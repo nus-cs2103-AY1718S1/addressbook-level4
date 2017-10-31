@@ -54,6 +54,8 @@ public class MainWindow extends UiPart<Region> {
     private EmailTextField emailTextField;
     private AddressTextField addressTextField;
     private TagTextField tagTextField;
+    private ClearLogButton clearLogButton;
+    private QrButton qrButton;
     @FXML
     private StackPane browserPlaceholder;
 
@@ -102,6 +104,10 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane editTagTextfieldPlaceholder;
+    @FXML
+    private StackPane clearLogButtonPlaceholder;
+    @FXML
+    private StackPane qrButtonPlaceholder;
     //@@author
     @FXML
     private VBox vBox;
@@ -170,6 +176,8 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+        clearLogButton = new ClearLogButton();
+        clearLogButtonPlaceholder.getChildren().add(clearLogButton.getRoot());
 
         nameTextField = new NameTextField();
         editNameTextfieldPlaceholder.getChildren().add(nameTextField.getRoot());
@@ -196,6 +204,9 @@ public class MainWindow extends UiPart<Region> {
 
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
+
+        qrButton = new QrButton(browserPanel);
+        qrButtonPlaceholder.getChildren().add(qrButton.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
