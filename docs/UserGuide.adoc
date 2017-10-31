@@ -132,7 +132,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 image::UG_header_alias.png[width="400"]
 {sp}+
-Alias: `a`
+Alias: `new`, `create`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -169,7 +169,7 @@ Format: `list` +
 
 image::UG_header_alias.png[width="400"]
 {sp}+
-Alias: `l`
+Alias: `ls`, `show`
 
 image::UG_header_stepbystep.png[width="400"]
 {sp}+
@@ -198,7 +198,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 
 image::UG_header_alias.png[width="400"]
 {sp}+
-Alias: `e`
+Alias: `change`
 
 image::header_note.png[width="400"]
 
@@ -243,7 +243,7 @@ to search for people based on their details, which include: +
 
 Find people whose names contain any of the given keywords. +
 Format: `find [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-Alias: `f`
+Alias: `search`, `filter`
 
 IMPORTANT: Only people matching all the keywords will be returned (i.e. `AND` search).
 e.g. `n/Hans n/Bo` will not return `Hans Gruber` or `Bo Yang` but will return `Hans Holbo`.
@@ -289,7 +289,7 @@ Format: `delete INDEX` +
 
 image::UG_header_alias.png[width="400"]
 
-Alias: `d`
+Alias: `remove`
 
 image::header_note.png[width="400"]
 
@@ -345,7 +345,7 @@ Format: `select INDEX` +
 
 image::UG_header_alias.png[width="400"]
 
-Alias: `s`
+Alias: `choose`, `pick`
 
 image::header_note.png[width="400"]
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -422,8 +422,7 @@ image::divider.png[width="900"]
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo` +
-Alias: `u`
+Format: `undo`
 
 [NOTE]
 ====
@@ -449,8 +448,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo` +
-Alias: `r`
+Format: `redo`
 
 Examples:
 
@@ -575,8 +573,8 @@ Format: `alias [ALIAS COMMAND]`
 
 Examples:
 
-* `alias show list` +
-`show` (performs the `list` command) +
+* `alias unfriend delete` +
+`unfriend` (performs the `delete` command) +
 * `alias` +
 Lists all your previously defined aliases.
 
@@ -586,9 +584,10 @@ Deletes a previously defined alias. +
 Format: `unalias ALIAS`
 Examples:
 
-* `unalias show` +
-`show` +
-The `show` command fails as there is no longer such a command.
+* `alias unfriend delete` +
+`unalias unfriend` +
+`unfriend` +
+The `unfriend` command fails as there is no longer such a command.
 
 === Exiting the program : `exit`
 image::UG_commandheader_exit.png[width="500"]
@@ -597,6 +596,9 @@ Exits the program. +
 
 image::UG_header_format.png[width="400"]
 Format: `exit`
+
+image::UG_header_alias.png[width="400"]
+Alias: `quit`
 
 image::UG_header_stepbystep.png[width="400"]
 {sp}+
