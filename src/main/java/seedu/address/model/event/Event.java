@@ -58,31 +58,6 @@ public class Event implements ReadOnlyEvent {
         }
         this.reminders = new SimpleObjectProperty<>(new UniqueReminderList(reminders));
     }
-
-    /**
-     * Every field must be present and not null.
-     */
-    public Event(Name name, DateTime time, Address address) {
-        requireAllNonNull(name, time, address);
-        this.name = new SimpleObjectProperty<>(name);
-        this.time = new SimpleObjectProperty<>(time);
-        this.address = new SimpleObjectProperty<>(address);
-        this.reminders = new SimpleObjectProperty<>(new UniqueReminderList());
-
-        Set<Property> properties = new HashSet<>();
-        properties.add(name);
-        properties.add(time);
-        properties.add(address);
-
-        this.properties = new SimpleObjectProperty<>();
-        try {
-            setProperties(properties);
-        } catch (DuplicatePropertyException e) {
-            // TODO: Better error handling
-            e.printStackTrace();
-            System.err.println("This should never happen.");
-        }
-    }
     public Event(Set<Property> properties, ArrayList<Reminder> reminders) throws DuplicateReminderException,
             DuplicatePropertyException {
         requireAllNonNull(properties, reminders);

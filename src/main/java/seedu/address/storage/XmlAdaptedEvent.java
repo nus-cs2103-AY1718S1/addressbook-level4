@@ -10,9 +10,6 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.property.Address;
-import seedu.address.model.property.DateTime;
-import seedu.address.model.property.Name;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
@@ -51,6 +48,12 @@ public class XmlAdaptedEvent {
         time = source.getTime().getValue();
         venue = source.getAddress().getValue();
         reminders = new ArrayList<>();
+
+        properties = new ArrayList<>();
+        for (Property property: source.getProperties()) {
+            properties.add(new XmlAdaptedProperty(property));
+        }
+
         for (Reminder reminder: source.getReminders()) {
             reminders.add(new XmlAdaptedReminder(reminder));
         }

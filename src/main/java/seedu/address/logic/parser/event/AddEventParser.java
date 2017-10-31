@@ -4,7 +4,10 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMINDER;
 
+import java.util.ArrayList;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -20,7 +23,11 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.property.Address;
 import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Name;
+import seedu.address.model.property.Property;
+import seedu.address.model.property.PropertyManager;
+import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
+import seedu.address.model.reminder.Reminder;
 
 
 /**
@@ -34,32 +41,21 @@ public class AddEventParser implements Parser<AddEventCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddEventCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DATE_TIME, PREFIX_ADDRESS);
+        Set<Prefix> prefixes = PropertyManager.getAllPrefixes();
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, prefixes);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_DATE_TIME, PREFIX_ADDRESS)) {
+        // TODO: Keep this checking for now. These pre-loaded properties are compulsory.
+        if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_DATE_TIME)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE));
         }
 
         try {
-            Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-            DateTime dateTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_DATE_TIME)).get();
-            Address venue = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
-
-            ReadOnlyEvent event = new Event(name, dateTime, venue);
-
-            return new AddEventCommand(event);
-        } catch (IllegalValueException | PropertyNotFoundException ive) {
-            throw new ParseException(ive.getMessage(), ive);
+            Set<Property> propertyList = ParserUtil.parseProperties(argMultimap.getAllValues());
+            ArrayList<Reminder> reminderList = new ArrayList<>();
+            return new AddEventCommand(new Event(propertyList, reminderList));
+        } catch (IllegalValueException | PropertyNotFoundException | DuplicatePropertyException e) {
+            throw new ParseException(e.getMessage(), e);
         }
     }
-
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-
 }
+
