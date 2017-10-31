@@ -184,7 +184,7 @@ public class ModelManager extends ComponentManager implements Model {
         int decrease = 0;
         if (!index.isEmpty()) {
             boolean removed = false;
-            for (int i =0; i < index.size(); i++) {
+            for (int i = 0; i < index.size(); i++) {
                 int currentSize = getFilteredPersonList().size();
                 int indexToRemove = Integer.parseInt(index.get(i)) - 1;
                 Person toDelete;

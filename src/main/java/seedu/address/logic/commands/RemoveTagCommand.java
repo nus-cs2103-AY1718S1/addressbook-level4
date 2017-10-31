@@ -56,7 +56,7 @@ public class RemoveTagCommand extends UndoableCommand {
         String successMessage;
         String notFound;
 
-         String indexInput = indexDisplay.stream().collect(Collectors.joining(", "));
+        String indexInput = indexDisplay.stream().collect(Collectors.joining(", "));
 
         if (!index.isEmpty()) {
 
