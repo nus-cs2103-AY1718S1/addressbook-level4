@@ -19,6 +19,8 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.storage.Storage;
+import seedu.address.testutil.TypicalStorage;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -26,6 +28,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class DeleteCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Storage storage = new TypicalStorage().setUp();
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
@@ -104,7 +107,7 @@ public class DeleteCommandTest {
      */
     private DeleteCommand prepareCommand(Index index) {
         DeleteCommand deleteCommand = new DeleteCommand(index);
-        deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack(), storage);
         return deleteCommand;
     }
 

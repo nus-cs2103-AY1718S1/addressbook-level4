@@ -19,6 +19,8 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.storage.Storage;
+import seedu.address.testutil.TypicalStorage;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code PinCommand and UnpinCommand}.
@@ -26,6 +28,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PinCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Storage storage = new TypicalStorage().setUp();
 
     @Test
     public void executeValidIndexUnfilteredListSuccess() throws Exception {
@@ -165,13 +168,13 @@ public class PinCommandTest {
      */
     private PinCommand prepareCommand(Index index) {
         PinCommand pinCommand = new PinCommand(index);
-        pinCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        pinCommand.setData(model, new CommandHistory(), new UndoRedoStack(), storage);
         return pinCommand;
     }
 
     private UnpinCommand prepareUnpinCommand(Index index) {
         UnpinCommand unpinCommand = new UnpinCommand(index);
-        unpinCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        unpinCommand.setData(model, new CommandHistory(), new UndoRedoStack(), storage);
         return unpinCommand;
     }
 }

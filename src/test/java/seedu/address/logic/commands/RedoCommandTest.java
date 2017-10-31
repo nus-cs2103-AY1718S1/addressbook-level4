@@ -18,6 +18,8 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.storage.Storage;
+import seedu.address.testutil.TypicalStorage;
 
 public class RedoCommandTest {
     private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
@@ -26,11 +28,12 @@ public class RedoCommandTest {
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
     private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
+    private final Storage storage = new TypicalStorage().setUp();
 
     @Before
     public void setUp() {
-        deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
-        deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
+        deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK, storage);
+        deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK, storage);
     }
 
     @Test
@@ -38,7 +41,7 @@ public class RedoCommandTest {
         UndoRedoStack undoRedoStack = prepareStack(
                 Collections.emptyList(), Arrays.asList(deleteCommandTwo, deleteCommandOne));
         RedoCommand redoCommand = new RedoCommand();
-        redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+        redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack, storage);
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
         // multiple commands in redoStack
