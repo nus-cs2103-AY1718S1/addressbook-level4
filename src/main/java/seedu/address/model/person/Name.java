@@ -70,7 +70,7 @@ public class Name {
     }
 
     public int compareTo(Name other) {
-        return toString().compareTo(other.toString());
+        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
     }
 
 }
