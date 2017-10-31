@@ -31,11 +31,11 @@ import seedu.address.model.tag.Tag;
  * All changes to any model should be synchronized.
  */
 public class ModelManager extends ComponentManager implements Model {
+    public static final String MESSAGE_DUPLICATE_PERSON = "Duplicate persons in Addressbook.";
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
-    public final static String MESSAGE_DUPLICATE_PERSON = "Duplicate persons in Addressbook.";
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -183,7 +183,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         }
         for (ReadOnlyPerson person : contactList) {
-            if ( (person.getBirthday().value.length() == 0)){
+            if ((person.getBirthday().value.length() == 0)) {
                 tempList.add(person);
             }
 
