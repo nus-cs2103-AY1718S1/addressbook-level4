@@ -335,18 +335,24 @@ image::UG_delete2.png[width="590"]
 image::divider.png[width="900"]
 
 === Selecting a person : `select`
+image::UG_commandheader_select.png[width="500"]
 
 Selects the person identified by the index number used in the last person listing. +
+
+image::UG_header_format.png[width="400"]
+
 Format: `select INDEX` +
+
+image::UG_header_alias.png[width="400"]
+
 Alias: `s`
 
-****
+image::header_note.png[width="400"]
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
-****
 
-Examples:
+image::UG_header_examples.png[width="400"]
 
 * `list` +
 `select 2` +
@@ -355,19 +361,28 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-//-
-
-. Type `list` into the command box, and press kbd:[Enter] to execute it.
-. The result box will display "Listed all persons"
-. The contact list will be displayed with every contacts found in the address book. You can scroll down to view more contacts in the list.
-. Type `select` into the command box first, then follow the index of the contact list, after which press kbd:[Enter] to execute it.
-. The result box will display "Selected person:" with the index.
-. The selected person will be highlighted from the contact list.
-. The details of the selected person will be shown in the contact's detail box.
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] Type `list` into the command box, and press kbd:[Enter] to execute it.
 
 image::UG_list1.png[width="590"]
+
+image:step2.png[width="70"] The result box will display "Listed all persons"
+
+image:step3.png[width="70"] The contact list will be displayed with every contacts found in the address book. You can scroll down to view more contacts in the list.
+
 image::UG_list2.png[width="590"]
+
+image:step4.png[width="70"] Type `select` into the command box first, then follow the index of the contact list, after which press kbd:[Enter] to execute it.
+
 image::UG_select1.png[width="590"]
+
+image:step5.png[width="70"] The result box will display "Selected person:" with the index.
+
+image:step6.png[width="70"] The selected person will be highlighted from the contact list.
+
+image:step7.png[width="70"] The details of the selected person will be shown in the contact's detail box.
+
 image::UG_select2.png[width="590"]
 
 {sp}+
@@ -576,6 +591,7 @@ Examples:
 The `show` command fails as there is no longer such a command.
 
 === Exiting the program : `exit`
+image::UG_commandheader_exit.png[width="500"]
 
 Exits the program. +
 
