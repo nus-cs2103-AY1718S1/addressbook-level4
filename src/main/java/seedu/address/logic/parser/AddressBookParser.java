@@ -23,6 +23,7 @@ import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UpcomingBirthdayCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -58,10 +59,10 @@ public class AddressBookParser {
 
         case AddPhotoCommand.COMMAND_WORD:
             return new AddPhotoCommandParser().parse(arguments);
-
+        //@@author zengfengw
         case BirthdayCommand.COMMAND_WORD:
             return new BirthdayCommandParser().parse(arguments);
-
+        //@@author
         case EditCommand.COMMAND_ALIAS:
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
@@ -82,10 +83,10 @@ public class AddressBookParser {
         case FindCommand.COMMAND_ALIAS:
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
-
+        //@@author Affalen
         case RemarkCommand.COMMAND_WORD:
             return new RemarkCommandParser().parse(arguments);
-
+        //@@author
         case ListCommand.COMMAND_ALIAS:
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
@@ -94,8 +95,10 @@ public class AddressBookParser {
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
 
+        //@@author Estois
         case SortCommand.COMMAND_WORD:
             return new SortCommandParser().parse(arguments);
+        //@@author
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
@@ -110,6 +113,10 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_ALIAS:
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
+        //@@author zengfengw
+        case UpcomingBirthdayCommand.COMMAND_WORD:
+            return new UpcomingBirthdayCommand();
+        //@@author
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

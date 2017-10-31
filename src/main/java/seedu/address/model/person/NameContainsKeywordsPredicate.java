@@ -1,3 +1,4 @@
+//@@author Affalen
 package seedu.address.model.person;
 
 import java.util.List;
