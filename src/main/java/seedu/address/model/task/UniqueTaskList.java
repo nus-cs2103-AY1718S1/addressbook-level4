@@ -2,6 +2,7 @@ package seedu.address.model.task;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -102,7 +103,17 @@ public class UniqueTaskList implements Iterable<Task> {
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<ReadOnlyTask> asObservableList() {
+        sortTasks(internalList);
         return FXCollections.unmodifiableObservableList(mappedList);
+    }
+
+    /**
+     * Sorts the internal list according to the {@code TaskComparator}.
+     * With the format: tasks with expired deadline, task with closer deadlines
+     *                  tasks with null deadline...
+     */
+    private void sortTasks(ObservableList<Task> tasks) {
+        Collections.sort(tasks, new TaskComparator());
     }
 
     @Override

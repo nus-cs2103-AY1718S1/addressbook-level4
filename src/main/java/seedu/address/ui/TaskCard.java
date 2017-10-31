@@ -23,8 +23,11 @@ public class TaskCard extends UiPart<Region> {
     private static final String FXML = "TaskCard.fxml";
     private static final int GREEN_RANGE = 7;
     private static final int YELLOW_RANGE = 3;
+    private static final int RED_RANGE = 0;
+    private static final int NULL_RANGE = -9999;
 
     public final ReadOnlyTask task;
+    public int rangeFinal;
 
     @FXML
     private GridPane gridPane;
@@ -46,7 +49,6 @@ public class TaskCard extends UiPart<Region> {
         this.task = task;
         id.setText("  " + displayedIndex + ". ");
         bindListeners(task);
-        setColour();
     }
 
     /**
@@ -57,6 +59,7 @@ public class TaskCard extends UiPart<Region> {
         description.textProperty().bind(Bindings.convert(task.descriptionProperty()));
         startDate.textProperty().bind(Bindings.convert(task.startDateProperty()));
         deadline.textProperty().bind(Bindings.convert(task.deadlineProperty()));
+        setColour();
     }
 
     /**
@@ -65,31 +68,42 @@ public class TaskCard extends UiPart<Region> {
     private void setColour() {
         LocalDate date = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String taskDate = "";
-        try {
-            Date deadline = ParserUtil.parseDate(task.getDeadline().date);
-            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-            taskDate = dateFormat.format(deadline);
-        } catch (IllegalValueException e) {
-            e.printStackTrace();
-        }
-        LocalDate deaddate = LocalDate.parse(taskDate, formatter);
-        int range = deaddate.getDayOfYear() - date.getDayOfYear();
         String bkgndColour;
-        if (range >= GREEN_RANGE) {
-            bkgndColour = "#00c300";
-        } else if (range >= YELLOW_RANGE) {
-            bkgndColour = "#d1d14f";
-        } else if (range == 0){
-            bkgndColour = "#ff444d";
+        if (!task.getDeadline().isEmpty()) {
+            String taskDate = "";
+            try {
+                Date deadline = ParserUtil.parseDate(task.getDeadline().date);
+                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                taskDate = dateFormat.format(deadline);
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+            }
+            LocalDate deaddate = LocalDate.parse(taskDate, formatter);
+            int range = deaddate.getDayOfYear() - date.getDayOfYear();
+            if (range >= GREEN_RANGE) {
+                bkgndColour = "#00c300";
+            } else if (range >= YELLOW_RANGE) {
+                bkgndColour = "#d1d14f";
+            } else if (range >= RED_RANGE) {
+                bkgndColour = "#ff444d";
+            } else {
+                bkgndColour = "#878787";
+            }
+            rangeFinal = range;
         } else {
-            bkgndColour = "#878787";
+            // for task with no deadline
+            bkgndColour = "#ffd0d0";
+            rangeFinal = NULL_RANGE;
         }
         gridPane.setStyle("-fx-background-color: " + bkgndColour + ";"
                 + "-fx-border-style: solid inside;"
                 + "-fx-border-width: 2;"
                 + "-fx-border-height: 2;"
                 + "-fx-border-color: black;");
+    }
+
+    public int getRange() {
+        return rangeFinal;
     }
 
     @Override
