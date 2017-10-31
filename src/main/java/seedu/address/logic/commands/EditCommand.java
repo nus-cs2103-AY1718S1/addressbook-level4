@@ -165,8 +165,6 @@ public class EditCommand extends UndoableCommand {
         Person personCreated = new Person(updatedName, updatedHandphone, updatedHomePhone, updatedOfficePhone,
                 updatedEmail, updatedAddress, updatedPostalCode, updatedDebt, updatedInterest, updatedDeadline,
                 updatedTags);
-        personCreated.setTotalDebt(personToEdit.getTotalDebt());
-
         personCreated.setDateBorrow(personToEdit.getDateBorrow());
         personCreated.setDateRepaid(personToEdit.getDateRepaid());
         personCreated.setIsBlacklisted(personToEdit.isBlacklisted());
@@ -196,6 +194,7 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private PostalCode postalCode;
         private Debt debt;
+        private Debt totalDebt;
         private Interest interest;
         private Deadline deadline;
         private Set<Tag> tags;
@@ -211,6 +210,7 @@ public class EditCommand extends UndoableCommand {
             this.address = toCopy.address;
             this.postalCode = toCopy.postalCode;
             this.debt = toCopy.debt;
+            this.totalDebt = toCopy.totalDebt;
             this.interest = toCopy.interest;
             this.deadline = toCopy.deadline;
             this.tags = toCopy.tags;
@@ -286,6 +286,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Debt> getDebt() {
             return Optional.ofNullable(debt);
+        }
+
+        public void setTotalDebt(Debt totalDebt) {
+            this.totalDebt = totalDebt;
+        }
+
+        public Optional<Debt> getTotalDebt() {
+            return Optional.ofNullable(totalDebt);
         }
 
         public void setInterest(Interest interest) {

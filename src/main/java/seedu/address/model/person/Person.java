@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.util.DateUtil;
@@ -320,10 +321,10 @@ public class Person implements ReadOnlyPerson {
      * Sets total debt of a person to the given Debt.
      * @param totalDebt must not be null and cannot be less than current debt
      */
-    public void setTotalDebt(Debt totalDebt) {
+    public void setTotalDebt(Debt totalDebt) throws IllegalValueException {
         requireNonNull(totalDebt);
         if (totalDebt.toNumber() < debt.get().toNumber()) {
-            throw new IllegalArgumentException("Total debt cannot be less than current debt");
+            throw new IllegalValueException("Total debt cannot be less than current debt");
         }
         this.totalDebt.set(totalDebt);
     }
