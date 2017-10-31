@@ -40,9 +40,11 @@ public class LogicManager extends ComponentManager implements Logic {
             Command command = addressBookParser.parseCommand(commandText);
             command.setData(model, history, undoRedoStack);
             CommandResult result = command.execute();
+            // @@author HuWanqing
             if (!(command instanceof AbortedCommand)) {
                 undoRedoStack.push(command);
             }
+            // @@author
             return result;
         } finally {
             history.add(commandText);

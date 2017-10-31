@@ -6,7 +6,7 @@ import javafx.beans.property.ObjectProperty;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 
-
+// @@author HuWanqing
 /**
  * Represents an interface for event in the address book.
  */

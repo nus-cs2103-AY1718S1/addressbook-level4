@@ -3,7 +3,7 @@ package seedu.address.model.event;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-
+// @@author HuWanqing
 /**
  * Represents a Event's description in the address book.
  */

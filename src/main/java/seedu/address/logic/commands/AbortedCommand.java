@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import seedu.address.model.event.Event;
-
+// @@author HuWanqing
 /**
  * A dummy command class used to abort add Event command
  */
