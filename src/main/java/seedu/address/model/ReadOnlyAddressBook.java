@@ -22,10 +22,12 @@ public interface ReadOnlyAddressBook {
      */
     ObservableList<Lecturer> getLecturerList();
 
+    //@@author junming403
     /**
      * Returns an unmodifiable view of the remarks list.
      * This list will not contain any duplicate remarks.
      */
     ObservableList<Remark> getRemarkList();
+    //@@author
 
 }

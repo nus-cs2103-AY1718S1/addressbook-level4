@@ -19,6 +19,7 @@ import seedu.address.commons.util.CollectionUtil;
  *
  * @see Lecturer#equals(Object)
  */
+//@@author junming403
 public class UniqueLecturerList implements Iterable<Lecturer> {
 
     private final ObservableList<Lecturer> internalList = FXCollections.observableArrayList();

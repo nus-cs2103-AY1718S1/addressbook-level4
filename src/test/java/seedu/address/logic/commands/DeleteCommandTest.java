@@ -27,6 +27,7 @@ import seedu.address.model.module.predicates.MarkedListPredicate;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
+//@@author junming403
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
  */
