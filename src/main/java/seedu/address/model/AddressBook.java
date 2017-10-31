@@ -74,6 +74,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         syncMasterTagListWith(persons);
     }
 
+    //@@author liuhang0213
     /**
      * Returns the maximum internal index in the unique person list
      */
@@ -85,6 +86,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ReadOnlyPerson getPersonByInternalIndex(int index) throws PersonNotFoundException {
         return persons.getPersonByInternalIndex(index);
     }
+
+    //@@author
     //// person-level operations
 
     /**

@@ -72,6 +72,7 @@ public class XmlSerializableAddressBook extends XmlSerializableData implements R
         return FXCollections.unmodifiableObservableList(tags);
     }
 
+    //@@author liuhang0213
     @Override
     public ReadOnlyPerson getPersonByInternalIndex(int index) throws PersonNotFoundException {
         try {
