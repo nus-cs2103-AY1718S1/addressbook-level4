@@ -64,6 +64,7 @@ public class ParserUtilTest {
         assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
     }
 
+    // @@author donjar
     @Test
     public void parsePositiveInteger_validInput_success() throws Exception {
         // No whitespaces
@@ -107,6 +108,8 @@ public class ParserUtilTest {
 
         ParserUtil.parsePositiveInteger("afg");
     }
+
+    // @@author donjar
 
     @Test
     public void parseName_null_throwsNullPointerException() throws Exception {

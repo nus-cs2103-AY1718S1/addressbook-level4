@@ -20,11 +20,13 @@ public class RedoCommand extends Command {
             + "Parameters: NUMBER_OF_COMMANDS_TO_REDO (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
+    // @@author donjar
     private final int amount;
 
     public RedoCommand(int amount) {
         this.amount = amount;
     }
+    // @@author
 
     @Override
     public CommandResult execute() throws CommandException {
@@ -34,12 +36,14 @@ public class RedoCommand extends Command {
             throw new CommandException(MESSAGE_FAILURE);
         }
 
+        // @@author donjar
         int commandsRedoed = 0;
         while (undoRedoStack.canRedo() && commandsRedoed < amount) {
             undoRedoStack.popRedo().redo();
             commandsRedoed++;
         }
         return new CommandResult(getSuccessMessage(commandsRedoed));
+        // @@author
     }
 
     @Override
@@ -48,6 +52,7 @@ public class RedoCommand extends Command {
         this.undoRedoStack = undoRedoStack;
     }
 
+    // @@author donjar
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -66,4 +71,5 @@ public class RedoCommand extends Command {
             return String.format("%1$s commands redoed.", amount);
         }
     }
+    // @@author
 }

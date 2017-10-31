@@ -116,6 +116,7 @@ public class PersonCard extends UiPart<Region> {
                 && person.equals(card.person);
     }
 
+    // @@author donjar
     @Subscribe
     private void handleFontSizeChangeEvent(FontSizeChangeRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -130,20 +131,16 @@ public class PersonCard extends UiPart<Region> {
         name.setStyle("-fx-font-size: " + (DEFAULT_BIG_FONT_SIZE + fontSizeChange));
         id.setStyle("-fx-font-size: " + (DEFAULT_BIG_FONT_SIZE + fontSizeChange));
 
+        for (Label l : new Label[] { phone, address, email, socialMedia, remark }) {
+            l.setStyle("-fx-font-size: " + (DEFAULT_SMALL_FONT_SIZE + fontSizeChange));
+        }
         if (isAccessDisplayed) {
-            for (Label l : new Label[] { phone, address, email, socialMedia, remark, accesses }) {
-                l.setStyle("-fx-font-size: " + (DEFAULT_SMALL_FONT_SIZE + fontSizeChange));
-            }
-        } else {
-            for (Label l : new Label[] { phone, address, email, socialMedia, remark}) {
-                l.setStyle("-fx-font-size: " + (DEFAULT_SMALL_FONT_SIZE + fontSizeChange));
-            }
+            accesses.setStyle("-fx-font-size: " + (DEFAULT_SMALL_FONT_SIZE + fontSizeChange));
         }
 
         for (Node tag : tags.getChildren()) {
             tag.setStyle("-fx-font-size: " + (DEFAULT_TAG_FONT_SIZE + fontSizeChange));
         }
     }
-
-
+    // @@author
 }

@@ -16,7 +16,9 @@ public class Name {
     /*
      * Matches unicode words separated with one space, e.g. "Charles Nguyễn 你好"
      */
+    // @@author donjar
     public static final String NAME_VALIDATION_REGEX = "[\\p{L}\\p{Digit}]+( [\\p{L}\\p{Digit}]+)*";
+    // @@author
 
     public final String fullName;
 

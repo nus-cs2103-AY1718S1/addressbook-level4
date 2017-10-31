@@ -20,11 +20,13 @@ public class UndoCommand extends Command {
             + "Parameters: NUMBER_OF_COMMANDS_TO_UNDO (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
+    // @@author donjar
     private final int amount;
 
     public UndoCommand(int amount) {
         this.amount = amount;
     }
+    // @@author
 
     @Override
     public CommandResult execute() throws CommandException {
@@ -34,12 +36,14 @@ public class UndoCommand extends Command {
             throw new CommandException(MESSAGE_FAILURE);
         }
 
+        // @@author donjar
         int commandsUndoed = 0;
         while (undoRedoStack.canUndo() && commandsUndoed < amount) {
             undoRedoStack.popUndo().undo();
             commandsUndoed++;
         }
         return new CommandResult(getSuccessMessage(commandsUndoed));
+        // @@author
     }
 
     @Override
@@ -48,6 +52,7 @@ public class UndoCommand extends Command {
         this.undoRedoStack = undoRedoStack;
     }
 
+    // @@author donjar
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -66,4 +71,5 @@ public class UndoCommand extends Command {
             return String.format("%1$s commands undoed.", amount);
         }
     }
+    // @@author
 }

@@ -158,6 +158,7 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    // @@author donjar
     @Subscribe
     private void handleFontSizeChangeEvent(FontSizeChangeRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -171,4 +172,5 @@ public class CommandBox extends UiPart<Region> {
     private void refreshFontSizes() {
         commandTextField.setStyle("-fx-font-size: " + (DEFAULT_FONT_SIZE + fontSizeChange));
     }
+    // @@author
 }

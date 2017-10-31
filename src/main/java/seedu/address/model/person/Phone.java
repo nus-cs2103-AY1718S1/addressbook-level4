@@ -10,11 +10,12 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Phone {
 
-
+    // @@author donjar
     public static final String MESSAGE_PHONE_CONSTRAINTS =
             "Phone numbers can only contain numbers, dashes, parentheses, and spaces. Also, there should be at "
                     + "least 3 numbers in the string.";
     public static final String PHONE_REPLACEMENT_REGEX = "[() -]";
+    // @@author
     public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
     public final String value;
 
@@ -29,6 +30,7 @@ public class Phone {
         this.value = extractPhone(trimmedPhone);
     }
 
+    // @@author donjar
     /**
      * Returns a phone number from the given string, by stripping certain special characters.
      */
@@ -39,6 +41,7 @@ public class Phone {
         }
         return strippedPhoneNumber;
     }
+    // @@author
 
     /**
      * Returns true if a given string is a valid person phone number.
