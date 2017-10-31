@@ -158,15 +158,8 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new PersonNotFoundException();
         }
     }
-
+    
     //@@author keithsoc
-    /**
-     * Sorts the persons in the address book based on the provided {@code comparator}.
-     */
-    public void sortPersons(Comparator<ReadOnlyPerson> comparator) {
-        persons.sortPersons(comparator);
-    }
-
     /**
      * Sets {@code personToFav} favorite field to true or false according to {@code type}.
      * Replaces the given person {@code target} in the list with {@code personToFav}.

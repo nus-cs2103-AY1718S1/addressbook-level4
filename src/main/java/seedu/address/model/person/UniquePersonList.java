@@ -98,13 +98,6 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Sorts the list based on the input {@code comparator}
-     */
-    public void sortPersons(Comparator<ReadOnlyPerson> comparator) {
-        FXCollections.sort(internalList, comparator);
-    }
-
-    /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<ReadOnlyPerson> asObservableList() {
