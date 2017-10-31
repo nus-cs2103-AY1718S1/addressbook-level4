@@ -93,6 +93,7 @@ public class MainApp extends Application {
         storage.setNewRolodexStorage(rolodexStorage);
         Model modelToBeLoaded = initModelManager(storage, userPrefs);
         model.resetData(modelToBeLoaded.getRolodex());
+        logic.clearUndoRedoStack();
         EventsCenter.getInstance().post(new RolodexChangedDirectoryEvent(newRolodexPath));
     }
 

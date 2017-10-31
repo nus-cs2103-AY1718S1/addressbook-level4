@@ -86,4 +86,12 @@ public class UndoRedoStack {
         return undoStack.equals(stack.undoStack)
                 && redoStack.equals(stack.redoStack);
     }
+
+    /**
+     * Clears the {@code UndoRedoStack} by emptying out {@code undoStack} and {@code redoStack}.
+     */
+    public void clear() {
+        undoStack.clear();
+        redoStack.clear();
+    }
 }
