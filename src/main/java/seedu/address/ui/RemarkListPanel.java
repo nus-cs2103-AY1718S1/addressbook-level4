@@ -49,8 +49,8 @@ public class RemarkListPanel extends UiPart<Region> {
         totalPersonsWithRemarks = 0;
         personListWithRemarks = new ArrayList<>();
         for (int i = 0; i < personObservableList.size(); i++) {
-            if (!personObservableList.get(i).getRemark().get(firstIndexOfArray).value.equals("")
-                    && !personObservableList.get(i).getRemark().isEmpty()) {
+            if (!personObservableList.get(i).getRemark().isEmpty()
+                    && !personObservableList.get(i).getRemark().get(firstIndexOfArray).value.equals("")) {
                 totalPersonsWithRemarks++;
                 personListWithRemarks.add(personObservableList.get(i).getName().fullName);
             }
