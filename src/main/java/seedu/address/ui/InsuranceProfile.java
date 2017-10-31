@@ -1,10 +1,12 @@
 package seedu.address.ui;
 
+import static java.awt.SystemColor.window;
 import static seedu.address.commons.util.FileUtil.isFileExists;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.logging.Logger;
 
 import javafx.beans.binding.Bindings;
@@ -13,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
+import javafx.stage.FileChooser;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonNameClickedEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
@@ -56,19 +59,28 @@ public class InsuranceProfile extends UiPart<Region> {
 
         insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractPath());
         if (isFileExists(insuranceFile)) {
-            contractPath.getStyleClass().add("particular-link");
+            activateLinkToInsuranceFile();
+        }
+        else {
             contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    try {
-                        Desktop.getDesktop().open(insuranceFile);
-                        // HostServices hostServices = getRoot().getHostservices();
-                        // hostServices.showDocument(file.getAbsolutePath());
-                    } catch (IOException ee) {
-                        logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractPath());
+                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+                    FileChooser chooser = new FileChooser();
+                    chooser.getExtensionFilters().add(extFilter);
+                    File openedFile = chooser.showOpenDialog(null);
+                    activateLinkToInsuranceFile();
+
+                    if (isFileExists(openedFile)) {
+                        try {
+                            Files.copy(openedFile.toPath(), insuranceFile.toPath());
+                        } catch (IOException ex) {
+                            logger.info("Unable to open at path: " + openedFile.getAbsolutePath());
+                        }
                     }
                 }
             });
+
         }
         owner.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getOwner())));
         insured.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getInsured())));
@@ -77,6 +89,22 @@ public class InsuranceProfile extends UiPart<Region> {
 
         bindListeners(insurance);
         registerAsAnEventHandler(this);
+    }
+
+    private void activateLinkToInsuranceFile() {
+        contractPath.getStyleClass().add("particular-link");
+        contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    Desktop.getDesktop().open(insuranceFile);
+                    // HostServices hostServices = getRoot().getHostservices();
+                    // hostServices.showDocument(file.getAbsolutePath());
+                } catch (IOException ee) {
+                    logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractPath());
+                }
+            }
+        });
     }
 
     /**
