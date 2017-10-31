@@ -36,11 +36,9 @@ public class Phone {
     public Phone(String phone) throws IllegalValueException {
         requireNonNull(phone);
         String trimmedPhone = phone.trim();
-        //@@author Juxarius
         if (trimmedPhone.isEmpty()) {
             throw new EmptyFieldException(PREFIX_PHONE);
         }
-        //@@author
         if (!isValidPhone(trimmedPhone)) {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
         }

@@ -36,11 +36,9 @@ public class Email {
     public Email(String email) throws IllegalValueException {
         requireNonNull(email);
         String trimmedEmail = email.trim();
-        //@@author Juxarius
         if (trimmedEmail.isEmpty()) {
             throw new EmptyFieldException(PREFIX_EMAIL);
         }
-        //@@author
         if (!isValidEmail(trimmedEmail)) {
             throw new IllegalValueException(MESSAGE_EMAIL_CONSTRAINTS);
         }

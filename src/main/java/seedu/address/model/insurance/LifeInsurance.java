@@ -39,14 +39,17 @@ public class LifeInsurance implements ReadOnlyInsurance {
     private StringProperty contractPath;
     private StringProperty signingDateString;
     private StringProperty expiryDateString;
+    //@@author Juxarius
     private LocalDate signingDate;
     private LocalDate expiryDate;
+    //@@author
 
     /**
      * Constructor for {@code XmlAdaptedLifeInsurance.toModelType()}
      */
     public LifeInsurance(String owner, String insured, String beneficiary, Double premium,
-                         String contractPath, String signingDateInput, String expiryDateInput) throws IllegalValueException {
+                         String contractPath, String signingDateInput, String expiryDateInput)
+            throws IllegalValueException {
         this.roleToPersonNameMap = new EnumMap<>(Roles.class);
         this.roleToPersonNameMap.put(Roles.OWNER, owner);
         this.roleToPersonNameMap.put(Roles.INSURED, insured);
@@ -67,7 +70,8 @@ public class LifeInsurance implements ReadOnlyInsurance {
      * Constructor for {@code AddLifeInsuranceCommand}
      */
     public LifeInsurance(ReadOnlyPerson owner, ReadOnlyPerson insured, ReadOnlyPerson beneficiary, Double premium,
-                         String contractPath, String signingDateInput, String expiryDateInput) throws IllegalValueException {
+                         String contractPath, String signingDateInput, String expiryDateInput)
+            throws IllegalValueException {
         requireAllNonNull(owner, insured, beneficiary, premium, contractPath);
         this.roleToPersonNameMap = new EnumMap<>(Roles.class);
         this.roleToPersonNameMap.put(Roles.OWNER, owner.getName().fullName);
@@ -204,6 +208,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return premium.get();
     }
 
+    //@author Juxarius
     @Override
     public StringProperty premiumStringProperty() {
         return premiumString;
@@ -213,6 +218,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
     public String getPremiumString() {
         return "S$ " + String.format("%.2f", premium.get());
     }
+    //@author
 
     public void setContractPath(String contractPath) {
         this.contractPath.set(requireNonNull(contractPath));

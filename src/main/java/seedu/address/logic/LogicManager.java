@@ -38,7 +38,7 @@ public class LogicManager extends ComponentManager implements Logic {
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
     }
-
+    //@@author Juxarius
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
@@ -48,7 +48,7 @@ public class LogicManager extends ComponentManager implements Logic {
             CommandResult result = command.execute();
             undoRedoStack.push(command);
             return result;
-            //@@author Juxarius
+
         } catch (EmptyFieldException efe) {
             // index check was bypassed, this checks the index before filling empty prefix
             if (efe.getIndex().getOneBased() > model.getFilteredPersonList().size()) {
@@ -56,12 +56,11 @@ public class LogicManager extends ComponentManager implements Logic {
             }
             commandText = getAutoFilledCommand(commandText, efe.getIndex());
             throw efe;
-            //@@author
         } finally {
             history.add(commandText);
         }
     }
-
+    //@@author
     //@@author Juxarius
     /**
      * Replaces the given command text with filled command text
