@@ -105,7 +105,7 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_FILEPATH + " " + photo.getFilePath());
         assertTrue(command instanceof AddPhotoCommand);
     }
-    //@@author 
+    //@@author
     @Test
     public void parseCommand_exit() throws Exception {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);

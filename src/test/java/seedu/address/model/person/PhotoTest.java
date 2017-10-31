@@ -1,7 +1,9 @@
 //@@author wishingmaid
 package seedu.address.model.person;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.model.person.Photo.URL_VALIDATION;
 
 import org.junit.Rule;
@@ -23,13 +25,13 @@ public class PhotoTest {
         Photo photoCopy = new Photo("");
         assertTrue(photo.equals(photoCopy));
 
-        // different types -> returns false 
+        // different types -> returns false
         assertFalse(photo.equals(1));
 
-        // null -> returns false; 
+        // null -> returns false;
         assertFalse(photo.equals(null));
 
-        //different filepath -> returns false; 
+        //different filepath -> returns false;
         Photo differentPhoto = new Photo("src/main/resources/images/noPhoto.png");
         assertFalse(photo.equals(differentPhoto));
     }
@@ -38,8 +40,8 @@ public class PhotoTest {
     public void readFile() {
         try {
             Photo photo = new Photo("C:/something/picture.png");
-        } catch (IllegalArgumentException e) { 
+        } catch (IllegalArgumentException e) {
           assertEquals(e.getMessage(), URL_VALIDATION);
-        } 
+        }
     }
-}  
+}

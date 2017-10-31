@@ -34,8 +34,6 @@ public class AddPhotoCommandParserTest {
             photo.resetFilePath("C/Users/pictures/pic.png");
             AddPhotoCommand newExpectedCommand = new AddPhotoCommand(INDEX_FIRST_PERSON, photo);
             assertParseSuccess(parser, newUserInput, newExpectedCommand);
-
-
         }*/
 
     @Test
