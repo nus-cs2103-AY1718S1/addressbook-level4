@@ -31,9 +31,9 @@ public class EventBuilder {
         try {
             Name defaultEventName = new Name(DEFAULT_EVENT_NAME);
             DateTime defaultTime = new DateTime(DEFAULT_TIME);
-            Address defaultVenue = new Address(DEFAULT_VENUE);
+            Address defaultAddress = new Address(DEFAULT_VENUE);
             ArrayList<Reminder> defaultReminder = new ArrayList<>();
-            this.event = new Event(defaultEventName, defaultTime, defaultVenue, defaultReminder);
+            this.event = new Event(defaultEventName, defaultTime, defaultAddress, defaultReminder);
         } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new AssertionError("Default event's values are invalid.");
         }
@@ -69,11 +69,11 @@ public class EventBuilder {
     /**
      * Sets the {@code Address} of the {@code Event} that we are building.
      */
-    public EventBuilder withVenue(String address) {
+    public EventBuilder withAddress(String address) {
         try {
-            this.event.setVenue(new Address(address));
+            this.event.setAddress(new Address(address));
         } catch (IllegalValueException | PropertyNotFoundException ive) {
-            throw new IllegalArgumentException("venue is expected to be unique.");
+            throw new IllegalArgumentException("address is expected to be unique.");
         }
         return this;
     }

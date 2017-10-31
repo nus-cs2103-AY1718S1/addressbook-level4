@@ -45,7 +45,7 @@ public class EditEventParser implements Parser<EditEventCommand> {
         try {
             ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editEventDescriptor::setName);
             ParserUtil.parseTime(argMultimap.getValue(PREFIX_DATE_TIME)).ifPresent(editEventDescriptor::setTime);
-            ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editEventDescriptor::setVenue);
+            ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editEventDescriptor::setAddress);
         } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new ParseException(ive.getMessage());
         }

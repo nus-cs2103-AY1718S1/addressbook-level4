@@ -40,7 +40,6 @@ public class AddEventCommandTest {
     public void execute_duplicateEvent_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStubThrowingDuplicateEventException();
         Event validEvent = new EventBuilder().build();
-
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddEventCommand.MESSAGE_DUPLICATE_EVENT);
 

@@ -1,8 +1,5 @@
 package seedu.address.ui.event;
 
-import java.util.HashMap;
-import java.util.Random;
-
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -10,28 +7,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.ui.UiPart;
-import seedu.address.ui.person.PersonCard;
 
 /**
  * An UI component that displays information of a {@code Event}.
  */
 public class EventCard extends UiPart<Region> {
     private static final String FXML = "event/EventListCard.fxml";
-
-    /**
-     * The upper (exclusive) bound should be equal to {@code Math.pow(16, 6)}.
-     */
-    private static final int RGB_BOUND = 16777216;
-
-    // Random number generator (non-secure purpose)
-    private static final Random randomGenerator = new Random();
-
-    /**
-     * Stores the colors for all existing tags here so that the same tag always has the same color. Notice this
-     * {@code HashMap} has to be declared as a class variable.
-     */
-    private static HashMap<String, String> tagColors = new HashMap<>();
-
     // Keep a list of all persons.
     public final ReadOnlyEvent event;
 
@@ -51,7 +32,7 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private Label dateTime;
     @FXML
-    private Label venue;
+    private Label address;
 
 
     public EventCard(ReadOnlyEvent event, int displayedIndex) {
@@ -59,6 +40,7 @@ public class EventCard extends UiPart<Region> {
         this.event = event;
         idEvent.setText(displayedIndex + ". ");
         bindListeners(event);
+        registerAsAnEventHandler(this);
     }
 
     /**
@@ -67,22 +49,8 @@ public class EventCard extends UiPart<Region> {
      */
     private void bindListeners(ReadOnlyEvent event) {
         name.textProperty().bind(Bindings.convert(event.nameProperty()));
+        address.textProperty().bind(Bindings.convert(event.addressProperty()));
         dateTime.textProperty().bind(Bindings.convert(event.timeProperty()));
-        venue.textProperty().bind(Bindings.convert(event.venueProperty()));
-    }
-
-    /**
-     * Gets the RGB value of a randomly-selected color. Notice the selection is not cryptographically random. It will
-     * use the same color if a tag with the same name already exists.
-     *
-     * @return a 6-character string representation of the hexadecimal RGB value.
-     */
-    private String getRandomColorValue(String tagName) {
-        if (!tagColors.containsKey(tagName)) {
-            tagColors.put(tagName, Integer.toHexString(randomGenerator.nextInt(RGB_BOUND)));
-        }
-
-        return tagColors.get(tagName);
     }
 
     @Override
@@ -93,7 +61,7 @@ public class EventCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
+        if (!(other instanceof EventCard)) {
             return false;
         }
 

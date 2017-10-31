@@ -72,15 +72,12 @@ public class TypicalPersons {
      * Sample cases for events.
      *****************************************************/
     public static final ReadOnlyEvent BASKETBALL = new EventBuilder().withName("Basketball practice")
-            .withVenue("OCBC Basketball Court").withDateTime("15102017 11:00").build();
+            .withAddress("OCBC Basketball Court").withDateTime("15102017 11:00").build();
     public static final ReadOnlyEvent MOVIE = new EventBuilder().withName("Movie with friends")
-            .withVenue("Vivo city Golden Village").withDateTime("20112017 15:00").build();
+            .withAddress("Vivo city Golden Village").withDateTime("20112017 15:00").build();
     public static final ReadOnlyEvent TUTORIAL = new EventBuilder().withName("CS2103T Tutorial")
-            .withVenue("Basement COM1 NUS").withDateTime("01122017 09:00").build();
+            .withAddress("Basement COM1 NUS").withDateTime("01122017 09:00").build();
 
-    static {
-        PropertyManager.initializePropertyManager();
-    }
 
     /**
      * This is a singleton class, the only constructor was set to private to prevent instantiation.

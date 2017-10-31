@@ -19,6 +19,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.property.PropertyManager;
 
 
 /**
@@ -28,18 +29,18 @@ public class TypicalEvents {
 
     public static final ReadOnlyEvent EVENT1 = new EventBuilder().withName("HHN 6001")
             .withDateTime("22022015 08:30")
-            .withVenue("123, Sentosa, #08-111").withReminder().build();
+            .withAddress("123, Sentosa, #08-111").withReminder().build();
     public static final ReadOnlyEvent EVENT2 = new EventBuilder().withName("ZoukOut 6001")
             .withDateTime("25122017 10:30")
-            .withVenue("123, Clarke Quay #01-111").withReminder().build();
+            .withAddress("123, Clarke Quay #01-111").withReminder().build();
 
     // Manually added
     public static final ReadOnlyEvent EVENTM1 = new EventBuilder().withName("Volleyball Tour 17")
             .withDateTime("25122017 08:30")
-            .withVenue("OCBC ARENA Hall 3, #01-111").withReminder().build();
+            .withAddress("OCBC ARENA Hall 3, #01-111").withReminder().build();
     public static final ReadOnlyEvent EVENTM2 = new EventBuilder().withName("Meeting with Jason")
             .withDateTime("25112016 02:30")
-            .withVenue("123, Sheraton Towers , #06-111").withReminder().build();
+            .withAddress("123, Sheraton Towers , #06-111").withReminder().build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final ReadOnlyPerson AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
@@ -64,6 +65,9 @@ public class TypicalEvents {
             }
         }
         return ab;
+    }
+    static {
+        PropertyManager.initializePropertyManager();
     }
 
     public static List<ReadOnlyEvent> getTypicalEvents() {

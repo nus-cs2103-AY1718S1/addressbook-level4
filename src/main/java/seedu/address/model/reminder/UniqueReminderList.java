@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
@@ -35,6 +36,8 @@ public class UniqueReminderList implements Iterable<Reminder> {
     public UniqueReminderList(ArrayList<Reminder> reminders) {
         requireNonNull(reminders);
         internalList.addAll(reminders);
+    }
+    public UniqueReminderList() {
     }
 
     /**

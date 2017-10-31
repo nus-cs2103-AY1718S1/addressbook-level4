@@ -108,9 +108,9 @@ public class CommandTestUtil {
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
         DESC_EVENT1 = new EditEventDescriptorBuilder().withName(VALID_NAME_EVENT1).withTime(VALID_DATE_EVENT1)
-               .withVenue(VALID_VENUE_EVENT1).build();
+               .withAddress(VALID_VENUE_EVENT1).build();
         DESC_EVENT2 = new EditEventDescriptorBuilder().withName(VALID_NAME_EVENT2).withTime(VALID_DATE_EVENT2)
-                .withVenue(VALID_VENUE_EVENT2).build();
+                .withAddress(VALID_VENUE_EVENT2).build();
     }
 
     /**
