@@ -1,4 +1,4 @@
-= Personal Information Manager Program (PIMP) - User Guide
+= Personal Information Management Program (PIMP) - User Guide
 :toc:
 :toclevels: 4
 :toc-title:
@@ -11,9 +11,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W10-B1/main
 
-By: `Team PIMP (W10-B1)`      Since: `Sep 2016`      Licence: `MIT`
+By: `Team PIMP (W10-B1)`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
 
@@ -35,7 +35,7 @@ This user guide is simple and intuitive enough for anyone to understand. Gone ar
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `pimp.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
@@ -564,7 +564,7 @@ A newly added person is defined as a person that was added in the current month.
 
 ==== Viewing access counts (Since v1.3)
 
-At the left side of the screen where the addressbook entries are displayed, we can see an "Accesses: #number" row, which describes the number of times this entry has been accessed. Clicking on this entry, or modifying it using any of the edit, add/remove tag functions will increase this counter. This can be toggled on and off using the `accessdisplay` command.
+At the left side of the screen where the address book entries are displayed, we can see an "Accesses: #number" row, which describes the number of times this entry has been accessed. Clicking on this entry, or modifying it using any of the edit, add/remove tag functions will increase this counter. This can be toggled on and off using the `accessdisplay` command.
 
 ==== Saving the data
 

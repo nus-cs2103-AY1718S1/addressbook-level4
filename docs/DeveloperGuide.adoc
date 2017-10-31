@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Personal Information Management Application (PIMP) - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W10-B1/main
 
 By: `Team PIMP (W10-B1)`      Since: `Sep 2017`      Licence: `MIT`
 
@@ -18,7 +18,7 @@ By: `Team PIMP (W10-B1)`      Since: `Sep 2017`      Licence: `MIT`
 
 === Software Outline
 
-PIMP (Personal Information Manager Program) is a command line interface (CLI) address book that allows users to maintain their contacts. This program allows users to store various properties of their contacts, such as their home addresses, email addresses, phone numbers, or even custom tags. It also allows users to view the social media profiles of their addressbook entries. Since PIMP is targetted at young socialites, it includes many functionalities suitable for such an audience, such as birthday alerts. The program has four main components, namely the `User Interface (UI)`, `Logic`, `Model` and `Storage` components. Addressbook data is stored locally in an .xml file.
+PIMP (Personal Information Manager Program) is a command line interface (CLI) address book that allows users to maintain their contacts. This program allows users to store various properties of their contacts, such as their home addresses, email addresses, phone numbers, or even custom tags. It also allows users to view the social media profiles of their address book entries. Since PIMP is targeted at young socialites, it includes many functionalities suitable for such an audience, such as birthday alerts. The program has four main components, namely the `User Interface (UI)`, `Logic`, `Model` and `Storage` components. Addressbook data is stored locally in an .xml file.
 
 === Purpose of Developer Guide
 
@@ -26,7 +26,7 @@ This developer guide aims to give an overview to any developer who wishes to mod
 
 A few documentation guidelines will also be described, so that any improvements made can be documented in a consistent style for the convenience of future developers.
 
-Various user profiles, user stories and use cases have also been included, so that future developers can gain some insight as to the design decisions made during the development process. Potential improvements that can be made to the addressbook can also be found in this section.
+Various user profiles, user stories and use cases have also been included, so that future developers can gain some insight as to the design decisions made during the development process. Potential improvements that can be made to the address book can also be found in this section.
 
 == Setting up
 
@@ -82,7 +82,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103AUG2017-W10-B1/main` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103AUG2017-W10-B1/main`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -447,7 +447,7 @@ Searching by tag is implemented by the `FindTagCommand` class. This command allo
 
 The `FindTagCommand` class is implemented by calling `TagContainsKeywordsPredicate` as opposed to `NameContainsKeywordsPredicate`. This class tells us if a certain `person` object has any tag that matches the desired keyword. Implementing it this way allows us to extend functionality that was already implemented with a similar structure. In the future, implementing other search functions could build on these current search options.
 
-Since this search function involves iterating searching through all tags of all `person` objects in the addressbook, it could take up to O(pt) time, where p is the number of `person` objects in the addressbook, and t is the number of tags per person. To ensure that this will not take up too much time, an alternative implementation considered was to maintain a list of all tags, and maintain a list of `person` objects for each tag that is updated whenever a suitable command is inputted. These commands would be any command that could affect the list of `person` objects that have the tag, say `delete`, `add` or `edit`. This would then offset some of the time required for the search onto these other commands.
+Since this search function involves iterating searching through all tags of all `person` objects in the address book, it could take up to O(pt) time, where p is the number of `person` objects in the address book, and t is the number of tags per person. To ensure that this will not take up too much time, an alternative implementation considered was to maintain a list of all tags, and maintain a list of `person` objects for each tag that is updated whenever a suitable command is inputted. These commands would be any command that could affect the list of `person` objects that have the tag, say `delete`, `add` or `edit`. This would then offset some of the time required for the search onto these other commands.
 
 However, since these other commands are more commonly used, we decided not to slow down these commands for the performance of the `FingTagCommand` function. Instead, we simply allowed the `FindTagCommand` to search through all possibilities each time it is called.
 
@@ -457,7 +457,7 @@ The `EditCommand` currently allows the user to edit all the fields of a contact,
 
 The `AddRemoveTagsCommand` was added to allow users to add or remove only certain tags without compromising the entire tags list of the contact.
 
-In the backend, `AddRemoveTagsCommand` actually uses the same mechanics as `EditCommand`, where the person is updated as a whole. What it means is the `Person` to be targeted is firstly duplicated, then the tags list is being changed to add/remove certain tags, and the new `Person` object is used to update in the addressbook.
+In the backend, `AddRemoveTagsCommand` actually uses the same mechanics as `EditCommand`, where the person is updated as a whole. What it means is the `Person` to be targeted is firstly duplicated, then the tags list is being changed to add/remove certain tags, and the new `Person` object is used to update in the address book.
 
 [source,java]
 ----
@@ -497,7 +497,7 @@ After parsing, the TYPE, INDEX, and set of tags is passed to the `AddRemoveTagsC
 
 * **Alternative 2:** Update the Set<Tag> directly by exposing it with a getter and setter
 ** **Pros:** Isolate to only touch on tags
-** **Cons:** Breaks the idea that each person in addressbook is read-only.
+** **Cons:** Breaks the idea that each person in address book is read-only.
 
 **Aspect:** Commands to add and remove tags.
 
@@ -711,7 +711,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |have a 'quickhelp' command available |view a condensed list of essential instructions
 
-|`* * *` |user |be able to store incomplete addressbook entries |add people to the addressbook even if I do not have all their contact details
+|`* * *` |user |be able to store incomplete address book entries |add people to the address book even if I do not have all their contact details
 
 |`* * *` |user |store multiple email addresses or phone numbers for a single person |access all a contact's details in a single query
 
@@ -743,7 +743,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |see my contacts' upcoming birthdays |so that I know if it is their birthday
 
-|`* *` |user |be able to import addressbook data from an external source |avoid having to key in each individual entry separately
+|`* *` |user |be able to import address book data from an external source |avoid having to key in each individual entry separately
 
 |`* *` |user |upload a picture for each of my contact |identify them easier
 
@@ -861,7 +861,7 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-* 5a. The addressbook is full
+* 5a. The address book is full
 +
 
 ** 5a1. AddressBook shows an error message.
@@ -906,7 +906,7 @@ Use case resumes at step 2.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Should be initialised and ready for user input within 1 second
 .  Should require at most 100MB of memory in RAM
-.  Should still allow for addressbook viewing even without an internet connection
+.  Should still allow for address book viewing even without an internet connection
 
 [appendix]
 == Glossary
