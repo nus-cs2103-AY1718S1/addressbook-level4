@@ -41,6 +41,14 @@ public class SortCommandParserTest {
     }
 
     @Test
+    public void parse_sortName_returnsSortCommand() {
+        String userInput = " n/";
+        SortCommand expectedCommand = new SortCommand(PREFIX_NAME.toString());
+
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
     public void parse_invalidArgs_throwsParseException() {
         assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
     }

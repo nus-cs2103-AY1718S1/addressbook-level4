@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AGE;
 
 import java.util.function.Consumer;
 
@@ -34,7 +35,7 @@ public class SortCommandParser implements Parser<SortCommand> {
         }
 
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_AGE);
 
         if (argMultimap.size() > 2) {
             throw new ParseException(String.format(SortCommand.SORT_MULTIPLE_INPUT, SortCommand.MESSAGE_USAGE));
@@ -48,6 +49,7 @@ public class SortCommandParser implements Parser<SortCommand> {
         argMultimap.getValue(PREFIX_PHONE).ifPresent(updateParam(PREFIX_PHONE));
         argMultimap.getValue(PREFIX_EMAIL).ifPresent(updateParam(PREFIX_EMAIL));
         argMultimap.getValue(PREFIX_ADDRESS).ifPresent(updateParam(PREFIX_ADDRESS));
+        argMultimap.getValue(PREFIX_AGE).ifPresent(updateParam(PREFIX_AGE));
 
         if (parameter.equals("invalid")) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
