@@ -24,7 +24,7 @@ public class DeleteCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1 "
             //@@author Estois
             + "or " + COMMAND_WORD + " 1 3 4";
-            //@@author
+    //@@author
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted: %1$s";
 
