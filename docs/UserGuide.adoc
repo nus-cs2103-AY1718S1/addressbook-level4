@@ -171,9 +171,9 @@ Finds persons who matches the given attributes. +
 
 > ##Version 1.3 (Current)## +
 
- Format: `find KEYWORD [MORE_KEYWORDS]`
+  Format: `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [w/WEBSITE] [t/TAG]... `
 
- Shorthand: `f KEYWORD [MORE_KEYWORDS]`
+  Shorthand: `f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [w/WEBSITE] [t/TAG]...`
 
 > ##Version 2.0## +
 
@@ -181,11 +181,11 @@ Finds persons who matches the given attributes. +
 
   Shorthand: `f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [w/WEBSITE] [t/TAG]...`
 
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`,
-`Bo Yang`
+* Searches based on the input and prefix.
+* The search is case insensitive for NAME. e.g `hans` will match `Hans`
+* The order of the keywords for NAME does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The other prefixes require the exact words
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 [big green]#Examples#:
 

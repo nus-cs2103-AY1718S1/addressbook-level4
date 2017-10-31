@@ -1,3 +1,4 @@
+//@@author Jemereny
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -27,7 +28,6 @@ public class ThemeCommandParser implements Parser<ThemeCommand> {
             } else {
                 return new ThemeCommand(trimmedArgs);
             }
-
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                                     ThemeCommand.MESSAGE_USAGE));

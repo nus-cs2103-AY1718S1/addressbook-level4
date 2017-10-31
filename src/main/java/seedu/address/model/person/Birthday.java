@@ -1,3 +1,4 @@
+//@@author chilipadiboy
 package seedu.address.model.person;
 
 import java.text.ParseException;
@@ -5,8 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-
-
 
 /**
  * Represents a Person's address in the address book.
