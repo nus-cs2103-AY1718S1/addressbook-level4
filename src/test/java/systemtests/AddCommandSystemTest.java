@@ -33,7 +33,6 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -48,7 +47,6 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
-import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
 public class AddCommandSystemTest extends AddressBookSystemTest {
@@ -66,7 +64,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + ADDRESS_DESC_AMY + "   " + BIRTHDAY_DESC_AMY + "  " + TAG_DESC_FRIEND + " ";
         assertCommandSuccess(command, toAdd);
 
-         /* Case: undo adding Amy to the list -> Amy deleted */
+        /* Case: undo adding Amy to the list -> Amy deleted */
         command = UndoCommand.COMMAND_WORDVAR_2.toUpperCase();
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         Model expectedModel = getModel();
@@ -79,7 +77,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
-                /* Case: add a duplicate person -> rejected */
+        /* Case: add a duplicate person -> rejected */
         command = AddCommand.COMMAND_WORDVAR_2 + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
         expectedModel = getModel();
@@ -216,7 +214,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
-        assertApplicationDisplaysExpected("" ,expectedResultMessage, expectedModel);
+        assertApplicationDisplaysExpected("" , expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
         //assertStatusBarUnchangedExceptSyncStatus();
