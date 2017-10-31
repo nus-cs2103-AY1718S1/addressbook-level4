@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -13,7 +14,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-
+//@@author blaqkrow
 /**
  * The UI component that is responsible for editing selected contacts in the PersonListPanel.
  */
@@ -47,7 +48,7 @@ public class EditButton extends UiPart<Region> {
      * Handles the Enter button pressed event.
      */
     @FXML
-    private void handleEditButtonPressed() throws CommandException, ParseException {
+    private void handleEditButtonPressed() throws CommandException, ParseException, IOException {
         StringBuilder command = new StringBuilder();
         command.append("edit " + getSelectedIndex() + " n/"
                 + nameTextField.getNameTextField() + " p/" + phoneTextField.getPhoneTextField() + " e/"
@@ -55,7 +56,7 @@ public class EditButton extends UiPart<Region> {
                 + " a/" + addressTextFieldTextField.getAddressTextField());
         String tagTextArea = tagTextField.getTagTextArea();
         String[] tagSplit = tagTextArea.split(",");
-        for ( String s : tagSplit) {
+        for (String s : tagSplit) {
             command.append(" t/" + s.trim());
         }
         CommandResult commandResult = logic.execute(command.toString());

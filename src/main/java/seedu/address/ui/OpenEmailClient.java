@@ -4,7 +4,7 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 
-
+//@@author blaqkrow
 /**
  * Handles the opening of email client
  */

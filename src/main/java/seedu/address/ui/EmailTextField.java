@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-
+//@@author blaqkrow
 /**
  * The UI component that is responsible for saving and displaying the currently selected contact's name.
  */

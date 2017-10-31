@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import java.io.IOException;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -30,7 +32,7 @@ public abstract class Command {
      * @return feedback message of the operation result for display
      * @throws CommandException If an error occurs during command execution.
      */
-    public abstract CommandResult execute() throws CommandException;
+    public abstract CommandResult execute() throws CommandException, IOException;
 
     /**
      * Provides any needed dependencies to the command.

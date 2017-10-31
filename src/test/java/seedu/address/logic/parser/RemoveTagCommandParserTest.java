@@ -11,6 +11,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.model.tag.Tag;
 
+//@@author JasmineSee
 public class RemoveTagCommandParserTest {
     private RemoveTagCommandParser parser = new RemoveTagCommandParser();
 

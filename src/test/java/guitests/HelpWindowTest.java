@@ -41,6 +41,11 @@ public class HelpWindowTest extends AddressBookGuiTest {
         runCommand(HelpCommand.COMMAND_WORD);
         assertHelpWindowOpen();
     }
+    @Test
+    public void openFileMenu() {
+        getMainMenu().openFileWindowUsingMenu();
+        guiRobot.pauseForHuman();
+    }
 
     /**
      * Asserts that the help window is open, and closes it after checking.
