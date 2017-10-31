@@ -11,9 +11,7 @@ ifdef::env-github[]
 image::docs/images/Ui.png[width="600"]
 endif::[]
 
-ifndef::env-github[]
-image::images/Ui.png[width="600"]
-endif::[]
+image::docs/images/unifytrailer.gif[width="600"]
 
 * This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
 * It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
@@ -22,6 +20,10 @@ endif::[]
 ** A more sophisticated GUI that includes a list  panel and an in-built Browser.
 ** More test cases, including automated GUI testing.
 ** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+
+== Target Users
+
+Unify was designed specially for computing students who love to multitask and prefers the use of command line interface to execute functions as fast as possible. However, Unify is also build to teach and encourage users to slowly learn and master the usage of command line interface. Giving power without removing simplicity of the application.
 
 == Site Map
 
