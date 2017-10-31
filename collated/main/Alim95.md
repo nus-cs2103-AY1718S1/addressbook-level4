@@ -676,6 +676,50 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
+    /**
+     * Opens the help overlay
+     */
+    @FXML
+    private void handleOverlay() {
+        helpOverlay.setVisible(true);
+    }
+
+    /**
+     * Closes the help overlay
+     */
+    @FXML
+    private void handleOverlayExit() {
+        helpOverlay.setVisible(false);
+    }
+
+    /**
+     * Lists all Person in Bluebird.
+     */
+    @FXML
+    private void handleListAllClicked() {
+        listAllToggleStyle();
+        try {
+            logic.execute("list");
+        } catch (CommandException | ParseException e) {
+            logger.warning("Failed to list all using label");
+        }
+    }
+
+    /**
+     * Lists pinned Person in Bluebird.
+     */
+    @FXML
+    private void handleListPinnedClicked() {
+        listPinToggleStyle();
+        try {
+            logic.execute("listpin");
+        } catch (CommandException | ParseException e) {
+            logger.warning("Failed to list pinned using label");
+        }
+    }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
     @Subscribe
     private void handleSwitchToBrowserEvent(SwitchToBrowserEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
