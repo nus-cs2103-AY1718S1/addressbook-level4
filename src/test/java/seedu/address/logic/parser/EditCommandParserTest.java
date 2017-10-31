@@ -229,6 +229,7 @@ public class EditCommandParserTest {
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
+    //@@author sarahnzx
     @Test
     public void parse_validValueFollowedByInvalidValue_success() {
         // no other valid values specified
@@ -247,6 +248,7 @@ public class EditCommandParserTest {
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
+    //@@author
     @Test
     public void parse_resetTags_success() {
         Index targetIndex = INDEX_THIRD_PERSON;

@@ -51,6 +51,7 @@ public class ArgumentMultimap {
         return new ArrayList<>(argMultimap.get(prefix));
     }
 
+    //@@author sarahnzx
     /**
      * Returns multiple values of {@code prefix}.
      */
@@ -70,6 +71,7 @@ public class ArgumentMultimap {
         return str.isEmpty() ? Optional.empty() : Optional.of(str);
     }
 
+    //@@author
     /**
      * Returns a boolean value that indicates whether a prefix is present in user input
      */
