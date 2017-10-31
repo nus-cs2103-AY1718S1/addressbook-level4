@@ -159,7 +159,7 @@ public class EditCommand extends UndoableCommand {
         try {
             updatedDeadline.checkDateBorrow(personToEdit.getDateBorrow().getDate());
         } catch (IllegalValueException ive) {
-            throw new CommandException(ive.getMessage());
+            throw new CommandException("Deadline cannot be before date borrow.");
         }
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
@@ -216,6 +216,7 @@ public class EditCommand extends UndoableCommand {
             this.address = toCopy.address;
             this.postalCode = toCopy.postalCode;
             this.debt = toCopy.debt;
+            this.totalDebt = toCopy.totalDebt;
             this.totalDebt = toCopy.totalDebt;
             this.interest = toCopy.interest;
             this.deadline = toCopy.deadline;
