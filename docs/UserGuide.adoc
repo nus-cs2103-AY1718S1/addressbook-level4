@@ -358,7 +358,9 @@ Adds an event `Orbital` in The Myth's Book.
 Adds an event `Halloween Horror Night` in The Myth's Book.
 
 The event will be successfully added into The Myth's Book when you see the following in the Results Display Panel.
+image::sampleeventresults.PNG[width="200"]
 
+A `Invalid Command Format` will appear if you have keyed in invalid fields for the event.
 
 
 === Favouriting a person : `favourite`
