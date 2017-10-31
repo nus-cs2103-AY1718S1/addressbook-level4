@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import java.io.IOException;
 
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.XmlAddressBookStorage;
@@ -15,11 +16,13 @@ public class ExportCommand extends Command {
     public static final String COMMAND_ALIAS = "x";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-        + ": Export the addressbook into preferred file path.\n"
+        + ": Export the AddressBook into preferred location with customizable file name.\n"
+        + "New folder will be created if the specified folder is not present in the directory.\n"
         + "Parameters: FILEPATH (must be a xml file path)\n"
-        + "Example: " + COMMAND_WORD + " data/addressbook.xml";
+        + "Example: " + COMMAND_WORD + " docs/MyAddressBook.xml"
+        + "Example: " + COMMAND_WORD + " C:\\MyAddressBook.xml";
 
-    public static final String MESSAGE_SUCCESS = "Addressbook exported to: ";
+    public static final String MESSAGE_FILE_EXPORTED = "Addressbook exported : ";
 
     private final String userPrefsFilePath;
 
@@ -28,17 +31,23 @@ public class ExportCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
         ReadOnlyAddressBook localAddressBook = model.getAddressBook();
         AddressBookStorage exportStorage = new XmlAddressBookStorage("data/addressbook.xml");
 
         try {
             exportStorage.saveAddressBook(localAddressBook, userPrefsFilePath);
         } catch (IOException e) {
-            assert false: "Target filepath should not be missing.";
+            assert false : "IO error";
         }
 
-        return new CommandResult(MESSAGE_SUCCESS + userPrefsFilePath);
+        return new CommandResult(MESSAGE_FILE_EXPORTED + userPrefsFilePath);
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+            || (other instanceof ExportCommand // instanceof handles nulls
+            && this.userPrefsFilePath.equals(((ExportCommand) other).userPrefsFilePath)); // state check
+    }
 }

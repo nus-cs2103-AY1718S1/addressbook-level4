@@ -5,7 +5,6 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.nio.file.InvalidPathException;
 
 /**
  * Helper functions for handling strings.
@@ -110,7 +109,7 @@ public class StringUtil {
 
     /**
      * Returns true if {@code s} represents file path
-     * e.g. data/addressbook.xml, docs/addressbook.xml, ..., <br>
+     * e.g. data/addressbook.xml, C:\addressbook.xml, ..., <br>
      * Will return false for any other non-file-path string input
      * e.g. empty string, " data/addressbook.xml " (untrimmed), "data/ addressbook.xml"(contains whitespace),
      * "data/addressbook.doc"(non xml file).
@@ -121,7 +120,7 @@ public class StringUtil {
 
         try {
             return s.contains(".xml") && s.matches("[\\p{Alnum}][\\p{Graph} ]*");
-        } catch (InvalidPathException ipe) {
+        } catch (IllegalArgumentException ipe) {
             return false;
         }
     }

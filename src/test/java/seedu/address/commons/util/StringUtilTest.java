@@ -207,4 +207,24 @@ public class StringUtilTest {
         assertTrue(StringUtil.isSortOption("-a"));
         assertTrue(StringUtil.isSortOption("-t"));
     }
+
+    //---------------- Tests for isFilePathOption --------------------------------------
+
+    @Test
+    public void isFilePath() {
+
+        // empty strings
+        assertFalse(StringUtil.isFilePath("")); // Boundary value
+        assertFalse(StringUtil.isFilePath("  "));
+
+        // does not contain a suffix ".xml"
+        assertFalse(StringUtil.isFilePath("data/addressbook"));
+
+        // does not contain a file name
+        assertFalse(StringUtil.isFilePath("data/"));
+
+        // EP: valid file path, should return true
+        assertTrue(StringUtil.isFilePath("data/addressbook.xml"));
+        assertTrue(StringUtil.isFilePath("C:\\shakalaka.xml"));
+    }
 }

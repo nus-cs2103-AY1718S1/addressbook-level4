@@ -147,7 +147,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void sortPerson (String option) throws NoPersonFoundException {
+        public void sortPerson(String option) throws NoPersonFoundException {
             fail("This method should not be called.");
         }
     }

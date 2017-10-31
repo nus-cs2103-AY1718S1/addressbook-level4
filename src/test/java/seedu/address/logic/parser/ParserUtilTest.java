@@ -4,9 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_FILE_PATH;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_OPTION;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_STRING;
+import static seedu.address.testutil.TypicalFilePath.FILE_PATH_DOCS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalNames.NAME_FIRST_PERSON;
 import static seedu.address.testutil.TypicalOptions.OPTION_NAME;
@@ -88,6 +90,22 @@ public class ParserUtilTest {
         thrown.expect(IllegalValueException.class);
         thrown.expectMessage(MESSAGE_INVALID_OPTION);
         ParserUtil.parseOption("-T");
+    }
+
+    @Test
+    public void parseFilePath_validInput_success() throws Exception {
+        // Contains ".xml" as suffix
+        assertEquals(FILE_PATH_DOCS, ParserUtil.parseFilePath("docs/AcquaiNote.xml"));
+
+        // Leading and trailing whitespaces
+        assertEquals(FILE_PATH_DOCS, ParserUtil.parseFilePath("  docs/AcquaiNote.xml  "));
+    }
+
+    @Test
+    public void parseFilePath_invalidInput_throwsIllegalValueExceptionException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(MESSAGE_INVALID_FILE_PATH);
+        ParserUtil.parseFilePath("docs/");
     }
 
     @Test
