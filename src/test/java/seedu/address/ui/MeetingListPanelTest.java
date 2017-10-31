@@ -52,7 +52,8 @@ public class MeetingListPanelTest extends GuiUnitTest {
         postNow(JUMP_TO_SECOND_EVENT);
         guiRobot.pauseForHuman();
 
-        MeetingCardHandle expectedCard = meetingListPanelHandle.getMeetingCardHandle(INDEX_SECOND_MEETING.getZeroBased());
+        MeetingCardHandle expectedCard =
+                meetingListPanelHandle.getMeetingCardHandle(INDEX_SECOND_MEETING.getZeroBased());
         MeetingCardHandle selectedCard = meetingListPanelHandle.getHandleToSelectedCard();
         assertCardEquals(expectedCard, selectedCard);
     }
