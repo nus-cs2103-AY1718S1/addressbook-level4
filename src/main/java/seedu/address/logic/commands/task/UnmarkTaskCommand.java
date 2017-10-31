@@ -44,7 +44,7 @@ public class UnmarkTaskCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-    requireNonNull(model);
+        requireNonNull(model);
 
         List<ReadOnlyTask> tasksToUnmark = new ArrayList<>();
         int counter = 0;
@@ -56,10 +56,10 @@ public class UnmarkTaskCommand extends UndoableCommand {
         }
 
         for (Index targetIndex : targetIndices) {
-            counter++;
             List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
             ReadOnlyTask taskToUnmark = lastShownList.get(targetIndex.getZeroBased() - counter);
             tasksToUnmark.add(taskToUnmark);
+            counter++;
         }
 
         try {

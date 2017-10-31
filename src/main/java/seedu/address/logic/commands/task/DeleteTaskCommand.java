@@ -23,7 +23,7 @@ public class DeleteTaskCommand extends UndoableCommand {
             + "Parameters: INDEX START (must be a positive integer) ~ INDEX END(must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1" + " ~" + " 3";
 
-    public static final String MESSAGE_DELETE_TASK_SUCCESS = "Deleted Task: %1$s";
+    public static final String MESSAGE_DELETE_TASK_SUCCESS = "Deleted Task(s): %1$s";
 
     private final List<Index> targetIndices = new ArrayList<>();
 

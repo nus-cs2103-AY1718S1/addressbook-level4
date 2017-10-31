@@ -37,14 +37,14 @@ public class MarkTaskCommand extends UndoableCommand {
     }
 
     public MarkTaskCommand(List<Index> indices) {
-        targetIndices.addAll(indices);
+        this.targetIndices.addAll(indices);
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
 
-        List<ReadOnlyTask> tasksToMark = new ArrayList<>();
+        List<ReadOnlyTask> tasksToMark = new ArrayList<ReadOnlyTask>();
         int counter = 0;
         for (Index checkException : targetIndices) {
             List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
@@ -52,25 +52,24 @@ public class MarkTaskCommand extends UndoableCommand {
                 throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
             }
         }
-
         for (Index targetIndex : targetIndices) {
             List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
             ReadOnlyTask taskToMark = lastShownList.get(targetIndex.getZeroBased() - counter);
             tasksToMark.add(taskToMark);
-            counter++;
-        }
 
-        try {
-            model.markTasks(tasksToMark);
-        } catch (DuplicateTaskException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_TASK);
-        } catch (TaskNotFoundException tnfe) {
-            assert false : "The target task cannot be missing";
+            try {
+                model.markTasks(tasksToMark);
+            } catch (DuplicateTaskException e) {
+                throw new CommandException(MESSAGE_DUPLICATE_TASK);
+            } catch (TaskNotFoundException tnfe) {
+                assert false : "The target task cannot be missing";
+            }
+            counter++;
         }
 
         StringBuilder builder = new StringBuilder();
         for (ReadOnlyTask toAppend : tasksToMark) {
-            builder.append("\n" + toAppend.toString());
+            builder.append(toAppend.toString());
         }
 
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
