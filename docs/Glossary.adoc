@@ -36,6 +36,13 @@ JavaFX
 A software platform for creating and delivering desktop applications, as well as rich internet applications (RIAs) that can run across a wide variety of devices.
 ....
 
+[[lexicographic]]
+Lexicographical order
+
+....
+In mathematics, the lexicographic or lexicographical order (also known as lexical order, dictionary order, alphabetical order or lexicographic(al) product) is a generalization of the way words are alphabetically ordered based on the alphabetical order of their component letters. This generalization consists primarily in defining a total order over the sequences (often called words in computer science) of elements of a finite totally ordered set, often called alphabet.
+....
+
 [[mainstream-os]]
 Mainstream OS
 
