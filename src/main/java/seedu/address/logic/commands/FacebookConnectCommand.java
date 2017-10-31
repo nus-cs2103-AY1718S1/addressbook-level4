@@ -12,6 +12,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+//@@author alexfoodw
 /**
  * Connects the addressbook to a personal Facebook account.
  */

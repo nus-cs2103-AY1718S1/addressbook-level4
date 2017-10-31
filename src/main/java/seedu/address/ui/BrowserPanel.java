@@ -18,6 +18,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BrowserUrlChangeEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.commands.FacebookConnectCommand;
+import seedu.address.logic.commands.FacebookLinkCommand;
 import seedu.address.logic.commands.FacebookPostCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
@@ -38,6 +39,7 @@ public class BrowserPanel extends UiPart<Region> {
 
     private static final String FXML = "BrowserPanel.fxml";
     private static boolean isPost = false;
+    private static boolean isLink = false;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -70,13 +72,23 @@ public class BrowserPanel extends UiPart<Region> {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
 
+    //@@author alexfoodw
     /**
      * Identifies if in the midst of posting process
-     * @param post
+     * @param bool
      */
-    public static void setPost(boolean post) {
-        isPost = post;
+    public static void setPost(boolean bool) {
+        isPost = bool;
     }
+
+    /**
+     * Identifies if in the midst of linking process
+     * @param bool
+     */
+    public static void setLink(boolean bool) {
+        isLink = bool;
+    }
+    //@@author
 
     //@@author keithsoc
     /**
@@ -93,21 +105,26 @@ public class BrowserPanel extends UiPart<Region> {
     }
     //@@author
 
+    //@@author alexfoodw
     private void setEventHandlerForBrowserUrlChangeEvent() {
         location.textProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue.contains("access_token")) {
-                        if (!isPost) {
-                            logger.fine("browser url changed to : '" + newValue + "'");
-                            raise(new BrowserUrlChangeEvent(FacebookConnectCommand.COMMAND_ALIAS));
-                        } else {
+                        if (isPost) {
                             logger.fine("browser url changed to : '" + newValue + "'");
                             raise(new BrowserUrlChangeEvent(FacebookPostCommand.COMMAND_ALIAS));
+                        } else if (isLink) {
+                            logger.fine("browser url changed to : '" + newValue + "'");
+                            raise(new BrowserUrlChangeEvent(FacebookLinkCommand.COMMAND_ALIAS));
+                        } else {
+                            logger.fine("browser url changed to : '" + newValue + "'");
+                            raise(new BrowserUrlChangeEvent(FacebookConnectCommand.COMMAND_ALIAS));
                         }
                     }
                 });
         isPost = false;
     }
+    //@@author
 
     /**
      * Frees resources allocated to the browser.
@@ -131,6 +148,7 @@ public class BrowserPanel extends UiPart<Region> {
         }
     }
 
+    //@@author alexfoodw
     @Subscribe
     private void handleBrowserUrlChangeEvent(BrowserUrlChangeEvent event) throws CommandException {
         switch (event.getProcessType()) {
@@ -146,8 +164,15 @@ public class BrowserPanel extends UiPart<Region> {
             FacebookPostCommand.completePost();
             break;
 
+        case FacebookLinkCommand.COMMAND_ALIAS:
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            FacebookConnectCommand.completeAuth(browser.getEngine().getLocation());
+            FacebookLinkCommand.completeLink();
+            break;
+
         default:
             throw new CommandException("Url change error.");
         }
     }
+    //@@author
 }
