@@ -480,10 +480,10 @@ The explanation for the above diagram is as follows: +
 1. Logic
 
 * AddressBookParser: Detects if list keyword contains keyword after +
-e.g. friends family colleagues
+e.g. friends or family
 * ListByTagParser:
 ** Parses the input by splitting the string of tags that come after the list keyword +
-Parsed string : friends family colleagues
+Parsed string : friends or family
 ** Forms a predicate based on the parsed tags
 ** Creates a ListByTagCommand class and passes the predicate as an argument
 * ListByTagCommand:
@@ -494,7 +494,7 @@ Parsed string : friends family colleagues
 
 * Updates the filter of the filtered person list to filter by the given predicate +
 e.g. Predicate with the parsed string above filters all persons in MedNus +
-that has the tag "friends", "family" or "colleague"
+that has the tag "friends" or "family"
 * Saves the filtered list in the memory
 * Outputs the filtered list onto the result display screen of the application
 
