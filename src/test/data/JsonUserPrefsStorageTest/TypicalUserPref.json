@@ -7,6 +7,10 @@
       "y" : 100
     }
   },
+  "themeSettings" : {
+    "theme" : "view/ThemeDay.css",
+    "themeExtensions" : "view/ThemeDayExtensions.css"
+  },
   "addressBookFilePath" : "addressbook.xml",
   "addressBookName" : "TypicalAddressBookName"
 }
