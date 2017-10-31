@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlIDREF;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
@@ -16,12 +17,15 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Task;
 
 /**
  * JAXB-friendly version of the Person.
  */
 public class XmlAdaptedPerson {
 
+    @XmlElement
+    public static Integer nextId = 0;
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
@@ -34,7 +38,10 @@ public class XmlAdaptedPerson {
     private String remark;
 
     @XmlElement
-    private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    private List<XmlAdaptedTag> tagged;
+    @XmlElement
+    private List<Integer> taskIds;
+
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -58,6 +65,7 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        taskIds = source.getTaskIDs();
     }
 
     /**
@@ -70,12 +78,14 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
+
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Remark remark = new Remark(this.remark == null ? "" : this.remark);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, remark, tags);
+        final List<Integer> taskIds = this.taskIds;
+        return new Person(name, phone, email, address, remark, tags, taskIds);
     }
 }

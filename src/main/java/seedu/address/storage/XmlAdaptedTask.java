@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlID;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
@@ -17,6 +18,8 @@ import seedu.address.model.task.Task;
  */
 public class XmlAdaptedTask {
 
+    @XmlElement
+    public static Integer nextId = 0;
     @XmlElement(required = true)
     private String taskName;
     @XmlElement(required = true)
@@ -25,8 +28,8 @@ public class XmlAdaptedTask {
     private String startDateTime;
     @XmlElement(required = true)
     private String endDateTime;
-    @XmlElement(required = true)
-    private Integer id;
+    @XmlID
+    private String id;
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
     @XmlElement(required = true)

@@ -1,34 +1,18 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.Remark;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.Task;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -65,6 +49,33 @@ public class LinkCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        throw new CommandException("not implemented yet");
+
+        List<ReadOnlyTask> lastShownTaskList = model.getSortedTaskList();
+
+        ReadOnlyTask TaskToLink = chooseItem(lastShownTaskList, index);
+
+        List<ReadOnlyPerson> lastShownPersonList = model.getFilteredPersonList();
+
+        ReadOnlyPerson personToLink;
+        for(Index index : personIndices) {
+            personToLink = chooseItem(lastShownPersonList, index);
+        }
+
+
+
+        return new CommandResult(MESSAGE_EDIT_PERSON_SUCCESS);
+    }
+
+    private static Person createLinkedPerson(ReadOnlyPerson personToLink, ReadOnlyTask task) {
+        assert personToLink != null;
+        Person newPerson = new Person(personToLink);
+
+    }
+
+    private  static <E> E chooseItem(List<E> list, Index index) throws CommandException{
+        if (index.getZeroBased() >= list.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+        return list.get(index.getZeroBased());
     }
 }

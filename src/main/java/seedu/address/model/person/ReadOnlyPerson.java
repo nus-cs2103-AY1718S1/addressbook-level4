@@ -1,10 +1,12 @@
 package seedu.address.model.person;
 
+import java.util.List;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.task.Task;
 
 /**
  * A read-only immutable interface for a Person in the addressbook.
@@ -22,9 +24,12 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<Remark> remarkProperty();
     Remark getRemark();
+    ObjectProperty<Integer> idProperty();
+    Integer getId();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
-
+    ObjectProperty<List<Integer>> taskIDsProperty();
+    List<Integer> getTaskIDs();
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */

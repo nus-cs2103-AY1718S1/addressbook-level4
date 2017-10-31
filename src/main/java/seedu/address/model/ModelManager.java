@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -159,6 +160,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateTaskBookChanged();
     }
 
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -205,6 +207,13 @@ public class ModelManager extends ComponentManager implements Model {
     public void taskByPriority() {
         sortedTasks.setComparator((t1, t2) -> t1.getPriority().compareTo(t2.getPriority()));
     }
+
+    public void link(ReadOnlyTask taskToLink, List<ReadOnlyPerson> personsToList) {
+        for(ReadOnlyPerson p :personsToList) {
+
+        }
+    }
+
 
     @Override
     public boolean equals(Object obj) {

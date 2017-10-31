@@ -2,8 +2,10 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.storage.XmlAdaptedPerson.nextId;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -23,8 +25,10 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<Remark> remark;
+    private ObjectProperty<Integer> id;
 
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<List<Integer>> taskIDs;
 
     /**
      * Every field must be present and not null.
@@ -36,6 +40,22 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(remark);
+        this.id = new SimpleObjectProperty<>(nextId);
+        nextId++;
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+
+        this.taskIDs = new SimpleObjectProperty<>();
+    }
+
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags, Integer id) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.remark = new SimpleObjectProperty<>(remark);
+        this.id = new SimpleObjectProperty<>(id);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -45,7 +65,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRemark(),
-                source.getTags());
+                source.getTags(), source.getId());
     }
 
     public void setName(Name name) {
@@ -118,6 +138,16 @@ public class Person implements ReadOnlyPerson {
         return remark.get();
     }
 
+    @Override
+    public ObjectProperty<Integer> idProperty() {
+        return id;
+    }
+
+    @Override
+    public Integer getId() {
+        return id.get();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -125,6 +155,16 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags.get().toSet());
+    }
+
+    @Override
+    public ObjectProperty<List<Integer>> taskIDsProperty() {
+        return taskIDs;
+    }
+
+    @Override
+    public List<Integer> getTaskIDs() {
+        return taskIDs.get();
     }
 
     public ObjectProperty<UniqueTagList> tagProperty() {
@@ -135,6 +175,10 @@ public class Person implements ReadOnlyPerson {
      * Replaces this person's tags with the tags in the argument tag set.
      */
     public void setTags(Set<Tag> replacement) {
+        tags.set(new UniqueTagList(replacement));
+    }
+
+    public void setTaskIDs(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
     }
 
