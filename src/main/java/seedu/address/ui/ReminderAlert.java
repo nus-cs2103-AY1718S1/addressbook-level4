@@ -1,6 +1,10 @@
 package seedu.address.ui;
 
-import java.awt.*;
+import java.awt.AWTException;
+import java.awt.Image;
+import java.awt.SystemTray;
+import java.awt.Toolkit;
+import java.awt.TrayIcon;
 import java.awt.TrayIcon.MessageType;
 
 /**

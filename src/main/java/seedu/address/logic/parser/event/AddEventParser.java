@@ -4,11 +4,9 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMINDER;
 
 import java.util.ArrayList;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.event.AddEventCommand;
@@ -19,10 +17,6 @@ import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
-import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.property.Address;
-import seedu.address.model.property.DateTime;
-import seedu.address.model.property.Name;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;

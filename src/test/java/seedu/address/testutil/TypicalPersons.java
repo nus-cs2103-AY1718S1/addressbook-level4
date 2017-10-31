@@ -19,7 +19,6 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.property.PropertyManager;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
