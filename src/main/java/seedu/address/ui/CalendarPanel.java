@@ -161,21 +161,23 @@ public class CalendarPanel extends UiPart<Region> {
 
                         for (ReadOnlyPerson person: personList) {
                             try {
-                                if (MonthDay.from(item).equals
-                                        (MonthDay.from(LocalDate.parse(person.getBirthday().toString(), formatter)))) {
-                                    if (bCount == 0) {
-                                        bCount++;
-                                        s.append(person.getName() + "'s Birthday");
-                                    } else if (bCount > 0) {
-                                        int endIndex = s.indexOf("Birthday");
-                                        s.delete(0, endIndex);
-                                        bCount++;
-                                        s.insert(0, bCount + " ");
-                                        if (bCount == 2) {
-                                            s.append("s");
+                                if (!person.getBirthday().isEmpty()) {
+                                    if (MonthDay.from(item).equals
+                                            (MonthDay.from(LocalDate.parse(person.getBirthday().toString(), formatter)))) {
+                                        if (bCount == 0) {
+                                            bCount++;
+                                            s.append(person.getName() + "'s Birthday");
+                                        } else if (bCount > 0) {
+                                            int endIndex = s.indexOf("Birthday");
+                                            s.delete(0, endIndex);
+                                            bCount++;
+                                            s.insert(0, bCount + " ");
+                                            if (bCount == 2) {
+                                                s.append("s");
+                                            }
                                         }
+                                        colour = new StringBuilder("-fx-background-color: #f1a3ff;");
                                     }
-                                    colour = new StringBuilder("-fx-background-color: #f1a3ff;");
                                 }
                             } catch (DateTimeParseException exc) {
                                 logger.warning("Not parsable: " + person.getBirthday().toString());
