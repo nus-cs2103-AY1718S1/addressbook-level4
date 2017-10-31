@@ -47,7 +47,7 @@ include::../UserGuide.adoc[tag=dups]
 
 ==== Justification
 
-Batch deletions make it less tedious to perform deletions on multiple contacts.
+Duplicate contacts can accumulate over time. The `duplicates` command compiles a list of potential duplicate contacts for the user to review.
 
 ---
 
@@ -63,4 +63,5 @@ include::../DeveloperGuide.adoc[tag=dups]
 
 === Other contributions
 
-* Storage Enhancement
+* Drafted a light UI theme
+* Revamped the Developer Guide content with Eric

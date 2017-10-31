@@ -87,5 +87,5 @@ Responsibilities: Model component + Documentation
 ** https://github.com/CS2103AUG2017-T17-B2/main/pull/117[Display potential duplicate contacts]
 
 * Other Contributions : +
-** https://github.com/CS2103AUG2017-T17-B2/main/pull/49[Drafted a light UI theme]
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/49[Drafted the light UI theme]
 ** https://github.com/CS2103AUG2017-T17-B2/main/pull/101[Revamped Developer Guide content] with Eric
