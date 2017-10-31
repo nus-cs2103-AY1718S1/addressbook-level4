@@ -46,8 +46,7 @@ public class PortraitPath {
      * return true if the file path can really locate a file
      */
     public static boolean isValidUrl(String test) {
-        String url = FILE_PREFIX + test;
-        return new File(url).exists();
+        return new File(test).exists();
     }
 
     @Override
