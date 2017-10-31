@@ -1,5 +1,6 @@
 package seedu.address.logic.autocomplete;
 
+//@@author john19950730
 /**
  * Stores a pair of command word and its usage,
  * autocomplete feature will generate command skeleton based on {@code COMMAND_USAGE} specified in each command class.
