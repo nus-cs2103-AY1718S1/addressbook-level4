@@ -452,11 +452,11 @@ UI that shows all details of a person that is not shown in person card.
 UI that displays a calendar for the user.
 You will be able to toggle through different months to view the day and date of different months.
 
-image::calendar.PNG[width="500"]
+image::calendar.PNG[width="700"]
 
 Also, you can add events after clicking on the specific date. A pop up window as shown below will appear prompting you to fill up the details of the event.
 
-image::calendar.PNG[width="100"]
+image::popupwindow.PNG[width="300"]
 
 link:#the-myths-book---user-guide[Back To Top]
 
