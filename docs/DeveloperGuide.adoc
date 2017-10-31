@@ -405,14 +405,14 @@ For different listing type, we always use the same lessonList but set different 
 `UniqueModuleCodePredicate` and `UniqueLocationPredicate` are used to facilitate the implementation of list.
 For example, when user types in `list module`, a `UniqueModulePredicate` will be used to filter the lessonList and UI will hide all other irrelevant information of the lesson and results in showing a list of all Modules.
 
-The following sequence diagram shows how the list command works:
+The following link:#sequence-diagram[sequence diagram] shows how the list command works:
 
 image::ListCommandSequenceDiagram.jpg[width="900"]
 
 `FixedCodePredicate` and `FixedLocationPredicate` are used to facilitate the implementation of `view` command.
 According to current listing type, which we can obtain from `ListingUnit`, we create either a `FixedCodePredicate` or a `FixedLocationPredicate` to filter the lesson list and set `currentListingUnit` to be `Lesson`.
 
-The following sequence diagram shows how the view command works:
+The following link:#sequence-diagram[sequence diagram] shows how the view command works:
 
 image::ViewCommandSequenceDiagram.jpg[width="900"]
 
@@ -438,7 +438,7 @@ When user `unmark` a lesson, the `isMarked` attribute of the specified lesson wi
 
 When a new lesson is added. By default it is not in the marked list thus the `isMarked` filed will be set to false.
 
-The following sequence diagram shows how the mark command works:
+The following link:#sequence-diagram[sequence diagram] shows how the mark command works:
 
 image::MarkCommandSequenceDiagram.jpg[width="900"]
 
@@ -511,7 +511,7 @@ Both adding a remark and deleting a remark used an index while the meaning of th
 The index in `remark INDEX CONTENT` is the index of the module in the module list we want to add remark to.
 While the index in `delete -d INDEX` is the index of the remark we want to delete.
 
-The following link:#activity-diagram[activity diagram] summarize what happens when an user execute remark command.
+The following link:#sequence-diagram[sequence diagram] summarize what happens when an user execute remark command.
 
 image::RemarkCommandSequenceDiagram.jpg[width="900"]
 
