@@ -86,10 +86,8 @@ public class PersonCard extends UiPart<Region> {
         //String textToDisplay = favouriteStatus ? "Fav" : "";
         //Label favouriteLabel = new Label(textToDisplay);
         Button favouriteButton = new Button();
-        Image starFilled = new Image(getClass().getResource("/images/Gold_Star.png").toExternalForm(),
-                30, 30, true, true);
-        Image starTransparent = new Image(getClass().getResource("/images/Star_star.png").toExternalForm(),
-                30, 30, true, true);
+        Image starFilled = new Image(getClass().getResource("/images/Gold_Star.png").toExternalForm());
+        Image starTransparent = new Image(getClass().getResource("/images/Star_star.png").toExternalForm());
         if (favouriteStatus) {
             //favouriteLabel.setStyle("-fx-background-color: orangered");
             favouriteButton.setGraphic(new ImageView(starFilled));
