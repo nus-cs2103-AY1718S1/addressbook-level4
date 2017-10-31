@@ -1,4 +1,4 @@
-= AddressBookX - User Guide
+= ABC Business Contact - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -15,16 +15,16 @@ endif::[]
 By: `Team W13-B3`      Since: `Jun 2016`      Licence: `MIT`
 
 == Product Overview
-Product Name: *DummyName* +
-Version: 1.5 +
+Product Name: *ABC Business Contact* +
+Version: 1.4 +
 {empty} +
-*DummyName* is a free desktop contact management application that helps you manage your large collection of contacts conveniently and keep track of your appointments. You can store contacts as well as other information and retrieve them efficiently with the help of *DummyName*. +
+*ABC* is a free desktop contact management application that helps you manage your large collection of contacts conveniently and keep track of your appointments. You can store contacts as well as other information and retrieve them efficiently with the help of *ABC*. +
 
-*DummyName* is available for the `Linux`, `Unix`, `Windows 10`, and `Mac OS X` operating systems.
+*ABC* is available for the `Linux`, `Unix`, `Windows 10`, and `Mac OS X` operating systems.
 
 == About
 
-This User Guide introduces a detailed description of the various features that are available to *DummyName*.
+This User Guide introduces a detailed description of the various features that are available to *ABC*.
 It also contains a summary of all the commands, giving you a quick overview on how to use all the features.
 Being familiar with Command-Line Interface(CLI) will help you with understanding the document, but do not worry if you are not.
 As long as you follow the guide closely, we are sure you can still comprehend the document.
@@ -37,8 +37,8 @@ As long as you follow the guide closely, we are sure you can still comprehend th
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `ABC.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your *ABC*.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -65,7 +65,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* Wildcard symbol `*` and `?` are allowed in parameters for `find` and `filter` where `*` matches any non-space string and `?` matches any non-space unit-length symbol.
+* Wildcard symbol `\*` and `?` are allowed in parameters for `find` and `filter` where `\*` matches any non-space string and `?` matches any non-space unit-length symbol.
 * Suggestions would pop up for partial words keyed in. Press kbd:[TAB] to auto-complete using the first suggestion.
 ====
 
@@ -91,7 +91,7 @@ _Figure 4.1.1_
 ====
 Command Name: `add` +
 Shorthand Alias: `a` +
-Function: adds a person to *DummyName* +
+Function: adds a person to *ABC* +
 Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]... [m/MEETING]...` +
 [TIP]
 A person can have any number of tags (including 0)
@@ -101,9 +101,9 @@ A person can have any number of meetings (including 0)
 Parameters can be in any order e.g. `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` are equivalent.
 ====
 
-If you want to add a new contact to your *DummyName*: +
+If you want to add a new contact to your *ABC*: +
 
-.  Type in (Figure 4.2.1)+
+.  Type in (Figure 4.2.1) +
 `>> add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 image:add1.png[add1, 600] +
 _Figure 4.2.1_
@@ -127,11 +127,8 @@ If you type in all commands shown above, you should see:
 ====
 Command Name: `list` +
 Shorthand Alias: `l` +
-Function: List all contacts in DummyName
+Function: List all contacts in ABC +
 Format: `list`
-
-[TIP]
-You can use `list` to view your contacts after running `filter` or `find`
 ====
 
 You can view all your contacts by following the steps below:
@@ -140,24 +137,21 @@ You can view all your contacts by following the steps below:
 `>> list` +
 image:list1.png[list1, 600] +
 _Figure 4.3.1(`filter` was run)_
-.   Press Enter. You should now see a list of all your contacts (Figure 4.3.2) +
+.   Press kbd:[Enter]. You should now see a list of all your contacts (Figure 4.3.2) +
 image:list2.png[list2, 600] +
 _Figure 4.3.2_
 
-Here is another way to list your contacts:
-
-* `l`
 
 === Deleting a person : `delete`
 
 ====
 Command Name: `delete` +
 Shorthand Alias: `d` +
-Function: Deletes the specified person at the specified `INDEX` from your *DummyName*. +
+Function: Deletes the specified person at the specified `INDEX` from your *ABC*. +
 Format: `delete INDEX` +
 ====
 
-If you want to delete a contact in your *DummyName*: +
+If you want to delete a contact in your *ABC*: +
 
 .  Locate the contact you want to delete and the index of the contact. +
 .  Type in the index of the contact. (Figure 4.4.1) +
@@ -197,7 +191,7 @@ Parameters can be in any order e.g. `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/N
 You must provide at least one of the optional fields.
 ====
 
-If you want to change the details of a contact in your *DummyName*: +
+If you want to change the details of a contact in your *ABC*: +
 
 .  Locate the contact you want to edit and the index of the contact. +
 .  Type in the index of the contact, and the details you wish to replace. (Figure 4.5.1) +
@@ -210,7 +204,7 @@ _Figure 4.5.2_
 
 [NOTE]
 ====
-* Existing values will be updated to the input values.
+Existing values will be updated to the input values.
 ====
 
 You can also edit contacts in a filtered list:
@@ -239,13 +233,13 @@ When you edit tags, the existing tags of the person will be removed. To add tags
 ====
 Command Name: `addtag` +
 Shorthand Alias: `at` +
-Function: Adds a tag to an existing person at the specified `INDEX` in your *DummyName*. +
+Function: Adds a tag to an existing person at the specified `INDEX` in your *ABC*. +
 Format: `addtag INDEX TAG` +
 [NOTE]
 Only one alphanumeric tag can be added at a time. Special characters will not be accepted. e.g !, @, #, ...
 ====
 
-If you want to add a single tag to a contact in your *DummyName*: +
+If you want to add a single tag to a contact in your *ABC*: +
 
 .  Locate the contact you want to add a tag to and the index of the contact. +
 .  Type in the index of the contact, and the tag you wish to add. (Figure 4.6.1) +
@@ -276,13 +270,13 @@ Adds the `9pmclass` tag to the 1st person in the results of the `find` command.
 ====
 Command Name: `deletetag` +
 Shorthand Alias: `dt` +
-Function: Deletes the specified tag from an existing person at the specified `INDEX` in your *DummyName*.
-Can also remove all instances of a tag from your *DummyName*. +
+Function: Deletes the specified tag from an existing person at the specified `INDEX` in your *ABC*.
+Can also remove all instances of a tag from your *ABC*. +
 Format: `deletetag INDEX TAG` +
 ====
 
 _Coming in v1.3_ +
-If you want to delete a single tag from a contact in your *DummyName*: +
+If you want to delete a single tag from a contact in your *ABC*: +
 
 .  Locate the contact you want to delete a tag from and the index of the contact. +
 .  Type in the index of the contact, and the tag you wish to delete. (Figure 4.7.1) +
@@ -303,7 +297,7 @@ Deletes the `friends` tag from the 2nd person in the results of the `filter` com
 `>> dt 1 9pmclass` +
 Deletes the `9pmclass` tag from the 1st person in the results of the `find` command.
 
-If you would like to delete all instances of a particular tag from your *DummyName*: +
+If you would like to delete all instances of a particular tag from your *ABC*: +
 
 .  Type in `all`, followed by the tag you wish to delete. (Figure 4.7.3) +
 `>> deletetag all friends`.
@@ -397,7 +391,6 @@ Lists any person tagged with any tags matching `fa*` such as `family` but not `f
 
 
 
->>>>>>> master
 
 === Selecting a person : `select`
 
@@ -419,7 +412,7 @@ You can select a contact from the displayed list by:
 `>>select 1` +
 image:select1.png[select1, 600] +
 _Figure 4.10.1_
-. Pressing Enter. Your choice should now be selected (Figure 4.10.2) +
+. Pressing kbd:[Enter]. Your choice should now be selected (Figure 4.10.2) +
 image:select2.png[select2, 600] +
 _Figure 4.10.2_
 
@@ -444,7 +437,7 @@ Selects the 7th person in the address book.
 ====
 Command Name: `note` +
 Shorthand Alias: `n` +
-Function: Inserts the NOTE for an entry specified by INDEX in the DummyName +
+Function: Inserts the NOTE for an entry specified by INDEX in the ABC +
 Format: `note INDEX [n/NOTE]`
 
 [NOTE]
@@ -454,7 +447,7 @@ Each contact can only have a maximum of 1 note
 Notes can be blank to delete existing notes, i.e. `note n/`
 ====
 
-If you want to add a note for a DummyName contact:
+If you want to add a note for a ABC contact:
 
 .   Locate the index of the contact +
 .   Type in your desired INDEX and NOTE (Figure 4.11.1) +
@@ -465,7 +458,7 @@ _Figure 4.11.1_
 image:note2.png[note2, 600, 40] +
 _Figure 4.11.2_
 
-Here are some other ways to change your DummyName contact's note:
+Here are some other ways to change your ABC contact's note:
 
 
 * `note 2 n/` +
@@ -484,7 +477,7 @@ Function: Creates a backup file to store the data in address book. +
 Format: `backup`
 ====
 
-You may want to be safe and backup often when using *DummyName*:
+You may want to be safe and backup often when using *ABC*:
 
 . Type in `backup`. (Figure 4.12.1) +
 `>> backup` +
@@ -502,7 +495,7 @@ Your data is automatically backed up every time you close the app.
 ====
 Command Name: `restore` +
 Shorthand Alias: `rb` +
-Function: Retrieves data from a backup file and store it in *DummyName*. +
+Function: Retrieves data from a backup file and store it in *ABC*. +
 Format: `restore`
 ====
 
@@ -544,7 +537,7 @@ Format: `sync`
 A browser is necessary for logging in to Google
 ====
 
-You can easily synchronise your DummyName contacts with Google Contacts through the following steps:
+You can easily synchronise your *ABC* contacts with Google Contacts through the following steps:
 
 .   Type (Figure 4.14.1) +
 `>> sync` +
@@ -556,7 +549,7 @@ _Figure 4.14.2_
 .   Enter your login details and press Next (Figure 4.14.3) +
 image:sync3.png[sync3, 600] +
 _Figure 4.14.3_
-.   Allow DummyName to access your Google Contacts information (Figure 4.14.4) +
+.   Allow *ABC* to access your Google Contacts information (Figure 4.14.4) +
 image:sync4.png[sync4, 600] +
 _Figure 4.14.4_
 .   Your contacts are now synchronised. Figure (4.14.5)
@@ -728,11 +721,11 @@ _Figure 4.17.14_ +
 ====
 Command Name: `clear` +
 Shorthand Alias: `c` +
-Function: Clears all existing contacts in the DummyName +
+Function: Clears all existing contacts in the ABC +
 Format: `clear`
 ====
 
-You can also clear all DummyName contacts. To do so,
+You can also clear all ABC contacts. To do so,
 
 .   Type (Figure 4.18.1) +
 `>> clear` +
@@ -742,9 +735,6 @@ _Figure 4.18.1_
 image:clear2.png[clear2, 600] +
 _Figure 4.18.2_
 
-Another example of clearing your contacts:
-
-* c
 
 === Resizing the main window : `resize`
 
@@ -772,7 +762,7 @@ _Figure 4.19.1_
 ====
 Command Name: `exit` +
 Shorthand Alias: `q` +
-Function: Exits the app.
+Function: Exits the app. +
 Format: `exit`
 ====
 
@@ -782,7 +772,7 @@ If you want to close the app:
 `>> exit` +
 image:Exit_1.png[600] +
 _Figure 4.20.1_ +
-. Press kbd:[Enter] and you will see that *DummyName* is closed. +
+. Press kbd:[Enter] and you will see that *ABC* is closed. +
 
 Do not worry about losing your contacts as they will be saved automatically.
 
@@ -820,7 +810,7 @@ There is no need to save manually.
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous *DummyName* folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous *ABC* folder.
 
 *Q*: I can't sync my contacts with my Google contacts! +
 *A*: Make sure you have a default browser enabled as attempting to sync your data

@@ -1,4 +1,4 @@
-= Address Book (Level 4)
+= ABC Business Contact
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
@@ -13,15 +13,15 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+* ABC Business Contact(ABC) is a desktop Business Contact Management application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+* ABC's target audience are businessmen who maintain a huge collection of contacts and frequently attend appointments with different people. They have the need to efficiently locate a particular contact and keep track of their appointments.
 * It is developed based on the AddressBook-Level4 project created by SE-EDU initiative at `https://github.com/se-edu/`
-* It is *written in OOP fashion*.
+
 
 == Site Map
 
 * <<UserGuide#, User Guide>>
 * <<DeveloperGuide#, Developer Guide>>
-* <<FeatureTracking#, Feature Tracking>>
 * <<AboutUs#, About Us>>
 * <<ContactUs#, Contact Us>>
 
