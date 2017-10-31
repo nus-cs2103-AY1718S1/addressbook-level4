@@ -23,7 +23,7 @@ public class Email {
      * @throws IllegalValueException if given email address string is invalid.
      */
     public Email(String email) throws IllegalValueException {
-        if (email == null) {
+        if (EMAIL_EMPTY.equals(email) || email == null) {
             this.value = EMAIL_EMPTY;
         } else {
             String trimmedEmail = email.trim();
