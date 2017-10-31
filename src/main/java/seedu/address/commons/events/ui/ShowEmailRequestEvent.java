@@ -1,7 +1,9 @@
+//@@author jin-ting
 package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
 
+//@@author jin-ting
 /**
  * An event requesting to view the help page.
  */

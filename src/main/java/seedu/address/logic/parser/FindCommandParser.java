@@ -21,7 +21,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.ScheduleContainsKeywordsPredicate;
 import seedu.address.model.person.TagContainsKeywordsPredicate;
 
-
+//@@author jin-ting
 /**
  * Parses input arguments and creates a new FindCommand object
  */

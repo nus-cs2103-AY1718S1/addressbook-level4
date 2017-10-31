@@ -9,7 +9,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CalendarCommand;
 import seedu.address.logic.commands.HelpCommand;
 
-
+//@@author jin-ting
 public class CalendarWindowTest extends AddressBookGuiTest {
     private static final String ERROR_MESSAGE = "ATTENTION!!!! : On some computers, this test may fail when run on "
             + "non-headless mode as FxRobot#clickOn(Node, MouseButton...) clicks on the wrong location. We suspect "

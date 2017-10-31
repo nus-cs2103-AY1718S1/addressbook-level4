@@ -24,6 +24,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
+
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
@@ -71,6 +72,7 @@ public class FindCommandTest {
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
+    //@@author jin-ting
     /**
      * Parses {@code userInput} into a {@code FindCommand}.
      */
@@ -81,6 +83,7 @@ public class FindCommandTest {
         return command;
     }
 
+    //@@author
     /**
      * Asserts that {@code command} is successfully executed, and<br>
      *     - the command feedback is equal to {@code expectedMessage}<br>

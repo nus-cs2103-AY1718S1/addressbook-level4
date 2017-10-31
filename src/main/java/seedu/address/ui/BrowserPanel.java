@@ -67,6 +67,7 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(defaultPage.toExternalForm());
     }
 
+    //@@author jin-ting
     /**
      * Opens the Calendar window in the browser panel.
      */
@@ -88,18 +89,21 @@ public class BrowserPanel extends UiPart<Region> {
         browser = null;
     }
 
+    //@@author
     @Subscribe
     private void handleSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
     }
 
+    //@@author jin-ting
     @Subscribe
     private void handleCalendarRequestEvent(ShowCalendarRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadCalendar();
     }
 
+    //@@author jin-ting
     @Subscribe
     private void handleEmailRequestEvent(ShowEmailRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

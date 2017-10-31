@@ -108,6 +108,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_ALIAS + " 3") instanceof ExitCommand);
     }
 
+    //@@author jin-ting
     @Test
     public void parseCommand_findName() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
@@ -187,7 +188,7 @@ public class AddressBookParserTest {
         assertEquals(new FindCommand(new ScheduleContainsKeywordsPredicate(keywords)), commandUsingAlias);
     }
 
-
+    //@@author
     @Test
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
@@ -254,6 +255,7 @@ public class AddressBookParserTest {
         assertEquals(new LocateCommand(INDEX_FIRST_PERSON), commandUsingAlias);
     }
 
+    //@@author jin-ting
     @Test
     public void parseCommand_calendar() throws Exception {
         assertTrue(parser.parseCommand(CalendarCommand.COMMAND_WORD) instanceof CalendarCommand);
@@ -264,6 +266,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(EmailCommand.COMMAND_WORD) instanceof EmailCommand);
     }
 
+    //@@author
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD) instanceof RedoCommand);

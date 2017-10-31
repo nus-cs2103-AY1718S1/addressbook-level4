@@ -5,7 +5,7 @@ import java.net.URL;
 import guitests.GuiRobot;
 import javafx.stage.Stage;
 
-
+//@@author jin-ting
 /**
  * A handle to the {@code HelpWindow} of the application.
  */

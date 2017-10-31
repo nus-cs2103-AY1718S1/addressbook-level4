@@ -125,6 +125,7 @@ public abstract class AddressBookSystemTest {
         assert getModel().getAddressBook().getPersonList().size() == getModel().getFilteredPersonList().size();
     }
 
+    //@@author jin-ting
     /**
      * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
      */

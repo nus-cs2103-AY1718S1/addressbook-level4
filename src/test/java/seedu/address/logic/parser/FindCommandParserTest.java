@@ -20,6 +20,7 @@ import seedu.address.model.person.PhoneContainsKeywordsPredicate;
 import seedu.address.model.person.ScheduleContainsKeywordsPredicate;
 import seedu.address.model.person.TagContainsKeywordsPredicate;
 
+//@@author jin-ting
 public class FindCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
