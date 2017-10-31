@@ -165,7 +165,7 @@ public class ModelManager extends ComponentManager implements Model {
         Collections.sort(contactList, new BirthdayComparator());
         ArrayList<ReadOnlyPerson> tempList = new ArrayList<>();
         int month = Calendar.getInstance().get(Calendar.MONTH);
-        int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK_IN_MONTH);
+        int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
         for (ReadOnlyPerson person : contactList) {
             if ((person.getBirthday().value.length() != 0)
                     && (Integer.parseInt(person.getBirthday().value.substring(0, 2)) >= day)
