@@ -7,6 +7,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.model.person.Address.DEFAULT_ADDRESS;
+import static seedu.address.model.person.Email.DEFAULT_EMAIL;
+
+import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
@@ -51,6 +55,8 @@ public class AddCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static boolean requiresHandling;
+
 
     private final Person toAdd;
 
@@ -64,11 +70,30 @@ public class AddCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
-        try {
-            model.addPerson(toAdd);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (DuplicatePersonException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+
+        //resets AddCommand
+        if (isWaitingforReply) {
+            isWaitingforReply = false;
+            requiresHandling = false;
+        }
+
+        /* Check if the person to add contains any duplicate fields.
+         * If so, ReplyCommand to store the AddCommand to wait for further instructions.
+         */
+        checkDuplicateField(toAdd);
+
+        if (isWaitingforReply) {
+            requiresHandling = true;
+            ReplyCommand.storeAddCommandParameter(toAdd);
+            return result;
+
+        } else {
+            try {
+                model.addPerson(toAdd);
+                return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+            } catch (DuplicatePersonException e) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            }
         }
     }
 
@@ -78,4 +103,5 @@ public class AddCommand extends UndoableCommand {
                 || (other instanceof AddCommand // instanceof handles nulls
                 && toAdd.equals(((AddCommand) other).toAdd));
     }
+
 }

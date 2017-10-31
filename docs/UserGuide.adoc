@@ -405,6 +405,27 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Shows this user guide. +
 Format: `help`
 
+==== Adding or editing contacts with duplicate fields
+
+Checks and informs user of their actions to save or edit contacts that contain existing fields in UniCity.
+Prompts user to reply `yes` or `no` to proceed with his actions.
+
+Format: `yes` / `no`
+
+Examples:
+
+* User decides to add a contact with name `Darius Teo`. +
+`Darius Teo` already exists in UniCity. +
+UniCity prompts the user, `This person's name is already in use. Would you like to continue? YES or NO?`. +
+User will reply with `yes` in the command box to continue the operation. +
+Otherwise, he may choose to reply with `no`.
+
+* User decides to edit a person's email from `tangeckboon@yahoo.com` to `tangb@yahoo.com`. +
+That email already exists in UniCity. +
+UniCity prompts the user, `This person's email is already in use. Would you like to continue? YES or NO?`. +
+User will reply with `yes` in the command box to continue the operation. +
+Otherwise, he may choose to reply with `no`.
+
 ==== Exiting the program : `exit`
 
 Exits the program. +
