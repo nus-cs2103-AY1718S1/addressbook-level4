@@ -72,6 +72,7 @@ public class AddMeetingCommandTest {
 
     @Test
     public void equals() {
+        this.index = Index.fromOneBased(1);
         Meeting project = new MeetingBuilder().withNameMeeting("Project").build();
         Meeting meeting = new MeetingBuilder().withNameMeeting("Meeting").build();
         AddMeetingCommand addProjectCommand = new AddMeetingCommand(project.getName(), project.getDate(),

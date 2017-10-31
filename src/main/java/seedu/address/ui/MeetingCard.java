@@ -84,7 +84,7 @@ public class MeetingCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
+        if (!(other instanceof MeetingCard)) {
             return false;
         }
 

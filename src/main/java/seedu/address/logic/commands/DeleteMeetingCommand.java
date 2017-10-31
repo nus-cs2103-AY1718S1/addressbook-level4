@@ -53,7 +53,7 @@ public class DeleteMeetingCommand extends UndoableCommand {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof DeleteCommand // instanceof handles nulls
+                || (other instanceof DeleteMeetingCommand // instanceof handles nulls
                 && this.targetIndex.equals(((DeleteMeetingCommand) other).targetIndex)); // state check
     }
 }

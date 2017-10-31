@@ -15,11 +15,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import seedu.address.model.AddressBook;
 import seedu.address.model.meeting.ReadOnlyMeeting;
-import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
-import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
-import seedu.address.model.meeting.exceptions.MeetingClashException;
+//import seedu.address.model.AddressBook;
+//import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
+//import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
+//import seedu.address.model.meeting.exceptions.MeetingClashException;
 
 /**
  * A utility class containing a list of {@code Meeting} objects to be used in tests.
@@ -71,6 +71,7 @@ public class TypicalMeetings {
     /**
      * Returns an {@code AddressBook} with all the typical meetings.
      */
+    /**
     public static AddressBook getTypicalAddressBook() {
         AddressBook ab = new AddressBook();
         for (ReadOnlyMeeting meeting : getTypicalMeetings()) {
@@ -86,6 +87,7 @@ public class TypicalMeetings {
         }
         return ab;
     }
+    */
 
     public static List<ReadOnlyMeeting> getTypicalMeetings() {
         return new ArrayList<>(Arrays.asList(AGEING, BREEDING, CYCLING, DIVING, EATING, FENCING, GARDENING));

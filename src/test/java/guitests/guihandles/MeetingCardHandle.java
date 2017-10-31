@@ -12,11 +12,11 @@ import javafx.scene.control.Label;
  */
 public class MeetingCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
-    private static final String NAME_FIELD_ID = "#nameMeeting";
+    private static final String NAME_FIELD_ID = "#name";
     private static final String PLACE_FIELD_ID = "#place";
     private static final String PHONENUM_FIELD_ID = "#phoneNum";
-    private static final String PERSONTOMEET_FIELD_ID = "#personToMeet";
-    private static final String DATETIME_FIELD_ID = "#dateTime";
+    private static final String PERSONTOMEET_FIELD_ID = "#person";
+    private static final String DATETIME_FIELD_ID = "#date";
 
     private final Label idLabel;
     private final Label nameMeetingLabel;
