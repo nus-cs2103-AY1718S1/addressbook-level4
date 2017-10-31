@@ -9,6 +9,9 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.InsurancePanelSelectionChangedEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 
+/**
+ * To be used in ProfilePanel ListView, displaying list of associated insurance
+ */
 public class InsuranceIdLabel extends UiPart<Region> {
 
     private static final String FXML = "InsuranceIdLabel.fxml";

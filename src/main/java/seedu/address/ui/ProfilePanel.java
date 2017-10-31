@@ -33,9 +33,9 @@ public class ProfilePanel extends UiPart<Region> {
     public static final String NO_INSURANCE_MESSAGE = "This person is not related to any Insurance Contracts";
     public static final String PERSON_DOES_NOT_EXIST_MESSAGE = "This person does not exist in Lisa.";
 
-    public final ObservableList<InsuranceIdLabel> insurance = FXCollections.observableArrayList();
-
     private static final String FXML = "ProfilePanel.fxml";
+
+    public final ObservableList<InsuranceIdLabel> insurance = FXCollections.observableArrayList();
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
