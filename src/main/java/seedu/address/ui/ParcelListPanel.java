@@ -11,9 +11,13 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.JumpToTabRequestEvent;
 import seedu.address.commons.events.ui.ParcelPanelSelectionChangedEvent;
 import seedu.address.model.parcel.ReadOnlyParcel;
 
@@ -21,32 +25,69 @@ import seedu.address.model.parcel.ReadOnlyParcel;
  * Panel containing the list of parcels.
  */
 public class ParcelListPanel extends UiPart<Region> {
+    public static final Index INDEX_FIRST_TAB = Index.fromOneBased(1);
+    public static final Index INDEX_SECOND_TAB = Index.fromOneBased(2);
+
     private static final String FXML = "ParcelListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(ParcelListPanel.class);
 
     @FXML
-    private ListView<ParcelCard> parcelListView;
+    private ListView<ParcelCard> allUncompletedParcelListView;
 
-    public ParcelListPanel(ObservableList<ReadOnlyParcel> parcelList) {
+    @FXML
+    private ListView<ParcelCard> allCompletedParcelListView;
+
+    @FXML
+    private TabPane tabPanePlaceholder;
+
+    public ParcelListPanel(ObservableList<ReadOnlyParcel> uncompletedParcels,
+                           ObservableList<ReadOnlyParcel> completedParcels) {
         super(FXML);
-        setConnections(parcelList);
+        setConnections(uncompletedParcels, completedParcels);
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<ReadOnlyParcel> parcelList) {
+    //@@author kennard123661
+    private void setConnections(ObservableList<ReadOnlyParcel> uncompletedParcels,
+                                ObservableList<ReadOnlyParcel> completedParcels) {
         ObservableList<ParcelCard> mappedList = EasyBind.map(
-                parcelList, (parcel) -> new ParcelCard(parcel, parcelList.indexOf(parcel) + 1));
-        parcelListView.setItems(mappedList);
-        parcelListView.setCellFactory(listView -> new ParcelListViewCell());
+                uncompletedParcels, (parcel) -> new ParcelCard(parcel,
+                        uncompletedParcels.indexOf(parcel) + 1));
+        allUncompletedParcelListView.setItems(mappedList);
+        allUncompletedParcelListView.setCellFactory(listView -> new ParcelListViewCell());
+
+        mappedList = EasyBind.map(completedParcels, (parcel) -> new ParcelCard(parcel,
+                        completedParcels.indexOf(parcel) + 1));
+        allCompletedParcelListView.setItems(mappedList);
+        allCompletedParcelListView.setCellFactory(listView -> new ParcelListViewCell());
+
         setEventHandlerForSelectionChangeEvent();
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
-        parcelListView.getSelectionModel().selectedItemProperty()
+        allUncompletedParcelListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in parcel list panel changed to : '" + newValue + "'");
                         raise(new ParcelPanelSelectionChangedEvent(newValue));
+                    }
+                });
+
+        allCompletedParcelListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in parcel list panel changed to : '" + newValue + "'");
+                        raise(new ParcelPanelSelectionChangedEvent(newValue));
+                    }
+                });
+
+        tabPanePlaceholder.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    logger.fine("Tab in parcel list panel changed to : '" + newValue.getText() + "'");
+                    if (newValue.getText().equals("All Parcels")) {
+                        handleTabSelection(INDEX_FIRST_TAB);
+                    } else {
+                        handleTabSelection(INDEX_SECOND_TAB);
                     }
                 });
     }
@@ -56,16 +97,38 @@ public class ParcelListPanel extends UiPart<Region> {
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
-            parcelListView.scrollTo(index);
-            parcelListView.getSelectionModel().clearAndSelect(index);
+            if (tabPanePlaceholder.getSelectionModel().getSelectedIndex() == 0) {
+                allUncompletedParcelListView.scrollTo(index);
+                allUncompletedParcelListView.getSelectionModel().clearAndSelect(index);
+            }
+        });
+
+        Platform.runLater(() -> {
+            if (tabPanePlaceholder.getSelectionModel().getSelectedIndex() == 1) {
+                allCompletedParcelListView.scrollTo(index);
+                allCompletedParcelListView.getSelectionModel().clearAndSelect(index);
+            }
         });
     }
+    //@@author
 
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }
+
+    @FXML @Subscribe
+    private void handleJumpToTabEvent(JumpToTabRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        tabPanePlaceholder.getSelectionModel().select(event.targetIndex);
+    }
+
+    //@@author kennard123661
+    public void handleTabSelection(Index selectedIndex) {
+        EventsCenter.getInstance().post(new JumpToTabRequestEvent(selectedIndex));
+    }
+    //@@author
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code ParcelCard}.

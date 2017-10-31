@@ -11,6 +11,7 @@ import java.util.logging.StreamHandler;
 
 import seedu.address.commons.core.LogsCenter;
 
+//@author kennard123661
 /**
  * Simple class to get logging messages
  * To Use:

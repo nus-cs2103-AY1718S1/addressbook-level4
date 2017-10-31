@@ -32,7 +32,7 @@ public class DeleteCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
-        List<ReadOnlyParcel> lastShownList = model.getFilteredParcelList();
+        List<ReadOnlyParcel> lastShownList = model.getActiveList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);

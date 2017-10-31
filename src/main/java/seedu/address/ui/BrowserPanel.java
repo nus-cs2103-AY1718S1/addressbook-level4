@@ -70,6 +70,7 @@ public class BrowserPanel extends UiPart<Region> {
         loadParcelLocationPage(event.getNewSelection().parcel);
     }
 
+    //@@author kennard123661
     public static String getMapQueryStringFromPostalString(String postalCode) {
         int firstDigitIndex = 1;
         int lastDigitIndex = 7;

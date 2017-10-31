@@ -84,8 +84,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         selectParcel(selectedIndex);
         command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
         deletedParcel = removeParcel(expectedModel, selectedIndex);
-        expectedModel.forceSelect(expectedIndex
-        );
+        expectedModel.forceSelect(expectedIndex);
         expectedResultMessage = String.format(MESSAGE_DELETE_PARCEL_SUCCESS, deletedParcel);
         assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
 

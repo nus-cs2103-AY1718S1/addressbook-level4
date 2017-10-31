@@ -79,13 +79,14 @@ public class ParcelCard extends UiPart<Region> {
         });
     }
 
+    //@@author kennard123661
     /**
      * Sets color for the status labels based on the current status.
      */
     private void setColorForStatus() {
         switch (status.textProperty().get()) {
         case "PENDING":
-            status.setStyle("-fx-background-color: " + "#ff4800");
+            status.setStyle("-fx-background-color: " + "#d68411");
             break;
 
         case "DELIVERING":
@@ -103,6 +104,7 @@ public class ParcelCard extends UiPart<Region> {
 
         }
     }
+    //@@author
 
     /**
      * Initializes tags and sets their style based on their tag label

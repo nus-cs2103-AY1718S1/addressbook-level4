@@ -3,7 +3,7 @@ package guitests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalParcels.HOON;
+import static seedu.address.testutil.TypicalParcels.IDA;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 
@@ -49,7 +49,7 @@ public class StatusBarFooterTest extends AddressBookGuiTest {
     public void syncStatus_mutatingCommandSucceeds_syncStatusUpdated() {
         String timestamp = new Date(injectedClock.millis()).toString();
         String expected = String.format(SYNC_STATUS_UPDATED, timestamp);
-        assertTrue(runCommand(ParcelUtil.getAddCommand(HOON))); // mutating command succeeds
+        assertTrue(runCommand(ParcelUtil.getAddCommand(IDA))); // mutating command succeeds
         assertEquals(expected, getStatusBarFooter().getSyncStatus());
     }
 

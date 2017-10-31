@@ -40,8 +40,7 @@ public interface ReadOnlyParcel extends Comparable {
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress()))
-                && other.getDeliveryDate().equals(this.getDeliveryDate())
-                && other.getStatus().equals(this.getStatus());
+                && other.getDeliveryDate().equals(this.getDeliveryDate());
     }
 
     /**

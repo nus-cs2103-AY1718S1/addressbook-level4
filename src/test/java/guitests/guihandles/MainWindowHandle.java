@@ -7,7 +7,7 @@ import javafx.stage.Stage;
  */
 public class MainWindowHandle extends StageHandle {
 
-    private final ParcelListPanelHandle parcelListPanel;
+    private final TabPaneHandle tabPane;
     private final ResultDisplayHandle resultDisplay;
     private final CommandBoxHandle commandBox;
     private final StatusBarFooterHandle statusBarFooter;
@@ -16,8 +16,7 @@ public class MainWindowHandle extends StageHandle {
 
     public MainWindowHandle(Stage stage) {
         super(stage);
-
-        parcelListPanel = new ParcelListPanelHandle(getChildNode(ParcelListPanelHandle.PARCEL_LIST_VIEW_ID));
+        tabPane = new TabPaneHandle(getChildNode(TabPaneHandle.TAB_PANE_ID));
         resultDisplay = new ResultDisplayHandle(getChildNode(ResultDisplayHandle.RESULT_DISPLAY_ID));
         commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
@@ -25,9 +24,23 @@ public class MainWindowHandle extends StageHandle {
         browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
     }
 
-    public ParcelListPanelHandle getParcelListPanel() {
-        return parcelListPanel;
+    //@@author kennard123661
+    public ParcelListPanelHandle getActiveParcelListPanel() {
+        return tabPane.getActiveParcelList();
     }
+
+    public ParcelListPanelHandle getDeliveredListPanel() {
+        return tabPane.getDeliveredParcelListPanel();
+    }
+
+    public ParcelListPanelHandle getUndeliveredListPanel() {
+        return tabPane.getUndeliveredParcelListPanel();
+    }
+
+    public TabPaneHandle getTabPane() {
+        return tabPane;
+    }
+    //@@author
 
     public ResultDisplayHandle getResultDisplay() {
         return resultDisplay;

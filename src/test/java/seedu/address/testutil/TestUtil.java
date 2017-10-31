@@ -42,13 +42,13 @@ public class TestUtil {
      * Returns the last index of the parcel in the {@code model}'s parcel list.
      */
     public static Index getLastIndex(Model model) {
-        return Index.fromOneBased(model.getAddressBook().getParcelList().size());
+        return Index.fromOneBased(model.getActiveList().size());
     }
 
     /**
      * Returns the parcel in the {@code model}'s parcel list at {@code index}.
      */
     public static ReadOnlyParcel getParcel(Model model, Index index) {
-        return model.getAddressBook().getParcelList().get(index.getZeroBased());
+        return model.getActiveList().get(index.getZeroBased());
     }
 }

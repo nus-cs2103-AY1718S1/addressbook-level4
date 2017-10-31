@@ -55,6 +55,7 @@ public class StorageManagerTest {
         assertEquals(getTempFilePath("prefs"), storageManager.getUserPrefsFilePath());
     }
 
+    //@@author kennard123661
     @Test
     public void onInitialStartupNoBackupTest() throws DataConversionException, IOException {
         testLogger = new TestLogger(storageManager.getClass(), Level.WARNING);
@@ -127,6 +128,7 @@ public class StorageManagerTest {
         AddressBook backupAddressBook = new AddressBook(backupAddressBookOptional.get());
         assertEquals(backupAddressBook, original);
     }
+    //@@author
 
     @Test
     public void prefsReadSave() throws Exception {

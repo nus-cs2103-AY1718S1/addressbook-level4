@@ -5,6 +5,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalParcels.BENSON;
 import static seedu.address.testutil.TypicalParcels.CARL;
 import static seedu.address.testutil.TypicalParcels.DANIEL;
+import static seedu.address.testutil.TypicalParcels.HOON;
 import static seedu.address.testutil.TypicalParcels.KEYWORD_MATCHING_MEIER;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
          */
         String command = "   " + FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER + "   ";
         Model expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL); // first names of Benson and Daniel are "Meier"
+        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL, HOON); //first names of Benson and Daniel are "Meier"
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -80,12 +81,13 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
-        /* Case: find same parcels in address book after deleting 1 of them -> 1 parcel found */
+        /* Case: find same parcels in address book after deleting 1 of them -> 2 parcelS found, 1 in completed delivery
+         * list the other in uncompleted delivery list */
         executeCommand(DeleteCommand.COMMAND_WORD + " 1");
         assert !getModel().getAddressBook().getParcelList().contains(BENSON);
         command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
         expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        ModelHelper.setFilteredList(expectedModel, DANIEL, HOON);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -167,7 +169,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(String command, Model expectedModel) {
         String expectedResultMessage = String.format(
-                MESSAGE_PARCELS_LISTED_OVERVIEW, expectedModel.getFilteredParcelList().size());
+                MESSAGE_PARCELS_LISTED_OVERVIEW, expectedModel.getActiveList().size());
 
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);

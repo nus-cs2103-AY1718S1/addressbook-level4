@@ -1,21 +1,35 @@
 package seedu.address.logic;
 
+import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.testutil.TypicalParcels.ALICE;
+import static seedu.address.testutil.TypicalParcels.BENSON;
+import static seedu.address.testutil.TypicalParcels.CARL;
+import static seedu.address.testutil.TypicalParcels.DANIEL;
+import static seedu.address.testutil.TypicalParcels.ELLE;
+import static seedu.address.testutil.TypicalParcels.FIONA;
+import static seedu.address.testutil.TypicalParcels.GEORGE;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javafx.collections.ObservableList;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.Status;
+import seedu.address.testutil.AddressBookBuilder;
 
 
 public class LogicManagerTest {
@@ -51,6 +65,27 @@ public class LogicManagerTest {
         thrown.expect(UnsupportedOperationException.class);
         logic.getFilteredParcelList().remove(0);
     }
+
+    //@@author kennard123661
+    @Test
+    public void getFilteredParcelListWithStatus() {
+        // setting up
+        AddressBook addressBook = new AddressBookBuilder().withParcel(ALICE).withParcel(BENSON).withParcel(CARL)
+                .withParcel(DANIEL).withParcel(ELLE).withParcel(FIONA).withParcel(GEORGE).build();
+        UserPrefs userPrefs = new UserPrefs();
+
+        Model testModel = new ModelManager(addressBook, userPrefs);
+        Logic testLogic = new LogicManager(testModel);
+
+        // test for completed parcels
+        ObservableList<ReadOnlyParcel> completedParcels = testLogic.getDeliveredParcelList();
+        assertTrue(completedParcels.stream().allMatch(parcel -> parcel.getStatus().equals(Status.COMPLETED)));
+
+        // Test for uncompleted parcels
+        ObservableList<ReadOnlyParcel> uncompletedParcels = testLogic.getUndeliveredParcelList();
+        assertFalse(uncompletedParcels.stream().anyMatch(parcel -> parcel.getStatus().equals(Status.COMPLETED)));
+    }
+    //@@author
 
     /**
      * Executes the command, confirms that no exceptions are thrown and that the result message is correct.

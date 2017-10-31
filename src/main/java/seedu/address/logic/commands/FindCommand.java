@@ -25,7 +25,7 @@ public class FindCommand extends Command {
     public CommandResult execute() {
         model.updateFilteredParcelList(predicate);
         model.unselect();
-        return new CommandResult(getMessageForParcelListShownSummary(model.getFilteredParcelList().size()));
+        return new CommandResult(getMessageForParcelListShownSummary(model.getActiveList().size()));
     }
 
     @Override
