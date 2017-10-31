@@ -18,8 +18,8 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ListCommand;
 
 public class AliasesTest {
-    private static final String LIST_COMMAND_ALIAS = "show";
-    private static final String ADD_COMMAND_ALIAS = "create";
+    private static final String LIST_COMMAND_ALIAS = "everyone";
+    private static final String ADD_COMMAND_ALIAS = "someone";
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
