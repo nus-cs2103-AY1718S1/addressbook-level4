@@ -502,7 +502,7 @@ that has the tag "friends", "family" or "colleague"
 
 *Reason for how it is implemented*
 
-ListByTagCommand builds on and makes use of existing implementations +
+The newly added list enhancements build on and make use of existing implementations +
 
 * Building on existing implementations +
 Instead of recreating the list feature, extra list commands are created +
