@@ -11,6 +11,7 @@ public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
     public static final String COMMAND_ALIAS = "l";
+    //@@author keithsoc
     public static final String COMMAND_OPTION_FAV = PREFIX_OPTION + FavoriteCommand.COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS_LIST_ALL = "Listed all persons";
@@ -34,4 +35,5 @@ public class ListCommand extends Command {
             return new CommandResult(MESSAGE_SUCCESS_LIST_ALL);
         }
     }
+    //@@author
 }

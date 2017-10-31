@@ -61,6 +61,7 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    //@@author keithsoc
     /**
      * Parses {@code args} into an {@code List<Index>} and returns it.
      * Used for commands that need to parse multiple indexes
@@ -76,6 +77,7 @@ public class ParserUtil {
         }
         return indexList;
     }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
@@ -113,6 +115,7 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
+    //@@author keithsoc
     /**
      * Checks if favorite and unfavorite prefixes are present in {@code ArgumentMultimap argMultimap}
      * Catered for both AddCommandParser and EditCommandParser usage
@@ -141,6 +144,7 @@ public class ParserUtil {
             return Optional.empty();
         }
     }
+    //@@author
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.

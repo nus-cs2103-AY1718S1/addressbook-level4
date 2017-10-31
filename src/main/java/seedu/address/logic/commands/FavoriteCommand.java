@@ -10,6 +10,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+//@@author keithsoc
 /**
  * Favorites the person(s) identified using it's last displayed index from the address book.
  */
@@ -81,3 +82,4 @@ public class FavoriteCommand extends UndoableCommand {
                 && this.targetIndexList.equals(((FavoriteCommand) other).targetIndexList)); // state check
     }
 }
+//@@author
