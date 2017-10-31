@@ -122,6 +122,10 @@ When you are ready to start coding,
 1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
 2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
+=== Contribute to the project
+
+
+
 == Design
 
 === Architecture

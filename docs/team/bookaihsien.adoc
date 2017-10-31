@@ -34,7 +34,7 @@ This feature allows experienced user to use the AddressBook more efficiently. Th
 
 ---
 
-=== Enhancement Added: Open different Address Book on App
+=== Enhancement Added: Open another address book
 
 ==== External behavior
 
@@ -61,6 +61,9 @@ are using the app on the same device.
 
 ---
 
+=== Enhancement Added: Improve `find` command
+
+=== Enhancement Added: Improve flexibility of `add` command
 
 === Other contributions
 

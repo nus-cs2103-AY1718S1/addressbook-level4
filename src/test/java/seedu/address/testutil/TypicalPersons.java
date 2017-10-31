@@ -30,12 +30,13 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
  */
 public class TypicalPersons {
 
-    public static final ReadOnlyPerson ALICE = new PersonBuilder().withName("Alice Pauline")
+    public static final ReadOnlyPerson ALICE = new PersonBuilder()
+            .withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111")
             .withEmail("alice@example.com")
             .withBirthday("15/02/1992")
             .withPhone("85355255")
-            .withWebsite(Website.WEBSITE_EXAMPLE)
+            .withWebsite("https://www.paulinealice.com/")
             .withTags("friends")
             .withPicture(null)
             .build();
@@ -44,7 +45,7 @@ public class TypicalPersons {
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432")
             .withBirthday("15/02/1993")
-            .withWebsite(Website.WEBSITE_EXAMPLE)
+            .withWebsite("https://twitter.com/bensonwillems?lang=en")
             .withTags("owesMoney", "friends")
             .withPicture(null)
             .build();
@@ -54,7 +55,7 @@ public class TypicalPersons {
             .withEmail("heinz@example.com")
             .withAddress("wall street")
             .withBirthday("15/02/1994")
-            .withWebsite(Website.WEBSITE_EXAMPLE)
+            .withWebsite("https://twitter.com/sebastiankurz")
             .withPicture(null)
             .build();
     public static final ReadOnlyPerson DANIEL = new PersonBuilder()
@@ -63,7 +64,7 @@ public class TypicalPersons {
             .withEmail("cornelia@example.com")
             .withAddress("10th street")
             .withBirthday("15/02/1995")
-            .withWebsite(Website.WEBSITE_EXAMPLE)
+            .withWebsite("https://www.danielnyc.com/")
             .withPicture(null)
             .build();
     public static final ReadOnlyPerson ELLE = new PersonBuilder()
@@ -130,6 +131,7 @@ public class TypicalPersons {
             .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "n/Meier"; // A keyword that matches MEIER
+    public static final String KEYWORD_MATCHING_CARL = "n/Carl"; // A keyword that matches CARL
 
     private TypicalPersons() {} // prevents instantiation
 
