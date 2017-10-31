@@ -8,12 +8,12 @@ import java.util.Set;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.MusicCommand;
 import seedu.address.logic.commands.SelectCommand;
-import seedu.address.logic.commands.UndoCommand;
 
 /**
  * Contains a mapping of aliases to their commands, which is referred to when parsing commands.
@@ -27,15 +27,19 @@ public class Aliases {
      * We initialise the map with aliases for frequently used commands. Users can add other aliases themselves.
      */
     public Aliases() {
-        map.put("a", AddCommand.COMMAND_WORD);
-        map.put("d", DeleteCommand.COMMAND_WORD);
-        map.put("e", EditCommand.COMMAND_WORD);
-        map.put("f", FindCommand.COMMAND_WORD);
-        map.put("h", HelpCommand.COMMAND_WORD);
-        map.put("l", ListCommand.COMMAND_WORD);
-        map.put("r", RedoCommand.COMMAND_WORD);
-        map.put("s", SelectCommand.COMMAND_WORD);
-        map.put("u", UndoCommand.COMMAND_WORD);
+        map.put("new", AddCommand.COMMAND_WORD);
+        map.put("create", AddCommand.COMMAND_WORD);
+        map.put("remove", DeleteCommand.COMMAND_WORD);
+        map.put("change", EditCommand.COMMAND_WORD);
+        map.put("quit", ExitCommand.COMMAND_WORD);
+        map.put("search", FindCommand.COMMAND_WORD);
+        map.put("filter", FindCommand.COMMAND_WORD);
+        map.put("man", HelpCommand.COMMAND_WORD);
+        map.put("ls", ListCommand.COMMAND_WORD);
+        map.put("show", ListCommand.COMMAND_WORD);
+        map.put("song", MusicCommand.COMMAND_WORD);
+        map.put("choose", SelectCommand.COMMAND_WORD);
+        map.put("pick", SelectCommand.COMMAND_WORD);
     }
 
     /**
