@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 
@@ -34,13 +35,12 @@ public class ProfilePanelTest extends GuiUnitTest {
     public void display() throws Exception {
         // default profile page
         final String expectedDefaultName = ProfilePanel.DEFAULT_MESSAGE;
-        final String emptyText = "";
 
         assertEquals(expectedDefaultName, profilePanelHandle.getName());
-        assertEquals(emptyText, profilePanelHandle.getEmail());
-        assertEquals(emptyText, profilePanelHandle.getPhone());
-        assertEquals(emptyText, profilePanelHandle.getDateOfBirth());
-        assertEquals(emptyText, profilePanelHandle.getAddress());
+        assertNull(profilePanelHandle.getEmail());
+        assertNull(profilePanelHandle.getPhone());
+        assertNull(profilePanelHandle.getDateOfBirth());
+        assertNull(profilePanelHandle.getAddress());
 
         // select Stub Person
         postNow(personNameClickedEventStub);
