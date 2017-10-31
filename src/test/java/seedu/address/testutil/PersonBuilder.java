@@ -2,6 +2,7 @@ package seedu.address.testutil;
 
 import static java.util.Arrays.asList;
 
+import java.util.List;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -75,18 +76,6 @@ public class PersonBuilder {
     public PersonBuilder withTags(String... tags) {
         try {
             this.person.setTags(SampleDataUtil.getTagSet(tags));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("tags are expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Parses the {@code tags} into a {@code Set<Schedule>} and set it to the {@code Person} that we are building.
-     */
-    public PersonBuilder withSchedule(String...schedules) {
-        try {
-            this.person.setSchedules(SampleDataUtil.getScheduleSet(schedules));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tags are expected to be unique.");
         }
