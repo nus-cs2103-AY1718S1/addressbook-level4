@@ -12,6 +12,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ClearPersonDetailPanelRequestEvent;
+import seedu.address.commons.events.ui.PersonEditedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.ui.util.Avatar;
@@ -48,20 +50,21 @@ public class PersonDetailPanel extends UiPart<Region> {
 
     public PersonDetailPanel() {
         super(FXML);
-        initialise();
+        showEmptyPanel();
         registerAsAnEventHandler(this);
     }
 
     /**
-     * Initialize the panel with empty fields
+     * Displays an empty panel
      */
-    private void initialise() {
+    private void showEmptyPanel() {
         name.setText("");
         phone.setText("");
         email.setText("");
         address.setText("");
         remark.setText("");
         initial.setText("");
+        tags.getChildren().clear();
         avatar.setFill(Color.TRANSPARENT);
     }
 
@@ -97,5 +100,19 @@ public class PersonDetailPanel extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showPersonDetails(event.getNewSelection().person);
+    }
+
+    /**
+     * Updates the panel when the details of the selected person is changed
+     */
+    @Subscribe
+    private void handlePersonDetailsChangedEvent(PersonEditedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showPersonDetails(event.editedPerson);
+    }
+
+    @Subscribe
+    private void handlePersonListClearedEvent(ClearPersonDetailPanelRequestEvent event) {
+        showEmptyPanel();
     }
 }
