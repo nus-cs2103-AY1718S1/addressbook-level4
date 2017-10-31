@@ -167,6 +167,15 @@ public class RemarkTest {
         Remark differentRemark = new Remark("Bye");
         assertFalse(remark.equals(differentRemark));
     }
+
+    @Test
+    public void hashCodeTest() throws IllegalValueException {
+        Remark remarkStub = new Remark("remark stub");
+        assertEquals("remark stub".hashCode(), remarkStub.hashCode());
+
+        Remark remarkStub2 = new Remark("remark stub 2");
+        assertEquals("remark stub 2".hashCode(), remarkStub2.hashCode());
+    }
 }
 ```
 ###### \java\seedu\address\testutil\PersonBuilder.java
@@ -182,6 +191,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_REMARK = "";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_AVATAR = "";
 
     private Person person;
 
@@ -193,8 +203,9 @@ public class PersonBuilder {
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Remark defaultRemark = new Remark(DEFAULT_REMARK);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
+            Avatar defaultAvatar = new Avatar(DEFAULT_AVATAR);
             this.person = new Person(defaultName, defaultPhone, defaultEmail,
-                    defaultAddress, defaultRemark, defaultTags);
+                    defaultAddress, defaultRemark, defaultAvatar, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -210,7 +221,23 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Avatar} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withAvatar(String filePath) {
+        try {
+            this.person.setAvatar(Avatar.readAndCreateAvatar(filePath));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("avatar file is not valid");
+        }
+        return this;
+    }
+
+    /**
+     * saves {@code avatar} to data folder and returns {@code Person}
+     */
     public Person build() {
+        this.person.saveAvatar();
         return this.person;
     }
 
