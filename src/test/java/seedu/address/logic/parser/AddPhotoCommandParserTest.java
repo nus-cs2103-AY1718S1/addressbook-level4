@@ -17,7 +17,7 @@ public class AddPhotoCommandParserTest {
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased() + " " + PREFIX_FILEPATH.toString();
         AddPhotoCommand expectedCommand = new AddPhotoCommand(INDEX_FIRST_PERSON, new Photo(""));
-        assertParseSuccess(parser, userInput, expectedCommand);          
+        assertParseSuccess(parser, userInput, expectedCommand);
         //Has a filepath that that is input from user
         Index newTargetIndex = INDEX_FIRST_PERSON;
         String newUserInput = newTargetIndex.getOneBased() + "C/Users/pictures/pic.png"
