@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+//@@author taojiashu
 public class FavouriteTest {
 
     @Test

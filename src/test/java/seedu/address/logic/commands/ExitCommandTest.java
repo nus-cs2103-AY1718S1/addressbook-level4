@@ -20,9 +20,11 @@ public class ExitCommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
+    //@@author taojiashu
     private ExitCommand exitCommand;
     private CommandHistory history;
 
+    //@@author taojiashu
     @Before
     public void setUp() {
         Model model = new ModelManager();
@@ -31,6 +33,7 @@ public class ExitCommandTest {
         exitCommand.setData(model, history, new UndoRedoStack());
     }
 
+    //@@author taojiashu
     @Test
     public void execute_exit_stalled() {
         assertCommandResult(exitCommand, MESSAGE_CONFIRMATION);
@@ -43,6 +46,7 @@ public class ExitCommandTest {
 
     @Test
     public void execute_exit_success() {
+        //@@author taojiashu
         history.add("exit");
 
         assertCommandResult(exitCommand, MESSAGE_EXIT_ACKNOWLEDGEMENT);
@@ -50,6 +54,7 @@ public class ExitCommandTest {
         assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
     }
 
+    //@@author taojiashu-reused
     /**
      * Asserts that the result message from the execution of {@code historyCommand} equals to {@code expectedMessage}
      */

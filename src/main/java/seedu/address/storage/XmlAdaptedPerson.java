@@ -31,6 +31,7 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    //@@author taojiashu
     @XmlElement(required = true)
     private String favourite;
     @XmlElement(required = true)
@@ -55,6 +56,7 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        //@@author taojiashu
         favourite = source.getFavourite().getStatus();
         birthday = source.getBirthday().getBirthdayNumber();
         tagged = new ArrayList<>();
@@ -77,6 +79,7 @@ public class XmlAdaptedPerson {
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
+        //@@author taojiashu
         final Favourite favourite = new Favourite();
         if (this.favourite.equals("True")) {
             favourite.toggleFavourite();

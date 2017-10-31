@@ -122,11 +122,11 @@ public class AddressBookParser {
         } else if (commandWord.equalsIgnoreCase(RedoCommand.COMMAND_WORDVAR_3)) {
             return new RedoCommandParser().parse(arguments);
 
-        } else if (commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD_1)
+        } else if (commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD_1) //@@author taojiashu
                 || commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD_2)) {
             return new FavouriteCommandParser().parse(arguments);
 
-        } else if (commandWord.equalsIgnoreCase(ShowFavouriteCommand.COMMAND_WORD_1)
+        } else if (commandWord.equalsIgnoreCase(ShowFavouriteCommand.COMMAND_WORD_1) //@@author taojiashu
                 || commandWord.equalsIgnoreCase(ShowFavouriteCommand.COMMAND_WORD_2)) {
             return new ShowFavouriteCommand();
 
