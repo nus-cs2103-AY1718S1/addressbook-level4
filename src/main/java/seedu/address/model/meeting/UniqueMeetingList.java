@@ -65,7 +65,6 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         from.internalList.stream()
                 .filter(meeting -> !alreadyInside.contains(meeting))
                 .forEach(internalList::add);
-
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
@@ -119,6 +118,12 @@ public class UniqueMeetingList implements Iterable<Meeting> {
      * The elements do not have to be in the same order.
      */
     public boolean equalsOrderInsensitive(UniqueMeetingList other) {
+        for (Meeting m : internalList) {
+            System.out.println(m.value + " " + m.getName().toString() + "checking order insensitive");
+        }
+        for (Meeting m : other.internalList) {
+            System.out.println(m.value + " " + m.getName().toString() + " other checking order insensitive");
+        }
         assert CollectionUtil.elementsAreUnique(internalList);
         assert CollectionUtil.elementsAreUnique(other.internalList);
         return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));

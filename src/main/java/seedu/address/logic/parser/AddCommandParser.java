@@ -55,7 +55,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Address address = addressOptional.isPresent() ? addressOptional.get() : new Address(null);
             Note note = new Note("");
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            Set<Meeting> meetingList = ParserUtil.parseMeetings(argMultimap.getAllValues(PREFIX_MEETING));
+            Set<Meeting> meetingList = ParserUtil.parseMeetings(argMultimap.getAllValues(PREFIX_MEETING), name);
 
             ReadOnlyPerson person = new Person(name, phone, email, address, note, tagList, meetingList);
 
