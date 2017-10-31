@@ -23,6 +23,7 @@ import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UpcomingBirthdayCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -110,6 +111,10 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_ALIAS:
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
+
+        case UpcomingBirthdayCommand.COMMAND_WORD:
+            return new UpcomingBirthdayCommand();
+
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
