@@ -5,8 +5,6 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
@@ -58,7 +56,8 @@ public class EditCommandTest {
         EditCommand editCommand = prepareCommand(INDEX_SECOND_PERSON, descriptor);
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
-        assertCommandSuccess(editCommand, model, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD, UndoableCommand.NAME_FIELD), expectedModel);
+        assertCommandSuccess(editCommand, model, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
+                UndoableCommand.NAME_FIELD), expectedModel);
     }
 
     @Test

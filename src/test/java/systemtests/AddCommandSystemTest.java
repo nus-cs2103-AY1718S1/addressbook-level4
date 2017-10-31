@@ -19,17 +19,6 @@ import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_BIRTHDAY_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_BIRTHDAY_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.AMY;
@@ -77,20 +66,25 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + ADDRESS_DESC_AMY + "   " + BIRTHDAY_DESC_AMY + "  " + TAG_DESC_FRIEND + " ";
         assertCommandSuccess(command, toAdd);
 
-        /* Case: undo adding Amy to the list -> Amy deleted */
+         /* Case: undo adding Amy to the list -> Amy deleted */
         command = UndoCommand.COMMAND_WORDVAR_2.toUpperCase();
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        Model expectedModel = getModel();
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: redo adding Amy to the list -> Amy added again */
         command = RedoCommand.COMMAND_WORDVAR_1;
-        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: add a duplicate person -> rejected */
+        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
+
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+
+                /* Case: add a duplicate person -> rejected */
         command = AddCommand.COMMAND_WORDVAR_2 + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
-        assertCommandFailure(command, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD, UndoableCommand.NAME_FIELD));
+        expectedModel = getModel();
+        assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
+                UndoableCommand.NAME_FIELD));
 
         /* Case: add a duplicate person except with different tags -> Prompt Message */
         // "friends" is an existing tag used in the default model, see TypicalPersons#ALICE
@@ -98,24 +92,26 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         // AddressBook#addPerson(ReadOnlyPerson)
         command = AddCommand.COMMAND_WORDVAR_1 + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + " " + PREFIX_TAG.getPrefix() + "friends";
-        assertCommandFailure(command, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD, UndoableCommand.NAME_FIELD));
+        expectedModel = getModel();
+        assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
+                UndoableCommand.NAME_FIELD));
 
         /* Case: add a person with all fields same as another person in the address book except name
          * -> Duplicate Phone Message Prompt
          */
-        toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORDVAR_2 + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
-        assertCommandFailure(command, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD, UndoableCommand.PHONE_FIELD));
+        expectedModel = getModel();
+        assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
+                UndoableCommand.PHONE_FIELD));
 
         /* Case: add a person with all fields same as another person in the address book except phone
          *  -> Duplicate Name Message Prompt*/
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORDVAR_1 + NAME_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
-        assertCommandFailure(command, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD, UndoableCommand.NAME_FIELD));
+        expectedModel = getModel();
+        assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
+                UndoableCommand.NAME_FIELD));
 
         /* Case: filters the person list before adding -> added */
         executeCommand(FindCommand.COMMAND_WORDVAR_2 + " " + KEYWORD_MATCHING_MEIER);
@@ -220,7 +216,21 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
-        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertApplicationDisplaysExpected("" ,expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsDefaultStyle();
+        //assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyPerson)} except that the result
+     * display box displays {@code expectedResultMessage} and the model related components equal to
+     * {@code expectedModel}.
+     * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyPerson)
+     */
+    private void assertCommandPrompt(String command, Model expectedModel, String expectedResultMessage) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
