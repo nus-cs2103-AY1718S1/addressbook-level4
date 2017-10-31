@@ -1224,7 +1224,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |store multiple information of the same kind for a contact |accommodate contacts with multiple addresses, e-mail addresses or phone numbers
 
-|`* * *` |user |get suggestions on the tags I have used |be consistent with the tags I use
+|`* * *` |busy user |view my agenda for the upcoming days |prepare for my tasks in advance
+
+|`* *` |user |get suggestions on the tags I have used |be consistent with the tags I use
 
 |`* *` |user |see a sorted list of my contacts |save time and energy on my end
 
