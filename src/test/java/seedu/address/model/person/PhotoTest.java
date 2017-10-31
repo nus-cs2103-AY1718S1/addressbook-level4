@@ -13,7 +13,6 @@ import org.junit.rules.ExpectedException;
 public class PhotoTest {
     @Rule
     public ExpectedException throwException = ExpectedException.none();
-    
     @Test
     public void equals() {
         Photo photo = new Photo("");
@@ -35,13 +34,12 @@ public class PhotoTest {
         Photo differentPhoto = new Photo("src/main/resources/images/noPhoto.png");
         assertFalse(photo.equals(differentPhoto));
     }
-    
-    @Test 
+    @Test
     public void readFile() {
         try {
             Photo photo = new Photo("C:/something/picture.png");
         } catch (IllegalArgumentException e) {
-          assertEquals(e.getMessage(), URL_VALIDATION);
+            assertEquals(e.getMessage(), URL_VALIDATION);
         }
     }
 }
