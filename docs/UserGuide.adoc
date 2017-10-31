@@ -438,7 +438,7 @@ To *transfer data* to another Computer, install the app in the other computer an
 
 |link:#opening-email-code-email-code-since-v1-4[Email] |`em` |`email` |
 
-|link:#exiting-the-program-code-exit-code[Exit] |
+|link:#exiting-the-program-code-exit-code[Exit] |  | `exit ` | 
 
 |link:#finding-persons-by-any-field-code-find-code-since-v1-2[Find]|`f` |`find [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`find n/James Jake`
 
