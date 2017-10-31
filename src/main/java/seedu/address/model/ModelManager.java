@@ -202,6 +202,7 @@ public class ModelManager extends ComponentManager implements Model {
             }
 
         }
+
         contactList = tempList;
 
         try {
