@@ -66,7 +66,7 @@ public class UrlUtil {
         return Arrays.stream(pairs).map(pair -> pair.substring(0, pair.indexOf("="))).collect(Collectors.toSet());
     }
 
-    private static String urlDecode(String url) throws UnsupportedEncodingException {
+    public static String urlDecode(String url) throws UnsupportedEncodingException {
         return URLDecoder.decode(url, "utf-8");
     }
 }

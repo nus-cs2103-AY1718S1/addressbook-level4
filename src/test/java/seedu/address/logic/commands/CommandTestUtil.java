@@ -98,6 +98,7 @@ public class CommandTestUtil {
     public static final String INVALID_IMPORT_PATH = " unknown path";
 
     public static final String VALID_URL = "https://www.google.com.sg/contacts?day=monday";
+    public static final String VALID_URL_ENCODED = "https%3A%2F%2Fwww.google.com.sg%2Fcontacts%3Fday%3Dmonday";
     public static final String INVALID_URL_COMMA = " https://123,tg/";
     public static final String IMPORT_NO_PATH = "--nusmods ";
 

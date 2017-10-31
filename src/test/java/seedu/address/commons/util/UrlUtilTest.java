@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_URL_COMMA;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_URL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_URL_ENCODED;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -47,5 +48,10 @@ public class UrlUtilTest {
 
         assertEquals(1, keys.size());
         assertTrue(keys.contains("day"));
+    }
+
+    @Test
+    public void urlDecode_success_checkCorrectness() throws Exception {
+        assertEquals(VALID_URL, UrlUtil.urlDecode(VALID_URL_ENCODED));
     }
 }
