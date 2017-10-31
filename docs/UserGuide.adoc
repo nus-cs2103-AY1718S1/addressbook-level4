@@ -76,7 +76,7 @@ Format: `help`
 === Adding a person: `add`
 `since v1.2` `new field: Birthday (Archana) , Website (Darren), Home Number (Cherng Hann) and School Email(Cherng Hann)`
 
-Adds a person to the address book +
+Adds a person to The Myth's Book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL w/WEBSITE a/ADDRESS [h/HOME_NUMBER] [se/SCHOOL_EMAIL] [b/BIRTHDAY] [t/TAG]...`
 
 [TIP]
@@ -102,7 +102,7 @@ Example of adding an individual without Birthday, School Email, Home Number:
 
 === Accessing a person's website : `access`
 
-Accesses a person's website in the address book +
+Accesses a person's website in The Myth's Book +
 Format: 'access INDEX'
 
 ****
@@ -118,7 +118,7 @@ Examples:
 
 * 1.`list` +
 2.`access 2` +
-Selects the 2nd person in the address book and attains the website of the 2nd person.
+Selects the 2nd person in The Myth's Book and attains the website of the 2nd person.
 The website details is then loaded into the browser.
 * 1.`find Betsy` +
 2.`access 1` +
@@ -133,13 +133,13 @@ Figure 4.3.1 Access Command Result
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in The Myth's Book. +
 Format: `list`
 
 === Accessing a person's location : `locate`
 `since v1.3` `Darren Chin`
 
-Accesses a person's location in the address book +
+Accesses a person's location in The Myth's Book +
 Format: 'locate INDEX'
 
 ****
@@ -160,7 +160,7 @@ Examples:
 
 * 1.`list` +
 2.`locate 2` +
-Selects the 2nd person in the address book and attains the address of the 2nd person.
+Selects the 2nd person in The Myth's Book and attains the address of the 2nd person.
 The address details is then used in a Google Maps Search.
 * 1.`find Betsy` +
 2.`locate 1` +
@@ -170,12 +170,12 @@ The address details is then used in a Google Maps Search.
 === Sorting all persons : `sort`
 `since v1.2` `Darren Chin`
 
-Sorts all persons in the address book by their names alphabetically. +
+Sorts all persons in The Myth's Book by their names alphabetically. +
 Format: `sort`
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
+Edits an existing person in The Myth's Book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [h/HOME_NUMBER] [e/EMAIL] [se/SCHOOL_EMAIL] [w/WEBSITE] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...`
 
 ****
@@ -219,7 +219,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
+Deletes the specified person from The Myth's Book. +
 Format: `delete INDEX`
 
 ****
@@ -232,7 +232,7 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in The Myth's Book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
@@ -253,7 +253,7 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in The Myth's Book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
@@ -271,12 +271,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores The Myth's Book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify The Myth's Book's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -343,24 +343,24 @@ Examples:
 Switches to the 2nd theme in the themes list.
 
 === Adding an event : `addevent`
-`since v1.2` `Cherng Hann`
+`since v1.2` `Chia Cherng Hann`
 
-Adds an event to the address book +
+Adds an event to The Myth's Book +
 Format: `add n/NAME d/DATE a/ADDRESS`
 
 Examples:
 
 * `addevent n/ZoukOut d/23/12/2017 a/Sentosa, Siloso Beach` +
-Adds an event `ZoukOut` in the address book.
+Adds an event `ZoukOut` in The Myth's Book.
 * `addevent n/Orbital d/1/5/2018 a/NUS School Of Computing` +
-Adds an event `Orbital` in the address book.
+Adds an event `Orbital` in The Myth's Book.
 * `addevent n/Halloween Horror Night d/31/10/2017 a/Universal Studios Singapore` +
-Adds an event `Halloween Horror Night` in the address book.
+Adds an event `Halloween Horror Night` in The Myth's Book.
 
 === Favouriting a person : `favourite`
 `since v1.2` `Dickson Chan`
 
-Favourites the specified person from the address book. +
+Favourites the specified person from The Myth's Book. +
 Format: `favourite INDEX`
 
 ****
@@ -373,7 +373,7 @@ Examples:
 
 * `list` +
 `favourite 2` +
-Favourites the 2nd person in the address book.
+Favourites the 2nd person in The Myth's Book.
 * `find Betsy` +
 `favourite 1` +
 Favourites the 1st person in the results of the `find` command.
@@ -381,7 +381,7 @@ Favourites the 1st person in the results of the `find` command.
 === Unfavouriting a person : `unfavourite`
 `since v1.2` `Dickson Chan`
 
-Unfavourites the specified person from the address book. +
+Unfavourites the specified person from The Myth's Book. +
 Format: `unfavourite INDEX`
 
 ****
@@ -394,7 +394,7 @@ Examples:
 
 * `list` +
 `unfavourite 2` +
-Unfavourites the 2nd person in the address book.
+Unfavourites the 2nd person in The Myth's Book.
 * `favouritelist` +
 `unfavourite 1` +
 Unfavourites the 1st person in the results of the `favouritelist` command.
@@ -405,7 +405,7 @@ Unfavourites the 1st person in the results of the `find` command.
 === Listing all favourited persons : `favouritelist`
 `since v1.2` `Dickson Chan`
 
-Shows a list of all favourited persons in the address book. +
+Shows a list of all favourited persons in The Myth's Book. +
 Format: `favouritelist`
 
 === Checking for birthdays : `birthdays`
@@ -417,7 +417,7 @@ Format: `birthdays`
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from The Myth's Book. +
 Format: `clear`
 
 === Exiting the program : `exit`
@@ -427,7 +427,7 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+The Myth's Book's data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 link:#the-myths-book---user-guide[Back To Top]
@@ -437,7 +437,7 @@ link:#the-myths-book---user-guide[Back To Top]
 === Details Panel
 `since v1.2` `Archana Pradeep`
 
-UI that shows all details of a person that is not shown in person card
+UI that shows all details of a person that is not shown in person card.
 
 === Calendar
 
@@ -450,7 +450,8 @@ image::calendar.PNG[width="500"]
 
 Also, you can add events after clicking on the specific date. A pop up window as shown below will appear prompting you to fill up the details of the event.
 
-image::
+image::calendar.PNG[width="100"]
+
 link:#the-myths-book---user-guide[Back To Top]
 
 == FAQ
@@ -466,6 +467,8 @@ link:#the-myths-book---user-guide[Back To Top]
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com w/https://www.facebook.com/jamesHo a/123, Clementi Rd, 1234665 h/65812131 se/jamesho@u.nus.edu b/12/11/1972 t/friend t/colleague`
 * *Access* : `access INDEX` +
 e.g. `access 2`
+* *AddEvent* `addevent n/NAME d/DATE a/ADDRESS` +
+e.g. `addevent n/IHG Floorball d/16/01/2018 a/NUS Sports Recreation Centre`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
@@ -490,8 +493,6 @@ e.g. `select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *AddEvent* `addevent n/NAME d/DATE a/ADDRESS` +
-e.g. `addevent n/IHG Floorball d/16/01/2018 a/NUS Sports Recreation Centre`
 
 
 link:#the-myths-book---user-guide[Back To Top]
