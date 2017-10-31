@@ -33,18 +33,16 @@ public class Appointment {
                 String date = split[0];
                 String time = split[1];
                 String duration = split[2];
-                String startDateTime = date + " " + time;
-                String endDateTime = getEndDateTime(startDateTime, duration);
                 if (!isValidDuration(duration)) {
                     throw new IllegalValueException(MESSAGE_DURATION_CONSTRAINT);
                 }
+                String startDateTime = date + " " + time;
+                String endDateTime = getEndDateTime(startDateTime, duration);
                 if (!isValidDateTime(startDateTime) || !isValidDateTime(endDateTime)) {
                     throw new IllegalValueException(MESSAGE_DATETIME_CONSTRAINT);
                 }
                 this.value = appointment;
             } catch (ArrayIndexOutOfBoundsException iob) {
-                throw new IllegalValueException(MESSAGE_APPOINTMENT_CONSTRAINTS);
-            } catch (IllegalValueException ive) {
                 throw new IllegalValueException(MESSAGE_APPOINTMENT_CONSTRAINTS);
             }
         }
@@ -66,15 +64,10 @@ public class Appointment {
     }
 
     /**
-     * Returns true if given duration is an integer
+     * Returns true if given duration is an integer, using regex
      */
-    public static boolean isValidDuration(String duration) throws IllegalValueException {
-        try {
-            Integer.parseInt(duration);
-        } catch (NumberFormatException e) {
-            throw new IllegalValueException(MESSAGE_DURATION_CONSTRAINT);
-        }
-        return true;
+    public static boolean isValidDuration(String duration) {
+        return duration.matches("^-?\\d+$");
     }
 
     /**

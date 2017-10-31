@@ -49,7 +49,7 @@ public class AppointCommandTest {
                 .withAppointment("").build();
         AppointCommand appointCommand = prepareCommand(INDEX_FIRST_PERSON, "");
 
-        String expectedMessage = String.format(AppointCommand.MESSAGE_APPOINT_SUCCESS, editedPerson);
+        String expectedMessage = String.format(AppointCommand.MESSAGE_DELETE_APPOINTMENT_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
