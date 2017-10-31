@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
 
+//@@author eldonng
 /**
  * A list of groups that enforces uniqueness between its elements and does not allow nulls.
  *

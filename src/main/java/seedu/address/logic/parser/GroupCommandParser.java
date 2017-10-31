@@ -13,6 +13,7 @@ import seedu.address.logic.commands.CreateGroupCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.group.GroupName;
 
+//@@author eldonng
 /**
  * Parses input arguments and create a CreateGroupCommand object
  */

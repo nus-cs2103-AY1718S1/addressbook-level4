@@ -12,6 +12,7 @@ import javafx.scene.text.Text;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author eldonng
 /**
  * An UI component that displays information of a {@code Group}.
  */

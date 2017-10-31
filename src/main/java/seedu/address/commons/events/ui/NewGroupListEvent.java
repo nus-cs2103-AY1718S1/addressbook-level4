@@ -5,6 +5,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author eldonng
 /**
  * Indicates that the group list has been changed.
  */

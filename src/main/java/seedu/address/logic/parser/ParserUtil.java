@@ -131,6 +131,7 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
+    //@@author eldonng
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -168,6 +169,7 @@ public class ParserUtil {
         }
     }
 
+    //@@author eldonng
     /**
      * Parses a String and checks whether it has two different .
      */

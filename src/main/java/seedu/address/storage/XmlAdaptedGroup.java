@@ -11,6 +11,7 @@ import seedu.address.model.group.GroupName;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author eldonng
 /**
  * JAXB-friendly version of the Group.
  */

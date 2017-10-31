@@ -102,6 +102,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
+        //@@author eldonng
         raise(new NewGroupListEvent(getGroupList(), addressBook.getPersonList()));
         indicateAddressBookChanged();
     }
@@ -113,12 +114,14 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author eldonng
     @Override
     public synchronized void addGroup(ReadOnlyGroup group) throws DuplicateGroupException {
         addressBook.addGroup(group);
         indicateAddressBookChanged();
     }
 
+    //@@author eldonng
     @Override
     public synchronized void deleteGroup(ReadOnlyGroup group) throws GroupNotFoundException {
         addressBook.deleteGroup(group);
@@ -134,8 +137,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-
-
+    //@@author eldonng
     @Override
     public void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
         try {
@@ -147,6 +149,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //@@author eldonng
     @Override
     public void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
         try {
@@ -158,6 +161,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //@@author eldonng
     @Override
     public void setTagColour(String tagName, String colour) throws IllegalValueException {
         List<Tag> tagList = addressBook.getTagList();
@@ -183,6 +187,7 @@ public class ModelManager extends ComponentManager implements Model {
         colourPrefs.updateColorMap(allTagColours);
     }
 
+    //@@author eldonng
     /**
      * @param personToPin
      * @return updated Person with added pin to be added to the address book
@@ -199,6 +204,7 @@ public class ModelManager extends ComponentManager implements Model {
                 personToPin.getEmail(), personToPin.getAddress(), updatedTags.toSet());
     }
 
+    //@@author eldonng
     /**
      * @param personToUnpin
      * @return updated Person with removed pin to be added to the address book
@@ -216,6 +222,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //@@author eldonng
     public Predicate<ReadOnlyPerson> getPredicateForTags(String arg) throws IllegalValueException {
         try {
             Tag targetTag = new Tag(arg);
@@ -236,6 +243,7 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
+    //@@author eldonng
     @Override
     public ObservableList<ReadOnlyGroup> getGroupList() {
         return FXCollections.unmodifiableObservableList(filteredGroups);
@@ -247,6 +255,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author eldonng
     @Override
     public void updateFilteredGroupList(Predicate<ReadOnlyGroup> predicate) {
         requireNonNull(predicate);

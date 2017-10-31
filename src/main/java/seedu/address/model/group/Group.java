@@ -7,6 +7,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author eldonng
 /**
  * Represents a group in the address book
  * Guarantees: details are present and not null, field values are validated.

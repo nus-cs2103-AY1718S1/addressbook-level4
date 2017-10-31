@@ -5,6 +5,7 @@ import java.util.List;
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author eldonng
 /**
  * A read-only immutable interface for a Group in the addressbook.
  * Implementations should guarantee: details are present and not null, field values are validated.

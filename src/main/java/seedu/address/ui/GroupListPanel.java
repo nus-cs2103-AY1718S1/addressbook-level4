@@ -20,6 +20,7 @@ import seedu.address.commons.events.ui.NewGroupListEvent;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author eldonng
 /**
  * Panel containing a list of groups
  */
