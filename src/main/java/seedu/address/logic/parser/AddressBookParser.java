@@ -53,8 +53,6 @@ public class AddressBookParser {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        ClearCommand clearCommand = new ClearCommand();
-
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
         if (commandWord.equalsIgnoreCase(AddCommand.COMMAND_WORDVAR_1)
@@ -87,7 +85,7 @@ public class AddressBookParser {
 
         } else if (commandWord.equalsIgnoreCase(ClearCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(ClearCommand.COMMAND_WORDVAR_2)) {
-            return clearCommand;
+            return new ClearCommand();
 
         } else if (commandWord.equalsIgnoreCase(FilterCommand.COMMAND_WORDVAR)) {
             return new FilterCommandParser().parse(arguments);
