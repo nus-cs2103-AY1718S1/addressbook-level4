@@ -27,18 +27,22 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Note> note;
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<UniqueMeetingList> meetings;
+    private ObjectProperty<LastUpdated> lastUpdated;
+    private ObjectProperty<Id> id;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Note note,
-                  Set<Tag> tags, Set<Meeting> meetings) {
+    public Person(Name name, Phone phone, Email email, Address address, Note note, Id id,
+                  LastUpdated lastUpdated, Set<Tag> tags, Set<Meeting> meetings) {
         requireAllNonNull(name, phone, email, address, tags, meetings);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.note = new SimpleObjectProperty<>(note);
+        this.id = new SimpleObjectProperty<>(id);
+        this.lastUpdated = new SimpleObjectProperty<>(lastUpdated);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         // protect internal meetings from changes in the arg list
@@ -50,7 +54,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getNote(),
-                source.getTags(), source.getMeetings());
+                source.getId(), source.getLastUpdated(), source.getTags(), source.getMeetings());
     }
 
     public void setName(Name name) {
@@ -122,6 +126,34 @@ public class Person implements ReadOnlyPerson {
     public Note getNote() {
         return note.get();
     };
+
+    @Override
+    public ObjectProperty<LastUpdated> lastUpdatedProperty() {
+        return lastUpdated;
+    }
+
+    @Override
+    public LastUpdated getLastUpdated() {
+        return lastUpdated.get();
+    }
+
+    public void setLastUpdated (LastUpdated lastUpdated) {
+        this.lastUpdated = new SimpleObjectProperty<>(lastUpdated);
+    }
+
+    @Override
+    public ObjectProperty<Id> idProperty() {
+        return id;
+    }
+
+    @Override
+    public Id getId() {
+        return id.get();
+    }
+
+    public void setId (Id id) {
+        this.id.set(requireNonNull(id));
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

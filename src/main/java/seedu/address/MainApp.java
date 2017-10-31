@@ -3,6 +3,8 @@ package seedu.address;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -52,6 +54,7 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
     protected OAuth oauth;
+    protected ExecutorService executor;
 
 
     @Override
@@ -65,18 +68,25 @@ public class MainApp extends Application {
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
-        oauth = new OAuth();
 
         initLogging(config);
 
-        model = initModelManager(storage, userPrefs);
+        oauth = OAuth.getInstance();
 
-        logic = new LogicManager(model);
+        executor = Executors.newSingleThreadExecutor();
+
+        model = initModelManager(storage, userPrefs);
+        oauth.setModel(model);
+
+        logic = new LogicManager(model, oauth, executor);
 
         ui = new UiManager(logic, config, userPrefs);
 
+
+
         initEventsCenter();
     }
+
 
     private String getApplicationParameter(String parameterName) {
         Map<String, String> applicationParameters = getParameters().getNamed();

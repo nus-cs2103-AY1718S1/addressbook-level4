@@ -1,28 +1,68 @@
-package seedu.address.google;
+# derrickchua-reused
+###### /java/seedu/address/ui/PersonCard.java
+``` java
+    /**
+    * Enumerate fixed colours for tags
+    * */
+    private static enum Colour {
+        MAROON, DARKCYAN, FIREBRICK, LIGHTSLATEGREY, DEEPSKYBLUE, OLIVEDRAB, LIGHTPINK, DARKOLIVEGREEN;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Collections;
-import java.util.Observable;
+        private static final List<Colour> VALUES =
+                Collections.unmodifiableList(Arrays.asList(values()));
+        private static final int SIZE = VALUES.size();
+        private static final Random RANDOM = new Random();
 
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.store.DataStoreFactory;
-import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.people.v1.PeopleService;
-import com.google.api.services.people.v1.PeopleServiceScopes;
+        public static Colour randomColour()  {
+            return VALUES.get(RANDOM.nextInt(SIZE));
+        }
+    }
 
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.model.Model;
+    private static HashMap <String, String> tagColours = new HashMap<String, String>();
 
-//@@author derrickchua-reused
+```
+###### /java/seedu/address/ui/PersonCard.java
+``` java
+    /**
+     *Initialises a label with an assigned colour for a given person
+     * @param person
+     */
+    private void initTags(ReadOnlyPerson person) {
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-background-color: " + getTagColour(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
+    }
+
+    private static String getTagColour (String tagName) {
+        if (!(tagColours.containsKey(tagName))) {
+            tagColours.put(tagName, Colour.randomColour().toString());
+        }
+
+        return tagColours.get(tagName);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof PersonCard)) {
+            return false;
+        }
+
+        // state check
+        PersonCard card = (PersonCard) other;
+        return id.getText().equals(card.id.getText())
+                && person.equals(card.person);
+    }
+}
+```
+###### /java/seedu/address/google/OAuth.java
+``` java
 /**
  * Command-line sample for the Google OAuth2 API described at <a
  * href="http://code.google.com/apis/accounts/docs/OAuth2Login.html">Using OAuth 2.0 for Login
@@ -134,3 +174,4 @@ public class OAuth extends Observable {
     }
 
 }
+```

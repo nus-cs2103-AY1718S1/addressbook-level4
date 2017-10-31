@@ -6,19 +6,20 @@ import static java.util.Objects.requireNonNull;
 /**
  * Represents a Person's note in the address book.
  */
-public class Note {
+public class Id {
 
     public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Person notes can take any values";
+            "Person id can take any values";
 
-    private final String value;
 
-    public Note(String value) {
+    private String value;
+
+    public Id(String value) {
         requireNonNull(value);
         this.value = value;
     }
 
-    public static boolean isValidNote(String test) {
+    public static boolean isValidId(String test) {
         return test != null;
     }
 
@@ -26,16 +27,22 @@ public class Note {
         return this.value;
     }
 
+
+    public void setValue (String value) {
+        this.value = value;
+    }
     @Override
     public String toString() {
-        return value;
+        return this.value;
     }
+
+
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Note // instanceof handles nulls
-                && this.value.equals(((Note) other).value)); // state check
+                || (other instanceof Id // instanceof handles nulls
+                && this.value.equals(((Id) other).value)); // state check
     }
 
     @Override

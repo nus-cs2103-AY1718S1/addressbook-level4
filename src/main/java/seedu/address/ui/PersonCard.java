@@ -21,11 +21,12 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
 
+    //@@author derrickchua-reused
     /**
     * Enumerate fixed colours for tags
     * */
     private static enum Colour {
-        RED, ORANGE, YELLOW, GREEN, BLUE, INDIGO, VIOLET, BLACK;
+        MAROON, DARKCYAN, FIREBRICK, LIGHTSLATEGREY, DEEPSKYBLUE, OLIVEDRAB, LIGHTPINK, DARKOLIVEGREEN;
 
         private static final List<Colour> VALUES =
                 Collections.unmodifiableList(Arrays.asList(values()));
@@ -36,8 +37,10 @@ public class PersonCard extends UiPart<Region> {
             return VALUES.get(RANDOM.nextInt(SIZE));
         }
     }
+
     private static HashMap <String, String> tagColours = new HashMap<String, String>();
 
+    //@@author
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -91,6 +94,7 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    //@@author derrickchua-reused
     /**
      *Initialises a label with an assigned colour for a given person
      * @param person
