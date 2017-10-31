@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import org.controlsfx.control.textfield.TextFields;
@@ -21,11 +23,18 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -36,9 +45,14 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
-    private static final int TIME_SINCE_TYPING = 300;
+    private static final int MILLISECONDS_SINCE_TYPING = 300;
+    private static final int MILLISECONDS_PAUSE_BEFORE_PRESSING_CTRL = 100;
     private static final int START_OF_FIRST_FIELD = 6;
     private static final int END_OF_FIRST_FIELD = 10;
+    private static final String[] LIST_OF_ALL_COMMANDS = {AddCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD,
+        DeleteCommand.COMMAND_WORD, EditCommand.COMMAND_WORD, FindCommand.COMMAND_WORD, HelpCommand.COMMAND_WORD,
+        HistoryCommand.COMMAND_WORD, ListCommand.COMMAND_WORD, SelectCommand.COMMAND_WORD, RedoCommand.COMMAND_WORD,
+        UndoCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD};
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
@@ -50,11 +64,8 @@ public class CommandBox extends UiPart<Region> {
     private int anchorPosition;
     private String selectedText = "";
     private String input;
-    private final String[] autocompleteCommandList = {"add", "a", "delete", "d", "edit", "e", "find", "f", "search",
-        "list", "l", "select", "s"};
-    private final String[] addCommandFieldList = {"NAME", "PHONE_NUMBER", "EMAIL", "ADDRESS", "TAG", "INDEX",
-        "KEYWORD"};
     private FxRobot robot;
+    private Set<String> setOfAutoCompleteCommands = new HashSet<>();
 
 
 
@@ -71,10 +82,14 @@ public class CommandBox extends UiPart<Region> {
         this.robot = new FxRobot();
         loadKeyboardIcons();
         keyboardIcon.setImage(keyboardIdle);
-        pause = new PauseTransition(Duration.millis(TIME_SINCE_TYPING));
-        final String[] allCommandList = {"add", "delete", "edit", "find", "search", "help", "history",
-            "list", "select", "redo", "undo", "exit", "clear"};
-        TextFields.bindAutoCompletion(commandTextField, allCommandList);
+        pause = new PauseTransition(Duration.millis(MILLISECONDS_SINCE_TYPING));
+        TextFields.bindAutoCompletion(commandTextField, LIST_OF_ALL_COMMANDS);
+
+        setOfAutoCompleteCommands.addAll(AddCommand.COMMAND_WORD_ABBREVIATIONS);
+        setOfAutoCompleteCommands.addAll(EditCommand.COMMAND_WORD_ABBREVIATIONS);
+        setOfAutoCompleteCommands.addAll(DeleteCommand.COMMAND_WORD_ABBREVIATIONS);
+        setOfAutoCompleteCommands.addAll(SelectCommand.COMMAND_WORD_ABBREVIATIONS);
+        setOfAutoCompleteCommands.addAll(FindCommand.COMMAND_WORD_ABBREVIATIONS);
 
         // calls #processInput() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> processInput());
@@ -125,16 +140,13 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
-    public FxRobot getRobot() {
-        return this.robot;
-    }
 
     /**
      * press control key
      */
     public void pressCtrl() {
         pause = new PauseTransition();
-        pause.setDuration(Duration.millis(100));
+        pause.setDuration(Duration.millis(MILLISECONDS_PAUSE_BEFORE_PRESSING_CTRL));
         pause.setOnFinished(event -> {
             robot.push(KeyCode.CONTROL);
         });
@@ -215,7 +227,7 @@ public class CommandBox extends UiPart<Region> {
         input = commandTextField.getText();
         updateKeyboardIconAndStyle();
         autoSelectFirstField();
-        if (Arrays.asList(addCommandFieldList).contains(selectedText)) {
+        if (Arrays.asList(AddCommand.LIST_OF_FIELDS).contains(selectedText)) {
             updateSelection();
         }
     }
@@ -266,7 +278,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     private boolean isAutoCompleteCommand(String command) {
-        return Arrays.asList(autocompleteCommandList).contains(command);
+        return setOfAutoCompleteCommands.contains(command);
     }
 
     private boolean isAddCommandFormat(String input) {
