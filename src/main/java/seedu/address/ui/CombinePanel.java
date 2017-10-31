@@ -210,7 +210,7 @@ public class CombinePanel extends UiPart<Region> {
                     lbl.setEditable(false);
                     lbl.setId(LESSON_NODE_ID);
                     timetableGrid.setGridLinesVisible(true);
-                    if(endHourSpan == 1){
+                    if (endHourSpan == 1) {
                         lbl.setStyle("-fx-font-size: small");
                     }
                     timetableGrid.add(lbl, j + 1, i + 1, endHourSpan, 1);
