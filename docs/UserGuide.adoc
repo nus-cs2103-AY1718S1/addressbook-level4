@@ -258,6 +258,21 @@ Sorts the list based on name in ascending order.
 * `findtag owesMoney` +
 `sort email dsc` +
 Sorts the people with `owesMoney` tag based on their emails in descending order.
+=== Change the theme of AddressBook: `theme`
+[NOTE]
+theme feature available since v1.4.
+
+Change the theme of the Rubrika to the theme specified.
+Format: theme KEYWORD
+
+****
+* The command is case sensitive. e.g `darktheme` is different from `DarkTheme`.
+* The respective `.css` file must be added into resources before the function can work.
+****
+Examples:
+
+* `theme` `DarkTheme` +
+Change the theme of the Rubrika to DarkTheme.
 
 === Importing contacts: `import`
 

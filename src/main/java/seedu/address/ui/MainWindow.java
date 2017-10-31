@@ -13,10 +13,12 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeThemeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -66,6 +68,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private VBox vbox;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -219,10 +224,27 @@ public class MainWindow extends UiPart<Region> {
         browserPanel.freeResources();
         mapPanel.freeResources();
     }
-
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+    //@@author kosyoz
+    /**
+     * Change the theme of teh application.
+     */
+    @Subscribe
+    public void handleChangeThemeEvent(ChangeThemeEvent event) {
+        if (event.getTheme().equals("DarkTheme"))
+        {
+            vbox.getStylesheets().remove("/view/RedTheme.css");
+            vbox.getStylesheets().add("/view/" + event.getTheme() + ".css");
+        }
+
+        else
+        {
+            vbox.getStylesheets().remove("/view/DarkTheme.css");
+            vbox.getStylesheets().add("/view/" + event.getTheme() + ".css");
+        }
     }
 }
