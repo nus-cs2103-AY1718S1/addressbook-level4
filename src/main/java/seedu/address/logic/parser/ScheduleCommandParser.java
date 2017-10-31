@@ -42,10 +42,12 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
             if (str.length == 0 && str.length < 3) {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE));
+            // it is a valid Command
             } else if (str.length >= 3 && isNumeric(str[0])) {
                 index = ParserUtil.parseIndex(argMultimap.getPreamble());
                 com.joestelmach.natty.Parser parser = new com.joestelmach.natty.Parser();
                 scheduleToParse = parser.parse(argMultimap.getValue(PREFIX_SCHEDULE).get());
+                // Natty returns no date or returns with more than one date --> invalid
                 if (scheduleToParse.isEmpty() || scheduleToParse.size() > 1) {
                     throw new ParseException("Please enter a more specific date for your student's consultation.");
                 }
