@@ -41,7 +41,7 @@ public class TagContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_emailContainsKeywords_returnsTrue() {
+    public void test_tagContainsKeywords_returnsTrue() {
         // exact match
         Predicate<ReadOnlyPerson> predicate = new TagContainsKeywordsPredicate(Collections.singletonList("friends"));
         assertTrue(predicate.test(new PersonBuilder().withTags("friends").build()));
@@ -57,7 +57,7 @@ public class TagContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_emailDoesNotContainKeywords_returnsFalse() {
+    public void test_tagDoesNotContainKeywords_returnsFalse() {
         // Zero email domain
         Predicate<ReadOnlyPerson> predicate = new TagContainsKeywordsPredicate(Collections.emptyList());
         assertFalse(predicate.test(new PersonBuilder().withTags("friends").build()));

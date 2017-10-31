@@ -8,24 +8,24 @@ import seedu.address.commons.util.PredicateUtil;
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Tags} matches any of the keywords given.
  */
-public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+public class ScheduleContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
 
-    public TagContainsKeywordsPredicate(List<String> keywords) {
+    public ScheduleContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
     @Override
     public boolean test(ReadOnlyPerson person) {
         return keywords.stream()
-                .anyMatch(keyword -> PredicateUtil.containsTagIgnoreCase(person.getTags(), keyword));
+                .anyMatch(keyword -> PredicateUtil.containsScheduleIgnoreCase(person.getSchedules(), keyword));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof TagContainsKeywordsPredicate // instanceof handles nulls
-                && this.keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check
+                || (other instanceof ScheduleContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((ScheduleContainsKeywordsPredicate) other).keywords)); // state check
     }
 
 }
