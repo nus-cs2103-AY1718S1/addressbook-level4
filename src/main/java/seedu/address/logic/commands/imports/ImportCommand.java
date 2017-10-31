@@ -31,8 +31,8 @@ public abstract class ImportCommand extends UndoableCommand {
             + " are not defined in your operating system.";
     public static final String MESSAGE_CONSECUTIVE_SEPARATOR = "The file path contains consecutive"
             + " name-separators (/ or \\) or extension-separators (.).";
-    public static final String MESSAGE_CORRUPTED_XML_FILE = "The specified XML file is corrupted.\n Please try to import"
-            + " from another XML file.";
+    public static final String MESSAGE_INVALID_XML_DATA_FORMAT = "The data in the specified XML file is not in the"
+            + " correct format as recognized by BoNUS.\nPlease try to import from another XML file.";
 
     /**
      * Different types of sub-commands within {@link ImportCommand}.
