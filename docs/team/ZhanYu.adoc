@@ -12,7 +12,11 @@ ifndef::env-github[]
 
 include::../../README.adoc[tag=applicationDescription]
 
-*Code contributed*: https://github.com/CS2103AUG2017-W11-B2/main/pulse[Pulse]
+*Code contributed*:
+
+* https://github.com/CS2103AUG2017-W11-B2/main/collated/main/ZY-Ang.md[Functional Code]
+* https://github.com/CS2103AUG2017-W11-B2/main/collated/test/ZY-Ang.md[Tests]
+* https://github.com/CS2103AUG2017-W11-B2/main/collated/docs/ZY-Ang.md[Pages]
 
 === Enhancement Added: Find by close words (fuzzy searching) and find by tags
 
@@ -119,7 +123,10 @@ https://www.codacy.com/app/ZY-Ang/main/dashboard[Codacy].
 
 == Project: https://zy-ang.github.io/AutoNameGenerator/[AutoNameGenerator]
 
-{Optionally (not graded), you may include other projects in your portfolio.}
+== Other projects
+
+You can view my full portfolio https://zy-ang.github.io/Portfolio[here].
+
 endif::[]
 
 ifndef::env-github[]
