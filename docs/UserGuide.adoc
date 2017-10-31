@@ -471,25 +471,33 @@ A list of keyboard shortcuts is provided link:#keyboard-shortcuts-2[here].
           | `r`
 |===
 
-// tag::shortcut[]
 == Keyboard Shortcuts
 
-=== Command Shortcuts
+=== AutoComplete Command Shortcuts
 
-[width=50%, cols="2,4"]
+[width=60%, cols="2,4"]
 |===
 | Shortcut | Purpose
 
 | kbd:[Ctrl + A] | Display the add command format in command box
 | kbd:[Ctrl + E] | Display the edit command format in command box
 | kbd:[Ctrl + F] | Display the find command format in command box
+| kbd:[Ctrl + S] | Display the select command format in command box
+| kbd:[Ctrl + Shift + D] | Display the delete command format in command box
+|===
+
+// tag::shortcut[]
+=== Quick Command Shortcuts
+
+[width=60%, cols="2,4"]
+|===
+| Shortcut | Purpose
+
+| kbd:[Ctrl + Shift + C] | Clear contact list
 | kbd:[Ctrl + H] | View history
 | kbd:[Ctrl + L] | List all contacts
-| kbd:[Ctrl + S] | Display the select command format in command box
 | kbd:[Ctrl + Z] | Undo last command
 | kbd:[Ctrl + Y] | Redo last command
-| kbd:[Ctrl + Shift + D] | Display the delete command format in command box
-| kbd:[Ctrl + Shift + C] | Clear contact list
 | kbd:[F1] | View help window
 | kbd:[Ctrl + O] | Open a Rolodex file
 | kbd:[Ctrl + N] | Create new Rolodex file
@@ -497,7 +505,7 @@ A list of keyboard shortcuts is provided link:#keyboard-shortcuts-2[here].
 
 === Navigation/Selection Shortcuts
 
-[width=50%, cols="2,4"]
+[width=60%, cols="2,4"]
 |===
 | Shortcut | Purpose
 
