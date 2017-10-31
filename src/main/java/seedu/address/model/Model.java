@@ -1,11 +1,14 @@
 package seedu.address.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.EmptyListException;
@@ -57,4 +60,50 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /**
+     * Replaces the given list of persons {@code target} with the list of edited persons{@code editedPerson}.
+     *
+     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
+     *      another existing person in the list.
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     */
+    void updateListOfPerson(ArrayList<ReadOnlyPerson> targets, ArrayList<ReadOnlyPerson> editedPersons)
+            throws DuplicatePersonException, PersonNotFoundException;
+
+    /**
+     * Adds an event to master UniqueEventList.
+     * Replace the list of targets with editedPersons to update the UniqueEventList and UniquePersonList.
+     *
+     * @param targets
+     * @param editedPersons
+     * @param event
+     * @throws DuplicateEventException
+     * @throws DuplicatePersonException
+     * @throws PersonNotFoundException
+     */
+    void addEvent(ArrayList<ReadOnlyPerson> targets, ArrayList<ReadOnlyPerson> editedPersons, Event event)
+        throws DuplicateEventException, DuplicatePersonException, PersonNotFoundException;
+
+    /**
+     * Remove event(s) from master UniqueEventList.
+     * Replace the list of targets with editedPersons to update the UniqueEventList and UniquePersonList.
+     *
+     * @param targets
+     * @param editedPersons
+     * @param toRemoveEvents
+     * @throws DuplicatePersonException
+     * @throws PersonNotFoundException
+     * @throws EventNotFoundException
+     */
+    void removeEvents(ArrayList<ReadOnlyPerson> targets, ArrayList<ReadOnlyPerson> editedPersons,
+                      ArrayList<Event> toRemoveEvents)
+            throws DuplicatePersonException, PersonNotFoundException, EventNotFoundException;
+
+    /**
+     * Sort list of Events based on the the given date.
+     *
+     * Comparator logic and sorting details is found in {@code UniquePersonList#sort}
+     * @param date
+     */
+    void sortEvents(LocalDate date);
 }
