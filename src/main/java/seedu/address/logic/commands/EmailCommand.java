@@ -36,9 +36,11 @@ public class EmailCommand extends Command {
     private static final String MESSAGE_FAILURE = "Email was not sent!";
 
     private final Index targetIndex;
+    private String recipientEmail;
 
-    public EmailCommand(Index targetIndex) {
+    public EmailCommand(Index targetIndex, String recipientEmail) {
         this.targetIndex = targetIndex;
+        this.recipientEmail = recipientEmail;
     }
 
     @Override
@@ -61,7 +63,7 @@ public class EmailCommand extends Command {
             tags += tag.tagName + " ";
         }
 
-        String to = "hanselblack@hotmail.com";
+        String to = recipientEmail;
         // Sender's email ID needs to be mentioned
         String from = "unifycs2103@gmail.com";
         // For Gmail host
@@ -99,7 +101,11 @@ public class EmailCommand extends Command {
             MimeBodyPart messageBodyPart = new MimeBodyPart();
 
             //set the actual message
-            messageBodyPart.setContent("Hi, you have requested to send an email"
+            messageBodyPart.setContent("<br/><img src='https://github.com/hanselblack/main/blob/Email/docs/images"
+                            + "/email_header.png?raw=true'/>"
+                            + "<br/><img src='https://github.com/hanselblack/main/blob/Email/docs/images"
+                            + "/email_subheader.png?raw=true'/>"
+                            + "Hi, you have requested to send an email"
                             + " to you.<br/>"
                             + "<table>"
                             + "<tr><td style=\"height:20px; width:80px; margin:0;\">"
@@ -114,9 +120,7 @@ public class EmailCommand extends Command {
                             + "<b>Remark</b></td><td>" + remark + "</td></tr>"
                             + "<tr><td style=\"height:20px; width:80px; margin:0;\">"
                             + "<b>Tags</b></td><td>" + tags + "</td></tr>"
-                            + "</table>"
-                            + "<br/><img src='https://github.com/CS2103AUG2017-W11-B4/"
-                            + "main/blob/master/docs/images/Ui.png?raw=true'/>",
+                            + "</table>",
                     "text/html");
 
             Multipart multipart = new MimeMultipart();

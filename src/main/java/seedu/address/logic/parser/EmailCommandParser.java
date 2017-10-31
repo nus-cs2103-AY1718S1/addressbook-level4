@@ -16,11 +16,19 @@ public class EmailCommandParser {
      * and returns an EmailCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public EmailCommand parse(String args) throws ParseException {
-        try {
-            Index index = ParserUtil.parseIndex(args);
-            return new EmailCommand(index);
-        } catch (IllegalValueException ive) {
+    public EmailCommand parse(String arguments) throws ParseException {
+        String[] args = arguments.trim().split("\\s+");
+        if (args.length == 2) {
+            String email = args[1];
+            try {
+                Index index = ParserUtil.parseIndex(args[0]);
+                return new EmailCommand(index, email);
+            } catch (IllegalValueException ive) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
+            }
+        }
+        else{
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
         }
