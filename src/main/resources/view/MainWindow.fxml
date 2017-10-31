@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
     <URL value="@PEERSONAL_THEME.css" />
     <URL value="@Extensions.css" />
@@ -30,7 +30,7 @@
     </padding>
   </StackPane>
 
-  <StackPane fx:id="resultDisplayPlaceholder" maxHeight="386.0" minHeight="100" prefHeight="386.0" prefWidth="853.0" styleClass="pane-with-border" VBox.vgrow="NEVER">
+  <StackPane fx:id="resultDisplayPlaceholder" maxHeight="386.0" minHeight="100" prefHeight="170.0" prefWidth="853.0" styleClass="pane-with-border" VBox.vgrow="NEVER">
     <padding>
       <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
@@ -41,15 +41,15 @@
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
-      <StackPane fx:id="personListPanelPlaceholder" maxWidth="-Infinity" prefHeight="74.0" prefWidth="188.0" VBox.vgrow="ALWAYS" />
+      <StackPane fx:id="personListPanelPlaceholder" maxWidth="-Infinity" VBox.vgrow="ALWAYS" />
     </VBox>
-      <VBox fx:id="PersonsDetails" prefHeight="200.0" prefWidth="570.0" styleClass="pane-with-border">
+      <VBox fx:id="PersonsDetails" prefHeight="200.0" prefWidth="286.0" styleClass="pane-with-border">
          <children>
-            <StackPane fx:id="personDetailsPlaceholder" prefHeight="224.0" prefWidth="300.0" />
+            <StackPane fx:id="personDetailsPlaceholder" minWidth="0.0" prefHeight="198.0" prefWidth="292.0"/>
          </children>
       </VBox>
 
-    <StackPane fx:id="browserPlaceholder" prefWidth="340" style="-fx-background-color: #9999ff;" styleClass="pane-with-border">
+    <StackPane fx:id="browserPlaceholder" prefHeight="200.0" prefWidth="1279.0" style="-fx-background-color: #9999ff;" styleClass="pane-with-border">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
