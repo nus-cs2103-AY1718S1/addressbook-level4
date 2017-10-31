@@ -84,6 +84,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
     }
 
+    //@@author chrisboo
     @Test
     public void parseCommand_find() throws Exception {
         Person person = new PersonBuilder().build();
@@ -92,6 +93,7 @@ public class AddressBookParserTest {
             + PersonUtil.getPersonDetails(person));
         assertEquals(new FindCommand(descriptor), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_help() throws Exception {

@@ -1,4 +1,11 @@
-//@@author chilipadiboy
+# chilipadiboy
+###### \java\seedu\address\logic\parser\CliSyntax.java
+``` java
+    public static final Prefix PREFIX_REMARK = new Prefix("r/");
+    public static final Prefix PREFIX_BIRTHDAY = new Prefix("b/");
+```
+###### \java\seedu\address\model\person\Birthday.java
+``` java
 package seedu.address.model.person;
 
 import java.text.ParseException;
@@ -53,25 +60,56 @@ public class Birthday {
         return value;
     }
 
-    //@@author chrisboo
+```
+###### \java\seedu\address\model\person\Remark.java
+``` java
+package seedu.address.model.person;
+
+import static java.util.Objects.requireNonNull;
+
+/**
+ * Represents a Person's remark in the address book.
+ * Guarantees: immutable; is always valid
+ */
+public class Remark {
+
+    public static final String MESSAGE_REMARK_CONSTRAINTS =
+        "Person remarks can take any values, can even be blank";
+
+    public final String value;
+
+    public Remark(String remark) {
+        requireNonNull(remark);
+        this.value = remark;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
     @Override
     public boolean equals(Object other) {
-        if (other == this) { // short circuit if same object
-            return true;
-        } else if (!(other instanceof Birthday)) { // instanceof handle nulls
-            return false;
-        } else if (this.value == ((Birthday) other).value) {
-            return true;
-        } else if (this.value != null && this.value.equals(((Birthday) other).value)) { // state check
-            return true;
-        }
-
-        return false;
+        return other == this // short circuit if same object
+            || (other instanceof Remark // instanceof handles nulls
+            && this.value.equals(((Remark) other).value)); // state check
     }
-    //@@author
 
     @Override
     public int hashCode() {
         return value.hashCode();
     }
 }
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+    @FXML
+    private Label birthday;
+    @FXML
+    private Label remark;
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+        birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
+        remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
+```

@@ -15,6 +15,7 @@ public class FindCommandParserTest {
 
     private FindCommandParser parser = new FindCommandParser();
 
+    //@@author chrisboo
     @Test
     public void parse_emptyArg_throwsParseException() {
         assertParseFailure(parser, "     ", FindCommand.MESSAGE_NO_FIELD_PROVIDED);
@@ -35,5 +36,5 @@ public class FindCommandParserTest {
         FindCommand expectedFindCommand = new FindCommand(person);
         assertParseSuccess(parser, " n/Alice p/123456", expectedFindCommand);
     }
-
+    //@@author
 }

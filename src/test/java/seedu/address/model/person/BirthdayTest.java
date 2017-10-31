@@ -7,6 +7,7 @@ import org.junit.Test;
 
 public class BirthdayTest {
 
+    //@@author chrisboo
     @Test
     public void isValidBirthday() {
         // invalid Birthdays
@@ -22,4 +23,5 @@ public class BirthdayTest {
         assertTrue(Birthday.isValidBirthday("01/01/1994"));
         assertTrue(Birthday.isValidBirthday("1/1/1994"));
     }
+    //@@author
 }

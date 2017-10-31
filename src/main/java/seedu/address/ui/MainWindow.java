@@ -209,6 +209,7 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.show();
     }
 
+    //@@author chrisboo
     /**
      * Opens a FileChooser to let the user select an address book to load.
      */
@@ -226,6 +227,7 @@ public class MainWindow extends UiPart<Region> {
 
         raise(new OpenAddressBookRequestEvent(file));
     }
+    //@@author
 
     /**
      * Closes the application.
