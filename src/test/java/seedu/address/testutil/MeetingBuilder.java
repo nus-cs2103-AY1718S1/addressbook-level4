@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Meeting;
 import seedu.address.model.person.InternalId;
-
+//@@author liuhang0213
 /**
  * A utility class to help with building Meeting objects.
  */

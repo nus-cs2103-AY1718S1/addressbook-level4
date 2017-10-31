@@ -9,7 +9,7 @@ import java.util.Objects;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.InternalId;
-
+//@@author liuhang0213
 /**
  * Represents a Meeting
  * Guarantees: immutable; meeting time is in the future
