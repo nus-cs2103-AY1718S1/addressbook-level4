@@ -111,10 +111,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
 
-        // addTags should run first to ensure any data added to this AddressBook is valid
-        addTags(new HashSet<>(newData.getTagList()));
         addPersons(newData.getPersonList());
         addEvents(newData.getEventList());
+        addTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
     }
 
