@@ -2,6 +2,8 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.Label;
 import org.fxmisc.easybind.EasyBind;
 
 import com.google.common.eventbus.Subscribe;
@@ -27,9 +29,12 @@ public class EventListPanel extends UiPart<Region> {
 
     @FXML
     private ListView<EventCard> eventListView;
+    @FXML
+    private Label title;
 
     public EventListPanel(ObservableList<ReadOnlyEvent> eventList) {
         super(FXML);
+        title.textProperty().bind(new SimpleStringProperty("Event List"));
         setConnections(eventList);
         registerAsAnEventHandler(this);
     }
