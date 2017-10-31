@@ -81,7 +81,6 @@ public class BrowserPanel extends UiPart<Region> {
         isPost = bool;
     }
 
-    //@@author alexfoodw
     /**
      * Identifies if in the midst of linking process
      * @param bool
@@ -89,6 +88,7 @@ public class BrowserPanel extends UiPart<Region> {
     public static void setLink(boolean bool) {
         isLink = bool;
     }
+    //@@author
 
     //@@author keithsoc
     /**
@@ -124,6 +124,7 @@ public class BrowserPanel extends UiPart<Region> {
                 });
         isPost = false;
     }
+    //@@author
 
     /**
      * Frees resources allocated to the browser.
@@ -173,4 +174,5 @@ public class BrowserPanel extends UiPart<Region> {
             throw new CommandException("Url change error.");
         }
     }
+    //@@author
 }
