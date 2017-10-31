@@ -22,8 +22,10 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.HideCalendarEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowCalendarEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -47,7 +49,10 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
+    //@@author sebtsh
     private PersonPanel personPanel;
+    private EventPanel eventPanel;
+    //@@author
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
     private EventListPanel eventListPanel;
@@ -155,8 +160,11 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+        //@@author sebtsh
+        eventPanel = new EventPanel(logic);
+
         personPanel = new PersonPanel(logic);
-        browserPlaceholder.getChildren().add(personPanel.getRoot());
+        //@@author
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -264,6 +272,36 @@ public class MainWindow extends UiPart<Region> {
         }
     }
 
+    //@@author sebtsh
+    /**
+     * Called when a person panel is selected. Hides other panels and displays the person panel.
+     */
+    @FXML
+    public void handlePersonPanelSelected() {
+        if (browserPlaceholder.getChildren().contains(eventPanel.getRoot())) {
+            browserPlaceholder.getChildren().remove(eventPanel.getRoot());
+        }
+        if (browserPlaceholder.getChildren().contains(calendarView.getRoot())) {
+            browserPlaceholder.getChildren().remove(calendarView.getRoot());
+        }
+        browserPlaceholder.getChildren().add((personPanel.getRoot()));
+    }
+
+    /**
+     * Called when an event panel is selected. Hides other panels and displays the event panel.
+     */
+    @FXML
+    public void handleEventPanelSelected() {
+        if (browserPlaceholder.getChildren().contains(personPanel.getRoot())) {
+            browserPlaceholder.getChildren().remove(personPanel.getRoot());
+        }
+        if (browserPlaceholder.getChildren().contains(calendarView.getRoot())) {
+            browserPlaceholder.getChildren().remove(calendarView.getRoot());
+        }
+        browserPlaceholder.getChildren().add((eventPanel.getRoot()));
+    }
+    //@@author
+
     void show() {
         primaryStage.show();
     }
@@ -304,5 +342,18 @@ public class MainWindow extends UiPart<Region> {
     private void handleHideCalendarEvent(HideCalendarEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHideCalendar();
+    }
+
+    //@@author sebtsh
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handlePersonPanelSelected();
+    }
+
+    @Subscribe
+    private void handleEventPanelSelectionChangedEvent(EventPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleEventPanelSelected();
     }
 }

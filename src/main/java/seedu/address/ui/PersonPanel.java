@@ -1,4 +1,4 @@
-//@@author A0155754X
+//@@author sebtsh
 package seedu.address.ui;
 
 import java.io.File;
@@ -126,7 +126,7 @@ public class PersonPanel extends UiPart<Region> {
             }
         });
     }
-    //@@author
+    //@@author sebtsh
 
     /**
      * Shows the details of the person selected. Called by the handlePersonPanelSelectionChangedEvent event listener,
@@ -153,9 +153,9 @@ public class PersonPanel extends UiPart<Region> {
         String imagePath = person.getPhoto().toString();
         Image image = new Image(new File(imagePath).toURI().toString());
         photo.setImage(image);
-
         //@@author
         storedPerson = person;
+        //@@author sebtsh
     }
 
     /**
