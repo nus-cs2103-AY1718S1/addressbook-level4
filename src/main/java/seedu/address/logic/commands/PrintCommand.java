@@ -16,6 +16,11 @@ import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.insurance.UniqueLifeInsuranceList;
 import seedu.address.model.person.ReadOnlyPerson;
 
+/**
+ * Prints the list of contacts, along with any associated
+ * insurance policies where the contact is involved in,
+ * into a printable, readable .txt file.
+ */
 public class PrintCommand extends Command {
 
     public static final String[] COMMAND_WORDS = {"print"};
@@ -26,8 +31,8 @@ public class PrintCommand extends Command {
             + "Example: " + COMMAND_WORD + " filename\n"
             + "file can then be found in the in doc/books folder as filename.txt";
 
-    public static final String MESSAGE_SUCCESS = "Addressbook has been saved! " +
-            "Find your addressbook in the .txt file named by you in the doc/books folder.";
+    public static final String MESSAGE_SUCCESS = "Addressbook has been saved! "
+            + "Find your addressbook in the .txt file named by you in the doc/books folder.";
 
     private final String fileName;
 
@@ -44,8 +49,8 @@ public class PrintCommand extends Command {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         List<String> lines = new ArrayList<>();
-        String timeStamp = new SimpleDateFormat("dd/MM/YYYY" + " "+ "HH:mm:ss").format(new Date());
-        lines.add("Addressbook was last updated on: " + timeStamp +"\n");
+        String timeStamp = new SimpleDateFormat("dd/MM/YYYY" + " " + "HH:mm:ss").format(new Date());
+        lines.add("Addressbook was last updated on: " + timeStamp + "\n");
 
         int personIndex = 1;
         for (ReadOnlyPerson person: lastShownList) {
@@ -73,7 +78,7 @@ public class PrintCommand extends Command {
             personIndex++;
         }
 
-        Path file = Paths.get("docs/books/"+ fileName +".txt");
+        Path file = Paths.get("docs/books/" + fileName + ".txt");
         try {
             Files.write(file, lines, Charset.forName("UTF-8"));
         } catch (IOException e) {
