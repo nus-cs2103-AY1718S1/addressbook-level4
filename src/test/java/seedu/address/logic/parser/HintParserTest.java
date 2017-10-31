@@ -27,26 +27,53 @@ public class HintParserTest {
     }
 
     @Test
-    public void autocomplete_incompleteCommand_returnsFullCommand() {
+    public void autocomplete_incompleteCommand_returnsFullCommandAndTrailingSpace() {
         assertEquals(
-                AddCommand.COMMAND_WORD,
+                AddCommand.COMMAND_WORD + " ",
                 autocomplete(AddCommand.COMMAND_WORD.substring(0, AddCommand.COMMAND_WORD.length() - 1)));
         assertEquals(
-                ListCommand.COMMAND_WORD,
+                ListCommand.COMMAND_WORD + " ",
                 autocomplete(ListCommand.COMMAND_WORD.substring(0, ListCommand.COMMAND_WORD.length() - 1)));
     }
 
     @Test
     public void autocomplete_validCommands_returnsParameters() {
         assertEquals(
-                AddCommand.COMMAND_WORD + " n/NAME",
+                AddCommand.COMMAND_WORD + " n/",
                 autocomplete(AddCommand.COMMAND_WORD));
         assertEquals(
-                EditCommand.COMMAND_WORD + " index",
+                AddCommand.COMMAND_WORD + " n/",
+                autocomplete(AddCommand.COMMAND_WORD + " "));
+        assertEquals(
+                AddCommand.COMMAND_WORD + " n/",
+                autocomplete(AddCommand.COMMAND_WORD + " n"));
+        assertEquals(
+                AddCommand.COMMAND_WORD + " n/",
+                autocomplete(AddCommand.COMMAND_WORD + " n/"));
+
+        assertEquals(
+                EditCommand.COMMAND_WORD + " ",
                 autocomplete(EditCommand.COMMAND_WORD));
         assertEquals(
-                FindCommand.COMMAND_WORD + " n/NAME",
+                EditCommand.COMMAND_WORD + " 1 n/",
+                autocomplete(EditCommand.COMMAND_WORD + " 1"));
+        assertEquals(
+                EditCommand.COMMAND_WORD + " 1 n/",
+                autocomplete(EditCommand.COMMAND_WORD + " 1 n"));
+        assertEquals(
+                EditCommand.COMMAND_WORD + " 1 n/",
+                autocomplete(EditCommand.COMMAND_WORD + " 1 n/"));
+
+        assertEquals(
+                FindCommand.COMMAND_WORD + " n/",
                 autocomplete(FindCommand.COMMAND_WORD));
+        assertEquals(
+                FindCommand.COMMAND_WORD + " n/",
+                autocomplete(FindCommand.COMMAND_WORD + " n"));
+        assertEquals(
+                FindCommand.COMMAND_WORD + " n/",
+                autocomplete(FindCommand.COMMAND_WORD + " n/"));
+
         assertEquals(
                 MusicCommand.COMMAND_WORD + " play",
                 autocomplete(MusicCommand.COMMAND_WORD));
