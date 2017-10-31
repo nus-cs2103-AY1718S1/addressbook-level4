@@ -53,7 +53,7 @@ public class AccessCommandTest {
     }
 
     @Test
-    public void execute_invalidWebsite_failure(){
+    public void execute_invalidWebsite_failure() {
         try {
             accessCommandOne.execute();
         } catch (CommandException ce) {
