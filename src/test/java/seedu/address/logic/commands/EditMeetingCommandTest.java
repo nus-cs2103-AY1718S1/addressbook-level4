@@ -14,7 +14,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstMeetingOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_MEETING;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_MEETING;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalMeetings.getTypicalAddressBook;
 
 import org.junit.Test;
 
@@ -93,9 +93,9 @@ public class EditMeetingCommandTest {
         showFirstMeetingOnly(model);
 
         ReadOnlyMeeting meetingInFilteredList = model.getFilteredMeetingList().get(INDEX_FIRST_MEETING.getZeroBased());
-        Meeting editedMeeting = new MeetingBuilder(meetingInFilteredList).withNameMeeting(VALID_NAME_BIKING).build();
+        Meeting editedMeeting = new MeetingBuilder(meetingInFilteredList).withNameMeeting(VALID_NAME_BIKING).withDateTime(VALID_DATE_BIKING).build();
         EditMeetingCommand editMeetingCommand = prepareCommand(INDEX_FIRST_MEETING,
-                new EditMeetingDescriptorBuilder().withMeetingName(VALID_NAME_BIKING).build());
+                new EditMeetingDescriptorBuilder().withMeetingName(VALID_NAME_BIKING).withDate(VALID_DATE_BIKING).build());
 
         String expectedMessage = String.format(EditMeetingCommand.MESSAGE_EDIT_MEETING_SUCCESS, editedMeeting);
 
