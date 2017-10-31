@@ -148,7 +148,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void sortPersons(Comparator<ReadOnlyPerson> comparator) {
-        requireNonNull(comparator);
         sortedPersons.setComparator(comparator);
     }
 
@@ -166,6 +165,9 @@ public class ModelManager extends ComponentManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
+        System.out.println("THIS: " + filteredPersons);
+        System.out.println("OTHER: " + other.filteredPersons);
+        System.out.println("EQUALS: " + filteredPersons.equals(other.filteredPersons));
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
     }

@@ -25,6 +25,7 @@ import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_FAVORITE_YES;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_SOCIAL_BOB_FACEBOOK;
@@ -33,6 +34,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
@@ -104,8 +106,10 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: edit a person with new values same as existing values -> edited */
+        // After sorting, bob is the second person in the list
+        Index bobIndex = INDEX_SECOND_PERSON;
         command = EditCommand.COMMAND_WORD + " "
-                + index.getOneBased()
+                + bobIndex.getOneBased()
                 + NAME_DESC_BOB
                 + PHONE_DESC_BOB
                 + EMAIL_DESC_BOB
@@ -114,7 +118,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 + TAG_DESC_FRIEND
                 + TAG_DESC_HUSBAND
                 + SOCIAL_DESC_BOB;
-        assertCommandSuccess(command, index, BOB);
+        assertCommandSuccess(command, bobIndex, BOB);
 
         /* Case: edit some fields -> edited */
         index = INDEX_FIRST_PERSON;
@@ -135,9 +139,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         index = INDEX_FIRST_PERSON;
         assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_BOB;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_AMY;
         personToEdit = getModel().getFilteredPersonList().get(index.getZeroBased());
-        editedPerson = new PersonBuilder(personToEdit).withName(VALID_NAME_BOB).build();
+        editedPerson = new PersonBuilder(personToEdit).withName(VALID_NAME_AMY).build();
         assertCommandSuccess(command, index, editedPerson);
 
         /* Case: filtered person list, edit index within bounds of address book but out of bounds of person list
@@ -219,14 +223,15 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: edit a person with new values same as another person's values -> rejected */
         executeCommand(PersonUtil.getAddCommand(BOB));
         assertTrue(getModel().getAddressBook().getPersonList().contains(BOB));
-        index = INDEX_FIRST_PERSON;
-        assertFalse(getModel().getFilteredPersonList().get(index.getZeroBased()).equals(BOB));
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+        // Index of a person who is not Bob so that edit should fail
+        Index notBobIndex = INDEX_SECOND_PERSON;
+        assertFalse(getModel().getFilteredPersonList().get(notBobIndex.getZeroBased()).equals(BOB));
+        command = EditCommand.COMMAND_WORD + " " + notBobIndex.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + FAVORITE_DESC_YES + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: edit a person with new values same as another person's values but with different tags -> rejected */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+        command = EditCommand.COMMAND_WORD + " " + notBobIndex.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + FAVORITE_DESC_YES + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
     }
@@ -253,6 +258,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
             Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
         try {
+            System.out.println("EDITING: " + expectedModel.getFilteredPersonList().get(toEdit.getZeroBased()));
             expectedModel.updatePerson(
                     expectedModel.getFilteredPersonList().get(toEdit.getZeroBased()), editedPerson);
             expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);

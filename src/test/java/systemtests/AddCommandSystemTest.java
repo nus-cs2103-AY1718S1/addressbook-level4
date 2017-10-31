@@ -51,6 +51,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DefaultPersonComparator;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Favorite;
 import seedu.address.model.person.Name;
@@ -331,7 +332,9 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandSuccess(String command, ReadOnlyPerson toAdd) {
         Model expectedModel = getModel();
         try {
+            System.out.println("BEFORE ADD: " + expectedModel.getFilteredPersonList());
             expectedModel.addPerson(toAdd);
+            System.out.println("AFTER ADD: " + expectedModel.getFilteredPersonList());
         } catch (DuplicatePersonException dpe) {
             throw new IllegalArgumentException("toAdd already exists in the model.");
         }
@@ -348,6 +351,13 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
+        /*
+        DefaultPersonComparator defaultComparator = new DefaultPersonComparator();
+        expectedModel.sortPersons(null);
+        getModel().sortPersons(null);
+        expectedModel.sortPersons(defaultComparator);
+        getModel().sortPersons(defaultComparator);
+        */
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsDefaultStyle();

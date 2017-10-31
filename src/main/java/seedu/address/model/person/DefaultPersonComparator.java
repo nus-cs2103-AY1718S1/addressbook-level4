@@ -1,23 +1,30 @@
 package seedu.address.model.person;
 
+import static seedu.address.model.person.PersonComparatorUtil.compareAddress;
+import static seedu.address.model.person.PersonComparatorUtil.compareEmail;
+import static seedu.address.model.person.PersonComparatorUtil.compareFavorite;
+import static seedu.address.model.person.PersonComparatorUtil.compareName;
+import static seedu.address.model.person.PersonComparatorUtil.comparePhone;
+
 import java.util.Comparator;
 
 /**
- * Default comparator for persons. Sorts first by favorites, then by name in alphabetical order.
+ * Default comparator for persons. Sorts first by favorites, then by name in alphabetical order,
+ * then by phone in numeric order, then by address in alphabetical order, then by email in alphabetical order
  */
 public class DefaultPersonComparator implements Comparator<ReadOnlyPerson> {
     @Override
     public int compare(ReadOnlyPerson thisPerson, ReadOnlyPerson otherPerson) {
-        boolean isThisPersonFavorite = thisPerson.getFavorite().isFavorite();
-        boolean isOtherPersonFavorite = otherPerson.getFavorite().isFavorite();
-        if (isThisPersonFavorite && !isOtherPersonFavorite) {
-            return -1;
-        } else if (!isThisPersonFavorite && isOtherPersonFavorite) {
-            return 1;
+        if (!thisPerson.getFavorite().equals(otherPerson.getFavorite())) {
+            return compareFavorite(thisPerson, otherPerson);
+        } else if (!thisPerson.getName().equals(otherPerson.getName())) {
+            return compareName(thisPerson, otherPerson);
+        } else if (!thisPerson.getPhone().equals(otherPerson.getPhone())) {
+            return comparePhone(thisPerson, otherPerson);
+        } else if (!thisPerson.getAddress().equals(otherPerson.getAddress())) {
+            return compareAddress(thisPerson, otherPerson);
         } else {
-            String thisPersonName = thisPerson.getName().toString();
-            String otherPersonName = otherPerson.getName().toString();
-            return thisPersonName.compareToIgnoreCase(otherPersonName);
+            return compareEmail(thisPerson, otherPerson);
         }
     }
 }
