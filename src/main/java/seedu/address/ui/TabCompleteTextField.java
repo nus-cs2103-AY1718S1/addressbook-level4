@@ -60,14 +60,28 @@ public class TabCompleteTextField extends TextField {
     }
 
     /**
-     * Generate options for Auto-Completion from
+     * Generates options for Auto-Completion from
      * the names and tags of persons from a list.
      * @param persons a list of person
      */
     public void generateOptions(List<ReadOnlyPerson> persons) {
         for (ReadOnlyPerson person : persons) {
-            options.addAll(Arrays.asList(person.getName().fullName.split("\\s+")));
-            person.getTags().stream().map(tag -> tag.tagName).forEachOrdered(options::add);
+            options.addAll(Arrays.asList(person.getName().fullName.toLowerCase().split("\\s+")));
+            person.getTags().stream().map(tag -> tag.tagName.toLowerCase()).forEachOrdered(options::add);
+        }
+    }
+
+    /**
+     * Updates options for Auto-Completion from
+     * the arguments of an inputted command.
+     * @param command an inputted command
+     */
+    public void updateOptions(String command) {
+        String[] args = command.toLowerCase().split("(\\s+|[a-z]/)");
+        for (int i = 1; i < args.length; i++) {
+            if (args[i].matches("[a-z]+")) {
+                options.add(args[i]);
+            }
         }
     }
 
@@ -80,7 +94,7 @@ public class TabCompleteTextField extends TextField {
         String text = getText();
         int lastSpace = text.lastIndexOf(" ");
         prefixWords = text.substring(0, lastSpace + 1);
-        lastWord = text.substring(lastSpace + 1);
+        lastWord = text.substring(lastSpace + 1).toLowerCase();
     }
 
     /**
