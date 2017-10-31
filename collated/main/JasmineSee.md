@@ -369,6 +369,16 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
+    public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        addressBook.removePerson(target);
+        File photoPath = new File("src/main/photos/" + target.getEmail().toString() + ".png");
+        photoPath.delete();
+        indicateAddressBookChanged();
+    }
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
     public void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException {
         for (int i = 0; i < addressBook.getPersonList().size(); i++) {
             ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
