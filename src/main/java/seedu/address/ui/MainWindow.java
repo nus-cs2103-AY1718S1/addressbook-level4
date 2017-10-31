@@ -237,12 +237,4 @@ public class MainWindow extends UiPart<Region> {
         rightPanelPlaceholder.getChildren().clear();
         rightPanelPlaceholder.getChildren().add(profilePanel.getRoot());
     }
-
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        //insuranceListPanel = new InsuranceListPanel(event.getNewSelection().person);
-        rightPanelPlaceholder.getChildren().clear();
-        // rightPanelPlaceholder.getChildren().add(insuranceListPanel.getRoot());
-    }
 }

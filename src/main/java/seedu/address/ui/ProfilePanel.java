@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonNameClickedEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.SwitchPanelRequestEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -91,6 +92,13 @@ public class ProfilePanel extends UiPart<Region> {
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         dob.textProperty().bind(Bindings.convert(person.dobProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
+    }
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        //insuranceListPanel = new InsuranceListPanel(event.getNewSelection().person);
+        loadPersonPage(event.getNewSelection().person);
+        // rightPanelPlaceholder.getChildren().add(insuranceListPanel.getRoot());
     }
 
     //@@author OscarWang114
