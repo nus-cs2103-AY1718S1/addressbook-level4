@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.xml.bind.annotation.XmlElement;
 
@@ -33,8 +34,12 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String dob;
 
-    @XmlElement
+    @XmlElement(name = "tagged")
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    //@@author OscarWang114
+    @XmlElement(name = "lifeInsuranceId")
+    private List<String> lifeInsuranceIds = new ArrayList<>();
+    //@@author
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -53,13 +58,18 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        dob = source.getDateOfBirth().finalDateOfBirth;
+        dob = source.getDateOfBirth().toString();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        lifeInsuranceIds = new ArrayList<>();
+        for (UUID id : source.getLifeInsuranceIds()) {
+            lifeInsuranceIds.add(id.toString());
+        }
     }
 
+    //@@author OscarWang114
     /**
      * Converts this jaxb-friendly adapted person object into the model's Person object.
      *
@@ -70,12 +80,17 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
+        final List<UUID> personLifeInsuranceIds = new ArrayList<>();
+        for (String lifeInsuranceId: lifeInsuranceIds) {
+            personLifeInsuranceIds.add(UUID.fromString(lifeInsuranceId));
+        }
         final Name name = new Name(this.name);
         final Phone phone = this.phone.equals("") ? new Phone() : new Phone(this.phone);
         final Email email = this.email.equals("") ? new Email() : new Email(this.email);
         final Address address = this.address.equals("") ? new Address() : new Address(this.address);
         final DateOfBirth dob = this.dob.equals("") ? new DateOfBirth() : new DateOfBirth(this.dob);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, dob, tags);
+        return new Person(name, phone, email, address, dob, tags, personLifeInsuranceIds);
     }
+    //@@author
 }

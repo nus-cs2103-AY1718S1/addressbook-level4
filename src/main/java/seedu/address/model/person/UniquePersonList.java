@@ -2,8 +2,6 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -96,49 +94,32 @@ public class UniquePersonList implements Iterable<Person> {
         for (final ReadOnlyPerson person : persons) {
             replacement.add(new Person(person));
         }
-
-        ArrayList<ReadOnlyPerson> temp = new ArrayList<>();
-        for (ReadOnlyPerson person: persons) {
-            temp.add(new Person(person));
-        }
-        ObservableList<ReadOnlyPerson> temp2 = FXCollections.observableArrayList(temp);
-        Comparator<ReadOnlyPerson> alphaOrder = new Comparator<ReadOnlyPerson>() {
-            public int compare(ReadOnlyPerson first, ReadOnlyPerson second) {
-                int x = String.CASE_INSENSITIVE_ORDER.compare(first.getName().fullName, second.getName().fullName);
-                if (x == 0) {
-                    x = (first.getName().fullName).compareTo(second.getName().fullName);
-                }
-                return x;
-            }
-        };
-        temp2.sort(alphaOrder);
-
-        final UniquePersonList replacement2 = new UniquePersonList();
-        for (final ReadOnlyPerson person : temp2) {
-            replacement2.add(new Person(person));
-        }
-
-        setPersons(replacement2);
+        replacement.sortPersons();
+        setPersons(replacement);
     }
 
+    //@@author Juxarius
     /**
      * Sorts the internal list of people
      */
     public void sortPersons() throws DuplicatePersonException {
         ObservableList<Person> listToSort = FXCollections.observableArrayList(internalList);
         listToSort.sort((ReadOnlyPerson first, ReadOnlyPerson second)-> {
+            //@@author arnollim
             int x = String.CASE_INSENSITIVE_ORDER.compare(first.getName().fullName, second.getName().fullName);
             if (x == 0) {
                 x = (first.getName().fullName).compareTo(second.getName().fullName);
             }
             return x;
         });
+        //@@author Juxarius
         UniquePersonList listToReplace = new UniquePersonList();
         for (ReadOnlyPerson person : listToSort) {
             listToReplace.add(person);
         }
         setPersons(listToReplace);
     }
+    //@@author
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.

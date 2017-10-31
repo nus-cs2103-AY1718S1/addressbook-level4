@@ -51,8 +51,8 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.parser.DateParser;
 import seedu.address.model.Model;
-import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -158,8 +158,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person, missing tags -> added */
         assertCommandSuccess(HOON);
 
+        //@@author OscarWang114
         /* Case: missing phone -> added */
-
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + DOB_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, AMY_NO_PHONE);
@@ -173,16 +173,20 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + DOB_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, AMY_NO_ADDRESS);
+        //@@author
 
         /* Case: missing dob -> added */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY  + TAG_DESC_FRIEND;
         assertCommandSuccess(command, AMY_NO_DOB);
 
+        //@@author OscarWang114
         /* Case: missing name -> rejected */
         command = AddCommand.COMMAND_WORD + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + DOB_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        //@@author
+
         /* Case: invalid keyword -> rejected */
         command = "adds " + PersonUtil.getPersonDetails(toAdd);
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
@@ -201,7 +205,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: invalid dob -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + INVALID_DOB_DESC;
-        assertCommandFailure(command, DateOfBirth.MESSAGE_DOB_CONSTRAINTS);
+        assertCommandFailure(command, DateParser.MESSAGE_INVALID_MONTH);
         /* Case: invalid tag -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + DOB_DESC_AMY + INVALID_TAG_DESC;

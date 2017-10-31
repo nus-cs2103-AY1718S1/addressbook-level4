@@ -2,19 +2,21 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
-//import java.util.ArrayList;
-//import java.util.Comparator;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-
-//import javafx.collections.FXCollections;
+import java.util.UUID;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.function.ThrowingConsumer;
+import seedu.address.model.insurance.LifeInsurance;
+import seedu.address.model.insurance.ReadOnlyInsurance;
+import seedu.address.model.insurance.UniqueLifeInsuranceMap;
+import seedu.address.model.insurance.exceptions.DuplicateInsuranceException;
+import seedu.address.model.insurance.exceptions.InsuranceNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -31,6 +33,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    //@@author OscarWang114
+    private final UniqueLifeInsuranceMap lifeInsuranceMap;
+    //@@author
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -42,6 +47,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        //@@author OscarWang114
+        lifeInsuranceMap = new UniqueLifeInsuranceMap();
+        //@@author
     }
 
     public AddressBook() {}
@@ -64,6 +72,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    //@@author OscarWang114
+    public void setLifeInsurances(Map<UUID, ReadOnlyInsurance> insurances) throws DuplicateInsuranceException {
+        this.lifeInsuranceMap.setInsurances(insurances);
+    }
+    //@@author
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -78,6 +92,21 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
+
+        //@@author OscarWang114
+        try {
+            setLifeInsurances(newData.getLifeInsuranceMap());
+        } catch (DuplicateInsuranceException e) {
+            assert false : "AddressBooks should not have duplicate insurances";
+        }
+        syncMasterLifeInsuranceMapWith(persons);
+
+        try {
+            syncMasterPersonListWith(lifeInsuranceMap);
+        } catch (InsuranceNotFoundException e) {
+            assert false : "AddressBooks should not contain id that doesn't match to an insurance";
+        }
+        //@@author
     }
 
     //// person-level operations
@@ -163,6 +192,48 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author OscarWang114
+    /**
+     * Ensures that every insurance in the master map:
+     *  - links to its owner, insured, and beneficiary {@code Person} if they exist in master person list respectively
+     */
+    public void syncMasterLifeInsuranceMapWith(UniquePersonList persons) {
+        lifeInsuranceMap.forEach((id, insurance) -> {
+            String owner = insurance.getOwner().getName();
+            String insured = insurance.getInsured().getName();
+            String beneficiary = insurance.getBeneficiary().getName();
+            persons.forEach(person -> {
+                if (person.getName().fullName.equals(owner)) {
+                    insurance.setOwner(person);
+                }
+                if (person.getName().fullName.equals(insured)) {
+                    insurance.setInsured(person);
+                }
+                if (person.getName().fullName.equals(beneficiary)) {
+                    insurance.setBeneficiary(person);
+                }
+            });
+        });
+    }
+
+    /**
+     * Ensures that every person in the master list:
+     *  - contains the correct life insurance corresponding to its id from the master map
+     */
+    public void syncMasterPersonListWith(UniqueLifeInsuranceMap lifeInsuranceMap) throws InsuranceNotFoundException {
+        persons.forEach((ThrowingConsumer<Person>) person -> {
+            List<UUID> idList = person.getLifeInsuranceIds();
+            if (!idList.isEmpty()) {
+                person.clearLifeInsurances();
+                idList.forEach((ThrowingConsumer<UUID>) id -> {
+                    LifeInsurance lf = lifeInsuranceMap.get(id);
+                    person.addLifeInsurances(lf);
+                });
+            }
+        });
+    }
+    //@@author
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
@@ -179,25 +250,6 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
-        /*
-        ArrayList<ReadOnlyPerson> temp = new ArrayList<>();
-        ObservableList<ReadOnlyPerson> personList = persons.asObservableList();
-        for(ReadOnlyPerson person: personList){
-            temp.add(person);
-        }
-        ObservableList<ReadOnlyPerson> temp2 = FXCollections.observableArrayList(temp);
-        Comparator<ReadOnlyPerson> ALPHA_ORDER = new Comparator<ReadOnlyPerson>() {
-            public int compare(ReadOnlyPerson first, ReadOnlyPerson second) {
-                int x = String.CASE_INSENSITIVE_ORDER.compare(first.getName().fullName, second.getName().fullName);
-                if (x== 0) {
-                    x = (first.getName().fullName).compareTo(second.getName().fullName);
-                }
-                return x;
-            }
-        };
-        temp2.sort(ALPHA_ORDER);
-        return temp2;
-        */
         return persons.asObservableList();
     }
 
@@ -205,6 +257,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
     }
+
+    //@@author OscarWang114
+    @Override
+    public Map<UUID, ReadOnlyInsurance> getLifeInsuranceMap() {
+        return lifeInsuranceMap.asMap();
+    }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

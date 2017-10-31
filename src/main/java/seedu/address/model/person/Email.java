@@ -18,13 +18,15 @@ public class Email {
 
     public final String value;
 
+    //@@author OscarWang114
     /**
-     * Initialise a Email object with value of empty String. This can ONLY be used in the default field of
+     * Initialize a Email object with value of empty String. This can ONLY be used in the default field of
      * {@code AddPersonOptionalFieldDescriptor}
      */
     public Email() {
         this.value = "";
     }
+    //@@author
 
     /**
      * Validates given email.
@@ -34,9 +36,11 @@ public class Email {
     public Email(String email) throws IllegalValueException {
         requireNonNull(email);
         String trimmedEmail = email.trim();
+        //@@author Juxarius
         if (trimmedEmail.isEmpty()) {
             throw new EmptyFieldException(PREFIX_EMAIL);
         }
+        //@@author
         if (!isValidEmail(trimmedEmail)) {
             throw new IllegalValueException(MESSAGE_EMAIL_CONSTRAINTS);
         }
