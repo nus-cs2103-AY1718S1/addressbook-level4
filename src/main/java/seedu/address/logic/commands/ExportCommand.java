@@ -3,8 +3,6 @@ package seedu.address.logic.commands;
 import java.io.IOException;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.storage.XmlAddressBookStorage;
-
 
 /**
  * Exports the contacts list in file format to a provided directory in the provided filename
@@ -20,17 +18,15 @@ public class ExportCommand extends Command {
     public static final String MESSAGE_WRITE_ERROR = "The file could not be exported.";
 
     private String fileLocation;
-    private XmlAddressBookStorage exportMethod;
 
     public ExportCommand(String fileLocation) {
         this.fileLocation = fileLocation;
-        exportMethod = new XmlAddressBookStorage(fileLocation);
     }
 
     @Override
     public CommandResult execute() throws CommandException {
         try {
-            exportMethod.saveAddressBook(model.getAddressBook(), fileLocation);
+            storage.saveAddressBook(model.getAddressBook(), fileLocation);
         } catch (IOException ioe) {
             throw new CommandException(MESSAGE_WRITE_ERROR);
         }
