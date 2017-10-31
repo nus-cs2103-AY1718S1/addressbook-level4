@@ -47,8 +47,8 @@ public class Picture {
     public static final String DEFAULT_IRFAN =
             "default_irfan.png";
 
-    private static final int RESIZE_IMAGE_WIDTH = 128;
-    private static final int RESIZE_IMAGE_HEIGHT = 128;
+    private static final int RESIZE_IMAGE_WIDTH = 64;
+    private static final int RESIZE_IMAGE_HEIGHT = 64;
 
     private static final String PICTURE_SUFFIX = ".png";
     private static final String PICTURE_DELIMITER_SLASH = "/";

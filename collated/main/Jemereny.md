@@ -100,13 +100,23 @@ public class ThemeCommandParser implements Parser<ThemeCommand> {
     }
 }
 ```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+        return FXCollections.unmodifiableObservableList(filteredPersons.sorted());
+```
 ###### \java\seedu\address\model\person\Picture.java
 ``` java
 package seedu.address.model.person;
 
+import java.awt.AlphaComposite;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 
@@ -120,8 +130,7 @@ import seedu.address.model.UserPrefs;
 public class Picture {
 
     public static final String MESSAGE_PROFILEPICTURE_CONSTRAINTS =
-            "There should be a valid location to the picture, the picture must be a .png "
-                    + "and the size is 512KB or less";
+            "There should be a valid location to the picture, the picture must be a .png ";
     public static final String MESSAGE_PROFILEPICTURE_ERROR =
             "Error copying file.";
 
@@ -132,9 +141,25 @@ public class Picture {
             "/images/";
     public static final String DEFAULT_PICTURE =
             "default_profile.png";
+    public static final String DEFAULT_ALEX =
+            "default_alex.png";
+    public static final String DEFAULT_BALAKRISHNAN =
+            "default_balakrishnan.png";
+    public static final String DEFAULT_BERNICE =
+            "default_bernice.png";
+    public static final String DEFAULT_CHARLOTTE =
+            "default_charlotte.png";
+    public static final String DEFAULT_DAVID =
+            "default_david.png";
+    public static final String DEFAULT_IRFAN =
+            "default_irfan.png";
+
+    private static final int RESIZE_IMAGE_WIDTH = 64;
+    private static final int RESIZE_IMAGE_HEIGHT = 64;
 
     private static final String PICTURE_SUFFIX = ".png";
-    private static final String PICTURE_DELIMITER = "/";
+    private static final String PICTURE_DELIMITER_SLASH = "/";
+    private static final String PICTURE_DELIMITER_BACKSLASH = "\\\\";
     private static final int PICTURE_MAX_SIZE = 512000; // 512 KB
 
     public final String value;
@@ -146,30 +171,35 @@ public class Picture {
         }
 
         if (trimmedFileLocation != null) {
-            String[] split = trimmedFileLocation.split(PICTURE_DELIMITER);
+            String[] split = trimmedFileLocation.split(PICTURE_DELIMITER_SLASH);
+            if (split.length < 2) {
+                split = trimmedFileLocation.split(PICTURE_DELIMITER_BACKSLASH);
+            }
 
             // When we save the file, it is a single file name there is nothing to split.
             // No need to copy it either
 
             // last value before '/' is picture we want
-            this.value = split[split.length - 1];
+            String fileName = split[split.length - 1];
 
             // length will give 1 when it is the file we saved
             // in that case just put PICTURE_IMAGE_LOCATION to find it
             if (split.length != 1) {
                 File src = new File(fileLocation);
-                File dest = new File(PICTURE_SAVE_LOCATION + this.value);
+                File dest = new File(PICTURE_SAVE_LOCATION + fileName);
 
-                try {
-                    FileUtils.copyFile(src, dest);
-                } catch (IOException e) {
-                    throw new IllegalValueException(MESSAGE_PROFILEPICTURE_ERROR);
+                // If file is too big, resize it.
+                if (src.length() > PICTURE_MAX_SIZE) {
+                    resizeAndSaveImage(src, fileName);
+                } else {
+                    copyImage(src, dest);
                 }
             }
+
+            this.value = fileName;
         } else {
             this.value = null;
         }
-
     }
 
     /**
@@ -182,8 +212,15 @@ public class Picture {
             return true;
         }
 
+        // For default people
+        if (fileLocation.equals(Picture.DEFAULT_ALEX) || fileLocation.equals(Picture.DEFAULT_BALAKRISHNAN)
+                || fileLocation.equals(Picture.DEFAULT_BERNICE) || fileLocation.equals(Picture.DEFAULT_CHARLOTTE)
+                || fileLocation.equals(Picture.DEFAULT_DAVID) || fileLocation.equals(Picture.DEFAULT_IRFAN)) {
+            return true;
+        }
+
         File file = new File(fileLocation);
-        if (file.exists() && file.length() <= PICTURE_MAX_SIZE && fileLocation.endsWith(PICTURE_SUFFIX)) {
+        if (file.exists() && (fileLocation.endsWith(PICTURE_SUFFIX))) {
             return true;
         } else {
             file = new File(PICTURE_SAVE_LOCATION + fileLocation);
@@ -196,11 +233,68 @@ public class Picture {
     }
 
     /**
+     * Copies the image and puts into data folder
+     * @param src Source of file to save
+     * @param dest Destination of the file to save
+     * @throws IllegalValueException
+     */
+    private void copyImage(File src, File dest) throws IllegalValueException {
+        try {
+            FileUtils.copyFile(src, dest);
+        } catch (IOException e) {
+            throw new IllegalValueException(MESSAGE_PROFILEPICTURE_ERROR);
+        }
+    }
+
+    /**
+     * Resizes and saves image to data folder
+     * @param file the image
+     * @param newFileName file name to save as
+     * @throws IllegalValueException if there is an error loading the file
+     */
+    private void resizeAndSaveImage(File file, String newFileName) throws IllegalValueException {
+        try {
+            BufferedImage resizedImage = resizeImage(ImageIO.read(file));
+
+            // Saving of image into data folder
+            ImageIO.write(resizedImage, "png", new File(PICTURE_SAVE_LOCATION + newFileName));
+        } catch (IOException e) {
+            throw new IllegalValueException(MESSAGE_PROFILEPICTURE_ERROR);
+        }
+    }
+
+    /**
+     * Redraws the original image into a smaller canvas, resizing the image.
+     * @param originalImage The original image to be resized
+     * @return BufferedImage image that is redrawn and resized
+     */
+    private BufferedImage resizeImage(BufferedImage originalImage) {
+        int type = originalImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
+
+        BufferedImage resizedImage = new BufferedImage(RESIZE_IMAGE_WIDTH, RESIZE_IMAGE_HEIGHT, type);
+        Graphics2D g = resizedImage.createGraphics();
+        g.drawImage(originalImage, 0, 0, RESIZE_IMAGE_WIDTH, RESIZE_IMAGE_HEIGHT, null);
+        g.dispose();
+
+        g.setComposite(AlphaComposite.Src);
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        return resizedImage;
+    }
+
+    /**
      * Returns default picture location if there is no value
      */
     public String getPictureLocation() {
         if (value == null) {
             return DEFAULT_PICTURE_LOCATION + DEFAULT_PICTURE;
+        } else if (value.equals(Picture.DEFAULT_ALEX) || value.equals(Picture.DEFAULT_BALAKRISHNAN)
+                || value.equals(Picture.DEFAULT_BERNICE) || value.equals(Picture.DEFAULT_CHARLOTTE)
+                || value.equals(Picture.DEFAULT_DAVID) || value.equals(Picture.DEFAULT_IRFAN)) {
+            // Sample data
+            return DEFAULT_PICTURE_LOCATION + value;
         } else {
             return PREFIX_PICTURE + Paths.get(PICTURE_SAVE_LOCATION + value)
                     .toAbsolutePath().toUri().getPath();
