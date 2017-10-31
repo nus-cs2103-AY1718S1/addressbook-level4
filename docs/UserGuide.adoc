@@ -297,7 +297,7 @@ _E.g: creategroup n/CS2103 Project i/1 2 3_ +
 2. The following message will appear if the creation of group is successful. (as shown in Figure XX) +
 _E.g: New group added: CS2103 Project with 3 member(s)_ +
 
-image::Figure15.png[width="790"]
+image::Figure15.PNG[width="790"]
 _Figure 15: Creating a group_ +
 
 === Deleting a group : `deletegroup`
@@ -306,7 +306,7 @@ Format: `deletegroup INDEX`
 
 1. Enter `deletegroup 1` to delete the 1st group on the Groups list on the right.
 
-image::Figure16.png[width="790"]
+image::Figure16.PNG[width="790"]
 _Figure 16: Deleting a group_ +
 
 === Setting colours for tags : `setcolour`
@@ -315,7 +315,7 @@ Format: `setcolour TAGS COLOUR`
 
 1. Enter `setcolour friends red` to set all the tags `friends` to red in Circles.
 
-image::Figure17.png[width="790"]
+image::Figure17.PNG[width="790"]
 _Figure 17: Changing colour for a tag_ +
 
 [TIP]
@@ -331,7 +331,7 @@ Format: `sort` +
 1. Enter `sort name` to sort contacts by name in alphabetical order.
 2. Circles will now have your contacts sorted by name and displayed as shown in Figure 13.
 
-image::Figure18.png[width="790"]
+image::Figure18.PNG[width="790"]
 _Figure 18: Sorting address book by name_ +
 
 [TIP]
@@ -358,7 +358,7 @@ Format: `clear` +
 1. Enter `clear` to clear all contacts.
 2. Address book will now be empty as shown in Figure 14.
 
-image::Figure19.png[width="790"]
+image::Figure19.PNG[width="790"]
 _Figure 19: Clearing of address book_ +
 
 
