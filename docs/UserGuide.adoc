@@ -396,6 +396,31 @@ Use `clear --all` if you want to clear data in all components (both contacts and
 
 ==== From `.xml` format
 
+Imports the data in an external XML file, including data from all three components: *Contacts*, *Events* and *Calendar*,
+into the current address book of *BoNUS*. +
+Format: `(i)import FILEPATH`
+
+****
+* Imports data from the location and file name specified by `FILEPATH`.
+* `FILEPATH` must end with an extension of `.xml`.
+* The file name and folder names in `FILEPATH` should not contain any prohibited characters `?!%*+:|"<>`.
+* If a relative path is provided, the data will be imported from a location relative to the *BoNUS* installation directory.
+****
+
+Examples:
+
+* For `Windows` users: +
+`import C:\Users\John Doe\Documents\bonus.xml`
+
+* For `macOS` and `Linux` users: +
+`import /Users/John Doe/Documents/bonus.xml`
+
+[NOTE]
+====
+For `Windows` users, use `\` as the name-separator in your `FILEPATH`. +
+For `macOS` and `Linux` users, use `/` instead.
+====
+
 ==== From `.bo` format
 
 ==== From NUSMods URL
@@ -413,7 +438,7 @@ Format: `(p)export FILEPATH`
 * Exports data to the location and file name specified by `FILEPATH`.
 * `FILEPATH` must end with an extension of `.xml`.
 * The file name and any non-existent folder names in `FILEPATH` should not contain any prohibited characters `?!%*+:|"<>`.
-* If a relative path is provided, the data will be exported to the *BoNUS* installation directory.
+* If a relative path is provided, the data will be exported to a location relative to the *BoNUS* installation directory.
 * Existing data file at `FILEPATH` will be overwritten.
 * Parent directories, if specified in `FILEPATH`, will be created if they do not exist.
 ****
@@ -425,12 +450,6 @@ Examples:
 
 * For `macOS` and `Linux` users: +
 `export /Users/John Doe/Documents/bonus.xml`
-
-[NOTE]
-====
-For `Windows` users, use `\` as the name-separator in your `FILEPATH`. +
-For `macOS` and `Linux` users, use `/` instead.
-====
 
 ==== To Microsoft Excel^TM^ Worksheet
 
@@ -447,10 +466,10 @@ Format: `(p)export --excel FILEPATH`
 Examples:
 
 * For `Windows` users: +
-`export C:\Users\John Doe\Documents\bonus.xls`
+`export --excel C:\Users\John Doe\Documents\bonus.xls`
 
 * For `macOS` and `Linux` users: +
-`export /Users/John Doe/Documents/bonus.xls`
+`export --excel /Users/John Doe/Documents/bonus.xls`
 
 === Advance setting : `(cfg)config`
 
@@ -555,7 +574,10 @@ e.g.`select 2`
 * *Undo* : `(u)undo`
 * *Redo* : `(r)redo`
 * *Exit* : `(x)exit`
+* *Import* : `(i)import FILEPATH` +
+eg. For `Windows` users: `import C:\Users\John Doe\Documents\bonus.xml` +
+eg. For `macOS` and `Linux` users: `import /Users/John Doe/Documents/bonus.xml`
 * *Export* : `(p)export [--excel] FILEPATH` +
-eg. For `Windows` users: `export C:\Users\John Doe\Documents\addressbook.xml` +
-eg. For `macOS` and `Linux` users: `export /Users/John Doe/Documents/addressbook.xml`
+eg. For `Windows` users: `export C:\Users\John Doe\Documents\bonus.xml` +
+eg. For `macOS` and `Linux` users: `export /Users/John Doe/Documents/bonus.xml`
 * *Config* : `(cfg)config --add-property` `(cfg)config --set-tag-color` `(cfg)config --import-calendar`
