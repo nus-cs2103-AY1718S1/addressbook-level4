@@ -31,6 +31,39 @@ Let's get started. Here is a quick demonstration showing how to perform basic co
 
 image::usage.gif[width="768"]
 
+Here is an explanation of what is happening. First, add 3 persons namely Alice, Bob and Carol.
+
+....
+> add n/Alice
+New person added: Alice Remarks:
+
+> add n/Bob
+New person added: Bob Remarks:
+
+> add n/Carol
+New person added: Carol Remarks:
+....
+
+Intuitive. Now you want to find the information about Bob.
+
+....
+> find n/Bob
+1 persons listed!
+....
+
+To view everyone in your Death Note:
+
+....
+> list
+Listed all persons
+....
+
+To remove the third person shown on the list from your Death Note:
+
+....
+> delete 3
+....
+
 == Quick Start
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
