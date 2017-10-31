@@ -153,18 +153,24 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         PostalCode updatedPostalCode = editPersonDescriptor.getPostalCode().orElse(personToEdit.getPostalCode());
         Debt updatedDebt = editPersonDescriptor.getDebt().orElse(personToEdit.getDebt());
+        Debt updatedTotalDebt = editPersonDescriptor.getTotalDebt().orElse(personToEdit.getTotalDebt());
         Interest updatedInterest = editPersonDescriptor.getInterest().orElse(personToEdit.getInterest());
         Deadline updatedDeadline = editPersonDescriptor.getDeadline().orElse(personToEdit.getDeadline());
         try {
             updatedDeadline.checkDateBorrow(personToEdit.getDateBorrow().getDate());
         } catch (IllegalValueException ive) {
-            throw new CommandException("Deadline cannot be before date borrow.");
+            throw new CommandException(ive.getMessage());
         }
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         Person personCreated = new Person(updatedName, updatedHandphone, updatedHomePhone, updatedOfficePhone,
                 updatedEmail, updatedAddress, updatedPostalCode, updatedDebt, updatedInterest, updatedDeadline,
                 updatedTags);
+        try {
+            personCreated.setTotalDebt(updatedTotalDebt);
+        } catch (IllegalValueException ive) {
+            throw new CommandException(ive.getMessage());
+        }
         personCreated.setDateBorrow(personToEdit.getDateBorrow());
         personCreated.setDateRepaid(personToEdit.getDateRepaid());
         personCreated.setIsBlacklisted(personToEdit.isBlacklisted());
