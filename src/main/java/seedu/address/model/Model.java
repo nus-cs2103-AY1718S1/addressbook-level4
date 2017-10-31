@@ -1,9 +1,11 @@
 package seedu.address.model;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.EmptyBookException;
@@ -53,4 +55,9 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /** Checks if the address book is empty. */
+    Boolean ifListIsEmpty(ArrayList<ReadOnlyPerson> contactList);
+
+    /** Sorts address book in order of upcoming birthdays. */
+    void sortListByUpcomingBirthday(ArrayList<ReadOnlyPerson> contactList) throws CommandException;
 }

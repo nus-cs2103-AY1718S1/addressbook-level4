@@ -79,6 +79,7 @@ public class AddressBookParserTest {
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
+    //@@author Affalen
     @Test
     public void parseCommand_remark() throws Exception {
         final Remark remark = new Remark("Some remark.");
@@ -86,6 +87,7 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + " " + remark.value);
         assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remark), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_birthday() throws Exception {
@@ -105,7 +107,9 @@ public class AddressBookParserTest {
     public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindCommand command = (FindCommand) parser.parseCommand(
+                //@@author Affalen
                 FindCommand.COMMAND_WORD + " " + "n/" + keywords.stream().collect(Collectors.joining(" ")));
+        //@@author
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 

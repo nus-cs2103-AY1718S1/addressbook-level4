@@ -17,7 +17,7 @@ image::teeyk.jpg[width="150", align="left"]
 {empty}[https://github.com/Estois[github]] [<<teeyoukuan#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Logic
+Responsibilities: Logic, Model
 
 
 '''
@@ -27,7 +27,7 @@ image::zfwong.jpg[width="150", align="left"]
 {empty}[https://github.com/zengfengw[github]] [<<zengfengw#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Model
+Responsibilities: Logic, Model
 
 
 '''
@@ -37,7 +37,7 @@ image::yanwc.png[width="150", align="left"]
 {empty}[https://github.com/Affalen[github]] [<<yanweicheng#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Storage
+Responsibilities: Logic, UI
 
 
 '''
@@ -47,6 +47,6 @@ image::yapzx.jpg[width="150", align="left"]
 {empty}[http://github.com/wishingmaid[github]] [<<yapzuoxuan#, portfolio>>]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: Logic, Storage, UI
 
 '''

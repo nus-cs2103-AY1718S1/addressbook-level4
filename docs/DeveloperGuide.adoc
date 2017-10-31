@@ -229,7 +229,7 @@ Suppose that the user wishes to append an image to a desired contact. The user w
 The `editedPerson` will replace `personToEdit` using the `updatePerson()` in the `Model` class. A success message will be generated if the photo addition is successful. +
 The sequence diagram below shows how the `addphoto` process is carried out:
 
-image::SequenceDiagramUML.png[width="800]
+image::NewUML.png[width="800]
 
 ==== Design considerations
 
@@ -406,12 +406,37 @@ image::FindCommandSequenceDiagram.png[width="800"]
 **Aspect:** Accepting different types of user input. +
 **Alternative 1 (current choice):** Using a `commandWord` and `arguments` regex to distinguish user inputs. +
 **Pros:** It is easy to add new parameters and debug. +
-**Cons:** Only able to find one contact at a time e.g. `find n/Alice Bob` does not work.  +
+**Cons:** Inconvenient for users as they have to use a specific `commandWord` for a specific parameter.  +
 **Alternative 2:** Accept any type of user input after `find`. +
 **Pros:** More user-friendly as there are fewer requirements for user input. +
 **Cons:** Difficult to implement because it is tedious to distinguish the user input as several parameters are `String` parameters.
 
 ---
+
+=== Enhancing DeleteCommand mechanism
+
+Prior to enhancement, the `DeleteCommand` class can only delete one entry at a time from the current visible
+list on the model. With this enhancement, it is now able to accept multiple parameters to delete more than one
+entry at a time.
+
+This enhancement was done by changing the `Index` input for the original `DeleteCommand` class to an `ArrayList`,
+allowing it to store more than one `Index` from the user's input. Once it is able to accept more than one `Index`
+for its parameters, the original `DeleteCommand` was modified such that it would run through all the validity checks
+for the given indices. The `DeleteCommand` class would then delete these indicated entries upon success of the
+validity check.
+
+The `DeleteCommandParser` also has to be updated to allow for multiple indices to be accepted. This is done in a similar
+fashion to the above, where the entries for `Index` are changed to that of `ArrayList`, causing the user's entries
+to be stored in an `ArrayList <Index>`.
+
+==== Design Considerations
+
+**Aspect:** Accepting multiple inputs from the user. +
+**Alternative 1 (current choice):** Change the given input from `Index` to `ArrayList<Index>` +
+**Pros:** It allows for most of the base code of `DeleteCommand` to be reused. +
+**Cons:** Have to be thorough and change `Index` to `ArrayList<Index>` in all occurrences within all relevant
+  `DeleteCommand` classes and methods. +
+
 === BirthdayCommand mechanism
 
 image::BirthdayUMLClass.png[width="800]
@@ -465,7 +490,7 @@ display of the entire list in an easier to see manner. +
 ---
 
 **Aspect:** Sort parameters of `SortCommand`. +
-**Alternative 1 (current choice):** Allow sorting based on name, phone, email or address +
+**Alternative 1 (current choice):** Allow sorting based on name, phone, email, address or age +
 **Pros:** Gives the option to sort based on whichever option the user wants.  +
 **Cons:** Unable to make it inbuilt due to the presence of multiple sort parameters. Contacts are not sorted upon addition to Peersonal.  +
 
