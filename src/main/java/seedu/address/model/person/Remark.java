@@ -18,6 +18,10 @@ public class Remark {
         this.value = remark;
     }
 
+    public boolean isEmpty() {
+        return value.equals("");
+    }
+
     @Override
     public String toString() {
         return value;

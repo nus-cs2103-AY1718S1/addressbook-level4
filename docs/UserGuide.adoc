@@ -18,16 +18,26 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 === What is Rubrika?
 
-Rubrika is a desktop Address Book application that lets you store and manage your contacts in a convenient manner. +
-Rubrika has a simple GUI interface and focuses on using CLI to interact.
+Welcome to Rubrika! +
+
+Rubrika is a desktop Address Book application that lets you store and manage your contacts in a convenient manner.
+
+Rubrika revolutionises the way you interact with an Address Book Application. We have done away with the traditional buttons, and now allow users to interact through the Command Line Interface.
+
+This guide will familiarise you with the basic commands that you will need to start using Rubrika.
+
 
 == Quick Start
+
+Before we start, please make sure you follow the steps below to install Rubrika.
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This app will not work with earlier versions of Java 8. +
+If you are missing Java 8, you may download it for free [http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[here]]
+
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
@@ -225,7 +235,7 @@ Sort feature available since v1.3
 
 Sorts the list of person in the addressbook. +
 You may choose to sort based on a parameter and display in +
-ascending or descending order.
+ascending or descending order. +
 Format: `sort FIELD ORDER` +
 
 ****
@@ -244,9 +254,42 @@ Sorts the list based on name in ascending order.
 `sort email dsc` +
 Sorts the people with `owesMoney` tag based on their emails in descending order.
 
-=== Import/Export : `import`/`export`
+=== Importing contacts: `import`
+
 [NOTE]
-Coming soon in v2.0
+Import feature available since v1.4.
+
+Imports a list of contacts from the selected vCard file. +
+Format: `import`
+
+****
+* The function only imports user that do not exist in the current address book.
+* Duplicate persons will be ignored.
+****
+
+=== Exporting contacts: `export`
+
+[NOTE]
+Export feature available since v1.4. +
+Currently due to save path, it only works on windows platform.
+
+
+Exports the list of contact shown on the addressbook into a vCard file. +
+Format: `export`
+
+****
+* Exports only the list that is being shown to the user. +
+* Exported contacts are saved into export.vcf file in the user's Desktop folder.
+****
+
+Examples:
+
+* `list` +
+`import` +
+Exports the whole list of addressbook.
+* `findtag prospective` +
+`export` +
+Exports the list of people with prospective `TAG`.
 
 === Selecting a person : `select`
 
@@ -363,7 +406,7 @@ Examples:
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. Alternatively, you may export your contacts into a vCard file and transfer the file to the other Computer and import the vCard file from there.
 
 == Command Summary
 
@@ -386,6 +429,8 @@ e.g.`select 2`
 * *Sort* : `sort FIELD ORDER` +
 e.g. `sort name asc` +
 e.g. `sort email dsc`
+* *Import* : `ìmport`
+* *Export* : `export`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
