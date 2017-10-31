@@ -5,10 +5,12 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,11 +26,20 @@ public class UndoCommandTest {
     private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
 
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
-    private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
+    private DeleteCommand deleteCommandOne;
+    private DeleteCommand deleteCommandTwo;
 
     @Before
     public void setUp() {
+        HashSet<Integer> zeroBasedIndexes = new HashSet<>();
+        zeroBasedIndexes.add(INDEX_FIRST_PERSON.getZeroBased());
+        deleteCommandOne = new DeleteCommand(zeroBasedIndexes);
+
+        // New HashSet created to prevent multiple HashSets referencing to the same HashSet
+        HashSet<Integer> zeroBasedIndexes2 = new HashSet<>();
+        zeroBasedIndexes2.add(INDEX_SECOND_PERSON.getZeroBased());
+        deleteCommandTwo = new DeleteCommand(zeroBasedIndexes2);
+
         deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
         deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
     }

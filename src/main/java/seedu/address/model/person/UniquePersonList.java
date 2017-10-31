@@ -2,6 +2,8 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -71,13 +73,13 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Removes the equivalent person from the list.
+     * Removes the equivalent persons from the list.
      *
-     * @throws PersonNotFoundException if no such person could be found in the list.
+     * @throws PersonNotFoundException if a person could be found in the list.
      */
-    public boolean remove(ReadOnlyPerson toRemove) throws PersonNotFoundException {
-        requireNonNull(toRemove);
-        final boolean personFoundAndDeleted = internalList.remove(toRemove);
+    public boolean removeAll(List<ReadOnlyPerson> personsToRemove) throws PersonNotFoundException {
+        requireNonNull(personsToRemove);
+        final boolean personFoundAndDeleted = internalList.removeAll(personsToRemove);
         if (!personFoundAndDeleted) {
             throw new PersonNotFoundException();
         }
@@ -102,6 +104,40 @@ public class UniquePersonList implements Iterable<Person> {
     public ObservableList<ReadOnlyPerson> asObservableList() {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
+
+    /**
+     * Sorts person name in alphabetical order
+     */
+    public void sort() {
+        Comparator<Person> comparator = (p1, p2) -> (comparePeople(p1, p2));
+        Collections.sort(internalList, comparator);
+    }
+
+    /**
+     * Compare Persons by favourite status and then name
+     */
+    public int comparePeople(Person p1, Person p2) {
+        int compare;
+        String p1Fav = "";
+        String p2Fav = "";
+        if (p1.getFavourite().getFavourite()) {
+            p1Fav = "1";
+        } else {
+            p1Fav = "2";
+        }
+        if (p2.getFavourite().getFavourite()) {
+            p2Fav = "1";
+        } else {
+            p2Fav = "2";
+        }
+        compare = p1Fav.compareTo(p2Fav);
+        if (compare == 0) {
+            compare = p1.getName().toString().compareTo(p2.getName().toString());
+        }
+
+        return compare;
+    }
+
 
     @Override
     public Iterator<Person> iterator() {

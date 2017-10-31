@@ -9,20 +9,20 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 /**
- * A handler for the {@code BrowserPanel} of the UI.
+ * A handler for the {@code InstagramBrowserPanel} of the UI.
  */
-public class BrowserPanelHandle extends NodeHandle<Node> {
+public class InstagramBrowserPanelHandle extends NodeHandle<Node> {
 
-    public static final String BROWSER_ID = "#browser";
+    public static final String INSTAGRAM_BROWSER_ID = "#instagramBrowser";
 
     private boolean isWebViewLoaded = true;
 
     private URL lastRememberedUrl;
 
-    public BrowserPanelHandle(Node browserPanelNode) {
+    public InstagramBrowserPanelHandle(Node browserPanelNode) {
         super(browserPanelNode);
 
-        WebView webView = getChildNode(BROWSER_ID);
+        WebView webView = getChildNode(INSTAGRAM_BROWSER_ID);
         WebEngine engine = webView.getEngine();
         new GuiRobot().interact(() -> engine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
             if (newState == Worker.State.RUNNING) {
@@ -37,7 +37,7 @@ public class BrowserPanelHandle extends NodeHandle<Node> {
      * Returns the {@code URL} of the currently loaded page.
      */
     public URL getLoadedUrl() {
-        return WebViewUtil.getLoadedUrl(getChildNode(BROWSER_ID));
+        return WebViewUtil.getLoadedUrl(getChildNode(INSTAGRAM_BROWSER_ID));
     }
 
     /**

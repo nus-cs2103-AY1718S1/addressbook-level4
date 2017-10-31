@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Bevy - User Guide `v1.3`
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,32 +10,57 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T16-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team Bevy`      Since: `Aug 2017`      Licence: `MIT`
+
+== Introduction
+
+Have you ever forget that special friend's birthday? Or that memorable event you have had with
+a friend?
+
+In today's interconnectedness, we are making more friends than we can ever imagine, but
+at the same time, we are losing many of them because of our forgetfulness. If that is you,
+then this app is for you.
+
+Bevy is a powerful app that helps you to remember your friends again. It simplifies your friends' information in a
+single place and provide more. Bevy is smart to know what your friends are up to in their social media and even gives
+you a sneak peek into their location.
+
+Excited? We are too, because we *love* connecting you with Bevy.
+
+== About
+
+Bevy is easy to use, with an elegant user interface and a simple Command Line Interface.
+This User Guide provides you concise instructions on how to use the app.
 
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
-Having any Java 8 version is not enough. +
+The version has to be `1.8.0_60` or later. +
 This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the app icon to start the app.
 +
 image::Ui.png[width="790"]
+_Figure 3.4.1 GUI_
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
+e.g. typing *`help`* or *`sos`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+* *`list`* +
+Lists all contacts.
+* **`add`**`n/John Doe b/010595 p/98765432 e/johnd@u.nus.edu a/John street, block 123, #01-01 pc/159656` +
+Adds a contact named `John Doe` to the Address Book.
+* **`delete`**`3` +
+Deletes the 3rd contact shown in the current list.
+* *`exit`* +
+Exits the app.
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
@@ -50,58 +75,121 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+=== Viewing help : `help` `sos`
 
-Format: `help`
+Opens the help window which shows the guidelines to use Bevy.
+Format: `help` +
+Command Alias: `sos`
 
-=== Adding a person: `add`
+=== Adding a person: `add` `a`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
-[TIP]
-A person can have any number of tags (including 0)
+Format: `add n/NAME p/PHONE_NUMBER [b/BIRTHDAY] [e/EMAIL] [a/ADDRESS] [pc/POSTAL_CODE] [t/TAG]...` +
+Command Alias: `a`
 
-Examples:
+****
+* There are restrictions for each parameters:
+** Name: Person names should contain alphanumeric characters and spaces, and it should not be blank.
+** Phone: Phone should only contain numbers and it should not be blank. It should be at least 3 digits long.
+** Birthday: Birthday must be in the format DDMMYYYY, separated by '/' or '-' or '.' or ' '.
+             The month can be entered as a number or name of the month. The date entered must be a valid.
+** Email: Person email should be 2 aphanumeric/ period strings separated by '@'.
+** Address: Person address can take any values, and it should not be blank.
+** Postal Code: Postal code should only contain numbers and be exactly 6 digits long.
+****
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+Examples: +
+There are a number of features that are available in the add command.
+These features can be further explained using examples.
 
-=== Listing all persons : `list`
+*1. Adding a new Contact*
+
+Command: `add p/89893878 n/brandon tan t/friend b/25-9-94 e/brandon@gmail.com a/Blk 433, Bedok Street 10, 520433 t/family`
+
+image::AddCommand.jpg[width="790"]
+_Figure 4.2.1.1 Adding a New Contact_
+
+* From Figure 4.2.1.1, you can observe the following features:
+** You need not add the name in a specific order.
+** There is autocapitalisation for the name. This means that the first letter of each part of the name will be capitalised when saved in the database.
+** Postal code can be retrieved from the address without specifying `pc/`.
+** A person can have any number of tags.
+** Note that birthday can be added in a number of format, and it will be saved in the contact in the standard format.
+
+=== Listing all persons : `list` `l`
 
 Shows a list of all persons in the address book. +
-Format: `list`
+Format: `list` +
+Command Alias: `l`
 
-=== Editing a person : `edit`
+=== Editing a person : `edit` `e`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [b/BIRTHDAY] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Command Alias: `e`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
-Examples:
+Examples: +
+The examples will show you how to use the edit command in more detail.
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+image::EditBefore.jpg[width="790"]
+Figure 4.4.1 Before edit command
 
-=== Locating persons by name: `find`
+Figure 4.4.1 shows the initial state before any edits. Subsequent edits will be changed with respect to this figure.
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+*1. Removing Tag*
+
+Command: `edit 2 t/`
+
+image::RemoveTag.jpg[width="790"]
+_Figure 4.4.2 Removing Tag_
+
+You can remove all the person's tags by typing `t/` without specifying any tags after it. +
+From Figure 4.4.1, index 2 is Bernice Yu and has the tags colleagues and friends.
+After entering the command, all tags are removed as seen from Figure 4.4.2.
+
+*2. Editing Tag*
+
+Command: `edit 2 t/family`
+
+image::EditTag.jpg[width="790"]
+_Figure 4.4.3 Editing tag_
+
+When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative. +
+From Figure 4.4.1, index 2 is Bernice Yu and has the tags, colleagues and friends.
+After entering the command, the previous tags are replaced with a single tag, family.
+
+*3. Editing Fields*
+
+Command: `edit 4 n/Jackie Lam e/jackielam@hotmail.com`
+
+image::EditFields.jpg[width="790"]
+_Figure 4.4.4 Editing Fields_
+
+It is possible to edit more than one field at the same time.
+From Figure 4.4.1, index 4 is David Li.
+After executing the command, the name and email is changed as requested.
+
+=== Locating persons by name, phone number or birthday: `find` `f`
+
+Finds persons whose names, phone numbers or birthday month contain any of the given keywords. +
+Format: `find KEYWORD [MORE_KEYWORDS]` +
+Format to find month: `find m/MONTH` +
+Command Alias: `f`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* Only the name, phone number and birthday are searched
+* To find the month, user has to inclue `m/` to ensure that it does not clash with name search
+* Only full words will be matched for names e.g. `Han` will not match `Hans`
+* Phone numbers will match all numbers than contain the given number e.g. `123' will match `91234567`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
@@ -109,37 +197,57 @@ Examples:
 
 * `find John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `find Betsy Tim John 123` +
+Returns any person having names `Betsy`, `Tim`, or `John`, or any person with phone number containing `123`.
+* `find m/Feb` +
+Returns all person that have their birthday in the month of Feb.
 
-=== Deleting a person : `delete`
+=== Deleting persons : `delete` `d`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Delete the specified persons from the address book. +
+Format: `delete INDEX RANGES` +
+Command Alias: `d`
 
 ****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* Delete persons at the specified `INDEX RANGES`.
+* The index ranges refers to the index numbers shown in the most recent listing.
+* The index ranges *must be a positive integer* 1, 2, 3, ...
+* The index ranges can *overlap one another* 2-3, 1-3
+
 ****
 
 Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person listed in the address book.
+
+* `list` +
+`delete 2-5` +
+Deletes the 2nd to 4th person listed in the address book.
+
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st person listed in the results of the `find` command.
 
-=== Selecting a person : `select`
+* `find John` +
+`delete 2-3 1-3 5-6` +
+Delete the 1st to 3rd, 5th and 6th person listed in the results of the `find` command.
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+=== Show Birthday Statistics: `statistics` `stats`
+Shows a table that indicates the number of people having their birthdays in a particular month. +
+Format: `statistics` +
+Command Alias: `stats`
+
+=== Selecting a person : `select` `s`
+
+Selects the person identified by the index shown in the current listing of persons. +
+Format: `select INDEX` +
+Command Alias: `s`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
+* Selects the person and displays the details, Instagram and Google Map of the person at the specified `INDEX`.
+* The index refers to the index numbers shown in the current listing of persons.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
@@ -147,15 +255,17 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person listed in the address book. +
+
 * `find Betsy` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+Selects the 1st person listed in the results of the `find` command.
 
-=== Listing entered commands : `history`
+=== Listing entered commands: `history` `h`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: `history` +
+Command Alias: `h`
 
 [NOTE]
 ====
@@ -163,21 +273,22 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undoing previous command: `undo` `u`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Format: `undo` +
+Command Alias: `u`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: Those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
 
 * `delete 1` +
 `list` +
-`undo` (reverses the `delete 1` command) +
+`undo` (Reverses the `delete 1` command) +
 
 * `select 1` +
 `list` +
@@ -186,19 +297,20 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`undo` (Reverses the `clear` command) +
+`undo` (Reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+=== Redoing the previously undone command: `redo` `r`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `redo` +
+Command Alias: `r`
 
 Examples:
 
 * `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+`undo` (Reverses the `delete 1` command) +
+`redo` (Reapplies the `delete 1` command) +
 
 * `delete 1` +
 `redo` +
@@ -206,21 +318,27 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 * `delete 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
+`undo` (Reverses the `clear` command) +
+`undo` (Reverses the `delete 1` command) +
+`redo` (Reapplies the `delete 1` command) +
+`redo` (Reapplies the `clear` command) +
 
-=== Clearing all entries : `clear`
+=== Clearing all entries: `clear` `c`
 
 Clears all entries from the address book. +
-Format: `clear`
+Format: `clear` +
+Command Alias: `c`
 
-=== Exiting the program : `exit`
+=== Changing the theme: `changetheme` `ct`
+
+Changes the theme of the application between the bright and dark theme. +
+Format: `changetheme`
+
+=== Exiting the program : `exit` `x`
 
 Exits the program. +
-Format: `exit`
+Format: `exit` +
+Command Alias: `x`
 
 === Saving the data
 
@@ -232,21 +350,46 @@ There is no need to save manually.
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+*Q*: I do not see the correct Instagram page of my friend, what should I do?
+*A*: Ensure that the name of your friend matches the username of the instagram account.
+
+*Q*: Why am I able to add another friend with the same details? +
+*A*: Please check that all fields are the same. Bevy allows adding of a similar person even if they are only a letter apart,
+because we know you have many friends.
+
+*Q*: My question is not on the FAQ list, what can I do? +
+*A*: Please do not hesitate to link:{repoURL}/blob/master/docs/AboutUs.adoc[email] us for any questions or comments.
+
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+[width="99%",cols="10%, 10%, 5%, <30%, <40%",options="header",]
+|=======================================================================
+|Command |Keyword |Alias | Format | Examples
+|Add |`add` |`a` | `add n/NAME p/PHONE_NUMBER [b/Birthday] [e/EMAIL] [a/ADDRESS] [pc/POSTAL_CODE] t/TAG]...` |`add n/James Ho p/92224444 b/24 09 89 e/jamesho@example.com a/123, Clementi Rd pc/234665 t/friend t/colleague`
+
+|Clear |`clear` |`c` |- |-
+
+|Change Theme |`changetheme` |`ct` |- |-
+
+|Delete |`delete` |`d` |`delete INDEX RANGES` |`delete 3`, `delete 1-3`, `d 1-2, 1-3`
+
+|Edit |`edit` |`e` |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [b/BIRTHDAY] [e/EMAIL] [a/ADDRESS] [pc/POSTAL CODE] [t/TAG]...` |`edit 2 n/James Lee` `e/jameslee@example.com`
+
+|Exit |`exit` |`x` |- |-
+
+|Find |`find` |`f` |`find KEYWORD [MORE_KEYWORDS]` |`find James Jake`
+
+|Help |`help` |`sos` |- |-
+
+|History |`history` |`h` |- |-
+
+|List |`list` |`l` |- |-
+
+|Birthday Statistics |`statistics` |`stats` |- |-
+
+|Select |`select` |`s` |- |-
+
+|Undo |`undo` |`u` |- |-
+
+|Redo |`redo` |`r` |- |-
+

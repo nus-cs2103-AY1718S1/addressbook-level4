@@ -5,6 +5,11 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Helper functions for handling strings.
@@ -67,5 +72,18 @@ public class StringUtil {
         } catch (NumberFormatException nfe) {
             return false;
         }
+    }
+
+    /** Returns a string of indexed {@code hashSet} items in the {@code list},
+     * with a newline for each item.
+     * */
+    public static String toIndexedListString(HashSet<?> hashSet, List<?> list) {
+        final Iterator<?> hashSetItr = hashSet.iterator();
+        final Iterator<?> listItr = list.iterator();
+
+        return IntStream.rangeClosed(1, list.size())
+                .mapToObj(index -> (Integer.parseInt(hashSetItr.next().toString()) + 1) + ". "
+                        + listItr.next().toString())
+                .collect(Collectors.joining("\n"));
     }
 }

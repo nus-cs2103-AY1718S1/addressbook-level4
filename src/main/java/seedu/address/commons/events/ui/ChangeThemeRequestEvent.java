@@ -3,13 +3,12 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * An event requesting to view the help page.
+ * Indicates a request for theme change
  */
-public class ShowHelpRequestEvent extends BaseEvent {
+public class ChangeThemeRequestEvent extends BaseEvent {
 
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
-
 }

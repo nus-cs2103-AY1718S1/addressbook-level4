@@ -90,6 +90,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.add(newPerson);
+        persons.sort();
     }
 
     /**
@@ -145,11 +146,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Removes {@code key} from this {@code AddressBook}.
-     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     * Removes {@code keys} from this {@code AddressBook}.
+     * @throws PersonNotFoundException if the {@code keys} is not in this {@code AddressBook}.
      */
-    public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
-        if (persons.remove(key)) {
+    public boolean removePersons(List<ReadOnlyPerson> keys) throws PersonNotFoundException {
+        if (persons.removeAll(keys)) {
             return true;
         } else {
             throw new PersonNotFoundException();

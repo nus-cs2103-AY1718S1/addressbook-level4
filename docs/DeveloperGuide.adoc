@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Bevy - Developer Guide `v1.3`
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,67 +10,92 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T16-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team Bevy`      Since: `Aug 2017`      Licence: `MIT`
+
+== Introduction
+
+Bevy is a database that helps to store user's contact list.
+It is a one stop location for user to find out more detailed information about their friends.
+This developer guide provides information that will help you get started as a Bevy contributor.
+It will be useful even if you are already an experienced contributor.
+It contains a general guideline that you will have to take note of such as the documentation required.
+There is a detailed explanation on the design of the architecture for clear understanding.
 
 == Setting up
 
 === Prerequisites
 
+It is important that you have downloaded required software to support Bevy.
+If not, you will not be able to run or make changes to it.
+
 . *JDK `1.8.0_60`* or later
 +
 [NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+Having any Java 8 version will not be sufficient. +
+Bevy will not work with earlier versions of Java 8.
 +
 
 . *IntelliJ* IDE
 +
 [NOTE]
-IntelliJ by default has Gradle and JavaFx plugins installed. +
-Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
+By default, IntelliJ has Gradle and JavaFx plugins installed. +
+To ensure that you have enabled them, go to `File` > `Settings` > `Plugins`.
 
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
+. Fork this repository from Bevy's github page, and clone the fork to your computer to create a local repository.
+. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
+. Set up the correct JDK version for Gradle.
+.. Click `Configure` > `Project Defaults` > `Project Structure`.
+.. Click `New...` and find the directory of the JDK.
+. Click `Import Project`.
+. Locate the `build.gradle` file and select it. Click `OK`.
+. Click `Open as Project`.
+. Click `OK` to accept the default settings.
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
+. Run the `seedu.address.MainApp` and try a few commands.
 . link:#testing[Run the tests] to ensure they all pass.
+. If you encounter any issues, please refork the repository and ensure that you have the relevant software required.
 
 === Configurations to do before writing code
 
 ==== Configuring the coding style
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards].
+IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify:
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
+. Select `Editor` > `Code Style` > `Java`.
+. Click on the `Imports` tab to set the order.
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`:
+Set to `999` to prevent IntelliJ from contracting the import statements.
+* For `Import Layout`, follow this order:
+** import static all other imports
+** import java.\*
+** import javax.*
+** import org.\*
+** import com.*
+** import all other imports
+** Add a `<blank line>` between each import.
 
-Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
+Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document
+to configure IntelliJ to check style-compliance as you write code.
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repository, links in the documentation will still point to the `CS2103AUG2017-T16-B3/main` repository.
+If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103AUG2017-T16-B3/main`),
+you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
-==== Setting up CI
+==== Setting up Continuous Integration
 
 Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
@@ -83,25 +108,27 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 
 When you are ready to start coding,
 
-1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
+1. Read the link:#architecture[Architecture] section to get a better understanding of how to code using the API.
 2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
 == Design
 
 === Architecture
 
+The architecture section shows how Bevy is designed and will explain the reasons needed for this structure.
+
 image::Architecture.png[width="600"]
 _Figure 2.1.1 : Architecture Diagram_
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+The *_Architecture Diagram_* given above explains the high-level design of the application. The following is a quick overview of each component.
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* App launch: Initializes the components and connects them in the correct sequence.
+* Shut down: Shuts down the components and invokes cleanup method where necessary.
 
 link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
@@ -165,6 +192,8 @@ The `UI` component,
 
 === Logic component
 
+The logic component executes the commands. This is the component that parses and filter the information required for Model.
+
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.3.1 : Structure of the Logic Component_
 
@@ -176,6 +205,8 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
+.  `CommandParser` parses the input for execution by `Command`
+.  The fixed variable names are stored separately as indicated by the faded blue boxes that will be used by `Command` and `CommandParser`.
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
@@ -183,6 +214,13 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 
 image::DeletePersonSdForLogic.png[width="800"]
 _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+
+.  Following the flow of the diagram, the command `delete 1` will be sent to `LogicManager`.
+.  `AddressBookParser` will parse the `delete` command and will call the `DeleteCommandParser`.
+.  `DeleteCommandParser` will parse the remaining command, in this case `1` and call `DeleteCommand`.
+.  `DeleteCommand` will execute the functions in the class and delete the information in `Model`.
+.  After the end of execution, `DeleteCommand` will return the result to `LogicManager`.
+.  `LogicManager` will then return result.
 
 === Model component
 
@@ -193,10 +231,10 @@ _Figure 2.4.1 : Structure of the Model Component_
 
 The `Model`,
 
-* stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
+* Stores a `UserPref` object that represents the user's preferences.
+* Stores the Address Book data.
+* Exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* Does not depend on any of the other three components.
 
 === Storage component
 
@@ -364,6 +402,144 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Sorting
+
+The list will be sorted in alphabetical order whenever a new person is added.
+
+image::SortSequenceDiagram.png[width="300"]
+_Figure 4.4.1: Sorting Sequence Diagram_
+
+. Following the flow of the diagram, when a person is added, the addPerson method will be called in `AddressBook`.
+. `UniquePersonList` will sort the added person by comparing the names in the current list and insert the name at the correct slot.
+. The sorted contact list will then be returned.
+
+==== Design Consideration
+
+**Aspect:** Type of implementation to sort contact list. +
+**Alternative 1 (current choice):** Sort the list while new persons are added. +
+**Pros:**More convenient for users as the list will be sorted once a new person is added. +
+**Cons:** List will only be sorted when new person is added. May cause limitation if there are commands that will mess up the order. +
+**Alternative 2:** Creating a separate sort command to sort list. +
+**Pros:** A command that will always allow the list to be sorted in order. +
+**Cons:** It will cause inconvenience as user have to manually type in the command to sort the list whenever they add a new person. +
+
+=== Birthday
+
+The birthday feature allows user to store their friends' birthdays.
+Restrictions are set to ensure that the date entered is valid.
+There are a few format that the user can enter the date.
+The birthday class will reformat the birthday entered to ensure that the birthday saved in the contact list is standardised.
+This will make it easier for user to view and also assist in executing find command for month.
+
+After adding the birthday, user can search for a particular month and the list will show the people who were born in the same month, sorted according to the day.
+
+The following sequence diagram shows how find works when searching for a month.
+
+image::FindMonthSequenceDiagram.png[width="800"]
+_Figure 4.4.1: Find Month Sequence Diagram_
+
+. Following the flow of the diagram, the command `find m/Jan` will be sent to the `LogicManager`.
+. `AddressBookParser` will parse the `find` command and will call the `FindCommandParser`.
+. `FindCommandParser` will parse the remaining command, in this case `m/Jan` and call `FindCommand`.
+. `FindCommand` will execute the functions in the class and call `PersonContainsKeywordsPredicate`.
+. In `PersonContainsKeywordsPredicate`, this is where the list is filtered to find the contacts who has their birthday in Jan.
+. The list will then be returned to `LogicManager`.
+
+==== Design Consideration
+
+**Aspect:** Type of implementation to find the month. +
+**Alternative 1 (current choice):** Use the current find command that is currently used for finding name and phone number. +
+**Pros:** Easy to implement, since we only need to add a method to the class. +
+**Cons:** It may make the code for find command more complicated. +
+**Alternative 2:** Creating a separate find command only for searching month. +
+**Pros:** Makes the code simpler and more direct as there is a command reserved for each of the command. +
+**Cons:** This would make it more complicated for the user to use as there is a different command for the different search. +
+
+=== Birthday Statistics
+
+_Figure 4.6.1: Birthday Statistics_
+
+The birthday statistics will show user a table of the number of people having their birthday in each month.
+
+image::BirthdayStatisticsPanelClassDiagram.png[width="800"]
+_Figure 4.6.2: Birthday Statistics Panel Class Diagram_
+
+As shown from the class diagram, the birthday statistics class diagram extends the UiParts.
+The birthday statistics panel will display the information when user enter the command word, `statistics`.
+
+The following sequence diagram shows how the birthday statistics table is called.
+
+image::BirthdayStatisticsSequenceDiagram.png[width="800"]
+_Figure 4.6.2: Birthday Statistics Sequence Diagram_
+
+. Following the flow of the diagram, the command `statistics` will be sent to the `LogicManager`.
+. `AddressBookParser` will parse the `statistics` command and will call the `BirthdyaStatisticsCommand`.
+. This command will trigger the `HandleBirthdayStatistics` method within the `MainWindow` and `BirthdayStatisticsPanel`.
+. `MainWindow` will wait for `BirthdayStatisticsPanel` to create the table through the method `setPersonData` and after that,
+it will raise a `handleAddressBookChangedEvent` method and will return by raising the `ChangeInformationPanelRequestEvent` to `MainWindow`.
+. `MainWindow` will show the table after the end of execution.
+
+=== Instagram/Google Map Browser Panel
+
+image::BrowserPanels.png[width="800"]
+_Figure 4.7.1: Browser Panels UI_
+
+The browser panels display visual information about the selected person.
+
+image::BrowserPanelsClassDiagram.png[width="400"]
+_Figure 4.7.2: Browser Panels Class Diagram_
+
+As shown from the class diagram, both browser panels extends the UiParts. The browser panels are responsible for displaying information on the selected
+person based on the person details.
+
+The following sequence diagram shows how the browser operation works, using InstagramBrowserPanel as an exmaple:
+
+image::BrowserPanelsSequenceDiagram.png[width="400"]
+_Figure 4.7.3: Browser Panels Sequence Diagram_
+
+As shown from the sequence diagram, when a user selects a new person, the InstagramBrowserPanel handles the new selection event and display the selected
+person's instagram based on the name in the details. For example, if the selected person's name is `Alex Yeoh`, InstagramBrowserPanel will use `AlexYeoh` as part of the URL parameter to display the person's
+instagram page.
+
+Similarly, the GoogleMapBrowserPanel will display the map of the selected person's home location using either the postal code or the address in the person details. The UiParts is responsible for constructing and displaying
+respective scene. For example, if the postal code is `150159`, GoogleMapBrowserPanel will use this exact value to display the person's location. If the postal code is not available, address will be used. For example,
+if the address is `ABC 123 Street`, GoogleMapBrowserPanel will use `ABC+123+Street` as part of the URL parameter to display
+the person's location.
+
+[NOTE]
+If the address contains `#` characters, GoogleMapBrowserPanel will ignore any substring after this character
+
+==== Design Considerations
+
+**Aspect:** Type of implementation for Instagram +
+**Alternative 1 (current choice):** Use browser to display selected person's instagram page. +
+**Pros:** Easy to implement, since the components needed is the JavaFX scene and instagram URL parameter. The user interaction
+ is fully managed by the browser and instagram page itself. +
+**Cons:** Some user's instagram page cannot be found using just their name. +
+**Alternative 2:** Use Instagram API to construct an intergrated Instagram component +
+**Pros:** Integrates well, as users can use one-time login authentication to sync with Instagram and we can find users with similar names from user's followers. +
+**Cons:** Difficult to implement, as there is a steep learning curve to master Instagram API. +
+
+
+**Aspect:** Type of implementation for Google Map +
+**Alternative 1 (current choice):** Use browser to display selected person's location. +
+**Pros:** Easy to implement, since the componenets needed is the JavaFX scene and Google Map URL parameter. The user interaction
+is fully managed by the browser and Google Map page itself. +
+**Cons:** We can not customise the visual display of Google Map. +
+**Alternative 2:** Use Google Map API to construct an intergrated Google Map component +
+**Pros:** Integrates well, as we can simplify the experience for users. +
+**Cons:** Difficult to implement, as there is a steep learning curve to master Google Map API. +
+
+=== Delete Multiple Persons Mechanism
+
+The Delete mechanism is able to support deleting multiple persons. Refer to diagram 2.3.1 for the basic implementation of the
+Delete mechanism.
+
+At `DeleteCommandParser`, the index ranges will be parsed into a list of `IndexRange` class using the `ParserUtil`, where each `IndexRange`
+object contains the start and end index of each range. This list will then be converted into a `HashSet` of indexes, which
+will be used to construct a `DeleteCommand`. `HashSet` prevents the duplicates of indexes. Upon executing the `DeleteCommand`,
+a sub list of person to delete will be produced to delete the information in `Model`.
+
 == Documentation
 
 We use asciidoc for writing documentation.
@@ -451,7 +627,9 @@ See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build auto
 
 === Continuous Integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+We use https://travis-ci.org/[Travis CI], https://www.appveyor.com/[AppVeyor], https://coveralls.io/[Coveralls] and https://www.codacy.com/[Codacy] to perform _Continuous Integration_ on Bevy. +
+
+See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
 === Making a Release
 
@@ -718,28 +896,173 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+[width="99%",cols="2%,10%,<13%,<27%,<38%",options="header",]
 |=======================================================================
-|Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|No. |Priority |As a ... |I want to ... |So that I can...
+|1 |`* * *` |new user |see user usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|2 |`* * *` |user |add a new person | store the information about that person
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|3 |`* * *` |user |delete a person |remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|4 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|5 |`* * *` |user |find my friends through their initials |find my friend’s details easily
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|6 |`* * *` |user |undo and redo my commands |undo and redo my recent errors
+
+|7 |`* * *` |user |edit my addressBook |make changes to the addressBook
+
+|8 |`* * *` |user |view my contact list in alphabetical order |scroll through the list easily
+
+|9 |`* * *` |user |use alias for commands |use the commands conveniently
+
+|10 |`* * *` |user |find person using tags |find persons based on the different categories
+
+|11 |`* * *` |user |save my person's birthday |track persons' birthdays
+
+|12 |`* * *` |user |find persons by birthday month |find who is having birthdays
+
+|13 |`* * *` |user |add persons with minimal details |have a choice on the amount of details I want to include about a person
+
+|14 |`* * *` |user |view the total number of persons  |know how many persons in AddressBook
+
+|15 |`* * *` |user |pin contacts at the top |find my favourite contacts more easily
+
+|16 |`* *` |user |sort my list in many different ways |organise according to my preference
+
+|17 |`* *` |user |have an AddressBook that can auto capitalise the name |Add new person with more convenience
+
+|18 |`* *` |user |be able to have a choice of viewing less details on persons |view a cleaner list
+
+|19 |`* *` |user |be able to view more details about persons only after selection |view more information about that person with a cleaner list
+
+|20 |`* *` |user |be able to sync my AddressBook with social media |import persons’ details
+
+|21 |`* *` |user |view selected person’s social media |view more information
+
+|22 |`* *` |user |see invalid commands with a different colour |so that I can identify them easily
+
+|23 |`* *` |user |find persons using emails |find them without knowing their names
+
+|24 |`* *` |user |view selected person’s address visually |have a better idea of where they are at
+
+|25 |`* *` |user |close the help UI with a command |close the help UI without going back to it while on the main window
+
+|26 | `* *` |user |delete persons that contain a certain tag |delete a group with convenience
+
+|27 |`* *` |user |have confirmation before deleting a person |ensure that I am deleting the correct person
+
+|28 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|29 |`*` |user |open one help UI at any time |limit the number of windows opened
+
+|30 |`*` |user |add new persons using first name and last name |easily differentiate a name
+
+|31 |`*` |user |see the time |keep track of the time
+
+|32 |`*` |user |apply different themes |customise it according to my preference
+
+|33 |`*` |user |be able to change the colours of the tags | customise it according to my preference
+
+|34 |`*` |user |be able to add and view money lent to my friends |keep track of money lending
+
+|35 |`*` |user |filter and sort my friends based on how much money is on loan |better see the amount of money involved in lending
 |=======================================================================
-
-{More to be added}
-
 [appendix]
 == Use Cases
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+
+[discrete]
+=== Use case: View help
+
+*MSS*
+
+1.  User requests to view the help information
+2.  AddressBook opens a new window containing the help information
++
+Use case ends.
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User adds new person
+2.  AddressBook saves new person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The given command is invalid.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: List all persons
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User edits a specific person in the list
+4. AddressBook saves edited person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The given command is invalid
+[none]
+** 3a1. AddressBook shows an error message
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Find persons
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to find specific persons in the list
+4. AddressBook shows a list of matched persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The given keywords are invalid.
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
 
 [discrete]
 === Use case: Delete person
@@ -767,7 +1090,131 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Select person
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to select a specific person in list
+4. AddressBook shows selected person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The given index is invalid.
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: View history
+
+*MSS*
+
+1. User requests to view history of commands
+2. AddressBook shows a list of history
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. History is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Undo
+
+*MSS*
+
+1. User requests to undo commands
+2. AddressBook retrieve previous state of AddressBook
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No command to undo.
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo
+
+*MSS*
+
+1. User requests to redo commands
+2. AddressBook retrieve previous state of AddressBook
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No command to redo.
++
+Use case ends.
+
+[discrete]
+=== Use case: Clear
+
+*MSS*
+
+1. User requests to clear persons
+2. AddressBook clear all persons
++
+Use case ends.
+
+[discrete]
+=== Use case: Exit
+
+*MSS*
+
+1. User requests to exit AddressBook
+2. AddressBook closes and exit window
++
+Use case ends.
+
+[discrete]
+=== Use case: Rename Tag
+
+*MSS*
+
+1. User requests to list all existing tags
+2. AddressBook shows a list of tags
+3. User requests to rename a tag in the list
+4. AddressBook renames the tag
+5. AddressBook updates the tag
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. Updated name already exist in the list of existing tags
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
@@ -775,6 +1222,12 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  A user should be able to fully understand and use the AddressBook by following the User Guide and Help UI.
+.  The GUI should be easily readable without straining the user’s eyes.
+.  It is open source.
+.  It is completely free for use.
+.  A user should find the AddressBook easy to use and intuitive.
+.  Should be able to function properly with and without an Internet connection.
 
 {More to be added}
 
@@ -804,10 +1257,10 @@ Author: ...
 
 Pros:
 
-* ...
-* ...
+* Shows detailed information on birthday.
+* Command alias to allow ease of use.
 
 Cons:
 
-* ...
+* Commands are restricted to CLI. It would be better if there are more GUI commands.
 * ...

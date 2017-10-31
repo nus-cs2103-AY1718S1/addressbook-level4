@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<SplitPane fx:id="personInformationPanel" dividerPositions="0.5" orientation="VERTICAL" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <items>
+      <AnchorPane id="personInformationPanel" fx:id="personDetailsPlaceholder" maxHeight="220.0" minHeight="220.0" prefHeight="220.0" />
+      <SplitPane dividerPositions="0.5">
+         <items>
+            <StackPane fx:id="instagramBrowserPlaceholder" maxWidth="350.0" minHeight="300.0" minWidth="300.0" prefWidth="300.0" />
+            <StackPane fx:id="googleMapBrowserPaceholder" minWidth="400.0" prefWidth="400.0" />
+         </items>
+      </SplitPane>
+   </items>
+</SplitPane>

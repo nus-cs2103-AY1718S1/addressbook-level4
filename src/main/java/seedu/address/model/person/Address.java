@@ -11,14 +11,13 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Address {
 
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
-            "Person addresses can take any values, and it should not be blank";
+            "Person addresses can only accept alphanumeric values, '-' and '#'";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
-
+    public static final String ADDRESS_VALIDATION_REGEX = "^[ A-Za-z0-9#,+-]*$";
     public final String value;
 
     /**
@@ -28,7 +27,7 @@ public class Address {
      */
     public Address(String address) throws IllegalValueException {
         requireNonNull(address);
-        if (!isValidAddress(address)) {
+        if (!address.isEmpty() & !isValidAddress(address)) {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
         this.value = address;

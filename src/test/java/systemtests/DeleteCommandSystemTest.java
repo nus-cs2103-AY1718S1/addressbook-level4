@@ -8,12 +8,20 @@ import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
 import static seedu.address.testutil.TestUtil.getPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FORTH_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -33,9 +41,59 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         /* Case: delete the first person in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
         String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_PERSON.getOneBased() + "       ";
-        ReadOnlyPerson deletedPerson = removePerson(expectedModel, INDEX_FIRST_PERSON);
-        String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
+        List<ReadOnlyPerson> deletedPerson = removePerson(expectedModel, INDEX_FIRST_PERSON);
+        HashSet<Integer> zeroBasedIndexes = new HashSet<>();
+        zeroBasedIndexes.add(INDEX_FIRST_PERSON.getZeroBased());
+
+        String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson.size(),
+                StringUtil.toIndexedListString(zeroBasedIndexes, deletedPerson));
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
+        deletedPerson.clear();
+        zeroBasedIndexes.clear();
+
+        /* Case: delete multiple person in the list, without overlapping range -> deleted */
+        Model modelBeforeDeletingMultiple = getModel();
+        command = DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + "-"
+                + INDEX_SECOND_PERSON.getOneBased() + " " + INDEX_THIRD_PERSON.getOneBased() + "-"
+                + INDEX_FORTH_PERSON.getOneBased();
+        deletedPerson = removePerson(expectedModel, INDEX_FIRST_PERSON, INDEX_SECOND_PERSON,
+                INDEX_THIRD_PERSON, INDEX_FORTH_PERSON);
+        zeroBasedIndexes.add(INDEX_FIRST_PERSON.getZeroBased());
+        zeroBasedIndexes.add(INDEX_SECOND_PERSON.getZeroBased());
+        zeroBasedIndexes.add(INDEX_THIRD_PERSON.getZeroBased());
+        zeroBasedIndexes.add(INDEX_FORTH_PERSON.getZeroBased());
+
+        expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson.size(),
+                StringUtil.toIndexedListString(zeroBasedIndexes, deletedPerson));
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+        deletedPerson.clear();
+        zeroBasedIndexes.clear();
+
+        /* Case: undo deleting multiple persons in the list, without overlap -> multiple persons restored */
+        command = UndoCommand.COMMAND_WORD;
+        expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        assertCommandSuccess(command, modelBeforeDeletingMultiple, expectedResultMessage);
+
+        /* Case: delete multiple person in the list, with overlapping range -> deleted */
+        expectedModel = getModel();
+        command = DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + "-"
+                + INDEX_SECOND_PERSON.getOneBased() + " " + INDEX_SECOND_PERSON.getOneBased() + "-"
+                + INDEX_THIRD_PERSON.getOneBased();
+        deletedPerson = removePerson(expectedModel, INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, INDEX_THIRD_PERSON);
+        zeroBasedIndexes.add(INDEX_FIRST_PERSON.getZeroBased());
+        zeroBasedIndexes.add(INDEX_SECOND_PERSON.getZeroBased());
+        zeroBasedIndexes.add(INDEX_THIRD_PERSON.getZeroBased());
+
+        expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson.size(),
+                StringUtil.toIndexedListString(zeroBasedIndexes, deletedPerson));
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+        deletedPerson.clear();
+        zeroBasedIndexes.clear();
+
+        /* Case: undo deleting multiple persons in the list, with overlap -> multiple persons restored */
+        command = UndoCommand.COMMAND_WORD;
+        expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        assertCommandSuccess(command, modelBeforeDeletingMultiple, expectedResultMessage);
 
         /* Case: delete the last person in the list -> deleted */
         Model modelBeforeDeletingLast = getModel();
@@ -83,8 +141,13 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         selectPerson(selectedIndex);
         command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
         deletedPerson = removePerson(expectedModel, selectedIndex);
-        expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
+        zeroBasedIndexes.add(selectedIndex.getZeroBased());
+
+        expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson.size(),
+                StringUtil.toIndexedListString(zeroBasedIndexes, deletedPerson));
         assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
+        deletedPerson.clear();
+        zeroBasedIndexes.clear();
 
         /* --------------------------------- Performing invalid delete operation ------------------------------------ */
 
@@ -116,10 +179,15 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      * Removes the {@code ReadOnlyPerson} at the specified {@code index} in {@code model}'s address book.
      * @return the removed person
      */
-    private ReadOnlyPerson removePerson(Model model, Index index) {
-        ReadOnlyPerson targetPerson = getPerson(model, index);
+    private List<ReadOnlyPerson> removePerson(Model model, Index... index) {
+        List<ReadOnlyPerson> targetPerson = new ArrayList<>();
+
+        for (int i = 0; i < index.length; i++) {
+            targetPerson.add(getPerson(model, index[i]));
+        }
+
         try {
-            model.deletePerson(targetPerson);
+            model.deletePersons(targetPerson);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("targetPerson is retrieved from model.");
         }
@@ -133,8 +201,12 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(Index toDelete) {
         Model expectedModel = getModel();
-        ReadOnlyPerson deletedPerson = removePerson(expectedModel, toDelete);
-        String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
+        HashSet<Integer> zeroBasedIndexes = new HashSet<>();
+        zeroBasedIndexes.add(toDelete.getZeroBased());
+
+        List<ReadOnlyPerson> deletedPerson = removePerson(expectedModel, toDelete);
+        String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson.size(),
+                StringUtil.toIndexedListString(zeroBasedIndexes, deletedPerson));
 
         assertCommandSuccess(
                 DeleteCommand.COMMAND_WORD + " " + toDelete.getOneBased(), expectedModel, expectedResultMessage);

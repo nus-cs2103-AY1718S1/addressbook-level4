@@ -16,22 +16,21 @@ import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * The Browser Panel of the App.
+ * The Google Map Browser Panel of the App.
  */
-public class BrowserPanel extends UiPart<Region> {
+public class GoogleMapBrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
-    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
-
-    private static final String FXML = "BrowserPanel.fxml";
+    public static final String GOOGLEMAP_SEARCH_URL_PREFIX = "https://www.google.com/maps/place/";
+    public static final String GOOGLEMAP_SEARCH_URL_SUFFIX = "?dg=dbrw&newdg=1";
+    private static final String FXML = "GoogleMapBrowserPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
-    private WebView browser;
+    private WebView googleMapBrowser;
 
-    public BrowserPanel() {
+    public GoogleMapBrowserPanel() {
         super(FXML);
 
         // To prevent triggering events for typing inside the loaded Web page.
@@ -41,13 +40,19 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Tokenise the address to remove substring after "#" and use this address to load page
+     * @param person
+     */
     private void loadPersonPage(ReadOnlyPerson person) {
-        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                + GOOGLE_SEARCH_URL_SUFFIX);
+        String []segment = person.getAddress().value.split("#");
+
+        loadPage(GOOGLEMAP_SEARCH_URL_PREFIX + segment[0].replaceAll(" ", "+")
+            + GOOGLEMAP_SEARCH_URL_SUFFIX);
     }
 
     public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
+        Platform.runLater(() -> googleMapBrowser.getEngine().load(url));
     }
 
     /**
@@ -62,7 +67,7 @@ public class BrowserPanel extends UiPart<Region> {
      * Frees resources allocated to the browser.
      */
     public void freeResources() {
-        browser = null;
+        googleMapBrowser = null;
     }
 
     @Subscribe

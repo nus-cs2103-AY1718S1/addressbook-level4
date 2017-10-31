@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane fx:id="personDetailsPanel" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane layoutX="94.0" layoutY="45.0" minHeight="100.0" minWidth="400.0" prefHeight="148.0" prefWidth="432.0" styleClass="personGrid" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="284.0" minWidth="10.0" prefWidth="119.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="410.0" minWidth="10.0" prefWidth="313.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="30.0" prefHeight="25.0" />
+        </rowConstraints>
+         <children>
+            <Label text="Phone" />
+            <Label text="Birthday" GridPane.rowIndex="1" />
+            <Label text="Address" GridPane.rowIndex="3" />
+            <Label text="Postal Code" GridPane.rowIndex="4" />
+            <Label fx:id="phone" text="Label" GridPane.columnIndex="1" />
+            <Label fx:id="birthday" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="address" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Email" GridPane.rowIndex="2" />
+            <Label fx:id="email" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="postalCode" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+         </children>
+      </GridPane>
+      <Label fx:id="name" layoutX="20.0" layoutY="14.0" styleClass="personLabel" text="Label">
+         <padding>
+            <Insets bottom="10.0" />
+         </padding></Label>
+   </children>
+</AnchorPane>

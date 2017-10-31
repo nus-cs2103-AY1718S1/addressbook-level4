@@ -19,6 +19,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlSerializableAddressBook;
 import seedu.address.testutil.TestUtil;
+import seedu.address.ui.MainWindow;
 import systemtests.ModelHelper;
 
 /**
@@ -64,7 +65,7 @@ public class TestApp extends MainApp {
         UserPrefs userPrefs = super.initPrefs(storage);
         double x = Screen.getPrimary().getVisualBounds().getMinX();
         double y = Screen.getPrimary().getVisualBounds().getMinY();
-        userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y));
+        userPrefs.updateLastUsedGuiSetting(new GuiSettings(1500.0, 800.0, (int) x, (int) y));
         userPrefs.setAddressBookFilePath(saveFileLocation);
         userPrefs.setAddressBookName(ADDRESS_BOOK_NAME);
         return userPrefs;
@@ -97,6 +98,23 @@ public class TestApp extends MainApp {
         Model copy = new ModelManager((model.getAddressBook()), new UserPrefs());
         ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
         return copy;
+    }
+
+    public MainWindow getMainWindow() {
+        return ui.getMainWindow();
+    }
+    /**
+     * Returns an unmodifiable child of information panel currently displayed
+     */
+    public String getCurrentInformationPanel() {
+        return ui.getCurrentInformationPanel();
+    }
+
+    /**
+     * Returns the current stylesheets
+     */
+    public String getCurrentStyleSheets() {
+        return ui.getCurrentStyleSheets();
     }
 
     @Override

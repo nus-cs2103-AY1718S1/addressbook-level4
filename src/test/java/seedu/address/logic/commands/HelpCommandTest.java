@@ -2,12 +2,12 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.HelpCommand.SHOWING_HELP_MESSAGE;
+import static seedu.address.logic.commands.HelpCommand.MESSAGE_SUCCESS;
 
 import org.junit.Rule;
 import org.junit.Test;
 
-import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ChangeInformationPanelRequestEvent;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 public class HelpCommandTest {
@@ -17,8 +17,8 @@ public class HelpCommandTest {
     @Test
     public void execute_help_success() {
         CommandResult result = new HelpCommand().execute();
-        assertEquals(SHOWING_HELP_MESSAGE, result.feedbackToUser);
-        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ShowHelpRequestEvent);
+        assertEquals(MESSAGE_SUCCESS, result.feedbackToUser);
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ChangeInformationPanelRequestEvent);
         assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
     }
 }

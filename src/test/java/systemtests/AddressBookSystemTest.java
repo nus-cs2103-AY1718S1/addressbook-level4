@@ -3,12 +3,15 @@ package systemtests;
 import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
-import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
-import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
+import static org.junit.Assert.assertNotEquals;
+import static seedu.address.ui.GoogleMapBrowserPanel.GOOGLEMAP_SEARCH_URL_PREFIX;
+import static seedu.address.ui.GoogleMapBrowserPanel.GOOGLEMAP_SEARCH_URL_SUFFIX;
+import static seedu.address.ui.InstagramBrowserPanel.DEFAULT_PAGE;
+import static seedu.address.ui.InstagramBrowserPanel.INSTAGRAM_SEARCH_URL_PREFIX;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
+import static seedu.address.ui.testutil.GuiTestAssert.assertEmptyPersonDetailsPanel;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
 import java.net.MalformedURLException;
@@ -22,13 +25,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
-import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.GoogleMapBrowserPanelHandle;
+import guitests.guihandles.InstagramBrowserPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
+import guitests.guihandles.PersonDetailsPanelHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
+import javafx.application.Platform;
 import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
@@ -50,6 +56,8 @@ public abstract class AddressBookSystemTest {
     private static final List<String> COMMAND_BOX_DEFAULT_STYLE = Arrays.asList("text-input", "text-field");
     private static final List<String> COMMAND_BOX_ERROR_STYLE =
             Arrays.asList("text-input", "text-field", CommandBox.ERROR_STYLE_CLASS);
+    private static final String homePanel = "homePanel";
+    private static final String helpPanel = "helpPanel";
 
     private MainWindowHandle mainWindowHandle;
     private TestApp testApp;
@@ -66,7 +74,8 @@ public abstract class AddressBookSystemTest {
         testApp = setupHelper.setupApplication();
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
-        waitUntilBrowserLoaded(getBrowserPanel());
+        waitUntilBrowserLoaded(getInstagramBrowserPanel());
+        waitUntilBrowserLoaded(getGoogleMapBrowserPanel());
         assertApplicationStartingStateIsCorrect();
     }
 
@@ -84,12 +93,20 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getPersonListPanel();
     }
 
+    public PersonDetailsPanelHandle getPersonDetailsPanel() {
+        return mainWindowHandle.getPersonDetailsPanel();
+    }
+
     public MainMenuHandle getMainMenu() {
         return mainWindowHandle.getMainMenu();
     }
 
-    public BrowserPanelHandle getBrowserPanel() {
-        return mainWindowHandle.getBrowserPanel();
+    public InstagramBrowserPanelHandle getInstagramBrowserPanel() {
+        return mainWindowHandle.getInstagramBrowserPanel();
+    }
+
+    public GoogleMapBrowserPanelHandle getGoogleMapBrowserPanel() {
+        return mainWindowHandle.getGoogleMapBrowserPanel();
     }
 
     public StatusBarFooterHandle getStatusBarFooter() {
@@ -98,6 +115,14 @@ public abstract class AddressBookSystemTest {
 
     public ResultDisplayHandle getResultDisplay() {
         return mainWindowHandle.getResultDisplay();
+    }
+
+    public String getCurrentInformationPanel() {
+        return testApp.getCurrentInformationPanel();
+    }
+
+    public String getCurrentStyleSheet() {
+        return testApp.getCurrentStyleSheets();
     }
 
     /**
@@ -112,9 +137,33 @@ public abstract class AddressBookSystemTest {
 
         mainWindowHandle.getCommandBox().run(command);
 
-        waitUntilBrowserLoaded(getBrowserPanel());
+        waitUntilBrowserLoaded(getInstagramBrowserPanel());
+        waitUntilBrowserLoaded(getGoogleMapBrowserPanel());
     }
 
+    /**
+     * Executes {@code handle} in the application's {@code MainMenu}
+     * Method returns after UI components have been updated.
+     */
+    protected void executeHandle(String handle) {
+        rememberStates();
+
+        // Injects a fixed clock before executing a command so that the time stamp shown in the status bar
+        // after each command is predictable and also different from the previous command.
+        clockRule.setInjectedClockToCurrentTime();
+
+        if (homePanel.equals(handle)) {
+            Platform.runLater(() -> testApp.getMainWindow().handleHome());
+        } else if (helpPanel.equals(handle)) {
+            Platform.runLater(() -> testApp.getMainWindow().handleHelp());
+        }
+
+        try {
+            Thread.sleep(250);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+    }
     /**
      * Displays all persons in the address book.
      */
@@ -159,7 +208,8 @@ public abstract class AddressBookSystemTest {
      */
     private void rememberStates() {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
-        getBrowserPanel().rememberUrl();
+        getInstagramBrowserPanel().rememberUrl();
+        getGoogleMapBrowserPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
@@ -168,40 +218,51 @@ public abstract class AddressBookSystemTest {
     /**
      * Asserts that the previously selected card is now deselected and the browser's url remains displaying the details
      * of the previously selected person.
-     * @see BrowserPanelHandle#isUrlChanged()
+     * @see InstagramBrowserPanelHandle#isUrlChanged()
+     * @see GoogleMapBrowserPanelHandle#isUrlChanged()
      */
     protected void assertSelectedCardDeselected() {
-        assertFalse(getBrowserPanel().isUrlChanged());
+        assertFalse(getInstagramBrowserPanel().isUrlChanged());
+        assertFalse(getGoogleMapBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isAnyCardSelected());
     }
 
     /**
      * Asserts that the browser's url is changed to display the details of the person in the person list panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
-     * @see BrowserPanelHandle#isUrlChanged()
+     * @see InstagramBrowserPanelHandle#isUrlChanged()
+     * @see GoogleMapBrowserPanelHandle#isUrlChanged()
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
         String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
-        URL expectedUrl;
+        String []selectedCardAddress = getPersonDetailsPanel().getAddress().split("#");
+
+        URL expectedInstagramUrl;
+        URL expectedGoogleMapUrl;
         try {
-            expectedUrl = new URL(GOOGLE_SEARCH_URL_PREFIX + selectedCardName.replaceAll(" ", "+")
-                    + GOOGLE_SEARCH_URL_SUFFIX);
+            expectedInstagramUrl = new URL(INSTAGRAM_SEARCH_URL_PREFIX + selectedCardName.replaceAll("\\s+",
+                    "") + "/");
+            expectedGoogleMapUrl = new URL(GOOGLEMAP_SEARCH_URL_PREFIX + selectedCardAddress[0].replaceAll(" ",
+                    "+") + GOOGLEMAP_SEARCH_URL_SUFFIX);
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
-        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
+        assertEquals(expectedInstagramUrl, getInstagramBrowserPanel().getLoadedUrl());
+        assertEquals(expectedGoogleMapUrl, getGoogleMapBrowserPanel().getLoadedUrl());
 
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
 
     /**
-     * Asserts that the browser's url and the selected card in the person list panel remain unchanged.
-     * @see BrowserPanelHandle#isUrlChanged()
+     * Asserts that the browsers' url and the selected card in the person list panel remain unchanged.
+     * @see InstagramBrowserPanelHandle#isUrlChanged()
+     * @see GoogleMapBrowserPanelHandle#isUrlChanged()
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardUnchanged() {
-        assertFalse(getBrowserPanel().isUrlChanged());
+        assertFalse(getInstagramBrowserPanel().isUrlChanged());
+        assertFalse(getGoogleMapBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isSelectedPersonCardChanged());
     }
 
@@ -217,6 +278,27 @@ public abstract class AddressBookSystemTest {
      */
     protected void assertCommandBoxShowsErrorStyle() {
         assertEquals(COMMAND_BOX_ERROR_STYLE, getCommandBox().getStyleClass());
+    }
+
+    /**
+     * Asserts that the information panel shows correct panel.
+     */
+    protected void assertInformationPanelShowsCorrectPanel(String expectedInformationPanelId) {
+        assertEquals(expectedInformationPanelId, getCurrentInformationPanel());
+    }
+
+    /**
+     * Asserts that the theme before changing is not the same as the expected theme.
+      */
+    protected void assertThemeBeforeChangingNotSame(String expectedThemeAllPaths) {
+        assertNotEquals(expectedThemeAllPaths, getCurrentStyleSheet());
+    }
+
+    /**
+     * Asserts that the theme after changing is the same as the expected theme.
+      */
+    protected void assertThemeAfterChangingSame(String expectedThemeAllPaths) {
+        assertEquals(expectedThemeAllPaths, getCurrentStyleSheet());
     }
 
     /**
@@ -248,7 +330,11 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
-            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
+            assertEmptyPersonDetailsPanel(getPersonDetailsPanel());
+            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE),
+                    getInstagramBrowserPanel().getLoadedUrl());
+            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE),
+                    getGoogleMapBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {
