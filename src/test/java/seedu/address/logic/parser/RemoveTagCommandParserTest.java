@@ -12,6 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.model.tag.Tag;
 
+//@@author freesoup
 public class RemoveTagCommandParserTest {
 
     private RemoveTagCommandParser parser = new RemoveTagCommandParser();
@@ -19,6 +20,12 @@ public class RemoveTagCommandParserTest {
     @Test
     public void parse_emptyArg_throwsParseException() {
         assertParseFailure(parser, "     ", String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_MultipleArg_throwsParseException() {
+        assertParseFailure(parser, "friends owesMoney", String.format(
                 MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
     }
 

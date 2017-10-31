@@ -21,7 +21,10 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
-
+//@@author freesoup
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for RemoveTagCommand.
+ */
 public class RemoveTagCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -45,8 +48,19 @@ public class RemoveTagCommandTest {
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
+    @Test
+    public void execute_removeSingleTag_success() throws IllegalValueException, PersonNotFoundException {
+        String expectedMessage = MESSAGE_TAG_REMOVED;
+
+        RemoveTagCommand command = prepareCommand(5, "owesMoney");
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.removeTag(Index.fromOneBased(5), new Tag("owesMoney"));
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+    }
+
     /**
-     * Generates a new {@code RemoveTagCommand} which upon execution, removes tag in {@code model}.
+     * Generates a new {@code RemoveTagCommand} which upon execution, removes all tag
+     * matching given Tag in {@code model}.
      */
     private RemoveTagCommand prepareCommand(String tag) throws IllegalValueException {
         RemoveTagCommand command = new RemoveTagCommand(new Tag(tag));
@@ -54,6 +68,10 @@ public class RemoveTagCommandTest {
         return command;
     }
 
+    /**
+     * Generates a new {@code RemoveTagCommand} which upon execution, removes tag
+     * corresponding to given Tag and Index in {@code model}.
+     */
     private RemoveTagCommand prepareCommand(int index, String tag) throws IllegalValueException {
         RemoveTagCommand command = new RemoveTagCommand(Index.fromZeroBased(index), new Tag(tag));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
