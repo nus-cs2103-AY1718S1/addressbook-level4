@@ -170,7 +170,6 @@ public class ModelManager extends ComponentManager implements Model {
             if ((person.getBirthday().value.length() != 0)
                     && (Integer.parseInt(person.getBirthday().value.substring(0, 2)) >= day)
                     && (Integer.parseInt(person.getBirthday().value.substring(3, 5)) == (month + 1))) {
-
                 tempList.add(person);
             }
 
@@ -178,7 +177,6 @@ public class ModelManager extends ComponentManager implements Model {
         for (ReadOnlyPerson person : contactList) {
             if ((person.getBirthday().value.length() != 0)
                     && (Integer.parseInt(person.getBirthday().value.substring(3, 5)) > (month + 1))) {
-
                 tempList.add(person);
             }
 
@@ -194,14 +192,12 @@ public class ModelManager extends ComponentManager implements Model {
             if ((person.getBirthday().value.length() != 0)
                     && (Integer.parseInt(person.getBirthday().value.substring(0, 2)) < day)
                     && (Integer.parseInt(person.getBirthday().value.substring(3, 5)) == (month + 1))) {
-
                 tempList.add(person);
             }
 
         }
         for (ReadOnlyPerson person : contactList) {
-            if ((person.getBirthday().value.length() == 0)
-                    ) {
+            if ((person.getBirthday().value.length() == 0)) {
                 tempList.add(person);
             }
 
