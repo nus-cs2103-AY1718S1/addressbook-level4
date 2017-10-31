@@ -2,12 +2,12 @@ package seedu.address.logic.commands.imports;
 
 import java.util.HashMap;
 
-import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.UndoableCommand;
 
 /**
  * Imports data from various format to the application.
  */
-public abstract class ImportCommand extends Command {
+public abstract class ImportCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "import";
     public static final String COMMAND_ALIAS = "i";
 
