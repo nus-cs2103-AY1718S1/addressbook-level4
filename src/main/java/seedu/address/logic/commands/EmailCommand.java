@@ -19,6 +19,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
+//@@author hanselblack
 /**
  * Emails the list of contact details to the input email address
  */
@@ -96,17 +97,16 @@ public class EmailCommand extends Command {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
             // Set Subject: header field
-            message.setSubject("Unify: Address Book: Exported Data");
+            message.setSubject("Unify: Address Book: " + name + "Exported Data");
 
             MimeBodyPart messageBodyPart = new MimeBodyPart();
 
             //set the actual message
-            messageBodyPart.setContent("<br/><img src='https://github.com/hanselblack/main/blob/Email/docs/images"
-                            + "/email_header.png?raw=true'/>"
-                            + "<br/><img src='https://github.com/hanselblack/main/blob/Email/docs/images"
-                            + "/email_subheader.png?raw=true'/>"
-                            + "Hi, you have requested to send an email"
-                            + " to you.<br/>"
+            messageBodyPart.setContent("<img src='https://github.com/CS2103AUG2017-W11-B4/"
+                            + "main/blob/master/docs/images/email_header.png?raw=true'/>"
+                            + "<br/><br/><br/><img src='https://github.com/CS2103AUG2017-W11-B4/"
+                            + "main/blob/master/docs/images/email_subheader.png?raw=true'/>"
+                            + "<br/><br/>"
                             + "<table>"
                             + "<tr><td style=\"height:20px; width:80px; margin:0;\">"
                             + "<b>Name</b></td><td>" + name + "</td></tr>"
