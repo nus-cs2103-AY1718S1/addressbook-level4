@@ -117,13 +117,19 @@ public class FindCommand extends Command {
             if (this.name != null && !match(this.name, ((Person) other).getName())) {
                 return false;
             }
-            if (this.phone != null && !this.phone.equals(((Person) other).getPhone())) {
+            if (this.phone != null && !match(this.phone, ((Person) other).getPhone())) {
                 return false;
             }
             if (this.email != null && !this.email.equals(((Person) other).getEmail())) {
                 return false;
             }
             if (this.address != null && !this.address.equals(((Person) other).getAddress())) {
+                return false;
+            }
+            if (this.website != null && !this.website.equals(((Person) other).getWebsite())) {
+                return false;
+            }
+            if (this.birthday != null && !this.birthday.equals(((Person) other).getBirthday())) {
                 return false;
             }
             if (this.tags != null && !match(this.tags, ((Person) other).getTags())) {
@@ -134,7 +140,6 @@ public class FindCommand extends Command {
         }
 
         /**
-         *
          * @param predicate
          * @param test
          * @return true if test contains predicate
@@ -165,13 +170,29 @@ public class FindCommand extends Command {
          *
          * @param predicate
          * @param test
+         * @return true if predicate is a substring of test
+         */
+        private boolean match(Phone predicate, Phone test) {
+            if (predicate == test) {
+                return true;
+            }
+            if (predicate == null || test == null) {
+                return false;
+            }
+
+            return test.toString().contains(predicate.toString());
+        }
+
+        /**
+         * @param predicate
+         * @param test
          * @return true if test contains a tag that is among the predicate
          */
         private boolean match(Set<Tag> predicate, Set<Tag> test) {
             for (Tag predicateTag : predicate) {
                 for (Tag testTag : test) {
-                    if (predicateTag.equals(test)) {
-                        return  true;
+                    if (predicateTag.equals(testTag)) {
+                        return true;
                     }
                 }
             }
