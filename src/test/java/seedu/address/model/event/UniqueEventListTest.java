@@ -72,9 +72,6 @@ public class UniqueEventListTest {
 
         //Test for overlaps
         assertTrue(eventList.hasClashes(new Event(new MemberList(), new EventName("1"),
-                new EventTime(past, Duration.ofHours(2)),
-                new EventDuration(Duration.ofHours(2)))));
-        assertTrue(eventList.hasClashes(new Event(new MemberList(), new EventName("1"),
                 new EventTime(future, Duration.ofHours(2)),
                 new EventDuration(Duration.ofHours(2)))));
 
@@ -82,9 +79,6 @@ public class UniqueEventListTest {
         assertTrue(eventList.hasClashes(new Event(new MemberList(), new EventName("1"),
                 new EventTime(future, Duration.ofMinutes(30)),
                 new EventDuration(Duration.ofMinutes(30)))));
-        assertTrue(eventList.hasClashes(new Event(new MemberList(), new EventName("1"),
-                new EventTime(past, Duration.ofHours(5)),
-                new EventDuration(Duration.ofHours(5)))));
 
         //Test for exact date-time match
         assertTrue(eventList.hasClashes(new Event(new MemberList(), new EventName("1"),
