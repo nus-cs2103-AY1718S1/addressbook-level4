@@ -3,12 +3,12 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
+ifndef::env-github[]
 == Project: Rolodex
 
-Rolodex is a desktop Address Book application for computing professionals who prefer working without a mouse to manage their contacts more efficiently.
-Rolodex is an extension of AddressBook - Level 4, which is a desktop address book application used for teaching Software Engineering principles.
-The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+include::../../README.adoc[tag=applicationDescription]
+
+*Code contributed*: [https://github.com/jo-lyn/Rolodex/blob/collate/collated/main/jo-lyn.md[Functional code]] [https://github.com/jo-lyn/Rolodex/blob/collate/collated/test/jo-lyn.md[Test code]]
 
 === Enhancement Added: Keyboard Shortcuts
 
@@ -18,11 +18,8 @@ and `View help window` which came with the original state of the application.
 ==== External behavior
 
 ---
-#Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=shortcut]
-
-#End of Extract#
+include::../UserGuide.adoc[leveloffset=2,tag=shortcut]
 
 ---
 
@@ -35,27 +32,27 @@ This implementation should enable the user to access all parts of the applicatio
 ==== Implementation
 
 ---
-#Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=shortcut]
-
-#End of Extract#
+include::../DeveloperGuide.adoc[leveloffset=2, tag=shortcut]
 
 ---
 
 === Enhancement Proposed: Add Profile Pictures
 
 ---
-#Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=picture]
-
-#End of Extract#
+include::../UserGuide.adoc[leveloffset=2, tag=picture]
 
 ---
 === Other contributions
-
 * Updated the GUI layout and color scheme (Pull request https://github.com[#16])
 * Added a keyboard icon in the command box which provides visual feedback for some user events (Pull request https://github.com[#28])
 * Added the removeTag method (Pull request https://github.com[#6])
 * Updated the General Documentation (Pull requests https://github.com[#2], https://github.com[#66])
+
+endif::[]
+
+
+ifndef::env-github[]
+include::../NavigationMenu.adoc[]
+endif::[]
