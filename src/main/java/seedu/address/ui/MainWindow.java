@@ -27,6 +27,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.RefreshStatisticsPanelIfOpenEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ToggleBrowserPanelEvent;
 import seedu.address.commons.events.ui.ToggleStatisticsPanelEvent;
@@ -43,6 +44,7 @@ public class MainWindow extends UiPart<Region> {
 
     private static final String ICON = "/images/address_book_32.png";
     private static final String FXML = "MainWindow.fxml";
+    private static final String STATISTICS_STYLE = "view/Statistics.css";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
 
@@ -57,6 +59,8 @@ public class MainWindow extends UiPart<Region> {
     private StatisticsPanel statisticsPanel;
     private Config config;
     private UserPrefs prefs;
+
+    private Boolean statisticsPanelOpen;
 
     @FXML
     private StackPane browserOrStatisticsPlaceholder;
@@ -97,6 +101,7 @@ public class MainWindow extends UiPart<Region> {
         setWindowMinSize();
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
+        scene.getStylesheets().add(STATISTICS_STYLE);
         primaryStage.setScene(scene);
 
         setAccelerators();
@@ -170,16 +175,24 @@ public class MainWindow extends UiPart<Region> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
-    void switchToStatisticsPanel() {
+    /**
+     * Instantiates and adds the statistics panel to the UI
+     */
+    private void switchToStatisticsPanel() {
         statisticsPanel = new StatisticsPanel(logic.getAllPersonList());
         browserOrStatisticsPlaceholder.getChildren().clear();
         browserOrStatisticsPlaceholder.getChildren().add(statisticsPanel.getRoot());
+        statisticsPanelOpen = true;
     }
 
-    void switchToBrowserPanel() {
+    /**
+     * Instantiates and adds the browser panel to the UI
+     */
+    private void switchToBrowserPanel() {
         browserPanel = new BrowserPanel();
         browserOrStatisticsPlaceholder.getChildren().clear();
         browserOrStatisticsPlaceholder.getChildren().add(browserPanel.getRoot());
+        statisticsPanelOpen = false;
     }
 
     void hide() {
@@ -268,5 +281,13 @@ public class MainWindow extends UiPart<Region> {
     private void handleToggleStatisticsPanelEvent(ToggleStatisticsPanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchToStatisticsPanel();
+    }
+
+    @Subscribe
+    private void handleRefreshStatisticsPanelIfOpenEvent(RefreshStatisticsPanelIfOpenEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (statisticsPanelOpen) {
+            switchToStatisticsPanel();
+        }
     }
 }
