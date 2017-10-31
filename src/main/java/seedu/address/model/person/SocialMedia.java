@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author kenpaxtonlim
 /**
  * Represents a Person's social media usernames in the address book.
  */

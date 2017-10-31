@@ -20,7 +20,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * The Statistics Panel of the App.
  */
-public class StatisticsPanel extends UiPart<Region> {
+public class    StatisticsPanel extends UiPart<Region> {
     private static final String FXML = "StatisticsPanel.fxml";
 
     private static final Integer PERSON_ADDED_EARLIEST_YEAR = 2000;

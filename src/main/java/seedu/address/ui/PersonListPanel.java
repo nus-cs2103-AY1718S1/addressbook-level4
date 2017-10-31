@@ -22,6 +22,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonListPanel extends UiPart<Region> {
     private static final String FXML = "PersonListPanel.fxml";
+
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
 
     @FXML
@@ -47,6 +48,9 @@ public class PersonListPanel extends UiPart<Region> {
                     if (newValue != null) {
                         logger.fine("Selection in person list panel changed to : '" + newValue + "'");
                         raise(new PersonPanelSelectionChangedEvent(newValue));
+                        if (oldValue == null || oldValue.person.getName() != newValue.person.getName()) {
+                            newValue.person.incrementAccess();
+                        }
                     }
                 });
     }
@@ -59,28 +63,6 @@ public class PersonListPanel extends UiPart<Region> {
             personListView.scrollTo(index);
             personListView.getSelectionModel().clearAndSelect(index);
         });
-    }
-
-    /**
-     * Resets the font sizes of this class.
-     */
-    public void resetFontSize() {
-        PersonCard.resetFontSize();
-        for (PersonCard pc : personListView.getItems()) {
-            pc.refreshFontSizes();
-        }
-        personListView.refresh();
-    }
-
-    /**
-     * Changes the font sizes of this class by {@code change}.
-     */
-    public void changeFontSize(int change) {
-        PersonCard.changeFontSize(change);
-        for (PersonCard pc : personListView.getItems()) {
-            pc.refreshFontSizes();
-        }
-        personListView.refresh();
     }
 
     @Subscribe

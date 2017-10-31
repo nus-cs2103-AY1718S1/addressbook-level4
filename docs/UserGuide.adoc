@@ -85,7 +85,7 @@ Alias: `h`
 
 This command takes no arguments.
 
-==== Viewing quick help : `quickhelp` (Coming v2.0)
+==== Viewing quick help : `quickhelp` (Not implemented yet. Coming in v2.0)
 
 Opens a quick summary of using the address book. +
 Format: `quickhelp` +
@@ -96,14 +96,14 @@ This command takes no arguments.
 ==== Adding a person: `add`
 
 Adds a person to the address book. +
-Format: `add n/NAME [p/PHONE_NUMBER]... [e/EMAIL]... [a/ADDRESS]... [fb/FACEBOOK] [tw/TWITTER] [ig/INSTAGRAM] [t/TAG]...` +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [fb/FACEBOOK] [tw/TWITTER] [ig/INSTAGRAM] [t/TAG]...` +
 Alias: `a`
 
 [TIP]
-A person can have any number of tags, phone numbers, emails or addresses (including 0) (Coming v2.0)
+A person can have any number of tags, phone numbers, emails or addresses (including 0) (Not implemented yet. Coming in v2.0)
 
 ****
-* If a person to be added is similar to one of the existing contacts, a prompt will show you that similar contact/s. (Coming in v2.0)
+* If a person to be added is similar to one of the existing contacts, a prompt will show you that similar contact/s. (Not implemented yet. Coming in v2.0)
 ****
 
 Examples:
@@ -366,10 +366,10 @@ Alias example:
 
 * `re 1 r/Owe money`
 
-==== Accessing a person's social media : `socialmedia` (Coming v2.0)
+==== Accessing a person's social media : `socialmedia` (Since v1.4)
 
 Access a person's social media profile on the browser. +
-Format: `socialmedia INDEX TYPE` +
+Format: `socialmedia TYPE INDEX` +
 Alias: `sm`
 
 ****
@@ -382,11 +382,11 @@ Alias: `sm`
 Examples:
 
 * `list` +
-`socialmedia 1 facebook` +
+`socialmedia facebook 1` +
 Loads the Facebook account of the 1st person in the address book.
 
 * `find Tony` +
-`socialmedia 2 instagram` +
+`socialmedia instagram 2` +
 Loads the Instagram account of the 2nd person returned by the `find` command.
 
 ==== Viewing contacts with birthday in current month : `birthday`
@@ -418,6 +418,17 @@ Decreases the font size by 3 pts.
 
 * `size` +
 Resets the font size back to the default.
+
+=== Toggling the display of the access counts : `accessdisplay` (Since v1.4)
+Toggles the display option for the access count numbers. +
+Format: `accessdisplay TYPE` +
+Alias: `ad`
+TYPE can be either 'on' or 'off'
+
+Examples:
+
+* `accessdisplay off`
+The description cards on the left plane no longer display access counts.
 
 ==== Listing entered commands : `history`
 
@@ -510,7 +521,7 @@ Alias example:
 
 * `r 1`
 
-==== Exporting all entries : `export` (Coming in v2.0)
+==== Exporting all entries : `export` (Not implemented yet. Coming in v2.0)
 
 Exports all entries in the address book into the given format and stores it at the given location. +
 Format: `export FORMAT LOCATION`
@@ -542,7 +553,7 @@ A newly added person is defined as a person that was added in the current month.
 
 ==== Viewing access counts (Since v1.3)
 
-At the left side of the screen where the addressbook entries are displayed, we can see an "Accesses: #number" row, which describes the number of times this entry has been accessed. Clicking on this entry, or modifying it using any of the edit, add/remove tag functions will increase this counter.
+At the left side of the screen where the addressbook entries are displayed, we can see an "Accesses: #number" row, which describes the number of times this entry has been accessed. Clicking on this entry, or modifying it using any of the edit, add/remove tag functions will increase this counter. This can be toggled on and off using the `accessdisplay` command.
 
 ==== Saving the data
 
@@ -585,6 +596,7 @@ e.g.`remark 4 r/new remark`
 e.g. `socialmedia 1 facebook`
 * *Birthday* : `birthday`
 * *Font size* : `size AMOUNT` +
+* *Toggle access display* : `accessdisplay TYPE` +
 e.g. `size 3`
 * *History* : `history`
 * *Undo* : `undo [AMOUNT]`

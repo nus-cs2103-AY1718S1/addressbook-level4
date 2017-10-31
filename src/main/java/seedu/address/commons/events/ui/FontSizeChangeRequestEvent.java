@@ -7,16 +7,9 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class FontSizeChangeRequestEvent extends BaseEvent {
 
-    public final boolean isReset;
     public final int sizeChange;
 
-    public FontSizeChangeRequestEvent() {
-        isReset = true;
-        this.sizeChange = 0;
-    }
-
     public FontSizeChangeRequestEvent(int sizeChange) {
-        isReset = false;
         this.sizeChange = sizeChange;
     }
 

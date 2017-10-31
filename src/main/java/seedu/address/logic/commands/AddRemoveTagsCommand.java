@@ -17,6 +17,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
+//@@author kenpaxtonlim
 /**
  * Adds tags to an existing person in the address book.
  */
@@ -113,7 +114,7 @@ public class AddRemoveTagsCommand extends UndoableCommand {
         HashSet<Tag> newTags = new HashSet<Tag>(personTags);
         newTags.removeAll(tags);
 
-        AccessCount accessCount = new AccessCount((personToEdit.getAccessCount().numAccess() + 1));
+        AccessCount accessCount = new AccessCount(personToEdit.getAccessCount().numAccess() + 1);
 
         return new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getRemark(), newTags, personToEdit.getCreatedAt(),

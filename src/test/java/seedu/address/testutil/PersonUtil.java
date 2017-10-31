@@ -24,12 +24,14 @@ public class PersonUtil {
         return AddCommand.COMMAND_WORD + " " + getPersonDetails(person);
     }
 
+    //@@author kenpaxtonlim
     /**
      * Returns an add command string using alias for adding the {@code person}.
      */
     public static String getAddCommandAlias(ReadOnlyPerson person) {
         return AddCommand.COMMAND_ALIAS + " " + getPersonDetails(person);
     }
+    //@@author
 
     /**
      * Returns the part of command string for the given {@code person}'s details.

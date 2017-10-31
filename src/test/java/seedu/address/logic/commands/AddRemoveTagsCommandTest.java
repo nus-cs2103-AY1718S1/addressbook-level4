@@ -29,6 +29,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
+//@@author kenpaxtonlim
 public class AddRemoveTagsCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());

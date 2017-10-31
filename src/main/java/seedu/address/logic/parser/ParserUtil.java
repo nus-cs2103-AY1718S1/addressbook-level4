@@ -110,6 +110,7 @@ public class ParserUtil {
         return tagSet;
     }
 
+    //@@author kenpaxtonlim
     /**
      * Parses three {@code String facebook, twitter, instagram} into an {@code SocialMedia}.
      */
@@ -123,4 +124,5 @@ public class ParserUtil {
 
         return new SocialMedia(fb, tw, in);
     }
+    //@@author
 }

@@ -70,6 +70,7 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        accessCount = source.getAccessCount().numAccess();
         createdAt = source.getCreatedAt();
         facebook = source.getSocialMedia().facebook;
         twitter = source.getSocialMedia().twitter;

@@ -18,6 +18,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.FontSizeOutOfBoundsException;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
@@ -138,6 +139,17 @@ public class AddCommandTest {
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void resetFontSize() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public int updateFontSize(int change) throws FontSizeOutOfBoundsException {
+            fail("This method should not be called.");
+            return 0;
         }
     }
 
