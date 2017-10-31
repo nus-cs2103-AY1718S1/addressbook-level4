@@ -62,7 +62,7 @@ public class EditCommand extends UndoableCommand {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
-    public static boolean requiresHandling;
+    private static boolean requiresHandling;
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -87,7 +87,7 @@ public class EditCommand extends UndoableCommand {
             requiresHandling = false;
         }
 
-            List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -135,6 +135,14 @@ public class EditCommand extends UndoableCommand {
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
                 updatedFavourite, updatedBirthday, updatedTags);
+    }
+
+    public static boolean requiresHandling(){
+        return requiresHandling;
+    }
+
+    public static void setHandlingFalse() {
+        requiresHandling = false;
     }
 
     @Override
@@ -233,6 +241,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<Set<Tag>> getTags() {
             return Optional.ofNullable(tags);
         }
+
 
         @Override
         public boolean equals(Object other) {

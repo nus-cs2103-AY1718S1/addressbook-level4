@@ -10,8 +10,6 @@ import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -22,17 +20,16 @@ import seedu.address.model.person.ReadOnlyPerson;
 public abstract class UndoableCommand extends Command {
     private ReadOnlyAddressBook previousAddressBook;
 
-    public static boolean isWaitingforReply;
-    public static CommandResult result;
-
     public static final String MESSAGE_DUPLICATE_FIELD = "This person's %1$s is already in use."
             + "Would you like to continue? YES or NO?";
 
     public static final String NAME_FIELD = "name";
     public static final String PHONE_FIELD = "phone";
-    private static final String ADDRESS_FIELD = "address";
-    private static final String EMAIL_FIELD = "email";
+    public static final String ADDRESS_FIELD = "address";
+    public static final String EMAIL_FIELD = "email";
 
+    protected static boolean isWaitingforReply;
+    protected CommandResult result;
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
     /**
@@ -75,6 +72,10 @@ public abstract class UndoableCommand extends Command {
         return executeUndoableCommand();
     }
 
+    public static void reply() {
+        isWaitingforReply = false;
+    }
+
     /*
      * Check for duplicate fields in current UniCity contacts. Set isWaitingforReply to true
      * to proceed with prompting user of edit/add command.
@@ -90,13 +91,13 @@ public abstract class UndoableCommand extends Command {
                 isWaitingforReply = true;
                 result = new CommandResult(String.format(MESSAGE_DUPLICATE_FIELD, PHONE_FIELD));
 
-            } else if ((toAdd.getAddress().toString().trim().equals(contact.getAddress().toString().trim())) &&
-                    (!toAdd.getAddress().toString().trim().equals(DEFAULT_ADDRESS))) {
+            } else if ((toAdd.getAddress().toString().trim().equals(contact.getAddress().toString().trim()))
+                    && (!toAdd.getAddress().toString().trim().equals(DEFAULT_ADDRESS))) {
                 isWaitingforReply = true;
                 result = new CommandResult(String.format(MESSAGE_DUPLICATE_FIELD, ADDRESS_FIELD));
 
-            } else if ((toAdd.getEmail().toString().trim().equals(contact.getEmail().toString().trim())) &&
-                    (!toAdd.getEmail().toString().trim().equals(DEFAULT_EMAIL))) {
+            } else if ((toAdd.getEmail().toString().trim().equals(contact.getEmail().toString().trim()))
+                    && (!toAdd.getEmail().toString().trim().equals(DEFAULT_EMAIL))) {
                 isWaitingforReply = true;
                 result = new CommandResult(String.format(MESSAGE_DUPLICATE_FIELD, EMAIL_FIELD));
 

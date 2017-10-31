@@ -7,10 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.person.Address.DEFAULT_ADDRESS;
-import static seedu.address.model.person.Email.DEFAULT_EMAIL;
-
-import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
@@ -55,7 +51,7 @@ public class AddCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
-    public static boolean requiresHandling;
+    private static boolean requiresHandling;
 
 
     private final Person toAdd;
@@ -97,6 +93,10 @@ public class AddCommand extends UndoableCommand {
         }
     }
 
+    public static boolean requiresHandling(){
+        return requiresHandling;
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -104,4 +104,7 @@ public class AddCommand extends UndoableCommand {
                 && toAdd.equals(((AddCommand) other).toAdd));
     }
 
+    public static void setHandlingFalse() {
+        requiresHandling = false;
+    }
 }
