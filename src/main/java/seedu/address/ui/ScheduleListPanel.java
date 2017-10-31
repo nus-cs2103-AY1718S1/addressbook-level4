@@ -40,7 +40,7 @@ public class ScheduleListPanel extends UiPart<Region> {
         ObservableList<ScheduleCard> mappedList = EasyBind.map(
                 scheduleList, (schedule) -> new ScheduleCard(schedule, scheduleList.indexOf(schedule) + 1));
         scheduleListView.setItems(mappedList);
-        scheduleListView.setCellFactory(listView -> new scheduleListViewCell());
+        scheduleListView.setCellFactory(listView -> new ScheduleListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
 
@@ -77,7 +77,7 @@ public class ScheduleListPanel extends UiPart<Region> {
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code ScheduleCard}.
      */
-    class scheduleListViewCell extends ListCell<ScheduleCard> {
+    class ScheduleListViewCell extends ListCell<ScheduleCard> {
 
         @Override
         protected void updateItem(ScheduleCard schedule, boolean empty) {
