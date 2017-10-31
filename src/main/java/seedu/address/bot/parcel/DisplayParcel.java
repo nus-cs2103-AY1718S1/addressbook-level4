@@ -21,7 +21,7 @@ public class DisplayParcel {
 
     public String toString() {
         return "Name: " + this.name.toString()
-                + "Address: " + this.address.toString()
-                + "Phone: " + this.phone.toString();
+                + "\nAddress: " + this.address.toString()
+                + "\nPhone: " + this.phone.toString();
     }
 }

@@ -5,14 +5,15 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import org.telegram.telegrambots.ApiContextInitializer;
+import org.telegram.telegrambots.TelegramBotsApi;
+import org.telegram.telegrambots.exceptions.TelegramApiException;
+
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import org.telegram.telegrambots.ApiContextInitializer;
-import org.telegram.telegrambots.TelegramBotsApi;
-import org.telegram.telegrambots.exceptions.TelegramApiException;
 import seedu.address.bot.ArkBot;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
