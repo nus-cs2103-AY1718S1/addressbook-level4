@@ -64,6 +64,7 @@ public class LogicManager extends ComponentManager implements Logic {
         return new ListElementPointer(history.getHistory());
     }
 
+    //@@author john19950730
     @Override
     public ListElementPointer getAutoCompleteSnapshot() {
         return new ListElementPointer(autoCompletePossibilities.getPossibilities());

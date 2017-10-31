@@ -2,6 +2,7 @@ package seedu.address.logic.autocomplete.parser;
 
 import java.util.List;
 
+//@@author john19950730
 /**
  * Represents a parser used for autocomplete, different logics can be used for different occassions
  */

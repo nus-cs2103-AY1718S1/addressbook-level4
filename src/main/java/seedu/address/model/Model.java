@@ -24,6 +24,7 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
+    //@@author john19950730
     /** Returns all names in the AddressBook */
     List<String> getAllNamesInAddressBook();
 
@@ -42,6 +43,7 @@ public interface Model {
     /** Returns all remarks in the AddressBook */
     List<String> getAllRemarksInAddressBook();
 
+    //@@author
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
