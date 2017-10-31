@@ -26,9 +26,9 @@ public class FindCommandParser implements Parser<FindCommand> {
         String field;
         String trimmedArgs;
 
-        if(args.length() > 2) {
+        if (args.length() > 2) {
             field = args.substring(0, 2);
-            if(!field.substring(1, 2).equals("/")) {
+            if (!field.substring(1, 2).equals("/")) {
                 trimmedArgs = args;
                 field = " n/";
             } else {
@@ -50,17 +50,17 @@ public class FindCommandParser implements Parser<FindCommand> {
         FindCommand returnFindCommand = new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
 
         switch (field) {
-            case " n/":
-                returnFindCommand = new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
-                break;
-            case " a/":
-                returnFindCommand = new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
-                break;
-            case " p/":
-                returnFindCommand = new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(keywords)));
-                break;
-            default:
-                break;
+        case " n/":
+            returnFindCommand = new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+            break;
+        case " a/":
+            returnFindCommand = new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
+            break;
+        case " p/":
+            returnFindCommand = new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(keywords)));
+            break;
+        default:
+            break;
         }
 
         return returnFindCommand;
