@@ -5,7 +5,11 @@ import static java.util.Objects.requireNonNull;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.regex.Matcher;
 import java.util.Set;
+import java.util.regex.Pattern;
+
+import com.sun.prism.shader.FillCircle_LinearGradient_PAD_AlphaTest_Loader;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -31,6 +35,9 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
+    public static final Pattern PRINT_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
+            Pattern.compile("(?<filename>[^/]+)");//name of .txt file to be saved as
+
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
@@ -42,6 +49,16 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    public static String parseFilePath(String args) throws IllegalValueException {
+        final Matcher matcher = PRINT_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+        }
+        {
+            return matcher.group("filename");
+        }
     }
 
     /**
