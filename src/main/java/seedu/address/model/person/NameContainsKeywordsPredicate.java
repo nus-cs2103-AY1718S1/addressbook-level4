@@ -11,6 +11,7 @@ import seedu.address.logic.parser.ArgumentWildcardMatcher;
 public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
 
+    //@@author newalter
     public NameContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = ArgumentWildcardMatcher.processKeywords(keywords);
     }
@@ -26,6 +27,7 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
         }
         return false;
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
