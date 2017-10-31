@@ -20,12 +20,12 @@ public abstract class DeleteCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the specified persons from the address book\n"
             + "Alias: " + COMMAND_ALIAS + "\n"
+            + "Parameters: [OPTION] IDENTIFIER [MORE_IDENTIFIERS]...\n"
             + "Options: \n"
             + "\tdefault - Deletes the persons identified by the index numbers "
             + "(must be positive integers) used in the last person listing.\n"
             + "\t" + DeleteByTagCommand.COMMAND_OPTION
             + " - Deletes the perons in the last person listing with the specified tags.\n"
-            + "Parameters: [OPTION] IDENTIFIER [MORE_IDENTIFIERS]...\n"
             + "Example:\n"
             + COMMAND_WORD + " 1 2\n"
             + COMMAND_WORD + " -" + DeleteByTagCommand.COMMAND_OPTION + " friends colleagues";
