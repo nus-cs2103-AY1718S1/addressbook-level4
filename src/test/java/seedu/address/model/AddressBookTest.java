@@ -110,8 +110,8 @@ public class AddressBookTest {
         // Test equality
         assertEquals(addressBookUnderTest, expectedAddressBook);
     }
+
     //@@author
-    
     /**
      * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
      */
