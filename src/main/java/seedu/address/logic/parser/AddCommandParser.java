@@ -48,9 +48,9 @@ public class AddCommandParser implements Parser<AddCommand> {
             Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
-            Optional<String> OptionalBirthday = argMultimap.getValue(PREFIX_BIRTHDAY);
+            Optional<String> optionalBirthday = argMultimap.getValue(PREFIX_BIRTHDAY);
             Birthday birthday = new Birthday("");
-            if (OptionalBirthday.isPresent()) {
+            if (optionalBirthday.isPresent()) {
                 birthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get();
             }
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));

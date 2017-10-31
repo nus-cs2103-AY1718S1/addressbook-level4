@@ -44,7 +44,7 @@ public class SelectTaskCommand extends Command {
 
         String tag = model.getFilteredTaskList().get(targetIndex.getZeroBased()).getTags().toString()
                 .replaceAll("[\\[\\](),{}]", "");
-        if(!tag.isEmpty()) {
+        if (!tag.isEmpty()) {
             String[] tagArray = tag.split("\\s+");
             model.updateFilteredPersonList(new PersonContainsKeywordsPredicate(Arrays.asList(tagArray)));
         }
