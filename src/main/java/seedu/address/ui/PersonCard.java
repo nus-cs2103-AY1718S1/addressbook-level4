@@ -28,7 +28,7 @@ public class PersonCard extends UiPart<Region> {
     private static HashMap<String, String> tagColors = new HashMap<>();
     private static Random random = new Random();
     private static final String defaultThemeTagColor = "#fc4465";
-    private static final double goldenRatio = 0.618033988749895;
+    private static final double GOLDEN_RATIO = 0.618033988749895;
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -96,7 +96,7 @@ public class PersonCard extends UiPart<Region> {
      */
     private String generateRandomColor() {
         float randomHue = random.nextFloat();
-        randomHue += goldenRatio;
+        randomHue += GOLDEN_RATIO;
         randomHue = randomHue % 1;
 
         Color result = Color.getHSBColor(randomHue, 0.5f, 0.85f);
@@ -154,16 +154,16 @@ public class PersonCard extends UiPart<Region> {
      * TODO: This method will be modified for upcoming addPhoto command
      */
     private void initProfilePhoto (ReadOnlyPerson person) {
-        /* Round profile photo */
+        // Round profile photo
         double value = profilePhotoImageView.getFitWidth() / 2;
         Circle clip = new Circle(value, value, value);
         profilePhotoImageView.setClip(clip);
 
-        /* Add background circle with a random pastel color */
+        // Add background circle with a random pastel color
         Circle backgroundCircle = new Circle(value);
         backgroundCircle.setFill(Paint.valueOf(getColorForPerson(person)));
 
-        /* Add text */
+        // Add text
         Text personInitialsText = new Text(extractInitials(person));
         personInitialsText.setFill(Paint.valueOf("white"));
         profilePhotoStackPane.getChildren().addAll(backgroundCircle, personInitialsText);

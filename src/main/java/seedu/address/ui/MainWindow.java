@@ -208,7 +208,9 @@ public class MainWindow extends UiPart<Region> {
      * Returns the current theme applied.
      */
     ThemeSettings getCurrentThemeSetting() {
-        return new ThemeSettings(scene.getStylesheets().get(0), scene.getStylesheets().get(1));
+        String cssMain = scene.getStylesheets().get(0);
+        String cssExtensions = scene.getStylesheets().get(1);
+        return new ThemeSettings(cssMain, cssExtensions);
     }
 
     /**

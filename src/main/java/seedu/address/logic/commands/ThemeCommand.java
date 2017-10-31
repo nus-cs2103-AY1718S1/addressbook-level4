@@ -14,12 +14,14 @@ public class ThemeCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Changes the application theme to the specified option.\n"
+            + "Alias: " + COMMAND_ALIAS + "\n"
+            + "Parameters: -OPTION\n"
             + "Options: \n"
             + "\t" + COMMAND_OPTION_DAY + " - Changes the application theme to a light color scheme\n"
             + "\t" + COMMAND_OPTION_NIGHT + " - Changes the application theme to a dark color scheme\n"
             + "Example: \n"
-            + "\t" + COMMAND_WORD + " -day\n"
-            + "\t" + COMMAND_WORD + " -night\n";
+            + "\t" + COMMAND_WORD + " -" + COMMAND_OPTION_DAY + "\n"
+            + "\t" + COMMAND_WORD + " -" + COMMAND_OPTION_NIGHT + "\n";
 
     public static final String MESSAGE_THEME_CHANGE_SUCCESS = "Theme successfully applied";
 
