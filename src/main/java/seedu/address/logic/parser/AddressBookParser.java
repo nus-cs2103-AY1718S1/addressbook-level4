@@ -92,7 +92,7 @@ public class AddressBookParser {
 
         case JoinCommand.COMMAND_WORD:
             return new JoinCommandParser().parse(arguments);
-        
+
         case DisplayEmailsCommand.COMMAND_WORD:
             return new DisplayEmailsCommandParser().parse(arguments);
 
