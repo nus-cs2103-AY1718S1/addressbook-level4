@@ -17,6 +17,10 @@ public class Note {
         this.value = value;
     }
 
+    public static boolean isValidNote(String test) {
+        return test != null;
+    }
+
     public String getValue() {
         return this.value;
     }

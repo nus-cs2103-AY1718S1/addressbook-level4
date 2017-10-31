@@ -1,5 +1,7 @@
 package seedu.address.model.person;
 
+import java.time.Instant;
+
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -16,6 +18,15 @@ public class LastUpdated {
     public LastUpdated(String value) {
         requireNonNull(value);
         this.value = value;
+    }
+
+    /**TODO: Restrict LastUpdated to date values
+     *
+     * @param test
+     * @return
+     */
+    public static boolean isValidLastUpdated(String test) {
+        return test != null;
     }
 
     public String getValue() {

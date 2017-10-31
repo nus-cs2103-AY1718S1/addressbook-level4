@@ -8,7 +8,7 @@ import static java.util.Objects.requireNonNull;
 public class Id {
 
     public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Person value can take any values";
+            "Person id can take any values";
 
 
     private String value;
@@ -16,6 +16,10 @@ public class Id {
     public Id(String value) {
         requireNonNull(value);
         this.value = value;
+    }
+
+    public static boolean isValidId(String test) {
+        return test != null;
     }
 
     public String getValue() {
