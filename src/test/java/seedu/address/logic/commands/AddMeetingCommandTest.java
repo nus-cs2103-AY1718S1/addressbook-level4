@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -34,6 +35,7 @@ public class AddMeetingCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+    private Index index;
 
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
@@ -67,14 +69,17 @@ public class AddMeetingCommandTest {
     public void equals() {
         Meeting project = new MeetingBuilder().withNameMeeting("Project").build();
         Meeting meeting = new MeetingBuilder().withNameMeeting("Meeting").build();
-        AddMeetingCommand addProjectCommand = new AddMeetingCommand(project.getName(), project.getDate(), project.getPlace(), project.getIndex());
-        AddMeetingCommand addMeetingCommand = new AddMeetingCommand(meeting.getName(), meeting.getDate(), meeting.getPlace(), project.getIndex());
+        AddMeetingCommand addProjectCommand = new AddMeetingCommand(project.getName(), project.getDate(),
+                project.getPlace(), index);
+        AddMeetingCommand addMeetingCommand = new AddMeetingCommand(meeting.getName(), meeting.getDate(),
+                meeting.getPlace(), index);
 
         // same object -> returns true
         assertTrue(addProjectCommand.equals(addProjectCommand));
 
         // same values -> returns true
-        AddMeetingCommand addProjectCommandCopy = new AddMeetingCommand(project.getName(), project.getDate(), project.getPlace(), project.getIndex());
+        AddMeetingCommand addProjectCommandCopy = new AddMeetingCommand(project.getName(), project.getDate(),
+                project.getPlace(), index);
         assertTrue(addProjectCommand.equals(addProjectCommandCopy));
 
         // different types -> returns false
@@ -91,7 +96,9 @@ public class AddMeetingCommandTest {
      * Generates a new AddMeetingCommand with the details of the given meeting.
      */
     private AddMeetingCommand getAddMeetingCommandForMeeting(Meeting meeting, Model model) {
-        AddMeetingCommand command = new AddMeetingCommand(meeting.getName(), meeting.getDate(), meeting.getPlace(), meeting.getIndex());
+        this.index = Index.fromZeroBased(1);
+        AddMeetingCommand command = new AddMeetingCommand(meeting.getName(), meeting.getDate(), meeting.getPlace(),
+                index);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
