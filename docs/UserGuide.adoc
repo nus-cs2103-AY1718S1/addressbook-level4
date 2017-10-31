@@ -619,8 +619,8 @@ image::UG_mainheader_faq.png[width="900"]
 //-
 {sp}
 
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+image:question.png[width="70"] How do I transfer my data to another Computer? +
+image:answer.png[width="70"] Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
 == Command Summary
 image::UG_mainheader_commandsummary.png[width="900"]
