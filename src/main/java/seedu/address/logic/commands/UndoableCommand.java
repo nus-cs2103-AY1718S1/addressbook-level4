@@ -10,6 +10,8 @@ import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -23,11 +25,11 @@ public abstract class UndoableCommand extends Command {
     public static boolean isWaitingforReply;
     public static CommandResult result;
 
-    private static final String MESSAGE_DUPLICATE_FIELD = "This person's %1$s is already in use."
+    public static final String MESSAGE_DUPLICATE_FIELD = "This person's %1$s is already in use."
             + "Would you like to continue? YES or NO?";
 
-    private static final String NAME_FIELD = "name";
-    private static final String PHONE_FIELD = "phone";
+    public static final String NAME_FIELD = "name";
+    public static final String PHONE_FIELD = "phone";
     private static final String ADDRESS_FIELD = "address";
     private static final String EMAIL_FIELD = "email";
 
