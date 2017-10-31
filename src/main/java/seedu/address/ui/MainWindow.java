@@ -41,6 +41,7 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private ExtendedPersonCard extendedPersonCard;
+    private StatisticsPanel statisticsPanel;
     private GraphPanel graphPanel;
     private PersonListPanel personListPanel;
     private Config config;
@@ -48,6 +49,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane extendedPersonCardPlaceholder;
+
+    @FXML
+    private StackPane statisticsPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
