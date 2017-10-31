@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -150,7 +151,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void removeTag(Set<Tag> tag, Set<Index> index) throws  PersonNotFoundException,
+        public void removeTag(Set<Tag> tag, List<String> index) throws  PersonNotFoundException,
                 DuplicatePersonException {
             fail("This method should not be called.");
         }
