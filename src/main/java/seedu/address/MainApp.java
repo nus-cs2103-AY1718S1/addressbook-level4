@@ -84,7 +84,7 @@ public class MainApp extends Application {
         TelegramBotsApi botsApi = new TelegramBotsApi();
 
         try {
-            botsApi.registerBot(new ArkBot(logic));
+            botsApi.registerBot(new ArkBot(logic, model));
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
