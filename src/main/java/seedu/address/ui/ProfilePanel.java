@@ -1,14 +1,20 @@
 package seedu.address.ui;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -50,6 +56,8 @@ public class ProfilePanel extends UiPart<Region> {
     private Label website;
     @FXML
     private FlowPane tags;
+    @FXML
+    private javafx.scene.image.ImageView profilePicture;
 
     public ProfilePanel() {
         super(FXML);
@@ -57,7 +65,22 @@ public class ProfilePanel extends UiPart<Region> {
         initTags(person);
         bindListeners(person);
         initStyle();
+        initPicture();
         registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Initialize profile picture
+     */
+    private void initPicture() {
+        BufferedImage bufferedImage;
+        try {
+            bufferedImage = ImageIO.read(new File("data/default_profile_picture.png"));
+            Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+            profilePicture.setImage(image);
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
     }
 
     /**
