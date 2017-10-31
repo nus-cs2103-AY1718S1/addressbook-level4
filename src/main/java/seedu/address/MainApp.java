@@ -10,6 +10,10 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import org.telegram.telegrambots.ApiContextInitializer;
+import org.telegram.telegrambots.TelegramBotsApi;
+import org.telegram.telegrambots.exceptions.TelegramApiException;
+import seedu.address.bot.ArkBot;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
@@ -73,6 +77,17 @@ public class MainApp extends Application {
         ui = new UiManager(logic, config, userPrefs);
 
         initEventsCenter();
+
+        // Instantiate bot here
+        ApiContextInitializer.init();
+
+        TelegramBotsApi botsApi = new TelegramBotsApi();
+
+        try {
+            botsApi.registerBot(new ArkBot(logic));
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
     }
 
     private String getApplicationParameter(String parameterName) {
