@@ -13,6 +13,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyEventList;
 import seedu.address.model.event.ReadOnlyEvent;
 
+//@@author leonchowwenhao
 /**
  * An Immutable EventStorage that is serializable to XML format
  */
