@@ -1,12 +1,17 @@
 package seedu.address.ui;
 
+import java.time.LocalDate;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import seedu.address.commons.util.DateTimeUtil;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.EventTime;
+
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -24,6 +29,7 @@ public class EventCard extends UiPart<Region> {
      */
 
     public final Event event;
+    public final LocalDate selectedDate;
 
     @FXML
     private HBox cardPane;
@@ -35,15 +41,22 @@ public class EventCard extends UiPart<Region> {
     private Label eventDateTime;
     @FXML
     private Label eventDuration;
+
+    @FXML
+    private Label eventStatus;
     @FXML
     private VBox members;
 
-    public EventCard(Event event, int displayedIndex) {
+    public EventCard(Event event, int displayedIndex, LocalDate selectedDate) {
         super(FXML);
         this.event = event;
+        this.selectedDate = selectedDate;
+
         id.setText(displayedIndex + ". ");
         initMembers(event);
         bindListeners(event);
+
+        updateEventStatusLabel(eventStatus, event);
     }
 
     /**
@@ -66,6 +79,34 @@ public class EventCard extends UiPart<Region> {
                 new Label(member.getName().toString())));
     }
 
+    /**
+     * Update the event status label to reflect the relevance of the event.
+     * @param eventStatusLabel
+     * @param event
+     */
+    private void updateEventStatusLabel(Label eventStatusLabel, Event event) {
+        EventTime eventTime = event.getEventTime();
+
+        if (eventTime.getStart().toLocalDate().isEqual(LocalDate.now())) {
+            eventStatusLabel.setText("Today");
+            eventStatusLabel.setStyle("-fx-background-color: #fd720f");
+
+        } else if (eventTime.isUpcoming()) {
+            eventStatusLabel.setText("Upcoming");
+            eventStatusLabel.setStyle("-fx-background-color: #009e73");
+        } else {
+            eventStatusLabel.setText("Past");
+            eventStatusLabel.setStyle("-fx-background-color: #a31621");
+        }
+
+        if (event.getEventTime().getStart().toLocalDate().isEqual(selectedDate)
+                || DateTimeUtil.containsReferenceDate(event, selectedDate)) {
+            eventStatusLabel.setText("Selected");
+            eventStatusLabel.setStyle("-fx-background-color: #b91372");
+        }
+    }
+
+
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
@@ -83,4 +124,6 @@ public class EventCard extends UiPart<Region> {
         return id.getText().equals(card.id.getText())
                 && event.equals(card.event);
     }
+
+
 }

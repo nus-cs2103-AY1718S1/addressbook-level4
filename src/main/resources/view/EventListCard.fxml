@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
@@ -27,6 +26,7 @@
           </minWidth>
         </Label>
         <Label fx:id="eventName" styleClass="cell_big_label" text="\$first" />
+            <Label fx:id="eventStatus" maxWidth="-Infinity" minWidth="-Infinity" text="\$status" />
       </HBox>
 
       <Label fx:id="eventDateTime" styleClass="cell_small_label" text="\$time" />

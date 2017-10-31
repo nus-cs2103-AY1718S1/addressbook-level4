@@ -39,7 +39,8 @@ public class UniqueEventList implements Iterable<Event> {
     /**
      * Constructs empty UniqueEventList.
      */
-    public UniqueEventList() {}
+    public UniqueEventList() {
+    }
 
     /**
      * Creates a UniqueEventList using given tags.
@@ -98,8 +99,6 @@ public class UniqueEventList implements Iterable<Event> {
         internalList.add(new Event(toAdd));
 
         assert CollectionUtil.elementsAreUnique(internalList);
-
-        this.sort(LocalDate.now());
     }
 
 
@@ -146,11 +145,8 @@ public class UniqueEventList implements Iterable<Event> {
      */
     public boolean hasClashes(Event toCheck) {
         for (Event e : internalList) {
-            if (e.getEventTime().getStart().toLocalDate().equals(
-                    toCheck.getEventTime().getStart().toLocalDate())) {
-                if (DateTimeUtil.checkEventClash(toCheck, e)) {
-                    return true;
-                }
+            if (DateTimeUtil.checkEventClash(toCheck, e)) {
+                return true;
             }
         }
 
@@ -171,7 +167,34 @@ public class UniqueEventList implements Iterable<Event> {
             @Override
             public int compare(Event o1, Event o2) {
                 LocalDateTime today = LocalDate.now().atStartOfDay();
+
+                //Priority 1: This section pushes ongoing events to top of list (with reference to selected date)
+                if (DateTimeUtil.containsReferenceDate(o1, selectedDate)
+                        && !DateTimeUtil.containsReferenceDate(o2, selectedDate)) {
+                    return -1;
+                } else if (!DateTimeUtil.containsReferenceDate(o1, selectedDate)
+                        && DateTimeUtil.containsReferenceDate(o2, selectedDate)) {
+                    return 1;
+                } else if (DateTimeUtil.containsReferenceDate(o1, selectedDate)
+                        && DateTimeUtil.containsReferenceDate(o2, selectedDate)) {
+                    if (o1.getEventTime().getStart().isBefore(o2.getEventTime().getStart())) {
+                        return -1;
+                    } else if (o2.getEventTime().getStart().isBefore(o1.getEventTime().getStart())) {
+                        return 1;
+                    } else {
+                        return o1.getEventDuration().getDuration().compareTo(o2.getEventDuration().getDuration());
+                    }
+                }
+                //End of Priority 1
+
+                //Priority 2: This section pushes events on selected date to top
                 if (o1.getEventTime().getStart().toLocalDate().equals(selectedDate)
+                        && !o2.getEventTime().getStart().toLocalDate().equals(selectedDate)) {
+                    return -1;
+                } else if (o2.getEventTime().getStart().toLocalDate().equals(selectedDate)
+                        && !o1.getEventTime().getStart().toLocalDate().equals(selectedDate)) {
+                    return 1;
+                } else if (o1.getEventTime().getStart().toLocalDate().equals(selectedDate)
                         && o2.getEventTime().getStart().toLocalDate().equals(selectedDate)) {
                     if (o1.getEventTime().getStart().isBefore(o2.getEventTime().getStart())) {
                         return -1;
@@ -180,35 +203,37 @@ public class UniqueEventList implements Iterable<Event> {
                     } else {
                         return o1.getEventDuration().getDuration().compareTo(o2.getEventDuration().getDuration());
                     }
-                } else if (o1.getEventTime().getStart().toLocalDate().equals(selectedDate)) {
-                    return -1;
-                } else if (o2.getEventTime().getStart().toLocalDate().equals(selectedDate)) {
-                    return 1;
-                } else {
-                    //Both not within selected date
+                }
+                //End of Priority 2
 
-                    if (o1.getEventTime().getStart().isAfter(today) && o2.getEventTime().getStart().isAfter(today)) {
-                        if (o1.getEventTime().getStart().isBefore(o2.getEventTime().getStart())) {
-                            return -1;
-                        } else if (o2.getEventTime().getStart().isBefore(o1.getEventTime().getStart())) {
-                            return 1;
-                        } else {
-                            return o1.getEventDuration().getDuration().compareTo(o2.getEventDuration().getDuration());
-                        }
-                    } else if (o1.getEventTime().getStart().isAfter(today)) {
+                //Priority 3: This section pushes upcoming events above past events
+                if (o1.getEventTime().getStart().isAfter(today)
+                        && !o2.getEventTime().getStart().isAfter(today)) {
+                    return -1;
+                } else if (o2.getEventTime().getStart().isAfter(today)
+                        && !o1.getEventTime().getStart().isAfter(today)) {
+                    return 1;
+                } else if (o1.getEventTime().getStart().isAfter(today)
+                        && o2.getEventTime().getStart().isAfter(today)) {
+                    if (o1.getEventTime().getStart().isBefore(o2.getEventTime().getStart())) {
                         return -1;
-                    } else if (o2.getEventTime().getStart().isAfter(today)) {
+                    } else if (o2.getEventTime().getStart().isBefore(o1.getEventTime().getStart())) {
                         return 1;
                     } else {
-                        if (o1.getEventTime().getStart().isBefore(o2.getEventTime().getStart())) {
-                            return -1;
-                        } else if (o2.getEventTime().getStart().isBefore(o1.getEventTime().getStart())) {
-                            return 1;
-                        } else {
-                            return o1.getEventDuration().getDuration().compareTo(o2.getEventDuration().getDuration());
-                        }
+                        return o1.getEventDuration().getDuration().compareTo(o2.getEventDuration().getDuration());
                     }
                 }
+                //End of Priority 3
+
+                //Priority 4: This section handles the leftover past events
+                if (o1.getEventTime().getStart().isBefore(o2.getEventTime().getStart())) {
+                    return -1;
+                } else if (o2.getEventTime().getStart().isBefore(o1.getEventTime().getStart())) {
+                    return 1;
+                } else {
+                    return o1.getEventDuration().getDuration().compareTo(o2.getEventDuration().getDuration());
+                }
+                //End of Priority 4
             }
         });
     }
@@ -224,6 +249,7 @@ public class UniqueEventList implements Iterable<Event> {
             replacement.add(new Event(event));
         }
         setEvents(replacement);
+
     }
 
     /**

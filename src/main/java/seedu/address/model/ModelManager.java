@@ -3,25 +3,35 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 
+import seedu.address.commons.events.ui.CalendarSelectionChangedEvent;
+import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ScheduleUpdateEvent;
 import seedu.address.model.event.Event;
 
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.EmptyListException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.ui.EventListPanel;
 
 
 /**
@@ -57,6 +67,8 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
+
+        EventsCenter.getInstance().post(new ScheduleUpdateEvent(getEventList()));
         indicateAddressBookChanged();
     }
 
@@ -108,6 +120,46 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+
+    @Override
+    public void updateListOfPerson(ArrayList<ReadOnlyPerson> targets, ArrayList<ReadOnlyPerson> editedPersons)
+            throws DuplicatePersonException, PersonNotFoundException {
+        requireAllNonNull(targets, editedPersons);
+
+        addressBook.updateListOfPerson(targets, editedPersons);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void addEvent(ArrayList<ReadOnlyPerson> targets, ArrayList<ReadOnlyPerson> editedPersons, Event event)
+            throws DuplicateEventException, DuplicatePersonException, PersonNotFoundException {
+        requireAllNonNull(targets, editedPersons, event);
+
+        addressBook.addEvent(targets, editedPersons, event);
+
+        EventsCenter.getInstance().post(new ScheduleUpdateEvent(getEventList()));
+        indicateAddressBookChanged();
+
+    }
+
+    @Override
+    public void removeEvents(ArrayList<ReadOnlyPerson> targets, ArrayList<ReadOnlyPerson> editedPersons,
+                             ArrayList<Event> toRemoveEvents)
+            throws DuplicatePersonException, PersonNotFoundException, EventNotFoundException {
+        requireAllNonNull(targets, editedPersons);
+
+        addressBook.removeEvents(targets, editedPersons, toRemoveEvents);
+
+        EventsCenter.getInstance().post(new ScheduleUpdateEvent(getEventList()));
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void sortEvents(LocalDate date) {
+        requireAllNonNull(date);
+        addressBook.sortEvents(date);
+    }
+
     @Override
     public ObservableList<Event> getEventList() {
         return FXCollections.unmodifiableObservableList(filteredEvents);
@@ -149,5 +201,40 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
     }
+
+
+    /**
+     * Handle event when Event in Event list is clicked.
+     *
+     * Update {@code FilteredList<ReadOnlyPerson> filteredPersons} to show members of Event upon clicking on Event.
+     * @see EventListPanel#setEventHandlerForSelectionChangeEvent()
+     *
+     * @param event
+     */
+    @Subscribe
+    private void handleEventPanelSelectionChangedEvent(EventPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredPersonList(p ->
+            event.getMemberAsArrayList().contains(p)
+        );
+    }
+
+    /**
+     * Handle event when date in CalenderView is clicked.
+     *
+     * Update master UniqueEventList by running a sort with the given date as reference.
+     * Comparator logic and sorting details is found in {@see UniqueEventList#sort(LocalDate)}
+     *
+     * @param event
+     */
+    @Subscribe
+    private void handleCalendarSelectionChangedEvent(CalendarSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        sortEvents(event.getSelectedDate());
+    }
+
 
 }

@@ -1,8 +1,14 @@
 package seedu.address.commons.util;
 
+import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Event;
 
 /**
@@ -16,8 +22,51 @@ public class DateTimeUtil {
         return dateTime.format(EVENT_DATETIME_FORMAT);
     }
 
-    public static LocalDateTime parseStringToLocalDateTime(String input) {
+    public static LocalDateTime parseStringToLocalDateTime(String input) throws DateTimeParseException {
         return LocalDateTime.parse(input, EVENT_DATETIME_FORMAT);
+    }
+
+    /**
+     * Extracts duration of event if exist.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Duration parseDuration(String durationInput) throws IllegalValueException {
+
+        if (durationInput.equals("")) {
+            return Duration.ofMinutes(0);
+        }
+
+        String dayPattern = "(\\d+)d";
+        String hourPattern = "(\\d+)h";
+        String minPattern = "(\\d+)m";
+
+        int dayCount = 0;
+        int hourCount = 0;
+        int minCount = 0;
+
+        Pattern pattern = Pattern.compile(dayPattern);
+        Matcher matcher = pattern.matcher(durationInput);
+        if (matcher.find()) {
+            dayCount = Integer.parseInt(matcher.group(1));
+        }
+
+        pattern = Pattern.compile(hourPattern);
+        matcher = pattern.matcher(durationInput);
+        if (matcher.find()) {
+            hourCount = Integer.parseInt(matcher.group(1));
+        }
+
+        pattern = Pattern.compile(minPattern);
+        matcher = pattern.matcher(durationInput);
+        if (matcher.find()) {
+            minCount = Integer.parseInt(matcher.group(1));
+        }
+
+        if (dayCount < 0 || hourCount < 0 || minCount < 0 || hourCount > 23 || minCount > 59) {
+            throw new IllegalValueException("Illegal values detected.");
+        }
+
+        return Duration.ofMinutes(dayCount * 24 * 60 + hourCount * 60 + minCount);
     }
 
 
@@ -74,4 +123,22 @@ public class DateTimeUtil {
             return false;
         }
     }
+
+    /**
+     * Checks to see if date lies in between Event start time and end time.
+     *
+     * @param event
+     * @param refDate
+     * @return
+     */
+    public static boolean containsReferenceDate(Event event, LocalDate refDate) {
+        LocalDate startDate = event.getEventTime().getStart().toLocalDate();
+        LocalDate endDate = event.getEventTime().getEnd().toLocalDate();
+
+        return
+                startDate.isEqual(refDate)
+                        || endDate.isEqual(refDate)
+                        || (startDate.isBefore(refDate) && endDate.isAfter(refDate));
+    }
+
 }

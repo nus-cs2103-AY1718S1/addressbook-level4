@@ -22,14 +22,17 @@ public class EventOutputUtil {
      * @return a String of Duration in human-readable form
      */
     public static String toStringDuration(Duration d1) {
-        //Assert event duration not more than 23hr 59min
-        assert d1.getSeconds() < 86340;
 
         StringBuilder sb = new StringBuilder();
 
         int totalSeconds = (int) d1.getSeconds();
-        int hoursOutput = totalSeconds / (60 * 60);
+        int daysOutput = totalSeconds / (60 * 60 * 24);
+        int hoursOutput = (totalSeconds % (60 * 60 * 24)) / (60 * 60);
         int minutesOutput = (totalSeconds % (60 * 60)) / 60;
+
+        if (daysOutput > 0) {
+            sb.append(daysOutput + "day");
+        }
 
         if (hoursOutput > 0) {
             sb.append(hoursOutput + "hr");
@@ -39,10 +42,9 @@ public class EventOutputUtil {
             sb.append(minutesOutput + "min");
         }
 
-        if (hoursOutput == 0 && minutesOutput == 0) {
-            sb.append(minutesOutput + "min");
+        if (daysOutput == 0 && hoursOutput == 0 && minutesOutput == 0) {
+            sb.append(0 + "min");
         }
-
 
         return sb.toString();
 
@@ -84,7 +86,7 @@ public class EventOutputUtil {
      */
     public static String toStringEvent(EventName eventName, EventTime eventTime,
                                        EventDuration eventDuration, MemberList memberList) {
-        return eventName.toString() + " Time: " + eventTime.toString()
+        return "Name: " + eventName.toString() + " Time: " + eventTime.toString()
                 + " Duration: " + eventDuration.toString() + "\n"
                 + "Members: " + memberList.toString();
     }

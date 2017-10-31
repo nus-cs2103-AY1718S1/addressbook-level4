@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -22,6 +23,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -125,7 +128,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
-        public void deletePerson(ArrayList<ReadOnlyPerson> targets)throws PersonNotFoundException {
+        public void deletePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException {
             fail("This method should not be called");
         }
 
@@ -151,6 +154,33 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void updateListOfPerson(ArrayList<ReadOnlyPerson> targets, ArrayList<ReadOnlyPerson> editedPersons)
+                throws DuplicatePersonException, PersonNotFoundException {
+            fail("This method should not be called.");
+
+        }
+
+        @Override
+        public void addEvent(ArrayList<ReadOnlyPerson> targets, ArrayList<ReadOnlyPerson> editedPersons, Event event)
+                throws DuplicateEventException, DuplicatePersonException, PersonNotFoundException {
+            fail("This method should not be called.");
+
+        }
+
+        @Override
+        public void removeEvents(ArrayList<ReadOnlyPerson> targets, ArrayList<ReadOnlyPerson> editedPersons,
+                                 ArrayList<Event> toRemoveEvents)
+                throws DuplicatePersonException, PersonNotFoundException, EventNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortEvents(LocalDate date) {
+            fail("This method should not be called.");
+        }
+
     }
 
     /**
