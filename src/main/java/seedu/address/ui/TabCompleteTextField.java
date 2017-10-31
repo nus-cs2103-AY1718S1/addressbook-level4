@@ -14,6 +14,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author newalter
 /**
  * This class enables auto-completion feature as a drop down menu from the command box.
  */

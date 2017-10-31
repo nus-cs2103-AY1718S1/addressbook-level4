@@ -34,7 +34,9 @@ public class CommandBox extends UiPart<Region> {
         this.logic = logic;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+        //@@author newalter
         commandTextField.generateOptions(logic.getFilteredPersonList());
+        //@@author
         historySnapshot = logic.getHistorySnapshot();
     }
 
@@ -54,11 +56,13 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        //@@author newalter
         case TAB:
             // Auto-complete using the first entry of the drop down menu
             keyEvent.consume();;
             commandTextField.completeFirst();
             break;
+        //@@author
         default:
             // let JavaFx handle the keypress
         }
@@ -73,8 +77,9 @@ public class CommandBox extends UiPart<Region> {
         if (!historySnapshot.hasPrevious()) {
             return;
         }
-
+        //@@author newalter
         commandTextField.replaceText(historySnapshot.previous());
+        //@@author
     }
 
     /**
@@ -86,8 +91,9 @@ public class CommandBox extends UiPart<Region> {
         if (!historySnapshot.hasNext()) {
             return;
         }
-
+        //@@author newalter
         commandTextField.replaceText(historySnapshot.next());
+        //@@author
     }
 
     /**

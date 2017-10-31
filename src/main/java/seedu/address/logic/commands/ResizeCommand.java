@@ -9,6 +9,7 @@ import seedu.address.commons.events.ui.ResizeMainWindowEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.ui.ScreenDimension;
 
+//@@author newalter
 /**
  * Resize the main window.
  */

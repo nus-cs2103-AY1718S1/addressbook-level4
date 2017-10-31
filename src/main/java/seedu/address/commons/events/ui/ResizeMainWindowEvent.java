@@ -2,6 +2,7 @@ package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
 
+//@@author newalter
 /**
  * An event requesting to change the size of the main window.
  */

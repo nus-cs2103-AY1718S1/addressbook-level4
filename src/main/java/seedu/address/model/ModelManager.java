@@ -119,10 +119,12 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
+    //@@author newalter
     @Override
     public Predicate<? super ReadOnlyPerson> getPersonListPredicate() {
         return filteredPersons.getPredicate();
     }
+    //@@author
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
