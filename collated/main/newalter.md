@@ -285,6 +285,12 @@ public class ContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
 ``` java
         commandTextField.replaceText(historySnapshot.next());
 ```
+###### \java\seedu\address\ui\CommandBox.java
+``` java
+            String command = commandTextField.getText();
+            CommandResult commandResult = logic.execute(command);
+            commandTextField.updateOptions(command);
+```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
     @Subscribe
@@ -351,8 +357,8 @@ public class TabCompleteTextField extends TextField {
         if (lastWord.length() == 0 || prefixWords.equals("")) {
             dropDownMenu.hide();
         } else {
-            LinkedList<String> matchedWords = new LinkedList<>();
-            matchedWords.addAll(options.subSet(lastWord + Character.MIN_VALUE, lastWord + Character.MAX_VALUE));
+            SortedSet<String> matchedWords =
+                    options.subSet(lastWord + Character.MIN_VALUE, lastWord + Character.MAX_VALUE);
             if (matchedWords.size() > 0) {
                 fillDropDown(matchedWords);
                 if (!dropDownMenu.isShowing()) {
@@ -365,14 +371,28 @@ public class TabCompleteTextField extends TextField {
     }
 
     /**
-     * Generate options for Auto-Completion from
+     * Generates options for Auto-Completion from
      * the names and tags of persons from a list.
      * @param persons a list of person
      */
     public void generateOptions(List<ReadOnlyPerson> persons) {
         for (ReadOnlyPerson person : persons) {
-            options.addAll(Arrays.asList(person.getName().fullName.split("\\s+")));
-            person.getTags().stream().map(tag -> tag.tagName).forEachOrdered(options::add);
+            options.addAll(Arrays.asList(person.getName().fullName.toLowerCase().split("\\s+")));
+            person.getTags().stream().map(tag -> tag.tagName.toLowerCase()).forEachOrdered(options::add);
+        }
+    }
+
+    /**
+     * Updates options for Auto-Completion from
+     * the arguments of an inputted command.
+     * @param command an inputted command
+     */
+    public void updateOptions(String command) {
+        String[] args = command.toLowerCase().split("(\\s+|[a-z]/)");
+        for (int i = 1; i < args.length; i++) {
+            if (args[i].matches("[a-z]+")) {
+                options.add(args[i]);
+            }
         }
     }
 
@@ -385,20 +405,21 @@ public class TabCompleteTextField extends TextField {
         String text = getText();
         int lastSpace = text.lastIndexOf(" ");
         prefixWords = text.substring(0, lastSpace + 1);
-        lastWord = text.substring(lastSpace + 1);
+        lastWord = text.substring(lastSpace + 1).toLowerCase();
     }
 
     /**
      * Fill the dropDownMenu with the matched words up to MAX_ENTRIES.
      * @param matchedWords The list of matched words.
      */
-    private void fillDropDown(List<String> matchedWords) {
+    private void fillDropDown(SortedSet<String> matchedWords) {
         List<MenuItem> menuItems = dropDownMenu.getItems();
         menuItems.clear();
 
+        Iterator<String> iterator = matchedWords.iterator();
         int numEntries = Math.min(matchedWords.size(), MAX_ENTRIES);
         for (int i = 0; i < numEntries; i++) {
-            final String suggestion = prefixWords + matchedWords.get(i);
+            final String suggestion = prefixWords + iterator.next();
             MenuItem item = new CustomMenuItem(new Label(suggestion), true);
             // Complete the word with the chosen suggestion when Enter is pressed.
             item.setOnAction((unused) -> complete(item));
