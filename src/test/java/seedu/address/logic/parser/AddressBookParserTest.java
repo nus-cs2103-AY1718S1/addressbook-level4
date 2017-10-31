@@ -22,6 +22,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddRemarkCommand;
 import seedu.address.logic.commands.AddTagCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
@@ -34,7 +35,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.LinkCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.logic.commands.RemoveRemarkCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -177,12 +178,21 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_remarkCommandWord_returnsRemarkCommand() throws Exception {
+    public void parseCommand_addRemarkCommandWord_returnsRemarkCommand() throws Exception {
         ArrayList<Remark> remarks = new ArrayList<>();
         remarks.add(new Remark("Some remark."));
-        RemarkCommand command = (RemarkCommand) parser.parseCommand(RemarkCommand.COMMAND_WORD + " "
+        AddRemarkCommand command = (AddRemarkCommand) parser.parseCommand(AddRemarkCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + " " + "Some remark.");
-        assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remarks), command);
+        assertEquals(new AddRemarkCommand(INDEX_FIRST_PERSON, remarks), command);
+    }
+
+    @Test
+    public void parseCommand_removeRemarkCommandWord() throws Exception {
+        ArrayList<Integer> remarkIndexes = new ArrayList<>();
+        remarkIndexes.add(1);
+        RemoveRemarkCommand command = (RemoveRemarkCommand) parser.parseCommand(RemoveRemarkCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + "1");
+        assertEquals(new RemoveRemarkCommand(INDEX_FIRST_PERSON, remarkIndexes), command);
     }
 
     @Test

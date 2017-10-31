@@ -121,7 +121,8 @@ public class Person implements ReadOnlyPerson {
 
     @Override
     public ArrayList<Remark> getRemark() {
-        return remark.get();
+        ArrayList<Remark> readOnlyRemarkList = new ArrayList<>(remark.get());
+        return readOnlyRemarkList;
     }
 
     public void setFavouriteStatus(FavouriteStatus favouriteStatus) {
