@@ -26,6 +26,18 @@ image::ernestong.png[width="150", align="left"]
 Role: Developer +
 Responsibilities: Logic
 
+* Features Implemented : +
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/41[Bloodtype Class]
+https://github.com/CS2103AUG2017-T17-B2/main/pull/113[Bloodtype Class Regex Enhancement]
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/81[List By Bloodtype Command]
+
+* Other Enhancement(s) : +
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/121[Case Insensitive Command Word input]
+
+** User Guide +
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/79[Wording Changes]
+(In collaboration with http://github.com/Jeremylsw[Jeremy])
+
 '''
 
 === Jeremy Long

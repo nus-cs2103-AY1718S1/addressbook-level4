@@ -239,10 +239,12 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + INVALID_ADDRESS_DESC + BLOODTYPE_DESC_AMY;
         assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
+        //@@author Ernest
         /* Case: invalid bloodtype -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + INVALID_BLOODTYPE_DESC;
         assertCommandFailure(command, Bloodtype.MESSAGE_BLOODTYPE_CONSTRAINTS);
+        //@@author
 
         /* Case: invalid tag -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY

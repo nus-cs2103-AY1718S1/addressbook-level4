@@ -111,6 +111,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author Ernest
     public void setBloodType(Bloodtype bloodType) {
         this.bloodType.set(requireNonNull(bloodType));
     }
@@ -124,6 +125,7 @@ public class Person implements ReadOnlyPerson {
     public Bloodtype getBloodType() {
         return bloodType.get();
     }
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

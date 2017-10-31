@@ -83,6 +83,7 @@ public class AddressBookParserTest {
         assertTrue(command.equals(new AddAppointmentCommand(Index.fromOneBased(1), calendar)));
     }
 
+    //@@author Ernest
     @Test
     public void parseCommandListByBloodtype() throws Exception {
         List<String> keyword = Arrays.asList("A+", "ab", "O-");
@@ -91,6 +92,7 @@ public class AddressBookParserTest {
                         + keyword.stream().collect(Collectors.joining(" ")));
         assertEquals(new ListByBloodtypeCommand(new BloodtypeContainsKeywordPredicate(keyword)), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_clear() throws Exception {

@@ -95,6 +95,7 @@ public class ParserUtil {
     }
     //@@author
 
+    //@@author Ernest
     /**
      * Parses a {@code Optional<String> bloodType} into an {@code Optional<Bloodtype>} if {@code bloodType} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -103,6 +104,7 @@ public class ParserUtil {
         requireNonNull(bloodType);
         return bloodType.isPresent() ? Optional.of(new Bloodtype(bloodType.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.

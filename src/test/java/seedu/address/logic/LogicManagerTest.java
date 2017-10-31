@@ -57,8 +57,6 @@ public class LogicManagerTest {
         String listByTagCommand = ListByTagCommand.COMMAND_WORD + " colleagues";
         assertCommandSuccess(listByTagCommand, ListByTagCommand.MESSAGE_SUCCESS, model);
         assertHistoryCorrect(listByTagCommand);
-        listByTagCommand = ListCommand.COMMAND_ALIAS + " tag";
-        assertCommandSuccess(listByTagCommand, ListByTagCommand.MESSAGE_SUCCESS, model);
 
 
         //Existing feature do not check if tag is present or not.
