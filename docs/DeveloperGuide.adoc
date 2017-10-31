@@ -84,7 +84,9 @@ link:#rolodex[Rolodex] files are associated with the `.rldx` extensions and are 
 
 image::RegisterRldx.png[width="600"]
 
-You are now configured to use `.rldx` files with intellij.
+If you can get syntax highlighting as seen below, you are successfully configured to use `.rldx` files with intellij.
+
+image::RldxSyntaxHighlighting.png[width="600"]
 
 ==== Updating documentation to match your fork
 
