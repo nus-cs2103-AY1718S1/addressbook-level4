@@ -64,9 +64,8 @@ Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingT
 
 === Architecture
 
-_Figure 1: The Architecture Diagram below explains the high-level design of the App._
-
 image::Architecture.png[width="600"]
+    Figure 1: The Architecture Diagram below explains the high-level design of the App.
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
