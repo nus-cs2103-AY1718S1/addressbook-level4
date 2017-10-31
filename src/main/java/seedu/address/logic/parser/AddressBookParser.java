@@ -24,7 +24,9 @@ import seedu.address.logic.commands.ModListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveFavouriteCommand;
 import seedu.address.logic.commands.RemovePersonFromGroupCommand;
+import seedu.address.logic.commands.ResetPictureCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SetPictureCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -133,6 +135,14 @@ public class AddressBookParser {
         case ModListCommand.COMMAND_WORD:
         case ModListCommand.COMMAND_ALT:
             return new ModListCommand();
+
+        case ResetPictureCommand.COMMAND_WORD:
+        case ResetPictureCommand.COMMAND_ALT:
+            return new ResetPictureCommandParser().parse(arguments);
+
+        case SetPictureCommand.COMMAND_WORD:
+        case SetPictureCommand.COMMAND_ALT:
+            return new SetPictureCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

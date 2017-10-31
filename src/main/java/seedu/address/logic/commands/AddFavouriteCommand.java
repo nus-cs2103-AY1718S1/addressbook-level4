@@ -15,6 +15,7 @@ import seedu.address.model.person.Favourite;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProfPic;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -30,7 +31,7 @@ public class AddFavouriteCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Marks the person identified by the index number used in the last person listing as a favourite.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_FAVE_PERSON_SUCCESS = "%1$s has been marked as a favourite contact.";
     public static final String MESSAGE_ALREADY_FAVOURITE = "This person is already marked as a favourite.";
@@ -72,9 +73,11 @@ public class AddFavouriteCommand extends UndoableCommand {
         Phone updatedPhone = personToEdit.getPhone();
         Email updatedEmail = personToEdit.getEmail();
         Address updatedAddress = personToEdit.getAddress();
+        ProfPic updatedProfPic = personToEdit.getProfPic();
         Favourite updatedFavourite = new Favourite(true);
         Set<Tag> updatedTags = personToEdit.getTags();
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFavourite, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFavourite,
+                updatedProfPic, updatedTags);
     }
 }

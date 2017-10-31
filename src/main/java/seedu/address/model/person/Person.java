@@ -34,6 +34,10 @@ public class Person implements ReadOnlyPerson {
      *  A Person will not be marked as favourite by default
      */
     private ObjectProperty<Favourite> favourite = new SimpleObjectProperty<>(new Favourite(false));
+    /**
+     *  A Person will have a generic profile picture by default. will search in /resources by default?
+     */
+    private ObjectProperty<ProfPic> profPic = new SimpleObjectProperty<>(new ProfPic("maleIcon.png"));
 
     /**
      * Every field must be present and not null.
@@ -53,13 +57,15 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and not null.
      * Constructor for Favourite feature
      */
-    public Person(Name name, Phone phone, Email email, Address address, Favourite favourite, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Favourite favourite,
+                  ProfPic profPic, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.favourite = new SimpleObjectProperty<>(favourite);
+        this.profPic = new SimpleObjectProperty<>(profPic);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -85,13 +91,14 @@ public class Person implements ReadOnlyPerson {
      * Constructor for XMLAdaptedPerson
      */
     public Person(Name name, Phone phone, Email email, Address address, Favourite favourite,
-                  Set<Tag> tags, Set<Group> groups) {
+                  ProfPic profPic, Set<Tag> tags, Set<Group> groups) {
         requireAllNonNull(name, phone, email, address, tags, groups);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.favourite = new SimpleObjectProperty<>(favourite);
+        this.profPic = new SimpleObjectProperty<>(profPic);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         // protect internal groups from changes in the arg list
@@ -103,7 +110,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getFavourite(),
-                source.getTags());
+                source.getProfPic(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -167,13 +174,28 @@ public class Person implements ReadOnlyPerson {
         this.favourite.set(fav);
     }
 
+    @Override
     public ObjectProperty<Favourite> favouriteProperty() {
         return favourite;
     }
 
-
+    @Override
     public Favourite getFavourite() {
         return favourite.get();
+    }
+
+    public void setProfPic(ProfPic profPic) {
+        this.profPic.set(profPic);
+    }
+
+    @Override
+    public ObjectProperty<ProfPic> profPicProperty() {
+        return profPic;
+    }
+
+    @Override
+    public ProfPic getProfPic() {
+        return profPic.get();
     }
 
     /**
