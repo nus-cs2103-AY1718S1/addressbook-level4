@@ -77,7 +77,8 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     }
 
     /**
-     * File path is being checked in {@code XmlAddressBookStorage#validateFilePath(String)}, similar to {@code ExportCommand}.
+     * File path is being checked in {@code XmlAddressBookStorage#validateFilePath(String)}, similar to
+     * {@code ExportCommand}.
      */
     private ImportCommand checkXmlImport(String path) {
         return new ImportXmlCommand(path);
