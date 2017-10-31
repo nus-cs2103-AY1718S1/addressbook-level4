@@ -47,14 +47,14 @@
       </padding>
       <StackPane fx:id="personListPanelPlaceholder" minWidth="300.0" VBox.vgrow="ALWAYS" />
     </VBox>
-      <VBox fx:id="pinList" spacing="0.5" style="-fx-border-color: white; -fx-border-width: 1.7;" SplitPane.resizableWithParent="false">
+      <VBox fx:id="taskList" spacing="0.5" style="-fx-border-color: white; -fx-border-width: 1.7;" SplitPane.resizableWithParent="false">
          <children>
-            <Label style="-fx-text-fill: white;" text="Pinned Person">
+            <Label style="-fx-text-fill: white;" text="Task List">
                <VBox.margin>
                   <Insets left="110.0" />
                </VBox.margin>
             </Label>
-            <StackPane fx:id="pinListPlaceHolder" minWidth="300.0" VBox.vgrow="ALWAYS" />
+            <StackPane fx:id="taskListPlaceHolder" minWidth="300.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
       <StackPane fx:id="browserPlaceholder" minWidth="600.0" style="-fx-border-color: white; -fx-border-width: 1.70;" />

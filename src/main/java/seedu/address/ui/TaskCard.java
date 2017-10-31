@@ -9,9 +9,9 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -32,8 +32,8 @@ public class TaskCard extends UiPart<Region> {
     private static final String DEADLINE_PREFIX = "by ";
     private static final String EMPTY_PREFIX = "";
     private static final String OVERDUE_STYLE = "-fx-background-color: rgba(244, 67, 54, 0.8)";
-    private static final String UPCOMING_STYLE = "-fx-background-color: rgba(255, 235, 59, 0.8)";
-    private static final String OTHER_STYLE = "-fx-background-color: rgba(255,255,255,0.6)";
+    private static final String UPCOMING_STYLE = "-fx-background-color: rgba(170,181,46,0.8)";
+    private static final String OTHER_STYLE = "-fx-background-color: rgba(7,38,255,0.51)";
     private static final Color NAME_COLOR_DARK = Color.web("#3a3d42");
     private static final Color TIME_COLOR_DARK = Color.web("#4172c1");
     private static final Color NAME_COLOR_LIGHT = Color.web("#ffffff");
@@ -48,10 +48,7 @@ public class TaskCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private FlowPane status;
-    @FXML
-    private Label time;
-
+    private VBox taskVbox;
 
     public TaskCard(ReadOnlyTask task, int displayedIndex) {
         super(FXML);
@@ -75,22 +72,22 @@ public class TaskCard extends UiPart<Region> {
     @FXML
     public void initTimeStatus() {
 
-        Label timeLabel = new Label();
-        timeLabel.setId("timeLabel");
+        Label time = new Label();
+        time.setId("time");
 
         if (task.isOverdue()) {
             cardPane.setStyle(OVERDUE_STYLE);
             header.setTextFill(NAME_COLOR_LIGHT);
-            timeLabel.setTextFill(TIME_COLOR_LIGHT);
+            time.setTextFill(TIME_COLOR_LIGHT);
             id.setTextFill(NAME_COLOR_LIGHT);
         } else if (task.isUpcoming()) {
             cardPane.setStyle(UPCOMING_STYLE);
             header.setTextFill(NAME_COLOR_DARK);
-            timeLabel.setTextFill(TIME_COLOR_DARK);
+            time.setTextFill(TIME_COLOR_DARK);
         } else {
             cardPane.setStyle(OTHER_STYLE);
             header.setTextFill(NAME_COLOR_DARK);
-            timeLabel.setTextFill(TIME_COLOR_DARK);
+            time.setTextFill(TIME_COLOR_DARK);
         }
 
         StringBuilder timeDescription = new StringBuilder();
@@ -100,14 +97,14 @@ public class TaskCard extends UiPart<Region> {
             timeDescription.append(formatUpdatedTime(task));
         }
 
-        timeLabel.setText(timeDescription.toString());
-        timeLabel.setMaxHeight(Control.USE_COMPUTED_SIZE);
-        timeLabel.setWrapText(true);
+        time.setText(timeDescription.toString());
+        time.setMaxHeight(Control.USE_COMPUTED_SIZE);
+        time.setWrapText(true);
 
         if (task.hasTime() || task.isCompleted()) {
-            time.getChildrenUnmodifiable().add(timeLabel);
+            taskVbox.getChildren().add(time);
+            taskVbox.setAlignment(Pos.CENTER_LEFT);
             time.setAlignment(Pos.CENTER_LEFT);
-            timeLabel.setAlignment(Pos.CENTER_LEFT);
             time.setFont(Font.font("Segoe UI Semibold", FontPosture.ITALIC, 11));
         }
 

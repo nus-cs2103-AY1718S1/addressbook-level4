@@ -3,43 +3,39 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="cardPane" alignment="CENTER_LEFT" styleClass="hbox" stylesheets="@../../../../../sampletesta/src/main/resources/view/TasksPanel.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane HBox.hgrow="ALWAYS">
+      <GridPane alignment="CENTER_LEFT" style="-fx-background-color: transparent;">
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+            <ColumnConstraints hgrow="ALWAYS" />
+            <ColumnConstraints hgrow="ALWAYS" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
-               <padding>
-                  <Insets bottom="5" left="15" right="5" top="5" />
-               </padding>
+            <Label fx:id="id" minWidth="40.0" styleClass="cell_big_label" stylesheets="@../../../../../sampletesta/src/main/resources/view/TasksPanel.css" text="\$ID" wrapText="true" />
+            <VBox fx:id="taskVbox" alignment="CENTER" styleClass="vbox" GridPane.columnIndex="1">
                <children>
-                  <HBox alignment="CENTER_LEFT" spacing="5">
-                     <children>
-                        <Label fx:id="id" styleClass="cell_big_label">
-                           <minWidth>
-                              <Region fx:constant="USE_PREF_SIZE" />
-                           </minWidth>
-                        </Label>
-                        <Label fx:id="header" styleClass="cell_big_label" text="\\$task" />
-                     </children>
-                  </HBox>
-                  <FlowPane fx:id="status" />
-                  <Label fx:id="time" styleClass="cell_small_label" text="\\\$time" />
+                  <Label fx:id="header" styleClass="cell_big_label" stylesheets="@../../../../../sampletesta/src/main/resources/view/TasksPanel.css" text="\$task" wrapText="true">
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </Label>
                </children>
             </VBox>
          </children>
       </GridPane>
    </children>
+   <padding>
+      <Insets bottom="3.0" left="5.0" right="3.0" top="3.0" />
+   </padding>
 </HBox>
