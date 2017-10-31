@@ -89,5 +89,4 @@ public class SortCommand extends UndoableCommand {
             return (o1, o2) -> o1.getName().toString().compareToIgnoreCase(o2.getName().toString());
         }
     }
-
 }
