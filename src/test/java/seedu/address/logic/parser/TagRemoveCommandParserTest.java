@@ -31,6 +31,8 @@ public class TagRemoveCommandParserTest {
 
         // no user input
         assertParseFailure(parser, TAG_EMPTY, MESSAGE_INVALID_FORMAT);
+        // no tagName provided
+        assertParseFailure(parser, "1", MESSAGE_INVALID_FORMAT);
     }
 
     @Test
