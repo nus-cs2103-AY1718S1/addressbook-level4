@@ -910,6 +910,34 @@ public class UiTheme {
     }
 }
 ```
+###### \resources\view\defaultDay.html
+``` html
+<html>
+<head>
+    <link rel="stylesheet" href="ThemeDay.css">
+</head>
+
+<body class="background">
+    <div class="center">
+        <div class="text">Please select a contact to start stalking</div>
+    </div>
+</body>
+</html>
+```
+###### \resources\view\defaultNight.html
+``` html
+<html>
+<head>
+    <link rel="stylesheet" href="ThemeNight.css">
+</head>
+
+<body class="background">
+    <div class="center">
+        <div class="text">Please select a contact to start stalking</div>
+    </div>
+</body>
+</html>
+```
 ###### \resources\view\MainWindow.fxml
 ``` fxml
 <VBox fx:id="rootVBox" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
