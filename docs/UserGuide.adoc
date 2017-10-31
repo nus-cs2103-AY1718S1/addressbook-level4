@@ -36,7 +36,11 @@ Rolodex will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Rolodex.
 .  Double-click the file to start the app. You should see the GUI in a few seconds as shown below.
 +
-image::Ui_labeled.png[width="790"]
+image::Ui.png[width="790"]
++
+The following picture labels the main components of the application.
++
+image::UiLabeled.png[width="790"]
 +
 .  Type the command (case insensitive) in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
