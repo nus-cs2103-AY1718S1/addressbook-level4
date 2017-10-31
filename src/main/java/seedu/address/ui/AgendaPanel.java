@@ -1,4 +1,4 @@
-//@@author 17navasaw 
+//@@author 17navasaw
 package seedu.address.ui;
 
 import java.util.logging.Logger;
