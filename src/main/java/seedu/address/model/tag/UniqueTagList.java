@@ -54,17 +54,13 @@ public class UniqueTagList implements Iterable<Tag> {
     public void addTags(Set<Tag> tags) {
         requireAllNonNull(tags);
 
-        final UniqueTagList tagsToAdd = new UniqueTagList();
         for (final Tag tag : tags) {
             try {
-                tagsToAdd.add(new Tag(tag));
+                this.add(new Tag(tag));
             } catch (DuplicateTagException e) {
                 // skip tag if it exists
             }
         }
-
-        // add {@code tagsToAdd} to the list only if no exception is thrown
-        internalList.addAll(tagsToAdd.internalList);
     }
 
     /**

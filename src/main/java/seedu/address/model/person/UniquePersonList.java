@@ -94,23 +94,17 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndDeleted;
     }
 
-    public void addPersons(UniquePersonList personsToAdd) {
-        this.internalList.addAll(personsToAdd.internalList);
-    }
-
     /**
      * Adds all persons in the argument person list to this list.
      */
     public void addPersons(List<? extends ReadOnlyPerson> persons) {
-        final UniquePersonList personsToAdd = new UniquePersonList();
         for (final ReadOnlyPerson person : persons) {
             try {
-                personsToAdd.add(new Person(person));
+                this.add(new Person(person));
             } catch (DuplicatePersonException e) {
                 // skip person if it exists
             }
         }
-        addPersons(personsToAdd);
     }
 
     public void setPersons(UniquePersonList replacement) {
