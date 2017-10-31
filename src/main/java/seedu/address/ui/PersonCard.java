@@ -83,15 +83,13 @@ public class PersonCard extends UiPart<Region> {
      */
     private void initFavouriteLabel(ReadOnlyPerson person) {
         boolean favouriteStatus = person.getFavourite().getFavourite();
-        //String textToDisplay = favouriteStatus ? "Fav" : "";
+        String textToDisplay = favouriteStatus ? "Fav" : "";
         //Label favouriteLabel = new Label(textToDisplay);
-        Button favouriteButton = new Button();
-        String urlFilled = "https://upload.wikimedia.org/wikipedia/commons/thumb/"
-                + "2/29/Gold_Star.svg/2000px-Gold_Star.svg.png";
-        String urlTransparent = "https://vignette.wikia.nocookie.net/animal-jam-clans-1/"
-                + "images/c/c1/Star_star_.png/revision/latest?cb=20170111070537";
-        Image starFilled = new Image(urlFilled, 30, 30, true, true);
-        Image starTransparent = new Image(urlTransparent, 30, 30, true, true);
+        Button favouriteButton = new Button(textToDisplay);
+        Image starFilled = new Image(getClass().getResource("/images/Gold_Star.png").toExternalForm(),
+                30, 30, true, true);
+        Image starTransparent = new Image(getClass().getResource("/images/Star-star.png").toExternalForm(),
+                30, 30, true, true);
         if (favouriteStatus) {
             //favouriteLabel.setStyle("-fx-background-color: orangered");
             favouriteButton.setGraphic(new ImageView(starFilled));
