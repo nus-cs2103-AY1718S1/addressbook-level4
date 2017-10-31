@@ -258,7 +258,6 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
             Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
         try {
-            System.out.println("EDITING: " + expectedModel.getFilteredPersonList().get(toEdit.getZeroBased()));
             expectedModel.updatePerson(
                     expectedModel.getFilteredPersonList().get(toEdit.getZeroBased()), editedPerson);
             expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
