@@ -228,12 +228,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author angtianlannus
     /**
      * Sort the filtered lesson/module/location list regarding different listing unit.
      */
     public void sortLessons() {
         lessons.sortLessons();
     }
+    //@@author
 
     //// util methods
 

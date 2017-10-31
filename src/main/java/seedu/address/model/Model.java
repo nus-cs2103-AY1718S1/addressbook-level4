@@ -51,11 +51,6 @@ public interface Model {
     ReadOnlyAddressBook getAddressBook();
 
     /**
-     * update the set of BookedList
-     */
-    void updateBookedSlotSet();
-
-    /**
      * Deletes the given lesson.
      */
     void deleteLesson(ReadOnlyLesson target) throws LessonNotFoundException;
@@ -80,6 +75,12 @@ public interface Model {
      */
     void unBookmarkLesson(ReadOnlyLesson lesson);
 
+    //@@author angtianlannus
+    /**
+     * update the set of BookedList
+     */
+    void updateBookedSlotSet();
+
     /**
      * Booked a location with a given timeslot
      */
@@ -99,6 +100,7 @@ public interface Model {
      * clear all booked slot of a location
      */
     void unbookAllSlot();
+    //@@author
 
     /**
      * Replaces the given lesson {@code target} with {@code editedLesson}.
@@ -152,6 +154,7 @@ public interface Model {
      */
     void handleListingUnit();
 
+    //@@author angtianlannus
     /**
      * Sort the filtered lesson/module/location list regarding different listing unit.
      */
@@ -168,6 +171,7 @@ public interface Model {
 
     /** Get the current viewing panel attribute **/
     String getCurrentViewingAttribute();
+    //@@author
 
     /** Returns an unmodifiable view of the list of remarks */
     ObservableList<Remark> getFilteredRemarkList();

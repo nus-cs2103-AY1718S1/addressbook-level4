@@ -2,6 +2,7 @@ package seedu.address.model.module;
 
 import java.util.Objects;
 
+//@@author angtianlannus
 /**
  * Represents a Booked time slot of a venue
  */
