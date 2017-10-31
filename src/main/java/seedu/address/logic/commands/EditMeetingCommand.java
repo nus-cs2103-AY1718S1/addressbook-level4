@@ -176,9 +176,11 @@ public class EditMeetingCommand extends UndoableCommand {
             return Optional.ofNullable(place);
         }
 
-        public void setPersonToMeet(PersonToMeet name) { this.personName = name;}
+        public void setPersonToMeet(PersonToMeet name) {
+            this.personName = name; }
 
-        public void setPhoneNum (PhoneNum phoneNum) { this.phoneNum = phoneNum;}
+        public void setPhoneNum (PhoneNum phoneNum) {
+            this.phoneNum = phoneNum; }
 
         @Override
         public boolean equals(Object other) {
