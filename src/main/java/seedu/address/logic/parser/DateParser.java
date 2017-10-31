@@ -110,4 +110,13 @@ public class DateParser {
         }
         throw new IllegalValueException(MESSAGE_INVALID_MONTH);
     }
+
+    /**
+     * Takes a LocalDate and produces it in a nice format
+     * @param date
+     * @return
+     */
+    public static String dateString(LocalDate date) {
+        return date.format(DATE_FORMAT);
+    }
 }
