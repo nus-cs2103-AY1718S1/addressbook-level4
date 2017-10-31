@@ -17,5 +17,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_REMARK = new Prefix("r/");
     public static final Prefix PREFIX_TASK = new Prefix("t/");
     public static final Prefix PREFIX_PERSON = new Prefix("p/");
+    public static final Prefix PREFIX_PRIORITY = new Prefix("c/"); // to be updated
 
 }

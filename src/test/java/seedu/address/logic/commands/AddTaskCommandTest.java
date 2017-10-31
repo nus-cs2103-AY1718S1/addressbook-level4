@@ -131,6 +131,11 @@ public class AddTaskCommandTest {
         }
 
         @Override
+        public void updateTaskPriority(ReadOnlyTask target, Integer value) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
         }
@@ -170,6 +175,11 @@ public class AddTaskCommandTest {
 
         @Override
         public void taskByEnd() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void taskByPriority() {
             fail("This method should not be called.");
         }
 

@@ -33,6 +33,9 @@ public class XmlAdaptedTask {
     private Boolean complete;
     @XmlElement
     private List<Integer> peopleIndices = new ArrayList<>();
+    @XmlElement(required = true)
+    private Integer priority;
+
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -58,6 +61,7 @@ public class XmlAdaptedTask {
         }
         complete = source.getComplete();
         peopleIndices = source.getPeopleIndices();
+        priority = source.getPriority();
     }
 
     /**
@@ -77,7 +81,8 @@ public class XmlAdaptedTask {
         final Set<Tag> tags = new HashSet<>(personTags);
         final Boolean complete = this.complete;
         final List<Integer> peopleIndices= this.peopleIndices;
-        return new Task(taskName, taskDescription, startDateTime, endDateTime, tags, complete, peopleIndices);
+        final Integer priority = this.priority;
+        return new Task(taskName, taskDescription, startDateTime, endDateTime, tags, complete, priority);
     }
 
 }

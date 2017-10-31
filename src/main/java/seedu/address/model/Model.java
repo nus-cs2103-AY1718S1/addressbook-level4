@@ -52,6 +52,8 @@ public interface Model {
     void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask)
             throws DuplicateTaskException, TaskNotFoundException;
 
+    void updateTaskPriority(ReadOnlyTask task, Integer value) throws TaskNotFoundException, DuplicateTaskException;
+
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 
     void markTask(ReadOnlyTask task) throws TaskNotFoundException;
@@ -69,4 +71,6 @@ public interface Model {
     void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
 
     void taskByEnd();
+
+    void taskByPriority();
 }

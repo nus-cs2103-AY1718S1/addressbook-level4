@@ -24,6 +24,9 @@ public class Task implements ReadOnlyTask {
     private ObjectProperty<String> taskDescription;
     private ObjectProperty<String> startDateTime;
     private ObjectProperty<String> endDateTime;
+
+    private ObjectProperty<Integer> taskIndex;
+    private ObjectProperty<Integer> taskPriority;
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<Boolean> complete;
     private ObjectProperty<Integer> id;
@@ -37,6 +40,7 @@ public class Task implements ReadOnlyTask {
         this.startDateTime = new SimpleObjectProperty<>("");
         this.endDateTime = new SimpleObjectProperty<>("");
         this.complete = new SimpleObjectProperty<>(false);
+        this.taskPriority = new SimpleObjectProperty<>(1);
     }
 
     /**
@@ -54,7 +58,7 @@ public class Task implements ReadOnlyTask {
      */
     public Task(Boolean state) {
         this();
-        this.complete = new SimpleObjectProperty<>(true);
+        this.complete = new SimpleObjectProperty<>(state);
     }
 
     /**
@@ -67,6 +71,7 @@ public class Task implements ReadOnlyTask {
         this.taskName = new SimpleObjectProperty<>(name);
         this.taskDescription = new SimpleObjectProperty<>(description);
         this.complete = new SimpleObjectProperty<>(false);
+        this.taskPriority = new SimpleObjectProperty<>(1);
     }
 
     /**
@@ -81,6 +86,7 @@ public class Task implements ReadOnlyTask {
         this.taskDescription = new SimpleObjectProperty<>(description);
         this.startDateTime = new SimpleObjectProperty<>(startDateTime);
         this.complete = new SimpleObjectProperty<>(false);
+        this.taskPriority = new SimpleObjectProperty<>(1);
     }
 
     /**
@@ -97,10 +103,29 @@ public class Task implements ReadOnlyTask {
         this.startDateTime = new SimpleObjectProperty<>(startDateTime);
         this.endDateTime = new SimpleObjectProperty<>(endDateTime);
         this.complete = new SimpleObjectProperty<>(false);
+        this.taskPriority = new SimpleObjectProperty<>(1);
     }
 
     /**
-     * Constructor with also a time only to be passed in (third type, start and end)
+     * Constructor for taking also a priority set by the user
+     * @param name
+     * @param description
+     * @param startDateTime
+     * @param endDateTime
+     * @param priority
+     */
+    public Task (String name, String description, String startDateTime, String endDateTime,
+                 int priority) {
+        this();
+        this.taskName = new SimpleObjectProperty<>(name);
+        this.taskDescription = new SimpleObjectProperty<>(description);
+        this.startDateTime = new SimpleObjectProperty<>(startDateTime);
+        this.endDateTime = new SimpleObjectProperty<>(endDateTime);
+        setPriority(priority);
+    }
+
+    /**
+     * Constructor with also a time only to be passed in (third type, start and end) and the complete state
      * @param name, the name of this task
      * @param description, the description of this task
      * @param startDateTime, the start date and time of this task
@@ -108,12 +133,13 @@ public class Task implements ReadOnlyTask {
      * @param tags, the tag set
      */
     public Task (String name, String description, String startDateTime, String endDateTime,
-                 Set<Tag> tags, Boolean complete) {
+                 Set<Tag> tags, Boolean state) {
         this(tags);
         this.taskName = new SimpleObjectProperty<>(name);
         this.taskDescription = new SimpleObjectProperty<>(description);
         this.startDateTime = new SimpleObjectProperty<>(startDateTime);
         this.endDateTime = new SimpleObjectProperty<>(endDateTime);
+
         this.complete = new SimpleObjectProperty<>(false);
         this.id = new SimpleObjectProperty<>(this.hashCode());
         this.peopleIndices = new SimpleObjectProperty<>();
@@ -122,6 +148,22 @@ public class Task implements ReadOnlyTask {
 
     public Task (String name, String description, String startDateTime, String endDateTime,
                  Set<Tag> tags, Boolean complete, List<Integer> peopleIndices) {
+
+        this.complete = new SimpleObjectProperty<>(state);
+    }
+
+    /**
+     * Constructor for copy constructor
+     * with also a time only to be passed in (third type, start and end) and the complete state
+     * @param name, the name of this task
+     * @param description, the description of this task
+     * @param startDateTime, the start date and time of this task
+     * @param endDateTime, the end date and time of this task
+     * @param tags, the tag set
+     * @param priority, the priority value
+     */
+    public Task (String name, String description, String startDateTime, String endDateTime,
+                 Set<Tag> tags, Boolean state, Integer priority) {
         this(tags);
         this.taskName = new SimpleObjectProperty<>(name);
         this.taskDescription = new SimpleObjectProperty<>(description);
@@ -130,6 +172,8 @@ public class Task implements ReadOnlyTask {
         this.complete = new SimpleObjectProperty<>(false);
         this.id = new SimpleObjectProperty<>(this.hashCode());
         this.peopleIndices = new SimpleObjectProperty<>(new ArrayList<>(peopleIndices));
+        this.complete = new SimpleObjectProperty<>(state);
+        setPriority(priority);
     }
 
     /**
@@ -138,7 +182,16 @@ public class Task implements ReadOnlyTask {
      */
     public Task (ReadOnlyTask task) {
         this(task.getName(), task.getDescription(), task.getStartDateTime(),
-                task.getEndDateTime(), task.getTags(), task.getComplete());
+                task.getEndDateTime(), task.getTags(), task.getComplete(), task.getPriority());
+    }
+
+    /**
+     * Copy constructor for task class with complete
+     * @param task
+     */
+    public Task (ReadOnlyTask task, boolean complete) {
+        this(task.getName(), task.getDescription(), task.getStartDateTime(),
+                task.getEndDateTime(), task.getTags(), complete, task.getPriority());
     }
 
     /**
@@ -182,6 +235,9 @@ public class Task implements ReadOnlyTask {
     public Integer getId() {
         return id.get();
     }
+    public Integer getPriority () {
+        return taskPriority.get();
+    }
 
     public ObjectProperty<String> nameProperty() {
         return taskName;
@@ -197,6 +253,10 @@ public class Task implements ReadOnlyTask {
 
     public ObjectProperty<String> endTimeProperty() {
         return endDateTime;
+    }
+
+    public ObjectProperty<Integer> priorityProperty() {
+        return taskPriority;
     }
 
     public ObjectProperty<UniqueTagList> tagProperty() {
@@ -221,6 +281,19 @@ public class Task implements ReadOnlyTask {
 
     public void setEndDateTime(String endDateTime) {
         this.taskName.set(requireNonNull(endDateTime));
+    }
+
+    /**
+     * Setter for priority property (functional)
+     * In all priority settings we will use this function, to prevent illegal values
+     * @param priority
+     */
+    public void setPriority(Integer priority) {
+        if (priority > 5 || priority < 0) {
+            this.taskPriority.set(requireNonNull(1));
+        } else {
+            this.taskPriority.set(requireNonNull(priority));
+        }
     }
 
     public void setTags(Set<Tag> replacement) {

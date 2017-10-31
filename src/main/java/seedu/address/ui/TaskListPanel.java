@@ -76,7 +76,7 @@ public class TaskListPanel extends UiPart<Region> {
         protected void updateItem(TaskCard task, boolean empty) {
             super.updateItem(task, empty);
 
-            if (empty || task == null) {
+            if (empty || task == null || task.getTask().getComplete()) {
                 setGraphic(null);
                 setText(null);
             } else {

@@ -17,17 +17,17 @@ public class TypicalTasks {
     public static final ReadOnlyTask PICNIC = new Task("picnic",
             "Have a good time with my best friends",
             "20/05/2018-12:00pm",
-            "20/05/2018-13:00pm").withTags("Friends", "Fun");
+            "20/05/2018-13:00pm", 2).withTags("Friends", "Fun");
 
     public static final ReadOnlyTask MEETING = new Task("meeting",
             "Have a CS2101 group meeting for oral presentation 2",
             "20/05/2017-12:00pm",
-            "20/05/2017-13:00pm").withTags("Study");
+            "20/05/2017-13:00pm", 3).withTags("Study");
 
     public static final ReadOnlyTask EXAM = new Task("CS2103 exam",
             "Have a final exam for CS2103T",
             "20/05/2017-15:00pm",
-            "20/05/2017-16:00pm").withTags("Study");
+            "20/05/2017-16:00pm", 1).withTags("Study");
 
 
     private TypicalTasks() {} // prevents instantiation

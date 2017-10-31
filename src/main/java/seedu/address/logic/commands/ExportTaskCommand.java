@@ -41,7 +41,7 @@ public class ExportTaskCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
-        List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
+        List<ReadOnlyTask> lastShownList = model.getSortedTaskList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
