@@ -24,7 +24,7 @@ image::UG_mainheader_introduction.png[width="900"]
 Unify is a Command Line Interface AddressBook that helps manage your contacts efficiently. Unlike conventional Address Books, Unify adopts a Command-Line Interface (CLI).
 By having a CLI, you can navigate and manage Unify efficiently by typing commands.
 Commands capture the important details of your action into a concise line.
-With just one line, you can traverse your large network to find your old pal John or update your Mum's phone number.
+With just one line, you can traverse your large network to find your old pal John or update your Brother's phone number.
 Now you can spend less time in your Address Book, and more time on what matters most to you.
 
 
@@ -248,8 +248,7 @@ to search for people based on their details, which include: +
 * E-mail
 * Address
 * Tags
-
-Find people whose names contain any of the given keywords. +
+* Remark
 
 image::UG_header_format.png[width="400"]
 Format: `find [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
@@ -257,21 +256,6 @@ Format: `find [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 image::UG_header_alias.png[width="400"]
 Alias: `search`, `filter`
 
-IMPORTANT: Only people matching all the keywords will be returned (i.e. `AND` search).
-e.g. `n/Hans n/Bo` will not return `Hans Gruber` or `Bo Yang` but will return `Hans Holbo`.
-
-****
-* The search is case insensitive. e.g `n/hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `n/Hans n/Bo` will match `Bo Hans`
-* You may search for different fields by adding a prefix. ([n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG])
-* If the first field is a name, you do not need a prefix. (find NAME [MORE_PREFIX/KEYWORDS]...) +
-image:UG_FindByNameInput.png[width="300"] +
-image:UG_FindByNameOutput.png[width="300"] +
-* Words will be matched if the keyword is contained by the peron's details e.g. `n/Han` will identify `Hans`, `n/Gabrielle` will not identify `Gabriel`.
-****
-
-[NOTE]
-For Remark, we test with `StringUtil#containsWordIgnoreCase` which is case-insensitive but a full match is required
 
 image::UG_header_examples.png[width="400"]
 
@@ -282,10 +266,64 @@ Returns any person whose name contains `john`, has a tag which contains `friend`
 * `find a/Blk 100 Street` +
 Returns any person whose address contains `Blk 100 Street` (case-insensitive). Does not return person whose address is `Street Blk 100`.
 
-TIP: You may also click on tags to do a search for that tag. (ie. find t/CLICKED_TAG); +
-Clicking on a tag, image:UG_ClickTagInput.png[width="300"] +
-Searches for all people with the same tag. image:UG_ClickTagOutput.png[width="300"] +
+image::header_note.png[width="400"]
 
+****
+* Only people matching all the keywords will be returned (i.e. `AND` search).
+** e.g. `n/Hans n/Bo` will not return `Hans Gruber` or `Bo Yang` but will return `Hans Holbo`.
+* The search is case insensitive. e.g `n/hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `n/Hans n/Bo` will match `Bo Hans`
+* You may search for different fields by adding a prefix. ([n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG])
+* If the first field is a name, you do not need a prefix. (find NAME [MORE_PREFIX/KEYWORDS]...) +
+* Words will be matched if the keyword is contained by the peron's details e.g. `n/Han` will identify `Hans`, `n/Gabrielle` will not identify `Gabriel`.
+* For Remark, only people whose remark sentence contains your query will be found. A full word match is required but it is case-insensitive.
+** For example `find r/swim` will identify John whose remark is `likes to swim` but not Hans whose remark is `likes swimming`.
+****
+
+image::UG_header_examples.png[width="400"]
+
+* `find n/John` +
+Returns `john` and `John Doe`
+* `find n/John t/friend p/123` +
+Returns any person whose name contains `john`, has a tag which contains `friend` and whose phone contains `123`.
+* `find a/Blk 100 Street` +
+Returns any person whose address contains `Blk 100 Street` (case-insensitive). Does not return person whose address is `Street Blk 100`.
+
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] Type `find` into the command box first, then follow the format as shown above, after which press kbd:[Enter] to execute it.
+
+image::UG_find1.png[width="590"]
+
+image:step2.png[width="70"] The result box will display (number) persons listed!
+
+image::UG_find2.png[width="590"]
+
+image:step3.png[width="70"] You can click on any other of people listed in the list of contacts or do a `select` command.
+
+image:step4.png[width="70"] The details of the selected person will be displayed under the Contact Details.
+
+image::UG_find3.png[width="590"]
+{sp}+
+
+TIP: You can also click on tags to do a search for that tag. (ie. find t/CLICKED_TAG); +
+
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+
+image:step1.png[width="70"] Click on the tag you wish to search for.
+
+image::UG_findtag1.png[width="590"]
+
+image:step2.png[width="70"] The result box will display (number) persons listed!
+
+image::UG_find2.png[width="590"]
+
+image:step3.png[width="70"] You can click on any other of people listed in the list of contacts or do a `select` command.
+
+image:step4.png[width="70"] The details of the selected person will be displayed under the Contact Details.
+
+image::UG_find3.png[width="590"]
 {sp}+
 
 image::divider.png[width="900"]
