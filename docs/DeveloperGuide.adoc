@@ -484,7 +484,7 @@ image::FindCommandActivityDiagram.png[width="900"]
 **Alternative 1 (current choice):** Find module/lesson/location base on the current `ListingUnit`. +
 **Pros:** Make more sense to implement this way as in ModU as user do not always view all lessons in `LessonListPanel`.
 It will not make sense for the user to find something that is not currently in `LessonListPanel`. +
-**Cons:** More work need to be done as implementing `FindCommand` this way would need to create multiple `Predicates` for different type of `ListCommand` attributes.
+**Cons:** More work need to be done as implementing `FindCommand` this way would need to create multiple `Predicates` for different type of `ListCommand` attributes. +
 **Alternative 2:** Find lesson based on the full list regardless which previous `ListCommand` attribute. +
 **Pros:** Less work. +
 **Cons:** Make no sense for user as the `FindCommand` will return something that is irrelevant for the user.
@@ -541,9 +541,9 @@ image::sortCommandactivitydiagram.png[width="900"]
 **Aspect:** Implementation of `SortCommand` +
 **Alternative 1 (current choice):** Sort the actual `internalList` in `UniqueLessonList`. +
 **Pros:** Easier for new developer to understand the operation of SortCommand execution as it is more intuitive. Prevent conflicting with other command execution which use the `internalList`. +
-**Cons:** More work as need to create different level of abstraction in model for a single method.
+**Cons:** More work as need to create different level of abstraction in model for a single method. +
 **Alternative 2:** Sort list by calling event to sort the current Observable<ReadOnlyLesson> lesson list on `LessonListPanel`. +
-**Pros:** The actual `internalList` wont be altered and wont affect other commands' execution. +
+**Pros:** This implementation requires lesser work compare to alternative 1. +
 **Cons:** Could be counter intuitive for new developer who is looking at the code for the first time as normally developers would relate such execution in the `Model` component of this product. In additional, this will make the `internalList` to be different with the `list` users see on the `LessonListPanel` which sill make other command operate to not operate properly. +
 
 ---
