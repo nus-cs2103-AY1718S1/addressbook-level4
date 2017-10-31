@@ -1,5 +1,5 @@
 # angtianlannus
-###### \java\seedu\address\logic\commands\FindCommandTest.java
+###### /java/seedu/address/logic/commands/FindCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -115,7 +115,7 @@ public class FindCommandTest {
         assertCommandSuccess(findByMarkedLesson, expectedMessage, expectedList);
     }
 ```
-###### \java\seedu\address\logic\commands\FindCommandTest.java
+###### /java/seedu/address/logic/commands/FindCommandTest.java
 ``` java
     @After
     public void wrapUp() {
@@ -124,7 +124,7 @@ public class FindCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\SortCommandTest.java
+###### /java/seedu/address/logic/commands/SortCommandTest.java
 ``` java
 public class SortCommandTest {
 
@@ -182,7 +182,7 @@ public class SortCommandTest {
 
     }
 ```
-###### \java\seedu\address\logic\commands\SortCommandTest.java
+###### /java/seedu/address/logic/commands/SortCommandTest.java
 ``` java
     @After
     public void wrapUp() {
@@ -190,7 +190,7 @@ public class SortCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_find() throws Exception {
@@ -200,7 +200,7 @@ public class SortCommandTest {
         assertEquals(new FindCommand(keywords), command);
     }
 ```
-###### \java\seedu\address\logic\parser\FindCommandParserTest.java
+###### /java/seedu/address/logic/parser/FindCommandParserTest.java
 ``` java
     @Test
     public void parse_validTrimmedKeywordsToList_returnsFindCommand() {
@@ -213,7 +213,7 @@ public class SortCommandTest {
 
 }
 ```
-###### \java\seedu\address\model\lesson\predicate\LessonContainsKeywordsPredicateTest.java
+###### /java/seedu/address/model/lesson/predicate/LessonContainsKeywordsPredicateTest.java
 ``` java
 public class LessonContainsKeywordsPredicateTest {
 
@@ -357,7 +357,7 @@ public class LessonContainsKeywordsPredicateTest {
     }
 }
 ```
-###### \java\seedu\address\model\lesson\predicate\LocationContainsKeywordsPredicateTest.java
+###### /java/seedu/address/model/lesson/predicate/LocationContainsKeywordsPredicateTest.java
 ``` java
 public class LocationContainsKeywordsPredicateTest {
 
@@ -439,7 +439,7 @@ public class LocationContainsKeywordsPredicateTest {
 
 }
 ```
-###### \java\seedu\address\model\lesson\predicate\MarkedLessonsContainsKeywordsPredicateTest.java
+###### /java/seedu/address/model/lesson/predicate/MarkedLessonsContainsKeywordsPredicateTest.java
 ``` java
 public class MarkedLessonsContainsKeywordsPredicateTest {
 
@@ -567,7 +567,7 @@ public class MarkedLessonsContainsKeywordsPredicateTest {
     }
 }
 ```
-###### \java\seedu\address\model\lesson\predicate\ModuleContainsKeywordsPredicateTest.java
+###### /java/seedu/address/model/lesson/predicate/ModuleContainsKeywordsPredicateTest.java
 ``` java
 public class ModuleContainsKeywordsPredicateTest {
 

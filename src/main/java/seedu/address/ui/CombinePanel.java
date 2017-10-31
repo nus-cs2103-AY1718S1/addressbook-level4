@@ -1,12 +1,8 @@
 //@@author caoliangnus
-
 package seedu.address.ui;
 
 import java.net.URL;
 import java.time.DayOfWeek;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -26,7 +22,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
-
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.LessonPanelSelectionChangedEvent;
@@ -51,6 +46,7 @@ public class CombinePanel extends UiPart<Region> {
     private static final String STICKY_NOTE = "stickyNote";
     private static final int ROW = 6;
     private static final int COL = 13;
+    private static final int START_TIME = 8;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private final Logic logic;
@@ -247,26 +243,7 @@ public class CombinePanel extends UiPart<Region> {
 
     private int getTime(String text) {
         int time = Integer.parseInt(text);
-        return time - 8;
-    }
-
-
-    /**
-     * Clear timetable grid.
-     */
-    private void clearGrid() {
-        ObservableList<Node> list = timetableGrid.getChildren();
-        final List<Node> removalCandidates = new ArrayList<>();
-
-        Iterator<Node> iter = list.iterator();
-        while (iter.hasNext()) {
-            Node node = iter.next();
-            if (node.getId().contains("lbl")) {
-                node.setVisible(false);
-                removalCandidates.add(node);
-            }
-        }
-        timetableGrid.getChildren().removeAll(removalCandidates);
+        return time - START_TIME;
     }
 
 
@@ -347,6 +324,7 @@ public class CombinePanel extends UiPart<Region> {
     }
     //@@author
 
+    //@@author caoliangnus
     /**
      * This method will initialize StickyNote screen
      */
@@ -460,3 +438,4 @@ class GridData {
         return true;
     }
 }
+

@@ -1,5 +1,5 @@
 # junming403
-###### \java\seedu\address\commons\events\ui\RefreshPanelEvent.java
+###### /java/seedu/address/commons/events/ui/RefreshPanelEvent.java
 ``` java
 /**
  * Indicates the listingUnit in the personListPanel is changed.
@@ -13,7 +13,7 @@ public class RefreshPanelEvent extends BaseEvent {
 
 }
 ```
-###### \java\seedu\address\commons\events\ui\RemarkChangedEvent.java
+###### /java/seedu/address/commons/events/ui/RemarkChangedEvent.java
 ``` java
 /**
  * An event indicates addressbook has changed.
@@ -26,7 +26,7 @@ public class RemarkChangedEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\ViewedLessonEvent.java
+###### /java/seedu/address/commons/events/ui/ViewedLessonEvent.java
 ``` java
 /**
  * Indicates a request to view a lesson on the existing lesson list
@@ -39,7 +39,7 @@ public class ViewedLessonEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\AddCommand.java
+###### /java/seedu/address/logic/commands/AddCommand.java
 ``` java
 /**
  * Adds a lesson to the ModU.
@@ -105,7 +105,7 @@ public class AddCommand extends UndoableCommand {
 
 }
 ```
-###### \java\seedu\address\logic\commands\ClearCommand.java
+###### /java/seedu/address/logic/commands/ClearCommand.java
 ``` java
 /**
  * Clears the ModU data.
@@ -131,7 +131,7 @@ public class ClearCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\DeleteCommand.java
+###### /java/seedu/address/logic/commands/DeleteCommand.java
 ``` java
 /**
  * Deletes a lesson/location/module identified using it's last displayed index from ModU.
@@ -260,7 +260,7 @@ public class DeleteCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\DeleteRemarkCommand.java
+###### /java/seedu/address/logic/commands/DeleteRemarkCommand.java
 ``` java
 /**
  * Deletes the remark with specified index.
@@ -310,7 +310,7 @@ public class DeleteRemarkCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\EditCommand.java
+###### /java/seedu/address/logic/commands/EditCommand.java
 ``` java
 /**
  * Edits the details of an existing lesson/module/location in ModU.
@@ -630,7 +630,7 @@ public class EditCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ListCommand.java
+###### /java/seedu/address/logic/commands/ListCommand.java
 ``` java
 /**
  * Lists unique locations or unique module codes of all lessons according to user's specification.
@@ -716,7 +716,7 @@ public class ListCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\MarkCommand.java
+###### /java/seedu/address/logic/commands/MarkCommand.java
 ``` java
 /**
  * Bookmark a lesson identified using it's last displayed index from the address book into the favourite list.
@@ -773,7 +773,7 @@ public class MarkCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\RedoCommand.java
+###### /java/seedu/address/logic/commands/RedoCommand.java
 ``` java
 /**
  * Redo the previously undone command.
@@ -803,7 +803,7 @@ public class RedoCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\RemarkCommand.java
+###### /java/seedu/address/logic/commands/RemarkCommand.java
 ``` java
 /**
  * Add a remark to a module with specified index.
@@ -876,7 +876,7 @@ public class RemarkCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\SelectCommand.java
+###### /java/seedu/address/logic/commands/SelectCommand.java
 ``` java
 /**
  * Selects a module/location identified using it's last displayed index from the address book.
@@ -925,7 +925,7 @@ public class SelectCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\UnmarkCommand.java
+###### /java/seedu/address/logic/commands/UnmarkCommand.java
 ``` java
 /**
  * Unbookmark a lesson identified using it's last displayed index from the address book into the favourite list.
@@ -981,7 +981,7 @@ public class UnmarkCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ViewCommand.java
+###### /java/seedu/address/logic/commands/ViewCommand.java
 ``` java
 /**
  * Views all persons with the selected listing unit from the address book.
@@ -1078,7 +1078,7 @@ public class ViewCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\EditCommandParser.java
+###### /java/seedu/address/logic/parser/EditCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new EditCommand object
@@ -1197,7 +1197,7 @@ public class EditCommandParser implements Parser<EditCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\ListCommandParser.java
+###### /java/seedu/address/logic/parser/ListCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ListCommand object
@@ -1229,7 +1229,7 @@ public class ListCommandParser implements Parser<ListCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\MarkCommandParser.java
+###### /java/seedu/address/logic/parser/MarkCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new MarkCommand object
@@ -1253,7 +1253,7 @@ public class MarkCommandParser implements Parser<MarkCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\RemarkCommandParser.java
+###### /java/seedu/address/logic/parser/RemarkCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new RemarkCommand object
@@ -1292,7 +1292,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\UnmarkCommandParser.java
+###### /java/seedu/address/logic/parser/UnmarkCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new UnmarkCommand object
@@ -1316,7 +1316,7 @@ public class UnmarkCommandParser implements Parser<UnmarkCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\ViewCommandParser.java
+###### /java/seedu/address/logic/parser/ViewCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ViewCommand object
@@ -1339,7 +1339,7 @@ public class ViewCommandParser implements Parser<ViewCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\UndoRedoStack.java
+###### /java/seedu/address/logic/UndoRedoStack.java
 ``` java
     public void push(Command command) {
         if (!(command instanceof UndoCommand) && !(command instanceof RedoCommand)) {
@@ -1377,13 +1377,13 @@ public class ViewCommandParser implements Parser<ViewCommand> {
         return toRedo;
     }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     public void setRemarks(Set<Remark> remarks) {
         this.remarks.setRemarks(remarks);
     }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     /**
      * Adds a lesson to the marked list.
@@ -1407,7 +1407,7 @@ public class ViewCommandParser implements Parser<ViewCommand> {
         m.setAsUnmarked();
     }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     //// remark-level operations
     public void addRemark(Remark r) throws DuplicateRemarkException {
@@ -1431,14 +1431,14 @@ public class ViewCommandParser implements Parser<ViewCommand> {
         }
     }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     @Override
     public ObservableList<Remark> getRemarkList() {
         return remarks.asObservableList();
     }
 ```
-###### \java\seedu\address\model\lecturer\Lecturer.java
+###### /java/seedu/address/model/lecturer/Lecturer.java
 ``` java
 public class Lecturer {
 
@@ -1489,7 +1489,7 @@ public class Lecturer {
 
 }
 ```
-###### \java\seedu\address\model\lecturer\UniqueLecturerList.java
+###### /java/seedu/address/model/lecturer/UniqueLecturerList.java
 ``` java
 public class UniqueLecturerList implements Iterable<Lecturer> {
 
@@ -1613,7 +1613,7 @@ public class UniqueLecturerList implements Iterable<Lecturer> {
 
 }
 ```
-###### \java\seedu\address\model\ListingUnit.java
+###### /java/seedu/address/model/ListingUnit.java
 ``` java
 /**
  * A Enumeration class that consists of all possible Listing
@@ -1655,7 +1655,7 @@ public enum ListingUnit {
 
 }
 ```
-###### \java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
     /**
      * Get a hash set of all the distinct locations
@@ -1667,7 +1667,7 @@ public enum ListingUnit {
      */
     HashSet<Code> getUniqueCodeSet();
 ```
-###### \java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
     /**
      * Updates the filter of the filtered remark list to filter by the given {@code predicate}.
@@ -1699,7 +1699,7 @@ public enum ListingUnit {
      */
     void handleListingUnit();
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public HashSet<Location> getUniqueLocationSet() {
@@ -1729,7 +1729,7 @@ public enum ListingUnit {
         return set;
     }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public void bookmarkLesson(ReadOnlyLesson target) throws DuplicateLessonException {
@@ -1743,7 +1743,7 @@ public enum ListingUnit {
         indicateAddressBookChanged();
     }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public void updateFilteredRemarkList(Predicate<Remark> predicate) {
@@ -1798,7 +1798,7 @@ public enum ListingUnit {
         }
     }
 ```
-###### \java\seedu\address\model\module\exceptions\DuplicateLessonException.java
+###### /java/seedu/address/model/module/exceptions/DuplicateLessonException.java
 ``` java
 /**
  * Signals that the operation will result in duplicate Lesson objects.
@@ -1809,7 +1809,7 @@ public class DuplicateLessonException extends DuplicateDataException {
     }
 }
 ```
-###### \java\seedu\address\model\module\exceptions\DuplicateRemarkException.java
+###### /java/seedu/address/model/module/exceptions/DuplicateRemarkException.java
 ``` java
 /**
  * Signals that the operation will result in duplicate Remark objects.
@@ -1820,21 +1820,21 @@ public class DuplicateRemarkException extends DuplicateDataException {
     }
 }
 ```
-###### \java\seedu\address\model\module\exceptions\LessonNotFoundException.java
+###### /java/seedu/address/model/module/exceptions/LessonNotFoundException.java
 ``` java
 /**
  * Signals that the operation is unable to find the specified lesson.
  */
 public class LessonNotFoundException extends Exception {}
 ```
-###### \java\seedu\address\model\module\exceptions\RemarkNotFoundException.java
+###### /java/seedu/address/model/module/exceptions/RemarkNotFoundException.java
 ``` java
 /**
  * Indicates the remark cannot be found.
  */
 public class RemarkNotFoundException extends Exception {}
 ```
-###### \java\seedu\address\model\module\predicates\FixedCodePredicate.java
+###### /java/seedu/address/model/module/predicates/FixedCodePredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyLesson}'s {@code location} matches the given module code.
@@ -1864,7 +1864,7 @@ public class FixedCodePredicate implements Predicate<ReadOnlyLesson> {
 
 }
 ```
-###### \java\seedu\address\model\module\predicates\FixedLocationPredicate.java
+###### /java/seedu/address/model/module/predicates/FixedLocationPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyLesson}'s {@code location} matches the given location.
@@ -1894,7 +1894,7 @@ public class FixedLocationPredicate implements Predicate<ReadOnlyLesson> {
 
 }
 ```
-###### \java\seedu\address\model\module\predicates\MarkedListPredicate.java
+###### /java/seedu/address/model/module/predicates/MarkedListPredicate.java
 ``` java
 /**
  * Tests that if a {@code ReadOnlyLesson} if in the marked list.
@@ -1914,7 +1914,7 @@ public class MarkedListPredicate implements Predicate<ReadOnlyLesson> {
 
 }
 ```
-###### \java\seedu\address\model\module\predicates\SelectedStickyNotePredicate.java
+###### /java/seedu/address/model/module/predicates/SelectedStickyNotePredicate.java
 ``` java
 /**
  * Tests that a {@code Remark}'s {@code moduleCode} matches the given module code.
@@ -1944,7 +1944,7 @@ public class SelectedStickyNotePredicate implements Predicate<Remark> {
 
 }
 ```
-###### \java\seedu\address\model\module\predicates\ShowSpecifiedLessonPredicate.java
+###### /java/seedu/address/model/module/predicates/ShowSpecifiedLessonPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyLesson} matches the given lesson.
@@ -1974,7 +1974,7 @@ public class ShowSpecifiedLessonPredicate implements Predicate<ReadOnlyLesson> {
 
 }
 ```
-###### \java\seedu\address\model\module\predicates\UniqueLocationPredicate.java
+###### /java/seedu/address/model/module/predicates/UniqueLocationPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Address} is unique in the given list.
@@ -2005,7 +2005,7 @@ public class UniqueLocationPredicate implements Predicate<ReadOnlyLesson> {
 
 }
 ```
-###### \java\seedu\address\model\module\predicates\UniqueModuleCodePredicate.java
+###### /java/seedu/address/model/module/predicates/UniqueModuleCodePredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Code} is unique in the given list.
@@ -2036,7 +2036,7 @@ public class UniqueModuleCodePredicate implements Predicate<ReadOnlyLesson> {
 
 }
 ```
-###### \java\seedu\address\model\module\Remark.java
+###### /java/seedu/address/model/module/Remark.java
 ``` java
 /**
  * Represents a Module's remark(if any) in the application.
@@ -2100,7 +2100,7 @@ public class Remark {
     }
 }
 ```
-###### \java\seedu\address\model\module\UniqueRemarkList.java
+###### /java/seedu/address/model/module/UniqueRemarkList.java
 ``` java
 /**
  * A list of remarks that enforces no nulls and uniqueness between its elements.
@@ -2248,7 +2248,7 @@ public class UniqueRemarkList implements Iterable<Remark> {
 
 }
 ```
-###### \java\seedu\address\model\ReadOnlyAddressBook.java
+###### /java/seedu/address/model/ReadOnlyAddressBook.java
 ``` java
     /**
      * Returns an unmodifiable view of the remarks list.
@@ -2256,7 +2256,7 @@ public class UniqueRemarkList implements Iterable<Remark> {
      */
     ObservableList<Remark> getRemarkList();
 ```
-###### \java\seedu\address\storage\XmlAdaptedRemark.java
+###### /java/seedu/address/storage/XmlAdaptedRemark.java
 ``` java
 /**
  * Stores remark data in an XML file
@@ -2297,7 +2297,7 @@ public class XmlAdaptedRemark {
 
 }
 ```
-###### \java\seedu\address\ui\CombinePanel.java
+###### /java/seedu/address/ui/CombinePanel.java
 ``` java
     @Subscribe
     private void handleRemarkChangedEvent(RemarkChangedEvent event) {
@@ -2330,7 +2330,7 @@ public class XmlAdaptedRemark {
         }
     }
 ```
-###### \java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
     /**
      * Configure border colour to indicate validity of user input.
@@ -2348,7 +2348,7 @@ public class XmlAdaptedRemark {
         }
     }
 ```
-###### \java\seedu\address\ui\LessonListCard.java
+###### /java/seedu/address/ui/LessonListCard.java
 ``` java
     /**
      * Change the card state to hide irrelevant information and only show address
@@ -2407,7 +2407,7 @@ public class XmlAdaptedRemark {
         }
     }
 ```
-###### \java\seedu\address\ui\LessonListPanel.java
+###### /java/seedu/address/ui/LessonListPanel.java
 ``` java
     private void setConnections(ObservableList<ReadOnlyLesson> infoList) {
 
@@ -2420,7 +2420,7 @@ public class XmlAdaptedRemark {
 
     }
 ```
-###### \java\seedu\address\ui\LessonListPanel.java
+###### /java/seedu/address/ui/LessonListPanel.java
 ``` java
     @Subscribe
     private void handleRefreshPanelEvent(RefreshPanelEvent event) {

@@ -135,6 +135,7 @@ public class CommandBox extends UiPart<Region> {
         prefixList.add(CliSyntax.PREFIX_FONT_SIZE.getPrefix());
     }
 
+    //@@author
     /**
      * Handles the key press event, {@code keyEvent}.
      */
@@ -170,7 +171,6 @@ public class CommandBox extends UiPart<Region> {
     }
 
 
-    //@@author caoliangnus
     /**
      * Handles the Command input changed event.
      */
@@ -243,7 +243,6 @@ public class CommandBox extends UiPart<Region> {
     }
 
 
-    //@@author caoliangnus
     private ArrayList<Integer> getTagIndexList(String allTextInput) {
         ArrayList<Integer> tagList = new ArrayList<>();
         int index = 0;
@@ -259,7 +258,6 @@ public class CommandBox extends UiPart<Region> {
     }
 
 
-    //@@author caoliangnus
     /**
      * Check if keyword is a valid command keyword
      * @param keyWord
@@ -273,7 +271,6 @@ public class CommandBox extends UiPart<Region> {
     }
 
 
-    //@@author caoliangnus
     /**
      * Configure words that are not command keyword
      */
@@ -352,7 +349,6 @@ public class CommandBox extends UiPart<Region> {
     }
 
 
-    //@@author caoliangnus
     /**
      * Configure tag that appear in the text field
      */
@@ -425,7 +421,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
 
-    //@@author caoliangnus
+
     /**
      * This method only remove all tag label in stack pane
      */
@@ -445,7 +441,6 @@ public class CommandBox extends UiPart<Region> {
     }
 
 
-    //@@author caoliangnus
     /**
      * This method compute the margin for label
      * @param index the type of font size used in command box
@@ -480,6 +475,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
 
+    //@@author
     /**
      * Updates the text field with the previous input in {@code historySnapshot},
      * if there exists a previous input in {@code historySnapshot}
@@ -580,6 +576,7 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
+    //@@author
     /**
      * Initializes the history snapshot.
      */

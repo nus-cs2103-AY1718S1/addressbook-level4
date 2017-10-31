@@ -122,6 +122,7 @@ public class LessonListCard extends UiPart<Region> {
 
     }
 
+
     /**
      * Change the card state to hide irrelevant information and only show lesson
      */
@@ -133,6 +134,7 @@ public class LessonListCard extends UiPart<Region> {
             bookmark.setVisible(true);
         }
     }
+
 
     /**
      * Change the card state depending on the current listing unit
