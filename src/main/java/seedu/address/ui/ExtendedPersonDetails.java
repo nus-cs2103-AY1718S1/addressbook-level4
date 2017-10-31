@@ -78,12 +78,13 @@ public class ExtendedPersonDetails extends UiPart<Region> {
 
     /** */
     private void setImage(ReadOnlyPerson person) {
-        String url = person.getPhoto().getUrl();
-        if (!url.equals("")) { //if url is not empty, sets the image that overrides the default photo.
-            Image image = new Image(url);
+        String url = person.getPhoto().getFilePath(); //gets the filepath directly from the resources folder.
+        if (url.equals("")) {
+            Image image = new Image(getClass().getResource("/images/noPhoto.png").toExternalForm());
             imageView.setImage(image);
         } else {
-            imageView.setImage(null);
+            Image image = new Image("file:" + person.getPhoto().getFilePath());
+            imageView.setImage(image);
         }
     }
 
