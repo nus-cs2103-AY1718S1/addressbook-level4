@@ -20,6 +20,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.NewGroupListEvent;
 import seedu.address.commons.events.ui.NewPersonListEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
@@ -101,6 +102,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
+        raise(new NewGroupListEvent(getGroupList()));
         indicateAddressBookChanged();
     }
 
