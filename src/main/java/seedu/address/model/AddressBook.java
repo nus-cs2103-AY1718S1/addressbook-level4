@@ -174,6 +174,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author rushan-khor
     /**
      * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
      *
@@ -195,6 +196,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             removeUnusedTags(person.getTags());
         }
     }
+    //@@author
 
     //// tag-level operations
 
@@ -202,6 +204,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    //@@author rushan-khor
     /**
      * Removes {@code tagsToRemove} from this {@code AddressBook} if and only if they are not help by any persons.
      */
@@ -221,6 +224,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
         return results;
     }
+    //@@author
 
     //// util methods
 
