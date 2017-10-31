@@ -2,8 +2,10 @@ package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.commons.exceptions.IllegalValueException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 /**
  * Represents a Event's time in the address book.
  */
@@ -14,7 +16,7 @@ public class EventTime {
     public static final String MESSAGE_EVENT_TIME_CONSTRAINTS =
             "Event time should be in dd/mm/yyyy form, and satisfies reality.";
 
-    /*
+    /**
      * The first character of the event name must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
@@ -101,6 +103,29 @@ public class EventTime {
                 || (year % 100 != 0 && year % 4 == 0);
     }
 
+    public String getDaysLeft() {
+        long day = getDays();
+        if (day < 0) {
+            return Long.toString(-day) + "↑";
+        }
+        return Long.toString(day) + "↓";
+    }
+
+    public Long getDays() {
+        long day = 0;
+        Date now = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String today = format.format(now);
+        try {
+            Date ddl = format.parse(eventTime);
+            Date thisDay = format.parse(today);
+            day = (ddl.getTime() - thisDay.getTime()) / (24 * 60 * 60 * 1000);
+        } catch (Exception e) {
+            return day;
+        }
+        return day;
+    }
+
     @Override
     public String toString() {
         return eventTime;
@@ -117,5 +142,4 @@ public class EventTime {
     public int hashCode() {
         return eventTime.hashCode();
     }
-
 }

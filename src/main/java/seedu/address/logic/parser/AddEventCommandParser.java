@@ -5,9 +5,13 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TIME;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.AbortedCommand;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
@@ -42,6 +46,20 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
             EventTime time = ParserUtil.parseEventTime(argMultimap.getValue(PREFIX_EVENT_TIME)).get();
 
             Event event = new Event(name, description, time);
+
+            if (time.getDays() < 0) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Alert");
+                alert.setHeaderText("This event date is outdated");
+                alert.setContentText("Do you still want to add this event to Planno?");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    return new AddEventCommand(event);
+                } else {
+                    return new AbortedCommand(event);
+                }
+            }
 
             return new AddEventCommand(event);
         } catch (IllegalValueException ive) {

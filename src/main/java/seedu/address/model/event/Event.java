@@ -23,12 +23,16 @@ public class Event implements ReadOnlyEvent {
     private ObjectProperty<EventDescription> desc;
     private ObjectProperty<EventTime> time;
     private ObjectProperty<ParticipantList> participants;
+    private ObjectProperty<String> days;
+    private EventTime eTime;
 
     /**
      * Event name and time must be present and not null.
      */
     public Event (EventName name, EventDescription desc, EventTime time, Set<Person> participants) {
         requireAllNonNull(name, time);
+        this.eTime = time;
+        this.days = new SimpleObjectProperty<>(time.getDaysLeft());
         this.name = new SimpleObjectProperty<>(name);
         this.desc = new SimpleObjectProperty<>(desc);
         this.time = new SimpleObjectProperty<>(time);
@@ -40,6 +44,8 @@ public class Event implements ReadOnlyEvent {
      */
     public Event (EventName name, EventDescription desc, EventTime time) {
         requireAllNonNull(name, time);
+        this.eTime = time;
+        this.days = new SimpleObjectProperty<>(time.getDaysLeft());
         this.name = new SimpleObjectProperty<>(name);
         this.desc = new SimpleObjectProperty<>(desc);
         this.time = new SimpleObjectProperty<>(time);
@@ -104,6 +110,11 @@ public class Event implements ReadOnlyEvent {
 
     public ParticipantList getParticipantList() {
         return participants.get();
+    }
+
+    @Override
+    public ObjectProperty<String> daysProperty() {
+        return days;
     }
     /**
      * Replaces this event's participants with the persons in the argument set.
