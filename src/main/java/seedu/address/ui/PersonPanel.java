@@ -39,9 +39,6 @@ public class PersonPanel extends UiPart<Region> {
     private Logic logic;
 
     @FXML
-    private Rectangle defaultScreen;
-
-    @FXML
     private Label nameLabel;
 
     @FXML
@@ -134,8 +131,6 @@ public class PersonPanel extends UiPart<Region> {
      * @param person
      */
     private void showPersonDetails(ReadOnlyPerson person) {
-        defaultScreen.setOpacity(0);
-
         nameLabel.setText(person.getName().toString());
         phoneLabel.setText(person.getPhone().toString());
         emailLabel.setText(person.getEmail().toString());
