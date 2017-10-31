@@ -3,12 +3,16 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -17,6 +21,15 @@ import seedu.address.model.tag.UniqueTagList;
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Person implements ReadOnlyPerson {
+
+    private static final String DEFAULT_NAME = "Full Name";
+    private static final String DEFAULT_OCCUPATION = "Google, Software engineer";
+    private static final String DEFAULT_PHONE = "123456";
+    private static final String DEFAULT_EMAIL = "fullname@gmail.com";
+    private static final String DEFAULT_ADDRESS = "Singapore";
+    private static final String DEFAULT_REMARK = "funny";
+    private static final String DEFAULT_WEBSITE = "https://www.google.com";
+    private static final String DEFAULT_TAG = "me";
 
     private ObjectProperty<Name> name;
     private ObjectProperty<Occupation> occupation;
@@ -42,6 +55,23 @@ public class Person implements ReadOnlyPerson {
         this.website = new SimpleObjectProperty<>(website);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+    }
+
+    public Person() {
+        try {
+            this.name = new SimpleObjectProperty<>(new Name(DEFAULT_NAME));
+            this.occupation = new SimpleObjectProperty<>(new Occupation(DEFAULT_OCCUPATION));
+            this.phone = new SimpleObjectProperty<>(new Phone(DEFAULT_PHONE));
+            this.email = new SimpleObjectProperty<>(new Email(DEFAULT_EMAIL));
+            this.address = new SimpleObjectProperty<>(new Address(DEFAULT_ADDRESS));
+            this.remark = new SimpleObjectProperty<>(new Remark(DEFAULT_REMARK));
+            this.website = new SimpleObjectProperty<>(new Website(DEFAULT_WEBSITE));
+            List<Tag> tagList = new ArrayList<>();
+            tagList.add(new Tag(DEFAULT_TAG));
+            this.tags = new SimpleObjectProperty<>(new UniqueTagList(new HashSet<>(tagList)));
+        } catch (IllegalValueException ive) {
+            ive.printStackTrace();
+        }
     }
 
     /**

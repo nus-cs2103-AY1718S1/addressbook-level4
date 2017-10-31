@@ -26,7 +26,7 @@ public class Occupation {
             this.value = "";
         } else {
             String trimmedOccupation = occupation.trim();
-            if (!isValidOccupation(trimmedOccupation)) {
+            if (trimmedOccupation.length() > 0 && !isValidOccupation(trimmedOccupation)) {
                 throw new IllegalValueException(MESSAGE_OCCUPATION_CONSTRAINTS);
             }
             this.value = trimmedOccupation;
