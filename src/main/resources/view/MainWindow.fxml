@@ -13,7 +13,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
-        <URL value="@Extensions.css" />
+        <URL value="@DarkTheme.css" />
     </stylesheets>
 
     <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
