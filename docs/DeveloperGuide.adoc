@@ -630,7 +630,7 @@ user field for the additonal information.
 *How it is implemented* +
 Implementation passes through two main segments: Logic and Model. +
 
-image::remarkSD.png[width="800"]
+image::RemarkSD.png[width="800"]
     Figure 21: Remark Command Sequence Diagram
 
 The sequence diagram of the Remark Command can be seen in the figure above. +
