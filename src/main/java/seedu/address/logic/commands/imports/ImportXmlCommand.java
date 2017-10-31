@@ -9,12 +9,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 public class ImportXmlCommand extends ImportCommand {
 
     public ImportXmlCommand(String path) {
-        super(path, ImportType.XML
-        );
+        super(path, ImportType.XML);
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         return null;
     }
 }

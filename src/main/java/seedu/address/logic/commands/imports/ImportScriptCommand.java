@@ -13,7 +13,7 @@ public class ImportScriptCommand extends ImportCommand {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         return null;
     }
 }
