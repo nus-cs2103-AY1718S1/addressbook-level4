@@ -17,11 +17,11 @@ import seedu.address.model.ModelManager;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 public class ExitCommandTest {
-    private ExitCommand exitCommand;
-    private CommandHistory history;
-
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+    private ExitCommand exitCommand;
+    private CommandHistory history;
 
     @Before
     public void setUp() {
