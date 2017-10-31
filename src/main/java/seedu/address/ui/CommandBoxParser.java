@@ -25,7 +25,7 @@ public class CommandBoxParser {
 
     public CommandBoxParser() { }
 
-    public String[] parseTextBox(String commandBoxText) {
+    public String[] parseCommandAndPrefixes(String commandBoxText) {
         String[] parseResults = {EMPTY_STRING, EMPTY_STRING };
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(commandBoxText.trim());
         if (!matcher.matches()) {

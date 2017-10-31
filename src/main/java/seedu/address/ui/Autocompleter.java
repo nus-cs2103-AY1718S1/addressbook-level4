@@ -84,7 +84,7 @@ public class Autocompleter {
             state = AutocompleteState.EMPTY;
             return;
         }
-        String[] currentTextArray = parser.parseTextBox(commandBoxText);
+        String[] currentTextArray = parser.parseCommandAndPrefixes(commandBoxText);
         String commandWord = currentTextArray[CommandBoxParser.COMMAND_INDEX];
         String arguments = currentTextArray[CommandBoxParser.ARGUMENT_INDEX];
 
