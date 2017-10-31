@@ -67,6 +67,7 @@ public class BrowserPanel extends UiPart<Region> {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
 
+    //@@author alexfoodw
     /**
      * Identifies if in the midst of posting process
      * @param bool
@@ -75,6 +76,7 @@ public class BrowserPanel extends UiPart<Region> {
         isPost = bool;
     }
 
+    //@@author alexfoodw
     /**
      * Identifies if in the midst of linking process
      * @param bool
@@ -91,6 +93,7 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(defaultPage.toExternalForm());
     }
 
+    //@@author alexfoodw
     private void setEventHandlerForBrowserUrlChangeEvent() {
         location.textProperty()
                 .addListener((observable, oldValue, newValue) -> {
@@ -132,6 +135,7 @@ public class BrowserPanel extends UiPart<Region> {
         }
     }
 
+    //@@author alexfoodw
     @Subscribe
     private void handleBrowserUrlChangeEvent(BrowserUrlChangeEvent event) throws CommandException {
         switch (event.getProcessType()) {
