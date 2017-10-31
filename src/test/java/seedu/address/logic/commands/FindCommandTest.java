@@ -7,7 +7,6 @@ import static seedu.address.testutil.TypicalLessons.MA1101R_L1;
 import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
@@ -83,14 +82,6 @@ public class FindCommandTest {
 
         // different find command -> returns false
         assertFalse(firstFindCommand.equals(secondFindCommand));
-    }
-
-    @Test
-    public void execute_zeroKeywords_noLessonFound() {
-        String expectedMessage = String.format(FindCommand.MESSAGE_SUCCESS);
-        FindCommand command = new FindCommand(keywords);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
