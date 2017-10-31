@@ -191,6 +191,9 @@ public class MainWindow extends UiPart<Region> {
                 if (!browserPlaceholder.getChildren().contains(calendarView
                         .getRoot())) {
                     browserPlaceholder.getChildren().add(calendarView.getRoot());
+                    //@@author sebtsh
+                    raise(new ShowCalendarEvent());
+                    //@@author
                 } else {
                     browserPlaceholder.getChildren().remove(calendarView.getRoot());
                 }
