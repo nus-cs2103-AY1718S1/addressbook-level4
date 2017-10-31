@@ -26,7 +26,7 @@ public class Remark {
      */
     public Remark(String remark, Code module) throws IllegalValueException {
         requireNonNull(remark);
-        if (isValidRemark(remark)) {
+        if (!isValidRemark(remark)) {
             throw new IllegalValueException(MESSAGE_REMARK_CONSTRAINTS);
         }
         value = remark;

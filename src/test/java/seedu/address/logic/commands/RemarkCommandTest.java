@@ -23,14 +23,6 @@ import seedu.address.model.module.Remark;
 public class RemarkCommandTest {
 
     private static final String SAMPLE_REMARK = "This is a sample remark";
-    private static final String SAMPLE_VERY_LONG_REMARK = "This module introduces the necessary conceptual and "
-            + "analytical tools for systematic and rigorous development of software systems. It covers four main "
-            + "areas of software development, namely object-oriented system analysis, object-oriented system modelling"
-            + " and design, implementation, and testing, with emphasis on system modelling and design and "
-            + "implementation of software modules that work cooperatively to fulfill the requirements of the system. "
-            + "Tools and techniques for software development, such as Unified Modelling Language (UML), program "
-            + "specification, and testing methods, will be taught. Major software engineering issues such as "
-            + "modularisation criteria, program correctness, and software quality will also be covered.";
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -61,7 +53,7 @@ public class RemarkCommandTest {
     @Test
     public void execute_longRemark_throwsCommandException() throws Exception {
         ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
-        RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_LESSON, SAMPLE_VERY_LONG_REMARK);
+        RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_LESSON, getLongString());
 
         assertCommandFailure(remarkCommand, model, Remark.MESSAGE_REMARK_CONSTRAINTS);
     }
@@ -74,6 +66,18 @@ public class RemarkCommandTest {
         remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return remarkCommand;
     }
+
+    /**
+     * Get a String that is longger than 150 characters.
+     */
+    private String getLongString() {
+        String ouput = "";
+        for (int i = 0; i < 1000; i++) {
+            ouput += "abc";
+        }
+        return ouput;
+    }
+
 
 
 }
