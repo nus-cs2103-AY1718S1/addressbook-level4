@@ -26,11 +26,11 @@ public abstract class UndoableCommand extends Command {
     public static final String EMAIL_FIELD = "email";
 
     protected static boolean isWaitingforReply;
-
     protected CommandResult result;
-    protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
     private ReadOnlyAddressBook previousAddressBook;
+
+    protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
     /**
      * Stores the current state of {@code model#addressBook}.
