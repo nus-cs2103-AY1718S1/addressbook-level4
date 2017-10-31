@@ -233,8 +233,20 @@ public class MainWindow extends UiPart<Region> {
         raise(new ChangeThemeRequestEvent());
     }
     @FXML
+    private void handleDarkTheme2() {
+        String themeUrl = getClass().getResource("/view/DarkTheme2.css").toExternalForm();
+        setTheme(themeUrl);
+        raise(new ChangeThemeRequestEvent());
+    }
+    @FXML
     private void handleLightTheme() {
         String themeUrl = getClass().getResource("/view/LightTheme.css").toExternalForm();
+        setTheme(themeUrl);
+        raise(new ChangeThemeRequestEvent());
+    }
+    @FXML
+    private void handleLightTheme2() {
+        String themeUrl = getClass().getResource("/view/LightTheme2.css").toExternalForm();
         setTheme(themeUrl);
         raise(new ChangeThemeRequestEvent());
     }

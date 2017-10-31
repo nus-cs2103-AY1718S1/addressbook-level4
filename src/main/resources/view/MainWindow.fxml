@@ -23,7 +23,9 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Theme">
             <MenuItem mnemonicParsing="false" onAction="#handleDarkTheme" text="Dark Theme" />
+            <MenuItem mnemonicParsing="false" onAction="#handleDarkTheme2" text="Dark Theme 2" />
             <MenuItem mnemonicParsing="false" onAction="#handleLightTheme" text="Light Theme" />
+            <MenuItem mnemonicParsing="false" onAction="#handleLightTheme2" text="Light Theme 2" />
         </Menu>
     </MenuBar>
 
