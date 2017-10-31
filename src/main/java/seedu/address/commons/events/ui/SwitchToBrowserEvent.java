@@ -2,10 +2,12 @@ package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
 
+//@@author Alim95
+
 /**
- * An event requesting to view the help page.
+ * An event requesting to switch to browser panel.
  */
-public class PinPersonEvent extends BaseEvent {
+public class SwitchToBrowserEvent extends BaseEvent {
 
     @Override
     public String toString() {

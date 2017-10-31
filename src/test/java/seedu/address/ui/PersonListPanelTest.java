@@ -24,10 +24,11 @@ public class PersonListPanelTest extends GuiUnitTest {
     private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_PERSON);
 
     private PersonListPanelHandle personListPanelHandle;
+    private PersonListPanel personListPanel;
 
     @Before
     public void setUp() {
-        PersonListPanel personListPanel = new PersonListPanel(TYPICAL_PERSONS);
+        personListPanel = new PersonListPanel(TYPICAL_PERSONS);
         uiPartRule.setUiPart(personListPanel);
 
         personListPanelHandle = new PersonListPanelHandle(getChildNode(personListPanel.getRoot(),
@@ -54,5 +55,18 @@ public class PersonListPanelTest extends GuiUnitTest {
         PersonCardHandle expectedCard = personListPanelHandle.getPersonCardHandle(INDEX_SECOND_PERSON.getZeroBased());
         PersonCardHandle selectedCard = personListPanelHandle.getHandleToSelectedCard();
         assertCardEquals(expectedCard, selectedCard);
+    }
+
+    //@@author Alim95
+    @Test
+    public void personListPanelHighlight() {
+        personListPanel.highlight();
+        assertEquals(personListPanelHandle.getStyle(), "-fx-border-color: lightgreen; -fx-border-width: 2");
+    }
+
+    @Test
+    public void personListPanelUnhighlight() {
+        personListPanel.unhighlight();
+        assertEquals(personListPanelHandle.getStyle(), "");
     }
 }

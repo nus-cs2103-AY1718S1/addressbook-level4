@@ -14,10 +14,11 @@ public class ResultDisplayTest extends GuiUnitTest {
     private static final NewResultAvailableEvent NEW_RESULT_EVENT_STUB = new NewResultAvailableEvent("Stub");
 
     private ResultDisplayHandle resultDisplayHandle;
+    private ResultDisplay resultDisplay;
 
     @Before
     public void setUp() {
-        ResultDisplay resultDisplay = new ResultDisplay();
+        resultDisplay = new ResultDisplay();
         uiPartRule.setUiPart(resultDisplay);
 
         resultDisplayHandle = new ResultDisplayHandle(getChildNode(resultDisplay.getRoot(),
@@ -34,5 +35,18 @@ public class ResultDisplayTest extends GuiUnitTest {
         postNow(NEW_RESULT_EVENT_STUB);
         guiRobot.pauseForHuman();
         assertEquals(NEW_RESULT_EVENT_STUB.message, resultDisplayHandle.getText());
+    }
+
+    //@@author Alim95
+    @Test
+    public void resultDisplayHighlight() {
+        resultDisplay.highlight();
+        assertEquals(resultDisplayHandle.getStyle(), "-fx-border-color: lightgreen; -fx-border-width: 2");
+    }
+
+    @Test
+    public void resultDisplayUnhighlight() {
+        resultDisplay.unhighlight();
+        assertEquals(resultDisplayHandle.getStyle(), "");
     }
 }

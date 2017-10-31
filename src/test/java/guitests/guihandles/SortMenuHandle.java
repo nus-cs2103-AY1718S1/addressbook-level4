@@ -3,7 +3,7 @@ package guitests.guihandles;
 import javafx.scene.control.MenuButton;
 
 /**
- * A handle to the {@code SearchField} in the GUI.
+ * A handle to the {@code SortMenu} in the GUI.
  */
 public class SortMenuHandle extends NodeHandle<MenuButton> {
 
@@ -15,7 +15,7 @@ public class SortMenuHandle extends NodeHandle<MenuButton> {
     }
 
     /**
-     * Enters the given Person name in the search field.
+     * Clicks on the sort menu item {@code toClick} in the list.
      */
     public void run(String toClick) {
         switch (toClick) {
@@ -38,5 +38,12 @@ public class SortMenuHandle extends NodeHandle<MenuButton> {
         default:
             break;
         }
+    }
+
+    /**
+     * Returns style of sort menu.
+     */
+    public String getStyle() {
+        return getRootNode().getStyle();
     }
 }

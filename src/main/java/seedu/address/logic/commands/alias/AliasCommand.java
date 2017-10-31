@@ -53,12 +53,12 @@ public class AliasCommand extends UndoableCommand {
 
         for (ReadOnlyAliasToken token : model.getAddressBook().getAliasTokenList()) {
             if (token.getKeyword().keyword.equals(toAdd.getKeyword().keyword)) {
-                return new CommandResult(MESSAGE_DUPLICATE_ALIAS);
+                throw new CommandException(MESSAGE_DUPLICATE_ALIAS);
             }
         }
 
         if ((logic != null) && (logic.isCommandWord(toAdd.getKeyword().keyword))) {
-            return new CommandResult(MESSAGE_INVALID_KEYWORD);
+            throw new CommandException(MESSAGE_INVALID_KEYWORD);
         }
         try {
             model.addAliasToken(toAdd);

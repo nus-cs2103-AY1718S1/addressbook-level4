@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 
 import org.junit.Test;
 
+import seedu.address.TestApp;
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.util.SampleDataUtil;
@@ -17,6 +18,7 @@ public class SampleDataTest extends AddressBookGuiTest {
     @Override
     protected AddressBook getInitialData() {
         // return null to force test app to load data from file only
+        TestApp.setFirstTimeOpen();
         return null;
     }
 

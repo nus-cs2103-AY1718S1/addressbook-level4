@@ -31,6 +31,20 @@ public class MainMenuHandle extends NodeHandle<Node> {
     }
 
     /**
+     * Opens the {@code HelpOverlay} by pressing the shortcut key associated.
+     */
+    public void openHelpOverlayUsingAccelerator() {
+        guiRobot.push(KeyCode.F2);
+    }
+
+    /**
+     * Closes the {@code HelpOverlay} by pressing the shortcut key associated.
+     */
+    public void closeHelpOverlayUsingAccelerator() {
+        guiRobot.push(KeyCode.ESCAPE);
+    }
+
+    /**
      * Clicks on {@code menuItems} in order.
      */
     private void clickOnMenuItemsSequentially(String... menuItems) {

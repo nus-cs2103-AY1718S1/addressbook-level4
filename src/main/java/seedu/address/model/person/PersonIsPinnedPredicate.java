@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import java.util.function.Predicate;
 
+//@@author Alim95
 /**
  * Tests that a {@code ReadOnlyPerson} is pinned.
  */
