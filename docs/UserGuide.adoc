@@ -46,11 +46,16 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to the link:#Features[Features] section below for details of each command.
 
-== What's New in Version 1.2
+== What's New in Version 1.4
 
 === Enhanced Autocomplete
 
-Autocomplete should now be able to autocomplete person data as well, based on the information current stored in the application.
+Autocomplete should now be able to autocomplete person data based on command word given too.
+
+Example: `removetag fa` +
+Autocompletes to all tags starting with `fa`.
+
+Autocomplete should also work no matter where in the input you are currently trying to modify, unless there are no options to autocomplete.
 
 === FindTag
 
@@ -346,18 +351,43 @@ There is no need to save manually.
 // tag::autocomplete[]
 == Autocomplete
 
-Use `Tab` key to automatically generate a command 'skeleton' from an incomplete command word input. +
-Besides commands, the `Tab` key can also help autocomplete person data using information from existing persons stored in Rubrika.
-There must be a prefix (`n/` or `p/`) present in order to use this autocomplete feature, and you can only use autocomplete at the end of your command input.
+The Autocomplete feature comes together with Rubrika, and further improves your experience with using CLI, shortening time required to input commands greatly. +
+Autocomplete comes in many shapes and forms, and shall be explained to you in detail as follows.
+
+=== Autocomplete Command
+
+You may use `Tab` key to automatically generate a command 'skeleton' from an incomplete command word input. +
+Long command words are no longer a hassle to type and some command syntax that are too tough to remember are also generated for you.
 
 Examples:
 
 * `c` becomes `clear` after pressing `Tab` once
 * nothing happens to `b` (no command starting with letter `b`)
 * `h` becomes `history`, and then `help` if you press `Tab` again
+
+=== Autocomplete Person Data Based on Prefix
+
+You may also use `Tab` key to automatically complete personal data, based on prefix like `n/` or `a/` given. +
+This helps with wordy addresses or long names and other person data you do not want to type out in full.
+
 * `add n/J` becomes `add n/John Hawkins` if you have a person with the name `John Hawkins` stored
 * `edit 2 t/co t/owesMoney` does not autocomplete the `t/co` because it is in the middle of the input
-* `find G` does not autocomplete because there is no prefix present
+* `select ` does not autocomplete because there is no prefix present, and no person data should be involved
+
+=== Autocomplete Person Data Based on Command Word
+
+`Tab` key also automatically complete person data based on the command word given. +
+You can even find someone without executing the `find` command, but just let Autocomplete feature help you.
+
+* `find A` gets completed with all possible keywords starting with `A`
+* `removetag fa` becomes `removetag` followed by all possible tags starting with `fa`
+* `delete ` does not autocomplete because the command does not involve person data
+
+=== Autocompleting Anywhere in the Command Input Box
+
+`Tab` key can be used almost anywhere in the command input box. +
+You can go back to complete or modify any particulars you may have missed out.
+
 // end::autocomplete[]
 
 == FAQ
