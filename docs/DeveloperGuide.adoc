@@ -227,7 +227,7 @@ Suppose that the user wishes to append an image to a desired contact. The user w
 `AddPhotoCommandParser` will then return a `AddPhotoCommand` to be executed in the `LogicManager`. Upon the `execute()` method of `AddPhotoCommand`, a new `Person` object, `editedPerson` is created with all the same field as the `personToEdit` with the addition of the new `Photo` field. The `editedPerson` will replace `personToEdit` using the `updatePerson()` in the `Model` class. A success message will be generated if the photo addition is successful. +
 The sequence diagram below shows how the `addphoto` process is carried out:
 
-image::SequenceDiagramUML.png[width="800]
+image::NewUML.png[width="800]
 
 ==== Design considerations
 
@@ -394,7 +394,7 @@ image::FindCommandSequenceDiagram.png[width="800"]
 **Aspect:** Accepting different types of user input. +
 **Alternative 1 (current choice):** Using a `commandWord` and `arguments` regex to distinguish user inputs. +
 **Pros:** It is easy to add new parameters and debug. +
-**Cons:** Only able to find one contact at a time e.g. `find n/Alice Bob` does not work.  +
+**Cons:** Inconvenient for users as they have to use a specific `commandWord` for a specific parameter.  +
 **Alternative 2:** Accept any type of user input after `find`. +
 **Pros:** More user-friendly as there are fewer requirements for user input. +
 **Cons:** Difficult to implement because it is tedious to distinguish the user input as several parameters are `String` parameters.

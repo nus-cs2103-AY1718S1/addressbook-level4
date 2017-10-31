@@ -53,9 +53,9 @@ public class TypicalPersons {
     public static final ReadOnlyPerson BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
-
+    //@@author Affalen
     public static final String KEYWORD_MATCHING_MEIER = "n/Meier"; // A keyword that matches MEIER
-
+    //@@author
     private TypicalPersons() {} // prevents instantiation
 
     /**
