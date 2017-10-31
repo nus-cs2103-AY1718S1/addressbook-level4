@@ -15,6 +15,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Photo;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.phone.Phone;
+import seedu.address.model.person.phone.UniquePhoneList;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -35,6 +36,8 @@ public class XmlAdaptedPerson {
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    @XmlElement
+    private List<XmlAdaptedPhone> optionalPhones = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -55,8 +58,12 @@ public class XmlAdaptedPerson {
         address = source.getAddress().value;
         photoPath = source.getPhoto().pathName;
         tagged = new ArrayList<>();
+        optionalPhones = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
+        }
+        for (Phone phone : source.getPhoneList()) {
+            optionalPhones.add(new XmlAdaptedPhone(phone));
         }
     }
 
@@ -76,6 +83,10 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address);
         final Photo photo = new Photo(this.photoPath);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, photo, tags);
+        UniquePhoneList phoneList = new UniquePhoneList();
+        for (XmlAdaptedPhone optionalPhone : optionalPhones) {
+            phoneList.add(optionalPhone.toModelType());
+        }
+        return new Person(name, phone, email, address, photo, phoneList, tags);
     }
 }
