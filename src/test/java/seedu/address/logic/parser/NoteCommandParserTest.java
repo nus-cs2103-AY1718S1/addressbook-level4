@@ -11,6 +11,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.NoteCommand;
 import seedu.address.model.person.Note;
 
+//@@author derrickchua
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
  * outside of the NoteCommand code.

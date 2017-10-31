@@ -95,6 +95,7 @@ public class AddCommandParserTest {
                 new AddCommand(expectedPersonMultipleMeetings));
     }
 
+    //@@author derrickchua
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
@@ -141,6 +142,7 @@ public class AddCommandParserTest {
                 + VALID_EMAIL_BOB + VALID_ADDRESS_BOB, expectedMessage);
     }
 
+    //@@author
     @Test
     public void parse_invalidValue_failure() {
         // invalid name

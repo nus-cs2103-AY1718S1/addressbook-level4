@@ -23,6 +23,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
+//@@author derrickchua
 /**
  * Deletes a person identified using it's last displayed index from the address book.
  */

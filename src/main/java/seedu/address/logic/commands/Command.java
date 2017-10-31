@@ -16,15 +16,16 @@ import seedu.address.model.Model;
  * Represents a command with hidden internal logic and the ability to be executed.
  */
 public abstract class Command {
-
     protected static CompletableFuture<PeopleService> clientFuture;
 
     protected Model model;
     protected CommandHistory history;
     protected UndoRedoStack undoRedoStack;
+
     protected OAuth oauth;
     protected ExecutorService executor;
 
+    //@@author
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
      *
@@ -43,6 +44,7 @@ public abstract class Command {
      */
     public abstract CommandResult execute() throws CommandException;
 
+    //@@author derrickchua
     /**
      * Provides any needed dependencies to the command.
      * Commands making use of any of these should override this method to gain

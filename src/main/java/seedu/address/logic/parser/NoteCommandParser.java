@@ -10,6 +10,7 @@ import seedu.address.logic.commands.NoteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Note;
 
+//@@author derrickchua
 /**
  * Parses input arguments and creates a new NoteCommand object
  */
