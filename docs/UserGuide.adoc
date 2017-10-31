@@ -600,6 +600,7 @@ image::UG_email2.png[width="590"]
 image::divider.png[width="900"]
 
 === Adding / Editing a remark : `remark`
+image::UG_commandheader_remarksadd.png[width="500"]
 
 Adds or edits the remark for a person specified in the INDEX. +
 
@@ -615,7 +616,8 @@ Add / Edits the remark for the first person to Likes to drink coffee.
 
 image::divider.png[width="900"]
 
-=== Remove a remark : `remark`
+=== Deleting a remark : `remark`
+image::UG_commandheader_remarksdelete.png[width="500"]
 
 Edits the remark for a person specified in the INDEX. +
 
@@ -632,6 +634,7 @@ Removes the remark for the first person.
 image::divider.png[width="900"]
 
 === Adding aliases : `alias`
+image::UG_commandheader_aliasadd.png[width="500"]
 
 If you find yourself forgetting your commands often, you can define aliases to make them mean the same thing! +
 
@@ -652,6 +655,7 @@ Lists all your previously defined aliases.
 image::divider.png[width="900"]
 
 === Deleting aliases : `unalias`
+image::UG_commandheader_aliasdelete.png[width="500"]
 
 Deletes a previously defined alias. +
 
