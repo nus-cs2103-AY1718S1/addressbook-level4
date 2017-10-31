@@ -6,16 +6,21 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonNameClickedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.SwitchPanelRequestEvent;
+import seedu.address.commons.events.ui.SwitchToProfilePanelRequestEvent;
+import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -24,7 +29,11 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class ProfilePanel extends UiPart<Region> {
 
     public static final String DEFAULT_MESSAGE = "Ain't Nobody here but us chickens!";
+    public static final String INSURANCE_LIST_HEADER = "List of Insurance Contracts Involved: ";
+    public static final String NO_INSURANCE_MESSAGE = "This person is not related to any Insurance Contracts";
     public static final String PERSON_DOES_NOT_EXIST_MESSAGE = "This person does not exist in Lisa.";
+    public static final ObservableList<InsuranceIdLabel> insurance = FXCollections.observableArrayList();
+
     private static final String FXML = "ProfilePanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -43,6 +52,10 @@ public class ProfilePanel extends UiPart<Region> {
     private Label dob;
     @FXML
     private Label email;
+    @FXML
+    private Label insuranceHeader;
+    @FXML
+    private ListView<InsuranceIdLabel> insuranceListView;
 
     public ProfilePanel() {
         super(FXML);
@@ -61,6 +74,19 @@ public class ProfilePanel extends UiPart<Region> {
      */
     private void loadPersonPage(ReadOnlyPerson person) {
         bindListeners(person);
+        if (person.getLifeInsuranceIds().isEmpty()) {
+            insuranceHeader.setText(NO_INSURANCE_MESSAGE);
+        } else {
+            insuranceHeader.setText(INSURANCE_LIST_HEADER);
+        }
+        ObservableList<ReadOnlyInsurance> insuranceList = person.getLifeInsurances().asObservableList();
+        for ( ReadOnlyInsurance i : insuranceList) {
+            insurance.add(new InsuranceIdLabel(i));
+        }
+        insuranceListView.setItems(insurance);
+        insuranceListView.setCellFactory(insuranceListView -> new ProfilePanel.InsuranceIdListViewCell());
+
+
     }
 
     //@@author OscarWang114
@@ -71,17 +97,19 @@ public class ProfilePanel extends UiPart<Region> {
     }
     //@@author
 
+    //@@author RSJunior37
     /**
      * Load default page with empty fields and default message
      */
     private void loadDefaultPage() {
         name.setText(DEFAULT_MESSAGE);
-        phone.setText("");
-        address.setText("");
-        dob.setText("");
-        email.setText("");
-    }
+        phone.setText(null);
+        address.setText(null);
+        dob.setText(null);
+        email.setText(null);
+        insuranceHeader.setText(null);
 
+    }
     /**
      * To be called everytime a new person is selected and bind all information for real-time update
      * @param person
@@ -93,25 +121,43 @@ public class ProfilePanel extends UiPart<Region> {
         dob.textProperty().bind(Bindings.convert(person.dobProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
     }
+
+    class InsuranceIdListViewCell extends ListCell<InsuranceIdLabel> {
+        @Override
+        protected void updateItem(InsuranceIdLabel insurance, boolean empty) {
+            super.updateItem(insurance, empty);
+
+            if (empty || insurance == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                setGraphic(insurance.getRoot());
+            }
+        }
+    }
+
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        //insuranceListPanel = new InsuranceListPanel(event.getNewSelection().person);
+        insurance.clear();
         loadPersonPage(event.getNewSelection().person);
-        // rightPanelPlaceholder.getChildren().add(insuranceListPanel.getRoot());
+        raise(new SwitchToProfilePanelRequestEvent());
     }
+
+    //@@author
 
     //@@author OscarWang114
     @Subscribe
     private void handlePersonNameClickedEvent(PersonNameClickedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        insurance.clear();
         ReadOnlyPerson person = event.getPerson().orElse(null);
         if (person == null) {
             loadPersonPage(event.getPersonName());
         } else {
             loadPersonPage(event.getPerson().get());
         }
-        raise(new SwitchPanelRequestEvent());
+        raise(new SwitchToProfilePanelRequestEvent());
     }
     //@@author
 }

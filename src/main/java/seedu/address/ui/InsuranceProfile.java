@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.beans.binding.Bindings;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,7 +18,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.InsurancePanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.PersonNameClickedEvent;
+import seedu.address.commons.events.ui.SwitchToInsurancePanelRequestEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 
 //@@author OscarWang114
@@ -28,10 +32,10 @@ public class InsuranceProfile extends UiPart<Region> {
     private static final String FXML = "InsuranceProfile.fxml";
     private static final String PDFFOLDERPATH = "data/";
 
+
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-
-    private ReadOnlyInsurance insurance;
+    public ReadOnlyInsurance insurance;
     private File insuranceFile;
 
     @FXML
@@ -51,11 +55,33 @@ public class InsuranceProfile extends UiPart<Region> {
     @FXML
     private Label expiryDate;
 
+    public InsuranceProfile() {
+        super(FXML);
+        enableNameToProfileLink(insurance);
+        registerAsAnEventHandler(this);
+
+    }
+
+    //@@author RSJunior37
     public InsuranceProfile(ReadOnlyInsurance insurance, int displayIndex) {
         super(FXML);
         this.insurance = insurance;
         index.setText(displayIndex + ".");
 
+        initializeContractFile(insurance);
+
+        enableNameToProfileLink(insurance);
+
+        bindListeners(insurance);
+    }
+
+    private void enableNameToProfileLink(ReadOnlyInsurance insurance) {
+        owner.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getOwner())));
+        insured.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getInsured())));
+        beneficiary.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getBeneficiary())));
+    }
+
+    private void initializeContractFile(ReadOnlyInsurance insurance) {
         insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractPath());
         if (isFileExists(insuranceFile)) {
             activateLinkToInsuranceFile();
@@ -81,13 +107,6 @@ public class InsuranceProfile extends UiPart<Region> {
             });
 
         }
-        owner.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getOwner())));
-        insured.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getInsured())));
-        beneficiary.setOnMouseClicked(e ->
-                raise(new PersonNameClickedEvent(insurance.getBeneficiary())));
-
-        bindListeners(insurance);
-        registerAsAnEventHandler(this);
     }
 
     /**
@@ -108,6 +127,7 @@ public class InsuranceProfile extends UiPart<Region> {
             }
         });
     }
+    //@@author
 
     /**
      * Binds the individual UI elements to observe their respective {@code ReadOnlyInsurance} properties
@@ -122,5 +142,17 @@ public class InsuranceProfile extends UiPart<Region> {
         contractPath.textProperty().bind(Bindings.convert(insurance.contractPathProperty()));
         signingDate.textProperty().bind(Bindings.convert(insurance.signingDateStringProperty()));
         expiryDate.textProperty().bind(Bindings.convert(insurance.expiryDateStringProperty()));
+    }
+
+    @Subscribe
+    private void handleInsurancePanelSelectionChangedEvent(InsurancePanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        insurance = event.getInsurance();
+
+        initializeContractFile(insurance);
+        bindListeners(insurance);
+        index.setText(null);
+        raise(new SwitchToInsurancePanelRequestEvent());
+
     }
 }
