@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.parser.SortArgument;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -41,6 +42,9 @@ public interface Model {
 
     /** Removes the given tag from all persons in the list */
     void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException;
+
+    /** Returns the index of the given person */
+    Index getIndex(ReadOnlyPerson target);
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getLatestPersonList();
