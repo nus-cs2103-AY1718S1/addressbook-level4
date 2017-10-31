@@ -18,7 +18,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_STRING;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -53,7 +52,7 @@ public class HintParser {
     private static String userInput;
 
     //@@author goweiwen
-    private static final Set<String> COMMAND_SET = new HashSet<>(Arrays.asList(
+    private static final ArrayList<String> COMMAND_LIST = new ArrayList<>(Arrays.asList(
         "add", "alias", "clear", "delete", "edit", "exit", "find", "help", "history", "list",
         "music", "redo", "remark", "select", "unalias", "undo"
     ));
@@ -130,8 +129,9 @@ public class HintParser {
      * matches.
      */
     public static String autocompleteCommand(String command) {
-        Set<String> commands = new HashSet<>();
-        commands.addAll(COMMAND_SET);
+        List<String> commands = new ArrayList<>();
+        // We add from COMMAND_LIST first because we want to autocomplete them first.
+        commands.addAll(COMMAND_LIST);
         commands.addAll(UserPrefs.getInstance().getAliases().getAllAliases());
         String[] list = commands.toArray(new String[commands.size()]);
         return autocompleteFromList(command, list);
