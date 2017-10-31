@@ -18,11 +18,7 @@ import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.TimeSlot;
 
 
-
-
-
-
-
+//@@author caoliangnus
 /**
  * Stores lesson data in an XML file
  */

@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import seedu.address.model.module.Code;
 
+//@@author caoliangnus
 public class CodeTest {
     @Test
     public void isValidCode() {

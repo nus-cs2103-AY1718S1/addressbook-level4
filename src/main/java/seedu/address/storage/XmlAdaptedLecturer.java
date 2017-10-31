@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlValue;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.lecturer.Lecturer;
 
+//@@author caoliangnus
 /**
  * Stores lecturer data in an XML file
  */

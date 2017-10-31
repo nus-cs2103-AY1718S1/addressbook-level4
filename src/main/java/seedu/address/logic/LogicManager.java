@@ -85,6 +85,7 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
 
+    //@@author caoliangnus
     @Override
     public HashMap<String, String> getCommandKeywordColorMap() {
         HashMap<String, String> keywordColorMap = new HashMap<>();

@@ -16,6 +16,7 @@ import seedu.address.model.ListingUnit;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 
+//@@author caoliangnus
 /**
  * A list of lessons that enforces uniqueness between its elements and does not allow nulls.
  *
