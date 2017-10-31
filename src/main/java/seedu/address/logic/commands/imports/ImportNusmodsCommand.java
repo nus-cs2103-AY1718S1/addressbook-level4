@@ -88,7 +88,7 @@ public class ImportNusmodsCommand extends ImportCommand {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         // Get all the module codes.
         Set<String> modules;
         try {
