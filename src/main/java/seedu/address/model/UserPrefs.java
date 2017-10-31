@@ -9,13 +9,16 @@ import seedu.address.commons.core.GuiSettings;
  */
 public class UserPrefs {
 
+    //@@author goweiwen
     private static UserPrefs instance;
 
     private Aliases aliases;
+    //@@author
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
 
+    //@@author goweiwen
     public UserPrefs() {
         if (instance == null) {
             instance = this;
@@ -30,6 +33,7 @@ public class UserPrefs {
         }
         return instance;
     }
+    //@@author
 
     public GuiSettings getGuiSettings() {
         return guiSettings == null ? new GuiSettings() : guiSettings;
@@ -59,12 +63,14 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
+    //@@author goweiwen
     public Aliases getAliases() {
         if (aliases == null) {
             aliases = new Aliases();
         }
         return aliases;
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

@@ -23,6 +23,7 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
         return getRootNode().getText();
     }
 
+    //@@author goweiwen
     /**
      * Types the given command in the Command Box.
      */
@@ -31,6 +32,7 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
         guiRobot.interact(() -> getRootNode().setText(command));
         guiRobot.pauseForHuman();
     }
+    //@@author
 
     /**
      * Enters the given command in the Command Box and presses enter.

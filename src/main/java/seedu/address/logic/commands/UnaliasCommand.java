@@ -6,6 +6,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Aliases;
 import seedu.address.model.UserPrefs;
 
+//@@author goweiwen
 /**
  * Removes a previously defined alias.
  */

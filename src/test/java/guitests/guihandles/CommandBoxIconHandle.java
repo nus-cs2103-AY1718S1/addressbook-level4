@@ -3,6 +3,7 @@ package guitests.guihandles;
 import org.kordamp.ikonli.Ikon;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+//@@author goweiwen
 /**
  * A handle to the {@code CommandBoxIcon} in the GUI.
  */

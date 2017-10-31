@@ -15,6 +15,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.MusicCommand;
 import seedu.address.logic.commands.SelectCommand;
 
+//@@author goweiwen
 /**
  * Contains a mapping of aliases to their commands, which is referred to when parsing commands.
  * When using the Alias and Unalias commands, key-value pairs are added and removed respectively.

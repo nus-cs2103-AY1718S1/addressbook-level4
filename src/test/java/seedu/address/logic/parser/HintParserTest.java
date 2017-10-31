@@ -14,6 +14,7 @@ import seedu.address.logic.commands.MusicCommand;
 
 public class HintParserTest {
 
+    //@@author goweiwen
     @Test
     public void autocomplete_emptyInput_returnsEmpty() {
         assertEquals("", autocomplete(""));
@@ -38,49 +39,24 @@ public class HintParserTest {
 
     @Test
     public void autocomplete_validCommands_returnsParameters() {
-        assertEquals(
-                AddCommand.COMMAND_WORD + " n/",
-                autocomplete(AddCommand.COMMAND_WORD));
-        assertEquals(
-                AddCommand.COMMAND_WORD + " n/",
-                autocomplete(AddCommand.COMMAND_WORD + " "));
-        assertEquals(
-                AddCommand.COMMAND_WORD + " n/",
-                autocomplete(AddCommand.COMMAND_WORD + " n"));
-        assertEquals(
-                AddCommand.COMMAND_WORD + " n/",
-                autocomplete(AddCommand.COMMAND_WORD + " n/"));
+        assertEquals(AddCommand.COMMAND_WORD + " n/", autocomplete(AddCommand.COMMAND_WORD));
+        assertEquals(AddCommand.COMMAND_WORD + " n/", autocomplete(AddCommand.COMMAND_WORD + " "));
+        assertEquals(AddCommand.COMMAND_WORD + " n/", autocomplete(AddCommand.COMMAND_WORD + " n"));
+        assertEquals(AddCommand.COMMAND_WORD + " n/", autocomplete(AddCommand.COMMAND_WORD + " n/"));
 
-        assertEquals(
-                EditCommand.COMMAND_WORD + " ",
-                autocomplete(EditCommand.COMMAND_WORD));
-        assertEquals(
-                EditCommand.COMMAND_WORD + " 1 n/",
-                autocomplete(EditCommand.COMMAND_WORD + " 1"));
-        assertEquals(
-                EditCommand.COMMAND_WORD + " 1 n/",
-                autocomplete(EditCommand.COMMAND_WORD + " 1 n"));
-        assertEquals(
-                EditCommand.COMMAND_WORD + " 1 n/",
-                autocomplete(EditCommand.COMMAND_WORD + " 1 n/"));
+        assertEquals(EditCommand.COMMAND_WORD + " ", autocomplete(EditCommand.COMMAND_WORD));
+        assertEquals(EditCommand.COMMAND_WORD + " 1 n/", autocomplete(EditCommand.COMMAND_WORD + " 1"));
+        assertEquals(EditCommand.COMMAND_WORD + " 1 n/", autocomplete(EditCommand.COMMAND_WORD + " 1 n"));
+        assertEquals(EditCommand.COMMAND_WORD + " 1 n/", autocomplete(EditCommand.COMMAND_WORD + " 1 n/"));
 
-        assertEquals(
-                FindCommand.COMMAND_WORD + " n/",
-                autocomplete(FindCommand.COMMAND_WORD));
-        assertEquals(
-                FindCommand.COMMAND_WORD + " n/",
-                autocomplete(FindCommand.COMMAND_WORD + " n"));
-        assertEquals(
-                FindCommand.COMMAND_WORD + " n/",
-                autocomplete(FindCommand.COMMAND_WORD + " n/"));
+        assertEquals(FindCommand.COMMAND_WORD + " n/", autocomplete(FindCommand.COMMAND_WORD));
+        assertEquals(FindCommand.COMMAND_WORD + " n/", autocomplete(FindCommand.COMMAND_WORD + " n"));
+        assertEquals(FindCommand.COMMAND_WORD + " n/", autocomplete(FindCommand.COMMAND_WORD + " n/"));
 
-        assertEquals(
-                MusicCommand.COMMAND_WORD + " play",
-                autocomplete(MusicCommand.COMMAND_WORD));
-        assertEquals(
-                MusicCommand.COMMAND_WORD + " pause",
-                autocomplete(MusicCommand.COMMAND_WORD + " paus"));
+        assertEquals(MusicCommand.COMMAND_WORD + " play", autocomplete(MusicCommand.COMMAND_WORD));
+        assertEquals(MusicCommand.COMMAND_WORD + " pause", autocomplete(MusicCommand.COMMAND_WORD + " paus"));
     }
+    //@@author
 
     @Test
     public void generate_add_hint() {

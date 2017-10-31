@@ -68,6 +68,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
     }
 
+    //@@author goweiwen
     @Test
     public void commandBox_autocomplete() {
         guiRobot.push(KeyCode.TAB);
@@ -77,6 +78,7 @@ public class CommandBoxTest extends GuiUnitTest {
         guiRobot.push(KeyCode.TAB);
         assertEquals(HintParser.autocomplete(AddCommand.COMMAND_WORD), commandBoxHandle.getInput());
     }
+    //@@author
 
     @Test
     public void handleKeyPress_startingWithUp() {
@@ -134,6 +136,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
 
+    //@@author goweiwen
     /**
      * Types a command that is invalid, then verifies that <br>
      *      - the command box's style is the same as {@code errorStyleOfCommandBox}.
@@ -151,6 +154,7 @@ public class CommandBoxTest extends GuiUnitTest {
         commandBoxHandle.type(COMMAND_THAT_SUCCEEDS);
         assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
     }
+    //@@author
 
     /**
      * Runs a command that fails, then verifies that <br>

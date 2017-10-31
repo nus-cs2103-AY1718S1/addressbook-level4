@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import seedu.address.model.Aliases;
 import seedu.address.model.UserPrefs;
 
+//@@author goweiwen
 /**
  * Creates an alias for other commands.
  */

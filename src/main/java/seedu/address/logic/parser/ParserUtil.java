@@ -61,6 +61,7 @@ public class ParserUtil {
      */
     public static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
+    //@@author goweiwen
     private static final Map<String, Ikon> Icons = new HashMap<>();
     static {
         Icons.put(MusicCommand.COMMAND_WORD, Feather.FTH_PLAY);
@@ -79,6 +80,7 @@ public class ParserUtil {
         Icons.put(UndoCommand.COMMAND_WORD, Feather.FTH_ARROW_LEFT);
         Icons.put(RedoCommand.COMMAND_WORD, Feather.FTH_ARROW_RIGHT);
     }
+    //@@author
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -141,6 +143,7 @@ public class ParserUtil {
         return tagSet;
     }
 
+    //@@author goweiwen
     /**
      * Parses {@code String command} and returns itself if it is a valid command.
      */
@@ -197,6 +200,5 @@ public class ParserUtil {
 
         return new String[] {commandWord, arguments};
     }
-
 
 }

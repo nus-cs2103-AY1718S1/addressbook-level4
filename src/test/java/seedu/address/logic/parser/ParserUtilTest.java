@@ -43,8 +43,6 @@ public class ParserUtilTest {
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
-    private static final String LIST_COMMAND_ALIAS = "show";
-
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
@@ -195,6 +193,7 @@ public class ParserUtilTest {
         assertEquals(expectedTagSet, actualTagSet);
     }
 
+    //@@author goweiwen
     @Test
     public void parseCommand_validCommand_returnsCommand() throws Exception {
         assertEquals(ParserUtil.parseCommand(AddCommand.COMMAND_WORD), AddCommand.COMMAND_WORD);
