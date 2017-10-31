@@ -35,14 +35,17 @@ public class ReplyCommand extends Command {
         toReply = reply;
     }
 
+    /**
+     * Executes ReplyCommand.
+     */
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
 
         if (UndoableCommand.isWaitingforReply) {
             if (AddCommand.requiresHandling()) {
-                return HandleAddCommand();
+                return handleAddCommand();
             } else if (EditCommand.requiresHandling()) {
-                return HandleEditCommand();
+                return handleEditCommand();
             } else {
                 return new CommandResult(MESSAGE_COMMAND_MISHANDLED);
             }
@@ -54,7 +57,8 @@ public class ReplyCommand extends Command {
     /**
      * Handle replies to EditCommand prompts
      */
-    private CommandResult HandleEditCommand() throws CommandException {
+    private CommandResult handleEditCommand() throws CommandException {
+
         if (toReply.equalsIgnoreCase(COMMAND_WORDVAR_YES)) {
 
             UndoableCommand.reply();
@@ -79,7 +83,8 @@ public class ReplyCommand extends Command {
     /**
      * Handle replies to AddCommand prompts
      */
-    private CommandResult HandleAddCommand() throws CommandException {
+    private CommandResult handleAddCommand() throws CommandException {
+
         if (toReply.equalsIgnoreCase(COMMAND_WORDVAR_YES)) {
 
             UndoableCommand.reply();

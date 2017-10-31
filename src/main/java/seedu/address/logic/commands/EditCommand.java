@@ -137,7 +137,7 @@ public class EditCommand extends UndoableCommand {
                 updatedFavourite, updatedBirthday, updatedTags);
     }
 
-    public static boolean requiresHandling(){
+    public static boolean requiresHandling() {
         return requiresHandling;
     }
 

@@ -18,20 +18,19 @@ import seedu.address.model.person.ReadOnlyPerson;
  * Represents a command which can be undone and redone.
  */
 public abstract class UndoableCommand extends Command {
-    private ReadOnlyAddressBook previousAddressBook;
-
     public static final String MESSAGE_DUPLICATE_FIELD = "This person's %1$s is already in use."
             + "Would you like to continue? YES or NO?";
-
     public static final String NAME_FIELD = "name";
     public static final String PHONE_FIELD = "phone";
     public static final String ADDRESS_FIELD = "address";
     public static final String EMAIL_FIELD = "email";
 
     protected static boolean isWaitingforReply;
+
     protected CommandResult result;
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
+    private ReadOnlyAddressBook previousAddressBook;
     /**
      * Stores the current state of {@code model#addressBook}.
      */
@@ -72,6 +71,9 @@ public abstract class UndoableCommand extends Command {
         return executeUndoableCommand();
     }
 
+    /**
+     * Prepare to reply prompt. Sets isWaitingforReply to false.
+     */
     public static void reply() {
         isWaitingforReply = false;
     }
