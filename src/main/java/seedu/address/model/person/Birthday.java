@@ -55,11 +55,8 @@ public class Birthday {
      */
     public static boolean isValidDayEntered(String test) {
 
-        if ((test.substring(0, 2).compareTo("32") < 0 && test.substring(0, 2).compareTo("00") > 0)
-                || test.equalsIgnoreCase(DEFAULT_BIRTHDAY)) {
-            return true;
-        }
-        return false;
+        return test.substring(0, 2).compareTo("32") < 0 && test.substring(0, 2).compareTo("00") > 0
+                || test.equalsIgnoreCase(DEFAULT_BIRTHDAY);
     }
 
     /**
@@ -67,11 +64,8 @@ public class Birthday {
      */
     public static boolean isValidMonthEntered(String test) {
 
-        if ((test.substring(2, 4).compareTo("13") < 0 && test.substring(2, 4).compareTo("00") > 0)
-                || test.equalsIgnoreCase(DEFAULT_BIRTHDAY)) {
-            return true;
-        }
-        return false;
+        return test.substring(2, 4).compareTo("13") < 0 && test.substring(2, 4).compareTo("00") > 0
+                || test.equalsIgnoreCase(DEFAULT_BIRTHDAY);
     }
 
     /**
@@ -79,10 +73,7 @@ public class Birthday {
      */
     public static boolean isValidBirthdayFormat(String test) {
 
-        if (test.matches(BIRTHDAY_VALIDATION_REGEX) || test.equalsIgnoreCase(DEFAULT_BIRTHDAY)) {
-            return true;
-        }
-        return false;
+        return test.matches(BIRTHDAY_VALIDATION_REGEX) || test.equalsIgnoreCase(DEFAULT_BIRTHDAY);
     }
 
     @Override
