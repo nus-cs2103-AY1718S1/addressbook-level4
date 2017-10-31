@@ -23,6 +23,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
@@ -36,6 +37,7 @@ public class ProfilePanel extends UiPart<Region> {
     private static final String FXML = "ProfilePanel.fxml";
     private static final String DEFAULT_IMAGE_STORAGE_PREFIX = "data/";
     private static final String DEFAULT_IMAGE_STORAGE_SUFFIX = ".png";
+    private static final String DEFAULT_PROFILE_PICTURE_PATH = "/images/default_profile_picture.png";
     private static String[] colors = { "red", "yellow", "blue", "orange", "indigo", "green", "violet", "black" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
@@ -141,13 +143,8 @@ public class ProfilePanel extends UiPart<Region> {
             Image image = SwingFXUtils.toFXImage(bufferedImage, null);
             profilePicture.setImage(image);
         } catch (IOException ioe1) {
-            try {
-                bufferedImage = ImageIO.read(new File("data/default_profile_picture.png"));
-                Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-                profilePicture.setImage(image);
-            } catch (IOException ioe2) {
-                ioe2.printStackTrace();
-            }
+            Image image = new Image(MainApp.class.getResourceAsStream(DEFAULT_PROFILE_PICTURE_PATH));
+            profilePicture.setImage(image);
         }
     }
 
