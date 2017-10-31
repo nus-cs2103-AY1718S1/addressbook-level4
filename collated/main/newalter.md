@@ -241,6 +241,12 @@ public class ContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
 
 }
 ```
+###### \java\seedu\address\model\person\Name.java
+``` java
+        if (name == null) {
+            throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
+        }
+```
 ###### \java\seedu\address\model\person\NameContainsKeywordsPredicate.java
 ``` java
     public NameContainsKeywordsPredicate(List<String> keywords) {
