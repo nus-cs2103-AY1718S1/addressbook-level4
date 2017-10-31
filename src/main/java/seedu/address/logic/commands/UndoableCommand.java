@@ -27,10 +27,12 @@ public abstract class UndoableCommand extends Command {
 
     protected static boolean isWaitingforReply;
 
+    private ReadOnlyAddressBook previousAddressBook;
+
     protected CommandResult result;
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
-    private ReadOnlyAddressBook previousAddressBook;
+
     /**
      * Stores the current state of {@code model#addressBook}.
      */
@@ -78,7 +80,7 @@ public abstract class UndoableCommand extends Command {
         isWaitingforReply = false;
     }
 
-    /*
+    /**
      * Check for duplicate fields shared with {@code toAdd} in current UniCity contacts. Set isWaitingforReply to true
      * to proceed with prompting user of edit/add command.
      */
