@@ -2,11 +2,11 @@ package seedu.address.logic.commands.imports;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_YEAR_OFFSET_NUSMODS_URL;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_YEAR_START_NUSMODS_URL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NUSMODS_URL;
 import static seedu.address.logic.commands.imports.ImportNusmodsCommand.INVALID_URL;
+import static seedu.address.logic.commands.imports.ImportNusmodsCommand.MESSAGE_SUCCESS;
 import static seedu.address.logic.commands.imports.ImportNusmodsCommand.YEAR_OFFSET_BY_ONE;
 
 import java.net.URL;
@@ -16,10 +16,15 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.stub.ModelStub;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.exceptions.DuplicateEventException;
+import seedu.address.model.property.PropertyManager;
 
 public class ImportNusmodsCommandTest {
     private static ImportCommand validCommand;
@@ -43,7 +48,12 @@ public class ImportNusmodsCommandTest {
 
     @Test
     public void execute_succeed_checkCorrectness() throws Exception {
-        validCommand.setData(new ImportNusmodsCommandModelStub(), new CommandHistory(), new UndoRedoStack());
+        Model modelStub = new ImportNusmodsCommandModelStub();
+        validCommand.setData(modelStub, new CommandHistory(), new UndoRedoStack());
+        CommandResult result = validCommand.execute();
+        ImportNusmodsCommandModelStub stubCount = (ImportNusmodsCommandModelStub) modelStub;
+        assertEquals(1, stubCount.getEventCount());
+        assertEquals(String.format(MESSAGE_SUCCESS, 1), result.feedbackToUser);
     }
 
     /**
@@ -60,9 +70,24 @@ public class ImportNusmodsCommandTest {
     }
 
     private class ImportNusmodsCommandModelStub extends ModelStub {
+        private int countEvent = 0;
+
+        ImportNusmodsCommandModelStub() {
+            PropertyManager.initializePropertyManager();
+        }
+
         @Override
         public void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
-            fail("This method should not be called.");
+            countEvent++;
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+
+        int getEventCount() {
+            return countEvent;
         }
     }
 }

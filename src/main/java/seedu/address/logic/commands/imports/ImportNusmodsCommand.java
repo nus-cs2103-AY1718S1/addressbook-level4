@@ -38,10 +38,11 @@ public class ImportNusmodsCommand extends ImportCommand {
             + ": Imports data from NUSMods timetable URL.\n"
             + "Examples:\n"
             + COMMAND_WORD + " --nusmods https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01";
-
     public static final String INVALID_URL = "The URL provided is not from NUSMods website. \n%1$s";
     public static final String YEAR_OFFSET_BY_ONE =
             "The start/end year of the same academic year must offset by 1";
+    public static final String MESSAGE_SUCCESS = "%1$d examinations have been added as events.";
+
     private static final String YEAR_INVALID =
             "Maybe you modify the part regarding academic year and semester.";
     private static final String INVALID_ENCODING = "The URL encoding is not supported. Please use UTF-8.";
@@ -53,7 +54,7 @@ public class ImportNusmodsCommand extends ImportCommand {
     private static final String EXAM_EVENT_DEFAULT_ADDRESS = "NUS";
     private static final String EXAM_EVENT_EXIST_DUPLICATE =
             "The examination event for %1$s already exists in the application.";
-    private static final String MESSAGE_SUCCESS = "%1$d examinations have been added as events.";
+
     private static final String SOME_EXAMS_NOT_ADDED =
             "\nHowever, some examination were not added since they already exist in the application.";
     private static final String TO_STRING_FORMAT = "AY%1$d-%2$d Semester %3$d";
