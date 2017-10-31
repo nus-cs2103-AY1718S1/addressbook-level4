@@ -47,7 +47,7 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
 
             Event event = new Event(name, description, time);
 
-            if(time.getDays() < 0) {
+            if (time.getDays() < 0) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Alert");
                 alert.setHeaderText("This event date is outdated");

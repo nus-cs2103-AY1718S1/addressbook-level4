@@ -2,9 +2,13 @@ package seedu.address.logic.commands;
 
 import seedu.address.model.event.Event;
 
+/**
+ * A dummy command class used to abort add Event command
+ */
 public class AbortedCommand extends AddEventCommand {
-    private Event toAdd;
     public static final String MESSAGE_SUCCESS = "This command is aborted";
+
+    private Event toAdd;
 
     public AbortedCommand (Event event) {
         super(event);

@@ -2,11 +2,10 @@ package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 /**
  * Represents a Event's time in the address book.
  */
@@ -106,7 +105,7 @@ public class EventTime {
 
     public String getDaysLeft() {
         long day = getDays();
-        if(day<0) {
+        if (day < 0) {
             return Long.toString(-day) + "↑";
         }
         return Long.toString(day) + "↓";
@@ -118,10 +117,11 @@ public class EventTime {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         String today = format.format(now);
         try {
-            Date DDL = format.parse(eventTime);
-            Date TODAY = format.parse(today);
-            day = (DDL.getTime() - TODAY.getTime()) / (24 * 60 * 60 * 1000);
+            Date ddl = format.parse(eventTime);
+            Date thisDay = format.parse(today);
+            day = (ddl.getTime() - thisDay.getTime()) / (24 * 60 * 60 * 1000);
         } catch (Exception e) {
+            return day;
         }
         return day;
     }
