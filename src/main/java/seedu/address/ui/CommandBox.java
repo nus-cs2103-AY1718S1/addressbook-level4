@@ -45,7 +45,7 @@ public class CommandBox extends UiPart<Region> {
         super(FXML);
         this.logic = logic;
 
-        //
+        //@@author nicholaschuayunzhi
         commandTextField.textProperty().addListener((ob, o, n) -> {
             // expand the textfield
             double width = TextUtil.computeTextWidth(commandTextField.getFont(),
@@ -76,6 +76,8 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.textProperty().addListener((observable, oldInput, newInput) ->
                 EventsCenter.getInstance().post(new CommandInputChangedEvent(newInput)));
         historySnapshot = logic.getHistorySnapshot();
+
+        //@@author
     }
 
     /**

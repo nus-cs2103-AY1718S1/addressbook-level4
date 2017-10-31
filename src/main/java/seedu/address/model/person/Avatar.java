@@ -9,6 +9,8 @@ import seedu.address.storage.ImageStorage;
 /**
  * Represents a file path to Person's saved Avatar
  */
+
+//@@author nicholaschuayunzhi
 public class Avatar {
 
 

@@ -11,6 +11,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 // we extend AddressBookGuitest to load (a stage) internal graphics for TextUtil to work
+//@@author nicholaschuayunzhi-reused
 public class TextUtilTest extends AddressBookGuiTest {
 
     private Text helper;

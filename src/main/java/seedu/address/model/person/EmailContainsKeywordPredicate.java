@@ -5,6 +5,8 @@ import java.util.function.Predicate;
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code email} matches the keyword given.
  */
+
+//@@author nicholaschuayunzhi
 public class EmailContainsKeywordPredicate implements Predicate<ReadOnlyPerson> {
 
     private final String keyword;

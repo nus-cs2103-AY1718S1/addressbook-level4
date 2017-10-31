@@ -5,6 +5,7 @@ import javafx.scene.control.TextField;
  * Provides a handle to the Person Panel
  */
 
+//@@author nicholaschuayunzhi
 public class CommandBoxHintsHandle extends NodeHandle<TextField> {
     public static final String COMMAND_BOX_HINTS_ID = "#commandBoxHints";
     private TextField commandBoxHints;

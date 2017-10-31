@@ -28,6 +28,7 @@ public class Tag extends UiPart<Label> {
     @FXML
     private Label tag;
 
+    //@@author nicholaschuayunzhi
     public Tag(String tagValue) {
         super(FXML);
         tag.setText(tagValue);

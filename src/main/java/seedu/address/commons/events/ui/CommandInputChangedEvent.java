@@ -6,6 +6,8 @@ import seedu.address.commons.events.BaseEvent;
  * Indicates a change of input in command box
  * Contains the full string of input in the command box
  */
+
+//@@author nicholaschuayunzhi
 public class CommandInputChangedEvent extends BaseEvent {
 
     public final String currentInput;

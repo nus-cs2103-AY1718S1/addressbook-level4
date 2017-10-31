@@ -20,6 +20,7 @@ import seedu.address.commons.util.AppUtil;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.storage.ImageStorageTest;
 
+//@@author nicholaschuayunzhi
 public class PersonPanelTest extends GuiUnitTest {
 
     private PersonPanel personPanel;

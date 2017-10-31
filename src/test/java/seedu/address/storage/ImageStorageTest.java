@@ -15,7 +15,7 @@ import guitests.AddressBookGuiTest;
 import javafx.scene.image.Image;
 import seedu.address.commons.util.AppUtil;
 
-
+//@@author nicholaschuayunzhi
 public class ImageStorageTest extends AddressBookGuiTest {
 
     private static final String PNG_STUB = "png";

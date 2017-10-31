@@ -11,6 +11,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author nicholaschuayunzhi
 public class AvatarTest {
 
     @Rule

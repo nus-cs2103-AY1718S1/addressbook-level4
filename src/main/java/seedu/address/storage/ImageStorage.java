@@ -15,6 +15,7 @@ import seedu.address.commons.util.FileUtil;
  * A class to store and retrieve images in the data folder
  * Currently used for for avatars
  */
+//@@author nicholaschuayunzhi
 public class ImageStorage {
 
     public static final String PNG = "png";

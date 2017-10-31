@@ -46,6 +46,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        //@@author nicholaschuayunzhi
         /* Case: find person where person list is not displaying the person we are finding -> 1 person found */
         command = FindCommand.COMMAND_WORD + " n/Carl";
         ModelHelper.setFilteredList(expectedModel, CARL);
@@ -203,6 +204,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         command = "FiNd n/Meier";
         assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
+    //@@author
 
     /**
      * Executes {@code command} and verifies that the command box displays an empty string, the result display

@@ -20,6 +20,8 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+
+    //@@author nicholaschuayunzhi
     ObjectProperty<Avatar> avatarProperty();
     Avatar getAvatar();
     /**
@@ -27,6 +29,8 @@ public interface ReadOnlyPerson {
      * Must be changed in the future as this breaks the read-only interface of ReadOnlyPerson
      */
     void saveAvatar();
+    //@@author
+
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
     ObjectProperty<Remark> remarkProperty();

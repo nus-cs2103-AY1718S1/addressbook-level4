@@ -32,6 +32,8 @@ import seedu.address.model.person.TagsContainKeywordPredicate;
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
+
+//@@author nicholaschuayunzhi
 public class FindCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 

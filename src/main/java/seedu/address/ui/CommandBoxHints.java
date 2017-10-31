@@ -12,6 +12,8 @@ import seedu.address.commons.util.TextUtil;
 /**
  * The UI component that is responsible for displaying hints
  */
+
+//@@author nicholaschuayunzhi
 public class CommandBoxHints extends UiPart<TextField> {
 
     private static final String FXML = "CommandBoxHints.fxml";

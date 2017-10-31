@@ -58,6 +58,7 @@ public class HintParserTest {
     }
     //@@author
 
+    //@@author nicholaschuayunzhi
     @Test
     public void generate_add_hint() {
         assertHintEquals("add", " n/NAME");

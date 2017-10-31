@@ -19,6 +19,8 @@ import seedu.address.storage.ImageStorage;
 /**
  * Panel that displays the additional details of a Person
  */
+
+//@@author nicholaschuayunzhi
 public class PersonPanel extends UiPart<Region> {
 
     private static final String FXML = "PersonPanel.fxml";

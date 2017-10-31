@@ -12,6 +12,8 @@ import javafx.scene.layout.Region;
 /**
  * Provides a handle to the Person Panel
  */
+
+//@@author nicholaschuayunzhi
 public class PersonPanelHandle extends NodeHandle<Node> {
     public static final String PERSON_PANEL_ID = "#personPanel";
     private static final String NAME_FIELD_ID = "#name";
