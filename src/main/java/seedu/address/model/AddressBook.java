@@ -328,7 +328,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() + " tags, "
-                + aliasTokens.asObservableList().size() + " aliases" + tasks.asObservableLis().size()
+                + aliasTokens.asObservableList().size() + " aliases" + tasks.asObservableList().size()
                 + " tasks";
     }
 
@@ -349,7 +349,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public ObservableList<ReadOnlyTask> getTaskList() {
-        return tasks.asObservableLis();
+        return tasks.asObservableList();
     }
 
     @Override
