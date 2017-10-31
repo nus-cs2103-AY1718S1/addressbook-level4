@@ -12,11 +12,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.insurance.UniqueLifeInsuranceList;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.ReadOnlyPerson;
 
 public class PrintCommand extends Command {
@@ -26,14 +23,13 @@ public class PrintCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Saves the addressbook into a .txt file named by you for your viewing.\n"
-            + "Example: " + COMMAND_WORD + "addressbook";
+            + "Example: " + COMMAND_WORD + " filename\n"
+            + "file can then be found in the in doc/books folder as filename.txt";
 
     public static final String MESSAGE_SUCCESS = "Addressbook has been saved! " +
             "Find your addressbook in the .txt file named by you in the doc/books folder.";
 
-    //private final String fileName = "lol.txt";
     private final String fileName;
-
 
     public PrintCommand(String filename) {
         requireNonNull(filename);
@@ -78,7 +74,6 @@ public class PrintCommand extends Command {
         }
 
         Path file = Paths.get("docs/books/"+ fileName +".txt");
-        //Path file = Paths.get("docs/books/lol.txt");
         try {
             Files.write(file, lines, Charset.forName("UTF-8"));
         } catch (IOException e) {

@@ -9,8 +9,6 @@ import java.util.regex.Matcher;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import com.sun.prism.shader.FillCircle_LinearGradient_PAD_AlphaTest_Loader;
-
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
