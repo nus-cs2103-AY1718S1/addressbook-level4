@@ -37,6 +37,10 @@ public class UiTheme {
         this.scene = scene;
     }
 
+    /**
+     * Sets the browser panel obtained from MainWindow right after its instance is created.
+     * @param browserPanel
+     */
     public void setBrowserPanel(BrowserPanel browserPanel) {
         this.browserPanel = browserPanel;
     }
