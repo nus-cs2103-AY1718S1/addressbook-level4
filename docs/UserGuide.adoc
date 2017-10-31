@@ -507,6 +507,8 @@ A list of keyboard shortcuts is provided link:#keyboard-shortcuts-2[here].
 
 // end::excludeNavbar[]
 
+include::Glossary.adoc[]
+
 ifndef::env-github[]
 include::NavigationMenu.adoc[]
 endif::[]
