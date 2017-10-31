@@ -6,7 +6,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import org.junit.Test;
 
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.commons.events.model.TagColorChangedEvent;
 import seedu.address.model.tag.Tag;
 
 public class TagColorChangedEventTest {

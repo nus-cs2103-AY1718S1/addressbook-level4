@@ -4,8 +4,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.commands.CommandTestUtil.IMPORT_NO_PATH;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_IMPORT_PATH;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_IMPORT_TYPE;
-import static seedu.address.logic.commands.CommandTestUtil.NUSMODS_INVALID_IMPORT;
 import static seedu.address.logic.commands.CommandTestUtil.NOT_FROM_NUSMODS_IMPORT;
+import static seedu.address.logic.commands.CommandTestUtil.NUSMODS_INVALID_IMPORT;
 import static seedu.address.logic.commands.CommandTestUtil.NUSMODS_VALID_IMPORT;
 import static seedu.address.logic.commands.CommandTestUtil.NUSMODS_VALID_URL;
 import static seedu.address.logic.commands.imports.ImportNusmodsCommand.INVALID_URL;
