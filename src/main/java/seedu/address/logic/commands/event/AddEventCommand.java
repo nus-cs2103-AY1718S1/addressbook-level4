@@ -9,8 +9,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMESLOT;
 
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.UndoableCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.EventTimeClashException;
 
 /**
  * Adds an event to the address book.
@@ -31,6 +33,7 @@ public class AddEventCommand extends UndoableCommand {
             + PREFIX_DESCRIPTION + "johnd@example.com ";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
+    public static final String MESSAGE_TIME_CLASH = "This event has time clash with an existing event";
 
     private final Event toAdd;
 
@@ -42,10 +45,14 @@ public class AddEventCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() {
+    public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
-        model.addEvent(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        try {
+            model.addEvent(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        } catch (EventTimeClashException e) {
+            throw new CommandException(MESSAGE_TIME_CLASH);
+        }
     }
 
     @Override

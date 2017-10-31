@@ -8,9 +8,11 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.event.ReadOnlyEvent;
 
+//@@author a0107442n
+
 /**
  * An UI component that displays information of a {@code Event}.
- * //@@author yangshuang
+ *
  */
 public class EventCard extends UiPart<Region> {
 

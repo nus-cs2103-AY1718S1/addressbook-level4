@@ -125,9 +125,8 @@ public class XmlAdaptedPerson {
         if (this.note != null) {
             note = new Note(this.note);
         }
-        Photo photo = new Photo("NIL.jpg"); //to handle legacy versions where
-        // these
-        // optional fields were not stored
+        Photo photo = new Photo("NIL.jpg"); //to handle legacy versions
+        // where these optional fields were not stored
         if (this.photo != null) {
             photo = new Photo(this.photo);
         }

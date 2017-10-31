@@ -222,6 +222,21 @@ public class CommandTestUtil {
     }
 
     /**
+     * Updates {@code model}'s filtered list to show only the first two events in the {@code model}'s address book.
+     */
+    public static void showFirstTwoEventsOnly(Model model) {
+        ReadOnlyEvent firstEvent = model.getAddressBook().getEventList().get(0);
+        ReadOnlyEvent secondEvent = model.getAddressBook().getEventList().get(1);
+        String[] splitFirstEvent = firstEvent.getTitle().toString().split("\\s+");
+        String[] splitSecondEvent = secondEvent.getTitle().toString().split("\\s+");
+
+        model.updateFilteredEventList(new TitleContainsKeywordsPredicate(Arrays.asList(splitFirstEvent[0],
+                splitSecondEvent[0])));
+
+        assert model.getFilteredEventList().size() == 2;
+    }
+
+    /**
      * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
      */
     public static void deleteFirstPerson(Model model) {

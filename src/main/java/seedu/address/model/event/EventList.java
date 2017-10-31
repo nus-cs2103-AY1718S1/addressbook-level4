@@ -3,14 +3,19 @@ package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
-import org.fxmisc.easybind.EasyBind;
+import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
+import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.exceptions.EventTimeClashException;
+import seedu.address.model.event.timeslot.Timeslot;
 
 /**
  * A list of events that does not allow nulls.
@@ -21,82 +26,140 @@ import seedu.address.model.event.exceptions.EventNotFoundException;
  */
 public class EventList implements Iterable<Event> {
 
-    private final ObservableList<Event> internalList = FXCollections.observableArrayList();
-    // used by asObservableList()
-    private final ObservableList<ReadOnlyEvent> mappedList = EasyBind.map(internalList, (event) -> event);
+    private static final Logger logger = LogsCenter.getLogger(EventList.class);
 
+    private final ObservableTreeMap<Timeslot, Event> internalMap = new
+            ObservableTreeMap<>();
+    // used by asObservableList()
+    private final ObservableList<ReadOnlyEvent> mappedList = FXCollections.observableArrayList(new
+            ArrayList<>(internalMap.values()));
+
+    public EventList() {
+        internalMap.addListener((MapChangeListener.Change<? extends Timeslot, ? extends Event> change) -> {
+            logger.info("Change heard.");
+            boolean removed = change.wasRemoved();
+            if (removed != change.wasAdded()) {
+                if (removed) {
+                    mappedList.remove(change.getValueRemoved());
+                } else {
+                    mappedList.add(change.getValueAdded());
+                }
+            }
+        });
+    }
     /**
-     * Adds a event to the list.
+     * Adds a event to the tree map.
      */
-    public void add(ReadOnlyEvent toAdd) {
+    public void add(ReadOnlyEvent toAdd) throws EventTimeClashException {
         requireNonNull(toAdd);
-        internalList.add(new Event(toAdd));
+        if (hasClashWith(new Event(toAdd))) {
+            throw new EventTimeClashException();
+        }
+        internalMap.put(toAdd.getTimeslot(), new Event(toAdd));
     }
 
     /**
-     * Replaces the event {@code target} in the list with {@code editedEvent}.
+     * Replaces the event {@code target} in the tree map with {@code editedEvent}.
      *
-     * @throws EventNotFoundException if {@code target} could not be found in the list.
+     * @throws EventNotFoundException if {@code target} could not be found in the tree map.
      */
     public void setEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
-            throws EventNotFoundException {
+            throws EventNotFoundException, EventTimeClashException {
         requireNonNull(editedEvent);
 
-        int index = internalList.indexOf(target);
-        if (index == -1) {
+        //@@author a0107442n
+        Event targetEvent = new Event(target);
+        if (!internalMap.containsValue(targetEvent)) {
             throw new EventNotFoundException();
         }
 
-        internalList.set(index, new Event(editedEvent));
+
+        if (hasClashWith(new Event(editedEvent))) {
+            throw new EventTimeClashException();
+        }
+        internalMap.remove(targetEvent.getTimeslot());
+        internalMap.put(editedEvent.getTimeslot(), new Event(editedEvent));
+        //@@author
     }
 
     /**
-     * Removes the equivalent person from the list.
+     * Removes the equivalent event from the tree map.
      *
-     * @throws EventNotFoundException if no such person could be found in the list.
+     * @throws EventNotFoundException if no such person could be found in the tree map.
      */
     public boolean remove(ReadOnlyEvent toRemove) throws EventNotFoundException {
         requireNonNull(toRemove);
-        final boolean eventFoundAndDeleted = internalList.remove(toRemove);
-        if (!eventFoundAndDeleted) {
+        //@@author a0107442
+        final boolean eventFound = internalMap.containsValue(toRemove);
+        if (!eventFound) {
             throw new EventNotFoundException();
         }
-        return eventFoundAndDeleted;
+        internalMap.remove(toRemove.getTimeslot());
+        return eventFound;
+        //@@author
     }
 
     public void setEvents(EventList replacement) {
-        this.internalList.setAll(replacement.internalList);
+        this.internalMap.putAll(replacement.internalMap);
     }
 
-    public void setEvents(List<? extends ReadOnlyEvent> persons) {
+    public void setEvents(List<? extends ReadOnlyEvent> events) throws EventTimeClashException {
         final EventList replacement = new EventList();
-        for (final ReadOnlyEvent person : persons) {
-            replacement.add(new Event(person));
+        for (final ReadOnlyEvent event : events) {
+            try {
+                replacement.add(new Event(event));
+            } catch (EventTimeClashException e) {
+                throw e;
+            }
         }
         setEvents(replacement);
     }
 
+    //@@author a0107442n
     /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     * Check if a given event has any time clash with any event in the EventList.
+     * @param event for checking
+     * @return true if there is a clashing event.
+     */
+    private boolean hasClashWith(Event event) {
+        Iterator<Event> iterator = this.iterator();
+        while (iterator.hasNext()) {
+            Event e = iterator.next();
+            if (e.clashesWith(event)
+                    && (!e.getTitle().equals(event.getTitle())
+                    || !e.getDescription().equals(event.getDescription()))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns the backing tree map as an {@code ObservableList}.
      */
     public ObservableList<ReadOnlyEvent> asObservableList() {
-        return FXCollections.unmodifiableObservableList(mappedList);
+        ObservableList<ReadOnlyEvent> list = FXCollections.observableList(new ArrayList<>(internalMap.values()));
+        //logger.info("EventList ------------- got " + mappedList.size() + " list.");
+        return FXCollections.unmodifiableObservableList(list);
     }
 
     @Override
     public Iterator<Event> iterator() {
-        return internalList.iterator();
+        Collection<Event> c = internalMap.values();
+        return c.iterator();
     }
+
+    //@@author
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof EventList // instanceof handles nulls
-                && this.internalList.equals(((EventList) other).internalList));
+                && this.internalMap.equals(((EventList) other).internalMap));
     }
 
     @Override
     public int hashCode() {
-        return internalList.hashCode();
+        return internalMap.hashCode();
     }
 }

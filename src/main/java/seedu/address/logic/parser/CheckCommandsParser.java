@@ -72,7 +72,7 @@ public class CheckCommandsParser {
         final Set<String> commandsForSelect = new HashSet<>(Arrays.asList(subSelectCommands));
         final Set<String> commandsForSort = new HashSet<>(Arrays.asList(subSortCommands));
         final Set<String> commandsForUndo = new HashSet<>(Arrays.asList(subUndoCommands));
-        final Set<String> commandsForCheckCalendar = new HashSet<>(Arrays.asList
+        final Set<String> commandsForCheckSchedule = new HashSet<>(Arrays.asList
                 (subCheckScheduleCommands));
         final Set<String> commandsForAddEvent = new HashSet<>(Arrays.asList(subAddEventsCommands));
         final Set<String> commandsForDeleteEvent = new HashSet<>(Arrays.asList(subDeleteEventsCommands));
@@ -109,8 +109,8 @@ public class CheckCommandsParser {
             finalUserCommand = "sort";
         } else if (!Collections.disjoint(userInputCommand, commandsForUndo)) {
             finalUserCommand = "undo";
-        } else if (!Collections.disjoint(userInputCommand, commandsForCheckCalendar)) {
-            finalUserCommand = "checkschedule";
+        } else if (!Collections.disjoint(userInputCommand, commandsForCheckSchedule)) {
+            finalUserCommand = "thisweek";
         } else if (!Collections.disjoint(userInputCommand, commandsForAddEvent)) {
             finalUserCommand = "eventadd";
         } else if (!Collections.disjoint(userInputCommand, commandsForDeleteEvent)) {

@@ -76,6 +76,10 @@ public class Timing implements Comparable<Timing> {
         setTiming(this.start + "-" + this.end);
     }
 
+    public int getEnd() {
+        return end;
+    }
+
     @Override
     public String toString() {
         return timing;

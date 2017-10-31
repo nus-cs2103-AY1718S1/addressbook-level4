@@ -24,6 +24,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -35,7 +36,6 @@ public class PersonPanel extends UiPart<Region> {
     private static final String FXML = "PersonPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private ReadOnlyPerson storedPerson;
-    private Index storedPersonIndex;
     private Logic logic;
 
     @FXML
@@ -92,10 +92,9 @@ public class PersonPanel extends UiPart<Region> {
      * Register the image import button for click event.
      */
 
-    private void registerImageSelectionButton(Index index, ReadOnlyPerson person) {
+    private void registerImageSelectionButton(Index index) {
         //Set onClickListener for the image import button
-        photoSelectionButton.setOnAction(new
-                EventHandler<ActionEvent>() {
+        photoSelectionButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
                 FileChooser fileChooser = new FileChooser();
@@ -114,11 +113,13 @@ public class PersonPanel extends UiPart<Region> {
                 File file = fileChooser.showOpenDialog(((Node) t.getTarget())
                         .getScene().getWindow());
 
+                //Update photo field in addressbook through an edit command
                 try {
-                    logger.info("Person Panel register button for index "
+                    logger.fine("Person Panel register button for index "
                             + index.getZeroBased());
-                    logic.execute("edit " + index.getZeroBased() + " ph/"
+                    CommandResult commandResult = logic.execute("edit " + index.getZeroBased() + " ph/"
                             + file.toURI().toString());
+                    raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
                 } catch (CommandException | ParseException e) {
                     raise(new NewResultAvailableEvent(e.getMessage(), true));
                 }
@@ -132,7 +133,7 @@ public class PersonPanel extends UiPart<Region> {
      * as well as the handleAddressBookChanged event listener.
      * @param person
      */
-    private void showPersonDetails(Index index, ReadOnlyPerson person) {
+    private void showPersonDetails(ReadOnlyPerson person) {
         defaultScreen.setOpacity(0);
 
         nameLabel.setText(person.getName().toString());
@@ -152,7 +153,8 @@ public class PersonPanel extends UiPart<Region> {
         String imagePath = person.getPhoto().toString();
         Image image = new Image(new File(imagePath).toURI().toString());
         photo.setImage(image);
-
+        //@@author
+        storedPerson = person;
         //@@author sebtsh
     }
 
@@ -165,15 +167,13 @@ public class PersonPanel extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         Index index = event.getNewSelection().index;
         ReadOnlyPerson person = event.getNewSelection().person;
-        storedPerson = person;
-        storedPersonIndex = index;
-        logger.info("Person Panel: stored index becomes " + index
+        logger.fine("Person Panel: stored index becomes " + index
                 .getZeroBased());
 
-        registerImageSelectionButton(index, person);
-        logger.info(LogsCenter.getEventHandlingLogMessage
+        registerImageSelectionButton(index);
+        logger.fine(LogsCenter.getEventHandlingLogMessage
                 (event) + " for index " + index.getZeroBased());
-        showPersonDetails(index, person);
+        showPersonDetails(person);
     }
 
     /**
@@ -183,10 +183,10 @@ public class PersonPanel extends UiPart<Region> {
      */
     @Subscribe
     private void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        logger.fine(LogsCenter.getEventHandlingLogMessage(event));
         for (ReadOnlyPerson dataPerson : event.data.getPersonList()) {
-            if (storedPerson.getName().equals(dataPerson.getName())) {
-                showPersonDetails(storedPersonIndex, dataPerson);
+            if (storedPerson != null && storedPerson.getName().equals(dataPerson.getName())) {
+                showPersonDetails(dataPerson);
                 storedPerson = dataPerson;
                 break;
             }

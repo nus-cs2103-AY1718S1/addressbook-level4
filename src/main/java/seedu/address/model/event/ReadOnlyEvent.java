@@ -1,6 +1,9 @@
 //@@author A0162268B
 package seedu.address.model.event;
 
+import java.time.Duration;
+import java.time.LocalTime;
+
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.event.timeslot.Date;
 import seedu.address.model.event.timeslot.Timeslot;
@@ -30,6 +33,14 @@ public interface ReadOnlyEvent {
     ObjectProperty<Description> descriptionProperty();
 
     Description getDescription();
+
+    boolean happensBefore(Timeslot slot);
+
+    boolean happensAfter(Timeslot slot);
+
+    Duration getDuration();
+
+    LocalTime getStartTime();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

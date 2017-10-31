@@ -9,12 +9,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventList;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.exceptions.EventTimeClashException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -32,11 +35,15 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
+    private static final Logger logger = LogsCenter.getLogger(AddressBook.class);
+
     private final UniquePersonList persons;
     private final EventList events;
     private final UniqueTagList tags;
     private final UniqueTagList eventTags;
     private final UniqueRelList relation;
+
+    private ReadOnlyEvent lastChangedEvent;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -69,7 +76,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
-    public void setEvents(List<? extends ReadOnlyEvent> events) {
+    public void setEvents(List<? extends ReadOnlyEvent> events) throws EventTimeClashException {
         this.events.setEvents(events);
     }
 
@@ -91,7 +98,11 @@ public class AddressBook implements ReadOnlyAddressBook {
             assert false : "AddressBooks should not have duplicate persons";
         }
 
-        setEvents(newData.getEventList());
+        try {
+            setEvents(newData.getEventList());
+        } catch (EventTimeClashException e) {
+            assert false : "AddressBooks should not have time-clashing events";
+        }
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
@@ -238,7 +249,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Adds an event to the address book.
      */
-    public void addEvent(ReadOnlyEvent e) {
+    public void addEvent(ReadOnlyEvent e) throws EventTimeClashException {
         Event newEvent = new Event(e);
         events.add(newEvent);
     }
@@ -246,9 +257,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Removes {@code key} from this {@code AddressBook}.
      *
-     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     * @throws EventNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removeEvent(ReadOnlyEvent key) throws EventNotFoundException {
+        lastChangedEvent = key;
         if (events.remove(key)) {
             return true;
         } else {
@@ -264,7 +276,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws EventNotFoundException if {@code target} could not be found in the list.
      */
     public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedReadOnlyEvent)
-            throws EventNotFoundException {
+            throws EventNotFoundException, EventTimeClashException {
         requireNonNull(editedReadOnlyEvent);
         Event editedEvent = new Event(editedReadOnlyEvent);
         // TODO: create master list for event tags
@@ -273,6 +285,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         events.setEvent(target, editedEvent);
+        lastChangedEvent = target;
+    }
+
+    @Override
+    public ReadOnlyEvent getLastChangedEvent() {
+        return this.lastChangedEvent;
     }
 
     //// tag-level operations

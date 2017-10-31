@@ -21,13 +21,13 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.Title;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.exceptions.EventTimeClashException;
 import seedu.address.model.event.timeslot.Timeslot;
 
 /**
  * Edits the details of an existing event in the address book.
  */
 public class EditEventCommand extends UndoableCommand {
-
     public static final String COMMAND_WORD = "eventedit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the event identified "
@@ -43,6 +43,7 @@ public class EditEventCommand extends UndoableCommand {
 
     public static final String MESSAGE_EDIT_EVENT_SUCCESS = "Edited Event: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
+    public static final String MESSAGE_TIME_CLASH = "The edited event has time clash with an existing event";
 
     private final Index index;
     private final EditEventDescriptor editEventDescriptor;
@@ -89,6 +90,8 @@ public class EditEventCommand extends UndoableCommand {
             model.updateEvent(eventToEdit, editedEvent);
         } catch (EventNotFoundException pnfe) {
             throw new AssertionError("The target event cannot be missing");
+        } catch (EventTimeClashException etce) {
+            throw new CommandException(MESSAGE_TIME_CLASH);
         }
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         return new CommandResult(String.format(MESSAGE_EDIT_EVENT_SUCCESS, editedEvent));
