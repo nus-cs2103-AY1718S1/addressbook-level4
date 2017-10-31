@@ -648,7 +648,7 @@ people is then continually updated, before it is finally returned to the user
 **Pros:** More powerful search tool +
 **Cons:** Unnecessary results may be returned for larger address books
 
----
+----
 
 === Meeting Display
 
