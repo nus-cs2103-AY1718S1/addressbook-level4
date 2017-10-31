@@ -426,7 +426,7 @@ above diagram, each tag is updated to a certain color and does not need to know 
 
 
 === *Enhancement: List Package* +
-
+// tag::list[]
 *Reason for implementation* +
 
 This enhancement taps on the concept of Open-closed principle, enhancing the listing capabilities of the `list` command +
@@ -457,8 +457,9 @@ Scenarios include - +
 2. We reverse the list instead of appending newly added contacts to the top of the list as older patients should be given more attention and thus, be at the top of the list.
 
 |=======================================================================
+// end::list[]
 
-
+// tag::listImplementation[]
 *How it is implemented* +
 
 
@@ -516,8 +517,11 @@ Potential enhancements include the use of complex search algorithms such as goog
 to provide users with the ability to search for users with greater detail. However, this is something +
 unlikely to have and will ensue only once all existing must-have and good-to-have are completed.
 
-=== *Enhancement: Command Box Keyboard Shortcuts*
+// end::listImplementation[]
 
+=== *Enhancement: Command Box Keyboard Shortcuts* +
+
+// tag::shortcutreason[]
 *Reason for implementation* +
 
 Such a feature is implemented to enhance the experience of users and allows developers to debug +
@@ -525,6 +529,9 @@ newly implemented features with greater ease that requires the use of the comman
 
 The feature allows users and developers to easily navigate and edit input text.
 
+// end::shortcutreason[]
+
+// tag::shortcutimple[]
 *How it is implemented* +
 
 There are three key improvements that the enhancement brings
@@ -598,12 +605,74 @@ though not ideal, it is workable as there is only a limited number of combinatio
 Brute force is used to eliminate the need to throw exceptions which can never be called which in turn +
 adversely affect test coverage as these exception can never be thrown.
 
+// end::shortcutimple[]
+
 *Future enhancements*
 
 * Add Command Shortcut: As of now, Prefixes are hard-coded to reflect existing available prefixes +
 +
 Potential enhancements involves syncing the shortcut to the CliSyntax.java file to obtain the necessary +
 prefixes
+
+=== *Enhancement: Remark Command* +
+
+// tag::remarkreason[]
+*Reason for implementation* +
+
+This feature allows users to take down and save any additional information regarding their patients. +
+Being able to save a remark field, unique to the contact, is crucial in cases where there is no allocated +
+user field for the additonal information.
+
+// end::remarkreason[]
+
+// tag::remarkimple[]
+
+*How it is implemented* +
+Implementation passes through two main segments: Logic and Model. +
+
+image::RemarkSD.png[width="800"]
+    Figure 21: Remark Command Sequence Diagram
+
+The sequence diagram of the Remark Command can be seen in the figure above. +
+The explanation for the above diagram is as follows: +
+
+1. Logic
+* AddressBookParser: Detects if remark keyword contains keyword after +
+e.g. 1 r/Allergic to Pollen
+* RemarkCommandParser:
+** Parses the input by extracting the text that come after the prefix +
+and extracts the input index +
+Parsed index : 1 +
+Parsed string : Allergic to Pollen
+** Creates a RemarkCommand class and passes the index and string as arguments
+* RemarkCommand:
+** Sets the index and remark locally
+** Runs the execution which calls the model
+
+2. Model
+
+* 1. Calls the model and gets the filtered persons list
+* 2. Creates a new Person object with the local remark variable instantiated
+* 3. Updates the filtered persons list
+* 4. Gets the updated filtered persons list
+
+*Reason for how it is implemented* +
+
+* Makes use of existing implementations +
+Instead of thinking of new algorithms, the command uses existing implementations such as +
+filtering of contacts and parsing of text inputs to reduce errors and complexity.
+
+
+*Future enhancements* +
+
+Remark fields exceeding a certain word count will not be able to fully display on the display screen. +
+ +
+Potential enhancements involves saving the data in a tab on the display screen which will pop up +
+upon clicking, displaying the remark attached to the contact. However, this is something +
+unlikely to have and will ensue only once all existing must-have and good-to-have are completed.
+
+
+// end::remarkimple[]
 
 === *Enhancement: ListByBloodtypeCommand* +
 
@@ -616,7 +685,7 @@ in these types of emergencies.
 
 
 image::SDforListByBloodtypeCommandLogic.png[width="800"]
-    Figure 21: ListByBloodyTypeCommand Sequence Diagram
+    Figure 22: ListByBloodyTypeCommand Sequence Diagram
 
 The sequence diagram for ListByBloodtypeCommand class within the Logic Component is as shown above.
 
@@ -660,7 +729,7 @@ The sequence diagram for using this Command class within the Logic Component is 
 
 
 image::SDforBatchDeleteLogic.png[width="800"]
-    Figure 22: Sequence diagram for a `batch myTag` command in the Logic Component
+    Figure 23: Sequence diagram for a `batch myTag` command in the Logic Component
 
 The model component will handle the actual deletion operations. To support this, an additional method is defined in the Model interface for implementation by the ModelManager class. +
 
@@ -670,7 +739,7 @@ See the sequence diagram below to better understand the full range of interactio
 
 
 image::SDforBatchDeleteModel.png[width="800"]
-    Figure 23: Sequence diagram for a `batch myTag` command in the Model Component
+    Figure 24: Sequence diagram for a `batch myTag` command in the Model Component
 
 *Reasons for how it is implemented*
 

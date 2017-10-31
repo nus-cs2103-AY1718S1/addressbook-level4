@@ -1,5 +1,5 @@
 # Jeremy
-###### \java\seedu\address\logic\commands\ListAscendingNameCommand.java
+###### /java/seedu/address/logic/commands/ListAscendingNameCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book in ascending order by name
@@ -26,7 +26,7 @@ public class ListAscendingNameCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\commands\ListByTagCommand.java
+###### /java/seedu/address/logic/commands/ListByTagCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book whose tag contains any of the argument keywords.
@@ -38,8 +38,8 @@ public class ListByTagCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " colleague ";
+            + "Parameters: KEYWORD [AND/OR] [KEYWORD]...\n"
+            + "Example: " + COMMAND_WORD + " colleague and family";
 
     public static final String MESSAGE_SUCCESS = "Listed all persons with specified tags";
 
@@ -63,7 +63,7 @@ public class ListByTagCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ListDescendingNameCommand.java
+###### /java/seedu/address/logic/commands/ListDescendingNameCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book in descending order by name
@@ -90,7 +90,7 @@ public class ListDescendingNameCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\commands\ListFailureCommand.java
+###### /java/seedu/address/logic/commands/ListFailureCommand.java
 ``` java
 /**
  * Prints failure message if invalid arguments are passed after a list command
@@ -123,7 +123,7 @@ public class ListFailureCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\commands\ListReverseCommand.java
+###### /java/seedu/address/logic/commands/ListReverseCommand.java
 ``` java
 /**
  * Reverses existing displayed list
@@ -149,7 +149,7 @@ public class ListReverseCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\RemarkCommand.java
+###### /java/seedu/address/logic/commands/RemarkCommand.java
 ``` java
 /**
  * Adds/Remove a remark from a person identified using it's last displayed index from the address book.
@@ -238,7 +238,7 @@ public class RemarkCommand extends UndoableCommand {
 
 }
 ```
-###### \java\seedu\address\logic\parser\AddCommandParser.java
+###### /java/seedu/address/logic/parser/AddCommandParser.java
 ``` java
             Phone phone = (!arePrefixesPresent(argMultimap, PREFIX_PHONE))
                     ? new Phone("000") : ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
@@ -252,8 +252,9 @@ public class RemarkCommand extends UndoableCommand {
             Remark remark = (!arePrefixesPresent(argMultimap, PREFIX_REMARK))
                     ? new Remark("") : ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
+
     /**
      * Returns the correct list feature based on word after list
      *
@@ -271,7 +272,7 @@ public class RemarkCommand extends UndoableCommand {
             returnThisCommand = new ListCommand();
             break;
         case "tag":
-            returnThisCommand = new ListByTagCommandParser().parse(arguments.substring(firstArgLength));
+            returnThisCommand = new ListByTagCommandParser().parse(arguments.substring(firstArgLength + 1));
             break;
         case "asc":
         case "ascending":
@@ -291,8 +292,9 @@ public class RemarkCommand extends UndoableCommand {
         return returnThisCommand;
     }
 ```
-###### \java\seedu\address\logic\parser\ListByTagCommandParser.java
+###### /java/seedu/address/logic/parser/ListByTagCommandParser.java
 ``` java
+
 /**
  * Parses input arguments and creates a new ListByTagCommand object
  */
@@ -306,20 +308,70 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
      */
     public ListByTagCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
+
+        String[] tagKeyWords = trimmedArgs.split("\\s+");
+        List<String> evaluateList = Arrays.asList(tagKeyWords);
+
+        if (trimmedArgs.isEmpty() || invalidListTagArgs(evaluateList)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ListByTagCommand.MESSAGE_USAGE));
         }
 
-        String[] tagKeyWords = trimmedArgs.split("\\s+");
 
-        return new ListByTagCommand(new TagContainsKeywordsPredicate(Arrays.asList(tagKeyWords)));
+        return new ListByTagCommand(new TagContainsKeywordsPredicate(evaluateList));
 
     }
 
+    /**
+     * Returns true if tag list argument is invalid.
+     * Tag list is invalid if
+     * 1. List starts or ends with "AND" or "OR"
+     * 2. "AND" or "OR" are clustered together
+     */
+    private boolean invalidListTagArgs(List<String> evaluateList) {
+        boolean multipleAndOrCluster = hasManyAndOrClustered(evaluateList);
+        boolean startWithAndOr = startsWithAndOr(evaluateList);
+        boolean endWithAndOr = endsWithAndOr(evaluateList);
+        return multipleAndOrCluster || startWithAndOr || endWithAndOr;
+    }
+
+    /**
+     * Returns true if list starts with "AND" or "OR"
+     */
+    private boolean startsWithAndOr(List<String> evaluateList) {
+        boolean startWithAndOr = "and".equalsIgnoreCase(evaluateList.get(0))
+                || "or".equalsIgnoreCase(evaluateList.get(0));
+        return startWithAndOr;
+    }
+
+    /**
+     * Returns true if list ends with "AND" or "OR"
+     */
+    private boolean endsWithAndOr(List<String> evaluateList) {
+        boolean endWithAndOr = "and".equalsIgnoreCase(evaluateList.get(evaluateList.size() - 1))
+                || "or".equalsIgnoreCase(evaluateList.get(evaluateList.size() - 1));
+        return endWithAndOr;
+    }
+
+    /**
+     * Returns true if "AND" or "OR" strings are clustered together
+     */
+    private boolean hasManyAndOrClustered(List<String> evaluateList) {
+        String previousString = "";
+        boolean multipleAndOrCluster = false;
+        for (String str : evaluateList) {
+            if (("and".equalsIgnoreCase(previousString) || "or".equalsIgnoreCase(previousString))
+                    && ("and".equalsIgnoreCase(str) || "or".equalsIgnoreCase(str))) {
+                multipleAndOrCluster = true;
+                break;
+            }
+            previousString = str;
+        }
+        return multipleAndOrCluster;
+    }
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
@@ -330,7 +382,7 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
         return remark.isPresent() ? Optional.of(new Remark(remark.get())) : Optional.empty();
     }
 ```
-###### \java\seedu\address\logic\parser\RemarkCommandParser.java
+###### /java/seedu/address/logic/parser/RemarkCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new RemarkCommand object
@@ -374,7 +426,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
 
 }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     public ObservableList<ReadOnlyPerson> getPersonListSortByNameAscending() {
         return persons.asObservableListSortedByNameAsc();
@@ -388,7 +440,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
         return persons.asObservableListReversed();
     }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     /**
      * @return an unmodifiable view of the list of ReadOnlyPerson that has nonNull name,
@@ -419,7 +471,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
         return FXCollections.unmodifiableObservableList(list);
     }
 ```
-###### \java\seedu\address\model\person\Remark.java
+###### /java/seedu/address/model/person/Remark.java
 ``` java
 /**
  * Represents a Person's remark in the address book.
@@ -457,8 +509,9 @@ public class Remark {
 
 }
 ```
-###### \java\seedu\address\model\person\TagContainsKeywordsPredicate.java
+###### /java/seedu/address/model/person/TagContainsKeywordsPredicate.java
 ``` java
+
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Tag} matches any of the tag keywords given.
  */
@@ -471,14 +524,13 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        for (String keyword : keywords) {
-            for (Tag tags : person.getTags()) {
-                if (tags.tagName.equalsIgnoreCase(keyword)) {
-                    return true;
-                }
-            }
+        boolean containsAndOr = keywords.toString().toLowerCase().contains("and")
+                || keywords.toString().toLowerCase().contains("or");
+        if (containsAndOr) {
+            return predicateWithAndOr(person);
+        } else {
+            return predicateWithoutAndOr(person);
         }
-        return false;
     }
 
     @Override
@@ -488,9 +540,93 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
                 && this.keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check
     }
 
+
+    /**
+     * Returns the predicate for the case where the input text does not contain "AND" / "OR"
+     * Default Logic: Treated as "AND"
+     * Filters users who has ALL input tags
+     */
+    private boolean predicateWithoutAndOr(ReadOnlyPerson person) {
+        int foundTags = 0;
+        for (String keyword : keywords) {
+            for (Tag tags : person.getTags()) {
+                if (tags.tagName.equalsIgnoreCase(keyword)) {
+                    foundTags += 1;
+                    break;
+                }
+            }
+        }
+        return (foundTags == keywords.size());
+    }
+
+    /**
+     * Returns the predicate for the case where the input text contains and / or
+     * If "AND" or "OR" is not specified, value treated as "AND"
+     */
+    private boolean predicateWithAndOr(ReadOnlyPerson person) {
+        List<List<String>> finalPredicate = generateTagNestledList();
+        for (List<String> listOfTags : finalPredicate) {
+            if (evaluateListOfTags(listOfTags, person)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if person contains all tags in list
+     */
+    private boolean evaluateListOfTags(List<String> listOfTags, ReadOnlyPerson person) {
+        int foundTags = 0;
+        for (String tag : listOfTags) {
+            for (Tag tags : person.getTags()) {
+                if (tags.tagName.equalsIgnoreCase(tag)) {
+                    foundTags += 1;
+                    break;
+                }
+            }
+        }
+        return foundTags == listOfTags.size();
+    }
+
+    /**
+     * Returns a nestled list, containing all the list of tags which are seperated by "OR"
+     * or joined by "AND"
+     */
+    private List<List<String>> generateTagNestledList() {
+        List<List<String>> finalPredicate = new ArrayList<>();
+        List<String> indivPredicate = new ArrayList<>();
+        Stack<String> myStack = createStack(keywords);
+        while (!myStack.empty()) {
+            String peekWord = myStack.peek();
+            if ("and".equalsIgnoreCase(peekWord)) {
+                myStack.pop();
+                indivPredicate.add(myStack.pop());
+            } else if ("or".equalsIgnoreCase(peekWord)) {
+                myStack.pop();
+                finalPredicate.add(indivPredicate);
+                indivPredicate = new ArrayList<>();
+            } else {
+                indivPredicate.add(myStack.pop());
+            }
+        }
+        finalPredicate.add(indivPredicate);
+        return finalPredicate;
+    }
+
+    /**
+     * Instantiates an empty stack and pushes a list of keywords into the stack
+     */
+    private Stack<String> createStack(List<String> keywords) {
+        Stack<String> myStack = new Stack<>();
+        for (String keyword : keywords) {
+            myStack.push(keyword);
+        }
+        return myStack;
+    }
 }
 ```
-###### \java\seedu\address\model\person\UniquePersonList.java
+###### /java/seedu/address/model/person/UniquePersonList.java
 ``` java
     /**
      * @return the list as an unmodifiable list and sorted by name in ascending order
@@ -522,14 +658,14 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 ```
-###### \java\seedu\address\storage\StorageManager.java
+###### /java/seedu/address/storage/StorageManager.java
 ``` java
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-backup.xml");
     }
 ```
-###### \java\seedu\address\storage\XmlAddressBookStorage.java
+###### /java/seedu/address/storage/XmlAddressBookStorage.java
 ``` java
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
@@ -538,7 +674,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
 
 }
 ```
-###### \java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
     /**
      * Handles KeyPress Commands that are not keyed with Shift button held down
@@ -1025,7 +1161,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return currentInput.contains(PREFIX_NAME.getPrefix());
     }
 ```
-###### \java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
     /**
      * Gets the text field for testing purposes
@@ -1035,7 +1171,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 }
 ```
-###### \resources\view\MainWindow.fxml
+###### /resources/view/MainWindow.fxml
 ``` fxml
     <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
         <padding>
@@ -1049,7 +1185,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     <StackPane fx:id="statusbarPlaceholder" prefHeight="13.0" prefWidth="692.0" VBox.vgrow="ALWAYS" />
 </VBox>
 ```
-###### \resources\view\MedNusTheme.css
+###### /resources/view/MedNusTheme.css
 ``` css
 background {
     -fx-background-color: red;

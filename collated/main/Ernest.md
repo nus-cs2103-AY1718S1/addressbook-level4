@@ -1,15 +1,15 @@
 # Ernest
-###### \java\seedu\address\logic\commands\EditCommand.java
+###### /java/seedu/address/logic/commands/EditCommand.java
 ``` java
-    public void setBloodType(Bloodtype bloodType) {
+        public void setBloodType(Bloodtype bloodType) {
             this.bloodType = bloodType;
-    }
+        }
 
-    public Optional<Bloodtype> getBloodType() {
+        public Optional<Bloodtype> getBloodType() {
             return Optional.ofNullable(bloodType);
-    }
+        }
 ```
-###### \java\seedu\address\logic\commands\ListByBloodtypeCommand.java
+###### /java/seedu/address/logic/commands/ListByBloodtypeCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book whose blood type matches the keyword.
@@ -45,7 +45,7 @@ public class ListByBloodtypeCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ListByBloodtypeCommandParser.java
+###### /java/seedu/address/logic/parser/ListByBloodtypeCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ListByBloodtypeCommand object
@@ -73,7 +73,7 @@ public class ListByBloodtypeCommandParser implements Parser<ListByBloodtypeComma
 
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> bloodType} into an {@code Optional<Bloodtype>} if {@code bloodType} is present.
@@ -84,7 +84,7 @@ public class ListByBloodtypeCommandParser implements Parser<ListByBloodtypeComma
         return bloodType.isPresent() ? Optional.of(new Bloodtype(bloodType.get())) : Optional.empty();
     }
 ```
-###### \java\seedu\address\model\person\Bloodtype.java
+###### /java/seedu/address/model/person/Bloodtype.java
 ``` java
 /**
  * Represents a Person's blood type in the address book.
@@ -116,7 +116,7 @@ public class Bloodtype {
         if (!isValidBloodType(trimmedBloodType)) {
             throw new IllegalValueException(MESSAGE_BLOODTYPE_CONSTRAINTS);
         }
-        this.type = bloodType;
+        this.type = bloodType.toUpperCase();
     }
 
 
@@ -147,7 +147,7 @@ public class Bloodtype {
 
 }
 ```
-###### \java\seedu\address\model\person\BloodtypeContainsKeywordPredicate.java
+###### /java/seedu/address/model/person/BloodtypeContainsKeywordPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Bloodtype} matches any of the keywords given.
@@ -174,7 +174,7 @@ public class BloodtypeContainsKeywordPredicate implements Predicate<ReadOnlyPers
 
 }
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
     public void setBloodType(Bloodtype bloodType) {
         this.bloodType.set(requireNonNull(bloodType));

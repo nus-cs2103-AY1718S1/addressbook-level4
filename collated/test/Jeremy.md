@@ -1,5 +1,5 @@
 # Jeremy
-###### \java\seedu\address\commons\core\GuiSettingsTest.java
+###### /java/seedu/address/commons/core/GuiSettingsTest.java
 ``` java
 public class GuiSettingsTest {
 
@@ -23,7 +23,7 @@ public class GuiSettingsTest {
 
 }
 ```
-###### \java\seedu\address\commons\core\MessageTest.java
+###### /java/seedu/address/commons/core/MessageTest.java
 ``` java
 public class MessageTest {
 
@@ -38,7 +38,7 @@ public class MessageTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ListAscendingNameCommandTest.java
+###### /java/seedu/address/logic/commands/ListAscendingNameCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListAscendingNameCommand.
@@ -64,7 +64,7 @@ public class ListAscendingNameCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ListByTagCommandTest.java
+###### /java/seedu/address/logic/commands/ListByTagCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code ListByTagCommand}.
@@ -109,19 +109,7 @@ public class ListByTagCommandTest {
         return command;
     }
 
-    @Test
-    public void executeZeroKeywordsNoPersonFound() {
-        String expectedMessage = String.format(ListByTagCommand.MESSAGE_SUCCESS);
-        ListByTagCommand command = prepareCommand(" ");
-        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
-    }
 
-    @Test
-    public void executeMultipleKeywordsMultiplePersonsFound() {
-        String expectedMessage = String.format(ListByTagCommand.MESSAGE_SUCCESS);
-        ListByTagCommand command = prepareCommand("Test1 Test2 Test3");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
-    }
 
     /**
      * Asserts that {@code command} is successfully executed, and<br>
@@ -141,7 +129,7 @@ public class ListByTagCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\ListDescendingNameCommandTest.java
+###### /java/seedu/address/logic/commands/ListDescendingNameCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListDescendingNameCommand.
@@ -168,7 +156,7 @@ public class ListDescendingNameCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\ListIntegrationTest.java
+###### /java/seedu/address/logic/commands/ListIntegrationTest.java
 ``` java
 public class ListIntegrationTest {
     private Model model;
@@ -243,7 +231,7 @@ public class ListIntegrationTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\ListReverseCommandTest.java
+###### /java/seedu/address/logic/commands/ListReverseCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListReverseCommand.
@@ -269,7 +257,7 @@ public class ListReverseCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\RemarkCommandTest.java
+###### /java/seedu/address/logic/commands/RemarkCommandTest.java
 ``` java
 public class RemarkCommandTest {
 
@@ -421,15 +409,13 @@ public class RemarkCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\LogicManagerTest.java
+###### /java/seedu/address/logic/LogicManagerTest.java
 ``` java
     @Test
     public void executeValidListByTagTest() {
         String listByTagCommand = ListByTagCommand.COMMAND_WORD + " colleagues";
         assertCommandSuccess(listByTagCommand, ListByTagCommand.MESSAGE_SUCCESS, model);
         assertHistoryCorrect(listByTagCommand);
-        listByTagCommand = ListCommand.COMMAND_ALIAS + " tag";
-        assertCommandSuccess(listByTagCommand, ListByTagCommand.MESSAGE_SUCCESS, model);
 
 
         //Existing feature do not check if tag is present or not.
@@ -532,7 +518,7 @@ public class RemarkCommandTest {
         assertCommandSuccess(reverseCommand, ListFailureCommand.MESSAGE_FAILURE, model);
     }
 ```
-###### \java\seedu\address\logic\parser\AddCommandParserTest.java
+###### /java/seedu/address/logic/parser/AddCommandParserTest.java
 ``` java
         //missing phone
         expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withEmail(VALID_EMAIL_AMY)
@@ -570,7 +556,7 @@ public class RemarkCommandTest {
                 .withPhone(NON_COMPULSORY_PHONE_AMY).withRemark(NON_COMPULSORY_REMARK).build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY, new AddCommand(expectedPerson));
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommandRemarkCommandWordReturnsRemarkCommand() throws Exception {
@@ -587,7 +573,7 @@ public class RemarkCommandTest {
         assertNotEquals(new RemarkCommand(index, new Remark("")), testRemarkCommand);
     }
 ```
-###### \java\seedu\address\logic\parser\ListByBloodtypeCommandParserTest.java
+###### /java/seedu/address/logic/parser/ListByBloodtypeCommandParserTest.java
 ``` java
 public class ListByBloodtypeCommandParserTest {
 
@@ -612,7 +598,7 @@ public class ListByBloodtypeCommandParserTest {
 
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtilTest.java
+###### /java/seedu/address/logic/parser/ParserUtilTest.java
 ``` java
     @Test
     public void parseRemarkNullThrowsNullPointerException() throws Exception {
@@ -633,7 +619,7 @@ public class ListByBloodtypeCommandParserTest {
         assertEquals(expectedRemark, actualRemark.get());
     }
 ```
-###### \java\seedu\address\logic\parser\RemarkCommandParserTest.java
+###### /java/seedu/address/logic/parser/RemarkCommandParserTest.java
 ``` java
 public class RemarkCommandParserTest {
     private RemarkCommandParser parser = new RemarkCommandParser();
@@ -701,7 +687,7 @@ public class RemarkCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ToggleTagColorParserTest.java
+###### /java/seedu/address/logic/parser/ToggleTagColorParserTest.java
 ``` java
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -730,7 +716,7 @@ public class RemarkCommandParserTest {
         parser.parse("Test");
     }
 ```
-###### \java\seedu\address\model\person\PersonTest.java
+###### /java/seedu/address/model/person/PersonTest.java
 ``` java
 public class PersonTest {
 
@@ -764,7 +750,7 @@ public class PersonTest {
 
 }
 ```
-###### \java\seedu\address\model\person\RemarkTest.java
+###### /java/seedu/address/model/person/RemarkTest.java
 ``` java
 public class RemarkTest {
 
@@ -796,7 +782,7 @@ public class RemarkTest {
     }
 }
 ```
-###### \java\seedu\address\model\person\TagContainsKeywordsPredicateTest.java
+###### /java/seedu/address/model/person/TagContainsKeywordsPredicateTest.java
 ``` java
 public class TagContainsKeywordsPredicateTest {
 
@@ -835,22 +821,22 @@ public class TagContainsKeywordsPredicateTest {
         predicate = new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "Family"));
         assertTrue(predicate.test(new PersonBuilder().withTags("Colleague", "Family").build()));
 
-        // Only one matching tag
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "Family"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("Colleague").build()));
-        assertTrue(predicate.test(new PersonBuilder().withTags("Family").build()));
-
         // Mixed-case keywords
         predicate = new TagContainsKeywordsPredicate(Arrays.asList("FaMiLy"));
         assertTrue(predicate.test(new PersonBuilder().withTags("family").build()));
+
+        // Individual keywords follow "AND" logic
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "Family"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("Colleague", "Family", "Female").build()));
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "Male"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("Colleague", "Family", "Female").build()));
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "Family", "Male"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("Colleague", "Family").build()));
     }
 
     @Test
     public void testTagIsNotValidReturnsFalse() {
-        // Zero keywords
-        TagContainsKeywordsPredicate predicate = new TagContainsKeywordsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withTags("Family").build()));
-
+        TagContainsKeywordsPredicate predicate;
         // Non-matching keyword
         predicate = new TagContainsKeywordsPredicate(Arrays.asList("Family"));
         assertFalse(predicate.test(new PersonBuilder().withTags("Colleague").build()));
@@ -859,10 +845,59 @@ public class TagContainsKeywordsPredicateTest {
         predicate = new TagContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com", "Main", "Street", ""));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
                 .withEmail("alice@email.com").withAddress("Main Street").withTags("Family").build()));
+
+        // Only one matching tag -> False
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "Family"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("Colleague").build()));
+        assertFalse(predicate.test(new PersonBuilder().withTags("Family").build()));
     }
+
+    @Test
+    public void testValidArgsWithAndOr() {
+        //And included
+        TagContainsKeywordsPredicate predicate =
+                new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "and", "Family"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("Colleague").build()));
+        assertFalse(predicate.test(new PersonBuilder().withTags("Family").build()));
+        assertTrue(predicate.test(new PersonBuilder().withTags("Colleague", "Family").build()));
+
+        //Or included
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "or", "Family"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("Colleague").build()));
+        assertTrue(predicate.test(new PersonBuilder().withTags("Family").build()));
+        assertTrue(predicate.test(new PersonBuilder().withTags("Colleague", "Family").build()));
+
+        //Complex combination
+        // [a,[b,c],d,[e,f,g],h]
+        // a or (b and c) or d or (e and f and g) or h
+        // Equivalence Partition:
+        // 1. Contains None
+        // 2. Contains At least one
+        List<String> myStringArray = Arrays.asList("a", "or", "b", "and", "c", "or", "d",
+                "or", "e", "and", "f", "and", "g", "or", "h");
+        predicate = new TagContainsKeywordsPredicate(myStringArray);
+        assertFalse(predicate.test(new PersonBuilder().withTags("i").build()));
+        assertTrue(predicate.test(new PersonBuilder().withTags("e", "f", "g").build()));
+
+        //Additional Cases for Boundary cases
+        assertFalse(predicate.test(new PersonBuilder().withTags("e", "f", "b").build()));
+        assertTrue(predicate.test(new PersonBuilder().withTags("a", "b", "c", "d", "e", "f", "g", "h", "i").build()));
+
+        //Case sensitive
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("COLLEAGUE", "and", "family"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("colleague", "FAMILY").build()));
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("COLLEAGUE", "aNd", "family"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("colleague", "FAMILY").build()));
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("COLLEAGUE", "AnD", "family"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("colleague", "FAMILY").build()));
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("colleague", "OR", "FAMILY"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("COLLEAGUE", "family").build()));
+
+    }
+
 }
 ```
-###### \java\seedu\address\model\UniqueTagListTest.java
+###### /java/seedu/address/model/UniqueTagListTest.java
 ``` java
     @Test
     public void testThrowDuplicateTagError() throws Exception {
@@ -875,7 +910,7 @@ public class TagContainsKeywordsPredicateTest {
 
     }
 ```
-###### \java\seedu\address\model\UniqueTagListTest.java
+###### /java/seedu/address/model/UniqueTagListTest.java
 ``` java
     @Test
     public void testEquals() {
@@ -904,7 +939,7 @@ public class TagContainsKeywordsPredicateTest {
         assertFalse(uniqueTagList.equals(uniqueTagListThree));
     }
 ```
-###### \java\seedu\address\storage\JsonUserPrefsStorageTest.java
+###### /java/seedu/address/storage/JsonUserPrefsStorageTest.java
 ``` java
     @Test
     public void testUserPrefsGetAddressBookName() {
@@ -952,7 +987,7 @@ public class TagContainsKeywordsPredicateTest {
         assertTrue(firstHashCode == thirdHashCode);
     }
 ```
-###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
+###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
 ``` java
     /**
      * Sets the {@code Remark} of the {@code EditPersonDescriptor} that we are building.
@@ -966,7 +1001,7 @@ public class TagContainsKeywordsPredicateTest {
         return this;
     }
 ```
-###### \java\seedu\address\ui\CommandBoxTest.java
+###### /java/seedu/address/ui/CommandBoxTest.java
 ``` java
     @Test
     public void handleKeyPressEscape() {
@@ -2009,7 +2044,7 @@ public class TagContainsKeywordsPredicateTest {
 
     }
 ```
-###### \java\systemtests\AddCommandSystemTest.java
+###### /java/systemtests/AddCommandSystemTest.java
 ``` java
         /* Case: missing remark -> success */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)

@@ -381,6 +381,7 @@ To remove appointment,
 
 // end::appointment[]
 
+// tag::remark[]
 === Adding/Removing Remarks to a person : `remark`
 
 You can add or remove a remark from an existing person in the address book. +
@@ -402,6 +403,8 @@ Existing remarks of the person will be removed
 [NOTE]
 The index refers to the index number shown in the last person listing +
 The index *must be a positive integer* `1, 2, 3, ...`
+
+// end::remark[]
 
 === Deleting all persons with a particular tag : [Since v1.2]
 
@@ -547,6 +550,7 @@ You do not need to save data manually.
 
 <<<
 
+// tag::shortcut[]
 === Keyboard Shortcut
 
 [width="59%",cols="22%,<40%,<40%",options="header",]
@@ -569,3 +573,4 @@ You do not need to save data manually.
 
 |*Right* |Add Command Shortcut to autofill Prefixes |"Add" or "A" must be present at the start of the line
 |=======================================================================
+// end::shortcut[]
