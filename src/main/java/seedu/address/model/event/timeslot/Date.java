@@ -3,6 +3,8 @@ package seedu.address.model.event.timeslot;
 
 import static java.util.Objects.requireNonNull;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -95,6 +97,23 @@ public class Date implements Comparable<Date> {
 
     public LocalDate toLocalDate() {
         return LocalDate.of(year, month, day);
+    }
+
+    /**
+     *
+     * Gets the current date and returns the local implementation of date.
+     *
+     * @return the current date
+     */
+    public Date getCurrentDate() {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date currentDate = new java.util.Date();
+
+        try {
+            return new Date(dateFormat.format(currentDate));
+        } catch (IllegalValueException e) {
+            return null;
+        }
     }
 
     public int getDay() {
