@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.social.SocialInfo;
 
+//@@author marvinchin
 /**
  * Handles mappings of social related identifiers when parsing SocialInfo
  */
