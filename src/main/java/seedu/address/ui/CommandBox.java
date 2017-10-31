@@ -29,7 +29,6 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
-    private static final String FILEPATH = "data/test.pdf";
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
@@ -109,15 +108,6 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleCommandInputChanged() {
         try {
-            if (commandTextField.getText().equals("open")) {
-
-                    File file = new File(FILEPATH);
-                    Desktop.getDesktop().open(file);
-                    // HostServices hostServices = getRoot().getHostservices();
-                    // hostServices.showDocument(file.getAbsolutePath());
-
-
-            }
             CommandResult commandResult = logic.execute(commandTextField.getText());
             initHistory();
             historySnapshot.next();
@@ -140,8 +130,6 @@ public class CommandBox extends UiPart<Region> {
             setStyleToIndicateCommandFailure();
             logger.info("Invalid command: " + commandTextField.getText());
             raise(new NewResultAvailableEvent(e.getMessage(), true));
-        } catch ( IOException eee){
-            logger.info("Cannot open pdf file");
         }
     }
     //@@author

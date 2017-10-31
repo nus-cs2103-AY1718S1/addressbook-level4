@@ -1,10 +1,15 @@
 package seedu.address.ui;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import javafx.beans.binding.Bindings;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonNameClickedEvent;
@@ -17,8 +22,10 @@ import seedu.address.model.insurance.ReadOnlyInsurance;
 public class InsuranceProfile extends UiPart<Region> {
 
     private static final String FXML = "InsuranceProfile.fxml";
+    private static final String PDFFOLDERPATH = "data/";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
 
     private ReadOnlyInsurance insurance;
 
@@ -47,7 +54,19 @@ public class InsuranceProfile extends UiPart<Region> {
         insured.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getInsured())));
         beneficiary.setOnMouseClicked(e ->
                 raise(new PersonNameClickedEvent(insurance.getBeneficiary())));
-
+        contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    File file = new File(PDFFOLDERPATH + insurance.getContractPath());
+                    Desktop.getDesktop().open(file);
+                    // HostServices hostServices = getRoot().getHostservices();
+                    // hostServices.showDocument(file.getAbsolutePath());
+                } catch (IOException ee) {
+                    logger.info("Cannot open file: " + PDFFOLDERPATH + insurance.getContractPath());
+                }
+            }
+            });
         bindListeners(insurance);
         registerAsAnEventHandler(this);
     }
