@@ -21,6 +21,8 @@ public class Name {
 
     public final String fullName;
 
+    public int UNKNWON_NAME_COUNT=0;
+
     /**
      * Validates given name.
      *

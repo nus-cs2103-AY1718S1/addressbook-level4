@@ -24,6 +24,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -79,8 +81,8 @@ public class AddCommandTest {
         // null -> returns false
         assertFalse(addAliceCommand.equals(null));
 
-        // different person -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        // different name but same phone number -> returns true
+        assertTrue(addAliceCommand.equals(addBobCommand));
     }
 
     /**
@@ -98,6 +100,11 @@ public class AddCommandTest {
     private class ModelStub implements Model {
         @Override
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addEvent(Event event) throws DuplicateEventException {
             fail("This method should not be called.");
         }
 

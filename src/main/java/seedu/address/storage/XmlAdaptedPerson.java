@@ -8,12 +8,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -28,7 +23,13 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String email;
     @XmlElement(required = true)
+    private String birthday;
+    @XmlElement(required = true)
     private String address;
+    //@@author quangtdn
+    @XmlElement(required = false)
+    private String profile="";
+    //@@author
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -49,7 +50,13 @@ public class XmlAdaptedPerson {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
+        birthday = source.getBirthday().value;
         address = source.getAddress().value;
+
+        if(!source.getProfilePage().value.equals("")) {
+            profile = source.getProfilePage().value;
+        }
+
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -69,8 +76,10 @@ public class XmlAdaptedPerson {
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
+        final Birthday birthday = new Birthday(this.birthday);
         final Address address = new Address(this.address);
+        final ProfilePage profile = new ProfilePage(this.profile);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, email, birthday, address, profile, tags);
     }
 }

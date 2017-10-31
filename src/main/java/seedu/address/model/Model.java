@@ -3,6 +3,8 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -25,6 +27,9 @@ public interface Model {
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+
+    /** Adds the given person */
+    void addEvent(Event event) throws DuplicateEventException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

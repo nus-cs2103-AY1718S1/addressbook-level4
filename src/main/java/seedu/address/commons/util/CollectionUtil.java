@@ -15,6 +15,20 @@ import java.util.stream.Stream;
 public class CollectionUtil {
 
     /** @see #requireAllNonNull(Collection) */
+
+    public static void requireNotAllNull(Object... items) {
+        boolean all_null=true;
+        for(Object ob:items){
+            if(ob!=null){
+                all_null=false;
+                break;
+            }
+        }
+        if(all_null==true){
+            throw new NullPointerException();
+        }
+    }
+
     public static void requireAllNonNull(Object... items) {
         requireNonNull(items);
         Stream.of(items).forEach(Objects::requireNonNull);

@@ -10,6 +10,9 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.EventList;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -26,6 +29,19 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final EventList events;
+
+    public int ELEMENT_COUNT=7;
+
+    public int[] unknownCount=new int[ELEMENT_COUNT];
+
+    public int ELEMENT_NAME=0;
+    public int ELEMENT_PHONE=1;
+    public int ELEMENT_BIRTHDAY=2;
+    public int ELEMENT_ADDRESS=3;
+    public int ELEMENT_PROFILE=4;
+    public int ELEMENT_EMAIL=5;
+
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,6 +53,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        events = new EventList();
     }
 
     public AddressBook() {}
@@ -59,6 +76,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    public void setEvents(List<? extends Event> events) throws DuplicateEventException {
+        this.events.setEvents(events);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -72,6 +93,11 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
+        try {
+            setEvents(newData.getEventList());
+        } catch (DuplicateEventException e) {
+            assert false : "AddressBooks should not have duplicate events";
+        }
     }
 
     //// person-level operations
@@ -162,6 +188,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    //// event-level operations
+
+    /**
+     * Adds an event to the address book.
+     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     * TO DO:
+     * TO DECIDE: whether to @throws DuplicateEventException if an equivalent event already exists.
+     */
+    public void addEvent(Event e) throws DuplicateEventException  {
+        Event newEvent = new Event(e);
+        events.add(newEvent);
+    }
+
     //// util methods
 
     @Override
@@ -173,6 +213,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
         return persons.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Event> getEventList() {
+        return events.asObservableList();
     }
 
     @Override

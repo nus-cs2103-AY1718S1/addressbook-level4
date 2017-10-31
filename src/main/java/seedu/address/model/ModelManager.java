@@ -12,9 +12,12 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+
 
 /**
  * Represents the in-memory model of the address book data.
@@ -78,6 +81,13 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addEvent(Event event) throws DuplicateEventException {
+        addressBook.addEvent(event);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
 

@@ -14,7 +14,7 @@ public class Phone {
     public static final String MESSAGE_PHONE_CONSTRAINTS =
             "Phone numbers can only contain numbers, and should be at least 3 digits long";
     public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
-    public final String value;
+    public String value;
 
     /**
      * Validates given phone number.
@@ -29,6 +29,16 @@ public class Phone {
         }
         this.value = trimmedPhone;
     }
+
+    public Phone() throws IllegalValueException {
+        //requireNonNull(phone);
+        String trimmedPhone = "000";
+        /*if (!isValidPhone(trimmedPhone)) {
+            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+        }*/
+        this.value = trimmedPhone;
+    }
+
 
     /**
      * Returns true if a given string is a valid person phone number.
