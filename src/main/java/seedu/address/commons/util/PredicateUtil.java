@@ -181,7 +181,7 @@ public class PredicateUtil {
         checkArgument(preppedSchedule.split("\\s+").length == 1, "Schedule parameter should be a single word");
 
         for (Schedule schedule : scheduleSet) {
-            String[] preppedActivity = schedule.activity.toString().split("\\s+");
+            String[] preppedActivity = schedule.getActivity().toString().split("\\s+");
             for (String wordsInPreppedActivity : preppedActivity) {
                 if (wordsInPreppedActivity.equalsIgnoreCase(preppedSchedule)) {
                     return true;
