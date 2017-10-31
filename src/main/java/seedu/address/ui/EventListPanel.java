@@ -7,8 +7,10 @@ import org.fxmisc.easybind.EasyBind;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
@@ -27,9 +29,12 @@ public class EventListPanel extends UiPart<Region> {
 
     @FXML
     private ListView<EventCard> eventListView;
+    @FXML
+    private Label title;
 
     public EventListPanel(ObservableList<ReadOnlyEvent> eventList) {
         super(FXML);
+        title.textProperty().bind(new SimpleStringProperty("Event List"));
         setConnections(eventList);
         registerAsAnEventHandler(this);
     }
