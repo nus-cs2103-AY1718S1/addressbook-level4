@@ -53,7 +53,6 @@ public class EventCard extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(event.eventNameProperty()));
         description.textProperty().bind(Bindings.convert(event.descriptionProperty()));
         time.textProperty().bind(Bindings.convert(event.timeProperty()));
-        timer.textProperty().bind(Bindings.concat(event.timeProperty()));
         timer.textProperty().bind(Bindings.convert(event.daysProperty()));
     }
 
