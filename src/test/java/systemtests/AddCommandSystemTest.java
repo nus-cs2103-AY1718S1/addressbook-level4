@@ -137,6 +137,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assert getModel().getAddressBook().getPersonList().size() == 0;
         assertCommandSuccess(ALICE);
 
+
         /* Case: add a person with tags, command with parameters in random order -> added */
         toAdd = BOB;
         command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + PHONE_DESC_BOB + ADDRESS_DESC_BOB + NAME_DESC_BOB

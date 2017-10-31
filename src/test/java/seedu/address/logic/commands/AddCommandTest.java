@@ -20,6 +20,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.meeting.Meeting;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -133,11 +134,13 @@ public class AddCommandTest {
             return null;
         }
 
+        //@@author newalter
         @Override
         public Predicate<? super ReadOnlyPerson> getPersonListPredicate() {
             fail("This method should not be called.");
             return null;
         }
+        //@@author
 
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
@@ -145,7 +148,18 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<Meeting> getFilteredMeetingList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void deleteTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sort(String field) {
             fail("This method should not be called.");
         }
     }

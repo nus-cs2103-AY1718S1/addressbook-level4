@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.meeting.Meeting;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -41,16 +42,23 @@ public interface Model {
     /** Deletes given tag from AddressBook */
     void deleteTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException;
 
+    /** Sorts AddressBook by a field in alphabetical order */
+    void sort(String field);
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
+    //@@author newalter
     /** Returns the predicate of the current filtered person list */
     Predicate<? super ReadOnlyPerson> getPersonListPredicate();
+    //@@author
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    ObservableList<Meeting> getFilteredMeetingList();
 
 }

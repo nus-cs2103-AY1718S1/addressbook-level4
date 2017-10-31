@@ -1,4 +1,4 @@
-= AddressBookX - Developer Guide
+= ABC Business Contact - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -14,12 +14,12 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `Team W13-B3`      Since: `Jun 2016`      Licence: `MIT`
 
-Welcome to *DummyName*!
+Welcome to *ABC*!
 
-*DummyName* is a desktop Address Book application, which is primarily a CLI (Command Line Interface)
+*ABC* is a desktop Business Contact Management application, which is primarily a CLI (Command Line Interface)
 application, but also uses a GUI (graphical user interface). It provides a convenient way for users
 to customize their contacts and keep track of appointments. This guide provides information that will
-help both experienced contributors and first-time users contribute to *DummyName*.
+help both experienced contributors and first-time users contribute to *ABC*.
 
 == Setting up
 
@@ -357,7 +357,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 ==== Mechanism
 
-The backing up of DummyName is done by `BackupCommand` and the restoring of data from a backup file is done by `RestoreBackupCommand`.
+The backing up of ABC is done by `BackupCommand` and the restoring of data from a backup file is done by `RestoreBackupCommand`.
 `BackupCommand` inherits from `Command` as it does not support the undoing and redoing of user actions, whereas `RestoreBackupCommand` inherits from `UndoableCommand`.
 These commands require access to `Storage` from `Logic` and the way to accomplish this is to post an event to `EventsCenter`. `Subscribers` in `StorageManager` will handle these events and respond correspondingly.
 The following shows a sequence diagram of how the `BackupCommand` is carried out.
@@ -418,7 +418,7 @@ This check is done before `RestoreBackupEvent` is posted. Once again, this requi
 Therefore, a `BackupFilePresentEvent` will be posted and the `Subscriber` in `StorageManager` would handle this event to check if the backup file exist.
 
 [NOTE]
-A backup of the data is automatically created when *DummyName* is closed.
+A backup of the data is automatically created when *ABC* is closed.
 
 ==== Design Considerations
 

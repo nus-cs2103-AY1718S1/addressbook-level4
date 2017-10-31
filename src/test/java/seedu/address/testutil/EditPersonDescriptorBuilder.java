@@ -103,7 +103,20 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withMeetings(String... meetings) {
         try {
-            descriptor.setMeetings(ParserUtil.parseMeetings(Arrays.asList(meetings)));
+            descriptor.setMeetings(ParserUtil.parseMeetings(Arrays.asList(meetings), descriptor.getName().get()));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("meetings are expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Parses the {@code meetings} into a {@code Set<Meeting>} and set it to the {@code EditPersonDescriptor}
+     * that we are building. For edit command only.
+     */
+    public EditPersonDescriptorBuilder withMeetingsForEdit(String... meetings) {
+        try {
+            descriptor.setMeetings(ParserUtil.parseMeetingsForEdit(Arrays.asList(meetings)));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("meetings are expected to be unique.");
         }

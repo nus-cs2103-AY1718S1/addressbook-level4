@@ -14,6 +14,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.meeting.Meeting;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -108,6 +109,13 @@ public class ModelManager extends ComponentManager implements Model {
         }
         indicateAddressBookChanged();
     }
+
+    @Override
+    public void sort(String field) {
+        addressBook.sort(field);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -119,15 +127,22 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
+    //@@author newalter
     @Override
     public Predicate<? super ReadOnlyPerson> getPersonListPredicate() {
         return filteredPersons.getPredicate();
     }
+    //@@author
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public ObservableList<Meeting> getFilteredMeetingList() {
+        return addressBook.getMeetingList();
     }
 
     @Override

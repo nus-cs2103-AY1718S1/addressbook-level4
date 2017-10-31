@@ -81,6 +81,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         setTags(new HashSet<>(newData.getTagList()));
         setMeetings(new HashSet<>(newData.getMeetingList()));
         syncMasterTagListWith(persons);
+        syncMasterMeetingListWith(persons);
     }
 
     //// person-level operations
@@ -98,18 +99,21 @@ public class AddressBook implements ReadOnlyAddressBook {
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
+        syncMasterMeetingListWith(newPerson);
         persons.add(newPerson);
     }
 
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
+     * {@code AddressBook}'s meeting list will be updated with the meetings of {@code editedReadOnlyPerson}.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
      *      another existing person in the list.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      *
      * @see #syncMasterTagListWith(Person)
+     * @see #syncMasterMeetingListWith(Person)
      */
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -117,6 +121,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         Person editedPerson = new Person(editedReadOnlyPerson);
         syncMasterTagListWith(editedPerson);
+        syncMasterMeetingListWith(editedPerson);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
@@ -154,6 +159,36 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Ensures that every meeting in this person:
+     *  - exists in the master list {@link #meetings}
+     *  - points to a Meeting object in the master list
+     */
+    private void syncMasterMeetingListWith(Person person) {
+        final UniqueMeetingList personMeetings = new UniqueMeetingList(person.getMeetings());
+        meetings.mergeFrom(personMeetings);
+
+        // Create map with values = meeting object references in the master list
+        // used for checking person meeting references
+        final Map<Meeting, Meeting> masterMeetingObjects = new HashMap<>();
+        meetings.forEach(meeting -> masterMeetingObjects.put(meeting, meeting));
+
+        // Rebuild the list of person meetings to point to the relevant meetings in the master tag list.
+        final Set<Meeting> correctMeetingReferences = new HashSet<>();
+        personMeetings.forEach(meeting -> correctMeetingReferences.add(masterMeetingObjects.get(meeting)));
+        person.setMeetings(correctMeetingReferences);
+    }
+
+    /**
+     * Ensures that every meeting in these persons:
+     *  - exists in the master list {@link #meetings}
+     *  - points to a Meeting object in the master list
+     *  @see #syncMasterMeetingListWith(Person)
+     */
+    private void syncMasterMeetingListWith(UniquePersonList persons) {
+        persons.forEach(this::syncMasterMeetingListWith);
+    }
+
+    /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
@@ -163,6 +198,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         } else {
             throw new PersonNotFoundException();
         }
+    }
+
+    public void sort(String field) {
+        persons.sort(field);
     }
 
     //// tag-level operations
