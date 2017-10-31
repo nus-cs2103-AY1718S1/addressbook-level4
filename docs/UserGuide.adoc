@@ -257,7 +257,7 @@ Examples:
 Deletes the 2nd group in the address book.
 * `gd 2`
 
-=== Adding a schedule to a person (Since V1.4)
+=== Adding a schedule to a person : `cadd` (Since V1.4)
 
 Adds a person's Google Calendar events to schedules. +
 Format: `cadd p/PERSON INDEX i/GOOGLE CALENDAR ID`
