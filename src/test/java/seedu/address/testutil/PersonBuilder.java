@@ -2,7 +2,6 @@ package seedu.address.testutil;
 
 import static java.util.Arrays.asList;
 
-import java.util.List;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -118,7 +117,7 @@ public class PersonBuilder {
     /**
      * Parses the {@code emails} into a {@code Set<Email>} and sets it to the {@code Person} that we are building.
      */
-    public PersonBuilder withEmail(String ... emails) {
+    public PersonBuilder withEmail(String... emails) {
         try {
             this.person.setEmails(SampleDataUtil.getEmailSet(emails));
         } catch (IllegalValueException ive) {

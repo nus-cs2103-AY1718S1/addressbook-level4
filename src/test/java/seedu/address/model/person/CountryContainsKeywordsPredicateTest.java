@@ -43,7 +43,8 @@ public class CountryContainsKeywordsPredicateTest {
     public void test_countryContainsKeywords_returnsTrue() {
         // One keyword
 
-        Predicate<ReadOnlyPerson> predicate = new CountryContainsKeywordsPredicate(Collections.singletonList("Singapore"));
+        Predicate<ReadOnlyPerson> predicate =
+                new CountryContainsKeywordsPredicate(Collections.singletonList("Singapore"));
         assertTrue(predicate.test(new PersonBuilder().withCountry("65").build()));
 
         // Only one matching keyword
