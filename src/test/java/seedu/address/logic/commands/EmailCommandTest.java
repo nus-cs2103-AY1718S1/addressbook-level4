@@ -1,12 +1,13 @@
 package seedu.address.logic.commands;
 
-import org.junit.Rule;
-import org.junit.Test;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.ui.testutil.EventsCollectorRule;
-
 import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.commands.EmailCommand.MESSAGE_DISPLAY_EMAIL_SUCCESS;
+
+import org.junit.Rule;
+import org.junit.Test;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.ui.testutil.EventsCollectorRule;
 
 //@@author jin-ting
 /**
