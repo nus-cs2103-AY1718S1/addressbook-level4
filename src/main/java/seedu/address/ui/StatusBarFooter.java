@@ -58,7 +58,7 @@ public class StatusBarFooter extends UiPart<Region> {
         registerAsAnEventHandler(this);
         setTotalPersons(totalPersons);
     }
-
+    //@@author limyongsong
     /**
      * Displays the total number of persons on list on StatusBarFooter along with syncstatus and savelocation
      * Placement determine by @see StatusBarFooter.fxml
@@ -67,6 +67,7 @@ public class StatusBarFooter extends UiPart<Region> {
     private void setTotalPersons(int totalPersons) {
         this.totalPersons.setText(totalPersons + " person(s) total");
     }
+    //@@author
     /**
      * Sets the clock used to determine the current time.
      */

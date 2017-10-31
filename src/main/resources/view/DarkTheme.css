@@ -334,7 +334,7 @@
     -fx-background-color: transparent, #383838, transparent, #383838;
     -fx-background-radius: 0;
 }
-
+/* @@author limyongsong */
 #remarkPanel .content {
     -fx-background-color: transparent, #383838, transparent, #383838;
     -fx-background-radius: 0;
@@ -344,7 +344,7 @@
     -fx-background-color: transparent, #383838, transparent, #383838;
     -fx-background-radius: 0;
 }
-
+/* @@author */
 #tags {
     -fx-hgap: 7;
     -fx-vgap: 3;

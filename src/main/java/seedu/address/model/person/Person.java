@@ -109,7 +109,7 @@ public class Person implements ReadOnlyPerson {
     public Address getAddress() {
         return address.get();
     }
-
+    //@@author limyongsong
     public void setRemark(ArrayList<Remark> remark) {
         this.remark.set(requireNonNull(remark));
     }
@@ -124,7 +124,7 @@ public class Person implements ReadOnlyPerson {
         ArrayList<Remark> readOnlyRemarkList = new ArrayList<>(remark.get());
         return readOnlyRemarkList;
     }
-
+    //@@author
     public void setFavouriteStatus(FavouriteStatus favouriteStatus) {
         this.favouriteStatus.set(requireNonNull(favouriteStatus));
     }
@@ -158,7 +158,7 @@ public class Person implements ReadOnlyPerson {
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
     }
-
+    //@@author limyongsong
     public void setLink(Link link) {
         this.link.set(requireNonNull(link));
     }
@@ -179,7 +179,7 @@ public class Person implements ReadOnlyPerson {
                 || (other instanceof ReadOnlyPerson // instanceof handles nulls
                 && this.isSameStateAs((ReadOnlyPerson) other));
     }
-
+    //@@author
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
