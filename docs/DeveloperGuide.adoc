@@ -478,7 +478,7 @@ display of the entire list in an easier to see manner. +
 ---
 
 **Aspect:** Sort parameters of `SortCommand`. +
-**Alternative 1 (current choice):** Allow sorting based on name, phone, email or address +
+**Alternative 1 (current choice):** Allow sorting based on name, phone, email, address or age +
 **Pros:** Gives the option to sort based on whichever option the user wants.  +
 **Cons:** Unable to make it inbuilt due to the presence of multiple sort parameters. Contacts are not sorted upon addition to Peersonal.  +
 
