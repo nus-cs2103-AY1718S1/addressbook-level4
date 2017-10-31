@@ -18,26 +18,20 @@ link:{collatedDir}/test/rushan-khor.md[Test code]
 ==== External behavior
 
 ---
-#Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=batch]
-
-#End of Extract#
 
 ---
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Batch deletions make it less tedious to perform deletions on multiple contacts.
 
 ==== Implementation
 
 ---
-#Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
-
-#End of Extract#
+include::../DeveloperGuide.adoc[tag=batch]
 
 ---
 
