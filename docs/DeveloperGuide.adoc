@@ -365,51 +365,31 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 // tag::favourite[]
 === Favourite mechanism (Since v1.2)
-To favourite a contact is achieved by `FavouriteCommand`, which is a subclass of `UndoableCommand`. It basically changes the value of the `Favourite` field of a `Person`.
+To favourite a contact is achieved by `FavouriteCommand`. It basically changes the value of the `Favourite` field of a `Person`. The `Favourite` class has two status indicators: one is a boolean value and the other is a String. The boolean one is used in the constructor while the String one is for UI and output purposes.
 
-In this sense, `Favourite` class need to be created to store the favourite status of a contact. As `AddCommand` does not involve `Favourite`, the default `Favourite` status for every newly added `Person` is "False".
+In this sense, `Favourite` class needs to be created to store the favourite status of a contact. As `AddCommand` does not involve `Favourite`, the default `Favourite` status for every newly added `Person` is false.
 
 The following sequence diagram shows how a `FavouriteCommand` is processed:
 
 image::FavouriteSequenceDiagram.png[width="800"]
 
-To make the default status of a `Favourite` field "False", the default constructor of `Favourite` is implemented in this way:
+To make the default status of a `Favourite` field "False", the default constructor of `Favourite` takes no arguments and set the boolean indicator to false. The value of the String indicator is synchronised with the boolean indicator. But in some cases, such as JUnit Tests, a `FavouriteCommand` needs to be initialised in such a way that its status is "True". Thus, another constructor that takes in a boolean argument is also available. The following shows the two different constructors:
 [source,java]
 ----
-public class Favourite {
-
-    private String status;
-
     public Favourite() {
+        this.favourite = false;
         this.status = "False";
     }
-}
+
+    public Favourite(boolean favourite) {
+        this.favourite = favourite;
+        this.status = favourite ? "True" : "False";
+    }
 ----
 
-In addition, the utility class `PersonBuilder` sets the default value of `Favourite` to each newly created object in this way:
-[source,java]
-----
-public class PersonBuilder {
-    // ... other default values ...
-    public static final Favourite DEFAULT_FAVOURITE = new Favourite();
+In addition, the utility class `PersonBuilder` is also modified to set the default value of `Favourite` to each newly created object.
 
-    private Person person;
-
-    public PersonBuilder() {
-           try {
-               // ... set other fields to their default states ...
-               Favourite defaultFavourite = DEFAULT_FAVOURITE;
-
-               this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
-                       defaultFavourite, defaultTags);
-           } catch (IllegalValueException ive) {
-               // ... catch statement ...
-           }
-       }
-}
-----
-
-After the default status is set, `FavouriteCommand` changes it either from "True" to "False" or "False" to "True". `FavouriteCommand` takes in an integer as its argument. The command is first being parsed in `AddressBookParser` to be identified as an instance of `FavouriteCommand`. Then it is parsed by `FavouriteCommandParser` to parse the index. Invalid indexes will be handled by throwing an exception. This is how `FavouriteCommandParser` is implemented:
+`FavouriteCommand` takes in an integer as its argument. The command is first being parsed in `AddressBookParser` to be identified as an instance of `FavouriteCommand`. Then it is parsed by `FavouriteCommandParser` to parse the index. Invalid indexes will be handled by throwing an exception. This is how `FavouriteCommandParser` is implemented:
 [source,java]
 ----
 public class FavouriteCommandParser implements Parser<FavouriteCommand> {
@@ -434,22 +414,18 @@ public class FavouriteCommand extends UndoableCommand {
         protected CommandResult executeUndoableCommand() throws CommandException {
             // ... fetch personToEdit ...
 
-            Favourite favourite = personToEdit.getFavourite();
-            favourite.setFavourite();
-            if (favourite.getStatus().equals("True")) {
-                changedToFav = true;
-            } else {
-                changedToFav = false;
-            }
-            Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                    personToEdit.getAddress(), favourite, personToEdit.getTags());
+             Favourite favourite = personToEdit.getFavourite();
+             favourite.toggleFavourite();
+             changedToFav = favourite.getFavourite();
+
+             Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(), personToEdit.getAddress(), favourite, personToEdit.getBirthday(), personToEdit.getTags());
 
             // ... try replace personToEdit with editedPerson ...
         }
 }
 ----
 
-It is important to display `Favourite` in the user interface. Thus a few changes on UI is needed. `PersonCard` class and `PersonCardHandle` class are modified to include `Favourite` label in the UI. `PersonListCard.fxml` is also modified to reserve space for the `Favourite` label.
+It is important to display `Favourite` in the user interface. `PersonCard` is modified to contain a `favouriteLabel` that changes its appearance based on the favourite status of the person. It will first detect the boolean favourite status of the person. If the person is a favourite contact, a yellow star will be shown. Otherwise, a transparent star with black border will be show. The colours of the border and the background of the label are set to transparent, so that only the background picture, which is a star, will be shown.
 
 ==== Design Considerations
 
@@ -460,6 +436,16 @@ It is important to display `Favourite` in the user interface. Thus a few changes
 **Alternative 2:** Keep it as a `Boolean` value +
 **Pros:** Does not need to create another class. Easier to implement. +
 **Cons:** Potentially catastrophic because some Boolean methods need to be overwritten. It is also prone to bugs when developers forget to change the ObjectProperty to `String` in UI classes.
+
+---
+
+**Aspect:** Indicating `Favourite` values +
+**Alternative 1 (current choice):** Two indicators: one boolean and one String +
+**Pros:** Using the boolean indicator in conditional loops can reduce the complexity of the code. It is also more natural to have a binary value of the favourite status. It also exercises defensive programming, because passing a String parameter to the constructor may break the application if the argument is illegal (anything besides "True" and "False"). By also having a String indicator, it is much easier to output the value of the favourite status. +
+**Cons:** Need to create one more variable in the `Favourite` class. Also additional attention needs to be given to avoid problems where the two indicators are not synchronised. +
+**Alternative 2:** Only use a String indicator +
+**Pros:** Easier to implement. +
+**Cons:** Dangerous as it is prone to bugs when an illegal String value is passed to the constructor. It is also not natural to have a String indicator for a supposedly binary one. +
 
 ---
 

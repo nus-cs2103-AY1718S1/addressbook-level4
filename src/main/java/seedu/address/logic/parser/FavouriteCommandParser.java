@@ -7,6 +7,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.FavouriteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author taojiashu
 /**
  * Parser for FavouriteCommand
  */

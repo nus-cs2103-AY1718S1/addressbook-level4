@@ -113,6 +113,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author taojiashu
     /**
      * Sets the {@code Favourite} of the {@code Person} that we are building
      */

@@ -14,10 +14,11 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+//@@author taojiashu
 /**
  * Mark a person in the contact as favourite
  */
-public class FavouriteCommand extends UndoableCommand {
+public class FavouriteCommand extends Command {
 
     public static final String COMMAND_WORD_1 = "favourite";
     public static final String COMMAND_WORD_2 = "fav";
@@ -47,7 +48,7 @@ public class FavouriteCommand extends UndoableCommand {
     }
 
     @Override
-    protected CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
