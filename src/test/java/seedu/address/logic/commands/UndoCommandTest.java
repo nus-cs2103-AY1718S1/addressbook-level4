@@ -41,7 +41,7 @@ public class UndoCommandTest {
         UndoRedoStack undoRedoStack = prepareStack(
                 Arrays.asList(deleteCommandOne, deleteCommandTwo), Collections.emptyList());
         UndoCommand undoCommand = new UndoCommand();
-        undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack,storage);
+        undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack, storage);
         deleteCommandOne.execute();
         deleteCommandTwo.execute();
 

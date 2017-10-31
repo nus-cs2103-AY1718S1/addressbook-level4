@@ -10,15 +10,15 @@ import seedu.address.logic.commands.ImportCommand;
 
 public class ImportCommandParserTest {
 
-        private ImportCommandParser parser = new ImportCommandParser();
+    private ImportCommandParser parser = new ImportCommandParser();
 
-        @Test
-        public void parse_validArgs_returnsImportCommand() {
-            assertParseSuccess(parser, "data\\circlesImportTest.xml", new ImportCommand("data\\circlesImportTest.xml"));
-        }
-
-        @Test
-        public void parse_invalidArgs_throwsParseException() {
-            assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
-        }
+    @Test
+    public void parse_validArgs_returnsImportCommand() {
+        assertParseSuccess(parser, "data\\circlesImportTest.xml", new ImportCommand("data\\circlesImportTest.xml"));
     }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
+    }
+}

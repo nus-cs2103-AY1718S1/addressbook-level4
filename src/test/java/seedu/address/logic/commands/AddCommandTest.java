@@ -36,10 +36,10 @@ import seedu.address.testutil.TypicalStorage;
 
 public class AddCommandTest {
 
-    private Storage storage = new TypicalStorage().setUp();
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    private Storage storage = new TypicalStorage().setUp();
 
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
