@@ -1,7 +1,8 @@
+//@@author limyongsong
 package seedu.address.commons.core;
 
 /**
- * Container for user visible messages.
+ * Container for possible links for link command.
  */
 public class PossibleLinks {
 
