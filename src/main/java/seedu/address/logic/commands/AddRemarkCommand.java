@@ -58,8 +58,16 @@ public class AddRemarkCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        ArrayList<Remark> tempRemarkList = personToEdit.getRemark();
-        tempRemarkList.addAll(remarkArrayList);
+        ArrayList<Remark> tempRemarkList;
+        if(!remarkArrayList.get(0).equals("") || !remarkArrayList.get(0).equals(null)){
+            tempRemarkList = new ArrayList<>(personToEdit.getRemark());
+        } else {
+            tempRemarkList = new ArrayList<>();
+        }
+
+        for(int i =0; i<remarkArrayList.size(); i++) {
+            tempRemarkList.add(remarkArrayList.get(i));
+        }
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), tempRemarkList, personToEdit.getFavouriteStatus(), personToEdit.getTags(),
                 personToEdit.getLink());

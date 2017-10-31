@@ -26,17 +26,16 @@ public class RemoveRemarkCommandParser implements Parser<RemoveRemarkCommand> {
      */
     public RemoveRemarkCommand parse(String args) throws ParseException {
         requireNonNull(args);
-
-       Index index;
-       Scanner scan;
-       String checkedString;
-       String tempString;
-       int tempIndex = 0;
+        Index index;
+        Scanner scan;
+        String checkedString;
+        String tempString;
+        int tempIndex = 0;
         try {
             List<Integer> integerList = new ArrayList<Integer>();
             scan = new Scanner(args);
             index = Index.fromOneBased(scan.nextInt());
-            while(scan.hasNext()) {
+            while (scan.hasNext()) {
                 tempString = scan.next();
                 //Makes sure index accepted are integers
                 if (!tempString.matches(".*\\d+.*")) {
@@ -44,7 +43,7 @@ public class RemoveRemarkCommandParser implements Parser<RemoveRemarkCommand> {
                             RemoveRemarkCommand.MESSAGE_USAGE));
                 }
                 tempIndex = Integer.parseInt(tempString);
-                if(!integerList.contains(tempIndex)) { //makes sure there are no duplicate index in the list
+                if (!integerList.contains(tempIndex)) { //makes sure there are no duplicate index in the list
                     integerList.add(tempIndex);
                 }
 

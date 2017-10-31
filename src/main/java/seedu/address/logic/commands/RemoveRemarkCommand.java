@@ -59,23 +59,23 @@ public class RemoveRemarkCommand extends UndoableCommand {
 
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        ArrayList<Remark> tempRemarkList = personToEdit.getRemark();
+        ArrayList<Remark> tempRemarkList = new ArrayList<>(personToEdit.getRemark());
         ArrayList<Remark> emptyRemarkList = new ArrayList<>();
         Person editedPerson;
-        if(remarkIndexArrayList.isEmpty()){ //clears all the remarks if no specific remark index is provided
+        if (remarkIndexArrayList.isEmpty()) { //clears all the remarks if no specific remark index is provided
             editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                    personToEdit.getAddress(), emptyRemarkList, personToEdit.getFavouriteStatus(), personToEdit.getTags(),
-                    personToEdit.getLink());
+                    personToEdit.getAddress(), emptyRemarkList, personToEdit.getFavouriteStatus(),
+                    personToEdit.getTags(), personToEdit.getLink());
         } else {
             for (int i = 0; i < remarkIndexArrayList.size(); i++) {
-                if (Index.fromOneBased(remarkIndexArrayList.get(i)).getZeroBased() >= tempRemarkList.size()){
+                if (Index.fromOneBased(remarkIndexArrayList.get(i)).getZeroBased() >= tempRemarkList.size()) {
                     throw new CommandException(Messages.MESSAGE_INVALID_REMARK_INDEX_FORMAT);
                 }
                 tempRemarkList.remove(Index.fromOneBased(remarkIndexArrayList.get(i)).getZeroBased());
             }
             editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                    personToEdit.getAddress(), tempRemarkList, personToEdit.getFavouriteStatus(), personToEdit.getTags(),
-                    personToEdit.getLink());
+                    personToEdit.getAddress(), tempRemarkList, personToEdit.getFavouriteStatus(),
+                    personToEdit.getTags(), personToEdit.getLink());
         }
 
         try {
