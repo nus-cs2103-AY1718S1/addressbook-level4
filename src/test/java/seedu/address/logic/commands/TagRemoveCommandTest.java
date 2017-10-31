@@ -243,14 +243,6 @@ public class TagRemoveCommandTest {
         Set<Tag> tagSetCopy = tagRemoveCommand.createModifiableTagSet(originalTagSet);
         assertTrue(tagSetCopy.equals(originalTagSet));
     }
-        /**
-         * Returns an {@code TagRemoveCommand} with parameters {@code index} and {@code descriptor}
-         */
-    private TagAddCommand prepareCommand(ArrayList<Index> index, TagAddDescriptor descriptor) {
-        TagAddCommand tagAddCommand = new TagAddCommand(index, descriptor);
-        tagAddCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return tagAddCommand;
-    }
 
     /**
      * Returns an {@code TagRemoveCommand} with parameters {@code index} and {@code descriptor}
