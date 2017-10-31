@@ -44,25 +44,11 @@
       <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
 
-    <StackPane fx:id="browserPlaceholder" prefHeight="0.0" prefWidth="0.0" visible="true">
+    <StackPane fx:id="togglePlaceHolder" prefHeight="20.0" prefWidth="525.0" visible="true">
       <padding>
-        <Insets bottom="10" left="10" right="10" top="10" />
+        <Insets bottom="1" left="1" right="1" top="1" />
       </padding>
     </StackPane>
-
-    <StackPane fx:id="informationBoardPlaceholder" prefHeight="20.0" prefWidth="525.0" >
-      <padding>
-        <Insets bottom="10" left="10" right="10" top="10" />
-      </padding>
-    </StackPane>
-      <VBox fx:id="eventList" minWidth="340" SplitPane.resizableWithParent="false">
-         <padding>
-            <Insets bottom="10" left="10" right="10" top="10" />
-         </padding>
-         <children>
-            <StackPane fx:id="eventListPanelPlaceholder" VBox.vgrow="ALWAYS" />
-         </children>
-      </VBox>
   </SplitPane>
 
   <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />

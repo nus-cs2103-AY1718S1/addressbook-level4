@@ -43,6 +43,7 @@ public class MainWindow extends UiPart<Region> {
     private BrowserPanel browserPanel;
     private EventListPanel eventListPanel;
     private PersonListPanel personListPanel;
+    private TogglePanel togglePanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -66,6 +67,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane resultDisplayPlaceholder;
+
+    @FXML
+    private StackPane togglePlaceHolder;
 
     @FXML
     private StackPane statusbarPlaceholder;
@@ -134,16 +138,19 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        //browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         InformationBoard informationBoard = new InformationBoard();
-        informationBoardPlaceholder.getChildren().add(informationBoard.getRoot());
+        //informationBoardPlaceholder.getChildren().add(informationBoard.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         eventListPanel = new EventListPanel(logic.getFilteredEventList());
-        eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+        //eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+
+        togglePanel = new TogglePanel(browserPanel, informationBoard, eventListPanel);
+        togglePlaceHolder.getChildren().add(togglePanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
