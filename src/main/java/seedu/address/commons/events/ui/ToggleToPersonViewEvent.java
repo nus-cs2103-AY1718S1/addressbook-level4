@@ -5,7 +5,7 @@ import seedu.address.commons.events.BaseEvent;
 //@@author Alim95
 
 /**
- * An event requesting to toggle the viewo to PersonPanel.
+ * An event requesting to toggle the view to PersonPanel.
  */
 public class ToggleToPersonViewEvent extends BaseEvent {
 

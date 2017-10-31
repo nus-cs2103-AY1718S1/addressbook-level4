@@ -5,7 +5,7 @@ import seedu.address.commons.events.BaseEvent;
 //@@author Alim95
 
 /**
- * An event requesting to toggle the viewo to TaskPanel.
+ * An event requesting to toggle the view to TaskPanel.
  */
 public class ToggleToTaskViewEvent extends BaseEvent {
 
