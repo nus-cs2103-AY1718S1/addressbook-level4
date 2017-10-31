@@ -95,10 +95,10 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name, address or phone number: `find`
+=== Locating persons by name, address or phone number: `find` (Since V1.4)
 
-Finds persons whose names or name initial or address or phone number contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]` +
+Finds persons whose names or name initials or address or phone number contain any of the given keywords. +
+Format: `find [n/] [p/] [a/] KEYWORD [MORE_KEYWORDS]` +
 Alias: `f`
 
 ****
@@ -112,11 +112,11 @@ Alias: `f`
 
 Examples:
 
-* `find (n/)John` +
+* `find John` +
 Returns `john` and `John Doe`
-* `find (n/)Betsy Tim John` +
+* `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
-* `find (n/)AY` +
+* `find AY` +
 Returns `Alex Yeoh` whose name initial is `AY`
 * `find p/83537423` +
 Returns any person with phone number `83537423`
@@ -265,7 +265,7 @@ Examples:
 Deletes the 2nd group in the address book.
 * `gd 2`
 
-=== Adding a schedule to a person (Since V1.4)
+=== Adding a schedule to a person : `cadd` (Since V1.4)
 
 Adds a person's Google Calendar events to schedules. +
 Format: `cadd p/PERSON INDEX i/GOOGLE CALENDAR ID`
@@ -281,6 +281,39 @@ Alias: `ca`
 Examples:
 
 * `cadd p/2 i/b8dyuv028k71krma10abbc8f3s`
+
+=== Setting the photo of a person: `ppset` (Since V1.4)
+
+Sets the photo of a person. +
+Format: `ppset INDEX fp/FILEPATH`
+Alias: pps
+
+****
+* Adds photo to person at specified `INDEX`
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `ppset 1 fp/C:\Users\nas.png`
+
+=== Resetting the photo of a person: `ppreset` (Since V1.4)
+
+Resets photo of a person to default picture. +
+Format: `ppreset INDEX`
+Alias: ppr
+
+****
+* Resets photo of person at specified `INDEX`
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `ppreset 1`
+
 
 === Sorting persons : `sort` (Since V1.1)
 
