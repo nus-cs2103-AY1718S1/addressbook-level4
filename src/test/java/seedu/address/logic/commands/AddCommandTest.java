@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -129,6 +130,12 @@ public class AddCommandTest {
         @Override
         public void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public Index getIndex(ReadOnlyPerson person) {
+            fail("This method should not be called.");
+            return null;
         }
 
         @Override
