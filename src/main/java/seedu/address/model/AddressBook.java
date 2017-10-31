@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -256,6 +257,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
+    }
+
+    public ObservableList<ReadOnlyInsurance> getInsuranceList() {
+       return lifeInsuranceMap.asObservableList();
     }
 
     //@@author OscarWang114

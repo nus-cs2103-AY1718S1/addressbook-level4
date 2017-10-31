@@ -2,12 +2,15 @@ package seedu.address.model.insurance;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.insurance.exceptions.DuplicateInsuranceException;
 import seedu.address.model.insurance.exceptions.InsuranceNotFoundException;
@@ -84,6 +87,10 @@ public class UniqueLifeInsuranceMap {
             replacement.put(entry.getKey(), entry.getValue());
         }
         setInsurances(replacement);
+    }
+
+    public ObservableList<ReadOnlyInsurance> asObservableList() {
+        return FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(internalMap.values()));
     }
 
     /**

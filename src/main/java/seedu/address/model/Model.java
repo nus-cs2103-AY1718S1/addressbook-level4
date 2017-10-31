@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -39,10 +40,13 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
+    ObservableList<ReadOnlyInsurance> getInsuranceList();
+
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
 
 }

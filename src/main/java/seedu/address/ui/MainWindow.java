@@ -64,6 +64,9 @@ public class MainWindow extends UiPart<Region> {
     private StackPane personListPanelPlaceholder;
 
     @FXML
+    private StackPane insuranceListPanelPlaceholder;
+
+    @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
@@ -132,10 +135,11 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        insuranceListPanel = new InsuranceListPanel();
-        rightPanelPlaceholder.getChildren().add(insuranceListPanel.getRoot());
+        insuranceListPanel = new InsuranceListPanel(logic.getInsuranceList());
+        insuranceListPanelPlaceholder.getChildren().add(insuranceListPanel.getRoot());
 
         profilePanel = new ProfilePanel();
+        rightPanelPlaceholder.getChildren().add(profilePanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -237,8 +241,8 @@ public class MainWindow extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        insuranceListPanel = new InsuranceListPanel(event.getNewSelection().person);
+        //insuranceListPanel = new InsuranceListPanel(event.getNewSelection().person);
         rightPanelPlaceholder.getChildren().clear();
-        rightPanelPlaceholder.getChildren().add(insuranceListPanel.getRoot());
+        // rightPanelPlaceholder.getChildren().add(insuranceListPanel.getRoot());
     }
 }

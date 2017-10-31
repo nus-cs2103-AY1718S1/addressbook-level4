@@ -27,9 +27,9 @@ public class InsuranceListPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    public InsuranceListPanel(ReadOnlyPerson person) {
+    public InsuranceListPanel(ObservableList<ReadOnlyInsurance> insuranceList) {
         super(FXML);
-        setConnections(person.getLifeInsurances().asObservableList());
+        setConnections(insuranceList);
         registerAsAnEventHandler(this);
     }
     /**
@@ -48,6 +48,7 @@ public class InsuranceListPanel extends UiPart<Region> {
                 insuranceList, (insurance) -> new InsuranceProfile(insurance, insuranceList.indexOf(insurance) + 1));
         insuranceListView.setItems(mappedList);
         insuranceListView.setCellFactory(listView -> new InsuranceListPanel.InsuranceListViewCell());
+
     }
 
     /**
