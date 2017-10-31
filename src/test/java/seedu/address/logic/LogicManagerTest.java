@@ -111,7 +111,7 @@ public class LogicManagerTest {
      * Asserts that the result display shows all the {@code expectedCommands} upon the execution of
      * {@code HistoryCommand}.
      */
-    private void assertHistoryCorrect(String... expectedCommands) {
+    private void assertHistoryCorrect(String... expectedCommands)  {
         try {
             CommandResult result = logic.execute(HistoryCommand.COMMAND_WORD);
             String expectedMessage = String.format(

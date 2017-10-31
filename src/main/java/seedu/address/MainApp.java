@@ -27,6 +27,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.InitImageFolder;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
@@ -40,7 +41,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 4, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -50,11 +51,14 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
-
-
+    //@@author wishingmaid
+    protected InitImageFolder imageFolder;
+    //@@author
     @Override
     public void init() throws Exception {
+        //@@author wishingmaid
         logger.info("=============================[ Initializing PEERSONAL ]===========================");
+        //@@author
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
@@ -63,7 +67,9 @@ public class MainApp extends Application {
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
-
+        //@@author wishingmaid
+        imageFolder = new InitImageFolder(userPrefs.getDisplayPicturesPath());
+        //@@author
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);

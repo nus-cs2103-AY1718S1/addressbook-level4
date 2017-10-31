@@ -28,18 +28,18 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     public FindCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
-
+        //@@author Affalen
         /**
          * Used for initial separation of command word and args.
          */
         final Pattern commandFormat = Pattern.compile("(?<commandWord>\\w/)(?<arguments>.*)");
         final Matcher matcher = commandFormat.matcher(args.trim());
-
+        //@@author
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
-
+        //@@author Affalen
         if (!matcher.matches()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
@@ -48,7 +48,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         String commandWord = matcher.group("commandWord");
         String arguments = matcher.group("arguments");
 
-        String[] keywords = arguments.split("\\s+");
+        String[] keywords = arguments.split("\\s", 0);
 
         switch(commandWord) {
 

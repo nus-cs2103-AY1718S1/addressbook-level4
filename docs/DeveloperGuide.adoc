@@ -224,10 +224,12 @@ The diagram below shows the inheritance diagram for commands:
 image::inheritCommandUML.png[width="800]
 
 Suppose that the user wishes to append an image to a desired contact. The user will execute `addphoto 1 f/C:/Users/PhotoBook/myFace.png` to add a photo to the first person in Peersonal. Peersonal will parse the user input into their proper parameters in `AddPhotoCommandParser`.
-`AddPhotoCommandParser` will then return a `AddPhotoCommand` to be executed in the `LogicManager`. Upon the `execute()` method of `AddPhotoCommand`, a new `Person` object, `editedPerson` is created with all the same field as the `personToEdit` with the addition of the new `Photo` field. The `editedPerson` will replace `personToEdit` using the `updatePerson()` in the `Model` class. A success message will be generated if the photo addition is successful. +
+`AddPhotoCommandParser` will then return a `AddPhotoCommand` to be executed in the `LogicManager`. Upon the `execute()` method of `AddPhotoCommand`, a new `Person` object, `editedPerson` is created with all the same field as the `personToEdit` with the addition of the new `Photo` field. +
+`PhotoStorage` is then called to rewrite the filepath of the image to a local folder `displaypictures` and return the new filepath to be set in `Photo` class. An error message will be thrown if PEERSONAL is unable to write the new image to the `displaypictures` folder. The `editedPerson` will take the new filepath of the image instead of the local filepath from the user input. +
+The `editedPerson` will replace `personToEdit` using the `updatePerson()` in the `Model` class. A success message will be generated if the photo addition is successful. +
 The sequence diagram below shows how the `addphoto` process is carried out:
 
-image::SequenceDiagramUML.png[width="800]
+image::NewUML.png[width="800]
 
 ==== Design considerations
 
@@ -245,6 +247,16 @@ image::SequenceDiagramUML.png[width="800]
 **Alternative 2:** Using a String to represent the filepath of the photo. +
 **Pros:** Do not have to go through multiple stages of conversion to represent the photo as an Image object. +
 **Cons:** Unable to pass String into ImageView class in Javafx to load an image. Therefore still have to convert into an Image object to pass through to ImageView class. Thus, using Image Object to represent a photo makes more sense.
+
+---
+
+**Aspect:** Choice of how the images are stored and accessed +
+**Alternative 1(current choice):** Creating a new folder `displaypictures` upon first execution of PEERSONAL.jar to use as an image storage folder. +
+**Pros:** Image filepaths are now independent of the source filepath. Therefore users do not have to worry about shifting the specific image that is tied to a specified contact in PEERSONAL. +
+**Cons:** `displaypictures` folder size might become too big if user adds too many photos. +
+**Alternative 2:** Directly obtains the local filepath of the image on the user's hard drive without writing the image into a new image storage folder `displaypicture` for PEERSONAL. +
+**Pros:** Do not have deal with write issues to `displaypictures` and memory size of `displaypictures` if it gets too big. +
+**Cons:** Users might forget that a specific image file is tied to a contact in PEERSONAL. Shifting the image file will cause PEERSONAL to be unable to find the image file. +
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -394,12 +406,37 @@ image::FindCommandSequenceDiagram.png[width="800"]
 **Aspect:** Accepting different types of user input. +
 **Alternative 1 (current choice):** Using a `commandWord` and `arguments` regex to distinguish user inputs. +
 **Pros:** It is easy to add new parameters and debug. +
-**Cons:** Only able to find one contact at a time e.g. `find n/Alice Bob` does not work.  +
+**Cons:** Inconvenient for users as they have to use a specific `commandWord` for a specific parameter.  +
 **Alternative 2:** Accept any type of user input after `find`. +
 **Pros:** More user-friendly as there are fewer requirements for user input. +
 **Cons:** Difficult to implement because it is tedious to distinguish the user input as several parameters are `String` parameters.
 
 ---
+
+=== Enhancing DeleteCommand mechanism
+
+Prior to enhancement, the `DeleteCommand` class can only delete one entry at a time from the current visible
+list on the model. With this enhancement, it is now able to accept multiple parameters to delete more than one
+entry at a time.
+
+This enhancement was done by changing the `Index` input for the original `DeleteCommand` class to an `ArrayList`,
+allowing it to store more than one `Index` from the user's input. Once it is able to accept more than one `Index`
+for its parameters, the original `DeleteCommand` was modified such that it would run through all the validity checks
+for the given indices. The `DeleteCommand` class would then delete these indicated entries upon success of the
+validity check.
+
+The `DeleteCommandParser` also has to be updated to allow for multiple indices to be accepted. This is done in a similar
+fashion to the above, where the entries for `Index` are changed to that of `ArrayList`, causing the user's entries
+to be stored in an `ArrayList <Index>`.
+
+==== Design Considerations
+
+**Aspect:** Accepting multiple inputs from the user. +
+**Alternative 1 (current choice):** Change the given input from `Index` to `ArrayList<Index>` +
+**Pros:** It allows for most of the base code of `DeleteCommand` to be reused. +
+**Cons:** Have to be thorough and change `Index` to `ArrayList<Index>` in all occurrences within all relevant
+  `DeleteCommand` classes and methods. +
+
 === BirthdayCommand mechanism
 
 image::BirthdayUMLClass.png[width="800]
@@ -453,7 +490,7 @@ display of the entire list in an easier to see manner. +
 ---
 
 **Aspect:** Sort parameters of `SortCommand`. +
-**Alternative 1 (current choice):** Allow sorting based on name, phone, email or address +
+**Alternative 1 (current choice):** Allow sorting based on name, phone, email, address or age +
 **Pros:** Gives the option to sort based on whichever option the user wants.  +
 **Cons:** Unable to make it inbuilt due to the presence of multiple sort parameters. Contacts are not sorted upon addition to Peersonal.  +
 

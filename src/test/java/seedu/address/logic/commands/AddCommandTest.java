@@ -141,6 +141,16 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
+
+        public Boolean ifListIsEmpty(ArrayList<ReadOnlyPerson> contactList) {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public void sortListByUpcomingBirthday(ArrayList<ReadOnlyPerson> contactList) throws CommandException {
+            fail("This method should not be called.");
+        }
     }
 
     /**

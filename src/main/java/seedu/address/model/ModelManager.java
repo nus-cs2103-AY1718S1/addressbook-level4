@@ -3,6 +3,9 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -14,6 +17,8 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.BirthdayComparator;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -26,6 +31,7 @@ import seedu.address.model.tag.Tag;
  * All changes to any model should be synchronized.
  */
 public class ModelManager extends ComponentManager implements Model {
+    public static final String MESSAGE_DUPLICATE_PERSON = "Duplicate persons in Addressbook.";
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
@@ -140,4 +146,71 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+
+    @Override
+    public Boolean ifListIsEmpty(ArrayList<ReadOnlyPerson> contactList) {
+        if (filteredPersons.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+    //@@author zengfengw
+    /**
+     * Sorts the address book in chronological order according to the birthday from the current date.
+     * @param contactList
+     * @throws CommandException
+     */
+    public void sortListByUpcomingBirthday(ArrayList<ReadOnlyPerson> contactList) throws CommandException {
+        contactList.addAll(filteredPersons);
+        Collections.sort(contactList, new BirthdayComparator());
+        ArrayList<ReadOnlyPerson> tempList = new ArrayList<>();
+        int month = Calendar.getInstance().get(Calendar.MONTH);
+        int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        for (ReadOnlyPerson person : contactList) {
+            if ((person.getBirthday().value.length() != 0)
+                    && (Integer.parseInt(person.getBirthday().value.substring(0, 2)) >= day)
+                    && (Integer.parseInt(person.getBirthday().value.substring(3, 5)) == (month + 1))) {
+                tempList.add(person);
+            }
+
+        }
+        for (ReadOnlyPerson person : contactList) {
+            if ((person.getBirthday().value.length() != 0)
+                    && (Integer.parseInt(person.getBirthday().value.substring(3, 5)) > (month + 1))) {
+                tempList.add(person);
+            }
+
+        }
+        for (ReadOnlyPerson person : contactList) {
+            if ((person.getBirthday().value.length() != 0)
+                    && (Integer.parseInt(person.getBirthday().value.substring(3, 5)) < (month + 1))) {
+                tempList.add(person);
+            }
+
+        }
+        for (ReadOnlyPerson person : contactList) {
+            if ((person.getBirthday().value.length() != 0)
+                    && (Integer.parseInt(person.getBirthday().value.substring(0, 2)) < day)
+                    && (Integer.parseInt(person.getBirthday().value.substring(3, 5)) == (month + 1))) {
+                tempList.add(person);
+            }
+
+        }
+        for (ReadOnlyPerson person : contactList) {
+            if ((person.getBirthday().value.length() == 0)) {
+                tempList.add(person);
+            }
+
+        }
+
+        contactList = tempList;
+
+        try {
+            addressBook.setPersons(contactList);
+            indicateAddressBookChanged();
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
+    }
+    //@@author
 }

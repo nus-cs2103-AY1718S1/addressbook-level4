@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FILEPATH;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.MULTI_INDEX_FIRST_PERSON;
@@ -19,6 +20,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddPhotoCommand;
 import seedu.address.logic.commands.BirthdayCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
@@ -37,6 +39,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Photo;
 import seedu.address.model.person.Remark;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -79,6 +82,7 @@ public class AddressBookParserTest {
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
+    //@@author Affalen
     @Test
     public void parseCommand_remark() throws Exception {
         final Remark remark = new Remark("Some remark.");
@@ -86,6 +90,7 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + " " + remark.value);
         assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remark), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_birthday() throws Exception {
@@ -94,7 +99,15 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_BIRTHDAY + " " + birthday.value);
         assertTrue(command instanceof BirthdayCommand);
     }
-
+    //@@author wishingmaid
+    @Test
+    public void parseCommand_photo() throws Exception {
+        final Photo photo = new Photo("");
+        AddPhotoCommand command = (AddPhotoCommand) parser.parseCommand(AddPhotoCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_FILEPATH + " " + photo.getFilePath());
+        assertTrue(command instanceof AddPhotoCommand);
+    }
+    //@@author
     @Test
     public void parseCommand_exit() throws Exception {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
@@ -105,7 +118,9 @@ public class AddressBookParserTest {
     public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindCommand command = (FindCommand) parser.parseCommand(
+                //@@author Affalen
                 FindCommand.COMMAND_WORD + " " + "n/" + keywords.stream().collect(Collectors.joining(" ")));
+        //@@author
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 

@@ -45,6 +45,7 @@ public class UndoCommandTest {
         deleteCommandOne.execute();
         deleteCommandTwo.execute();
 
+
         // multiple commands in undoStack
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         deleteFirstPerson(expectedModel);

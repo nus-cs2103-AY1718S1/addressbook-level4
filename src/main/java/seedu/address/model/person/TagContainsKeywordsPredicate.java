@@ -1,3 +1,4 @@
+//@@author Affalen
 package seedu.address.model.person;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.function.Predicate;
 import seedu.address.model.tag.Tag;
 
 /**
- * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
+ * Tests that a {@code ReadOnlyPerson}'s {@code Tag} matches any of the keywords given.
  */
 public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;

@@ -21,20 +21,25 @@ public class DeleteCommand extends UndoableCommand {
             + ": Deletes the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Multiple parameters must be separated by a space\n"
-            + "Example: " + COMMAND_WORD + " 1 or " + COMMAND_WORD + " 1 3 4";
+            + "Example: " + COMMAND_WORD + " 1 "
+            //@@author Estois
+            + "or " + COMMAND_WORD + " 1 3 4";
+    //@@author
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted: %1$s";
 
+    //@@author Estois
     private ArrayList <Index> targetIndex = new ArrayList <>();
 
     public DeleteCommand(ArrayList <Index> targetIndex) {
         this.targetIndex = targetIndex;
     }
+    //@@author
 
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-
+        //@@author Estois
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         for (int x = 0; x < targetIndex.size(); x++) {
             if (targetIndex.get(x).getZeroBased() >= lastShownList.size()) {
@@ -46,7 +51,6 @@ public class DeleteCommand extends UndoableCommand {
         for (int x = 0; x < targetIndex.size(); x++) {
             personToDelete.add(lastShownList.get(targetIndex.get(x).getZeroBased()));
         }
-
         try {
             for (int x = 0; x < personToDelete.size(); x++) {
                 model.deletePerson(personToDelete.get(x));
@@ -61,6 +65,7 @@ public class DeleteCommand extends UndoableCommand {
             String temp = personToDelete.get(x).toString();
             outputResult += temp;
         }
+        //@@author
         return new CommandResult(outputResult);
     }
 
