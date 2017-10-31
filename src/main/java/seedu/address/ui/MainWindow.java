@@ -202,6 +202,7 @@ public class MainWindow extends UiPart<Region> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
+    //@@author cctdaniel
     /**
      * Handles SwitchThemeEvent.
      */
@@ -267,6 +268,7 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author cctdaniel
     @Subscribe
     private void handleSwitchThemeRequestEvent(SwitchThemeRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

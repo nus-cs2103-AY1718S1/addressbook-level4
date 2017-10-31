@@ -8,6 +8,7 @@ import static seedu.address.model.ThemeUnit.setCurrentThemeUnit;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.SwitchThemeRequestEvent;
 
+//@@author cctdaniel
 /**
  * Toggle between light and dark theme.
  */
