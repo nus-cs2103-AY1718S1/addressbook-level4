@@ -6,6 +6,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Id;
+import seedu.address.model.person.LastUpdated;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Note;
 import seedu.address.model.person.Person;
@@ -24,6 +26,8 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_NOTE = "";
+    public static final String DEFAULT_ID = "";
+    public static final String DEFAULT_LASTUPDATED = "2017-10-18T15:16:28.018Z";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_MEETINGS = "2017-12-12 10:00";
 
@@ -36,10 +40,14 @@ public class PersonBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Note defaultNote = new Note(DEFAULT_NOTE);
+            Id defaultId = new Id(DEFAULT_ID);
+            LastUpdated defaultLastUpdated = new LastUpdated(DEFAULT_LASTUPDATED);
+
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             Set<Meeting> defaultMeetings = SampleDataUtil.getMeetingSet(DEFAULT_MEETINGS);
+
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
-                    defaultNote, defaultTags, defaultMeetings);
+                    defaultNote, defaultId, defaultLastUpdated, defaultTags, defaultMeetings);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }

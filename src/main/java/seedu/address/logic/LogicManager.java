@@ -1,6 +1,5 @@
 package seedu.address.logic;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.logging.Logger;
 

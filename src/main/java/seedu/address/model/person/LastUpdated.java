@@ -37,7 +37,7 @@ public class LastUpdated {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof LastUpdated // instanceof handles nulls
-                && this.value.equals(((LastUpdated) other).value));// state check
+                && this.value.equals(((LastUpdated) other).value)); // state check
     }
 
     @Override

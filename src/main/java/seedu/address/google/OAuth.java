@@ -29,7 +29,7 @@ import seedu.address.model.Model;
  *
  * @author Yaniv Inbar
  */
-public class OAuth extends Observable{
+public class OAuth extends Observable {
 
     private static final OAuth oauth = new OAuth();
     private Model model;
@@ -38,10 +38,10 @@ public class OAuth extends Observable{
      * Be sure to specify the name of your application. If the application name is {@code null} or
      * blank, the application will log a warning. Suggested format is "MyCompany-ProductName/1.0".
      */
-    private final String APPLICATION_NAME = "W13B3-AddressBook/1.2";
+    private final String appName = "W13B3-AddressBook/1.2";
 
     /** Directory to store user credentials. */
-    private final java.io.File DATA_STORE_DIR =
+    private final java.io.File dataStoreDir =
             new java.io.File(System.getProperty("user.home"), ".store/addressbook");
 
     /**
@@ -54,7 +54,7 @@ public class OAuth extends Observable{
     private HttpTransport httpTransport;
 
     /** Global instance of the JSON factory. */
-    private final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+    private final JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
 
     private com.google.api.services.people.v1.PeopleService client;
 
@@ -69,7 +69,7 @@ public class OAuth extends Observable{
     /** Authorizes the installed application to access user's protected data. */
     private Credential authorize() throws Exception {
         // load client secrets
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory,
                 new InputStreamReader(OAuth.class.getResourceAsStream("/client_secrets.json")));
         if (clientSecrets.getDetails().getClientId().startsWith("Enter")
                 || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
@@ -81,7 +81,7 @@ public class OAuth extends Observable{
 
         // set up authorization code flow
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                httpTransport, JSON_FACTORY, clientSecrets,
+                httpTransport, jsonFactory, clientSecrets,
                 Collections.singleton(PeopleServiceScopes.CONTACTS)).setDataStoreFactory(dataStoreFactory)
                 .build();
 
@@ -90,25 +90,30 @@ public class OAuth extends Observable{
         return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }
 
+    /** Method to obtain a PeopleService client
+     *
+     * @return PeopleService client
+     * @throws Throwable
+     */
     public PeopleService execute() throws Throwable {
         try {
-                // initialize the transport
-                httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+            // initialize the transport
+            httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 
-                // initialize the data store factory
-                dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
+            // initialize the data store factory
+            dataStoreFactory = new FileDataStoreFactory(dataStoreDir);
 
-                // authorization
-                Credential credential = authorize();
-                // set up global People instance
-                client = new PeopleService.Builder(
-                        httpTransport, JSON_FACTORY, credential).setApplicationName(APPLICATION_NAME).build();
+            // authorization
+            Credential credential = authorize();
+            // set up global People instance
+            client = new PeopleService.Builder(
+                    httpTransport, jsonFactory, credential).setApplicationName(appName).build();
 
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            } catch (Throwable t) {
-                t.printStackTrace();
-            }
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
 
         return client;
 
@@ -120,7 +125,7 @@ public class OAuth extends Observable{
     }
 
     public Model getModel () {
-       return model;
+        return model;
     }
 
     public static OAuth getInstance () {

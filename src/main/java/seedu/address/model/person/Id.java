@@ -37,7 +37,7 @@ public class Id {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Id // instanceof handles nulls
-                && this.value.equals(((Id) other).value));// state check
+                && this.value.equals(((Id) other).value)); // state check
     }
 
     @Override
