@@ -47,17 +47,13 @@
         <tabs>
           <Tab text="Google Maps">
             <content>
-
               <StackPane fx:id="mapsPlaceholder" prefWidth="340">
-
               </StackPane>
             </content>
             </Tab>
           <Tab text="Browser">
                <content>
-            
                 <StackPane fx:id="browserPlaceholder" prefWidth="340">
-
                 </StackPane>
                </content>
             </Tab>
