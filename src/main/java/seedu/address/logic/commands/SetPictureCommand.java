@@ -38,8 +38,8 @@ public class SetPictureCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Changes the profile picture of person in given index with picture at given file path.\n"
             + "Image file must be .png and optimal size 200 x 200.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " fp/FILEPATH";
+            + "Parameters: p/INDEX (must be a positive integer) fp/FILEPATH\n"
+            + "Example: " + COMMAND_WORD + " p/1 fp/C:\\profilepic.png";
 
     public static final String MESSAGE_SET_PICTURE_PERSON_SUCCESS = "New profile picture for %1$s has been set";
     public static final String MESSAGE_INVALID_FILE = "File at given file path was not type .png";
