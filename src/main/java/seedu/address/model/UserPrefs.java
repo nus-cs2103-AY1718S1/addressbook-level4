@@ -63,7 +63,7 @@ public class UserPrefs {
                 && Objects.equals(addressBookName, o.addressBookName)
                 //@@author wishingmaid
                 && Objects.equals(displayPicturesPath, o.displayPicturesPath);
-                //@@author
+        //@@author
     }
 
     @Override
