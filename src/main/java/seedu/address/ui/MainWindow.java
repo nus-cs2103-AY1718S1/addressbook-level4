@@ -59,6 +59,9 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem helpMenuItem;
 
     @FXML
+    private StackPane informationBoardPlaceholder;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
 
     @FXML
@@ -133,6 +136,9 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
+        InformationBoard informationBoard = new InformationBoard();
+        informationBoardPlaceholder.getChildren().add(informationBoard.getRoot());
+
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -203,6 +209,10 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.show();
     }
 
+    void releaseResources() {
+        browserPanel.freeResources();
+    }
+
     /**
      * Closes the application.
      */
@@ -213,10 +223,6 @@ public class MainWindow extends UiPart<Region> {
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
-    }
-
-    void releaseResources() {
-        browserPanel.freeResources();
     }
 
     @Subscribe

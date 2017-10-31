@@ -44,7 +44,13 @@
       <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
 
-    <StackPane fx:id="browserPlaceholder" prefHeight="20.0" prefWidth="525.0">
+    <StackPane fx:id="browserPlaceholder" prefHeight="0.0" prefWidth="0.0" visible="true">
+      <padding>
+        <Insets bottom="10" left="10" right="10" top="10" />
+      </padding>
+    </StackPane>
+
+    <StackPane fx:id="informationBoardPlaceholder" prefHeight="20.0" prefWidth="525.0" >
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
