@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
@@ -10,16 +9,24 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox alignment="CENTER" minHeight="105" prefHeight="105" prefWidth="120">
+        <StackPane fx:id="profilePhotoStackPane" styleClass="profile-photo-pane">
+            <ImageView fx:id="profilePhotoImageView" fitHeight="85" fitWidth="85"
+                       preserveRatio="true" styleClass="profile-photo" />
+        </StackPane>
+    </VBox>
+
     <GridPane HBox.hgrow="ALWAYS">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
         </columnConstraints>
         <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
             <padding>
-                <Insets bottom="5" left="15" right="5" top="5" />
+                <Insets bottom="5" left="1" right="5" top="5" />
             </padding>
             <HBox alignment="CENTER_LEFT" spacing="5">
                 <Label fx:id="id" styleClass="cell_big_label">
@@ -40,14 +47,11 @@
             <RowConstraints />
         </rowConstraints>
     </GridPane>
-    <VBox alignment="TOP_RIGHT" minHeight="105" prefWidth="100.0">
+
+    <VBox alignment="TOP_RIGHT" minHeight="105" prefWidth="40">
         <padding>
             <Insets bottom="5" left="5" right="10" top="8" />
         </padding>
-        <ImageView fx:id="favorite" fitHeight="45.0" fitWidth="28.0" preserveRatio="true" smooth="true">
-            <image>
-                <Image url="@../images/fav_icon.png" />
-            </image>
-        </ImageView>
+        <ImageView fx:id="favoriteImageView" fitHeight="32" fitWidth="32" preserveRatio="true" />
     </VBox>
 </HBox>

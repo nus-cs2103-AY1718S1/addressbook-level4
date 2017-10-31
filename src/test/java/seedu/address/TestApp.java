@@ -8,6 +8,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.ThemeSettings;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
@@ -65,6 +66,8 @@ public class TestApp extends MainApp {
         double x = Screen.getPrimary().getVisualBounds().getMinX();
         double y = Screen.getPrimary().getVisualBounds().getMinY();
         userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y));
+        userPrefs.updateLastUsedThemeSetting(new ThemeSettings(
+                "view/ThemeDay.css", "view/ThemeDayExtensions.css"));
         userPrefs.setAddressBookFilePath(saveFileLocation);
         userPrefs.setAddressBookName(ADDRESS_BOOK_NAME);
         return userPrefs;

@@ -9,6 +9,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
@@ -28,7 +29,8 @@ import seedu.address.model.social.SocialInfo;
  */
 public class BrowserPanel extends UiPart<Region> {
 
-    public static final String DEFAULT_PAGE = "default.html";
+    public static final String DEFAULT_PAGE_DAY = "defaultDay.html";
+    public static final String DEFAULT_PAGE_NIGHT = "defaultNight.html";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 
@@ -42,13 +44,13 @@ public class BrowserPanel extends UiPart<Region> {
 
     private Label location;
 
-    public BrowserPanel() {
+    public BrowserPanel(Scene scene) {
         super(FXML);
 
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
-        loadDefaultPage();
+        loadDefaultPage(scene);
         FacebookConnectCommand.setWebEngine(browser.getEngine());
         location = new Label();
         location.textProperty().bind(browser.getEngine().locationProperty());
@@ -74,10 +76,15 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     /**
-     * Loads a default HTML file with a background that matches the general theme.
+     * Loads a default HTML file with a background that matches the current theme.
      */
-    private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+    public void loadDefaultPage(Scene scene) {
+        URL defaultPage;
+        if (scene.getStylesheets().get(0).equals(UiTheme.THEME_DAY)) {
+            defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_DAY);
+        } else {
+            defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_NIGHT);
+        }
         loadPage(defaultPage.toExternalForm());
     }
 

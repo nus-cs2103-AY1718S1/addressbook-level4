@@ -7,16 +7,20 @@ import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.ThemeSettings;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -31,12 +35,15 @@ public class MainWindow extends UiPart<Region> {
 
     private static final String ICON = "/images/kaypoh_icon_32.png";
     private static final String FXML = "MainWindow.fxml";
-    private static final int MIN_HEIGHT = 600;
-    private static final int MIN_WIDTH = 800;
+    private static final int MIN_HEIGHT = 900;
+    private static final int MIN_WIDTH = 1600;
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Stage primaryStage;
+    private Scene scene;
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
@@ -46,20 +53,21 @@ public class MainWindow extends UiPart<Region> {
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
-
-    @FXML
-    private StackPane commandBoxPlaceholder;
-
+    private MenuBar menuBar;
     @FXML
     private MenuItem helpMenuItem;
-
+    @FXML
+    private Button minimiseButton;
+    @FXML
+    private Button maximiseButton;
+    @FXML
+    private StackPane browserPlaceholder;
+    @FXML
+    private StackPane commandBoxPlaceholder;
     @FXML
     private StackPane personListPanelPlaceholder;
-
     @FXML
     private StackPane resultDisplayPlaceholder;
-
     @FXML
     private StackPane statusbarPlaceholder;
 
@@ -77,8 +85,19 @@ public class MainWindow extends UiPart<Region> {
         setIcon(ICON);
         setWindowMinSize();
         setWindowDefaultSize(prefs);
-        Scene scene = new Scene(getRoot());
+
+        // Set theme
+        scene = new Scene(getRoot());
+        scene.setFill(Color.TRANSPARENT);
+        setDefaultTheme(prefs, scene);
+        UiTheme.getInstance().setScene(scene);
         primaryStage.setScene(scene);
+
+        // Enable window navigation
+        enableMovableWindow();
+        enableMinimiseWindow();
+        enableMaximiseWindow();
+        UiResize.enableResizableWindow(primaryStage);
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -126,7 +145,8 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
+        browserPanel = new BrowserPanel(scene);
+        UiTheme.getInstance().setBrowserPanel(browserPanel);
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
@@ -177,6 +197,21 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
+     * Sets the default theme based on user preferences.
+     */
+    private void setDefaultTheme(UserPrefs prefs, Scene scene) {
+        scene.getStylesheets().addAll(prefs.getThemeSettings().getTheme(),
+                prefs.getThemeSettings().getThemeExtensions());
+    }
+
+    /**
+     * Returns the current theme applied.
+     */
+    ThemeSettings getCurrentThemeSetting() {
+        return new ThemeSettings(scene.getStylesheets().get(0), scene.getStylesheets().get(1));
+    }
+
+    /**
      * Returns the current size and the position of the main Window.
      */
     GuiSettings getCurrentGuiSetting() {
@@ -217,5 +252,44 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    /**
+     * Enable movable window.
+     */
+    private void enableMovableWindow() {
+        menuBar.setOnMousePressed((event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        menuBar.setOnMouseDragged((event) -> {
+            primaryStage.setX(event.getScreenX() - xOffset);
+            primaryStage.setY(event.getScreenY() - yOffset);
+        });
+    }
+
+    /**
+     * Enable minimising of window.
+     */
+    private void enableMinimiseWindow() {
+        minimiseButton.setOnMouseClicked((event) ->
+                primaryStage.setIconified(true)
+        );
+    }
+
+    /**
+     * Enable maximising and restoring pre-maximised state of window.
+     * Change button images respectively via css.
+     */
+    private void enableMaximiseWindow() {
+        maximiseButton.setOnMouseClicked((event) -> {
+            primaryStage.setMaximized(true);
+            maximiseButton.setId("restoreButton");
+        });
+
+        maximiseButton.setOnMousePressed((event) -> {
+            primaryStage.setMaximized(false);
+            maximiseButton.setId("maximiseButton");
+        });
     }
 }
