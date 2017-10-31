@@ -43,8 +43,10 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String age;
     //@@author
+    //@@author wishingmaid
     @XmlElement(required = true)
     private String filepath;
+    //@@author
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
@@ -70,7 +72,9 @@ public class XmlAdaptedPerson {
         birthday = source.getBirthday().value;
         age = source.getAge().value;
         //@@author
+        //@@author wishingmaid
         filepath = source.getPhoto().getFilePath();
+        //@@author
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -96,7 +100,9 @@ public class XmlAdaptedPerson {
         final Birthday birthday = new Birthday(this.birthday);
         final Age age = new Age(this.birthday);
         //@@author
+        //@@author wishingmaid
         final Photo photo = new Photo(this.filepath);
+        //@@author
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, remark, birthday, age, photo, tags);
     }

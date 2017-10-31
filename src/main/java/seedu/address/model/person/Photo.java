@@ -1,3 +1,4 @@
+//@@author wishingmaid
 package seedu.address.model.person;
 
 import java.io.File;
@@ -7,7 +8,6 @@ import java.io.File;
  */
 
 public class Photo {
-
     public static final String URL_VALIDATION = "The filepath URL does not exist.";
     private static final String DEFAULT_PHOTOURL = "";
     private static final String DEFAULT_FILEPATH = "";

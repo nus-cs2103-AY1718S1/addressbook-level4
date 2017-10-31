@@ -1,5 +1,4 @@
 package seedu.address.ui;
-import java.io.File;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -17,12 +16,12 @@ import seedu.address.model.person.ReadOnlyPerson;
  * An UI component that displays information of a {@code Person}.
  */
 public class PersonCard extends UiPart<Region> {
-
+    //@@author wishingmaid
     private static final String FXML = "PersonListCard.fxml";
     private static String[] colors = { "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
-
+    //@@author
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -55,8 +54,10 @@ public class PersonCard extends UiPart<Region> {
     private Label age;
     @FXML
     private FlowPane tags;
+    //@@author wishingmaid
     @FXML
     private ImageView imageView;
+    //@@author
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
@@ -64,12 +65,14 @@ public class PersonCard extends UiPart<Region> {
         initTags(person);
         bindListeners(person);
     }
+    //@@author wishingmaid
     private static String getColorForTag(String tagValue) {
         if (!tagColors.containsKey(tagValue)) {
             tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
         }
         return tagColors.get(tagValue);
     }
+    //@@author
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
@@ -84,13 +87,15 @@ public class PersonCard extends UiPart<Region> {
         birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         age.textProperty().bind(Bindings.convert(person.ageProperty()));
         //@@author
+        //@@author wishingmaid
         setImage(person);
+        //@@author
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);
         });
     }
-
+    //@@author wishingmaid
     /** Changes the tag colour*/
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
@@ -99,6 +104,8 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
+    //@@author
+    //@@author wishingmaid
     /** Checks if the user has added any photo to the specific contact*/
     private void setImage(ReadOnlyPerson person) {
         String url = person.getPhoto().getFilePath(); //gets the filepath directly from the resources folder.
@@ -106,11 +113,11 @@ public class PersonCard extends UiPart<Region> {
             Image image = new Image(getClass().getResource("/images/noPhoto.png").toExternalForm());
             imageView.setImage(image);
         } else {
-            File storedImage = new File(url);
-            Image image = new Image(storedImage.toURI().toString());
+            Image image = new Image("file:" + person.getPhoto().getFilePath());
             imageView.setImage(image);
         }
     }
+    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
