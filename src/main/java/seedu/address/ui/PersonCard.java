@@ -44,15 +44,18 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private FlowPane tags;
+    //@@author chilipadiboy
+    @FXML
     private Label birthday;
     @FXML
-    private FlowPane tags;
-    @FXML
     private Label remark;
+    //@@author Jemereny
     @FXML
     private Label website;
     @FXML
     private ImageView picture;
+    //@@author
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
@@ -72,8 +75,10 @@ public class PersonCard extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        //@@author chilipadiboy
         birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
+        //@@author Jemereny
         website.textProperty().bind(Bindings.convert(person.websiteProperty()));
 
         person.pictureProperty().addListener((observable, oldValue, newValue) -> {
@@ -84,8 +89,10 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         });
+        //@@author
     }
 
+    //@@author Jemereny
     /**
      * Initialise tag colors for person
      */
@@ -106,6 +113,7 @@ public class PersonCard extends UiPart<Region> {
         Circle circle = new Circle(32.0, 32.0, 30.0);
         picture.setClip(circle);
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
@@ -125,6 +133,7 @@ public class PersonCard extends UiPart<Region> {
             && person.equals(card.person);
     }
 
+    //@@author Jemereny
     private static String getColorForTag(String tagValue) {
         if (!tagColors.containsKey(tagValue)) {
             tagColors.put(tagValue, UiStyle.getInstance().getRandomHexColor());
@@ -132,5 +141,5 @@ public class PersonCard extends UiPart<Region> {
 
         return tagColors.get(tagValue);
     }
-
+    //@@author
 }
