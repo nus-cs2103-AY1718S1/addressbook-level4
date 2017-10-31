@@ -32,7 +32,7 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private Label dateTime;
     @FXML
-    private Label address;
+    private Label venue;
 
 
     public EventCard(ReadOnlyEvent event, int displayedIndex) {
@@ -49,7 +49,7 @@ public class EventCard extends UiPart<Region> {
      */
     private void bindListeners(ReadOnlyEvent event) {
         name.textProperty().bind(Bindings.convert(event.nameProperty()));
-        address.textProperty().bind(Bindings.convert(event.addressProperty()));
+        venue.textProperty().bind(Bindings.convert(event.addressProperty()));
         dateTime.textProperty().bind(Bindings.convert(event.timeProperty()));
     }
 

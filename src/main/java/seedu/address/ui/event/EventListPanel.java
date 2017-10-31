@@ -19,7 +19,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.ui.UiPart;
 
 /**
- * Panel containing the list of persons.
+ * Panel containing the list of events.
  */
 public class EventListPanel extends UiPart<Region> {
     private static final String FXML = "event/EventListPanel.fxml";
