@@ -41,6 +41,9 @@ public interface Model {
     /** Deletes given tag from AddressBook */
     void deleteTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException;
 
+    /** Sorts AddressBook by a field in alphabetical order */
+    void sort(String field);
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
