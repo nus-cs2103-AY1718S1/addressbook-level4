@@ -98,7 +98,6 @@ public class UniquePersonList implements Iterable<Person> {
         setPersons(replacement);
     }
 
-    //@@author Juxarius
     /**
      * Sorts the internal list of people
      */
@@ -117,7 +116,6 @@ public class UniquePersonList implements Iterable<Person> {
         }
         setPersons(listToReplace);
     }
-    //@@author
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
