@@ -35,7 +35,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
-    public static final String MESSAGE_DUPLICATE_PERSON = "Duplicate persons in Addressbook.";
+    public final static String MESSAGE_DUPLICATE_PERSON = "Duplicate persons in Addressbook.";
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -167,17 +167,17 @@ public class ModelManager extends ComponentManager implements Model {
         int month = Calendar.getInstance().get(Calendar.MONTH);
         int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK_IN_MONTH);
         for (ReadOnlyPerson person : contactList) {
-            if ( (person.getBirthday().value.length() != 0) &&
-                    (Integer.parseInt(person.getBirthday().value.substring(0, 2)) >= day) &&
-                    (Integer.parseInt(person.getBirthday().value.substring(3, 5)) >= month) ){
+            if ((person.getBirthday().value.length() != 0)
+                    && (Integer.parseInt(person.getBirthday().value.substring(0, 2)) >= day)
+                    && (Integer.parseInt(person.getBirthday().value.substring(3, 5)) >= month)) {
                 tempList.add(person);
             }
 
         }
         for (ReadOnlyPerson person : contactList) {
-            if ( (person.getBirthday().value.length() != 0) &&
-                    (Integer.parseInt(person.getBirthday().value.substring(0, 2)) < day) &&
-                    (Integer.parseInt(person.getBirthday().value.substring(3, 5)) < month) ){
+            if ((person.getBirthday().value.length() != 0)
+                    && (Integer.parseInt(person.getBirthday().value.substring(0, 2)) < day)
+                    && (Integer.parseInt(person.getBirthday().value.substring(3, 5)) < month)) {
                 tempList.add(person);
             }
 
