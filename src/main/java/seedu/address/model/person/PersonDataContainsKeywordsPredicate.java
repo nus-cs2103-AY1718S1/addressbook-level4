@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.function.Predicate;
 
 /**
- * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
+ * Tests that a {@code ReadOnlyPerson}'s {@code Name} roughly matches any of the keywords given or
+ * that any of the keywords are an exact match to any {@code Tag} in {@code UniqueTagList}
  */
 public class PersonDataContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;

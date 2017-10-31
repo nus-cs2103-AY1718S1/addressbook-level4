@@ -1,7 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.commons.util.StringUtil.apppendCrotchets;
+import static seedu.address.commons.util.StringUtil.appendCrotchets;
 import static seedu.address.logic.parser.CliSyntax.POSSIBLE_SORT_ARGUMENTS;
 import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_ADDRESS_ASCENDING;
 import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_ADDRESS_DEFAULT;
@@ -27,18 +27,18 @@ public class SortUtil {
 
     /* Sub-message that lists out all the message usage possibilities of the sort parameters */
     public static final String MESSAGE_SORT_USAGE =
-            apppendCrotchets(SORT_ARGUMENT_NAME_DEFAULT.toString()) + " "
-            + apppendCrotchets(SORT_ARGUMENT_PHONE_DEFAULT.toString()) + " "
-            + apppendCrotchets(SORT_ARGUMENT_EMAIL_DEFAULT.toString()) + " "
-            + apppendCrotchets(SORT_ARGUMENT_ADDRESS_DEFAULT.toString()) + " "
-            + apppendCrotchets(SORT_ARGUMENT_NAME_DESCENDING.toString()) + " "
-            + apppendCrotchets(SORT_ARGUMENT_PHONE_DESCENDING.toString()) + " "
-            + apppendCrotchets(SORT_ARGUMENT_EMAIL_DESCENDING.toString()) + " "
-            + apppendCrotchets(SORT_ARGUMENT_ADDRESS_DESCENDING.toString()) + " "
-            + apppendCrotchets(SORT_ARGUMENT_NAME_ASCENDING.toString()) + " "
-            + apppendCrotchets(SORT_ARGUMENT_PHONE_ASCENDING.toString()) + " "
-            + apppendCrotchets(SORT_ARGUMENT_EMAIL_ASCENDING.toString()) + " "
-            + apppendCrotchets(SORT_ARGUMENT_ADDRESS_ASCENDING.toString());
+            appendCrotchets(SORT_ARGUMENT_NAME_DEFAULT.toString()) + " "
+            + appendCrotchets(SORT_ARGUMENT_PHONE_DEFAULT.toString()) + " "
+            + appendCrotchets(SORT_ARGUMENT_EMAIL_DEFAULT.toString()) + " "
+            + appendCrotchets(SORT_ARGUMENT_ADDRESS_DEFAULT.toString()) + " "
+            + appendCrotchets(SORT_ARGUMENT_NAME_DESCENDING.toString()) + " "
+            + appendCrotchets(SORT_ARGUMENT_PHONE_DESCENDING.toString()) + " "
+            + appendCrotchets(SORT_ARGUMENT_EMAIL_DESCENDING.toString()) + " "
+            + appendCrotchets(SORT_ARGUMENT_ADDRESS_DESCENDING.toString()) + " "
+            + appendCrotchets(SORT_ARGUMENT_NAME_ASCENDING.toString()) + " "
+            + appendCrotchets(SORT_ARGUMENT_PHONE_ASCENDING.toString()) + " "
+            + appendCrotchets(SORT_ARGUMENT_EMAIL_ASCENDING.toString()) + " "
+            + appendCrotchets(SORT_ARGUMENT_ADDRESS_ASCENDING.toString());
 
     /**
      * Orders and filters the keywords to the correct lists to be passed into the new find command.
