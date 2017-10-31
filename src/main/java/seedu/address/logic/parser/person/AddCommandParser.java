@@ -1,6 +1,7 @@
 package seedu.address.logic.parser.person;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -16,6 +17,7 @@ import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -37,9 +39,10 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_BIRTHDAY,
+                        PREFIX_TAG);
 
-        //if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
+        //if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_BIRTHDAY, PREFIX_EMAIL)) {
         //throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));}
 
         try {
@@ -47,12 +50,13 @@ public class AddCommandParser implements Parser<AddCommand> {
             Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE), "add").get();
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL), "add").get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS), "add").get();
+            Birthday birthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get();
             Remark remark = new Remark(""); // add command does not allow adding remarks straight away
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             boolean isPrivate = false;
             boolean isPinned = false;
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, remark, tagList, isPrivate, isPinned);
+            ReadOnlyPerson person = new Person(name, phone, email, address, , birthday, remark, tagList, isPrivate, isPinned);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
