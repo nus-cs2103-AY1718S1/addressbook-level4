@@ -102,9 +102,11 @@ public class AddressBookParser {
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand(arguments);
 
+        //@@author keithsoc
         case ThemeCommand.COMMAND_WORD:
         case ThemeCommand.COMMAND_ALIAS:
             return new ThemeCommandParser().parse(arguments);
+        //@@author
 
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:

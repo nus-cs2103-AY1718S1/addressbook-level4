@@ -3,6 +3,7 @@ package seedu.address.commons.core;
 import java.io.Serializable;
 import java.util.Objects;
 
+//@@author keithsoc
 /**
  * A Serializable class that contains the Theme settings.
  */
@@ -60,3 +61,5 @@ public class ThemeSettings implements Serializable {
         return sb.toString();
     }
 }
+//@@author
+

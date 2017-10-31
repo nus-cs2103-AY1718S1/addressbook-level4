@@ -182,6 +182,7 @@ public class MainApp extends Application {
         EventsCenter.getInstance().registerHandler(this);
     }
 
+    //@@author keithsoc
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
@@ -193,6 +194,7 @@ public class MainApp extends Application {
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         ui.start(primaryStage);
     }
+    //@@author
 
     @Override
     public void stop() {

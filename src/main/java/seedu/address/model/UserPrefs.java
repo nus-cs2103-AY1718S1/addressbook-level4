@@ -11,14 +11,20 @@ import seedu.address.commons.core.ThemeSettings;
 public class UserPrefs {
 
     private GuiSettings guiSettings;
+    //@@author keithsoc
     private ThemeSettings themeSettings;
+    //@@author
     private String addressBookFilePath = "data/addressbook.xml";
+    //@@author keithsoc
     private String addressBookName = "KayPoh!";
+    //@@author
 
+    //@@author keithsoc
     public UserPrefs() {
         this.setGuiSettings(1600, 900, 0, 0);
         this.setThemeSettings("view/ThemeDay.css", "view/ThemeDayExtensions.css");
     }
+    //@@author
 
     public GuiSettings getGuiSettings() {
         return guiSettings == null ? new GuiSettings() : guiSettings;
@@ -32,6 +38,7 @@ public class UserPrefs {
         guiSettings = new GuiSettings(width, height, x, y);
     }
 
+    //@@author keithsoc
     public ThemeSettings getThemeSettings() {
         return themeSettings == null ? new ThemeSettings() : themeSettings;
     }
@@ -43,6 +50,7 @@ public class UserPrefs {
     public void setThemeSettings(String theme, String themeExtensions) {
         themeSettings = new ThemeSettings(theme, themeExtensions);
     }
+    //@@author
 
     public String getAddressBookFilePath() {
         return addressBookFilePath;

@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_OPTION;
 import javafx.scene.Scene;
 import seedu.address.logic.commands.ThemeCommand;
 
+//@@author keithsoc
 /**
  * A singleton class that manages the changing of scene graph's stylesheets at runtime.
  */
@@ -62,3 +63,4 @@ public class UiTheme {
         }
     }
 }
+//@@author

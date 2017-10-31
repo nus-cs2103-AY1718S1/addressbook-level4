@@ -1,4 +1,4 @@
-
+/* @@author keithsoc */
 .error {
     -fx-text-fill: #ff0000 !important; /* The error class should always override the default text-fill style */
     -fx-background-color: #ffdede !important;
@@ -8,6 +8,7 @@
     /* Empty cells will not have alternating colours */
     -fx-background: #ffffff;
 }
+/* @@author */
 
 .tag-selector {
     -fx-border-width: 1;

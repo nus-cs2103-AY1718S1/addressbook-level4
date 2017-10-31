@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.ui.UiTheme;
 
+//@@author keithsoc
 /**
  * Changes the application theme to the user specified option.
  */
@@ -44,3 +45,4 @@ public class ThemeCommand extends Command {
                 && this.optedTheme.equals(((ThemeCommand) other).optedTheme)); // state check
     }
 }
+//@@author

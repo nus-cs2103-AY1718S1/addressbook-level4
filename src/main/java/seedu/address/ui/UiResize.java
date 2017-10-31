@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+//@@author keithsoc-reused
 /**
  * Manages resizing of UI Window by adding mouse event listeners to each UI component.
  */
@@ -142,3 +143,4 @@ public class UiResize {
         }
     }
 }
+//@@author

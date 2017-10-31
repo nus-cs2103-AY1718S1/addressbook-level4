@@ -24,11 +24,13 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    //@@author keithsoc
     private static HashMap<ReadOnlyPerson, String> personColors = new HashMap<>();
     private static HashMap<String, String> tagColors = new HashMap<>();
     private static Random random = new Random();
     private static final String defaultThemeTagColor = "#fc4465";
     private static final double GOLDEN_RATIO = 0.618033988749895;
+    //@@author
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -42,10 +44,12 @@ public class PersonCard extends UiPart<Region> {
 
     @FXML
     private HBox cardPane;
+    //@@author keithsoc
     @FXML
     private StackPane profilePhotoStackPane;
     @FXML
     private ImageView profilePhotoImageView;
+    //@@author
     @FXML
     private Label name;
     @FXML
@@ -72,6 +76,7 @@ public class PersonCard extends UiPart<Region> {
         bindListeners(person);
     }
 
+    //@@author keithsoc
     /**
      * Generates a random pastel color for profile photos.
      * @return String containing hex value of the color.
@@ -127,6 +132,7 @@ public class PersonCard extends UiPart<Region> {
         }
         return tagColors.get(tagValue);
     }
+    //@@author
 
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
@@ -149,6 +155,7 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    //@@author keithsoc
     /**
      * Adds a profile photo for each {@code person}.
      * TODO: This method will be modified for upcoming addPhoto command
@@ -191,6 +198,7 @@ public class PersonCard extends UiPart<Region> {
             favoriteImageView.setId("favorite");
         }
     }
+    //@@author
 
     /**
      * Creates a tag label for each {@code Person} and assign a color to the style of each tag label.

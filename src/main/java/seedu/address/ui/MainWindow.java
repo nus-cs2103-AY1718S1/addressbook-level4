@@ -35,15 +35,19 @@ public class MainWindow extends UiPart<Region> {
 
     private static final String ICON = "/images/kaypoh_icon_32.png";
     private static final String FXML = "MainWindow.fxml";
+    //@@author keithsoc
     private static final int MIN_HEIGHT = 900;
     private static final int MIN_WIDTH = 1600;
+    //@@author
     private double xOffset = 0;
     private double yOffset = 0;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Stage primaryStage;
+    //@@author keithsoc
     private Scene scene;
+    //@@author
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
@@ -52,6 +56,7 @@ public class MainWindow extends UiPart<Region> {
     private Config config;
     private UserPrefs prefs;
 
+    //@@author keithsoc
     @FXML
     private MenuBar menuBar;
     @FXML
@@ -60,6 +65,7 @@ public class MainWindow extends UiPart<Region> {
     private Button minimiseButton;
     @FXML
     private Button maximiseButton;
+    //@@author
     @FXML
     private StackPane browserPlaceholder;
     @FXML
@@ -88,16 +94,20 @@ public class MainWindow extends UiPart<Region> {
 
         // Set theme
         scene = new Scene(getRoot());
+        //@@author keithsoc
         scene.setFill(Color.TRANSPARENT);
         setDefaultTheme(prefs, scene);
         UiTheme.getInstance().setScene(scene);
+        //@@author
         primaryStage.setScene(scene);
 
+        //@@author keithsoc
         // Enable window navigation
         enableMovableWindow();
         enableMinimiseWindow();
         enableMaximiseWindow();
         UiResize.enableResizableWindow(primaryStage);
+        //@@author
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -196,6 +206,7 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.setMinWidth(MIN_WIDTH);
     }
 
+    //@@author keithsoc
     /**
      * Sets the default theme based on user preferences.
      */
@@ -212,6 +223,7 @@ public class MainWindow extends UiPart<Region> {
         String cssExtensions = scene.getStylesheets().get(1);
         return new ThemeSettings(cssMain, cssExtensions);
     }
+    //@@author
 
     /**
      * Returns the current size and the position of the main Window.
@@ -256,6 +268,7 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author keithsoc
     /**
      * Enable movable window.
      */
@@ -294,4 +307,5 @@ public class MainWindow extends UiPart<Region> {
             maximiseButton.setId("maximiseButton");
         });
     }
+    //@@author
 }

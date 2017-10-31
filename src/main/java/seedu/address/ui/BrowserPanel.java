@@ -29,8 +29,10 @@ import seedu.address.model.social.SocialInfo;
  */
 public class BrowserPanel extends UiPart<Region> {
 
+    //@@author keithsoc
     public static final String DEFAULT_PAGE_DAY = "defaultDay.html";
     public static final String DEFAULT_PAGE_NIGHT = "defaultNight.html";
+    //@@author
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 
@@ -51,6 +53,7 @@ public class BrowserPanel extends UiPart<Region> {
         getRoot().setOnKeyPressed(Event::consume);
 
         loadDefaultPage(scene);
+
         FacebookConnectCommand.setWebEngine(browser.getEngine());
         location = new Label();
         location.textProperty().bind(browser.getEngine().locationProperty());
@@ -75,6 +78,7 @@ public class BrowserPanel extends UiPart<Region> {
         isPost = post;
     }
 
+    //@@author keithsoc
     /**
      * Loads a default HTML file with a background that matches the current theme.
      */
@@ -87,6 +91,7 @@ public class BrowserPanel extends UiPart<Region> {
         }
         loadPage(defaultPage.toExternalForm());
     }
+    //@@author
 
     private void setEventHandlerForBrowserUrlChangeEvent() {
         location.textProperty()
