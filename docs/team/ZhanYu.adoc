@@ -108,6 +108,21 @@ include::../DeveloperGuide.adoc[leveloffset=2,tag=commandAbbreviations]
 
 ---
 
+=== Enhancement Added: Search Highlighting in HelpWindow
+
+==== Justification
+
+JavaFx's native WebView does not allow the user to easily search a html document, putting it on a subpar standard to modern
+web browsers. Implementing a search feature in the help window will allow the user to search for terms in the user guide with ease.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[leveloffset=2,tag=helpWindowHighlight]
+
+---
+
 === Enhancement Proposed: Markdown/HTML parser
 
 To replace the content field of the note/remark command with 'rich-text', to be displayed on the browser panel.
