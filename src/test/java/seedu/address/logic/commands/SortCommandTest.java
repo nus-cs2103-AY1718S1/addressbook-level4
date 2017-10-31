@@ -25,7 +25,7 @@ public class SortCommandTest {
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        Storage storage = new TypicalStorage().setUp();
+        storage = new TypicalStorage().setUp();
     }
 
     @Test

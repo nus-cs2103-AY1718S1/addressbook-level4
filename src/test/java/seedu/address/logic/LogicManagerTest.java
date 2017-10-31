@@ -25,8 +25,7 @@ public class LogicManagerTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private Model model = new ModelManager();
-    TypicalStorage typicalStorage = new TypicalStorage();
-    private Storage storage = typicalStorage.setUp();
+    private Storage storage = new TypicalStorage().setUp();
     private Logic logic = new LogicManager(model, storage);
 
     @Test

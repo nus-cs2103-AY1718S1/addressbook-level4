@@ -24,7 +24,6 @@ public class ImportCommand extends Command {
 
     private String fileLocation;
     private Optional<ReadOnlyAddressBook> importData;
-    private ReadOnlyAddressBook newAddressBook;
 
     public ImportCommand(String fileLocation) {
         this.fileLocation = fileLocation;
@@ -41,13 +40,20 @@ public class ImportCommand extends Command {
             throw new CommandException(MESSAGE_WRITE_ERROR);
         }
 
-        newAddressBook = importData.orElse(null);
+        ReadOnlyAddressBook newAddressBook = importData.orElse(null);
 
-        if (!(newAddressBook == null)) {
+        if (newAddressBook != null) {
             model.resetData(newAddressBook);
             return new CommandResult(MESSAGE_SUCCESS);
         } else {
             return new CommandResult(MESSAGE_WRITE_ERROR);
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ImportCommand // instanceof handles nulls
+                && this.fileLocation.equals(((ImportCommand) other).fileLocation)); // state check
     }
 }
