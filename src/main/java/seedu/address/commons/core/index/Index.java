@@ -45,6 +45,7 @@ public class Index implements Comparable<Index> {
         return new Index(oneBasedIndex - 1);
     }
 
+    //@@author keithsoc
     /**
      * Implement comparable for usage such as {@code Collections.max}
      */
@@ -52,6 +53,7 @@ public class Index implements Comparable<Index> {
     public int compareTo(Index idx) {
         return Double.compare(getOneBased(), idx.getOneBased());
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

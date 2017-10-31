@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.UnFavoriteCommand;
 
+//@@author keithsoc
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
  * outside of the UnFavoriteCommand code. For example, inputs "1" and "1 abc" take the
@@ -33,3 +34,4 @@ public class UnFavoriteCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnFavoriteCommand.MESSAGE_USAGE));
     }
 }
+//@@author
