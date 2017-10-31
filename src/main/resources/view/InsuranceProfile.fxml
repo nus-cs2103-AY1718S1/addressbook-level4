@@ -84,7 +84,7 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="owner" styleClass="particular-person" text="\$owner" />
+                  <Label fx:id="owner" styleClass="particular-link" text="\$owner" />
                </children>
                <padding>
                   <Insets top="10.0" />
@@ -102,7 +102,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="premium" styleClass="particular-link" text="\$premium" />
+                  <Label fx:id="premium" styleClass="particular-field" text="\$premium" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
