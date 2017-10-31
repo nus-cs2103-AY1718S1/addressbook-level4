@@ -56,6 +56,7 @@ public class AccessCommandTest {
     public void execute_invalidWebsite_failure() {
         try {
             accessCommandOne.execute();
+            fail("The expected CommandException was not thrown.");
         } catch (CommandException ce) {
             assertEquals(Messages.MESSAGE_INVALID_WEBSITE, ce.getMessage());
         }

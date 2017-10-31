@@ -42,20 +42,21 @@ public class LocationCommandTest {
 
     private Model model;
     private Model onePersonModel;
-    private AccessCommand accessCommandOne;
+    private LocationCommand locationCommandOne;
 
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         onePersonModel = new ModelManager(getOnePersonAddressBook(), new UserPrefs());
-        accessCommandOne = new AccessCommand(INDEX_FIRST_PERSON);
-        accessCommandOne.setData(onePersonModel, new CommandHistory(), new UndoRedoStack());
+        locationCommandOne = new LocationCommand(INDEX_FIRST_PERSON);
+        locationCommandOne.setData(onePersonModel, new CommandHistory(), new UndoRedoStack());
     }
 
     @Test
     public void execute_invalidLocation_failure() {
         try {
-            accessCommandOne.execute();
+            locationCommandOne.execute();
+            fail("The expected CommandException was not thrown.");
         } catch (CommandException ce) {
             assertEquals(Messages.MESSAGE_INVALID_LOCATION, ce.getMessage());
         }
