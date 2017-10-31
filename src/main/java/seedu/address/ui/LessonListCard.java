@@ -95,6 +95,7 @@ public class LessonListCard extends UiPart<Region> {
         lesson.getLecturers().forEach(lecturer -> lecturers.getChildren().add(new Label(lecturer.lecturerName)));
     }
 
+    //@@author junming403
     /**
      * Change the card state to hide irrelevant information and only show address
      */
@@ -151,6 +152,7 @@ public class LessonListCard extends UiPart<Region> {
 
         }
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

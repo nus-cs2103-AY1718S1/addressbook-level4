@@ -24,6 +24,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.lecturer.Lecturer;
 
+//@@author junming403
 /**
  * Parses input arguments and creates a new EditCommand object
  */

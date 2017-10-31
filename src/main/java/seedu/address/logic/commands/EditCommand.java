@@ -37,9 +37,9 @@ import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
-
+//@@author junming403
 /**
- * Edits the details of an existing lesson in the address book.
+ * Edits the details of an existing lesson/module/location in ModU.
  */
 public class EditCommand extends UndoableCommand {
 

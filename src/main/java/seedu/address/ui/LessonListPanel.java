@@ -39,6 +39,7 @@ public class LessonListPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author junming403
     private void setConnections(ObservableList<ReadOnlyLesson> infoList) {
 
         ObservableList<LessonListCard> mappedList = EasyBind.map(
@@ -49,6 +50,7 @@ public class LessonListPanel extends UiPart<Region> {
         setEventHandlerForSelectionChangeEvent();
 
     }
+    //@@author
 
 
     private void setEventHandlerForSelectionChangeEvent() {
@@ -77,11 +79,13 @@ public class LessonListPanel extends UiPart<Region> {
         scrollTo(event.targetIndex);
     }
 
+    //@@author junming403
     @Subscribe
     private void handleRefreshPanelEvent(RefreshPanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         setConnections(lessonList);
     }
+    //@@author
 
 
     /**

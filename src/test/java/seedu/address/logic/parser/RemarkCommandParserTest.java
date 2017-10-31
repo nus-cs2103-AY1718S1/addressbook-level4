@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.RemarkCommand;
 
+//@@author junming403
 public class RemarkCommandParserTest {
     private RemarkCommandParser parser = new RemarkCommandParser();
 

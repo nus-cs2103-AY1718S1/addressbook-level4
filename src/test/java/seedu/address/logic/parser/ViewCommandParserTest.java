@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.ViewCommand;
 
-
+//@@author junming403
 public class ViewCommandParserTest {
 
     private ViewCommandParser parser = new ViewCommandParser();

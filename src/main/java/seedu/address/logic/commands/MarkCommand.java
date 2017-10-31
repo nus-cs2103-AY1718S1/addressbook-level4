@@ -13,6 +13,7 @@ import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 
+//@@author junming403
 /**
  * Bookmark a lesson identified using it's last displayed index from the address book into the favourite list.
  */

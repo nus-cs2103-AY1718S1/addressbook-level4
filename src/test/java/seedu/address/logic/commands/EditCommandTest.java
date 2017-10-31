@@ -37,6 +37,7 @@ import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 import seedu.address.testutil.EditLessonDescriptorBuilder;
 import seedu.address.testutil.LessonBuilder;
 
+//@@author junming403
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
  */

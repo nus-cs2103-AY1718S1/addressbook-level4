@@ -20,8 +20,9 @@ import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
+//@@author junming403
 /**
- * Deletes a person identified using it's last displayed index from the address book.
+ * Deletes a lesson/location/module identified using it's last displayed index from ModU.
  */
 public class DeleteCommand extends UndoableCommand {
 

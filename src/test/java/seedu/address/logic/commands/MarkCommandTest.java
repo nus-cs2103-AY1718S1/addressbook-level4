@@ -22,6 +22,7 @@ import seedu.address.model.module.predicates.FixedCodePredicate;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
+//@@author junming403
 public class MarkCommandTest {
 
     private Model model;

@@ -17,6 +17,7 @@ import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 
+//@@author junming403
 /**
  * Adds a lesson to the ModU.
  */

@@ -19,6 +19,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.module.Code;
 import seedu.address.model.module.Remark;
 
+//@@author junming403
 public class RemarkCommandTest {
 
     private static final String SAMPLE_REMARK = "This is a sample remark";

@@ -12,19 +12,20 @@ import seedu.address.model.module.Code;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.predicates.SelectedStickyNotePredicate;
 
+//@@author junming403
 /**
- * Selects a lesson identified using it's last displayed index from the address book.
+ * Selects a module/location identified using it's last displayed index from the address book.
  */
 public class SelectCommand extends Command {
 
     public static final String COMMAND_WORD = "select";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Selects the lesson identified by the index number used in the last lesson listing.\n"
+            + ": Selects the module/location identified by the index number used in the last listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SELECT_LESSON_SUCCESS = "Selected Lesson: %1$s";
+    public static final String MESSAGE_SELECT_LESSON_SUCCESS = "Selected: %1$s";
 
     private final Index targetIndex;
 
