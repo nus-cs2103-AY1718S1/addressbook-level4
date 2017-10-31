@@ -24,7 +24,7 @@ public class RemoveTagCommandParserTest {
     }
 
     @Test
-    public void parse_MultipleArg_throwsParseException() {
+    public void parse_multipleArg_throwsParseException() {
         assertParseFailure(parser, "friends owesMoney", String.format(
                 MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
     }
