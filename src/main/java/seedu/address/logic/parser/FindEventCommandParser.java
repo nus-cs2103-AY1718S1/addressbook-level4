@@ -8,6 +8,7 @@ import seedu.address.logic.commands.FindEventCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.EventNameContainsKeywordsPredicate;
 
+// @@author HouDenghao
 /**
  * Parses input arguments and creates a new FindEventCommand object
  */

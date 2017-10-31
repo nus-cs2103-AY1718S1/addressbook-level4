@@ -3,6 +3,7 @@
     background-color: #383838; /* Used in the default.html file */
 }
 
+/* @@author HouDenghao */
 .text-area {
     -fx-background-color: transparent;
     -fx-background-radius: 18px;
@@ -27,6 +28,7 @@
     -fx-background-radius: 18px;
 }
 
+/* @@author */
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -111,6 +113,7 @@
     -fx-background-color: derive(#1d1d1d, 20%);
 }
 
+/* @@author HouDenghao */
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
@@ -127,6 +130,7 @@
     -fx-background-color: transparent;
 }
 
+/* @@author */
 .list-cell:filled:selected #cardPane {
     -fx-border-color: #3e7b91;
     -fx-border-width: 1;
