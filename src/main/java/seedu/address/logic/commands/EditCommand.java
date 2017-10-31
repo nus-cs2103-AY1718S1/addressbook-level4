@@ -98,8 +98,7 @@ public class EditCommand extends UndoableCommand {
             }
         }
 
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
-
+        Person editedPerson = new Person(personToEdit);
         try {
             editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
             model.updatePerson(personToEdit, editedPerson);
@@ -234,8 +233,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(meetings);
         }
 
-        public void 
-          (Name name) {
+        public void setNameForMeetings(Name name) {
             Set<Meeting> meetingList = getMeetings().get();
             for (Meeting meeting : meetingList) {
                 meeting.setName(name);
