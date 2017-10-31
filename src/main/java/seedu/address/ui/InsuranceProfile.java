@@ -63,7 +63,7 @@ public class InsuranceProfile extends UiPart<Region> {
         beneficiary.textProperty().bind(Bindings.convert(insurance.getBeneficiary().nameProperty()));
         premium.textProperty().bind(Bindings.convert(insurance.premiumStringProperty()));
         contractPath.textProperty().bind(Bindings.convert(insurance.contractPathProperty()));
-        signingDate.textProperty().bind(Bindings.convert(insurance.signingDateProperty()));
-        expiryDate.textProperty().bind(Bindings.convert(insurance.expiryDateProperty()));
+        signingDate.textProperty().bind(Bindings.convert(insurance.signingDateStringProperty()));
+        expiryDate.textProperty().bind(Bindings.convert(insurance.expiryDateStringProperty()));
     }
 }

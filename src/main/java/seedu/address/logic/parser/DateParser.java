@@ -33,7 +33,7 @@ public class DateParser {
     /**
      * Parses input dob string
      */
-    public static LocalDate parser(String dob) throws IllegalValueException {
+    public LocalDate parse(String dob) throws IllegalValueException {
         List<String> arguments = Arrays.asList(dob.split("[\\s-/.,]"));
         if (arguments.size() < 2) {
             throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
@@ -51,7 +51,7 @@ public class DateParser {
      * @return
      * @throws IllegalValueException
      */
-    private static String getValidYear(String year) throws IllegalValueException {
+    private String getValidYear(String year) throws IllegalValueException {
         int currYear = LocalDate.now().getYear();
         if (year.length() > 4) {
             year = year.substring(0, 4);
@@ -70,7 +70,7 @@ public class DateParser {
         }
     }
 
-    private static String getValidDay(String day) throws IllegalValueException {
+    private String getValidDay(String day) throws IllegalValueException {
         if (Integer.parseInt(day) > 31) {
             throw new IllegalValueException(MESSAGE_INVALID_DAY);
         }
@@ -83,7 +83,7 @@ public class DateParser {
         }
     }
 
-    private static String getValidMonth(String month) throws IllegalValueException {
+    private String getValidMonth(String month) throws IllegalValueException {
         int iMonth;
         if (month.matches("\\p{Alpha}+")) {
             iMonth = getMonth(month);
@@ -100,7 +100,7 @@ public class DateParser {
     /**
      * finds int month from string month name
      */
-    private static int getMonth(String monthName) throws IllegalValueException {
+    private int getMonth(String monthName) throws IllegalValueException {
         for (int i = 0; i < MONTH_NAME_LONG.length; i++) {
             if (monthName.toLowerCase().equals(MONTH_NAME_LONG[i].toLowerCase())
                     || monthName.toLowerCase().equals(MONTH_NAME_SHORT[i].toLowerCase())) {
