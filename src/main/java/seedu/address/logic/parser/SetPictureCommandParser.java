@@ -11,6 +11,8 @@ import seedu.address.logic.commands.SetPictureCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ProfPic;
 
+//@@author nassy93
+
 /**
  * Parses input arguments and creates a new SetPictureCommand object
  */
