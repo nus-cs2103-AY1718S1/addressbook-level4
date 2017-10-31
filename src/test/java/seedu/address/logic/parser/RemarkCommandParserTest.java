@@ -4,13 +4,12 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_LESSON;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.DeleteRemarkCommand;
 import seedu.address.logic.commands.RemarkCommand;
 
+//@@author junming403
 public class RemarkCommandParserTest {
     private RemarkCommandParser parser = new RemarkCommandParser();
 
@@ -26,8 +25,4 @@ public class RemarkCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE));
     }
 
-    @Test
-    public void parse_deleteRemark_returnsDeleteRemarkCommand() {
-        assertParseSuccess(parser, "-d 2", new DeleteRemarkCommand(INDEX_SECOND_LESSON));
-    }
 }

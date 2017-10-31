@@ -13,6 +13,7 @@ import org.junit.Test;
 import seedu.address.model.module.predicates.LocationContainsKeywordsPredicate;
 import seedu.address.testutil.LessonBuilder;
 
+//@@author angtianlannus
 public class LocationContainsKeywordsPredicateTest {
 
     @Test

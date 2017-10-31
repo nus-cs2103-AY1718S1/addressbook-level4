@@ -314,7 +314,7 @@ public class CombinePanel extends UiPart<Region> {
 
 
     /***************** Sticky Note *****************/
-
+    //@@author junming403
     @Subscribe
     private void handleRemarkChangedEvent(RemarkChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -345,6 +345,7 @@ public class CombinePanel extends UiPart<Region> {
             }
         }
     }
+    //@@author
 
     /**
      * This method will initialize StickyNote screen

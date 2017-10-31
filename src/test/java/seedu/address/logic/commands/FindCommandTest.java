@@ -7,7 +7,6 @@ import static seedu.address.testutil.TypicalLessons.MA1101R_L1;
 import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
@@ -27,6 +26,7 @@ import seedu.address.model.module.predicates.LocationContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.MarkedLessonContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.ModuleContainsKeywordsPredicate;
 
+//@@author angtianlannus
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
@@ -86,14 +86,6 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_zeroKeywords_noLessonFound() {
-        String expectedMessage = String.format(FindCommand.MESSAGE_SUCCESS);
-        FindCommand command = new FindCommand(keywords);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
-    }
-
-    @Test
     public void execute_findByValidModuleCode_moduleFound() {
         ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
         keywords.add("MA1101");
@@ -148,6 +140,7 @@ public class FindCommandTest {
 
         assertCommandSuccess(findByMarkedLesson, expectedMessage, expectedList);
     }
+    //@@author
 
     /***
      * Asserts that {@code command} is successfully executed, and<br>
@@ -164,6 +157,7 @@ public class FindCommandTest {
         assertEquals(expectedAddressBook, model.getAddressBook());
     }
 
+    //@@author angtianlannus
     @After
     public void wrapUp() {
         ListingUnit.setCurrentListingUnit(beginningListingUnit);

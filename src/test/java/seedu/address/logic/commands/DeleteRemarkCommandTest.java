@@ -18,6 +18,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
+//@@author junming403
 public class DeleteRemarkCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private RemarkCommand remarkCommand;

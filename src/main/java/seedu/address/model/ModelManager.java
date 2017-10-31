@@ -71,6 +71,7 @@ public class ModelManager extends ComponentManager implements Model {
         this(new AddressBook(), new UserPrefs());
     }
 
+    //@@author junming403
     @Override
     public HashSet<Location> getUniqueLocationSet() {
         HashSet<Location> set = new HashSet<>();
@@ -98,7 +99,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
         return set;
     }
-
+    //@@author
 
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
@@ -139,6 +140,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author junming403
     @Override
     public void bookmarkLesson(ReadOnlyLesson target) throws DuplicateLessonException {
         addressBook.bookmarkLesson(target);
@@ -149,6 +151,17 @@ public class ModelManager extends ComponentManager implements Model {
     public void unBookmarkLesson(ReadOnlyLesson target) {
         addressBook.unBookmarkLesson(target);
         indicateAddressBookChanged();
+    }
+    //@@author
+
+    //@@author angtianlannus
+    /**
+     * This method initialize the booked slot
+     */
+    public void initializeBookedSlot() {
+        for (int i = 0; i < filteredLessons.size(); i++) {
+            bookedList.add(new BookedSlot(filteredLessons.get(i).getLocation(), filteredLessons.get(i).getTimeSlot()));
+        }
     }
 
     @Override
@@ -195,6 +208,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void unbookAllSlot() {
         bookedList.clear();
     }
+    //@@author
 
     @Override
     public void updateLesson(ReadOnlyLesson target, ReadOnlyLesson editedLesson)
@@ -204,15 +218,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    /**
-     * This method initialize the booked slot
-     */
-    public void initializeBookedSlot() {
-        for (int i = 0; i < filteredLessons.size(); i++) {
-            bookedList.add(new BookedSlot(filteredLessons.get(i).getLocation(), filteredLessons.get(i).getTimeSlot()));
-        }
-    }
-
+    //@@author angtianlannus
     @Override
     public void sortLessons() {
         addressBook.sortLessons();
@@ -237,17 +243,7 @@ public class ModelManager extends ComponentManager implements Model {
     public String getCurrentViewingAttribute() {
         return this.currentViewingAttribute;
     }
-
-    @Override
-    public ObservableList<Remark> getFilteredRemarkList() {
-        return FXCollections.unmodifiableObservableList(filteredRemarks);
-    }
-
-    @Override
-    public synchronized void deleteRemark(Remark target) throws RemarkNotFoundException {
-        addressBook.removeRemark(target);
-        indicateAddressBookChanged();
-    }
+    //@@author
 
 
     //=========== Filtered Module List Accessors =============================================================
@@ -267,6 +263,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredLessons.setPredicate(predicate);
     }
 
+    //@@author junming403
     @Override
     public void updateFilteredRemarkList(Predicate<Remark> predicate) {
         requireNonNull(predicate);
@@ -283,6 +280,17 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateRemark(Remark target, Remark editedRemark)
             throws DuplicateRemarkException, RemarkNotFoundException {
         addressBook.updateRemark(target, editedRemark);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public ObservableList<Remark> getFilteredRemarkList() {
+        return FXCollections.unmodifiableObservableList(filteredRemarks);
+    }
+
+    @Override
+    public synchronized void deleteRemark(Remark target) throws RemarkNotFoundException {
+        addressBook.removeRemark(target);
         indicateAddressBookChanged();
     }
 
@@ -308,6 +316,7 @@ public class ModelManager extends ComponentManager implements Model {
             }
         }
     }
+    //@@author
 
     @Override
     public boolean equals(Object obj) {

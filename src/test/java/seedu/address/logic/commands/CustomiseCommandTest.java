@@ -22,6 +22,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.font.FontSize;
 
+//@@author cctdaniel
 public class CustomiseCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());

@@ -283,6 +283,7 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.toFront();
     }
 
+    //@@author junming403
     /**
      * Configure border colour to indicate validity of user input.
      */
@@ -298,6 +299,7 @@ public class CommandBox extends UiPart<Region> {
             checkBox.toFront();
         }
     }
+    //@@author
 
 
     //@@author caoliangnus
@@ -409,10 +411,12 @@ public class CommandBox extends UiPart<Region> {
         tagLabel.toFront();
     }
 
+    //@@author cctdaniel
     @Subscribe
     private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
         setFontSize(event.message);
     }
+    //@@author
 
     //@@author caoliangnus
     @Subscribe
@@ -535,6 +539,7 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
+    //@@author cctdaniel
     /**
      * Sets the command box style to user preferred font size.
      */

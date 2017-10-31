@@ -8,6 +8,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Represents a Lecturer in the address book.
  * Guarantees: immutable; name is valid as declared in {@link #isValidLecturerName(String)}
  */
+//@@author junming403
 public class Lecturer {
 
     public static final String MESSAGE_LECTURER_CONSTRAINTS = "Lecturer names should be alphabetic";

@@ -47,6 +47,7 @@ import seedu.address.model.module.Location;
 import seedu.address.model.module.TimeSlot;
 import seedu.address.testutil.EditLessonDescriptorBuilder;
 
+//@@author junming403
 public class EditCommandParserTest {
 
     private static final String TAG_EMPTY = " " + PREFIX_LECTURER;

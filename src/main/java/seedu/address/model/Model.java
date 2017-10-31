@@ -30,6 +30,7 @@ public interface Model {
      */
     Predicate<Remark> PREDICATE_SHOW_ALL_REMARKS = unused -> true;
 
+    //@@author junming403
     /**
      * Get a hash set of all the distinct locations
      */
@@ -39,6 +40,7 @@ public interface Model {
      * Get a hash set of all the distinct module codes
      */
     HashSet<Code> getUniqueCodeSet();
+    //@@author
 
     /**
      * Clears existing backing model and replaces with the provided new data.
@@ -49,11 +51,6 @@ public interface Model {
      * Returns the AddressBook
      */
     ReadOnlyAddressBook getAddressBook();
-
-    /**
-     * update the set of BookedList
-     */
-    void updateBookedSlotSet();
 
     /**
      * Deletes the given lesson.
@@ -80,6 +77,12 @@ public interface Model {
      */
     void unBookmarkLesson(ReadOnlyLesson lesson);
 
+    //@@author angtianlannus
+    /**
+     * update the set of BookedList
+     */
+    void updateBookedSlotSet();
+
     /**
      * Booked a location with a given timeslot
      */
@@ -99,6 +102,7 @@ public interface Model {
      * clear all booked slot of a location
      */
     void unbookAllSlot();
+    //@@author
 
     /**
      * Replaces the given lesson {@code target} with {@code editedLesson}.
@@ -122,6 +126,7 @@ public interface Model {
      */
     void updateFilteredLessonList(Predicate<ReadOnlyLesson> predicate);
 
+    //@@author junming403
     /**
      * Updates the filter of the filtered remark list to filter by the given {@code predicate}.
      *
@@ -151,7 +156,9 @@ public interface Model {
      * handle different ListingUnit after redo and undo
      */
     void handleListingUnit();
+    //@@author
 
+    //@@author angtianlannus
     /**
      * Sort the filtered lesson/module/location list regarding different listing unit.
      */
@@ -168,6 +175,7 @@ public interface Model {
 
     /** Get the current viewing panel attribute **/
     String getCurrentViewingAttribute();
+    //@@author
 
     /** Returns an unmodifiable view of the list of remarks */
     ObservableList<Remark> getFilteredRemarkList();

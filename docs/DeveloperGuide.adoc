@@ -405,12 +405,16 @@ For different listing type, we always use the same lessonList but set different 
 `UniqueModuleCodePredicate` and `UniqueLocationPredicate` are used to facilitate the implementation of list.
 For example, when user types in `list module`, a `UniqueModulePredicate` will be used to filter the lessonList and UI will hide all other irrelevant information of the lesson and results in showing a list of all Modules.
 
-The following sequence diagram shows how the list command works:
+The following link:#sequence-diagram[sequence diagram] shows how the list command works:
+
+image::ListCommandSequenceDiagram.jpg[width="900"]
 
 `FixedCodePredicate` and `FixedLocationPredicate` are used to facilitate the implementation of `view` command.
 According to current listing type, which we can obtain from `ListingUnit`, we create either a `FixedCodePredicate` or a `FixedLocationPredicate` to filter the lesson list and set `currentListingUnit` to be `Lesson`.
 
-The following sequence diagram shows how the view command works:
+The following link:#sequence-diagram[sequence diagram] shows how the view command works:
+
+image::ViewCommandSequenceDiagram.jpg[width="900"]
 
 ==== Design Considerations
 
@@ -434,7 +438,9 @@ When user `unmark` a lesson, the `isMarked` attribute of the specified lesson wi
 
 When a new lesson is added. By default it is not in the marked list thus the `isMarked` filed will be set to false.
 
-The following sequence diagram shows how the mark command works:
+The following link:#sequence-diagram[sequence diagram] shows how the mark command works:
+
+image::MarkCommandSequenceDiagram.jpg[width="900"]
 
 You can see a list of all marked lesson by command `list marked`.
 
@@ -484,7 +490,7 @@ image::FindCommandActivityDiagram.png[width="900"]
 **Alternative 1 (current choice):** Find module/lesson/location base on the current `ListingUnit`. +
 **Pros:** Make more sense to implement this way as in ModU as user do not always view all lessons in `LessonListPanel`.
 It will not make sense for the user to find something that is not currently in `LessonListPanel`. +
-**Cons:** More work need to be done as implementing `FindCommand` this way would need to create multiple `Predicates` for different type of `ListCommand` attributes.
+**Cons:** More work need to be done as implementing `FindCommand` this way would need to create multiple `Predicates` for different type of `ListCommand` attributes. +
 **Alternative 2:** Find lesson based on the full list regardless which previous `ListCommand` attribute. +
 **Pros:** Less work. +
 **Cons:** Make no sense for user as the `FindCommand` will return something that is irrelevant for the user.
@@ -501,21 +507,20 @@ A filtered list is used to show remarks related to a specified module when a mod
 
 [NOTE]
 Only module can be remarked, therefore user can use remark if and only if current listing element is module.
-
-Although delete remark is a separate command, it shares the same parser as Remark Command, according to different syntax, RemarkCommand Parser will either return a `RemarkCommand` or a `DeleteRemarkCommand`.
-Adding a remark has the syntax `remark INDEX CONTENT` while deleting a remark has the syntax `remark -d INDEX`.
-
-[NOTE]
 Both adding a remark and deleting a remark used an index while the meaning of the index is different.
 The index in `remark INDEX CONTENT` is the index of the module in the module list we want to add remark to.
-While the index in `remark -d INDEX` is the index of the remark we want to delete.
+While the index in `delete -d INDEX` is the index of the remark we want to delete.
+
+The following link:#sequence-diagram[sequence diagram] summarize what happens when an user execute remark command.
+
+image::RemarkCommandSequenceDiagram.jpg[width="900"]
 
 ==== Design Considerations
 
-**Aspect:** Implementation of DeleteRemarkCommand +
-**Alternative 1 (current choice):** Use the same parser for RemarkCommand and DeleteRemarkCommand. +
-**Pros:** The prefix of the command input for both of the commands is remark, it is more user-friendly since we summarise the two commands related to remark under the same prefix.
-**Cons:** The parser has to choose to parse the input into one of the two commands according to the syntax.
+**Aspect:** Implementation of RemarkCommand +
+**Alternative 1 (current choice):** use a `uniqueRemarkList` similar to `uniqueLessonList`. +
+**Pros:** Store all remarks as a single list thus it is easy to manage.
+**Cons:** Need to filter out a selected set of remarks when user select a specific module.
 // end::remark[]
 
 // tag::sort[]
@@ -541,9 +546,9 @@ image::sortCommandactivitydiagram.png[width="900"]
 **Aspect:** Implementation of `SortCommand` +
 **Alternative 1 (current choice):** Sort the actual `internalList` in `UniqueLessonList`. +
 **Pros:** Easier for new developer to understand the operation of SortCommand execution as it is more intuitive. Prevent conflicting with other command execution which use the `internalList`. +
-**Cons:** More work as need to create different level of abstraction in model for a single method.
+**Cons:** More work as need to create different level of abstraction in model for a single method. +
 **Alternative 2:** Sort list by calling event to sort the current Observable<ReadOnlyLesson> lesson list on `LessonListPanel`. +
-**Pros:** The actual `internalList` wont be altered and wont affect other commands' execution. +
+**Pros:** This implementation requires lesser work compare to alternative 1. +
 **Cons:** Could be counter intuitive for new developer who is looking at the code for the first time as normally developers would relate such execution in the `Model` component of this product. In additional, this will make the `internalList` to be different with the `list` users see on the `LessonListPanel` which sill make other command operate to not operate properly. +
 
 ---
@@ -600,20 +605,47 @@ The following link:#sequence-diagram[sequence diagram] shows how the customise c
 
 image::CustomiseCommandSeqDiagram.png[width="900"]
 
-The following link:#sequence-diagram[activity diagram] summarize what happens when an user execute customise command.
+The following link:#sequence-diagram[activity diagram] summarize what happens when a user execute customise command.
 
 image::CustomiseCommandActivityDiagram.png[width="900"]
 
 ==== Design Considerations
 
 **Aspect:** Implementation of `CustomiseCommand` +
-**Alternative 1 (current choice):** Update static variable `currentFontSizeUnit` to the corresponding `fontSizeUnit` and use `EventBus` to inform `UI` the change of `fontSizeUnit`.
+**Alternative 1 (current choice):** Update static variable `currentFontSizeUnit` to the corresponding `FontSizeUnit` and use `EventBus` to inform `UI` the change of `fontSizeUnit`.
 **Pros:** One global variable that records current `fontSizeUnit`. +
 **Cons:** Hard for new developers to understand the event center mechanism. +
 **Alternative 2 (previous choice):** Use a variable in model manager to keep record of `currentFontSizeUnit` +
 **Pros:** No need for extra enumeration class and easier for new developers to design. +
 **Cons:** In order to get it in other components, the variable must be declared static. But we cannot define static abstract method in interface. It also does not follow Java's standard coding style.
 // end::customise[]
+
+// tag::swt[]
+=== Switch Theme mechanism
+
+The switch theme mechanism is facilitated by both the link:#event-bus[`Event Bus`] and an enumeration class `ThemeUnit`. Currently, `SwitchThemeCommand` only supports toggling between light (default) and dark theme. Each time `SwitchThemeCommand` is executed, it will raise a `SwitchThemeRequestEvent` via `EventCenter`and update the `currentThemeUnit`.
+
+[NOTE]
+The `ThemeUnit` enumeration is to set a global static variable `currentThemeUnit` so that `MainWindow` is able to obtain the current theme whenever it is called.
+
+The following link:#sequence-diagram[sequence diagram] shows how the switch theme command operation works:
+
+image::SwitchThemeSeqDiagram.png[width="900"]
+
+The following link:#sequence-diagram[activity diagram] summarize what happens when a user execute switch theme command.
+
+image::SwitchThemeCommandActivityDiagram.png[width="900"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `SwitchThemeCommand` +
+**Alternative 1 (current choice):** Update static variable `currentThemeUnit` to the corresponding `ThemeUnit` and use `EventBus` to inform `UI` the change of `ThemeUnit`.
+**Pros:** One global variable that records current `ThemeUnit`. +
+**Cons:** Hard for new developers to understand the event center mechanism. +
+**Alternative 2 (previous choice):** Use a variable in model manager to keep record of `currentThemeUnit` +
+**Pros:** No need for extra enumeration class and easier for new developers to design. +
+**Cons:** In order to get it in other components, the variable must be declared static. But we cannot define static abstract method in interface. It also does not follow Java's standard coding style.
+// end::swt[]
 
 // tag::list[]
 

@@ -6,6 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.module.Code;
 import seedu.address.model.module.Remark;
 
+//@@author junming403
 /**
  * Stores remark data in an XML file
  */
