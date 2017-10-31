@@ -27,6 +27,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
+        //String[] nameKeywords = trimmedArgs;
 
         return new FindCommand(new FindCommandPredicate(Arrays.asList(nameKeywords)));
     }
