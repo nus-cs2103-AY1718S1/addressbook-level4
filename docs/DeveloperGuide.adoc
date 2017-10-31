@@ -526,11 +526,11 @@ If more than one tag is given or if `INDEX` out of the range of the shown list i
 
 ==== Design Considerations
 
-Aspect: Which tags to remove when removing all tags. +
-Alternative 1 (current): Remove all tags from the addressbook regardless of current view. +
-Alternative 2: Remove all tags for the list shown to the user. +
-Pros: Completely removes the specified tag from the whole addressbook +
-Cons: User may want to remove only from list shown instead of the whole list.
+**Aspect:** Which tags to remove when removing all tags. +
+**Alternative 1 (current):** Remove all tags from the addressbook regardless of current view. +
+**Alternative 2:** Remove all tags for the list shown to the user. +
+**Pros:** Completely removes the specified tag from the whole addressbook +
+**Cons:** User may want to remove only from list shown instead of the whole list.
 
 === Sort Function
 
@@ -553,13 +553,60 @@ If arguments given do not comply with the correct format, ParseException will be
 
 ==== Design Considerations
 
-Aspect: Whether to sort the intern list of the addressBook or just the filtered list. +
-Alternative 1 (current): Sorts the filteredList found in `ModelManager`. +
-Alternative 2: Sorts the internalList found in `AddressBook`. +
-Pros: A more defensive approach as internalList in AddressBook is not modified in anyway. +
-Pros: User may have already have a preferred way of listing users and may only want to sort once for convenience. +
-Cons: More difficult to implement. +
-Cons: Other methods within ModelManager must be modified since SortedList is the list being displayed, not FilteredList. +
+**Aspect:** Whether to sort the intern list of the addressBook or just the filtered list. +
+**Alternative 1 (current):** Sorts the filteredList found in `ModelManager`. +
+**Alternative 2:** Sorts the internalList found in `AddressBook`. +
+**Pros:** A more defensive approach as internalList in AddressBook is not modified in anyway. +
+**Pros:** User may have already have a preferred way of listing users and may only want to sort once for convenience. +
+**Cons:** More difficult to implement. +
+**Cons:** Other methods within ModelManager must be modified since SortedList is the list being displayed, not FilteredList. +
+
+=== Import function
+
+The import function supports importing of vCard files (.vcf).
+
+Firstly, the `ImportCommandParser` will create an new `ImportCommand` with a `FileInputSteam` containing the vCard file to be imported.
+
+An `BufferedReader` object is then created within `ImportCommand` to read in the data within the vCard file.
+The contents are then read in this manner;
+
+----
+@Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        // ...iterates through each line...
+        while (!newLine.equals("END:VCARD")) {
+            String type = newLine.split(":")[0];
+            String parameter = newLine.split(":")[1];
+
+            switch (type) {
+            case "FN":
+                name = new Name(parameter);
+                break;
+
+            case "EMAIL":
+                email = new Email(parameter);
+                break;
+
+            case "TEL":
+                phone = new Phone(parameter);
+                break;
+
+            case "ADR":
+                address = new Address(parameter);
+                break;
+
+            case "RM":
+                remark = new Remark(parameter);
+                break;
+
+            case "TAG":
+                Tag tag = new Tag(parameter);
+                tagList.add(tag);
+                break;
+        }
+        ReadOnlyPerson toAdd = new Person(name, phone, email, address, remark, tagList);
+        model.addPerson(toAdd);
+----
 
 === FindTag function
 

@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -35,12 +34,10 @@ public class ImportCommand extends UndoableCommand {
     public static final String MESSAGE_FILEERROR = "Please ensure that VCard file contents are correct.";
     public static final String MESSAGE_NOFILECHOSEN = "No files were selected";
 
-    private final BufferedInputStream bis;
     private final BufferedReader br;
 
     public ImportCommand (FileInputStream fis) {
-        bis = new BufferedInputStream(fis);
-        br = new BufferedReader(new InputStreamReader(bis));
+        br = new BufferedReader(new InputStreamReader(fis));
     }
 
     @Override
@@ -88,7 +85,6 @@ public class ImportCommand extends UndoableCommand {
                             tagList.add(tag);
                             break;
                         default :
-                            br.readLine();
                         }
                         newLine = br.readLine();
                     }
@@ -109,7 +105,6 @@ public class ImportCommand extends UndoableCommand {
             throw new CommandException("Data problem");
         } finally {
             try {
-                bis.close();
                 br.close();
             } catch (IOException ioe) {
                 throw new CommandException("Problem Closing File");
