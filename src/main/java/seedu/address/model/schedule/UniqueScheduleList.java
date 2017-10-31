@@ -57,18 +57,6 @@ public class UniqueScheduleList implements Iterable<Schedule> {
     }
 
     /**
-     * Ensures every schedule in the argument list exists in this object.
-     */
-    public void mergeFrom(UniqueScheduleList from) {
-        final Set<Schedule> alreadyInside = this.toSet();
-        from.internalList.stream()
-                .filter(schedules -> !alreadyInside.contains(schedules))
-                .forEach(internalList::add);
-
-        assert CollectionUtil.elementsAreUnique(internalList);
-    }
-
-    /**
      * Returns true if the list contains an equivalent Schedule as the given argument.
      */
     public boolean contains(Schedule toCheck) {
@@ -121,16 +109,6 @@ public class UniqueScheduleList implements Iterable<Schedule> {
         return other == this // short circuit if same object
                 || (other instanceof UniqueScheduleList // instanceof handles nulls
                 && this.internalList.equals(((UniqueScheduleList) other).internalList));
-    }
-
-    /**
-     * Returns true if the element in this list is equal to the elements in {@code other}.
-     * The elements do not have to be in the same order.
-     */
-    public boolean equalsOrderInsensitive(UniqueScheduleList other) {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        assert CollectionUtil.elementsAreUnique(other.internalList);
-        return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
     }
 
     @Override

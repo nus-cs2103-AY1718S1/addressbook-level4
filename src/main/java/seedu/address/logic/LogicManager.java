@@ -52,7 +52,8 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public ObservableList<Schedule> getScheduleList() { return model.getScheduleList(); }
+    public ObservableList<Schedule> getScheduleList() {
+        return model.getScheduleList(); }
 
     @Override
     public ListElementPointer getHistorySnapshot() {

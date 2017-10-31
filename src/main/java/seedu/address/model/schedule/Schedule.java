@@ -11,8 +11,6 @@ import java.util.Objects;
  */
 public class Schedule {
 
-    public static final String SCHEDULE_VALIDATION_REGEX = "([\\w\\.]+ [\\w\\.]+)|(\\(Schedule not recorded\\))";
-
     private String personName;
     private Date date;
 
@@ -34,13 +32,6 @@ public class Schedule {
 
     public Date getDate() {
         return this.date;
-    }
-
-    /**
-     * Returns if a given string is a valid person Schedule.
-     */
-    public static boolean isValidSchedule(String test) {
-        return test.matches(SCHEDULE_VALIDATION_REGEX);
     }
 
     @Override
