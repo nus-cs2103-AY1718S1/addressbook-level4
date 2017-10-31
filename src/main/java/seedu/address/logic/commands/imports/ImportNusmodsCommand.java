@@ -40,12 +40,10 @@ public class ImportNusmodsCommand extends ImportCommand {
             + COMMAND_WORD + " --nusmods https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01";
 
     public static final String INVALID_URL = "The URL provided is not from NUSMods website. \n%1$s";
+    public static final String YEAR_OFFSET_BY_ONE =
+            "The start/end year of the same academic year must offset by 1";
     private static final String YEAR_INVALID =
             "Maybe you modify the part regarding academic year and semester.";
-    private static final String YEAR_OFFSET_BY_ONE =
-            "The start/end year of the same academic year must offset by 1";
-    private static final String SEMESTER_INVALID =
-            "Semester number must be an integer from 1 to 4. Use 3/4 for Special Terms Part 1/2.";
     private static final String INVALID_ENCODING = "The URL encoding is not supported. Please use UTF-8.";
     private static final String MODULE_INFO_JSON_URL_FORMAT =
             "http://api.nusmods.com/%1$s-%2$s/%3$s/modules/%4$s.json";
@@ -58,6 +56,7 @@ public class ImportNusmodsCommand extends ImportCommand {
     private static final String MESSAGE_SUCCESS = "%1$d examinations have been added as events.";
     private static final String SOME_EXAMS_NOT_ADDED =
             "\nHowever, some examination were not added since they already exist in the application.";
+    private static final String TO_STRING_FORMAT = "AY%1$d-%2$d Semester %3$d";
 
     // Semester should be a one-digit number from 1 to 4, year must be after 2000.
     private static final Pattern URL_SEMESTER_INFO_FORMAT  =
@@ -156,10 +155,6 @@ public class ImportNusmodsCommand extends ImportCommand {
         if (yearEnd - yearStart != 1) {
             throw new ParseException(String.format(INVALID_URL, YEAR_OFFSET_BY_ONE));
         }
-
-        if (semester <= 0 || semester >= 5) {
-            throw  new ParseException(String.format(INVALID_URL, SEMESTER_INVALID));
-        }
     }
 
     /**
@@ -205,5 +200,10 @@ public class ImportNusmodsCommand extends ImportCommand {
 
     private void incrementEventsAddedCount() {
         eventsAdded++;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(TO_STRING_FORMAT, yearStart, yearEnd, semester);
     }
 }

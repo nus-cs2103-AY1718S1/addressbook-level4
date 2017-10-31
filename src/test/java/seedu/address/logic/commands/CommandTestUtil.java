@@ -99,14 +99,20 @@ public class CommandTestUtil {
 
     public static final String VALID_URL = "https://www.google.com.sg/contacts?day=monday";
     public static final String INVALID_URL_COMMA = " https://123,tg/";
+    public static final String IMPORT_NO_PATH = "--nusmods ";
+
     public static final String VALID_NUSMODS_URL =
             " https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01";
     public static final String INVALID_NUSMODS_URL =
             " https://nusmods.com/timetable/2017-2018//sem?CS2103T[TUT]=C01";
+    public static final String INVALID_YEAR_START_NUSMODS_URL =
+            " https://nusmods.com/timetable/1999-2000/sem1?CS2103T[TUT]=C01";
+    public static final String INVALID_YEAR_OFFSET_NUSMODS_URL =
+            " https://nusmods.com/timetable/2017-2019/sem1?CS2103T[TUT]=C01";
+
     public static final String VALID_NUSMODS_IMPORT = "--nusmods " + VALID_NUSMODS_URL;
     public static final String NOT_FROM_NUSMODS_IMPORT = "--nusmods " + VALID_URL;
     public static final String INVALID_NUSMODS_IMPORT = "--nusmods " + INVALID_NUSMODS_URL;
-    public static final String IMPORT_NO_PATH = "--nusmods ";
 
     static {
         PropertyManager.initializePropertyManager();
