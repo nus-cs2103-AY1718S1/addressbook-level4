@@ -69,6 +69,9 @@ public class MainWindow extends UiPart<Region> {
     private Label sortedByLabel;
 
     @FXML
+    private Label organizerLabel;
+
+    @FXML
     private Label personViewLabel;
 
     @FXML
@@ -390,6 +393,9 @@ public class MainWindow extends UiPart<Region> {
     private void switchToPersonView() {
         personListPanelPlaceholder.getChildren().removeAll(taskListPanel.getRoot());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        allLabel.setVisible(true);
+        pinLabel.setVisible(true);
+        organizerLabel.setText("Sorted By:");
         personViewLabel.setStyle("-fx-text-fill: white");
         taskViewLabel.setStyle("-fx-text-fill: #555555");
     }
@@ -400,6 +406,9 @@ public class MainWindow extends UiPart<Region> {
     private void switchToTaskView() {
         personListPanelPlaceholder.getChildren().removeAll(personListPanel.getRoot());
         personListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
+        allLabel.setVisible(false);
+        pinLabel.setVisible(false);
+        organizerLabel.setText("Showing:");
         personViewLabel.setStyle("-fx-text-fill: #555555");
         taskViewLabel.setStyle("-fx-text-fill: white");
     }

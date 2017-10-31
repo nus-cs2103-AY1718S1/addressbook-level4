@@ -92,7 +92,7 @@
                                  <GridPane.margin>
                                     <Insets bottom="5.0" left="10.0" />
                                  </GridPane.margin></Label>
-                              <Label prefHeight="21.0" prefWidth="76.0" style="-fx-text-fill: white;" text="Sorted By:" GridPane.columnIndex="4">
+                              <Label fx:id="organizerLabel" prefHeight="21.0" prefWidth="76.0" style="-fx-text-fill: white;" text="Sorted By:" GridPane.columnIndex="4">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" />
                                  </GridPane.margin>
