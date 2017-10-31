@@ -30,20 +30,6 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
     /**
-     * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
-     */
-    public static void assertCardDisplaysPerson(ReadOnlyPerson expectedPerson, PersonCardHandle actualCard) {
-        assertEquals(expectedPerson.getName().fullName, actualCard.getName());
-        assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
-        assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
-        assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
-        assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
-                actualCard.getTags());
-    }
-
-
-
-    /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
      */
     public static void assertCardEquals(MeetingCardHandle expectedCard, MeetingCardHandle actualCard) {
@@ -53,6 +39,17 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getPersonToMeet(), actualCard.getPersonToMeet());
         assertEquals(expectedCard.getPhoneNum(), actualCard.getPhoneNum());
         assertEquals(expectedCard.getDateTime(), actualCard.getDateTime());
+    }
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
+     */
+    public static void assertCardDisplaysPerson(ReadOnlyPerson expectedPerson, PersonCardHandle actualCard) {
+        assertEquals(expectedPerson.getName().fullName, actualCard.getName());
+        assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
+        assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
+        assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
+        assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
+                actualCard.getTags());
     }
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedMeeting}.

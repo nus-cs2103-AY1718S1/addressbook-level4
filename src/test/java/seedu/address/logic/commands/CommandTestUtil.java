@@ -80,12 +80,13 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
-        DESC_ACTIVITY = new EditMeetingDescriptorBuilder().withMeetingName(VALID_NAME_ACTIVITY).withDate(VALID_DATE_ACTIVITY)
-                .withPersonToMeet(VALID_PERSONTOMEET_ACTIVITY).withPlace(VALID_PLACE_ACTIVITY).withPhoneNum(VALID_PHONENUM_ACTIVITY)
+        DESC_ACTIVITY = new EditMeetingDescriptorBuilder().withMeetingName(VALID_NAME_ACTIVITY)
+                .withDate(VALID_DATE_ACTIVITY).withPersonToMeet(VALID_PERSONTOMEET_ACTIVITY)
+                .withPlace(VALID_PLACE_ACTIVITY).withPhoneNum(VALID_PHONENUM_ACTIVITY)
                 .build();
-        DESC_BIKING = new EditMeetingDescriptorBuilder().withMeetingName(VALID_NAME_BIKING).withDate(VALID_DATE_BIKING)
-                .withPersonToMeet(VALID_PERSONTOMEET_BIKING).withPlace(VALID_PLACE_BIKING).withPhoneNum(VALID_PHONENUM_BIKING)
-                .build();
+        DESC_BIKING = new EditMeetingDescriptorBuilder().withMeetingName(VALID_NAME_BIKING)
+                .withDate(VALID_DATE_BIKING).withPersonToMeet(VALID_PERSONTOMEET_BIKING)
+                .withPlace(VALID_PLACE_BIKING).withPhoneNum(VALID_PHONENUM_BIKING).build();
     }
 
     /**

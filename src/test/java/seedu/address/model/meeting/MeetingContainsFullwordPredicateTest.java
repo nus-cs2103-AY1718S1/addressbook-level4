@@ -27,7 +27,8 @@ public class MeetingContainsFullwordPredicateTest {
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        MeetingContainsKeywordsPredicate firstPredicateCopy = new MeetingContainsKeywordsPredicate(firstPredicateKeywordList);
+        MeetingContainsKeywordsPredicate firstPredicateCopy =
+                new MeetingContainsKeywordsPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -43,7 +44,8 @@ public class MeetingContainsFullwordPredicateTest {
     @Test
     public void test_nameContainsKeywords_returnsTrue() {
         // One keyword
-        MeetingContainsKeywordsPredicate predicate = new MeetingContainsKeywordsPredicate(Collections.singletonList("Alice"));
+        MeetingContainsKeywordsPredicate predicate =
+                new MeetingContainsKeywordsPredicate(Collections.singletonList("Alice"));
         assertTrue(predicate.test(new MeetingBuilder().withNameMeeting("Shopping Date").build()));
 
         // Multiple keywords

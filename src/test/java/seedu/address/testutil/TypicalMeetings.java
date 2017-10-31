@@ -1,15 +1,5 @@
 package seedu.address.testutil;
 
-import seedu.address.model.AddressBook;
-import seedu.address.model.meeting.ReadOnlyMeeting;
-import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
-import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
-import seedu.address.model.meeting.exceptions.MeetingClashException;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_ACTIVITY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_BIKING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_ACTIVITY;
@@ -21,6 +11,19 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONENUM_BIKING
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PLACE_ACTIVITY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PLACE_BIKING;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import seedu.address.model.AddressBook;
+import seedu.address.model.meeting.ReadOnlyMeeting;
+import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
+import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
+import seedu.address.model.meeting.exceptions.MeetingClashException;
+
+/**
+ * A utility class containing a list of {@code Meeting} objects to be used in tests.
+ */
 public class TypicalMeetings {
     public static final ReadOnlyMeeting AGEING = new MeetingBuilder().withNameMeeting("Ageing")
             .withDateTime("01-01-2018 00:00").withPersonToMeet("Alice Tan")
@@ -53,10 +56,12 @@ public class TypicalMeetings {
             .withPhoneNum("81234567").withPlace("JEM").build();
 
     // Manually added - Meeting's details found in {@code CommandTestUtil}
-    public static final ReadOnlyMeeting ACTIVITY = new MeetingBuilder().withNameMeeting(VALID_NAME_ACTIVITY).withPhoneNum(VALID_PHONENUM_ACTIVITY)
-            .withPlace(VALID_PLACE_ACTIVITY).withDateTime(VALID_DATE_ACTIVITY).withPersonToMeet(VALID_PERSONTOMEET_ACTIVITY).build();
-    public static final ReadOnlyMeeting BIKING = new MeetingBuilder().withNameMeeting(VALID_NAME_BIKING).withPhoneNum(VALID_PHONENUM_BIKING)
-            .withPlace(VALID_PLACE_BIKING).withDateTime(VALID_DATE_BIKING).withPersonToMeet(VALID_PERSONTOMEET_BIKING).build();
+    public static final ReadOnlyMeeting ACTIVITY = new MeetingBuilder().withNameMeeting(VALID_NAME_ACTIVITY)
+            .withPhoneNum(VALID_PHONENUM_ACTIVITY).withPlace(VALID_PLACE_ACTIVITY).withDateTime(VALID_DATE_ACTIVITY)
+            .withPersonToMeet(VALID_PERSONTOMEET_ACTIVITY).build();
+    public static final ReadOnlyMeeting BIKING = new MeetingBuilder().withNameMeeting(VALID_NAME_BIKING)
+            .withPhoneNum(VALID_PHONENUM_BIKING).withPlace(VALID_PLACE_BIKING).withDateTime(VALID_DATE_BIKING)
+            .withPersonToMeet(VALID_PERSONTOMEET_BIKING).build();
 
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
