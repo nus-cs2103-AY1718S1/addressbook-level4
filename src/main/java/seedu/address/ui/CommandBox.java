@@ -399,10 +399,12 @@ public class CommandBox extends UiPart<Region> {
         tagLabel.toFront();
     }
 
+    //@@author cctdaniel
     @Subscribe
     private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
         setFontSize(event.message);
     }
+    //@@author
 
     @Subscribe
     private void handleColorKeywordEvent(ColorKeywordEvent event) {
@@ -520,6 +522,7 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
+    //@@author cctdaniel
     /**
      * Sets the command box style to user preferred font size.
      */
