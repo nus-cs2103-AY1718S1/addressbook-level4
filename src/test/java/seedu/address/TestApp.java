@@ -35,6 +35,8 @@ public class TestApp extends MainApp {
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
     protected static final String ADDRESS_BOOK_NAME = "Test";
 
+    private static final double DEFAULT_HEIGHT = 600.0;
+    private static final double DEFAULT_WIDTH = 600.0;
     private static final String DEFAULT_THEME = "view/ThemeDay.css";
     private static final String DEFAULT_THEME_EXTENSIONS = "view/ThemeDayExtensions.css";
 
@@ -69,7 +71,7 @@ public class TestApp extends MainApp {
         UserPrefs userPrefs = super.initPrefs(storage);
         double x = Screen.getPrimary().getVisualBounds().getMinX();
         double y = Screen.getPrimary().getVisualBounds().getMinY();
-        userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y));
+        userPrefs.updateLastUsedGuiSetting(new GuiSettings(DEFAULT_WIDTH, DEFAULT_HEIGHT, (int) x, (int) y));
         userPrefs.updateLastUsedThemeSetting(new ThemeSettings(DEFAULT_THEME, DEFAULT_THEME_EXTENSIONS));
         userPrefs.setAddressBookFilePath(saveFileLocation);
         userPrefs.setAddressBookName(ADDRESS_BOOK_NAME);
