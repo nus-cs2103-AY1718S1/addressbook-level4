@@ -451,7 +451,7 @@ in `.xml` format. It is unnecessary to explicitly state `import --xml FILEPATH`,
 ****
 * Imports data from the location and file name specified by `FILEPATH`.
 * `FILEPATH` must end with an extension of `.xml`.
-* The file name and folder names in `FILEPATH` should not contain any prohibited characters `?!%*+:|"<>`.
+* The file name in `FILEPATH` should not contain any prohibited characters `?!%*+:|"<>`.
 * If a relative path is provided, the data will be imported from a location relative to the *BoNUS* installation directory.
 ****
 
@@ -480,7 +480,7 @@ Format: `(i)import --script FILEPATH`
 ****
 * You must explicitly provide the `--script` parameter.
 * `FILEPATH` must end with an extension of `.bo`.
-* The file name and folder names in `FILEPATH` should not contain any prohibited characters `?!%*+:|"<>`.
+* The file name in `FILEPATH` should not contain any prohibited characters `?!%*+:|"<>`.
 * If a relative path is provided, the data will be imported from a location relative to the *BoNUS* installation directory.
 * The provided script file should include one or multiple lines of valid *BoNUS* command(s). Each line can only have **at
 most one** command.
