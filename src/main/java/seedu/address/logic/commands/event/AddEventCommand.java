@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMINDER;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -34,7 +35,8 @@ public class AddEventCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe birthday "
             + PREFIX_DATE_TIME + "25122017 08:30 "
-            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 ";
+            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
+            + PREFIX_REMINDER + "1 more day to event!";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
     public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the address book";
