@@ -41,7 +41,15 @@ public class AddTaskCommand extends UndoableCommand {
     /**
      * Empty Constructor
      */
-    public AddTaskCommand() {}
+    public AddTaskCommand() {
+    }
+
+    /**
+     * Copy Constructor
+     */
+    public AddTaskCommand(ReadOnlyTask task) {
+        this.toAdd = new Task(task);
+    }
 
     /**
      * Creates an AddTaskCommand to add a task with only a header
@@ -87,5 +95,12 @@ public class AddTaskCommand extends UndoableCommand {
         } catch (DuplicateTaskException e) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddTaskCommand // instanceof handles nulls
+                && toAdd.equals(((AddTaskCommand) other).toAdd));
     }
 }
