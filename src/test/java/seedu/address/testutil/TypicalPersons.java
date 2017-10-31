@@ -40,7 +40,7 @@ public class TypicalPersons {
             .build();
     public static final ReadOnlyPerson CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street")
-            .withSocialMedia("carl123", "carl123", "carl123")
+            .withSocialMedia("carl123", "carl123", "carl123").withTags("owesLunch")
             .build();
     public static final ReadOnlyPerson DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street")

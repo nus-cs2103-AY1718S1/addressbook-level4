@@ -21,6 +21,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static final String FXML_WITHOUT_ACCESSES = "PersonListCardNoAccess.fxml";
 
     private static final int DEFAULT_TAG_FONT_SIZE = 11;
     private static final int DEFAULT_SMALL_FONT_SIZE = 13;
@@ -60,12 +61,15 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    public PersonCard(ReadOnlyPerson person, int displayedIndex) {
-        super(FXML);
+    private boolean isAccessDisplayed;
+
+    public PersonCard(ReadOnlyPerson person, int displayedIndex, boolean isAccessDisplayed) {
+        super(isAccessDisplayed ? FXML : FXML_WITHOUT_ACCESSES);
         this.person = person;
+        this.isAccessDisplayed = isAccessDisplayed;
         id.setText(displayedIndex + ". ");
         initTags(person);
-        bindListeners(person);
+        bindListeners(person, isAccessDisplayed);
         registerAsAnEventHandler(this);
         refreshFontSizes();
     }
@@ -74,14 +78,16 @@ public class PersonCard extends UiPart<Region> {
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
      */
-    private void bindListeners(ReadOnlyPerson person) {
+    private void bindListeners(ReadOnlyPerson person, boolean isAccessDisplayed) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         socialMedia.textProperty().bind(Bindings.convert(person.socialMediaProperty()));
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
-        accesses.textProperty().bind(Bindings.convert(person.accessCountProperty()));
+        if (isAccessDisplayed) {
+            accesses.textProperty().bind(Bindings.convert(person.accessCountProperty()));
+        }
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
@@ -124,12 +130,20 @@ public class PersonCard extends UiPart<Region> {
         name.setStyle("-fx-font-size: " + (DEFAULT_BIG_FONT_SIZE + fontSizeChange));
         id.setStyle("-fx-font-size: " + (DEFAULT_BIG_FONT_SIZE + fontSizeChange));
 
-        for (Label l : new Label[] { phone, address, email, socialMedia, remark, accesses }) {
-            l.setStyle("-fx-font-size: " + (DEFAULT_SMALL_FONT_SIZE + fontSizeChange));
+        if (isAccessDisplayed) {
+            for (Label l : new Label[] { phone, address, email, socialMedia, remark, accesses }) {
+                l.setStyle("-fx-font-size: " + (DEFAULT_SMALL_FONT_SIZE + fontSizeChange));
+            }
+        } else {
+            for (Label l : new Label[] { phone, address, email, socialMedia, remark}) {
+                l.setStyle("-fx-font-size: " + (DEFAULT_SMALL_FONT_SIZE + fontSizeChange));
+            }
         }
 
         for (Node tag : tags.getChildren()) {
             tag.setStyle("-fx-font-size: " + (DEFAULT_TAG_FONT_SIZE + fontSizeChange));
         }
     }
+
+
 }

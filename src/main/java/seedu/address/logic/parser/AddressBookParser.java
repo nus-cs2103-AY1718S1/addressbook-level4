@@ -25,6 +25,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SizeCommand;
 import seedu.address.logic.commands.SocialMediaCommand;
 import seedu.address.logic.commands.StatisticsCommand;
+import seedu.address.logic.commands.ToggleAccessDisplayCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -129,6 +130,10 @@ public class AddressBookParser {
         case SocialMediaCommand.COMMAND_WORD:
         case SocialMediaCommand.COMMAND_ALIAS:
             return new SocialMediaCommandParser().parse(arguments);
+
+        case ToggleAccessDisplayCommand.COMMAND_WORD:
+        case ToggleAccessDisplayCommand.COMMAND_ALIAS:
+            return new ToggleAccessDisplayCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
