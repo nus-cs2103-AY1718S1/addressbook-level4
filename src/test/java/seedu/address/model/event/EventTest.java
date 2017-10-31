@@ -84,7 +84,7 @@ public class EventTest {
                 e1.hashCode());
 
         //Test toString
-        assertEquals("Event name Time: 2017-02-07 08:00 Duration: 1hr30min\n"
+        assertEquals("Name: Event name Time: 2017-02-07 08:00 Duration: 1hr30min\n"
                 + "Members: Alice Pauline, Carl Kurz", e1.toString());
     }
 
