@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -14,6 +15,8 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
+import java.util.concurrent.Executors;
+
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code SyncCommand}.
  */
@@ -22,14 +25,11 @@ public class SyncCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_addSync_success() throws Exception {
+    public void execute_addSync_failure() throws Exception {
         SyncCommand syncCommand = prepareCommand();
 
-        String expectedMessage = String.format(SyncCommand.MESSAGE_SUCCESS);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-
-        assertCommandSuccess(syncCommand, model, expectedMessage, expectedModel);
+        String expectedMessage = String.format(SyncCommand.MESSAGE_FAILURE);
+        assertCommandFailure(syncCommand, model, expectedMessage);
     }
 
     @Test
@@ -51,13 +51,24 @@ public class SyncCommandTest {
     }
 
     /**
-     * Returns a {@code SyncCommand} with the parameter {@code index}.
+     * Returns a {@code SyncCommand}
      */
     private SyncCommand prepareCommand() {
         SyncCommand synccommand = new SyncCommand();
         synccommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return synccommand;
     }
+
+    /**
+     * Returns a {@code LoginCommand}
+     */
+    private LoginCommand prepareLogin() {
+        LoginCommand logincommand = new LoginCommand();
+        logincommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        logincommand.setExecutor(Executors.newSingleThreadExecutor());
+        return logincommand;
+    }
+
 
     /**
      * Updates {@code model}'s filtered list to show no one.
