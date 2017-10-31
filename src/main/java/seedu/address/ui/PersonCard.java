@@ -1,8 +1,16 @@
 package seedu.address.ui;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import javax.xml.bind.DatatypeConverter;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -14,6 +22,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static final String GRAVATAR_URL_FORMAT = "https://www.gravatar.com/avatar/%1$s.jpg";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -27,6 +36,8 @@ public class PersonCard extends UiPart<Region> {
 
     @FXML
     private HBox cardPane;
+    @FXML
+    private ImageView gravatar;
     @FXML
     private Label name;
     @FXML
@@ -44,6 +55,7 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
+        initPicture(person);
         initTags(person);
         bindListeners(person);
     }
@@ -81,6 +93,30 @@ public class PersonCard extends UiPart<Region> {
             }
             tags.getChildren().add(tagLabel);
         });
+    }
+
+    /**
+     * Initializes the profile picture using Gravatar
+     */
+    private void initPicture(ReadOnlyPerson person) {
+        try {
+            String email = person.getEmail().value.trim().toLowerCase();
+            System.out.println(email);
+            byte[] emailBytes = email.getBytes("UTF-8");
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            String hash = DatatypeConverter.printHexBinary(md.digest(emailBytes)).toUpperCase();
+            String gravatarUrl = String.format(GRAVATAR_URL_FORMAT, hash.toLowerCase());
+            System.out.println(gravatarUrl);
+            Image image = new Image(gravatarUrl);
+            gravatar.setImage(image);
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     @Override
