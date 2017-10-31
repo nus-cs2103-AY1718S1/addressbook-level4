@@ -79,7 +79,7 @@ public class SyncCommand extends UndoableCommand {
      * @throws IOException
      */
 
-    public void exportContacts (List<ReadOnlyPerson> personList) throws IOException {
+    public void exportContacts (List<ReadOnlyPerson> personList) throws Exception {
         for (ReadOnlyPerson person : personList) {
             if (person.getId().getValue().equals("")) {
                 Person contactToCreate = new Person();

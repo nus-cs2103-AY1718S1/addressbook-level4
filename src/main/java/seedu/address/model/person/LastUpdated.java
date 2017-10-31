@@ -1,22 +1,27 @@
 package seedu.address.model.person;
 
-import java.time.Instant;
-
 import static java.util.Objects.requireNonNull;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's note in the address book.
  */
 public class LastUpdated {
 
-    public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Person notes can take any values";
+    public static final String MESSAGE_LASTUPDATED_CONSTRAINTS =
+            "Person update timings must fit UTC Zulu format, e.g. 2017-10-31T16:20:34.856Z, with 3 to 6 decimals";
 
+    public static final String LASTUPDATED_VALIDATION_REGEX = "\\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[1-2]\\d|3[0-1])T"
+            + "(?:[0-1]\\d|2[0-3]):[0-5]\\d:[0-5]\\d.\\d{3,6}Z";
 
     private String value;
 
-    public LastUpdated(String value) {
+    public LastUpdated(String value) throws IllegalValueException {
         requireNonNull(value);
+        if (!isValidLastUpdated(value)) {
+            throw new IllegalValueException(MESSAGE_LASTUPDATED_CONSTRAINTS);
+        }
         this.value = value;
     }
 
@@ -26,7 +31,7 @@ public class LastUpdated {
      * @return
      */
     public static boolean isValidLastUpdated(String test) {
-        return test != null;
+        return test.matches(LASTUPDATED_VALIDATION_REGEX);
     }
 
     public String getValue() {
