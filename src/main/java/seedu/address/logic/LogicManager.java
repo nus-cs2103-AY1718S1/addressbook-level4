@@ -59,7 +59,9 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public GraphWrapper getGraphWrapper() { return this.graphWrapper; }
+    public GraphWrapper getGraphWrapper() {
+        return this.graphWrapper;
+    }
 
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {

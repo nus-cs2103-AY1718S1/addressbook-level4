@@ -1,25 +1,25 @@
 package seedu.address.ui;
 
-import javax.swing.*;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static seedu.address.testutil.EventsUtil.postNow;
+
+import javax.swing.JComponent;
 
 import org.graphstream.graph.implementations.SingleGraph;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.GraphDisplayHandle;
 import javafx.collections.ObservableList;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertThat;
 import seedu.address.commons.events.ui.NewGraphDisplayEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.graph.GraphWrapper;
 import seedu.address.model.person.ReadOnlyPerson;
-import static seedu.address.testutil.EventsUtil.postNow;
 
 public class GraphDisplayTest extends GuiUnitTest {
 

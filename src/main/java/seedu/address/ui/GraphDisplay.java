@@ -19,7 +19,7 @@ import seedu.address.logic.Logic;
 /**
  * Integrating GraphStream graph display into the application.
  */
-public class GraphDisplay extends UiPart<Region>{
+public class GraphDisplay extends UiPart<Region> {
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "GraphDisplay.fxml";

@@ -9,12 +9,12 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class NewGraphDisplayEvent extends BaseEvent {
 
-    private final SingleGraph graph;
     public final String message;
+    private final SingleGraph graph;
 
     public NewGraphDisplayEvent(SingleGraph graph, String message) {
-        this.graph = graph;
         this.message = message;
+        this.graph = graph;
     }
 
     @Override
