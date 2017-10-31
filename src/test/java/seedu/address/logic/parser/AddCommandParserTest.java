@@ -69,7 +69,6 @@ public class AddCommandParserTest {
                         + TAG_DESC_FRIEND,
                 new AddCommand(expectedPerson));
 
-        //@@author sarahnzx
         Person expectedMultiplePhonePerson = new PersonBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_AMY + "\n" + VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND).build();
@@ -84,7 +83,6 @@ public class AddCommandParserTest {
                         + FAVORITE_DESC_YES
                         + TAG_DESC_FRIEND,
                 new AddCommand(expectedMultiplePhonePerson));
-        //@@author
 
         // multiple emails - last email accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD

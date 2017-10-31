@@ -247,8 +247,8 @@ public class EditCommandParserTest {
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
-
     //@@author
+
     @Test
     public void parse_resetTags_success() {
         Index targetIndex = INDEX_THIRD_PERSON;
