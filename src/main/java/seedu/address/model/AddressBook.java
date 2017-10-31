@@ -66,9 +66,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.lecturers.setLectuers(lecturers);
     }
 
+    //@@author junming403
     public void setRemarks(Set<Remark> remarks) {
         this.remarks.setRemarks(remarks);
     }
+    //@@author
 
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
@@ -108,9 +110,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         syncMasterLecturerListWith(newLesson);
     }
 
+    //@@author junming403
     /**
-     * Adds a lesson to the favourite list.
-     * Only person exists in the Address Book can be added into the favourite list.
+     * Adds a lesson to the marked list.
+     * Only person exists in the ModU can be added into the marked list.
      *
      * @throws DuplicateLessonException if an equivalent lesson already exists.
      */
@@ -123,13 +126,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Removes a lesson from the favourite list.
-     * Only person exists in the favourite List can be unbookmarked from the favourite list.
+     * Removes a lesson from the marked list.
+     * Only person exists in the marked List can be unbookmarked from the marked list.
      */
     public void unBookmarkLesson(ReadOnlyLesson m) {
         m.setAsUnmarked();
-
     }
+    //@@author
 
     /**
      * Replaces the given lesson {@code target} in the list with {@code editedReadOnlyLesson}.
@@ -206,6 +209,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         lecturers.add(t);
     }
 
+    //@@author junming403
     //// remark-level operations
     public void addRemark(Remark r) throws DuplicateRemarkException {
         remarks.add(r);
@@ -227,6 +231,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new RemarkNotFoundException();
         }
     }
+    //@@author
 
     /**
      * Sort the filtered lesson/module/location list regarding different listing unit.
@@ -253,10 +258,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         return lecturers.asObservableList();
     }
 
+    //@@author junming403
     @Override
     public ObservableList<Remark> getRemarkList() {
         return remarks.asObservableList();
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

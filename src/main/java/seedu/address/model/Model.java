@@ -30,6 +30,7 @@ public interface Model {
      */
     Predicate<Remark> PREDICATE_SHOW_ALL_REMARKS = unused -> true;
 
+    //@@author junming403
     /**
      * Get a hash set of all the distinct locations
      */
@@ -39,6 +40,7 @@ public interface Model {
      * Get a hash set of all the distinct module codes
      */
     HashSet<Code> getUniqueCodeSet();
+    //@@author
 
     /**
      * Clears existing backing model and replaces with the provided new data.
@@ -122,6 +124,7 @@ public interface Model {
      */
     void updateFilteredLessonList(Predicate<ReadOnlyLesson> predicate);
 
+    //@@author junming403
     /**
      * Updates the filter of the filtered remark list to filter by the given {@code predicate}.
      *
@@ -151,6 +154,7 @@ public interface Model {
      * handle different ListingUnit after redo and undo
      */
     void handleListingUnit();
+    //@@author
 
     /**
      * Sort the filtered lesson/module/location list regarding different listing unit.
