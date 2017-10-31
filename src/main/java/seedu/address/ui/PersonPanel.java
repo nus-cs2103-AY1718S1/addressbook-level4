@@ -16,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
