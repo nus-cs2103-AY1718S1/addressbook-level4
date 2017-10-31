@@ -49,6 +49,25 @@ public class UniqueTagList implements Iterable<Tag> {
     }
 
     /**
+     * Adds all tags in the argument tag list to this list.
+     */
+    public void addTags(Set<Tag> tags) {
+        requireAllNonNull(tags);
+
+        final UniqueTagList tagsToAdd = new UniqueTagList();
+        for (final Tag tag : tags) {
+            try {
+                tagsToAdd.add(new Tag(tag));
+            } catch (DuplicateTagException e) {
+                // skip tag if it exists
+            }
+        }
+
+        // add {@code tagsToAdd} to the list only if no exception is thrown
+        internalList.addAll(tagsToAdd.internalList);
+    }
+
+    /**
      * Replaces the Tags in this list with those in the argument tag list.
      */
     public void setTags(Set<Tag> tags) {

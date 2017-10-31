@@ -100,6 +100,25 @@ public class UniqueEventList implements Iterable<Event> {
         return eventFoundAndDeleted;
     }
 
+    public void addEvents(UniqueEventList eventsToAdd) {
+        this.internalList.addAll(eventsToAdd.internalList);
+    }
+
+    /**
+     * Adds all events in the argument events list to this list.
+     */
+    public void addEvents(List<? extends ReadOnlyEvent> events) {
+        final UniqueEventList eventsToAdd = new UniqueEventList();
+        for (final ReadOnlyEvent event : events) {
+            try {
+                eventsToAdd.add(new Event(event));
+            } catch (DuplicateEventException e) {
+                // skip event if it exists
+            }
+        }
+        addEvents(eventsToAdd);
+    }
+
     public void setEvents(UniqueEventList replacement) {
         this.internalList.setAll(replacement.internalList);
     }
