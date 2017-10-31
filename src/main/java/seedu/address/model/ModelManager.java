@@ -16,7 +16,7 @@ import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.person.DefaultPersonComparator;
+import seedu.address.model.person.PersonDefaultComparator;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -47,7 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         // To avoid having to re-sort upon every change in filter, we first sort the list before applying the filter
         // This was we only need to re-sort when there is a change in the backing person list
-        sortedPersons = new SortedList<>(this.addressBook.getPersonList(), new DefaultPersonComparator());
+        sortedPersons = new SortedList<>(this.addressBook.getPersonList(), new PersonDefaultComparator());
         filteredPersons = new FilteredList<>(sortedPersons);
     }
 

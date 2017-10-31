@@ -6,8 +6,8 @@ package seedu.address.model.person;
 public class PersonComparatorUtil {
 
     /**
-     * Compares two persons based on whether or not they are favorited. The favorited person will be ordered first,
-     * otherwise if both are favorited or both are unfavorited, then they are considered equal.
+     * Compares two persons based on whether or not they are favorited. The favorited person will be ordered first.
+     * If both persons have the same favorite status (yes/no), they are considered equal.
      */
     public static int compareFavorite(ReadOnlyPerson thisPerson, ReadOnlyPerson otherPerson) {
         boolean isThisPersonFavorite = thisPerson.getFavorite().isFavorite();

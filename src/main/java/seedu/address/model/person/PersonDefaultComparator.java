@@ -9,16 +9,16 @@ import static seedu.address.model.person.PersonComparatorUtil.comparePhone;
 import java.util.Comparator;
 
 /**
- * Default comparator for persons. Sorts first by name in alphabetical order, then by favorite
+ * Default comparator for persons. Sorts first by favorites, then by name in alphabetical order,
  * then by phone in numeric order, then by address in alphabetical order, then by email in alphabetical order
  */
-public class OrderByNamePersonComparator implements Comparator<ReadOnlyPerson> {
+public class PersonDefaultComparator implements Comparator<ReadOnlyPerson> {
     @Override
     public int compare(ReadOnlyPerson thisPerson, ReadOnlyPerson otherPerson) {
-        if (!thisPerson.getName().equals(otherPerson.getName())) {
-            return compareName(thisPerson, otherPerson);
-        } else if (!thisPerson.getFavorite().equals(otherPerson.getFavorite())) {
+        if (!thisPerson.getFavorite().equals(otherPerson.getFavorite())) {
             return compareFavorite(thisPerson, otherPerson);
+        } else if (!thisPerson.getName().equals(otherPerson.getName())) {
+            return compareName(thisPerson, otherPerson);
         } else if (!thisPerson.getPhone().equals(otherPerson.getPhone())) {
             return comparePhone(thisPerson, otherPerson);
         } else if (!thisPerson.getAddress().equals(otherPerson.getAddress())) {
@@ -28,4 +28,3 @@ public class OrderByNamePersonComparator implements Comparator<ReadOnlyPerson> {
         }
     }
 }
-

@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import java.util.Comparator;
 
-import seedu.address.model.person.OrderByNamePersonComparator;
+import seedu.address.model.person.PersonNameComparator;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -14,7 +14,7 @@ public class SortByNameCommand extends SortCommand {
 
     @Override
     public Comparator<ReadOnlyPerson> getComparator() {
-        return new OrderByNamePersonComparator();
+        return new PersonNameComparator();
     }
 
     @Override

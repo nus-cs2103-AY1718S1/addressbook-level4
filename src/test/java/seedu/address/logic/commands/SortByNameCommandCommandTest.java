@@ -15,8 +15,8 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.DefaultPersonComparator;
-import seedu.address.model.person.OrderByNamePersonComparator;
+import seedu.address.model.person.PersonDefaultComparator;
+import seedu.address.model.person.PersonNameComparator;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TagsContainKeywordsPredicate;
@@ -33,9 +33,9 @@ public class SortByNameCommandCommandTest {
     public void execute_unfilteredList_success() throws Exception {
         SortByNameCommand sortCommand = prepareCommand();
 
-        String expectedMessage = SortByDefaultCommand.MESSAGE_SORTED;
+        String expectedMessage = SortByDefaultCommand.MESSAGE_SORT_SUCCESS;
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.sortPersons(new DefaultPersonComparator());
+        expectedModel.sortPersons(new PersonDefaultComparator());
 
         assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
     }
@@ -45,10 +45,10 @@ public class SortByNameCommandCommandTest {
         showFirstThreePersonsOnly(model);
         SortByNameCommand sortCommand = prepareCommand();
 
-        String expectedMessage = SortByNameCommand.MESSAGE_SORTED;
+        String expectedMessage = SortByNameCommand.MESSAGE_SORT_SUCCESS;
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         showFirstThreePersonsOnly(expectedModel);
-        expectedModel.sortPersons(new OrderByNamePersonComparator());
+        expectedModel.sortPersons(new PersonNameComparator());
 
         assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
     }
