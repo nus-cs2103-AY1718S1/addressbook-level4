@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.model.insurance.ReadOnlyInsurance;
+import seedu.address.model.insurance.UniqueLifeInsuranceList;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -53,22 +55,25 @@ public class PrintCommand extends Command {
         for (ReadOnlyPerson person: lastShownList) {
             String entry = personIndex + ". " + person.getAsText();
             lines.add(entry);
-            lines.add("Insurance Policy: =========");
-            String owner = "";//person.getLifeInsurance().getOwner().getName().fullName;
-            String insured = "";//person.getLifeInsurance().getInsured().getName().fullName;
-            String beneficiary = ""; //person.getLifeInsurance().getBeneficiary().getName().fullName;
-            String premium = ""; //person.getLifeInsurance().getPremium().toString();
-            String signingdate = ""; //person.getLifeInsurance().getSigningDate();
-            String expirydate = "";//person.getLifeInsurance().getExpiryDate();
-            lines.add("Owner: " + owner +"\n"
-                    + "Insured: " + insured + "\n"
-                    + "Beneficiary: " + beneficiary + "\n"
-                    + "Premium: " + premium + "\n"
-                    + "Signing Date: " + signingdate + "\n"
-                    + "Expiry Date: " + expirydate + "\n"
-            );
-            lines.add("============");
-            lines.add("\n");
+
+            UniqueLifeInsuranceList insurances = person.getLifeInsurances();
+            for (ReadOnlyInsurance insurance: insurances) {
+                lines.add("Insurance Policy: =========");
+                String owner = insurance.getOwner().getName();
+                String insured = insurance.getInsured().getName();
+                String beneficiary = insurance.getBeneficiary().getName();
+                String premium = insurance.getPremium().toString();
+                String signingDate = insurance.getSigningDate();
+                String expiryDate = insurance.getExpiryDate();
+                lines.add("Owner: " + owner + "\n"
+                        + "Insured: " + insured + "\n"
+                        + "Beneficiary: " + beneficiary + "\n"
+                        + "Premium: " + premium + "\n"
+                        + "Signing Date: " + signingDate + "\n"
+                        + "Expiry Date: " + expiryDate + "\n"
+                );
+                lines.add("============");
+            }
             personIndex++;
         }
 
