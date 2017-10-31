@@ -520,7 +520,7 @@ public class TagAddCommand extends UndoableCommand {
 }
 ----
 
-For example, the user input might be `t-add 1 2 3 college friend`.
+For example, the user input might be `t-add 1 2 3 college friend`. +
 After the command word `t-add` is parsed at the `AddresBookParser`, the remaining user input(indices in the list, tag to add), in the example `t-add 1 2 3 college friend`, will be passed to and parsed by `TagAddCommandParser`.
 Different from the previous limitation on the choice of word for `tag`, which is `Alnum`, we allow multiple words `tagName` as well, such as `college friend`.
 The change of `tagName` format requires a new algorithm for parsing in the `TagAddCommandParser`.
@@ -1236,6 +1236,7 @@ Use case ends.
 +
 Use case ends.
 
+[appendix]
 == Non Functional Requirements
 
 .  Address book should have restricted access.
