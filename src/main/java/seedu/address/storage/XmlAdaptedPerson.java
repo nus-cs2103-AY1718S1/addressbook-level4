@@ -39,8 +39,7 @@ public class XmlAdaptedPerson {
 
     @XmlElement
     private List<XmlAdaptedTag> tagged;
-    @XmlElement
-    private List<Integer> taskIds;
+
 
 
     /**
@@ -65,7 +64,6 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
-        taskIds = source.getTaskIDs();
     }
 
     /**
@@ -85,7 +83,6 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address);
         final Remark remark = new Remark(this.remark == null ? "" : this.remark);
         final Set<Tag> tags = new HashSet<>(personTags);
-        final List<Integer> taskIds = this.taskIds;
-        return new Person(name, phone, email, address, remark, tags, taskIds);
+        return new Person(name, phone, email, address, remark, tags);
     }
 }

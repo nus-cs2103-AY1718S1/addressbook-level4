@@ -28,7 +28,6 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Integer> id;
 
     private ObjectProperty<UniqueTagList> tags;
-    private ObjectProperty<List<Integer>> taskIDs;
 
     /**
      * Every field must be present and not null.
@@ -45,7 +44,6 @@ public class Person implements ReadOnlyPerson {
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
 
-        this.taskIDs = new SimpleObjectProperty<>();
     }
 
     public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags, Integer id) {
@@ -157,16 +155,6 @@ public class Person implements ReadOnlyPerson {
         return Collections.unmodifiableSet(tags.get().toSet());
     }
 
-    @Override
-    public ObjectProperty<List<Integer>> taskIDsProperty() {
-        return taskIDs;
-    }
-
-    @Override
-    public List<Integer> getTaskIDs() {
-        return taskIDs.get();
-    }
-
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;
     }
@@ -175,10 +163,6 @@ public class Person implements ReadOnlyPerson {
      * Replaces this person's tags with the tags in the argument tag set.
      */
     public void setTags(Set<Tag> replacement) {
-        tags.set(new UniqueTagList(replacement));
-    }
-
-    public void setTaskIDs(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
     }
 

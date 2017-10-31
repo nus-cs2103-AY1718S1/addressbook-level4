@@ -28,8 +28,7 @@ public interface ReadOnlyPerson {
     Integer getId();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
-    ObjectProperty<List<Integer>> taskIDsProperty();
-    List<Integer> getTaskIDs();
+
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */
