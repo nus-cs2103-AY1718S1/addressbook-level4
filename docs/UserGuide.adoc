@@ -179,6 +179,7 @@ image::btexample.png[width="500"]
 [NOTE]
 BLOODTYPE is case insensitive.
 
+// tag::dups[]
 === Showing duplicate persons: `duplicates` [Since v1.3]
 
 You can use duplicates to show a list of people who share the same name. +
@@ -188,6 +189,7 @@ This makes it convenient for finding and resolving duplicate contacts. +
 
 [NOTE]
 The results are from case-sensitive comparisons.
+// end::dups[]
 
 === Editing a person : `edit`
 

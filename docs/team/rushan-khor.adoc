@@ -15,9 +15,9 @@ link:{collatedDir}/test/rushan-khor.md[Test code]
 
 === Enhancement Added: Batch deletion of contacts by tag
 
-==== External behavior
-
 ---
+
+==== External behavior
 
 include::../UserGuide.adoc[tag=batch]
 
@@ -27,11 +27,33 @@ include::../UserGuide.adoc[tag=batch]
 
 Batch deletions make it less tedious to perform deletions on multiple contacts.
 
+---
+
 ==== Implementation
+
+include::../DeveloperGuide.adoc[tag=batch]
 
 ---
 
-include::../DeveloperGuide.adoc[tag=batch]
+=== Enhancement Added: Display potential duplicate contacts
+
+---
+
+==== External behavior
+
+include::../UserGuide.adoc[tag=dups]
+
+---
+
+==== Justification
+
+Batch deletions make it less tedious to perform deletions on multiple contacts.
+
+---
+
+==== Implementation
+
+include::../DeveloperGuide.adoc[tag=dups]
 
 ---
 
