@@ -406,6 +406,7 @@ The index *must be a positive integer* `1, 2, 3, ...`
 
 // end::remark[]
 
+// tag::batch[]
 === Deleting all persons with a particular tag : [Since v1.2]
 
 You can delete multiple contacts by tags +
@@ -414,7 +415,7 @@ You can delete multiple contacts by tags +
 
 [WARNING]
 Command can only delete one tag at a time
-
+// end::batch[]
 
 === KeyBoard Shortcuts [Since v1.2]
 
