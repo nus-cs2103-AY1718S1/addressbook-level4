@@ -154,7 +154,10 @@ public class ModelManager extends ComponentManager implements Model {
         }
         return false;
     }
-
+    //@@author zengfengw
+    /**
+     * Check if a person is in the temp list.
+     */
     public boolean inTempList(ArrayList<ReadOnlyPerson> list, ReadOnlyPerson person) {
         if (list.contains(person)) {
             return true;
@@ -176,7 +179,7 @@ public class ModelManager extends ComponentManager implements Model {
         for (ReadOnlyPerson person : contactList) {
             if ((person.getBirthday().value.length() != 0)
                     && (Integer.parseInt(person.getBirthday().value.substring(0, 2)) >= day)
-                    && (Integer.parseInt(person.getBirthday().value.substring(3, 5)) >= (month+1))) {
+                    && (Integer.parseInt(person.getBirthday().value.substring(3, 5)) >= (month + 1))) {
                 tempList.add(person);
             }
 
@@ -184,7 +187,7 @@ public class ModelManager extends ComponentManager implements Model {
         for (ReadOnlyPerson person : contactList) {
             if ((person.getBirthday().value.length() != 0)
                     && (Integer.parseInt(person.getBirthday().value.substring(0, 2)) < day)
-                    && (Integer.parseInt(person.getBirthday().value.substring(3, 5)) < (month+1))
+                    && (Integer.parseInt(person.getBirthday().value.substring(3, 5)) < (month + 1))
                     && (!(inTempList(tempList, person)))) {
                 tempList.add(person);
             }
@@ -206,4 +209,5 @@ public class ModelManager extends ComponentManager implements Model {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
     }
+    //@@author
 }

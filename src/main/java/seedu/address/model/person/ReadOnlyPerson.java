@@ -45,11 +45,10 @@ public interface ReadOnlyPerson {
                 && other.getAddress().equals(this.getAddress())
                 //@@author Affalen
                 && other.getRemark().equals(this.getRemark()))
-                //@@author
                 //@@author zengfengw
                 && other.getBirthday().equals(this.getBirthday())
                 && other.getAge().equals(this.getAge());
-                //@@author
+        //@@author
     }
 
     /**
