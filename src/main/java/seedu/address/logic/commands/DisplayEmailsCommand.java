@@ -33,7 +33,7 @@ public class DisplayEmailsCommand extends Command {
         List<ReadOnlyEvent> lastShownList = model.getFilteredEventList();
         String temp = "";
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
         }
 
         if (!lastShownList.get(targetIndex.getZeroBased()).getParticipants().isEmpty()) {
