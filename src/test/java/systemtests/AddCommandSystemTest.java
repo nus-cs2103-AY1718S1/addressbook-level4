@@ -44,10 +44,12 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
@@ -68,6 +70,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person without tags to a non-empty address book, command with leading spaces and trailing spaces
          * -> added
          */
+
         ReadOnlyPerson toAdd = AMY;
         String command = "   " + AddCommand.COMMAND_WORDVAR_1.toUpperCase() + "  " + NAME_DESC_AMY + "  "
                 + PHONE_DESC_AMY + " " + EMAIL_DESC_AMY + "   "
@@ -81,57 +84,38 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: redo adding Amy to the list -> Amy added again */
         command = RedoCommand.COMMAND_WORDVAR_1;
-        model.addPerson(toAdd);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: add a duplicate person -> rejected */
         command = AddCommand.COMMAND_WORDVAR_2 + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(command, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD, UndoableCommand.NAME_FIELD));
 
-        /* Case: add a duplicate person except with different tags -> rejected */
+        /* Case: add a duplicate person except with different tags -> Prompt Message */
         // "friends" is an existing tag used in the default model, see TypicalPersons#ALICE
         // This test will fail is a new tag that is not in the model is used, see the bug documented in
         // AddressBook#addPerson(ReadOnlyPerson)
         command = AddCommand.COMMAND_WORDVAR_1 + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + " " + PREFIX_TAG.getPrefix() + "friends";
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(command, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD, UndoableCommand.NAME_FIELD));
 
-        /* Case: add a person with all fields same as another person in the address book except name -> added */
+        /* Case: add a person with all fields same as another person in the address book except name
+         * -> Duplicate Phone Message Prompt
+         */
         toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORDVAR_2 + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd);
+        assertCommandFailure(command, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD, UndoableCommand.PHONE_FIELD));
 
-        /* Case: add a person with all fields same as another person in the address book except phone -> added */
+        /* Case: add a person with all fields same as another person in the address book except phone
+         *  -> Duplicate Name Message Prompt*/
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORDVAR_1 + NAME_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd);
-
-        /* Case: add a person with all fields same as another person in the address book except email -> added */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY).withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORDVAR_2 + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
-                + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd);
-
-        /* Case: add a person with all fields same as another person in the address book except address -> added */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_BOB).withBirthday(VALID_BIRTHDAY_AMY).withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORDVAR_1 + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_BOB
-                + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd);
-
-        /* Case: add a person with all fields same as another person in the address book except birthday -> added */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_BOB).withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORDVAR_1 + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + BIRTHDAY_DESC_BOB + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd);
+        assertCommandFailure(command, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD, UndoableCommand.NAME_FIELD));
 
         /* Case: filters the person list before adding -> added */
         executeCommand(FindCommand.COMMAND_WORDVAR_2 + " " + KEYWORD_MATCHING_MEIER);
