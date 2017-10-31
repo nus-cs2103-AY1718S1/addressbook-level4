@@ -21,7 +21,9 @@ It is useful for busy people who have many connections, such as a businessmen wi
 
 The Developer Guide will walk you through the design, implementation and development environment of link:#rolodex[Rolodex]. This is the go-to page for all your information needs in understanding our application.
 
-== Setting up
+== Setting Up
+
+This section will guide you in setting up the Rolodex project in your local machine for the first time.
 
 === Prerequisites
 
@@ -39,7 +41,7 @@ IntelliJ by default has Gradle and link:#java-fx[JavaFx] plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 
-=== Setting up the project in your computer
+=== Setting up the Project in Your Computer
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
@@ -53,14 +55,14 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
-=== Verifying the setup
+=== Verifying the Setup
 
 . Run the `seedu.address.MainApp` and try a few commands
 . link:#testing[Run the tests] to ensure they all pass.
 
-=== Configurations to do before writing code
+=== Configurations to Do Before Writing Code
 
-==== Configuring the coding style
+==== Configuring the Coding Style
 
 This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
 
@@ -73,7 +75,7 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
-==== Configuring Rolodex `.rldx` extensions
+==== Configuring Rolodex `.rldx` Extensions
 
 link:#rolodex[Rolodex] files are associated with the `.rldx` extensions and are an extension of xml. To configure xml tools in intellij for `rldx` files,
 
@@ -87,7 +89,7 @@ image::RegisterRldx.png[width="600"]
 
 You are now configured to use `.rldx` files with intellij.
 
-==== Updating documentation to match your fork
+==== Updating Documentation to Match Your Fork
 
 After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
@@ -100,7 +102,7 @@ Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingA
 [NOTE]
 Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
 
-==== Getting started with coding
+==== Getting Started With Coding
 
 When you are ready to start coding,
 
@@ -147,7 +149,7 @@ image::LogicClassDiagram.png[width="800"]
 _Figure 2.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
-==== Events-Driven nature of the design
+==== Events-Driven Nature of the Design
 
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
@@ -167,7 +169,7 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 
 The sections below give more details of each component.
 
-=== UI component
+=== UI Component
 
 image::UiClassDiagram.png[width="800"]
 _Figure 2.2.1 : Structure of the UI Component_
@@ -184,7 +186,7 @@ The `UI` component,
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
-=== Logic component
+=== Logic Component
 
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.3.1 : Structure of the Logic Component_
@@ -205,7 +207,7 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 image::DeletePersonSdForLogic.png[width="800"]
 _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
-=== Model component
+=== Model Component
 
 image::ModelClassDiagram.png[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
@@ -219,7 +221,7 @@ The `Model`,
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
-=== Storage component
+=== Storage Component
 
 image::StorageClassDiagram.png[width="800"]
 _Figure 2.5.1 : Structure of the Storage Component_
@@ -231,7 +233,7 @@ The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
 * can save the link:#rolodex[Rolodex] data in xml format and read it back.
 
-=== Common classes
+=== Common Classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
@@ -240,7 +242,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 This section describes some noteworthy details on how certain features are implemented.
 
 // tag::undoredo[]
-=== Undo/Redo mechanism
+=== Undo/Redo Mechanism
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the link:#rolodex[rolodex] (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
@@ -367,7 +369,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 // end::undoredo[]
 
 // tag::openNew[]
-=== Open file and New file mechanism
+=== Open File and New File Mechanism
 The open new file and creating new file mechanism are handled by two new types of requests under the `EventsCenter`,
 `OpenRolodexRequestEvent` and `RolodexChangedDirectoryEvent`. Upon receiving a new command, the `MainApp` attempts to
 reloads the instance `model` and `logic` but **not the `UI`**.
@@ -478,7 +480,7 @@ Another approach would be to reload the application with a loaded and built .jar
 // end::openNew[]
 
 // tag::findClose[]
-=== Fuzzy finding mechanism
+=== Fuzzy Finding Mechanism
 The link:#fuzzy-finding[fuzzy finding] mechanism is powered by https://en.wikipedia.org/wiki/Levenshtein_distance[Levenshtein distance],
 a string heuristic for measuring the difference between two character sequences. It can be informally viewed as the number
 of _hops_ that are required to get from a string to another, where _hops_ are insertions, deletions and substitution
@@ -536,7 +538,7 @@ to the currently examined name word in which the contact will be added.
 // end::findClose[]
 
 // tag::sorting[]
-=== Sorting mechanism
+=== Sorting Mechanism
 The sorting mechanism is integrated into the `list` and `find` commands which resides in the application's `logic` component.
 It supports sorting in ascending or descending order of most fields of a person (e.g. [underline]#Name#, [underline]#Phone#).
 The sort commands update the state of the application at the model level, which resides in `ModelManager`,
@@ -616,7 +618,7 @@ comparator before executing a sort and filter which is handled by the event cons
 // end::sorting[]
 
 // tag::commandAbbreviations[]
-=== Abbreviation mechanism
+=== Abbreviation Mechanism
 The ability for users to enter a variety of different words for a same command is implemented using https://docs.oracle.com/javase/8/docs/api/java/util/Set.html[`java.util.set`].
 
 An example as implemented in the open command:
@@ -676,7 +678,7 @@ access on a java https://docs.oracle.com/javase/8/docs/api/java/util/HashSet.htm
 // end::commandAbbreviations[]
 
 // tag::auto-completion[]
-=== Auto-completion mechanism
+=== Auto-completion Mechanism
 Auto-completion mechanism is implemented in `CommandBox` class under UI component.
 
 Auto-completion is activated when `TAB` key is pressed. This is done by adding a case in the keypress handler in `CommandBox`.
@@ -831,7 +833,7 @@ Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows y
 
 See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting Documentation to PDF Format
 
 We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
@@ -872,7 +874,7 @@ Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI t
 
 To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
 
-=== Types of tests
+=== Types of Tests
 
 We have two types of tests:
 
@@ -928,12 +930,12 @@ Suggested path for new programmers:
 
 2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
 
-=== Improving each component
+=== Improving Each Component
 
 Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
 
 [discrete]
-==== `Logic` component
+==== `Logic` Component
 
 [TIP]
 Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
@@ -950,7 +952,7 @@ Do take a look at the link:#logic-component[Design: Logic Component] section bef
 ****
 
 [discrete]
-==== `Model` component
+==== `Model` Component
 
 [TIP]
 Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
@@ -967,7 +969,7 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 ****
 
 [discrete]
-==== `Ui` component
+==== `Ui` Component
 
 [TIP]
 Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
@@ -1031,7 +1033,7 @@ image::getting-started-ui-status-after.png[width="500"]
 ****
 
 [discrete]
-==== `Storage` component
+==== `Storage` Component
 
 [TIP]
 Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
@@ -1046,7 +1048,7 @@ Do take a look at the link:#storage-component[Design: Storage Component] section
 ** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
 ****
 
-=== Creating a new command: `remark`
+=== Creating a New Command: `remark`
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
 
@@ -1204,7 +1206,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |=======================================================================
 
 [discrete]
-=== Completed user stories
+=== Completed User Stories
 |=======================================================================
 |As a ... |I want to ... |So that I can...
 |user with bad spelling |find a person using close words |find persons without having to remember the exact spelling
@@ -1217,7 +1219,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `Rolodex` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Find person
+=== Use Case: Find Person
 
 *MSS*
 
@@ -1236,7 +1238,7 @@ Use case ends.
 Use case ends.
 
 [discrete]
-=== Use case: Delete person
+=== Use Case: Delete Person
 
 *MSS*
 
@@ -1262,7 +1264,7 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
-=== Use case: Store person note
+=== Use Case: Store Person Note
 
 *MSS*
 
@@ -1293,7 +1295,7 @@ Use case resumes at step 2.
 ** 3b3. Rolodex overwrites existing note with new note.
 
 [discrete]
-=== Use case: Clear Rolodex
+=== Use Case: Clear Rolodex
 
 *MSS*
 
@@ -1312,7 +1314,7 @@ Use case ends.
 Use case ends.
 
 [discrete]
-=== Use case: Editing a person's details
+=== Use Case: Editing a Person's Details
 
 *MSS*
 
@@ -1360,7 +1362,7 @@ Use case ends.
 
 
 [discrete]
-=== Use case: Autocomplete commands
+=== Use Case: Autocomplete Commands
 
 *MSS*
 
@@ -1388,7 +1390,7 @@ Use case ends.
 Use case ends.
 
 [discrete]
-=== Use case: Delete tag
+=== Use Case: Delete Tag
 
 *MSS*
 
@@ -1412,7 +1414,7 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
-=== Use case: Logging into the Rolodex with login credentials
+=== Use Case: Logging into the Rolodex With Login Credentials
 
 *MSS*
 
