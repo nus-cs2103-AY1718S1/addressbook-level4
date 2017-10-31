@@ -75,11 +75,13 @@ public class AddressBookParser {
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
 
+        //@@author keithsoc
         case FavoriteCommand.COMMAND_WORD:
             return new FavoriteCommandParser().parse(arguments);
 
         case UnFavoriteCommand.COMMAND_WORD:
             return new UnFavoriteCommandParser().parse(arguments);
+        //@@author
 
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:
@@ -97,9 +99,11 @@ public class AddressBookParser {
         case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
 
+        //@@author keithsoc
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand(arguments);
+        //@@author
 
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:

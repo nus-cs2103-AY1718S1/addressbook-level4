@@ -58,11 +58,13 @@ public class ParserUtilTest {
         ParserUtil.parseIndex(Long.toString(Integer.MAX_VALUE + 1));
     }
 
+    //@@author keithsoc
     @Test
     public void parseMultiIndex_invalidInput_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
         ParserUtil.parseMultipleIndexes("1 2 3 a"); // Two trailing spaces in front
     }
+    //@@author
 
     @Test
     public void parseIndex_validInput_success() throws Exception {
@@ -73,6 +75,7 @@ public class ParserUtilTest {
         assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
     }
 
+    //@@author keithsoc
     @Test
     public void parseMultiIndex_validInput_success() throws Exception {
         List<Index> expectedIndexList = Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, INDEX_THIRD_PERSON);
@@ -83,6 +86,7 @@ public class ParserUtilTest {
         // Leading and trailing whitespaces
         assertEquals(expectedIndexList, ParserUtil.parseMultipleIndexes(" 1  2   3    "));
     }
+    //@@author
 
     @Test
     public void parseName_null_throwsNullPointerException() throws Exception {

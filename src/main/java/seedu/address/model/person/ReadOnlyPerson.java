@@ -22,8 +22,10 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    //@@author keithsoc
     ObjectProperty<Favorite> favoriteProperty();
     Favorite getFavorite();
+    //@@author
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
     ObjectProperty<UniqueSocialInfoList> socialInfoProperty();

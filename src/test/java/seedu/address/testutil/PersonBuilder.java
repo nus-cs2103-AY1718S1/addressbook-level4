@@ -137,6 +137,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author keithsoc
     /**
      * Sets the {@code Favorite} of the {@code Person} that we are building.
      */
@@ -144,6 +145,7 @@ public class PersonBuilder {
         this.person.setFavorite(new Favorite(favorite));
         return this;
     }
+    //@@author
 
     public Person build() {
         return this.person;

@@ -16,8 +16,10 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    //@@author keithsoc
     /** {@code Predicate} that consists of all ReadOnlyPerson who has been favorited */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_FAV_PERSONS = p -> p.getFavorite().isFavorite();
+    //@@author
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -34,9 +36,11 @@ public interface Model {
     /** Adds all persons in the given collection */
     void addPersons(Collection<ReadOnlyPerson> persons);
 
+    //@@author keithsoc
     /** Favorites or unfavorites the given person */
     void toggleFavoritePerson(ReadOnlyPerson target, String type)
             throws DuplicatePersonException, PersonNotFoundException;
+    //@@author
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
