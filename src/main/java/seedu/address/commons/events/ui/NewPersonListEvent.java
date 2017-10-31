@@ -5,7 +5,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * Indicates that the colour has been changed.
+ * Indicates that the person list has been changed.
  */
 public class NewPersonListEvent extends BaseEvent {
 
