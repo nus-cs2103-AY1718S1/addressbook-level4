@@ -37,10 +37,12 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String remark;
     //@@author
+    //@@author zengfengw
     @XmlElement(required = true)
     private String birthday;
     @XmlElement(required = true)
     private String age;
+    //@@author
     //@@author wishingmaid
     @XmlElement(required = true)
     private String filepath;
@@ -66,8 +68,10 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         remark = source.getRemark().value;
+        //@@author zengfengw
         birthday = source.getBirthday().value;
         age = source.getAge().value;
+        //@@author
         //@@author wishingmaid
         filepath = source.getPhoto().getFilePath();
         //@@author
@@ -92,8 +96,10 @@ public class XmlAdaptedPerson {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Remark remark = new Remark(this.remark);
+        //@@author zengfengw
         final Birthday birthday = new Birthday(this.birthday);
         final Age age = new Age(this.birthday);
+        //@@author
         //@@author wishingmaid
         final Photo photo = new Photo(this.filepath);
         //@@author
