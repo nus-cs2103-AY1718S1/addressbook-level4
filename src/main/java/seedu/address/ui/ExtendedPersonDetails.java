@@ -1,9 +1,10 @@
 package seedu.address.ui;
+
 import java.util.HashMap;
+import java.util.logging.Logger;
 import java.util.Random;
 
 import com.google.common.eventbus.Subscribe;
-import java.util.logging.Logger;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -16,11 +17,12 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
-public class ExtendedPersonDetails extends UiPart<Region>{
+/** javadoc comment*/
+public class ExtendedPersonDetails extends UiPart<Region> {
 
     private static final String FXML = "ExtendDetailsPerson.fxml";
     private static String[] colors = { "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey" };
-    private static HashMap<String, String> tagColors = new HashMap<String, String>();
+    private static HashMap<String, String> tagColors = new HashMap<>();
     private static Random random = new Random();
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     @FXML
@@ -41,11 +43,14 @@ public class ExtendedPersonDetails extends UiPart<Region>{
     private FlowPane tags;
     @FXML
     private ImageView imageView;
-    
+
+    /** */
     public ExtendedPersonDetails() {
         super(FXML);
         registerAsAnEventHandler(this);
     }
+
+    /** */
     private void loadPersonDetails(ReadOnlyPerson person) {
         //initTags(person);
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
@@ -62,6 +67,7 @@ public class ExtendedPersonDetails extends UiPart<Region>{
         });
     }
 
+    /** */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
@@ -70,6 +76,7 @@ public class ExtendedPersonDetails extends UiPart<Region>{
         });
     }
 
+    /** */
     private void setImage(ReadOnlyPerson person) {
         String url = person.getPhoto().getUrl();
         if (!url.equals("")) { //if url is not empty, sets the image that overrides the default photo.
@@ -80,12 +87,15 @@ public class ExtendedPersonDetails extends UiPart<Region>{
         }
     }
 
+    /** */
     private static String getColorForTag(String tagValue) {
         if (!tagColors.containsKey(tagValue)) {
             tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
         }
         return tagColors.get(tagValue);
     }
+
+    /** */
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
