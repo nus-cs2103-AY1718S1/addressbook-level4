@@ -47,6 +47,10 @@ public class AnchorPaneNode extends AnchorPane {
         this.date = date;
     }
 
+    /**
+     * Handles the event when the anchorpane is being clicked
+     * @param event
+     */
     private void handleCalendarEvent(LocalDate event) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
         String newDate = formatter.format(event);
