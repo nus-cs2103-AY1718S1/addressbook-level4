@@ -18,7 +18,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Tooltip;
@@ -84,8 +83,6 @@ public class CalendarPanel extends UiPart<Region> {
      */
     private void setDate(ObservableList<ReadOnlyPerson> personList, ObservableList<ReadOnlyTask> taskList) {
         datePicker = new DatePicker((LocalDate.now()));
-        //ObservableList<PersonCard> mappedList = EasyBind.map(
-        //        personList, (markdate) -> new PersonCard(personList));
         Callback<DatePicker, DateCell> dayCellFactory = this.getDayCellFactory(personList, taskList);
         datePicker.setDayCellFactory(dayCellFactory);
         findDateForSelection();
@@ -163,7 +160,8 @@ public class CalendarPanel extends UiPart<Region> {
                             try {
                                 if (!person.getBirthday().isEmpty()) {
                                     if (MonthDay.from(item).equals
-                                            (MonthDay.from(LocalDate.parse(person.getBirthday().toString(), formatter)))) {
+                                            (MonthDay.from(LocalDate.parse(person.getBirthday().toString(),
+                                                    formatter)))) {
                                         if (bCount == 0) {
                                             bCount++;
                                             s.append(person.getName() + "'s Birthday");
