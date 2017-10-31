@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.logic.commands.AddRemarkCommand;
 import seedu.address.model.person.Remark;
 
-public class RemarkCommandParserTest {
-    private RemarkCommandParser parser = new RemarkCommandParser();
+public class AddRemarkCommandParserTest {
+    private AddRemarkCommandParser parser = new AddRemarkCommandParser();
 
     @Test
     public void parse_indexSpecified_failure() throws Exception {
@@ -25,15 +25,15 @@ public class RemarkCommandParserTest {
         //if no remarks
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased() + " " + PREFIX_REMARK.toString();
-        RemarkCommand expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, remarksNothing);
+        AddRemarkCommand expectedCommand = new AddRemarkCommand(INDEX_FIRST_PERSON, remarksNothing);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
     @Test
     public void parse_noFieldSpecified_failure() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemarkCommand.MESSAGE_USAGE);
 
         // nothing at all
-        assertParseFailure(parser, RemarkCommand.COMMAND_WORD, expectedMessage);
+        assertParseFailure(parser, AddRemarkCommand.COMMAND_WORD, expectedMessage);
     }
 }
