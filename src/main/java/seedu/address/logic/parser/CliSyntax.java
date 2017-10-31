@@ -22,4 +22,8 @@ public class CliSyntax {
     /* Prefix definitions for Event*/
     public static final Prefix PREFIX_DESCRIPTION = new Prefix("d/");
     public static final Prefix PREFIX_TIMESLOT = new Prefix("t/");
+    /* Prefix definitions for Relationship*/
+    public static final Prefix PREFIX_ADD_RELATIONSHIP = new Prefix("ar/");
+    public static final Prefix PREFIX_DELETE_RELATIONSHIP = new Prefix("dr/");
+    public static final Prefix PREFIX_EMPTY_RELATIONSHIP = new Prefix("er/");
 }
