@@ -5,7 +5,6 @@ import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_MIDTERM;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_SOCCER;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_MIDTERM;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_SOCCER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_MIDTERM;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_MIDTERM;
