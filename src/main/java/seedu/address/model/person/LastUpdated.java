@@ -25,11 +25,6 @@ public class LastUpdated {
         this.value = value;
     }
 
-    /**TODO: Restrict LastUpdated to date values
-     *
-     * @param test
-     * @return
-     */
     public static boolean isValidLastUpdated(String test) {
         return test.matches(LASTUPDATED_VALIDATION_REGEX);
     }
