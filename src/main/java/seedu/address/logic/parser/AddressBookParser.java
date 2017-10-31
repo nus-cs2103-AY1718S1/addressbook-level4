@@ -123,7 +123,7 @@ public class AddressBookParser {
             }
 
         case EditCommand.COMMAND_WORD:
-            if (isPersonEnabled && isTaskEnabled) {
+            if (isPersonEnabled && !isTaskEnabled) {
                 return new EditCommandParser().parse(checkedArguments);
             } else {
                 throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
