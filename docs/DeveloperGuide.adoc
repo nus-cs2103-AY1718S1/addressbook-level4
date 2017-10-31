@@ -573,18 +573,21 @@ settings panel is then translated out of sight again.
 
 image::SettingsPaneInOut.png[width="700"]
 
+When the choose command is called, another event is called to hide the other views that are not "chosen" by the user. For example, if the user types in the command `choose meeting`, the root view of the current display page, e.g linkedin, will be removed
+from the placeholder in the MainWindow, then the root view of the meeting display is placed in its stead.
+
 ==== Design Considerations
 
-**Aspect:** Implementation of choose command
-**Alternative:** Combine it with the pref command to come under a "mega" "settings" command.
-**Pros:** Lesser commands for the user to remember, higher code modularity, easier for future command implementations on settings.
+**Aspect:** Implementation of choose command +
+**Alternative:** Combine it with the pref command to come under a "mega" "settings" command. +
+**Pros:** Lesser commands for the user to remember, higher code modularity, easier for future command implementations on settings. +
 **Cons:** Harder to code and debug due to requirement to parse more arguments
 
----
+----
 
-**Aspect:** Animation of settings panel
-**Alternative:** Use transitions instead of timeline
-**Pros:** Transitions are easier to implement and understand
+**Aspect:** Animation of settings panel +
+**Alternative:** Use transitions instead of timeline +
+**Pros:** Transitions are easier to implement and understand +
 **Cons:** KeyValue objects are fit into a keyframe which is then fit into the timeline, which fits more into the concept of java's OOP and allows for more code reusability when we want to, for example, animate bouncing
 
 ---
@@ -646,6 +649,27 @@ people is then continually updated, before it is finally returned to the user
 **Cons:** Unnecessary results may be returned for larger address books
 
 ---
+
+=== Meeting Display
+
+Displays the list of upcoming meetings to the user on the main display window. Accessible through the `choose` command to select the display type.
+
+==== Implementation
+
+When the user executes the `choose` command under the `meeting` keyword, an event is raised to hide the current display, which is a WebView.
+Since the meeting display cannot be implemented using a WebView, the root view of the BrowserPanel.fxml is first removed from the placeholder, then the view of MeetingPanel.fxml is added into the placeholder instead.
+The meeting information is retrieved from a ReadOnlyMeetingList converted into an ObservableList<Meeting>, and stored into a list view with list cells containing 5x1 GridPanes, each populated with information on the meeting.
+
+==== Design Considerations
+
+**Aspect:** Constructor of the MeetingPanel class
+**Alternative:** Instead of taking in logic, directly take in an ObservableList<Meeting> that is called from MainWindow.java.
+**Pros:** Less coupling since there is no logic component in the MeetingPanel class.
+**Cons:** Since the Meeting class does not have getter methods to obtain person strings and instead uses a mapped unique id system to obtain each person's name through the ReadOnlyAddressBook, a instance of the model object is required to obtain the strings of each person's name in the meeting object
+**Alternative 2:** Implement a direct getter method for the person's string in the meeting object.
+**Pros:** Lesser code complexity; we no longer need a method in the LogicManager class to obtain person strings through the ReadOnlyAddressBook using the Meeting class' unique IDs.
+**Pros:** Less coupling since there is no logic component in the MeetingPanel class.
+**Cons:** Invalidates the unique id system currently in place for the meeting class.
 
 == Documentation
 

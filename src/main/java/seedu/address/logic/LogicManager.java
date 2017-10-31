@@ -126,11 +126,6 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public ListElementPointer getHistorySnapshot() {
-        return new ListElementPointer(history.getHistory());
-    }
-
-    @Override
     public ObservableList<Meeting> getMeetingList() {
         return model.getMeetingList().getMeetingList();
     }
@@ -147,5 +142,10 @@ public class LogicManager extends ComponentManager implements Logic {
             logger.info(e.getMessage());
             return nameList;
         }
+    }
+
+    @Override
+    public ListElementPointer getHistorySnapshot() {
+        return new ListElementPointer(history.getHistory());
     }
 }

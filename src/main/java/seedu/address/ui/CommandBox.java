@@ -36,9 +36,10 @@ public class CommandBox extends UiPart<Region> {
 
     private StackPane helperContainer;
     private CommandBoxHelper commandBoxHelper;
-    private SplitPane settingsPane;
     private Boolean helpEnabled = false;
+    private SplitPane settingsPane;
 
+    //Animation attributes
     private Timeline timelineLeft;
     private Timeline timelineRight;
 
@@ -274,13 +275,13 @@ public class CommandBox extends UiPart<Region> {
         timelineLeft.setCycleCount(1);
         timelineLeft.setAutoReverse(true);
         KeyValue kvLeft1 = new KeyValue(settingsPane.translateXProperty(), -10);
-        KeyFrame kfLeft = new KeyFrame(Duration.millis(400), onFinished, kvLeft1);
+        KeyFrame kfLeft = new KeyFrame(Duration.millis(200), onFinished, kvLeft1);
         timelineLeft.getKeyFrames().add(kfLeft);
 
         timelineRight.setCycleCount(1);
         timelineRight.setAutoReverse(true);
         KeyValue kvRight1 = new KeyValue(settingsPane.translateXProperty(), 300);
-        KeyFrame kfRight = new KeyFrame(Duration.millis(400), kvRight1);
+        KeyFrame kfRight = new KeyFrame(Duration.millis(200), kvRight1);
         timelineRight.getKeyFrames().add(kfRight);
     }
 }
