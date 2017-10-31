@@ -480,6 +480,7 @@ The remove tag function is done by calling a `removetag` function which resides 
 The following is the sequence diagram of how the RemoveTagCommands removes the tag from the list of persons.
 
 image::RemoveTagAllSequenceDiagram.png[width="800"]
+_Figure 4.5.1 : Sequence Diagram of removeTag function_
 
 If no `INDEX` is given to the Remove Tag command, the remove tag command will run the following code during execution.
 ----
