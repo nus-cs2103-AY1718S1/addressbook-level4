@@ -92,9 +92,9 @@ public class Picture {
         }
 
         // For default people
-        if (fileLocation == Picture.DEFAULT_ALEX || fileLocation == Picture.DEFAULT_BALAKRISHNAN
-                || fileLocation == Picture.DEFAULT_BERNICE || fileLocation == Picture.DEFAULT_CHARLOTTE
-                || fileLocation == Picture.DEFAULT_DAVID || fileLocation == Picture.DEFAULT_IRFAN) {
+        if (fileLocation.equals(Picture.DEFAULT_ALEX) || fileLocation.equals(Picture.DEFAULT_BALAKRISHNAN)
+                || fileLocation.equals(Picture.DEFAULT_BERNICE) || fileLocation.equals(Picture.DEFAULT_CHARLOTTE)
+                || fileLocation.equals(Picture.DEFAULT_DAVID) || fileLocation.equals(Picture.DEFAULT_IRFAN)) {
             return true;
         }
 
@@ -117,9 +117,9 @@ public class Picture {
     public String getPictureLocation() {
         if (value == null) {
             return DEFAULT_PICTURE_LOCATION + DEFAULT_PICTURE;
-        } else if (value == Picture.DEFAULT_ALEX || value == Picture.DEFAULT_BALAKRISHNAN
-                || value == Picture.DEFAULT_BERNICE || value == Picture.DEFAULT_CHARLOTTE
-                || value == Picture.DEFAULT_DAVID || value == Picture.DEFAULT_IRFAN) {
+        } else if (value.equals(Picture.DEFAULT_ALEX) || value.equals(Picture.DEFAULT_BALAKRISHNAN)
+                || value.equals(Picture.DEFAULT_BERNICE) || value.equals(Picture.DEFAULT_CHARLOTTE)
+                || value.equals(Picture.DEFAULT_DAVID) || value.equals(Picture.DEFAULT_IRFAN)) {
             // Sample data
             return DEFAULT_PICTURE_LOCATION + value;
         } else {
