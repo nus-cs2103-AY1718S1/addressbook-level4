@@ -14,20 +14,22 @@ endif::[]
 
 By: `CS2103AUG2017-W10-B3`      Since: `Jun 2016`      Licence: `MIT`
 
-== Introduction
-=== Purpose
-This user guide contains all the essential information required to make full
-use of Death Note. It also includes the description of the
-application's system function, abilities and
-step-by-step procedures to be able to use Death Note effectively.
+This user guide contains all the essential information required to make full use of Death Note. It also includes the
+description of the application's system function, abilities and step-by-step procedures to be able to use Death Note
+effectively.
 
-=== Overview
-Death Note allows you to store the name, profile picture, phone number, email,
-address, birthday and website of your contacts. It also allows you to add tags and
-remarks to people stored inside.
+== Getting Started
 
-=== Current Version
-The current version of this application is *Version 1.4*.
+=== Introduction
+
+Death Note allows you to store the name, profile picture, phone number, email, address, birthday and website of
+your contacts. It also allows you to add tags and remarks to people stored inside.
+
+=== 30-Second Tutorial
+
+Let's get started. Here is a quick demonstration showing how to perform basic contact management.
+
+image::usage.gif[width="800"]
 
 == Quick Start
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
