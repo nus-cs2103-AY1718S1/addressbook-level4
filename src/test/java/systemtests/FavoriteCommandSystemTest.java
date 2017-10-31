@@ -27,6 +27,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+//@@author keithsoc
 public class FavoriteCommandSystemTest extends AddressBookSystemTest {
 
     private static final String MESSAGE_INVALID_FAVORITE_COMMAND_FORMAT =
@@ -199,3 +200,4 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
         assertStatusBarUnchanged();
     }
 }
+//@@author

@@ -9,6 +9,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.FavoriteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author keithsoc
 /**
  * Parses input arguments and creates a new FavoriteCommand object
  */
@@ -27,3 +28,4 @@ public class FavoriteCommandParser implements Parser<FavoriteCommand> {
         }
     }
 }
+//@@author

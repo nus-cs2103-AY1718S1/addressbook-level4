@@ -3,6 +3,7 @@ package seedu.address.testutil.modelstubs;
 import static org.junit.Assert.fail;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -28,6 +29,11 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public void sortPersons(Comparator<ReadOnlyPerson> comparator) {
+        fail("This method should not be called.");
+    }
+
+    @Override
     public void resetData(ReadOnlyAddressBook newData) {
         fail("This method should not be called.");
     }
@@ -49,11 +55,13 @@ public class ModelStub implements Model {
         fail("This method should not be called.");
     }
 
+    //@@author keithsoc
     @Override
     public void toggleFavoritePerson(ReadOnlyPerson target, String type)
             throws DuplicatePersonException, PersonNotFoundException {
         fail("This method should not be called.");
     }
+    //@@author
 
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {

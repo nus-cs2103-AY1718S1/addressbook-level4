@@ -40,6 +40,15 @@ public class ParserUtil {
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
     /**
+     * Splits {@code args} by whitespace and returns it
+     */
+    public static List<String> parseWhitespaceSeparatedStrings(String args) {
+        requireNonNull(args);
+        String[] splitArgs = args.split("\\s+");
+        return Arrays.asList(splitArgs);
+    }
+
+    /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
@@ -52,6 +61,7 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    //@@author keithsoc
     /**
      * Parses {@code args} into an {@code List<Index>} and returns it.
      * Used for commands that need to parse multiple indexes
@@ -67,6 +77,7 @@ public class ParserUtil {
         }
         return indexList;
     }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
@@ -104,6 +115,7 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
+    //@@author keithsoc
     /**
      * Checks if favorite and unfavorite prefixes are present in {@code ArgumentMultimap argMultimap}
      * Catered for both AddCommandParser and EditCommandParser usage
@@ -132,6 +144,7 @@ public class ParserUtil {
             return Optional.empty();
         }
     }
+    //@@author
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.

@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+//@@author keithsoc
 /**
  * Represents a Favorite status in the address book.
  */
@@ -45,3 +46,4 @@ public class Favorite {
     }
 
 }
+//@@author

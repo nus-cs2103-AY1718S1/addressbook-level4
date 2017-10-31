@@ -24,7 +24,9 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    //@@author keithsoc
     private ObjectProperty<Favorite> favorite;
+    //@@author
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<UniqueSocialInfoList> socialInfos;
 
@@ -108,6 +110,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author keithsoc
     public void setFavorite(Favorite favorite) {
         this.favorite.set(requireNonNull(favorite));
     }
@@ -121,6 +124,7 @@ public class Person implements ReadOnlyPerson {
     public Favorite getFavorite() {
         return favorite.get();
     }
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

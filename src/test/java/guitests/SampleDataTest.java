@@ -5,11 +5,13 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 import org.junit.Test;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonDefaultComparator;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.TestUtil;
 
@@ -42,6 +44,8 @@ public class SampleDataTest extends AddressBookGuiTest {
     @Test
     public void addressBook_dataFileDoesNotExist_loadSampleData() {
         Person[] expectedList = SampleDataUtil.getSamplePersons();
+        // Persons should be sorted using the default comparator
+        Arrays.sort(expectedList, new PersonDefaultComparator());
         assertListMatching(getPersonListPanel(), expectedList);
     }
 }

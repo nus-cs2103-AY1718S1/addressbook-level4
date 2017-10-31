@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -16,8 +17,10 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    //@@author keithsoc
     /** {@code Predicate} that consists of all ReadOnlyPerson who has been favorited */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_FAV_PERSONS = p -> p.getFavorite().isFavorite();
+    //@@author
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -34,9 +37,14 @@ public interface Model {
     /** Adds all persons in the given collection */
     void addPersons(Collection<ReadOnlyPerson> persons);
 
+    //@@author keithsoc
+    /** Sorts the persons in the address book based on the input {@code comparator} */
+    void sortPersons(Comparator<ReadOnlyPerson> comparator);
+
     /** Favorites or unfavorites the given person */
     void toggleFavoritePerson(ReadOnlyPerson target, String type)
             throws DuplicatePersonException, PersonNotFoundException;
+    //@@author
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -58,5 +66,4 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
-
 }

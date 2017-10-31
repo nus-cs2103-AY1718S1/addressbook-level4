@@ -24,6 +24,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author keithsoc
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code FavoriteCommand}.
  */
@@ -113,3 +114,4 @@ public class FavoriteCommandTest {
         return favoriteCommand;
     }
 }
+//@@author
