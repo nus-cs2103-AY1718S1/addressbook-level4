@@ -268,6 +268,11 @@ Edits the birthday for the first person to `20-12-2012` +
 * `birthday 1 b/` or `birthday 1` +
 Removes the birthday for the first person.
 
+=== Upcoming birthdays : `UpcomingBirthday` (Since v1.4)
+
+Updates the list to show the upcoming birthdays. +
+Format: `UpcomingBirthday`
+
 === Sorting all entries : `sort` (Since v1.2)
 
 Sorts all entries in Peersonal based on the given prefix in ascending order. +
@@ -336,6 +341,7 @@ e.g. `find James Jake`
 e.g. `remark 1 r/is a student in NUS`
 * *Birthday* : `birthday INDEX [b/DATE]` +
 e.g. `birthday 1 b/01-01-1995`
+* *Upcoming Birthday* : `UpcomingBirthday`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
