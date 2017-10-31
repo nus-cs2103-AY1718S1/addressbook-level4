@@ -47,7 +47,7 @@ public class ExtendedPersonDetails extends UiPart<Region>{
         registerAsAnEventHandler(this);
     }
     private void loadPersonDetails(ReadOnlyPerson person) {
-        initTags(person);
+        //initTags(person);
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));

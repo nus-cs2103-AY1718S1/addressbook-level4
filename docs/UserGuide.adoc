@@ -156,12 +156,14 @@ Deletes the 1st person in the results of the `find` command.
 === Adding photo : `addPhoto` (Since v1.3)
 
 Adds a photo for the specifed person in the address book. +
-Format: `addPhoto INDEX f/[FILEPATH]`
+Format: `addphoto INDEX f/[FILEPATH]`
 
 Examples:
 
-* `addPhoto 1 f/C:/users/pictures/cuteThings/cutedog.png` +
-Adds a photo `cutedog.png` to the first person of the Address Book.
+* `addphoto 1 f/C:/users/pictures/cuteThings/cutedog.png` +
+Adds a photo `cutedog.png` to the first person of the Address Book. 
+
+* `addphoto 1` or `addphoto 1 f/` removes the current photo from the first person of PEERSONAL.
 
 === Selecting a person : `select`
 

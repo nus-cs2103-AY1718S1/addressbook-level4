@@ -224,7 +224,9 @@ The diagram below shows the inheritance diagram for commands:
 image::inheritCommandUML.png[width="800]
 
 Suppose that the user wishes to append an image to a desired contact. The user will execute `addphoto 1 f/C:/Users/PhotoBook/myFace.png` to add a photo to the first person in Peersonal. Peersonal will parse the user input into their proper parameters in `AddPhotoCommandParser`.
-`AddPhotoCommandParser` will then return a `AddPhotoCommand` to be executed in the `LogicManager`. Upon the `execute()` method of `AddPhotoCommand`, a new `Person` object, `editedPerson` is created with all the same field as the `personToEdit` with the addition of the new `Photo` field. The `editedPerson` will replace `personToEdit` using the `updatePerson()` in the `Model` class. A success message will be generated if the photo addition is successful. +
+`AddPhotoCommandParser` will then return a `AddPhotoCommand` to be executed in the `LogicManager`. Upon the `execute()` method of `AddPhotoCommand`, a new `Person` object, `editedPerson` is created with all the same field as the `personToEdit` with the addition of the new `Photo` field. +
+`PhotoStorage` is then called to rewrite the filepath of the image to a local folder `displaypictures` and return the new filepath to be set in `Photo` class. An error message will be thrown if PEERSONAL is unable to write the new image to the `displaypictures` folder. The `editedPerson` will take the new filepath of the image instead of the local filepath from the user input. +
+The `editedPerson` will replace `personToEdit` using the `updatePerson()` in the `Model` class. A success message will be generated if the photo addition is successful. +
 The sequence diagram below shows how the `addphoto` process is carried out:
 
 image::SequenceDiagramUML.png[width="800]
@@ -245,6 +247,16 @@ image::SequenceDiagramUML.png[width="800]
 **Alternative 2:** Using a String to represent the filepath of the photo. +
 **Pros:** Do not have to go through multiple stages of conversion to represent the photo as an Image object. +
 **Cons:** Unable to pass String into ImageView class in Javafx to load an image. Therefore still have to convert into an Image object to pass through to ImageView class. Thus, using Image Object to represent a photo makes more sense.
+
+---
+
+**Aspect:** Choice of how the images are stored and accessed +
+**Alternative 1(current choice):** Creating a new folder `displaypictures` upon first execution of PEERSONAL.jar to use as an image storage folder. + 
+**Pros:** Image filepaths are now independent of the source filepath. Therefore users do not have to worry about shifting the specific image that is tied to a specified contact in PEERSONAL. +
+**Cons:** `displaypictures` folder size might become too big if user adds too many photos. + 
+**Alternative 2:** Directly obtains the local filepath of the image on the user's hard drive without writing the image into a new image storage folder `displaypicture` for PEERSONAL. +
+**Pros:** Do not have deal with write issues to `displaypictures` and memory size of `displaypictures` if it gets too big. +
+**Cons:** Users might forget that a specific image file is tied to a contact in PEERSONAL. Shifting the image file will cause PEERSONAL to be unable to find the image file. +
 
 // tag::undoredo[]
 === Undo/Redo mechanism
