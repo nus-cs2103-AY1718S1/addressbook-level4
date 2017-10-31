@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author caoliangnus
 /**
  * Represents a Module code in the application.
  * Guarantees: immutable; is valid as declared in {@link #isValidCode(String)}

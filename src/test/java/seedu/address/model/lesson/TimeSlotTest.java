@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import seedu.address.model.module.TimeSlot;
 
+//@@author caoliangnus
 public class TimeSlotTest {
     @Test
     public void isValidTimeSlot() {

@@ -23,6 +23,7 @@ import seedu.address.model.module.exceptions.DuplicateRemarkException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.exceptions.RemarkNotFoundException;
 
+//@@author caoliangnus
 /**
  * Wraps all data at the address-book level
  * Duplicates are not allowed (by .equals comparison)

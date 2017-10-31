@@ -32,6 +32,7 @@ import seedu.address.model.module.exceptions.RemarkNotFoundException;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
+//@@author caoliangnus
 /**
  * Represents the in-memory model of the address book data.
  * All changes to any model should be synchronized.

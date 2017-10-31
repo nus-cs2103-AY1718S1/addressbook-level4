@@ -6,6 +6,7 @@ import javafx.beans.property.ObjectProperty;
 import seedu.address.model.lecturer.Lecturer;
 import seedu.address.model.lecturer.UniqueLecturerList;
 
+//@@author caoliangnus
 /**
  * A read-only immutable interface for a Module in the application.
  * Implementations should guarantee: details are present and not null, field values are validated.

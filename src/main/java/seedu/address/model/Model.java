@@ -16,6 +16,7 @@ import seedu.address.model.module.exceptions.DuplicateRemarkException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.exceptions.RemarkNotFoundException;
 
+//@@author caoliangnus
 /**
  * The API of the Model component.
  */

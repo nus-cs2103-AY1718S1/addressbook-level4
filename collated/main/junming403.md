@@ -2376,6 +2376,7 @@ public class XmlAdaptedRemark {
 
     }
 
+
     /**
      * Change the card state to hide irrelevant information and only show lesson
      */
@@ -2387,6 +2388,7 @@ public class XmlAdaptedRemark {
             bookmark.setVisible(true);
         }
     }
+
 
     /**
      * Change the card state depending on the current listing unit
