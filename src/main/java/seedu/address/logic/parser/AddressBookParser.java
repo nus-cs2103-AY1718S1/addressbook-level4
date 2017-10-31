@@ -24,6 +24,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.JoinCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListEventCommand;
+import seedu.address.logic.commands.PortraitCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SelectJoinedEventsCommand;
@@ -91,9 +92,12 @@ public class AddressBookParser {
 
         case JoinCommand.COMMAND_WORD:
             return new JoinCommandParser().parse(arguments);
-
+        
         case DisplayEmailsCommand.COMMAND_WORD:
             return new DisplayEmailsCommandParser().parse(arguments);
+
+        case PortraitCommand.COMMAND_WORD:
+            return new PortraitCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
