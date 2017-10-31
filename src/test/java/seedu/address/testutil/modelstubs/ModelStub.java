@@ -3,6 +3,7 @@ package seedu.address.testutil.modelstubs;
 import static org.junit.Assert.fail;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -24,6 +25,11 @@ public class ModelStub implements Model {
 
     @Override
     public void addPersons(Collection<ReadOnlyPerson> persons) {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void sortPersons(Comparator<ReadOnlyPerson> comparator) {
         fail("This method should not be called.");
     }
 
