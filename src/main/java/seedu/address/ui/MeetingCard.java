@@ -7,7 +7,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.meeting.Meeting;
-import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * An UI component that displays meetings of a person.
@@ -18,7 +17,7 @@ public class MeetingCard extends UiPart<Region> {
 
     public final Meeting meeting;
 
-    @javafx.fxml.FXML
+    @FXML
     private HBox meetingCardPane;
     @FXML
     private Label name;
@@ -31,7 +30,6 @@ public class MeetingCard extends UiPart<Region> {
         super(FXML);
         this.meeting = meeting;
         id.setText(displayedIndex + ". ");
-//        initMeetings(meeting);
         bindListeners(meeting);
     }
 
@@ -43,26 +41,6 @@ public class MeetingCard extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(meeting.nameProperty()));
         Label tagLabel = new Label(meeting.value);
         meetings.getChildren().add(tagLabel);
-
-//        person.tagProperty().addListener((observable, oldValue, newValue) -> {
-//            meetings.getChildren().clear();
-//
-//            /*
-//            * Initalise meetings for a person by assigning it with a label
-//            * */
-//            initMeetings(person);
-//        });
     }
-
-    /**
-     *Initialises a label with an assigned colour for a given person
-     * @param person
-     */
-//    private void initMeetings(ReadOnlyPerson person) {
-//        person.getMeetings().forEach(meeting -> {
-//            Label tagLabel = new Label(meeting.value);
-//            meetings.getChildren().add(tagLabel);
-//        });
-//    }
 
 }

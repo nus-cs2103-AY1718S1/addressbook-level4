@@ -12,7 +12,6 @@ import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.meeting.Meeting;
-import seedu.address.model.meeting.UniqueMeetingList;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -56,21 +55,6 @@ public class LogicManager extends ComponentManager implements Logic {
     public ObservableList<Meeting> getFilteredMeetingList() {
         return model.getFilteredMeetingList();
     }
-//    @Override
-//    public ObservableList<Meeting> getMeetingList() {
-//        ObservableList<ReadOnlyPerson> personList = model.getFilteredPersonList();
-//        UniqueMeetingList meetingList = new UniqueMeetingList();
-//        for (ReadOnlyPerson person : personList) {
-//            for (Meeting meeting : person.getMeetings()) {
-//                try {
-//                    meetingList.add(meeting);
-//                } catch (UniqueMeetingList.DuplicateMeetingException e) {
-//                    throw new AssertionError("Meetings should all be unique" + e);
-//                }
-//            }
-//        }
-//        return meetingList.asObservableList();
-//    }
 
     @Override
     public ListElementPointer getHistorySnapshot() {

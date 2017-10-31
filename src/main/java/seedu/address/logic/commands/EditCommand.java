@@ -79,6 +79,21 @@ public class EditCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+
+        if (editPersonDescriptor.getName().isPresent()) {
+            if (editPersonDescriptor.getMeetings().isPresent()) {
+                editPersonDescriptor.setNameForMeetings(editPersonDescriptor.getName().get());
+            } else {
+                for (Meeting meeting : personToEdit.getMeetings()) {
+                    meeting.setName(editPersonDescriptor.getName().get());
+                }
+            }
+        } else {
+            if (editPersonDescriptor.getMeetings().isPresent()) {
+                editPersonDescriptor.setNameForMeetings(personToEdit.getName());
+            }
+        }
+
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         try {
@@ -207,6 +222,13 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Set<Meeting>> getMeetings() {
             return Optional.ofNullable(meetings);
+        }
+
+        public void setNameForMeetings(Name name) {
+            Set<Meeting> meetingList = getMeetings().get();
+            for (Meeting meeting : meetingList) {
+                meeting.setName(name);
+            }
         }
 
         @Override

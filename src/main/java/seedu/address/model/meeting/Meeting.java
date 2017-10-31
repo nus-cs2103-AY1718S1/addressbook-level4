@@ -21,7 +21,7 @@ public class Meeting {
 
     public final LocalDateTime date;
     public final String value;
-    public final Name name;
+    private Name name;
     private ObjectProperty<Name> displayName;
 
     /**
@@ -30,8 +30,7 @@ public class Meeting {
      * @throws IllegalValueException if the given tag name string is invalid.
      */
     public Meeting(String time, Name name) throws IllegalValueException {
-        this.name = name;
-        this.displayName = new SimpleObjectProperty<>(name);
+        setName(name);
         requireNonNull(time);
         String trimmedTime = time.trim();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -44,16 +43,55 @@ public class Meeting {
         }
     }
 
+    /**
+     * Overloaded constructor to be used in edit command parser
+     */
+    public Meeting(String time) throws IllegalValueException {
+        requireNonNull(time);
+        String trimmedTime = time.trim();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        try {
+            LocalDateTime date = LocalDateTime.parse(trimmedTime, formatter);
+            this.date = date;
+            value = date.format(formatter);
+        } catch (DateTimeParseException dtpe) {
+            throw new IllegalValueException(MESSAGE_TIME_CONSTRAINTS);
+        }
+    }
+
+    /**
+     * Set the name attributes of the meeting object.
+     */
+    public void setName(Name name) {
+        this.name = name;
+        this.displayName = new SimpleObjectProperty<>(name);
+    }
+
+    /**
+     * Returns name of the meeting
+     */
     public Name getName() {
         return name;
     }
 
+    /**
+     * Return name for use by UI
+     */
     public ObjectProperty<Name> nameProperty() {
         return displayName;
     }
 
+
+
     @Override
     public boolean equals(Object other) {
+        /* Only happens for testing as name attribute will be set for the main app*/
+        if (this.name == null && other instanceof Meeting && ((Meeting) other).name == null) {
+            return other == this // short circuit if same object
+                    || (other instanceof Meeting // instanceof handles nulls
+                    && this.date.equals(((Meeting) other).date)); //state check
+        }
+
         return other == this // short circuit if same object
                 || (other instanceof Meeting // instanceof handles nulls
                 && this.date.equals(((Meeting) other).date)
