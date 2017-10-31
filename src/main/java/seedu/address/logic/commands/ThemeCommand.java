@@ -18,8 +18,8 @@ public class ThemeCommand extends Command {
             + "Alias: " + COMMAND_ALIAS + "\n"
             + "Parameters: -OPTION\n"
             + "Options: \n"
-            + "\t" + COMMAND_OPTION_DAY + " - Changes the application theme to a light color scheme\n"
-            + "\t" + COMMAND_OPTION_NIGHT + " - Changes the application theme to a dark color scheme\n"
+            + "\t" + COMMAND_OPTION_DAY + " - Changes the application theme to a light color scheme.\n"
+            + "\t" + COMMAND_OPTION_NIGHT + " - Changes the application theme to a dark color scheme.\n"
             + "Example: \n"
             + "\t" + COMMAND_WORD + " -" + COMMAND_OPTION_DAY + "\n"
             + "\t" + COMMAND_WORD + " -" + COMMAND_OPTION_NIGHT + "\n";
