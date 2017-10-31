@@ -62,6 +62,8 @@ This will generate all resources required by the application and tests.
 
 === Configurations to Do Before Writing Code
 
+Before you start coding, there are some important configurations that you have to do for the project to run smoothly.
+
 ==== Configuring the Coding Style
 
 This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
@@ -110,6 +112,9 @@ When you are ready to start coding,
 2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
 == Design
+
+To help you better understand the internal design of the application, this section provides model diagrams with accompanying explanations
+for the main architecture of Rolodex.
 
 === Architecture
 
@@ -849,6 +854,8 @@ _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
+Testing ensures that our software works as expected. In Rolodex, we use several frameworks for running tests.
+
 === Running Tests
 
 There are three ways to run tests.
@@ -897,6 +904,8 @@ e.g. `seedu.address.logic.LogicManagerTest`
 * Solution: Execute Gradle task `processResources`.
 
 == Dev Ops
+
+This section contains the tools we use for software collaboration.
 
 === Build Automation
 
