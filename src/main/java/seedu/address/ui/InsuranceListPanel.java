@@ -11,7 +11,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.InsurancePanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.SwitchToInsurancePanelRequestEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 
 //@@author OscarWang114

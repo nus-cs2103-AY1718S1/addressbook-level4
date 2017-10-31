@@ -31,12 +31,10 @@ public class InsuranceProfile extends UiPart<Region> {
 
     private static final String FXML = "InsuranceProfile.fxml";
     private static final String PDFFOLDERPATH = "data/";
-
-
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    public ReadOnlyInsurance insurance;
     private File insuranceFile;
+    private ReadOnlyInsurance insurance;
 
     @FXML
     private Label index;
@@ -54,7 +52,6 @@ public class InsuranceProfile extends UiPart<Region> {
     private Label signingDate;
     @FXML
     private Label expiryDate;
-
     public InsuranceProfile() {
         super(FXML);
         enableNameToProfileLink(insurance);
@@ -63,6 +60,7 @@ public class InsuranceProfile extends UiPart<Region> {
     }
 
     //@@author RSJunior37
+
     public InsuranceProfile(ReadOnlyInsurance insurance, int displayIndex) {
         super(FXML);
         this.insurance = insurance;
@@ -75,12 +73,26 @@ public class InsuranceProfile extends UiPart<Region> {
         bindListeners(insurance);
     }
 
+    public ReadOnlyInsurance getInsurance() {
+        return insurance;
+    }
+
+
+    /**
+     * Listen for click event on person names to be displayed as profile
+     * @param insurance
+     */
     private void enableNameToProfileLink(ReadOnlyInsurance insurance) {
         owner.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getOwner())));
         insured.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getInsured())));
         beneficiary.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getBeneficiary())));
     }
 
+    /**
+     * Checks if pdf file exist in project, if not add click event on contract field to add file with filechooser
+     * Then add click event on contract field to open up the file
+     * @param insurance
+     */
     private void initializeContractFile(ReadOnlyInsurance insurance) {
         insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractPath());
         if (isFileExists(insuranceFile)) {
@@ -143,6 +155,7 @@ public class InsuranceProfile extends UiPart<Region> {
         signingDate.textProperty().bind(Bindings.convert(insurance.signingDateStringProperty()));
         expiryDate.textProperty().bind(Bindings.convert(insurance.expiryDateStringProperty()));
     }
+
 
     @Subscribe
     private void handleInsurancePanelSelectionChangedEvent(InsurancePanelSelectionChangedEvent event) {

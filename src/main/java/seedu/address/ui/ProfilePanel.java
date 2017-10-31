@@ -32,7 +32,8 @@ public class ProfilePanel extends UiPart<Region> {
     public static final String INSURANCE_LIST_HEADER = "List of Insurance Contracts Involved: ";
     public static final String NO_INSURANCE_MESSAGE = "This person is not related to any Insurance Contracts";
     public static final String PERSON_DOES_NOT_EXIST_MESSAGE = "This person does not exist in Lisa.";
-    public static final ObservableList<InsuranceIdLabel> insurance = FXCollections.observableArrayList();
+
+    public final ObservableList<InsuranceIdLabel> insurance = FXCollections.observableArrayList();
 
     private static final String FXML = "ProfilePanel.fxml";
 
@@ -80,7 +81,7 @@ public class ProfilePanel extends UiPart<Region> {
             insuranceHeader.setText(INSURANCE_LIST_HEADER);
         }
         ObservableList<ReadOnlyInsurance> insuranceList = person.getLifeInsurances().asObservableList();
-        for ( ReadOnlyInsurance i : insuranceList) {
+        for (ReadOnlyInsurance i : insuranceList) {
             insurance.add(new InsuranceIdLabel(i));
         }
         insuranceListView.setItems(insurance);
@@ -122,6 +123,10 @@ public class ProfilePanel extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
     }
 
+
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code InsuranceIdLabel}.
+     */
     class InsuranceIdListViewCell extends ListCell<InsuranceIdLabel> {
         @Override
         protected void updateItem(InsuranceIdLabel insurance, boolean empty) {
