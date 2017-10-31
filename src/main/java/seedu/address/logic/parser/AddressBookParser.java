@@ -99,7 +99,7 @@ public class AddressBookParser {
             // @@author HuWanqing
         case JoinCommand.COMMAND_WORD:
             return new JoinCommandParser().parse(arguments);
-            
+
         //@@author leonchowwenhao
         case DisplayEmailsCommand.COMMAND_WORD:
             return new DisplayEmailsCommandParser().parse(arguments);
