@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <ListView fx:id="personListView" VBox.vgrow="ALWAYS" />
+<!-- @@author HouDenghao -->
+<VBox style="-fx-background-color: #dd2200; -fx-background-radius: 18px;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <Label fx:id="title" contentDisplay="CENTER" text="\$title" style="-fx-text-fill: white; -fx-font-size: 18">
+      <VBox.margin>
+         <Insets left="20.0" />
+      </VBox.margin></Label>
+  <ListView fx:id="personListView" style="-fx-background-color: #dd2200; -fx-background-radius: 18px;" VBox.vgrow="ALWAYS" />
 </VBox>

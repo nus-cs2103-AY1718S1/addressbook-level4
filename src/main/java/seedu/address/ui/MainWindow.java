@@ -48,9 +48,6 @@ public class MainWindow extends UiPart<Region> {
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
-
-    @FXML
     private StackPane commandBoxPlaceholder;
 
     @FXML
@@ -137,21 +134,26 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        //browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        //@@ leonchowwenhao
+        BrowserPanel browserPanel = new BrowserPanel();
 
+        // @@author HouDenghao
         InformationBoard informationBoard = new InformationBoard();
         //informationBoardPlaceholder.getChildren().add(informationBoard.getRoot());
 
+        // @@author
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        // @@author HouDenghao
         eventListPanel = new EventListPanel(logic.getFilteredEventList());
         //eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
+        //@@author leonchowwenhao
         togglePanel = new TogglePanel(browserPanel, informationBoard, eventListPanel);
         togglePlaceHolder.getChildren().add(togglePanel.getRoot());
 
+        // @@author
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 

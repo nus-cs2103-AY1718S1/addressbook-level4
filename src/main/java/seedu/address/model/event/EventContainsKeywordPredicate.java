@@ -3,6 +3,7 @@ package seedu.address.model.event;
 import java.util.List;
 import java.util.function.Predicate;
 
+//@@author leonchowwenhao
 /**
  * Tests that a {@code ReadOnlyEvent}'s {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
  */

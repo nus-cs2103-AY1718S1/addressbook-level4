@@ -36,14 +36,14 @@
     </padding>
   </StackPane>
 
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" VBox.vgrow="ALWAYS">
+  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5"  VBox.vgrow="ALWAYS">
     <VBox fx:id="personList" minWidth="340" SplitPane.resizableWithParent="false">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
       <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
-
+    
     <StackPane fx:id="togglePlaceHolder" prefHeight="20.0" prefWidth="525.0" visible="true">
       <padding>
         <Insets bottom="1" left="1" right="1" top="1" />

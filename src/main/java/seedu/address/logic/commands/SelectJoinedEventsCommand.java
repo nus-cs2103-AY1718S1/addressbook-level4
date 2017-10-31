@@ -10,6 +10,7 @@ import seedu.address.model.event.EventContainsKeywordPredicate;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author leonchowwenhao
 /**
  * Selects a person identified using it's last displayed index from the address book
  * and displays all events the person has joined.

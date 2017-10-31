@@ -9,7 +9,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 /**
  * Represents a Event's time in the address book.
  */
-
+// @@author HuWanqing
 public class EventTime {
 
 

@@ -8,6 +8,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.Person;
 
+//@@author leonchowwenhao
 /**
  * Selects an event identified using it's last displayed index from the address book
  * and displays the emails of every person that has joined.

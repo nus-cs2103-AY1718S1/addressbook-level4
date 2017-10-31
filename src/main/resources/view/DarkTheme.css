@@ -3,10 +3,11 @@
     background-color: #383838; /* Used in the default.html file */
 }
 
+/* @@author HouDenghao */
 .text-area {
-    -fx-background-color: #515658;
-    -fx-background-radius: 18 18 18 18;
-    -fx-border-radius: 18 18 18 18;
+    -fx-background-color: transparent;
+    -fx-background-radius: 18px;
+    -fx-border-radius: 18px;
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 13pt;
     -fx-text-fill: white;
@@ -14,6 +15,7 @@
 
 .text-area .scroll-pane {
     -fx-background-color: transparent;
+    -fx-border-radius: 18px;
 }
 
 .text-area .scroll-pane .viewport{
@@ -22,9 +24,11 @@
 
 
 .text-area .scroll-pane .content{
-    -fx-background-color: transparent;
+    -fx-background-color: lightgreen;
+    -fx-background-radius: 18px;
 }
 
+/* @@author */
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -109,6 +113,7 @@
     -fx-background-color: derive(#1d1d1d, 20%);
 }
 
+/* @@author HouDenghao */
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
@@ -118,21 +123,15 @@
 .list-cell {
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap : 0;
-    -fx-padding: 0 0 0 0;
-}
-
-.list-cell:filled:even {
-    -fx-background-color: #3c3e3f;
-}
-
-.list-cell:filled:odd {
-    -fx-background-color: #515658;
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: #424d5f;
+    -fx-background-color: transparent;
 }
 
+/* @@author */
 .list-cell:filled:selected #cardPane {
     -fx-border-color: #3e7b91;
     -fx-border-width: 1;

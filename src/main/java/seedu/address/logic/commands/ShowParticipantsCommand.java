@@ -8,6 +8,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.PersonJoinsEventsPredicate;
 
+// @@author HouDenghao
 /**
  * Shows all the participants of an event.
  */

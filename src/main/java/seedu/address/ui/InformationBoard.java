@@ -8,11 +8,13 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
+// @@author HouDenghao
 /**
  * A ui for the status bar that is displayed at the header of the application.
  */
@@ -26,8 +28,12 @@ public class InformationBoard extends UiPart<Region> {
     @FXML
     private TextArea informationBoard;
 
+    @FXML
+    private Label title;
+
     public InformationBoard() {
         super(FXML);
+        title.textProperty().bind(new SimpleStringProperty("Information Board"));
         informationBoard.textProperty().bind(displayed);
         registerAsAnEventHandler(this);
     }

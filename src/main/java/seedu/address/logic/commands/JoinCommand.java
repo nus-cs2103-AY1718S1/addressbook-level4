@@ -20,7 +20,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.HaveParticipateEventException;
 import seedu.address.model.person.exceptions.NotParticipateEventException;
 
-
+// @@author HuWanqing
 /**
  * adds a participant to an event, and adds this event to the participant
  */
