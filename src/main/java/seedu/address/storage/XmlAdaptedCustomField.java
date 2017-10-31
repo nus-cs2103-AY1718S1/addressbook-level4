@@ -1,11 +1,10 @@
 package seedu.address.storage;
 
+import java.util.StringTokenizer;
 import javax.xml.bind.annotation.XmlValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.customField.CustomField;
-
-import java.util.StringTokenizer;
 
 /**
  * JAXB-friendly adapted version of the Custom Field.
