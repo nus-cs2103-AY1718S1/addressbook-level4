@@ -120,8 +120,6 @@ public abstract class AddressBookSystemTest {
         clockRule.setInjectedClockToCurrentTime();
 
         mainWindowHandle.getCommandBox().pressAndRun(command, keyPresses);
-
-        waitUntilBrowserLoaded(getBrowserPanel());
     }
     //@@author
 
