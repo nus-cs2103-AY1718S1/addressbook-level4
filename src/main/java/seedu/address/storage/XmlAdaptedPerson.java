@@ -91,9 +91,6 @@ public class XmlAdaptedPerson {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final ArrayList<Remark> remarks = new ArrayList<>(personRemarks);
-        if (remarks.isEmpty()) { //Ensures that an empty remark list will not increase in size
-            remarks.add(new Remark("")); //Ensures every Person will always have a remarked field
-        }
         final FavouriteStatus favouriteStatus = new FavouriteStatus(this.favouriteStatus);
         final Set<Tag> tags = new HashSet<>(personTags);
         final Link link = new Link(this.link);

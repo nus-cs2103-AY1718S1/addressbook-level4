@@ -32,7 +32,7 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
-    private static final Integer ONE_REMARK = 1;
+    private static final Integer ONE_OBJECT = 1;
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -152,9 +152,22 @@ public class ParserUtil {
         for (String remarkString : remarks) {
             remarkArrayList.add(new Remark(remarkString));
         }
-        if (remarkArrayList.size() < ONE_REMARK) {
+        if (remarkArrayList.size() < ONE_OBJECT) {
             remarkArrayList.add(new Remark(""));
         }
         return remarkArrayList;
+    }
+
+    /**
+     * Parses {@code Collection<Integer> indexes} into a {@code ArrayList<Integer>}.
+     */
+    public static ArrayList<Integer> parseIndexes(Collection<Integer> indexes) throws IllegalValueException {
+        requireNonNull(indexes);
+        final ArrayList<Integer> indexArrayList = new ArrayList<>();
+        for (Integer index : indexes) {
+            indexArrayList.add(index);
+        }
+
+        return indexArrayList;
     }
 }
