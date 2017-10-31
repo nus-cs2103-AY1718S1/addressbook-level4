@@ -96,7 +96,7 @@ public class Person implements ReadOnlyPerson {
     public Email getEmail() {
         return email.get();
     }
-
+    //@@author chilipadiboy
     public void setBirthday(Birthday birthday) {
         this.birthday.set(requireNonNull(birthday));
     }
@@ -110,7 +110,7 @@ public class Person implements ReadOnlyPerson {
     public Birthday getBirthday() {
         return birthday.get();
     }
-
+    //@@author
     public void setAddress(Address address) {
         this.address.set(requireNonNull(address));
     }
@@ -124,7 +124,7 @@ public class Person implements ReadOnlyPerson {
     public Address getAddress() {
         return address.get();
     }
-
+    //@@author chilipadiboy
     public void setRemark(Remark remark) {
         this.remark.set(requireNonNull(remark));
     }
@@ -138,7 +138,7 @@ public class Person implements ReadOnlyPerson {
     public Remark getRemark() {
         return remark.get();
     }
-
+    //@@author Jemereny
     public void setWebsite(Website website) {
         this.website.set(requireNonNull(website));
     }
@@ -166,7 +166,7 @@ public class Person implements ReadOnlyPerson {
     public Picture getPicture() {
         return picture.get();
     }
-
+    //@@author
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -190,6 +190,7 @@ public class Person implements ReadOnlyPerson {
     /**
      * Updates this person with the details of {@code replacement}.
      */
+    //@@author chilipadiboy
     public void resetData(ReadOnlyPerson replacement) {
         requireNonNull(replacement);
 
@@ -202,6 +203,7 @@ public class Person implements ReadOnlyPerson {
         this.setPicture(replacement.getPicture());
         this.setTags(replacement.getTags());
     }
+    //@@author chilipadiboy
 
     @Override
     public boolean equals(Object other) {

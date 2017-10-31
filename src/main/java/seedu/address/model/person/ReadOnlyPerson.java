@@ -58,9 +58,12 @@ public interface ReadOnlyPerson {
                       && other.getPhone().equals(this.getPhone())
                       && other.getEmail().equals(this.getEmail())
                       && other.getBirthday().equals(this.getBirthday())
+                      //@@author chilipadiboy
                       && other.getAddress().equals(this.getAddress())
+                      //@@author Jemereny
                       && other.getWebsite().equals(this.getWebsite())
                       && other.getPicture().equals(this.getPicture())
+                      //@@author chilipadiboy
                       && other.getRemark().equals(this.getRemark()));
     }
 
@@ -68,6 +71,7 @@ public interface ReadOnlyPerson {
      * Formats the person as text, showing all contact details.
      */
     default String getAsText() {
+        //@@author chilipadiboy
         final StringBuilder builder = new StringBuilder();
         builder.append(getName());
         if (getPhone().toString() != null) {
@@ -98,7 +102,7 @@ public interface ReadOnlyPerson {
             builder.append(" Picture: ")
                     .append(getPicture());
         }
-
+        //@@author
         if (!(getTags().isEmpty())) {
             builder.append(" Tags: ");
             getTags().forEach(builder::append);
