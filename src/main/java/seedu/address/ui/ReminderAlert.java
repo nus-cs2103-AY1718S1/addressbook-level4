@@ -6,27 +6,28 @@ import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.TrayIcon.MessageType;
+import java.net.MalformedURLException;
+
+import javax.swing.plaf.synth.Region;
 
 /**
  * ReminderAlert allows tray icon to be utilised
  */
-public class ReminderAlert {
+public class ReminderAlert extends UiPart<Region> {
 
-    /**
-     *
-     * @param args
-     * @throws AWTException
-     * @throws java.net.MalformedURLException
-     */
-    public static void main(String[] args) throws AWTException, java.net.MalformedURLException {
-        if (SystemTray.isSupported()) {
-            ReminderAlert td = new ReminderAlert();
-            td.displayTray();
-        } else {
-            System.err.println("System tray not supported!");
+
+    public ReminderAlert() {
+        try {
+            if (SystemTray.isSupported()) {
+                ReminderAlert td = new ReminderAlert();
+                td.displayTray();
+            } else {
+                System.err.println("System tray not supported!");
+            }
+        } catch (AWTException | MalformedURLException e) {
+            e.printStackTrace();
         }
     }
-
     /**
      * Method utilised to display tray icon
      */
@@ -38,12 +39,12 @@ public class ReminderAlert {
         Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
         //Alternative (if the icon is on the classpath):
         //Image image = Toolkit.getToolkit().createImage(getClass().getResource("icon.png"));
-        TrayIcon trayIcon = new TrayIcon(image, "Tray Demo");
+        TrayIcon trayIcon = new TrayIcon(image, "Reminder");
         //Let the system resizes the image if needed
         trayIcon.setImageAutoSize(true);
         //Set tooltip text for the tray icon
         trayIcon.setToolTip("System tray icon demo");
         tray.add(trayIcon);
-        trayIcon.displayMessage("Hello, World", "notification demo", MessageType.INFO);
+        trayIcon.displayMessage("You have an event today!", "CS2103T Lecture", MessageType.INFO);
     }
 }
