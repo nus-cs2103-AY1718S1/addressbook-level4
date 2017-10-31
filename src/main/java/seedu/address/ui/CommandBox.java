@@ -12,8 +12,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.controlsfx.control.textfield.TextFields;
-
 import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.ObservableList;
@@ -28,7 +26,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-
+import org.controlsfx.control.textfield.TextFields;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.commons.events.ui.ColorKeywordEvent;
@@ -122,6 +120,7 @@ public class CommandBox extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author caoliangnus
     /**
      * This method create a list of prefix used in the command
      */
@@ -158,6 +157,7 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
+    //@@author caoliangnus
     /**
      * Handles the key released event, {@code keyEvent}.
      */
@@ -169,6 +169,8 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
+
+    //@@author caoliangnus
     /**
      * Handles the Command input changed event.
      */
@@ -240,6 +242,8 @@ public class CommandBox extends UiPart<Region> {
 
     }
 
+
+    //@@author caoliangnus
     private ArrayList<Integer> getTagIndexList(String allTextInput) {
         ArrayList<Integer> tagList = new ArrayList<>();
         int index = 0;
@@ -255,6 +259,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
 
+    //@@author caoliangnus
     /**
      * Check if keyword is a valid command keyword
      * @param keyWord
@@ -268,6 +273,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
 
+    //@@author caoliangnus
     /**
      * Configure words that are not command keyword
      */
@@ -293,6 +299,8 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
+
+    //@@author caoliangnus
     /**
      * Configure command keyword when appeared on Command Box
      * @param commandKeyword
@@ -341,6 +349,8 @@ public class CommandBox extends UiPart<Region> {
         keywordLabel.toFront();
     }
 
+
+    //@@author caoliangnus
     /**
      * Configure tag that appear in the text field
      */
@@ -404,11 +414,14 @@ public class CommandBox extends UiPart<Region> {
         setFontSize(event.message);
     }
 
+    //@@author caoliangnus
     @Subscribe
     private void handleColorKeywordEvent(ColorKeywordEvent event) {
         setEnableHighlight(event.isEnabled);
     }
 
+
+    //@@author caoliangnus
     /**
      * This method only remove all tag label in stack pane
      */
@@ -427,6 +440,8 @@ public class CommandBox extends UiPart<Region> {
         stackPane.getChildren().removeAll(removalCandidates);
     }
 
+
+    //@@author caoliangnus
     /**
      * This method compute the margin for label
      * @param index the type of font size used in command box
@@ -590,6 +605,7 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    //@@author caoliangnus
     /**
      * Sets the command box to enable highlighting of command keywords
      */
