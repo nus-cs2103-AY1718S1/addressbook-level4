@@ -226,13 +226,13 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         // Index of a person who is not Bob so that edit should fail
         Index notBobIndex = INDEX_SECOND_PERSON;
         assertFalse(getModel().getFilteredPersonList().get(notBobIndex.getZeroBased()).equals(BOB));
-        command = EditCommand.COMMAND_WORD + " " + notBobIndex.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + FAVORITE_DESC_YES + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+        command = EditCommand.COMMAND_WORD + " " + notBobIndex.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB
+                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + FAVORITE_DESC_YES + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: edit a person with new values same as another person's values but with different tags -> rejected */
-        command = EditCommand.COMMAND_WORD + " " + notBobIndex.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + FAVORITE_DESC_YES + TAG_DESC_HUSBAND;
+        command = EditCommand.COMMAND_WORD + " " + notBobIndex.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB
+                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + FAVORITE_DESC_YES + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
     }
 

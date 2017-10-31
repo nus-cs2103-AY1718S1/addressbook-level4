@@ -12,7 +12,7 @@ public abstract class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
     public static final String COMMAND_ALIAS = "sr";
 
-    private static final String MESSAGE_SORTED_BY = "Persons sorted!\n";
+    public static final String MESSAGE_SORTED = "Persons sorted!\n";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the displayed person list.\n"
             + "Alias: " + COMMAND_ALIAS + "\n"
@@ -27,7 +27,7 @@ public abstract class SortCommand extends Command {
     public CommandResult execute() {
         Comparator<ReadOnlyPerson> comparator = getComparator();
         model.sortPersons(comparator);
-        return new CommandResult(MESSAGE_SORTED_BY);
+        return new CommandResult(MESSAGE_SORTED);
     }
 
     /**

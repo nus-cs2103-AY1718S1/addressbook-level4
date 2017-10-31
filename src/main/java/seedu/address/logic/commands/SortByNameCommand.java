@@ -16,4 +16,10 @@ public class SortByNameCommand extends SortCommand {
     public Comparator<ReadOnlyPerson> getComparator() {
         return new OrderByNamePersonComparator();
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || other instanceof SortByNameCommand; // instanceof handles nulls
+    }
 }

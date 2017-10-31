@@ -29,7 +29,9 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void sortPersons(Comparator<ReadOnlyPerson> comparator) { fail("This method should not be called."); }
+    public void sortPersons(Comparator<ReadOnlyPerson> comparator) {
+        fail("This method should not be called.");
+    }
 
     @Override
     public void resetData(ReadOnlyAddressBook newData) {

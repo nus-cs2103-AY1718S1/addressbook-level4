@@ -13,4 +13,10 @@ public class SortByDefaultCommand extends SortCommand {
     public Comparator<ReadOnlyPerson> getComparator() {
         return new DefaultPersonComparator();
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || other instanceof SortByDefaultCommand; // instanceof handles nulls
+    }
 }
