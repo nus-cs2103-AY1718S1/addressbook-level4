@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_FINDCOMMAND;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -12,9 +13,11 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.model.person.AddressContainsKeywordsPredicate;
+import seedu.address.model.person.CountryContainsKeywordsPredicate;
 import seedu.address.model.person.EmailContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.PhoneContainsKeywordsPredicate;
+import seedu.address.model.person.ScheduleContainsKeywordsPredicate;
 import seedu.address.model.person.TagContainsKeywordsPredicate;
 
 public class FindCommandParserTest {
@@ -33,10 +36,10 @@ public class FindCommandParserTest {
         // no leading and trailing whitespaces
         FindCommand expectedFindCommandName =
                 new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
-        assertParseSuccess(parser, FindCommand.COMMAND_WORD + " " + "n/Alice Bob", expectedFindCommandName);
+        assertParseSuccess(parser, "n/Alice Bob", expectedFindCommandName);
 
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, FindCommand.COMMAND_WORD + " " + "n/ Alice    Bob", expectedFindCommandName);
+        assertParseSuccess(parser, "n/ Alice    Bob", expectedFindCommandName);
     }
 
 
@@ -45,11 +48,19 @@ public class FindCommandParserTest {
         // no leading and trailing whitespaces
         FindCommand expectedFindCommandPhone =
                 new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList("9898", "4553")));
-        assertParseSuccess(parser, FindCommand.COMMAND_WORD + " " + "p/98984553", expectedFindCommandPhone);
+        assertParseSuccess(parser, " " + "p/98984553", expectedFindCommandPhone);
 
         // digits not exactly 4 or 8
-        assertParseFailure(parser, "find p/988754445", PhoneContainsKeywordsPredicate.MESSAGE_PHONE_VALIDATION);
-        assertParseFailure(parser, "find p/988754445", PhoneContainsKeywordsPredicate.MESSAGE_PHONE_VALIDATION);
+        assertParseFailure(parser, "p/988754445", PhoneContainsKeywordsPredicate.MESSAGE_PHONE_VALIDATION);
+        assertParseFailure(parser, "p/988754445", PhoneContainsKeywordsPredicate.MESSAGE_PHONE_VALIDATION);
+    }
+
+    @Test
+    public void parse_validArgs_returnsFindCommandCountry() {
+        // no leading and trailing whitespaces
+        FindCommand expectedFindCommandCountry =
+                new FindCommand(new CountryContainsKeywordsPredicate(Arrays.asList("china", "paris")));
+        assertParseSuccess(parser, "c/china paris", expectedFindCommandCountry);
     }
 
     @Test
@@ -57,7 +68,7 @@ public class FindCommandParserTest {
         // no leading and trailing whitespaces
         FindCommand expectedFindCommandAddress =
                 new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList("1", "Barn", "Ave", "6", "#08-10")));
-        assertParseSuccess(parser, "find a/1 Barn Ave 6 #08-10", expectedFindCommandAddress);
+        assertParseSuccess(parser, "a/1 Barn Ave 6 #08-10", expectedFindCommandAddress);
     }
 
     @Test
@@ -65,7 +76,7 @@ public class FindCommandParserTest {
         // no leading and trailing whitespaces
         FindCommand expectedFindCommandEmail =
                 new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList("abc@yahoo.com.sg")));
-        assertParseSuccess(parser, FindCommand.COMMAND_WORD + " " + "e/abc@yahoo.com.sg", expectedFindCommandEmail);
+        assertParseSuccess(parser, " " + "e/abc@yahoo.com.sg", expectedFindCommandEmail);
 
     }
 
@@ -74,25 +85,38 @@ public class FindCommandParserTest {
         // no leading and trailing whitespaces
         FindCommand expectedFindCommandTag =
                 new FindCommand(new TagContainsKeywordsPredicate(Arrays.asList("friends", "teachers")));
-        assertParseSuccess(parser, FindCommand.COMMAND_WORD + " " + "t/friends teachers", expectedFindCommandTag);
+        assertParseSuccess(parser, " " + "t/friends teachers", expectedFindCommandTag);
 
 
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, FindCommand.COMMAND_WORD + " " + "t/friends      teachers", expectedFindCommandTag);
+        assertParseSuccess(parser, " " + "t/friends      teachers", expectedFindCommandTag);
+
+    }
+
+    @Test
+    public void parse_validArgs_returnsFindCommandSchedule() {
+        // no leading and trailing whitespaces
+        FindCommand expectedFindCommandSchedule =
+                new FindCommand(new ScheduleContainsKeywordsPredicate(Arrays.asList("party", "interview")));
+        assertParseSuccess(parser, " " + "act/party interview", expectedFindCommandSchedule);
+
+
+        // multiple whitespaces between keywords
+        assertParseSuccess(parser, " " + "act/party      interview", expectedFindCommandSchedule);
 
     }
 
     @Test
     public void parse_invalidPreamble_failure() {
         // negative index
-        assertParseFailure(parser, "find /abc@example.com", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "/abc@example.com", MESSAGE_INVALID_FORMAT);
 
 
         // invalid arguments being parsed as preamble
-        assertParseFailure(parser, "find 1 some random string", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
 
         // invalid prefix being parsed as preamble
-        assertParseFailure(parser, "find i/ string", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "i/ string", MESSAGE_UNKNOWN_FINDCOMMAND);
     }
 
     @Test

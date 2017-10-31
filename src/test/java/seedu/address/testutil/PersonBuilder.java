@@ -23,11 +23,11 @@ public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
-    public static final String DEFAULT_COUNTRY = "Singapore";
+    public static final String DEFAULT_COUNTRY_CODE = "Singapore";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, Singapore 408769";
     public static final String DEFAULT_SCHEDULE_DATE = "15-01-1997";
-    public static final String DEFAULT_ACTIVITY = "Play basketball";
+    public static final String DEFAULT_ACTIVITY = "Party";
     public static final String DEFAULT_TAGS = "friends";
 
     private Person person;
@@ -36,7 +36,7 @@ public class PersonBuilder {
         try {
             Name defaultName = new Name(DEFAULT_NAME);
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
-            Country defaultCountry = new Country(DEFAULT_COUNTRY);
+            Country defaultCountry = new Country(DEFAULT_COUNTRY_CODE);
             Set<Email> defaultEmail = SampleDataUtil.getEmailSet(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Schedule> defaultSchedule = SampleDataUtil.getScheduleSet(asList(DEFAULT_SCHEDULE_DATE),
@@ -108,8 +108,8 @@ public class PersonBuilder {
     /**
      * Sets the {@code Phone} of the {@code Person} that we are building.
      */
-    public PersonBuilder withCountry(String country) {
-        this.person.setCountry(new Country(country));
+    public PersonBuilder withCountry(String countryCode) {
+        this.person.setCountry(new Country(countryCode));
         // any illegal values already caught in Phone, where code is extracted.
         return this;
     }
@@ -117,7 +117,7 @@ public class PersonBuilder {
     /**
      * Parses the {@code emails} into a {@code Set<Email>} and sets it to the {@code Person} that we are building.
      */
-    public PersonBuilder withEmail(String ... emails) {
+    public PersonBuilder withEmail(String... emails) {
         try {
             this.person.setEmails(SampleDataUtil.getEmailSet(emails));
         } catch (IllegalValueException ive) {
