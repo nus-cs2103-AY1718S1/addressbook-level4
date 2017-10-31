@@ -25,6 +25,8 @@ public class ThemeCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "-",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "day",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
     }
 }
 //@@author
