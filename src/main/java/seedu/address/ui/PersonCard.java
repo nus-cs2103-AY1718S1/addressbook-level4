@@ -17,7 +17,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static String[] colors = {"red", "yellow", "blue", "orange", "brown", "green", "pink", "black"};
+    private static String[] colors = {"darkblue", "darkolivegreen", "slategray ", "teal", "maroon", "darkslateblue"};
     private static HashMap<String, String> tagColors = new HashMap<>();
     private static HashMap<String, String> webLinkColors = new HashMap<>();
 
@@ -117,7 +117,8 @@ public class PersonCard extends UiPart<Region> {
     private void initWebLinks(ReadOnlyPerson person) {
         person.getWebLinks().forEach(webLink -> {
             Label webLinkLabel = new Label(webLink.webLinkTag);
-            webLinkLabel.setStyle("-fx-background-color: " + getColorForWeblinks(webLink.toStringWebLinkTag()));
+            webLinkLabel.setStyle("-fx-background-color: transparent");
+            webLinkLabel.setStyle("-fx-border-color: " + getColorForWeblinks(webLink.toStringWebLinkTag()));
             webLinks.getChildren().add(webLinkLabel);
         });
     }
@@ -125,6 +126,8 @@ public class PersonCard extends UiPart<Region> {
     public static HashMap<String, String> getTagColors() {
         return tagColors;
     }
+
+    public static HashMap<String, String> getWebLinkColors() { return webLinkColors; }
 
     @Override
     public boolean equals(Object other) {

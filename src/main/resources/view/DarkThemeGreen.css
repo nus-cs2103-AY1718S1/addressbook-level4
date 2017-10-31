@@ -1,14 +1,14 @@
 * {
-    -fx-base-background-color-0: #181b1d;
-    -fx-base-background-color-1: #2e3138;
+    -fx-base-background-color-0: #141d12;
+    -fx-base-background-color-1: #2b3826;
     -fx-base-text-fill-color: white;
     -fx-base-text-fill-color-alt: black;
     -fx-label-text-fill-color: #010505;
-    -fx-list-cell-even: #3c3e3f;
-    -fx-list-cell-odd: #4a4f58;
-    -fx-list-cell-selected: #36435f;
-    -fx-list-cell-selected-border: #3e7b91;
-    -fx-list-cell-empty: #383838;
+    -fx-list-cell-even: #363f34;
+    -fx-list-cell-odd: #4a584d;
+    -fx-list-cell-selected: #5f4855;
+    -fx-list-cell-selected-border: #912d76;
+    -fx-list-cell-empty: #323833;
 }
 
 .background {

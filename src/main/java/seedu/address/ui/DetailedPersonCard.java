@@ -22,16 +22,12 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class DetailedPersonCard extends UiPart<Region> {
 
     private static final String FXML = "DetailedPersonListCard.fxml";
-    private static String[] colors = {"red", "yellow", "blue", "orange", "brown", "green", "pink", "black"};
+    private static String[] colors = {"darkblue", "darkolivegreen", "slategray ", "teal", "maroon", "darkslateblue", "black"};
     private static HashMap<String, String> tagColors = new HashMap<>();
     private static HashMap<String, String> webLinkColors = new HashMap<>();
 
     static {
-        webLinkColors.put("facebook", "#3b5998");
-        webLinkColors.put("twitter", "#00aced");
-        webLinkColors.put("linkedin", "#0077b5");
-        webLinkColors.put("instagram", "#8a3ab9");
-        webLinkColors.put("others", "grey");
+        webLinkColors = PersonCard.getWebLinkColors();
     }
 
     private static Random random = new Random();
