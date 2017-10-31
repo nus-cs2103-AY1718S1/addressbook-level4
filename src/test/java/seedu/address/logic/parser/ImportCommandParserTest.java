@@ -4,10 +4,10 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.commands.CommandTestUtil.IMPORT_NO_PATH;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_IMPORT_PATH;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_IMPORT_TYPE;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_NUSMODS_IMPORT;
+import static seedu.address.logic.commands.CommandTestUtil.NUSMODS_INVALID_IMPORT;
 import static seedu.address.logic.commands.CommandTestUtil.NOT_FROM_NUSMODS_IMPORT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NUSMODS_IMPORT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NUSMODS_URL;
+import static seedu.address.logic.commands.CommandTestUtil.NUSMODS_VALID_IMPORT;
+import static seedu.address.logic.commands.CommandTestUtil.NUSMODS_VALID_URL;
 import static seedu.address.logic.commands.imports.ImportNusmodsCommand.INVALID_URL;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -25,8 +25,8 @@ public class ImportCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() throws Exception {
-        ImportCommand expected = new ImportNusmodsCommand(new URL(VALID_NUSMODS_URL));
-        assertParseSuccess(parser, VALID_NUSMODS_IMPORT, expected);
+        ImportCommand expected = new ImportNusmodsCommand(new URL(NUSMODS_VALID_URL));
+        assertParseSuccess(parser, NUSMODS_VALID_IMPORT, expected);
     }
 
     @Test
@@ -46,6 +46,6 @@ public class ImportCommandParserTest {
         assertParseFailure(parser, NOT_FROM_NUSMODS_IMPORT,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportNusmodsCommand.MESSAGE_USAGE));
 
-        assertParseFailure(parser, INVALID_NUSMODS_IMPORT, String.format(INVALID_URL, ""));
+        assertParseFailure(parser, NUSMODS_INVALID_IMPORT, String.format(INVALID_URL, ""));
     }
 }

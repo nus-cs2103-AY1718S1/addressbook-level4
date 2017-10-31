@@ -2,9 +2,9 @@ package seedu.address.logic.commands.imports;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_YEAR_OFFSET_NUSMODS_URL;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_YEAR_START_NUSMODS_URL;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NUSMODS_URL;
+import static seedu.address.logic.commands.CommandTestUtil.NUSMODS_INVALID_URL_YEAR_OFFSET;
+import static seedu.address.logic.commands.CommandTestUtil.NUSMODS_INVALID_URL_YEAR_START;
+import static seedu.address.logic.commands.CommandTestUtil.NUSMODS_VALID_URL;
 import static seedu.address.logic.commands.imports.ImportNusmodsCommand.INVALID_URL;
 import static seedu.address.logic.commands.imports.ImportNusmodsCommand.MESSAGE_SUCCESS;
 import static seedu.address.logic.commands.imports.ImportNusmodsCommand.YEAR_OFFSET_BY_ONE;
@@ -31,7 +31,7 @@ public class ImportNusmodsCommandTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        validCommand = new ImportNusmodsCommand(new URL(VALID_NUSMODS_URL));
+        validCommand = new ImportNusmodsCommand(new URL(NUSMODS_VALID_URL));
     }
 
     @Test
@@ -42,8 +42,8 @@ public class ImportNusmodsCommandTest {
 
     @Test
     public void createCommand_wrongSemesterInformation_expectException() throws Exception {
-        assertConstructorFailure(INVALID_YEAR_START_NUSMODS_URL, String.format(INVALID_URL, ""));
-        assertConstructorFailure(INVALID_YEAR_OFFSET_NUSMODS_URL, String.format(INVALID_URL, YEAR_OFFSET_BY_ONE));
+        assertConstructorFailure(NUSMODS_INVALID_URL_YEAR_START, String.format(INVALID_URL, ""));
+        assertConstructorFailure(NUSMODS_INVALID_URL_YEAR_OFFSET, String.format(INVALID_URL, YEAR_OFFSET_BY_ONE));
     }
 
     @Test
