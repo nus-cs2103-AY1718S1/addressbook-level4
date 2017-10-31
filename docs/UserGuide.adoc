@@ -51,7 +51,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Adding a person: `add`, `a` or `+` _(Since v1.3)_
+=== `add`, `a` or `+`: Adding a person _(Since v1.3)_
 
 Adds a person to Rolodex +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
@@ -67,13 +67,13 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-=== Clearing all entries : `clear` or `c` _(Since v1.3)_
+=== `clear` or `c`: Clearing all entries _(Since v1.3)_
 
 Clears all entries from Rolodex. +
 Format: `clear` or `c` +
 Keyboard shortcut: kbd:[Ctrl+Shift+C]
 
-=== Deleting a person : `delete`, `d` or `-` _(Since v1.3)_
+=== `delete`, `d` or `-`: Deleting a person _(Since v1.3)_
 
 Deletes the specified person from Rolodex. +
 Format: `delete INDEX` or `d INDEX`
@@ -95,7 +95,7 @@ Deletes the 2nd person in Rolodex.
 `d 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Editing a person : `edit`, `e`, `change` or `modify` _(Since v1.3)_
+=== `edit`, `e`, `change` or `modify`: Editing a person _(Since v1.3)_
 
 Edits an existing person in Rolodex. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
@@ -121,13 +121,13 @@ the 2nd person, or removes it otherwise.
 
 // tag::find[]
 
-=== Exiting the program : `exit`, `quit`, `close`, `bye`, `esc` _(Since v1.3)_
+=== `exit`, `quit`, `close`, `bye`, `esc`: Exiting the program _(Since v1.3)_
 
 Exits the program. +
 Format: `exit` +
 Keyboard shortcut: kbd:[Alt+F4]
 
-=== Locating persons in Rolodex: `find`, `f`, `filter` or `search` _(Since v1.4)_
+=== `find`, `f`, `filter` or `search`: Locating persons in Rolodex _(Since v1.4)_
 
 Finds persons in Rolodex. +
 Format: `find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
@@ -179,12 +179,12 @@ Returns any person having tag `School` or tag `werk`, sorted by email.
 Returns an error (do not count as search arguments).
 // end::find[]
 
-=== Viewing help : `help`, `h`, `assist` or `faq` _(Since v1.4)_
+=== `help`, `h`, `assist` or `faq`: Viewing help _(Since v1.4)_
 
 Format: `help` or `h` +
 Keyboard shortcut: kbd:[F1]
 
-=== Listing entered commands : `history`, `his` or `past` _(Since v1.3)_
+=== `history`, `his` or `past`: Listing entered commands _(Since v1.3)_
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history` or `his` or `past` +
@@ -196,7 +196,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::list[]
-=== Listing all persons : `list`, `l`, `show` or `display` _(Since v1.3)_
+=== `list`, `l`, `show` or `display`: Listing all persons _(Since v1.3)_
 
 Shows a list of all persons in Rolodex, sorted by the specified sort order or default sort order. +
 Format: `list [SORT_ARGUMENTS]` or `l [SORT_ARGUMENTS]` +
@@ -225,7 +225,7 @@ Examples:
 // end::list[]
 
 // tag::newfile[]
-=== Creating a new Rolodex storage file: `new`, `n`, `touch` or `>` _(Since v1.3)_
+=== `new`, `n`, `touch` or `>`: Creating a new Rolodex storage file _(Since v1.3)_
 Creates a new Rolodex at the specified filepath and reloads the application with new sample data. +
 Format: `new FILEPATH` or `n FILEPATH`
 Keyboard Shortcut: kbd:[Ctrl+N]
@@ -250,7 +250,7 @@ Creates a new Rolodex file `default.rldx` at the relative directory `data` and r
 // end::newfile[]
 
 // tag::openfile[]
-=== Opening an existing Rolodex storage file: `open`, `o`, `cd`, `ls`, `<` _(Since v1.3)_
+=== `open`, `o`, `cd`, `ls`, `<`: Opening an existing Rolodex storage file _(Since v1.3)_
 Reloads the application with data from a rolodex at the specified filepath. +
 Format: `open FILEPATH` or `o FILEPATH`
 Keyboard Shortcut: kbd:[Ctrl+O]
@@ -280,7 +280,7 @@ Loads the application with the data at the directory `C:/Users/Rolodex/downloads
 Loads the application with the data in `default.rldx` in the folder `data`.
 // end::openfile[]
 
-=== Redoing the previously undone command : `redo` or `r` _(Since v1.3)_
+=== `redo` or `r`: Redoing the previously undone command _(Since v1.3)_
 
 Reverses the most recent `undo` command. +
 Format: `redo` or `r` +
@@ -303,7 +303,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `delete 1` command) +
 `r` (reapplies the `clear` command) +
 
-=== Adding a remark: `remark` or `note` or `rmk` _(Coming in V2.0)_
+=== `remark` or `note` or `rmk`: Adding a remark _(Coming in V2.0)_
 
 Adds a remark to the specified person in Rolodex. +
 Format: `remark INDEX [r/REMARK]` or `remark INDEX [r/REMARK]`
@@ -327,7 +327,7 @@ Removes the remark for the 1st person.
 Rolodex's data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-=== Selecting a person : `select` or `s` _(Since v1.3)_
+=== `select` or `s`: Selecting a person _(Since v1.3)_
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX` or `s INDEX`
@@ -349,7 +349,7 @@ Selects the 2nd person in Rolodex.
 `s 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Undoing previous command : `undo` or `u` _(Since v1.3)_
+=== `undo` or `u`: Undoing previous command _(Since v1.3)_
 
 Restores Rolodex to the state before the previous _undoable_ command was executed. +
 Format: `undo` or `u` +
