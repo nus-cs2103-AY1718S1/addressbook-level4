@@ -16,6 +16,7 @@ import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.Remark;
 import seedu.address.model.module.exceptions.DuplicateRemarkException;
 
+//@@author junming403
 /**
  * Add a remark to a module with specified index.
  */

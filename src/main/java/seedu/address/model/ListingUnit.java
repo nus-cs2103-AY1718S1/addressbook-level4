@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import java.util.function.Predicate;
 
+//@@author junming403
 /**
  * A Enumeration class that consists of all possible Listing
  * Unit in the panel.

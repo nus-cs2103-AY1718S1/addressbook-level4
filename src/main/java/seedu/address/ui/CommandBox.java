@@ -277,6 +277,7 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.toFront();
     }
 
+    //@@author junming403
     /**
      * Configure border colour to indicate validity of user input.
      */
@@ -292,6 +293,7 @@ public class CommandBox extends UiPart<Region> {
             checkBox.toFront();
         }
     }
+    //@@author
 
     /**
      * Configure command keyword when appeared on Command Box

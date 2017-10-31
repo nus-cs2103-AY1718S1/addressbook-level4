@@ -15,6 +15,7 @@ import seedu.address.model.ListingUnit;
 import seedu.address.model.module.Remark;
 import seedu.address.model.module.exceptions.RemarkNotFoundException;
 
+//@@author junming403
 /**
  * Deletes the remark with specified index.
  */

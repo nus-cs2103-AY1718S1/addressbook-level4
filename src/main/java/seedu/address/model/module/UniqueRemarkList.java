@@ -13,6 +13,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.module.exceptions.DuplicateRemarkException;
 import seedu.address.model.module.exceptions.RemarkNotFoundException;
 
+//@@author junming403
 /**
  * A list of remarks that enforces no nulls and uniqueness between its elements.
  *

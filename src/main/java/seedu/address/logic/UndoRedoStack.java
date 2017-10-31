@@ -27,6 +27,7 @@ public class UndoRedoStack {
      * if {@code command} is not of type {@code UndoCommand} or {@code RedoCommand}, and clears the undo-stack if
      * the command
      */
+    //@@author junming403
     public void push(Command command) {
         if (!(command instanceof UndoCommand) && !(command instanceof RedoCommand)) {
             redoStack.clear();
@@ -62,6 +63,7 @@ public class UndoRedoStack {
         undoStack.push(toRedo);
         return toRedo;
     }
+    //@@author
 
     /**
      * Returns true if there are more commands that can be undone.

@@ -24,9 +24,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.module.ReadOnlyLesson;
 
-/**
- * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
- */
+//@@author junming403
 public class ViewCommandTest {
 
     private Model model;

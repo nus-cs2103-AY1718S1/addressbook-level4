@@ -238,7 +238,7 @@ Examples:
 `find MA1101R` +
 Returns modules with code name `MA1101R`
 * `find MA1101R CS2101 CS2103` +
-Returns module having code `MA1101R`, `CS2101`, or `CS2103T`
+Returns module having code `MA1101R`, `CS2101`, or `CS2103`
 * `list location` +
 `find lt25` +
 Returns location with name `LT25`
@@ -250,27 +250,27 @@ image::video/find.gif[width="790"]
 
 === Sorting lesson by module code: `sort`
 
- Sort the existing list. +
- Format: `sort KEYWORD`
+Sort the existing list. +
+Format: `sort KEYWORD`
 
- ****
- * The sort command will sort the list according to its current listed attribute
- * If the list was not listed in any attribute, it will be sorted by code of the lesson
- ****
+****
+* The sort command will sort the list according to its current listed attribute
+* If the list was not listed in any attribute, it will be sorted by code of the lesson
+****
 
- Examples:
+Examples:
 
- * `list location` +
- Returns a list of location +
- `sort` +
- Return a list of location sorted lexicographically
+* `list location` +
+Returns a list of location +
+`sort` +
+Return a list of location sorted lexicographically
 
 image::video/sortLocation.gif[width="790"]
 
- * `list lesson` +
- Returns whole module +
- `sort` +
- Return a list sorted by code lexicographically
+* `list lesson` +
+Returns whole module +
+`sort` +
+Return a list sorted by code lexicographically
 
 image::video/sortModule.gif[width="790"]
 
