@@ -752,6 +752,8 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Email* : `email INDEX EMAILADDRESS` +
+e.g. `email 2 cs2103@gmail.com`
 * *Find* : `find PREFIX/KEYWORD [MORE_PREFIX/KEYWORDS]...` +
 e.g. `find James Jake`
 * *List* : `list`
@@ -759,7 +761,8 @@ e.g. `find James Jake`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
-* *Music* : `music [MUSIC COMMAND]`
+* *Music* : `music [MUSIC COMMAND]` +
+e.g. `music stop`
 * *Redo* : `redo`
 * *Undo* : `undo`
 * *Unalias* `unalias ALIAS`
