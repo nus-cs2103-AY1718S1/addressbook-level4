@@ -128,7 +128,7 @@ Adds a person to the address book +
 
 image::UG_header_format.png[width="400"]
 {sp}+
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [i/AVATAR_FILE_PATH] [t/TAG]...`
 
 image::UG_header_alias.png[width="400"]
 {sp}+
@@ -140,7 +140,7 @@ A person can have any number of tags (including 0)
 image::UG_header_examples.png[width="400"]
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 i/d:/pictures/betsy.png t/criminal`
 
 image::UG_header_stepbystep.png[width="400"]
 {sp}+
@@ -154,6 +154,13 @@ image:step3.png[width="70"] The contact list will be displayed with the newly ad
 
 image::UG_add2.png[width="590"]
 {sp}+
+
+image::header_note.png[width="400"]
+* When choosing the right image for your contact, make sure that the image is in .jpg or .png format.
+* For a contact's avatar file path, you may specify the full path of the image (ie: d:/pictures/betsy.png)
+* For Windows users, if you are unsure how to get the path of the image click http://www.howto-connect.com/copy-path-of-a-file-or-folder-in-windows-10/[here]
+
+
 
 image::divider.png[width="900"]
 
