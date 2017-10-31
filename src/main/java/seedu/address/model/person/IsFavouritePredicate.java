@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import java.util.function.Predicate;
 
+//@@author taojiashu
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Favourite} is "True".
  */

@@ -17,9 +17,11 @@ import seedu.address.model.Model;
 public class ExitCommand extends Command {
 
     public static final String COMMAND_WORD = "exit";
+    //@@author taojiashu
     public static final String MESSAGE_CONFIRMATION = "Type 'exit' again to confirm to exit";
     public static final String MESSAGE_EXIT_ACKNOWLEDGEMENT = "Exiting Address Book as requested ...";
 
+    //@@author taojiashu
     @Override
     public CommandResult execute() {
         List<String> previousCommands = history.getHistory();
@@ -37,6 +39,7 @@ public class ExitCommand extends Command {
         }
     }
 
+    //@@author taojiashu-reused
     @Override
     public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
         requireNonNull(history);

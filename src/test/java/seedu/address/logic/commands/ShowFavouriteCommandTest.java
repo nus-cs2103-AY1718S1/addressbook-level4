@@ -19,8 +19,9 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author taojiashu
 /**
- *
+ * JUnit tests of ShowFavouriteCommand
  */
 public class ShowFavouriteCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -46,6 +47,7 @@ public class ShowFavouriteCommandTest {
         return command;
     }
 
+    //@@author taojiashu-reused
     /**
      * Asserts that {@code command} is successfully executed, and<br>
      *     - the command feedback is equal to {@code expectedMessage}<br>

@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+//@@author taojiashu
 /**
  *  Represents whether a Person is a favourite contact or not
  */

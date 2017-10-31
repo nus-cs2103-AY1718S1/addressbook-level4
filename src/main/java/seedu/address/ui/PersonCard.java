@@ -57,6 +57,7 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
+        //@@author taojiashu
         initFavouriteLabel(person);
         initBirthdayLabel(person);
         initTags(person);
@@ -72,6 +73,7 @@ public class PersonCard extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        //@@author taojiashu
         person.favouriteProperty().addListener((observable, oldValue, newValue) -> initFavouriteLabel(person));
         //birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         person.birthdayProperty().addListener((observable, oldValue, newValue) -> initBirthdayLabel(person));
@@ -81,6 +83,7 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    //@@author taojiashu
     /**
      * Sets the colour of a favourite label based on its favourite status
      */

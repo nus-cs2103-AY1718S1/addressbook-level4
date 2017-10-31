@@ -14,6 +14,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+//@@author taojiashu
 /**
  * Mark a person in the contact as favourite
  */

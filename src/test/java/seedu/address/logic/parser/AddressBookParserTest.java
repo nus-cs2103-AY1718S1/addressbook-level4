@@ -92,6 +92,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
     }
 
+    //@@author taojiashu
     @Test
     public void parseCommand_favourite() throws Exception {
         FavouriteCommand command = (FavouriteCommand) parser.parseCommand(FavouriteCommand.COMMAND_WORD_1 + " "
@@ -213,7 +214,7 @@ public class AddressBookParserTest {
         assertEquals(new AddTagCommand(indexes, toAdd), command);
     }
 
-    //@@author
+    //@@author taojiashu
     @Test
     public void parseCommand_showFavourite() throws Exception {
         assertTrue(parser.parseCommand(ShowFavouriteCommand.COMMAND_WORD_1) instanceof ShowFavouriteCommand);
