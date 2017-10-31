@@ -371,26 +371,33 @@ image::UG_select1.png[width="590"]
 image::UG_select2.png[width="590"]
 
 === Listing entered commands : `history`
+image::UG_commandheader_history.png[width="500"]
 
 Lists all the commands that you have entered in reverse chronological order. +
+
+image::UG_header_format.png[width="400"]
 Format: `history`
 
-//-
-1) Type `history` into the command box, and press kbd:[Enter] to execute it.
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] Type `history` into the command box, and press kbd:[Enter] to execute it.
 
 image::UG_history1.png[width="590"]
 
-2) The result box will display "Entered commands (from most recent to earliest):" with the history of the commands you have previously entered.
+image:step2.png[width="70"] The result box will display "Entered commands (from most recent to earliest):" with the history of the commands you have previously entered.
 
 image::UG_history2.png[width="590"]
 
-3) If your result box will display "You have not yet entered any commands." Do not worry! It just means that you have not entered any commands yet! Try executing a command a repeat step 1 again.
+image:step3.png[width="70"] If your result box will display "You have not yet entered any commands." Do not worry! It just means that you have not entered any commands yet! Try executing a command and repeat step 1 again.
 
 image::UG_history3.png[width="590"]
-[NOTE]
-====
+
+{sp}+
+
+image::header_note.png[width="400"]
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
+
+image::divider.png[width="900"]
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
