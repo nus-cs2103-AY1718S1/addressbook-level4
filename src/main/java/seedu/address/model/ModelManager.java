@@ -84,6 +84,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author marvinchin
     @Override
     public synchronized void addPersons(Collection<ReadOnlyPerson> persons) {
         for (ReadOnlyPerson person : persons) {
@@ -97,6 +98,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
