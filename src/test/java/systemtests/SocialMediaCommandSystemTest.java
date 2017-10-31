@@ -57,7 +57,7 @@ public class SocialMediaCommandSystemTest extends AddressBookSystemTest {
      * of the selected person, and the model related components equal to the current model.
      * These verifications are done by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the command box has the default style class and the status bar remain unchanged. The resulting
+     * Also verifies that the command box has the default style class remains unchanged. The resulting
      * browser url and selected card will be verified if the current selected card and the card at
      * {@code expectedSelectedCardIndex} are different.
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
@@ -89,7 +89,6 @@ public class SocialMediaCommandSystemTest extends AddressBookSystemTest {
         }
 
         assertCommandBoxShowsDefaultStyle();
-        assertStatusBarUnchanged();
     }
 
     /**
@@ -97,7 +96,7 @@ public class SocialMediaCommandSystemTest extends AddressBookSystemTest {
      * box displays {@code expectedResultMessage} and the model related components equal to the current model.
      * These verifications are done by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the browser url and status bar remain unchanged, and the command box has the
+     * Also verifies that the browser url remains unchanged, and the command box has the
      * error style.
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
@@ -107,6 +106,5 @@ public class SocialMediaCommandSystemTest extends AddressBookSystemTest {
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertCommandBoxShowsErrorStyle();
-        assertStatusBarUnchanged();
     }
 }
