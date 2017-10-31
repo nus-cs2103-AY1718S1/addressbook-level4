@@ -24,6 +24,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -116,8 +117,9 @@ public class PersonPanel extends UiPart<Region> {
                 try {
                     logger.fine("Person Panel register button for index "
                             + index.getZeroBased());
-                    logic.execute("edit " + index.getZeroBased() + " ph/"
+                    CommandResult commandResult = logic.execute("edit " + index.getZeroBased() + " ph/"
                             + file.toURI().toString());
+                    raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
                 } catch (CommandException | ParseException e) {
                     raise(new NewResultAvailableEvent(e.getMessage(), true));
                 }

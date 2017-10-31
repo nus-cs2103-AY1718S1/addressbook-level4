@@ -72,11 +72,12 @@ public class EventList implements Iterable<Event> {
         if (!internalMap.containsValue(targetEvent)) {
             throw new EventNotFoundException();
         }
-        internalMap.remove(targetEvent.getTimeslot());
+
 
         if (hasClashWith(new Event(editedEvent))) {
             throw new EventTimeClashException();
         }
+        internalMap.remove(targetEvent.getTimeslot());
         internalMap.put(editedEvent.getTimeslot(), new Event(editedEvent));
         //@@author
     }
@@ -124,7 +125,9 @@ public class EventList implements Iterable<Event> {
         Iterator<Event> iterator = this.iterator();
         while (iterator.hasNext()) {
             Event e = iterator.next();
-            if (e.clashesWith(event) && !e.equals(event)) {
+            if (e.clashesWith(event)
+                    && (!e.getTitle().equals(event.getTitle())
+                    || !e.getDescription().equals(event.getDescription()))) {
                 return true;
             }
         }

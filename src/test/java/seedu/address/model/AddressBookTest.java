@@ -112,7 +112,9 @@ public class AddressBookTest {
         }
 
         @Override
-        public ReadOnlyEvent getLastChangedEvent() { return null;}
+        public ReadOnlyEvent getLastChangedEvent() {
+            return null;
+        }
     }
 
 }

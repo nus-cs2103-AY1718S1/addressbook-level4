@@ -48,6 +48,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -76,7 +77,7 @@ public class CalendarView extends UiPart<Region> {
     private final LocalTime firstSlotStart = LocalTime.of(7, 0);
     private final Duration slotLength = Duration.ofMinutes(SLOT_LENGTH);
     private final LocalTime lastSlotStart = LocalTime.of(23, 59);
-    private final int lastSlotIndex = (int) MINUTES.between(firstSlotStart, lastSlotStart) / SLOT_LENGTH;
+    private final int lastSlotIndex = (int) MINUTES.between(firstSlotStart, lastSlotStart) / SLOT_LENGTH + 1;
 
     private final List<TimeSlot> timeSlots = new ArrayList<>();
 
@@ -136,13 +137,10 @@ public class CalendarView extends UiPart<Region> {
 
                 TimeSlot timeSlot = new TimeSlot(startTime, slotLength);
                 timeSlots.add(timeSlot);
-
-                int columnIndex = timeSlot.getDayOfWeek().getValue();
-                int rowIndex = (int) MINUTES.between(firstSlotStart, timeSlot.getStartDateTime()) / SLOT_LENGTH + 1;
-
                 registerSelectionHandler(timeSlot, mouseAnchor);
 
-                addDropHandling(timeSlot, columnIndex, rowIndex);
+                int rowIndex = (int) MINUTES.between(firstSlotStart, timeSlot.getStartDateTime()) / SLOT_LENGTH + 1;
+                addDropHandling(timeSlot, rowIndex);
 
                 calendarView.add(timeSlot.getView(), timeSlot.getDayOfWeek().getValue(), slotIndex);
                 slotIndex++;
@@ -254,8 +252,8 @@ public class CalendarView extends UiPart<Region> {
      * @return the stack pane created
      */
     private StackPane createPane(ReadOnlyEvent event) {
-        String[] colors = {"#FEDFE1", "#D7C4BB", "#D7B98E"};
-        int randomColor = (int) (Math.random() * 3);
+        String[] colors = {"#81C7D4", "#FEDFE1", "#D7C4BB", "#D7B98E"};
+        int randomColor = (int) (Math.random() * 4);
 
         //Create the label
         Label eventTitle = new Label();
@@ -361,10 +359,9 @@ public class CalendarView extends UiPart<Region> {
      * Registers dropping handlers on the time slots to enable changing event scheduling through drag-and-drop.
      *
      * @param timeSlot Starting TimeSlot to drop the event at
-     * @param columnIndex column of the dropped TimeSlot
      * @param rowIndex row of the dropped TimeSlot
      */
-    private void addDropHandling(TimeSlot timeSlot, int columnIndex, int rowIndex) {
+    private void addDropHandling(TimeSlot timeSlot, int rowIndex) {
         StackPane pane = timeSlot.getView();
         pane.setOnDragOver(e -> {
             Dragboard dragBoard = e.getDragboard();
@@ -375,11 +372,7 @@ public class CalendarView extends UiPart<Region> {
 
         pane.setOnDragDropped(e -> {
             Dragboard dragBoard = e.getDragboard();
-
-            if (dragBoard.hasContent(paneFormat) && rowIndex + draggingPaneSpan < lastSlotIndex) {
-                calendarView.getChildren().remove(draggingPane);
-                calendarView.add(draggingPane, columnIndex, rowIndex, 1, draggingPaneSpan);
-
+            if (dragBoard.hasContent(paneFormat) && rowIndex + draggingPaneSpan <= lastSlotIndex) {
                 try {
                     int eventIndex = eventList.indexOf(draggedEvent) + 1;
                     String date = timeSlot.getDateAsString();
@@ -387,10 +380,9 @@ public class CalendarView extends UiPart<Region> {
                     String endTime = timeSlot.getEndTimeAsString(draggingPaneSpan);
 
                     //Update event's new date and time information through an edit command
-                    logic.execute("eventedit " + eventIndex + " t/" + date
+                    CommandResult commandResult = logic.execute("eventedit " + eventIndex + " t/" + date
                             + " " + startTime + "-" + endTime);
-
-                    logger.info("Dropping event " + eventIndex + " at " + startTime);
+                    raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
                 } catch (CommandException | ParseException exc) {
                     raise(new NewResultAvailableEvent(exc.getMessage(), true));
                 }
