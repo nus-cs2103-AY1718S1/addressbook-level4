@@ -23,7 +23,6 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.TagAddCommand.TagAddDescriptor;
 import seedu.address.logic.commands.TagRemoveCommand.TagRemoveDescriptor;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -224,13 +223,24 @@ public class TagRemoveCommandTest {
         ArrayList<Index> indexList = tagRemoveCommand.makeFullIndexList(personList);
         assertTrue(indexList.size() == personList.size());
     }
-    /**
-     * Returns an {@code TagRemoveCommand} with parameters {@code index} and {@code descriptor}
-     */
-    private TagAddCommand prepareCommand(ArrayList<Index> index, TagAddDescriptor descriptor) {
-        TagAddCommand tagAddCommand = new TagAddCommand(index, descriptor);
-        tagAddCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return tagAddCommand;
+
+    @Test
+    public void createModifiableTagSetTest()throws Exception {
+        ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Set<Tag> originalTagSet = personInFilteredList.getTags();
+        List<ReadOnlyPerson> personList = new ArrayList<>();
+        personList.add(personInFilteredList);
+
+        ArrayList<Index> singlePersonIndexList = new ArrayList<>();
+        singlePersonIndexList.add(INDEX_FIRST_PERSON);
+        Set<Tag> tagSet = new HashSet<>();
+        tagSet.add(new Tag(VALID_TAG_HUSBAND));
+        tagSet.add(new Tag(VALID_TAG_FRIEND));
+        TagRemoveDescriptor tagRemoveDescriptor = new TagRemoveDescriptor();
+        tagRemoveDescriptor.setTags(tagSet);
+        TagRemoveCommand tagRemoveCommand = new TagRemoveCommand(singlePersonIndexList, tagRemoveDescriptor);
+        Set<Tag> tagSetCopy = tagRemoveCommand.createModifiableTagSet(originalTagSet);
+        assertTrue(tagSetCopy.equals(originalTagSet));
     }
 
     /**
@@ -241,5 +251,4 @@ public class TagRemoveCommandTest {
         tagRemoveCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return tagRemoveCommand;
     }
-
 }
