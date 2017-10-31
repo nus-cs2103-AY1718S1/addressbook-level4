@@ -605,20 +605,47 @@ The following link:#sequence-diagram[sequence diagram] shows how the customise c
 
 image::CustomiseCommandSeqDiagram.png[width="900"]
 
-The following link:#sequence-diagram[activity diagram] summarize what happens when an user execute customise command.
+The following link:#sequence-diagram[activity diagram] summarize what happens when a user execute customise command.
 
 image::CustomiseCommandActivityDiagram.png[width="900"]
 
 ==== Design Considerations
 
 **Aspect:** Implementation of `CustomiseCommand` +
-**Alternative 1 (current choice):** Update static variable `currentFontSizeUnit` to the corresponding `fontSizeUnit` and use `EventBus` to inform `UI` the change of `fontSizeUnit`.
+**Alternative 1 (current choice):** Update static variable `currentFontSizeUnit` to the corresponding `FontSizeUnit` and use `EventBus` to inform `UI` the change of `fontSizeUnit`.
 **Pros:** One global variable that records current `fontSizeUnit`. +
 **Cons:** Hard for new developers to understand the event center mechanism. +
 **Alternative 2 (previous choice):** Use a variable in model manager to keep record of `currentFontSizeUnit` +
 **Pros:** No need for extra enumeration class and easier for new developers to design. +
 **Cons:** In order to get it in other components, the variable must be declared static. But we cannot define static abstract method in interface. It also does not follow Java's standard coding style.
 // end::customise[]
+
+// tag::swt[]
+=== Switch Theme mechanism
+
+The switch theme mechanism is facilitated by both the link:#event-bus[`Event Bus`] and an enumeration class `ThemeUnit`. Currently, `SwitchThemeCommand` only supports toggling between light (default) and dark theme. Each time `SwitchThemeCommand` is executed, it will raise a `SwitchThemeRequestEvent` via `EventCenter`and update the `currentThemeUnit`.
+
+[NOTE]
+The `ThemeUnit` enumeration is to set a global static variable `currentThemeUnit` so that `MainWindow` is able to obtain the current theme whenever it is called.
+
+The following link:#sequence-diagram[sequence diagram] shows how the switch theme command operation works:
+
+image::SwitchThemeSeqDiagram.png[width="900"]
+
+The following link:#sequence-diagram[activity diagram] summarize what happens when a user execute switch theme command.
+
+image::SwitchThemeCommandActivityDiagram.png[width="900"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `SwitchThemeCommand` +
+**Alternative 1 (current choice):** Update static variable `currentThemeUnit` to the corresponding `ThemeUnit` and use `EventBus` to inform `UI` the change of `ThemeUnit`.
+**Pros:** One global variable that records current `ThemeUnit`. +
+**Cons:** Hard for new developers to understand the event center mechanism. +
+**Alternative 2 (previous choice):** Use a variable in model manager to keep record of `currentThemeUnit` +
+**Pros:** No need for extra enumeration class and easier for new developers to design. +
+**Cons:** In order to get it in other components, the variable must be declared static. But we cannot define static abstract method in interface. It also does not follow Java's standard coding style.
+// end::swt[]
 
 // tag::list[]
 

@@ -415,7 +415,7 @@ image::video/edit.gif[width="790"]
 === Customising the font size : `customise fs/FONT-SIZE`
 
 Customise the font size of ModU list +
-Format: `customise fs\FONT-SIZE`
+Format: `customise`
 
 [TIP]
 A lesson can have any number of tags (including 0)
@@ -426,7 +426,17 @@ Examples:
 * `customise fs\small`
 * `customise fs\xlarge`
 
-image::video/customise.gif[width="790"]
+=== Switch theme : `swt`
+
+Switch between light (default) and dark theme +
+Format: `swt`
+
+[TIP]
+Toggle between light and dark theme. If the current theme is light, executing `swt` will change the theme to be dark theme.
+
+Example:
+
+* `swt`
 
 === Highlighting keywords : `color`
 
@@ -644,6 +654,9 @@ image::commandSummary/12redo.png[width="790"]
 e.g. `customise fs/xsmall`
 +
 image::commandSummary/13customiseF.png[width="790"]
++
+* *Switch Theme* `swt` +
+e.g. `swt`
 +
 * *Color* `color` +
 e.g. `customise enable` +

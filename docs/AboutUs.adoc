@@ -43,6 +43,6 @@ image::DanielChew.jpg[width="150", align="left"]
 {empty}[https://github.com/cctdaniel[github]] [<<Chew Chaow Thong Daniel#, portfolio>>]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: UI component, changed overall theme, add CustomiseCommand, add SwitchThemeCommand and related tests.
 
 '''
