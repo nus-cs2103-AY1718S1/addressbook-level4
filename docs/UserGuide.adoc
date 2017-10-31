@@ -542,6 +542,20 @@ image::profile_pic_after.png[width="500"]
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Rolodex folder.
 
+*Q*: How do I know if there is a newer version of the application? +
+*A*: You may follow our link:https://github.com/CS2103AUG2017-W11-B2/main/releases[release page] to check for any new updates.
+
+*Q*: Help! This guide did not solve my problem. +
+*A*: You may raise any enquires at our link:https://github.com/CS2103AUG2017-W11-B2/main/issues[issues page] by creating a new issue.
+We will do our best to answer to your queries.
+
+*Q*: I found a bug, where do I report it? +
+*A*: As similar to above, you may create a new issue at our link:https://github.com/CS2103AUG2017-W11-B2/main/issues[issues page].
+
+*Q*: Can I contribute to the code? +
+*A*: Of course! We welcome new contributors. You can contribute by creating a new Pull Request link:https://github.com/CS2103AUG2017-W11-B2/main/pulls[here].
+To get started, you may want to check out our link:https://cs2103aug2017-w11-b2.github.io/main/DeveloperGuide.html[Developer's Guide].
+
 include::Glossary.adoc[]
 
 ifndef::env-github[]
