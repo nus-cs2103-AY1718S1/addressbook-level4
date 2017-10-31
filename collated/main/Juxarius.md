@@ -373,27 +373,6 @@ public class EmptyFieldException extends ParseException {
         return dateSet ? dateOfBirth.format(DateParser.DATE_FORMAT) : "";
     }
 ```
-###### \java\seedu\address\model\person\UniquePersonList.java
-``` java
-    /**
-     * Sorts the internal list of people
-     */
-    public void sortPersons() throws DuplicatePersonException {
-        ObservableList<Person> listToSort = FXCollections.observableArrayList(internalList);
-        listToSort.sort((ReadOnlyPerson first, ReadOnlyPerson second)-> {
-            int x = String.CASE_INSENSITIVE_ORDER.compare(first.getName().fullName, second.getName().fullName);
-            if (x == 0) {
-                x = (first.getName().fullName).compareTo(second.getName().fullName);
-            }
-            return x;
-        });
-        UniquePersonList listToReplace = new UniquePersonList();
-        for (ReadOnlyPerson person : listToSort) {
-            listToReplace.add(person);
-        }
-        setPersons(listToReplace);
-    }
-```
 ###### \java\seedu\address\ui\CommandBox.java
 ``` java
     /**
