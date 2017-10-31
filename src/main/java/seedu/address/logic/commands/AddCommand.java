@@ -93,7 +93,7 @@ public class AddCommand extends UndoableCommand {
         }
     }
 
-    public static boolean requiresHandling(){
+    public static boolean requiresHandling() {
         return requiresHandling;
     }
 

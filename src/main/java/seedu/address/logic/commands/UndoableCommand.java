@@ -79,7 +79,7 @@ public abstract class UndoableCommand extends Command {
     }
 
     /*
-     * Check for duplicate fields in current UniCity contacts. Set isWaitingforReply to true
+     * Check for duplicate fields shared with {@code toAdd} in current UniCity contacts. Set isWaitingforReply to true
      * to proceed with prompting user of edit/add command.
      */
     protected void checkDuplicateField(Person toAdd) {
