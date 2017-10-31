@@ -16,7 +16,7 @@ image::images/Ui.png[width="1000"]
 endif::[]
 
 * This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* This application is targetted at social users, with features that include:
+* This application is targeted at social users, with features that include:
 ** Social media integration
 ** Easy sharing of contacts
 ** Powerful contact management tools
