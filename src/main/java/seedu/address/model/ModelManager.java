@@ -60,6 +60,8 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addData(ReadOnlyAddressBook newData) {
         addressBook.addData(newData);
+        addressBook.sortPersonList();
+        addressBook.sortEventList();
         indicateAddressBookChanged();
     }
 
