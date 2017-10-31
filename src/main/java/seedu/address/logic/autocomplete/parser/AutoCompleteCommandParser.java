@@ -21,6 +21,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 
 /**
@@ -36,6 +37,7 @@ public class AutoCompleteCommandParser implements AutoCompleteParser {
         new CommandWordUsageTuple(ExitCommand.COMMAND_WORD, ExitCommand.COMMAND_USAGE),
         new CommandWordUsageTuple(FindCommand.COMMAND_WORD, FindCommand.COMMAND_USAGE),
         new CommandWordUsageTuple(FindTagCommand.COMMAND_WORD, FindTagCommand.COMMAND_USAGE),
+        new CommandWordUsageTuple(SortCommand.COMMAND_WORD, SortCommand.COMMAND_USAGE),
         new CommandWordUsageTuple(HelpCommand.COMMAND_WORD, HelpCommand.COMMAND_USAGE),
         new CommandWordUsageTuple(HistoryCommand.COMMAND_WORD, HistoryCommand.COMMAND_USAGE),
         new CommandWordUsageTuple(ListCommand.COMMAND_WORD, ListCommand.COMMAND_USAGE),

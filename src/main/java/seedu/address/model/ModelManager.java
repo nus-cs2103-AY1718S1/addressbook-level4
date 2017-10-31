@@ -142,6 +142,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author freesoup
     @Override
     public void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
         ObservableList<ReadOnlyPerson> list = addressBook.getPersonList();
@@ -172,7 +173,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updatePerson(person, newPerson);
         indicateAddressBookChanged();
     }
-
+    //@@author
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -184,10 +185,12 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(sortedPersons);
     }
 
+    //@@author freesoup
     @Override
     public void sortFilteredPersonList(Comparator<ReadOnlyPerson> comparator) {
         sortedPersons.setComparator(comparator);
     }
+    //@@author
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {

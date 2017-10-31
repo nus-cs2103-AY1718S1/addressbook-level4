@@ -10,6 +10,7 @@ import javax.swing.JFileChooser;
 import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author freesoup
 /**
  * Retrieves the location of the import file and passes the FileInputStream into
  * a new ImportCommand Object.

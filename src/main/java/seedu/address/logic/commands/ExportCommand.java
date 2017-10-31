@@ -11,12 +11,13 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
+//@@author freesoup
 /**
  * Exports address book app contacts into an  contacts.vcf file.
  */
 public class ExportCommand extends Command {
     public static final String COMMAND_WORD = "export";
-    public static final String COMMAND_USAGE = COMMAND_WORD + " ";
+    public static final String COMMAND_USAGE = COMMAND_WORD;
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports contacts into a .vcf file.";
 
