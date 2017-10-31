@@ -15,7 +15,7 @@ public class Timing implements Comparable<Timing> {
                     + "and it should not be blank";
 
     public static final String TIMING_VALIDATION_REGEX =
-            "(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]-(0[1-9]|1[0-9]|2[0-3])[0-5][0-9]";
+            "(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]-(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]";
 
     private String timing;
     private int start;
