@@ -10,6 +10,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Test;
 
@@ -18,7 +19,7 @@ import seedu.address.model.tag.Tag;
 
 public class UntagCommandParserTest {
 
-    private static final String VALID_TAG_NAME = "friends";
+    private static final String VALID_TAG_NAMES = "friends/enemies";
 
     private static final String VALID_INDEX_LIST = "1,2,3";
 
@@ -33,10 +34,7 @@ public class UntagCommandParserTest {
     @Test
     public void parse_missingParts_failure() {
         // no indexes specified
-        assertParseFailure(parser, VALID_TAG_NAME, MESSAGE_INVALID_FORMAT);
-
-        // no tag name specified
-        assertParseFailure(parser, VALID_INDEX_LIST, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, VALID_TAG_NAMES, MESSAGE_INVALID_FORMAT);
 
         // no indexes and no tag name specified
         assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
@@ -45,45 +43,54 @@ public class UntagCommandParserTest {
     @Test
     public void parse_invalidArgs_throwsParseException() {
         // no indexes
-        assertParseFailure(parser, ",,,, " + VALID_TAG_NAME, MESSAGE_NO_INDEXES);
+        assertParseFailure(parser, ",,,, " + VALID_TAG_NAMES, MESSAGE_NO_INDEXES);
 
         // negative index
-        assertParseFailure(parser, "-5,-1" + VALID_TAG_NAME, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "-5,-1" + VALID_TAG_NAMES, MESSAGE_INVALID_FORMAT);
 
         // zero index
-        assertParseFailure(parser, "0, 0,  0 " + VALID_TAG_NAME, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "0, 0,  0 " + VALID_TAG_NAMES, MESSAGE_INVALID_FORMAT);
 
         // indexes are not all integers
-        assertParseFailure(parser, "1,2,three " + VALID_TAG_NAME, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "1,2,three " + VALID_TAG_NAMES, MESSAGE_INVALID_FORMAT);
 
         // invalid tag name
-        assertParseFailure(parser, VALID_INDEX_LIST + " !@#$", MESSAGE_TAG_CONSTRAINTS);
+        assertParseFailure(parser, VALID_INDEX_LIST + " friends/!@#$", MESSAGE_TAG_CONSTRAINTS);
 
         // invalid arguments being parsed
-        assertParseFailure(parser, "1,2,three dummy tag", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "1,2,three dummy friends/enemies", MESSAGE_INVALID_FORMAT);
     }
 
     @Test
     public void parse_validArgs_returnsTagCommand() throws Exception {
+        Tag firstTag = new Tag("friends");
+        Tag secondTag = new Tag("enemies");
+
         // no leading and trailing whitespaces
-        UntagCommand expectedCommand = new UntagCommand(Arrays.asList(INDEX_FIRST_PERSON,
-                INDEX_SECOND_PERSON, INDEX_THIRD_PERSON), new Tag(VALID_TAG_NAME));
-        assertParseSuccess(parser, VALID_INDEX_LIST + " " + VALID_TAG_NAME, expectedCommand);
+        UntagCommand expectedCommand = new UntagCommand(false, Arrays.asList(INDEX_FIRST_PERSON,
+                INDEX_SECOND_PERSON, INDEX_THIRD_PERSON), Arrays.asList(secondTag, firstTag));
+        assertParseSuccess(parser, VALID_INDEX_LIST + " " + VALID_TAG_NAMES, expectedCommand);
 
         // multiple whitespaces between keywords
         assertParseSuccess(parser, "\t " + VALID_INDEX_LIST + " \n"
-                + VALID_TAG_NAME + "\t \n", expectedCommand);
+                + VALID_TAG_NAMES + "\t \n", expectedCommand);
 
         // multiple duplicated indexes
-        assertParseSuccess(parser, "1,1,1,2,2,3" + " " + VALID_TAG_NAME, expectedCommand);
+        assertParseSuccess(parser, "1,1,1,2,2,3" + " " + VALID_TAG_NAMES, expectedCommand);
 
-        // untag all tags
-        expectedCommand = new UntagCommand();
-        assertParseSuccess(parser, "  -all  ", expectedCommand);
+        // remove all tags from the specified persons
+        expectedCommand = new UntagCommand(false, Arrays.asList(INDEX_FIRST_PERSON,
+                INDEX_SECOND_PERSON, INDEX_THIRD_PERSON), Collections.emptyList());
+        assertParseSuccess(parser, "  1,2,3  ", expectedCommand);
 
-        // untag a tag from all persons
-        expectedCommand = new UntagCommand(new Tag(VALID_TAG_NAME));
-        assertParseSuccess(parser, " -all  " + " friends  ", expectedCommand);
+        // remove all tags
+        expectedCommand = new UntagCommand(true, Collections.emptyList(), Collections.emptyList());
+        assertParseSuccess(parser, "  -a  ", expectedCommand);
+
+        // remove a tag from all persons
+        expectedCommand = new UntagCommand(true, Collections.emptyList(),
+                Arrays.asList(secondTag, firstTag));
+        assertParseSuccess(parser, " -a  " + " friends/enemies  ", expectedCommand);
     }
 
 }

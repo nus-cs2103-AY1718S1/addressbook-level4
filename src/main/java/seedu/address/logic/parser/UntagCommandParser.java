@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.UntagCommand.MESSAGE_EMPTY_INDEX_LIST;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,22 +48,24 @@ public class UntagCommandParser implements Parser<UntagCommand> {
                     tagList.add(new Tag(tagArg));
                 }
             } catch (IllegalValueException ive) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UntagCommand.MESSAGE_USAGE));
+                throw new ParseException(ive.getMessage(), ive);
             }
         }
 
         List<Index> indexList = new ArrayList<>();
         if (splittedArgs[0].equals("-a")) {
             return new UntagCommand(true, indexList, tagList);
-        } else {
-            Set<String> uniqueIndexes = new HashSet<>(Arrays.asList(splittedArgs[0].split(",")));
-            try {
-                for (String indexArg : uniqueIndexes) {
-                    indexList.add(ParserUtil.parseIndex(indexArg));
-                }
-            } catch (IllegalValueException ive) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UntagCommand.MESSAGE_USAGE));
+        }
+        Set<String> uniqueIndexes = new HashSet<>(Arrays.asList(splittedArgs[0].split(",")));
+        if (uniqueIndexes.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_EMPTY_INDEX_LIST, UntagCommand.MESSAGE_USAGE));
+        }
+        try {
+            for (String indexArg : uniqueIndexes) {
+                indexList.add(ParserUtil.parseIndex(indexArg));
             }
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UntagCommand.MESSAGE_USAGE));
         }
 
         return new UntagCommand(false, indexList, tagList);

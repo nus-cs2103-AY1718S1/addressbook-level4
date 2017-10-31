@@ -46,6 +46,7 @@ public class UntagCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS_ALL_TAGS_IN_LIST = "All tags successfully removed.";
 
     public static final String MESSAGE_PERSONS_DO_NOT_HAVE_TAGS = "%d person(s) do not have any of the specified tags:";
+    public static final String MESSAGE_EMPTY_INDEX_LIST = "Please provide one or more indexes! \n%1$s";
     public static final String MESSAGE_INVALID_INDEXES = "One or more person indexes provided are invalid.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
