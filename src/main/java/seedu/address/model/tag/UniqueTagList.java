@@ -93,6 +93,7 @@ public class UniqueTagList implements Iterable<Tag> {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    //@@author sebtsh
     /**
      * Removes a Tag from the list if it is present.
      *
@@ -104,6 +105,7 @@ public class UniqueTagList implements Iterable<Tag> {
             internalList.remove(toRemove);
         }
     }
+    //author
 
     @Override
     public Iterator<Tag> iterator() {

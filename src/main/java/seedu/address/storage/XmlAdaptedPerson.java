@@ -36,6 +36,7 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    //@@author sebtsh
     @XmlElement(required = true)
     private String company;
     @XmlElement(required = true)
@@ -46,6 +47,7 @@ public class XmlAdaptedPerson {
     private String priority;
     @XmlElement(required = true)
     private String note;
+    //@@author
     @XmlElement(required = true)
     private String photo;
 
@@ -61,7 +63,7 @@ public class XmlAdaptedPerson {
     public XmlAdaptedPerson() {
     }
 
-
+    //@@author sebtsh
     /**
      * Converts a given Person into this class for JAXB use.
      *

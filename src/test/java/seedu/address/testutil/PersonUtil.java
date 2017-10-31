@@ -27,7 +27,7 @@ public class PersonUtil {
     public static String getAddCommand(ReadOnlyPerson person) {
         return AddCommand.COMMAND_WORD + " " + getPersonDetails(person);
     }
-
+    //@@author sebtsh
     /**
      * Returns the part of command string for the given {@code person}'s details.
      */

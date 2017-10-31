@@ -231,6 +231,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author sebtsh
     /**
      * Removes a tag from all persons in the list if they have it
      *
@@ -243,6 +244,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
         tags.remove(tag); //remove tag from Master Tag List
     }
+    //@@author
 
     //// event-level operations
 

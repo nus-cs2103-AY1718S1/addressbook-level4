@@ -23,6 +23,7 @@ public class EditPersonDescriptorBuilder {
         this.descriptor = new EditPersonDescriptor(descriptor);
     }
 
+    //@@author sebtsh
     /**
      * Returns an {@code EditPersonDescriptor} with fields containing {@code person}'s details
      */
@@ -41,6 +42,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setTags(person.getTags());
         descriptor.setRelation(person.getRelation());
     }
+    //@@author
 
     /**
      * Sets the {@code Name} of the {@code EditPersonDescriptor} that we are building.
@@ -90,6 +92,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author sebtsh
     /**
      * Sets the {@code Company} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -139,7 +142,7 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Note} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withNote(String note) {
         try {
@@ -149,6 +152,7 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
+    //@@author
 
     /**
      * Sets the {@code Photo} of the {@code EditPersonDescriptor} that we are

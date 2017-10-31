@@ -1,6 +1,4 @@
-/**
- * @@author Sebastian
- */
+//@@author sebtsh
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;

@@ -16,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
@@ -37,9 +36,6 @@ public class PersonPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private ReadOnlyPerson storedPerson;
     private Logic logic;
-
-    @FXML
-    private Rectangle defaultScreen;
 
     @FXML
     private Label nameLabel;
@@ -134,8 +130,6 @@ public class PersonPanel extends UiPart<Region> {
      * @param person
      */
     private void showPersonDetails(ReadOnlyPerson person) {
-        defaultScreen.setOpacity(0);
-
         nameLabel.setText(person.getName().toString());
         phoneLabel.setText(person.getPhone().toString());
         emailLabel.setText(person.getEmail().toString());
@@ -153,7 +147,6 @@ public class PersonPanel extends UiPart<Region> {
         String imagePath = person.getPhoto().toString();
         Image image = new Image(new File(imagePath).toURI().toString());
         photo.setImage(image);
-        //@@author
         storedPerson = person;
         //@@author sebtsh
     }

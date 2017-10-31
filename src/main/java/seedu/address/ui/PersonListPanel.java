@@ -13,9 +13,11 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.HideCalendarEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowCalendarEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -70,6 +72,24 @@ public class PersonListPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }
+
+    //@@author sebtsh
+    @Subscribe
+    /**
+     *Clears the person card selection when an event is selected.
+     */
+    private void handleEventPanelSelectionChangedEvent(EventPanelSelectionChangedEvent event) {
+        personListView.getSelectionModel().clearSelection();
+    }
+
+    @Subscribe
+    /**
+     *Clears the person card selection when the calendar is opened.
+     */
+    private void handleShowCalendarEvent(ShowCalendarEvent event) {
+        personListView.getSelectionModel().clearSelection();
+    }
+    //@@author
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.

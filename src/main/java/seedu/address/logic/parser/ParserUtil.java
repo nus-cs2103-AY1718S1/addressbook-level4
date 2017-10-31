@@ -92,7 +92,7 @@ public class ParserUtil {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
-
+    //@@author sebtsh
     /**
      * Parses a {@code Optional<String> company} into an {@code Optional<Company>} if {@code company} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
