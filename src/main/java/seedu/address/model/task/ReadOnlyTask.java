@@ -3,11 +3,15 @@ package seedu.address.model.task;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import javafx.beans.property.ObjectProperty;
+
 /**
  * A read-only immutable interface for a Task in the addressbook.
  * Implementations should guarantee: details are present and not null, field values are validated.
  */
 public interface ReadOnlyTask {
+
+    ObjectProperty<Header> headerProperty();
 
     Header getHeader();
 

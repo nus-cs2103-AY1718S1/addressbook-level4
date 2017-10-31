@@ -28,6 +28,8 @@ public interface Model {
     //@@author
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_NOT_HIDDEN = person -> !person.isPrivate();
 
+    Predicate<ReadOnlyTask> PREDICATE_SHOW_ALL_TASKS = unused -> true;
+
     /**
      * Clears existing backing model and replaces with the provided new data.
      */
@@ -137,13 +139,13 @@ public interface Model {
             throws TaskNotFoundException, DuplicateTaskException;
 
     /**
-     * Marks the given task as completed
+     * Marks the given tasks as completed
      */
     void markTasks(List<ReadOnlyTask> targets)
             throws TaskNotFoundException, DuplicateTaskException;
 
     /**
-     * Unmarks the given task as completed
+     * Unmarks the given tasks as completed
      */
     void unmarkTasks(List<ReadOnlyTask> targets)
             throws TaskNotFoundException, DuplicateTaskException;
