@@ -1,9 +1,8 @@
 package seedu.address.ui;
 
-import static java.awt.SystemColor.window;
 import static seedu.address.commons.util.FileUtil.isFileExists;
 
-import java.awt.*;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -61,11 +60,13 @@ public class InsuranceProfile extends UiPart<Region> {
         if (isFileExists(insuranceFile)) {
             activateLinkToInsuranceFile();
         }
+
         else {
             contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+                    FileChooser.ExtensionFilter extFilter =
+                            new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
                     FileChooser chooser = new FileChooser();
                     chooser.getExtensionFilters().add(extFilter);
                     File openedFile = chooser.showOpenDialog(null);
@@ -91,6 +92,9 @@ public class InsuranceProfile extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /*
+    Enable the link to open contract pdf file and adjusting the text hover highlight
+     */
     private void activateLinkToInsuranceFile() {
         contractPath.getStyleClass().add("particular-link");
         contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
