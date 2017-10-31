@@ -1,5 +1,8 @@
 package seedu.address.logic.commands;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
 
@@ -7,9 +10,6 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.ui.BrowserPanel;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 
 //@@author alexfoodw
 /**

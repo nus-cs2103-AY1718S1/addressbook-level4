@@ -101,7 +101,7 @@ public class BrowserPanel extends UiPart<Region> {
                         if (isPost) {
                             logger.fine("browser url changed to : '" + newValue + "'");
                             raise(new BrowserUrlChangeEvent(FacebookPostCommand.COMMAND_ALIAS));
-                        } else if(isLink) {
+                        } else if (isLink) {
                             logger.fine("browser url changed to : '" + newValue + "'");
                             raise(new BrowserUrlChangeEvent(FacebookLinkCommand.COMMAND_ALIAS));
                         } else {
