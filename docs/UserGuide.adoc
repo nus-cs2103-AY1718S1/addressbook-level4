@@ -100,13 +100,11 @@ image::UG_mainheader_basicfeatures.png[width="900"]
 
 === Viewing help : `help`
 
-image::UG_commandheader_viewinghelp.png[width="500"]
-//-
+image::UG_commandheader_help.png[width="500"]
 {sp}+
 Opens the User Guide
 
 image::UG_header_format.png[width="400"]
-//-
 {sp}+
 Format: `help`
 
@@ -118,25 +116,22 @@ image::UG_help1.png[width="590"]
 image:step2.png[width="70"] The help window will appear as shown above.
 
 image::UG_help2.png[width="590"]
-//-
 {sp}+
 
 image::divider.png[width="900"]
-
 {sp}+
-
 
 === Adding a person: `add`
 
+image::UG_commandheader_add.png[width="500"]
+{sp}+
 Adds a person to the address book +
 
 image::UG_header_format.png[width="400"]
-//-
 {sp}+
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 image::UG_header_alias.png[width="400"]
-//-
 {sp}+
 Alias: `a`
 
@@ -144,8 +139,7 @@ Alias: `a`
 A person can have any number of tags (including 0)
 
 image::UG_header_examples.png[width="400"]
-
-Examples:
+{sp}+
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
@@ -154,13 +148,18 @@ Examples:
 
 image::UG_header_stepbystep.png[width="400"]
 
-. Type `add` into the command box first, then follow the format as shown above, after which press kbd:[Enter] to execute it.
-. The result box will display "New person added:" with the contact details.
-. The contact list will be displayed with the newly added contact at the bottom of the list.
+image:step1.png[width="70"] Type `add` into the command box first, then follow the format as shown above, after which press kbd:[Enter] to execute it.
 
 image::UG_add1.png[width="590"]
-image::UG_add2.png[width="590"]
+image:step2.png[width="70"] The result box will display "New person added:" with the contact details.
 
+image:step3.png[width="70"] The contact list will be displayed with the newly added contact at the bottom of the list.
+
+image::UG_add2.png[width="590"]
+{sp}+
+
+image::divider.png[width="900"]
+{sp}+
 
 === Listing all persons : `list`
 
