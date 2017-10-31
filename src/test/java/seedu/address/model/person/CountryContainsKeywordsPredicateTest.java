@@ -38,7 +38,7 @@ public class CountryContainsKeywordsPredicateTest {
         // different person -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
     }
-    
+
 
     @Test
     public void test_countryDoesNotContainKeywords_returnsFalse() {
