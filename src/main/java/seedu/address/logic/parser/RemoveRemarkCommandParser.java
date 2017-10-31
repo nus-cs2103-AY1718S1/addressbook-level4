@@ -34,6 +34,9 @@ public class RemoveRemarkCommandParser implements Parser<RemoveRemarkCommand> {
         try {
             List<Integer> integerList = new ArrayList<Integer>();
             scan = new Scanner(args);
+            if (!scan.hasNextInt()){
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveRemarkCommand.MESSAGE_USAGE));
+            }
             index = Index.fromOneBased(scan.nextInt());
             while (scan.hasNext()) {
                 tempString = scan.next();

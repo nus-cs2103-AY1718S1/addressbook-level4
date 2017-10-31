@@ -35,6 +35,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.LinkCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemoveRemarkCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -183,6 +184,15 @@ public class AddressBookParserTest {
         AddRemarkCommand command = (AddRemarkCommand) parser.parseCommand(AddRemarkCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + " " + "Some remark.");
         assertEquals(new AddRemarkCommand(INDEX_FIRST_PERSON, remarks), command);
+    }
+
+    @Test
+    public void parseCommand_removeRemarkCommandWord() throws Exception {
+        ArrayList<Integer> remarkIndexes = new ArrayList<>();
+        remarkIndexes.add(1);
+        RemoveRemarkCommand command = (RemoveRemarkCommand) parser.parseCommand(RemoveRemarkCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + "1");
+        assertEquals(new RemoveRemarkCommand(INDEX_FIRST_PERSON, remarkIndexes), command);
     }
 
     @Test
