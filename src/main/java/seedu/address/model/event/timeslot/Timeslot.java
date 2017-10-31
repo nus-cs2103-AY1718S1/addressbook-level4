@@ -15,7 +15,7 @@ public class Timeslot implements Comparable<Timeslot> {
                     + "1. A 6-digit date specifying day, month and year (in the format of dd/mm/yyyy) followed by\n "
                     + "2. A 4-digit 24-hour format start timing and end timing separated by a \"-\"";
     public static final String TIMESLOT_VALIDATION_REGEX =
-            "[0-2][0-9]/(0[1-9]|1[0-2])/[0-9][0-9][0-9][0-9] "
+            "(0[1-9]|1[0-9]|2[0-9]|3[0-1])/(0[1-9]|1[0-2])/[0-9][0-9][0-9][0-9] "
                     + "(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]-(0[1-9]|1[0-9]|2[0-3])[0-5][0-9]";
 
     private Date date;
