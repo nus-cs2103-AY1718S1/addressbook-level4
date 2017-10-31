@@ -23,7 +23,9 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<Remark> remark;
+    //@@author zengfengw
     private ObjectProperty<Birthday> birthday;
+    //@@author
     private ObjectProperty<Age> age;
     private ObjectProperty<Photo> photo;
     private ObjectProperty<UniqueTagList> tags;
@@ -41,8 +43,10 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(remark);
+        //@@author zengfengw
         this.birthday = new SimpleObjectProperty<>(birthday);
         this.age = new SimpleObjectProperty<>(age);
+        //@@author
         this.photo = new SimpleObjectProperty<>(photo);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
@@ -113,6 +117,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author zengfengw
     public void setBirthday(Birthday birthday) {
         this.birthday.set(requireNonNull(birthday));
     }
@@ -126,6 +131,7 @@ public class Person implements ReadOnlyPerson {
     public Birthday getBirthday() {
         return birthday.get();
     }
+    //@@author
 
     public void setRemark(Remark remark) {
         this.remark.set(requireNonNull(remark));
@@ -152,6 +158,7 @@ public class Person implements ReadOnlyPerson {
         return remark.get();
     }
 
+    //@@author zengfengw
     //@Override
     public void setAge(Age age) {
         this.age.set(requireNonNull(age));
@@ -166,6 +173,7 @@ public class Person implements ReadOnlyPerson {
     public Age getAge() {
         return age.get();
     }
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
@@ -215,8 +223,10 @@ public class Person implements ReadOnlyPerson {
         this.setPhone(replacement.getPhone());
         this.setEmail(replacement.getEmail());
         this.setAddress(replacement.getAddress());
+        //@@author zengfengw
         this.setBirthday(replacement.getBirthday());
         this.setAge(replacement.getAge());
+        //@@author
         this.setTags(replacement.getTags());
     }
 

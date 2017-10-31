@@ -35,10 +35,12 @@ public class XmlAdaptedPerson {
     private String address;
     @XmlElement(required = true)
     private String remark;
+    //@@author zengfengw
     @XmlElement(required = true)
     private String birthday;
     @XmlElement(required = true)
     private String age;
+    //@@author
     @XmlElement(required = true)
     private String filepath;
     @XmlElement
@@ -62,8 +64,10 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         remark = source.getRemark().value;
+        //@@author zengfengw
         birthday = source.getBirthday().value;
         age = source.getAge().value;
+        //@@author
         filepath = source.getPhoto().getFilePath();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
@@ -86,8 +90,10 @@ public class XmlAdaptedPerson {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Remark remark = new Remark(this.remark);
+        //@@author zengfengw
         final Birthday birthday = new Birthday(this.birthday);
         final Age age = new Age(this.birthday);
+        //@@author
         final Photo photo = new Photo(this.filepath);
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, remark, birthday, age, photo, tags);

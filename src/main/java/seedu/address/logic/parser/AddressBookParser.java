@@ -59,10 +59,10 @@ public class AddressBookParser {
 
         case AddPhotoCommand.COMMAND_WORD:
             return new AddPhotoCommandParser().parse(arguments);
-
+        //@@author zengfengw
         case BirthdayCommand.COMMAND_WORD:
             return new BirthdayCommandParser().parse(arguments);
-
+        //@@author
         case EditCommand.COMMAND_ALIAS:
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
@@ -111,10 +111,10 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_ALIAS:
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
-
+        //@@author zengfengw
         case UpcomingBirthdayCommand.COMMAND_WORD:
             return new UpcomingBirthdayCommand();
-
+        //@@author
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
