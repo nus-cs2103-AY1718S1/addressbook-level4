@@ -46,6 +46,11 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
+    public UndoRedoStack getUndoRedoStack() {
+        return undoRedoStack;
+    }
+
+    @Override
     public void clearUndoRedoStack() {
         undoRedoStack.clear();
     }
