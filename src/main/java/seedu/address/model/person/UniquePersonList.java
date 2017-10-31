@@ -48,7 +48,7 @@ public class UniquePersonList implements Iterable<Person> {
         }
         return false;
     }
-    //@@author
+
     /**
      * Adds a person to the list.
      *
@@ -61,7 +61,7 @@ public class UniquePersonList implements Iterable<Person> {
         }
         internalList.add(new Person(toAdd));
     }
-
+    //@@author
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
