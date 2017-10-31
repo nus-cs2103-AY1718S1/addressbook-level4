@@ -8,6 +8,8 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.customField.CustomField;
+import seedu.address.model.customField.UniqueCustomFieldList;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -38,6 +40,8 @@ public class XmlAdaptedPerson {
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
     @XmlElement
     private List<XmlAdaptedPhone> optionalPhones = new ArrayList<>();
+    @XmlElement
+    private List<XmlAdaptedCustomField> customised = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -65,6 +69,9 @@ public class XmlAdaptedPerson {
         for (Phone phone : source.getPhoneList()) {
             optionalPhones.add(new XmlAdaptedPhone(phone));
         }
+        for (CustomField customField : source.getCustomFields()) {
+            customised.add(new XmlAdaptedCustomField(customField));
+        }
     }
 
     /**
@@ -77,6 +84,10 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
+        final List<CustomField> personCustomFields = new ArrayList<>();
+        for (XmlAdaptedCustomField customField : customised) {
+            personCustomFields.add(customField.toModelType());
+        }
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
@@ -87,6 +98,8 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedPhone optionalPhone : optionalPhones) {
             phoneList.add(optionalPhone.toModelType());
         }
-        return new Person(name, phone, email, address, photo, phoneList, tags);
+        final Set<CustomField> customFields = new HashSet<>(personCustomFields);
+
+        return new Person(name, phone, email, address, photo, phoneList, tags, customFields);
     }
 }
