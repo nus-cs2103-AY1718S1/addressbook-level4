@@ -49,12 +49,13 @@ public class AddTaskCommandParser {
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             Boolean complete = false;
-            ReadOnlyTask task = new Task(name, description, startDateTime, endDateTime, tagList, complete);
-
+            ReadOnlyTask task;
             // Renew the task object with the priority parameter specially set if given
             if (priority.isPresent()) {
                 Integer priorityValue = priority.get();
                 task = new Task(name, description, startDateTime, endDateTime, tagList, complete, priorityValue);
+            } else {
+                task = new Task(name, description, startDateTime, endDateTime, tagList, complete);
             }
 
             return new AddTaskCommand(task);
