@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@DarkTheme.css" />
@@ -24,6 +25,13 @@
         <Menu mnemonicParsing="false" text="Help">
             <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
         </Menu>
+      <Menu mnemonicParsing="false" text="Style">
+        <items>
+            <MenuItem fx:id="NightMode" mnemonicParsing="false" onAction="#changeToDarkTheme" text="Twilight" />
+          <MenuItem fx:id="DayMode" mnemonicParsing="false" onAction="#changeToBrightTheme" text="Sunburst" />
+            <MenuItem fx:id="Default" mnemonicParsing="false" onAction="#changeToDefaultTheme" text="Minimalism" />
+        </items>
+      </Menu>
     </MenuBar>
     <SplitPane dividerPositions="0.5" VBox.vgrow="ALWAYS">
         <items>
@@ -74,10 +82,7 @@
             </VBox>
             <SplitPane fx:id="schedulePanel" dividerPositions="1.0" maxWidth="500.0" minWidth="300.0" orientation="VERTICAL" prefWidth="400.0">
                 <items>
-                    <StackPane fx:id="calendarViewPlaceholder" alignment="TOP_LEFT" maxHeight="-Infinity">
-                  <opaqueInsets>
-                     <Insets />
-                  </opaqueInsets></StackPane>
+                    <StackPane fx:id="calendarViewPlaceholder" alignment="TOP_LEFT" maxHeight="-Infinity" />
                     <StackPane fx:id="eventListPanelPlaceholder" alignment="TOP_LEFT" minHeight="-Infinity" />
                 </items>
             <opaqueInsets>

@@ -20,8 +20,8 @@ import seedu.address.model.tag.Tag;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static String[] colors = { "Brown", "CadetBlue", "Coral", "Bisque", "DarkOrange", "DarkRed",
-        "Gold", "LightBlue", "Olive", "PaleVioletRed", "Crimson",
+    private static String[] colors = { "Brown", "CadetBlue", "DarkOrange", "DarkRed",
+        "Gold", "Olive", "PaleVioletRed", "Crimson", "Indigo", "OrangeRed", "YellowGreen",
         "Chocolate", "Plum"};
     private static HashMap<String, String> tagColorMap = new HashMap<>();
     private static Random random = new Random();
@@ -54,11 +54,19 @@ public class PersonCard extends UiPart<Region> {
     }
 
     private static String getColorForTag(String tagString) {
-        String color = colors[random.nextInt(colors.length)];
-        if (!tagColorMap.containsKey(tagString)) {
-            tagColorMap.put(tagString, color);
-        } else {
-            color = tagColorMap.get(tagString);
+        String color = "";
+        boolean uniqueColor = false;
+        while (!uniqueColor) {
+            color = colors[random.nextInt(colors.length)];
+            if (!tagColorMap.containsKey(tagString)) {
+                if (!tagColorMap.containsValue(color)) {
+                    tagColorMap.put(tagString, color);
+                    break;
+                }
+            } else {
+                color = tagColorMap.get(tagString);
+                break;
+            }
         }
         return color;
     }
