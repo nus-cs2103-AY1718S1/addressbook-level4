@@ -15,6 +15,7 @@ public class FindCommandParserTest {
 
     private FindCommandParser parser = new FindCommandParser();
 
+    //@@author dalessr
     @Test
     public void parse_emptyArg_throwsParseException() {
         assertParseFailure(parser, "     ",

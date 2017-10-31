@@ -67,6 +67,7 @@ public class FindCommandTest {
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
+    //@@author dalessr
     @Test
     public void execute_multipleNameKeywords_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
@@ -144,6 +145,7 @@ public class FindCommandTest {
         assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON, CARL, DANIEL));
     }
 
+    //@@author
     /**
      * Parses {@code userInput} into a {@code FindCommand}.
      */

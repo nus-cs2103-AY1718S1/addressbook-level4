@@ -18,6 +18,7 @@ import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author dalessr
 /**
  * The Contact Details Panel of the App.
  */

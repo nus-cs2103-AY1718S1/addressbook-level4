@@ -51,6 +51,7 @@ public class BrowserPanel extends UiPart<Region> {
                 + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
+    //@@author dalessr
     /**
      * Loads the google map page on the browser specifying the location of the person selected.
      * @param person the person whose location is to be shown on the map
@@ -74,6 +75,7 @@ public class BrowserPanel extends UiPart<Region> {
                 + GOOGLE_MAP_SEARCH_URL_SUFFIX);
     }
 
+    //@@author
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
@@ -99,6 +101,7 @@ public class BrowserPanel extends UiPart<Region> {
         loadPersonPage(event.getNewSelection().person);
     }
 
+    //@@author dalessr
     @Subscribe
     private void handleBrowserPanelShowLocationEvent(BrowserPanelShowLocationEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

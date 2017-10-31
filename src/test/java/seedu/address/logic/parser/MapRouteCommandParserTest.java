@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.MapRouteCommand;
 
+//@@author dalessr
 /**
  * Test scope: similar to {@code SelectCommandParserTest}.
  * @see SelectCommandParserTest

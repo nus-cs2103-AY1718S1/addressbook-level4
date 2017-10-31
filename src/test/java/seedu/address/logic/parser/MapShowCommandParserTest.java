@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.MapShowCommand;
 
+//@@author dalessr
 /**
  * Test scope: similar to {@code SelectCommandParserTest}.
  * @see SelectCommandParserTest

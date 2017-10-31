@@ -21,6 +21,7 @@ import seedu.address.model.Model;
 
 public class FindCommandSystemTest extends AddressBookSystemTest {
 
+    //@@author dalessr
     @Test
     public void find() {
         /* Case: find multiple persons by name in address book, command with leading spaces and trailing spaces
@@ -217,6 +218,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
 
+    //@@author dalessr
     /**
      * Executes {@code command} and verifies that the command box displays an empty string, the result display
      * box displays {@code Messages#MESSAGE_PERSONS_LISTED_OVERVIEW} with the number of people in the filtered list,

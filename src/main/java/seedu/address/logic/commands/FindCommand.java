@@ -37,6 +37,7 @@ public class FindCommand extends Command {
         this.predicate = predicate;
     }
 
+    //@@author dalessr
     @Override
     public CommandResult execute() {
         String[] parameters = (String[]) predicate.getKeywords().toArray();
@@ -194,6 +195,7 @@ public class FindCommand extends Command {
         }
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
