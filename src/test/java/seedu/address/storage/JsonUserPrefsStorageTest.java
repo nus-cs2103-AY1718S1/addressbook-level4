@@ -32,11 +32,6 @@ public class JsonUserPrefsStorageTest {
         readUserPrefs(null);
     }
 
-    private Optional<UserPrefs> readUserPrefs(String userPrefsFileInTestDataFolder) throws DataConversionException {
-        String prefsFilePath = addToTestDataPathIfNotNull(userPrefsFileInTestDataFolder);
-        return new JsonUserPrefsStorage(prefsFilePath).readUserPrefs(prefsFilePath);
-    }
-
     @Test
     public void readUserPrefs_missingFile_emptyResult() throws DataConversionException {
         assertFalse(readUserPrefs("NonExistentFile.json").isPresent());
@@ -50,12 +45,6 @@ public class JsonUserPrefsStorageTest {
         /* IMPORTANT: Any code below an exception-throwing line (like the one above) will be ignored.
          * That means you should not have more than one exception test in one method
          */
-    }
-
-    private String addToTestDataPathIfNotNull(String userPrefsFileInTestDataFolder) {
-        return userPrefsFileInTestDataFolder != null
-                ? TEST_DATA_FOLDER + userPrefsFileInTestDataFolder
-                : null;
     }
 
     @Test
@@ -77,6 +66,23 @@ public class JsonUserPrefsStorageTest {
         UserPrefs actual = readUserPrefs("ExtraValuesUserPref.json").get();
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void getUserPrefsFilePath_success_checkCorrectness() {
+        JsonUserPrefsStorage json = new JsonUserPrefsStorage("some name");
+        assertEquals("some name", json.getUserPrefsFilePath());
+    }
+
+    private Optional<UserPrefs> readUserPrefs(String userPrefsFileInTestDataFolder) throws DataConversionException {
+        String prefsFilePath = addToTestDataPathIfNotNull(userPrefsFileInTestDataFolder);
+        return new JsonUserPrefsStorage(prefsFilePath).readUserPrefs(prefsFilePath);
+    }
+
+    private String addToTestDataPathIfNotNull(String userPrefsFileInTestDataFolder) {
+        return userPrefsFileInTestDataFolder != null
+                ? TEST_DATA_FOLDER + userPrefsFileInTestDataFolder
+                : null;
     }
 
     private UserPrefs getTypicalUserPrefs() {
