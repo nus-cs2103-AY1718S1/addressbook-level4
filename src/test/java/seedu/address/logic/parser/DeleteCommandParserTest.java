@@ -23,9 +23,11 @@ public class DeleteCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsDeleteCommand() {
+        //@@author Estois
         MULTI_INDEX_FIRST_PERSON.clear();
         MULTI_INDEX_FIRST_PERSON.add(INDEX_FIRST_PERSON);
         assertParseSuccess(parser, "1", new DeleteCommand(MULTI_INDEX_FIRST_PERSON));
+        //@@author
     }
 
     @Test

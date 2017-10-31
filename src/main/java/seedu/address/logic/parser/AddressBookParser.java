@@ -95,8 +95,10 @@ public class AddressBookParser {
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
 
+        //@@author Estois
         case SortCommand.COMMAND_WORD:
             return new SortCommandParser().parse(arguments);
+        //@@author
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

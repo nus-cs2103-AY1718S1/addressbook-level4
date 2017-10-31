@@ -44,6 +44,7 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    //@@author Estois
     /**
      * Parses multiple {@code oneBasedIndex} into a {@code Index} ArrayList and returns it. Leading
      * and trailing whitespaces will be trimmed.
@@ -68,6 +69,7 @@ public class ParserUtil {
         }
         return parsedIndexes;
     }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.

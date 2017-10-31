@@ -76,4 +76,55 @@ public class TypicalPersons {
     public static List<ReadOnlyPerson> getTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
+
+    /**
+     * Returns an {@code AddressBook} with all the typical persons sorted by the given parameter.
+     */
+    public static AddressBook getSortedAddressBook(String sortBy) {
+        AddressBook ab = new AddressBook();
+        List<ReadOnlyPerson> personList;
+
+        switch(sortBy) {
+        case "name":
+            personList = getTypicalPersons();
+            break;
+        case "phone":
+            personList = getTypicalPersonsSortedByPhone();
+            break;
+        case "email":
+            personList = getTypicalPersonsSortedByEmail();
+            break;
+        case "address":
+            personList = getTypicalPersonsSortedByAddress();
+            break;
+        default:
+            personList = getTypicalPersons();
+        }
+
+        for (ReadOnlyPerson person : personList) {
+            try {
+                ab.addPerson(person);
+            } catch (DuplicatePersonException e) {
+                assert false : "not possible";
+            }
+        }
+
+        return ab;
+    }
+
+    /**
+     * Returns Typical Persons list sorted by given parameter.
+     */
+    public static List<ReadOnlyPerson> getTypicalPersonsSortedByPhone() {
+        return new ArrayList<>(Arrays.asList(ALICE, DANIEL, ELLE, FIONA, GEORGE, CARL, BENSON));
+    }
+
+    public static List<ReadOnlyPerson> getTypicalPersonsSortedByEmail() {
+        return new ArrayList<>(Arrays.asList(ALICE, GEORGE, DANIEL, CARL, BENSON, FIONA, ELLE));
+    }
+
+    public static List<ReadOnlyPerson> getTypicalPersonsSortedByAddress() {
+        return new ArrayList<>(Arrays.asList(DANIEL, ALICE, BENSON, GEORGE, FIONA, ELLE, CARL));
+    }
+
 }

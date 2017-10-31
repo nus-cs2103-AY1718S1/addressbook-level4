@@ -16,5 +16,8 @@ public class CliSyntax {
     //@@author
     public static final Prefix PREFIX_TAG = new Prefix("t/");
     public static final Prefix PREFIX_FILEPATH = new Prefix("f/");
+    //@@author Estois
+    public static final Prefix PREFIX_AGE = new Prefix("o/");
+    //@@author
 
 }
