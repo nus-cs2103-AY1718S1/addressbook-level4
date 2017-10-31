@@ -70,6 +70,7 @@ public class EditCommandTest {
         assertCommandFailure(editCommand, model, expectedMessage);
     }
 
+    //@@author jelneo
     @Test
     public void execute_totalDebtLessThanCurrentDebt_failure() throws Exception {
         Person editedPerson = new PersonBuilder().build();
@@ -84,6 +85,7 @@ public class EditCommandTest {
 
         assertCommandFailure(editCommand, model, expectedMessage);
     }
+    //@@author
 
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
@@ -142,6 +144,7 @@ public class EditCommandTest {
     public void execute_duplicatePersonUnfilteredList_failure() {
         Person firstPerson = new Person(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(firstPerson).build();
+        descriptor.setTotalDebt(firstPerson.getTotalDebt());
         EditCommand editCommand = prepareCommand(INDEX_SECOND_PERSON, descriptor);
 
         assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
