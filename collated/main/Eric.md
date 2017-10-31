@@ -1,5 +1,5 @@
 # Eric
-###### \java\seedu\address\logic\commands\AddAppointmentCommand.java
+###### /java/seedu/address/logic/commands/AddAppointmentCommand.java
 ``` java
 /**
  * Command to add appointment to a person in addressBook
@@ -7,7 +7,7 @@
 public class AddAppointmentCommand extends Command {
 
     public static final String COMMAND_WORD = "appointment";
-    public static final String COMMAND_ALIAS = "apt";
+    public static final String COMMAND_ALIAS = "appt";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appoint to a person in address book. \n"
             + COMMAND_ALIAS + ": Shorthand equivalent for add. \n"
@@ -24,21 +24,31 @@ public class AddAppointmentCommand extends Command {
 
     private final Index index;
     private final Calendar date;
+    private final Calendar endDate;
 
 
     public AddAppointmentCommand() {
         date = null;
         index = null;
+        endDate = null;
     }
 
     public AddAppointmentCommand(Index index) {
         this.index = index;
         this.date = null;
+        endDate = null;
     }
 
     public AddAppointmentCommand(Index index, Calendar date) {
         this.index = index;
         this.date = date;
+        this.endDate = null;
+    }
+
+    public AddAppointmentCommand(Index index, Calendar date, Calendar endDate) {
+        this.index = index;
+        this.date = date;
+        this.endDate = endDate;
     }
 
     @Override
@@ -63,8 +73,10 @@ public class AddAppointmentCommand extends Command {
         requireNonNull(index);
         if (date == null) {
             appointment = new Appointment(personToAddAppointment.getName().toString());
-        } else {
+        } else if (date != null && endDate == null) {
             appointment = new Appointment(personToAddAppointment.getName().toString(), date);
+        } else {
+            appointment = new Appointment(personToAddAppointment.getName().toString(), date, endDate);
         }
 
         if (date != null && !isDateValid()) {
@@ -80,7 +92,7 @@ public class AddAppointmentCommand extends Command {
             return new CommandResult("Appointment with " + personToAddAppointment.getName().toString()
                     + " set to off.");
         }
-        return new CommandResult(MESSAGE_SUCCESS + "Meet " +  appointment.getPersonName().toString()
+        return new CommandResult(MESSAGE_SUCCESS + "Meet " +  appointment.getPersonName()
                 + " on "
                 +  appointment.getDate().toString());
     }
@@ -116,7 +128,7 @@ public class AddAppointmentCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\commands\ToggleTagColorCommand.java
+###### /java/seedu/address/logic/commands/ToggleTagColorCommand.java
 ``` java
 /**
  *  Changes tag color in address book
@@ -188,7 +200,7 @@ public class ToggleTagColorCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddAppointmentParser.java
+###### /java/seedu/address/logic/parser/AddAppointmentParser.java
 ``` java
 /**
  * Parse input arguments and creates a new AddAppointmentCommand Object
@@ -228,6 +240,14 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
             if (groups.size() == 0) {
                 throw new ParseException("Please be more specific with your appointment time");
             }
+
+            //If there is a start and end time that is parsed
+            if (groups.get(0).getDates().size() == 2) {
+                calendar.setTime(groups.get(0).getDates().get(0));
+                Calendar calendarEnd = Calendar.getInstance();
+                calendarEnd.setTime(groups.get(0).getDates().get(1));
+                return new AddAppointmentCommand(index, calendar, calendarEnd);
+            }
             calendar.setTime(groups.get(0).getDates().get(0));
             return new AddAppointmentCommand(index, calendar);
         } catch (NumberFormatException e) {
@@ -244,7 +264,7 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ToggleTagColorParser.java
+###### /java/seedu/address/logic/parser/ToggleTagColorParser.java
 ``` java
 /**
  * Parse input for tagcolor command
@@ -299,20 +319,20 @@ public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
     }
 }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     public void setTags(Set<Tag> tags, String tagString, String color) {
         this.tags.setTags(tags, tagString, color);
     }
 
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     public void addAppointment(Appointment appointment) throws PersonNotFoundException {
         persons.addAppointment(appointment);
     }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     /**
      * Sets tag color for a particular tag
@@ -325,7 +345,7 @@ public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
         indicateAddressBookChanged();
     }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     /**
      * Adds appointment for a contact in address book
@@ -350,7 +370,7 @@ public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
     }
 
 ```
-###### \java\seedu\address\model\person\Appointment.java
+###### /java/seedu/address/model/person/Appointment.java
 ``` java
 /**
  *  Appointment class to hold all the appointment information of an appointment
@@ -364,6 +384,9 @@ public class Appointment {
     private Date date;
 
 
+
+    private Date endDate;
+
     public Appointment(String person) {
         this.personString = person;
     }
@@ -374,6 +397,14 @@ public class Appointment {
         this.date = date;
     }
 
+    public Appointment(String person, Calendar calendar, Calendar calendarEnd) {
+        requireNonNull(calendar);
+        Date date = calendar.getTime();
+        this.personString = person;
+        this.date = date;
+        this.endDate = calendarEnd.getTime();
+    }
+
     public String getPersonName() {
         return this.personString;
     }
@@ -382,6 +413,9 @@ public class Appointment {
         return this.date;
     }
 
+    public Date getEndDate() {
+        return endDate;
+    }
     @Override
     public String toString() {
         if (date != null) {
@@ -400,7 +434,7 @@ public class Appointment {
     }
 }
 ```
-###### \java\seedu\address\model\tag\Tag.java
+###### /java/seedu/address/model/tag/Tag.java
 ``` java
     /**
      * Validates given tag name.
@@ -441,7 +475,7 @@ public class Appointment {
         tagColor = "grey";
     }
 ```
-###### \java\seedu\address\model\tag\Tag.java
+###### /java/seedu/address/model/tag/Tag.java
 ``` java
     /**
      * Converts a color to hexadecimal string
@@ -452,7 +486,7 @@ public class Appointment {
     }
 }
 ```
-###### \java\seedu\address\model\tag\UniqueTagList.java
+###### /java/seedu/address/model/tag/UniqueTagList.java
 ``` java
     /**
      * Replaces the Tags in this list with those in the argument tag list.
@@ -478,7 +512,7 @@ public class Appointment {
         internalList.setAll(tags);
     }
 ```
-###### \java\seedu\address\model\tag\UniqueTagList.java
+###### /java/seedu/address/model/tag/UniqueTagList.java
 ``` java
     private void setOffColor(Set<Tag> tags) {
         for (Tag tag : tags) {
@@ -501,7 +535,7 @@ public class Appointment {
         }
     }
 ```
-###### \java\seedu\address\ui\CalendarWindow.java
+###### /java/seedu/address/ui/CalendarWindow.java
 ``` java
 /**
  * The Browser Panel of the App.
@@ -553,7 +587,7 @@ public class CalendarWindow extends UiPart<Region> {
                     });
 
                     try {
-                        // update every 10 seconds
+                        // update every 1 second
                         sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -575,12 +609,21 @@ public class CalendarWindow extends UiPart<Region> {
     public void setAppointments() {
         for (ReadOnlyPerson person : personList) {
             if (person.getAppointment().getDate() == null) {
+                List<Entry<?>> result = calendar.findEntries(person.getName().toString());
+                calendar.removeEntries(result);
                 continue;
             }
             LocalDateTime ldt = LocalDateTime.ofInstant(person.getAppointment().getDate().toInstant(),
                     ZoneId.systemDefault());
+            LocalDateTime ldt2;
+            if (person.getAppointment().getEndDate() != null) {
+                ldt2 = LocalDateTime.ofInstant(person.getAppointment().getEndDate().toInstant(),
+                        ZoneId.systemDefault());
+            } else {
+                ldt2 = ldt.plusHours(1);
+            }
             Entry entry = new Entry(person.getName().toString());
-            entry.setInterval(new Interval(ldt, ldt.plusHours(1)));
+            entry.setInterval(new Interval(ldt, ldt2));
             List<Entry<?>> result = calendar.findEntries(person.getName().toString());
             calendar.removeEntries(result);
             calendar.addEntry(entry);
@@ -589,7 +632,7 @@ public class CalendarWindow extends UiPart<Region> {
 
 }
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
     private void setStyle(int displayedIndex) {
         appointment.setStyle("-fx-font-weight: bold");
