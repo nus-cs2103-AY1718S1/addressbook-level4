@@ -732,8 +732,6 @@ public class RemarkCommandTest {
         return ouput;
     }
 
-
-
 }
 ```
 ###### /java/seedu/address/logic/commands/UnmarkCommandTest.java
@@ -1214,6 +1212,329 @@ public class ViewCommandParserTest {
     @Test
     public void parse_invalidArgs_throwsParseException() {
         assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### /java/seedu/address/model/lesson/predicate/FixedCodePredicateTest.java
+``` java
+public class FixedCodePredicateTest {
+    @Test
+    public void equals() {
+
+        Code firstCode = null;
+        Code secondCode = null;
+
+        try {
+            firstCode = new Code(VALID_CODE_MA1101R);
+            secondCode = new Code(VALID_CODE_CS2101);
+        } catch (IllegalValueException e) {
+            assert false : "The code shouldn't invalid";
+        }
+
+        FixedCodePredicate firstPredicate = new FixedCodePredicate(firstCode);
+        FixedCodePredicate secondPredicate = new FixedCodePredicate(secondCode);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        FixedCodePredicate firstPredicateCopy = new FixedCodePredicate(firstCode);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different address -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_isTheCodeGiven_returnsTrue() {
+
+        Code code = null;
+
+        try {
+            code = new Code("MA1101R");
+        } catch (IllegalValueException e) {
+            assert false : "The address shouldn't invalid";
+        }
+
+        FixedCodePredicate predicate = new FixedCodePredicate(code);
+        assertTrue(predicate.test(new LessonBuilder().build()));
+
+    }
+
+    @Test
+    public void test_isTheCodeCGiven_returnsFalse() {
+
+        try {
+            Code code = new Code("GEQ1000");
+            FixedCodePredicate predicate = new FixedCodePredicate(code);
+            assertFalse(predicate.test(new LessonBuilder().build()));
+        } catch (IllegalValueException e) {
+            assert false : "The code shouldn't invalid";
+        }
+    }
+}
+```
+###### /java/seedu/address/model/lesson/predicate/FixedLocationPredicateTest.java
+``` java
+public class FixedLocationPredicateTest {
+
+    @Test
+    public void equals() {
+
+        Location firstLocation = null;
+        Location secondLocation = null;
+
+        try {
+            firstLocation = new Location(VALID_VENUE_MA1101R);
+            secondLocation = new Location(VALID_VENUE_CS2101);
+        } catch (IllegalValueException e) {
+            assert false : "The location shouldn't invalid";
+        }
+
+        FixedLocationPredicate firstPredicate = new FixedLocationPredicate(firstLocation);
+        FixedLocationPredicate secondPredicate = new FixedLocationPredicate(secondLocation);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        FixedLocationPredicate firstPredicateCopy = new FixedLocationPredicate(firstLocation);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different address -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_isTheAddressGiven_returnsTrue() {
+
+        Location location = null;
+
+        try {
+            location = new Location("LT27");
+        } catch (IllegalValueException e) {
+            assert false : "The location shouldn't invalid";
+        }
+
+        FixedLocationPredicate predicate = new FixedLocationPredicate(location);
+        assertTrue(predicate.test(new LessonBuilder().build()));
+
+    }
+
+    @Test
+    public void test_isTheAddressGiven_returnsFalse() {
+
+        try {
+            Location location = new Location("LT1");
+            FixedLocationPredicate predicate = new FixedLocationPredicate(location);
+            assertFalse(predicate.test(new LessonBuilder().build()));
+        } catch (IllegalValueException e) {
+            assert false : "The location shouldn't invalid";
+        }
+    }
+}
+```
+###### /java/seedu/address/model/lesson/predicate/SelectedStickyNotePredicateTest.java
+``` java
+public class SelectedStickyNotePredicateTest {
+
+        @Test
+        public void equals() {
+
+            Code firstCode = null;
+            Code secondCode = null;
+
+            try {
+                firstCode = new Code(VALID_CODE_MA1101R);
+                secondCode = new Code(VALID_CODE_CS2101);
+            } catch (IllegalValueException e) {
+                assert false : "The code shouldn't invalid";
+            }
+
+            SelectedStickyNotePredicate firstPredicate = new SelectedStickyNotePredicate(firstCode);
+            SelectedStickyNotePredicate secondPredicate = new SelectedStickyNotePredicate(secondCode);
+
+            // same object -> returns true
+            assertTrue(firstPredicate.equals(firstPredicate));
+
+            // same values -> returns true
+            SelectedStickyNotePredicate firstPredicateCopy = new SelectedStickyNotePredicate(firstCode);
+            assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+            // different types -> returns false
+            assertFalse(firstPredicate.equals(1));
+
+            // null -> returns false
+            assertFalse(firstPredicate.equals(null));
+
+            // different address -> returns false
+            assertFalse(firstPredicate.equals(secondPredicate));
+        }
+
+        @Test
+        public void test_isTheCodeGiven_returnsTrue() throws IllegalValueException {
+
+            Code code = null;
+
+            try {
+                code = new Code("MA1101R");
+            } catch (IllegalValueException e) {
+                assert false : "The address shouldn't invalid";
+            }
+
+            SelectedStickyNotePredicate predicate = new SelectedStickyNotePredicate(code);
+            assertTrue(predicate.test(new Remark("Remark content", code)));
+
+        }
+
+        @Test
+        public void test_isTheCodeCGiven_returnsFalse() {
+
+            try {
+                Code code = new Code("GEQ1000");
+                Code secondCode = new Code("GEQ1001");
+                SelectedStickyNotePredicate predicate = new SelectedStickyNotePredicate(code);
+                assertFalse(predicate.test(new Remark("Remark content", secondCode)));
+            } catch (IllegalValueException e) {
+                assert false : "The code shouldn't invalid";
+            }
+        }
+
+}
+```
+###### /java/seedu/address/model/lesson/predicate/ShowSpecifiedLessonPredicateTest.java
+``` java
+public class ShowSpecifiedLessonPredicateTest {
+
+    @Test
+    public void equals() {
+
+        ShowSpecifiedLessonPredicate firstPredicate = new ShowSpecifiedLessonPredicate(MA1101R_L1.hashCode());
+        ShowSpecifiedLessonPredicate secondPredicate = new ShowSpecifiedLessonPredicate(CS2101_L1.hashCode());
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        ShowSpecifiedLessonPredicate firstPredicateCopy = new ShowSpecifiedLessonPredicate(MA1101R_L1.hashCode());
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_isTheLessonGiven_returnsTrue() {
+
+
+        ShowSpecifiedLessonPredicate predicate = new ShowSpecifiedLessonPredicate(MA1101R_L1.hashCode());
+        assertTrue(predicate.test(MA1101R_L1));
+
+    }
+
+    @Test
+    public void test_isThePersonGiven_returnsFalse() {
+
+        ShowSpecifiedLessonPredicate predicate = new ShowSpecifiedLessonPredicate(MA1101R_L1.hashCode());
+        assertFalse(predicate.test(CS2101_L1));
+    }
+}
+```
+###### /java/seedu/address/model/lesson/predicate/UniqueLocationPredicateTest.java
+``` java
+public class UniqueLocationPredicateTest {
+
+    private Model model;
+
+    @Test
+    public void equals() {
+
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+        UniqueLocationPredicate predicate = new UniqueLocationPredicate(model.getUniqueLocationSet());
+
+        // same object -> returns true
+        assertTrue(predicate.equals(predicate));
+
+        // same values -> returns true
+        UniqueLocationPredicate firstPredicateCopy = new UniqueLocationPredicate(model.getUniqueLocationSet());
+        assertTrue(predicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(predicate.equals(1));
+
+        // null -> returns false
+        assertFalse(predicate.equals(null));
+
+    }
+
+    @Test
+    public void test_isTheAddressUnique() {
+
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        UniqueLocationPredicate predicate = new UniqueLocationPredicate(model.getUniqueLocationSet());
+        assertTrue(predicate.test(MA1101R_L1));
+
+        // Now it is not unique
+        assertTrue(predicate.test(CS2101_L1));
+    }
+}
+```
+###### /java/seedu/address/model/lesson/predicate/UniqueModuleCodePredicateTest.java
+``` java
+public class UniqueModuleCodePredicateTest {
+
+    private Model model;
+
+    @Test
+    public void equals() {
+
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+        UniqueModuleCodePredicate predicate = new UniqueModuleCodePredicate(model.getUniqueCodeSet());
+
+        // same object -> returns true
+        assertTrue(predicate.equals(predicate));
+
+        // same values -> returns true
+        UniqueModuleCodePredicate firstPredicateCopy = new UniqueModuleCodePredicate(model.getUniqueCodeSet());
+        assertTrue(predicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(predicate.equals(1));
+
+        // null -> returns false
+        assertFalse(predicate.equals(null));
+
+    }
+
+    @Test
+    public void test_isTheAddressUnique() {
+
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        UniqueModuleCodePredicate predicate = new UniqueModuleCodePredicate(model.getUniqueCodeSet());
+        assertTrue(predicate.test(MA1101R_L1));
+
+        // Now it is not unique
+        assertTrue(predicate.test(CS2101_L1));
     }
 }
 ```

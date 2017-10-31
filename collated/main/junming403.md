@@ -1078,6 +1078,18 @@ public class ViewCommand extends Command {
     }
 }
 ```
+###### /java/seedu/address/logic/LogicManager.java
+``` java
+    @Override
+    public ObservableList<Remark> getFilteredRemarkList() {
+        return model.getFilteredRemarkList();
+    }
+
+    @Override
+    public void setRemarkPredicate(Predicate predicate) {
+        model.updateFilteredRemarkList(predicate);
+    }
+```
 ###### /java/seedu/address/logic/parser/EditCommandParser.java
 ``` java
 /**
@@ -1938,7 +1950,7 @@ public class SelectedStickyNotePredicate implements Predicate<Remark> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof FixedCodePredicate // instanceof handles nulls
+                || (other instanceof SelectedStickyNotePredicate // instanceof handles nulls
                 && this.codeTotest.equals(((SelectedStickyNotePredicate) other).codeTotest)); // state check
     }
 
