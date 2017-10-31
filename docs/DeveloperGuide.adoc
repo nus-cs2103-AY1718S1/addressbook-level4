@@ -21,7 +21,7 @@ By: `W15-B1`      Since: `Jun 2016`      Licence: `MIT`
 Rubrika is a desktop Address Book application that lets you store and manage your contacts in a convenient manner. +
 Rubrika has a simple link:#GUI[GUI] and allows you to interact using the link:#CLI[CLI].
 
-This document shall assist you in understanding the underlying mechanics of Rubrika and guide you through to making your first contribution.
+This document will assist you in understanding the underlying mechanics of Rubrika and guide you through to making your first and subsequent contribution.
 
 === Need help?
 
@@ -536,8 +536,9 @@ Cons: User may want to remove only from list shown instead of the whole list.
 
 The sort function is done by performing the `sortFilteredPersonList` function which resides in the `ModelManager` class. Sort currently supports sorting by name, email and phone in ascending or descending order. +
 
-Within `ModelManager`, we mask `FilteredList` with a `SortedList` object, and use `sortFilteredPersonList` sets the comparator that been parsed by `SortCommandParser` into the `SortedList` filtered list. For each different way of sorting, a different comparator is being passed into `sortFilteredPersonList`. +
-Below is the code fragemnt found in `ModelManager`.
+Within `ModelManager`, we mask `FilteredList` with a `SortedList` object, and call `sortFilteredPersonList` method within `Model`. This sets the comparator that been parsed by `SortCommandParser` into the `SortedList` filtered list. For each different way of sorting, a different comparator is being passed into `sortFilteredPersonList`. +
+
+Below is the code fragment found in `Model`.
 
 ----
     @Override
