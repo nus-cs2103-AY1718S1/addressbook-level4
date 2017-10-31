@@ -25,6 +25,26 @@ public abstract class Command {
     }
 
     /**
+     * Constructs a feedback message to summarise an operation that displayed a listing of emails.
+     *
+     * @param displaySize
+     * @return
+     */
+    public static String getMessageForEmailListShownSummary(int displaySize) {
+        return String.format(Messages.MESSAGE_EMAILS_LISTED_OVERVIEW, displaySize);
+    }
+
+    /**
+     * Constructs a feedback message to summarise an operation that displayed a listing of phones.
+     *
+     * @param displaySize
+     * @return
+     */
+    public static String getMessageForPhoneListShownSummary(int displaySize) {
+        return String.format(Messages.MESSAGE_PHONES_LISTED_OVERVIEW, displaySize);
+    }
+
+    /**
      * Executes the command and returns the result message.
      *
      * @return feedback message of the operation result for display
