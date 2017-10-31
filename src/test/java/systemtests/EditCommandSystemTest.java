@@ -252,8 +252,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
      * 4. Asserts that the browser url and selected card update accordingly depending on the card at
      * {@code expectedSelectedCardIndex}.<br>
-     * 5. Asserts that the status bar's sync status changes.<br>
-     * 6. Asserts that the command box has the default style class.<br>
+     * 5. Asserts that the command box has the default style class.<br>
      * Verifications 1 to 3 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
@@ -270,7 +269,6 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         } else {
             assertSelectedCardUnchanged();
         }
-        assertStatusBarUnchangedExceptSyncStatus();
     }
 
     /**
@@ -278,7 +276,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * 1. Asserts that the command box displays {@code command}.<br>
      * 2. Asserts that result display box displays {@code expectedResultMessage}.<br>
      * 3. Asserts that the model related components equal to the current model.<br>
-     * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
+     * 4. Asserts that the browser url, selected card remains unchanged.<br>
      * 5. Asserts that the command box has the error style.<br>
      * Verifications 1 to 3 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
@@ -291,6 +289,5 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
-        assertStatusBarUnchanged();
     }
 }

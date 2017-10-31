@@ -1,17 +1,9 @@
 package seedu.address.ui;
 
-import java.time.Instant;
-import java.time.Month;
-import java.time.Year;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.Date;
-
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -34,7 +26,6 @@ import seedu.address.commons.events.ui.ToggleStatisticsPanelEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -158,17 +149,7 @@ public class MainWindow extends UiPart<Region> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        ObservableList<ReadOnlyPerson> newlyAddedInFilteredList;
-        newlyAddedInFilteredList = logic.getFilteredPersonList()
-                .filtered(t-> {
-                    Date givenDate = t.getCreatedAt();
-                    ZonedDateTime given = givenDate.toInstant().atZone(ZoneId.of("UTC"));
-                    ZonedDateTime ref = Instant.now().atZone(ZoneId.of("UTC"));
-                    return Month.from(given) == Month.from(ref) && Year.from(given).equals(Year.from(ref));
-                });
-
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
-                logic.getFilteredPersonList().size(), newlyAddedInFilteredList.size());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -185,6 +166,7 @@ public class MainWindow extends UiPart<Region> {
         statisticsPanelOpen = true;
     }
 
+    //@@author 500poundbear
     /**
      * Instantiates and adds the browser panel to the UI
      */
@@ -257,10 +239,6 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
-    }
-
     void releaseResources() {
         browserPanel.freeResources();
     }
@@ -271,18 +249,21 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author 500poundbear
     @Subscribe
     private void handleToggleBrowserPanelEvent(ToggleBrowserPanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchToBrowserPanel();
     }
 
+    //@@author 500poundbear
     @Subscribe
     private void handleToggleStatisticsPanelEvent(ToggleStatisticsPanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchToStatisticsPanel();
     }
 
+    //@@author 500poundbear
     @Subscribe
     private void handleRefreshStatisticsPanelIfOpenEvent(RefreshStatisticsPanelIfOpenEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
