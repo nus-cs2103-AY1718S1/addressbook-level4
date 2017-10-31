@@ -16,7 +16,7 @@ image::tianlan.jpg[width="150", align="left"]
 {empty} [https://github.com/angtianlannus[github]]
 
 Role: Developer +
-Responsibilities: Storage, SortCommand, part of documentation
+Responsibilities: Storage component, adding SortCommand, enhance FindCommand, BookedSlot constraint and related tests.
 
 '''
 
