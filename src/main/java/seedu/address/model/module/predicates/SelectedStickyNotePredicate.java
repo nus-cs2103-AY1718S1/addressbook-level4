@@ -28,7 +28,7 @@ public class SelectedStickyNotePredicate implements Predicate<Remark> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof FixedCodePredicate // instanceof handles nulls
+                || (other instanceof SelectedStickyNotePredicate // instanceof handles nulls
                 && this.codeTotest.equals(((SelectedStickyNotePredicate) other).codeTotest)); // state check
     }
 

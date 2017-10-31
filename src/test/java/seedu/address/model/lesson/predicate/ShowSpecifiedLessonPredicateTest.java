@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import seedu.address.model.module.predicates.ShowSpecifiedLessonPredicate;
 
+//@@author junming403
 public class ShowSpecifiedLessonPredicateTest {
 
     @Test
