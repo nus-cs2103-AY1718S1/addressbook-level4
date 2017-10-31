@@ -54,26 +54,29 @@ public class MarkTaskCommand extends UndoableCommand {
         }
         for (Index targetIndex : targetIndices) {
             List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
-            ReadOnlyTask taskToMark = lastShownList.get(targetIndex.getZeroBased() - counter);
+            ReadOnlyTask taskToMark = lastShownList.get(targetIndex.getZeroBased());
             tasksToMark.add(taskToMark);
-
-            try {
-                model.markTasks(tasksToMark);
-            } catch (DuplicateTaskException e) {
-                throw new CommandException(MESSAGE_DUPLICATE_TASK);
-            } catch (TaskNotFoundException tnfe) {
-                assert false : "The target task cannot be missing";
-            }
             counter++;
         }
 
+        try {
+            model.markTasks(tasksToMark);
+        } catch (DuplicateTaskException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_TASK);
+        } catch (TaskNotFoundException tnfe) {
+            assert false : "The target task cannot be missing";
+        }
+
         StringBuilder builder = new StringBuilder();
+        builder.append("\n");
         for (ReadOnlyTask toAppend : tasksToMark) {
             builder.append(toAppend.toString());
         }
 
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
-        return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, builder));
+        return new
+
+                CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, builder));
     }
 
     @Override

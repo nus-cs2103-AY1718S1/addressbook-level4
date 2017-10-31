@@ -57,9 +57,8 @@ public class UnmarkTaskCommand extends UndoableCommand {
 
         for (Index targetIndex : targetIndices) {
             List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
-            ReadOnlyTask taskToUnmark = lastShownList.get(targetIndex.getZeroBased() - counter);
+            ReadOnlyTask taskToUnmark = lastShownList.get(targetIndex.getZeroBased());
             tasksToUnmark.add(taskToUnmark);
-            counter++;
         }
 
         try {
@@ -71,8 +70,9 @@ public class UnmarkTaskCommand extends UndoableCommand {
         }
 
         StringBuilder builder = new StringBuilder();
+        builder.append("\n");
         for (ReadOnlyTask toAppend : tasksToUnmark) {
-            builder.append("\n" + toAppend.toString());
+            builder.append(toAppend.toString());
         }
 
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
