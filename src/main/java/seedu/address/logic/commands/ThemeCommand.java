@@ -23,7 +23,7 @@ public class ThemeCommand extends Command {
             + "\t" + COMMAND_WORD + " -" + COMMAND_OPTION_DAY + "\n"
             + "\t" + COMMAND_WORD + " -" + COMMAND_OPTION_NIGHT + "\n";
 
-    public static final String MESSAGE_THEME_CHANGE_SUCCESS = "Theme successfully applied";
+    public static final String MESSAGE_THEME_CHANGE_SUCCESS = "Theme successfully applied! ✓";
 
     private final String optedTheme;
 
