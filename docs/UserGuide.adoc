@@ -357,7 +357,8 @@ Keyboard Shortcut: kbd:[Ctrl+Z]
 
 [NOTE]
 ====
-Undoable commands: those commands that modify Rolodex's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: `add`, `clear`, `delete`, `edit`, `redo` and `remark`. +
+These are commands that modify Rolodex's content.
 ====
 
 Examples:
