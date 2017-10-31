@@ -93,6 +93,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author sebtsh
     /**
      * Removes specified tag from all the persons in the address book.
      *
@@ -102,6 +103,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removeTagFromAll(tag);
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public void sortPerson(String type) throws InvalidSortTypeException {

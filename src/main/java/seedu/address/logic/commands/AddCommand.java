@@ -24,7 +24,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 public class AddCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "add";
-
+    //@@author sebtsh
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
@@ -50,6 +50,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney"
             + PREFIX_RELATIONSHIP + "Colleague";;
+    //@@author
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";

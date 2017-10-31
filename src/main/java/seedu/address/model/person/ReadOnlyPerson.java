@@ -27,7 +27,7 @@ public interface ReadOnlyPerson {
     Email getEmail();
 
     ObjectProperty<Address> addressProperty();
-
+    //@@author sebtsh
     Address getAddress();
 
     ObjectProperty<Company> companyProperty();
@@ -49,7 +49,7 @@ public interface ReadOnlyPerson {
     ObjectProperty<Note> noteProperty();
 
     Note getNote();
-
+    //@@author
     ObjectProperty<Photo> photoProperty();
 
     Photo getPhoto();
@@ -61,6 +61,7 @@ public interface ReadOnlyPerson {
     Set<Relationship> getRelation();
     ObjectProperty<UniqueRelList> relProperty();
 
+    //@@author sebtsh
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */
@@ -109,5 +110,5 @@ public interface ReadOnlyPerson {
         getTags().forEach(builder::append);
         return builder.toString();
     }
-
+    //@@author
 }

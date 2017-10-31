@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.relationship.UniqueRelList;
 import seedu.address.model.tag.Tag;
@@ -24,16 +25,19 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    //@@author sebtsh
     private ObjectProperty<Company> company;
     private ObjectProperty<Position> position;
     private ObjectProperty<Status> status;
     private ObjectProperty<Priority> priority;
     private ObjectProperty<Note> note;
     private ObjectProperty<Photo> photo;
+    //@@author
 
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<UniqueRelList> relation;
 
+    //@@author sebtsh
     /**
      * Constructor without optional fields. Every field must be present and not null.
      */
@@ -55,8 +59,8 @@ public class Person implements ReadOnlyPerson {
             this.priority = new SimpleObjectProperty<>(new Priority("L"));
             this.note = new SimpleObjectProperty<>(new Note("NIL"));
             this.photo = new SimpleObjectProperty<>(new Photo("src/main/resources/images/default.jpg"));;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IllegalValueException ive) {
+            ive.printStackTrace();
         }
 
         // protect internal tags from changes in the arg list
@@ -143,6 +147,7 @@ public class Person implements ReadOnlyPerson {
         // protect internal connections from changes in the arg list
         this.relation = new SimpleObjectProperty<>(new UniqueRelList(relation));
     }
+    //@@author
 
     /**
      * Creates a copy of the given ReadOnlyPerson.
@@ -209,6 +214,7 @@ public class Person implements ReadOnlyPerson {
         this.address.set(requireNonNull(address));
     }
 
+    //@@author sebtsh
     @Override
     public Company getCompany() {
         return company.get();
@@ -277,6 +283,7 @@ public class Person implements ReadOnlyPerson {
     public void setNote(Note note) {
         this.note.set(note);
     }
+    //@@author
 
     @Override
     public Photo getPhoto() {
@@ -338,6 +345,7 @@ public class Person implements ReadOnlyPerson {
                 && this.isSameStateAs((ReadOnlyPerson) other));
     }
 
+    //@@author sebtsh
     /**
      * Removes a tag from this person's list of tags if the list contains the tag.
      *
@@ -346,6 +354,7 @@ public class Person implements ReadOnlyPerson {
     public void removeTag(Tag toRemove) {
         tags.get().remove(toRemove);
     }
+    //@@author
 
     @Override
     public int hashCode() {

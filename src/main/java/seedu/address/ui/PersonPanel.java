@@ -148,7 +148,6 @@ public class PersonPanel extends UiPart<Region> {
         String imagePath = person.getPhoto().toString();
         Image image = new Image(new File(imagePath).toURI().toString());
         photo.setImage(image);
-        //@@author
         storedPerson = person;
         //@@author sebtsh
     }
