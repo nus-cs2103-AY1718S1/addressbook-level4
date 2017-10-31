@@ -59,9 +59,7 @@ public class InsuranceProfile extends UiPart<Region> {
         insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractPath());
         if (isFileExists(insuranceFile)) {
             activateLinkToInsuranceFile();
-        }
-
-        else {
+        } else {
             contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -92,8 +90,8 @@ public class InsuranceProfile extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    /*
-    Enable the link to open contract pdf file and adjusting the text hover highlight
+    /**
+     *  Enable the link to open contract pdf file and adjusting the text hover highlight
      */
     private void activateLinkToInsuranceFile() {
         contractPath.getStyleClass().add("particular-link");
