@@ -6,6 +6,7 @@ import static java.util.Objects.requireNonNull;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.event.DateParser;
@@ -114,6 +115,47 @@ public class Date implements Comparable<Date> {
         } catch (IllegalValueException e) {
             return null;
         }
+    }
+
+    /**
+     * Sets date after {@code days} have elapsed. Works for negative numbers.
+     */
+    public Date addDays(int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(this.year, this.month, this.day);
+        cal.add(Calendar.DATE, days);
+
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        try {
+            return new Date(dateBuilder(day, month, year));
+        } catch (IllegalValueException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Builds a string in the format of a correct date.
+     */
+    private String dateBuilder(int day, int month, int year) {
+        String date = "";
+        if (day < 10) {
+            date += "0" + String.valueOf(day) + "/";
+        } else {
+            date += String.valueOf(day) + "/";
+        }
+
+        if (month < 10) {
+            date += "0" + String.valueOf(month) + "/";
+        } else {
+            date += String.valueOf(month) + "/";
+        }
+
+        date += String.valueOf(year);
+
+        return date;
     }
 
     public int getDay() {
