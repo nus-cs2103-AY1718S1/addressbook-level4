@@ -119,7 +119,7 @@ public class RemarkCommandTest {
         assertTrue(standardCommand.equals(standardCommand));
 
         // null -> false
-        assertFalse(standardCommand.equals(null));
+        assertFalse(standardCommand == null);
 
         // different types -> false
         assertFalse(standardCommand.equals(new ClearCommand()));
