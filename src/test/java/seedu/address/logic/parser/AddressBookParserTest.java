@@ -196,6 +196,7 @@ public class AddressBookParserTest {
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
+    // @@author donjar
     @Test
     public void parseCommand_findregex() throws Exception {
         FindRegexCommand command = (FindRegexCommand) parser.parseCommand(FindRegexCommand.COMMAND_WORD + " asdf");
@@ -207,6 +208,7 @@ public class AddressBookParserTest {
         FindRegexCommand command = (FindRegexCommand) parser.parseCommand(FindRegexCommand.COMMAND_ALIAS + " asdf");
         assertEquals(new FindRegexCommand(new NameMatchesRegexPredicate("asdf")), command);
     }
+    // @@author
 
     //@@author kenpaxtonlim
     @Test
@@ -324,6 +326,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS + " 3") instanceof UndoCommand);
     }
 
+    // @@author donjar
     @Test
     public void parseCommand_sizeCommandWord_returnsSizeCommand() throws Exception {
         assertTrue(parser.parseCommand(SizeCommand.COMMAND_WORD + " 1") instanceof SizeCommand);
@@ -337,6 +340,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(SizeCommand.COMMAND_ALIAS + " -1") instanceof SizeCommand);
         assertTrue(parser.parseCommand(SizeCommand.COMMAND_ALIAS) instanceof SizeCommand);
     }
+    // @@author
 
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {

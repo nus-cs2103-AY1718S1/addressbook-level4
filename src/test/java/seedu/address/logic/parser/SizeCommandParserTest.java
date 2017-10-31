@@ -12,7 +12,7 @@ import seedu.address.logic.commands.SizeCommand;
  * Test scope: similar to {@code DeleteCommandParserTest}.
  * @see DeleteCommandParserTest
  */
-public class    SizeCommandParserTest {
+public class SizeCommandParserTest {
 
     private SizeCommandParser parser = new SizeCommandParser();
 

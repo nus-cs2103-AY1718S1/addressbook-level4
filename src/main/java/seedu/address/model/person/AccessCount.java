@@ -1,7 +1,6 @@
 package seedu.address.model.person;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
+//@@author Zzmobie
 /**
  * Represents the number of accesses to a person's data.
  */
@@ -12,11 +11,6 @@ public class AccessCount {
 
     private int value;
 
-    /**
-     * Validates given address.
-     *
-     * @throws IllegalValueException if given address string is invalid.
-     */
     public AccessCount(int accessCount) {
         this.value = accessCount;
     }

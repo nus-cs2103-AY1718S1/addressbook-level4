@@ -61,6 +61,7 @@ public class UndoCommandTest {
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
     }
 
+    // @@author donjar
     @Test
     public void execute_undoManyTimes() {
         UndoRedoStack undoRedoStack = prepareStack(
@@ -92,6 +93,7 @@ public class UndoCommandTest {
         // no command in undoStack
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
     }
+    // @@author
 
     @Test
     public void getSuccessMessage() {

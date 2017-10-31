@@ -25,6 +25,7 @@ public class PhoneTest {
         assertTrue(Phone.isValidPhone("124293842033123")); // long phone numbers
     }
 
+    // @@author donjar
     @Test
     public void extractPhone() throws IllegalValueException {
         assertEquals("93121534", Phone.extractPhone("9312 1534")); // spaces within digits
@@ -32,4 +33,5 @@ public class PhoneTest {
         assertEquals("93121534", Phone.extractPhone("(9312) 1534")); // parentheses within digits
         assertEquals("1234567890", Phone.extractPhone("(123) 456-7890")); // complex phone number
     }
+    // @@author
 }

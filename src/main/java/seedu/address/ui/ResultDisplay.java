@@ -42,6 +42,7 @@ public class ResultDisplay extends UiPart<Region> {
         Platform.runLater(() -> displayed.setValue(event.message));
     }
 
+    // @@author donjar
     @Subscribe
     private void handleFontSizeChangeEvent(FontSizeChangeRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -55,4 +56,5 @@ public class ResultDisplay extends UiPart<Region> {
     private void refreshFontSizes() {
         resultDisplay.setStyle("-fx-font-size: " + (DEFAULT_FONT_SIZE + fontSizeChange));
     }
+    // @@author
 }

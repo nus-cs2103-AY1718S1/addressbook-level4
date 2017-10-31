@@ -111,6 +111,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    // @@author donjar
     @Override
     public void resetFontSize() {
         fontSizeChange = 0;
@@ -137,6 +138,7 @@ public class ModelManager extends ComponentManager implements Model {
     private void indicateFontSizeChanged() {
         raise(new FontSizeChangeRequestEvent(fontSizeChange));
     }
+    // @@author
 
     @Override
     public boolean equals(Object obj) {

@@ -11,9 +11,11 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * The API of the Model component.
  */
 public interface Model {
+    // @@author donjar
     /** Upper and lower bounds for the font size change */
     int FONT_SIZE_LOWER_BOUND = -5;
     int FONT_SIZE_UPPER_BOUND = 5;
+    // @@author
 
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
@@ -52,6 +54,7 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    // @@author donjar
     /**
      * Resets the font size of the model to its defaults.
      */
@@ -61,4 +64,5 @@ public interface Model {
      * Resets the font size of the model to its defaults. Returns the new change of the font size.
      */
     int updateFontSize(int change) throws FontSizeOutOfBoundsException;
+    // @@author
 }
