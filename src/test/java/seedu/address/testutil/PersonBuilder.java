@@ -6,6 +6,7 @@ import java.util.Set;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -25,6 +26,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_BIRTHDAY = "01/01/1970";
 
     private Person person;
 
@@ -34,6 +36,7 @@ public class PersonBuilder {
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
+            Birthday defaultBirthday = new Birthday(DEFAULT_BIRTHDAY);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             Set<Event> defaultEvents = new HashSet<>();
             DateAdded defaultDateAdded = new DateAdded();
@@ -136,6 +139,18 @@ public class PersonBuilder {
             this.person.setEmail(new Email(email));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Birthday} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withBirthday(String birthday) {
+        try {
+            this.person.setBirthday(new Birthday(birthday));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("Birthday is expected to be unique.");
         }
         return this;
     }

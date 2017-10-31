@@ -15,6 +15,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -110,6 +111,7 @@ public class TagAddCommand extends UndoableCommand {
         assert personToEdit != null;
 
         Name updatedName = personToEdit.getName();
+        Birthday updatedBirthday = personToEdit.getBirthday();
         Phone updatedPhone = personToEdit.getPhone();
         Email updatedEmail = personToEdit.getEmail();
         Address updatedAddress = personToEdit.getAddress();
@@ -117,7 +119,7 @@ public class TagAddCommand extends UndoableCommand {
         Set<Event> updatedEvents = personToEdit.getEvents();
         DateAdded updateDateAdded = personToEdit.getDateAdded();
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
+        return new Person(updatedName, updatedBirthday, updatedPhone, updatedEmail, updatedAddress, updatedTags,
                 updatedEvents, updateDateAdded);
     }
 
@@ -145,6 +147,7 @@ public class TagAddCommand extends UndoableCommand {
      */
     public static class TagAddDescriptor {
         private Name name;
+        private Birthday birthday;
         private Phone phone;
         private Email email;
         private Address address;
@@ -156,6 +159,7 @@ public class TagAddCommand extends UndoableCommand {
 
         public TagAddDescriptor(TagAddDescriptor toCopy) {
             this.name = toCopy.name;
+            this.birthday = toCopy.birthday;
             this.phone = toCopy.phone;
             this.email = toCopy.email;
             this.address = toCopy.address;
@@ -165,6 +169,7 @@ public class TagAddCommand extends UndoableCommand {
         }
         public TagAddDescriptor(ReadOnlyPerson toCopy) {
             this.name = toCopy.getName();
+            this.birthday = toCopy.getBirthday();
             this.phone = toCopy.getPhone();
             this.email = toCopy.getEmail();
             this.address = toCopy.getAddress();
@@ -186,6 +191,14 @@ public class TagAddCommand extends UndoableCommand {
 
         public Optional<Name> getName() {
             return Optional.ofNullable(name);
+        }
+
+        public void setBirthday(Birthday birthday) {
+            this.birthday = birthday;
+        }
+
+        public Optional<Birthday> getBirthday() {
+            return Optional.ofNullable(birthday);
         }
 
         public void setPhone(Phone phone) {

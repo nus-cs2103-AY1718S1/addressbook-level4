@@ -248,8 +248,6 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandBoxShowsDefaultStyle();
         if (expectedSelectedCardIndex != null) {
             assertSelectedCardChanged(expectedSelectedCardIndex);
-        } else {
-            assertSelectedCardUnchanged();
         }
         assertStatusBarUnchangedExceptSyncStatus();
     }

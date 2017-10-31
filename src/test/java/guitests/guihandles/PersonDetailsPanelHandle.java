@@ -2,20 +2,20 @@ package guitests.guihandles;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
 
 /**
  * A handler for the {@code PersonDetailsPanel} of the UI.
  */
 public class PersonDetailsPanelHandle extends NodeHandle<Node> {
 
-    public static final String VBOX_ID = "#personDetailsBox";
+    public static final String GRIDPANE_ID = "#personDetailsGrid";
     public static final String NAME_ID = "#nameLabel";
     public static final String PHONE_ID = "#phoneLabel";
     public static final String EMAIL_ID = "#emailLabel";
     public static final String ADDRESS_ID = "#addressLabel";
 
-    public final VBox vBox;
+    public final GridPane gridPane;
     public final Label nameLb;
     public final Label phoneLb;
     public final Label emailLb;
@@ -23,7 +23,7 @@ public class PersonDetailsPanelHandle extends NodeHandle<Node> {
 
     public PersonDetailsPanelHandle(Node cardNode) {
         super(cardNode);
-        this.vBox = getChildNode(VBOX_ID);
+        this.gridPane = getChildNode(GRIDPANE_ID);
         this.nameLb = getChildNode(NAME_ID);
         this.phoneLb = getChildNode(PHONE_ID);
         this.emailLb = getChildNode(EMAIL_ID);

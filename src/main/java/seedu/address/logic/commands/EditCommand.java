@@ -12,12 +12,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -88,6 +91,7 @@ public class EditCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }
 
@@ -103,12 +107,13 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Birthday updatedBirthday = editPersonDescriptor.getBirthday().orElse(personToEdit.getBirthday());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         DateAdded updatedDateAdded = editPersonDescriptor.getDateAdded().orElse(personToEdit.getDateAdded());
         Set<Event> updatedEvent = personToEdit.getEvents();
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedEvent,
-                updatedDateAdded);
+        return new Person(updatedName, updatedBirthday, updatedPhone, updatedEmail, updatedAddress, updatedTags,
+                updatedEvent, updatedDateAdded);
     }
 
     @Override
@@ -138,6 +143,7 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
+        private Birthday birthday;
         private Set<Tag> tags;
         private DateAdded dateAdded;
 
@@ -149,6 +155,7 @@ public class EditCommand extends UndoableCommand {
             this.phone = toCopy.phone;
             this.email = toCopy.email;
             this.address = toCopy.address;
+            this.birthday = toCopy.birthday;
             this.tags = toCopy.tags;
             this.dateAdded = toCopy.dateAdded;
         }
@@ -166,6 +173,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Name> getName() {
             return Optional.ofNullable(name);
+        }
+
+        public void setBirthday(Birthday birthday) {
+            this.birthday = birthday;
+        }
+
+        public Optional<Birthday> getBirthday() {
+            return Optional.ofNullable(birthday);
         }
 
         public void setPhone(Phone phone) {
@@ -221,6 +236,7 @@ public class EditCommand extends UndoableCommand {
             EditPersonDescriptor e = (EditPersonDescriptor) other;
 
             return getName().equals(e.getName())
+                    && getBirthday().equals(e.getBirthday())
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
