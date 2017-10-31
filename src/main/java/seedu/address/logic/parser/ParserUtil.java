@@ -1,6 +1,8 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.SocialInfoMapping.FACEBOOK_IDENTIFIER;
+import static seedu.address.logic.parser.SocialInfoMapping.INSTAGRAM_IDENTIFIER;
 import static seedu.address.logic.parser.SocialInfoMapping.parseSocialInfo;
 
 import java.util.ArrayList;
@@ -38,6 +40,19 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_INVALID_SOCIAL_TYPE = "Social type is not valid. Social type"
+            + " should be facebook or instagram.";
+
+    //@@author marvinchin
+    /**
+     * Splits {@code args} by whitespace and returns it
+     */
+    public static List<String> parseWhitespaceSeparatedStrings(String args) {
+        requireNonNull(args);
+        String[] splitArgs = args.split("\\s+");
+        return Arrays.asList(splitArgs);
+    }
+    //@@author
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -52,6 +67,7 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    //@@author keithsoc
     /**
      * Parses {@code args} into an {@code List<Index>} and returns it.
      * Used for commands that need to parse multiple indexes
@@ -67,6 +83,7 @@ public class ParserUtil {
         }
         return indexList;
     }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
@@ -104,6 +121,7 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
+    //@@author keithsoc
     /**
      * Checks if favorite and unfavorite prefixes are present in {@code ArgumentMultimap argMultimap}
      * Catered for both AddCommandParser and EditCommandParser usage
@@ -132,6 +150,20 @@ public class ParserUtil {
             return Optional.empty();
         }
     }
+    //@@author
+
+    //@@author sarahnzx
+    /**
+     * Checks if the specified social type is valid.
+     */
+    public static Optional<String> parseSelect(String arg) throws IllegalValueException {
+        requireNonNull(arg);
+        if (!(arg.equals(FACEBOOK_IDENTIFIER) || arg.equals(INSTAGRAM_IDENTIFIER))) {
+            throw new IllegalValueException(MESSAGE_INVALID_SOCIAL_TYPE);
+        }
+        return Optional.of(arg);
+    }
+    //@@author
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
@@ -145,6 +177,7 @@ public class ParserUtil {
         return tagSet;
     }
 
+    //@@author marvinchin
     /**
      * Parses {@code Collection<String> rawSocialInfos} into {@code Set<SocialInfo}.
      * @param rawSocialInfos
@@ -158,4 +191,5 @@ public class ParserUtil {
         }
         return socialInfoSet;
     }
+    //@@author
 }

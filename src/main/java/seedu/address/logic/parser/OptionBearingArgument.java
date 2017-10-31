@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OPTION;
 
 import java.util.Arrays;
@@ -7,6 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+//@@author marvinchin
 /**
  * The OptionBearingArgument class encapsulates an argument that contains options, and handles the parsing and filtering
  * of these options from the argument.
@@ -21,6 +23,7 @@ public class OptionBearingArgument {
      * Constructs an OptionBearingArgument for the input argument string.
      */
     public OptionBearingArgument(String args) {
+        requireNonNull(args);
         String trimmedArgs = args.trim();
         rawArgs = trimmedArgs;
         parse(rawArgs);

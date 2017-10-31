@@ -1,19 +1,20 @@
 package seedu.address.model.person;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Set;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.tag.Tag;
 
+//@@author marvinchin
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
  */
 public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson> {
-    private final List<String> keywords;
+    private final Collection<String> keywords;
 
-    public TagsContainKeywordsPredicate(List<String> keywords) {
+    public TagsContainKeywordsPredicate(Collection<String> keywords) {
         this.keywords = keywords;
     }
 

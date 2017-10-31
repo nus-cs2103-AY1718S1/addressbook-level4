@@ -18,6 +18,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteByIndexCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
@@ -74,14 +75,14 @@ public class AddressBookParserTest {
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteCommand(Arrays.asList(INDEX_FIRST_PERSON)), command);
+        assertEquals(new DeleteByIndexCommand(Arrays.asList(INDEX_FIRST_PERSON)), command);
     }
 
     @Test
     public void parseCommand_deleteAlias() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteCommand(Arrays.asList(INDEX_FIRST_PERSON)), command);
+        assertEquals(new DeleteByIndexCommand(Arrays.asList(INDEX_FIRST_PERSON)), command);
     }
 
     @Test
@@ -114,6 +115,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_ALIAS + " 3") instanceof ExitCommand);
     }
 
+    //@@author keithsoc
     @Test
     public void parseCommand_favorite() throws Exception {
         FavoriteCommand command = (FavoriteCommand) parser.parseCommand(
@@ -129,6 +131,7 @@ public class AddressBookParserTest {
                         + INDEX_SECOND_PERSON.getOneBased());
         assertEquals(new FavoriteCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON)), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_find() throws Exception {
@@ -183,6 +186,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
     }
 
+    //@@author keithsoc
     @Test
     public void parseCommand_listFav() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD
@@ -190,6 +194,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD
                 + " " + ListCommand.COMMAND_OPTION_FAV + " 3") instanceof ListCommand);
     }
+    //@@author
 
     @Test
     public void parseCommand_select() throws Exception {
@@ -229,6 +234,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand("u 3") instanceof UndoCommand);
     }
 
+    //@@author keithsoc
     @Test
     public void parseCommand_unFavorite() throws Exception {
         UnFavoriteCommand command = (UnFavoriteCommand) parser.parseCommand(
@@ -244,6 +250,7 @@ public class AddressBookParserTest {
                         + INDEX_SECOND_PERSON.getOneBased());
         assertEquals(new UnFavoriteCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON)), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {

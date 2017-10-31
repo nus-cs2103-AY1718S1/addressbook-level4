@@ -32,8 +32,10 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String address;
 
+    //@@author keithsoc
     @XmlElement
     private boolean favorite;
+    //@@author
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
     @XmlElement

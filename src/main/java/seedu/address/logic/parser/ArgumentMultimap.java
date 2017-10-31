@@ -72,12 +72,14 @@ public class ArgumentMultimap {
     }
     //@@author
 
+    //@@author keithsoc
     /**
      * Returns a boolean value that indicates whether a prefix is present in user input
      */
     public boolean isPrefixPresent(Prefix prefix) {
         return argMultimap.containsKey(prefix);
     }
+    //@@author
 
     /**
      * Returns the preamble (text before the first valid prefix). Trims any leading/trailing spaces.

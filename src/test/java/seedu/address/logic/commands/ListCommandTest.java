@@ -28,6 +28,7 @@ public class ListCommandTest {
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
     }
 
+    //@@author keithsoc
     @Test
     public void execute_noOptionUnfilteredList_showsSameList() {
         assertCommandSuccess(prepareCommand(""), model, ListCommand.MESSAGE_SUCCESS_LIST_ALL, expectedModel);
@@ -71,4 +72,5 @@ public class ListCommandTest {
         listCommand.setData(model, getNullStorage(), new CommandHistory(), new UndoRedoStack());
         return listCommand;
     }
+    //@@author
 }

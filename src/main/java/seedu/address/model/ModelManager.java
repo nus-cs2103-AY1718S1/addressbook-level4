@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -11,10 +12,12 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonDefaultComparator;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -28,8 +31,10 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
+    private final SortedList<ReadOnlyPerson> sortedPersons;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
 
+    //@@author marvinchin
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -40,8 +45,12 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        // To avoid having to re-sort upon every change in filter, we first sort the list before applying the filter
+        // This was we only need to re-sort when there is a change in the backing person list
+        sortedPersons = new SortedList<>(this.addressBook.getPersonList(), new PersonDefaultComparator());
+        filteredPersons = new FilteredList<>(sortedPersons);
     }
+    //@@author
 
     public ModelManager() {
         this(new AddressBook(), new UserPrefs());
@@ -76,6 +85,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author marvinchin
     @Override
     public synchronized void addPersons(Collection<ReadOnlyPerson> persons) {
         for (ReadOnlyPerson person : persons) {
@@ -89,6 +99,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
+    //@@author
 
     //@@author sarahnzx
     @Override
@@ -113,6 +124,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author keithsoc
     @Override
     public void toggleFavoritePerson(ReadOnlyPerson target, String type)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -120,6 +132,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.toggleFavoritePerson(target, type);
         indicateAddressBookChanged();
     }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -137,6 +150,13 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
+
+    //@@author marvinchin
+    @Override
+    public void sortPersons(Comparator<ReadOnlyPerson> comparator) {
+        sortedPersons.setComparator(comparator);
+    }
+    //@@author
 
     @Override
     public boolean equals(Object obj) {
