@@ -20,6 +20,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.module.ReadOnlyLesson;
 
+//@@author angtianlannus
 public class SortCommandTest {
 
     private Model model;
@@ -75,7 +76,7 @@ public class SortCommandTest {
         assertCommandSuccess(sortByModule, expectedMessage, expectedList);
 
     }
-
+    //@@author
 
     /***
      * Asserts that {@code command} is successfully executed, and<br>
@@ -97,6 +98,7 @@ public class SortCommandTest {
         assertEquals(expectedAddressBook, model.getAddressBook());
     }
 
+    //@@author angtianlannus
     @After
     public void wrapUp() {
         ListingUnit.setCurrentListingUnit(beginningListingUnit);

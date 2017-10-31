@@ -20,7 +20,7 @@ public class FindCommandParserTest {
         assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
 
-
+    //@@author angtianlannus
     @Test
     public void parse_validTrimmedKeywordsToList_returnsFindCommand() {
         List<String> keywordsInputs = new ArrayList<>();
