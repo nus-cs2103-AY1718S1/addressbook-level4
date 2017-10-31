@@ -25,6 +25,20 @@ effectively.
 Death Note allows you to store the name, profile picture, phone number, email, address, birthday and website of
 your contacts. It also allows you to add tags and remarks to people stored inside.
 
+=== Installation
+
+.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
++
+[NOTE]
+Having any Java 8 version is not enough. +
+This app will not work with earlier versions of Java 8.
++
+.  Download the latest `DeathNote.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for Death Note.
+.  Double-click the file to start the program. You should see the graphical user interface (GUI) appear in a few seconds.
++
+image::Ui.png[width="800"]
+
 === 30-Second Tutorial
 
 Let's get started. Here is a quick demonstration showing how to perform basic contact management.
@@ -63,32 +77,6 @@ To remove the third person shown on the list from your Death Note:
 ....
 > delete 3
 ....
-
-== Quick Start
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
-+
-[NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
-+
-.  Download the latest `DeathNote.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for Death Note.
-.  Double-click the file to start the program. The graphical user interface(GUI) should appear
-   in a few seconds.
-+
-image::Ui.png[width="800"]
-+
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
-
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe`
-    to Death Note.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits Death Note
-
-.  Refer to the link:#features[Features] section below for details of each command.
 
 == Features
 ====
