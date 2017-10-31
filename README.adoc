@@ -1,4 +1,4 @@
-image::images/logo.png[width="250" align="center"]
+image::docs/images/logo.png[width="250" align="center"]
 
 = KayPoh!
 ifdef::env-github,env-browser[:relfileprefix: docs/]
