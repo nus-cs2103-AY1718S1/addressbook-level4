@@ -33,16 +33,17 @@ public class Autocompleter {
     private String textInCommandBox;
     private CommandBoxParser parser;
     private AutocompleteState state;
+    private AutocompleteCommand currentCommand;
     private ArrayList<String> possibleAutocompleteResults;
 
 
     public Autocompleter() {
         registerAsAnEventHandler(this);
+        parser = new CommandBoxParser();
         resultIndex = 0;
         textInCommandBox = EMPTY_STRING;
-        parser = new CommandBoxParser();
-        //default state will be autocomplete for command
         state = AutocompleteState.EMPTY;
+        currentCommand = AutocompleteCommand.NONE;
         possibleAutocompleteResults = new ArrayList<>();
     }
 

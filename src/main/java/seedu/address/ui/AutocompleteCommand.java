@@ -12,6 +12,7 @@ public enum AutocompleteCommand {
     HELP,
     HISTORY,
     LIST,
+    NONE,
     SELECT,
     REDO,
     UNDO,
