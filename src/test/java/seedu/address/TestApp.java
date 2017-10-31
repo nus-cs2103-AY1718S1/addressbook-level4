@@ -11,6 +11,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
+import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyRolodex;
@@ -95,6 +96,13 @@ public class TestApp extends MainApp {
      */
     public String getStorageSaveLocation() {
         return storage.getRolodexFilePath();
+    }
+
+    /**
+     * Returns a defensive copy of the UndoRedoStack.
+     */
+    public UndoRedoStack getUndoRedoStack() {
+        return new UndoRedoStack(logic.getUndoRedoStack());
     }
 
     /**

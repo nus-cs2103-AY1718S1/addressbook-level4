@@ -108,6 +108,7 @@ public class NewCommandSystemTest extends RolodexSystemTest {
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedStorage);
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarDirectoryChanged(filePath);
+        assertUndoRedoStackCleared();
     }
 
     /**
