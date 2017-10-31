@@ -17,6 +17,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
+//@@author hanselblack
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code EmailCommand}.
  */
@@ -34,14 +35,14 @@ public class EmailCommandTest {
 
     @Test
     public void equals() {
-        EmailCommand emailFirstCommand = new EmailCommand(INDEX_FIRST_PERSON);
-        EmailCommand emailSecondCommand = new EmailCommand(INDEX_SECOND_PERSON);
+        EmailCommand emailFirstCommand = new EmailCommand(INDEX_FIRST_PERSON, "unifycs2103@gmail.com");
+        EmailCommand emailSecondCommand = new EmailCommand(INDEX_SECOND_PERSON, "unifycs2103@gmail.com");
 
         // same object -> returns true
         assertTrue(emailFirstCommand.equals(emailFirstCommand));
 
         // same values -> returns true
-        EmailCommand emailFirstCommandCopy = new EmailCommand(INDEX_FIRST_PERSON);
+        EmailCommand emailFirstCommandCopy = new EmailCommand(INDEX_FIRST_PERSON, "unifycs2103@gmail.com");
         assertTrue(emailFirstCommand.equals(emailFirstCommandCopy));
 
         // different types -> returns false
@@ -59,7 +60,7 @@ public class EmailCommandTest {
      * Returns a {@code EmailCommand} with the parameter {@code index}.
      */
     private EmailCommand prepareCommand(Index index) {
-        EmailCommand emailCommand = new EmailCommand(index);
+        EmailCommand emailCommand = new EmailCommand(index, "unifycs2103@gmail.com");
         emailCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return emailCommand;
     }

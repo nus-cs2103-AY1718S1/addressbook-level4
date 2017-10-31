@@ -14,6 +14,7 @@ import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+//@@author hanselblack
 /**
  * Edits the remark for a person specified in the INDEX
  */

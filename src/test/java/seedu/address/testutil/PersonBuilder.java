@@ -12,7 +12,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
-
+//@@author hanselblack
 /**
  * A utility class to help with building Person objects.
  */
@@ -41,7 +41,7 @@ public class PersonBuilder {
             throw new AssertionError("Default person's values are invalid.");
         }
     }
-
+    //@@author
     /**
      * Initializes the PersonBuilder with the data of {@code personToCopy}.
      */
@@ -108,7 +108,7 @@ public class PersonBuilder {
         }
         return this;
     }
-
+    //@@author hanselblack
     /**
      * Sets the {@code Remark} of the {@code Person} that we are building.
      */

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
+//@@author hanselblack
 /**
  * Plays Music with music play command
  * Pause Music with music pause command
