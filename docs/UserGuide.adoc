@@ -18,10 +18,18 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 === What is Rubrika?
 
-Rubrika is a desktop Address Book application that lets you store and manage your contacts in a convenient manner. +
-Rubrika has a simple GUI interface and focuses on using CLI to interact.
+Welcome to Rubrika! +
+
+Rubrika is a desktop Address Book application that lets you store and manage your contacts in a convenient manner.
+
+Rubrika revolutionises the way you interact with an Address Book Application. We have done away with the traditional buttons, and now allow users to interact through the Command Line Interface.
+
+This guide will familiarise you with the basic commands that you will need to start using Rubrika.
+
 
 == Quick Start
+
+Before we start, please make sure you follow the steps below to install Rubrika.
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
