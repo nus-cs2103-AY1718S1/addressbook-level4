@@ -58,7 +58,7 @@ public class MainApp extends Application {
     public void init() throws Exception {
         //@@author wishingmaid
         logger.info("=============================[ Initializing PEERSONAL ]===========================");
-        //@@author 
+        //@@author
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
