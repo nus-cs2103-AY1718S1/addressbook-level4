@@ -227,7 +227,7 @@ Suppose that the user wishes to append an image to a desired contact. The user w
 `AddPhotoCommandParser` will then return a `AddPhotoCommand` to be executed in the `LogicManager`. Upon the `execute()` method of `AddPhotoCommand`, a new `Person` object, `editedPerson` is created with all the same field as the `personToEdit` with the addition of the new `Photo` field. The `editedPerson` will replace `personToEdit` using the `updatePerson()` in the `Model` class. A success message will be generated if the photo addition is successful. +
 The sequence diagram below shows how the `addphoto` process is carried out:
 
-image::SequenceDiagramUML.png[width="800]
+image::NewUML.png[width="800]
 
 ==== Design considerations
 
