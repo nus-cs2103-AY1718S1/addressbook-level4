@@ -3,18 +3,23 @@ package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.SortedMap;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.event.exceptions.EventTimeClashException;
+import seedu.address.model.event.timeslot.Date;
 import seedu.address.model.event.timeslot.Timeslot;
 
 /**
@@ -150,6 +155,24 @@ public class EventList implements Iterable<Event> {
     }
 
     //@@author
+
+
+    /**
+     * Returns all the events on a particular date as an {@code ObservableList}.
+     */
+    public ObservableList<ReadOnlyEvent> getObservableSubList(Date date) {
+        String startTimeslot = date.toString() + " 0000-0000";
+        String endTimeslot = date.toString() + " 2359-2359";
+
+        try {
+            Timeslot start = new Timeslot(startTimeslot);
+            Timeslot end = new Timeslot(endTimeslot);
+            SortedMap<Timeslot, Event> sublist = internalMap.subMap(start, end);
+            return FXCollections.observableList(new ArrayList<>(sublist.values()));
+        } catch (IllegalValueException e) {
+            return null;
+        }
+    }
 
     @Override
     public boolean equals(Object other) {
