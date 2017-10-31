@@ -128,6 +128,7 @@ public class MainWindow extends UiPart<Region> {
     void fillInnerParts() {
         graphDisplay = new GraphDisplay(logic);
         graphDisplayPlaceholder.getChildren().add(graphDisplay.getRoot());
+        graphDisplay.createAndSetSwingContent();
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList(), prefs.getGuiSettings().getTagColours());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
