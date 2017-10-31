@@ -1,6 +1,8 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.SocialInfoMapping.FACEBOOK_IDENTIFIER;
+import static seedu.address.logic.parser.SocialInfoMapping.INSTAGRAM_IDENTIFIER;
 import static seedu.address.logic.parser.SocialInfoMapping.parseSocialInfo;
 
 import java.util.ArrayList;
@@ -38,6 +40,8 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_INVALID_SOCIAL_TYPE = "Social type is not valid. Social type"
+            + " should be facebook or instagram.";
 
     //@@author marvinchin
     /**
@@ -145,6 +149,19 @@ public class ParserUtil {
         } else {
             return Optional.empty();
         }
+    }
+    //@@author
+
+    //@@author sarahnzx
+    /**
+     * Checks if the specified social type is valid.
+     */
+    public static Optional<String> parseSelect(String arg) throws IllegalValueException {
+        requireNonNull(arg);
+        if (!(arg.equals(FACEBOOK_IDENTIFIER) || arg.equals(INSTAGRAM_IDENTIFIER))) {
+            throw new IllegalValueException(MESSAGE_INVALID_SOCIAL_TYPE);
+        }
+        return Optional.of(arg);
     }
     //@@author
 
