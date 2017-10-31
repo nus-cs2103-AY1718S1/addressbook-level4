@@ -58,6 +58,21 @@ public class TutorialMessages {
     };
 }
 ```
+###### \java\seedu\address\commons\events\ui\InvalidResultDisplayEvent.java
+``` java
+
+/**
+ * Indicates that an invalid command is entered.
+ */
+public class InvalidResultDisplayEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+}
+```
 ###### \java\seedu\address\commons\events\ui\SwitchToBrowserEvent.java
 ``` java
 
@@ -121,6 +136,21 @@ public class ToggleSortByLabelEvent extends BaseEvent {
     public String toString() {
         return this.sortBy;
     }
+}
+```
+###### \java\seedu\address\commons\events\ui\ValidResultDisplayEvent.java
+``` java
+
+/**
+ * Indicates that a valid command is entered.
+ */
+public class ValidResultDisplayEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
 }
 ```
 ###### \java\seedu\address\logic\commands\person\ListPinCommand.java
@@ -407,12 +437,12 @@ public class UnpinCommandParser implements Parser<UnpinCommand> {
     }
 
     /**
-     * Pins (@code toPin) from this {@code AddressBook}.
+     * Unpins (@code toUnpin) from this {@code AddressBook}.
      *
-     * @throws PersonNotFoundException if the {@code toPin} is not in this {@code AddressBook}.
+     * @throws PersonNotFoundException if the {@code toUnpin} is not in this {@code AddressBook}.
      */
-    public boolean unpinPerson(ReadOnlyPerson toPin) throws PersonNotFoundException {
-        if (persons.unpin(toPin)) {
+    public boolean unpinPerson(ReadOnlyPerson toUnpin) throws PersonNotFoundException {
+        if (persons.unpin(toUnpin)) {
             return true;
         } else {
             throw new PersonNotFoundException();
@@ -744,18 +774,15 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
 ###### \java\seedu\address\ui\ResultDisplay.java
 ``` java
     @Subscribe
-    private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
+    private void handleValidResultDisplayEvent(ValidResultDisplayEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        if (event.message.equals(Messages.MESSAGE_UNKNOWN_COMMAND)
-                || event.message.contains(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, ""))
-                || event.message.contains(Messages.MESSAGE_PERSON_ALREADY_PINNED)
-                || event.message.contains(Messages.MESSAGE_PERSON_ALREADY_UNPINNED)
-                || event.message.contains(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX)) {
-            imageDisplay.setImage(new Image("/images/error.png"));
-        } else {
-            imageDisplay.setImage(new Image("/images/success.png"));
-        }
-        Platform.runLater(() -> displayed.setValue(event.message));
+        imageDisplay.setImage(new Image("/images/success.png"));
+    }
+
+    @Subscribe
+    private void handleInvalidResultDisplayEvent(InvalidResultDisplayEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        imageDisplay.setImage(new Image("/images/error.png"));
     }
 
     public void highlight() {
