@@ -15,6 +15,12 @@ endif::[]
 
 By: `Team Rolodex`      Since: `Sep 2017`      Licence: `MIT`
 
+== Introduction
+
+Rolodex is a desktop contact management application for users who prefer working without a mouse to manage their contacts more efficiently.
+If you are a businessmen with a list of clients to remember, a teacher who wants to organize their student information, or anyone with a need for contact
+management, Rolodex provides you with a way to organize your important contacts in a fast and productive manner.
+
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
