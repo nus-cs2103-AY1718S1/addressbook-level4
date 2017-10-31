@@ -1,5 +1,5 @@
 # junming403
-###### /java/seedu/address/logic/commands/DeleteCommandTest.java
+###### \java\seedu\address\logic\commands\DeleteCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -206,7 +206,7 @@ public class DeleteCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/DeleteRemarkCommandTest.java
+###### \java\seedu\address\logic\commands\DeleteRemarkCommandTest.java
 ``` java
 public class DeleteRemarkCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -250,7 +250,7 @@ public class DeleteRemarkCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/EditCommandTest.java
+###### \java\seedu\address\logic\commands\EditCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
@@ -539,7 +539,7 @@ public class EditCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ListCommandTest.java
+###### \java\seedu\address\logic\commands\ListCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
@@ -591,7 +591,7 @@ public class ListCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/MarkCommandTest.java
+###### \java\seedu\address\logic\commands\MarkCommandTest.java
 ``` java
 public class MarkCommandTest {
 
@@ -672,19 +672,11 @@ public class MarkCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/RemarkCommandTest.java
+###### \java\seedu\address\logic\commands\RemarkCommandTest.java
 ``` java
 public class RemarkCommandTest {
 
     private static final String SAMPLE_REMARK = "This is a sample remark";
-    private static final String SAMPLE_VERY_LONG_REMARK = "This module introduces the necessary conceptual and "
-            + "analytical tools for systematic and rigorous development of software systems. It covers four main "
-            + "areas of software development, namely object-oriented system analysis, object-oriented system modelling"
-            + " and design, implementation, and testing, with emphasis on system modelling and design and "
-            + "implementation of software modules that work cooperatively to fulfill the requirements of the system. "
-            + "Tools and techniques for software development, such as Unified Modelling Language (UML), program "
-            + "specification, and testing methods, will be taught. Major software engineering issues such as "
-            + "modularisation criteria, program correctness, and software quality will also be covered.";
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -715,7 +707,7 @@ public class RemarkCommandTest {
     @Test
     public void execute_longRemark_throwsCommandException() throws Exception {
         ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
-        RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_LESSON, SAMPLE_VERY_LONG_REMARK);
+        RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_LESSON, getLongString());
 
         assertCommandFailure(remarkCommand, model, Remark.MESSAGE_REMARK_CONSTRAINTS);
     }
@@ -729,10 +721,22 @@ public class RemarkCommandTest {
         return remarkCommand;
     }
 
+    /**
+     * Get a String that is longger than 150 characters.
+     */
+    private String getLongString() {
+        String ouput = "";
+        for (int i = 0; i < 1000; i++) {
+            ouput += "abc";
+        }
+        return ouput;
+    }
+
+
 
 }
 ```
-###### /java/seedu/address/logic/commands/UnmarkCommandTest.java
+###### \java\seedu\address\logic\commands\UnmarkCommandTest.java
 ``` java
 public class UnmarkCommandTest {
 
@@ -824,7 +828,7 @@ public class UnmarkCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ViewCommandTest.java
+###### \java\seedu\address\logic\commands\ViewCommandTest.java
 ``` java
 public class ViewCommandTest {
 
@@ -890,7 +894,7 @@ public class ViewCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/parser/EditCommandParserTest.java
+###### \java\seedu\address\logic\parser\EditCommandParserTest.java
 ``` java
 public class EditCommandParserTest {
 
@@ -1115,7 +1119,7 @@ public class EditCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ListCommandParserTest.java
+###### \java\seedu\address\logic\parser\ListCommandParserTest.java
 ``` java
 public class ListCommandParserTest {
 
@@ -1143,7 +1147,7 @@ public class ListCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/MarkCommandParserTest.java
+###### \java\seedu\address\logic\parser\MarkCommandParserTest.java
 ``` java
 public class MarkCommandParserTest {
     private MarkCommandParser parser = new MarkCommandParser();
@@ -1160,7 +1164,7 @@ public class MarkCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/RemarkCommandParserTest.java
+###### \java\seedu\address\logic\parser\RemarkCommandParserTest.java
 ``` java
 public class RemarkCommandParserTest {
     private RemarkCommandParser parser = new RemarkCommandParser();
@@ -1179,7 +1183,7 @@ public class RemarkCommandParserTest {
 
 }
 ```
-###### /java/seedu/address/logic/parser/UnmarkCommandParserTest.java
+###### \java\seedu\address\logic\parser\UnmarkCommandParserTest.java
 ``` java
 public class UnmarkCommandParserTest {
     private UnmarkCommandParser parser = new UnmarkCommandParser();
@@ -1196,7 +1200,7 @@ public class UnmarkCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ViewCommandParserTest.java
+###### \java\seedu\address\logic\parser\ViewCommandParserTest.java
 ``` java
 public class ViewCommandParserTest {
 
@@ -1213,7 +1217,7 @@ public class ViewCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/model/lesson/RemarkTest.java
+###### \java\seedu\address\model\lesson\RemarkTest.java
 ``` java
 public class RemarkTest {
 
@@ -1240,7 +1244,7 @@ public class RemarkTest {
 
 }
 ```
-###### /java/seedu/address/model/ListingUnitTest.java
+###### \java\seedu\address\model\ListingUnitTest.java
 ``` java
 public class ListingUnitTest {
 
@@ -1267,7 +1271,7 @@ public class ListingUnitTest {
     }
 }
 ```
-###### /java/seedu/address/model/UniqueRemarkListTest.java
+###### \java\seedu\address\model\UniqueRemarkListTest.java
 ``` java
 public class UniqueRemarkListTest {
     @Rule
