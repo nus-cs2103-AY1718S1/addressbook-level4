@@ -23,6 +23,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
+import seedu.address.logic.commands.ReplyCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.ShowFavouriteCommand;
 import seedu.address.logic.commands.SortCommand;
@@ -122,11 +123,15 @@ public class AddressBookParser {
         } else if (commandWord.equalsIgnoreCase(RedoCommand.COMMAND_WORDVAR_3)) {
             return new RedoCommandParser().parse(arguments);
 
-        } else if (commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD_1) //@@author taojiashu
+        } else if (commandWord.equalsIgnoreCase(ReplyCommand.COMMAND_WORDVAR_YES)
+                || commandWord.equalsIgnoreCase(ReplyCommand.COMMAND_WORDVAR_NO)) {
+            return new ReplyCommand(commandWord);
+
+        } else if (commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD_1)
                 || commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD_2)) {
             return new FavouriteCommandParser().parse(arguments);
 
-        } else if (commandWord.equalsIgnoreCase(ShowFavouriteCommand.COMMAND_WORD_1) //@@author taojiashu
+        } else if (commandWord.equalsIgnoreCase(ShowFavouriteCommand.COMMAND_WORD_1)
                 || commandWord.equalsIgnoreCase(ShowFavouriteCommand.COMMAND_WORD_2)) {
             return new ShowFavouriteCommand();
 
