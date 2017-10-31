@@ -25,6 +25,7 @@ import seedu.address.model.tag.Tag;
  */
 public class FindCommandParser implements Parser<FindCommand> {
 
+    //@@author
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns an FindCommand object for execution.
@@ -85,4 +86,5 @@ public class FindCommandParser implements Parser<FindCommand> {
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
     }
+    //@@author
 }

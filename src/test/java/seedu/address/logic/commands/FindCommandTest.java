@@ -28,6 +28,7 @@ public class FindCommandTest {
 
     @Test
     public void equals() {
+        //@@author chrisboo
         FindPersonDescriptor firstPerson = new FindPersonDescriptor();
         FindPersonDescriptor secondPerson = new FindPersonDescriptor();
 
@@ -47,6 +48,7 @@ public class FindCommandTest {
         // same values -> returns true
         FindCommand findFirstCommandCopy = new FindCommand(firstPerson);
         assertTrue(findFirstCommand.equals(findFirstCommandCopy));
+        //@@author
 
         // different types -> returns false
         assertFalse(findFirstCommand.equals(1));

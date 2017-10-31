@@ -207,6 +207,7 @@ public class MainApp extends Application {
         System.exit(0);
     }
 
+    //@@author chrisboo
     @Subscribe
     public void handleOpenAddressBookRequestEvent(OpenAddressBookRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -214,7 +215,7 @@ public class MainApp extends Application {
         try {
             // change addressbook file path
             setAddressBookFilePath(event.getFilePath());
-            setAddressBookAppNamae(event.getFileName());
+            setAddressBookAppName(event.getFileName());
 
             init();
             start(this.primaryStage);
@@ -233,7 +234,7 @@ public class MainApp extends Application {
         }
     }
 
-    public void setAddressBookAppNamae(String addressBookFileName) {
+    public void setAddressBookAppName(String addressBookFileName) {
         try {
             config = JsonUtil.readJsonFile("config.json", Config.class).get();
             config.setAppTitle(addressBookFileName);
@@ -246,6 +247,7 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
+    //@@author
 
     @Subscribe
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {

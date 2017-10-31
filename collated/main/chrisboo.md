@@ -1,53 +1,47 @@
-package seedu.address.logic.commands;
+# chrisboo
+###### \java\seedu\address\commons\events\ui\OpenAddressBookRequestEvent.java
+``` java
+package seedu.address.commons.events.ui;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_WEBSITE;
+import java.io.File;
 
-import java.util.Optional;
-import java.util.Set;
+import org.apache.commons.io.FilenameUtils;
 
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Birthday;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.Website;
-import seedu.address.model.tag.Tag;
-
+import seedu.address.commons.events.BaseEvent;
 
 /**
- * Finds and lists all persons in address book whose fields matches all of the argument keywords.
- * Keyword matching is case sensitive.
+ * Indicates a request to open a new AddressBook
  */
-public class FindCommand extends Command {
+public class OpenAddressBookRequestEvent extends BaseEvent {
 
-    public static final String COMMAND_WORD = "find";
-    public static final String COMMAND_ALIAS = "f";
+    private String fileName;
+    private String filePath;
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Find a list of person that satisfies "
-        + "all the characteristic provided.\n"
-        + "Parameters: "
-        + "[" + PREFIX_NAME + "NAME] "
-        + "[" + PREFIX_PHONE + "PHONE] "
-        + "[" + PREFIX_EMAIL + "EMAIL] "
-        + "[" + PREFIX_ADDRESS + "ADDRESS] "
-        + "[" + PREFIX_WEBSITE + "WEBSITE] "
-        + "[" + PREFIX_BIRTHDAY + "DD/MM/YYYY] "
-        + "[" + PREFIX_TAG + "TAG]...\n"
-        + "Example: " + COMMAND_WORD + " "
-        + PREFIX_PHONE + "91234567 "
-        + PREFIX_EMAIL + "johndoe@example.com";
+    /**
+     *
+     * @param file that contains the addressbook xml
+     */
+    public OpenAddressBookRequestEvent(File file) {
+        this.fileName = FilenameUtils.removeExtension(file.getName());
+        this.filePath = file.getPath();
+    }
 
-    public static final String MESSAGE_NO_FIELD_PROVIDED = "At least one field to find must be provided.";
+    public String getFilePath() {
+        return filePath;
+    }
 
-    //@@author chrisboo
+    public String getFileName() {
+        return fileName;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\logic\commands\FindCommand.java
+``` java
     private FindPersonDescriptor findPersonDescriptor;
 
     public FindCommand(FindPersonDescriptor findPersonDescriptor) {
@@ -290,5 +284,151 @@ public class FindCommand extends Command {
                 && getTags().equals(e.getTags());
         }
     }
-    //@@author
-}
+```
+###### \java\seedu\address\MainApp.java
+``` java
+    @Subscribe
+    public void handleOpenAddressBookRequestEvent(OpenAddressBookRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        try {
+            // change addressbook file path
+            setAddressBookFilePath(event.getFilePath());
+            setAddressBookAppName(event.getFileName());
+
+            init();
+            start(this.primaryStage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setAddressBookFilePath(String addressBookFilePath) {
+        try {
+            userPrefs = JsonUtil.readJsonFile("preferences.json", UserPrefs.class).get();
+            userPrefs.setAddressBookFilePath(addressBookFilePath);
+            JsonUtil.saveJsonFile(userPrefs, "preferences.json");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setAddressBookAppName(String addressBookFileName) {
+        try {
+            config = JsonUtil.readJsonFile("config.json", Config.class).get();
+            config.setAppTitle(addressBookFileName);
+            JsonUtil.saveJsonFile(config, "config.json");
+
+            userPrefs = JsonUtil.readJsonFile("preferences.json", UserPrefs.class).get();
+            userPrefs.setAddressBookName(addressBookFileName);
+            JsonUtil.saveJsonFile(userPrefs, "preferences.json");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+```
+###### \java\seedu\address\model\person\Address.java
+``` java
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) { // short circuit if same object
+            return true;
+        } else if (!(other instanceof Address)) { // instanceof handle nulls
+            return false;
+        } else if (this.value == ((Address) other).value) {
+            return true;
+        } else if (this.value != null && this.value.equals(((Address) other).value)) { // state check
+            return true;
+        }
+
+        return false;
+    }
+```
+###### \java\seedu\address\model\person\Birthday.java
+``` java
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) { // short circuit if same object
+            return true;
+        } else if (!(other instanceof Birthday)) { // instanceof handle nulls
+            return false;
+        } else if (this.value == ((Birthday) other).value) {
+            return true;
+        } else if (this.value != null && this.value.equals(((Birthday) other).value)) { // state check
+            return true;
+        }
+
+        return false;
+    }
+```
+###### \java\seedu\address\model\person\Email.java
+``` java
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) { // short circuit if same object
+            return true;
+        } else if (!(other instanceof Email)) { // instanceof handle nulls
+            return false;
+        } else if (this.value == ((Email) other).value) {
+            return true;
+        } else if (this.value != null && this.value.equals(((Email) other).value)) { // state check
+            return true;
+        }
+
+        return false;
+    }
+```
+###### \java\seedu\address\model\person\Phone.java
+``` java
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) { // short circuit if same object
+            return true;
+        } else if (!(other instanceof Phone)) { // instanceof handle nulls
+            return false;
+        } else if (this.value == ((Phone) other).value) {
+            return true;
+        } else if (this.value != null && this.value.equals(((Phone) other).value)) { // state check
+            return true;
+        }
+
+        return false;
+    }
+```
+###### \java\seedu\address\model\person\Website.java
+``` java
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) { // short circuit if same object
+            return true;
+        } else if (!(other instanceof Website)) { // instanceof handle nulls
+            return false;
+        } else if (this.value == ((Website) other).value) {
+            return true;
+        } else if (this.value != null && this.value.equals(((Website) other).value)) { // state check
+            return true;
+        }
+
+        return false;
+    }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    /**
+     * Opens a FileChooser to let the user select an address book to load.
+     */
+    @FXML
+    private void handleOpen() {
+        FileChooser fileChooser = new FileChooser();
+
+        // Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+            "XML files (*.xml)", "*.xml");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show open file dialog
+        File file = fileChooser.showOpenDialog(new Stage());
+
+        raise(new OpenAddressBookRequestEvent(file));
+    }
+```

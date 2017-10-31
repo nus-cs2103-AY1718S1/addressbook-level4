@@ -28,6 +28,8 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         String command;
         Model expectedModel;
 
+        //@@author chrisboo
+
         /* Test: find with one attribute */
 
         /* Case: find a person not in address book
@@ -265,6 +267,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        //@@author
 
         /* Test: interaction with other commands */
 
