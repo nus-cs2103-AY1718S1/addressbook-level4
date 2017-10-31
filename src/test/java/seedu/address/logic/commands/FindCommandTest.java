@@ -26,6 +26,7 @@ import seedu.address.model.module.predicates.LocationContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.MarkedLessonContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.ModuleContainsKeywordsPredicate;
 
+//@@author angtianlannus
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
@@ -139,6 +140,7 @@ public class FindCommandTest {
 
         assertCommandSuccess(findByMarkedLesson, expectedMessage, expectedList);
     }
+    //@@author
 
     /***
      * Asserts that {@code command} is successfully executed, and<br>
@@ -155,6 +157,7 @@ public class FindCommandTest {
         assertEquals(expectedAddressBook, model.getAddressBook());
     }
 
+    //@@author angtianlannus
     @After
     public void wrapUp() {
         ListingUnit.setCurrentListingUnit(beginningListingUnit);

@@ -154,6 +154,16 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
+    //@@author angtianlannus
+    /**
+     * This method initialize the booked slot
+     */
+    public void initializeBookedSlot() {
+        for (int i = 0; i < filteredLessons.size(); i++) {
+            bookedList.add(new BookedSlot(filteredLessons.get(i).getLocation(), filteredLessons.get(i).getTimeSlot()));
+        }
+    }
+
     @Override
     public void unbookBookedSlot(BookedSlot target) {
         if (bookedList.contains(target)) {
@@ -198,6 +208,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void unbookAllSlot() {
         bookedList.clear();
     }
+    //@@author
 
     @Override
     public void updateLesson(ReadOnlyLesson target, ReadOnlyLesson editedLesson)
@@ -207,15 +218,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    /**
-     * This method initialize the booked slot
-     */
-    public void initializeBookedSlot() {
-        for (int i = 0; i < filteredLessons.size(); i++) {
-            bookedList.add(new BookedSlot(filteredLessons.get(i).getLocation(), filteredLessons.get(i).getTimeSlot()));
-        }
-    }
-
+    //@@author angtianlannus
     @Override
     public void sortLessons() {
         addressBook.sortLessons();
@@ -240,6 +243,7 @@ public class ModelManager extends ComponentManager implements Model {
     public String getCurrentViewingAttribute() {
         return this.currentViewingAttribute;
     }
+    //@@author
 
 
     //=========== Filtered Module List Accessors =============================================================
