@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -83,23 +82,18 @@ public class PersonCard extends UiPart<Region> {
      */
     private void initFavouriteLabel(ReadOnlyPerson person) {
         boolean favouriteStatus = person.getFavourite().getFavourite();
-        //String textToDisplay = favouriteStatus ? "Fav" : "";
-        //Label favouriteLabel = new Label(textToDisplay);
-        Button favouriteButton = new Button();
+        Label favouriteLabel = new Label();
         Image starFilled = new Image(getClass().getResource("/images/Gold_Star.png").toExternalForm());
         Image starTransparent = new Image(getClass().getResource("/images/Star_star.png").toExternalForm());
         if (favouriteStatus) {
-            //favouriteLabel.setStyle("-fx-background-color: orangered");
-            favouriteButton.setGraphic(new ImageView(starFilled));
-            favouriteButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent");
+            favouriteLabel.setGraphic(new ImageView(starFilled));
+            favouriteLabel.setStyle("-fx-background-color: transparent; -fx-border-color: transparent");
         } else {
-            //favouriteLabel.setStyle("-fx-background-color: cornflowerblue");
-            favouriteButton.setGraphic(new ImageView((starTransparent)));
-            favouriteButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent");
+            favouriteLabel.setGraphic(new ImageView((starTransparent)));
+            favouriteLabel.setStyle("-fx-background-color: transparent; -fx-border-color: transparent");
 
         }
-        //cardPane.getChildren().add(favouriteLabel);
-        cardPane.getChildren().add(favouriteButton);
+        cardPane.getChildren().add(favouriteLabel);
     }
 
     /**
