@@ -36,7 +36,7 @@ public class Phone {
      * Returns true if a given string is a valid person phone number.
      */
     public static boolean isValidPhone(String test) {
-        return test.matches(PHONE_VALIDATION_REGEX)||test.matches(PHONE_EMPTY);
+        return test.matches(PHONE_VALIDATION_REGEX) || test.matches(PHONE_EMPTY);
     }
 
     @Override
