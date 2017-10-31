@@ -156,16 +156,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author zengfengw
     /**
-     * Check if a person is in the temp list.
-     */
-    public boolean inTempList(ArrayList<ReadOnlyPerson> list, ReadOnlyPerson person) {
-        if (list.contains(person)) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * Sorts the address book in chronological order according to the birthday from the current date.
      * @param contactList
      * @throws CommandException
@@ -179,7 +169,23 @@ public class ModelManager extends ComponentManager implements Model {
         for (ReadOnlyPerson person : contactList) {
             if ((person.getBirthday().value.length() != 0)
                     && (Integer.parseInt(person.getBirthday().value.substring(0, 2)) >= day)
-                    && (Integer.parseInt(person.getBirthday().value.substring(3, 5)) >= (month + 1))) {
+                    && (Integer.parseInt(person.getBirthday().value.substring(3, 5)) == (month + 1))) {
+
+                tempList.add(person);
+            }
+
+        }
+        for (ReadOnlyPerson person : contactList) {
+            if ((person.getBirthday().value.length() != 0)
+                    && (Integer.parseInt(person.getBirthday().value.substring(3, 5)) > (month + 1))) {
+
+                tempList.add(person);
+            }
+
+        }
+        for (ReadOnlyPerson person : contactList) {
+            if ((person.getBirthday().value.length() != 0)
+                    && (Integer.parseInt(person.getBirthday().value.substring(3, 5)) < (month + 1))) {
                 tempList.add(person);
             }
 
@@ -187,15 +193,15 @@ public class ModelManager extends ComponentManager implements Model {
         for (ReadOnlyPerson person : contactList) {
             if ((person.getBirthday().value.length() != 0)
                     && (Integer.parseInt(person.getBirthday().value.substring(0, 2)) < day)
-                    && (Integer.parseInt(person.getBirthday().value.substring(3, 5)) < (month + 1))
-                    && (!(inTempList(tempList, person)))) {
+                    && (Integer.parseInt(person.getBirthday().value.substring(3, 5)) == (month + 1))) {
+
                 tempList.add(person);
             }
 
         }
         for (ReadOnlyPerson person : contactList) {
             if ((person.getBirthday().value.length() == 0)
-                    && (!(inTempList(tempList, person)))) {
+                    ) {
                 tempList.add(person);
             }
 
