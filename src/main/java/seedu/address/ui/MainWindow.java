@@ -18,7 +18,10 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.NearbyPersonNotInCurrentListEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -133,6 +136,7 @@ public class MainWindow extends UiPart<Region> {
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanelPlaceholder.getChildren().clear();
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         infoPanel = new InfoPanel(logic);
@@ -183,6 +187,7 @@ public class MainWindow extends UiPart<Region> {
             personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         }
 
+        personListPanelPlaceholder.getChildren().clear();
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
         infoPanel = new InfoPanel(logic);
         infoPanelPlaceholder.getChildren().clear();
@@ -255,5 +260,21 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    //@@author khooroko
+    /**
+     * Sets the person panel to display the unfiltered masterlist and raises a {@code JumpToListRequestEvent}.
+     * @param event
+     */
+    @Subscribe
+    private void handleNearbyPersonNotInCurrentListEvent(NearbyPersonNotInCurrentListEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        logic.resetFilteredPersonList();
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanelPlaceholder.getChildren().removeAll();
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        raise(new JumpToListRequestEvent(Index.fromZeroBased(logic.getFilteredPersonList()
+                .indexOf(event.getNewSelection().person))));
     }
 }
