@@ -51,6 +51,9 @@ public class ArkBot extends AbilityBot {
         return 164502603;
     }
 
+    /**
+     * Replicates the effects of AddCommand on ArkBot.
+     */
     public Ability addCommand() {
         return Ability
                 .builder()
@@ -76,6 +79,9 @@ public class ArkBot extends AbilityBot {
                 .build();
     }
 
+    /**
+     * Replicates the effects of ListCommand on ArkBot.
+     */
     public Ability listCommand() {
         return Ability
                 .builder()
@@ -89,7 +95,7 @@ public class ArkBot extends AbilityBot {
                         try {
                             logic.execute(ListCommand.COMMAND_WORD + " "
                                     + combineArguments(ctx.arguments()));
-                            ObservableList<ReadOnlyParcel> parcels = model.getFilteredParcelList();
+                            ObservableList<ReadOnlyParcel> parcels = model.getFilteredUndeliveredParcelList();
                             lastKnownMessage = sender.send(parseDisplayParcels(formatParcelsForBot(parcels)),
                                     ctx.chatId());
                         } catch (CommandException | ParseException e) {
@@ -101,6 +107,9 @@ public class ArkBot extends AbilityBot {
                 .build();
     }
 
+    /**
+     * Replicates the effects of DeleteCommand on ArkBot.
+     */
     public Ability deleteCommand() {
         return Ability
                 .builder()
@@ -114,7 +123,7 @@ public class ArkBot extends AbilityBot {
                         try {
                             logic.execute(DeleteCommand.COMMAND_WORD + " "
                                     + combineArguments(ctx.arguments()));
-                            ObservableList<ReadOnlyParcel> parcels = model.getFilteredParcelList();
+                            ObservableList<ReadOnlyParcel> parcels = model.getFilteredUndeliveredParcelList();
                             EditMessageText editedText =
                                     new EditMessageText().setChatId(ctx.chatId())
                                                          .setMessageId(lastKnownMessage.get().getMessageId())
@@ -130,6 +139,10 @@ public class ArkBot extends AbilityBot {
                 .build();
     }
 
+    /**
+     * Takes in the array of arguments that is parsed into ArkBot and
+     * returns a formatted string.
+     */
     private String combineArguments(String[] arguments) {
         String result = "";
 
@@ -140,6 +153,10 @@ public class ArkBot extends AbilityBot {
         return result;
     }
 
+    /**
+     * Filters the list of parcels to only show Name, Address and Phone number
+     * attributed to each parcel.
+     */
     private ArrayList<DisplayParcel> formatParcelsForBot(ObservableList<ReadOnlyParcel> parcels) {
         ArrayList<DisplayParcel> toDisplay = new ArrayList<>();
 
@@ -155,6 +172,9 @@ public class ArkBot extends AbilityBot {
         return toDisplay;
     }
 
+    /**
+     * Formats a list of Parcels to be displayed on ArkBot
+     */
     private String parseDisplayParcels(ArrayList<DisplayParcel> displayParcels) {
         if (displayParcels.size() == 0) {
             return "No parcels to be displayed.";

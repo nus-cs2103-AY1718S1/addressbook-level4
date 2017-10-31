@@ -19,6 +19,7 @@ public class DisplayParcel {
         this.phone = phone;
     }
 
+    @Override
     public String toString() {
         return "Name: " + this.name.toString()
                 + "\nAddress: " + this.address.toString()
