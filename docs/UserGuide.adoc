@@ -295,7 +295,7 @@ Alias example:
 
 ==== Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from PIMP. +
 Format: `clear` +
 Alias: `c`
 
@@ -521,6 +521,17 @@ Alias example:
 
 * `r 1`
 
+==== Viewing statistics : `statistics`
+
+Displays four charts based on information calculated in PIMP. The information displayed includes +
+1. Number of contacts added in the past 2 years, broken down by month in a bar chart. +
+2. Number of contacts added that have their Facebook, Instagram or Twitter handle recorded in PIMP. +
+
+[Add image here]
+
+Format: `statistics` +
+Alias: `st`
+
 ==== Exporting all entries : `export` (Not implemented yet. Coming in v2.0)
 
 Exports all entries in the address book into the given format and stores it at the given location. +
@@ -601,5 +612,6 @@ e.g. `size 3`
 * *History* : `history`
 * *Undo* : `undo [AMOUNT]`
 * *Redo* : `redo [AMOUNT]`
+* *Statistics* `statistics`
 * *Export* : `export FORMAT LOCATION` +
 e.g. `export JSON ~/contacts.json`

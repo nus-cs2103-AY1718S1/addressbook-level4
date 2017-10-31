@@ -388,6 +388,48 @@ column are undoable.
 ** **Pros:** The user can manage multiple remarks without overriding any one of them.
 ** **Cons:** The user might be confused with so many commands to manage a contact's remarks.
 
+=== Statistics Command
+
+The `statistics` command allows the user to view information about the system. The `statistics` command does not take
+any additional parameters.
+
+The `MainWindow` class controls the UI
+interface to swap out the `BrowserPanel` for the `StatisticsPanel` class. When other commands require the `BrowserPanel`,
+`MainWindow` will do the corresponding swap in the UI.
+
+The `StatisticsPanel` extends the `UiPart<Region>` and utilises the [] to filter data.
+
+Here are the information calculated:
+
+1. Monthly Breakdown of Newly Added Persons
+
+2. Number of Persons with Facebook, Twitter and Instagram accounts recorded in system
+
+Here is an implementation of 1.
+
+[Implementation]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `StatisticsPanel` as a `UiPart`
+
+* **Alternative 1 (current choice):** Utilise the browser class to display the statistics
+** **Pros:** Developer does not have to manage the swapping UI parts.
+** **Cons:** Information has to be passed from the Java system into a format that can be rendered
+by the browser engine. It is tricker to test and more likely to break.
+
+**Aspect:** Displaying of key information in `StatisticsPanel`
+
+* **Alternative 1 (current choice):** A bar chart breakdown by month in the last 2 years of newly created users
+** **Pros:** Developer does not have to manage the swapping UI parts.
+** **Cons:** Information has to be passed from the Java system into a format that can be rendered
+by the browser engine. It is tricker to test and more likely to break.
+
+* **Alternative 2:** A pie chart breakdown by year in the last 5 years of newly created users
+** **Pros:** User will be able to tell quickly the portion of Persons added in the year as compared to the past years.
+** **Cons:** A breakdown by year might not allow the user to answer a more important question easily: how has the number
+of people added changed in a more manageable timeframe (such as a month)?
+
 === Searching by Regex
 Searching contacts using regex is implemented with the `FindRegexCommand` class. It is very similar to the normal find command, which is `FindCommand`; the main difference is that, instead of a predicate which is an instance of `NameContainsKeywordPredicate`, the newly created predicate `NameMatchesRegexPredicate` is used.
 
