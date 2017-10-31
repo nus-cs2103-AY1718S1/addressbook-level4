@@ -1,5 +1,11 @@
 package seedu.address.ui;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -8,12 +14,6 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.task.ReadOnlyTask;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 /**
  * An UI component that displays information of a {@code Task}.
@@ -27,7 +27,6 @@ public class TaskCard extends UiPart<Region> {
     private static final int NULL_RANGE = -9999;
 
     public final ReadOnlyTask task;
-    public int rangeFinal;
 
     @FXML
     private GridPane gridPane;
@@ -89,21 +88,15 @@ public class TaskCard extends UiPart<Region> {
             } else {
                 bkgndColour = "#878787";
             }
-            rangeFinal = range;
         } else {
             // for task with no deadline
             bkgndColour = "#ffd0d0";
-            rangeFinal = NULL_RANGE;
         }
         gridPane.setStyle("-fx-background-color: " + bkgndColour + ";"
                 + "-fx-border-style: solid inside;"
                 + "-fx-border-width: 2;"
                 + "-fx-border-height: 2;"
                 + "-fx-border-color: black;");
-    }
-
-    public int getRange() {
-        return rangeFinal;
     }
 
     @Override

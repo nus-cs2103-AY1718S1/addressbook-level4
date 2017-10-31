@@ -5,7 +5,7 @@ import java.util.Comparator;
 /**
  * A Person comparator that compares the {@code Name} alphabetically
  */
-public class PersonComparator implements Comparator{
+public class PersonComparator implements Comparator {
     @Override
     public int compare(Object o1, Object o2) {
         Person p1 = (Person) o1;

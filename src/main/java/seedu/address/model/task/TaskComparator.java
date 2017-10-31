@@ -1,11 +1,11 @@
 package seedu.address.model.task;
 
-import java.util.Comparator;
-import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
+import java.util.Date;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.ParserUtil;
@@ -13,7 +13,7 @@ import seedu.address.logic.parser.ParserUtil;
 /**
  * A task comparator that compares the days of deadline from today
  */
-public class TaskComparator implements Comparator{
+public class TaskComparator implements Comparator {
     @Override
     public int compare(Object obj, Object obj1) {
         Task d = (Task) obj;
