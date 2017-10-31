@@ -52,10 +52,11 @@ public class HintParser {
     private static String arguments;
     private static String userInput;
 
-    private static final Set<String> COMMAND_SET = new HashSet<String>(Arrays.asList(new String[]{
+    //@@author goweiwen
+    private static final Set<String> COMMAND_SET = new HashSet<>(Arrays.asList(
         "add", "alias", "clear", "delete", "edit", "exit", "find", "help", "history", "list",
         "music", "redo", "remark", "select", "unalias", "undo"
-    }));
+    ));
 
     /**
      * Parses {@code String input} and returns an appropriate autocompletion
@@ -73,30 +74,60 @@ public class HintParser {
         commandWord = command[0];
         arguments = command[1];
 
+        String hint;
+
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD:
-            return input + generateAddHint();
+            hint = generateAddHint().trim();
+            // We only want to autocomplete prefixes (e.g. "n/", "a/", etc)
+            if (hint.startsWith("/")) {
+                return input.trim() + "/";
+            }
+            if (hint.startsWith("/", 1)) {
+                return input.trim() + " " + hint.substring(0, 2);
+            }
+            return input;
 
         case EditCommand.COMMAND_WORD:
-            return input + generateEditHint();
+            if (arguments.length() == 0) {
+                return commandWord + " ";
+            }
+            hint = generateEditHint().trim();
+            if (hint.startsWith("/")) {
+                return input.trim() + "/";
+            }
+            if (hint.startsWith("/", 1)) {
+                return input.trim() + " " + hint.substring(0, 2);
+            }
+            return input;
 
         case FindCommand.COMMAND_WORD:
-            return input + generateFindHint();
+            hint = generateFindHint().trim();
+            if (hint.startsWith("/")) {
+                return input.trim() + "/";
+            }
+            if (hint.startsWith("/", 1)) {
+                return input.trim() + " " + hint.substring(0, 2);
+            }
+            return input;
 
         case MusicCommand.COMMAND_WORD:
             if (arguments.isEmpty()) {
                 return commandWord + " " + (MusicCommand.isPlaying() ? "pause" : "play");
             }
-            return commandWord + " " + autocompleteFromList(arguments.trim(), new String[] {"play", "pause", "stop"});
+            hint = autocompleteFromList(arguments.trim(), new String[] {"play", "pause", "stop"});
+            return commandWord + (hint != null ? " " + hint : arguments);
 
         default:
-            return autocompleteCommand(commandWord);
+            hint = autocompleteCommand(commandWord);
+            return hint != null ? hint + " " : input;
         }
     }
 
     /**
-     * Parses {@code String command} and returns the closest matching command word.
+     * Parses {@code String command} and returns the closest matching command word, or null if nothing
+     * matches.
      */
     public static String autocompleteCommand(String command) {
         Set<String> commands = new HashSet<>();
@@ -107,7 +138,8 @@ public class HintParser {
     }
 
     /**
-     * Parses {@code String input} and returns the closest matching string in {@code String[] strings}.
+     * Parses {@code String input} and returns the closest matching string in {@code String[] strings},
+     * or null if nothing matches.
      */
     public static String autocompleteFromList(String input, String[] strings) {
         for (String string : strings) {
@@ -115,9 +147,10 @@ public class HintParser {
                 return string;
             }
         }
-        return input;
+        return null;
     }
 
+    //@@author nicholaschuayunzhi
     /**
      * Parses {@code String input} and returns an appropriate hint
      */
