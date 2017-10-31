@@ -1,7 +1,7 @@
 package seedu.address.ui;
 
 import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -46,8 +46,8 @@ public class TabCompleteTextField extends TextField {
         if (lastWord.length() == 0 || prefixWords.equals("")) {
             dropDownMenu.hide();
         } else {
-            LinkedList<String> matchedWords = new LinkedList<>();
-            matchedWords.addAll(options.subSet(lastWord + Character.MIN_VALUE, lastWord + Character.MAX_VALUE));
+            SortedSet<String> matchedWords =
+                    options.subSet(lastWord + Character.MIN_VALUE, lastWord + Character.MAX_VALUE);
             if (matchedWords.size() > 0) {
                 fillDropDown(matchedWords);
                 if (!dropDownMenu.isShowing()) {
@@ -101,13 +101,14 @@ public class TabCompleteTextField extends TextField {
      * Fill the dropDownMenu with the matched words up to MAX_ENTRIES.
      * @param matchedWords The list of matched words.
      */
-    private void fillDropDown(List<String> matchedWords) {
+    private void fillDropDown(SortedSet<String> matchedWords) {
         List<MenuItem> menuItems = dropDownMenu.getItems();
         menuItems.clear();
 
+        Iterator<String> iterator = matchedWords.iterator();
         int numEntries = Math.min(matchedWords.size(), MAX_ENTRIES);
         for (int i = 0; i < numEntries; i++) {
-            final String suggestion = prefixWords + matchedWords.get(i);
+            final String suggestion = prefixWords + iterator.next();
             MenuItem item = new CustomMenuItem(new Label(suggestion), true);
             // Complete the word with the chosen suggestion when Enter is pressed.
             item.setOnAction((unused) -> complete(item));
