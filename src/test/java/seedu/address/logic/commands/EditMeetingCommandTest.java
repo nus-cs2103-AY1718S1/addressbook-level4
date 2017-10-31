@@ -58,7 +58,8 @@ public class EditMeetingCommandTest {
 
         MeetingBuilder meetingInList = new MeetingBuilder(lastMeeting);
         Meeting editedMeeting = meetingInList.withNameMeeting(VALID_NAME_BIKING).withPhoneNum(VALID_PHONENUM_BIKING)
-                .withDateTime(VALID_DATE_BIKING).withPersonToMeet(VALID_PERSONTOMEET_BIKING).withPlace(VALID_PLACE_BIKING)
+                .withDateTime(VALID_DATE_BIKING).withPersonToMeet(VALID_PERSONTOMEET_BIKING)
+                .withPlace(VALID_PLACE_BIKING)
                 .build();
 
         EditMeetingDescriptor descriptor = new EditMeetingDescriptorBuilder().withMeetingName(VALID_NAME_BIKING)
@@ -118,7 +119,8 @@ public class EditMeetingCommandTest {
         showFirstMeetingOnly(model);
 
         // edit meeting in filtered list into a duplicate in address book
-        ReadOnlyMeeting meetingInList = model.getAddressBook().getMeetingList().get(INDEX_SECOND_MEETING.getZeroBased());
+        ReadOnlyMeeting meetingInList = model.getAddressBook().getMeetingList()
+                .get(INDEX_SECOND_MEETING.getZeroBased());
         EditMeetingCommand editMeetingCommand = prepareCommand(INDEX_FIRST_MEETING,
                 new EditMeetingDescriptorBuilder(meetingInList).build());
 
@@ -128,7 +130,8 @@ public class EditMeetingCommandTest {
     @Test
     public void execute_invalidMeetingIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredMeetingList().size() + 1);
-        EditMeetingDescriptor descriptor = new EditMeetingDescriptorBuilder().withMeetingName(VALID_NAME_BIKING).build();
+        EditMeetingDescriptor descriptor = new EditMeetingDescriptorBuilder()
+                .withMeetingName(VALID_NAME_BIKING).build();
         EditMeetingCommand editMeetingCommand = prepareCommand(outOfBoundIndex, descriptor);
 
         assertCommandFailure(editMeetingCommand, model, Messages.MESSAGE_INVALID_MEETING_DISPLAYED_INDEX);

@@ -17,8 +17,8 @@ public class MeetingBuilder {
     public static final String DEFAULT_NAMEMEETING = "Project Meeting";
     public static final String DEFAULT_DATETIME = "31-10-2017 21:30";
     public static final String DEFAULT_PLACE = "School of Computing";
-    public static final String DEFAULT_PERSONTOMEET = "Alex Yeoh";
-    public static final String DEFAULT_PHONENUM = "87438807";
+    public static final String DEFAULT_PERSONTOMEET = "Alice Pauline";
+    public static final String DEFAULT_PHONENUM = "85355255";
 
     private Meeting meeting;
 
@@ -30,7 +30,8 @@ public class MeetingBuilder {
             PersonToMeet defaultPersonToMeet = new PersonToMeet(DEFAULT_PERSONTOMEET);
             PhoneNum defaultPhoneNum = new PhoneNum(DEFAULT_PHONENUM);
 
-            this.meeting = new Meeting(defaultNameMeeting, defaultDateTime, defaultPlace, defaultPersonToMeet, defaultPhoneNum);
+            this.meeting = new Meeting(defaultNameMeeting, defaultDateTime, defaultPlace, defaultPersonToMeet,
+                    defaultPhoneNum);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default meeting's values are invalid.");
         }

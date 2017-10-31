@@ -7,6 +7,7 @@ import static seedu.address.testutil.TypicalMeetings.getTypicalAddressBook;
 import org.junit.Before;
 import org.junit.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
@@ -21,6 +22,7 @@ import seedu.address.testutil.MeetingBuilder;
 public class AddMeetingCommandIntegrationTest {
 
     private Model model;
+    private Index index;
 
     @Before
     public void setUp() {
@@ -40,7 +42,7 @@ public class AddMeetingCommandIntegrationTest {
 
     @Test
     public void execute_duplicateMeeting_throwsCommandException() {
-        Meeting MeetingInList = new Meeting(model.getAddressBook().getMeetingList().get(0));
+        Meeting meetingInList = new Meeting(model.getAddressBook().getMeetingList().get(0));
         assertCommandFailure(prepareCommand(meetingInList, model), model, AddMeetingCommand.MESSAGE_DUPLICATE_MEETING);
     }
 
@@ -48,7 +50,9 @@ public class AddMeetingCommandIntegrationTest {
      * Generates a new {@code AddMeetingCommand} which upon execution, adds {@code meeting} into the {@code model}.
      */
     private AddMeetingCommand prepareCommand(Meeting meeting, Model model) {
-        AddMeetingCommand command = new AddMeetingCommand(meeting);
+        this.index = Index.fromZeroBased(1);
+        AddMeetingCommand command =
+                new AddMeetingCommand(meeting.getName(), meeting.getDate(), meeting.getPlace(), index);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

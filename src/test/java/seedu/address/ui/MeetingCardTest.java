@@ -3,7 +3,7 @@ package seedu.address.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalMeetings.SHOPPING;
+import static seedu.address.testutil.TypicalMeetings.DIVING;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysMeeting;
 
 import org.junit.Test;
@@ -11,7 +11,7 @@ import org.junit.Test;
 import guitests.guihandles.MeetingCardHandle;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.ReadOnlyMeeting;
-import seedu.address.testutil.MeethingBuilder;
+import seedu.address.testutil.MeetingBuilder;
 
 public class MeetingCardTest extends GuiUnitTest {
 
@@ -25,11 +25,11 @@ public class MeetingCardTest extends GuiUnitTest {
 
         // changes made to Meeting reflects on card
         guiRobot.interact(() -> {
-            meeting.setName(SHOPPING.getName());
-            meeting.setPlace(SHOPPING.getPlace());
-            meeting.setDateTime(SHOPPING.getDate());
-            meeting.setPhoneNum(SHOPPING.getPersonPhone());
-            meeting.setPersonName(SHOPPING.getPersonName());
+            meeting.setName(DIVING.getName());
+            meeting.setPlace(DIVING.getPlace());
+            meeting.setDateTime(DIVING.getDate());
+            meeting.setPhoneNum(DIVING.getPersonPhone());
+            meeting.setPersonName(DIVING.getPersonName());
         });
         assertCardDisplay(meetingCard, meeting, 2);
     }
@@ -53,7 +53,7 @@ public class MeetingCardTest extends GuiUnitTest {
         assertFalse(meetingCard.equals(0));
 
         // different meeting, same index -> returns false
-        Meeting differentMeeting = new MeetingBuilder().withName("differentName").build();
+        Meeting differentMeeting = new MeetingBuilder().withNameMeeting("differentName").build();
         assertFalse(meetingCard.equals(new MeetingCard(differentMeeting, 0)));
 
         // same Meeting, different index -> returns false

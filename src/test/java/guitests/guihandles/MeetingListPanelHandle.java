@@ -16,8 +16,8 @@ public class MeetingListPanelHandle extends NodeHandle<ListView<MeetingCard>> {
 
     private Optional<MeetingCard> lastRememberedSelectedMeetingCard;
 
-    public MeetingListPanelHandle(ListView<MeetingCard> MeetingListPanelNode) {
-        super(MeetingListPanelNode);
+    public MeetingListPanelHandle(ListView<MeetingCard> meetingListPanelNode) {
+        super(meetingListPanelNode);
     }
 
     /**
@@ -26,13 +26,13 @@ public class MeetingListPanelHandle extends NodeHandle<ListView<MeetingCard>> {
      * @throws AssertionError if no card is selected, or more than 1 card is selected.
      */
     public MeetingCardHandle getHandleToSelectedCard() {
-        List<MeetingCard> MeetingList = getRootNode().getSelectionModel().getSelectedItems();
+        List<MeetingCard> meetingList = getRootNode().getSelectionModel().getSelectedItems();
 
-        if (MeetingList.size() != 1) {
+        if (meetingList.size() != 1) {
             throw new AssertionError("Meeting list size expected 1.");
         }
 
-        return new MeetingCardHandle(MeetingList.get(0).getRoot());
+        return new MeetingCardHandle(meetingList.get(0).getRoot());
     }
 
     /**
