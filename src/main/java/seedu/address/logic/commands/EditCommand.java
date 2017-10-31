@@ -161,12 +161,14 @@ public class EditCommand extends UndoableCommand {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
         }
 
+        //@@author JasmineSee
         /**
          * Returns true if email field is edited.
          */
         public boolean isEmailFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.email);
         }
+        //@@author
 
         public void setName(Name name) {
             this.name = name;
@@ -231,6 +233,7 @@ public class EditCommand extends UndoableCommand {
         }
     }
 
+    //@@author JasmineSee
     /**
      * Renames image file of person to new email if image of person exists.
      */
@@ -241,4 +244,5 @@ public class EditCommand extends UndoableCommand {
             oldFile.renameTo(newFile);
         }
     }
+    //@@author
 }

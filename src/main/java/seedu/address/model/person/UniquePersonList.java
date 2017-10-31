@@ -35,6 +35,7 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.contains(toCheck);
     }
 
+    //@@author JasmineSee
     /**
      * Returns true if the list contains a person with identical email in the given argument.
      */
@@ -47,7 +48,7 @@ public class UniquePersonList implements Iterable<Person> {
         }
         return false;
     }
-
+    //@@author
     /**
      * Adds a person to the list.
      *
