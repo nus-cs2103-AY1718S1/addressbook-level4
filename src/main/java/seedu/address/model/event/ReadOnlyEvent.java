@@ -19,6 +19,7 @@ public interface ReadOnlyEvent {
     EventTime getEventTime();
     ObjectProperty<ParticipantList> participantProperty();
     Set<Person> getParticipants();
+    ObjectProperty<String> daysProperty();
 
     /**
      * returns true if both event has the same state

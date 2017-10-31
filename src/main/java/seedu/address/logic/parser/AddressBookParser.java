@@ -13,15 +13,18 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteEventCommand;
 import seedu.address.logic.commands.DisJoinCommand;
+import seedu.address.logic.commands.DisplayEmailsCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditEventCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindEventCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.JoinCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListEventCommand;
+import seedu.address.logic.commands.PortraitCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SelectJoinedEventsCommand;
@@ -88,13 +91,22 @@ public class AddressBookParser {
             return new DisjoinCommandParser().parse(arguments);
 
         case JoinCommand.COMMAND_WORD:
-            return  new JoinCommandParser().parse(arguments);
+            return new JoinCommandParser().parse(arguments);
+
+        case DisplayEmailsCommand.COMMAND_WORD:
+            return new DisplayEmailsCommandParser().parse(arguments);
+
+        case PortraitCommand.COMMAND_WORD:
+            return new PortraitCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
+
+        case FindEventCommand.COMMAND_WORD:
+            return new FindEventCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();

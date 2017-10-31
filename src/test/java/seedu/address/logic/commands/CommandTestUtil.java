@@ -10,6 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PORTRAIT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -45,6 +46,8 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_BIRTHDAY_AMY = "01/01/1990";
     public static final String VALID_BIRTHDAY_BOB = "10-10-1991";
+    public static final String VALID_PORTRAIT_PATH_FIRST = "C:/sample1.png";
+    public static final String VALID_PORTRAIT_PATH_SECOND = "D:/sample2.jpg";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_EVENT_NAME_FIRST = "First";
@@ -64,6 +67,8 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String BIRTHDAY_DESC_AMY = " " + PREFIX_BIRTHDAY + VALID_BIRTHDAY_AMY;
     public static final String BIRTHDAY_DESC_BOB = " " + PREFIX_BIRTHDAY + VALID_BIRTHDAY_BOB;
+    public static final String PORTRAIT_DESC_FIRST = " " + PREFIX_PORTRAIT + VALID_PORTRAIT_PATH_FIRST;
+    public static final String PORTRAIT_DESC_SECOND = " " + PREFIX_PORTRAIT + VALID_PORTRAIT_PATH_SECOND;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
     public static final String EVENT_NAME_FIRST = " " + PREFIX_EVENT_NAME + VALID_EVENT_NAME_FIRST;
