@@ -377,6 +377,10 @@ Selects the 2nd person in Rolodex.
 `s 1` +
 Selects the 1st person in the results of the `find` command.
 
+=== Tagging a person
+Tagging a person can be done with the
+link:#editing-a-person-code-edit-code-code-e-code-code-change-code-or-code-modify-code-em-since-v1-3-em[edit command].
+
 === Undoing previous command : `undo` or `u` _(Since v1.3)_
 
 Restores Rolodex to the state before the previous _undoable_ command was executed. +
