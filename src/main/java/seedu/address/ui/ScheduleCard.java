@@ -44,7 +44,7 @@ public class ScheduleCard extends UiPart<Region> {
     }
 
     /**
-     * Binds the individual UI elements to observe their respective {@code Person} properties
+     * Binds the individual UI elements to observe their respective {@code Schedule} properties
      * so that they will be notified of any changes.
      */
     private void bindListeners(Schedule schedule) {
