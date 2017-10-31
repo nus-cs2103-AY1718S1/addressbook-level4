@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<!-- @@author HouDenghao -->
 <VBox style="-fx-background-color: dodgerblue; -fx-background-radius: 18;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <Label fx:id="title" contentDisplay="CENTER" text="\$title" style="-fx-text-fill: white; -fx-font-size: 18">
       <VBox.margin>

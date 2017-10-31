@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import seedu.address.model.event.EventNameContainsKeywordsPredicate;
 
+// @@author HouDenghao
 /**
  * Finds and lists all events in event list whose name contains any of the argument keywords.
  * Keyword matching is not case sensitive.
