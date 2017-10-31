@@ -1,8 +1,8 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalLessons.MA1101R_L1;
+import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,9 +16,11 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.tag.Tag;
+
+import seedu.address.model.lecturer.Lecturer;
+import seedu.address.model.module.Lesson;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.Remark;
 
 public class AddressBookTest {
 
@@ -27,10 +29,11 @@ public class AddressBookTest {
 
     private final AddressBook addressBook = new AddressBook();
 
+
     @Test
     public void constructor() {
-        assertEquals(Collections.emptyList(), addressBook.getPersonList());
-        assertEquals(Collections.emptyList(), addressBook.getTagList());
+        assertEquals(Collections.emptyList(), addressBook.getLessonList());
+        assertEquals(Collections.emptyList(), addressBook.getLecturerList());
     }
 
     @Test
@@ -49,46 +52,53 @@ public class AddressBookTest {
     @Test
     public void resetData_withDuplicatePersons_throwsAssertionError() {
         // Repeat ALICE twice
-        List<Person> newPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
-        List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        List<Lesson> newLessons = Arrays.asList(new Lesson(MA1101R_L1), new Lesson(MA1101R_L1));
+        List<Lecturer> newLecturers = new ArrayList<>(MA1101R_L1.getLecturers());
+        AddressBookStub newData = new AddressBookStub(newLessons, newLecturers);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
     }
 
     @Test
-    public void getPersonList_modifyList_throwsUnsupportedOperationException() {
+    public void getLessonList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        addressBook.getPersonList().remove(0);
+        addressBook.getLessonList().remove(0);
     }
 
     @Test
-    public void getTagList_modifyList_throwsUnsupportedOperationException() {
+    public void getLecturerList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        addressBook.getTagList().remove(0);
+        addressBook.getLecturerList().remove(0);
     }
 
     /**
-     * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
+     * A stub ReadOnlyAddressBook whose lessons and lecturers lists can violate interface constraints.
      */
     private static class AddressBookStub implements ReadOnlyAddressBook {
-        private final ObservableList<ReadOnlyPerson> persons = FXCollections.observableArrayList();
-        private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        private final ObservableList<ReadOnlyLesson> lessons = FXCollections.observableArrayList();
+        private final ObservableList<Lecturer> lecturers = FXCollections.observableArrayList();
+        private final ObservableList<Remark> remarks = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags) {
-            this.persons.setAll(persons);
-            this.tags.setAll(tags);
+        AddressBookStub(Collection<? extends ReadOnlyLesson> lessons, Collection<? extends Lecturer> lecturers) {
+            this.lessons.setAll(lessons);
+            this.lecturers.setAll(lecturers);
+            this.remarks.setAll(remarks);
         }
 
         @Override
-        public ObservableList<ReadOnlyPerson> getPersonList() {
-            return persons;
+        public ObservableList<ReadOnlyLesson> getLessonList() {
+            return lessons;
         }
 
         @Override
-        public ObservableList<Tag> getTagList() {
-            return tags;
+        public ObservableList<Lecturer> getLecturerList() {
+            return lecturers;
+        }
+
+        @Override
+        public ObservableList<Remark> getRemarkList() {
+            return remarks;
         }
     }
 

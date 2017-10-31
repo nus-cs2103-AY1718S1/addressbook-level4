@@ -2,9 +2,9 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.logic.commands.CommandTestUtil.deleteFirstLesson;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstLessonOnly;
+import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
 
 import org.junit.Test;
 
@@ -12,8 +12,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.exceptions.LessonNotFoundException;
 
 public class UndoableCommandTest {
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -24,10 +24,10 @@ public class UndoableCommandTest {
     @Test
     public void executeUndo() throws Exception {
         dummyCommand.execute();
-        deleteFirstPerson(expectedModel);
+        deleteFirstLesson(expectedModel);
         assertEquals(expectedModel, model);
 
-        showFirstPersonOnly(model);
+        showFirstLessonOnly(model);
 
         // undo() should cause the model's filtered list to show all persons
         dummyCommand.undo();
@@ -37,11 +37,14 @@ public class UndoableCommandTest {
 
     @Test
     public void redo() {
-        showFirstPersonOnly(model);
+        showFirstLessonOnly(model);
+        showFirstLessonOnly(expectedModel);
+        for (int i = 0; i < model.getFilteredLessonList().size(); i++) {
+            System.out.println(model.getFilteredLessonList().get(i));
+        }
 
-        // redo() should cause the model's filtered list to show all persons
         dummyCommand.redo();
-        deleteFirstPerson(expectedModel);
+        deleteFirstLesson(expectedModel);
         assertEquals(expectedModel, model);
     }
 
@@ -55,11 +58,11 @@ public class UndoableCommandTest {
 
         @Override
         public CommandResult executeUndoableCommand() throws CommandException {
-            ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(0);
+            ReadOnlyLesson lessonToDelete = model.getFilteredLessonList().get(0);
             try {
-                model.deletePerson(personToDelete);
-            } catch (PersonNotFoundException pnfe) {
-                fail("Impossible: personToDelete was retrieved from model.");
+                model.deleteLesson(lessonToDelete);
+            } catch (LessonNotFoundException pnfe) {
+                fail("Impossible: lessonToDelete was retrieved from model.");
             }
             return new CommandResult("");
         }

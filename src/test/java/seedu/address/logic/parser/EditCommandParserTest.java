@@ -1,51 +1,55 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.commands.CommandTestUtil.CLASSTYPE_DESC_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.CLASSTYPE_DESC_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.CODE_DESC_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.GROUP_DESC_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.GROUP_DESC_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_CLASSTYPE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_CODE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_GROUP_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TIMESLOT_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_VENUE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.LECTURER_DESC_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.LECTURER_DESC_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.TIMESLOT_DESC_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CLASSTYPE_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CLASSTYPE_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CODE_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUP_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUP_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_LECTURER_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_LECTURER_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_MA1101R;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LECTURER;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_LESSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_LESSON;
 
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.logic.commands.EditCommand.EditLessonDescriptor;
+import seedu.address.model.ListingUnit;
+import seedu.address.model.lecturer.Lecturer;
+import seedu.address.model.module.ClassType;
+import seedu.address.model.module.Code;
+import seedu.address.model.module.Group;
+import seedu.address.model.module.Location;
+import seedu.address.model.module.TimeSlot;
+import seedu.address.testutil.EditLessonDescriptorBuilder;
 
 public class EditCommandParserTest {
 
-    private static final String TAG_EMPTY = " " + PREFIX_TAG;
+    private static final String TAG_EMPTY = " " + PREFIX_LECTURER;
 
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
@@ -55,7 +59,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_missingParts_failure() {
         // no index specified
-        assertParseFailure(parser, VALID_NAME_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, VALID_CODE_MA1101R, MESSAGE_INVALID_FORMAT);
 
         // no field specified
         assertParseFailure(parser, "1", EditCommand.MESSAGE_NOT_EDITED);
@@ -66,11 +70,12 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_invalidPreamble_failure() {
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         // negative index
-        assertParseFailure(parser, "-5" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "-5" + CODE_DESC_MA1101R, MESSAGE_INVALID_FORMAT);
 
         // zero index
-        assertParseFailure(parser, "0" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "0" + CODE_DESC_MA1101R, MESSAGE_INVALID_FORMAT);
 
         // invalid arguments being parsed as preamble
         assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
@@ -81,39 +86,54 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_invalidValue_failure() {
-        assertParseFailure(parser, "1" + INVALID_NAME_DESC, Name.MESSAGE_NAME_CONSTRAINTS); // invalid name
-        assertParseFailure(parser, "1" + INVALID_PHONE_DESC, Phone.MESSAGE_PHONE_CONSTRAINTS); // invalid phone
-        assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_EMAIL_CONSTRAINTS); // invalid email
-        assertParseFailure(parser, "1" + INVALID_ADDRESS_DESC, Address.MESSAGE_ADDRESS_CONSTRAINTS); // invalid address
-        assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
+        assertParseFailure(parser, "1" + INVALID_CODE_DESC,
+                Code.MESSAGE_CODE_CONSTRAINTS); // invalid module code
+        assertParseFailure(parser, "1" + INVALID_CLASSTYPE_DESC,
+                ClassType.MESSAGE_CLASSTYPE_CONSTRAINTS); // invalid class type
+        assertParseFailure(parser, "1" + INVALID_VENUE_DESC,
+                Location.MESSAGE_LOCATION_CONSTRAINTS); // invalid venue
+        assertParseFailure(parser, "1" + INVALID_GROUP_DESC,
+                Group.MESSAGE_GROUP_CONSTRAINTS); // invalid group
+        assertParseFailure(parser, "1" + INVALID_TIMESLOT_DESC,
+                TimeSlot.MESSAGE_TIMESLOT_CONSTRAINTS); // invalid time slot
 
         // invalid phone followed by valid email
-        assertParseFailure(parser, "1" + INVALID_PHONE_DESC + EMAIL_DESC_AMY, Phone.MESSAGE_PHONE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + INVALID_CLASSTYPE_DESC + VENUE_DESC_MA1101R,
+                ClassType.MESSAGE_CLASSTYPE_CONSTRAINTS);
 
         // valid phone followed by invalid phone. The test case for invalid phone followed by valid phone
         // is tested at {@code parse_invalidValueFollowedByValidValue_success()}
-        assertParseFailure(parser, "1" + PHONE_DESC_BOB + INVALID_PHONE_DESC, Phone.MESSAGE_PHONE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + CLASSTYPE_DESC_MA1101R + INVALID_CLASSTYPE_DESC,
+                ClassType.MESSAGE_CLASSTYPE_CONSTRAINTS);
 
         // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Person} being edited,
         // parsing it together with a valid tag results in error
-        assertParseFailure(parser, "1" + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + TAG_EMPTY, Tag.MESSAGE_TAG_CONSTRAINTS);
-        assertParseFailure(parser, "1" + TAG_DESC_FRIEND + TAG_EMPTY + TAG_DESC_HUSBAND, Tag.MESSAGE_TAG_CONSTRAINTS);
-        assertParseFailure(parser, "1" + TAG_EMPTY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND, Tag.MESSAGE_TAG_CONSTRAINTS);
+        assertParseFailure(parser, "1" + LECTURER_DESC_MA1101R + LECTURER_DESC_CS2101 + TAG_EMPTY,
+                Lecturer.MESSAGE_LECTURER_CONSTRAINTS);
+        assertParseFailure(parser, "1" + LECTURER_DESC_MA1101R + TAG_EMPTY + LECTURER_DESC_CS2101,
+                Lecturer.MESSAGE_LECTURER_CONSTRAINTS);
+        assertParseFailure(parser, "1" + TAG_EMPTY + LECTURER_DESC_MA1101R + LECTURER_DESC_CS2101,
+                Lecturer.MESSAGE_LECTURER_CONSTRAINTS);
 
         // multiple invalid values, but only the first invalid value is captured
-        assertParseFailure(parser, "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_ADDRESS_AMY + VALID_PHONE_AMY,
-                Name.MESSAGE_NAME_CONSTRAINTS);
+        assertParseFailure(parser, "1" + INVALID_CODE_DESC + INVALID_CLASSTYPE_DESC + INVALID_VENUE_DESC
+                        + INVALID_GROUP_DESC + INVALID_TIMESLOT_DESC,
+                ClassType.MESSAGE_CLASSTYPE_CONSTRAINTS);
     }
 
     @Test
     public void parse_allFieldsSpecified_success() {
-        Index targetIndex = INDEX_SECOND_PERSON;
-        String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + TAG_DESC_HUSBAND
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY + TAG_DESC_FRIEND;
+        Index targetIndex = INDEX_SECOND_LESSON;
+        String userInput = targetIndex.getOneBased() + CLASSTYPE_DESC_CS2101 + LECTURER_DESC_MA1101R
+                + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + CODE_DESC_MA1101R + TIMESLOT_DESC_MA1101R
+                + LECTURER_DESC_CS2101;
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
-                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+        EditLessonDescriptor descriptor = new EditLessonDescriptorBuilder().withCode(VALID_CODE_MA1101R)
+                .withClassType(VALID_CLASSTYPE_CS2101).withLocation(VALID_VENUE_MA1101R)
+                .withGroup(VALID_GROUP_MA1101R).withTimeSlot(VALID_TIMESLOT_MA1101R)
+                .withLecturers(VALID_LECTURER_MA1101R, VALID_LECTURER_CS2101).build();
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -121,11 +141,12 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_someFieldsSpecified_success() {
-        Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + EMAIL_DESC_AMY;
+        Index targetIndex = INDEX_FIRST_LESSON;
+        String userInput = targetIndex.getOneBased() + CLASSTYPE_DESC_CS2101 + VENUE_DESC_MA1101R;
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB)
-                .withEmail(VALID_EMAIL_AMY).build();
+        EditLessonDescriptor descriptor = new EditLessonDescriptorBuilder().withClassType(VALID_CLASSTYPE_CS2101)
+                .withLocation(VALID_VENUE_MA1101R).build();
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -133,48 +154,58 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_oneFieldSpecified_success() {
-        // name
-        Index targetIndex = INDEX_THIRD_PERSON;
-        String userInput = targetIndex.getOneBased() + NAME_DESC_AMY;
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY).build();
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
+        // code
+        Index targetIndex = INDEX_SECOND_LESSON;
+        String userInput = targetIndex.getOneBased() + CODE_DESC_MA1101R;
+        EditLessonDescriptor descriptor = new EditLessonDescriptorBuilder().withCode(VALID_CODE_MA1101R).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
-        // phone
-        userInput = targetIndex.getOneBased() + PHONE_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_AMY).build();
+        // class type
+        userInput = targetIndex.getOneBased() + CLASSTYPE_DESC_MA1101R;
+        descriptor = new EditLessonDescriptorBuilder().withClassType(VALID_CLASSTYPE_MA1101R).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
-        // email
-        userInput = targetIndex.getOneBased() + EMAIL_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withEmail(VALID_EMAIL_AMY).build();
+        // venue
+        userInput = targetIndex.getOneBased() + VENUE_DESC_MA1101R;
+        descriptor = new EditLessonDescriptorBuilder().withLocation(VALID_VENUE_MA1101R).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
-        // address
-        userInput = targetIndex.getOneBased() + ADDRESS_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withAddress(VALID_ADDRESS_AMY).build();
+        // group
+        userInput = targetIndex.getOneBased() + GROUP_DESC_MA1101R;
+        descriptor = new EditLessonDescriptorBuilder().withGroup(VALID_GROUP_MA1101R).build();
+        expectedCommand = new EditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // time slot
+        userInput = targetIndex.getOneBased() + TIMESLOT_DESC_MA1101R;
+        descriptor = new EditLessonDescriptorBuilder().withTimeSlot(VALID_TIMESLOT_MA1101R).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // tags
-        userInput = targetIndex.getOneBased() + TAG_DESC_FRIEND;
-        descriptor = new EditPersonDescriptorBuilder().withTags(VALID_TAG_FRIEND).build();
+        userInput = targetIndex.getOneBased() + LECTURER_DESC_MA1101R;
+        descriptor = new EditLessonDescriptorBuilder().withLecturers(VALID_LECTURER_MA1101R).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
     @Test
     public void parse_multipleRepeatedFields_acceptsLast() {
-        Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased()  + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY
-                + TAG_DESC_FRIEND + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND
-                + PHONE_DESC_BOB + ADDRESS_DESC_BOB + EMAIL_DESC_BOB + TAG_DESC_HUSBAND;
+        Index targetIndex = INDEX_FIRST_LESSON;
+        String userInput = targetIndex.getOneBased()  + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + GROUP_DESC_MA1101R  + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + GROUP_DESC_MA1101R
+                + CLASSTYPE_DESC_CS2101 + VENUE_DESC_CS2101 + GROUP_DESC_CS2101 + LECTURER_DESC_MA1101R
+                + LECTURER_DESC_CS2101;
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB)
-                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
-                .build();
+        EditLessonDescriptor descriptor = new EditLessonDescriptorBuilder().withClassType(VALID_CLASSTYPE_CS2101)
+                .withLocation(VALID_VENUE_CS2101).withGroup(VALID_GROUP_CS2101)
+                .withLecturers(VALID_LECTURER_CS2101, VALID_LECTURER_MA1101R).build();
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -182,29 +213,58 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_invalidValueFollowedByValidValue_success() {
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         // no other valid values specified
-        Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + INVALID_PHONE_DESC + PHONE_DESC_BOB;
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB).build();
+        Index targetIndex = INDEX_THIRD_LESSON;
+        String userInput = targetIndex.getOneBased() + INVALID_CLASSTYPE_DESC + CLASSTYPE_DESC_CS2101;
+        EditLessonDescriptor descriptor = new EditLessonDescriptorBuilder()
+                .withClassType(VALID_CLASSTYPE_CS2101).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // other valid values specified
-        userInput = targetIndex.getOneBased() + EMAIL_DESC_BOB + INVALID_PHONE_DESC + ADDRESS_DESC_BOB
-                + PHONE_DESC_BOB;
-        descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_BOB).build();
+        userInput = targetIndex.getOneBased() + VENUE_DESC_MA1101R + INVALID_CLASSTYPE_DESC
+                + GROUP_DESC_CS2101
+                + CLASSTYPE_DESC_CS2101;
+        descriptor = new EditLessonDescriptorBuilder().withClassType(VALID_CLASSTYPE_CS2101)
+                .withGroup(VALID_GROUP_CS2101)
+                .withLocation(VALID_VENUE_MA1101R).build();
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
     @Test
-    public void parse_resetTags_success() {
-        Index targetIndex = INDEX_THIRD_PERSON;
+    public void parse_resetLecturers_failure() {
+        Index targetIndex = INDEX_THIRD_LESSON;
         String userInput = targetIndex.getOneBased() + TAG_EMPTY;
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withTags().build();
+        EditLessonDescriptor descriptor = new EditLessonDescriptorBuilder().withLecturers().build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
+
+        assertParseFailure(parser, userInput, Lecturer.MESSAGE_LECTURER_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_editModule() {
+        ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
+        Index targetIndex = INDEX_FIRST_LESSON;
+        String userInput = targetIndex.getOneBased()  + " " + VALID_CODE_MA1101R;
+
+        EditCommand expectedCommand = new EditCommand(targetIndex, VALID_CODE_MA1101R);
+
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_editLocation() {
+        ListingUnit.setCurrentListingUnit(ListingUnit.LOCATION);
+        Index targetIndex = INDEX_FIRST_LESSON;
+        String userInput = targetIndex.getOneBased()  + " " + VALID_VENUE_MA1101R;
+
+        ListingUnit.setCurrentListingUnit(ListingUnit.LOCATION);
+        EditCommand expectedCommand = new EditCommand(targetIndex, VALID_VENUE_MA1101R);
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }

@@ -2,67 +2,92 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CLASS_TYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FONT_SIZE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LECTURER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MODULE_CODE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_SLOT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.model.module.Code;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.predicates.FixedCodePredicate;
+import seedu.address.model.module.predicates.ShowSpecifiedLessonPredicate;
+import seedu.address.testutil.EditLessonDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
  */
 public class CommandTestUtil {
 
-    public static final String VALID_NAME_AMY = "Amy Bee";
-    public static final String VALID_NAME_BOB = "Bob Choo";
-    public static final String VALID_PHONE_AMY = "11111111";
-    public static final String VALID_PHONE_BOB = "22222222";
-    public static final String VALID_EMAIL_AMY = "amy@example.com";
-    public static final String VALID_EMAIL_BOB = "bob@example.com";
-    public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
-    public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
-    public static final String VALID_TAG_HUSBAND = "husband";
-    public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_CODE_MA1101R = "MA1101R";
+    public static final String VALID_CODE_CS2101 = "CS2101";
+    public static final String VALID_CLASSTYPE_MA1101R = "Lec";
+    public static final String VALID_CLASSTYPE_CS2101 = "Tut";
+    public static final String VALID_VENUE_MA1101R = "LT30";
+    public static final String VALID_VENUE_CS2101 = "COM02-04";
+    public static final String VALID_GROUP_MA1101R = "3";
+    public static final String VALID_GROUP_CS2101 = "2";
+    public static final String VALID_TIMESLOT_MA1101R = "TUE[1300-1500]";
+    public static final String VALID_TIMESLOT_CS2101 = "TUE[1600-1800]";
+    public static final String VALID_LECTURER_MA1101R = "Ma Siu Lun";
+    public static final String VALID_LECTURER_CS2101 = "Diana";
+    public static final String VALID_FONT_SIZE_XSMALL = "xsmall";
+    public static final String VALID_FONT_SIZE_SMALL = "small";
 
-    public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
-    public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
-    public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;
-    public static final String PHONE_DESC_BOB = " " + PREFIX_PHONE + VALID_PHONE_BOB;
-    public static final String EMAIL_DESC_AMY = " " + PREFIX_EMAIL + VALID_EMAIL_AMY;
-    public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
-    public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
-    public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
-    public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
-    public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String CODE_DESC_MA1101R = " " + PREFIX_MODULE_CODE + VALID_CODE_MA1101R;
+    public static final String CODE_DESC_CS2101 = " " + PREFIX_MODULE_CODE + VALID_CODE_CS2101;
+    public static final String CLASSTYPE_DESC_MA1101R = " " + PREFIX_CLASS_TYPE + VALID_CLASSTYPE_MA1101R;
+    public static final String CLASSTYPE_DESC_CS2101 = " " + PREFIX_CLASS_TYPE + VALID_CLASSTYPE_CS2101;
+    public static final String VENUE_DESC_MA1101R = " " + PREFIX_VENUE + VALID_VENUE_MA1101R;
+    public static final String VENUE_DESC_CS2101 = " " + PREFIX_VENUE + VALID_VENUE_CS2101;
+    public static final String GROUP_DESC_MA1101R = " " + PREFIX_GROUP + VALID_GROUP_MA1101R;
+    public static final String GROUP_DESC_CS2101 = " " + PREFIX_GROUP + VALID_GROUP_CS2101;
+    public static final String TIMESLOT_DESC_MA1101R = " " + PREFIX_TIME_SLOT + VALID_TIMESLOT_MA1101R;
+    public static final String TIMESLOT_DESC_CS2101 = " " + PREFIX_TIME_SLOT + VALID_TIMESLOT_CS2101;
+    public static final String LECTURER_DESC_MA1101R = " " + PREFIX_LECTURER + VALID_LECTURER_MA1101R;
+    public static final String LECTURER_DESC_CS2101 = " " + PREFIX_LECTURER + VALID_LECTURER_CS2101;
+    public static final String FONT_SIZE_DESC_XSMALL = " " + PREFIX_FONT_SIZE + VALID_FONT_SIZE_XSMALL;
+    public static final String FONT_SIZE_DESC_SMALL = " " + PREFIX_FONT_SIZE + VALID_FONT_SIZE_SMALL;
 
-    public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
-    public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
-    public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
-    public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
-    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
-    public static final EditCommand.EditPersonDescriptor DESC_AMY;
-    public static final EditCommand.EditPersonDescriptor DESC_BOB;
+
+    public static final String INVALID_CODE_DESC = " " + PREFIX_MODULE_CODE + "MA*"; //code format is not correct
+    public static final String INVALID_CLASSTYPE_DESC = " " + PREFIX_CLASS_TYPE + "1a"; // 'a' not allowed in class type
+    public static final String INVALID_VENUE_DESC = " " + PREFIX_VENUE; // empty string not allowed for venue
+    public static final String INVALID_GROUP_DESC = " " + PREFIX_GROUP + "SL1"; // 'SL' not allowed for addresses
+    public static final String INVALID_TIMESLOT_DESC = " " + PREFIX_TIME_SLOT + "FRIDAY[1200-1300]"; // Only 3 letters
+    public static final String INVALID_LECTURER_DESC = " " + PREFIX_LECTURER + ""; // '*' not allowed in tags
+    public static final String INVALID_FONT_SIZE_DESC = " " + PREFIX_FONT_SIZE
+            + "small!"; // '!' not allowed in font size
+
+
+    public static final EditCommand.EditLessonDescriptor DESC_MA1101R;
+    public static final EditCommand.EditLessonDescriptor DESC_CS2101;
+
+    public static final FixedCodePredicate MA1101R_CODE_PREDICATE;
 
     static {
-        DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
-                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
-        DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+        DESC_MA1101R = new EditLessonDescriptorBuilder().withCode(VALID_CODE_MA1101R)
+                .withClassType(VALID_CLASSTYPE_MA1101R).withLocation(VALID_VENUE_MA1101R).withGroup(VALID_GROUP_MA1101R)
+                .withTimeSlot(VALID_TIMESLOT_MA1101R).withLecturers(VALID_LECTURER_MA1101R).build();
+        DESC_CS2101 = new EditLessonDescriptorBuilder().withCode(VALID_CODE_CS2101)
+                .withClassType(VALID_CLASSTYPE_CS2101).withLocation(VALID_VENUE_CS2101).withGroup(VALID_GROUP_CS2101)
+                .withTimeSlot(VALID_TIMESLOT_CS2101).withLecturers(VALID_LECTURER_CS2101).build();
+        try {
+            MA1101R_CODE_PREDICATE = new FixedCodePredicate(new Code(VALID_CODE_MA1101R));
+        } catch (IllegalValueException e) {
+            throw new AssertionError("The code cannot be invalid");
+        }
     }
 
     /**
@@ -91,7 +116,7 @@ public class CommandTestUtil {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
         AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
-        List<ReadOnlyPerson> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
+        List<ReadOnlyLesson> expectedFilteredList = new ArrayList<>(actualModel.getFilteredLessonList());
 
         try {
             command.execute();
@@ -99,29 +124,28 @@ public class CommandTestUtil {
         } catch (CommandException e) {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedAddressBook, actualModel.getAddressBook());
-            assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+            assertEquals(expectedFilteredList, actualModel.getFilteredLessonList());
         }
     }
 
     /**
-     * Updates {@code model}'s filtered list to show only the first person in the {@code model}'s address book.
+     * Updates {@code model}'s filtered list to show only the first lesson in the {@code model}'s address book.
      */
-    public static void showFirstPersonOnly(Model model) {
-        ReadOnlyPerson person = model.getAddressBook().getPersonList().get(0);
-        final String[] splitName = person.getName().fullName.split("\\s+");
-        model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+    public static void showFirstLessonOnly(Model model) {
+        ReadOnlyLesson lesson = model.getAddressBook().getLessonList().get(0);
+        model.updateFilteredLessonList(new ShowSpecifiedLessonPredicate(lesson.hashCode()));
 
-        assert model.getFilteredPersonList().size() == 1;
+        assert model.getFilteredLessonList().size() == 1;
     }
 
     /**
-     * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
+     * Deletes the first lesson in {@code model}'s filtered list from {@code model}'s address book.
      */
-    public static void deleteFirstPerson(Model model) {
-        ReadOnlyPerson firstPerson = model.getFilteredPersonList().get(0);
+    public static void deleteFirstLesson(Model model) {
+        ReadOnlyLesson firstLesson = model.getFilteredLessonList().get(0);
         try {
-            model.deletePerson(firstPerson);
-        } catch (PersonNotFoundException pnfe) {
+            model.deleteLesson(firstLesson);
+        } catch (LessonNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
         }
     }

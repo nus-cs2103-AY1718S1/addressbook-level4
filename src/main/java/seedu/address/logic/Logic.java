@@ -1,10 +1,15 @@
 package seedu.address.logic;
 
+import java.util.HashMap;
+import java.util.function.Predicate;
+
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.Remark;
+
 
 /**
  * API of the Logic component
@@ -19,9 +24,23 @@ public interface Logic {
      */
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
-    /** Returns an unmodifiable view of the filtered list of persons */
-    ObservableList<ReadOnlyPerson> getFilteredPersonList();
+    /** Returns an unmodifiable view of the filtered list of lessons */
+    ObservableList<ReadOnlyLesson> getFilteredLessonList();
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
+
+    /**
+     * Returns the list of CommandKeyword and its corresponding color
+     * @return
+     */
+    HashMap<String, String> getCommandKeywordColorMap();
+
+    /** Returns an unmodifiable view of the list of remarks */
+    ObservableList<Remark> getFilteredRemarkList();
+
+    /**
+     * Updates the predicate of remark list.
+     */
+    void setRemarkPredicate(Predicate predicate);
 }

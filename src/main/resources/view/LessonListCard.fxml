@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <GridPane HBox.hgrow="ALWAYS">
+    <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+    </columnConstraints>
+    <VBox alignment="CENTER_RIGHT" minHeight="105" GridPane.columnIndex="0">
+      <padding>
+        <Insets bottom="5" left="15" right="5" top="5" />
+      </padding>
+         <FlowPane>
+            <children>
+           <Label fx:id="id" styleClass="cell_big_label" stylesheets="@LightTheme.css" text="\$id">
+             <minWidth>
+               <!-- Ensures that the label text is never truncated -->
+               <Region fx:constant="USE_PREF_SIZE" />
+             </minWidth>
+           </Label>
+               <Label fx:id="bookmark" />
+           <Label fx:id="code" alignment="CENTER" contentDisplay="CENTER" styleClass="cell_big_label" stylesheets="@LightTheme.css" text="\$code">
+                  <padding>
+                     <Insets left="10.0" />
+                  </padding></Label>
+            </children>
+         </FlowPane>
+      <FlowPane fx:id="lecturers" alignment="CENTER" />
+         <HBox alignment="CENTER_RIGHT" nodeOrientation="LEFT_TO_RIGHT" spacing="2.0">
+            <children>
+            <Label fx:id="classType" styleClass="cell_small_label" stylesheets="@LightTheme.css" text="\$classType" />
+               <Label fx:id="group" stylesheets="@LightTheme.css" text="\$group" />
+            </children>
+            <VBox.margin>
+               <Insets />
+            </VBox.margin>
+         </HBox>
+      <Label fx:id="venue" styleClass="cell_small_label" stylesheets="@LightTheme.css" text="\$venue" />
+      <Label fx:id="timeSlot" styleClass="cell_small_label" stylesheets="@LightTheme.css" text="\$timeSlot" />
+    </VBox>
+      <rowConstraints>
+         <RowConstraints />
+      </rowConstraints>
+  </GridPane>
+</HBox>
