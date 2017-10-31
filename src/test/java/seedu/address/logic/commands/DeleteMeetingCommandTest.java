@@ -18,7 +18,9 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.ReadOnlyMeeting;
+import seedu.address.testutil.MeetingBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteMeetingCommand}.
@@ -29,6 +31,8 @@ public class DeleteMeetingCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
+        Meeting meeting = new MeetingBuilder().build();
+        model.addMeeting(meeting);
         ReadOnlyMeeting meetingToDelete = model.getFilteredMeetingList().get(INDEX_FIRST_MEETING.getZeroBased());
         DeleteMeetingCommand deleteMeetingCommand = prepareCommand(INDEX_FIRST_MEETING);
 

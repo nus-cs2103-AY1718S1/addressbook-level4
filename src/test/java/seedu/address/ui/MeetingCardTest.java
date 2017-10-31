@@ -31,7 +31,7 @@ public class MeetingCardTest extends GuiUnitTest {
             meeting.setPhoneNum(DIVING.getPersonPhone());
             meeting.setPersonName(DIVING.getPersonName());
         });
-        assertCardDisplay(meetingCard, meeting, 2);
+        assertCardDisplay(meetingCard, meeting, 1);
     }
 
     @Test
