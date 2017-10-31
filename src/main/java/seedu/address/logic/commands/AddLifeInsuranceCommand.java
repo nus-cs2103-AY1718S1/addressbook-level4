@@ -13,6 +13,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.person.Person;
@@ -87,21 +88,23 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_PERSON_NOT_FOUND);
         }
 
-        LifeInsurance lifeInsuranceToAdd = new LifeInsurance(personForOwner, personForInsured, personForBeneficiary,
-                premium, contractPath, signingDate, expiryDate);
-
         try {
+            LifeInsurance lifeInsuranceToAdd = new LifeInsurance(personForOwner, personForInsured, personForBeneficiary,
+                premium, contractPath, signingDate, expiryDate);
             model.updatePerson(personForOwner, new Person(personForOwner, lifeInsuranceToAdd));
             model.updatePerson(personForInsured, new Person(personForInsured, lifeInsuranceToAdd));
             model.updatePerson(personForBeneficiary, new Person(personForBeneficiary, lifeInsuranceToAdd));
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+            return new CommandResult(String.format(MESSAGE_SUCCESS, lifeInsuranceToAdd));
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
+        } catch (IllegalValueException ive) {
+            throw new CommandException(ive.getMessage());
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, lifeInsuranceToAdd));
     }
 
     @Override

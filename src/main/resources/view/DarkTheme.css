@@ -18,7 +18,7 @@
 }
 
 .label-header, .particular-name {
-    -fx-font-size: 25pt;
+    -fx-font-size: 20pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
     -fx-opacity: 1;
@@ -26,14 +26,14 @@
 
 
 .particular-field {
-    -fx-font-size: 18pt;
+    -fx-font-size: 13pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
     -fx-opacity: 1;
 }
 
 .particular-person {
-    -fx-font-size: 18pt;
+    -fx-font-size: 13pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
     -fx-opacity: 1;
@@ -136,7 +136,7 @@
 }
 
 .list-cell:filled #insuranceCardPane .particular-person:hover {
-    -fx-font-size: 18pt;
+    -fx-font-size: 13pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: #d06651;
     -fx-opacity: 1;
@@ -194,6 +194,12 @@
     -fx-border-color: derive(#1d1d1d, 25%);
     -fx-border-width: 1px;
 }
+
+/*@@author Juxarius*/
+#insuranceListView {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+/*@@author*/
 
 .status-bar-with-border .label {
     -fx-text-fill: white;

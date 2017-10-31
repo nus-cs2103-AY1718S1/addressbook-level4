@@ -28,8 +28,8 @@ public interface ReadOnlyInsurance {
     String getPremiumString();
     StringProperty contractPathProperty();
     String getContractPath();
-    StringProperty signingDateProperty();
-    String getSigningDate();
-    StringProperty expiryDateProperty();
-    String getExpiryDate();
+    StringProperty signingDateStringProperty();
+    String getSigningDateString();
+    StringProperty expiryDateStringProperty();
+    String getExpiryDateString();
 }

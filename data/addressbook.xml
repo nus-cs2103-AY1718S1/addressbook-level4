@@ -77,8 +77,8 @@
                 <beneficiary>Charlotte Oliveiro</beneficiary>
                 <premium>100.0</premium>
                 <contractPath>contract.pdf</contractPath>
-                <signingDate>2017/11/1</signingDate>
-                <expiryDate>2018/11/1</expiryDate>
+                <signingDate>01 11 2017</signingDate>
+                <expiryDate>1 11 2018</expiryDate>
             </value>
         </entry>
         <entry>
@@ -89,8 +89,8 @@
                 <beneficiary>Mary Jane</beneficiary>
                 <premium>500.0</premium>
                 <contractPath>expensiveContract.pdf</contractPath>
-                <signingDate>2017/11/1</signingDate>
-                <expiryDate>2020/11/1</expiryDate>
+                <signingDate>1 11 2017</signingDate>
+                <expiryDate>1 11 2020</expiryDate>
             </value>
         </entry>
         <entry>
@@ -101,8 +101,8 @@
                 <beneficiary>Bernice Yu</beneficiary>
                 <premium>50.0</premium>
                 <contractPath>cheapContract.pdf</contractPath>
-                <signingDate>2017/11/1</signingDate>
-                <expiryDate>2018/11/1</expiryDate>
+                <signingDate>1 11 2017</signingDate>
+                <expiryDate>1 11 2018</expiryDate>
             </value>
         </entry>
     </lifeInsuranceMap>
