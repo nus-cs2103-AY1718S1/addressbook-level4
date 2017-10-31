@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
-import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -45,7 +44,6 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
         }
 
         Boolean indexAdded = false;
-        String indexInput;
         List<String> indexSet = new ArrayList<>();
         while (st.hasMoreTokens()) {
             String newToken = st.nextToken();
@@ -86,8 +84,7 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
                 }
             }
         }
-        indexInput = indexSet.stream().collect(Collectors.joining(", "));
-        return new RemoveTagCommand(toRemoveSet, index, indexInput);
+        return new RemoveTagCommand(toRemoveSet, index, indexSet);
     }
 
 }

@@ -8,7 +8,9 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
@@ -36,14 +38,15 @@ public class RemoveCommandTest {
         Set<Index> indexSet = new HashSet<>();
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tagToRemove);
+        List<String> indexDisplay = new ArrayList<>();
 
-        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet, "");
+        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet, indexDisplay);
 
         String expectedMessage = String.format(RemoveTagCommand.MESSAGE_REMOVE_SUCCESS
                         + " from address book.", tagSet);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.removeTag(tagSet, indexSet);
+        expectedModel.removeTag(tagSet, indexDisplay);
 
         assertCommandSuccess(removeCommand, model, expectedMessage, expectedModel);
     }
@@ -54,8 +57,9 @@ public class RemoveCommandTest {
         Set<Index> indexSet = new HashSet<>();
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tagToRemove);
+        List<String> indexDisplay = new ArrayList<>();
 
-        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet, "");
+        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet, indexDisplay);
 
         String expectedMessage =  String.format(
                 RemoveTagCommand.MESSAGE_TAG_NOT_FOUND + " the address book.", tagSet);
@@ -70,14 +74,16 @@ public class RemoveCommandTest {
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tagToRemove);
         indexSet.add(INDEX_FIRST_PERSON);
+        List<String> indexDisplay = new ArrayList<>();
+        indexDisplay.add("1");
 
-        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet, "1");
+        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet, indexDisplay);
 
         String expectedMessage = String.format(RemoveTagCommand.MESSAGE_REMOVE_SUCCESS + " from index "
                 + INDEX_FIRST_PERSON.getOneBased() + ".", tagSet);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.removeTag(tagSet, indexSet);
+        expectedModel.removeTag(tagSet, indexDisplay);
 
         assertCommandSuccess(removeCommand, model, expectedMessage, expectedModel);
     }
@@ -90,7 +96,9 @@ public class RemoveCommandTest {
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tagToRemove);
         indexSet.add(outOfBoundIndex);
-        String indexDisplay = String.valueOf(model.getFilteredPersonList().size() + 1);
+        String indexString = String.valueOf(model.getFilteredPersonList().size() + 1);
+        List<String> indexDisplay = new ArrayList<>();
+        indexDisplay.add(indexString);
 
         RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet, indexDisplay);
         assertCommandFailure(removeCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -103,8 +111,10 @@ public class RemoveCommandTest {
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tagToRemove);
         indexSet.add(INDEX_FIRST_PERSON);
+        List<String> indexDisplay = new ArrayList<>();
+        indexDisplay.add("1");
 
-        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet, "1");
+        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet, indexDisplay);
         assertCommandFailure(removeCommand, model, String.format(
                 RemoveTagCommand.MESSAGE_TAG_NOT_FOUND + " index: " + INDEX_FIRST_PERSON.getOneBased() + ".", tagSet));
     }
@@ -122,11 +132,17 @@ public class RemoveCommandTest {
         tagSet2.add(secondTag);
         indexSet2.add(INDEX_SECOND_PERSON);
         Set<Index> emptySet = new HashSet<>();
-        RemoveTagCommand removeFirstCommand = new RemoveTagCommand(tagSet1, emptySet, "");
-        RemoveTagCommand removeSecondCommand = new RemoveTagCommand(tagSet2, emptySet, "");
-        RemoveTagCommand removeThirdCommand = new RemoveTagCommand(tagSet1, indexSet1, "1");
-        RemoveTagCommand removeFourthCommand = new RemoveTagCommand(tagSet1, indexSet2, "2");
-        RemoveTagCommand removeFifthCommand = new RemoveTagCommand(tagSet2, indexSet1, "1");
+        List<String> indexDisplay = new ArrayList<>();
+        indexDisplay.add("");
+        List<String> indexDisplay1 = new ArrayList<>();
+        indexDisplay1.add("1");
+        List<String> indexDisplay2 = new ArrayList<>();
+        indexDisplay2.add("2");
+        RemoveTagCommand removeFirstCommand = new RemoveTagCommand(tagSet1, emptySet, indexDisplay);
+        RemoveTagCommand removeSecondCommand = new RemoveTagCommand(tagSet2, emptySet, indexDisplay);
+        RemoveTagCommand removeThirdCommand = new RemoveTagCommand(tagSet1, indexSet1, indexDisplay1);
+        RemoveTagCommand removeFourthCommand = new RemoveTagCommand(tagSet1, indexSet2, indexDisplay2);
+        RemoveTagCommand removeFifthCommand = new RemoveTagCommand(tagSet2, indexSet1, indexDisplay1);
 
         // same object -> returns true (no Index)
         assertTrue(removeFirstCommand.equals(removeFirstCommand));
@@ -157,7 +173,7 @@ public class RemoveCommandTest {
     /**
      * Returns a {@code RemoveTagCommand}.
      */
-    private RemoveTagCommand prepareCommand(Set<Tag> tag, Set<Index> index, String indexDisplay) {
+    private RemoveTagCommand prepareCommand(Set<Tag> tag, Set<Index> index, List<String> indexDisplay) {
         RemoveTagCommand removeCommand = new RemoveTagCommand(tag, index, indexDisplay);
         removeCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return removeCommand;

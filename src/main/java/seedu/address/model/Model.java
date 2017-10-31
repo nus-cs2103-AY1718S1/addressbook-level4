@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -60,7 +61,7 @@ public interface Model {
      * @throws PersonNotFoundException
      * @throws DuplicatePersonException
      */
-    void removeTag(Set<Tag> tag, Set<Index> index) throws PersonNotFoundException, DuplicatePersonException;
+    void removeTag(Set<Tag> tag, List<String> index) throws PersonNotFoundException, DuplicatePersonException;
 
     /**
      * Adds tag to specified index
