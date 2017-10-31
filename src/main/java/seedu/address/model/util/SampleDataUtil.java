@@ -29,27 +29,27 @@ public class SampleDataUtil {
                 new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                         new Address("Blk 30 Geylang Street 29, #06-40"), new Birthday("15/02/1992"),
                         new Remark(""), new Website(Website.WEBSITE_NULL),
-                        new Picture(null), getTagSet("friends")),
+                        new Picture(Picture.DEFAULT_ALEX), getTagSet("friends")),
                 new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                         new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), new Birthday("15/02/1992"),
                         new Remark("Likes to swim."), new Website(Website.WEBSITE_NULL),
-                        new Picture(null), getTagSet("colleagues", "friends")),
+                        new Picture(Picture.DEFAULT_BERNICE), getTagSet("colleagues", "friends")),
                 new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
                         new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), new Birthday("15/02/1992"),
                         new Remark(""), new Website(Website.WEBSITE_NULL),
-                        new Picture(null), getTagSet("neighbours")),
+                        new Picture(Picture.DEFAULT_CHARLOTTE), getTagSet("neighbours")),
                 new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
                         new Address("Blk 436 Serangoon Gardens Street 26, #16-43"), new Birthday("15/02/1992"),
                         new Remark("As quick as a leopard."), new Website(Website.WEBSITE_NULL),
-                        new Picture(null), getTagSet("family")),
+                        new Picture(Picture.DEFAULT_DAVID), getTagSet("family")),
                 new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
                         new Address("Blk 47 Tampines Street 20, #17-35"), new Birthday("15/02/1992"),
                         new Remark(""), new Website(Website.WEBSITE_NULL),
-                        new Picture(null), getTagSet("classmates")),
+                        new Picture(Picture.DEFAULT_IRFAN), getTagSet("classmates")),
                 new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                         new Address("Blk 45 Aljunied Street 85, #11-31"), new Birthday("15/02/1992"),
                         new Remark(""), new Website(Website.WEBSITE_NULL),
-                        new Picture(null), getTagSet("colleagues"))
+                        new Picture(Picture.DEFAULT_BALAKRISHNAN), getTagSet("colleagues"))
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
