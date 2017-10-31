@@ -45,7 +45,6 @@
     </VBox>
       <VBox fx:id="meetingList" minWidth="340.0" prefWidth="340.0" SplitPane.resizableWithParent="false">
          <children>
-         
              <StackPane fx:id="meetingListPanelPlaceholder" VBox.vgrow="ALWAYS" />
          </children>
          <padding>
