@@ -1,3 +1,4 @@
+//@@author 17navasaw
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
@@ -38,7 +39,7 @@ public class ScheduleCardTest extends GuiUnitTest {
         Schedule schedule = new ScheduleBuilder().build();
         ScheduleCard scheduleCard = new ScheduleCard(schedule, 0);
 
-        // same person, same index -> returns true
+        // same schedule, same index -> returns true
         ScheduleCard copy = new ScheduleCard(schedule, 0);
         assertTrue(scheduleCard.equals(copy));
 
