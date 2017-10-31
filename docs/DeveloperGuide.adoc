@@ -91,9 +91,8 @@ Keep in mind that each of the four components:
 
 === UI component
 
-_Figure 2: UML diagram of the UI Component showing how it is structured_
-
 image::UiClassDiagram.png[width="800"]
+    Figure 2: UML diagram of the UI Component showing how it is structured
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -105,15 +104,13 @@ The `UI` component,
 
 === Logic component
 
-_Figure 3: Structure of the Logic Component_
-
 image::LogicClassDiagram.png[width="800"]
+    Figure 3: Structure of the Logic Component
 
 Note the `XYZCommand` class on the right of the diagram. Its structure is detailde in the next figure.
 
-_Figure 4: Structure of Commands in the Logic Component_
-
 image::LogicCommandClassDiagram.png[width="800"]
+    Figure 4: Structure of Commands in the Logic Component
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
@@ -122,20 +119,18 @@ image::LogicCommandClassDiagram.png[width="800"]
 
 Events-driven nature of the design
 
-_Figure 5: Interactions *between components* for a `delete 1` command_
-
 image::SDforDeletePerson.png[width="800"]
+    Figure 5: Interactions *between components* for a `delete 1` command
 
-_Figure 6: Interactions *within the Logic Component* for the `delete 1` Command_
 
 image::DeletePersonSdForLogic.png[width="800"]
+    Figure 6: Interactions *within the Logic Component* for the `delete 1` Command
 
 
 === Model component
 
-_Figure 7: Structure of the Model Component_
-
 image::ModelClassDiagram.png[width="800"]
+    Figure 7: Structure of the Model Component
 
 The `Model`:
 
@@ -146,9 +141,8 @@ The `Model`:
 
 === Storage component
 
-_Figure 8: Structure of the Storage Component_
-
 image::StorageClassDiagram.png[width="800"]
+    Figure 8: Structure of the Storage Component
 
 The `Storage` component:
 
@@ -165,9 +159,8 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
-_Figure 9: Logic Command Class Diagram_
-
 image::LogicCommandClassDiagram.png[width="800"]
+    Figure 9: Logic Command Class Diagram
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -206,15 +199,14 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
-_Figure 10: Undo Redo Starting Stack Diagram_
-
 image::UndoRedoStartingStackDiagram.png[width="800"]
+    Figure 10: Undo Redo Starting Stack Diagram
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
-_Figure 11: Undo Redo New Command Stack Diagram_
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+    Figure 11: Undo Redo New Command Stack Diagram
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -223,18 +215,18 @@ The user now decides that adding the person was a mistake, and decides to undo t
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
-_Figure 12: Execute Undo Stack Diagram_
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+    Figure 12: Execute Undo Stack Diagram
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
 The following sequence diagram shows how the undo operation works:
 
-_Figure 13: Undo Redo Sequence Diagram_
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+    Figure 13: Undo Redo Sequence Diagram
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -243,21 +235,21 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
-_Figure 14: Undo Redo New Command Stack Diagram 2_
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+    Figure 14: Undo Redo New Command Stack Diagram 2
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
-_Figure 15: Undo Redo New Command Stack Diagram 3_
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+    Figure 15: Undo Redo New Command Stack Diagram 3
 
 The following activity diagram summarises what happens inside the `UndoRedoStack` when a user executes a new command:
 
-_Figure 16: Undo Redo Activity Diagram_
 
 image::UndoRedoActivityDiagram.png[width="200"]
+    Figure 16: Undo Redo Activity Diagram
 
 ==== Design Considerations
 
@@ -400,9 +392,9 @@ list.
              }
          };
 
-_Figure 17: Sequence diagram for `add appointment` Model Component_
 
 image::SDforAppointment.png[width="800"]
+    Figure 17: Sequence diagram for `add appointment` Model Component
 
 As seen from the diagram, CalendarView depends on the UniquePersonList to update every second on another thread.
 There is no need for the model to prompt the UI to update.
@@ -424,9 +416,9 @@ In the UI component, the tag is set by using the css attribute of the tag label.
 
              tagLabel.setStyle("-fx-background-color: " + tag.getTagColor());
 
-_Figure 18: Sequence diagram for `add appointment` Model Component_
 
 image::SDforTagColor.png[width="800"]
+    Figure 18: Sequence diagram for `add appointment` Model Component
 
 The sequence diagram is given if the command requests the model to set all the tags to a random color. As seen from
 above diagram, each tag is updated to a certain color and does not need to know which tag belongs towhich person.
@@ -469,9 +461,9 @@ Scenarios include - +
 
 *How it is implemented* +
 
-_Figure 19: List Package Activity Diagram_
 
 image::ListPackageActivityDiagram.png[width="800"]
+    Figure 19: List Package Activity Diagram
 
 The diagram above shows the activity diagram for the list package. +
 Implementation passes through two main segments: Logic and Model. +
@@ -615,9 +607,9 @@ in these types of emergencies.
 
 *How it is implemented* +
 
-_Figure 20: ListByBloodyTypeCommand Sequence Diagram _
 
 image::SDforListByBloodtypeCommandLogic.png[width="800"]
+    Figure 20: ListByBloodyTypeCommand Sequence Diagram
 
 The sequence diagram for ListByBloodtypeCommand class within the Logic Component is as shown above.
 
@@ -659,9 +651,9 @@ In summary, `BatchCommand` passes a set of tags to the Model Component which han
 
 The sequence diagram for using this Command class within the Logic Component is given below. +
 
-_Figure 21: Sequence diagram for a `batch myTag` command in the Logic Component_
 
 image::SDforBatchDeleteLogic.png[width="800"]
+    Figure 21: Sequence diagram for a `batch myTag` command in the Logic Component
 
 The model component will handle the actual deletion operations. To support this, an additional method is defined in the Model interface for implementation by the ModelManager class. +
 
@@ -669,9 +661,9 @@ The model component will handle the actual deletion operations. To support this,
 
 See the sequence diagram below to better understand the full range of interactions involved. +
 
-_Figure 22: Sequence diagram for a `batch myTag` command in the Model Component_
 
 image::SDforBatchDeleteModel.png[width="800"]
+    Figure 22: Sequence diagram for a `batch myTag` command in the Model Component
 
 *Reasons for how it is implemented*
 
