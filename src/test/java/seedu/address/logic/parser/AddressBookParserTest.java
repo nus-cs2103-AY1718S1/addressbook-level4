@@ -36,7 +36,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UngroupCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.group.Group;
-import seedu.address.model.person.Appointment;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;

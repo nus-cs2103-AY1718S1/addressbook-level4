@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.appointment;
 
 import static java.util.Objects.requireNonNull;
 
@@ -19,6 +19,8 @@ public class Appointment {
     private static final String MESSAGE_DATETIME_CONSTRAINT = "Date time must be valid format, dd/MM/yyyy HH:mm";
 
     public final String value;
+    public final LocalDateTime start;
+    public final LocalDateTime end;
 
     /**
      * Validates given appointment.
@@ -27,6 +29,8 @@ public class Appointment {
         requireNonNull(appointment);
         if (appointment.equals("")) {
             this.value = appointment;
+            this.start = null;
+            this.end = null;
         } else {
             try {
                 String[] split = appointment.split("\\s+");
@@ -36,12 +40,14 @@ public class Appointment {
                 if (!isValidDuration(duration)) {
                     throw new IllegalValueException(MESSAGE_DURATION_CONSTRAINT);
                 }
-                String startDateTime = date + " " + time;
-                String endDateTime = getEndDateTime(startDateTime, duration);
-                if (!isValidDateTime(startDateTime) || !isValidDateTime(endDateTime)) {
+                LocalDateTime startDateTime = getDateTime(date + " " + time);
+                LocalDateTime endDateTime = getEndDateTime(startDateTime, duration);
+                if (!isAfterToday(startDateTime) || !isAfterToday(endDateTime)) {
                     throw new IllegalValueException(MESSAGE_DATETIME_CONSTRAINT);
                 }
                 this.value = appointment;
+                this.start = startDateTime;
+                this.end = endDateTime;
             } catch (ArrayIndexOutOfBoundsException iob) {
                 throw new IllegalValueException(MESSAGE_APPOINTMENT_CONSTRAINTS);
             }
@@ -53,14 +59,17 @@ public class Appointment {
         return value;
     }
 
+    public static LocalDateTime getDateTime(String datetime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATETIME_PATTERN);
+        return LocalDateTime.parse(datetime, formatter);
+    }
+
     /**
      * Returns true if a given string is a valid appointment.
      */
-    public static boolean isValidDateTime(String datetime) {
-        LocalDateTime date = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATETIME_PATTERN);
-        LocalDateTime appointmentDateTime = LocalDateTime.parse(datetime, formatter);
-        return appointmentDateTime.isAfter(date);
+    public static boolean isAfterToday(LocalDateTime datetime) {
+        LocalDateTime now = LocalDateTime.now();
+        return datetime.isAfter(now);
     }
 
     /**
@@ -76,12 +85,8 @@ public class Appointment {
      * @param duration must be integer
      * @return String end date and time of appointment
      */
-    private static String getEndDateTime(String startDateTime, String duration) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATETIME_PATTERN);
-        LocalDateTime start = LocalDateTime.parse(startDateTime, formatter);
-        LocalDateTime end = start.plusMinutes(Integer.parseInt(duration));
-        String endDateTime = end.format(formatter);
-        return endDateTime;
+    private static LocalDateTime getEndDateTime(LocalDateTime startDateTime, String duration) {
+        return startDateTime.plusMinutes(Integer.parseInt(duration));
     }
 
     @Override
