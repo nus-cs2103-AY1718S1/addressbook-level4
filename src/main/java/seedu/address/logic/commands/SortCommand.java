@@ -4,6 +4,7 @@ import java.util.Comparator;
 
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author freesoup
 /**
  * Sorts all persons in the address book to the user.
  */

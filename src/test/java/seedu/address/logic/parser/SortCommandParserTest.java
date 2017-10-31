@@ -11,6 +11,7 @@ import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author freesoup
 public class SortCommandParserTest {
 
     private SortCommandParser parser = new SortCommandParser();

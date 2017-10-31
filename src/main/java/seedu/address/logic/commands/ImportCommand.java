@@ -19,6 +19,7 @@ import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 
+//@@author freesoup
 /**
  * Imports contact from a .vcf file.
  * Adds the contacts into the address book.
@@ -26,7 +27,7 @@ import seedu.address.model.tag.Tag;
 public class ImportCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "import";
-    public static final String COMMAND_USAGE = COMMAND_WORD + " ";
+    public static final String COMMAND_USAGE = COMMAND_WORD;
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Imports contacts from a .vcf file.";
 
