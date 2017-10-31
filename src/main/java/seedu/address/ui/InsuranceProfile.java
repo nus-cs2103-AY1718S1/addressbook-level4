@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static seedu.address.commons.util.FileUtil.isFileExists;
+
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +30,7 @@ public class InsuranceProfile extends UiPart<Region> {
 
 
     private ReadOnlyInsurance insurance;
+    private File insuranceFile;
 
     @FXML
     private Label index;
@@ -50,23 +53,28 @@ public class InsuranceProfile extends UiPart<Region> {
         super(FXML);
         this.insurance = insurance;
         index.setText(displayIndex + ".");
+
+        insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractPath());
+        if (isFileExists(insuranceFile)) {
+            contractPath.getStyleClass().add("particular-link");
+            contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        Desktop.getDesktop().open(insuranceFile);
+                        // HostServices hostServices = getRoot().getHostservices();
+                        // hostServices.showDocument(file.getAbsolutePath());
+                    } catch (IOException ee) {
+                        logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractPath());
+                    }
+                }
+            });
+        }
         owner.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getOwner())));
         insured.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getInsured())));
         beneficiary.setOnMouseClicked(e ->
                 raise(new PersonNameClickedEvent(insurance.getBeneficiary())));
-        contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                try {
-                    File file = new File(PDFFOLDERPATH + insurance.getContractPath());
-                    Desktop.getDesktop().open(file);
-                    // HostServices hostServices = getRoot().getHostservices();
-                    // hostServices.showDocument(file.getAbsolutePath());
-                } catch (IOException ee) {
-                    logger.info("Cannot open file: " + PDFFOLDERPATH + insurance.getContractPath());
-                }
-            }
-            });
+
         bindListeners(insurance);
         registerAsAnEventHandler(this);
     }

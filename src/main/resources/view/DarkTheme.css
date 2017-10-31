@@ -135,7 +135,7 @@
     -fx-border-width: 1;
 }
 
-.list-cell:filled #insuranceCardPane .particular-person:hover {
+.list-cell:filled #insuranceCardPane .particular-link:hover {
     -fx-font-size: 13pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: #d06651;

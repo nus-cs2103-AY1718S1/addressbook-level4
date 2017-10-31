@@ -92,17 +92,17 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="insured" styleClass="particular-person" text="\$insured" />
+                  <Label fx:id="insured" styleClass="particular-link" text="\$insured" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="beneficiary" styleClass="particular-person" text="\$beneficiary" />
+                  <Label fx:id="beneficiary" styleClass="particular-link" text="\$beneficiary" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="premium" styleClass="particular-field" text="\$premium" />
+                  <Label fx:id="premium" styleClass="particular-link" text="\$premium" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
