@@ -1,6 +1,6 @@
 .background {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    background-color: #383838; /* Used in the default.html file */
+    -fx-background-color: #1d1d1d;
+    background-color: #1d1d1d; /* Used in the default.html file */
 }
 
 .label {
@@ -77,21 +77,21 @@
 }
 
 .split-pane:horizontal .split-pane-divider {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #1d1d1d;
 }
 
 .split-pane:vertical .split-pane-divider {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #1d1d1d;
 }
 
 .split-pane {
     -fx-border-radius: 1;
     -fx-border-width: 1;
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #1d1d1d;
 }
 
 .list-view {
-    -fx-background-color: derive(#1d1d1d, 30%);
+    -fx-background-color: derive(#1d1d1d, 20%);
     -fx-background-insets: 0;
     -fx-padding: 0;
 }
@@ -107,11 +107,11 @@
 }
 
 .list-cell:hover {
-    -fx-background-color: derive(#1d1d1d, 60%);
+    -fx-background-color: derive(#1d1d1d, 40%);
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: derive(#1d1d1d, 60%);
+    -fx-background-color: derive(#1d1d1d, 40%);
 }
 
 .list-cell:filled:selected #cardPane {
@@ -153,17 +153,17 @@
 }
 
 .anchor-pane {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #1d1d1d;
 }
 
 .pane-with-border {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #1d1d1d;
     -fx-border-color: transparent;
     -fx-border-top-width: 1px;
 }
 
 .status-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #1d1d1d;
     -fx-text-fill: black;
 }
 
@@ -184,8 +184,8 @@
 }
 
 .status-bar-with-border {
-    -fx-background-color: derive(#1d1d1d, 30%);
-    -fx-border-color: derive(#1d1d1d, 25%);
+    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-border-color: derive(#1d1d1d, 15%);
     -fx-border-width: 1px;
 }
 
@@ -203,6 +203,12 @@
     -fx-background-color: derive(#1d1d1d, 30%);
 }
 
+.calendar-color {
+    -fx-border-color: derive(#1d1d1d, 60%);
+    -fx-fill: derive(#1d1d1d, 60%);
+    -fx-text-fill: derive(#1d1d1d, 60%);
+}
+
 .context-menu {
     -fx-background-color: derive(#1d1d1d, 50%);
 }
@@ -212,8 +218,8 @@
 }
 
 .menu-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    -fx-border-color: #1d1d1d;
+    -fx-background-color: #1d1d1d;
+    -fx-border-color: derive(#1d1d1d, 30%);
 }
 
 .menu-bar .label {
@@ -235,16 +241,16 @@
     -fx-background-color: transparent;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 13pt;
-    -fx-text-fill: white;
+    -fx-text-fill: derive(#1d1d1d, 60%);
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
 .button:hover {
-    -fx-background-color: derive(#1d1d1d, 60%);
+    -fx-background-color: derive(#1d1d1d, 30%);
 }
 
 .button:pressed, .button:default:hover:pressed {
-    -fx-background-color: derive(#1d1d1d, 60%);
+    -fx-background-color: derive(#1d1d1d, 30%);
     -fx-text-fill: #1d1d1d;
 }
 
@@ -301,7 +307,7 @@
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: derive(#1d1d1d, 60%);
+    -fx-background-color: derive(#1d1d1d, 40%);
     -fx-background-insets: 3;
 }
 
@@ -323,11 +329,11 @@
 }
 
 #browserPlaceholder {
-    -fx-border-color: #1d1d1d;
+    -fx-border-color: derive(#1d1d1d, 30%);
 }
 
 #calendarPanel {
-    -fx-border-color: #1d1d1d;
+    -fx-border-color: derive(#1d1d1d, 30%);
 }
 
 #cardPane {
@@ -336,7 +342,7 @@
 }
 
 #commandBoxPlaceholder {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #1d1d1d;
 }
 
 #commandTypeLabel {
@@ -345,9 +351,9 @@
 }
 
 #commandTextField {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #1d1d1d;
     -fx-background-insets: 0;
-    -fx-border-color: #1d1d1d;
+    -fx-border-color: derive(#1d1d1d, 30%);
     -fx-border-insets: 0;
     -fx-border-width: 1;
     -fx-font-family: "Segoe UI Light";
@@ -371,7 +377,7 @@
 }
 
 #detailsPanelPlaceholder {
-    -fx-border-color: #1d1d1d;
+    -fx-border-color: derive(#1d1d1d, 30%);
 }
 
 #filterField, #personListPanel, #personWebpage {
@@ -379,20 +385,20 @@
 }
 
 #personListPanelPlaceholder {
-    -fx-border-color: #1d1d1d;
+    -fx-border-color: derive(#1d1d1d, 30%);
 }
 
 #resultDisplay .content {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #1d1d1d;
     -fx-background-radius: 0;
 }
 
 #resultDisplay {
-    -fx-border-color: #1d1d1d;
+    -fx-border-color: derive(#1d1d1d, 30%);
 }
 
 #resultDisplayPlaceholder {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #1d1d1d;
 }
 
 #tags {
