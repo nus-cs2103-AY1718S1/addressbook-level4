@@ -25,7 +25,7 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage {
     String getAddressBookFilePath();
 
     @Override
-    Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException;
+    Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException, InvalidFilePathException;
 
     @Override
     void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException, InvalidFilePathException;

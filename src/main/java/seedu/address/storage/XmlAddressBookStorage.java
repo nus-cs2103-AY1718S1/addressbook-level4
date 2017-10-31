@@ -33,7 +33,8 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     }
 
     @Override
-    public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException {
+    public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException,
+            InvalidFilePathException {
         return readAddressBook(filePath);
     }
 
@@ -43,9 +44,11 @@ public class XmlAddressBookStorage implements AddressBookStorage {
      * @throws DataConversionException if the file is not in the correct format.
      */
     public Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws DataConversionException,
-                                                                                 FileNotFoundException {
+                                                                                 FileNotFoundException,
+                                                                                 InvalidFilePathException {
         requireNonNull(filePath);
 
+        validateFilePath(filePath);
         File addressBookFile = new File(filePath);
 
         if (!addressBookFile.exists()) {
