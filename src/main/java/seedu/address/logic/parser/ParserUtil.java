@@ -39,6 +39,7 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
+    //@@author marvinchin
     /**
      * Splits {@code args} by whitespace and returns it
      */
@@ -47,6 +48,7 @@ public class ParserUtil {
         String[] splitArgs = args.split("\\s+");
         return Arrays.asList(splitArgs);
     }
+    //@@author
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
