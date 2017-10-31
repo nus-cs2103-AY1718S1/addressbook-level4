@@ -158,6 +158,7 @@ public class ParserUtil {
         return tagSet;
     }
 
+    //@@author marvinchin
     /**
      * Parses {@code Collection<String> rawSocialInfos} into {@code Set<SocialInfo}.
      * @param rawSocialInfos
@@ -171,4 +172,5 @@ public class ParserUtil {
         }
         return socialInfoSet;
     }
+    //@@author
 }
