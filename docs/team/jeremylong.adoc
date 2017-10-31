@@ -27,6 +27,77 @@ include::../UserGuide.adoc[tag=list]
 
 ==== Justification
 
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=list]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=listImplementation]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: KeyBoard ShortCuts
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=shortcut]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=shortcutreason]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=shortcutimple]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Remark Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=remark]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+==== Implementation
 
 
 === Other contributions

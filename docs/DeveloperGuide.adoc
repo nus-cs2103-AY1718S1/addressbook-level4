@@ -426,7 +426,7 @@ above diagram, each tag is updated to a certain color and does not need to know 
 
 
 === *Enhancement: List Package* +
-
+// tag::list[]
 *Reason for implementation* +
 
 This enhancement taps on the concept of Open-closed principle, enhancing the listing capabilities of the `list` command +
@@ -457,8 +457,9 @@ Scenarios include - +
 2. We reverse the list instead of appending newly added contacts to the top of the list as older patients should be given more attention and thus, be at the top of the list.
 
 |=======================================================================
+// end::list[]
 
-
+// tag::listImplementation[]
 *How it is implemented* +
 
 
@@ -516,8 +517,11 @@ Potential enhancements include the use of complex search algorithms such as goog
 to provide users with the ability to search for users with greater detail. However, this is something +
 unlikely to have and will ensue only once all existing must-have and good-to-have are completed.
 
+// end::listImplementation[]
+
 === *Enhancement: Command Box Keyboard Shortcuts*
 
+// tag::shortcutreason[]
 *Reason for implementation* +
 
 Such a feature is implemented to enhance the experience of users and allows developers to debug +
@@ -525,6 +529,9 @@ newly implemented features with greater ease that requires the use of the comman
 
 The feature allows users and developers to easily navigate and edit input text.
 
+// end::shortcutreason[]
+
+// tag::shortcutimple[]
 *How it is implemented* +
 
 There are three key improvements that the enhancement brings
@@ -597,6 +604,8 @@ though not ideal, it is workable as there is only a limited number of combinatio
 +
 Brute force is used to eliminate the need to throw exceptions which can never be called which in turn +
 adversely affect test coverage as these exception can never be thrown.
+
+// end::shortcutimple[]
 
 *Future enhancements*
 
