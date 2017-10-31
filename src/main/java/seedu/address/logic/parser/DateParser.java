@@ -60,6 +60,7 @@ public class DateParser {
             throw new IllegalValueException(MESSAGE_INVALID_YEAR);
         } else if (year.length() == 2) {
             int iYear = Integer.parseInt(year);
+            // Change this if condition to edit your auto-correcting range for 2-digit year inputs
             if (iYear > currYear % 100) {
                 return Integer.toString(iYear + (currYear / 100 - 1) * 100);
             } else {
