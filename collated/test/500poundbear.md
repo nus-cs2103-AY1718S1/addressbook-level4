@@ -1,51 +1,31 @@
-package seedu.address.model;
+# 500poundbear
+###### /java/seedu/address/model/RemarkTest.java
+``` java
+    @Test
+    public void equals() {
+        Remark remark = new Remark("Hello");
 
-import static junit.framework.TestCase.assertEquals;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BENSON;
-import static seedu.address.testutil.TypicalPersons.CARL;
-import static seedu.address.testutil.TypicalPersons.DANIEL;
-import static seedu.address.testutil.TypicalPersons.ELLE;
-import static seedu.address.testutil.TypicalPersons.FIONA;
-import static seedu.address.testutil.TypicalPersons.GEORGE;
+        // Return true if same object
+        assertTrue(remark.equals(remark));
 
-import java.util.ArrayList;
-import java.util.Arrays;
+        // Returns true if remarks have the same value
+        Remark remarkSameValue = new Remark(remark.value);
+        assertTrue(remark.equals(remarkSameValue));
 
-import org.junit.Test;
+        // Returns false if different type
+        assertFalse(remark.equals(1));
 
-import javafx.collections.ObservableList;
+        // Returns false if null
+        assertFalse(remark.equals(null));
 
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.testutil.AddressBookBuilder;
-
-/**
- * Tests for Statistics model
- */
-public class StatisticsTest {
-    private AddressBook addressBook1 = new AddressBookBuilder()
-            .withPerson(ALICE)
-            .withPerson(BENSON)
-            .withPerson(CARL)
-            .withPerson(DANIEL)
-            .withPerson(ELLE)
-            .withPerson(FIONA)
-            .withPerson(GEORGE)
-            .build();
-
-    private AddressBook addressBook2 = new AddressBookBuilder()
-            .withPerson(ELLE)
-            .withPerson(FIONA)
-            .withPerson(GEORGE)
-            .withPerson(ALICE)
-            .build();
-
-    private ObservableList<ReadOnlyPerson> allPersonsList1 = addressBook1.getPersonList();
-    private ObservableList<ReadOnlyPerson> allPersonsList2 = addressBook2.getPersonList();
-
-    private Statistics statistics;
-
-    //@@author 500poundbear
+        // Returns false if different person
+        Remark differentRemark = new Remark("Hey");
+        assertFalse(remark.equals(differentRemark));
+    }
+}
+```
+###### /java/seedu/address/model/StatisticsTest.java
+``` java
     @Test
     public void getTotalNumberOfPeopleTest() {
 
@@ -56,7 +36,9 @@ public class StatisticsTest {
         assertEquals(statistics.getTotalNumberOfPeople().intValue(), 4);
     }
 
-    //@@author 500poundbear
+```
+###### /java/seedu/address/model/StatisticsTest.java
+``` java
     @Test
     public void calculateCountByMonthOffsetTest() {
 
@@ -79,7 +61,9 @@ public class StatisticsTest {
         assertEquals(statistics.calculateCountByMonthOffset(5, 2016), 10);
     }
 
-    //@@author 500poundbear
+```
+###### /java/seedu/address/model/StatisticsTest.java
+``` java
     @Test
     public void getTotalNumberOfNoFacebookRecordsTest() {
 
@@ -90,7 +74,9 @@ public class StatisticsTest {
         assertEquals(statistics.getHasNoFacebook().intValue(), 2);
     }
 
-    //@@author 500poundbear
+```
+###### /java/seedu/address/model/StatisticsTest.java
+``` java
     @Test
     public void getTotalNumberOfNoTwitterRecordsTest() {
 
@@ -102,7 +88,9 @@ public class StatisticsTest {
 
     }
 
-    //@@author 500poundbear
+```
+###### /java/seedu/address/model/StatisticsTest.java
+``` java
     @Test
     public void getTotalNumberOfNoInstagramRecordsTest() {
 
@@ -114,7 +102,9 @@ public class StatisticsTest {
 
     }
 
-    //@@author 500poundbear
+```
+###### /java/seedu/address/model/StatisticsTest.java
+``` java
     @Test
     public void getNewPersonsAddByMonthTest() {
 
@@ -140,3 +130,4 @@ public class StatisticsTest {
     }
 
 }
+```

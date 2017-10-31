@@ -9,6 +9,7 @@ import seedu.address.model.person.Remark;
 
 public class RemarkTest {
 
+    //@@author 500poundbear
     @Test
     public void equals() {
         Remark remark = new Remark("Hello");

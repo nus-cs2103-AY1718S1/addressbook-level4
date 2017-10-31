@@ -27,6 +27,7 @@ public class Statistics {
     private Integer currentYear;
     private Integer currentMonth;
 
+    //@@author 500poundbear
     public Statistics (ObservableList<ReadOnlyPerson> list, int currentMonth, int currentYear) {
 
         this.currentYear = currentYear;
@@ -38,6 +39,7 @@ public class Statistics {
         tabulateSocialMediaUsage();
     }
 
+    //@@author 500poundbear
     public ArrayList<Integer> getNewPersonsAddByMonth(int displayYears) {
 
         ArrayList<Integer> countByMonth = new ArrayList<>(Collections.nCopies(displayYears * 12 + 1, 0));
@@ -58,6 +60,7 @@ public class Statistics {
         return countByMonth;
     }
 
+    //@@author 500poundbear
     /**
      * Count the offset when adding to the array list of sum by months
      */
@@ -66,7 +69,7 @@ public class Statistics {
                 + (this.currentMonth - personAddedMonth);
     }
 
-
+    //@@author 500poundbear
     /**
      * Tabulate the total number of people in the list
      */
@@ -74,6 +77,7 @@ public class Statistics {
         this.totalNumberOfPeople = personList.size();
     }
 
+    //@@author 500poundbear
     /**
      * Tabulates number of users of each social media platform
      */
@@ -92,6 +96,7 @@ public class Statistics {
         }
     }
 
+    //@@author 500poundbear
     /**
      * Fetches number of persons with no facebook information added
      */
@@ -99,6 +104,7 @@ public class Statistics {
         return this.hasNoFacebook;
     }
 
+    //@@author 500poundbear
     /**
      * Fetches number of persons with no twitter information added
      */
@@ -106,6 +112,7 @@ public class Statistics {
         return this.hasNoTwitter;
     }
 
+    //@@author 500poundbear
     /**
      * Fetches number of persons with no instagram information added
      */
@@ -113,6 +120,7 @@ public class Statistics {
         return this.hasNoInstagram;
     }
 
+    //@@author 500poundbear
     /**
      * Fetches total number of persons
      */
