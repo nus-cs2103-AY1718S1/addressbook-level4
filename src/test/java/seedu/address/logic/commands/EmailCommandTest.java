@@ -22,7 +22,7 @@ public class EmailCommandTest {
 
     @Test
     public void assertExecutionSuccess() throws CommandException {
-        CalendarCommand command = new CalendarCommand();
+        EmailCommand command = new EmailCommand();
 
         try {
             CommandResult commandResult = command.execute();
