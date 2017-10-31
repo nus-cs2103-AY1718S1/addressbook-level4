@@ -167,7 +167,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person, missing tags -> added */
         assertCommandSuccess(HOON);
 
-         /* Case: missing name -> rejected */
+        /* Case: missing name -> rejected */
         command = AddCommand.COMMAND_WORD + PHONE_DESC_AMY + BIRTHDAY_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
