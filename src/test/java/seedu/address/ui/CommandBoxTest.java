@@ -17,12 +17,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.storage.Storage;
 import seedu.address.testutil.TypicalStorage;
 
-public class
-
-
-
-CommandBoxTest extends GuiUnitTest {
-
+public class CommandBoxTest extends GuiUnitTest {
 
     private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD + " all";
     private static final String COMMAND_THAT_FAILS = "invalid command";
