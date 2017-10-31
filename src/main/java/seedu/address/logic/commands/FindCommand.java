@@ -23,7 +23,7 @@ public class FindCommand extends Command {
     public FindCommand(NameContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
-
+    // @@author HuWanqing
     @Override
     public CommandResult execute() throws CommandException {
         model.updateFilteredPersonList(predicate);
@@ -40,7 +40,7 @@ public class FindCommand extends Command {
         }
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
-
+    // @@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
