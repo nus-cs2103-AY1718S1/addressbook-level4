@@ -8,7 +8,6 @@ import static seedu.address.testutil.TypicalPersons.FIONA;
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author Juxarius
 public class LifeInsuranceTest {
@@ -28,6 +27,11 @@ public class LifeInsuranceTest {
         }
     }
 
+    /**
+     * asserts that the 2 input insurances are identical
+     * @param insurance1
+     * @param insurance2
+     */
     public void assertEqualsInsurance(ReadOnlyInsurance insurance1, ReadOnlyInsurance insurance2) {
         assertEquals(insurance1.getOwner(), insurance2.getOwner());
         assertEquals(insurance1.getBeneficiary(), insurance2.getBeneficiary());

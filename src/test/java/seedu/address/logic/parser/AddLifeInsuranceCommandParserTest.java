@@ -15,7 +15,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 //@@author Juxarius
 public class AddLifeInsuranceCommandParserTest {
 
-    AddLifeInsuranceCommandParser parser = new AddLifeInsuranceCommandParser();
+    private final AddLifeInsuranceCommandParser parser = new AddLifeInsuranceCommandParser();
 
     @Test
     public void testParse() {
@@ -36,6 +36,11 @@ public class AddLifeInsuranceCommandParserTest {
         assertCommandSuccess(parser, command);
     }
 
+    /**
+     * asserts the failure to parse command due to invalid number of arguments
+     * @param parser
+     * @param command
+     */
     public void assertCommandFail(AddLifeInsuranceCommandParser parser, String command) {
         try {
             parser.parse(command);
@@ -45,6 +50,11 @@ public class AddLifeInsuranceCommandParserTest {
         }
     }
 
+    /**
+     * asserts that the parser is able to successfully parse the command
+     * @param parser
+     * @param command
+     */
     public void assertCommandSuccess(AddLifeInsuranceCommandParser parser, String command) {
         try {
             parser.parse(command);

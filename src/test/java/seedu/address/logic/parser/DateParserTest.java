@@ -44,6 +44,11 @@ public class DateParserTest {
         assertParseFailure(parser, "11 10 94kjds");
     }
 
+    /**
+     * asserts that the input string is unable to be parsed into a LocalDate
+     * @param parser
+     * @param input
+     */
     public static void assertParseFailure(DateParser parser, String input) {
         try {
             parser.parse(input);
