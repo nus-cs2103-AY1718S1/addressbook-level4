@@ -1,11 +1,16 @@
 package seedu.address.ui.event;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.reminder.Reminder;
 import seedu.address.ui.UiPart;
 
 /**
@@ -51,6 +56,14 @@ public class EventCard extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(event.nameProperty()));
         venue.textProperty().bind(Bindings.convert(event.addressProperty()));
         dateTime.textProperty().bind(Bindings.convert(event.timeProperty()));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+        LocalDate dateToCompare = LocalDate.parse(event.getTime().toString().substring(0, 8), formatter);
+        LocalDate date = LocalDate.now();
+        String text = date.format(formatter);
+        LocalDate parsedDate = LocalDate.parse(text, formatter);
+        if(parsedDate.isEqual(dateToCompare)) {
+            cardPane.setStyle("-fx-background-color: #990000;");
+        }
     }
 
     @Override
