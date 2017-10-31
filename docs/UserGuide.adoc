@@ -67,11 +67,21 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+[TIP]
+====
+Add commands are _undoable_ with the `undo` command.
+====
+
 === `clear` or `c`: Clearing all entries _(Since v1.3)_
 
 Clears all entries from Rolodex. +
 Format: `clear` or `c` +
 Keyboard shortcut: kbd:[Ctrl+Shift+C]
+
+[TIP]
+====
+Clear commands are _undoable_ with the `undo` command.
+====
 
 === `delete`, `d` or `-`: Deleting a person _(Since v1.3)_
 
@@ -94,6 +104,11 @@ Deletes the 2nd person in Rolodex.
 * `find Betsy` +
 `d 1` +
 Deletes the 1st person in the results of the `find` command.
+
+[TIP]
+====
+Delete commands are _undoable_ with the `undo` command.
+====
 
 === `edit`, `e`, `change` or `modify`: Editing a person _(Since v1.3)_
 
@@ -118,6 +133,11 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `e 2 n/Betsy Crower t/friends` +
 Edits the name of the 2nd person to be `Betsy Crower` and adds the tag `friends` if the tag `friends` does not exist in
 the 2nd person, or removes it otherwise.
+
+[TIP]
+====
+Edit commands are _undoable_ with the `undo` command.
+====
 
 // tag::find[]
 
@@ -238,6 +258,11 @@ Keyboard Shortcut: kbd:[Ctrl+N]
 * The command recognizes directories in formats kbd:[/] or kbd:[{backslash} ] as valid filepaths
 ****
 
+[NOTE]
+====
+The `new` command will refresh your session and all existing _undoable_ commands will be cleared. It is recommended that you confirm you are satisfied with your changes before opening a new file.
+====
+
 Examples:
 
 * `new C:/Users/Rolodex/downloads/myOwn.rldx` +
@@ -267,6 +292,11 @@ Keyboard Shortcut: kbd:[Ctrl+O]
 [NOTE]
 ====
 Opening a file without a .rldx extension will not save your changes.
+====
+
+[NOTE]
+====
+The `open` command will refresh your session and all existing _undoable_ commands will be cleared. It is recommended that you confirm you are satisfied with your changes before opening a new file.
 ====
 
 Examples:
@@ -302,6 +332,11 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `undo` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
 `r` (reapplies the `clear` command) +
+
+[TIP]
+====
+Redo commands are _undoable_ with the `undo` command.
+====
 
 === `remark` or `note` or `rmk`: Adding a remark _(Coming in V2.0)_
 
