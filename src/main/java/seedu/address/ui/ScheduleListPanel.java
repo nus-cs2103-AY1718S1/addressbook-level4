@@ -4,7 +4,7 @@ import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
 
-//import com.google.common.eventbus.Subscribe;
+import com.google.common.eventbus.Subscribe;
 
 //import javafx.application.Platform;
 
@@ -15,6 +15,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 //import seedu.address.commons.events.ui.JumpToScheduleListRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.SchedulePanelSelectionChangedEvent;
 import seedu.address.model.schedule.ReadOnlySchedule;
 
@@ -54,6 +55,15 @@ public class ScheduleListPanel extends UiPart<Region> {
                 });
     }
 
+    /** Implement it at browser panel side */
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        ObservableList<ReadOnlySchedule> scheduleList = event.getNewSelection()
+                .person.scheduleProperty().get().asObservableList();
+        ObservableList<ScheduleCard> mappedList = EasyBind.map(
+                scheduleList, (schedule) -> new ScheduleCard(schedule, scheduleList.indexOf(schedule) + 1));
+        scheduleListView.setItems(mappedList);
+    }
 
 
     /**

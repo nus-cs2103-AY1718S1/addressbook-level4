@@ -130,7 +130,6 @@ public class UniquePersonList implements Iterable<Person> {
             for (int i = 0; i < internalList.size(); i++) {
                 currentPerson = internalList.get(i);
                 if (currentPerson.getFavourite().getStatus()) {
-                    System.out.println();
                     if (currentPerson.getName().fullName.compareTo(editedPerson.getName().fullName) < 0) {
                         targetIndex++;
                     }
