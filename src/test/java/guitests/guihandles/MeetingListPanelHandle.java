@@ -12,7 +12,7 @@ import seedu.address.ui.MeetingCard;
  */
 
 public class MeetingListPanelHandle extends NodeHandle<ListView<MeetingCard>> {
-    public static final String MEETING_LIST_VIEW_ID = "#MeetingListView";
+    public static final String MEETING_LIST_VIEW_ID = "#meetingListView";
 
     private Optional<MeetingCard> lastRememberedSelectedMeetingCard;
 
