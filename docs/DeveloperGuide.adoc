@@ -378,7 +378,7 @@ different events with their information given by the user. This command inherits
 From Figure 5.2.1 below, it is visible that `AddEventCommand` inherits from `UndoableCommand` which is an extra layer between abstract `Command` class in which the SortCommand
 can be undoable, where the previous state of the address book before sorting is saved.
 
-image::AddEventCommandLogicClassDiagram.PNG[width="800"]
+image::AddEventDiagram.PNG[width="600"]
 Figure 5.2.1 AddEventCommand Logic Class Diagram
 
 Code of `AddEventCommand`:
@@ -1174,10 +1174,10 @@ image::getting-started-ui-status-after.png[width="500"]
 [discrete]
 ==== `Storage` component
 
-[TIP]
-Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
+//[TIP]
+//Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
+//
+//. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
 
 The new backUpAddressBook stores the address book at a back up location.
 
@@ -1202,13 +1202,13 @@ private void backUpAddressBook(ReadOnlyAddressBook addressBook) throws IOExcepti
 }
 ----
 
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
-****
+//****
+//* Hint
+//** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
+//** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
+//* Solution
+//** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
+//****
 
 === Creating a new command: `remark`
 
