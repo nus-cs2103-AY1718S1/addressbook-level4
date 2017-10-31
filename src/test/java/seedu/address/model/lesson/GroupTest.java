@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import seedu.address.model.module.Group;
 
+//@@author caoliangnus
 public class GroupTest {
 
     @Test

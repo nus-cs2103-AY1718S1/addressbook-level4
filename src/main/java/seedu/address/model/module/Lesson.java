@@ -13,6 +13,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.lecturer.Lecturer;
 import seedu.address.model.lecturer.UniqueLecturerList;
 
+//@@author caoliangnus
 /**
  * Represents a Lesson in the address book.
  * Guarantees: details are present and not null, field values are validated.

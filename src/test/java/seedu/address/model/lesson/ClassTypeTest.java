@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import seedu.address.model.module.ClassType;
 
+//@@author caoliangnus
 public class ClassTypeTest {
 
     @Test

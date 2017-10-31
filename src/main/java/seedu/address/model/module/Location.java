@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author caoliangnus
 /**
  * Represents a Lesson's location in the application.
  * Guarantees: immutable; is valid as declared in {@link #isValidLocation(String)}
