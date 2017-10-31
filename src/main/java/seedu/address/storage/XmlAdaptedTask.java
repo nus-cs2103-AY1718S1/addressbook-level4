@@ -63,7 +63,7 @@ public class XmlAdaptedTask {
             tagged.add(new XmlAdaptedTag(tag));
         }
         complete = source.getComplete();
-        peopleIndices = source.getPeopleIndices();
+        peopleIndices = source.getPeopleIds();
         priority = source.getPriority();
     }
 

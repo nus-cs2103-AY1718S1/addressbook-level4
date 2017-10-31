@@ -43,6 +43,7 @@ public class Task implements ReadOnlyTask {
         this.taskPriority = new SimpleObjectProperty<>(1);
         this.id = new SimpleObjectProperty<>(nextId);
         nextId++;
+        this.peopleIds = new SimpleObjectProperty<>(new ArrayList<Integer>());
     }
 
     /**
@@ -64,14 +65,13 @@ public class Task implements ReadOnlyTask {
      * @param endDateTime, the end date and time of this task
      */
     public Task (String name, String description, String startDateTime, String endDateTime) {
+        this();
         this.taskName = new SimpleObjectProperty<>(name);
         this.taskDescription = new SimpleObjectProperty<>(description);
         this.startDateTime = new SimpleObjectProperty<>(startDateTime);
         this.endDateTime = new SimpleObjectProperty<>(endDateTime);
         this.complete = new SimpleObjectProperty<>(false);
         this.taskPriority = new SimpleObjectProperty<>(1);
-        this.peopleIds = new SimpleObjectProperty<>();
-        peopleIds.set(new ArrayList<>());
     }
 
     /**
@@ -110,8 +110,6 @@ public class Task implements ReadOnlyTask {
 
         this.complete = new SimpleObjectProperty<>(false);
         this.id = new SimpleObjectProperty<>();
-        this.peopleIds = new SimpleObjectProperty<>();
-        peopleIds.set(new ArrayList<>());
     }
 
 
@@ -126,7 +124,7 @@ public class Task implements ReadOnlyTask {
      * @param priority, the priority value
      */
     public Task (String name, String description, String startDateTime, String endDateTime,
-                 Set<Tag> tags, Boolean state, Integer priority, Integer id) {
+                 Set<Tag> tags, Boolean state, Integer priority, Integer id, ArrayList<Integer> peopleIds) {
         this(tags);
         this.taskName = new SimpleObjectProperty<>(name);
         this.taskDescription = new SimpleObjectProperty<>(description);
@@ -134,7 +132,7 @@ public class Task implements ReadOnlyTask {
         this.endDateTime = new SimpleObjectProperty<>(endDateTime);
         this.complete = new SimpleObjectProperty<>(false);
         this.id = new SimpleObjectProperty<>(id);
-        this.peopleIds = new SimpleObjectProperty<>(new ArrayList<>(peopleIds));
+        this.peopleIds = new SimpleObjectProperty<>(peopleIds);
         this.complete = new SimpleObjectProperty<>(state);
         setPriority(priority);
     }
@@ -145,7 +143,8 @@ public class Task implements ReadOnlyTask {
      */
     public Task (ReadOnlyTask task) {
         this(task.getName(), task.getDescription(), task.getStartDateTime(),
-                task.getEndDateTime(), task.getTags(), task.getComplete(), task.getPriority(), task.getId());
+                task.getEndDateTime(), task.getTags(), task.getComplete(), task.getPriority(), task.getId(),
+                task.getPeopleIds());
     }
 
     /**

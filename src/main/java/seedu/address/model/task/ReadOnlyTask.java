@@ -32,8 +32,8 @@ public interface ReadOnlyTask {
     Boolean getComplete();
     ObjectProperty<Integer> idProperty();
     Integer getId();
-    ObjectProperty<ArrayList<Integer>> peopleIndicesProperty();
-    ArrayList<Integer> getPeopleIndices();
+    ObjectProperty<ArrayList<Integer>> peopleIdsProperty();
+    ArrayList<Integer> getPeopleIds();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
