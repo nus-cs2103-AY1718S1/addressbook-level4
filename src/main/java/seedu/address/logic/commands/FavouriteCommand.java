@@ -47,7 +47,7 @@ public class FavouriteCommand extends Command {
     }
 
     @Override
-    protected CommandResult execute() throws CommandException {
+    public CommandResult execute() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
