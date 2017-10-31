@@ -89,8 +89,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
-
-    //@@author sarahnzx
+    
     @Override
     public void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
         for (int i = 0; i < addressBook.getPersonList().size(); i++) {
