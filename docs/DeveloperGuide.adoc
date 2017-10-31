@@ -468,7 +468,14 @@ image::ListPackageActivityDiagram.png[width="800"]
 The diagram above shows the activity diagram for the list package. +
 Implementation passes through two main segments: Logic and Model. +
  +
-The explanation as follows will use ListByTag Command as an example: +
+
+image::ListByTagSD.png[width="800"]
+    Figure 20: ListByTag Command Sequence Diagram
+
+An explanation will be provided using ListByTag Command as an example. +
+The sequence diagram of the ListByTag Command can be seen in the figure above. +
+The explanation for the above diagram is as follows: +
+
 
 1. Logic
 
@@ -609,7 +616,7 @@ in these types of emergencies.
 
 
 image::SDforListByBloodtypeCommandLogic.png[width="800"]
-    Figure 20: ListByBloodyTypeCommand Sequence Diagram
+    Figure 21: ListByBloodyTypeCommand Sequence Diagram
 
 The sequence diagram for ListByBloodtypeCommand class within the Logic Component is as shown above.
 
@@ -653,7 +660,7 @@ The sequence diagram for using this Command class within the Logic Component is 
 
 
 image::SDforBatchDeleteLogic.png[width="800"]
-    Figure 21: Sequence diagram for a `batch myTag` command in the Logic Component
+    Figure 22: Sequence diagram for a `batch myTag` command in the Logic Component
 
 The model component will handle the actual deletion operations. To support this, an additional method is defined in the Model interface for implementation by the ModelManager class. +
 
@@ -663,7 +670,7 @@ See the sequence diagram below to better understand the full range of interactio
 
 
 image::SDforBatchDeleteModel.png[width="800"]
-    Figure 22: Sequence diagram for a `batch myTag` command in the Model Component
+    Figure 23: Sequence diagram for a `batch myTag` command in the Model Component
 
 *Reasons for how it is implemented*
 
