@@ -133,7 +133,7 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        profilePanel = new ProfilePanel();
+        profilePanel = new ProfilePanel(primaryStage);
         profilePlaceholder.getChildren().add(profilePanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());

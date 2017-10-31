@@ -12,12 +12,17 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
@@ -29,12 +34,16 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class ProfilePanel extends UiPart<Region> {
 
     private static final String FXML = "ProfilePanel.fxml";
+    private static final String DEFAULT_IMAGE_STORAGE_PREFIX = "data/";
+    private static final String DEFAULT_IMAGE_STORAGE_SUFFIX = ".png";
     private static String[] colors = { "red", "yellow", "blue", "orange", "indigo", "green", "violet", "black" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private final FileChooser fileChooser = new FileChooser();
     private ReadOnlyPerson person;
+    private Stage primaryStage;
 
     @FXML
     private HBox profilePane;
@@ -58,15 +67,65 @@ public class ProfilePanel extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private javafx.scene.image.ImageView profilePicture;
+    @FXML
+    private Button changePictureButton;
 
-    public ProfilePanel() {
+    public ProfilePanel(Stage primaryStage) {
         super(FXML);
         this.person = new Person();
-        initTags(person);
-        bindListeners(person);
+        this.primaryStage = primaryStage;
+        initChangePictureButton();
         initStyle();
-        initPicture();
+        refreshState();
         registerAsAnEventHandler(this);
+    }
+
+    private void refreshState() {
+        bindListeners();
+        initPicture();
+        initTags();
+    }
+
+    /**
+     * Initialize change picture button
+     */
+    private void initChangePictureButton() {
+        changePictureButton.setOnAction(
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        setExtFilters(fileChooser);
+                        File file = fileChooser.showOpenDialog(primaryStage);
+                        if (file != null) {
+                            saveImageToStorage(file);
+                            refreshState();
+                        }
+                    }
+                }
+        );
+    }
+
+    private void setExtFilters(FileChooser chooser) {
+        chooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("All Images", "*.*"),
+                new FileChooser.ExtensionFilter("PNG", "*.png")
+        );
+    }
+
+    /**
+     * Save a given image file to storage
+     * @param file
+     */
+    private void saveImageToStorage(File file) {
+        Image image = new Image(file.toURI().toString());
+        String phoneNum = person.getPhone().value;
+
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png",
+                    new File(DEFAULT_IMAGE_STORAGE_PREFIX + phoneNum + DEFAULT_IMAGE_STORAGE_SUFFIX));
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
     }
 
     /**
@@ -74,12 +133,21 @@ public class ProfilePanel extends UiPart<Region> {
      */
     private void initPicture() {
         BufferedImage bufferedImage;
+        String phoneNum = person.getPhone().value;
+
         try {
-            bufferedImage = ImageIO.read(new File("data/default_profile_picture.png"));
+            bufferedImage = ImageIO.read(new File(DEFAULT_IMAGE_STORAGE_PREFIX + phoneNum
+                    + DEFAULT_IMAGE_STORAGE_SUFFIX));
             Image image = SwingFXUtils.toFXImage(bufferedImage, null);
             profilePicture.setImage(image);
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+        } catch (IOException ioe1) {
+            try {
+                bufferedImage = ImageIO.read(new File("data/default_profile_picture.png"));
+                Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+                profilePicture.setImage(image);
+            } catch (IOException ioe2) {
+                ioe2.printStackTrace();
+            }
         }
     }
 
@@ -96,15 +164,14 @@ public class ProfilePanel extends UiPart<Region> {
      */
     public void changeProfile(ReadOnlyPerson person) {
         this.person = person;
-        initTags(person);
-        bindListeners(person);
+        refreshState();
     }
 
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
      */
-    private void bindListeners(ReadOnlyPerson person) {
+    private void bindListeners() {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         occupation.textProperty().bind(Bindings.convert(person.occupationProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
@@ -115,14 +182,14 @@ public class ProfilePanel extends UiPart<Region> {
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             //person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-            initTags(person);
+            initTags();
         });
     }
 
     /**
      *javadoc comment
      */
-    private void initTags(ReadOnlyPerson person) {
+    private void initTags() {
         //person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         tags.getChildren().clear();
         person.getTags().forEach(tag -> {
