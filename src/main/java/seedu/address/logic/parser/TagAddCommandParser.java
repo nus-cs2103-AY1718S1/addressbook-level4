@@ -38,7 +38,7 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
         }
         try {
             for (int i = 0; i < argsArray.length; i++) {
-                if (argsArray[i].matches("\\d?")) {
+                if (argsArray[i].matches("\\d+")) {
                     index.add(ParserUtil.parseIndex(argsArray[i]));
                     lastIndex = i;
                 } else {

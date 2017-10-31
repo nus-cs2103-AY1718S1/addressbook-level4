@@ -40,7 +40,7 @@ public class TagRemoveCommandParser implements Parser<TagRemoveCommand> {
         argsArray = args.trim().split(" ");
         try {
             for (int i = 0; i < argsArray.length; i++) {
-                if (argsArray[i].matches("\\d?")) {
+                if (argsArray[i].matches("\\d+")) {
                     index.add(ParserUtil.parseIndex(argsArray[i]));
                     lastIndex = i;
                 } else {
