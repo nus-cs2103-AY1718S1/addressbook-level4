@@ -1,16 +1,20 @@
 package seedu.address.ui;
 
+import java.time.LocalDate;
 import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
 
-import javafx.application.Platform;
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.CalendarSelectionChangedEvent;
+import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.model.event.Event;
 
 /**
@@ -19,34 +23,36 @@ import seedu.address.model.event.Event;
 public class EventListPanel extends UiPart<Region> {
     private static final String FXML = "EventListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(EventListPanel.class);
-
+    private final ObservableList<Event> eventList;
     @FXML
     private ListView<EventCard> eventListView;
 
     public EventListPanel(ObservableList<Event> eventList) {
         super(FXML);
-        setConnections(eventList);
+        this.eventList = eventList;
+
+        setConnections(eventList, LocalDate.now());
+        setEventHandlerForSelectionChangeEvent();
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<Event> eventList) {
+    private void setConnections(ObservableList<Event> eventList, LocalDate selectedDate) {
         ObservableList<EventCard> mappedList = EasyBind.map(
-                eventList, (event) -> new EventCard(event, eventList.indexOf(event) + 1));
+                eventList, (event) -> new EventCard(event, eventList.indexOf(event) + 1, selectedDate));
         eventListView.setItems(mappedList);
         eventListView.setCellFactory(listView -> new EventListViewCell());
-        //setEventHandlerForSelectionChangeEvent();
     }
 
-
-    /**
-     * Scrolls to the {@code EventCard} at the {@code index} and selects it.
-     */
-    private void scrollTo(int index) {
-        Platform.runLater(() -> {
-            eventListView.scrollTo(index);
-            eventListView.getSelectionModel().clearAndSelect(index);
-        });
+    private void setEventHandlerForSelectionChangeEvent() {
+        eventListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in event list panel changed to : '" + newValue + "'");
+                        raise(new EventPanelSelectionChangedEvent(newValue.event));
+                    }
+                });
     }
+
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code EventCard}.
@@ -66,4 +72,16 @@ public class EventListPanel extends UiPart<Region> {
         }
     }
 
+    /**
+     * Handle event when date in CalenderView is clicked.
+     * <p>
+     * Update master UniqueEventList by running a sort with the given date as reference.
+     * Comparator logic and sorting details is found in {@see UniqueEventList#sort(LocalDate)}
+     *
+     * @param event
+     */
+    @Subscribe
+    private void handleCalendarSelectionChangedEvent(CalendarSelectionChangedEvent event) {
+        setConnections(eventList, event.getSelectedDate());
+    }
 }

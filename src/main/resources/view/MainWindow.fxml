@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@DarkTheme.css" />
         <URL value="@Extensions.css" />
@@ -72,11 +72,17 @@
                     </SplitPane>
                 </children>
             </VBox>
-            <SplitPane fx:id="eventList" dividerPositions="0.5" maxWidth="500.0" minWidth="300.0" orientation="VERTICAL" prefWidth="400.0">
+            <SplitPane fx:id="schedulePanel" dividerPositions="1.0" maxWidth="500.0" minWidth="300.0" orientation="VERTICAL" prefWidth="400.0">
                 <items>
-                    <StackPane fx:id="calendarViewPlaceholder" alignment="TOP_LEFT" />
+                    <StackPane fx:id="calendarViewPlaceholder" alignment="TOP_LEFT" maxHeight="-Infinity">
+                  <opaqueInsets>
+                     <Insets />
+                  </opaqueInsets></StackPane>
                     <StackPane fx:id="eventListPanelPlaceholder" alignment="TOP_LEFT" minHeight="-Infinity" />
                 </items>
+            <opaqueInsets>
+               <Insets />
+            </opaqueInsets>
             </SplitPane>
         </items>
     </SplitPane>

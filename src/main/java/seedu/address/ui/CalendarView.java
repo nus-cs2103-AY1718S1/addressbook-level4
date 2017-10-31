@@ -2,12 +2,12 @@ package seedu.address.ui;
 
 import java.time.LocalDate;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
 
+import java.util.HashMap;
+import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.control.skin.DatePickerContent;
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
 
@@ -20,6 +20,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.CalendarSelectionChangedEvent;
+import seedu.address.commons.events.ui.ScheduleUpdateEvent;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.model.event.Event;
 
 /**
@@ -33,32 +36,42 @@ public class CalendarView extends UiPart<Region> {
     private AnchorPane box;
 
     private DatePicker datePicker;
+    private ObservableList<Event> eventList;
 
     public CalendarView(ObservableList<Event> eventList) {
         super(FXML);
 
-        initCalendar(eventList);
+        this.eventList = eventList;
+
+        initCalendar(this.eventList);
         initListener();
 
+        registerAsAnEventHandler(this);
     }
 
     /**
      * Initialise the calendar and highlight dates with Event.
      *
-     * @param eventList
+     * @param masterEventList
      */
-    private void initCalendar(ObservableList<Event> eventList) {
+    private void initCalendar(ObservableList<Event> masterEventList) {
 
         box.getChildren().clear();
         datePicker = new DatePicker(LocalDate.now());
 
-        HashMap<LocalDate, Integer> countEventDate = new HashMap<>();
-        List<LocalDate> masterEventDateList = eventList.stream().map(e ->
-                e.getEventTime().getStart().toLocalDate()).collect(Collectors.toList());
+        HashMap<LocalDate, ArrayList<String>> eventsByDate = new HashMap<>();
+        for (Event event : masterEventList) {
+            LocalDate pointerDay = event.getEventTime().getStart().toLocalDate();
+            LocalDate endDay = event.getEventTime().getEnd().toLocalDate().plusDays(1);
 
-        eventList.stream().distinct().forEach(event ->
-                countEventDate.put(event.getEventTime().getStart().toLocalDate(),
-                        Collections.frequency(masterEventDateList, event.getEventTime().getStart().toLocalDate())));
+            do {
+                ArrayList<String> eventsInPointerDay = eventsByDate.computeIfAbsent(pointerDay, k -> new ArrayList<>());
+                eventsInPointerDay.add(event.getEventName().toString());
+
+                pointerDay = pointerDay.plusDays(1);
+            } while (!pointerDay.isEqual(endDay));
+
+        }
 
         DatePickerSkin datePickerSkin = new DatePickerSkin(datePicker);
 
@@ -69,8 +82,9 @@ public class CalendarView extends UiPart<Region> {
                     public void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
 
-                        if (countEventDate.containsKey(item)) {
-                            setTooltip(new Tooltip(countEventDate.get(item) + " events!"));
+                        if (eventsByDate.containsKey(item)) {
+                            setTooltip(new Tooltip(
+                                    StringUtil.multiStringPrint(eventsByDate.get(item), "\n")));
                             if (!item.isEqual(LocalDate.now())) {
                                 setStyle("-fx-background-color: #a7a7a7; -fx-text-fill: #ffffff;");
 
@@ -81,34 +95,43 @@ public class CalendarView extends UiPart<Region> {
             }
         };
 
+
+
         datePicker.setDayCellFactory(dayCellFactory);
 
+
         DatePickerContent calendarView = (DatePickerContent) datePickerSkin.getPopupContent();
+
         calendarView.minWidthProperty().setValue(box.minWidthProperty().getValue());
 
+        AnchorPane.setTopAnchor(calendarView, 0.0);
         AnchorPane.setLeftAnchor(calendarView, 0.0);
-        AnchorPane.setRightAnchor(calendarView, 5.0);
-
-        System.out.println(calendarView.getPrefHeight());
-
-
-
-
-
+        AnchorPane.setRightAnchor(calendarView, 1.0);
+        AnchorPane.setBottomAnchor(calendarView, 1.0);
 
         box.getChildren().add(calendarView);
+
     }
 
     /**
      * Add listener to register users mouse click.
      */
     private void initListener() {
+
         datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("data: " + newValue.toString());
-            LocalDate value = datePicker.getValue();
-            System.out.println(value.toString());
+            LocalDate selectedDate = datePicker.getValue();
+            logger.fine("Selection in calendar: '" + selectedDate + "'");
+            raise(new CalendarSelectionChangedEvent(selectedDate));
         });
 
 
+    }
+
+    @Subscribe
+    private void handleScheduleUpdateEvent(ScheduleUpdateEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        initCalendar(event.getEvents());
+        initListener();
     }
 }
