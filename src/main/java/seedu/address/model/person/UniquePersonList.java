@@ -111,6 +111,7 @@ public class UniquePersonList implements Iterable<Person> {
 
     /**
      * Sorts the list by field.
+     * TO DO: More abstraction. Comparators in respective classes?
      */
     public void sort(String field) {
         switch (field) {
