@@ -33,6 +33,7 @@ public class Statistics {
 
     /**
      * Takes in a PersonList and initialises the appropriate values to the Statistics instance
+     *
      * @param personList the list of persons being taken in
      */
     public void initScore(ObservableList<ReadOnlyPerson> personList) {
@@ -163,12 +164,20 @@ public class Statistics {
         }
     }
 
-    public static String round(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
-
+    /**
+     * Formats and returns a double into a fixed number of decimal places and returns it as a string
+     *
+     * @param value  the double to be formatted
+     * @param places number of decimal places of the output string
+     * @return value formatted to places decimal places in a String
+     */
+    public static String getRoundedStringFromDouble(double value, int places) {
+        if (places < 0) {
+            throw new IllegalArgumentException();
+        }
         BigDecimal bd = new BigDecimal(value);
         bd = bd.setScale(places, RoundingMode.HALF_UP);
-        return Double.toString(bd.doubleValue()) ;
+        return Double.toString(bd.doubleValue());
     }
 
 }
