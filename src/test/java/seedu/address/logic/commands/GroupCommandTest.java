@@ -24,11 +24,11 @@ public class GroupCommandTest {
     @Test
     public void equals() {
         //Test same equality
-        GroupCommand groupCommand = new GroupCommand(Arrays.asList("Group","Trip","Alice"));
+        GroupCommand groupCommand = new GroupCommand(Arrays.asList("Group", "Trip", "Alice"));
         assertTrue(groupCommand.equals(groupCommand));
 
         //Test value equality
-        GroupCommand copy = new GroupCommand(Arrays.asList("Group","Trip","Alice"));
+        GroupCommand copy = new GroupCommand(Arrays.asList("Group", "Trip", "Alice"));
         assertTrue(groupCommand.equals(copy));
 
         //Test unequal values
@@ -37,8 +37,8 @@ public class GroupCommandTest {
     }
 
     @Test
-    public void execute_groupCommand_AddSuccessful() throws Exception {
-        GroupCommand validCommand = new GroupCommand(Arrays.asList("Group","Trip","Alice"));
+    public void executeGroupCommandAddSuccessful() throws Exception {
+        GroupCommand validCommand = new GroupCommand(Arrays.asList("Group", "Trip", "Alice"));
         validCommand.setData(model, new CommandHistory(), new UndoRedoStack());
 
         CommandResult result = validCommand.executeUndoableCommand();
@@ -47,7 +47,7 @@ public class GroupCommandTest {
     }
 
     @Test
-    public void execute_groupCommand_DeleteSuccesful() throws Exception {
+    public void executeGroupCommandDeleteSuccesful() throws Exception {
         GroupCommand validCommand = new GroupCommand(Arrays.asList("Trip"));
         validCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         Group trip = new Group("Trip");

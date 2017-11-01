@@ -7,10 +7,10 @@ package seedu.address.model.person;
  */
 public class Group {
 
-    public final String groupName;
-
     //Must be a single word without spaces
     public static final String GROUP_VALIDATION_REGEX = "[\\p{Alpha}]*";
+
+    public final String groupName;
 
     public Group (Group group) {
         this.groupName = group.getGroupName();
