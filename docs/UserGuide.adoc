@@ -14,22 +14,19 @@ endif::[]
 
 By: `CS2103AUG2017-W10-B3`      Since: `Jun 2016`      Licence: `MIT`
 
-== Introduction
-=== Purpose
-This user guide contains all the essential information required to make full
-use of Death Note. It also includes the description of the
-application's system function, abilities and
-step-by-step procedures to be able to use Death Note effectively.
+This user guide contains all the essential information required to make full use of Death Note. It also includes the
+description of the application's system function, abilities and step-by-step procedures to be able to use Death Note
+effectively.
 
-=== Overview
-Death Note allows you to store the name, profile picture, phone number, email,
-address, birthday and website of your contacts. It also allows you to add tags and
-remarks to people stored inside.
+== Getting Started
 
-=== Current Version
-The current version of this application is *Version 1.4*.
+=== Introduction
 
-== Quick Start
+Death Note allows you to store the name, profile picture, phone number, email, address, birthday and website of
+your contacts. It also allows you to add tags and remarks to people stored inside.
+
+=== Installation
+
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
@@ -38,40 +35,74 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `DeathNote.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for Death Note.
-.  Double-click the file to start the program. The graphical user interface(GUI) should appear
-   in a few seconds.
+.  Double-click the file to start the program. You should see the graphical user interface (GUI) appear in a few seconds.
 +
 image::Ui.png[width="800"]
-+
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe`
-    to Death Note.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits Death Note
+=== 30-Second Tutorial
 
-.  Refer to the link:#features[Features] section below for details of each command.
+Let's get started. Here is a quick demonstration showing how to perform basic contact management.
 
-== Features
-====
-*Command Format*
+image::usage.gif[width="768"]
+
+Here is an explanation of what is happening. First, add 3 persons namely Alice, Bob and Carol.
+
+....
+> add n/Alice
+New person added: Alice Remarks:
+
+> add n/Bob
+New person added: Bob Remarks:
+
+> add n/Carol
+New person added: Carol Remarks:
+....
+
+Intuitive. Now you want to find the information about Bob.
+
+....
+> find n/Bob
+1 persons listed!
+....
+
+To view everyone in your Death Note:
+
+....
+> list
+Listed all persons
+....
+
+To remove the third person shown on the list from your Death Note:
+
+....
+> delete 3
+....
+
+=== Getting Help
+
+There are several forms of help available.
+
+*User Guide*
+
+In Death Note command box, type `help` and a pop-up window will show up containing this User Guide.
+
+*GitHub Issue*
+
+You can file a GitHub https://github.com/CS2103AUG2017-W10-B3/main/issues[issue] describing you request/problem and
+the developers will look into it.
+
+*Email*
+
+Contact us directly by emailing to `kaihsien.boo[at]u.nus.edu`.
+
+== Basic Usage
+
+=== Command Line Syntax
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-//tag::alias[]
-* Most of the commands have an associated alias, except `help` and `exit`, e.g. you can use `add` and `a` interchangably.
-//end::alias[]
-====
-
-=== Viewing help : `help`
-
-Format: `help` +
-Opens up the help window.
 
 === Adding a person: `add` / `a` kbd:[V2.0]
 //tag::bday[]
@@ -374,12 +405,37 @@ On GUI:
 The data used in Death Note data is saved in the hard disk automatically after any
 command that changes the data is executed. There is no need to save manually.
 
+== Advanced Topics
+
+This section contains more sophisticated usage of Death Note.
+
+=== Aliases
+
+Most of the commands have an associated alias. This is for experienced users to increase their productivity when using
+Death Note.
+
+[width="59%",cols="25%,25%",options="header",]
+|=======================================================================
+|Command |Aliases
+|`add` |`a`
+|`list`|`l`
+|`edit`|`e`
+|`find`|`f`
+|`delete`|`d`
+|`select`|`s`
+|`history`|`h`
+|`undo`|`u`
+|`redo`|`r`
+|`clear`|`c`
+|=======================================================================
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
 == Cheat Sheet
+
 === Command Summary
 
 * *Help* : `help` +
