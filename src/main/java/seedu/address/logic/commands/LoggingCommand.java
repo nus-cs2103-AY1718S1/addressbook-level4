@@ -1,15 +1,10 @@
 package seedu.address.logic.commands;
 import java.io.BufferedWriter;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
-import java.util.logging.Logger;
-
-import seedu.address.commons.core.LogsCenter;
-
 
 /**
  * Method to Keep Track of User Activity Log
