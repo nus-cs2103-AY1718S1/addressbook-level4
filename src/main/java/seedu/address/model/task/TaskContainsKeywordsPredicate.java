@@ -26,6 +26,7 @@ public class TaskContainsKeywordsPredicate implements Predicate<ReadOnlyTask> {
         String testDate = "";
         String tag = Arrays.toString(task.getTags().toArray())
                 .replaceAll("[\\[\\](),{}]", "");
+
         if (!task.getDeadline().isEmpty()) {
             try {
                 Date date = ParserUtil.parseDate(task.getDeadline().date);
