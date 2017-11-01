@@ -6,6 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Occupation;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -20,6 +21,7 @@ import seedu.address.model.util.SampleDataUtil;
 public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";
+    public static final String DEFAULT_OCCUPATION = "SBS, Bus Driver";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
@@ -32,14 +34,15 @@ public class PersonBuilder {
     public PersonBuilder() {
         try {
             Name defaultName = new Name(DEFAULT_NAME);
+            Occupation defaultOccupation = new Occupation(DEFAULT_OCCUPATION);
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Website defaultWebsite = new Website(DEFAULT_WEBSITE);
             Remark defaultremark = new Remark(DEFAULT_REMARK);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultremark,
-                    defaultWebsite, defaultTags);
+            this.person = new Person(defaultName, defaultOccupation, defaultPhone, defaultEmail, defaultAddress,
+                    defaultremark, defaultWebsite, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -63,6 +66,20 @@ public class PersonBuilder {
         }
         return this;
     }
+
+    //@@author JavynThun
+    /**
+     * Sets the {@code Occupation} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withOccupation(String occupation) {
+        try {
+            this.person.setOccupation(new Occupation(occupation));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("occupation is expected to be unique.");
+        }
+        return this;
+    }
+    //@@author
 
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
@@ -112,6 +129,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author JavynThun
     /**
      *  Sets the {@code Remark} of the {@code Person} that we are building.
      */
@@ -131,6 +149,7 @@ public class PersonBuilder {
         }
         return this;
     }
+    //@@author
 
     public Person build() {
         return this.person;

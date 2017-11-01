@@ -17,7 +17,7 @@ By: `CS2103-T10-B4`      Since: `Sept 2017`      Licence: `MIT`
 
 == Product Overview
 
-YellowPages is a free-to-use enhanced address book application which you can use to keep track of all your contact details. The application comes in-built with multiple new features not found in regular address books which creates a more user-friendly experience for all.
+TheYellowPage is a free-to-use enhanced address book application which you can use to keep track of all your contact details. The application comes in-built with multiple new features not found in regular address books which creates a more user-friendly experience for all.
 
 == About
 
@@ -66,15 +66,15 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS w/WEBSITE [t/TAG]...`
+Format: `add n/NAME o/OCCUPATION p/PHONE_NUMBER e/EMAIL a/ADDRESS w/WEBSITE [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 w/https://github.com/JohnDoe`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 w/https://github.com/BetsyCrowe t/criminal`
+* `add n/John Doe o/Google, CEO p/98765432 e/johnd@example.com a/John street, block 123, #01-01 w/https://github.com/JohnDoe`
+* `add n/Betsy Crowe o/Microsoft, Software Engineer t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 w/https://github.com/BetsyCrowe t/criminal`
 
 === Listing all persons : `list`
 
@@ -84,7 +84,7 @@ Format: `list`
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [w/WEBSITE] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [o/OCCUPATION] [p/PHONE] [e/EMAIL] [a/ADDRESS] [w/WEBSITE] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -287,9 +287,10 @@ Delete specific tag from all contacts. +
 
 Clear all tags from specific contact. +
 
-=== Retrieve : (Coming in v1.5)
+=== Recently Deleted : `recentlyDel` (Since v1.2)
 
-Retrieve recently deleted list for past 3 days/past 30 contacts.
+Shows recently deleted list of contacts for past 30 contacts. +
+Format: `recentlyDel`
 
 === Moving contacts : `move` (Coming in v2.0)
 
@@ -318,12 +319,12 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS w/website [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 w/https://github.com/JamesHo t/friend t/colleague`
+* *Add* `add n/NAME o/OCCUPATION p/PHONE_NUMBER e/EMAIL a/ADDRESS w/website [t/TAG]...` +
+e.g. `add n/James o/Apple, Janitor Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 w/https://github.com/JamesHo t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [w/WEBSITE] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [o/OCCUPATION] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [w/WEBSITE] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
