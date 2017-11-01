@@ -17,6 +17,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.storage.XmlFileStorage;
 import seedu.address.storage.XmlSerializableAddressBook;
 
+//@@author KhorSL
 public class MergeCommandSystemTest extends AddressBookSystemTest {
 
     @Test
@@ -96,6 +97,7 @@ public class MergeCommandSystemTest extends AddressBookSystemTest {
 
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
     }
+    //@@author
 
     /**
      * Performs the same verification as {@code assertCommandSuccess(String, ArrayList<ReadOnlyPerson>)} except that the result

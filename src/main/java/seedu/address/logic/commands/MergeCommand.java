@@ -16,6 +16,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.storage.XmlFileStorage;
 import seedu.address.storage.XmlSerializableAddressBook;
 
+//@@author KhorSL
 /**
  * Merge the file given with the default storage file
  */
@@ -66,3 +67,4 @@ public class MergeCommand extends UndoableCommand {
                 && this.newFilePath.equals(((MergeCommand) other).newFilePath)); // state check
     }
 }
+//@@author KhorSL

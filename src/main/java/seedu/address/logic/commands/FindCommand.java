@@ -14,6 +14,7 @@ public class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
     public static final String COMMAND_ALIAS = "f";
 
+    //@@author KhorSL
     public static final String MESSAGE_USAGE = COMMAND_WORD + " or " + COMMAND_ALIAS
             + ": Finds all persons whose names contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
@@ -29,6 +30,7 @@ public class FindCommand extends Command {
     public FindCommand(PersonContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
+    //@@author
 
     @Override
     public CommandResult execute() {

@@ -64,6 +64,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //@@author KhorSL
     @Override
     public synchronized void mergeAddressBook(ObservableList<ReadOnlyPerson> newFilePersonList) {
         Boolean isAddressBookChanged = false;
@@ -92,6 +93,7 @@ public class ModelManager extends ComponentManager implements Model {
             indicateAddressBookChanged();
         }
     }
+    //@@author
 
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
