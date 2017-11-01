@@ -195,6 +195,27 @@ Deletes the 1st person in the results of the `find` command.
 `d 3` (`delete 3` command) +
 Deletes the 3rd person in the address book.
 
+=== Scheduling a person : `schedule` `Since v1.4`
+
+Schedules the person identified by the index number used in the last person listing. +
+Format: `schedule INDEX s/[DATE]` +
+Shorthand: `sche INDEX s/[DATE]`
+
+****
+* Schedules the person at the specified `INDEX` and adds them to the schedule list in the address book.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`schedule 2 s/tomorrow 7pm` +
+Schedules the 2nd person in the address book for tomorrow at 7pm and adds the schedule to the schedule list.
+* `find Betsy` +
+`sche 1 s/25 december 2017 3pm` +
+Schedules the 1st person in the address book on 25 December at 3pm and adds the schedule to the schedule list in the results of the `find` command.
+
 === Selecting a person : `select` `Since v1.0`
 
 Selects the person identified by the index number used in the last person listing. +
@@ -367,6 +388,7 @@ Here is a list of shortcuts you can use in cherBook together with some examples.
 | Findtags | `ft` + | `ft KEYWORD [MORE_KEYWORDS]` +
 | List | `l` + | `l` +
 | Help | NA | `help` +
+| Schedule | `sche` + | `sche 1 s/[DATE]` +
 | Select | `s` + | `s INDEX` +
 | Sort | `st` | `st` +
 | History | `h` + | `h` +
