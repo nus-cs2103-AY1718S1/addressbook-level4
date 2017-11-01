@@ -30,6 +30,8 @@ import seedu.address.model.event.timeslot.Timeslot;
  */
 public class EventList implements Iterable<Event> {
 
+    private static final String MIDNIGHT_HOURS = " 0000-0001";
+
     private static final Logger logger = LogsCenter.getLogger(EventList.class);
 
     private final ObservableTreeMap<Timeslot, Event> internalMap = new
@@ -160,7 +162,7 @@ public class EventList implements Iterable<Event> {
      * Returns all the events on a particular date as an {@code ObservableList}.
      */
     public ObservableList<ReadOnlyEvent> getObservableSubList(Date date) {
-        String MIDNIGHT_HOURS = " 0000-0001";
+
         String startTimeslot = date.toString() + MIDNIGHT_HOURS;
         String endTimeslot = date.addDays(1).toString() + MIDNIGHT_HOURS;
 

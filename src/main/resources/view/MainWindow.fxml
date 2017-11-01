@@ -4,6 +4,7 @@
 
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -13,10 +14,10 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.layout.HBox?>
 <VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@../../../../../../2103_project/src/main/resources/view/BrightTheme.css" />
@@ -70,11 +71,26 @@
     </SplitPane>
 
     <!-- @@author A0162268B -->
-    <SplitPane id="schedule" HBox.hgrow="ALWAYS">
-        <padding>
-            <Insets bottom="20" left="20" right="10" top="10" />
-        </padding>
-        <StackPane fx:id="scheduleListPanelPlaceholder" HBox.hgrow="ALWAYS" />
+    <SplitPane id="schedule" dividerPositions="0.15" minHeight="70.0" prefHeight="70.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+        <StackPane maxHeight="60.0" maxWidth="85.0" minHeight="60.0" minWidth="85.0" prefHeight="60.0" prefWidth="85.0">
+            <Label fx:id="scheduleTitle" text="Schedule: " StackPane.alignment="CENTER_LEFT">
+               <StackPane.margin>
+                  <Insets />
+               </StackPane.margin>
+               <padding>
+                  <Insets left="10.0" />
+               </padding></Label>
+        </StackPane>
+        <StackPane fx:id="scheduleListPanelPlaceholder" styleClass="background" HBox.hgrow="ALWAYS">
+            <padding>
+               <Insets left="10.0" />
+            </padding></StackPane>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="5.0" top="5.0" />
+         </padding>
     </SplitPane>
     <!-- @@author -->
 
@@ -101,8 +117,8 @@
             </padding>
         </StackPane>
     </SplitPane>
-
-
+   
+   
     <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
         <padding>
             <Insets bottom="5" left="10" right="10" top="5" />
