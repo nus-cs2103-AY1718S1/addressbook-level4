@@ -14,6 +14,7 @@ import seedu.address.logic.parser.ParserUtil;
  * A task comparator that compares the days of deadline from today
  */
 public class TaskComparator implements Comparator {
+    private final static String DATE_NULL = "30-12-2999";
 
     @Override
     public int compare(Object obj, Object obj1) {
@@ -23,7 +24,6 @@ public class TaskComparator implements Comparator {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String date0 = "";
         String date1 = "";
-        String DATE_NULL = "30-12-2999";
         int value = 0;
 
         try {
