@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMINDER;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -15,6 +14,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 
@@ -35,8 +35,7 @@ public class AddEventCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe birthday "
             + PREFIX_DATE_TIME + "25122017 08:30 "
-            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
-            + PREFIX_REMINDER + "1 more day to event!";
+            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 ";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
     public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the address book";
@@ -57,9 +56,13 @@ public class AddEventCommand extends UndoableCommand {
         String dateToString = toAdd.getTime().toString().substring(0, 8);
         LocalDate dateToCompare = LocalDate.parse(dateToString, formatter);
         LocalDate oneDayBefore = dateToCompare.minusDays(1);
+        String text = oneDayBefore.format(formatter);
+        LocalDate parsedDayBefore = LocalDate.parse(text, formatter);
         try {
             model.addEvent(toAdd);
-            model.addReminder(new Reminder(toAdd, oneDayBefore.toString()));
+            Reminder r = new Reminder(toAdd, parsedDayBefore.toString());
+            toAdd.addReminder(r);
+            model.addReminder(r);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateEventException | DuplicateReminderException e) {
             throw new CommandException(MESSAGE_DUPLICATE_EVENT);

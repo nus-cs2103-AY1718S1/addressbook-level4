@@ -24,6 +24,7 @@ import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.UniqueReminderList;
 import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 
+//@@junyang junyango
 /**
  * Represents an Event in the address book.
  * Guarantees: details are present and not null, field values are validated.

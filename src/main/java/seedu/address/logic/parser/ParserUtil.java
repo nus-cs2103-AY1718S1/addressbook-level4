@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,7 +20,6 @@ import seedu.address.model.property.Name;
 import seedu.address.model.property.Phone;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
-import seedu.address.model.reminder.Reminder;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -137,17 +135,6 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
-    }
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
-     */
-    public static ArrayList<Reminder> parseReminders(Collection<Reminder> reminders) throws IllegalValueException {
-        requireNonNull(reminders);
-        final ArrayList<Reminder> reminderList = new ArrayList<>();
-        for (Reminder r : reminders) {
-            reminderList.add(r);
-        }
-        return reminderList;
     }
 
     /**
