@@ -165,7 +165,6 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
-        
         @Override
         public void updateTodoItemList() {
             fail("This method should not be called.");
