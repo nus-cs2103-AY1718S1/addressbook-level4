@@ -31,6 +31,7 @@ public class XmlAdaptedSchedule {
      *
      * @param source future changes to this will not affect the created
      */
+    //@@author 17navasaw
     public XmlAdaptedSchedule(Schedule source) {
         ScheduleDate scheduleDate = source.getScheduleDate();
         Activity activity = source.getActivity();
@@ -45,7 +46,6 @@ public class XmlAdaptedSchedule {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
-    //@@author 17navasaw
     public Schedule toModelType() throws IllegalValueException {
         // extract out schedule date and activity from schedule string
         int personHeaderIndex = schedule.indexOf("Person: ");
