@@ -76,6 +76,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         return FXCollections.unmodifiableObservableList(tags);
     }
 
+    //@@author alexanderleegs
     @Override
     public ObservableList<Meeting> getMeetingList() {
         final ObservableList<Meeting> meetings = this.meetings.stream().map(m -> {
@@ -89,5 +90,6 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(meetings);
     }
+    //@@author
 
 }

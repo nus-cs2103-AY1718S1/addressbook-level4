@@ -158,6 +158,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.forEach(this::syncMasterTagListWith);
     }
 
+    //@@author alexanderleegs
     /**
      * Ensures that every meeting in this person:
      *  - exists in the master list {@link #meetings}
@@ -187,6 +188,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private void syncMasterMeetingListWith(UniquePersonList persons) {
         persons.forEach(this::syncMasterMeetingListWith);
     }
+    //@@author
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
@@ -200,10 +202,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author alexanderleegs
     public void sort(String field) {
         persons.sort(field);
     }
 
+    //@@author
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
@@ -228,11 +232,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         return tags.asObservableList();
     }
 
+    //@@author alexanderleegs
     @Override
     public ObservableList<Meeting> getMeetingList() {
         return meetings.asObservableList();
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

@@ -224,6 +224,7 @@ public class EditCommandParserTest {
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
+    //@@author alexanderleegs
     @Test
     public void parse_resetMeetings_success() {
         Index targetIndex = INDEX_THIRD_PERSON;
@@ -233,4 +234,5 @@ public class EditCommandParserTest {
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }
+    //@@author
 }

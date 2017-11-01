@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Name;
 
+//@@author alexanderleegs
 /**
  * Represents a Meeting in the address book.
  * Guarantees: immutable

@@ -109,6 +109,7 @@ public class UniquePersonList implements Iterable<Person> {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
+    //@@author alexanderleegs
     /**
      * Sorts the list by field.
      * TO DO: More abstraction. Comparators in respective classes?
@@ -221,6 +222,7 @@ public class UniquePersonList implements Iterable<Person> {
             });
         }
     }
+    //@@author
 
     @Override
     public Iterator<Person> iterator() {

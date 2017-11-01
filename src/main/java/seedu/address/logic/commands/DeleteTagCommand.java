@@ -16,6 +16,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
 import seedu.address.model.tag.Tag;
 
+//@@author alexanderleegs
 /**
  * Deletes a tag identified using its name from the address book.
  */

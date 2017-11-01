@@ -39,12 +39,14 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    //@@author alexanderleegs
     /** Deletes given tag from AddressBook */
     void deleteTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException;
 
     /** Sorts AddressBook by a field in alphabetical order */
     void sort(String field);
 
+    //@@author
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 

@@ -6,6 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.person.Name;
 
+//@@author alexanderleegs
 /**
  * JAXB-friendly adapted version of the Tag.
  */

@@ -87,6 +87,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author alexanderleegs
     @Override
     public void deleteTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException {
         ObservableList<ReadOnlyPerson> personList = addressBook.getPersonList();
@@ -116,6 +117,8 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
+
+    //@@author
     //=========== Filtered Person List Accessors =============================================================
 
     /**

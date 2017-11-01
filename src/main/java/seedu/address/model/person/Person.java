@@ -175,6 +175,7 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
+    //@@author alexanderleegs
     /**
      * Returns an immutable meeting set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -195,6 +196,7 @@ public class Person implements ReadOnlyPerson {
         meetings.set(new UniqueMeetingList(replacement));
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
