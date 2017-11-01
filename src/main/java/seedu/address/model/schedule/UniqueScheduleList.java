@@ -61,6 +61,7 @@ public class UniqueScheduleList implements Iterable<Schedule> {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    //@@author 17navasaw
     /**
      * Ensures every schedule in the argument list exists in this object.
      */
@@ -82,6 +83,7 @@ public class UniqueScheduleList implements Iterable<Schedule> {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    //@@author
     /**
      * Returns true if the list contains an equivalent Schedule as the given argument.
      */
@@ -119,7 +121,7 @@ public class UniqueScheduleList implements Iterable<Schedule> {
         return FXCollections.unmodifiableObservableList(internalList);
     }
 
-    //@@author
+    //@@author 17navasaw
     /**
      * Sorts the list from earliest to latest schedule.
      */
