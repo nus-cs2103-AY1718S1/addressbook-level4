@@ -45,4 +45,9 @@ public interface Email {
      * @return whether there is an email logged in
      */
     boolean isLoggedIn();
+
+    /**
+     * Log out from any currently logged in email
+     */
+    void logout();
 }

@@ -6,7 +6,9 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -43,7 +45,7 @@ public class EmailSendWindow extends UiPart<Region> {
     private TextField titleField;
 
     @FXML
-    private TextField bodyField;
+    private TextArea bodyField;
 
     @FXML
     private Button sendButton;
@@ -59,6 +61,9 @@ public class EmailSendWindow extends UiPart<Region> {
         this.primaryStage.setScene(scene);
         this.primaryStage.initOwner(parentStage);
         this.primaryStage.initModality(Modality.WINDOW_MODAL);
+        this.primaryStage.setResizable(false);
+        this.primaryStage.getIcons().add(new Image("/images/address_book_32.png"));
+        this.primaryStage.setTitle("Send Emails");
         this.logic = logic;
         recipientsField.setText(recipients);
         feedbackLabel.setText(feedback);
@@ -97,8 +102,10 @@ public class EmailSendWindow extends UiPart<Region> {
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
             feedbackLabel.setText(commandResult.feedbackToUser);
         } catch (ParseException e) {
+            raise(new NewResultAvailableEvent(e.getMessage()));
             feedbackLabel.setText(e.getMessage());
         } catch (CommandException e) {
+            raise(new NewResultAvailableEvent(e.getMessage()));
             feedbackLabel.setText(e.getMessage());
         }
     }

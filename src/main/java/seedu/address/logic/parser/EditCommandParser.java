@@ -70,8 +70,6 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
-        //if (args.split(" ").length < 2) throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
-
         return new EditCommand(index, editPersonDescriptor);
     }
 
@@ -89,5 +87,4 @@ public class EditCommandParser implements Parser<EditCommand> {
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
     }
-
 }
