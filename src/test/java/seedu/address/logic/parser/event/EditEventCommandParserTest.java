@@ -27,6 +27,7 @@ import seedu.address.logic.commands.event.EditEventCommand.EditEventDescriptor;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.testutil.EditEventDescriptorBuilder;
 
+//@@author junyango
 public class EditEventCommandParserTest {
 
     private static final String MESSAGE_INVALID_FORMAT =

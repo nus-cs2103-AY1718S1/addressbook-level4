@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.event.ReadOnlyEvent;
-
+//@@author junyango
 /**
  * Tests that a {@code ReadOnlyEvent}'s {@code Name} matches any of the keywords given.
  */

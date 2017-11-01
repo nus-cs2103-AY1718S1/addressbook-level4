@@ -17,7 +17,7 @@ import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
-
+//@@author junyango
 /**
  * Parses input arguments and creates a new EditEventCommand object
  */

@@ -11,7 +11,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_EVENT2;
 import org.junit.Test;
 
 import seedu.address.testutil.EditEventDescriptorBuilder;
-
+//@@author junyango
 public class EditEventDescriptorTest {
 
     @Test
