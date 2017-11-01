@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -20,6 +21,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -143,6 +145,12 @@ public class AddCommandTest {
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
+        }
+        
+        @Override
+        public Set<Appointment> getAllAppointments() {
+            fail("This method should not be called.");
+            return null;
         }
     }
 

@@ -4,11 +4,13 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
+import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -22,6 +24,7 @@ public class AppointCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "appoint";
     public static final String MESSAGE_APPOINT_SUCCESS = "New appointment added: %1$s";
     public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "Appointment removed for person: %1$s";
+    public static final String MESSAGE_APPOINTMENT_CLASH = "Appointment clash";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add an appointment to a person to the address book "
             + "by the index number in the last person listing. "
@@ -46,9 +49,16 @@ public class AppointCommand extends UndoableCommand {
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        Set<Appointment> appointments = model.getAllAppointments();
+        UniqueAppointmentList uniqueAppointmentList = new UniqueAppointmentList();
+        uniqueAppointmentList.setAppointments(appointments);
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        if (uniqueAppointmentList.hasClash(appointment)) {
+            throw new CommandException("Appointment clash with another in address book");
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());

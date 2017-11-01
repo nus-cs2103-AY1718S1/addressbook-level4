@@ -15,8 +15,8 @@ public class Appointment {
     public static final String MESSAGE_APPOINTMENT_CONSTRAINTS =
             "Appointment must be in exact format dd/MM/yyyy hh:mm duration, the date must be older than today";
     public static final String DATETIME_PATTERN = "dd/MM/yyyy HH:mm";
-    private static final String MESSAGE_DURATION_CONSTRAINT = "Duration must be an integer";
-    private static final String MESSAGE_DATETIME_CONSTRAINT = "Date time must be valid format, dd/MM/yyyy HH:mm";
+    private static final String MESSAGE_DURATION_CONSTRAINT = "Duration must be a positive integer in minutes";
+    private static final String MESSAGE_DATETIME_CONSTRAINT = "Date time cannot be in the past";
 
     public final String value;
     public final LocalDateTime start;
@@ -76,7 +76,8 @@ public class Appointment {
      * Returns true if given duration is an integer, using regex
      */
     public static boolean isValidDuration(String duration) {
-        return duration.matches("^-?\\d+$");
+        return duration.matches("^-?\\d+$")
+                    && Integer.parseInt(duration) > 0;
     }
 
     /**
@@ -87,6 +88,14 @@ public class Appointment {
      */
     private static LocalDateTime getEndDateTime(LocalDateTime startDateTime, String duration) {
         return startDateTime.plusMinutes(Integer.parseInt(duration));
+    }
+
+    public LocalDateTime getStart() {
+        return this.start;
+    }
+
+    public LocalDateTime getEnd() {
+        return end;
     }
 
     @Override

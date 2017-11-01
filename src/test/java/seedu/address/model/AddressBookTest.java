@@ -18,6 +18,7 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;

@@ -10,6 +10,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.person.Person;
@@ -29,6 +31,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final SortedUniquePersonList persons;
     private final UniqueTagList tags;
     private final UniqueGroupList groups;
+    private final UniqueAppointmentList appointments;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -41,6 +44,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new SortedUniquePersonList();
         tags = new UniqueTagList();
         groups = new UniqueGroupList();
+        appointments = new UniqueAppointmentList();
     }
 
     public AddressBook() {}
@@ -65,6 +69,10 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void setGroups(Set<Group> groups) {
         this.groups.setGroups(groups);
+    }
+
+    public void setAppointments(Set<Appointment> appointments) {
+        this.appointments.setAppointments(appointments);
     }
 
     /**
@@ -210,6 +218,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         groups.add(g);
     }
 
+    public void addAppointment(Appointment a) throws UniqueAppointmentList.DuplicateAppointmentException,
+                                                        UniqueAppointmentList.ClashAppointmentException {
+        appointments.add(a);
+    }
     //// util methods
 
     @Override
@@ -232,6 +244,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Group> getGroupList() {
         return groups.asObservableList();
+    }
+    
+    public Set<Appointment> getAllAppointments() {
+        return persons.getAllAppointments();
     }
 
     @Override

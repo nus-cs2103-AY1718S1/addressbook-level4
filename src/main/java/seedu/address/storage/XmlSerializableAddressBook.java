@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
@@ -27,6 +28,8 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     private List<XmlAdaptedTag> tags;
     @XmlElement
     private List<XmlAdaptedGroup> groups;
+    @XmlElement
+    private List<XmlAdaptedAppointment> appointments;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -36,6 +39,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
         groups = new ArrayList<>();
+        appointments = new ArrayList<>();
     }
 
     /**
@@ -89,5 +93,4 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(groups);
     }
-
 }
