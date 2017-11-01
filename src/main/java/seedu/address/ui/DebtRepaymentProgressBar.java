@@ -36,7 +36,7 @@ public class DebtRepaymentProgressBar extends UiPart<Region> {
      * Returns a {@code OcbservableValue<String>} to bind to {@code percentage} property
      */
     private ObservableValue<String> getPercentage(Double repaid, Double totalDebt) {
-        String percentage = Double.toString(repaid / totalDebt * 100).concat("%");
-        return new SimpleObjectProperty<>(percentage);
+        String percentage = String.format("%.2f", repaid / totalDebt * 100);
+        return new SimpleObjectProperty<>(percentage.concat("%"));
     }
 }
