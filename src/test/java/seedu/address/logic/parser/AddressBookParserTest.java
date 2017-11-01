@@ -75,6 +75,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS + " 3") instanceof ClearCommand);
     }
 
+    //@@author 17navasaw
     @Test
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
@@ -88,6 +89,7 @@ public class AddressBookParserTest {
         assertEquals(new DeleteCommand(indices), commandUsingAlias);
     }
 
+    //@@author
     @Test
     public void parseCommand_edit() throws Exception {
         Person person = new PersonBuilder().build();
@@ -247,9 +249,9 @@ public class AddressBookParserTest {
                 schedule.getActivity()), commandUsingAlias);
     }
 
-    //@@author
+    //@@author 17navasaw
     @Test
-    public void parseCommand_select() throws Exception {
+    public void parseCommand_locate() throws Exception {
         LocateCommand command = (LocateCommand) parser.parseCommand(
                 LocateCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         LocateCommand commandUsingAlias = (LocateCommand) parser.parseCommand(
