@@ -59,7 +59,7 @@ include::../DeveloperGuide.adoc[tag=dups]
 
 === Enhancement Proposed
 
-* Command that maps patient contacts with doctor contacts specialising in their illness
+* Command that maps (patient contacts) with (doctor contacts specialising in their illness)
 
 === Other contributions
 
