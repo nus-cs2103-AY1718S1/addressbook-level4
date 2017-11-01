@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author LuLechuan
 /**
  * Represents a Person's photo in the address book.
  */

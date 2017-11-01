@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 
+//@@author LuLechuan
 /**
  * A list of customField that enforces no nulls and uniqueness between its elements.
  *
