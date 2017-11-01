@@ -334,6 +334,15 @@ public class UniqueScheduleListTest {
 ###### /java/seedu/address/storage/XmlAddressBookStorageTest.java
 ``` java
     @Test
+    public void getScheduleList_modifyList_throwsUnsupportedOperationException() {
+        XmlSerializableAddressBook addressBook = new XmlSerializableAddressBook();
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getScheduleList().remove(0);
+    }
+```
+###### /java/seedu/address/storage/XmlAddressBookStorageTest.java
+``` java
+    @Test
     public void createNewXmlAdaptedScheduleTest() throws IllegalValueException {
         Calendar date = Calendar.getInstance();
         String personToAdd = TypicalPersons.ALICE.getName().toString();
