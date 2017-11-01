@@ -150,6 +150,7 @@ public class ParserUtilTest {
         assertEquals(expectedAddress, actualAddress.get());
     }
 
+    //@@author 17navasaw
     @Test
     public void parseEmail_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
