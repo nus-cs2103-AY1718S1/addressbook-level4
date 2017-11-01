@@ -153,7 +153,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return getScheduleList();
         }
-        //@@author limcel
+        //@@author
 
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {

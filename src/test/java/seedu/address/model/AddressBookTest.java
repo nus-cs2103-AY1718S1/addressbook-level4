@@ -102,6 +102,7 @@ public class AddressBookTest {
         public ObservableList<Schedule> getScheduleList() {
             return schedules;
         }
+        //@@author
     }
 
 }

@@ -168,6 +168,6 @@ public class XmlAddressBookStorageTest {
         }
         return false;
     }
-    //@@author limcel
+    //@@author
 
 }
