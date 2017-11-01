@@ -26,6 +26,7 @@ public class CommandHistoryTest {
         assertEquals(Arrays.asList(validCommand, invalidCommand), history.getHistory());
     }
 
+    //@@author Xenonym
     @Test
     public void clear() {
         history.add("list");
@@ -33,4 +34,5 @@ public class CommandHistoryTest {
         history.clear();
         assertEquals(Collections.EMPTY_LIST, history.getHistory());
     }
+    //@@author
 }
