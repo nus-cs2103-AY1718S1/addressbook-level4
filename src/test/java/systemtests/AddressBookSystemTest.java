@@ -175,7 +175,7 @@ public abstract class AddressBookSystemTest {
         getBrowserPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
-        // getParcelListPanel().rememberSelectedParcelCard();
+        getParcelListPanel().rememberSelectedParcelCard();
     }
 
     /**
