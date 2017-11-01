@@ -43,6 +43,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final SortedList<ReadOnlyPerson> sortedFilteredPersons;
     private final SortedList<Tag> tags;
 
+    //@@author Houjisan
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -60,6 +61,7 @@ public class ModelManager extends ComponentManager implements Model {
         sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenNameFirst());
     }
 
+    //@@author
     public ModelManager() {
         this(new AddressBook(), new UserPrefs());
     }
@@ -83,6 +85,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //@@author Houjisan
     /**
      * Raises an event to indicate that the UI needs to switch to viewing the Person List
      */
@@ -90,6 +93,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new ShowPersonListViewEvent());
     }
 
+    //@@author
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         indicateChangedToPersonListView();
@@ -132,6 +136,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author Houjisan
     @Override
     public ObservableList<Tag> getTagList() {
         return FXCollections.unmodifiableObservableList(tags);
@@ -158,6 +163,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

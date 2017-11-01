@@ -534,6 +534,7 @@ Format to remove remark: `remark PERSONINDEX REMARKINDEX`
 
 [TIP]
 A person can have any number of remarks (including 0) +
+Remarks can be anything (including a blank) +
 GUI will display a list of person with pending remarks.
 
 Examples:
