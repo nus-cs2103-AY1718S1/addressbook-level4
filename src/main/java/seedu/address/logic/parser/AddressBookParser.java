@@ -13,6 +13,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.EnablePersonCommand;
+import seedu.address.logic.commands.EnableTaskCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
@@ -32,7 +34,11 @@ import seedu.address.logic.commands.person.RemarkCommand;
 import seedu.address.logic.commands.person.SelectCommand;
 import seedu.address.logic.commands.person.SortCommand;
 import seedu.address.logic.commands.person.UnpinCommand;
-import seedu.address.logic.commands.task.AddTaskCommand;
+import seedu.address.logic.commands.task.ListTaskCommand;
+import seedu.address.logic.commands.task.MarkTaskCommand;
+import seedu.address.logic.commands.task.RenameTaskCommand;
+import seedu.address.logic.commands.task.RescheduleTaskCommand;
+import seedu.address.logic.commands.task.UnmarkTaskCommand;
 import seedu.address.logic.parser.alias.AliasCommandParser;
 import seedu.address.logic.parser.alias.UnaliasCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -47,6 +53,12 @@ import seedu.address.logic.parser.person.SelectCommandParser;
 import seedu.address.logic.parser.person.SortCommandParser;
 import seedu.address.logic.parser.person.UnpinCommandParser;
 import seedu.address.logic.parser.task.AddTaskCommandParser;
+import seedu.address.logic.parser.task.DeleteTaskCommandParser;
+import seedu.address.logic.parser.task.FindTaskCommandParser;
+import seedu.address.logic.parser.task.MarkTaskCommandParser;
+import seedu.address.logic.parser.task.RenameTaskCommandParser;
+import seedu.address.logic.parser.task.RescheduleTaskCommandParser;
+import seedu.address.logic.parser.task.UnmarkTaskCommandParser;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 
 
@@ -62,13 +74,23 @@ public class AddressBookParser {
     private static final Pattern KEYWORD_PATTERN =
             Pattern.compile("([^\\s/]+)([\\s/]+|$)");
 
+    private static final String MESSAGE_PERSON_MODEL_MODE = "This command only works with persons"
+            + "\nPlease toggle to person view.";
+
+    private static final String MESSAGE_TASK_MODEL_MODE = "This command only works with tasks"
+            + "\nPlease toggle to task view.";
+
     private final Map<String, Parser<? extends Command>> commandMap;
     private final Map<String, ReadOnlyAliasToken> aliasMap;
     private final ObservableList<ReadOnlyAliasToken> aliasList = FXCollections.observableArrayList();
+    private boolean isPersonEnabled;
+    private boolean isTaskEnabled;
 
     public AddressBookParser() {
         this.commandMap = new HashMap<String, Parser<? extends Command>>();
         this.aliasMap = new HashMap<String, ReadOnlyAliasToken>();
+        this.isPersonEnabled = true;
+        this.isTaskEnabled = false;
     }
 
     /**
@@ -94,43 +116,91 @@ public class AddressBookParser {
         switch (checkedCommandWord) {
 
         case AddCommand.COMMAND_WORD:
-            return new AddCommandParser().parse(checkedArguments);
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new AddCommandParser().parse(checkedArguments);
+            } else {
+                return new AddTaskCommandParser().parse(checkedArguments);
+            }
 
         case EditCommand.COMMAND_WORD:
-            return new EditCommandParser().parse(checkedArguments);
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new EditCommandParser().parse(checkedArguments);
+            } else {
+                throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
+            }
 
         case SelectCommand.COMMAND_WORD:
-            return new SelectCommandParser().parse(checkedArguments);
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new SelectCommandParser().parse(checkedArguments);
+            } else {
+                throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
+            }
 
         case DeleteCommand.COMMAND_WORD:
-            return new DeleteCommandParser().parse(checkedArguments);
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new DeleteCommandParser().parse(checkedArguments);
+            } else {
+                return new DeleteTaskCommandParser().parse(checkedArguments);
+            }
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
         case PinCommand.COMMAND_WORD:
-            return new PinCommandParser().parse(arguments);
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new PinCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
+            }
 
         case ListPinCommand.COMMAND_WORD:
-            return new ListPinCommand();
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new ListPinCommand();
+            } else {
+                throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
+            }
 
         case UnpinCommand.COMMAND_WORD:
-            return new UnpinCommandParser().parse(arguments);
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new UnpinCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
+            }
 
         case HideCommand.COMMAND_WORD:
-            return new HideCommandParser().parse(checkedArguments);
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new HideCommandParser().parse(checkedArguments);
+            } else {
+                throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
+            }
 
         case FindCommand.COMMAND_WORD:
-            return new FindCommandParser().parse(checkedArguments);
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new FindCommandParser().parse(checkedArguments);
+            } else {
+                return new FindTaskCommandParser().parse(checkedArguments);
+            }
 
         case RemarkCommand.COMMAND_WORD:
-            return new RemarkCommandParser().parse(checkedArguments);
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new RemarkCommandParser().parse(checkedArguments);
+            } else {
+                throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
+            }
 
         case ListCommand.COMMAND_WORD:
-            return new ListCommand();
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new ListCommand();
+            } else {
+                return new ListTaskCommand();
+            }
 
         case SortCommand.COMMAND_WORD:
-            return new SortCommandParser().parse(checkedArguments);
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new SortCommandParser().parse(checkedArguments);
+            } else {
+                throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
+            }
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
@@ -153,8 +223,39 @@ public class AddressBookParser {
         case UnaliasCommand.COMMAND_WORD:
             return new UnaliasCommandParser().parse(checkedArguments);
 
-        case AddTaskCommand.COMMAND_WORD:
-            return new AddTaskCommandParser().parse(checkedArguments);
+        case EnableTaskCommand.COMMAND_WORD:
+            return new EnableTaskCommand();
+
+        case EnablePersonCommand.COMMAND_WORD:
+            return new EnablePersonCommand();
+
+        case MarkTaskCommand.COMMAND_WORD:
+            if (!isPersonEnabled && isTaskEnabled) {
+                return new MarkTaskCommandParser().parse(checkedArguments);
+            } else {
+                throw new ParseException(MESSAGE_TASK_MODEL_MODE);
+            }
+
+        case UnmarkTaskCommand.COMMAND_WORD:
+            if (!isPersonEnabled && isTaskEnabled) {
+                return new UnmarkTaskCommandParser().parse(checkedArguments);
+            } else {
+                throw new ParseException(MESSAGE_TASK_MODEL_MODE);
+            }
+
+        case RenameTaskCommand.COMMAND_WORD:
+            if (!isPersonEnabled && isTaskEnabled) {
+                return new RenameTaskCommandParser().parse(checkedArguments);
+            } else {
+                throw new ParseException(MESSAGE_TASK_MODEL_MODE);
+            }
+
+        case RescheduleTaskCommand.COMMAND_WORD:
+            if (!isPersonEnabled && isTaskEnabled) {
+                return new RescheduleTaskCommandParser().parse(checkedArguments);
+            } else {
+                throw new ParseException(MESSAGE_TASK_MODEL_MODE);
+            }
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
@@ -294,5 +395,28 @@ public class AddressBookParser {
     public ObservableList<ReadOnlyAliasToken> getAliasTokenList() {
         return aliasList;
     }
+
+    /**
+     * Enables the the model command mode of either person or task to be used by main parser
+     *
+     * @return true for confirmation of enablePersonToggle
+     */
+    public boolean enablePersonToggle() {
+        isPersonEnabled = true;
+        isTaskEnabled = false;
+        return true;
+    }
+
+    /**
+     * Enables the the model command mode of either person or task to be used by main parser
+     *
+     * @return true for confirmation of enablePersonToggle
+     */
+    public boolean enableTaskToggle() {
+        isPersonEnabled = false;
+        isTaskEnabled = true;
+        return true;
+    }
+
 
 }

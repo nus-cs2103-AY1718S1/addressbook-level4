@@ -72,9 +72,21 @@ public class AddressBookTest {
     }
 
     @Test
+    public void getTaskList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getTaskList().remove(0);
+    }
+
+    @Test
     public void getTagList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getTagList().remove(0);
+    }
+
+    @Test
+    public void getAliasList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getAliasTokenList().remove(0);
     }
 
     /**

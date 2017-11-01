@@ -101,7 +101,7 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
     }
 
     /**
-     * Parses arguments according to the tokens defined in  AddCommandTask
+     * Parses arguments according to the tokens defined in  AddTaskCommand
      */
     private void executeOnEveryMatcherToken(Matcher matcher, BiConsumer<String, String> consumer) {
         while (matcher.find()) {

@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AliasTokenChangedEvent;
+import seedu.address.commons.events.model.ModelToggleEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -25,6 +26,13 @@ import seedu.address.logic.parser.person.RemarkCommandParser;
 import seedu.address.logic.parser.person.SelectCommandParser;
 import seedu.address.logic.parser.person.SortCommandParser;
 import seedu.address.logic.parser.person.UnpinCommandParser;
+import seedu.address.logic.parser.task.AddTaskCommandParser;
+import seedu.address.logic.parser.task.DeleteTaskCommandParser;
+import seedu.address.logic.parser.task.FindTaskCommandParser;
+import seedu.address.logic.parser.task.MarkTaskCommandParser;
+import seedu.address.logic.parser.task.RenameTaskCommandParser;
+import seedu.address.logic.parser.task.RescheduleTaskCommandParser;
+import seedu.address.logic.parser.task.UnmarkTaskCommandParser;
 import seedu.address.model.Model;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -83,7 +91,13 @@ public class LogicManager extends ComponentManager implements Logic {
         addressBookParser.registerCommandParser(new SelectCommandParser());
         addressBookParser.registerCommandParser(new PinCommandParser());
         addressBookParser.registerCommandParser(new UnpinCommandParser());
-        addressBookParser.registerCommandParser(new AddCommandParser());
+        addressBookParser.registerCommandParser(new AddTaskCommandParser());
+        addressBookParser.registerCommandParser(new DeleteTaskCommandParser());
+        addressBookParser.registerCommandParser(new FindTaskCommandParser());
+        addressBookParser.registerCommandParser(new MarkTaskCommandParser());
+        addressBookParser.registerCommandParser(new UnmarkTaskCommandParser());
+        addressBookParser.registerCommandParser(new RenameTaskCommandParser());
+        addressBookParser.registerCommandParser(new RescheduleTaskCommandParser());
     }
 
     /**
@@ -122,11 +136,27 @@ public class LogicManager extends ComponentManager implements Logic {
         }
     }
 
+    @Subscribe
+    public void handleModeToggleEvent(ModelToggleEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(
+                event, "Toggle: " + event.getToggle().toString()));
+        if (event.getToggle().equals(ModelToggleEvent.Toggle.personEnabled)) {
+            logModelToggelForParser(addressBookParser.enablePersonToggle(),
+                    "Successfully toggled to Person Commands in main parser",
+                    "Failed to toggle to Person Commands in main parser");
+        } else if (event.getToggle().equals(ModelToggleEvent.Toggle.taskEnabled)) {
+            logModelToggelForParser(
+                    addressBookParser.enableTaskToggle(),
+                    "Successfully toggled to Task Commands in main parser",
+                    "Failed to toggle to Task Commands in main parser");
+        }
+    }
+
     /**
      * Enter result of changed AliasToken with the logger into the main parser.
      *
      * @param messageSuccessful The String to be input if the operation is a success
-     * @param messageFailure    The Stringto be input if the operation is a failure
+     * @param messageFailure    The String to be input if the operation is a failure
      */
     private void logAliasChangeForParser(boolean isSuccessful, ReadOnlyAliasToken tokenChanged,
                                          String messageSuccessful, String messageFailure) {
@@ -136,6 +166,22 @@ public class LogicManager extends ComponentManager implements Logic {
             logger.warning(String.format(messageFailure, tokenChanged));
         }
     }
+
+    /**
+     * Enter result of changed ModelToggle with the logger into the main parser.
+     *
+     * @param messageSuccessful The String to be input if the operation is a success
+     * @param messageFailure    The String to be input if the operation is a failure
+     */
+    private void logModelToggelForParser(boolean isSuccessful,
+                                         String messageSuccessful, String messageFailure) {
+        if (isSuccessful) {
+            logger.info(messageSuccessful);
+        } else {
+            logger.warning(messageFailure);
+        }
+    }
+
 
     @Override
     public boolean isCommandWord(String keyword) {

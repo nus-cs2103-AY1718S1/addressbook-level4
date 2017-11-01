@@ -22,6 +22,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    private ObjectProperty<Birthday> birthday;
     private ObjectProperty<Remark> remark;
     private boolean isPrivate = false;
     private ObjectProperty<Boolean> isPinned;
@@ -31,13 +32,14 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags,
+    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday, Remark remark, Set<Tag> tags,
                   boolean isPrivate, boolean isPinned) {
-        requireAllNonNull(name, phone, email, address, tags);
+        requireAllNonNull(name, phone, email, address, birthday, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.birthday = new SimpleObjectProperty<>(birthday);
         this.remark = new SimpleObjectProperty<>(remark);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
@@ -49,8 +51,8 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRemark(),
-                source.getTags(), source.isPrivate(), source.isPinned());
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getBirthday(),
+                source.getRemark(), source.getTags(), source.isPrivate(), source.isPinned());
     }
 
     public void setName(Name name) {
@@ -148,6 +150,20 @@ public class Person implements ReadOnlyPerson {
         return remark.get();
     }
 
+    public void setBirthday(Birthday birthday) {
+        this.birthday.set(requireNonNull(birthday));
+    }
+
+    @Override
+    public ObjectProperty<Birthday> birthdayProperty() {
+        return birthday;
+    }
+
+    @Override
+    public Birthday getBirthday() {
+        return birthday.get();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -178,7 +194,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, remark, tags);
+        return Objects.hash(name, phone, email, address, birthday, remark, tags);
     }
 
     @Override

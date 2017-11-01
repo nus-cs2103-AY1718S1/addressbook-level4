@@ -28,6 +28,10 @@ public interface ReadOnlyPerson {
 
     Address getAddress();
 
+    ObjectProperty<Birthday> birthdayProperty();
+
+    Birthday getBirthday();
+
     ObjectProperty<Remark> remarkProperty();
 
     Remark getRemark();
@@ -53,7 +57,8 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress())
+                && other.getBirthday().equals(this.getBirthday()));
     }
 
     /**
@@ -61,13 +66,15 @@ public interface ReadOnlyPerson {
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-                .append(" Phone: ")
+        builder.append(getName());
+        builder.append(" Phone: ")
                 .append(getPhone())
                 .append(" Email: ")
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Birthday: ")
+                .append(getBirthday())
                 .append(" Remark: ")
                 .append(getRemark())
                 .append(" Tags: ");

@@ -2,6 +2,8 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -9,6 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.ToggleToPersonViewEvent;
+import seedu.address.commons.events.ui.ToggleToTaskViewEvent;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -49,6 +53,7 @@ public class SortFindPanel extends UiPart<Region> {
     public SortFindPanel(Logic logic) {
         super(FXML);
         this.logic = logic;
+        registerAsAnEventHandler(this);
     }
 
     /**
@@ -117,6 +122,35 @@ public class SortFindPanel extends UiPart<Region> {
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort address using sort menu");
         }
+    }
+
+    /**
+     * Handles switch to task view event
+     */
+    @Subscribe
+    private void handleToggleToTaskViewEvent(ToggleToTaskViewEvent event) {
+        switchToTaskView();
+    }
+
+    @Subscribe
+    private void handleToggleToPersonViewEvent(ToggleToPersonViewEvent event) {
+        switchToPersonView();
+    }
+
+    /**
+     * Switches style to person view.
+     */
+    private void switchToPersonView() {
+        searchBox.setPromptText("Search Person...");
+        sortMenu.setVisible(true);
+    }
+
+    /**
+     * Switches style to task view.
+     */
+    private void switchToTaskView() {
+        searchBox.setPromptText("Search Task...");
+        sortMenu.setVisible(false);
     }
 
     public MenuButton getSortMenu() {
