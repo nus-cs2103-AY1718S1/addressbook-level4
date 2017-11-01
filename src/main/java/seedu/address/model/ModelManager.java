@@ -229,21 +229,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public boolean hasSelected() {
-        return selected;
-    }
-
-    @Override
-    public void select() {
-        selected = true;
-    }
-
-    @Override
-    public void unselect() {
-        selected = false;
-    }
-
-    @Override
     public void forceSelect(Index target) {
         EventsCenter.getInstance().post(new JumpToListRequestEvent(target));
     }
@@ -253,6 +238,14 @@ public class ModelManager extends ComponentManager implements Model {
         forceSelect(Index.fromZeroBased(findIndex(target)));
     }
 
+    /**
+     * Method to retrieve the index of a given parcel in the active list.
+     */
+    private int findIndex(ReadOnlyParcel target) {
+        return getActiveList().indexOf(target);
+    }
+
+    /*
     @Override
     public void reselect(ReadOnlyParcel parcel) {
         // With sorting, we lose our selected card. As such we have to reselect the
@@ -266,14 +259,6 @@ public class ModelManager extends ComponentManager implements Model {
         forceSelect(Index.fromZeroBased(findIndex(previous)));
     }
 
-    /**
-     * Method to retrieve the index of a given parcel in the active list.
-     */
-    private int findIndex(ReadOnlyParcel target) {
-        return getActiveList().indexOf(target);
-    }
-
-
     @Override
     public ReadOnlyParcel getPrevSelectedParcel() {
         return prevSelectedParcel;
@@ -285,6 +270,21 @@ public class ModelManager extends ComponentManager implements Model {
         prevSelectedParcel = selectedParcel;
     }
 
+    @Override
+    public boolean hasSelected() {
+        return selected;
+    }
+
+    @Override
+    public void select() {
+        selected = true;
+    }
+
+    @Override
+    public void unselect() {
+        selected = false;
+    }
+    */
 
     @Override
     public boolean equals(Object obj) {

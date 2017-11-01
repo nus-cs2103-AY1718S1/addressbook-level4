@@ -105,23 +105,6 @@ public interface Model {
     void maintainSorted();
 
     /**
-     * Method to check if there is a parcel selected.
-     */
-    boolean hasSelected();
-
-    /**
-     * Method to toggle whether or not a parcel has been selected
-     */
-    void select();
-
-    /**
-     * Method to toggle whether or not a parcel has been selected
-     */
-    void unselect();
-
-    ReadOnlyParcel getPrevSelectedParcel();
-
-    /**
      * Method to force the model to select a card without using the select command.
      */
     void forceSelect(Index target);
@@ -132,13 +115,19 @@ public interface Model {
      */
     void forceSelectParcel(ReadOnlyParcel target);
 
-    /**
-     * Method to reselect a parcel card if there is a card selected.
-     */
+    /*
     void reselect(ReadOnlyParcel parcel);
 
-
     void setPrevSelectedParcel(ReadOnlyParcel parcel);
+
+    boolean hasSelected();
+
+    void select();
+
+    void unselect();
+
+    ReadOnlyParcel getPrevSelectedParcel();
+    */
     //@@author
 }
 

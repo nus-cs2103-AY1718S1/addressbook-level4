@@ -97,6 +97,17 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public void forceSelect(Index target) {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void forceSelectParcel(ReadOnlyParcel target) {
+        fail("This method should not be called.");
+    }
+
+    /*
+    @Override
     public boolean hasSelected() {
         fail("This method should not be called.");
         return false;
@@ -124,18 +135,8 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void forceSelect(Index target) {
-        fail("This method should not be called.");
-    }
-
-    @Override
-    public void forceSelectParcel(ReadOnlyParcel target) {
-        fail("This method should not be called.");
-    }
-
-    @Override
     public void reselect(ReadOnlyParcel parcel) {
         fail("This method should not be called.");
     }
-
+    */
 }
