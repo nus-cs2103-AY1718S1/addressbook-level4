@@ -1,5 +1,5 @@
 # TravisPhey
-###### \java\seedu\address\logic\commands\DeleteMultipleCommand.java
+###### /java/seedu/address/logic/commands/DeleteMultipleCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -85,7 +85,7 @@ public class DeleteMultipleCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FindCommand.java
+###### /java/seedu/address/logic/commands/FindCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -124,7 +124,7 @@ public class FindCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FindNumberCommand.java
+###### /java/seedu/address/logic/commands/FindNumberCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -163,19 +163,19 @@ public class FindNumberCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
         case DeleteMultipleCommand.COMMAND_WORD:
         case DeleteMultipleCommand.COMMAND_ALIAS:
             return new DeleteMultipleCommandParser().parse(arguments);
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
         case FindNumberCommand.COMMAND_WORD:
         case FindNumberCommand.COMMAND_ALIAS:
             return new FindNumberCommandParser().parse(arguments);
 ```
-###### \java\seedu\address\logic\parser\DeleteMultipleCommandParser.java
+###### /java/seedu/address/logic/parser/DeleteMultipleCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -221,7 +221,7 @@ public class DeleteMultipleCommandParser implements Parser<DeleteMultipleCommand
     }
 }
 ```
-###### \java\seedu\address\logic\parser\FindCommandParser.java
+###### /java/seedu/address/logic/parser/FindCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -251,13 +251,14 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
+        //String[] nameKeywords = trimmedArgs;
 
         return new FindCommand(new FindCommandPredicate(Arrays.asList(nameKeywords)));
     }
 
 }
 ```
-###### \java\seedu\address\logic\parser\FindNumberCommandParser.java
+###### /java/seedu/address/logic/parser/FindNumberCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
