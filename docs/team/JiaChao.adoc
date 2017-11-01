@@ -50,7 +50,7 @@ include::../DeveloperGuide.adoc[tag= findtags]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag= statisticspanel]
+include::../UserGuide.adoc[tag= undoredo ]
 
 #End of Extract#
 
@@ -71,7 +71,7 @@ and still be able to narrow down the demographic to individual CCA clubs or sele
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag= statisticspanel]
+include::../DeveloperGuide.adoc[tag= undoredo ]
 
 #End of Extract#
 
