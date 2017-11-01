@@ -50,6 +50,7 @@ public class PropertyManagerTest {
         int numPreLoadedProperties = testPrivateFieldsCount("propertyFullNames");
 
         assertEquals(numPreLoadedProperties, testPrivateFieldsCount("propertyConstraintMessages"));
+
         assertEquals(numPreLoadedProperties, testPrivateFieldsCount("propertyValidationRegex"));
     }
 

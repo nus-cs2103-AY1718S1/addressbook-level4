@@ -8,7 +8,8 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.person.exceptions.EventNotFoundException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
+
 //@@author junyango
 /**
  * Deletes an event identified using it's last displayed index from the address book.

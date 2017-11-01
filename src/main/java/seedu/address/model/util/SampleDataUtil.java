@@ -1,5 +1,6 @@
 package seedu.address.model.util;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,8 +8,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicateEventException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.property.Address;
 import seedu.address.model.property.DateTime;
@@ -17,6 +18,7 @@ import seedu.address.model.property.Name;
 import seedu.address.model.property.Phone;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
+import seedu.address.model.reminder.Reminder;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -54,9 +56,9 @@ public class SampleDataUtil {
         try {
             return new Event[]{
                 new Event(new Name("Volleyball Practice"), new DateTime("25122017 08:30"),
-                        new Address("OCBC ARENA Hall 3, #01-111")),
+                        new Address("OCBC ARENA Hall 3, #01-111"), new ArrayList<Reminder>()),
                 new Event(new Name("CS2103T Lecture"), new DateTime("20102017 14:00"),
-                        new Address("iCube Auditorium, NUS")),
+                        new Address("iCube Auditorium, NUS"), new ArrayList<Reminder>()),
             };
         } catch (IllegalValueException | PropertyNotFoundException e) {
             throw new AssertionError("sample data cannot be invalid", e);

@@ -5,12 +5,15 @@ import java.util.regex.PatternSyntaxException;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicateEventException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
+import seedu.address.model.reminder.ReadOnlyReminder;
+import seedu.address.model.reminder.exceptions.DuplicateReminderException;
+import seedu.address.model.reminder.exceptions.ReminderNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -20,6 +23,7 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
     Predicate<ReadOnlyEvent> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
+    Predicate<ReadOnlyReminder> PREDICATE_SHOW_ALL_REMINDERS = unused -> true;
 
     //@@author low5545
     /** Adds extra data to the existing model */
@@ -60,6 +64,7 @@ public interface Model {
 
     /** Changes the color of an existing tag (through TagColorManager) */
     void setTagColor(Tag tag, String color);
+
     //@@author junyango
     //=========== Model support for activity component =============================================================
 
@@ -69,21 +74,35 @@ public interface Model {
     /** Updates the given event */
     void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
             throws DuplicateEventException, EventNotFoundException;
-
     /** Deletes the given event */
     void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
     //@@author
+
+    //=========== Model support for reminder component =============================================================
+
+    /** Adds a reminder */
+    void addReminder(ReadOnlyReminder reminder) throws DuplicateReminderException;
+
+    /** Deletes the given event */
+    void deleteReminder(ReadOnlyReminder target) throws ReminderNotFoundException;
+
     //=========== Filtered Person/Activity List support =============================================================
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
-    /** Returns an unmodifiable view of the filtered person list */
+    /** Returns an unmodifiable view of the filtered event list */
     ObservableList<ReadOnlyEvent> getFilteredEventList();
+
+    /** Returns an unmodifiable view of the filtered reminder list */
+    ObservableList<ReadOnlyReminder> getFilteredReminderList();
 
     /** Updates the filter of the filtered person list to filter by the given {@code predicate}. */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
     /** Updates the filter of the filtered event list to filter by the given {@code predicate}. */
     void updateFilteredEventsList(Predicate<ReadOnlyEvent> predicate);
+
+    /** Updates the filter of the filtered reminder list to filter by the given {@code predicate}. */
+    void updateFilteredReminderList(Predicate<ReadOnlyReminder> predicate);
 }

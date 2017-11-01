@@ -26,7 +26,7 @@ public class EventUtil {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME + event.getName().toString() + " ");
         sb.append(PREFIX_DATE_TIME + event.getTime().toString() + " ");
-        sb.append(PREFIX_ADDRESS + event.getVenue().toString());
+        sb.append(PREFIX_ADDRESS + event.getAddress().toString());
         return sb.toString();
     }
 }

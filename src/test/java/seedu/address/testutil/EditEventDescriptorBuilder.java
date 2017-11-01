@@ -30,7 +30,7 @@ public class EditEventDescriptorBuilder {
         descriptor = new EditEventDescriptor();
         descriptor.setName(event.getName());
         descriptor.setTime(event.getTime());
-        descriptor.setVenue(event.getVenue());
+        descriptor.setAddress(event.getAddress());
     }
 
     /**
@@ -58,13 +58,13 @@ public class EditEventDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Venue} of the {@code EditEventDescriptor} that we are building.
+     * Sets the {@code Address} of the {@code EditEventDescriptor} that we are building.
      */
-    public EditEventDescriptorBuilder withVenue(String venue) {
+    public EditEventDescriptorBuilder withAddress(String address) {
         try {
-            ParserUtil.parseAddress(Optional.of(venue)).ifPresent(descriptor::setVenue);
+            ParserUtil.parseAddress(Optional.of(address)).ifPresent(descriptor::setAddress);
         } catch (IllegalValueException | PropertyNotFoundException ive) {
-            throw new IllegalArgumentException("Venue is expected to be unique.");
+            throw new IllegalArgumentException("Address is expected to be unique.");
         }
         return this;
     }
