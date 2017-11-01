@@ -3,10 +3,10 @@ package guitests;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-//import org.junit.Test;
+import org.junit.Test;
 
 import guitests.guihandles.HelpWindowHandle;
-//import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HelpCommand;
 
 
 public class HelpWindowTest extends AddressBookGuiTest {
@@ -14,7 +14,7 @@ public class HelpWindowTest extends AddressBookGuiTest {
             + "non-headless mode as FxRobot#clickOn(Node, MouseButton...) clicks on the wrong location. We suspect "
             + "that this is a bug with TestFX library that we are using. If this test fails, you have to run your "
             + "tests on headless mode. See UsingGradle.adoc on how to do so.";
-    /*
+
     @Test
     public void openHelpWindow() {
         //use accelerator
@@ -44,7 +44,7 @@ public class HelpWindowTest extends AddressBookGuiTest {
         assertHelpWindowOpen();
 
     }
-    */
+
 
     /**
      * Asserts that the help window is open, and closes it after checking.

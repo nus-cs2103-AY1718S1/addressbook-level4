@@ -49,4 +49,5 @@ public class BrowserPanelTest extends GuiUnitTest {
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
     }
     */
+
 }
