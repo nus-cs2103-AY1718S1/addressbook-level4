@@ -8,7 +8,7 @@ ifndef::env-github[]
 
 include::../../README.adoc[tag=applicationDescription]
 
-*Code contributed*: [https://github.com/jo-lyn/Rolodex/blob/collate/collated/main/jo-lyn.md[Functional code]] [https://github.com/jo-lyn/Rolodex/blob/collate/collated/test/jo-lyn.md[Test code]]
+*Code contributed*: [https://github.com/CS2103AUG2017-W11-B2/main/blob/master/collated/main/jo-lyn.md[Functional code]] [https://github.com/CS2103AUG2017-W11-B2/main/blob/master/collated/test/jo-lyn.md[Test code]]
 
 === Enhancement Added: Keyboard Shortcuts
 

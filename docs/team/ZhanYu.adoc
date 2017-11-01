@@ -14,9 +14,9 @@ include::../../README.adoc[tag=applicationDescription]
 
 *Code contributed*:
 
-* https://github.com/CS2103AUG2017-W11-B2/main/collated/main/ZY-Ang.md[Functional Code]
-* https://github.com/CS2103AUG2017-W11-B2/main/collated/test/ZY-Ang.md[Tests]
-* https://github.com/CS2103AUG2017-W11-B2/main/collated/docs/ZY-Ang.md[Pages]
+* https://github.com/CS2103AUG2017-W11-B2/main/blob/master/collated/main/ZY-Ang.md[Functional Code]
+* https://github.com/CS2103AUG2017-W11-B2/main/blob/master/collated/test/ZY-Ang.md[Tests]
+* https://github.com/CS2103AUG2017-W11-B2/main/blob/master/collated/docs/ZY-Ang.md[Pages]
 
 === Enhancement Added: Find by close words (fuzzy searching) and find by tags
 
