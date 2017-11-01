@@ -17,7 +17,7 @@ public class MeetingBuilder {
     public static final String DEFAULT_NAMEMEETING = "Project Meeting";
     public static final String DEFAULT_DATETIME = "27-01-2018 21:30";
     public static final String DEFAULT_PLACE = "School of Computing";
-    public static final String DEFAULT_PERSONTOMEET = "Alice Tan";
+    public static final String DEFAULT_PERSONTOMEET = "Alice Pauline";
     public static final String DEFAULT_PHONENUM = "85355255";
 
     private Meeting meeting;

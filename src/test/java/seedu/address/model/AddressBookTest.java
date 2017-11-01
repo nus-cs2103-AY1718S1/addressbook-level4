@@ -62,6 +62,7 @@ public class AddressBookTest {
         addressBook.resetData(newData);
     }
 
+    //@@author Melvin-leo
     @Test
     public void resetData_withDuplicateMeetings_throwsAssertionError() {
         // Repeat AGEING twice
@@ -73,8 +74,7 @@ public class AddressBookTest {
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
     }
-
-    //add test for DuplicateMeetings
+    //@@author
 
     @Test
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {

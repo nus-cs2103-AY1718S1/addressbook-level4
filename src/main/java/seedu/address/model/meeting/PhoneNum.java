@@ -1,5 +1,6 @@
 package seedu.address.model.meeting;
 
+//@@author Melvin-leo
 /**
  * Store phonenumber of Person so that user can easily contact him/her for meeting
  */

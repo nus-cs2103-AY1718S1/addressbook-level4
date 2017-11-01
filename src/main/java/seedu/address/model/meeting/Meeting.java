@@ -10,6 +10,7 @@ import java.util.Objects;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+//@@author Melvin-leo
 /**
  * Represents a Meeting in the address book.
  * Guarantees: details are present and not null, field values are validated.

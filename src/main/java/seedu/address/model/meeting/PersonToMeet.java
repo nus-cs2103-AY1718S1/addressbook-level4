@@ -1,5 +1,6 @@
 package seedu.address.model.meeting;
 
+//@@author Melvin-leo
 /**
  * Store the person who user is meeting in Meeting class
  */

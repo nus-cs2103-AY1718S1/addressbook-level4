@@ -72,6 +72,7 @@ public class UiManager extends ComponentManager implements Ui {
         }
     }
 
+    //@@author Melvin-leo
     /**
      * To check if there is a meeting on the day of logging in, only shows reminder if there is a meeting
      * @param meetingList
@@ -89,6 +90,7 @@ public class UiManager extends ComponentManager implements Ui {
         }
         return false;
     }
+    //@@author
 
     @Override
     public void stop() {

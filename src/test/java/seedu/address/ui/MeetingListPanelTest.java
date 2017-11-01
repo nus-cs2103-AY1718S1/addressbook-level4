@@ -16,7 +16,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.meeting.ReadOnlyMeeting;
-
+//@@author Melvin-leo
 public class MeetingListPanelTest extends GuiUnitTest {
 
     private static final ObservableList<ReadOnlyMeeting> TYPICAL_MEETINGS =
