@@ -28,6 +28,10 @@ public class StartDate extends TaskDates {
      */
     public StartDate(String date, Suffix recurInterval) throws IllegalValueException {
         requireNonNull(date);
+        String trimmedDate = date.trim();
+        if (!trimmedDate.isEmpty() && !TaskDates.isDateValid(trimmedDate)) {
+            throw new IllegalValueException(TaskDates.MESSAGE_DATE_CONSTRAINTS);
+        }
         this.date = date.trim();
         this.recurInterval = recurInterval;
     }

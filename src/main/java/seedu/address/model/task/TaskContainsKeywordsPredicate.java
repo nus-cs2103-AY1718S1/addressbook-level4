@@ -27,9 +27,11 @@ public class TaskContainsKeywordsPredicate implements Predicate<ReadOnlyTask> {
         String tag = Arrays.toString(task.getTags().toArray())
                 .replaceAll("[\\[\\](),{}]", "");
         try {
-            Date date = ParserUtil.parseDate(task.getDeadline().date);
-            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-            testDate = dateFormat.format(date);
+            if (!task.getDeadline().isEmpty()) {
+                Date date = ParserUtil.parseDate(task.getDeadline().date);
+                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                testDate = dateFormat.format(date);
+            }
         } catch (IllegalValueException e) {
             e.printStackTrace();
         }
