@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.ProfilePicturesFolder;
 import seedu.address.model.person.ReadOnlyPerson;
 
 public class DebtorProfilePicture extends UiPart<Region> {
@@ -18,7 +19,7 @@ public class DebtorProfilePicture extends UiPart<Region> {
     public DebtorProfilePicture(ReadOnlyPerson person) {
         super(FXML);
         String imageName = person.getName().toString().replaceAll("\\s+", "");
-        String imagePath = "C:/Users/acer/Desktop/SE/profilepic/" + imageName + ".jpg";
+        String imagePath = ProfilePicturesFolder.getPath() + imageName + ".jpg";
 
         File file = new File(imagePath);
 
