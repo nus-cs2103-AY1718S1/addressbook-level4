@@ -546,7 +546,6 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredOverduePersons.equals(other.filteredOverduePersons);
     }
 
-
     //==================== Event Handling Code ===============================================================
 
     @Subscribe

@@ -8,6 +8,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javafx.collections.ObservableList;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -16,6 +17,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
 
 
 public class LogicManagerTest {
@@ -69,6 +71,13 @@ public class LogicManagerTest {
     public void getFilteredOverduePersonList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         logic.getFilteredOverduePersonList().remove(0);
+    }
+    @Test
+    public void resetFilteredPersonList() {
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
+        ObservableList<ReadOnlyPerson> expectedList = logic.getAllPersons();
+        logic.resetFilteredPersonList();
+        assertEquals(expectedList, logic.getFilteredPersonList());
     }
 
 

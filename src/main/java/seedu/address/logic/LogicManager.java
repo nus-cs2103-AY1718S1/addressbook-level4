@@ -57,6 +57,14 @@ public class LogicManager extends ComponentManager implements Logic {
         model.updateSelectedPerson(person);
     }
 
+    /**
+     * Resets the filteredPersonList to be a list of all persons.
+     */
+    @Override
+    public void resetFilteredPersonList() {
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+    }
+
     @Override
     public ObservableList<ReadOnlyPerson> getAllPersons() {
         return model.getAllPersons();
