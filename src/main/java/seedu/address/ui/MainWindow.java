@@ -168,6 +168,17 @@ public class MainWindow extends UiPart<Region> {
         FxViewUtil.setStageIcon(primaryStage, iconSource);
     }
 
+
+    //@@ author grantcm
+    /**
+     * On startup, we want to set the browser to display the help window
+     */
+    private void setBrowserPanelToHelpOnStart () {
+        browserPanel.loadPage(HelpWindow.USERGUIDE_FILE_PATH);
+    }
+
+    //@@ author
+
     /**
      * Sets the default size based on user preferences.
      */
