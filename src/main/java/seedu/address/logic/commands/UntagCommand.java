@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,10 +40,11 @@ public class UntagCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " -a friends/colleagues";
 
     public static final String MESSAGE_SUCCESS = "%d person(s) successfully untagged from %s:";
-    public static final String MESSAGE_SUCCESS_ALL_TAGS = "%d person(s) sucessfully untagged all:";
+    public static final String MESSAGE_SUCCESS_ALL_TAGS = "%d person(s) sucessfully untagged:";
     public static final String MESSAGE_SUCCESS_MULTIPLE_TAGS_IN_LIST = "%s tag(s) successfully removed.";
-    public static final String MESSAGE_SUCCESS_ALL_TAGS_IN_LIST = "All tags successfully removed.";
+    public static final String MESSAGE_SUCCESS_ALL_TAGS_IN_LIST = "All tags in the list successfully removed.";
 
+    public static final String MESSAGE_TAG_NOT_FOUND = "Tag not found.";
     public static final String MESSAGE_PERSONS_DO_NOT_HAVE_TAGS = "%d person(s) do not have any of the specified tags:";
     public static final String MESSAGE_EMPTY_INDEX_LIST = "Please provide one or more indexes! \n%1$s";
     public static final String MESSAGE_INVALID_INDEXES = "One or more person indexes provided are invalid.";
@@ -74,9 +74,8 @@ public class UntagCommand extends UndoableCommand {
         if (toAllInFilteredList) {
             for (ReadOnlyPerson personToUntag : lastShownList) {
                 removeTagsFromPerson(personToUntag, tags);
+                deleteUnusedTagsInTagList(new ArrayList<>(personToUntag.getTags()));
             }
-
-            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             return (tags.isEmpty()) ? new CommandResult(MESSAGE_SUCCESS_ALL_TAGS_IN_LIST)
                     : new CommandResult(String.format(MESSAGE_SUCCESS_MULTIPLE_TAGS_IN_LIST, joinList(tags)));
         }
@@ -93,6 +92,7 @@ public class UntagCommand extends UndoableCommand {
                 ReadOnlyPerson personToUntag = lastShownList.get(targetIndex.getZeroBased());
                 removeTagsFromPerson(personToUntag, tags);
                 toBeUntaggedPersonNames.add(personToUntag.getName());
+                deleteUnusedTagsInTagList(new ArrayList<>(personToUntag.getTags()));
             }
             return new CommandResult(String.format(MESSAGE_SUCCESS_ALL_TAGS, targetIndexes.size()) + " "
                     + joinList(toBeUntaggedPersonNames));
@@ -109,11 +109,8 @@ public class UntagCommand extends UndoableCommand {
             toBeUntaggedPersonNames.add(personToUntag.getName());
         }
 
-        for (Tag tag : tags) {
-            model.deleteUnusedTag(tag);
-        }
+        deleteUnusedTagsInTagList(tags);
 
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         if (alreadyUntaggedPersonNames.size() > 0) {
             return new CommandResult(String.format(MESSAGE_SUCCESS,
                     targetIndexes.size() - alreadyUntaggedPersonNames.size(), joinList(tags)) + " "
@@ -156,6 +153,12 @@ public class UntagCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException e) {
             throw new AssertionError("The target person cannot be missing");
+        }
+    }
+
+    private void deleteUnusedTagsInTagList(List<Tag> tags) {
+        for (Tag tag : tags) {
+            model.deleteUnusedTag(tag);
         }
     }
 
