@@ -147,14 +147,6 @@ public class EditCommandParserTest {
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser, "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_ADDRESS_AMY + VALID_PHONE_AMY,
                 Name.MESSAGE_NAME_CONSTRAINTS);
-        // while parsing {@code PREFIX_RELATIONSHIP} alone will reset the relationships of the {@code Person} being
-        // edited, parsing it together with a valid tag results in error
-        assertParseFailure(parser, "1" + REL_DESC_SIBLINGS + REL_DESC_COLLEAGUE + REL_EMPTY,
-            Relationship.MESSAGE_REL_CONSTRAINTS);
-        assertParseFailure(parser, "1" + REL_DESC_SIBLINGS + REL_EMPTY + REL_DESC_COLLEAGUE,
-            Relationship.MESSAGE_REL_CONSTRAINTS);
-        assertParseFailure(parser, "1" + REL_EMPTY + REL_DESC_SIBLINGS + REL_DESC_COLLEAGUE,
-            Relationship.MESSAGE_REL_CONSTRAINTS);
     }
 
     @Test
@@ -162,14 +154,13 @@ public class EditCommandParserTest {
         Index targetIndex = INDEX_SECOND_PERSON;
         String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + TAG_DESC_HUSBAND
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY + TAG_DESC_FRIEND + COMPANY_DESC_BOB
-                + POSITION_DESC_BOB + STATUS_DESC_AMY + PRIORITY_DESC_AMY + NOTE_DESC_BOB + REL_DESC_SIBLINGS;
+                + POSITION_DESC_BOB + STATUS_DESC_AMY + PRIORITY_DESC_AMY + NOTE_DESC_BOB;
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withCompany(VALID_COMPANY_BOB).withPosition(VALID_POSITION_BOB)
                 .withStatus(VALID_STATUS_AMY).withPriority(VALID_PRIORITY_AMY)
-                .withNote(VALID_NOTE_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-                .withRelation(VALID_REL_SIBLINGS).build();
+                .withNote(VALID_NOTE_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);

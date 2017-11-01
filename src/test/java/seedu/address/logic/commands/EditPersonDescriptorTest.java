@@ -61,8 +61,5 @@ public class EditPersonDescriptorTest {
         // different tags -> returns false
         editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(DESC_AMY.equals(editedAmy));
-        // different relationship -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withRelation(VALID_REL_COLLEAGUE).build();
-        assertFalse(DESC_AMY.equals(editedAmy));
     }
 }
