@@ -2,7 +2,6 @@ package seedu.address.model.lesson.predicate;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CODE_CS2101;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CODE_MA1101R;
 
@@ -10,11 +9,12 @@ import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.module.Code;
-import seedu.address.model.module.predicates.FixedCodePredicate;
-import seedu.address.testutil.LessonBuilder;
+import seedu.address.model.module.Remark;
+import seedu.address.model.module.predicates.SelectedStickyNotePredicate;
 
 //@@author junming403
-public class FixedCodePredicateTest {
+public class SelectedStickyNotePredicateTest {
+
     @Test
     public void equals() {
 
@@ -28,14 +28,14 @@ public class FixedCodePredicateTest {
             assert false : "The code shouldn't invalid";
         }
 
-        FixedCodePredicate firstPredicate = new FixedCodePredicate(firstCode);
-        FixedCodePredicate secondPredicate = new FixedCodePredicate(secondCode);
+        SelectedStickyNotePredicate firstPredicate = new SelectedStickyNotePredicate(firstCode);
+        SelectedStickyNotePredicate secondPredicate = new SelectedStickyNotePredicate(secondCode);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        FixedCodePredicate firstPredicateCopy = new FixedCodePredicate(firstCode);
+        SelectedStickyNotePredicate firstPredicateCopy = new SelectedStickyNotePredicate(firstCode);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -49,7 +49,7 @@ public class FixedCodePredicateTest {
     }
 
     @Test
-    public void test_isTheCodeGiven_returnsTrue() {
+    public void test_isTheCodeGiven_returnsTrue() throws IllegalValueException {
 
         Code code = null;
 
@@ -59,8 +59,8 @@ public class FixedCodePredicateTest {
             assert false : "The address shouldn't invalid";
         }
 
-        FixedCodePredicate predicate = new FixedCodePredicate(code);
-        assertTrue(predicate.test(new LessonBuilder().build()));
+        SelectedStickyNotePredicate predicate = new SelectedStickyNotePredicate(code);
+        assertTrue(predicate.test(new Remark("Remark content", code)));
 
     }
 
@@ -69,10 +69,12 @@ public class FixedCodePredicateTest {
 
         try {
             Code code = new Code("GEQ1000");
-            FixedCodePredicate predicate = new FixedCodePredicate(code);
-            assertFalse(predicate.test(new LessonBuilder().build()));
+            Code secondCode = new Code("GEQ1001");
+            SelectedStickyNotePredicate predicate = new SelectedStickyNotePredicate(code);
+            assertFalse(predicate.test(new Remark("Remark content", secondCode)));
         } catch (IllegalValueException e) {
             assert false : "The code shouldn't invalid";
         }
     }
+
 }
