@@ -2,6 +2,7 @@ package seedu.address.model.property.exceptions;
 
 import static seedu.address.commons.core.Messages.PROPERTY_NOT_FOUND;
 
+//@@author yunpengn
 /**
  * Signals that the required property has not been defined yet.
  */

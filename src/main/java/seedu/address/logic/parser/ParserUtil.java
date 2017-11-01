@@ -66,6 +66,7 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    //@@author yunpengn
     /**
      * Parses all properties in the given {@code HashMap}.
      *
@@ -82,6 +83,7 @@ public class ParserUtil {
 
         return properties;
     }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
@@ -161,5 +163,5 @@ public class ParserUtil {
         }
         return filePath;
     }
-
+    //@@author
 }

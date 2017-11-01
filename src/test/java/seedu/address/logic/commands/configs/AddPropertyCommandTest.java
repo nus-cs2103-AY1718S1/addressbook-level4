@@ -17,6 +17,7 @@ import seedu.address.logic.commands.stub.ModelStub;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
 
+//@@author yunpengn
 public class AddPropertyCommandTest {
     private ConfigCommand successCommand;
 

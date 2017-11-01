@@ -67,6 +67,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(persons);
     }
+
     //@@author junyango
     @Override
     public ObservableList<ReadOnlyEvent> getEventList() {
@@ -82,6 +83,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         return FXCollections.unmodifiableObservableList(events);
     }
     //@@author
+
     @Override
     public ObservableList<Tag> getTagList() {
         final ObservableList<Tag> tags = this.tags.stream().map(t -> {
@@ -96,6 +98,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         return FXCollections.unmodifiableObservableList(tags);
     }
 
+    //@@author yunpengn
     /**
      * Initialize the {@link PropertyManager} by clearing all existing properties and load information about new
      * properties from the storage file.
@@ -104,4 +107,5 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         PropertyManager.clearAllProperties();
         properties.initializeProperties();
     }
+    //@@author
 }

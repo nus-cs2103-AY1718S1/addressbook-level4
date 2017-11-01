@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import seedu.address.logic.commands.UndoableCommand;
 
+//@@author yunpengn
 /**
  * Imports data from various format to the application.
  */
@@ -36,6 +37,7 @@ public abstract class ImportCommand extends UndoableCommand {
             + " correct format as recognized by BoNUS.\nPlease try to import from another XML file.";
     //@@author
 
+    //@@author yunpengn
     /**
      * Different types of sub-commands within {@link ImportCommand}.
      */
