@@ -11,6 +11,7 @@ import java.io.StringWriter;
  */
 public class StringUtil {
 
+    //@@author jiasheng
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
      * Ignores case, but a full word match is required.
@@ -35,7 +36,7 @@ public class StringUtil {
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
         for (String wordInSentence : wordsInPreppedSentence) {
-            if (wordInSentence.equalsIgnoreCase(preppedWord)) {
+            if (wordInSentence.toLowerCase().contains(preppedWord.toLowerCase())) {
                 return true;
             }
         }
