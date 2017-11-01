@@ -1574,6 +1574,54 @@ Use case ends.
 6. AddressBok adds event to list of events
 
 Use case ends
+
+=== Use case: Access website
+
+*MSS*
+
+1. User chooses to access a contact's website.
+2. AddressBook requests for details of the access.
+3. User enters the requested details which includes the index of the desired contact.
+4. AddressBook shows the website of the desired contact for user to use.
+
+Use case ends.
+
+*Extensions*
+
+* 3a. AddressBook detects an error in the entered data.
++
+[none]
+** 3a1. AddressBook shows an error message and requests for correct data.
+** 3a2. User enters new data.
++
+Steps 3a1-3a2 are repeated until the data entered are correct.
++
+Use case resumes at step 4.
+
+=== Use case: Access Location
+
+*MSS*
+
+1. User chooses to access a contact's location.
+2. AddressBook requests for details of the access.
+3. User enters the requested details which includes the index of the desired contact.
+4. AddressBook shows the location of the desired contact for user to view.
+
+Use case ends.
+
+*Extensions*
+
+* 3a. AddressBook detects an error in the entered data.
++
+[none]
+** 3a1. AddressBook shows an error message and requests for correct data.
+** 3a2. User enters new data.
++
+Steps 3a1-3a2 are repeated until the data entered are correct.
++
+Use case resumes at step 4.
+
+
 {More to be added}
 
 link:#the-myths-book---developer-guide[Back To Top]
