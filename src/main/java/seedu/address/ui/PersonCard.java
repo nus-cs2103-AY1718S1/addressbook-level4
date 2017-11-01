@@ -104,6 +104,7 @@ public class PersonCard extends UiPart<Region> {
         cardPane.getChildren().add(favouriteLabel);
     }
 
+    //@@author jacoblipech
     /**
      * Binds the birthday string together for each contact to display in a better format
      * so that it is clearer for the user.
@@ -189,6 +190,7 @@ public class PersonCard extends UiPart<Region> {
         return tagColors.get(tagValue);
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

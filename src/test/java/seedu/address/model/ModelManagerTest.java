@@ -36,12 +36,12 @@ public class ModelManagerTest {
         modelManager.getFilteredPersonList().remove(0);
     }
 
+    //@@author jacoblipech
     /**
      * Tests if sortPersonByName can return a list of sorted names from an input
      * of names with random orders.
      * @throws Exception
      */
-
     @Test
     public void sortPersonByName_validSort_success() throws Exception {
         Person inputPerson1 = new PersonBuilder().withName("YING ZHENG").build();

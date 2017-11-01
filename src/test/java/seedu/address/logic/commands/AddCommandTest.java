@@ -133,6 +133,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author jacoblipech
         @Override
         public void addBirthday (Index targetIndex, Birthday toAdd) throws PersonNotFoundException {
             fail("This method should not be called.");
@@ -145,6 +146,7 @@ public class AddCommandTest {
         }
     }
 
+    //@@author
     /**
      * A Model stub that always throw a DuplicatePersonException when trying to add a person.
      */

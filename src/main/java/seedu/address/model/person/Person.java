@@ -123,6 +123,7 @@ public class Person implements ReadOnlyPerson {
         return favourite.get();
     }
 
+    //@@author jacoblipech
     public void setBirthday(Birthday birthday) {
 
         this.birthday.set(requireNonNull(birthday));
@@ -140,6 +141,7 @@ public class Person implements ReadOnlyPerson {
         return birthday.get();
     }
 
+    //@@author
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

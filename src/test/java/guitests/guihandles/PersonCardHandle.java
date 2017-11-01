@@ -72,10 +72,12 @@ public class PersonCardHandle extends NodeHandle<Node> {
         return favouriteLabel.getText();
     }
 
+    //@@author jacoblipech
     public String getBirthday() {
         return birthdayLabel.getText();
     }
 
+    //@@author
     public List<String> getTags() {
         return tagLabels
                 .stream()
