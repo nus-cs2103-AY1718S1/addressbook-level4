@@ -142,7 +142,7 @@ public class ParserUtil {
         }
         return addressList;
     }
-
+    //@@author limyongsong
     /**
      * Parses {@code Collection<String> remarks} into a {@code ArrayList<Remark>}.
      */
@@ -170,4 +170,5 @@ public class ParserUtil {
 
         return indexArrayList;
     }
+    //@@author
 }

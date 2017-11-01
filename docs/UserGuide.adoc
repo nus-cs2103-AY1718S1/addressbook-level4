@@ -442,6 +442,39 @@ Remove specified tags from multiple persons in the address book by specifying th
 
 Format: `remove friends family 1 3`
 
+=== Add/remove a remark note to contact: `addremark`, `removeremark`
+
+Adds remarks to a person existing in the address book based on their index +
+Or to remove remarks based on person's index and remark index +
+
+Format to add remark: `remark PERSONINDEX r/REMARK` +
+Format to remove remark: `remark PERSONINDEX REMARKINDEX`
+
+[TIP]
+A person can have any number of remarks (including 0) +
+GUI will display a list of person with pending remarks.
+
+Examples:
+
+* `remark 1 r/Have a beer with him on Sunday`
+* `remark 3 r/Finish project with him by tomorrow r/Eat supper with him at 10`
+* `remark 1 1 3`
+* `remark 2 1`
+
+=== Link twitter page to contact: `link`
+
+Adds a twitter link to a person existing in the address book based on their index +
+
+Format: `link PERSONINDEX l/WEBSITEURL` +
+
+[TIP]
+A person can have only one link, any changes will update the existing link to be the new link +
+Only twitter links are accepted
+
+Examples:
+
+* `link 1 l/https://www.twitter.com/john.doe`
+
 
 
 == *Coming in v2.0*
@@ -476,38 +509,6 @@ Examples:
 
 * `login u/johndoeuser p/abcd1234`
 * `logout`
-
-=== Add a remark note to contact: `remark`
-
-Adds remarks to a person existing in the address book based on their index +
-Or to remove remarks based on person's index and remark index +
-
-Format to add remark: `remark PERSONINDEX r/REMARK` +
-Format to remove remark: `remark PERSONINDEX REMARKINDEX`
-
-[TIP]
-A person can have any number of remarks (including 0)
-
-Examples:
-
-* `remark 1 r/Have a beer with him on Sunday`
-* `remark 3 r/Finish project with him by tomorrow r/Eat supper with him at 10`
-* `remark 1 1`
-* `remark 2 1`
-
-=== Link twitter page to contact: `link`
-
-Adds a twitter link to a person existing in the address book based on their index +
-
-Format: `link PERSONINDEX l/WEBSITEURL` +
-
-[TIP]
-A person can have only one link, any changes will update the existing link to be the new link +
-Only twitter links are accepted
-
-Examples:
-
-* `link 1 l/https://www.twitter.com/john.doe`
 
 === Ability to highlight keyword from the `Find Command` result
 

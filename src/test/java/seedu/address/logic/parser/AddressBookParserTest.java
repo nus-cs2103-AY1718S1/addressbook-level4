@@ -178,7 +178,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD) instanceof UndoCommand);
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
     }
-
+    //@@author limyongsong
     @Test
     public void parseCommand_addRemarkCommandWord_returnsRemarkCommand() throws Exception {
         ArrayList<Remark> remarks = new ArrayList<>();
@@ -204,7 +204,7 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_LINK + " " + link.value);
         assertEquals(new LinkCommand(INDEX_FIRST_PERSON, link), command);
     }
-
+    //@@author
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);
