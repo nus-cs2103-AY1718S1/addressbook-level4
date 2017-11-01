@@ -13,6 +13,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Occupation;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Remark;
 import seedu.address.model.person.Website;
@@ -52,6 +53,16 @@ public class ParserUtil {
     public static Optional<Name> parseName(Optional<String> name) throws IllegalValueException {
         requireNonNull(name);
         return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> occupation} into an {@code Optional<Occupation>} if {@code occupation} is
+     * present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Occupation> parseOccupation(Optional<String> occupation) throws IllegalValueException {
+        requireNonNull(occupation);
+        return occupation.isPresent() ? Optional.of(new Occupation(occupation.get())) : Optional.empty();
     }
 
     /**
