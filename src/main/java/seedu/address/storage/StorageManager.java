@@ -80,7 +80,7 @@ public class StorageManager extends ComponentManager implements Storage {
     public void handleUserPersonChangedEvent(UserPersonChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local User Profile data changed, saving to file"));
         try {
-            saveUserPerson(event.data);
+            saveUserPerson(event.getUserPerson());
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }

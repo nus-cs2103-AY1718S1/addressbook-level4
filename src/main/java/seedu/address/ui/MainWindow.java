@@ -60,6 +60,9 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem helpMenuItem;
 
     @FXML
+    private MenuItem userProfileMenuItem;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
 
     @FXML
@@ -101,6 +104,7 @@ public class MainWindow extends UiPart<Region> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(userProfileMenuItem, KeyCombination.valueOf("F2"));
     }
 
     /**
@@ -220,7 +224,7 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     private void handleUserProfile() {
-        UserProfileWindow userProfileWindow = new UserProfileWindow();
+        UserProfileWindow userProfileWindow = new UserProfileWindow(logic.getUserPerson());
         userProfileWindow.show();
     }
 

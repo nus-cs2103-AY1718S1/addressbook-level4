@@ -66,12 +66,12 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <TextField id="name" GridPane.columnIndex="1" />
-            <TextField id="email" prefHeight="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField id="phone" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField id="address" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField id="tag" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField id="weblinks" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="nameTextField" GridPane.columnIndex="1" />
+            <TextField fx:id="emailTextField" prefHeight="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="phoneTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="addressTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" VBox.vgrow="NEVER">

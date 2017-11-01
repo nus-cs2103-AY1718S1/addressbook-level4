@@ -2,6 +2,8 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -10,6 +12,7 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.UserPersonChangedEvent;
 import seedu.address.model.person.UserPerson;
 
 /**
@@ -24,25 +27,31 @@ public class UserProfileWindow extends UiPart<Region> {
     private UserPerson userPerson;
 
     @FXML
-    private TextField name;
+    private TextField nameTextField;
 
     @FXML
-    private TextField phone;
+    private TextField phoneTextField;
 
     @FXML
-    private TextField email;
+    private TextField emailTextField;
 
     @FXML
-    private TextField address;
+    private TextField addressTextField;
 
     private final Stage stage;
 
-    public UserProfileWindow() {
+    public UserProfileWindow(UserPerson userPerson) {
         super(FXML);
         registerAsAnEventHandler(this);
 
         Scene scene = new Scene(getRoot());
         stage = createDialogStage(TITLE, null, scene);
+        this.userPerson = userPerson;
+        nameTextField.setText(userPerson.getName().toString());
+        emailTextField.setText(userPerson.getEmail().toString());
+        phoneTextField.setText(userPerson.getPhone().toString());
+        addressTextField.setText(userPerson.getAddress().toString());
+
     }
 
     /**
@@ -50,10 +59,10 @@ public class UserProfileWindow extends UiPart<Region> {
      * so that they will be notified of any changes.
      */
     private void bindListeners(UserPerson userPerson) {
-        name.textProperty().bind(Bindings.convert(userPerson.nameProperty()));
-        phone.textProperty().bind(Bindings.convert(userPerson.phoneProperty()));
-        address.textProperty().bind(Bindings.convert(userPerson.addressProperty()));
-        email.textProperty().bind(Bindings.convert(userPerson.emailProperty()));
+        nameTextField.textProperty().bind(Bindings.convert(userPerson.nameProperty()));
+        phoneTextField.textProperty().bind(Bindings.convert(userPerson.phoneProperty()));
+        addressTextField.textProperty().bind(Bindings.convert(userPerson.addressProperty()));
+        emailTextField.textProperty().bind(Bindings.convert(userPerson.emailProperty()));
     }
 
     @Override
@@ -88,7 +97,19 @@ public class UserProfileWindow extends UiPart<Region> {
 
     @FXML
     void handleOK(){
+        //raise(new UserPersonChangedEvent(userPerson));
         stage.close();
     }
 
+    @Subscribe
+    private void handleUserPersonChangedEvent(UserPersonChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setUserPerson(event.getUserPerson());
+        //bindListeners(userPerson);
+    }
+
+    void setUserPerson(UserPerson userPerson){
+        this.userPerson = userPerson;
+
+    }
 }
