@@ -9,7 +9,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 /**
  * Represents a Event's time in the address book.
  */
-// @@author HuWanqing
+
 public class EventTime {
 
 
@@ -28,6 +28,7 @@ public class EventTime {
     private String month;
     private String day;
 
+    //@@author Adoby7
     /**
      * Validates given name.
      *
@@ -59,13 +60,6 @@ public class EventTime {
 
     public String orderForSort() {
         return year + month + day;
-    }
-
-    /**
-     * Returns true if a given time is valid formatted.
-     */
-    public boolean isValidFormat(String test) {
-        return test.matches(EVNET_TIME_VALIDATION_REGEX);
     }
 
     /**
@@ -103,6 +97,14 @@ public class EventTime {
                 || (year % 100 != 0 && year % 4 == 0);
     }
 
+    /**
+     * Returns true if a given time is valid formatted.
+     */
+    public boolean isValidFormat(String test) {
+        return test.matches(EVNET_TIME_VALIDATION_REGEX);
+    }
+
+    // @@author HuWanqing
     public String getDaysLeft() {
         long day = getDays();
         if (day < 0) {

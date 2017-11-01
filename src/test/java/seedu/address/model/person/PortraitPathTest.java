@@ -5,6 +5,11 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+//@@author Adoby7
+
+/**
+ * Test portrait path class
+ */
 public class PortraitPathTest {
 
     @Test

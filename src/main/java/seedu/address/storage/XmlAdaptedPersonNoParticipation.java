@@ -19,8 +19,9 @@ import seedu.address.model.person.PortraitPath;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
+//@@author Adoby7
 /**
- * JAXB-friendly version of the Person.
+ * No participation events in this adapted event, to avoid infinite loop when store event
  */
 public class XmlAdaptedPersonNoParticipation {
 

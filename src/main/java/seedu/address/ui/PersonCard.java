@@ -72,6 +72,7 @@ public class PersonCard extends UiPart<Region> {
         loadPortrait(person.getPortraitPath().filePath);
     }
 
+    //@@author Adoby7
     /**
      * Add the picture to portrait field
      * @param filePath the picture file
@@ -87,6 +88,7 @@ public class PersonCard extends UiPart<Region> {
 
         this.portrait.setImage(portrait);
     }
+    //@@author
 
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));

@@ -131,6 +131,7 @@ public class EditCommand extends UndoableCommand {
             originalPath, updatedTags, originalParticipation);
     }
 
+    //@@author Adoby7
     @Override
     protected void undo() {
         try {
@@ -159,6 +160,7 @@ public class EditCommand extends UndoableCommand {
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

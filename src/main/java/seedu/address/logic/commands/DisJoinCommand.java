@@ -18,6 +18,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.HaveParticipateEventException;
 import seedu.address.model.person.exceptions.NotParticipateEventException;
 
+//@@author Adoby7
 /**
  * Shows a person does not participate an event any more
  */

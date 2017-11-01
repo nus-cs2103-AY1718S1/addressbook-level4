@@ -19,9 +19,9 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+//@@author Adoby7
 /**
  * Wraps all events at event list level
- * Duplicates are not allowed (by .equals comparison)
  */
 public class EventList implements ReadOnlyEventList {
     private final UniqueEventList events;
@@ -56,7 +56,7 @@ public class EventList implements ReadOnlyEventList {
 
     /**
      * Adds a event to the event list.
-     * Also checks the new event's particpands and updates {@link #events} with any new persons found,
+     * Also checks the new event's participants and updates {@link #events} with any new persons found,
      * and updates the Person objects in the event to point to those in {@link #events}.
      *
      * @throws DuplicateEventException if an equivalent person already exists.

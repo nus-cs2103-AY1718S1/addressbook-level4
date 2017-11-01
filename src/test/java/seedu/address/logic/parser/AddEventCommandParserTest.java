@@ -28,7 +28,7 @@ import seedu.address.model.event.EventName;
 import seedu.address.model.event.EventTime;
 import seedu.address.testutil.EventBuilder;
 
-
+//@@author Adoby7
 public class AddEventCommandParserTest {
     private AddEventCommandParser parser = new AddEventCommandParser();
 

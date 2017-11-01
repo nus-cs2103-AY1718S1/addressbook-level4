@@ -12,6 +12,10 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.DisJoinCommand;
 
+//@@author Adoby7
+/**
+ * Test disjoin command parser
+ */
 public class DisjoinCommandParserTest {
 
     private static final String MESSAGE_INVALID_FORMAT =
