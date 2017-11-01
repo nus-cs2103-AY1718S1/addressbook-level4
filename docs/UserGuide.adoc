@@ -81,9 +81,11 @@ Unify's user interface is split into a few sections. These sections are highligh
 image::UG_quicklookui.png[width="790"]
 
 == Quick Start
+
 image::UG_mainheader_installationguide.png[width="900"]
 //-
 {sp}
+Follow this installation guide to get Unify up and running on your computer.
 
 image::UG_header_stepbystep.png[width="400"]
 {sp}
@@ -113,13 +115,17 @@ image::UG_header_examples.png[width="400"]
 Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**` n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
 == Features
+
+Unify is jam-packed with features and it may be daunting for new users.
+This section of the user guide provides a step by step walk-through of all the commands Unify has to offer.
+Do read our short explanation about Command Format below so that the subsequent portions of this section will make sense to you.
 
 ====
 image::UG_header_commandformat.png[width="500"]
@@ -139,7 +145,8 @@ image::UG_mainheader_basicfeatures.png[width="900"]
 
 image::UG_commandheader_help.png[width="500"]
 {sp}+
-Opens the User Guide
+Feeling lost and not sure what to do? You can type the `help` command and Unify will open an in-application
+user guide for your reference!
 
 image::UG_header_format.png[width="400"]
 {sp}+
@@ -161,11 +168,15 @@ image::divider.png[width="900"]
 
 image::UG_commandheader_add.png[width="500"]
 {sp}+
-Adds a person to the address book +
+Adding a new contact? Unify's `add` command takes a person's information and records it in Unify as a contact!
 
 image::UG_header_format.png[width="400"]
 {sp}+
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [i/AVATAR_FILE_PATH] [t/TAG]...`
+
+[TIP]
+Still unsure of what fields are required? Not to worry! Unify's in-line hints will prompt you on the fields required.
+Simply press kbd:[Tab] to auto-complete to the next required prefix!
 
 image::UG_header_alias.png[width="400"]
 {sp}+
@@ -197,15 +208,14 @@ image::header_note.png[width="400"]
 * For a contact's avatar file path, you may specify the full path of the image (ie: d:/pictures/betsy.png)
 * For Windows users, if you are unsure how to get the path of the image click http://www.howto-connect.com/copy-path-of-a-file-or-folder-in-windows-10/[here]
 
-
-
 image::divider.png[width="900"]
 
 === Listing all persons : `list`
 
 image::UG_commandheader_list.png[width="500"]
 {sp}+
-Shows a list of all persons in the address book. +
+Looking to scroll through your entire contact list? Or just want to admire your large network?
+Unify's `list` command will list of all your contacts! +
 
 image::UG_header_format.png[width="400"]
 {sp}+
@@ -234,7 +244,8 @@ image::divider.png[width="900"]
 
 image::UG_commandheader_edit.png[width="500"]
 
-Edits an existing person in the address book. +
+Need to update your girlfriend's phone number? Or misspelt your tutor's e-mail address?
+Unify's `edit` command lets you edit an existing contact's details in the address book. +
 
 image::UG_header_format.png[width="400"]
 
@@ -277,8 +288,8 @@ image::divider.png[width="900"]
 === Searching for people by details: `find`
 image::UG_commandheader_find.png[width="500"]
 
-Looking for an old friend who stayed in Bishan? Identifying the person who sent you a message from his e-mail made in Primary School? Unify's `find` command allows you
-to search for people based on their details, which include: +
+Looking for an old friend who stayed in Bishan? Identifying the person who sent you a message from his e-mail made in Primary School?
+Unify's `find` command allows you to search for people based on their details, which include: +
 
 * Name
 * Phone
@@ -368,7 +379,11 @@ image::divider.png[width="900"]
 === Deleting a person : `delete`
 image::UG_commandheader_delete.png[width="500"]
 
-Deletes the specified person from the address book. +
+Deleting a duplicate contact?
+Unify's `delete` command removes a specified contact from the address book. +
+
+[TIP]
+If you accidentally deleted a contact, Unify's `undo` command can help undo the deletion!
 
 image::UG_header_format.png[width="400"]
 
@@ -424,7 +439,9 @@ image::divider.png[width="900"]
 === Selecting a person : `select`
 image::UG_commandheader_select.png[width="500"]
 
-Selects the person identified by the index number used in the last person listing. +
+Two hands on your keyboard and don't want to press the mouse?
+Unify's `select` command provides and alternative to clicking on a contact list.
+It selects the person identified by the index number used in the last contact listing. +
 
 image::UG_header_format.png[width="400"]
 
@@ -476,40 +493,13 @@ image::UG_select2.png[width="590"]
 
 image::divider.png[width="900"]
 
-=== Listing entered commands : `history`
-image::UG_commandheader_history.png[width="500"]
-
-Lists all the commands that you have entered in reverse chronological order. +
-
-image::UG_header_format.png[width="400"]
-Format: `history`
-
-image::UG_header_stepbystep.png[width="400"]
-{sp}+
-image:step1.png[width="70"] Type `history` into the command box, and press kbd:[Enter] to execute it.
-
-image::UG_history1.png[width="590"]
-
-image:step2.png[width="70"] The result box will display "Entered commands (from most recent to earliest):" with the history of the commands you have previously entered.
-
-image::UG_history2.png[width="590"]
-
-image:step3.png[width="70"] If your result box will display "You have not yet entered any commands." Do not worry! It just means that you have not entered any commands yet! Try executing a command and repeat step 1 again.
-
-image::UG_history3.png[width="590"]
-
-{sp}+
-
-image::header_note.png[width="400"]
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-
-image::divider.png[width="900"]
-
 // tag::undoredo[]
 === Undoing previous command : `undo`
 image::UG_commandheader_undo.png[width="500"]
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Accidentally cleared all your contacts? Edited the wrong contact detail? Fear not! Unify's `undo` command restores the
+address book to the state before the previous _undoable_ command was executed. This is your emergency command if you
+incorrectly modified Unify's contact list.+
 
 image::UG_header_format.png[width="400"]
 Format: `undo`
@@ -541,7 +531,7 @@ image::divider.png[width="900"]
 === Redoing the previously undone command : `redo`
 image::UG_commandheader_redo.png[width="500"]
 
-Reverses the most recent `undo` command. +
+Just like how `undo` undoes your most recent command, `redo` reverses the most recent `undo` command. +
 
 image::UG_header_format.png[width="400"]
 Format: `redo`
@@ -567,11 +557,40 @@ The `redo` command fails as there are no `undo` commands executed previously.
 {sp}+
 
 image::divider.png[width="900"]
+=== Listing entered commands : `history`
+image::UG_commandheader_history.png[width="500"]
+
+If you are unsure what commands the `undo` command will undo, Unify's `history` command will
+lists all the commands that you have entered in reverse chronological order. +
+
+image::UG_header_format.png[width="400"]
+Format: `history`
+
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] Type `history` into the command box, and press kbd:[Enter] to execute it.
+
+image::UG_history1.png[width="590"]
+
+image:step2.png[width="70"] The result box will display "Entered commands (from most recent to earliest):" with the history of the commands you have previously entered.
+
+image::UG_history2.png[width="590"]
+
+image:step3.png[width="70"] If your result box will display "You have not yet entered any commands." Do not worry! It just means that you have not entered any commands yet! Try executing a command and repeat step 1 again.
+
+image::UG_history3.png[width="590"]
+
+{sp}+
+
+image::header_note.png[width="400"]
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+
+image::divider.png[width="900"]
 
 === Clearing all entries : `clear`
 image::UG_commandheader_clear.png[width="500"]
 
-Clears all entries from the address book. +
+If you want to empty Unify from all contacts, Unify's `clear` command clears all entries from the address book. +
 
 image::UG_header_format.png[width="400"]
 Format: `clear`
@@ -597,7 +616,8 @@ image::divider.png[width="900"]
 === Playing background music : `music play`
 image::UG_commandheader_musicplay.png[width="500"]
 
-Plays a specific genre music track from a list of built in mp3 music from Unify or resumes playing currently paused music track. +
+Want to listen to some of your favourite tunes? Unify's got you covered! Unify's `music play` command plays a music track
+from a specific genre from a list of built in mp3 music. If you had already paused a track, `music play` resumes playing that track. +
 
 image::UG_header_format.png[width="400"]
 Format: `music play [GENRE]`
@@ -623,7 +643,8 @@ image::divider.png[width="900"]
 === Stopping background music : `music stop`
 image::UG_commandheader_musicstop.png[width="500"]
 
-Stops the current music track playing. +
+Maybe the music is getting distracting or you're just not in the mood for some tunes.
+`music stop` stops the current music track playing so that you can focus on the task at hand.+
 
 image::UG_header_format.png[width="400"]
 Format: `music stop`
@@ -648,7 +669,8 @@ image::divider.png[width="900"]
 === Pausing background music : `music pause`
 image::UG_commandheader_musicpause.png[width="500"]
 
-Pause the current music track playing. +
+Going for a short break and don't want to miss that catchy chorus?
+`music pause` pauses the current music track playing. +
 
 image::UG_header_format.png[width="400"]
 Format: `music pause`
@@ -670,10 +692,11 @@ image::divider.png[width="900"]
 === Exporting contact's details as an email : `email`
 image::UG_commandheader_email.png[width="500"]
 
-Emails the selected contact's details to your personal email +
+Want to share a contact to your colleagues via e-mail?
+Unify's `email` command lets you email the selected contact's details to your personal email! +
 
 image::UG_header_format.png[width="400"]
-Format: `email INDEX EMAILADDRESS`+
+Format: `email INDEX EMAIL_ADDRESS`+
 
 image::UG_header_examples.png[width="400"]
 
@@ -707,6 +730,9 @@ image::divider.png[width="900"]
 
 === Adding / Editing a remark : `remark`
 image::UG_commandheader_remarksadd.png[width="500"]
+
+Have something to say about a particular contact? Or want to record their favourite food so that you can treat them on their
+birthday? Unify's `remark` command lets you record anything you want about any person.
 
 Adds or edits the remark for a person specified in the INDEX. +
 
@@ -744,7 +770,7 @@ image::UG_commandheader_aliasadd.png[width="500"]
 
 If you find yourself forgetting your commands often, you can define aliases to make them mean the same thing! +
 
-Adds an alias to another command. If unspecified, lists all aliases. +
+Unify's `alias' command an alias to another command. If unspecified, lists all aliases. +
 
 image::UG_header_format.png[width="400"]
 Format: `alias [ALIAS COMMAND]`
