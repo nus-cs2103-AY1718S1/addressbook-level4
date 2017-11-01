@@ -1,5 +1,6 @@
 package seedu.room.ui;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -13,14 +14,20 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seedu.room.commons.core.Config;
 import seedu.room.commons.core.GuiSettings;
 import seedu.room.commons.core.LogsCenter;
 import seedu.room.commons.events.ui.ExitAppRequestEvent;
+import seedu.room.commons.events.ui.NewResultAvailableEvent;
 import seedu.room.commons.events.ui.ShowHelpRequestEvent;
 import seedu.room.commons.util.FxViewUtil;
 import seedu.room.logic.Logic;
+import seedu.room.logic.commands.CommandResult;
+import seedu.room.logic.commands.ImportCommand;
+import seedu.room.logic.commands.exceptions.CommandException;
+import seedu.room.logic.parser.exceptions.ParseException;
 import seedu.room.model.UserPrefs;
 
 /**
@@ -94,6 +101,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -152,6 +160,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the given image as the icon of the main window.
+     *
      * @param iconSource e.g. {@code "/images/help_icon.png"}
      */
     private void setIcon(String iconSource) {
@@ -186,10 +195,34 @@ public class MainWindow extends UiPart<Region> {
     /**
      * Opens the help window.
      */
-    @FXML
     public void handleHelp() {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
+    }
+
+    /**
+     * Handles import and allows user to choose file
+     */
+    @FXML
+    public void handleImport() {
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(null);
+        String filePath = file.getAbsolutePath();
+        System.out.println(filePath);
+
+        if (file != null) {
+            try {
+                CommandResult commandResult = logic.execute(ImportCommand.COMMAND_WORD + " " + filePath);
+                logger.info("Result: " + commandResult.feedbackToUser);
+                raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            } catch (CommandException e) {
+                logger.info("Invalid command: " + ImportCommand.MESSAGE_ERROR);
+                raise(new NewResultAvailableEvent(e.getMessage()));
+            } catch (ParseException e) {
+                logger.info("Invalid command: " + ImportCommand.MESSAGE_ERROR);
+                raise(new NewResultAvailableEvent(e.getMessage()));
+            }
+        }
     }
 
     void show() {
