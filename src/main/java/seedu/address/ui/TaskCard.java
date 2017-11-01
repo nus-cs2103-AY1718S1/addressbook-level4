@@ -13,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.image.Image;
 import seedu.address.model.task.ReadOnlyTask;
 
 import javax.swing.*;
@@ -63,8 +62,8 @@ public class TaskCard extends UiPart<Region> {
         super(FXML);
         this.task = task;
         //if (!task.getComplete()) {
-            id.setText(displayedIndex + ". ");
-            initTags(task);
+        id.setText(displayedIndex + ". ");
+        initTags(task);
         //}
         initMark(task);
         bindListeners(task);
@@ -136,7 +135,9 @@ public class TaskCard extends UiPart<Region> {
 
     private  void initMark(ReadOnlyTask task) {
         Image markIcon = new Image(ICON);
-        if(task.getComplete()) mark.setImage(markIcon);
+        if (task.getComplete()) {
+            mark.setImage(markIcon);
+        }
 
     }
     @Override
