@@ -409,13 +409,14 @@ Else if the input custom field value is empty, the custom field of the person wi
 For example, command `custom 1 Nickname` will clear the nickname custom field of the first person in the AddressBook.
 
 ==== Storage
-Xml file for Custom Field is created and the Xml for Person is updated for storing the information of the customs fields of every person.
+New XmlAdaptedCustomField class is created and new XmlElement customised is defined in XmlAdaptedPerson class to allow storage of
 
 ==== Ui
 A new label will be displaced for each person for each custom field.
 
 ==== Sequence Diagram
-image::CustomCommandSequenceProgram.png[width="800"]
+image::CustomCommandSequenceDiagram.png[width="800"]
+image::CustomCommandSequenceDiagramForStorage[width="800"]
 
 === Upload photo
 ==== Model
@@ -437,11 +438,14 @@ For example, command `upload 1 D:\Git Projects\wolf.jpg` will update the icon ph
 Else if the input photo path is empty, the icon photo of the person will be reset to the default photo.
 For example, command `upload 1` will reset the icon photo of the first person to the default photo in the AddressBook.
 
+==== Storage
+New XML value Photo is created in XmlAdaptedPerson class to allow the storing of icon photo address for each person.
+
 ==== Ui
 Image of the icon photo will be displayed after uploaded.
 
 ==== Sequence Diagram
-image::UploadPhotoCommandSequenceProgram.png[width="800"]
+image::UploadPhotoCommandSequenceDiagram.png[width="800"]
 
 === Search bar
 ==== Front end
@@ -551,10 +555,8 @@ image::showAllPhonesWithNoAdditionalPhones.png[width="200']
 If there are numbers in the uniquePhoneList, the all numbers will be displayed with an index in front of it. Illustration is below.
 image::showAllPhones.png[width="200']
 
-
-
 ==== Storage
-Xml file for newly created list will be created and the Xml for Person is updated for storing the information of the fields of every person.
+New XML element for UniquePhoneList and new XmlAdaptedPhone class with XML value Phone are created to allow the storage for unique phone list and optional phones.
 ==== Ui
 A new label will be displaced for each person for each instance of the same fields.
 
