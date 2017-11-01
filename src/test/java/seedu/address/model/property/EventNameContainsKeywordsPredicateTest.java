@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.Test;
 
 import seedu.address.testutil.EventBuilder;
-
+//@@author junyango
 public class EventNameContainsKeywordsPredicateTest {
 
     @Test

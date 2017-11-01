@@ -3,7 +3,7 @@ package seedu.address.model.event;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
+//@@author junyango
 public class UniqueEventListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
