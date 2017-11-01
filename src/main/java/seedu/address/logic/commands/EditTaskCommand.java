@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -104,8 +105,10 @@ public class EditTaskCommand extends UndoableCommand {
         Boolean updateComplete = editTaskDescriptor.getComplete().orElse(taskToEdit.getComplete());
         //Remark updatedRemark = taskToEdit.getRemark(); // edit command does not allow editing remarks
         Integer originalPriority = taskToEdit.getPriority(); // edit command is not used to update priority
+        Integer id = taskToEdit.getId();
+        ArrayList<Integer> peopleIds= taskToEdit.getPeopleIds();
         return new Task(updatedTaskName, updatedDescription, updatedStartDateTime, updatedEndDateTime,
-                updatedTags, updateComplete, originalPriority);
+                updatedTags, updateComplete, originalPriority, id, peopleIds);
     }
 
     @Override

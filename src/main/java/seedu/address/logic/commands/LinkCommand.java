@@ -13,6 +13,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -31,7 +33,9 @@ public class LinkCommand extends UndoableCommand {
             + PREFIX_PERSON + "2";
 
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "linked Task: %1$s";
+    public static final String MESSAGE_LINK_SUCCESS = "linked Task %d with Person %2$d, and";
+    public static final String MESSAGE_PERSON_LINKED = "person %d already linked.";
+
     private final Index index;
     private final ArrayList<Index> personIndices;
 
@@ -49,28 +53,38 @@ public class LinkCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
+        int personId;
 
         List<ReadOnlyTask> lastShownTaskList = model.getSortedTaskList();
 
-        ReadOnlyTask TaskToLink = chooseItem(lastShownTaskList, index);
+        ReadOnlyTask targetTask = chooseItem(lastShownTaskList, index);
 
         List<ReadOnlyPerson> lastShownPersonList = model.getFilteredPersonList();
 
-        ReadOnlyPerson personToLink;
+        ArrayList<Integer> peopleIds= targetTask.getPeopleIds();
+
         for(Index index : personIndices) {
-            personToLink = chooseItem(lastShownPersonList, index);
+            personId = chooseItem(lastShownPersonList, index).getId();
+            if(peopleIds.contains(personId)) {
+                throw new CommandException(String.format(MESSAGE_PERSON_LINKED, index.getZeroBased()));
+            }
+
+            peopleIds.add(personId);
         }
 
+        Task taskLinked = new Task(targetTask);
+        taskLinked.setPeopleIds(peopleIds);
 
-
-        return new CommandResult(MESSAGE_EDIT_PERSON_SUCCESS);
+        try {
+            model.updateTask(targetTask, taskLinked);
+        } catch (DuplicateTaskException e) {
+            throw new AssertionError("These people are already linked");
+        } catch (TaskNotFoundException e) {
+            throw new AssertionError("can never reach this");
+        }
+        return new CommandResult(MESSAGE_LINK_SUCCESS);
     }
 
-    private static Person createLinkedPerson(ReadOnlyPerson personToLink, ReadOnlyTask task) {
-        assert personToLink != null;
-        Person newPerson = new Person(personToLink);
-
-    }
 
     private  static <E> E chooseItem(List<E> list, Index index) throws CommandException{
         if (index.getZeroBased() >= list.size()) {

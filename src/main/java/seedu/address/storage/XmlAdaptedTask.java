@@ -28,8 +28,8 @@ public class XmlAdaptedTask {
     private String startDateTime;
     @XmlElement(required = true)
     private String endDateTime;
-    @XmlID
-    private String id;
+    @XmlElement
+    private Integer id;
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
     @XmlElement(required = true)
@@ -83,9 +83,10 @@ public class XmlAdaptedTask {
         final String endDateTime = this.endDateTime;
         final Set<Tag> tags = new HashSet<>(personTags);
         final Boolean complete = this.complete;
-        final List<Integer> peopleIndices= this.peopleIndices;
+        final ArrayList<Integer> peopleIndices = new ArrayList<>(this.peopleIndices);
         final Integer priority = this.priority;
-        return new Task(taskName, taskDescription, startDateTime, endDateTime, tags, complete, priority);
+        final Integer id = this.id;
+        return new Task(taskName, taskDescription, startDateTime, endDateTime, tags, complete, priority, id, peopleIndices);
     }
 
 }

@@ -43,7 +43,6 @@ public class Person implements ReadOnlyPerson {
         nextId++;
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-
     }
 
     public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags, Integer id) {
