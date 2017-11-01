@@ -57,7 +57,7 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Only name and phone number are compulsory fields +
+Only `NAME` and `PHONE NUMBER` are compulsory fields +
 Format: `add n/NAME p/PHONE_NUMBER b/BIRTHDAY e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
