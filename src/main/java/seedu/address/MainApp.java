@@ -1,5 +1,6 @@
 package seedu.address;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
@@ -65,6 +66,7 @@ public class MainApp extends Application {
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
 
         initLogging(config);
+        initEmptyStorage();
 
         model = initModelManager(storage, userPrefs);
 
@@ -107,6 +109,16 @@ public class MainApp extends Application {
 
     private void initLogging(Config config) {
         LogsCenter.init(config);
+    }
+
+    /**
+     * Initialize empty storage folder to store profile picture
+     */
+    private void initEmptyStorage() {
+        boolean success = (new File(StorageManager.EMPTY_STORAGE_DEFAULT_PATH)).mkdirs();
+        if (!success) {
+            logger.warning("Problem while initializing empty storage.");
+        }
     }
 
     /**

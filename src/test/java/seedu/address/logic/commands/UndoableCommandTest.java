@@ -8,6 +8,9 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
 
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.RecentlyDeletedQueue;
+import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -17,7 +20,8 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 public class UndoableCommandTest {
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private final DummyCommand dummyCommand = new DummyCommand(model);
+    private final DummyCommand dummyCommand = new DummyCommand(model, new CommandHistory(), new UndoRedoStack(),
+            new RecentlyDeletedQueue());
 
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -49,8 +53,11 @@ public class UndoableCommandTest {
      * Deletes the first person in the model's filtered list.
      */
     class DummyCommand extends UndoableCommand {
-        DummyCommand(Model model) {
+        DummyCommand(Model model, CommandHistory history, UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue) {
             this.model = model;
+            this.history = history;
+            this.undoRedoStack = undoRedoStack;
+            this.queue = queue;
         }
 
         @Override

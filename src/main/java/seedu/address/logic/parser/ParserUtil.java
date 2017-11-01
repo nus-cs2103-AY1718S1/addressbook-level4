@@ -13,6 +13,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Occupation;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Remark;
 import seedu.address.model.person.Website;
@@ -54,6 +55,18 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.empty();
     }
 
+    //@@author JavynThun
+    /**
+     * Parses a {@code Optional<String> occupation} into an {@code Optional<Occupation>} if {@code occupation} is
+     * present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Occupation> parseOccupation(Optional<String> occupation) throws IllegalValueException {
+        requireNonNull(occupation);
+        return occupation.isPresent() ? Optional.of(new Occupation(occupation.get())) : Optional.empty();
+    }
+    //@@author
+
     /**
      * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -81,6 +94,7 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
+    //@@author JavynThun
     /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -98,6 +112,7 @@ public class ParserUtil {
         requireNonNull(website);
         return website.isPresent() ? Optional.of(new Website(website.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
