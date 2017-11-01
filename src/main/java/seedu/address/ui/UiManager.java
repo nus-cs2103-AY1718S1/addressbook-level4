@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -8,6 +10,7 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import seedu.address.MainApp;
 import seedu.address.commons.core.ComponentManager;
@@ -56,7 +59,7 @@ public class UiManager extends ComponentManager implements Ui {
             mainWindow = new MainWindow(primaryStage, config, prefs, logic);
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
-
+            final Font f = Font.loadFont(new FileInputStream(new File("/Users/xuyiqing/Desktop/CS2103/addressbook-level4/src/main/java/seedu/address/ui/1.otf")), 12);
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);

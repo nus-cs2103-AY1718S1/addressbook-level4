@@ -10,28 +10,34 @@
    <children>
       <VBox>
          <children>
+
             <Label fx:id="id" styleClass="label-header" />
-            <Label fx:id="name" styleClass="label-header" />
+            <Label fx:id="name" styleClass="name" />
+             <VBox minHeight="10"></VBox>
+
             <HBox>
                <children>
-                  <Label styleClass="label-bright" text="Tags: " />
                   <FlowPane fx:id="tags" />
+                   <VBox minHeight="10"></VBox>
                </children>
             </HBox>
             <HBox>
                <children>
+                   <VBox minHeight="30"></VBox>
                   <Label styleClass="label-bright" text="Phone: " />
                   <Label fx:id="phone" styleClass="label-bright" />
                </children>
             </HBox>
             <HBox>
                <children>
+                   <VBox minHeight="30"></VBox>
                   <Label styleClass="label-bright" text="Address: " />
                   <Label fx:id="address" styleClass="label-bright" />
                </children>
             </HBox>
             <HBox>
                <children>
+                   <VBox minHeight="30"></VBox>
                   <Label styleClass="label-bright" text="Email: " />
                   <Label fx:id="email" styleClass="label-bright" />
                </children>

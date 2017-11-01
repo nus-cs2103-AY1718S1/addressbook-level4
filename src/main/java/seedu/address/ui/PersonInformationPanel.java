@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.logging.Logger;
@@ -9,6 +12,9 @@ import com.google.common.eventbus.Subscribe;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -44,6 +50,10 @@ public class PersonInformationPanel extends UiPart<Region> {
     private Label address;
     @FXML
     private Label email;
+    @FXML
+    private ImageView photoContainer;
+    @FXML
+    private AnchorPane photoPane;
 
     public PersonInformationPanel() {
         super(FXML);
@@ -89,9 +99,18 @@ public class PersonInformationPanel extends UiPart<Region> {
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         id.setText(Integer.toString(personid));
-
+        String path = "m133225.jpg";
+        try {
+            URL url = new File(path).toURI().toURL();
+            Image image = new Image(url.toString());
+            photoContainer = new ImageView();
+            photoContainer.setFitWidth(400);
+            photoContainer.setPreserveRatio(true);
+            photoContainer.setImage(image);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
     /**
      * Sets a background color for each tag.
      * @param
