@@ -21,6 +21,7 @@ import seedu.address.model.person.phone.Phone;
 import seedu.address.model.person.phone.UniquePhoneList;
 import seedu.address.model.tag.Tag;
 
+//@@author LuLechuan
 /**
  * Adds or updates the photo of a person identified using it's last displayed index from the address book.
  */

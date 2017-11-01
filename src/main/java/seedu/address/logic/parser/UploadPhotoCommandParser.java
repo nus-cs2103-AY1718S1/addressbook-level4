@@ -10,6 +10,7 @@ import seedu.address.logic.commands.UploadPhotoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Photo;
 
+//@@author LuLechuan
 /**
  * Parses input arguments and creates a new UploadPhotoCommand object
  */
