@@ -108,7 +108,7 @@ public class UserPerson implements ReadOnlyPerson {
 
     public String getEmailAsText() {
         StringBuilder builder = new StringBuilder();
-        for (Email email : getEmail()){
+        for (Email email : getEmail()) {
             builder.append(email.toString());
             builder.append(", ");
         }
