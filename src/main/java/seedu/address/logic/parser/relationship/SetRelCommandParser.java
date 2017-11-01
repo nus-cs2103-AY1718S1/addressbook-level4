@@ -54,9 +54,9 @@ public class SetRelCommandParser implements Parser<SetRelCommand> {
         EditPerson editPerson = new EditPerson();
         try {
             parseRelForEdit(argMultimap.getAllValues(PREFIX_ADD_RELATIONSHIP)).ifPresent
-            (editPerson::setToAdd);
+                (editPerson::setToAdd);
             parseRelForEdit(argMultimap.getAllValues(PREFIX_DELETE_RELATIONSHIP)).ifPresent
-            (editPerson::setToRemove);
+                (editPerson::setToRemove);
             editPerson.setClearRels(argMultimap.containsPrefix(PREFIX_EMPTY_RELATIONSHIP));
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
