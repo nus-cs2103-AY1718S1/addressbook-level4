@@ -662,13 +662,13 @@ The meeting information is retrieved from a ReadOnlyMeetingList converted into a
 
 ==== Design Considerations
 
-**Aspect:** Constructor of the MeetingPanel class
-**Alternative:** Instead of taking in logic, directly take in an ObservableList<Meeting> that is called from MainWindow.java.
-**Pros:** Less coupling since there is no logic component in the MeetingPanel class.
-**Cons:** Since the Meeting class does not have getter methods to obtain person strings and instead uses a mapped unique id system to obtain each person's name through the ReadOnlyAddressBook, a instance of the model object is required to obtain the strings of each person's name in the meeting object
-**Alternative 2:** Implement a direct getter method for the person's string in the meeting object.
-**Pros:** Lesser code complexity; we no longer need a method in the LogicManager class to obtain person strings through the ReadOnlyAddressBook using the Meeting class' unique IDs.
-**Pros:** Less coupling since there is no logic component in the MeetingPanel class.
+**Aspect:** Constructor of the MeetingPanel class +
+**Alternative:** Instead of taking in logic, directly take in an ObservableList<Meeting> that is called from MainWindow.java. +
+**Pros:** Less coupling since there is no logic component in the MeetingPanel class. +
+**Cons:** Since the Meeting class does not have getter methods to obtain person strings and instead uses a mapped unique id system to obtain each person's name through the ReadOnlyAddressBook, a instance of the model object is required to obtain the strings of each person's name in the meeting object. +
+**Alternative 2:** Implement a direct getter method for the person's string in the meeting object. +
+**Pros:** Lesser code complexity; we no longer need a method in the LogicManager class to obtain person strings through the ReadOnlyAddressBook using the Meeting class' unique IDs. +
+**Pros:** Less coupling since there is no logic component in the MeetingPanel class. +
 **Cons:** Invalidates the unique id system currently in place for the meeting class.
 
 == Documentation
