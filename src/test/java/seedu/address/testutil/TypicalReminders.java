@@ -6,18 +6,18 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_MESSAGE_ASSIGNM
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MESSAGE_PROJECT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_PROJECT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_ASSIGNMENT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_PROJECT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_OFFICE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_SOFTCOPY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_ASSIGNMENT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_PROJECT;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
-import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 import seedu.address.model.reminder.ReadOnlyReminder;
+import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 
 /**
  * A utility class containing a list of {@code Reminder} objects to be used in tests.

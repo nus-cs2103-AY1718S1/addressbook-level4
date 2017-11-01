@@ -4,9 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_PRIORITY_LISTED_OVERVIEW;
-import static seedu.address.testutil.TypicalReminders.DINNER;
-import static seedu.address.testutil.TypicalReminders.GATHERING;
-import static seedu.address.testutil.TypicalReminders.PARTY;
 import static seedu.address.testutil.TypicalReminders.getTypicalAddressBook;
 
 import java.util.Arrays;

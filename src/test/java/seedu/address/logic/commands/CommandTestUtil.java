@@ -105,8 +105,8 @@ public class CommandTestUtil {
                 .withPriority(VALID_PRIORITY_PROJECT).withDate(VALID_DATE_PROJECT).withMessage(VALID_MESSAGE_PROJECT)
                 .withTags(VALID_TAG_OFFICE).build();
         DESC_ASSIGNMENT = new EditReminderDescriptorBuilder().withTask(VALID_TASK_ASSIGNMENT)
-                .withPriority(VALID_PRIORITY_ASSIGNMENT).withDate(VALID_DATE_ASSIGNMENT).
-                        withMessage(VALID_MESSAGE_ASSIGNMENT).withTags(VALID_TAG_OFFICE, VALID_TAG_SOFTCOPY).build();
+                .withPriority(VALID_PRIORITY_ASSIGNMENT).withDate(VALID_DATE_ASSIGNMENT)
+                .withMessage(VALID_MESSAGE_ASSIGNMENT).withTags(VALID_TAG_OFFICE, VALID_TAG_SOFTCOPY).build();
     }
 
     /**

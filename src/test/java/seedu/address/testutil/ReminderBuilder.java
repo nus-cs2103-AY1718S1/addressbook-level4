@@ -73,7 +73,7 @@ public class ReminderBuilder {
      * Sets the {@code Message} of the {@code Reminder} that we are building.
      */
     public ReminderBuilder withMessage(String message) {
-            this.reminder.setMessage(new Message(message));
+        this.reminder.setMessage(new Message(message));
         return this;
     }
 

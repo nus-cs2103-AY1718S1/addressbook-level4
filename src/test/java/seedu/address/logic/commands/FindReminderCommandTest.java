@@ -21,8 +21,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.reminder.TaskContainsKeywordsPredicate;
 import seedu.address.model.reminder.ReadOnlyReminder;
+import seedu.address.model.reminder.TaskContainsKeywordsPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindReminderCommand}.
@@ -76,8 +76,7 @@ public class FindReminderCommandTest {
      */
     private FindReminderCommand prepareCommand(String userInput) {
         FindReminderCommand command =
-                new FindReminderCommand(new TaskContainsKeywordsPredicate
-                        (Arrays.asList(userInput.split("\\s+"))));
+                new FindReminderCommand(new TaskContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
