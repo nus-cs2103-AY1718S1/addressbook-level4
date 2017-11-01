@@ -47,7 +47,7 @@ public class ResultDisplay extends UiPart<Region> {
 
     //@@author raisa2010
     /**
-     * Sets the command box style to indicate a failed command.
+     * Sets the result display style to indicate a failed command.
      */
     private void setStyleToIndicateCommandFailure() {
         ObservableList<String> styleClass = resultDisplay.getStyleClass();
