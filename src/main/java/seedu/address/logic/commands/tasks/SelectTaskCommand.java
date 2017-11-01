@@ -1,9 +1,9 @@
 package seedu.address.logic.commands.tasks;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
 import java.util.Arrays;
 import java.util.List;
-
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
