@@ -141,12 +141,10 @@ public class Autocompleter {
             return;
         }
 
-        if (AutocompleteCommand.hasIndexParameter(commandWord)) {
-            if (!(AutocompleteCommand.hasPrefixParameter(commandWord)) || needIndex(arguments)) {
-                resetCountingAndMaxIndexIfNeeded();
-                state = AutocompleteState.INDEX;
-                return;
-            }
+        if (onlyHasIndex(commandWord) || needIndex(arguments)) {
+            resetCountingAndMaxIndexIfNeeded();
+            state = AutocompleteState.INDEX;
+            return;
         }
 
         if (AutocompleteCommand.hasPrefixParameter(commandWord)) {
@@ -159,6 +157,11 @@ public class Autocompleter {
             state = AutocompleteState.COMMAND_NEXT_PREFIX;
         }
 
+    }
+
+    private boolean onlyHasIndex(String commandWord) {
+        return AutocompleteCommand.hasIndexParameter(commandWord)
+                && !AutocompleteCommand.hasPrefixParameter(commandWord);
     }
 
     private boolean isCyclingThroughCommands(String commandWord) {
@@ -192,11 +195,12 @@ public class Autocompleter {
      * Check if the index field in the {@code String} has already been entered
      */
     private boolean containsIndex(String arguments) {
+        String arg = arguments;
         Prefix[] prefixes = AutocompleteCommand.ALL_PREFIXES;
-        if (lastTwoCharactersArePrefix(arguments)) {
-            arguments += SPACE;
+        if (lastTwoCharactersArePrefix(arg)) {
+            arg += SPACE;
         }
-        ArgumentMultimap argMap = ArgumentTokenizer.tokenize(arguments, prefixes);
+        ArgumentMultimap argMap = ArgumentTokenizer.tokenize(arg, prefixes);
 
         String index = argMap.getPreamble();
         return !index.equals(EMPTY_STRING);

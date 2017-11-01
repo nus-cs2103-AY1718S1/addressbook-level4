@@ -19,8 +19,6 @@ public class CommandBoxParser {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
-    public CommandBoxParser() { }
-
     /**
      * Parses {@code String} to see if it contains any instances of a {@code Command} and {@code Prefix}
      * @param commandBoxText
