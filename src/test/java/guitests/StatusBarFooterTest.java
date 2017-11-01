@@ -1,25 +1,29 @@
 package guitests;
 
-//import static org.junit.Assert.assertEquals;
-//import static org.junit.Assert.assertFalse;
-//import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-//import static seedu.address.testutil.TypicalPersons.HOON;
-//import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
-//import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
+import static seedu.address.testutil.TypicalPersons.HOON;
+import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
+import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
-//import java.util.Date;
+import java.util.Date;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.testutil.PersonUtil;
 import seedu.address.ui.StatusBarFooter;
-//import org.junit.Test;
-//import seedu.address.logic.commands.ListCommand;
-//import seedu.address.testutil.PersonUtil;
+
+
+
+
 
 
 
@@ -43,7 +47,7 @@ public class StatusBarFooterTest extends AddressBookGuiTest {
     public void restoreOriginalClock() {
         StatusBarFooter.setClock(originalClock);
     }
-    /*
+
     @Test
     public void syncStatus_initialValue() {
         assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
@@ -68,7 +72,7 @@ public class StatusBarFooterTest extends AddressBookGuiTest {
         assertFalse(runCommand("invalid command")); // invalid command fails
         assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
     }
-    */
+
 
 }
 
