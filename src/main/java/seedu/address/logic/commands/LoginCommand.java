@@ -18,20 +18,19 @@ public class LoginCommand extends Command {
 
 
     public static final String COMMAND_WORD = "login";
-    
+
     private static String MESSAGE_LOGIN_ACKNOWLEDGEMENT;
-    
+
     public static String MESSAGE_SUCCESS = "Login Successful";
-    
-    public static String MESSAGE_FAILURE = "Username or Password Incorrect"
-        ;
+
+    public static String MESSAGE_FAILURE = "Username or Password Incorrect";
+
     public static String MESSAGE_USAGE = COMMAND_WORD + ": Login to private Database. "
             + "Parameters: "
             + PREFIX_USERNAME + "USERNAME "
             + PREFIX_PASSWORD + "PASSWORD";
-    
-    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
+    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
     public LoginCommand(String userName, String userPassword) {
         if (userName.equals("private") && userPassword.equals("password")) {
