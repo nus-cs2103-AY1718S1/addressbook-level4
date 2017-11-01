@@ -38,7 +38,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     private static boolean selected = false;
     private static ReadOnlyParcel prevSelectedParcel = null;
-    private static Index prevIndex = Index.fromZeroBased(0);
     private final AddressBook addressBook;
 
     private final FilteredList<ReadOnlyParcel> filteredParcels;
@@ -58,6 +57,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredParcels = new FilteredList<>(this.addressBook.getParcelList());
         updatedDeliveredAndUndeliveredList();
         activeFilteredList = filteredUndeliveredParcels;
+        SelectionListener sl = new SelectionListener(this);
     }
 
     public ModelManager() {
@@ -302,4 +302,5 @@ public class ModelManager extends ComponentManager implements Model {
     public static Predicate<ReadOnlyParcel> getDeliveredPredicate() {
         return deliveredPredicate;
     }
+
 }
