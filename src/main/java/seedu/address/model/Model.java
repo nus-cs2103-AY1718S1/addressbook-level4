@@ -48,7 +48,7 @@ public interface Model {
     /**
      * Replaces the given person {@code target} with {@code favouritedPerson}.
      *
-     * @throws DuplicatePersonException if favouriting the personcauses the person to be equivalent to
+     * @throws DuplicatePersonException if favouriting the person causes the person to be equivalent to
      *      another existing person in the list.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
