@@ -5,5 +5,7 @@ package seedu.address.model.person.exceptions;
  */
 
 public class NoLocalNumberException extends Exception {
-    public NoLocalNumberException() { super("no local number added"); }
+    public NoLocalNumberException() {
+        super("no local number added");
+    }
 }
