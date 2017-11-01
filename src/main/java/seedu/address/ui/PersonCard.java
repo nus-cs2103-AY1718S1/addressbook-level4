@@ -104,7 +104,7 @@ public class PersonCard extends UiPart<Region> {
         }
 
     }
-    //@@author JasmineSee
+    //@@author
 
     /**
      * Init person tags with colour
