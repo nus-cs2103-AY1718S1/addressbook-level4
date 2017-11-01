@@ -17,7 +17,7 @@ public class UserPersonChangedEvent extends BaseEvent {
         return "UserPerson changed: " + userPerson.getName();
     }
 
-    public UserPerson getUserPerson(){
+    public UserPerson getUserPerson() {
         return userPerson;
     }
 }
