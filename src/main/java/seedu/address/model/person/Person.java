@@ -163,6 +163,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         return address.get();
     }
 
+    //@@author LuLechuan
     public void setPhoto(Photo photo) {
         this.photo.set(requireNonNull(photo));
     }
@@ -176,6 +177,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     public Photo getPhoto() {
         return photo.get();
     }
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
@@ -197,6 +199,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         tags.set(new UniqueTagList(replacement));
     }
 
+    //@@author LuLechuan
     /**
      * Returns an immutable custom field set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -226,7 +229,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     public void setCustomFields(Set<CustomField> replacement) {
         customFields.set(new UniqueCustomFieldList(replacement));
     }
-
+    //@@author
 
     @Override
     public boolean equals(Object other) {
