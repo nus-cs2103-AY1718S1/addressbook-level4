@@ -56,7 +56,7 @@ public class PersonCard extends UiPart<Region> {
      * so that they will be notified of any changes.
      */
     private void bindListeners(ReadOnlyPerson person) {
-        //@@author Aaron Soh Yu Han
+        //@@author aaronyhsoh
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         highlightName(person);
         //@@author
@@ -81,7 +81,7 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
-    //@@author Aaron Soh Yu Han
+    //@@author aaronyhsoh
     private void highlightName(ReadOnlyPerson person) {
         if (person.getFavourite()) {
             name.setStyle("-fx-text-fill: red");

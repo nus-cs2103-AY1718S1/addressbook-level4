@@ -42,7 +42,7 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
-    //@@author Aaron Soh Yu Han
+    //@@author aaronyhsoh
     /**
      * Replaces the given person {@code target} with {@code favouritedPerson}.
      *

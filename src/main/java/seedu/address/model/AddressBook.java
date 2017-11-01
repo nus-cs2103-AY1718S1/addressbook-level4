@@ -118,7 +118,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
 
     }
-    //@@author Aaron Soh Yu Han
+    //@@author aaronyhsoh
     /**
      * Replaces the given person {@code target} in the list with {@code favouritedReadOnlyPerson}.
      * Sorts the list to show favourite contacts first.

@@ -22,7 +22,6 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-
     private ObjectProperty<UniqueTagList> tags;
 
     private boolean favourite;
@@ -126,7 +125,7 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
-    //@@author Aaron Soh Yu Han
+    //@@author aaronyhsoh
     public boolean getFavourite() {
         return favourite;
     }

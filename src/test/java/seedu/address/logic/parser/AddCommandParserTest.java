@@ -41,9 +41,11 @@ import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandParserTest {
+    //@@author aaronyhsoh
     public static final String EMPTY_PHONE = "-";
     public static final String EMPTY_EMAIL = "-";
     public static final String EMPTY_ADDRESS = "-";
+    //@@author
 
     private AddCommandParser parser = new AddCommandParser();
 
@@ -84,7 +86,7 @@ public class AddCommandParserTest {
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags().build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY, new AddCommand(expectedPerson));
-
+        //@@author aaronyhsoh
         // missing phone number
         Person expectedPersonWithoutPhone = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(EMPTY_PHONE)
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags().build();
@@ -102,6 +104,7 @@ public class AddCommandParserTest {
                 .withEmail(EMPTY_EMAIL).withAddress(VALID_ADDRESS_AMY).withTags().build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY
                 + PHONE_DESC_AMY + ADDRESS_DESC_AMY, new AddCommand(expectedPersonWithoutEmail));
+        //@@author
     }
 
     @Test

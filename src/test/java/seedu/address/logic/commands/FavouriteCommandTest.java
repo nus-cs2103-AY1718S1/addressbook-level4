@@ -1,4 +1,4 @@
-//@@author Aaron Soh Yu Han
+//@@author aaronyhsoh
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
