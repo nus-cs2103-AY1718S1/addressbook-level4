@@ -61,10 +61,7 @@ public class AddCommand extends UndoableCommand {
         try {
             model.addParcel(toAdd);
             model.maintainSorted();
-            if (model.hasSelected()) {
-                model.reselect(toAdd);
-            }
-
+            model.forceSelectParcel(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateParcelException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PARCEL);

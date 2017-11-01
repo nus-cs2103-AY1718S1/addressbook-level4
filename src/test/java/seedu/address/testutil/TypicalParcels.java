@@ -63,7 +63,7 @@ public class TypicalParcels {
     public static final String PHONE_DESC_BENSON = " " + PREFIX_PHONE + VALID_PHONE_BENSON;
     public static final String EMAIL_DESC_BENSON = " " + PREFIX_EMAIL + VALID_EMAIL_BENSON;
     public static final String ADDRESS_DESC_BENSON = " " + PREFIX_ADDRESS + VALID_ADDRESS_BENSON;
-    public static final String DELIVERY_DATE_DESC_BENSON = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_ALICE;
+    public static final String DELIVERY_DATE_DESC_BENSON = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_BENSON;
 
     // Parcels that are OVERDUE
     public static final String VALID_TRACKING_NUMBER_CARL = "RR222000111SG";

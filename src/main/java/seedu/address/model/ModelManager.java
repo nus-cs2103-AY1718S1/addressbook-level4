@@ -80,6 +80,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void setActiveList(boolean isDelivered) {
+        System.out.println("LOOK HERE: " + isDelivered);
         activeFilteredList = isDelivered ? filteredDeliveredParcels : filteredUndeliveredParcels;
     }
     //@@author
@@ -141,7 +142,6 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {
         addressBook.addParcel(parcel);
         updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
-        updatedDeliveredAndUndeliveredList();
         indicateAddressBookChanged();
     }
 
@@ -161,7 +161,6 @@ public class ModelManager extends ComponentManager implements Model {
         }
 
         updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
-        updatedDeliveredAndUndeliveredList();
         indicateAddressBookChanged();
     }
     //@@author
@@ -172,6 +171,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedParcel);
 
         addressBook.updateParcel(target, editedParcel);
+        updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
         indicateAddressBookChanged();
     }
 
@@ -249,6 +249,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void forceSelectParcel(ReadOnlyParcel target) {
+        forceSelect(Index.fromZeroBased(findIndex(target)));
+    }
+
+    @Override
     public void reselect(ReadOnlyParcel parcel) {
         // With sorting, we lose our selected card. As such we have to reselect the
         // parcel that was previously selected. This leads to the need to have some way of
@@ -262,6 +267,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     private int findIndex(ReadOnlyParcel target) {
+        System.out.println(getActiveList().indexOf(target));
+        System.out.println(target);
+        System.out.println(getActiveList());
         return getActiveList().indexOf(target);
     }
 

@@ -55,6 +55,7 @@ public class MaintainSortedMechanismSystemTest {
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updateParcel(lastParcel, editedParcel);
         expectedModel.maintainSorted();
+        expectedModel.forceSelectParcel(editedParcel);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
         assertTrue(checkSortedLinear(model));
@@ -64,7 +65,7 @@ public class MaintainSortedMechanismSystemTest {
      * Method to retrieve list of parcels from input model and checks if the list is in sorted order.
      */
     private boolean checkSortedLinear(Model inputModel) {
-        ObservableList<ReadOnlyParcel> listToCheck = inputModel.getFilteredParcelList();
+        ObservableList<ReadOnlyParcel> listToCheck = inputModel.getActiveList();
         return checkSorted(listToCheck);
     }
 
@@ -88,7 +89,7 @@ public class MaintainSortedMechanismSystemTest {
      */
     private boolean compareParcels(ReadOnlyParcel parcelOne, ReadOnlyParcel parcelTwo) {
         int result = parcelOne.compareTo(parcelTwo);
-        return result < 0;
+        return result <= 0;
     }
 
     /**

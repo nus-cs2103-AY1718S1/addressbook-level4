@@ -122,6 +122,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void forceSelectParcel(ReadOnlyParcel parcel) {
+
+        }
+
+        @Override
         public void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {
             parcelsAdded.add(new Parcel(parcel));
         }

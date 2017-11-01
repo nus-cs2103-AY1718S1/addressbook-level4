@@ -125,6 +125,8 @@ public interface Model {
      */
     void forceSelect(Index target);
 
+    void forceSelectParcel(ReadOnlyParcel target);
+
     /**
      * Method to reselect a parcel card if there is a card selected.
      */

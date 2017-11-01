@@ -129,6 +129,11 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public void forceSelectParcel(ReadOnlyParcel target) {
+        fail("This method should not be called.");
+    }
+
+    @Override
     public void reselect(ReadOnlyParcel parcel) {
         fail("This method should not be called.");
     }

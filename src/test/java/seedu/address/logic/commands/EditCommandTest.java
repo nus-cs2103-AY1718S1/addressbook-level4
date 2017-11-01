@@ -7,11 +7,13 @@ import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_COMPLETED;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_DELIVERING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FROZEN;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstParcelInActiveListOnly;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PARCELS;
 import static seedu.address.model.ModelManager.getDeliveredPredicate;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PARCEL;
@@ -74,11 +76,11 @@ public class EditCommandTest {
         ParcelBuilder parcelInList = new ParcelBuilder(lastParcel);
         Parcel editedParcel = parcelInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withTags(VALID_TAG_FROZEN).withTrackingNumber(VALID_TRACKING_NUMBER_BOB)
-                .withStatus(VALID_STATUS_COMPLETED).build();
+                .withStatus(VALID_STATUS_DELIVERING).build();
 
         EditCommand.EditParcelDescriptor descriptor = new EditParcelDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_FROZEN).withTrackingNumber(VALID_TRACKING_NUMBER_BOB)
-                .withStatus(VALID_STATUS_COMPLETED).build();
+                .withStatus(VALID_STATUS_DELIVERING).build();
         EditCommand editCommand = prepareCommand(indexLastParcel, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PARCEL_SUCCESS, editedParcel);
@@ -86,6 +88,7 @@ public class EditCommandTest {
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updateParcel(lastParcel, editedParcel);
         expectedModel.maintainSorted();
+        expectedModel.forceSelectParcel(editedParcel);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
 
@@ -100,6 +103,7 @@ public class EditCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.maintainSorted();
+        expectedModel.forceSelectParcel(editedParcel);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -118,6 +122,7 @@ public class EditCommandTest {
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updateParcel(model.getFilteredParcelList().get(0), editedParcel);
         expectedModel.maintainSorted();
+        expectedModel.forceSelectParcel(editedParcel);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
