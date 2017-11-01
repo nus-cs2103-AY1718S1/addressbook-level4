@@ -23,11 +23,11 @@ public class Address {
     public static final String ADDRESS_FORMAT_DELIMITER = ",";
 
     public final String value;
+    //@@author 17navasaw
     private Block block;
     private Street street;
     private Unit unit;
     private PostalCode postalCode;
-
 
     /**
      * Validates given address.
@@ -79,6 +79,7 @@ public class Address {
         return ((tokenizer.countTokens() == 3) || (tokenizer.countTokens() == 4));
     }
 
+    //@@author
     @Override
     public String toString() {
         return value;
