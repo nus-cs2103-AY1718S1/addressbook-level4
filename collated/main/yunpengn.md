@@ -1308,3 +1308,86 @@ public class PropertyLabel extends Label {
     }
 }
 ```
+###### \resources\view\MainWindow.fxml
+``` fxml
+  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" minWidth="600.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
+      <VBox fx:id="sideButtonBar" alignment="CENTER" maxWidth="80.0" minWidth="80.0" prefWidth="80.0">
+         <padding>
+            <Insets bottom="10.0" top="10.0" />
+         </padding>
+         <children>
+            <ImageView fx:id="switchToContactsButton" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#handleSwitchToContacts" pickOnBounds="true" styleClass="sidebar-button">
+               <VBox.margin>
+                  <Insets bottom="50.0" top="50.0" />
+               </VBox.margin>
+               <image>
+                  <Image url="@../images/contacts.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="switchToEventsButton" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="20.0" onMouseClicked="#handleSwitchToEvents" pickOnBounds="true" styleClass="sidebar-button">
+               <image>
+                  <Image url="@../images/events.png" />
+               </image>
+               <VBox.margin>
+                  <Insets bottom="50.0" top="50.0" />
+               </VBox.margin>
+            </ImageView>
+         </children>
+      </VBox>
+    <VBox fx:id="dataList" minWidth="340" prefWidth="340.0" SplitPane.resizableWithParent="false">
+      <padding>
+        <Insets bottom="10" left="10" right="10" top="10" />
+      </padding>
+      <StackPane fx:id="dataListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+    </VBox>
+
+    <StackPane fx:id="dataDetailsPanelPlaceholder">
+      <padding>
+        <Insets bottom="10" left="10" right="10" top="10" />
+      </padding>
+    </StackPane>
+  </SplitPane>
+```
+###### \resources\view\person\PersonDetailsPanel.fxml
+``` fxml
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox prefHeight="600.0" prefWidth="580.0" stylesheets="@../../css/Extensions.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox prefHeight="200.0">
+         <children>
+            <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/default_person_photo.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="name" styleClass="details-name-huge-label" text="\\\$name" wrapText="true">
+               <font>
+                  <Font size="45.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="30.0" top="50.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+      <HBox>
+         <children>
+            <ListView fx:id="propertyListKeys" />
+            <ListView fx:id="propertyListValues" prefWidth="500.0" />
+         </children>
+         <VBox.margin>
+            <Insets top="30.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+</VBox>
+```

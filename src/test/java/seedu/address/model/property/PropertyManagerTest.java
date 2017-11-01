@@ -16,6 +16,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
 
+//@@author yunpengn
 public class PropertyManagerTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

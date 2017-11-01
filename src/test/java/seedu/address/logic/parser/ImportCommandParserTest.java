@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.ImportCommandParser.IMPORT_TYPE_NOT_FOU
 
 import org.junit.Test;
 
+//@@author yunpengn
 public class ImportCommandParserTest {
     private ImportCommandParser parser = new ImportCommandParser();
 

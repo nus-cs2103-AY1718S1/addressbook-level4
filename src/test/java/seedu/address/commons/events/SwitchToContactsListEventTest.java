@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import seedu.address.commons.events.ui.SwitchToContactsListEvent;
 
+//@@author yunpengn
 public class SwitchToContactsListEventTest {
     @Test
     public void createEvent_success() throws Exception {

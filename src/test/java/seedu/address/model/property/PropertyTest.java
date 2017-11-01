@@ -11,6 +11,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
+//@@author yunpengn
 public class PropertyTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
