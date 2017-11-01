@@ -62,7 +62,7 @@ public class UntagCommandParserTest {
     }
 
     @Test
-    public void parse_validArgs_returnsTagCommand() throws Exception {
+    public void parse_validArgs_returnsUntagCommand() throws Exception {
         Tag firstTag = new Tag("friends");
         Tag secondTag = new Tag("enemies");
 
