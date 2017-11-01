@@ -17,7 +17,10 @@ import seedu.address.model.UserPrefs;
 import seedu.address.storage.Storage;
 import seedu.address.testutil.TypicalStorage;
 
-
+//@@author LimeFallacie
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for SortCommand.
+ */
 public class SortCommandTest {
     private Model model;
     private Storage storage;

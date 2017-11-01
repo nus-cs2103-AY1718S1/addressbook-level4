@@ -153,6 +153,7 @@ public class ParserUtil {
         return tagSet;
     }
 
+    //@@author LimeFallacie
     /**
      * Parses a String and checks for validity. Leading and trailing whitespaces will be removed
      * @throws IllegalValueException if specified string is invalid (not 1 of 3 options)
@@ -181,6 +182,7 @@ public class ParserUtil {
         throw new IllegalValueException(MESSAGE_INVALID_ARGUMENTS);
     }
 
+    //@@author LimeFallacie
     /**
      * Parses a String argument for tag. Leading and trailing whitespaces will be removed
      */
