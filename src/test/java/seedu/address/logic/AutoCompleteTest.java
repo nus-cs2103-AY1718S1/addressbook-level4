@@ -13,6 +13,7 @@ public class AutoCompleteTest {
 
     private Trie commandTrie;
 
+    //@@author grantcm
     @Before
     public void setup() {
         commandTrie = new CommandTrie();
@@ -44,5 +45,5 @@ public class AutoCompleteTest {
         assert commandTrie.attemptAutoComplete("edit").equals(" INDEX [n/NAME] [p/PHONE] [e/EMAIL] "
                 + "[a/ADDRESS] [t/TAG]\n");
     }
-
+    //@@author
 }

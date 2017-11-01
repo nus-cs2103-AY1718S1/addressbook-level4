@@ -39,7 +39,9 @@ public class UniqueGroupList implements Iterable<Group> {
      */
     public void add (Group toAdd) throws DuplicateGroupException {
         requireNonNull(toAdd);
-        if (contains(toAdd)) {
+        if (DEFAULT_GROUP.equals(toAdd)) {
+
+        } else if (contains(toAdd)) {
             throw new DuplicateGroupException();
         } else {
             groups.add(toAdd);
@@ -89,8 +91,8 @@ public class UniqueGroupList implements Iterable<Group> {
 
     public void setGroups(List<? extends Group> groups) throws DuplicateGroupException {
         final UniqueGroupList replacement = new UniqueGroupList();
-        for (int i = 0; i < groups.size(); i++) {
-            replacement.add(new Group(groups.get(i).getGroupName()));
+        for (Group g: groups) {
+            replacement.add(new Group (g));
         }
         setGroups(replacement);
     }

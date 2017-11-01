@@ -168,6 +168,17 @@ public class MainWindow extends UiPart<Region> {
         FxViewUtil.setStageIcon(primaryStage, iconSource);
     }
 
+
+    //@@ author grantcm
+    /**
+     * On startup, we want to set the browser to display the help window
+     */
+    private void setBrowserPanelToHelpOnStart () {
+        browserPanel.loadPage(HelpWindow.USERGUIDE_FILE_PATH);
+    }
+
+    //@@ author
+
     /**
      * Sets the default size based on user preferences.
      */
@@ -232,9 +243,11 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author grantcm
     @Subscribe
     private void handleGroupSelectedEvent (GroupPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         commandBox.handleCommandInputChanged("filter " + event.getNewSelection().group.groupName);
     }
+    //@@author
 }

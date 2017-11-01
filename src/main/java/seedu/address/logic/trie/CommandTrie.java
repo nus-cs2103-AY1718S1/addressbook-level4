@@ -17,6 +17,7 @@ public class CommandTrie implements Trie {
     private Map<String, String> commandMap;
     private CommandCollection commandCollection;
 
+    //@@author grantcm
     public CommandTrie () {
         commandCollection = new CommandCollection ();
         commandSet = commandCollection.getCommandSet();
@@ -31,11 +32,7 @@ public class CommandTrie implements Trie {
      * Indicates whether or note a node is a leaf
      */
     public boolean isLeaf(Node current) {
-        if (!current.hasNext() && !current.hasChild()) {
-            return true;
-        } else {
-            return false;
-        }
+        return !current.hasNext() && !current.hasChild();
     }
 
     /**
@@ -128,4 +125,6 @@ public class CommandTrie implements Trie {
     public Set<String> getCommandSet() {
         return commandSet;
     }
+
+    //@@author
 }

@@ -24,6 +24,8 @@
         <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
       </Menu>
     </MenuBar>
+
+    <!-- @@author grantcm -->
     <VBox fx:id="groupList" SplitPane.resizableWithParent="false" prefWidth="700" minWidth="700" maxWidth="700"
           maxHeight="55" minHeight="55">
       <padding>
@@ -31,6 +33,7 @@
       </padding>
       <StackPane fx:id="groupListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
     </VBox>
+    <!-- @@author -->
   </SplitPane>
 
   <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
