@@ -17,6 +17,6 @@ public class Messages {
     //@@author Hailinx
     public static final String MESSAGE_IS_ENCRYPTD = "The address book is encrypted. "
             + "Please unlock it first!";
-    //@@author
+            //@@author
 
 }

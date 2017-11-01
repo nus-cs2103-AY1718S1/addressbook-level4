@@ -494,37 +494,12 @@ import seedu.address.model.person.exceptions.NoPersonFoundException;
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
-    public void addTodoItem(ReadOnlyPerson target, TodoItem todoItem)
-            throws DuplicatePersonException, PersonNotFoundException, DuplicateTodoItemException {
-        requireAllNonNull(target, todoItem);
+    public void sortPerson(String option) throws NoPersonFoundException {
+        requireNonNull(option);
 
-        addressBook.addTodoItem(target, todoItem);
+        addressBook.sortPerson(option);
         indicateAddressBookChanged();
     }
-
-    @Override
-    public void deleteTodoItem(ReadOnlyPerson target, TodoItem todoItem)
-            throws DuplicatePersonException, PersonNotFoundException {
-        requireAllNonNull(target, todoItem);
-
-        addressBook.deleteTodoItem(target, todoItem);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public void resetTodoItem(ReadOnlyPerson target)
-            throws DuplicatePersonException, PersonNotFoundException {
-        requireNonNull(target);
-
-        addressBook.resetTodoItem(target);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public void updateTodoItemList() {
-        raise(new ShowAllTodoItemsEvent());
-    }
-
 ```
 ###### \java\seedu\address\model\person\exceptions\NoPersonFoundException.java
 ``` java
@@ -701,10 +676,6 @@ import seedu.address.commons.events.ui.NewResultCheckEvent;
 ###### \java\seedu\address\ui\UiManager.java
 ``` java
         alert.getDialogPane().getStylesheets().add("view/LightTheme.css");
-```
-###### \resources\view\default.html
-``` html
-    <link rel="stylesheet" href="LightTheme.css">
 ```
 ###### \resources\view\Extensions.css
 ``` css
