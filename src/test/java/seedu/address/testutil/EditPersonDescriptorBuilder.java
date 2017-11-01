@@ -84,6 +84,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author JavynThun
     /**
      * Sets the {@code Website} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -95,6 +96,7 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
+    //@@author
 
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}

@@ -112,6 +112,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author JavynThun
     /**
      *  Sets the {@code Remark} of the {@code Person} that we are building.
      */
@@ -131,6 +132,7 @@ public class PersonBuilder {
         }
         return this;
     }
+    //@@author
 
     public Person build() {
         return this.person;
