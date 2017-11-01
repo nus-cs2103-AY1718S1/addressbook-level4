@@ -25,6 +25,7 @@ import guitests.guihandles.StatusBarFooterHandle;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -223,6 +224,15 @@ public abstract class RolodexSystemTest {
     }
 
     /**
+     * Asserts that the undo redo stack has been cleared on a successful
+     */
+    protected void assertUndoRedoStackCleared() {
+        UndoRedoStack undoRedoStack = getUndoRedoStack();
+        assertFalse(undoRedoStack.canUndo());
+        assertFalse(undoRedoStack.canRedo());
+    }
+
+    /**
      * Asserts that only the sync status in the status bar was changed to the timing of
      * {@code ClockRule#getInjectedClock()}, while the save location remains the same.
      */
@@ -247,6 +257,13 @@ public abstract class RolodexSystemTest {
         } catch (Exception e) {
             throw new AssertionError("Starting state is wrong.", e);
         }
+    }
+
+    /**
+     * Returns a defensive copy of the current UndoRedoStack.
+     */
+    protected UndoRedoStack getUndoRedoStack() {
+        return testApp.getUndoRedoStack();
     }
 
     /**

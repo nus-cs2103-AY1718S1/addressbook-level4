@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Arrays;
@@ -26,6 +27,7 @@ public class AddCommand extends UndoableCommand {
             new HashSet<>(Arrays.asList(COMMAND_WORD, "a", "+"));
     public static final String COMMAND_HOTKEY = "Ctrl+A";
     public static final String FORMAT = "add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS";
+    public static final String[] LIST_OF_FIELDS = {"NAME", "PHONE_NUMBER", "EMAIL", "ADDRESS"};
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the rolodex. "
             + "Parameters: "
@@ -39,6 +41,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
+            + PREFIX_REMARK + "Likes to eat "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 

@@ -19,6 +19,12 @@ public interface Logic {
      */
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
+    /** Gets the undo redo stack of the logic instance */
+    UndoRedoStack getUndoRedoStack();
+
+    /** Clears the undo redo stack of the logic instance */
+    void clearUndoRedoStack();
+
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<ReadOnlyPerson> getLatestPersonList();
 

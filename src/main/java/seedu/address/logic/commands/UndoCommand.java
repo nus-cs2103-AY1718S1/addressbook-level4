@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ClearPersonDetailPanelRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -33,6 +35,7 @@ public class UndoCommand extends Command {
         }
 
         undoRedoStack.popUndo().undo();
+        EventsCenter.getInstance().post(new ClearPersonDetailPanelRequestEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

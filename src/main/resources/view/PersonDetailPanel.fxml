@@ -72,6 +72,7 @@
                                     <Insets bottom="2.0" right="2.0" top="2.0" />
                                  </padding>
                               </Label>
+                              <Label fx:id="remark" text="\$remark" wrapText="true" />
                            </children>
                            <padding>
                               <Insets left="20.0" />

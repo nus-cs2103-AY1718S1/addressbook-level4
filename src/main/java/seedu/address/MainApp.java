@@ -42,7 +42,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(1, 3, 0, false);
+    public static final Version VERSION = new Version(1, 3, 1, false);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -93,6 +93,7 @@ public class MainApp extends Application {
         storage.setNewRolodexStorage(rolodexStorage);
         Model modelToBeLoaded = initModelManager(storage, userPrefs);
         model.resetData(modelToBeLoaded.getRolodex());
+        logic.clearUndoRedoStack();
         EventsCenter.getInstance().post(new RolodexChangedDirectoryEvent(newRolodexPath));
     }
 

@@ -122,6 +122,7 @@ public class OpenCommandSystemTest extends RolodexSystemTest {
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedStorage);
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarDirectoryChanged(filePath);
+        assertUndoRedoStackCleared();
     }
 
     /**
