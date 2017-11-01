@@ -21,6 +21,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.NewGroupListEvent;
+import seedu.address.commons.events.ui.NewPersonInfoEvent;
 import seedu.address.commons.events.ui.NewPersonListEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
@@ -115,6 +116,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        raise(new NewPersonInfoEvent(person));
         indicateAddressBookChanged();
     }
 
@@ -138,6 +140,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
+        raise(new NewPersonInfoEvent(editedPerson));
         indicateAddressBookChanged();
     }
 

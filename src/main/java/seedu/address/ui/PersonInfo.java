@@ -6,7 +6,8 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
-import javafx.event.Event;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -16,6 +17,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.NewPersonInfoEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
@@ -33,7 +35,7 @@ public class PersonInfo extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    private HashMap<String, String> colourMap;
+    private ObjectProperty<HashMap<String, String>> colourMap;
 
     @FXML
     private Circle circle;
@@ -63,10 +65,7 @@ public class PersonInfo extends UiPart<Region> {
     public PersonInfo(HashMap<String, String> colourMap) {
         super(FXML);
 
-        this.colourMap = colourMap;
-
-        // To prevent triggering events for typing inside the loaded Web page.
-        getRoot().setOnKeyPressed(Event::consume);
+        this.colourMap = new SimpleObjectProperty<>(colourMap);
 
         loadDefaultPage();
         registerAsAnEventHandler(this);
@@ -92,18 +91,30 @@ public class PersonInfo extends UiPart<Region> {
     public void loadPage(ReadOnlyPerson person) {
         circle.setRadius(70);
         initial.setText(person.getName().fullName.substring(0, 1));
-        name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
         circle.setFill(colors[initial.getText().hashCode() % colors.length]);
         emailHeader.setText("Email:");
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
         addressHeader.setText("Address:");
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
         birthdayHeader.setText("Birthday: ");
-        birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         tagsHeader.setText("Tags:");
+        bindListeners(person);
+
+    }
+
+    /**
+     * Binds the individual UI elements to observe their respective {@code Person} properties
+     * so that they will be notified of any changes.
+     */
+    private void bindListeners(ReadOnlyPerson person) {
+        name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        address.textProperty().bind(Bindings.convert(person.addressProperty()));
+        birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
+        person.tagProperty().addListener(((observable, oldValue, newValue) -> initTags(person)));
+        colourMap.addListener(((observable, oldValue, newValue) -> initTags(person)));
         initTags(person);
     }
+
 
     /**
      * Initializes tags for the person
@@ -119,16 +130,26 @@ public class PersonInfo extends UiPart<Region> {
     }
 
     private void setTagColour(Label tagLabel, Tag tag) {
-        if (colourMap.containsKey(tag.tagName)) {
-            tagLabel.setStyle("-fx-background-color: " + colourMap.get(tag.tagName));
+        if (colourProperty().containsKey(tag.tagName)) {
+            tagLabel.setStyle("-fx-background-color: " + colourProperty().get(tag.tagName));
         } else {
             tagLabel.setStyle(null);
         }
+    }
+
+    private HashMap<String, String> colourProperty() {
+        return colourMap.get();
     }
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handleNewPersonInfoEvent(NewPersonInfoEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonPage(event.getPerson());
     }
 }
