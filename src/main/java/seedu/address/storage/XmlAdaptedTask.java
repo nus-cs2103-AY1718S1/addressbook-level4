@@ -58,7 +58,7 @@ public class XmlAdaptedTask {
         startDateTime = source.getStartDateTime();
         endDateTime = source.getEndDateTime();
         tagged = new ArrayList<>();
-        id =source.getId();
+        id = source.getId();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
@@ -86,7 +86,8 @@ public class XmlAdaptedTask {
         final ArrayList<Integer> peopleIndices = new ArrayList<>(this.peopleIndices);
         final Integer priority = this.priority;
         final Integer id = this.id;
-        return new Task(taskName, taskDescription, startDateTime, endDateTime, tags, complete, priority, id, peopleIndices);
+        return new Task(taskName, taskDescription, startDateTime, endDateTime, tags, complete, priority, id,
+                peopleIndices);
     }
 
 }

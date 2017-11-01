@@ -106,7 +106,7 @@ public class EditTaskCommand extends UndoableCommand {
         //Remark updatedRemark = taskToEdit.getRemark(); // edit command does not allow editing remarks
         Integer originalPriority = taskToEdit.getPriority(); // edit command is not used to update priority
         Integer id = taskToEdit.getId();
-        ArrayList<Integer> peopleIds= taskToEdit.getPeopleIds();
+        ArrayList<Integer> peopleIds = taskToEdit.getPeopleIds();
         return new Task(updatedTaskName, updatedDescription, updatedStartDateTime, updatedEndDateTime,
                 updatedTags, updateComplete, originalPriority, id, peopleIds);
     }

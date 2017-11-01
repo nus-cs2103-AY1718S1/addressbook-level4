@@ -9,7 +9,6 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
@@ -61,11 +60,11 @@ public class LinkCommand extends UndoableCommand {
 
         List<ReadOnlyPerson> lastShownPersonList = model.getFilteredPersonList();
 
-        ArrayList<Integer> peopleIds= targetTask.getPeopleIds();
+        ArrayList<Integer> peopleIds = targetTask.getPeopleIds();
 
-        for(Index index : personIndices) {
+        for (Index index : personIndices) {
             personId = chooseItem(lastShownPersonList, index).getId();
-            if(peopleIds.contains(personId)) {
+            if (peopleIds.contains(personId)) {
                 throw new CommandException(String.format(MESSAGE_PERSON_LINKED, index.getZeroBased()));
             }
 
@@ -85,8 +84,12 @@ public class LinkCommand extends UndoableCommand {
         return new CommandResult(MESSAGE_LINK_SUCCESS);
     }
 
-
-    private  static <E> E chooseItem(List<E> list, Index index) throws CommandException{
+    /**
+     * @param list to be chosen from
+     * @param index of the item to choose
+     * @return item chosen
+     */
+    private  static <E> E chooseItem(List<E> list, Index index) throws CommandException {
         if (index.getZeroBased() >= list.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
