@@ -12,6 +12,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
+//@@author raisa2010
 /**
  * Represents a Task in the application.
  * Guarantees: details are present and not null, field values are validated.
@@ -24,7 +25,7 @@ public class Task implements ReadOnlyTask {
     private ObjectProperty<UniqueTagList> taskTags;
 
     /**
-     * Every field must be present and not null.
+     * Description must be present and not null.
      */
     public Task(Description description, StartDate startDate, Deadline deadline,
                 Set<Tag> taskTags) {

@@ -36,13 +36,14 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.EditTaskCommand;
-import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
+import seedu.address.logic.commands.tasks.EditTaskCommand;
+import seedu.address.logic.commands.tasks.EditTaskCommand.EditTaskDescriptor;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.TaskDates;
 import seedu.address.testutil.EditTaskDescriptorBuilder;
 
+//@@author raisa2010
 public class EditTaskCommandParserTest {
 
     private static final String TAG_EMPTY = " " + PREFIX_TAG;
@@ -94,7 +95,6 @@ public class EditTaskCommandParserTest {
                 TaskDates.MESSAGE_DATE_CONSTRAINTS);
 
         // invalid description containing deadline prefix, without quotes
-        // TODO: Make it throw Date constraint message
         assertParseFailure(parser, "1" + UNQUOTED_DESCRIPTION_PAPER + STARTDATE_DESC_PAPER + TAG_DESC_URGENT,
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditTaskCommand.MESSAGE_USAGE));
 

@@ -6,8 +6,9 @@ import javafx.beans.property.ObjectProperty;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
+//@@author raisa2010
 /**
- * A read-only immutable interface for a Task in the application.
+ * A read-only immutable interface for a Task in the task manager.
  * Implementations should guarantee: details are present and not null, field values are validated.
  */
 public interface ReadOnlyTask {
@@ -33,7 +34,7 @@ public interface ReadOnlyTask {
     }
 
     /**
-     * Formats the task as text, showing all task details.
+     * Formats the task as text, showing all non-empty task details.
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();

@@ -28,10 +28,13 @@ public class ArgumentTokenizer {
         return extractArguments(argsString, positions);
     }
 
+    //@@author raisa2010
     /**
-     * Returns the part of the argsString that is unquoted.
-     * @param argsString argument string.
-     * @return unquoted argument string.
+     * Returns the part of the {@code argsString} that is unquoted to prevent tokenization of prefixes intended to be
+     * in the description. If the argsString contains no quotes then the entire string is returned.
+     * @param argsString Arguments string of the form: {@code "preamble" <prefix>value <prefix>value ...} or
+     *                   Arguments string of the form: {@code preamble <prefix>value <prefix>value ...}
+     * @return           The part of the {@code argsString} that is unquoted.
      */
     private static String extractUnquotedArgsString(String argsString) {
         if (argsString.indexOf(QUOTE_REGEX) == argsString.lastIndexOf(QUOTE_REGEX)) {
@@ -41,6 +44,7 @@ public class ArgumentTokenizer {
         return (unquotedArgsString.length == 2) ? "" : unquotedArgsString[2];
     }
 
+    //@@author
     /**
      * Finds all zero-based prefix positions in the given arguments string.
      *

@@ -251,6 +251,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     ////task-level operations
 
+    //@@author raisa2010
     /**
      * Adds a task to the address book.
      *
@@ -270,7 +271,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *      another existing task in the list.
      * @throws TaskNotFoundException if {@code target} could not be found in the list.
      *
-     * @see #syncMasterTagListWith(Person)
+     * @see #syncMasterTagListWith(Task)
      */
     public void updateTask(ReadOnlyTask target, ReadOnlyTask editedReadOnlyTask)
             throws DuplicateTaskException, TaskNotFoundException {
@@ -281,6 +282,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tasks.setTask(target, editedTask);
     }
 
+    //@@author
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws TaskNotFoundException if the {@code key} is not in this {@code AddressBook}.
