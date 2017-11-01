@@ -64,11 +64,6 @@ public class GroupListPanel extends UiPart<Region> {
                     }
                 });
     }
-    @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        scrollTo(event.targetIndex);
-    }
 
     @Subscribe
     private void handleNewGroupListEvent(NewGroupListEvent event) {
