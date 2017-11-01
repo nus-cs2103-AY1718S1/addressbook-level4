@@ -20,10 +20,10 @@ public class SortCommandTest {
 
     private Model model;
     private Model expectedModel;
-    private String FIELD_NAME = "name";
-    private String FIELD_PHONE = "phone";
-    private String FIELD_EMAIL = "email";
-    private String FIELD_ADDRESS = "address";
+    private String nameField = "name";
+    private String phoneField = "phone";
+    private String emailField = "email";
+    private String addressField = "address";
 
     @Before
     public void setUp() {
@@ -33,58 +33,66 @@ public class SortCommandTest {
 
     @Test
     public void execute_listIsNotFiltered_sortsByName_sameList() {
-        SortCommand sortCommand = prepareCommand(FIELD_NAME);
-        assertCommandSuccess(sortCommand, model, String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, FIELD_NAME), expectedModel);
+        SortCommand sortCommand = prepareCommand(nameField);
+        assertCommandSuccess(sortCommand, model,
+                String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, nameField), expectedModel);
     }
 
     @Test
     public void execute_listIsFiltered_sortsByName_sameList() {
         showFirstPersonOnly(model);
         showFirstPersonOnly(expectedModel);
-        SortCommand sortCommand = prepareCommand(FIELD_NAME);
-        assertCommandSuccess(sortCommand, model, String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, FIELD_NAME), expectedModel);
+        SortCommand sortCommand = prepareCommand(nameField);
+        assertCommandSuccess(sortCommand, model,
+                String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, nameField), expectedModel);
     }
 
     @Test
     public void execute_listIsNotFiltered_sortsByPhone_sameList() {
-        SortCommand sortCommand = prepareCommand(FIELD_PHONE);
-        assertCommandSuccess(sortCommand, model, String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, FIELD_PHONE), expectedModel);
+        SortCommand sortCommand = prepareCommand(phoneField);
+        assertCommandSuccess(sortCommand, model,
+                String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, phoneField), expectedModel);
     }
 
     @Test
     public void execute_listIsFiltered_sortsByPhone_sameList() {
         showFirstPersonOnly(model);
         showFirstPersonOnly(expectedModel);
-        SortCommand sortCommand = prepareCommand(FIELD_PHONE);
-        assertCommandSuccess(sortCommand, model, String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, FIELD_PHONE), expectedModel);
+        SortCommand sortCommand = prepareCommand(phoneField);
+        assertCommandSuccess(sortCommand, model,
+                String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, phoneField), expectedModel);
     }
 
     @Test
     public void execute_listIsNotFiltered_sortsByEmail_sameList() {
-        SortCommand sortCommand = prepareCommand(FIELD_EMAIL);
-        assertCommandSuccess(sortCommand, model, String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, FIELD_EMAIL), expectedModel);
+        SortCommand sortCommand = prepareCommand(emailField);
+        assertCommandSuccess(sortCommand, model,
+                String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, emailField), expectedModel);
     }
 
     @Test
     public void execute_listIsFiltered_sortsByEmail_sameList() {
         showFirstPersonOnly(model);
         showFirstPersonOnly(expectedModel);
-        SortCommand sortCommand = prepareCommand(FIELD_EMAIL);
-        assertCommandSuccess(sortCommand, model, String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, FIELD_EMAIL), expectedModel);
+        SortCommand sortCommand = prepareCommand(emailField);
+        assertCommandSuccess(sortCommand, model,
+                String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, emailField), expectedModel);
     }
 
     @Test
     public void execute_listIsNotFiltered_sortsByAddress_sameList() {
-        SortCommand sortCommand = prepareCommand(FIELD_ADDRESS);
-        assertCommandSuccess(sortCommand, model, String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, FIELD_ADDRESS), expectedModel);
+        SortCommand sortCommand = prepareCommand(addressField);
+        assertCommandSuccess(sortCommand, model,
+                String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, addressField), expectedModel);
     }
 
     @Test
     public void execute_listIsFiltered_sortsByAddress_sameList() {
         showFirstPersonOnly(model);
         showFirstPersonOnly(expectedModel);
-        SortCommand sortCommand = prepareCommand(FIELD_ADDRESS);
-        assertCommandSuccess(sortCommand, model, String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, FIELD_ADDRESS), expectedModel);
+        SortCommand sortCommand = prepareCommand(addressField);
+        assertCommandSuccess(sortCommand, model,
+                String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, addressField), expectedModel);
     }
 
     /**

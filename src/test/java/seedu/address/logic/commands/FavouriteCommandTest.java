@@ -33,8 +33,8 @@ public class FavouriteCommandTest {
 
     @Test
     public void execute_favourite_success() throws Exception {
-        Person favouritedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased()))
-                .withFavouriteStatus(true).build();
+        Person favouritedPerson = new PersonBuilder(model.getFilteredPersonList()
+                .get(INDEX_SECOND_PERSON.getZeroBased())).withFavouriteStatus(true).build();
         FavouriteCommand favouriteCommand = prepareCommand(INDEX_SECOND_PERSON);
         String expectedMessage = String.format(FavouriteCommand.MESSAGE_FAVOURITED_PERSON, favouritedPerson);
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
