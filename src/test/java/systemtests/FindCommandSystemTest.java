@@ -84,6 +84,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         /* Case: find same parcels in address book after deleting 1 of them -> 2 parcelS found, 1 in completed delivery
          * list the other in uncompleted delivery list */
         executeCommand(DeleteCommand.COMMAND_WORD + " 1");
+        assert !getModel().getActiveList().contains(BENSON);
         assert !getModel().getAddressBook().getParcelList().contains(BENSON);
         command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
         expectedModel = getModel();
@@ -145,6 +146,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: find parcel in empty address book -> 0 parcels found */
         executeCommand(ClearCommand.COMMAND_WORD);
+        assert getModel().getActiveList().size() == 0;
         assert getModel().getAddressBook().getParcelList().size() == 0;
         command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
         expectedModel = getModel();

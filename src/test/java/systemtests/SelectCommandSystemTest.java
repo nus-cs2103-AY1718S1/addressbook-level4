@@ -61,7 +61,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
          * -> rejected
          */
         showParcelsWithName(KEYWORD_MATCHING_MEIER);
-        invalidIndex = getModel().getAddressBook().getParcelList().size();
+        invalidIndex = getModel().getActiveList().size() + 1;
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);
 
         /* Case: filtered parcel list, select index within bounds of address book and parcel list -> selected */

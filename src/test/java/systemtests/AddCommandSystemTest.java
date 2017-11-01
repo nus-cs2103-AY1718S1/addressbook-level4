@@ -262,6 +262,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
            -> added with delivery date with forward slash */
         executeCommand(ClearCommand.COMMAND_WORD);
         assert getModel().getAddressBook().getParcelList().size() == 0;
+        assert getModel().getActiveList().size() == 0;
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY)
                 .withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withDeliveryDate(VALID_DELIVERY_DATE_AMY_SLASHES)

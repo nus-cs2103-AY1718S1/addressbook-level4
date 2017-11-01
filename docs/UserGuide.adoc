@@ -47,6 +47,7 @@ This app will not work with earlier versions of Java 8.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ark_Main_Window.png[width="790"]
+_Figure 3.1.1 : This is the main window of Ark_
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -64,6 +65,7 @@ What you see in the picture below is an example of what the main window
 of the Ark application looks like separated into it's sections. +
 
 image::Ark_Main_Window_Sections.png[width="790"]
+_Figure 4.1.1 : This is the main window of Ark with each section color coded_
 
 The main window is separated into 8 sections from the top to bottom:
 
@@ -151,6 +153,7 @@ The Parcel List section is scrollable and shows you all the information of a par
 You can see an example in the picture below. +
 
 image::Ark_Parcel_List.png[width="790"]
+_Figure 5.4.1 : The `list` command displays the list of all the parcels in Ark_
 
 Format: `list`
 
@@ -244,6 +247,7 @@ The Browser Panel section will then show a google map search
 of the selected parcel's delivery address (postal code). You can see an example in the picture below. +
 
 image::Ark_Browser.png[width="790"]
+_Figure 5.9.1 : The `Select` command will display the location of the selected parcel_
 
 Format: `select INDEX`
 
@@ -397,14 +401,15 @@ browser section of the main window.
 Ark comes with tab autocompletion which is able to complete a command for you
 without requiring you to type out the command fully. +
 To make use of this feature, simply key in the first few characters of the command you with to enter and press the
- kbd:[Tab] key.
+kbd:[Tab] key.
 Ark will then fill in the rest of the command for you in the command box.
 Then press kbd:[Enter] key to enter the command.
 
 There is more than one possibility for the autocompletion, Ark will display the possible options to you as shown in the
- below.
+below.
 
 image::TabAutocompleteMultipleExample.PNG[width="400"]
+_Figure 5.19.1 : If there are multiple autocomplete options, the options will be displayed in the result window_
 
 Examples:
 

@@ -70,7 +70,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
          * -> rejected
          */
         showParcelsWithName(KEYWORD_MATCHING_MEIER);
-        int invalidIndex = getModel().getAddressBook().getParcelList().size();
+        int invalidIndex = getModel().getActiveList().size() + 1;
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
         assertCommandFailure(command, MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);
 
@@ -100,7 +100,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid index (size + 1) -> rejected */
         Index outOfBoundsIndex = Index.fromOneBased(
-                getModel().getAddressBook().getParcelList().size() + 1);
+                getModel().getActiveList().size() + 1);
         command = DeleteCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased();
         assertCommandFailure(command, MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);
 
