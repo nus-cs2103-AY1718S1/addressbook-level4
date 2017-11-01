@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_MEETINGS;
 
+//@@author Melvin-leo
 /**
  * Lists all meetings in the address book to the user.
  */

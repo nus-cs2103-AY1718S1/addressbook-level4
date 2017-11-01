@@ -54,6 +54,7 @@ public class AddMeetingCommand extends UndoableCommand {
     private final DateTime date;
     private final Place location;
 
+    //@@author Melvin-leo
     /**
      * Creates an AddMeetingCommand to add the specified {@code ReadOnlyMeeting}
      */
@@ -89,6 +90,7 @@ public class AddMeetingCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_MEETING_CLASH);
         }
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

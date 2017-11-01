@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.model.meeting.ReadOnlyMeeting;
-
+//@@author Melvin-leo
 /**
  * To have a pop up window to remind user about the meetings they have today
  */

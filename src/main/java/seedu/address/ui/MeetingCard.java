@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 
+//@@author Melvin-leo
 /**
  * An UI component that displays information of a {@code Meeting}.
  */

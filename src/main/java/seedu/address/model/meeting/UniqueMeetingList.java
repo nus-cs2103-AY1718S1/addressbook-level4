@@ -71,6 +71,7 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         return false;
     }
 
+    //@@author Melvin-leo
     /**
      * Adds a meeting to the list.
      *
@@ -86,7 +87,7 @@ public class UniqueMeetingList implements Iterable<Meeting> {
             throw new MeetingClashException();
         }
         internalMeetingList.add(new Meeting(toAdd));
-        internalMeetingList.sort((m1, m2)-> m1.getActualDate(m1.getDate().toString())
+        internalMeetingList.sort((m1, m2) -> m1.getActualDate(m1.getDate().toString())
                 .compareTo(m2.getActualDate(m2.getDate().toString())));
     }
 
@@ -116,6 +117,7 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         internalMeetingList.sort((m1, m2)-> m1.getActualDate(m1.getDate().toString())
                 .compareTo(m2.getActualDate(m2.getDate().toString())));
     }
+    //@@author
 
     /**
      * Removes the equivalent meeting from the list.

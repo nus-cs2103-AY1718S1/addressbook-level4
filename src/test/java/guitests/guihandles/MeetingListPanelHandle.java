@@ -6,7 +6,7 @@ import java.util.Optional;
 import javafx.scene.control.ListView;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.ui.MeetingCard;
-
+//@@author Melvin-leo
 /**
  * Provides a handle for {@code MeetingListPanel} containing the list of {@code MeetingCard}.
  */
