@@ -106,6 +106,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author fustilio
     /** Deletes the tag from every parcel in the address book */
     public void deleteTag(Tag target) throws TagNotFoundException, TagInternalErrorException {
 
