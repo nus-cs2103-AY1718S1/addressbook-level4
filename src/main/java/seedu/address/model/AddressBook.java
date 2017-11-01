@@ -209,6 +209,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.remove(t);
     }*/
 
+    //@@author tpq95
     /**
      * Remove {@code oldTag} from list of person stated by {@code indices} from
      * {@code AddressBook}
@@ -247,6 +248,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         updatePerson(oldPerson, newPerson);
     }
+    //@@author
 
     ////task-level operations
 
