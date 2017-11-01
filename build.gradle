@@ -93,7 +93,7 @@ allprojects {
     }
 
     shadowJar {
-        archiveName = "addressbook.jar"
+        archiveName = "DeathNote.jar"
 
         destinationDir = file("${buildDir}/jar/")
     }
