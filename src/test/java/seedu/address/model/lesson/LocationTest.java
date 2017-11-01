@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import seedu.address.model.module.Location;
 
+//@@author caoliangnus
 public class LocationTest {
     @Test
     public void isValidLocation() {

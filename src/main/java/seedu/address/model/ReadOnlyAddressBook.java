@@ -5,6 +5,7 @@ import seedu.address.model.lecturer.Lecturer;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.Remark;
 
+//@@author caoliangnus
 /**
  * Unmodifiable view of an address book
  */
