@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.event.DeleteEventCommand;
 import seedu.address.logic.parser.event.DeleteEventParser;
-
+//@@author junyango
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
  * outside of the DeleteEventCommand code. For example, inputs "1" and "1 abc" take the
