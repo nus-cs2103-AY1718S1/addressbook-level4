@@ -1,22 +1,14 @@
 package seedu.address.storage;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.*;
+import seedu.address.model.tag.Tag;
+
+import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.xml.bind.annotation.XmlElement;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Appoint;
-import seedu.address.model.person.Avatar;
-import seedu.address.model.person.Comment;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.tag.Tag;
 
 /**
  * JAXB-friendly version of the Person.
@@ -93,6 +85,6 @@ public class XmlAdaptedPerson {
         final Comment comment = new Comment(this.comment);
         final Appoint appoint = new Appoint(this.appoint);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, comment, appoint, tags);
+        return new Person(name, phone, email, address, comment, appoint, avatar, tags);
     }
 }
