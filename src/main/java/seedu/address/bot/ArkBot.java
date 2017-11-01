@@ -22,7 +22,10 @@ import seedu.address.bot.parcel.DisplayParcel;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
@@ -35,6 +38,8 @@ public class ArkBot extends AbilityBot {
 
     private static final String BOT_TOKEN = "339790464:AAGUN2BmhnU0I2B2ULenDdIudWyv1d4OTqY";
     private static final String BOT_USERNAME = "ArkBot";
+    private static final String BOT_MESSAGE_FAILURE = "Sorry, I don't understand.";
+    private static final String BOT_MESSAGE_SUCCESS = "%s command has been successfully executed!";
 
     private Logic logic;
     private Model model;
@@ -67,7 +72,7 @@ public class ArkBot extends AbilityBot {
                         try {
                             logic.execute(AddCommand.COMMAND_WORD + " "
                                     + combineArguments(ctx.arguments()));
-                            sender.send("Successfully added parcel.", ctx.chatId());
+                            sender.send(String.format(BOT_MESSAGE_SUCCESS, AddCommand.COMMAND_WORD), ctx.chatId());
                         } catch (CommandException | ParseException e) {
                             sender.send(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE),
                                     ctx.chatId());
@@ -90,20 +95,18 @@ public class ArkBot extends AbilityBot {
                 .input(0)
                 .locality(Locality.ALL)
                 .privacy(Privacy.ADMIN)
-                .action(ctx -> {
-                    Platform.runLater(() -> {
-                        try {
-                            logic.execute(ListCommand.COMMAND_WORD + " "
-                                    + combineArguments(ctx.arguments()));
-                            ObservableList<ReadOnlyParcel> parcels = model.getFilteredUndeliveredParcelList();
-                            lastKnownMessage = sender.send(parseDisplayParcels(formatParcelsForBot(parcels)),
-                                    ctx.chatId());
-                        } catch (CommandException | ParseException e) {
-                            sender.send("Sorry, I don't understand.",
-                                    ctx.chatId());
-                        }
-                    });
-                })
+                .action(ctx -> Platform.runLater(() -> {
+                    try {
+                        logic.execute(ListCommand.COMMAND_WORD + " "
+                                + combineArguments(ctx.arguments()));
+                        ObservableList<ReadOnlyParcel> parcels = model.getFilteredUndeliveredParcelList();
+                        lastKnownMessage = sender.send(parseDisplayParcels(formatParcelsForBot(parcels)),
+                                ctx.chatId());
+                    } catch (CommandException | ParseException e) {
+                        sender.send("Sorry, I don't understand.",
+                                ctx.chatId());
+                    }
+                }))
                 .build();
     }
 
@@ -118,24 +121,95 @@ public class ArkBot extends AbilityBot {
                 .input(0)
                 .locality(Locality.ALL)
                 .privacy(Privacy.ADMIN)
-                .action((MessageContext ctx) -> {
+                .action((MessageContext ctx) -> Platform.runLater(() -> {
+                    try {
+                        logic.execute(DeleteCommand.COMMAND_WORD + " "
+                                + combineArguments(ctx.arguments()));
+                        ObservableList<ReadOnlyParcel> parcels = model.getFilteredUndeliveredParcelList();
+                        EditMessageText editedText =
+                                new EditMessageText().setChatId(ctx.chatId())
+                                                     .setMessageId(lastKnownMessage.get().getMessageId())
+                                                     .setText(parseDisplayParcels(formatParcelsForBot(parcels)));
+                        sender.editMessageText(editedText);
+                    } catch (CommandException | ParseException | TelegramApiException e) {
+                        sender.send(BOT_MESSAGE_FAILURE,
+                                ctx.chatId());
+                    }
+                }))
+                .build();
+    }
+
+    /**
+     * Replicates the effects of RedoCommand on ArkBot.
+     */
+    public Ability redoCommand() {
+        return Ability
+                .builder()
+                .name(RedoCommand.COMMAND_WORD)
+                .info("deletes parcel at selected index")
+                .input(0)
+                .locality(Locality.ALL)
+                .privacy(Privacy.ADMIN)
+                .action((MessageContext ctx) -> Platform.runLater(() -> {
+                    try {
+                        logic.execute(RedoCommand.COMMAND_WORD);
+                        sender.send(String.format(BOT_MESSAGE_SUCCESS, RedoCommand.COMMAND_WORD), ctx.chatId());
+                    } catch (CommandException | ParseException e) {
+                        sender.send(BOT_MESSAGE_FAILURE, ctx.chatId());
+                    }
+                }))
+                .build();
+    }
+
+    /**
+     * Replicates the effects of RedoCommand on ArkBot.
+     */
+    public Ability undoCommand() {
+        return Ability
+                .builder()
+                .name(UndoCommand.COMMAND_WORD)
+                .info("deletes parcel at selected index")
+                .input(0)
+                .locality(Locality.ALL)
+                .privacy(Privacy.ADMIN)
+                .action((MessageContext ctx) -> Platform.runLater(() -> {
+                    try {
+                        logic.execute(UndoCommand.COMMAND_WORD);
+                        sender.send(String.format(BOT_MESSAGE_SUCCESS, UndoCommand.COMMAND_WORD), ctx.chatId());
+                    } catch (CommandException | ParseException e) {
+                        sender.send(BOT_MESSAGE_FAILURE, ctx.chatId());
+                    }
+                }))
+                .build();
+    }
+
+    /**
+     * Replicates the effects of AddCommand on ArkBot.
+     */
+    public Ability findCommand() {
+        return Ability
+                .builder()
+                .name(FindCommand.COMMAND_WORD)
+                .info("adds parcel to list")
+                .input(0)
+                .locality(Locality.ALL)
+                .privacy(Privacy.ADMIN)
+                .action(ctx -> {
                     Platform.runLater(() -> {
                         try {
-                            logic.execute(DeleteCommand.COMMAND_WORD + " "
+                            logic.execute(FindCommand.COMMAND_WORD + " "
                                     + combineArguments(ctx.arguments()));
                             ObservableList<ReadOnlyParcel> parcels = model.getFilteredUndeliveredParcelList();
-                            EditMessageText editedText =
-                                    new EditMessageText().setChatId(ctx.chatId())
-                                                         .setMessageId(lastKnownMessage.get().getMessageId())
-                                                         .setText(parseDisplayParcels(formatParcelsForBot(parcels)));
-
-                            sender.editMessageText(editedText);
-                        } catch (CommandException | ParseException | TelegramApiException e) {
-                            sender.send("Sorry, I don't understand.",
+                            lastKnownMessage = sender.send(parseDisplayParcels(formatParcelsForBot(parcels)),
+                                    ctx.chatId());
+                        } catch (CommandException | ParseException e) {
+                            sender.send(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE),
                                     ctx.chatId());
                         }
                     });
+                    // sender.send("You typed: " + combineArguments(ctx.arguments()), ctx.chatId());
                 })
+                .post(ctx -> sender.send("What would you like to do next?", ctx.chatId()))
                 .build();
     }
 
