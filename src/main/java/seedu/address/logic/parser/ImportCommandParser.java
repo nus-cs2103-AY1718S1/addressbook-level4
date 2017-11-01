@@ -1,23 +1,22 @@
 package seedu.address.logic.parser;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.InvalidPropertiesFormatException;
 import java.util.List;
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.storage.VcfImport;
-import seedu.address.storage.XmlAddressBookStorage;
 import seedu.address.storage.XmlFileStorage;
 
 //@@author freesoup
@@ -52,9 +51,16 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
             } else if (file.getName().endsWith(".vcf")) {
 
-                    List<ReadOnlyPerson> importList = VcfImport.getPersonList();
-                    return new ImportCommand(importList);
 
+                try {
+                    List<ReadOnlyPerson> importList = VcfImport.getPersonList(file);
+                    return new ImportCommand(importList);
+                } catch (IllegalValueException ive) {
+                    throw new ParseException(ImportCommand.MESSAGE_FILE_CORRUPT);
+                } catch (IOException ioe) {
+                    throw new ParseException(ImportCommand.MESSAGE_FILE_NOTFOUND);
+                }
+                
             } else {
                 throw new ParseException(ImportCommand.MESSAGE_WRONG_FORMAT);
             }
