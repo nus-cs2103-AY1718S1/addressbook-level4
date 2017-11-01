@@ -7,6 +7,7 @@ import org.junit.Test;
 
 public class AddressTest {
 
+    //@@author 17navasaw
     @Test
     public void hasValidAddressFormat() {
         // invalid address formats
