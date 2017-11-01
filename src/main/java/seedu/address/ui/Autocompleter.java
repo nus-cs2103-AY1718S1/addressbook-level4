@@ -2,14 +2,20 @@ package seedu.address.ui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.Logic;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Prefix;
+
+import javax.swing.text.html.Option;
 
 
 /**
@@ -21,8 +27,11 @@ public class Autocompleter {
             + "into the command box";
     private static final String MULTIPLE_RESULT_MESSAGE = "Multiple matches found";
     private static final String EMPTY_STRING = "";
+    private static final String SPACE = " ";
 
     private int resultIndex;
+    private int countingIndex;
+    private int maxIndex;
     private String textInCommandBox;
     private AutocompleteState state;
     private AutocompleteCommand currentCommand;
@@ -36,6 +45,7 @@ public class Autocompleter {
         this.logic = logic;
         parser = new CommandBoxParser();
         resultIndex = 0;
+        countingIndex = 1;
         textInCommandBox = EMPTY_STRING;
         state = AutocompleteState.EMPTY;
         currentCommand = AutocompleteCommand.NONE;
@@ -66,9 +76,14 @@ public class Autocompleter {
                 return textInCommandBox.substring(0, textInCommandBox.length() - 2) +
                         possibleAutocompleteResults.get(cycleIndex());
 
+            case INDEX:
+                String[] temp = textInCommandBox.split(" ");
+                return temp[0] + " " + cycleCountingIndex();
+
             case MULTIPLE_COMMAND:
                 displayMultipleResults(possibleAutocompleteResults);
                 return possibleAutocompleteResults.get(cycleIndex());
+
         }
         return textInCommandBox;
     }
@@ -82,6 +97,16 @@ public class Autocompleter {
         resultIndex = (resultIndex + 1) % possibleAutocompleteResults.size();
         return currentIndex;
 
+    }
+
+    private int cycleCountingIndex() {
+        int currentIndex = countingIndex;
+        maxIndex = logic.getFilteredParcelList().size();
+        countingIndex = (countingIndex + 1) % (maxIndex + 1);
+        if (countingIndex == 0) {
+            countingIndex = 1;
+        }
+        return currentIndex;
     }
 
     /**
@@ -112,9 +137,12 @@ public class Autocompleter {
         }
 
         if (AutocompleteCommand.hasIndexParameter(commandWord)) {
-            resetIndexIfNeeded();
-            state = AutocompleteState.INDEX;
-            return;
+            //System.out.println(needIndex(arguments));
+            if(!(AutocompleteCommand.hasPrefixParameter(commandWord)) || needIndex(arguments)) {
+                resetCountingAndMaxIndexIfNeeded();
+                state = AutocompleteState.INDEX;
+                return;
+            }
         }
 
         if (AutocompleteCommand.hasPrefixParameter(commandWord)) {
@@ -125,9 +153,7 @@ public class Autocompleter {
                 return;
             }
             state = AutocompleteState.COMMAND_NEXT_PREFIX;
-            return;
         }
-
 
     }
 
@@ -136,11 +162,42 @@ public class Autocompleter {
     }
 
     private void resetIndexIfNeeded() {
-        if (!state.equals(AutocompleteState.INDEX)
-                && !state.equals(AutocompleteState.MULTIPLE_COMMAND)
+        if (!state.equals(AutocompleteState.MULTIPLE_COMMAND)
                 && !state.equals(AutocompleteState.COMMAND_CYCLE_PREFIX)) {
             resultIndex = 0;
         }
+    }
+
+    private void resetCountingAndMaxIndexIfNeeded() {
+        if (!state.equals(AutocompleteState.INDEX)) {
+            countingIndex = 1;
+        }
+    }
+
+    private boolean needIndex(String arguments) {
+
+        return  (state.equals(AutocompleteState.INDEX) && lastCharIsDigit(textInCommandBox))
+                || !(containsIndex(arguments));
+    }
+
+    private boolean containsIndex(String arguments) {
+        Prefix[] prefixes = AutocompleteCommand.allPrefixes;
+        if (lastTwoCharactersArePrefix(arguments)){
+            arguments += SPACE;
+        }
+        ArgumentMultimap argMap = ArgumentTokenizer.tokenize(arguments, prefixes);
+
+        String index = argMap.getPreamble();
+        return !index.equals(EMPTY_STRING);
+    }
+
+    private boolean lastCharIsDigit(String text) {
+        if(text.length() < 1) {
+            return false;
+        }
+        System.out.println(text.charAt(text.length() - 1));
+        System.out.println(Character.isDigit(text.charAt(text.length() - 1)));
+        return Character.isDigit(text.charAt(text.length() - 1));
     }
 
 
@@ -170,6 +227,9 @@ public class Autocompleter {
     }
 
     private boolean lastTwoCharactersArePrefix(String commandBoxText) {
+        if (commandBoxText.length() < 2) {
+            return false;
+        }
         String lastTwoCharacters = commandBoxText.substring(commandBoxText.length() - 2);
         return Arrays.stream(AutocompleteCommand.allPrefixes)
                 .anyMatch(s -> lastTwoCharacters.equals(s.toString()));
