@@ -1,29 +1,32 @@
 package seedu.address.logic.commands;
 
+import java.util.List;
+
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
 
-import java.util.List;
 
+//@@author rushan-khor
 /**
  * Deletes a person identified using it's last displayed index from the address book.
  */
-public class CopyCommand extends UndoableCommand {
+public class CopyCommand extends Command {
 
     public static final String COMMAND_WORD = "copy";
     public static final String COMMAND_ALIAS = "c"; // shorthand equivalent alias
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the last person listing.\n"
-            + COMMAND_ALIAS + ": Shorthand equivalent for Delete. \n"
+            + ": Copies the email address of the person identified by the index number used in the last person listing.\n"
+            + COMMAND_ALIAS + ": Shorthand equivalent for Copy. \n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example 1: " + COMMAND_ALIAS + " 1 \n"
             + "Example 2: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_COPY_PERSON_SUCCESS = "%1$s's email address has been copied to your clipboard.";
 
     private final Index targetIndex;
 
@@ -33,7 +36,7 @@ public class CopyCommand extends UndoableCommand {
 
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
@@ -41,15 +44,16 @@ public class CopyCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
+        ReadOnlyPerson targetPerson = lastShownList.get(targetIndex.getZeroBased());
+        String resultantEmailAddress = targetPerson.getEmail().toString();
 
-        try {
-            model.deletePerson(personToDelete);
-        } catch (PersonNotFoundException pnfe) {
-            assert false : "The target person cannot be missing";
-        }
+        Clipboard systemClipboard = Clipboard.getSystemClipboard();
+        ClipboardContent systemClipboardContent = new ClipboardContent();
+        systemClipboardContent.putString(resultantEmailAddress);
 
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
+        systemClipboard.setContent(systemClipboardContent);
+
+        return new CommandResult(String.format(MESSAGE_COPY_PERSON_SUCCESS, targetPerson.getName()));
     }
 
     @Override
