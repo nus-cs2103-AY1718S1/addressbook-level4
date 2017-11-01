@@ -13,7 +13,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-
+//@@author RSJunior37
 /**
  * * The UI component that is responsible for real-time partial searching of contact name
  */

@@ -152,17 +152,17 @@ public class InsuranceProfile extends UiPart<Region> {
     }
 
 
+    //@@author RSJunior37
     @Subscribe
     private void handleInsurancePanelSelectionChangedEvent(InsurancePanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         insurance = event.getInsurance();
 
         initializeContractFile(insurance);
-
         enableNameToProfileLink(insurance);
         bindListeners(insurance);
         index.setText(null);
         raise(new SwitchToInsurancePanelRequestEvent());
-
     }
+    //@@author
 }

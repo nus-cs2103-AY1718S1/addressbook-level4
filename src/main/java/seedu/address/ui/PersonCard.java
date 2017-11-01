@@ -56,6 +56,7 @@ public class PersonCard extends UiPart<Region> {
         bindListeners(person);
     }
 
+    //@@author RSJunior37
     /**
      * Generate random colour with slight dark tint
      * and return it as hexadecimal String
@@ -82,6 +83,7 @@ public class PersonCard extends UiPart<Region> {
         }
         return tagToColor.get(tagName);
     }
+    //@@author
 
 
     /**
@@ -100,6 +102,7 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    //@@author RSJunior37
     /**
      * Retrieve all tags from a person and initialize them
      * with a unique tag colour
@@ -111,6 +114,7 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(uniqueTagLabel);
         });
     }
+    //@@author
 
 
     @Override

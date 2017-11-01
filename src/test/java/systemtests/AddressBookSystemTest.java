@@ -32,6 +32,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.ui.CommandBox;
+import seedu.address.ui.ProfilePanel;
 
 /**
  * A system test class for AddressBook, which provides access to handles of GUI components and helper methods
@@ -228,7 +229,9 @@ public abstract class AddressBookSystemTest {
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
-            assertNull(getProfilePanelHandle());
+            //@@author RSJunior37
+            assertEquals(ProfilePanel.DEFAULT_MESSAGE, getProfilePanelHandle().getName());
+            //@@author
         } catch (Exception e) {
             throw new AssertionError("Starting state is wrong.", e);
         }

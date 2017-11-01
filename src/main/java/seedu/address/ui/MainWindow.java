@@ -234,6 +234,7 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author RSJunior37
     @Subscribe
     private void handleSwitchToProfilePanelRequestEvent(SwitchToProfilePanelRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -248,6 +249,6 @@ public class MainWindow extends UiPart<Region> {
 
         rightPanelPlaceholder.getChildren().clear();
         rightPanelPlaceholder.getChildren().add(insuranceProfile.getRoot());
-
     }
+    //@@author
 }

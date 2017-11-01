@@ -56,7 +56,7 @@ public class InsuranceListPanel extends UiPart<Region> {
 
     }
 
-
+    //@@author RSJunior37
     private void setEventHandlerForSelectionChangeEvent() {
         insuranceListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
@@ -66,6 +66,7 @@ public class InsuranceListPanel extends UiPart<Region> {
                     }
                 });
     }
+    //@@author
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code InsuranceProfile}.

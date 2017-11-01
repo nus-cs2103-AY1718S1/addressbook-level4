@@ -3,8 +3,9 @@ package seedu.address.model.person;
 import java.util.List;
 import java.util.function.Predicate;
 
+//@@author RSJunior37
 /**
- * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
+ * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches the start of any of the keywords given.
  */
 public class NameStartsWithKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;

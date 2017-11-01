@@ -8,6 +8,7 @@ import seedu.address.logic.commands.PartialFindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameStartsWithKeywordsPredicate;
 
+//@@author RSJunior37
 /**
  * Parses input arguments and creates a new PartialFindCommand object
  */
