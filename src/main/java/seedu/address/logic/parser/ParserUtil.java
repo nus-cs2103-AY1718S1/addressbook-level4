@@ -139,8 +139,8 @@ public class ParserUtil {
 
             for (Iterator<WebLink> iterateInternalList = webLinkSet.iterator(); iterateInternalList.hasNext(); ) {
                 WebLink checkWebLink = iterateInternalList.next();
-                String checkWeblinkTag = checkWebLink.toStringWebLinkTag();
-                if (inputWebLink.contains(checkWeblinkTag)) {
+                String checkWebLinkTag = checkWebLink.toStringWebLinkTag();
+                if (inputWebLink.contains(checkWebLinkTag)) {
                     duplicateCheck = FALSE;
                     break;
                 }
