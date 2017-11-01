@@ -110,6 +110,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author namvd2709
     public void setAppointment(Appointment appointment) {
         this.appointment.set(requireNonNull(appointment));
     }
@@ -124,6 +125,7 @@ public class Person implements ReadOnlyPerson {
         return appointment.get();
     }
 
+    //@@author
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

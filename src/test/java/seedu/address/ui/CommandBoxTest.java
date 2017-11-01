@@ -125,6 +125,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
 
+    //@@author namvd2709
     @Test
     public void handleKeyPress_startingWithTab() {
         assertInputHistory(KeyCode.TAB, "");
@@ -139,6 +140,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.TAB, "e");
         assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
     }
+    //@@author
 
     /**
      * Runs a command that fails, then verifies that <br>

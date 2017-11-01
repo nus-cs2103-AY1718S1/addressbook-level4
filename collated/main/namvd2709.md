@@ -1,4 +1,121 @@
 # namvd2709
+###### /java/seedu/address/commons/util/StringUtil.java
+``` java
+    /**
+     * Returns true if the {@code sentence} contains the {@code word}.
+     *   Ignores case.
+     *   <br>examples:<pre>
+     *       containsWordIgnoreCase("ABc def", "abc") == true
+     *       containsWordIgnoreCase("ABc def", "EF") == true
+     *       containsWordIgnoreCase("ABc def", "AB") == true
+     *       </pre>
+     * @param sentence cannot be null
+     * @param phrase cannot be null, cannot be empty, must be a single word
+     */
+    public static boolean containsStringIgnoreCase(String sentence, String phrase) {
+        requireNonNull(sentence);
+        requireNonNull(phrase);
+
+        String preppedWord = phrase.trim();
+        checkArgument(!preppedWord.isEmpty(), "Search phrase parameter cannot be empty");
+        checkArgument(preppedWord.split("\\s+").length == 1, "Search phrase parameter should be a single word");
+
+        return sentence.toLowerCase().contains(phrase.toLowerCase());
+    }
+```
+###### /java/seedu/address/commons/util/StringUtil.java
+``` java
+    /**
+     * Returns true if the {@code sentence} contains the {@code word}.
+     *   Ignores case.
+     *   <br>examples:<pre>
+     *       containsWordIgnoreCase("ABc def", "abc") == true
+     *       containsWordIgnoreCase("ABc def", "EF") == false // no word starts with ef
+     *       containsWordIgnoreCase("ABc def", "aB") == true
+     *       </pre>
+     * @param sentence cannot be null
+     * @param phrase cannot be null, cannot be empty, must be a single word
+     */
+    public static boolean containsWordsStartWithString(String sentence, String phrase) {
+        requireNonNull(sentence);
+        requireNonNull(phrase);
+
+        String preppedWord = phrase.trim();
+        checkArgument(!preppedWord.isEmpty(), "Search phrase parameter cannot be empty");
+        checkArgument(preppedWord.split("\\s+").length == 1, "Search phrase parameter should be a single word");
+
+        String preppedSentence = sentence;
+        String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
+
+        for (String wordInSentence: wordsInPreppedSentence) {
+            if (wordInSentence.toLowerCase().startsWith(preppedWord.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+```
+###### /java/seedu/address/logic/AutocompleteManager.java
+``` java
+package seedu.address.logic;
+
+import java.util.ArrayList;
+
+import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AppointCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.GroupCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UndoCommand;
+
+/**
+ * Manage autocomplete logic when typing commands
+ */
+public class AutocompleteManager {
+
+    // This should include all commands.
+    // Add new commands here if implemented
+    private String[] commands = new String[]{
+        AddCommand.COMMAND_WORD, AppointCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD,
+        EditCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD, FindCommand.COMMAND_WORD, HelpCommand.COMMAND_WORD,
+        GroupCommand.COMMAND_WORD, HistoryCommand.COMMAND_WORD, ListCommand.COMMAND_WORD, RedoCommand.COMMAND_WORD,
+        SelectCommand.COMMAND_WORD, UndoCommand.COMMAND_WORD
+    };
+
+    public AutocompleteManager() {}
+
+```
+###### /java/seedu/address/logic/AutocompleteManager.java
+``` java
+    /**
+     * attempt to autocomplete input into one of the commands
+     * @param matcher field input
+     * @return String representation of command, or the matcher if not exactly one command is returned.
+     */
+    public String attemptAutocomplete(String matcher) {
+        ArrayList<String> matches = new ArrayList<>();
+        for (String command: commands) {
+            if (StringUtil.containsWordsStartWithString(command, matcher)) {
+                matches.add(command);
+            }
+        }
+        if (matches.size() == 1) {
+            return matches.get(0);
+        } else {
+            return matcher;
+        }
+    }
+}
+```
 ###### /java/seedu/address/logic/commands/AppointCommand.java
 ``` java
 package seedu.address.logic.commands;
@@ -153,6 +270,17 @@ public class AppointCommandParser implements Parser<AppointCommand> {
     }
 }
 ```
+###### /java/seedu/address/logic/parser/ParserUtil.java
+``` java
+    /**
+     * Parses a {@code Optional<String> appointment} into {@code Optional<Appointment>} if {@code appointment} present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Appointment> parseAppointment(Optional<String> appointment) throws IllegalValueException {
+        requireNonNull(appointment);
+        return appointment.isPresent() ? Optional.of(new Appointment(appointment.get())) : Optional.empty();
+    }
+```
 ###### /java/seedu/address/model/appointment/Appointment.java
 ``` java
 package seedu.address.model.appointment;
@@ -268,4 +396,21 @@ package seedu.address.model.appointment;
  */
 public class UniqueAppointmentList {
 }
+```
+###### /java/seedu/address/model/person/Person.java
+``` java
+    public void setAppointment(Appointment appointment) {
+        this.appointment.set(requireNonNull(appointment));
+    }
+
+    @Override
+    public ObjectProperty<Appointment> appointmentProperty() {
+        return appointment;
+    }
+
+    @Override
+    public Appointment getAppointment() {
+        return appointment.get();
+    }
+
 ```

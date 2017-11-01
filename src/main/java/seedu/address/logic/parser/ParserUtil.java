@@ -90,6 +90,7 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
+    //@@author namvd2709
     /**
      * Parses a {@code Optional<String> appointment} into {@code Optional<Appointment>} if {@code appointment} present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -98,6 +99,7 @@ public class ParserUtil {
         requireNonNull(appointment);
         return appointment.isPresent() ? Optional.of(new Appointment(appointment.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
