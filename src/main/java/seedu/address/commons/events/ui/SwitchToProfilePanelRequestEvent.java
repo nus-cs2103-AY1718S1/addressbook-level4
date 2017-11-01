@@ -3,9 +3,9 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * Request MainApp to switch from Insurance Profile to Person Profile
+ * Request MainApp to switch middle panel to Profile
  */
-public class SwitchPanelRequestEvent extends BaseEvent {
+public class SwitchToProfilePanelRequestEvent extends BaseEvent {
 
     @Override
     public String toString() {

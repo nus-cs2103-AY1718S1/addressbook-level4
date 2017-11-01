@@ -1,6 +1,20 @@
 # Juxarius
 ###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
+    /**
+     * Creates and returns a {@code Person} with the details of {@code personToEdit}
+     * edited with {@code editPersonDescriptor}.
+     */
+    private static Person createEditedPerson(ReadOnlyPerson personToEdit,
+                                             EditPersonDescriptor editPersonDescriptor) {
+        assert personToEdit != null;
+
+        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
+        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
+        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
+        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        DateOfBirth updatedDateOfBirth = editPersonDescriptor.getDateOfBirth().orElse(personToEdit.getDateOfBirth());
+
         Set<Tag> updatedTags = personToEdit.getTags();
 
         if (editPersonDescriptor.getTagsToDel().isPresent()) {
@@ -31,6 +45,16 @@
 ```
 ###### \java\seedu\address\logic\LogicManager.java
 ``` java
+    @Override
+    public CommandResult execute(String commandText) throws CommandException, ParseException {
+        logger.info("----------------[USER COMMAND][" + commandText + "]");
+        try {
+            Command command = addressBookParser.parseCommand(commandText);
+            command.setData(model, history, undoRedoStack);
+            CommandResult result = command.execute();
+            undoRedoStack.push(command);
+            return result;
+
         } catch (EmptyFieldException efe) {
             // index check was bypassed, this checks the index before filling empty prefix
             if (efe.getIndex().getOneBased() > model.getFilteredPersonList().size()) {
@@ -38,6 +62,10 @@
             }
             commandText = getAutoFilledCommand(commandText, efe.getIndex());
             throw efe;
+        } finally {
+            history.add(commandText);
+        }
+    }
 ```
 ###### \java\seedu\address\logic\LogicManager.java
 ``` java
@@ -96,7 +124,7 @@ public class DateParser {
     /**
      * Parses input dob string
      */
-    public static LocalDate parser(String dob) throws IllegalValueException {
+    public LocalDate parse(String dob) throws IllegalValueException {
         List<String> arguments = Arrays.asList(dob.split("[\\s-/.,]"));
         if (arguments.size() < 2) {
             throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
@@ -114,7 +142,7 @@ public class DateParser {
      * @return
      * @throws IllegalValueException
      */
-    private static String getValidYear(String year) throws IllegalValueException {
+    private String getValidYear(String year) throws IllegalValueException {
         int currYear = LocalDate.now().getYear();
         if (year.length() > 4) {
             year = year.substring(0, 4);
@@ -133,7 +161,7 @@ public class DateParser {
         }
     }
 
-    private static String getValidDay(String day) throws IllegalValueException {
+    private String getValidDay(String day) throws IllegalValueException {
         if (Integer.parseInt(day) > 31) {
             throw new IllegalValueException(MESSAGE_INVALID_DAY);
         }
@@ -146,7 +174,7 @@ public class DateParser {
         }
     }
 
-    private static String getValidMonth(String month) throws IllegalValueException {
+    private String getValidMonth(String month) throws IllegalValueException {
         int iMonth;
         if (month.matches("\\p{Alpha}+")) {
             iMonth = getMonth(month);
@@ -163,7 +191,7 @@ public class DateParser {
     /**
      * finds int month from string month name
      */
-    private static int getMonth(String monthName) throws IllegalValueException {
+    private int getMonth(String monthName) throws IllegalValueException {
         for (int i = 0; i < MONTH_NAME_LONG.length; i++) {
             if (monthName.toLowerCase().equals(MONTH_NAME_LONG[i].toLowerCase())
                     || monthName.toLowerCase().equals(MONTH_NAME_SHORT[i].toLowerCase())) {
@@ -176,10 +204,48 @@ public class DateParser {
 ```
 ###### \java\seedu\address\logic\parser\EditCommandParser.java
 ``` java
+    /**
+     * Parses the given {@code String} of arguments in the context of the EditCommand
+     * and returns an EditCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public EditCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(
+                        args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
+                        PREFIX_DOB, PREFIX_TAG, PREFIX_DELTAG);
+
+        Index index;
+
+        try {
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+
+        EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
+        try {
+            ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editPersonDescriptor::setName);
+            ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editPersonDescriptor::setPhone);
+            ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
+            ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
+            ParserUtil.parseDateOfBirth(argMultimap.getValue(PREFIX_DOB))
+                    .ifPresent(editPersonDescriptor::setDateOfBirth);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
             parseDetagsForEdit(argMultimap.getAllValues(PREFIX_DELTAG)).ifPresent(editPersonDescriptor::setTagsToDel);
         } catch (EmptyFieldException efe) {
             throw new EmptyFieldException(efe, index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+
+        if (!editPersonDescriptor.isAnyFieldEdited()) {
+            throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
+        }
+
+        return new EditCommand(index, editPersonDescriptor);
+    }
 ```
 ###### \java\seedu\address\logic\parser\EditCommandParser.java
 ``` java
@@ -244,6 +310,11 @@ public class EmptyFieldException extends ParseException {
     }
 }
 ```
+###### \java\seedu\address\model\insurance\LifeInsurance.java
+``` java
+    private LocalDate signingDate;
+    private LocalDate expiryDate;
+```
 ###### \java\seedu\address\model\person\Address.java
 ``` java
         if (address.isEmpty()) {
@@ -287,7 +358,7 @@ public class EmptyFieldException extends ParseException {
         if (!isValidDateOfBirth(dob)) {
             throw new IllegalValueException(MESSAGE_DOB_CONSTRAINTS);
         }
-        this.dateOfBirth = DateParser.parser(dob);
+        this.dateOfBirth = new DateParser().parse(dob);
         this.dateSet = true;
     }
 
@@ -302,50 +373,21 @@ public class EmptyFieldException extends ParseException {
         return dateSet ? dateOfBirth.format(DateParser.DATE_FORMAT) : "";
     }
 ```
-###### \java\seedu\address\model\person\Email.java
-``` java
-        if (trimmedEmail.isEmpty()) {
-            throw new EmptyFieldException(PREFIX_EMAIL);
-        }
-```
-###### \java\seedu\address\model\person\Name.java
-``` java
-        if (trimmedName.isEmpty()) {
-            throw new EmptyFieldException(PREFIX_NAME);
-        }
-```
-###### \java\seedu\address\model\person\Phone.java
-``` java
-        if (trimmedPhone.isEmpty()) {
-            throw new EmptyFieldException(PREFIX_PHONE);
-        }
-```
-###### \java\seedu\address\model\person\UniquePersonList.java
-``` java
-    /**
-     * Sorts the internal list of people
-     */
-    public void sortPersons() throws DuplicatePersonException {
-        ObservableList<Person> listToSort = FXCollections.observableArrayList(internalList);
-        listToSort.sort((ReadOnlyPerson first, ReadOnlyPerson second)-> {
-```
-###### \java\seedu\address\model\person\UniquePersonList.java
-``` java
-        UniquePersonList listToReplace = new UniquePersonList();
-        for (ReadOnlyPerson person : listToSort) {
-            listToReplace.add(person);
-        }
-        setPersons(listToReplace);
-    }
-```
-###### \java\seedu\address\model\tag\Tag.java
-``` java
-        if (trimmedName.isEmpty()) {
-            throw new EmptyFieldException(PREFIX_TAG);
-        }
-```
 ###### \java\seedu\address\ui\CommandBox.java
 ``` java
+    /**
+     * Handles the Enter button pressed event.
+     */
+    @FXML
+    private void handleCommandInputChanged() {
+        try {
+            CommandResult commandResult = logic.execute(commandTextField.getText());
+            initHistory();
+            historySnapshot.next();
+            // process result of the command
+            commandTextField.setText("");
+            logger.info("Result: " + commandResult.feedbackToUser);
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
         } catch (EmptyFieldException efe) {
             initHistory();
             // autofill function triggered
@@ -354,4 +396,19 @@ public class EmptyFieldException extends ParseException {
             commandTextField.setText(historySnapshot.previous());
             commandTextField.positionCaret(commandTextField.getText().length());
             raise(new NewResultAvailableEvent("Autofilled!", false));
+
+        } catch (CommandException | ParseException e) {
+            initHistory();
+            // handle command failure
+            setStyleToIndicateCommandFailure();
+            logger.info("Invalid command: " + commandTextField.getText());
+            raise(new NewResultAvailableEvent(e.getMessage(), true));
+        }
+    }
+```
+###### \resources\view\DarkTheme.css
+``` css
+#insuranceListView {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
 ```
