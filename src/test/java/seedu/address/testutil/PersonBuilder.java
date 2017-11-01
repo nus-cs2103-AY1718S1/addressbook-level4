@@ -4,9 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -128,7 +128,15 @@ public class PersonBuilder {
      * Sets the {@code Appointment} of the {@code Person} that we are building.
      */
     public PersonBuilder withAppointment(String appointment) {
-        this.person.setAppointment(new Appointment(appointment));
+        try {
+            this.person.setAppointment(new Appointment(appointment));
+        } catch (IllegalValueException ive) {
+            try {
+                throw new IllegalValueException("appointment is expected to be unique");
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+            }
+        }
         return this;
     }
 
