@@ -729,7 +729,7 @@ The sequence diagram for using this Command class within the Logic Component is 
 
 
 image::SDforBatchDeleteLogic.png[width="800"]
-    Figure 23: Sequence diagram for a `batch myTag` command in the Logic Component
+    Figure 23: Sequence diagram for a batch myTag command in the Logic component
 
 The model component will handle the actual deletion operations. To support this, an additional method is defined in the Model interface for implementation by the ModelManager class. +
 
@@ -739,7 +739,7 @@ See the sequence diagram below to better understand the full range of interactio
 
 
 image::SDforBatchDeleteModel.png[width="800"]
-    Figure 24: Sequence diagram for a `batch myTag` command in the Model Component
+    Figure 24: Sequence diagram for a batch myTag command in the Model component
 
 *Reasons for how it is implemented*
 
@@ -767,43 +767,32 @@ The user can occasionally clean up their contacts in case duplicates have accumu
 
 In view of the link:https://en.wikipedia.org/wiki/Open/closed_principle[open / closed principle],
 the Command class is open to extension but closed to modification. Its source code need not be edited for its behaviour to be extended in another object.
-Thus, to implement the batch deletion feature, a new `BatchCommand` class is extended from the Command class. +
+Thus, to implement the batch deletion feature, a new `DuplicatesCommand` class is extended from the Command class. +
 
-In summary, `BatchCommand` passes a set of tags to the Model Component which handles the actual deletions. Here's the constructor for the BatchCommand class. +
+Its constructor is given as +
 
- BatchCommand(Set<Tag> tagsToDelete)
+ DuplicatesCommand()
 
-The sequence diagram for using this Command class within the Logic Component is given below. +
+See the sequence diagram below to better understand the interactions within the Logic component. +
 
+image::SDforDuplicatesLogic.png[width="800"]
+    Figure 23: Sequence diagram for a duplicates command in the Logic component
 
-image::SDforBatchDeleteLogic.png[width="800"]
-    Figure 23: Sequence diagram for a `batch myTag` command in the Logic Component
+See the sequence diagram below to better understand the interactions it triggers within the Model component. +
 
-The model component will handle the actual deletion operations. To support this, an additional method is defined in the Model interface for implementation by the ModelManager class. +
+image::SDforDuplicatesModel.png[width="800"]
+    Figure 24: Sequence diagram within the Model component resulting from a duplicates command
 
- void deletePersonsByTags(Set<Tag> tags)
+As you've noticed in the diagram, a new `Predicate` is defined as
 
-See the sequence diagram below to better understand the full range of interactions involved. +
+ HasPotentialDuplicatesPredicate(ArrayList<Name> duplicateNames)
 
-
-image::SDforBatchDeleteModel.png[width="800"]
-    Figure 24: Sequence diagram for a `batch myTag` command in the Model Component
-
-*Reasons for how it is implemented*
-
-One thing you'll notice is that coupling between the logic and model component is minimised into the sole function call +
-
- deletePersonsByTags(Set<Tag> tags)
-
-Indeed, tracing the sequence diagrams will show you that each interaction is essentially a similar instruction.
-The seemingly unnecessary and roudabout sequence of function calls was actually conceived in view of the link:https://en.wikipedia.org/wiki/Law_of_Demeter[Law of Demeter].
-Objects ought not to "talk to strangers", or in other words, interact with objects more than one degree of separation away from them.
-This is justification for the "bureaucracy" between objects in the components.
+This predicate is compared against persons in the address book, so as to generate a list of potential duplicate persons.
+At the moment, persons are considered potential duplicates if they share the same name (case-sensitive) with any other person in the address book.
 
 *Future enhancements*
 
-We would like to include more batch operations beyond deletion. For example, editing tags, remarks, and other contact attributes by batch.
-A general function call between the logic and model components ought to be created. This could serve all batch operations, depending on its arguments.
+We would like to include a sync feature with a user's online accounts (e.g. Facebook, iCloud) that would increase the ability of MedNus to resolve duplicates on the user's behalf.
 // end::dups[]
 
 == Documentation
