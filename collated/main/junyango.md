@@ -460,14 +460,6 @@ public class EditEventParser implements Parser<EditEventCommand> {
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
-     * Adds all events in the argument event list to this list.
-     */
-    public void addEvents(List<? extends ReadOnlyEvent> events) {
-        this.events.addEvents(events);
-    }
-
-
-    /**
      * Replaces all events in this list with those in the argument event list.
      */
     public void setEvents(List<? extends ReadOnlyEvent> events) throws DuplicateEventException {
@@ -668,7 +660,6 @@ public interface ReadOnlyEvent {
 ```
 ###### \java\seedu\address\model\event\UniqueEventList.java
 ``` java
-
 /**
  * A list of events that enforces uniqueness between its elements and does not allow nulls.
  *
@@ -751,19 +742,9 @@ public class UniqueEventList implements Iterable<Event> {
         return eventFoundAndDeleted;
     }
 
-    /**
-     * Adds all events in the argument events list to this list.
-     */
-    public void addEvents(List<? extends ReadOnlyEvent> events) {
-        for (final ReadOnlyEvent event : events) {
-            try {
-                this.add(new Event(event));
-            } catch (DuplicateEventException e) {
-                // skip event if it exists
-            }
-        }
-    }
-
+```
+###### \java\seedu\address\model\event\UniqueEventList.java
+``` java
     public void setEvents(UniqueEventList replacement) {
         this.internalList.setAll(replacement.internalList);
     }

@@ -8,6 +8,7 @@ import org.junit.Test;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.tag.Tag;
 
+//@@author yunpengn
 public class TagColorChangedEventTest {
     @Test
     public void createEvent_success() throws Exception {

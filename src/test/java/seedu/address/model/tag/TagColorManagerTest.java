@@ -11,6 +11,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
+//@@author yunpengn
 public class TagColorManagerTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

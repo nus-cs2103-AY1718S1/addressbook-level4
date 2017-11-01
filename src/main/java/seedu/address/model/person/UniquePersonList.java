@@ -49,6 +49,7 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.add(new Person(toAdd));
     }
 
+    //@@author dennaloh
     /**
      * Sorts the persons based on name
      *

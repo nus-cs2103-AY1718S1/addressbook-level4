@@ -20,6 +20,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.imports.ImportCommand;
 import seedu.address.logic.commands.imports.ImportNusmodsCommand;
 
+//@@author yunpengn
 public class ImportCommandParserTest {
     private ImportCommandParser parser = new ImportCommandParser();
 

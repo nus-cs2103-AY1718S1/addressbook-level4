@@ -13,6 +13,7 @@ import javafx.collections.ObservableMap;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
+//@@author yunpengn
 /**
  * A HashMap of properties that enforces no nulls and uniqueness between its elements.
  *

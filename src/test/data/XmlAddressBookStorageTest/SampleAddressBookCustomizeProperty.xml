@@ -80,6 +80,7 @@
     </persons>
     <tags color="9fc7b6">friends</tags>
     <tags color="408ac4">owesMoney</tags>
+    <!-- @@author yunpengn -->
     <properties>
         <property>
             <shortName>p</shortName>
@@ -116,4 +117,5 @@
             <regex>[\p{Alnum}][\p{Alnum} ]*</regex>
         </property>
     </properties>
+    <!-- @@author -->
 </AddressBook>

@@ -25,6 +25,7 @@ import seedu.address.logic.commands.configs.AddPropertyCommand;
 import seedu.address.logic.commands.configs.ChangeTagColorCommand;
 import seedu.address.logic.commands.configs.ConfigCommand;
 
+//@@author yunpengn
 public class ConfigCommandParserTest {
     private ConfigCommandParser parser = new ConfigCommandParser();
 

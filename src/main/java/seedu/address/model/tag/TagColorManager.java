@@ -5,6 +5,7 @@ import java.util.Random;
 
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
+//@@author yunpengn
 /**
  * Manages the displayed color of all tags.
  *

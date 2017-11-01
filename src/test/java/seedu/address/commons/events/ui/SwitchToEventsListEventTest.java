@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import seedu.address.commons.events.BaseEvent;
 
+//@@author yunpengn
 public class SwitchToEventsListEventTest {
     @Test
     public void createEvent_success() throws Exception {
