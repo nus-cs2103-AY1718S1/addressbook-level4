@@ -163,6 +163,34 @@ The `UI` component,
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
+// tag::styling[]
+=== Styling and Themes
+
+image::StyleSheetColorNames.png[width="800"]
+_Figure 2.2.2 : Important variable names of the Stylesheet_
+
+The Stylesheets loaded are mainly controlled with the following global stylesheet variables
+
+```
+* {
+    -fx-base-background-color-0: #181b1d;
+    -fx-base-background-color-1: #2e3138;
+    -fx-base-text-fill-color: white;
+    -fx-base-text-fill-color-alt: black;
+    -fx-base-text-fill-color-labels: white;
+    -fx-label-text-fill-color: #010505;
+    -fx-list-cell-even: #3c3e3f;
+    -fx-list-cell-odd: #4a4f58;
+    -fx-list-cell-selected: #36435f;
+    -fx-list-cell-selected-border: #3e7b91;
+    -fx-list-cell-empty: #383838;
+}
+```
+
+Any new components added to the themes or stylesheets should utilise these base colors or variables to ensure the ease of creation and importation into other themes.
+
+// end::styling[]
+
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]

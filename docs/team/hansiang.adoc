@@ -90,5 +90,15 @@ This allows a user view the Social Links and Address of a contact directly withi
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+* Updated the GUI color scheme 
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=styling]
+
+#End of Extract#
+
+---
+
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
