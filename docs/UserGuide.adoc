@@ -67,17 +67,14 @@ Autocompletes to all tags starting with `fa`.
 
 Autocomplete should also work no matter where in the input you are currently trying to modify, unless there are no options to autocomplete.
 
-=== FindTag
+=== Import and Export Contacts : `import` and `export`
 
-Finds all persons whose tags contain any of the specified tags (not case-sensitive) and displays them as a list with index numbers. +
-Format: `findtag TAG [MORE_TAGS]...`
+You can now import and export vCard files from Rubrika, with `import` and `export` command respectively.
 
-Example: `findtag friends family` +
-Searches for all persons containing `friends` tag or `family` tag.
+=== Change UI Theme : `theme`
 
-=== Enhanced RemoveTag command
+You can now set the theme of the UI to suit your preference, with `theme` command.
 
-Now, you can specify which person you want to remove the tag from and not just remove from everyone on the list.
 
 [[Features]]
 == Features
@@ -311,6 +308,13 @@ Exports the whole list of addressbook.
 `export` +
 Exports the list of people with prospective `TAG`.
 
+=== Change UI Theme : `theme`
+
+[NOTE]
+Change theme feature available since v1.4.
+
+You can now set the theme of the UI to suit your preference, with `theme` command.
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
@@ -430,7 +434,7 @@ This helps with wordy addresses or long names and other person data you do not w
 
 * `add n/J` becomes `add n/John Hawkins` if you have a person with the name `John Hawkins` stored
 * `edit 2 t/co t/owesMoney` does not autocomplete the `t/co` because it is in the middle of the input
-* `select ` does not autocomplete because there is no prefix present, and no person data should be involved
+* `select 2` does not autocomplete because there is no prefix present, and no person data should be involved
 
 === Autocomplete Person Data Based on Command Word
 
@@ -439,7 +443,7 @@ You can even find someone without executing the `find` command, but just let Aut
 
 * `find A` gets completed with all possible keywords starting with `A`
 * `removetag fa` becomes `removetag` followed by all possible tags starting with `fa`
-* `delete ` does not autocomplete because the command does not involve person data
+* `delete 1` does not autocomplete because the command does not involve person data
 
 === Autocompleting Anywhere in the Command Input Box
 
