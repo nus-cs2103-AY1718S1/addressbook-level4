@@ -93,7 +93,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ==== Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Format: `undo`/`u`
 
 [NOTE]
 =====
@@ -119,7 +119,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 ==== Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `redo`/`r`
 
 Examples:
 
@@ -142,12 +142,12 @@ The `redo` command fails as there are no `undo` commands executed previously.
 ==== Clearing all entries : `clear`
 
 Clears all entries from the address book. +
-Format: `clear`
+Format: `clear`/`c`
 
 ==== Exiting the program : `exit`
 
 Exits the program. +
-Format: `exit`
+Format: `exit`/`x`
 
 ==== Saving the data
 
@@ -159,7 +159,8 @@ There is no need to save manually.
 ==== Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add`/`a` +
+Details: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -172,32 +173,34 @@ Examples:
 ==== Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
-Format: `list`
+Format: `list`/`l`
 
 ==== Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find`/`f` +
+Details: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The order of the keywords matters. e.g. `Hans Bo` will not match `Bo Hans`
+* Only the name/email/address are searched.
+* Full words are not need for matching e.g. `Han` will match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans/Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
 
 * `find John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
+* `find Betsy/Tim/John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
 ==== Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Format: `select`/`s` +
+Details: `select INDEX`
 
 ****
 * Selects the person and loads the Google Map page the person at the specified `INDEX`.
@@ -217,7 +220,8 @@ Selects the 1st person in the results of the `find` command.
 ==== Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit`/`ed` +
+Details: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -237,7 +241,8 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 ==== Exporting a person to a string of add command : `export`
 
 Export the details of the person by the index number +
-Format: `export INDEX`
+Format: `export`/`ex`
+Details: `export INDEX`
 
 ****
 * Exports the person at the specified `INDEX`, selects the person and loads the Google Map page.
@@ -253,7 +258,8 @@ Returns `add n/Alex Yeoh p/87438807 e/alexyeoh@example.com a/Blk 30 Geylang Stre
 ==== Adding/Updating remark of a person : `remark`
 
 Adds a new remark or updates existing remark of a person +
-Format: `remark 1 r/[remark]`
+Format: `remark`/`r`
+Details: `remark 1 r/[remark]`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
