@@ -15,7 +15,7 @@ image::images/Ui.png[width="600"]
 endif::[]
 
 * This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* Debt collectors have to make outbound telephone calls, take inbound telephone calls, and search for updated information on debtor daily. Thus, there is a need for a simple yet efficient way to handle all these information. This address book aims to address this need.
+* Debt collectors have to make outbound telephone calls, take inbound telephone calls, and search for updated information on debtors daily. Thus, there is a need for a simple yet efficient way to handle all these information. This address book aims to address this need.
 * Debt collectors can store information such as the amount owed, debt borrow date and debt cleared date in addition to debtor's personal information.
 * Unique features:
 ** Automatic debt update based on interests
