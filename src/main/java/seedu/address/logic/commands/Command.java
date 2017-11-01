@@ -35,6 +35,16 @@ public abstract class Command {
     }
 
     /**
+     * Constructs a feedback message to summarise an operation that displayed a listing of reminders.
+     *
+     * @param displaySize
+     * @return
+     */
+    public static String getMessageForReminderListShownSummary(int displaySize) {
+        return String.format(Messages.MESSAGE_REMINDERS_LISTED_OVERVIEW, displaySize);
+    }
+
+    /**
      * Constructs a feedback message to summarise an operation that displayed a listing of phones.
      *
      * @param displaySize
