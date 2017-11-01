@@ -70,9 +70,12 @@ Examples:
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
-Format: `list` +
+Shows a list of all persons in the address book. Has the option of showing only favourite contacts +
+Format: `list [/f]` +
 Alias: `l`
+
+* `list` will show all contacts
+* `list /f` will show only contacts that have been marked as favourites
 
 === Editing a person : `edit`
 
