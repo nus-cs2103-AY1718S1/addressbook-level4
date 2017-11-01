@@ -57,7 +57,8 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Only name and phone number are compulsory fields +
+Format: `add n/NAME p/PHONE_NUMBER b/BIRTHDAY e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -382,12 +383,12 @@ Changes the addressbook theme to theme `INDEX` of one, which is default *DarkThe
 
 === Since `v1.4`
 
-==== Quick Add
+==== Quick adding using improved `add` Command
 
 User can now add a person with just name and phone details. +
 All other details that are not given will be filled in by default values.
 
-=== Coming soon in v2.0
+=== Coming soon in `v2.0`
 
 ==== Import & export of addressbook
 
@@ -416,8 +417,8 @@ Functions wll be found from `new UI panel`.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER b/BIRTHDAY e/EMAIL a/ADDRESS [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 b/21/07/1991 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
