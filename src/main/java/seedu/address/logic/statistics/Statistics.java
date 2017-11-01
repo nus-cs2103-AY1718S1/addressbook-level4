@@ -32,6 +32,20 @@ public class Statistics {
     }
 
     /**
+     * Takes in a PersonList and initialises the appropriate values to the Statistics instance
+     * @param personList the list of persons being taken in
+     */
+    public void initScore(ObservableList<ReadOnlyPerson> personList) {
+        int listSize = personList.size();
+        double[] listArray = new double[listSize];
+        for (int i = 0; i < listSize; i++) {
+            Person person = (Person) personList.get(i);
+            listArray[i] = Double.parseDouble((person.getGrades().value));
+        }
+        initScore(listArray);
+    }
+
+    /**
      * Sorts an array and assigns the appropriate values to the Statistics instance
      *
      * @param scoreArray the array of doubles used fo calculating statistics
