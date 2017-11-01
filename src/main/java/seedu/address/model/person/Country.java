@@ -2,6 +2,11 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
 /**
  * Corresponding alias list of each country code and its corresponding .countryName().
  * Guarantees: immutable; is valid as declared in {@link #isValidCode(String)}
@@ -10,21 +15,38 @@ public class Country {
 
     public static final String DEFAULT_COUNTRY_CODE = "";
     public static final String DEFAULT_COUNTRY = "Country Unavailable";
+    public static final String MESSAGE_COUNTRY_CONSTRAINTS =
+            "Country code cannot be verified. "
+            + "Please ensure that the entered country code belongs to an existing country";
     public final String value;
 
     /**
      * Converts a country code to country name.
      */
-    public Country(String countryCode) {
+    public Country(String countryCode) throws IllegalValueException {
         requireNonNull(countryCode);
         this.value = countryGetter(countryCode); // value is a country name
     }
 
-    public static String countryGetter(String code) {
+    public static String countryGetter(String code) throws IllegalValueException {
         return getName(code);
     }
 
-    public static String getName(String code) {
+    public static String getName(String code) throws IllegalValueException {
+        Map <String, String> countries = new HashMap<>();
+        countries.put(DEFAULT_COUNTRY_CODE, DEFAULT_COUNTRY);
+        countries.put("65", "Singapore");
+        countries.put("263", "Zimbabwe");
+        countries.put("260", "Zambia");
+        countries.put("967", "Yemen");
+        if(!countries.containsKey(code)) {
+            throw new IllegalValueException(MESSAGE_COUNTRY_CONSTRAINTS);
+        }
+        return countries.get(code);
+
+
+        // this isn't much shorter than switch cases? to follow up.
+        /*
         switch (code) {
         case "65": return "Singapore";
         case "263": return "Zimbabwe";
@@ -68,8 +90,8 @@ public class Country {
 
         //case DEFAULT_COUNTRY_CODE: // fallthrough
         default: return DEFAULT_COUNTRY;
+        */
         }
-    }
 
     @Override
     public String toString() {
