@@ -33,7 +33,6 @@ public class DeleteCommand extends UndoableCommand {
     }
 
 
-    //@@author Vanessa
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
@@ -48,7 +47,9 @@ public class DeleteCommand extends UndoableCommand {
 
         try {
             model.deletePerson(personToDelete);
+            //@@author Vanessa
             queue.offer(personToDelete);
+            //@@author
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
