@@ -122,6 +122,17 @@ public class MainWindow extends UiPart<Region> {
         });
     }
 
+
+    /**
+     * Opens the help window.
+     */
+    @FXML
+    public void handleLogin() {
+        logger.info("Login: Enter username and password to open address book");
+        LoginWindow loginWindow = new LoginWindow();
+        loginWindow.show();
+    }
+
     /**
      * Fills up all the placeholders of this window.
      */
