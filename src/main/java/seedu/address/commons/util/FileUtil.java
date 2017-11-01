@@ -14,12 +14,15 @@ import java.util.regex.Pattern;
 public class FileUtil {
 
     private static final String CHARSET = "UTF-8";
+
+    //@@author low5545
     private static final Pattern XML_FILE_FORMAT = Pattern.compile(".*\\.xml$");
     private static final Pattern UNIX_NAME_SEPARATOR_FORMAT = Pattern.compile(".*/.*");
     private static final Pattern WINDOWS_NAME_SEPARATOR_FORMAT = Pattern.compile(".*\\\\.*");
     private static final Pattern INVALID_NAME_CHARACTERS_FORMAT = Pattern.compile(".*[?!%*+:|\"<>].*");
     private static final Pattern CONSECUTIVE_NAME_SEPARATOR_FORMAT = Pattern.compile("(.*//.*)|(.*\\\\\\\\.*)");
     private static final Pattern CONSECUTIVE_EXTENSION_SEPARATOR_FORMAT = Pattern.compile(".*\\.\\..*");
+    //@@author
 
     public static boolean isFileExists(File file) {
         return file.exists() && file.isFile();
@@ -98,6 +101,7 @@ public class FileUtil {
         return pathWithForwardSlash.replace("/", File.separator);
     }
 
+    //@@author low5545
     /**
      * Checks whether the file specified in the {@code filePath} is a valid XML file
      */

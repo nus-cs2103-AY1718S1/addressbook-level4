@@ -62,12 +62,14 @@ public class AddressBook implements ReadOnlyAddressBook {
      * List overwrite operations
      *****************************************************/
 
+    //@@author low5545
     /**
      * Adds all persons in the argument person list to this list.
      */
     public void addPersons(List<? extends ReadOnlyPerson> persons) {
         this.persons.addPersons(persons);
     }
+    //@@author
 
     /**
      * Replaces all persons in this list with those in the argument person list.
@@ -75,15 +77,17 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
         this.persons.setPersons(persons);
     }
-    //@@author junyango
+  
+    //@@author low5545
     /**
      * Adds all events in the argument event list to this list.
      */
     public void addEvents(List<? extends ReadOnlyEvent> events) {
         this.events.addEvents(events);
     }
+    //@@author
 
-
+    //@@author junyango
     /**
      * Replaces all events in this list with those in the argument event list.
      */
@@ -91,12 +95,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.events.setEvents(events);
     }
     //@@author
+
+    //@@author low5545
     /**
      * Adds all tags in the argument tag list to this list.
      */
     public void addTags(Set<Tag> tags) {
         this.tags.addTags(tags);
     }
+    //@@author
 
     /**
      * Replaces all tags in this list with those in the argument tag list.
@@ -105,6 +112,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    //@@author low5545
     /**
      * Adds extra {@code newData} into the existing data of this {@code AddressBook}.
      */
@@ -116,6 +124,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         addTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
     }
+    //@@author
 
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
