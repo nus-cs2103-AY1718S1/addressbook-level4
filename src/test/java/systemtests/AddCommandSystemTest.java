@@ -48,7 +48,9 @@ import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.EDITH;
+import static seedu.address.testutil.TypicalPersons.ERIC;
 import static seedu.address.testutil.TypicalPersons.ERNEST;
+import static seedu.address.testutil.TypicalPersons.ETHAN;
 import static seedu.address.testutil.TypicalPersons.EVELYN;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
@@ -253,16 +255,10 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(EVELYN);
 
         /* Case: missing website -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + HOME_NUM_DESC_AMY
-                + EMAIL_DESC_AMY + SCH_EMAIL_DESC_AMY
-                + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        assertCommandSuccess(ERIC);
 
         /* Case: missing address -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + HOME_NUM_DESC_AMY
-                + EMAIL_DESC_AMY + SCH_EMAIL_DESC_AMY
-                + WEBSITE_DESC_AMY + BIRTHDAY_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        assertCommandSuccess(ETHAN);
 
         /* Case: invalid keyword -> rejected */
         command = "adds " + PersonUtil.getPersonDetails(toAdd);
