@@ -90,4 +90,9 @@
         <address isPrivate="false">chicago ave</address>
         <birthday isPrivate="false">10/01/1978</birthday>
     </persons>
+    <events>
+        <name>ZoukOut</name>
+        <address isPrivate="false">Sentosa Beach, Siloso</address>
+        <date isPrivate="false">2017-12-05</date>
+    </events>
 </addressbook>
