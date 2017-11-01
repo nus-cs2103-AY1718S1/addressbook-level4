@@ -95,6 +95,7 @@ public class LoginWindow extends UiPart<Region> {
      */
     private void setStyleToDefault() {
         //TODO - restore if user restarts entering details
+        ;
     }
 
     /**
@@ -102,9 +103,13 @@ public class LoginWindow extends UiPart<Region> {
      */
     private void setMotionToindicateLoginFailure() {
         //TODO - change look/shake of dialog if user enters wrong details
+        ;
     }
 
-
+    /**
+     * Performs a check whether the username and password entered by the user are correct or not
+     * @return true if log in details are correct, else false
+     */
     public boolean performLoginAttempt() {
         boolean loginAttemptBool = false;
         try {

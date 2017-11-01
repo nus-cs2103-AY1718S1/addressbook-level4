@@ -23,7 +23,7 @@ public class LoginDetails {
      */
     public LoginDetails(String username, String password) {
         this.username = new SimpleStringProperty(username);
-        this.password= new SimpleStringProperty(password);
+        this.password = new SimpleStringProperty(password);
     }
 
     public String getUsername() {
