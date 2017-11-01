@@ -1,3 +1,4 @@
+//@@author namvd2709
 package seedu.address.logic;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class AutocompleteManager {
 
     public AutocompleteManager() {}
 
+    //@@author namvd2709
     /**
      * attempt to autocomplete input into one of the commands
      * @param matcher field input

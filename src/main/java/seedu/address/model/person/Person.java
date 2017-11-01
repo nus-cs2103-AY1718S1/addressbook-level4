@@ -112,6 +112,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author namvd2709
     public void setAppointment(Appointment appointment) {
         this.appointment.set(requireNonNull(appointment));
     }

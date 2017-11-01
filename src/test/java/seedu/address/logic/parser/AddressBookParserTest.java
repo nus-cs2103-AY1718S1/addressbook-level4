@@ -88,12 +88,14 @@ public class AddressBookParserTest {
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
+    //@@author namvd2709
     @Test
     public void parseCommand_appoint() throws Exception {
         AppointCommand command = (AppointCommand) parser.parseCommand(AppointCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + APPOINTMENT_DESC);
         assertEquals(new AppointCommand(INDEX_FIRST_PERSON, new Appointment(VALID_APPOINTMENT)), command);
     }
+    //@@author
 
     //@@author arturs68
     @Test

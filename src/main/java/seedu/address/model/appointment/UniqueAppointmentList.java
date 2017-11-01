@@ -1,3 +1,4 @@
+//@@author namvd2709
 package seedu.address.model.appointment;
 
 /**

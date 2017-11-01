@@ -1,4 +1,49 @@
-//@@author namvd2709
+# namvd2709
+###### /java/seedu/address/logic/AutocompleteManagerTest.java
+``` java
+package seedu.address.logic;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UndoCommand;
+
+public class AutocompleteManagerTest {
+    @Test
+    public void attemptAutocomplete() {
+        AutocompleteManager manager = new AutocompleteManager();
+
+        // test commands which can be matched by 1 character
+        assertEquals(manager.attemptAutocomplete("f"), FindCommand.COMMAND_WORD);
+        assertEquals(manager.attemptAutocomplete("u"), UndoCommand.COMMAND_WORD);
+        assertEquals(manager.attemptAutocomplete("r"), RedoCommand.COMMAND_WORD);
+
+        // test commands which can be matched by 1 character but 2 is supplied
+        assertEquals(manager.attemptAutocomplete("de"), DeleteCommand.COMMAND_WORD);
+        assertEquals(manager.attemptAutocomplete("s"), SelectCommand.COMMAND_WORD);
+
+        // test commands which can be matched by 2 characters
+        assertEquals(manager.attemptAutocomplete("ed"), EditCommand.COMMAND_WORD);
+        assertEquals(manager.attemptAutocomplete("ex"), ExitCommand.COMMAND_WORD);
+        assertEquals(manager.attemptAutocomplete("he"), HelpCommand.COMMAND_WORD);
+        assertEquals(manager.attemptAutocomplete("hi"), HistoryCommand.COMMAND_WORD);
+
+        // test commands which can't be matched by 1 character but 1 is supplied
+        assertEquals(manager.attemptAutocomplete("e"), "e");
+    }
+}
+```
+###### /java/seedu/address/logic/commands/AppointCommandTest.java
+``` java
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
@@ -112,3 +157,97 @@ public class AppointCommandTest {
         return appointCommand;
     }
 }
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_appoint() throws Exception {
+        AppointCommand command = (AppointCommand) parser.parseCommand(AppointCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + APPOINTMENT_DESC);
+        assertEquals(new AppointCommand(INDEX_FIRST_PERSON, new Appointment(VALID_APPOINTMENT)), command);
+    }
+```
+###### /java/seedu/address/logic/parser/AppointCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.APPOINTMENT_DESC;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.AppointCommand;
+
+public class AppointCommandParserTest {
+    private static final String MESSAGE_INVALID_FORMAT =
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, AppointCommand.MESSAGE_USAGE);
+
+    private AppointCommandParser parser = new AppointCommandParser();
+
+    @Test
+    public void parse_missingParts_failure() {
+        // no index specified
+        assertParseFailure(parser, APPOINTMENT_DESC, ParserUtil.MESSAGE_INVALID_INDEX);
+
+        // no index and no field specified
+        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_invalidPreamble_failure() {
+        // negative index
+        assertParseFailure(parser, "-3" + APPOINTMENT_DESC, ParserUtil.MESSAGE_INVALID_INDEX);
+
+        // zero index
+        assertParseFailure(parser, "0" + APPOINTMENT_DESC, ParserUtil.MESSAGE_INVALID_INDEX);
+
+        // invalid arguments being parsed as preamble
+        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
+
+        // invalid prefix being parsed as preamble
+        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
+    }
+}
+```
+###### /java/seedu/address/testutil/PersonBuilder.java
+``` java
+    /**
+     * Sets the {@code Appointment} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withAppointment(String appointment) {
+        try {
+            this.person.setAppointment(new Appointment(appointment));
+        } catch (IllegalValueException ive) {
+            try {
+                throw new IllegalValueException("appointment is expected to be unique");
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+            }
+        }
+        return this;
+    }
+
+    public Person build() {
+        return this.person;
+    }
+
+}
+```
+###### /java/seedu/address/ui/CommandBoxTest.java
+``` java
+    @Test
+    public void handleKeyPress_startingWithTab() {
+        assertInputHistory(KeyCode.TAB, "");
+
+        // successfully autocomplete
+        commandBoxHandle.setInput("f");
+        assertInputHistory(KeyCode.TAB, "find ");
+        assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
+
+        // fail autocomplete
+        commandBoxHandle.setInput("e");
+        assertInputHistory(KeyCode.TAB, "e");
+        assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
+    }
+```
