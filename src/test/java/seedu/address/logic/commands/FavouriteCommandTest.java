@@ -4,7 +4,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+//import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
@@ -16,13 +16,13 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.AddressBook;
+//import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.testutil.PersonBuilder;
+//import seedu.address.model.person.Person;
+//import seedu.address.model.person.ReadOnlyPerson;
+//import seedu.address.testutil.PersonBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for FavouriteCommand.
@@ -30,37 +30,6 @@ import seedu.address.testutil.PersonBuilder;
 public class FavouriteCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-//    @Test
-//    public void execute_favouritePersonUnfilteredList_success() throws Exception {
-//        Person firstPerson = new Person(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
-//        Person favouritedPerson = new PersonBuilder(firstPerson).build();
-//        FavouriteCommand favouriteCommand = prepareCommand(INDEX_FIRST_PERSON);
-//
-//        String expectedMessage = String.format(FavouriteCommand.MESSAGE_FAVOURITE_PERSON_SUCCESS, favouritedPerson);
-//
-//        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-//        expectedModel.favouritePerson(model.getFilteredPersonList().get(0), favouritedPerson);
-//
-//        assertCommandSuccess(favouriteCommand, model, expectedMessage, expectedModel);
-//    }
-
-//    @Test
-//    public void execute_favouritePersonFilteredList_success() throws Exception {
-//        showFirstPersonOnly(model);
-//
-//        ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-//        Person favouritedPerson = new PersonBuilder(personInFilteredList).build();
-//        FavouriteCommand favouriteCommand = prepareCommand(INDEX_FIRST_PERSON);
-//
-//        String expectedMessage = String.format(FavouriteCommand.MESSAGE_FAVOURITE_PERSON_SUCCESS, favouritedPerson);
-//
-//        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-//        expectedModel.updatePerson(model.getFilteredPersonList().get(0), favouritedPerson);
-//
-//        assertCommandSuccess(favouriteCommand, model, expectedMessage, expectedModel);
-//    }
-
 
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() {
