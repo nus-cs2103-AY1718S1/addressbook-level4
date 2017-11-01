@@ -57,7 +57,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredParcels = new FilteredList<>(this.addressBook.getParcelList());
         updatedDeliveredAndUndeliveredList();
         activeFilteredList = filteredUndeliveredParcels;
-        SelectionListener sl = new SelectionListener(this);
+        // SelectionListener sl = new SelectionListener(this);
     }
 
     public ModelManager() {

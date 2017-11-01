@@ -7,11 +7,13 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.logging.Logger;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -25,6 +27,8 @@ import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.testutil.ParcelBuilder;
 
 public class AddCommandTest {
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -123,7 +127,7 @@ public class AddCommandTest {
 
         @Override
         public void forceSelectParcel(ReadOnlyParcel parcel) {
-
+            logger.info("Simulate force selection of parcel.");
         }
 
         @Override
