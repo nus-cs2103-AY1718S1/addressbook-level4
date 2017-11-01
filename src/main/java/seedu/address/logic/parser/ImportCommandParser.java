@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import seedu.address.logic.commands.imports.ImportCommand;
 import seedu.address.logic.commands.imports.ImportCommand.ImportType;
 import seedu.address.logic.commands.imports.ImportNusmodsCommand;
+import seedu.address.logic.commands.imports.ImportXmlCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -80,8 +81,12 @@ public class ImportCommandParser implements Parser<ImportCommand> {
         }
     }
 
+    /**
+     * File path is being checked in {@code XmlAddressBookStorage#validateFilePath(String)}, similar to
+     * {@code ExportCommand}.
+     */
     private ImportCommand checkXmlImport(String path) {
-        return null;
+        return new ImportXmlCommand(path);
     }
 
     private ImportCommand checkScriptImport(String path) {

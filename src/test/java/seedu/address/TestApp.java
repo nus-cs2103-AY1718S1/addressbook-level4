@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.InvalidFilePathException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.AddressBook;
@@ -80,6 +81,8 @@ public class TestApp extends MainApp {
             throw new AssertionError("Data is not in the AddressBook format.");
         } catch (IOException ioe) {
             throw new AssertionError("Storage file cannot be found.");
+        } catch (InvalidFilePathException ifpe) {
+            throw new AssertionError("File path of storage file is not in the correct format.");
         }
     }
 

@@ -33,7 +33,7 @@ public class ExportCommand extends Command {
             + " are not defined in your operating system.";
     public static final String MESSAGE_CONSECUTIVE_SEPARATOR = "The file path contains consecutive"
             + " name-separators (/ or \\) or extension-separators (.).";
-    private Storage storage;
+
     private final String filePath;
 
     public ExportCommand(String filePath) {
