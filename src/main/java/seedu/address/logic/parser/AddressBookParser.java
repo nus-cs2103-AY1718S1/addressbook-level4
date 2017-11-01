@@ -56,8 +56,10 @@ public class AddressBookParser {
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
 
+        //@@author aver0214
         case AddQuickCommand.COMMAND_WORD:
             return new AddQuickCommandParser().parse(arguments);
+        //@@author
 
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
@@ -74,8 +76,10 @@ public class AddressBookParser {
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
 
+        //@@author aver0214
         case FindSpecificCommand.COMMAND_WORD:
             return new FindSpecificCommandParser().parse(arguments);
+        //@@author
 
         case GmapCommand.COMMAND_WORD:
             return new GmapCommandParser().parse(arguments);

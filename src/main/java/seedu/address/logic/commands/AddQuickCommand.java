@@ -41,7 +41,9 @@ public class AddQuickCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
     public static final String MESSAGE_PERSON_NOT_FOUND = "This person is not in the address book";
+    //@@author aver0214
     public static final String MESSAGE_NAME_PHONE_MISSING = "Missing name or phone number";
+    //@@author
 
     private final Person toAdd;
 
@@ -57,6 +59,7 @@ public class AddQuickCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.addPerson(toAdd);
+            //@@author aver0214
             model.sortAllPersons();
             model.sortImportantTag();
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
@@ -65,6 +68,7 @@ public class AddQuickCommand extends UndoableCommand {
         } catch (PersonNotFoundException e) {
             throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
         }
+        //@@author
 
     }
 

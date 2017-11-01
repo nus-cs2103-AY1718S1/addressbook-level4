@@ -100,6 +100,7 @@ public class AddQuickCommandParserTest {
                 + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY, new AddQuickCommand(expectedPerson));
     }
 
+    //@@author aver0214
     @Test
     public void parse_compulsoryFieldMissing_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
@@ -117,6 +118,7 @@ public class AddQuickCommandParserTest {
         assertParseFailure(parser, AddQuickCommand.COMMAND_WORD + VALID_NAME_BOB + VALID_PHONE_BOB
                 + VALID_EMAIL_BOB + VALID_ADDRESS_BOB + VALID_ADDRESS_BOB, expectedMessage);
     }
+    //@@author
 
     @Test
     public void parse_invalidValue_failure() {
