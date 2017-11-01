@@ -2,7 +2,9 @@ package seedu.address.model.schedule;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
-/* The object representing the time of the start of a 30-minute-span when a person is busy. */
+/**
+ * The object representing the time of the start of a 30-minute-span when a person is busy.
+ */
 public class Time {
 
     private final Integer earliestTime = 600;

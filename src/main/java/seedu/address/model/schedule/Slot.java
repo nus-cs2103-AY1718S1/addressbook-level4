@@ -4,7 +4,9 @@ import java.util.TreeSet;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
-/* The object representing a slot representing a span of time when a person is busy. */
+/**
+ * The object representing a slot representing a span of time when a person is busy.
+ */
 public class Slot {
 
     public final int dayCoefficent = 10000;

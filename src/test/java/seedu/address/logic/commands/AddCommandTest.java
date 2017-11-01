@@ -149,12 +149,12 @@ public class AddCommandTest {
 
 
         @Override
-        public void addScheduleToPerson(Integer index, TreeSet<Integer> span){
+        public void addScheduleToPerson(Integer index, TreeSet<Integer> span) {
             fail("This method should not be called.");
         }
 
         @Override
-        public void clearScheduleForPerson(Integer index, TreeSet<Integer> span){
+        public void clearScheduleForPerson(Integer index, TreeSet<Integer> span) {
             fail("This method should not be called.");
         }
     }
