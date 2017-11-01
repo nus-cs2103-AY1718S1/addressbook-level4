@@ -3,11 +3,11 @@ package seedu.address.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.DATE_DESC_EVENT1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_COLOR;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_REMINDERS;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -157,7 +157,6 @@ public class ModelManagerTest {
         UserPrefs userPrefs = new UserPrefs();
         ModelManager modelManager = new ModelManager(addressBook, userPrefs);
         int oldReminderListSize = modelManager.getAddressBook().getReminderList().size();
-        ObservableList<ReadOnlyReminder> reminders = modelManager.getAddressBook().getReminderList();
         Event newEvent = new Event(new EventBuilder().withName("Sample").withAddress("sample")
                 .withDateTime("25012007 02:30").build());
         Reminder reminder = new Reminder(newEvent, newEvent.getTime().toString());
@@ -217,6 +216,7 @@ public class ModelManagerTest {
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         modelManager.updateFilteredEventsList(PREDICATE_SHOW_ALL_EVENTS);
+        modelManager.updateFilteredReminderList(PREDICATE_SHOW_ALL_REMINDERS);
 
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();

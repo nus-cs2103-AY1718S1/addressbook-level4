@@ -62,30 +62,6 @@ public class UniqueReminderList implements Iterable<Reminder> {
     }
 
     /**
-     * Replaces the reminder {@code target} in the list with {@code editedReminder}.
-     *
-     * @throws DuplicateReminderException if the replacement is equivalent to another existing reminder in the list.
-     * @throws ReminderNotFoundException  if {@code target} could not be found in the list.
-     */
-    public void setReminder(ReadOnlyReminder target, ReadOnlyReminder editedReminder) throws DuplicateReminderException,
-            ReminderNotFoundException {
-
-        requireNonNull(editedReminder);
-
-        int index = internalList.indexOf(target);
-        if (index == -1) {
-            throw new ReminderNotFoundException();
-        }
-
-        if (!target.equals(editedReminder) && internalList.contains(editedReminder)) {
-            throw new DuplicateReminderException();
-        }
-
-        internalList.set(index, new Reminder(editedReminder));
-    }
-
-
-    /**
      * Removes the equivalent reminder from the list.
      *
      * @throws ReminderNotFoundException if no such reminder could be found in the list.
@@ -97,10 +73,6 @@ public class UniqueReminderList implements Iterable<Reminder> {
             throw new ReminderNotFoundException();
         }
         return reminderFoundAndDeleted;
-    }
-
-    public void setReminders(UniqueReminderList replacement) {
-        this.internalList.setAll(replacement.internalList);
     }
 
     /**
