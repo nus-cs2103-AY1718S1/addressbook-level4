@@ -55,7 +55,6 @@ public class EditTaskCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void edit() throws Exception {
-        /* Case: change the current command mode to task manager -> success */
         Model expectedModel = getModel();
         String commandMode = ChangeModeCommand.COMMAND_WORD + " tm";
         String expectedResultMessage = String.format(MESSAGE_CHANGE_MODE_SUCCESS, "taskmanager");
@@ -137,7 +136,7 @@ public class EditTaskCommandSystemTest extends AddressBookSystemTest {
         editedTask = new TaskBuilder(taskToEdit).withDescription(VALID_DESCRIPTION_INTERNSHIP).build();
         assertCommandSuccess(command, index, editedTask);
 
-        /* Case: filtered task list, edit index within bounds of address book but out of bounds of task list
+        /* Case: filtered task list, edit index within bounds of task manager but out of bounds of task list
          * -> rejected
          */
         showTasksWithDescription(KEYWORD_MATCHING_FINISH);
@@ -147,14 +146,13 @@ public class EditTaskCommandSystemTest extends AddressBookSystemTest {
 
         /* --------------------- Performing edit operation while a person card is selected -------------------------- */
 
-        /* Case: selects first card in the person list, edit a person -> edited, card selection remains unchanged
+        /* Case: selects first card in the task list, edit a task -> edited, card selection remains unchanged
          */
         showAllTasks();
         index = INDEX_FIRST_TASK;
         selectTask(index);
         command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + VALID_DESCRIPTION_INTERNSHIP
                 + STARTDATE_DESC_INTERNSHIP + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT;
-        // this can be misleading: card selection actually remains unchanged
         assertCommandSuccess(command, index, INTERNSHIP, index);
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
