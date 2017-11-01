@@ -34,10 +34,10 @@ public class DeleteRemarkCommandTest {
     @Test
     public void execute_validIndex_success() throws Exception {
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        String expectedMessage = String.format(DeleteRemarkCommand.MESSAGE_DELETE_REMARK_MODULE_SUCCESS,
+        String expectedMessage = String.format(RemarkCommand.MESSAGE_DELETE_REMARK_SUCCESS,
                 "This is a sample remark");
 
-        DeleteRemarkCommand deleteRemarkCommand = prepareCommand(INDEX_FIRST_LESSON);
+        RemarkCommand deleteRemarkCommand = prepareCommand(INDEX_FIRST_LESSON);
 
         assertCommandSuccess(deleteRemarkCommand, model, expectedMessage, expectedModel);
     }
@@ -46,16 +46,16 @@ public class DeleteRemarkCommandTest {
     public void execute_invalidIndex_throwsCommandException() throws Exception {
         ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
         Index outOfBoundIndex = Index.fromZeroBased(model.getFilteredLessonList().size());
-        DeleteRemarkCommand deleteRemarkCommand = prepareCommand(outOfBoundIndex);
+        RemarkCommand deleteRemarkCommand = prepareCommand(outOfBoundIndex);
 
         assertCommandFailure(deleteRemarkCommand, model, Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
     }
 
     /**
-     * Returns a {@code DeleteCommand} with the parameter {@code index}.
+     * Returns a {@code RemarkCommand} with the parameter {@code index}.
      */
-    private DeleteRemarkCommand prepareCommand(Index index) {
-        DeleteRemarkCommand deleteRemarkCommand = new DeleteRemarkCommand(index);
+    private RemarkCommand prepareCommand(Index index) {
+        RemarkCommand deleteRemarkCommand = new RemarkCommand(index);
         deleteRemarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return deleteRemarkCommand;
     }

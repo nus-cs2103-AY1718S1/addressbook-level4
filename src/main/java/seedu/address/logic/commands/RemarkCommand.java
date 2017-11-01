@@ -15,6 +15,7 @@ import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.Remark;
 import seedu.address.model.module.exceptions.DuplicateRemarkException;
+import seedu.address.model.module.exceptions.RemarkNotFoundException;
 
 //@@author junming403
 /**
@@ -31,15 +32,18 @@ public class RemarkCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + "[ADDITIONAL INFORMATION]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + MESSAGE_SAMPLE_REMARK_INFORMATION;
+            + MESSAGE_SAMPLE_REMARK_INFORMATION + "\n"
+            + COMMAND_WORD + " -d: Delete the remark with specified index "
+            + "Parameters: INDEX (must be a positive integer)..\n"
+            + "Example: " + COMMAND_WORD + " -d 1 " + "\n";
 
     public static final String MESSAGE_REMARK_MODULE_SUCCESS = "Remarked Module: %1$s";
+    public static final String MESSAGE_DELETE_REMARK_SUCCESS = "Deleted Remark: %1$s";
     public static final String MESSAGE_WRONG_LISTING_UNIT_FAILURE = "You can only remark a module";
-    public static final String DELETE_REMARK_KEYWORD = "-d";
-    public static final String CLEAR_REMARK_KEYWORD = "-c";
 
     private final String remarkContent;
     private final Index index;
+    private final boolean isDelete;
 
     /**
      * @param index       of the module in the module list to remark.
@@ -51,10 +55,60 @@ public class RemarkCommand extends UndoableCommand {
 
         this.remarkContent = content;
         this.index = index;
+        this.isDelete = false;
     }
+
+    /**
+     * @param index       of the remark in the remark list to delete.
+     */
+    public RemarkCommand(Index index) {
+        requireNonNull(index);
+
+        this.remarkContent = null;
+        this.index = index;
+        this.isDelete = true;
+    }
+
+
+
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
+        if (isDelete) {
+            return executeDeleteRemark();
+        } else {
+            return executeAddRemark();
+        }
+    }
 
+    /**
+     * delete the remark with given index.
+     */
+    public CommandResult executeDeleteRemark() throws CommandException {
+        List<Remark> lastShownList = model.getFilteredRemarkList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+        }
+
+        Remark remarkToDelete = lastShownList.get(index.getZeroBased());
+
+        if (ListingUnit.getCurrentListingUnit().equals(MODULE)) {
+            try {
+                model.deleteRemark(remarkToDelete);
+            } catch (RemarkNotFoundException e) {
+                throw new CommandException(e.getMessage());
+            }
+            EventsCenter.getInstance().post(new RemarkChangedEvent());
+            return new CommandResult(String.format(MESSAGE_DELETE_REMARK_SUCCESS, remarkToDelete));
+        } else {
+            throw new CommandException(MESSAGE_WRONG_LISTING_UNIT_FAILURE);
+        }
+    }
+
+    /**
+     * Adds in the remark.
+     */
+    public CommandResult executeAddRemark() throws CommandException {
         List<ReadOnlyLesson> lastShownList = model.getFilteredLessonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
@@ -79,11 +133,23 @@ public class RemarkCommand extends UndoableCommand {
         }
     }
 
+
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof RemarkCommand // instanceof handles nulls
-                && remarkContent.equals(((RemarkCommand) other).remarkContent)
-                && index.equals((((RemarkCommand) other).index)));
+
+        if (isDelete != ((RemarkCommand) other).isDelete) {
+            return false;
+        }
+
+        if (isDelete) {
+            return other == this // short circuit if same object
+                    || (other instanceof RemarkCommand // instanceof handles nulls
+                    && index.equals((((RemarkCommand) other).index)));
+        } else {
+            return other == this // short circuit if same object
+                    || (other instanceof RemarkCommand // instanceof handles nulls
+                    && remarkContent.equals(((RemarkCommand) other).remarkContent)
+                    && index.equals((((RemarkCommand) other).index)));
+        }
     }
 }

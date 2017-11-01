@@ -38,6 +38,7 @@ import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
 //@@author junming403
+
 /**
  * Edits the details of an existing lesson/module/location in ModU.
  */
@@ -70,6 +71,7 @@ public class EditCommand extends UndoableCommand {
     private final Index index;
     private final EditLessonDescriptor editLessonDescriptor;
     private final String attributeValue;
+    private final boolean isEditingLesson;
 
 
     /**
@@ -82,11 +84,12 @@ public class EditCommand extends UndoableCommand {
 
         this.index = index;
         this.editLessonDescriptor = new EditLessonDescriptor(editLessonDescriptor);
-        attributeValue = null;
+        this.attributeValue = null;
+        this.isEditingLesson = true;
     }
 
     /**
-     * @param index       of the address in the filtered address list to edit
+     * @param index          of the address in the filtered address list to edit
      * @param attributeValue the new edited address
      */
     public EditCommand(Index index, String attributeValue) {
@@ -96,6 +99,8 @@ public class EditCommand extends UndoableCommand {
         this.index = index;
         this.editLessonDescriptor = null;
         this.attributeValue = attributeValue;
+        this.isEditingLesson = false;
+
     }
 
     @Override
@@ -213,7 +218,7 @@ public class EditCommand extends UndoableCommand {
      * edited with {@code editLessonDescriptor}.
      */
     private Lesson createEditedLesson(ReadOnlyLesson lessonToEdit,
-                                             EditLessonDescriptor editLessonDescriptor) {
+                                      EditLessonDescriptor editLessonDescriptor) {
         assert lessonToEdit != null;
 
         Code updatedCode = editLessonDescriptor.getCode().orElse(lessonToEdit.getCode());
@@ -239,9 +244,14 @@ public class EditCommand extends UndoableCommand {
             return false;
         }
 
-        // state check
         EditCommand e = (EditCommand) other;
-        if (editLessonDescriptor != null && e.editLessonDescriptor != null) {
+
+        if (isEditingLesson != e.isEditingLesson) {
+            return false;
+        }
+
+        if (isEditingLesson) {
+            // state check
             return index.equals(e.index)
                     && editLessonDescriptor.equals(e.editLessonDescriptor);
         } else {
