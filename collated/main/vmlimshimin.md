@@ -1,9 +1,23 @@
-# Vanessa
+# vmlimshimin
 ###### /java/seedu/address/logic/commands/DeleteCommand.java
 ``` java
             queue.offer(personToDelete);
 ```
 ###### /java/seedu/address/logic/commands/DeleteCommand.java
+``` java
+    @Override
+    public void setData(Model model, CommandHistory commandHistory,
+                        UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue) {
+        this.model = model;
+        this.queue = queue;
+    }
+}
+```
+###### /java/seedu/address/logic/commands/DeleteMultipleCommand.java
+``` java
+                queue.offer(personToDelete);
+```
+###### /java/seedu/address/logic/commands/DeleteMultipleCommand.java
 ``` java
     @Override
     public void setData(Model model, CommandHistory commandHistory,
@@ -88,27 +102,6 @@ public class RecentlyDeletedCommand extends Command {
         queue.setQueue(previousQueue.getQueue());
     }
 
-    /**
-     * Executes the command and updates the filtered person
-     * list to show all persons.
-     */
-    protected final void redo() {
-        requireNonNull(model);
-        try {
-            executeUndoableCommand();
-        } catch (CommandException ce) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
-        }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-    }
-
-    @Override
-    public final CommandResult execute() throws CommandException {
-        saveAddressBookSnapshot();
-        return executeUndoableCommand();
-    }
-}
 ```
 ###### /java/seedu/address/logic/commands/UndoCommand.java
 ``` java
