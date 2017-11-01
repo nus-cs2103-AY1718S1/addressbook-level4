@@ -671,6 +671,8 @@ The meeting information is retrieved from a ReadOnlyMeetingList converted into a
 **Pros:** Less coupling since there is no logic component in the MeetingPanel class. +
 **Cons:** Invalidates the unique id system currently in place for the meeting class.
 
+---
+
 == Documentation
 
 We use asciidoc for writing documentation.
