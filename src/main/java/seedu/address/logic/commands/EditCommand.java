@@ -187,6 +187,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(country);
         }
 
+        //@@author 17navasaw
         public void setEmails(Set<Email> emails) {
             this.emails = emails;
         }
@@ -195,6 +196,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(emails);
         }
 
+        //@@author
         public void setAddress(Address address) {
             this.address = address;
         }
