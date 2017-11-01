@@ -70,11 +70,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setGroups(Set<Group> groups) {
         this.groups.setGroups(groups);
     }
-
-    public void setAppointments(Set<Appointment> appointments) {
-        this.appointments.setAppointments(appointments);
-    }
-
+    
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -217,11 +213,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addGroup(Group g) throws UniqueGroupList.DuplicateGroupException {
         groups.add(g);
     }
-
-    public void addAppointment(Appointment a) throws UniqueAppointmentList.DuplicateAppointmentException,
-                                                        UniqueAppointmentList.ClashAppointmentException {
-        appointments.add(a);
-    }
     //// util methods
 
     @Override
@@ -246,10 +237,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         return groups.asObservableList();
     }
 
+    //@@author namvd2709
     public Set<Appointment> getAllAppointments() {
         return persons.getAllAppointments();
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

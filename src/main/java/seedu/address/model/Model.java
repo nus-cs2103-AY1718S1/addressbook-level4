@@ -56,6 +56,7 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    //@@author namvd2709
     /** Returns list of all appointments */
     Set<Appointment> getAllAppointments();
 }

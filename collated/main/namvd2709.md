@@ -1,4 +1,13 @@
-//@@author namvd2709
+# namvd2709
+###### /java/seedu/address/model/AddressBook.java
+``` java
+    public Set<Appointment> getAllAppointments() {
+        return persons.getAllAppointments();
+    }
+
+```
+###### /java/seedu/address/model/appointment/UniqueAppointmentList.java
+``` java
 package seedu.address.model.appointment;
 
 import static java.util.Objects.requireNonNull;
@@ -142,3 +151,52 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         }
     }
 }
+```
+###### /java/seedu/address/model/Model.java
+``` java
+    /** Returns list of all appointments */
+    Set<Appointment> getAllAppointments();
+}
+```
+###### /java/seedu/address/model/person/SortedUniquePersonList.java
+``` java
+
+    /**
+     * Returns all the appointments in the internal list
+     */
+    public Set<Appointment> getAllAppointments() {
+        Set<Appointment> appointments = new HashSet<>();
+
+        for (Person p: internalList) {
+            if (!p.getAppointment().value.equals("")) {
+                appointments.add(p.getAppointment());
+            }
+        }
+        return appointments;
+    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<ReadOnlyPerson> asObservableList() {
+        return FXCollections.unmodifiableObservableList(mappedList);
+    }
+
+    @Override
+    public Iterator<Person> iterator() {
+        return internalList.iterator();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SortedUniquePersonList // instanceof handles nulls
+                        && this.internalList.equals(((SortedUniquePersonList) other).internalList));
+    }
+
+    @Override
+    public int hashCode() {
+        return internalList.hashCode();
+    }
+}
+```

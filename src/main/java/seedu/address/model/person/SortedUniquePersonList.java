@@ -109,6 +109,11 @@ public class SortedUniquePersonList implements Iterable<Person> {
         setPersons(replacement);
     }
 
+    //@@author namvd2709
+
+    /**
+     * Returns all the appointments in the internal list
+     */
     public Set<Appointment> getAllAppointments() {
         Set<Appointment> appointments = new HashSet<>();
 
