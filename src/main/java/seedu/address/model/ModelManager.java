@@ -48,6 +48,7 @@ public class ModelManager extends ComponentManager implements Model {
         this(new AddressBook(), new UserPrefs());
     }
 
+    //@@author JasmineSee
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
@@ -60,6 +61,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public ReadOnlyAddressBook getAddressBook() {
@@ -78,6 +80,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //@@author JasmineSee
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
@@ -85,7 +88,7 @@ public class ModelManager extends ComponentManager implements Model {
         photoPath.delete();
         indicateAddressBookChanged();
     }
-
+    //@@author
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);

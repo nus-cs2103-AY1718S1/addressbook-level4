@@ -245,16 +245,4 @@ public class ImportCommandParser implements Parser<ImportCommand> {
         saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-copy.xml");
     }
 
-    @Override
-    @Subscribe
-    public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
-        try {
-            saveAddressBook(event.data);
-        } catch (IOException e) {
-            raise(new DataSavingExceptionEvent(e));
-        }
-    }
-
-}
 ```

@@ -29,6 +29,7 @@ ConnectUs consists of the following features: +
 * Providing a view of the location in Google Maps by the contact's address
 * Login feature
 * Changing colour theme
+* Uploading photos for each contact
 
 == Setting up
 
@@ -600,7 +601,7 @@ _Figure 4.8.1: Remove Tag Sequence Diagram_
 **Alternative 1 (current choice):** Only keywords(case-sensitive) that are exactly equal to the tag names will match +
 **Pros:** Ensures that only the tag specified by the user gets deleted.  +
 **Cons:** Requires user to type the exact tag name which makes it inconvenient. +
-**Alternative 2 (current choice):** Keywords(case-insensitive) that are substrings or equal to the tag names will match +
+**Alternative 2 :** Keywords(case-insensitive) that are substrings or equal to the tag names will match +
 **Pros:** More convenient for users to type. +
 **Cons:** If the user only type a common letter or substring found in all tag names, some tags which may not be what the user wanted may get deleted.
  Even though the command can be undone, it is undesirable to have this logic when deleting. +
@@ -611,7 +612,7 @@ _Figure 4.8.1: Remove Tag Sequence Diagram_
 **Alternative 1 (current choice):** Use an ArrayList<Tag> to store the keywords +
 **Pros:** Compares between the same object Tag which can ensure that only the tag specified by the user gets deleted.  +
 **Cons:** Requires more overhead at creating the object Tag for each keyword +
-**Alternative 2 (current choice):** Use an ArrayList<String> to store the keywords +
+**Alternative 2 :** Use an ArrayList<String> to store the keywords +
 **Pros:** Less overhead as can compare between keyword strings and tag name strings +
 **Cons:** Further implementation and checks required to check that the keyword is identical to the tag name +
 
@@ -633,6 +634,39 @@ _Figure 4.9.1 : White Theme_
 
 image::greenThemeUI.png[width="800"]
 _Figure 4.9.2 : Green Theme_
+
+=== Upload photo mechanism
+(added in v1.4)
+
+The uploading photo mechanism is implemented by `EventsCenter` and `Logic`.
+
+* There are two ways a user can upload a photo to the contact, either by choosing an image from a file explorer or inputting in the image file path in the command. +
+* After the user enters the command, the `UploadPhotoCommandParser` will separate the argument into the index and file path before parsing both variables into `UploadPhotoCommand`. +
+* In `UploadPhotoCommand`, the `executeUndoableCommand()` method will check for invalid index before checking if filePath string is empty. The file explorer will open for the user to choose an image if the filePath string is empty. +
+* Next, the method will check if the file is a valid image file before saving the file into the project directory, as well as raising an event called `PhotoChangeEvent` as seen below.
+[source,java]
+----
+    if (isValidImageFile(imageFile)) {
+                imageFile = saveFile(imageFile, personToUploadImage.getEmail());
+                EventsCenter.getInstance().post(new PhotoChangeEvent());
+            } else {
+                throw new CommandException(String.format(MESSAGE_UPLOAD_IMAGE_FALURE));
+            }
+----
+* The event is raised to allow instant display of the modification of the photo. To implement this, `PersonCard` is registered as an event handler and includes a `@Subscribe handlePhotoChange` to handle the event of uploading the photo. +
+* The `handlePhotoChange` method will set the `ImageView` to the new image file path of the uploaded photo in the project directory.
+
+[NOTE]
+If the file given is not a valid image file, a 'CommandException' will be thrown to specify that the file is invalid.
+
+==== Design Considerations
+**Aspect:** Storing of photo for each contact in `UploadPhotoCommand` +
+**Alternative 1 (current choice):** The uploaded photo file name is saved as the person's email. +
+**Pros:** Implementation needs just `EventsCenter` and `PersonCard` to handle any change of photo event and instantly displays the change.  +
+**Cons:** Requires other modification to the storage of photo logic such as deleting or clearing contacts, as well as adding and editing a contact. +
+**Alternative 2 :** Modify `Person` in `Model` to include a `Photo` attribute. +
+**Pros:** Reliable as the photo path is always stored for each `Person`. +
+**Cons:** Requires a lot of modification to codes that will requires `Person` , as well as changing tests to reflect the additional attribute.
 
 == Documentation
 
