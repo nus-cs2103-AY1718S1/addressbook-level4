@@ -743,6 +743,47 @@ public class UniqueEventList implements Iterable<Event> {
     }
 
 ```
+###### \java\seedu\address\model\event\UniqueEventList.java
+``` java
+    public void setEvents(UniqueEventList replacement) {
+        this.internalList.setAll(replacement.internalList);
+    }
+
+    public void setEvents(List<? extends ReadOnlyEvent> events) throws DuplicateEventException {
+        final UniqueEventList replacement = new UniqueEventList();
+        for (final ReadOnlyEvent event : events) {
+            replacement.add(new Event(event));
+        }
+        setEvents(replacement);
+    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<ReadOnlyEvent> asObservableList() {
+        return FXCollections.unmodifiableObservableList(mappedList);
+    }
+
+    @Override
+    public Iterator<Event> iterator() {
+        return internalList.iterator();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UniqueEventList // instanceof handles nulls
+                && this.internalList.equals(((UniqueEventList) other).internalList));
+    }
+
+    @Override
+    public int hashCode() {
+        return internalList.hashCode();
+    }
+}
+
+
+```
 ###### \java\seedu\address\model\Model.java
 ``` java
     //=========== Model support for activity component =============================================================

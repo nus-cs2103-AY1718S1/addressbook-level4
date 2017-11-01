@@ -113,8 +113,8 @@ public class UniqueEventList implements Iterable<Event> {
             }
         }
     }
-    //@@author
 
+    //@@author junyango
     public void setEvents(UniqueEventList replacement) {
         this.internalList.setAll(replacement.internalList);
     }
