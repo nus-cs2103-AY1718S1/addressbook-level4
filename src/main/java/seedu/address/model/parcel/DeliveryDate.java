@@ -68,14 +68,6 @@ public class DeliveryDate {
     }
 
     /**
-     * Overload DeliveryDate constructor to take in multiple forms.
-     */
-    public DeliveryDate(Date deliveryDate) {
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        this.value = df.format(deliveryDate);
-    }
-
-    /**
      * Formats the input date according to the list VALID_STRING_FORMATS and returns it.
      */
     private Date formatDate(String inputDate) throws ParseException {
@@ -96,17 +88,17 @@ public class DeliveryDate {
 
     }
 
-
     /**
      * Returns true if a given string is a valid date for delivery.
      */
     public static boolean isValidDate(String test) {
+        DeliveryDate result;
         try {
-            DeliveryDate result = new DeliveryDate(test);
+            result = new DeliveryDate(test);
         } catch (IllegalValueException e) {
             return false;
         }
-        return true;
+        return !result.equals(null);
     }
 
     public static boolean isValidDateFormat(String test) {
