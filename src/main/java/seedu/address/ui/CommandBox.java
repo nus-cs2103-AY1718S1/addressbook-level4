@@ -8,7 +8,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+//@@author qihao27
 import seedu.address.commons.events.ui.NewResultCheckEvent;
+//@@author
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -107,14 +109,18 @@ public class CommandBox extends UiPart<Region> {
             // process result of the command
             commandTextField.setText("");
             logger.info("Result: " + commandResult.feedbackToUser);
+            //@@author qihao27
             raise(new NewResultCheckEvent(commandResult.feedbackToUser, false));
+            //@@author
 
         } catch (CommandException | ParseException e) {
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();
             logger.info("Invalid command: " + commandTextField.getText());
+            //@@author qihao27
             raise(new NewResultCheckEvent(e.getMessage(), true));
+            //@@author
         }
     }
 

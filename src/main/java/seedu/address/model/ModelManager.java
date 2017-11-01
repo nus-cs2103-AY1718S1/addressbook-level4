@@ -14,7 +14,9 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+//@@author qihao27
 import seedu.address.model.person.exceptions.NoPersonFoundException;
+//@@author
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -96,6 +98,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author qihao27
     @Override
     public void sortPerson(String option) throws NoPersonFoundException {
         requireNonNull(option);
@@ -103,6 +106,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.sortPerson(option);
         indicateAddressBookChanged();
     }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 

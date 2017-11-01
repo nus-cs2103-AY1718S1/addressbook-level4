@@ -71,11 +71,12 @@ public class StringUtil {
         }
     }
 
+    //@@author qihao27
     /**
-     * Returns true if {@code s} represents alphabets
-     * e.g. abc, asfa, gg, ..., <br>
-     * Will return false for any other non-alphabet string input
-     * e.g. empty string, " abc " (untrimmed), "1 a" (contains number)
+     * Returns true if {@code s} represents letters or numbers
+     * e.g. abc, as12, gg, ..., <br>
+     * Will return false for any other non-alnum string input
+     * e.g. empty string, " abc " (untrimmed), "1a#" (contains special character)
      * Will return false if the input string case does not match the string stored (case sensitive)
      * @throws NullPointerException if {@code s} is null.
      */
@@ -124,5 +125,6 @@ public class StringUtil {
             return false;
         }
     }
+    //@@author
 
 }
