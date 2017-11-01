@@ -1,6 +1,5 @@
 Collate-TUI.jar
 Collate-GUI.jar
-collate/
 .gitignore
 test.txt
 build/
