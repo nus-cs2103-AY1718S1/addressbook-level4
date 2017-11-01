@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author JavynThun
 /**
  * Represents a Person's occupation in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidOccupation(String)}
