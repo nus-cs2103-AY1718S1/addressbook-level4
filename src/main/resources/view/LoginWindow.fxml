@@ -3,15 +3,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Line?>
 
-
-<AnchorPane prefHeight="170.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginWindow">
+<AnchorPane maxHeight="170.0" maxWidth="400.0" prefHeight="170.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="14.0" layoutY="14.0" prefHeight="34.0" prefWidth="372.0" text="Address App requires the username and password to open" AnchorPane.bottomAnchor="134.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0" />
-      <TextField layoutX="26.0" layoutY="62.0" opacity="0.0" prefHeight="27.0" prefWidth="372.0" AnchorPane.bottomAnchor="93.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="62.0" />
-      <TextField layoutX="26.0" layoutY="102.0" opacity="0.0" prefHeight="27.0" prefWidth="372.0" AnchorPane.bottomAnchor="53.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="102.0" />
-      <Line endX="270.0" layoutX="115.0" layoutY="89.0" startX="-100.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
-      <Line endX="270.0" layoutX="115.0" layoutY="129.0" startX="-100.0" />
+      <TextField layoutX="26.0" layoutY="62.0" prefHeight="27.0" prefWidth="372.0" style="-fx-border-width: 0;" text="Username..." AnchorPane.bottomAnchor="93.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="62.0" />
+      <TextField layoutX="26.0" layoutY="102.0" prefHeight="27.0" prefWidth="372.0" text="Password..." AnchorPane.bottomAnchor="53.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="102.0" />
    </children>
 </AnchorPane>
