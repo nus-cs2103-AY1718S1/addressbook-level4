@@ -186,7 +186,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removeSchedule(Schedule s) throws ScheduleNotFoundException {
         schedules.remove(s);
     }
-    //@@author limcel
+    //@@author
 
     //// util methods
 
@@ -211,7 +211,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         System.out.println(schedules.asObservableList());
         return schedules.asObservableList();
     }
-    //@@author limcel
+    //@@author
 
     @Override
     public boolean equals(Object other) {
@@ -231,5 +231,5 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ObservableList<ReadOnlyPerson> listOfPersonNameSorted() {
         return persons.asObservableListSortedByName();
     }
-    //@@author limcel
+    //@@author
 }

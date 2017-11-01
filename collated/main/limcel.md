@@ -35,27 +35,11 @@ public class SortCommand extends Command {
     /** Returns an unmodifiable view of the schedule list */
     ObservableList<Schedule> getScheduleList();
 ```
-###### /java/seedu/address/logic/Logic.java
-``` java
-
-    /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
-    ListElementPointer getHistorySnapshot();
-}
-```
 ###### /java/seedu/address/logic/LogicManager.java
 ``` java
     @Override
     public ObservableList<Schedule> getScheduleList() {
         return model.getScheduleList(); }
-```
-###### /java/seedu/address/logic/LogicManager.java
-``` java
-
-    @Override
-    public ListElementPointer getHistorySnapshot() {
-        return new ListElementPointer(history.getHistory());
-    }
-}
 ```
 ###### /java/seedu/address/logic/parser/ScheduleCommandParser.java
 ``` java
@@ -132,28 +116,6 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
 ```
 ###### /java/seedu/address/model/AddressBook.java
 ``` java
-
-    //// util methods
-
-    @Override
-    public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
-        // TODO: refine later
-    }
-
-    @Override
-    public ObservableList<ReadOnlyPerson> getPersonList() {
-        return persons.asObservableList();
-    }
-
-    @Override
-    public ObservableList<Tag> getTagList() {
-        return tags.asObservableList();
-    }
-
-```
-###### /java/seedu/address/model/AddressBook.java
-``` java
     public ObservableList<Schedule> getScheduleList() {
         System.out.println(schedules.asObservableList());
         return schedules.asObservableList();
@@ -161,31 +123,9 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
 ```
 ###### /java/seedu/address/model/AddressBook.java
 ``` java
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof AddressBook // instanceof handles nulls
-                && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
-    }
-
-    @Override
-    public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
-    }
-
-```
-###### /java/seedu/address/model/AddressBook.java
-``` java
     public ObservableList<ReadOnlyPerson> listOfPersonNameSorted() {
         return persons.asObservableListSortedByName();
     }
-```
-###### /java/seedu/address/model/AddressBook.java
-``` java
-}
 ```
 ###### /java/seedu/address/model/Model.java
 ``` java
@@ -196,19 +136,6 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
      * @throws DuplicatePersonException if there are multiple same {@code tag} on a person.
      */
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException;
-```
-###### /java/seedu/address/model/Model.java
-``` java
-
-    /** Returns an unmodifiable view of the filtered person list */
-    ObservableList<ReadOnlyPerson> getFilteredPersonList();
-
-    /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
-     */
-    void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
-
 ```
 ###### /java/seedu/address/model/Model.java
 ``` java
@@ -226,10 +153,6 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
 
     /** Returns an unmodifiable view of the schedules list */
     ObservableList<Schedule> getScheduleList();
-```
-###### /java/seedu/address/model/Model.java
-``` java
-}
 ```
 ###### /java/seedu/address/model/ModelManager.java
 ``` java
@@ -275,46 +198,6 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
         ObservableList<Schedule> list = addressBook.getScheduleList();
         return FXCollections.unmodifiableObservableList(list);
     }
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-
-    //=========== Filtered Person List Accessors =============================================================
-
-    /**
-     * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
-     * {@code addressBook}
-     */
-    @Override
-    public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-        return FXCollections.unmodifiableObservableList(filteredPersons);
-    }
-
-    @Override
-    public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
-        requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        // short circuit if same object
-        if (obj == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(obj instanceof ModelManager)) {
-            return false;
-        }
-
-        // state check
-        ModelManager other = (ModelManager) obj;
-        return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
-    }
-
-}
 ```
 ###### /java/seedu/address/model/person/PostalCode.java
 ``` java
@@ -374,11 +257,6 @@ public class PostalCode {
      * This list will not contain any duplicate schedules.
      */
     ObservableList<Schedule> getScheduleList();
-```
-###### /java/seedu/address/model/ReadOnlyAddressBook.java
-``` java
-
-}
 ```
 ###### /java/seedu/address/model/schedule/exceptions/ScheduleNotFoundException.java
 ``` java

@@ -48,7 +48,7 @@ public interface Model {
      * @throws DuplicatePersonException if there are multiple same {@code tag} on a person.
      */
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException;
-    //@@author limcel
+    //@@author
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
@@ -74,5 +74,5 @@ public interface Model {
 
     /** Returns an unmodifiable view of the schedules list */
     ObservableList<Schedule> getScheduleList();
-    //@@author limcel
+    //@@author
 }

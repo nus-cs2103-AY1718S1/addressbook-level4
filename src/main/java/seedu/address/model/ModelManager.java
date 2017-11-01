@@ -132,7 +132,7 @@ public class ModelManager extends ComponentManager implements Model {
         ObservableList<Schedule> list = addressBook.getScheduleList();
         return FXCollections.unmodifiableObservableList(list);
     }
-    //@@author limcel
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 

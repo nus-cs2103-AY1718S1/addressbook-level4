@@ -28,6 +28,6 @@ public interface ReadOnlyAddressBook {
      * This list will not contain any duplicate schedules.
      */
     ObservableList<Schedule> getScheduleList();
-    //@@author limcel
+    //@@author
 
 }

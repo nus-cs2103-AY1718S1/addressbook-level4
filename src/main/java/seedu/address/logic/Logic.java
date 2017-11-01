@@ -26,7 +26,7 @@ public interface Logic {
     //@@author limcel
     /** Returns an unmodifiable view of the schedule list */
     ObservableList<Schedule> getScheduleList();
-    //@@author limcel
+    //@@author
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
