@@ -3,9 +3,7 @@ package seedu.address.logic.parser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.InvalidPropertiesFormatException;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -25,8 +23,6 @@ import seedu.address.storage.XmlFileStorage;
  * a new ImportCommand Object.
  */
 public class ImportCommandParser implements Parser<ImportCommand> {
-    public static final Pattern xmlFile = Pattern.compile("([^\\s] + (\\.xml$))");
-    public static final Pattern vcfFile = Pattern.compile("([^\\s] + (\\.xml$))");
 
     @Override
     public ImportCommand parse(String userInput) throws ParseException {
@@ -60,7 +56,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
                 } catch (IOException ioe) {
                     throw new ParseException(ImportCommand.MESSAGE_FILE_NOTFOUND);
                 }
-                
+
             } else {
                 throw new ParseException(ImportCommand.MESSAGE_WRONG_FORMAT);
             }
