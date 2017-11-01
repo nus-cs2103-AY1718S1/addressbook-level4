@@ -1,11 +1,11 @@
-package seedu.address.commons.events;
+package seedu.address.commons.events.model;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
 import org.junit.Test;
 
-import seedu.address.commons.events.model.TagColorChangedEvent;
+import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.tag.Tag;
 
 //@@author yunpengn

@@ -1,4 +1,4 @@
-package seedu.address.logic.parser;
+package seedu.address.logic.parser.person;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
@@ -32,7 +32,6 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.Test;
 
 import seedu.address.logic.commands.person.AddCommand;
-import seedu.address.logic.parser.person.AddCommandParser;
 import seedu.address.model.person.Person;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.model.tag.Tag;

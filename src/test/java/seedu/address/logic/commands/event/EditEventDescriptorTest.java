@@ -1,4 +1,4 @@
-package seedu.address.logic.commands;
+package seedu.address.logic.commands.event;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -10,7 +10,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_EVENT2;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.event.EditEventCommand;
 import seedu.address.testutil.EditEventDescriptorBuilder;
 //@@author junyango
 public class EditEventDescriptorTest {

@@ -1,5 +1,5 @@
-package seedu.address.logic.parser;
-//@@author junyango
+package seedu.address.logic.parser.event;
+
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.DATE_DESC_EVENT1;
 import static seedu.address.logic.commands.CommandTestUtil.DATE_DESC_EVENT2;
@@ -24,10 +24,10 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.event.EditEventCommand;
 import seedu.address.logic.commands.event.EditEventCommand.EditEventDescriptor;
-import seedu.address.logic.parser.event.EditEventParser;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.testutil.EditEventDescriptorBuilder;
 
+//@@author junyango
 public class EditEventCommandParserTest {
 
     private static final String MESSAGE_INVALID_FORMAT =
