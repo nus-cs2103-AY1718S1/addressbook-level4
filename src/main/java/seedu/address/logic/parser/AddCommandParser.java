@@ -49,7 +49,6 @@ public class AddCommandParser implements Parser<AddCommand> {
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             ArrayList<Remark> remark = new ArrayList<>(); // add command does not allow adding remarks straight away
-            remark.add(new Remark(""));
             FavouriteStatus favouriteStatus = new FavouriteStatus(false);
             // add command does not allow setting person as favourite immediately
 
