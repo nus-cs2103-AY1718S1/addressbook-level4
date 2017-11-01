@@ -230,7 +230,7 @@ There is no need to save manually.
 
 == New Features
 
-=== Since v1.0
+=== Since `v1.0`
 
 ==== Static `coloured` tags
 
@@ -241,7 +241,7 @@ Similar tags will also be assigned the same colour as long as tags have the same
 
 Total number of person in addressbook will now be displayed at the footer bar.
 
-=== Since v1.1
+=== Since `v1.1`
 
 ==== Locating persons by names or phone numbers or emails or tags: `finds`
 
@@ -288,7 +288,7 @@ Icon is similar to a down arrow.
 This feature can be found under the new `options` menu
 Deletes the user according to the selected option's parent person.
 
-=== Since v1.2
+=== Since `v1.2`
 
 ==== Displaying google map : `gmap`
 
@@ -327,7 +327,7 @@ Reinitializing of myBook will display the previous choice of theme.
 Contacts in user myBook app that has `Important` or `important` tag will always appear at the top of the list. +
 User using versions before v1.2 should add a new person with `important` tag first to enjoy this feature.
 
-=== Since v1.3
+=== Since `v1.3`
 
 ==== Sorted Contacts
 
@@ -380,13 +380,19 @@ Changes the addressbook theme to *Caspian* theme. +
 `theme 1` +
 Changes the addressbook theme to theme `INDEX` of one, which is default *DarkTheme*.
 
+=== Since `v1.4`
+
+==== Quick Add
+
+User can now add a person with just name and phone details. +
+All other details that are not given will be filled in by default values.
 
 === Coming soon in v2.0
 
-==== Import export of addressbook from header menu bar
+==== Import & export of addressbook
 
-An option to import external addressbook data in xml format. +
-An option to export local addressbook data in xml format.
+User is able to import or export an xml file of an addressbook from +
+the commandline or menu toolbar
 
 ==== Close panels in UI from `Button`
 
@@ -402,16 +408,6 @@ Functions will be found from improved `delete` command.
 
 All the tags in user myBook App will be displayed in a new UI panel. +
 Functions wll be found from `new UI panel`.
-
-==== Contact list arranged in alphabetical order from improved `list command`
-
-All contacts in the list will sorted in ascending alphabetical order.  +
-Functions wll be found from improved `list` command.
-
-==== Import & export of addressbook
-
-User is able to import or export an xml file of an addressbook from +
-the commandline or menu toolbar
 
 == FAQ
 
