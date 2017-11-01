@@ -583,7 +583,7 @@ from the placeholder in the MainWindow, then the root view of the meeting displa
 **Pros:** Lesser commands for the user to remember, higher code modularity, easier for future command implementations on settings. +
 **Cons:** Harder to code and debug due to requirement to parse more arguments
 
-----
+---
 
 **Aspect:** Animation of settings panel +
 **Alternative:** Use transitions instead of timeline +
