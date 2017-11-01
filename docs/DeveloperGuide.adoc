@@ -673,6 +673,8 @@ to be filled. This feature is done by using a constructor to initialize the defa
 using an additional parameter in the ParserUtil class to determine whether the default constructor for an empty field
 should be called.
 
+image::addSD.png[width="800"]
+
 An extract of the code from ParserUtil class shows how this is being implemented. The command parameter determines
 whether or not a field is required in the parser. If the parser is called from the add command, it will call a
 default constructor where the parsed field is empty. +
