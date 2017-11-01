@@ -35,35 +35,20 @@ public class SearchBox extends UiPart<Region> {
     }
 
     /**
-     * Handles the key press event, {@code keyEvent}.
-     */
-    @FXML
-    private void handleKeyPress(KeyEvent keyEvent) {
-        switch (keyEvent.getCode()) {
-        case BACK_SPACE: case DELETE:
-            searchBuffer = searchBuffer.substring(0, searchBuffer.length() - 1);
-            try {
-                CommandResult commandResult = logic.executeSearch(searchBuffer);
-                logger.info("Result: " + commandResult.feedbackToUser);
-                raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
-
-            } catch (CommandException | ParseException e) {
-                logger.info("Invalid search: " + searchTextField.getText());
-                raise(new NewResultAvailableEvent((e.getMessage())));
-            }
-            break;
-        default:
-            // let JavaFx handle the keypress
-        }
-    }
-
-    /**
      * Handles the Key typed event
      */
     @FXML
     private void handleKeyTyped(KeyEvent keyEvent) {
         String s = keyEvent.getCharacter();
-        searchBuffer = searchBuffer + s;
+        if (s.equals("\u0008") || s.equals("\u007F")) {
+            if (!searchBuffer.isEmpty()) {
+                searchBuffer = searchBuffer.substring(0, searchBuffer.length() - 1);
+            } else {
+                return;
+            }
+        } else {
+            searchBuffer = searchBuffer + s;
+        }
         try {
             CommandResult commandResult = logic.executeSearch(searchBuffer);
             logger.info("Result: " + commandResult.feedbackToUser);
