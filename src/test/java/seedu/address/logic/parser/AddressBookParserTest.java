@@ -11,6 +11,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,10 +31,12 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RetagCommand;
 import seedu.address.logic.commands.RetrieveCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.TagCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UntagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -152,6 +155,36 @@ public class AddressBookParserTest {
                 new Tag("friends")), command);
     }
     //@@author
+
+    @Test
+    public void parseCommand_untag() throws Exception {
+        UntagCommand command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + ","
+                + INDEX_SECOND_PERSON.getOneBased() + ","
+                + INDEX_THIRD_PERSON.getOneBased() + " " + "friends/enemies");
+        Tag firstTag = new Tag("friends");
+        Tag secondTag = new Tag("enemies");
+        assertEquals(new UntagCommand(false, Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON,
+                INDEX_THIRD_PERSON), Arrays.asList(secondTag, firstTag)), command);
+
+        command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " 1,2,3");
+        assertEquals(new UntagCommand(false, Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON,
+                INDEX_THIRD_PERSON), Collections.emptyList()), command);
+
+        command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " -a " + "friends/enemies");
+        assertEquals(new UntagCommand(true, Collections.emptyList(),
+                Arrays.asList(secondTag, firstTag)), command);
+
+        command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " -a");
+        assertEquals(new UntagCommand(true, Collections.emptyList(), Collections.emptyList()), command);
+    }
+
+    @Test
+    public void parseCommand_retag() throws Exception {
+        RetagCommand command = (RetagCommand) parser.parseCommand(RetagCommand.COMMAND_WORD + " "
+                + "enemies" + " " + "friends");
+        assertEquals(new RetagCommand(new Tag("enemies"), new Tag("friends")), command);
+    }
 
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
