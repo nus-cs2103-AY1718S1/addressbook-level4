@@ -66,19 +66,24 @@ public class AddressBookParser {
         case AddCommand.COMMAND_WORD:
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
-
-        case AddEventCommand.COMMAND_WORD:
-        case AddEventCommand.COMMAND_ALIAS:
-            return new AddEventParser().parse(arguments);
-
         case EditCommand.COMMAND_WORD:
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
-
+        //@@author junyango
+        case AddEventCommand.COMMAND_WORD:
+        case AddEventCommand.COMMAND_ALIAS:
+            return new AddEventParser().parse(arguments);
         case EditEventCommand.COMMAND_WORD:
         case EditEventCommand.COMMAND_ALIAS:
             return new EditEventParser().parse(arguments);
+        case DeleteEventCommand.COMMAND_WORD:
+        case DeleteEventCommand.COMMAND_ALIAS:
+            return new DeleteEventParser().parse(arguments);
 
+        case ListEventCommand.COMMAND_WORD:
+        case ListEventCommand.COMMAND_ALIAS:
+            return new ListEventCommand();
+        //@@author
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:
             return new SelectCommandParser().parse(arguments);
@@ -86,10 +91,6 @@ public class AddressBookParser {
         case DeleteCommand.COMMAND_WORD:
         case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
-
-        case DeleteEventCommand.COMMAND_WORD:
-        case DeleteEventCommand.COMMAND_ALIAS:
-            return new DeleteEventParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
         case ClearCommand.COMMAND_ALIAS:
@@ -102,11 +103,6 @@ public class AddressBookParser {
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
-
-        case ListEventCommand.COMMAND_WORD:
-        case ListEventCommand.COMMAND_ALIAS:
-            return new ListEventCommand();
-
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();
