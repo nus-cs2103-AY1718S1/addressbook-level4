@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -86,9 +87,29 @@ public class ListObserverTest {
         assertEquals(listObserver.updateCurrentFilteredList(findPredicate), 1);
     }
 
+    /**
+     * Assuming that the typicalAddressBook in the {@code model} has at least 1 person in each list
+     */
     @Test
     public void checkIndexOfCurrentPersonInList() {
         model.setCurrentListName("list");
         Person personToCheck = (Person) model.getFilteredPersonList().get(0);
+        Index indexOfPerson = listObserver.getIndexofPersonInCurrentList(personToCheck);
+        assertEquals(0, indexOfPerson.getZeroBased());
+
+        model.setCurrentListName("blacklist");
+        personToCheck = (Person) model.getFilteredBlacklistedPersonList().get(0);
+        indexOfPerson = listObserver.getIndexofPersonInCurrentList(personToCheck);
+        assertEquals(0, indexOfPerson.getZeroBased());
+
+        model.setCurrentListName("whitelist");
+        personToCheck = (Person) model.getFilteredWhitelistedPersonList().get(0);
+        indexOfPerson = listObserver.getIndexofPersonInCurrentList(personToCheck);
+        assertEquals(0, indexOfPerson.getZeroBased());
+
+        model.setCurrentListName("overduelist");
+        personToCheck = (Person) model.getFilteredOverduePersonList().get(0);
+        indexOfPerson = listObserver.getIndexofPersonInCurrentList(personToCheck);
+        assertEquals(0, indexOfPerson.getZeroBased());
     }
 }
