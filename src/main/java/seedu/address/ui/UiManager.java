@@ -62,7 +62,7 @@ public class UiManager extends ComponentManager implements Ui {
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
             if (meetingToday(logic.getFilteredMeetingList())) {
-                MeetingAlert meetingAlert = new MeetingAlert();
+                MeetingAlert meetingAlert = new MeetingAlert(logic.getFilteredMeetingList());
                 meetingAlert.show();
             }
 
