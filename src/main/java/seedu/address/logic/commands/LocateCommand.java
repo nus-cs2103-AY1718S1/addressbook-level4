@@ -9,6 +9,7 @@ import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author 17navasaw
 /**
  * Locates a person's address by showing its location on Google Maps.
  */
@@ -25,6 +26,7 @@ public class LocateCommand extends Command {
 
     private final Index targetIndex;
 
+    //@@author
     public LocateCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
