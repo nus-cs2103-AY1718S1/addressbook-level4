@@ -107,6 +107,7 @@ public class UniqueTaskList implements Iterable<Task> {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
+    //@@author tpq95
     /**
      * Sorts the internal list according to the {@code TaskComparator}.
      * With the format: tasks with expired deadline, task with closer deadlines
@@ -115,6 +116,7 @@ public class UniqueTaskList implements Iterable<Task> {
     private void sortTasks(ObservableList<Task> tasks) {
         Collections.sort(tasks, new TaskComparator());
     }
+    //@@author
 
     @Override
     public Iterator<Task> iterator() {

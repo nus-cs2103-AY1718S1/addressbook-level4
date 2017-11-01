@@ -129,6 +129,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author tpq95
         @Override
         public void deleteTag(ReadOnlyPerson person, Tag oldTag)
             throws PersonNotFoundException, DuplicatePersonException {
@@ -140,6 +141,7 @@ public class AddCommandTest {
                 throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
         }
+        //@@author
 
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {

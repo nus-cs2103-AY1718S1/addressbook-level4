@@ -75,6 +75,7 @@ public class FindCommandTest {
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
+    //@@author tpq95
     @Test
     public void executeMultipleBirthdaysMultiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
@@ -95,6 +96,7 @@ public class FindCommandTest {
         FindCommand command = prepareCommand("Alice 01-03-1996 buff");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, FIONA, GEORGE));
     }
+    //@@author
 
     /**
      * Parses {@code userInput} into a {@code FindCommand}.
