@@ -7,7 +7,7 @@ import seedu.address.model.tag.TagContainsKeywordsPredicate;
  * Keyword matching is case sensitive.
  */
 public class FindTagCommand extends Command {
-
+    //@@author adileyzekmoon
     public static final String COMMAND_WORD = "findtag";
     public static final String COMMAND_ALIAS = "ft";
 
@@ -27,7 +27,7 @@ public class FindTagCommand extends Command {
         model.updateFilteredPersonList(predicate);
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
-
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

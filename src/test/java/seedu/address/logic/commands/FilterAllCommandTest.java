@@ -26,7 +26,7 @@ import seedu.address.model.person.PersonContainsAllKeywordsPredicate;
 
 public class FilterAllCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
+    //@@author adileyzekmoon
     @Test
     public void equals() throws Exception {
         PersonContainsAllKeywordsPredicate firstPredicate =
@@ -61,6 +61,7 @@ public class FilterAllCommandTest {
         FilterAllCommand command = prepareCommand("owesMoney friends");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
     }
+    //@@author
 
     /**
      * Parses {@code userInput} into a {@code FilterAllCommand}.

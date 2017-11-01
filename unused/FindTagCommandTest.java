@@ -26,7 +26,7 @@ import seedu.address.model.tag.TagContainsKeywordsPredicate;
 
 public class FindTagCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
+    //@@author adileyzekmoon
     @Test
     public void equals() throws Exception {
         TagContainsKeywordsPredicate firstPredicate =
@@ -67,6 +67,7 @@ public class FindTagCommandTest {
         FindTagCommand command = prepareCommand("owesMoney colleagues");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON));
     }
+    //@@author
 
     /**
      * Parses {@code userInput} into a {@code FindTagCommand}.
