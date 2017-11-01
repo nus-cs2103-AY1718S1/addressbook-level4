@@ -287,9 +287,10 @@ Delete specific tag from all contacts. +
 
 Clear all tags from specific contact. +
 
-=== Retrieve : (Coming in v1.5)
+=== Recently Deleted : `recentlyDel` (Since v1.2)
 
-Retrieve recently deleted list for past 3 days/past 30 contacts.
+Shows recently deleted list of contacts for past 30 contacts. +
+Format: `recentlyDel`
 
 === Moving contacts : `move` (Coming in v2.0)
 

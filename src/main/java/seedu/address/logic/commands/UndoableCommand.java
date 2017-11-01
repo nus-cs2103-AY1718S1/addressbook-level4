@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import seedu.address.logic.RecentlyDeletedQueue;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -13,6 +14,7 @@ import seedu.address.model.ReadOnlyAddressBook;
  */
 public abstract class UndoableCommand extends Command {
     private ReadOnlyAddressBook previousAddressBook;
+    private RecentlyDeletedQueue previousQueue;
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
@@ -22,6 +24,7 @@ public abstract class UndoableCommand extends Command {
     private void saveAddressBookSnapshot() {
         requireNonNull(model);
         this.previousAddressBook = new AddressBook(model.getAddressBook());
+        this.previousQueue = new RecentlyDeletedQueue(queue.getQueue());
     }
 
     /**
@@ -33,6 +36,7 @@ public abstract class UndoableCommand extends Command {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        queue.setQueue(previousQueue.getQueue());
     }
 
     /**
