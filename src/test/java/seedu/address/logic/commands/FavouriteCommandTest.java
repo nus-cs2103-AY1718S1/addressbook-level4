@@ -108,7 +108,7 @@ public class FavouriteCommandTest {
     }
 
     /**
-     * Returns an {@code RemarkCommand} with parameters {@code index} and {@code remark}
+     * Returns an {@code FavouriteCommand} with parameter {@code index}
      */
     private FavouriteCommand prepareCommand(Index index) {
         FavouriteCommand favouriteCommand = new FavouriteCommand(index);
