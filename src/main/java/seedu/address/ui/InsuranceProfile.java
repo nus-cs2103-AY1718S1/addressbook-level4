@@ -126,16 +126,11 @@ public class InsuranceProfile extends UiPart<Region> {
      */
     private void activateLinkToInsuranceFile() {
         contractPath.getStyleClass().add("particular-link");
-        contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                try {
-                    Desktop.getDesktop().open(insuranceFile);
-                    // HostServices hostServices = getRoot().getHostservices();
-                    // hostServices.showDocument(file.getAbsolutePath());
-                } catch (IOException ee) {
-                    logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractPath());
-                }
+        contractPath.setOnMouseClicked(event -> {
+            try {
+                Desktop.getDesktop().open(insuranceFile);
+            } catch (IOException ee) {
+                logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractPath());
             }
         });
     }

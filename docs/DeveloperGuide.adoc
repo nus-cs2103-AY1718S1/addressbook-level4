@@ -447,6 +447,7 @@ in any part of the command and the program will be able to execute the user's in
 The additional searchbox used for quick partial search/filter is a child of `UiParts` and is based on using `Listener` to detect any changes to `TextProperty`.
 
 Upon detecting changes in observables, a handler (using Lambda Expression) then passes them to `Logic` to execute the pfind command.
+[source,java]
 ----
 public SearchBox (Logic logic) {
         super(FXML);
@@ -519,6 +520,70 @@ The rest of the execution then, follows closely to the case where the command is
 **Pros:** Can save space in case this software is run on very low resolution. Also prevent confusion of which textField to type in command. +
 **Cons:** More keyboard-based user may not notice the feature and/or movement in cursor may close the popup unintentionally. +
 // end::searchbox[]
+
+// tag::saveloadpdf
+
+=== Save/Load (contract) pdf file
+
+Allows for pdf file of the contract to be added to the project, and accessed by clicking on the link on insurance profile page.
+
+image::contractPdf.png[]
+
+If file is not detected in the project folder (data folder), filechooser will popup to allow user to add the pdf file into the project. Regardless of the name of the file chosen, it will automatically be renamed to the name specified in the insurance profile.
+
+In the case that the file exist in the project folder, the entry for contract file will be highlighted upon hover and will open the file upon clicking.
+
+[source,java]
+----
+ private void initializeContractFile(ReadOnlyInsurance insurance) {
+        insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractPath());
+        if (isFileExists(insuranceFile)) {
+            activateLinkToInsuranceFile();
+        } else {
+            contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    FileChooser.ExtensionFilter extFilter =
+                            new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+                    FileChooser chooser = new FileChooser();
+                    chooser.getExtensionFilters().add(extFilter);
+                    File openedFile = chooser.showOpenDialog(null);
+                    activateLinkToInsuranceFile();
+
+                    if (isFileExists(openedFile)) {
+                        try {
+                            Files.copy(openedFile.toPath(), insuranceFile.toPath());
+                        } catch (IOException ex) {
+                            logger.info("Unable to open at path: " + openedFile.getAbsolutePath());
+                        }
+                    }
+                }
+            });
+
+        }
+----
+
+As seen, the `File insuranceFile` attempts to find the file in the folder containing all save files.
+[source,Java]
+----
+private static final String PDFFOLDERPATH = "data/";
+----
+Upon successful retrieval of the file, or adding of the file if it does not exist, the method `activateLinkToInsuranceFile()` is then called to add a mouse click handler onto the contract entry to open up the file.
+
+[source,java]
+----
+ private void activateLinkToInsuranceFile() {
+        contractPath.getStyleClass().add("particular-link");
+        contractPath.setOnMouseClicked(event -> {
+            try {
+                Desktop.getDesktop().open(insuranceFile);
+            } catch (IOException ee) {
+                logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractPath());
+            }
+        });
+    }
+----
+// end::saveloadpdf[]
 
 // tag::undoredo[]
 === Undo/Redo mechanism
