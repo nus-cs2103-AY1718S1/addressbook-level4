@@ -16,29 +16,32 @@ By: `Team Rolodex`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
 
-Rolodex is a desktop contact management application. It is catered to computing professionals who prefer working without a mouse to manage their contacts more efficiently.
+link:#rolodex[Rolodex] is a desktop contact management application for users who prefer working without a mouse to manage their contacts more efficiently.
+It is useful for busy people who have many connections, such as a businessmen with a list of clients to remember, or a teacher who wants to organize their student information.
 
-This guide will walk you through the design, implementation and development environment of Rolodex. This is the go-to page for all your information needs in understanding our application.
+The Developer Guide will walk you through the design, implementation and development environment of link:#rolodex[Rolodex]. This is the go-to page for all your information needs in understanding our application.
 
-== Setting up
+== Setting Up
+
+This section will guide you in setting up the Rolodex project in your local machine for the first time.
 
 === Prerequisites
 
 . *JDK `1.8.0_60`* or later
 +
 [NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+Having any link:#java[Java 8] version is not enough. +
+This app will not work with earlier versions of link:#java[Java 8].
 +
 
 . *IntelliJ* IDE
 +
 [NOTE]
-IntelliJ by default has Gradle and JavaFx plugins installed. +
+IntelliJ by default has Gradle and link:#java-fx[JavaFx] plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 
-=== Setting up the project in your computer
+=== Setting up the Project in Your Computer
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
@@ -52,14 +55,16 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
-=== Verifying the setup
+=== Verifying the Setup
 
 . Run the `seedu.address.MainApp` and try a few commands
 . link:#testing[Run the tests] to ensure they all pass.
 
-=== Configurations to do before writing code
+=== Configurations to Do Before Writing Code
 
-==== Configuring the coding style
+Before you start coding, there are some important configurations that you have to do for the project to run smoothly.
+
+==== Configuring the Coding Style
 
 This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
 
@@ -72,9 +77,9 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
-==== Configuring Rolodex `.rldx` extensions
+==== Configuring Rolodex `.rldx` Extensions
 
-Rolodex files are associated with the `.rldx` extensions and are an extension of xml. To configure xml tools in intellij for `rldx` files,
+link:#rolodex[Rolodex] files are associated with the `.rldx` extensions and are an extension of xml. To configure xml tools in intellij for `rldx` files,
 
 . Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
 . Select `Editor` > `File Types`
@@ -84,22 +89,24 @@ Rolodex files are associated with the `.rldx` extensions and are an extension of
 
 image::RegisterRldx.png[width="600"]
 
-You are now configured to use `.rldx` files with intellij.
+If you can get syntax highlighting as seen below, you are successfully configured to use `.rldx` files with intellij.
 
-==== Updating documentation to match your fork
+image::RldxSyntaxHighlighting.png[width="600"]
+
+==== Updating Documentation to Match Your Fork
 
 After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+Set up Travis to perform link:#continuous-integration[Continuous Integration (CI)] for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
 [NOTE]
 Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
 
-==== Getting started with coding
+==== Getting Started With Coding
 
 When you are ready to start coding,
 
@@ -107,6 +114,9 @@ When you are ready to start coding,
 2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
 == Design
+
+To help you better understand the internal design of the application, this section provides model diagrams with accompanying explanations
+for the main architecture of Rolodex.
 
 === Architecture
 
@@ -146,7 +156,7 @@ image::LogicClassDiagram.png[width="800"]
 _Figure 2.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
-==== Events-Driven nature of the design
+==== Events-Driven Nature of the Design
 
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
@@ -154,7 +164,7 @@ image::SDforDeletePerson.png[width="800"]
 _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
-Note how the `Model` simply raises a `RolodexChangedEvent` when the Rolodex data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `RolodexChangedEvent` when the link:#rolodex[Rolodex] data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
@@ -166,7 +176,7 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 
 The sections below give more details of each component.
 
-=== UI component
+=== UI Component
 
 image::UiClassDiagram.png[width="800"]
 _Figure 2.2.1 : Structure of the UI Component_
@@ -175,7 +185,7 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The `UI` component uses link:#java-fx[JavaFx] UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
 The `UI` component,
 
@@ -183,7 +193,7 @@ The `UI` component,
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
-=== Logic component
+=== Logic Component
 
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.3.1 : Structure of the Logic Component_
@@ -204,7 +214,7 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 image::DeletePersonSdForLogic.png[width="800"]
 _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
-=== Model component
+=== Model Component
 
 image::ModelClassDiagram.png[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
@@ -214,11 +224,11 @@ _Figure 2.4.1 : Structure of the Model Component_
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Rolodex data.
+* stores the link:#rolodex[Rolodex] data.
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
-=== Storage component
+=== Storage Component
 
 image::StorageClassDiagram.png[width="800"]
 _Figure 2.5.1 : Structure of the Storage Component_
@@ -228,9 +238,9 @@ _Figure 2.5.1 : Structure of the Storage Component_
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Rolodex data in xml format and read it back.
+* can save the link:#rolodex[Rolodex] data in xml format and read it back.
 
-=== Common classes
+=== Common Classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
@@ -239,15 +249,15 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 This section describes some noteworthy details on how certain features are implemented.
 
 // tag::undoredo[]
-=== Undo/Redo mechanism
+=== Undo/Redo Mechanism
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the rolodex (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the link:#rolodex[rolodex] (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the rolodex before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the link:#rolodex[rolodex] before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -366,7 +376,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 // end::undoredo[]
 
 // tag::openNew[]
-=== Open file and New file mechanism
+=== Open File and New File Mechanism
 The open new file and creating new file mechanism are handled by two new types of requests under the `EventsCenter`,
 `OpenRolodexRequestEvent` and `RolodexChangedDirectoryEvent`. Upon receiving a new command, the `MainApp` attempts to
 reloads the instance `model` and `logic` but **not the `UI`**.
@@ -449,7 +459,7 @@ public void saveRolodex(ReadOnlyRolodex rolodex, String filePath) throws IOExcep
 **Pros:** The application can be quickly reloaded onto the active window. +
 **Cons:** User might need to switch back and forth between the Rolodex directories. +
 **Alternative 2:** Reload `MainApp` with a new application instance. +
-**Constraint:** JavaFX only allows launch(args) to be launched once per execution time on a code level.
+**Constraint:** link:#java-fx[JavaFX] only allows launch(args) to be launched once per execution time on a code level.
 Another approach would be to reload the application with a loaded and built .jar. +
 **Pros:** Easier logic to understand for new developers. +
 **Cons:** Building and debugging with a second .jar will be confusing and problematic to any development workflow. +
@@ -477,13 +487,13 @@ Another approach would be to reload the application with a loaded and built .jar
 // end::openNew[]
 
 // tag::findClose[]
-=== Fuzzy finding mechanism
-The fuzzy finding mechanism is powered by https://en.wikipedia.org/wiki/Levenshtein_distance[Levenshtein distance],
+=== Fuzzy Finding Mechanism
+The link:#fuzzy-finding[fuzzy finding] mechanism is powered by https://en.wikipedia.org/wiki/Levenshtein_distance[Levenshtein distance],
 a string heuristic for measuring the difference between two character sequences. It can be informally viewed as the number
 of _hops_ that are required to get from a string to another, where _hops_ are insertions, deletions and substitution
 operations.
 
-The activity diagram for the fuzzy finding can be loosely described as seen in the figure below:
+The activity diagram for the link:#fuzzy-finding[fuzzy finding] can be loosely described as seen in the figure below:
 
 image::FuzzyFindActivityDiagram.png[]
 
@@ -515,9 +525,9 @@ to the currently examined name word in which the contact will be added.
 ==== Design Considerations
 
 **Aspect:** Length of name word +
-**Alternative 1 (current choice):** Use a global minimum for defining when the fuzzy finding should execute. +
+**Alternative 1 (current choice):** Use a global minimum for defining when the link:#fuzzy-finding[fuzzy finding] should execute. +
 **Pros:** Name words have higher minimum hop to length ratio. +
-**Cons:** User might need fuzzy finding on name words with character length lesser than the global minimum. +
+**Cons:** User might need link:#fuzzy-finding[fuzzy finding] on name words with character length lesser than the global minimum. +
 **Pros:** Easy logic to understand, implement and maintain. +
 **Cons:** Rudimentary algorithm.
 
@@ -525,7 +535,7 @@ to the currently examined name word in which the contact will be added.
 
 **Aspect:** Location of fuzzy find settings +
 **Alternative 1 (current choice):** Use private static constant in a person. +
-**Pros:** User does not need to worry about changing the settings or the intricacies of the fuzzy finding. +
+**Pros:** User does not need to worry about changing the settings or the intricacies of the link:#fuzzy-finding[fuzzy finding]. +
 **Cons:** User might need stricter or looser limits than the ones defined for them. +
 **Pros:** Developers can easily change and manage settings and limits. +
 **Cons:** Users have no way of accessing the settings and limits. +
@@ -535,7 +545,7 @@ to the currently examined name word in which the contact will be added.
 // end::findClose[]
 
 // tag::sorting[]
-=== Sorting mechanism
+=== Sorting Mechanism
 The sorting mechanism is integrated into the `list` and `find` commands which resides in the application's `logic` component.
 It supports sorting in ascending or descending order of most fields of a person (e.g. [underline]#Name#, [underline]#Phone#).
 The sort commands update the state of the application at the model level, which resides in `ModelManager`,
@@ -615,8 +625,8 @@ comparator before executing a sort and filter which is handled by the event cons
 // end::sorting[]
 
 // tag::commandAbbreviations[]
-=== Abbreviation mechanism
-The ability for users to enter a variety of different words for a same command is implemented using `java.util.set`.
+=== Abbreviation Mechanism
+The ability for users to enter a variety of different words for a same command is implemented using https://docs.oracle.com/javase/8/docs/api/java/util/Set.html[`java.util.set`].
 
 An example as implemented in the open command:
 
@@ -659,7 +669,7 @@ public void parseAllCommandAbbreviationsAreDisjoint() {
 ==== Design Considerations
 
 **Aspect:** Implementation +
-**Alternative 1 (current choice):** A Set of strings +
+**Alternative 1 (current choice):** A https://docs.oracle.com/javase/8/docs/api/java/util/Set.html[Set] of strings +
 **Pros:** Constant access time per command level. Improves performance and reliability significantly. +
 **Pros:** Ease of testing for conflicting abbreviations, particularly where developers forget if they used a
 same abbreviation for two different commands (e.g. assigning `h` to both the `history` and `help` commands). +
@@ -670,12 +680,12 @@ on https://github.com/CS2103AUG2017-W11-B2/main/issues[github]. +
 **Cons:** Developers would have to manually check through all commands to ensure the accuracy of the abbreviations,
 which is time-consuming and makes way for human errors. +
 **Cons:** A switch-case for all possible commands abbreviations would perform significantly slower than direct memory
-access on a java `HashSet`, in the worst case.
+access on a java https://docs.oracle.com/javase/8/docs/api/java/util/HashSet.html[`HashSet`], in the worst case.
 
 // end::commandAbbreviations[]
 
 // tag::auto-completion[]
-=== Auto-completion mechanism
+=== Auto-completion Mechanism
 Auto-completion mechanism is implemented in `CommandBox` class under UI component.
 
 Auto-completion is activated when `TAB` key is pressed. This is done by adding a case in the keypress handler in `CommandBox`.
@@ -777,6 +787,14 @@ Where the key combination `FOCUS_PERSON_LIST` matches the `keyEvent` captured by
 
 ==== Design Considerations
 
+**Aspect:** Location of `KeyCombination` constants for the `KeyListener` class +
+**Alternative 1 (current choice):** `KeyCombination` constants are stored in a separate utility class, `KeyListenerUtil` +
+**Pros:** Better modularity given that the number of constants is fairly large. +
+**Cons:** The constants have to be imported to be used in the `KeyListener` class. +
+**Alternative 2:** Store the constants in the `KeyListener` class itself +
+**Pros:** Straightforward implementation and the constants does not have to be imported. +
+**Cons:** Violates Separation of Concerns as the `KeyListener` class acts as a storage for the constants in addition to handling key events.
+
 **Aspect:** The way commands words are executed +
 **Alternative 1 (current choice):** Pressing the shortcut automatically executes the command +
 **Pros:** Execution of command is faster and more convenient for the user. +
@@ -785,16 +803,148 @@ Where the key combination `FOCUS_PERSON_LIST` matches the `keyEvent` captured by
 **Pros:** Allows the user to check the command before executing it. +
 **Cons:**  An extra step for user to execute the command, i.e. pressing `Enter`.
 
-**Aspect:** Scrolling of the contact list +
-**Alternative 1 (current choice):** Pressing the `Esc` key focuses on the person list panel, then scrolling is handled by selecting the next contact with either the up or down arrow key. +
-**Pros:**  User can select contacts quickly. +
-**Cons:** Scrolling is done by selection of contacts one at a time.
-Thus, it may be time consuming for the user to search for a contact by scrolling. +
-**Alternative 2:** Contact list scrolls without triggering selection of a contact in the list +
-**Pros:** Scrolling motion is faster and smoother. +
-**Cons:** An extra step is needed for users who want to select a contact,
-          i.e. scroll the list until the contact is visible, then select the desired contact with a select command/shortcut. +
 // end::shortcut[]
+
+// tag::helpWindowHighlight[]
+=== Help Window Highlighting
+Rolodex uses link:#java-fx[JavaFx] version http://javafx.com/javafx/8.0.111[8.0.111], where WebView does not support
+search functionality that mimics kbd:[Ctrl] + kbd:[F] capability of modern web browsers. As a workaround, Johann Burkard's
+http://johannburkard.de/blog/programming/javascript/highlight-javascript-text-higlighting-jquery-plugin.html[jQuery text highlighting]
+library is being used to implement such a feature.
+
+Users can easily find keywords by using the highlighting feature of the help window, as opposed to manually looking through the
+help document for information, which can be counterproductive:
+
+image::Highlight.png[width="800"]
+
+The discussion for link:#java-fx[JavaFX] to implement a native search feature within WebView is ongoing and you can find it
+https://stackoverflow.com/questions/19418626/javafx-search-and-highlight-text-add-search-bar-for-loaded-web-page[here].
+
+==== Removing jQuery implementation
+In a future version of link:#java-fx[JavaFx] where such an implementation is no longer necessary, you may revert the changes by reverting pull request
+https://github.com/CS2103AUG2017-W11-B2/main/pull/99[#99] on the Rolodex repo on GitHub. You may also choose to manually do this by reverting the following code:
+
+Original `HelpWindow.fxml`:
+[source,xml]
+----
+<StackPane fx:id="helpWindowRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <WebView fx:id="browser" />
+</StackPane>
+----
+`HelpWindow.fxml` with makeshift user guide search functionality:
+[source,xml]
+----
+<StackPane fx:id="helpWindowRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox fx:id="layout">
+        <children>
+            <TextField fx:id="txtSearch" promptText="Search and press ENTER" />
+                <HBox fx:id="controls">
+                    <children>
+                        <Button fx:id="btnSearch" mnemonicParsing="false" text="Search">
+                            <HBox.margin>
+                                <Insets right="10.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="btnClear" mnemonicParsing="false" text="Clear" />
+                    </children>
+                </HBox>
+            <WebView fx:id="browser" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100000.0" />
+        </children>
+    </VBox>
+</StackPane>
+----
+
+Original `HelpWindow.java`:
+[source,java]
+----
+@FXML
+private WebView browser;
+
+private final Stage dialogStage;
+
+public HelpWindow() {
+    super(FXML);
+    Scene scene = new Scene(getRoot());
+    //Null passed as the parent stage to make it non-modal.
+    dialogStage = createDialogStage(TITLE, null, scene);
+    dialogStage.setMaximized(true); //TODO: set a more appropriate initial size
+    FxViewUtil.setStageIcon(dialogStage, ICON);
+
+    String userGuideUrl = getClass().getResource(HELP_FILE_PATH).toString();
+    browser.getEngine().load(userGuideUrl);
+}
+----
+`HelpWindow.java` with makeshift user guide search functionality:
+[source,java]
+----
+@FXML
+private WebView browser;
+
+@FXML
+private TextField txtSearch;
+
+@FXML
+private Button btnSearch;
+
+@FXML
+private Button btnClear;
+
+@FXML
+private HBox controls;
+
+private final Stage dialogStage;
+
+public HelpWindow() {
+    super(FXML);
+
+    txtSearch.setOnAction(event -> {
+        if (browser.getEngine().getDocument() != null) {
+            highlight(browser.getEngine(), txtSearch.getText());
+        }
+    });
+
+    btnSearch.setDefaultButton(true);
+    btnSearch.setOnAction(actionEvent -> txtSearch.fireEvent(new ActionEvent()));
+
+    btnClear.setOnAction(actionEvent -> clearHighlights(browser.getEngine()));
+    btnClear.setCancelButton(true);
+
+    controls.disableProperty().bind(browser.getEngine().getLoadWorker().runningProperty());
+    txtSearch.disableProperty().bind(browser.getEngine().getLoadWorker().runningProperty());
+
+    Scene scene = new Scene(getRoot());
+    //Null passed as the parent stage to make it non-modal.
+    dialogStage = createDialogStage(TITLE, null, scene);
+    dialogStage.setMaximized(true); //TODO: set a more appropriate initial size
+    FxViewUtil.setStageIcon(dialogStage, ICON);
+
+    String userGuideUrl = getClass().getResource(HELP_FILE_PATH).toString();
+    browser.getEngine().load(userGuideUrl);
+}
+
+private void highlight(WebEngine engine, String text) {
+    engine.executeScript("$('body').removeHighlight().highlight('" + text + "')");
+}
+
+private void clearHighlights(WebEngine engine) {
+    engine.executeScript("$('body').removeHighlight()");
+    txtSearch.clear();
+}
+----
+
+`Help.adoc` passthrough imports:
+[source,javascript]
+----
+<script type="text/javascript" src="scripts/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.highlight-5.js"></script>
+----
+
+`asciidoctor.css` `.highlight` class:
+[source,css]
+----
+.highlight{background-color:yellow}
+----
+// end::helpWindowHighlight[]
 
 === Logging
 
@@ -831,7 +981,7 @@ Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows y
 
 See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting Documentation to PDF Format
 
 We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
@@ -846,6 +996,8 @@ image::chrome_save_as_pdf.png[width="300"]
 _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
+
+Testing ensures that our software works as expected. In Rolodex, we use several frameworks for running tests.
 
 === Running Tests
 
@@ -872,7 +1024,7 @@ Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI t
 
 To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
 
-=== Types of tests
+=== Types of Tests
 
 We have two types of tests:
 
@@ -896,13 +1048,15 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 == Dev Ops
 
+This section contains the tools we use for software collaboration.
+
 === Build Automation
 
 See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
 
 === Continuous Integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform link:#continuous-integration[Continuous Integration] on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
 === Making a Release
 
@@ -928,12 +1082,12 @@ Suggested path for new programmers:
 
 2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
 
-=== Improving each component
+=== Improving Each Component
 
 Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
 
 [discrete]
-==== `Logic` component
+==== `Logic` Component
 
 [TIP]
 Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
@@ -950,7 +1104,7 @@ Do take a look at the link:#logic-component[Design: Logic Component] section bef
 ****
 
 [discrete]
-==== `Model` component
+==== `Model` Component
 
 [TIP]
 Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
@@ -967,7 +1121,7 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 ****
 
 [discrete]
-==== `Ui` component
+==== `Ui` Component
 
 [TIP]
 Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
@@ -1031,7 +1185,7 @@ image::getting-started-ui-status-after.png[width="500"]
 ****
 
 [discrete]
-==== `Storage` component
+==== `Storage` Component
 
 [TIP]
 Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
@@ -1046,7 +1200,7 @@ Do take a look at the link:#storage-component[Design: Storage Component] section
 ** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
 ****
 
-=== Creating a new command: `remark`
+=== Creating a New Command: `remark`
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
 
@@ -1204,7 +1358,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |=======================================================================
 
 [discrete]
-=== Completed user stories
+=== Completed User Stories
 |=======================================================================
 |As a ... |I want to ... |So that I can...
 |user with bad spelling |find a person using close words |find persons without having to remember the exact spelling
@@ -1217,7 +1371,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `Rolodex` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Find person
+=== Use Case: Find Person
 
 *MSS*
 
@@ -1236,7 +1390,7 @@ Use case ends.
 Use case ends.
 
 [discrete]
-=== Use case: Delete person
+=== Use Case: Delete Person
 
 *MSS*
 
@@ -1262,7 +1416,7 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
-=== Use case: Store person note
+=== Use Case: Store Person Note
 
 *MSS*
 
@@ -1293,7 +1447,7 @@ Use case resumes at step 2.
 ** 3b3. Rolodex overwrites existing note with new note.
 
 [discrete]
-=== Use case: Clear Rolodex
+=== Use Case: Clear Rolodex
 
 *MSS*
 
@@ -1312,7 +1466,7 @@ Use case ends.
 Use case ends.
 
 [discrete]
-=== Use case: Editing a person's details
+=== Use Case: Editing a Person's Details
 
 *MSS*
 
@@ -1360,7 +1514,7 @@ Use case ends.
 
 
 [discrete]
-=== Use case: Autocomplete commands
+=== Use Case: Autocomplete Commands
 
 *MSS*
 
@@ -1388,7 +1542,7 @@ Use case ends.
 Use case ends.
 
 [discrete]
-=== Use case: Delete tag
+=== Use Case: Delete Tag
 
 *MSS*
 
@@ -1412,7 +1566,7 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
-=== Use case: Logging into the Rolodex with login credentials
+=== Use Case: Logging into the Rolodex With Login Credentials
 
 *MSS*
 
@@ -1472,46 +1626,13 @@ Use case resumes at step 2.
 .  Should be able to work offline.
 .  Should be free to download.
 .  Startup time should be less than 3s.
-.  Should be usable by a human who has never seen a command line interface before.
-.  Should be usable by a human who has never used a command line interface before.
+.  Should be usable by a human who has never seen a link:#command-line-interface[command line interface] before.
+.  Should be usable by a human who has never used a link:#command-line-interface[command line interface] before.
 .  Data should be encrypted when application is not running.
 .  A computing professional should be able to manage his/her AddressBook contacts in a fast and efficient manner
 .  Commands should be intuitive and easy to learn.
 
-
-[appendix]
-== Glossary
-
-[[mainstream-os]]
-Mainstream OS
-
-....
-Windows, Linux, Unix, OS-X
-....
-
-[[private-contact-detail]]
-Private contact detail
-
-....
-A contact detail that is not meant to be shared with others
-....
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
+include::Glossary.adoc[]
 
 ifndef::env-github[]
 include::NavigationMenu.adoc[]

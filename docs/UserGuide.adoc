@@ -15,30 +15,58 @@ endif::[]
 
 By: `Team Rolodex`      Since: `Sep 2017`      Licence: `MIT`
 
+== Introduction
+
+Rolodex is a desktop contact management application for users who prefer working without a mouse to manage their contacts more efficiently.
+If you are a businessmen with a list of clients to remember, a teacher who wants to organize their student information, or anyone with a need for contact
+management, Rolodex provides you with a way to organize your important contacts in a fast and productive manner.
+
 == Quick Start
+
+This section serves as a tutorial for you to familiarize yourself with the usage of Rolodex.
+By following the steps below, getting started with Rolodex should be a fast and smooth process.
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+Rolodex will not work with earlier versions of Java 8.
 +
 .  Download the latest `rolodex.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Rolodex.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. You should see the GUI in a few seconds as shown below.
 +
 image::Ui.png[width="790"]
++
+The following picture labels the main components of the application.
++
+image::UiLabeled.png[width="790"]
 +
 .  Type the command (case insensitive) in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to Rolodex.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to Rolodex.
 
-.  Refer to the link:#features[Features] section below for details of each command.
+[TIP]
+The standard format for keying in person details is `PREFIX/PERSON_DETAIL` (e.g. n/John Doe for keying in a name). +
+The following table summarizes the prefixes and the corresponding person details they represent. +
+
+[width=30%, cols="2,3"]
+|===
+| Prefix | Person Detail
+
+| n/ | Name
+| p/ | Phone
+| e/ | Email
+| a/ | Address
+| r/ | Remark
+| t/ | Tag
+|===
+
+For the details of each command, you may refer to the link:#features[Features] section below.
 
 == Features
 
@@ -51,17 +79,12 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`, `h`, `assist` or `faq`
-
-Format: `help` or `h` +
-Keyboard shortcut: kbd:[F1]
-
-=== Adding a person: `add`, `a` or `+`
+=== `add`, `a` or `+`: Adding a Person _(Since v1.3)_
 
 Adds a person to Rolodex +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
-        or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
-        (press kbd:[Tab] after typing `add` for auto-completion)
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [t/TAG]...` +
+        or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [t/TAG]...` +
+        (press kbd:[Tab] after typing `add` for auto-completion) +
 Keyboard shortcut: kbd:[Ctrl+A]
 
 [TIP]
@@ -70,41 +93,57 @@ A person can have any number of tags (including 0)
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 r/Stole my house key t/criminal`
 
-// tag::list[]
-=== Listing all persons : `list`, `l`, `show` or `display`
+[TIP]
+====
+Add commands are _undoable_ with the `undo` command.
+====
 
-Shows a list of all persons in Rolodex, sorted by the specified sort order or default sort order. +
-Format: `list [SORT_ARGUMENTS]` or `l [SORT_ARGUMENTS]` +
-Keyboard shortcut: kbd:[Ctrl+L]
+=== `clear` or `c`: Clearing All Persons _(Since v1.3)_
+
+Clears all entries from Rolodex. +
+Format: `clear` or `c` +
+Keyboard shortcut: kbd:[Ctrl+Shift+C]
+
+[TIP]
+====
+Clear commands are _undoable_ with the `undo` command.
+====
+
+=== `delete`, `d` or `-`: Deleting a Person _(Since v1.3)_
+
+Deletes the specified person from Rolodex. +
+Format: `delete INDEX` or `d INDEX`
+        (press kbd:[Tab] after typing `delete` for auto-completion)
+Keyboard shortcut: kbd:[Ctrl+Shift+D]
 
 ****
-* `[SORT_ARGUMENTS]` can be none, some, any or all of `n/` `p/` `e/` `a/` `n/desc` `p/desc` `e/desc` `a/desc` `n/asc` `p/asc`
- `e/asc` `a/asc`, delimited by spaces, in no particular fixed order.
-* The sort argument prefix for sorting by [underline]#name# is `n/`.
-* The sort argument prefix for sorting by [underline]#phone# is `p/`.
-* The sort argument prefix for sorting by [underline]#email# is `e/`.
-* The sort argument prefix for sorting by [underline]#address# is `a/`.
-* The sort argument postfix `desc` denotes that the sort field is to be sorted in descending lexicographical order.
-* The sort argument postfix `asc` denotes that the sort field is to be sorted in ascending lexicographical order.
-* Sort arguments without a postfix are sorted by ascending lexicographical order.
-* The order of the `SORT_ARGUMENTS` are left-prioritized.
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
 ****
 
 Examples:
 
-* `list` or `l` displays all persons by the default sort order.
-* `l n/desc` displays all persons sorted by descending name.
-* `list p/ a/desc` or `list p/asc a/desc` displays all persons sorted by ascending phone, then by descending address.
-// end::list[]
+* `list` +
+`delete 2` +
+Deletes the 2nd person in Rolodex.
+* `find Betsy` +
+`d 1` +
+Deletes the 1st person in the results of the `find` command.
 
-=== Editing a person : `edit`, `e`, `change` or `modify`
+[TIP]
+====
+Delete commands are _undoable_ with the `undo` command.
+====
+
+=== `edit`, `e`, `change` or `modify`: Editing a Person _(Since v1.3)_
 
 Edits an existing person in Rolodex. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
-        or `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
-        (press kbd:[Tab] after typing `edit` for auto-completion)
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...` +
+        or `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...` +
+        (press kbd:[Tab] after typing `edit` for auto-completion) +
 Keyboard shortcut: kbd:[Ctrl+E]
 
 ****
@@ -123,15 +162,26 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 Edits the name of the 2nd person to be `Betsy Crower` and adds the tag `friends` if the tag `friends` does not exist in
 the 2nd person, or removes it otherwise.
 
+[TIP]
+====
+Edit commands are _undoable_ with the `undo` command.
+====
+
 // tag::find[]
 
-=== Locating persons in Rolodex: `find`, `f`, `filter` or `search`
+=== `exit`, `quit`, `close`, `bye`, `esc`: Exiting the Program _(Since v1.3)_
+
+Exits the program. +
+Format: `exit` +
+Keyboard shortcut: kbd:[Alt+F4]
+
+=== `find`, `f`, `filter` or `search`: Locating Persons in Rolodex _(Since v1.4)_
 
 Finds persons in Rolodex. +
 Format: `find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
         or `f KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
-        or `search KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
-        (press kbd:[Tab] after typing `find` for auto-completion)
+        or `search KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]` +
+        (press kbd:[Tab] after typing `find` for auto-completion) +
 Keyboard shortcut: kbd:[Ctrl+F]
 
 ****
@@ -158,19 +208,10 @@ Returns any person having tag `School`
 * `find School werk` +
 Returns any person having tag `School` or tag `werk`
 
-****
-* `[SORT_ARGUMENTS]` can be none, some, any or all of `n/` `p/` `e/` `a/` `n/desc` `p/desc` `e/desc` `a/desc` `n/asc` `p/asc`
- `e/asc` `a/asc`, delimited by spaces, in no particular fixed order.
-* The sort argument prefix for sorting by [underline]#name# is `n/`.
-* The sort argument prefix for sorting by [underline]#phone# is `p/`.
-* The sort argument prefix for sorting by [underline]#email# is `e/`.
-* The sort argument prefix for sorting by [underline]#address# is `a/`.
-* The sort argument postfix `desc` denotes that the sort field is to be sorted in descending lexicographical order.
-* The sort argument postfix `asc` denotes that the sort field is to be sorted in ascending lexicographical order.
-* Sort arguments without a postfix are sorted by ascending lexicographical order.
-* The order of the `SORT_ARGUMENTS` are left-prioritized.
-* Sort arguments *do not count as search arguments*.
-****
+include::UserGuide.adoc[tag=sortUsage]
+
+[NOTE]
+Sort arguments *do not count as search arguments*.
 
 Examples:
 
@@ -186,29 +227,173 @@ Returns any person having tag `School` or tag `werk`, sorted by email.
 Returns an error (do not count as search arguments).
 // end::find[]
 
-=== Deleting a person : `delete`, `d` or `-`
+=== `help`, `h`, `assist` or `faq`: Viewing Help _(Since v1.4)_
 
-Deletes the specified person from Rolodex. +
-Format: `delete INDEX` or `d INDEX`
-        (press kbd:[Tab] after typing `delete` for auto-completion)
-Keyboard shortcut: kbd:[Ctrl+Shift+D]
+Format: `help` or `h` +
+Keyboard shortcut: kbd:[F1]
+
+=== `history`, `his` or `past`: Listing Entered Commands _(Since v1.3)_
+
+Lists all the commands that you have entered in reverse chronological order. +
+Format: `history` or `his` or `past` +
+Keyboard shortcut: kbd:[Ctrl+H]
+
+[NOTE]
+====
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
+
+// tag::list[]
+=== `list`, `l`, `show` or `display`: Listing All Persons _(Since v1.3)_
+
+Shows a list of all persons in Rolodex, sorted by the specified sort order or default sort order. +
+Format: `list [SORT_ARGUMENTS]` or `l [SORT_ARGUMENTS]` +
+Keyboard shortcut: kbd:[Ctrl+L]
+
+// tag::sortUsage[]
+****
+* `[SORT_ARGUMENTS]` can be none, some, any or all of `n/` `p/` `e/` `a/` `n/desc` `p/desc` `e/desc` `a/desc` `n/asc` `p/asc`
+ `e/asc` `a/asc`, delimited by spaces, in no particular fixed order.
+* The sort argument prefix for sorting by [underline]#name# is `n/`.
+* The sort argument prefix for sorting by [underline]#phone# is `p/`.
+* The sort argument prefix for sorting by [underline]#email# is `e/`.
+* The sort argument prefix for sorting by [underline]#address# is `a/`.
+* The sort argument postfix `desc` denotes that the sort field is to be sorted in descending link:#lexicographic[lexicographical] order.
+* The sort argument postfix `asc` denotes that the sort field is to be sorted in ascending link:#lexicographic[lexicographical] order.
+* Sort arguments without a postfix are sorted by ascending link:#lexicographic[lexicographical] order.
+* The order of the `SORT_ARGUMENTS` are left-prioritized.
+****
+// end::sortUsage[]
+
+Examples:
+
+* `list` or `l` displays all persons by the default sort order.
+* `l n/desc` displays all persons sorted by descending name.
+* `list p/ a/desc` or `list p/asc a/desc` displays all persons sorted by ascending phone, then by descending address.
+// end::list[]
+
+// tag::newfile[]
+=== `new`, `n`, `touch` or `>`: Creating a New Rolodex Storage File _(Since v1.3)_
+
+Creates a new Rolodex at the specified filepath and reloads the application with new sample data. +
+Format: `new FILEPATH` or `n FILEPATH`
+Keyboard Shortcut: kbd:[Ctrl+N]
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Creates the rolodex at the specified `FILEPATH`.
+* The `FILEPATH` can be project-relative or any directory on the system.
+* The `FILEPATH` must end with a file extension .rldx in order for data to be created and saved.
+* If `FILEPATH` already exists, use the `open` command instead.
+* The command recognizes directories in formats kbd:[/] or kbd:[{backslash} ] as valid filepaths
+****
+
+[NOTE]
+====
+The `new` command will refresh your session and all existing _undoable_ commands will be cleared. It is recommended that you confirm you are satisfied with your changes before opening a new file.
+====
+
+Examples:
+
+* `new C:/Users/Rolodex/downloads/myOwn.rldx` +
+`n C:/Users/Rolodex/downloads/myOwn.rldx` +
+`n C:\Users\Rolodex\downloads\myOwn.rldx` +
+Creates a new Rolodex file `myOwn.rldx` at the directory `C:\Users\Rolodex\downloads` and reloads the application with sample data created for the new Rolodex.
+* `new data/default.rldx` +
+`new data\default.rldx` +
+Creates a new Rolodex file `default.rldx` at the relative directory `data` and reloads the application with sample data created for the new Rolodex.
+// end::newfile[]
+
+// tag::openfile[]
+
+=== `open`, `o`, `cd`, `ls`, `<`: Opening an Existing Rolodex Storage File _(Since v1.3)_
+
+Reloads the application with data from a rolodex at the specified filepath. +
+Format: `open FILEPATH` or `o FILEPATH`
+Keyboard Shortcut: kbd:[Ctrl+O]
+
+****
+* Loads the rolodex at the specified `FILEPATH`.
+* The `FILEPATH` can be project-relative or any directory on the system.
+* The `FILEPATH` must be a file with xml formatted data.
+* The `FILEPATH` must end with a file extension .rldx in order for data to be saved.
+* If `FILEPATH` does not exist, use the `new` command instead.
+* The command recognizes directories in formats kbd:[/] or kbd:[{backslash} ] as valid filepaths
+****
+
+[NOTE]
+====
+Opening a file without a .rldx extension will not save your changes.
+====
+
+[NOTE]
+====
+The `open` command will refresh your session and all existing _undoable_ commands will be cleared. It is recommended that you confirm you are satisfied with your changes before opening a new file.
+====
+
+Examples:
+
+* `open C:/Users/Rolodex/downloads/myOwn.rldx` +
+`o C:/Users/Rolodex/downloads/myOwn.rldx` +
+`o C:\Users\Rolodex\downloads\myOwn.rldx` +
+Loads the application with the data at the directory `C:/Users/Rolodex/downloads/myOwn.rldx`.
+* `open data/default.rldx` +
+`open data\default.rldx` +
+Loads the application with the data in `default.rldx` in the folder `data`.
+// end::openfile[]
+
+=== `redo` or `r`: Redoing the Previously Undone Command _(Since v1.3)_
+
+Reverses the most recent `undo` command. +
+Format: `redo` or `r` +
+Keyboard shortcut: kbd:[Ctrl+Y]
+
+Examples:
+
+* `delete 1` +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+
+* `delete 1` +
+`r` +
+The `redo` command fails as there are no `undo` commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+`r` (reapplies the `clear` command) +
+
+[TIP]
+====
+Redo commands are _undoable_ with the `undo` command.
+====
+
+=== `remark` or `note` or `rmk`: Adding a Remark _(Coming in V2.0)_
+
+Adds a remark to the specified person in Rolodex. +
+Format: `remark INDEX [r/REMARK]` or `remark INDEX [r/REMARK]`
+
+****
+* Adds a remark to the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer* `1, 2, 3, ...`
+* An existing remark will be replaced.
 ****
 
 Examples:
 
-* `list` +
-`delete 2` +
-Deletes the 2nd person in Rolodex.
-* `find Betsy` +
-`d 1` +
-Deletes the 1st person in the results of the `find` command.
+* `remark 1 r/Likes fishing` +
+Sets the remark of the 1st person to `Likes fishing`.
+* `note 1 r/` +
+Removes the remark for the 1st person.
 
-=== Selecting a person : `select` or `s`
+=== Saving the Data _(Since v1.0)_
+
+Rolodex's data are saved in the hard disk automatically after any command that changes the data. +
+There is no need to save manually.
+
+=== `select` or `s`: Selecting a Person _(Since v1.3)_
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX` or `s INDEX`
@@ -230,27 +415,42 @@ Selects the 2nd person in Rolodex.
 `s 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Adding a remark: `remark` or `note` or `rmk` _(Coming in V2.0)_
+=== Tagging a Person
 
-Adds a remark to the specified person in Rolodex. +
-Format: `remark INDEX [r/REMARK]` or `remark INDEX [r/REMARK]`
+Tagging a person can be done with the `add` or `edit` commands.
 
-****
-* Adds a remark to the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-* An existing remark will be replaced.
-****
+=== `undo` or `u`: Undoing a Previous Command _(Since v1.3)_
+
+Restores Rolodex to the state before the previous _undoable_ command was executed. +
+Format: `undo` or `u` +
+Keyboard Shortcut: kbd:[Ctrl+Z]
+
+[NOTE]
+====
+Undoable commands: `add`, `clear`, `delete`, `edit`, `redo` and `remark`. +
+These are commands that modify Rolodex's content.
+====
 
 Examples:
 
-* `remark 1 r/Likes fishing` +
-Sets the remark of the 1st person to `Likes fishing`.
-* `note 1 r/` +
-Removes the remark for the 1st person.
+* `delete 1` +
+`list` +
+`undo` (reverses the `delete 1` command) +
+
+* `select 1` +
+`list` +
+`u` +
+The `undo` command fails as there are no undoable commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`u` (reverses the `delete 1` command) +
+
+== Upcoming Features
 
 // tag::picture[]
-=== Adding a profile picture: `picture` or `pic` _(Coming in V2.0)_
+=== Adding a Profile Picture: `picture` or `pic` _(Coming in v2.0)_
 
 Adds a profile picture to the specified person in Rolodex. +
 Format: `picture INDEX FILE_DIRECTORY` or `pic INDEX FILE_DIRECTORY`
@@ -283,150 +483,6 @@ image::profile_pic_before.png[width="500"]
 image::profile_pic_after.png[width="500"]
 // end::picture[]
 
-=== Listing entered commands : `history`, `his` or `past`
-
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history` or `his` or `past` +
-Keyboard shortcut: kbd:[Ctrl+H]
-
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
-
-// tag::undoredo[]
-=== Undoing previous command : `undo` or `u`
-
-Restores Rolodex to the state before the previous _undoable_ command was executed. +
-Format: `undo` or `u` +
-Keyboard Shortcut: kbd:[Ctrl+Z]
-
-[NOTE]
-====
-Undoable commands: those commands that modify Rolodex's content (`add`, `delete`, `edit` and `clear`).
-====
-
-Examples:
-
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
-
-* `select 1` +
-`list` +
-`u` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`u` (reverses the `delete 1` command) +
-
-=== Redoing the previously undone command : `redo` or `r`
-
-Reverses the most recent `undo` command. +
-Format: `redo` or `r` +
-Keyboard shortcut: kbd:[Ctrl+Y]
-
-Examples:
-
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-
-* `delete 1` +
-`r` +
-The `redo` command fails as there are no `undo` commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`r` (reapplies the `clear` command) +
-// end::undoredo[]
-
-=== Clearing all entries : `clear` or `c`
-
-Clears all entries from Rolodex. +
-Format: `clear` or `c` +
-Keyboard shortcut: kbd:[Ctrl+Shift+C]
-
-// tag::openNew[]
-=== Opening an existing Rolodex storage file: `open`, `o`, `cd`, `ls`, `<`
-Reloads the application with data from a rolodex at the specified filepath. +
-Format: `open FILEPATH` or `o FILEPATH`
-Keyboard Shortcut: kbd:[Ctrl+O]
-
-****
-* Loads the rolodex at the specified `FILEPATH`.
-* The `FILEPATH` can be project-relative or any directory on the system.
-* The `FILEPATH` must be a file with xml formatted data.
-* The `FILEPATH` must end with a file extension .rldx in order for data to be saved.
-* If `FILEPATH` does not exist, use the `new` command instead.
-* The command recognizes directories in formats kbd:[/] or kbd:[{backslash} ] as valid filepaths
-****
-
-[NOTE]
-====
-Opening a file without a .rldx extension will not save your changes.
-====
-
-Examples:
-
-* `open C:/Users/Rolodex/downloads/myOwn.rldx` +
-`o C:/Users/Rolodex/downloads/myOwn.rldx` +
-`o C:\Users\Rolodex\downloads\myOwn.rldx` +
-Loads the application with the data at the directory `C:/Users/Rolodex/downloads/myOwn.rldx`.
-* `open data/default.rldx` +
-`open data\default.rldx` +
-Loads the application with the data in `default.rldx` in the folder `data`.
-
-=== Creating a new Rolodex storage file: `new`, `n`, `touch` or `>`
-Creates a new Rolodex at the specified filepath and reloads the application with new sample data. +
-Format: `new FILEPATH` or `n FILEPATH`
-Keyboard Shortcut: kbd:[Ctrl+N]
-
-****
-* Creates the rolodex at the specified `FILEPATH`.
-* The `FILEPATH` can be project-relative or any directory on the system.
-* The `FILEPATH` must end with a file extension .rldx in order for data to be created and saved.
-* If `FILEPATH` already exists, use the `open` command instead.
-* The command recognizes directories in formats kbd:[/] or kbd:[{backslash} ] as valid filepaths
-****
-
-Examples:
-
-* `new C:/Users/Rolodex/downloads/myOwn.rldx` +
-`n C:/Users/Rolodex/downloads/myOwn.rldx` +
-`n C:\Users\Rolodex\downloads\myOwn.rldx` +
-Creates a new Rolodex file `myOwn.rldx` at the directory `C:\Users\Rolodex\downloads` and reloads the application with sample data created for the new Rolodex.
-* `new data/default.rldx` +
-`new data\default.rldx` +
-Creates a new Rolodex file `default.rldx` at the relative directory `data` and reloads the application with sample data created for the new Rolodex.
-// end::openNew[]
-
-=== Exiting the program : `exit`, `quit`, `close`, `bye`, `esc`
-
-Exits the program. +
-Format: `exit` +
-Keyboard shortcut: kbd:[Alt+F4]
-
-=== Saving the data
-
-Rolodex's data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
-
-=== Keyboard Shortcuts
-
-A list of keyboard shortcuts is provided link:#keyboard-shortcuts-2[here].
-
-
-== FAQ
-
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Rolodex folder.
-
 == Command Summary
 
 [width=90%, cols="1,9"]
@@ -444,6 +500,11 @@ A list of keyboard shortcuts is provided link:#keyboard-shortcuts-2[here].
 .3+| Edit | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
           | `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
           | *E.g.* `edit 2 n/James Lee e/jameslee@example.com`
+.5+| Remark | `remark INDEX r/REMARK`
+            | `note INDEX r/REMARK`
+            | `rmk INDEX r/REMARK`
+            | `comment INDEX r/REMARK`
+            | *E.g.* `remark 1 r/Loves to sing`
 .4+| Find | `find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
           | `f KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
           | `search KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
@@ -465,33 +526,41 @@ A list of keyboard shortcuts is provided link:#keyboard-shortcuts-2[here].
           | `r`
 |===
 
-// tag::shortcut[]
 == Keyboard Shortcuts
 
-=== Command Shortcuts
+=== AutoComplete Command Shortcuts _(Since v1.3)_
 
-[width=50%, cols="2,4"]
+[width=60%, cols="2,4"]
 |===
 | Shortcut | Purpose
 
 | kbd:[Ctrl + A] | Display the add command format in command box
 | kbd:[Ctrl + E] | Display the edit command format in command box
 | kbd:[Ctrl + F] | Display the find command format in command box
+| kbd:[Ctrl + S] | Display the select command format in command box
+| kbd:[Ctrl + Shift + D] | Display the delete command format in command box
+|===
+
+// tag::shortcut[]
+=== Quick Command Shortcuts _(Since v1.2)_
+
+[width=60%, cols="2,4"]
+|===
+| Shortcut | Purpose
+
+| kbd:[Ctrl + Shift + C] | Clear contact list
 | kbd:[Ctrl + H] | View history
 | kbd:[Ctrl + L] | List all contacts
-| kbd:[Ctrl + S] | Display the select command format in command box
 | kbd:[Ctrl + Z] | Undo last command
 | kbd:[Ctrl + Y] | Redo last command
-| kbd:[Ctrl + Shift + D] | Display the delete command format in command box
-| kbd:[Ctrl + Shift + C] | Clear contact list
 | kbd:[F1] | View help window
 | kbd:[Ctrl + O] | Open a Rolodex file
 | kbd:[Ctrl + N] | Create new Rolodex file
 |===
 
-=== Navigation/Selection Shortcuts
+=== Navigation/Selection Shortcuts _(Since v1.2)_
 
-[width=50%, cols="2,4"]
+[width=60%, cols="2,4"]
 |===
 | Shortcut | Purpose
 
@@ -506,6 +575,27 @@ A list of keyboard shortcuts is provided link:#keyboard-shortcuts-2[here].
 // end::shortcut[]
 
 // end::excludeNavbar[]
+
+== FAQ
+
+*Q*: How do I transfer my data to another Computer? +
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Rolodex folder.
+
+*Q*: How do I know if there is a newer version of the application? +
+*A*: You may follow our link:https://github.com/CS2103AUG2017-W11-B2/main/releases[release page] to check for any new updates.
+
+*Q*: Help! This guide did not solve my problem. +
+*A*: You may raise any enquires at our link:https://github.com/CS2103AUG2017-W11-B2/main/issues[issues page] by creating a new issue.
+We will do our best to answer to your queries.
+
+*Q*: I found a bug, where do I report it? +
+*A*: As similar to above, you may create a new issue at our link:https://github.com/CS2103AUG2017-W11-B2/main/issues[issues page].
+
+*Q*: Can I contribute to the code? +
+*A*: Of course! We welcome new contributors. You can contribute by creating a new Pull Request link:https://github.com/CS2103AUG2017-W11-B2/main/pulls[here].
+To get started, you may want to check out our link:https://cs2103aug2017-w11-b2.github.io/main/DeveloperGuide.html[Developer's Guide].
+
+include::Glossary.adoc[]
 
 ifndef::env-github[]
 include::NavigationMenu.adoc[]

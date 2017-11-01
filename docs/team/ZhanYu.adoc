@@ -12,7 +12,11 @@ ifndef::env-github[]
 
 include::../../README.adoc[tag=applicationDescription]
 
-*Code contributed*: https://github.com/CS2103AUG2017-W11-B2/main/pulse[Pulse]
+*Code contributed*:
+
+* https://github.com/CS2103AUG2017-W11-B2/main/collated/main/ZY-Ang.md[Functional Code]
+* https://github.com/CS2103AUG2017-W11-B2/main/collated/test/ZY-Ang.md[Tests]
+* https://github.com/CS2103AUG2017-W11-B2/main/collated/docs/ZY-Ang.md[Pages]
 
 === Enhancement Added: Find by close words (fuzzy searching) and find by tags
 
@@ -68,7 +72,8 @@ include::../DeveloperGuide.adoc[leveloffset=2,tag=sorting]
 
 ---
 
-include::../UserGuide.adoc[leveloffset=2,tag=openNew]
+include::../UserGuide.adoc[leveloffset=2,tag=openfile]
+include::../UserGuide.adoc[leveloffset=2,tag=newfile]
 
 ---
 
@@ -103,6 +108,21 @@ include::../DeveloperGuide.adoc[leveloffset=2,tag=commandAbbreviations]
 
 ---
 
+=== Enhancement Added: Search Highlighting in HelpWindow
+
+==== Justification
+
+JavaFx's native WebView does not allow the user to easily search a html document, putting it on a subpar standard to modern
+web browsers. Implementing a search feature in the help window will allow the user to search for terms in the user guide with ease.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[leveloffset=2,tag=helpWindowHighlight]
+
+---
+
 === Enhancement Proposed: Markdown/HTML parser
 
 To replace the content field of the note/remark command with 'rich-text', to be displayed on the browser panel.
@@ -118,7 +138,10 @@ https://www.codacy.com/app/ZY-Ang/main/dashboard[Codacy].
 
 == Project: https://zy-ang.github.io/AutoNameGenerator/[AutoNameGenerator]
 
-{Optionally (not graded), you may include other projects in your portfolio.}
+== Other projects
+
+You can view my full portfolio https://zy-ang.github.io/Portfolio[here].
+
 endif::[]
 
 ifndef::env-github[]

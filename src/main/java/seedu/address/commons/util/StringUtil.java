@@ -97,7 +97,7 @@ public class StringUtil {
         return costs[b.length()];
     }
 
-    public static String apppendCrotchets(String s) {
+    public static String appendCrotchets(String s) {
         return "[" + s + "]";
     }
 
