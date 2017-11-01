@@ -200,7 +200,10 @@ Input format for Date and Time is "DD-MM-YYYY HH:MM"
 
 ****
 * Adds meeting with person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer 1,2,3, ...
-* Creation of meeting with multiple people at the same timing for an event is possible. i.e Group meeting. In this case, multiple Meeting Cards will be created.
+* Creation of meeting with multiple people at the same timing for an event is possible. i.e Group meeting. In this case, multiple Meeting Cards will be created. However, when opening Schedubook, if your next meeting is a group meeting, the reminder will show.
++
+image::Reminder.png[width="600"]
++
 * When adding a new meeting, you will be prompted to change the date and time of meeting if it will result in a clash with an existing meeting.
 ****
 
