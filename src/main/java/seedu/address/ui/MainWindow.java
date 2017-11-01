@@ -27,6 +27,8 @@ import seedu.address.commons.events.ui.SwitchToBrowserEvent;
 import seedu.address.commons.events.ui.ToggleListAllStyleEvent;
 import seedu.address.commons.events.ui.ToggleListPinStyleEvent;
 import seedu.address.commons.events.ui.ToggleSortByLabelEvent;
+import seedu.address.commons.events.ui.ToggleToPersonViewEvent;
+import seedu.address.commons.events.ui.ToggleToTaskViewEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -55,6 +57,8 @@ public class MainWindow extends UiPart<Region> {
     private ResultDisplay resultDisplay;
     private CommandBox commandBox;
     private SortFindPanel sortFindPanel;
+
+    private TaskListPanel taskListPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -63,6 +67,15 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private Label sortedByLabel;
+
+    @FXML
+    private Label organizerLabel;
+
+    @FXML
+    private Label personViewLabel;
+
+    @FXML
+    private Label taskViewLabel;
 
     @FXML
     private Label pinLabel;
@@ -78,6 +91,10 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private MenuItem helpOverlayExit;
+
+    @FXML
+    private StackPane taskListPlaceHolder;
+
 
     @FXML
     private HBox sortFindPanelPlaceholder;
@@ -163,6 +180,11 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+
+        browserPanel = new BrowserPanel();
+        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+
+        taskListPanel = new TaskListPanel(logic.getFilteredTaskList());
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -273,7 +295,6 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     private void handleListAllClicked() {
-        listAllToggleStyle();
         try {
             logic.execute("list");
         } catch (CommandException | ParseException e) {
@@ -286,7 +307,6 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     private void handleListPinnedClicked() {
-        listPinToggleStyle();
         try {
             logic.execute("listpin");
         } catch (CommandException | ParseException e) {
@@ -294,6 +314,30 @@ public class MainWindow extends UiPart<Region> {
         }
     }
     //@@author
+
+    /**
+     * Toggles to task view.
+     */
+    @FXML
+    private void handleTaskViewClicked() {
+        try {
+            logic.execute("task");
+        } catch (CommandException | ParseException e) {
+            logger.warning("Failed to toggle to task view using label");
+        }
+    }
+
+    /**
+     * Toggles to person view.
+     */
+    @FXML
+    private void handlePersonViewClicked() {
+        try {
+            logic.execute("person");
+        } catch (CommandException | ParseException e) {
+            logger.warning("Failed to toggle to person view using label");
+        }
+    }
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
@@ -332,6 +376,43 @@ public class MainWindow extends UiPart<Region> {
     private void handleSortByLabelEvent(ToggleSortByLabelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         sortedByLabel.setText(event.toString());
+    }
+
+    @Subscribe
+    private void handleToggleToTaskViewEvent(ToggleToTaskViewEvent event) {
+        switchToTaskView();
+    }
+
+
+    @Subscribe
+    private void handleToggleToPersonViewEvent(ToggleToPersonViewEvent event) {
+        switchToPersonView();
+    }
+
+    /**
+     * Switches style to person view.
+     */
+    private void switchToPersonView() {
+        personListPanelPlaceholder.getChildren().removeAll(taskListPanel.getRoot());
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        allLabel.setVisible(true);
+        pinLabel.setVisible(true);
+        organizerLabel.setText("Sorted By:");
+        personViewLabel.setStyle("-fx-text-fill: white");
+        taskViewLabel.setStyle("-fx-text-fill: #555555");
+    }
+
+    /**
+     * Switches style to task view.
+     */
+    private void switchToTaskView() {
+        personListPanelPlaceholder.getChildren().removeAll(personListPanel.getRoot());
+        personListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
+        allLabel.setVisible(false);
+        pinLabel.setVisible(false);
+        organizerLabel.setText("Showing:");
+        personViewLabel.setStyle("-fx-text-fill: #555555");
+        taskViewLabel.setStyle("-fx-text-fill: white");
     }
 
     private void switchToBrowser() {

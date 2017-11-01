@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+
 /**
  * Represents a Task in the addressbook
  */
@@ -13,19 +16,20 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
 
     private static final int UPCOMING_DAYS_THRESHOLD = 7;
 
-    private Header header;
+    private ObjectProperty<Header> header;
     private boolean isCompleted;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
     private LocalDateTime lastUpdatedTime;
 
     // ================ Constructors ==============================
+
     /**
      * Constructor for a task without date/time
      */
     public Task(Header header) {
         requireNonNull(header);
-        this.header = header;
+        this.header = new SimpleObjectProperty<>(header);
         this.isCompleted = false;
         this.startDateTime = null;
         this.endDateTime = null;
@@ -37,7 +41,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
      */
     public Task(Header header, Optional<LocalDateTime> deadline) {
         requireNonNull(header);
-        this.header = header;
+        this.header = new SimpleObjectProperty<>(header);
         this.isCompleted = false;
         this.startDateTime = null;
         this.endDateTime = deadline.orElse(null);
@@ -50,7 +54,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     public Task(Header header, Optional<LocalDateTime> startDateTime,
                 Optional<LocalDateTime> endDateTime) {
         requireNonNull(header);
-        this.header = header;
+        this.header = new SimpleObjectProperty<>(header);
         this.isCompleted = false;
         this.startDateTime = startDateTime.orElse(null);
         this.endDateTime = endDateTime.orElse(null);
@@ -71,8 +75,13 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     // ================ Getter methods ==============================
 
     @Override
-    public Header getHeader() {
+    public ObjectProperty<Header> headerProperty() {
         return header;
+    }
+
+    @Override
+    public Header getHeader() {
+        return header.get();
     }
 
     @Override
@@ -172,7 +181,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     // ================ Setter methods ==============================
 
     public void setHeader(Header header) {
-        this.header = header;
+        this.header.set(requireNonNull(header));
         setLastUpdatedTimeToCurrent();
     }
 

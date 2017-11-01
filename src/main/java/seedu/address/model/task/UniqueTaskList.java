@@ -131,7 +131,7 @@ public class UniqueTaskList implements Iterable<Task> {
         setTasks(replacement);
     }
 
-    public ObservableList<ReadOnlyTask> asObservableLis() {
+    public ObservableList<ReadOnlyTask> asObservableList() {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 

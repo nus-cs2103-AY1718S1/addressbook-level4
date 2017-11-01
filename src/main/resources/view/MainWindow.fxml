@@ -16,6 +16,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+
 <StackPane prefHeight="400.0" prefWidth="1249.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox>
@@ -72,12 +73,12 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label style="-fx-text-fill: white;" text="Person">
+                              <Label fx:id="personViewLabel" onMouseReleased="#handlePersonViewClicked" style="-fx-text-fill: white;" text="Person">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" left="5.0" />
                                  </GridPane.margin>
                               </Label>
-                              <Label text="Task" GridPane.columnIndex="1">
+                              <Label fx:id="taskViewLabel" onMouseReleased="#handleTaskViewClicked" text="Task" GridPane.columnIndex="1">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" left="10.0" />
                                  </GridPane.margin>
@@ -91,7 +92,7 @@
                                  <GridPane.margin>
                                     <Insets bottom="5.0" left="10.0" />
                                  </GridPane.margin></Label>
-                              <Label prefHeight="21.0" prefWidth="76.0" style="-fx-text-fill: white;" text="Sorted By:" GridPane.columnIndex="4">
+                              <Label fx:id="organizerLabel" prefHeight="21.0" prefWidth="76.0" style="-fx-text-fill: white;" text="Sorted By:" GridPane.columnIndex="4">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" />
                                  </GridPane.margin>
