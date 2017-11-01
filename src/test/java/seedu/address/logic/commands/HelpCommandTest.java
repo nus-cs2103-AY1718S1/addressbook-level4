@@ -10,6 +10,8 @@ import org.junit.Test;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
+//@@author Pengyuz
+
 public class HelpCommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();

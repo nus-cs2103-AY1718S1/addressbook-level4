@@ -13,7 +13,7 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteCommand;
 
-
+//@@author Pengyuz
 
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations

@@ -11,9 +11,11 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+//@@author Pengyuz
 /**
  * Deletes a person identified using it's last displayed index from the address book.
  */
+
 public class DeleteCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "delete";
