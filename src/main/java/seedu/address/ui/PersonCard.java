@@ -93,11 +93,10 @@ public class PersonCard extends UiPart<Region> {
     private void initPhoto(ReadOnlyPerson person) {
         try {
             File photoFile = new File(person.getPhoto().getFullPhotoDir());
-            if(photoFile.exists()) {
+            if (photoFile.exists()) {
                 FileInputStream fileStream = new FileInputStream(photoFile);
                 Image personPhoto = new Image(fileStream);
                 photo = new ImageView(personPhoto);
-
                 photo.setFitHeight(person.getPhoto().HEIGHT);
                 photo.setFitWidth(person.getPhoto().WIDTH);
                 cardPane.getChildren().add(photo);
