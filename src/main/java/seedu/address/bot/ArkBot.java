@@ -40,7 +40,10 @@ public class ArkBot extends AbilityBot {
     private static final String BOT_USERNAME = "ArkBot";
     private static final String BOT_MESSAGE_FAILURE = "Sorry, I don't understand.";
     private static final String BOT_MESSAGE_SUCCESS = "%s command has been successfully executed!";
-
+    private static final String BOT_MESSAGE_HELP = "Welcome to ArkBot, your friendly companion to ArkBot on Desktop.\n"
+                                                 + "Over here, you can interface with your Desktop application with "
+                                                 + "the following functions /add, /list, /delete, /undo, /redo, "
+                                                 + "/complete and /help.";
     private Logic logic;
     private Model model;
     private Optional<Message> lastKnownMessage;
@@ -162,7 +165,7 @@ public class ArkBot extends AbilityBot {
     }
 
     /**
-     * Replicates the effects of RedoCommand on ArkBot.
+     * Replicates the effects of UndoCommand on ArkBot.
      */
     public Ability undoCommand() {
         return Ability
@@ -184,7 +187,7 @@ public class ArkBot extends AbilityBot {
     }
 
     /**
-     * Replicates the effects of AddCommand on ArkBot.
+     * Replicates the effects of FindCommand on ArkBot.
      */
     public Ability findCommand() {
         return Ability
@@ -203,7 +206,31 @@ public class ArkBot extends AbilityBot {
                             lastKnownMessage = sender.send(parseDisplayParcels(formatParcelsForBot(parcels)),
                                     ctx.chatId());
                         } catch (CommandException | ParseException e) {
-                            sender.send(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE),
+                            sender.send(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE),
+                                    ctx.chatId());
+                        }
+                    });
+                })
+                .build();
+    }
+
+    /**
+     * Command to advise user on usage of bot.
+     */
+    public Ability helpCommand() {
+        return Ability
+                .builder()
+                .name("help")
+                .info("adds parcel to list")
+                .input(0)
+                .locality(Locality.ALL)
+                .privacy(Privacy.ADMIN)
+                .action(ctx -> {
+                    Platform.runLater(() -> {
+                        try {
+                            sender.send(BOT_MESSAGE_HELP), ctx.chatId());
+                        } catch (CommandException | ParseException e) {
+                            sender.send(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE),
                                     ctx.chatId());
                         }
                     });
