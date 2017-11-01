@@ -251,6 +251,7 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
+    //@@author Alim95
     /**
      * Opens the help overlay
      */
@@ -292,6 +293,7 @@ public class MainWindow extends UiPart<Region> {
             logger.warning("Failed to list pinned using label");
         }
     }
+    //@@author
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
@@ -307,6 +309,7 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author Alim95
     @Subscribe
     private void handleSwitchToBrowserEvent(SwitchToBrowserEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

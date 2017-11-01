@@ -8,7 +8,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.InvalidResultDisplayEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.ValidResultDisplayEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -108,6 +110,7 @@ public class CommandBox extends UiPart<Region> {
             commandTextField.setText("");
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            raise(new ValidResultDisplayEvent());
 
         } catch (CommandException | ParseException e) {
             initHistory();
@@ -115,6 +118,7 @@ public class CommandBox extends UiPart<Region> {
             setStyleToIndicateCommandFailure();
             logger.info("Invalid command: " + commandTextField.getText());
             raise(new NewResultAvailableEvent(e.getMessage()));
+            raise(new InvalidResultDisplayEvent());
         }
     }
 
@@ -148,6 +152,7 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    //@@author Alim95
     public void highlight() {
         this.commandTextField.setStyle("-fx-border-color: lightgreen; -fx-border-width: 2");
     }

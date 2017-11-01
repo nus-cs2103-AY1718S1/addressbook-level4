@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: AddressBook - Level 4
 AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-T15-B4/main/blob/master/collated/main/Alim95.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B4/main/blob/master/collated/test/Alim95.md[Test code]]
 
 === Enhancement Added: Sort
 
@@ -32,6 +32,35 @@ Some users find the contact they want by scrolling through the list as opposed t
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: First time tutorial
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=tutorial]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Currently when new users launch Bluebird for the first time, they will be lost as to what Bluebird has to offer and also what different UI panels mean.
+Therefore, there is a need to provide first time users of Bluebird a step-by-step tutorial on how Bluebird works.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=tutorial]
 
 #End of Extract#
 
@@ -67,12 +96,48 @@ include::../DeveloperGuide.adoc[tag=find]
 
 ---
 
-=== Enhancement Proposed: A quickstart tutorial for first time users of the application
+=== Enhancement Added: Pin/Unpin contact
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=pinunpin]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users may have some important contacts that they need to have quick access to at all times. Hence,
+this feature will solve the problem for them.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=pinunpin]
+
+#End of Extract#
+
+---
+
+
+
+=== Enhancement Proposed:
 
 {Explain similar to the Undo/Redo feature above.}
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Updated the UI of Bluebird
+(Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/14[#14], https://github.com/CS2103AUG2017-T15-B4/main/pull/58[#58],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/73[#73], https://github.com/CS2103AUG2017-T15-B4/main/pull/118[#118],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/134[#134], https://github.com/CS2103AUG2017-T15-B4/main/pull/143[#143],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/144[#144], https://github.com/CS2103AUG2017-T15-B4/main/pull/205[#205],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208])
+* Updated a help overlay for Bluebird (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/189[#189], https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208])
 

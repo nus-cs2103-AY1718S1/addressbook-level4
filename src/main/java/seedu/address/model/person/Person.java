@@ -82,6 +82,7 @@ public class Person implements ReadOnlyPerson {
         return isPrivate;
     }
 
+    //@@author Alim95
     @Override
     public ObjectProperty<Boolean> pinProperty() {
         return isPinned;
@@ -95,6 +96,7 @@ public class Person implements ReadOnlyPerson {
         this.isPinned.set(isPinned);
         return true;
     }
+    //@@author
 
     @Override
     public ObjectProperty<Phone> phoneProperty() {

@@ -5,9 +5,9 @@ import seedu.address.commons.events.BaseEvent;
 //@@author Alim95
 
 /**
- * An event requesting to toggle the style of Pin tab.
+ * Indicates that an invalid command is entered.
  */
-public class ToggleListPinStyleEvent extends BaseEvent {
+public class InvalidResultDisplayEvent extends BaseEvent {
 
     @Override
     public String toString() {

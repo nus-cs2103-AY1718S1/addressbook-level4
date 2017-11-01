@@ -126,6 +126,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
 
+    //@@author Alim95
     @Test
     public void commandBoxHighlight() {
         commandBox.highlight();
@@ -138,7 +139,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertEquals(commandBoxHandle.getStyle(),
                 "-fx-border-color: #383838 #383838 #ffffff #383838; -fx-border-width: 1");
     }
-
+    //@@author
     /**
      * Runs a command that fails, then verifies that <br>
      * - the text remains <br>

@@ -14,6 +14,7 @@ import seedu.address.commons.events.ui.SwitchToBrowserEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author Alim95
 /**
  * The panel for tutorial of the App.
  */

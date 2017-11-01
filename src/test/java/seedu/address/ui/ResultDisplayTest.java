@@ -37,6 +37,7 @@ public class ResultDisplayTest extends GuiUnitTest {
         assertEquals(NEW_RESULT_EVENT_STUB.message, resultDisplayHandle.getText());
     }
 
+    //@@author Alim95
     @Test
     public void resultDisplayHighlight() {
         resultDisplay.highlight();
