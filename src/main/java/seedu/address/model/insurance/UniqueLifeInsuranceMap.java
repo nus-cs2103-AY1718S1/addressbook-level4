@@ -92,7 +92,7 @@ public class UniqueLifeInsuranceMap {
     //@@author RSJunior37
     /**
      * Accessor to insurance list
-     * @return all existing insurances as ObservableList<ReadOnlyInsurance>
+     * @return all existing insurances as ReadOnly, ObservableList
      */
     public ObservableList<ReadOnlyInsurance> asObservableList() {
         assert CollectionUtil.elementsAreUnique(internalMap.values());
