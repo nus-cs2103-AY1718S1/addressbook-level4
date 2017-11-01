@@ -494,4 +494,6 @@ e.g.`select 2`
 e.g.`selectTask 2`
 * *Set Priority* : `setPriority INDEX c/PRIORITY INDEX` +
 e.g.`setPriority 1 c/2`
+* *Task By End* : `taskByEnd`
+* *Task By Priority* : `taskByPriority`
 * *Undo* : `undo`
