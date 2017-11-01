@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<!-- @@author jelneo -->
+<StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ProgressBar fx:id="progressBar" prefHeight="24.0" prefWidth="160.0" progress="0.0" StackPane.alignment="CENTER_LEFT" />
+      <Label fx:id="percentage" text="\$percentage" textAlignment="CENTER" StackPane.alignment="CENTER_LEFT">
+         <font>
+            <Font size="9.5" />
+         </font>
+         <StackPane.margin>
+            <Insets left="60.0" />
+         </StackPane.margin>
+      </Label>
+   </children>
+</StackPane>

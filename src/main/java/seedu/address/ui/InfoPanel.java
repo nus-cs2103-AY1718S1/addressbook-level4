@@ -35,17 +35,20 @@ public class InfoPanel extends UiPart<Region> {
     private static final String MESSAGE_INFO_EMAIL_FIELD = "Email: ";
     private static final String MESSAGE_INFO_POSTAL_CODE_FIELD = "S";
     private static final String MESSAGE_INFO_CLUSTER_FIELD = "General Location: ";
-    private static final String MESSAGE_INFO_DEBT_FIELD = "Debt: $";
+    private static final String MESSAGE_INFO_DEBT_FIELD = "Current Debt: $";
+    private static final String MESSAGE_INFO_TOTAL_DEBT_FIELD = "Total Debt: $";
     private static final String MESSAGE_INFO_INTEREST_FIELD = "Interest: ";
     private static final String MESSAGE_INFO_DATE_BORROW_FIELD = "Date Borrowed: ";
     private static final String MESSAGE_INFO_DEADLINE_FIELD = "Deadline: ";
     private static final String MESSAGE_INFO_DATE_REPAID_FIELD = "Date Repaid: ";
     private static final String MESSAGE_INFO_NEARBY_PERSON_FIELD = "All contacts in this area: ";
+    private static final String MESSAGE_INFO_DEBT_REPAYMENT_FIELD = "Debt repayment progress: ";
 
     private Logic logic;
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private NearbyPersonListPanel nearbyPersonListPanel;
+    private DebtRepaymentProgressBar debtRepaymentProgressBar;
 
     @FXML
     private Pane pane;
@@ -84,6 +87,10 @@ public class InfoPanel extends UiPart<Region> {
     @FXML
     private Label debt;
     @FXML
+    private Text totalDebtField;
+    @FXML
+    private Label totalDebt;
+    @FXML
     private Text interestField;
     @FXML
     private Label interest;
@@ -105,6 +112,10 @@ public class InfoPanel extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private StackPane nearbyPersonListPanelPlaceholder;
+    @FXML
+    private StackPane progressBarPlaceholder;
+    @FXML
+    private Text debtRepaymentField;
 
     public InfoPanel(Logic logic) {
         super(FXML);
@@ -127,11 +138,13 @@ public class InfoPanel extends UiPart<Region> {
         postalCodeField.setText(MESSAGE_INFO_POSTAL_CODE_FIELD);
         clusterField.setText(MESSAGE_INFO_CLUSTER_FIELD);
         debtField.setText(MESSAGE_INFO_DEBT_FIELD);
+        totalDebtField.setText(MESSAGE_INFO_TOTAL_DEBT_FIELD);
         interestField.setText(MESSAGE_INFO_INTEREST_FIELD);
         dateBorrowField.setText(MESSAGE_INFO_DATE_BORROW_FIELD);
         deadlineField.setText(MESSAGE_INFO_DEADLINE_FIELD);
         dateRepaidField.setText(MESSAGE_INFO_DATE_REPAID_FIELD);
         nearbyPersonField.setText(MESSAGE_INFO_NEARBY_PERSON_FIELD);
+        debtRepaymentField.setText(MESSAGE_INFO_DEBT_REPAYMENT_FIELD);
         bindListeners(person);
     }
 
@@ -144,6 +157,17 @@ public class InfoPanel extends UiPart<Region> {
         nearbyPersonListPanelPlaceholder.getChildren().clear();
         nearbyPersonListPanelPlaceholder.getChildren().add(nearbyPersonListPanel.getRoot());
     }
+
+    //@@author jelneo
+    /**
+     * Resets the debt repayment progress bar
+     * @param person the person whose person card is selected in the address book
+     */
+    private void resetDebtRepaymentProgressBar(ReadOnlyPerson person) {
+        debtRepaymentProgressBar = new DebtRepaymentProgressBar(person);
+        progressBarPlaceholder.getChildren().add(debtRepaymentProgressBar.getRoot());
+    }
+    //@@author
 
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
@@ -159,6 +183,7 @@ public class InfoPanel extends UiPart<Region> {
         cluster.textProperty().bind(Bindings.convert(person.clusterProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         debt.textProperty().bind(Bindings.convert(person.debtProperty()));
+        totalDebt.textProperty().bind(Bindings.convert(person.totalDebtProperty()));
         interest.textProperty().bind(Bindings.convert(person.interestProperty()));
         dateBorrow.textProperty().bind(Bindings.convert(person.dateBorrowProperty()));
         deadline.textProperty().bind(Bindings.convert(person.deadlineProperty()));
@@ -230,6 +255,7 @@ public class InfoPanel extends UiPart<Region> {
                 && postalCode.getText().equals(infoPanel.postalCode.getText())
                 && cluster.getText().equals(infoPanel.cluster.getText())
                 && debt.getText().equals(infoPanel.debt.getText())
+                && totalDebt.getText().equals(infoPanel.totalDebt.getText())
                 && interest.getText().equals(infoPanel.interest.getText())
                 && email.getText().equals(infoPanel.email.getText())
                 && deadline.getText().equals(infoPanel.deadline.getText())
@@ -253,11 +279,12 @@ public class InfoPanel extends UiPart<Region> {
         loadPersonInfo(event.getNewSelection().person);
         logic.updateSelectedPerson(event.getNewSelection().person);
         resetNearbyPersonListPanel(event.getNewSelection().person);
+        resetDebtRepaymentProgressBar(event.getNewSelection().person);
     }
 
     @Subscribe
     private void handleChangeInternalListEvent(ChangeInternalListEvent event) {
         unregisterAsAnEventHandler(this);
     }
-
+    
 }

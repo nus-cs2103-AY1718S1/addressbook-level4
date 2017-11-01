@@ -367,3 +367,7 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+.progress-bar {
+    -fx-accent: #3CB371;
+}

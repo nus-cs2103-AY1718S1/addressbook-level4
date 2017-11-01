@@ -48,6 +48,8 @@ public class XmlAdaptedPerson {
     @XmlElement (required = true)
     private String debt;
     @XmlElement (required = true)
+    private String totalDebt;
+    @XmlElement (required = true)
     private String interest;
     @XmlElement (required = true)
     private String dateBorrow;
@@ -83,6 +85,7 @@ public class XmlAdaptedPerson {
         postalCode = source.getPostalCode().value;
         interest = source.getInterest().value;
         debt = source.getDebt().toString();
+        totalDebt = source.getTotalDebt().toString();
         dateBorrow = source.getDateBorrow().value;
         deadline = source.getDeadline().value;
         dateRepaid = source.getDateRepaid().value;
@@ -111,14 +114,17 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address);
         final PostalCode postalCode = new PostalCode(this.postalCode);
         final Debt debt = new Debt(this.debt);
+        final Debt totalDebt = new Debt(this.totalDebt);
         final Interest interest = new Interest(this.interest);
         final DateBorrow dateBorrow = new DateBorrow(this.dateBorrow);
         final Deadline deadline = new Deadline(this.deadline);
         final DateRepaid dateRepaid = new DateRepaid(this.dateRepaid);
         final Date lastAccruedDate = DateUtil.convertStringToDate(this.lastAccruedDate);
         final Set<Tag> tags = new HashSet<>(personTags);
+
         Person adaptedPerson = new Person(name, handphone, homePhone, officePhone, email, address, postalCode, debt,
                 interest, deadline, tags);
+        adaptedPerson.setTotalDebt(totalDebt);
         adaptedPerson.setDateBorrow(dateBorrow);
         adaptedPerson.setDateRepaid(dateRepaid);
         adaptedPerson.setLastAccruedDate(lastAccruedDate);

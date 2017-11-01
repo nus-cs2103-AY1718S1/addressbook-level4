@@ -472,7 +472,6 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredWhitelistedPersons.equals(other.filteredWhitelistedPersons);
     }
 
-
     //==================== Event Handling Code ===============================================================
 
     @Subscribe
