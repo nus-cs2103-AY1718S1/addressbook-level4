@@ -14,6 +14,22 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `CS2103AUG2017-W09-B4`      Since: `Aug 2017`      Licence: `MIT`
 
+== Introduction
+
+=== About Bamboo
+
+Bamboo is a command-line interface (CLI) based address book application. 
+It is a one-stop solution to help you manage your contacts in an efficient and 
+convenient manner. Using Bamboo, you can organize contacts into groups, 
+find common schedules and get connected to your contacts’ social media platforms.
+
+=== Purpose
+
+This document serves as the developers' guide for developing Bamboo.
+It assumes that you have an intermediate understanding of Java.
+It describes how to start developing Bamboo with the Intellij IDE,
+as well as the structure of various components in the Bamboo application.
+
 == Setting up
 
 === Prerequisites
