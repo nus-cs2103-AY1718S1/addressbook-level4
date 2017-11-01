@@ -49,7 +49,7 @@ public class DateOfBirth {
         if (!isValidDateOfBirth(dob)) {
             throw new IllegalValueException(MESSAGE_DOB_CONSTRAINTS);
         }
-        this.dateOfBirth = DateParser.parser(dob);
+        this.dateOfBirth = new DateParser().parse(dob);
         this.dateSet = true;
     }
 

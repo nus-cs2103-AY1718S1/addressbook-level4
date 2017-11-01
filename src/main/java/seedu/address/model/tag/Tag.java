@@ -25,11 +25,9 @@ public class Tag {
     public Tag(String name) throws IllegalValueException {
         requireNonNull(name);
         String trimmedName = name.trim();
-        //@@author Juxarius
         if (trimmedName.isEmpty()) {
             throw new EmptyFieldException(PREFIX_TAG);
         }
-        //@@author
         if (!isValidTagName(trimmedName)) {
             throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
         }

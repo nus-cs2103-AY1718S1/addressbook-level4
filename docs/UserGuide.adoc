@@ -124,6 +124,8 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+
+// tag::pfind[]
 === Locating persons by the first few alphabets of the name: `pfind`
 `since v1.1`
 
@@ -146,6 +148,7 @@ Alternatively, this command can perform by directly inputting `PARTIALNAME` into
 
 image::searchbox.png[width="380"]
 
+// end::pfind[]
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +

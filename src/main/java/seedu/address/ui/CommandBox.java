@@ -95,7 +95,7 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.setText(text);
         commandTextField.positionCaret(commandTextField.getText().length());
     }
-
+    //@@author Juxarius
     /**
      * Handles the Enter button pressed event.
      */
@@ -109,7 +109,6 @@ public class CommandBox extends UiPart<Region> {
             commandTextField.setText("");
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
-            //@@author Juxarius
         } catch (EmptyFieldException efe) {
             initHistory();
             // autofill function triggered
@@ -118,7 +117,7 @@ public class CommandBox extends UiPart<Region> {
             commandTextField.setText(historySnapshot.previous());
             commandTextField.positionCaret(commandTextField.getText().length());
             raise(new NewResultAvailableEvent("Autofilled!", false));
-            //@@author
+
         } catch (CommandException | ParseException e) {
             initHistory();
             // handle command failure
@@ -127,6 +126,7 @@ public class CommandBox extends UiPart<Region> {
             raise(new NewResultAvailableEvent(e.getMessage(), true));
         }
     }
+    //@@author
 
     /**
      * Initializes the history snapshot.
