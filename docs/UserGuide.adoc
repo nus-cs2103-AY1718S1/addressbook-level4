@@ -238,6 +238,7 @@ Sort feature available since v1.3
 Sorts the list of person in the addressbook. +
 You may choose to sort based on a parameter and display in +
 ascending or descending order. +
+
 Format: `sort FIELD ORDER` +
 
 ****
@@ -276,37 +277,50 @@ Change the theme of the Rubrika to DarkTheme.
 [NOTE]
 Import feature available since v1.4.
 
-Imports a list of contacts from the selected vCard file. +
-Format: `import`
+To import a your contact from a pre-existing import file, you may choose to use the import functionality of Rubrika by calling the following command. +
+
+Format: `import` `File Path` or `import`
 
 ****
 * The function only imports user that do not exist in the current address book.
 * Duplicate persons will be ignored.
+* Only able to import .vcf or .xml files.
+* Only .vcf or .xml files exported by Rubrika will work.
+* You may use use an absolute path of a the import file if you want to load your import from a seperate Folder.
 ****
+
+Examples:
+
+* `import` +
+Opens up a file explorer for users to choose the file.
+
+* `import sample.vcf` +
+Imports the sample.vcf file found in the root folder.
+
+* `import sample.xml` +
+Imports the sample.xml file found in the root folder.
 
 === Exporting contacts: `export`
 
 [NOTE]
 Export feature available since v1.4. +
-Currently due to save path, it only works on windows platform.
 
+If you wish to export your contacts in your current Rubrika to add to another Rubrika application, you can use the export function of Rubrika by calling the following command.
 
-Exports the list of contact shown on the addressbook into a vCard file. +
-Format: `export`
+Format: `export Filepath`
 
 ****
-* Exports only the list that is being shown to the user. +
-* Exported contacts are saved into export.vcf file in the user's Desktop folder.
+* Only .vcf or .xml files are supported.
+* You may use use an absolute path of a folder if you want to save your export to a seperate Folder.
 ****
 
 Examples:
 
 * `list` +
-`import` +
-Exports the whole list of addressbook.
-* `findtag prospective` +
-`export` +
-Exports the list of people with prospective `TAG`.
+`export sample.vcf` +
+Exports the whole list of persons in addressbook into sample.vcf in root folder.
+* `export sample.xml` +
+Exports the whole list of persons in addressbook into sample.xml in root folder.
 
 === Change UI Theme : `theme`
 
