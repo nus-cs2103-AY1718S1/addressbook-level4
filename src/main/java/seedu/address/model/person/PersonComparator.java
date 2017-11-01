@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import java.util.Comparator;
 
+//@@author tpq95
 /**
  * A Person comparator that compares the {@code Name} alphabetically
  */

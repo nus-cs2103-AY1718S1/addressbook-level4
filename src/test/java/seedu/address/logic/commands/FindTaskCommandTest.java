@@ -75,6 +75,7 @@ public class FindTaskCommandTest {
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ASSIGNMENT, QUIZ, GYM, PERSONAL_PROJECT));
     }
 
+    //@@author tpq95
     @Test
     public void executeMultipleDeadlinesMultipleTasksFound() {
         String expectedMessage = String.format(MESSAGE_TASK_LISTED_OVERVIEW, 2);
@@ -88,6 +89,7 @@ public class FindTaskCommandTest {
         FindTaskCommand command = prepareCommand("code 01-11-2017 18-11-2017");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ASSIGNMENT, QUIZ, SUBMISSION));
     }
+    //@@author
 
     /**
      * Parses {@code userInput} into a {@code FindTaskCommand}.

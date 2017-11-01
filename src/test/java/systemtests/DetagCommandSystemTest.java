@@ -28,6 +28,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
 import seedu.address.model.tag.Tag;
 
+//@@author tpq95
 public class DetagCommandSystemTest extends AddressBookSystemTest {
 
     private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =
@@ -148,6 +149,7 @@ public class DetagCommandSystemTest extends AddressBookSystemTest {
         }
         return targetTag;
     }
+    //@@author
 
     /**
      * Deletes the person at {@code toDelete} by creating a default {@code DeleteCommand} using {@code toDelete} and

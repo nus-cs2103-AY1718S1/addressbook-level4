@@ -37,6 +37,7 @@ public class StringUtil {
         checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
         checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
 
+        //@@author tpq95
         // Check if the keyword is in dd-MM format
         Pattern p = Pattern.compile("\\d\\d-\\d\\d");
         Matcher m = p.matcher(preppedWord);
@@ -53,6 +54,7 @@ public class StringUtil {
         }
         return false;
     }
+    //@@author
 
     /**
      * Returns a detailed message of the t, including the stack trace.
