@@ -92,17 +92,27 @@ public class PersonCard extends UiPart<Region> {
      */
     private void initPhoto(ReadOnlyPerson person) {
         try {
-            if (person.getPhoto() != null) {
-                File photoFile = new File(person.getPhoto().getFullPhotoDir());
+            File photoFile = new File(person.getPhoto().getFullPhotoDir());
+            if(photoFile.exists()) {
                 FileInputStream fileStream = new FileInputStream(photoFile);
                 Image personPhoto = new Image(fileStream);
                 photo = new ImageView(personPhoto);
+
+                photo.setFitHeight(person.getPhoto().HEIGHT);
+                photo.setFitWidth(person.getPhoto().WIDTH);
+                cardPane.getChildren().add(photo);
+            } else {
+                File defaultPhotoFile = new File(person.getPhoto().getTemplatePhotoDir());
+                FileInputStream defaultFileStream = new FileInputStream(defaultPhotoFile);
+                Image defaultPersonPhoto = new Image(defaultFileStream);
+                photo = new ImageView(defaultPersonPhoto);
+
                 photo.setFitHeight(person.getPhoto().HEIGHT);
                 photo.setFitWidth(person.getPhoto().WIDTH);
                 cardPane.getChildren().add(photo);
             }
         } catch (Exception e) {
-            System.out.println("Image not found");
+            System.out.println("Image not found in directory");
         }
     }
 
