@@ -49,8 +49,9 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.add(new Person(toAdd));
     }
 
+    //@@author dennaloh
     /**
-     * Sorts the persons based on time
+     * Sorts the persons based on name
      *
      */
     public void sortPersons() {
@@ -94,6 +95,7 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndDeleted;
     }
 
+    //@@author low5545
     /**
      * Adds all persons in the argument person list to this list.
      */
@@ -106,6 +108,7 @@ public class UniquePersonList implements Iterable<Person> {
             }
         }
     }
+    //@@author
 
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);

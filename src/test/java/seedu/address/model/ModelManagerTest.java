@@ -51,14 +51,14 @@ public class ModelManagerTest {
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredPersonList().remove(0);
     }
-
+    //@@author junyango
     @Test
     public void getFilteredEventList_modifyList_throwsUnsupportedOperationException() {
         ModelManager modelManager = new ModelManager();
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredEventList().remove(0);
     }
-
+    //@@author
     @Test
     public void removeTag_successfullyRemoveTag() throws Exception {
         AddressBook addressBook = getTypicalAddressBook();
@@ -70,7 +70,7 @@ public class ModelManagerTest {
         int newTagSize = modelManager.getAddressBook().getTagList().size();
         assertEquals(1, originTagSize - newTagSize);
     }
-
+    //@@author junyango
     @Test
     public void addPerson_successfullyAddEvent() throws Exception {
         AddressBook addressBook = getTypicalAddressBook();
@@ -134,7 +134,7 @@ public class ModelManagerTest {
         int newEventListSize = modelManager.getAddressBook().getEventList().size();
         assertEquals(1, newEventListSize - originalEventListSize);
     }
-
+    //@@author
     @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();

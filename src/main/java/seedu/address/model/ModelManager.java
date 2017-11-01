@@ -63,6 +63,7 @@ public class ModelManager extends ComponentManager implements Model {
         this(new AddressBook(), new UserPrefs());
     }
 
+    //@@author low5545
     @Override
     public void addData(ReadOnlyAddressBook newData) {
         addressBook.addData(newData);
@@ -70,6 +71,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.sortEventList();
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
@@ -173,7 +175,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
         raise(new TagColorChangedEvent(tag, color));
     }
-
+    //@@author junyango
     //=========== Model support for activity component =============================================================
 
     @Override
@@ -199,6 +201,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removeEvent(event);
         indicateAddressBookChanged();
     }
+<<<<<<< HEAD
 
     //=========== Model support for activity component =============================================================
     @Override
@@ -214,6 +217,9 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+=======
+    //@@author
+>>>>>>> master
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -235,7 +241,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
-
+    //@@author junyango
     //=========== Filtered Activity List Accessors =============================================================
 
     @Override
@@ -253,6 +259,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
     }
+<<<<<<< HEAD
 
     //=========== Filtered Reminder List Accessors =============================================================
 
@@ -277,6 +284,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
 
+=======
+    //@@author
+>>>>>>> master
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

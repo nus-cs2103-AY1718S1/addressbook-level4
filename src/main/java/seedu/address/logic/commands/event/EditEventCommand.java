@@ -23,8 +23,12 @@ import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.property.Address;
 import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Name;
+<<<<<<< HEAD
 import seedu.address.model.reminder.Reminder;
 
+=======
+//@@author junyango
+>>>>>>> master
 /**
  * Edits the details of an existing person in the address book.
  */

@@ -24,8 +24,12 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.EventBuilder;
+<<<<<<< HEAD
 
 
+=======
+//@@author junyango
+>>>>>>> master
 public class AddEventCommandTest {
 
     @Rule

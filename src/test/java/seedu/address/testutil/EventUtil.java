@@ -6,7 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 import seedu.address.logic.commands.event.AddEventCommand;
 import seedu.address.model.event.ReadOnlyEvent;
-
+//@@author junyango
 /**
  * A utility class for Event.
  */

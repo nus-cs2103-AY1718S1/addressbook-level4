@@ -48,6 +48,7 @@ public abstract class Command {
         this.model = model;
     }
 
+    //@@author low5545
     /**
      * Provides {@code Storage} dependency to the command.
      * Commands making use of {@code Storage} should override this method to gain access.
@@ -67,6 +68,7 @@ public abstract class Command {
     public final void setCommandText(String commandText) {
         this.commandText = commandText;
     }
+    //@@author
 
     protected void raise(BaseEvent event) {
         eventsCenter.post(event);

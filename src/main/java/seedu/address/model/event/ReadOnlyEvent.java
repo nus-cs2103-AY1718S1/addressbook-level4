@@ -7,6 +7,7 @@ import javafx.beans.property.ObjectProperty;
 import seedu.address.model.property.Address;
 import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Name;
+<<<<<<< HEAD
 import seedu.address.model.property.Property;
 import seedu.address.model.property.UniquePropertyMap;
 import seedu.address.model.reminder.ReadOnlyReminder;
@@ -14,6 +15,9 @@ import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.UniqueReminderList;
 import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 
+=======
+//@@author junyango
+>>>>>>> master
 /**
  * A read-only immutable interface for an Event in the addressbook.
  * Implementations should guarantee: details are present and not null, field values are validated.

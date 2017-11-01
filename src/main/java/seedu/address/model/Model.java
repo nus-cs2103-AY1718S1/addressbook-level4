@@ -25,8 +25,10 @@ public interface Model {
     Predicate<ReadOnlyEvent> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
     Predicate<ReadOnlyReminder> PREDICATE_SHOW_ALL_REMINDERS = unused -> true;
 
+    //@@author low5545
     /** Adds extra data to the existing model */
     void addData(ReadOnlyAddressBook newData);
+    //@@author
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -62,7 +64,7 @@ public interface Model {
 
     /** Changes the color of an existing tag (through TagColorManager) */
     void setTagColor(Tag tag, String color);
-
+    //@@author junyango
     //=========== Model support for activity component =============================================================
 
     /** Adds an event */
@@ -73,6 +75,7 @@ public interface Model {
             throws DuplicateEventException, EventNotFoundException;
     /** Deletes the given event */
     void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
+<<<<<<< HEAD
 
     //=========== Model support for reminder component =============================================================
 
@@ -82,6 +85,9 @@ public interface Model {
     /** Deletes the given event */
     void deleteReminder(ReadOnlyReminder target) throws ReminderNotFoundException;
 
+=======
+    //@@author
+>>>>>>> master
     //=========== Filtered Person/Activity List support =============================================================
 
     /** Returns an unmodifiable view of the filtered person list */
