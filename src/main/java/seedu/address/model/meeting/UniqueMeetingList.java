@@ -18,7 +18,7 @@ import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
 import seedu.address.model.meeting.exceptions.MeetingClashException;
 import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 
-
+//@@author nelsonqyj
 /**
  * A list of meetings that enforces uniqueness between its elements and does not allow nulls.
  *
@@ -117,8 +117,8 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         internalMeetingList.sort((m1, m2)-> m1.getActualDate(m1.getDate().toString())
                 .compareTo(m2.getActualDate(m2.getDate().toString())));
     }
-    //@@author
 
+    //@@author nelsonqyj
     /**
      * Removes the equivalent meeting from the list.
      *

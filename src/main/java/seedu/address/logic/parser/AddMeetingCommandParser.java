@@ -15,6 +15,7 @@ import seedu.address.model.meeting.DateTime;
 import seedu.address.model.meeting.NameMeeting;
 import seedu.address.model.meeting.Place;
 
+//@@author nelsonqyj
 /**
  * Parses input arguments and creates a new AddMeetingCommand object
  */

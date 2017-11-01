@@ -8,6 +8,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.SelectMeetingCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author nelsonqyj
 /**
  * Parses input arguments and creates a new SelectMeetingCommand object
  */

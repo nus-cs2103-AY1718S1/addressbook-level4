@@ -59,6 +59,7 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.empty();
     }
 
+    //@@author nelsonqyj
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<NameMeeting>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -68,6 +69,7 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(new NameMeeting(name.get())) : Optional.empty();
     }
 
+    //@@author nelsonqyj
     /**
      * Parses a {@code Optional<String> date} into an {@code Optional<Date>} if {@code date} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -77,6 +79,7 @@ public class ParserUtil {
         return date.isPresent() ? Optional.of(new DateTime(date.get())) : Optional.empty();
     }
 
+    //@@author nelsonqyj
     /**
      * Parses a {@code Optional<String> Place} into an {@code Optional<Place>} if {@code place} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -113,6 +116,7 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
+    //@@author Melvin-leo
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<PersonToMeet>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -122,6 +126,7 @@ public class ParserUtil {
         return personName.isPresent() ? Optional.of(new PersonToMeet(personName.get())) : Optional.empty();
     }
 
+    //@@author Melvin-leo
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<NameMeeting>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.

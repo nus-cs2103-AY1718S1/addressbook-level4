@@ -9,6 +9,7 @@ import seedu.address.model.meeting.PhoneNum;
 import seedu.address.model.meeting.Place;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 
+//@@author nelsonqyj
 /**
  * A utility class to help with building Meeting objects.
  */

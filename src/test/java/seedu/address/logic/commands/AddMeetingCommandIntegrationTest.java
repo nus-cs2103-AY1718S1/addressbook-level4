@@ -18,6 +18,7 @@ import seedu.address.model.person.Person;
 import seedu.address.testutil.MeetingBuilder;
 import seedu.address.testutil.PersonBuilder;
 
+//@@author nelsonqyj
 /**
  * Contains integration tests (interaction with the Model) for {@code AddMeetingCommand}.
  */

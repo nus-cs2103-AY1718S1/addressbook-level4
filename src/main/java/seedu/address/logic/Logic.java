@@ -23,6 +23,7 @@ public interface Logic {
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
+    //@@author nelsonqyj
     /** Returns an unmodifiable view of the filtered list of meetings */
     ObservableList<ReadOnlyMeeting> getFilteredMeetingList();
 

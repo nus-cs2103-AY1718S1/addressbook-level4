@@ -2,6 +2,7 @@ package seedu.address.model.meeting.exceptions;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author nelsonqyj
 /**
  * Signals that the operation will result in duplicate Meeting objects.
  */
