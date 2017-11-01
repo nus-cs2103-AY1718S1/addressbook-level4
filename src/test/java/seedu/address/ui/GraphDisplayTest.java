@@ -1,12 +1,9 @@
 package seedu.address.ui;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 import static seedu.address.testutil.EventsUtil.postNow;
-
-import javax.swing.JComponent;
 
 import org.graphstream.graph.implementations.SingleGraph;
 import org.junit.Before;
@@ -49,7 +46,7 @@ public class GraphDisplayTest extends GuiUnitTest {
         // has been up-casted into a JComponent.
         postNow(NEW_GRAPH_INITIALISED_STUB);
         guiRobot.pauseForHuman();
-        assertThat(graphDisplayHandle.getContent(), instanceOf(JComponent.class));
+        assertNotNull(graphDisplayHandle.getContent());
     }
 
     /**
