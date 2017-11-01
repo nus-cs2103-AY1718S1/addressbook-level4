@@ -30,35 +30,35 @@ public class TypicalPersons {
 
     public static final ReadOnlyPerson ALICE = new PersonBuilder().withName("Alice Pauline")
             .withOccupation("Apple, CEO").withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
-            .withPhone("85355255").withWebsite("https://github.com/AlicePauline").withTags("friends").build();
+            .withPhone("85355255").withWebsite("https://twitter.com/AlicePauline").withTags("friends").build();
     public static final ReadOnlyPerson BENSON = new PersonBuilder().withName("Benson Meier")
             .withOccupation("NUS, student").withAddress("311, Clementi Ave 2, #02-25")
-            .withEmail("johnd@example.com").withPhone("98765432").withWebsite("https://github.com/BensonMeier")
+            .withEmail("johnd@example.com").withPhone("98765432").withWebsite("https://twitter.com/BensonMeier")
             .withTags("owesMoney", "friends").build();
     public static final ReadOnlyPerson CARL = new PersonBuilder().withName("Carl Kurz")
             .withOccupation("SBS, Bus Driver").withPhone("95352563").withEmail("heinz@example.com")
-            .withAddress("wall street").withWebsite("https://github.com/CarlKurz").build();
+            .withAddress("wall street").withWebsite("https://twitter.com/kurz").build();
     public static final ReadOnlyPerson DANIEL = new PersonBuilder().withName("Daniel Meier")
             .withOccupation("Prudential, Manager").withPhone("87652533").withEmail("cornelia@example.com")
-            .withAddress("10th street").withWebsite("https://github.com/DanielMeier").withTags("colleagues").build();
+            .withAddress("10th street").withWebsite("https://twitter.com/DanielMeier").withTags("colleagues").build();
     public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer")
             .withOccupation("NTU, Professor").withPhone("9482224").withTags("family").withEmail("werner@example.com")
-            .withAddress("michegan ave").withWebsite("https://github.com/ElleMeyer").build();
+            .withAddress("michegan ave").withWebsite("https://twitter.com/ElleMeyer").build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz")
             .withOccupation("Microsoft, Janitor").withPhone("9482427").withEmail("lydia@example.com")
-            .withAddress("little tokyo").withWebsite("https://github.com/FionaKunz").build();
+            .withAddress("little tokyo").withWebsite("https://twitter.com/FionaKunz").build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best")
             .withOccupation("NBA, Basketball player").withPhone("9482442").withEmail("anna@example.com")
-            .withAddress("4th street").withWebsite("https://github.com/GeorgeBest").build();
+            .withAddress("4th street").withWebsite("https://twitter.com/GeorgeBest").build();
 
     // Manually added
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier")
             .withOccupation("Apple, Manager").withPhone("8482424")
-            .withEmail("stefan@example.com").withAddress("little india").withWebsite("https://github.com/HoonMeier")
+            .withEmail("stefan@example.com").withAddress("little india").withWebsite("https://twitter.com/HoonMeier")
             .build();
     public static final ReadOnlyPerson IDA = new PersonBuilder().withName("Ida Mueller")
             .withOccupation("Samsung, Clerk").withPhone("8482131")
-            .withEmail("hans@example.com").withAddress("chicago ave").withWebsite("https://github.com/IdaMueller")
+            .withEmail("hans@example.com").withAddress("chicago ave").withWebsite("https://twitter.com/IdaMueller")
             .build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}

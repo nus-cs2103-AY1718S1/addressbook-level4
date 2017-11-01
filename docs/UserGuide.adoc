@@ -17,7 +17,7 @@ By: `CS2103-T10-B4`      Since: `Sept 2017`      Licence: `MIT`
 
 == Product Overview
 
-YellowPages is a free-to-use enhanced address book application which you can use to keep track of all your contact details. The application comes in-built with multiple new features not found in regular address books which creates a more user-friendly experience for all.
+TheYellowPage is a free-to-use enhanced address book application which you can use to keep track of all your contact details. The application comes in-built with multiple new features not found in regular address books which creates a more user-friendly experience for all.
 
 == About
 

@@ -6,7 +6,7 @@
         <phone isPrivate="false">9482424</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
-        <website isPrivate="false">https://github.com/Hans</website>
+        <website isPrivate="false">https://twitter.com/Hans</website>
         <remark isPrivate="false"></remark>
     </persons>
     <persons>
@@ -15,7 +15,7 @@
         <phone isPrivate="false">87249245</phone>
         <email isPrivate="false">ruth@example.com</email>
         <address isPrivate="false">81th street</address>
-        <website isPrivate="false">https://github.com/Ruth</website>
+        <website isPrivate="false">https://twitter.com/Ruth</website>
         <remark isPrivate="false"></remark>
     </persons>
     <persons>
@@ -24,7 +24,7 @@
         <phone isPrivate="false">95352563</phone>
         <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street</address>
-        <website isPrivate="false">https://github.com/Heinz</website>
+        <website isPrivate="false">https://twitter.com/Heinz</website>
         <remark isPrivate="false"></remark>
     </persons>
     <persons>
@@ -33,7 +33,7 @@
         <phone isPrivate="false">87652533</phone>
         <email isPrivate="false">cornelia@example.com</email>
         <address isPrivate="false">10th street</address>
-        <website isPrivate="false">https://github.com/Cornelia</website>
+        <website isPrivate="false">https://twitter.com/Cornelia</website>
         <remark isPrivate="false"></remark>
     </persons>
     <persons>
@@ -42,7 +42,7 @@
         <phone isPrivate="false">9482224</phone>
         <email isPrivate="false">werner@example.com</email>
         <address isPrivate="false">michegan ave</address>
-        <website isPrivate="false">https://github.com/Werner</website>
+        <website isPrivate="false">https://twitter.com/Werner</website>
         <remark isPrivate="false"></remark>
     </persons>
     <persons>
@@ -51,7 +51,7 @@
         <phone isPrivate="false">9482427</phone>
         <email isPrivate="false">lydia@example.com</email>
         <address isPrivate="false">little tokyo</address>
-        <website isPrivate="false">https://github.com/Lydia</website>
+        <website isPrivate="false">https://twitter.com/Lydia</website>
         <remark isPrivate="false"></remark>
     </persons>
     <persons>
@@ -60,7 +60,7 @@
         <phone isPrivate="false">9482442</phone>
         <email isPrivate="false">anna@example.com</email>
         <address isPrivate="false">4th street</address>
-        <website isPrivate="false">https://github.com/Anna</website>
+        <website isPrivate="false">https://twitter.com/Anna</website>
         <remark isPrivate="false"></remark>
     </persons>
     <persons>
@@ -69,7 +69,7 @@
         <phone isPrivate="false">8482424</phone>
         <email isPrivate="false">stefan@example.com</email>
         <address isPrivate="false">little india</address>
-        <website isPrivate="false">https://github.com/Stefan</website>
+        <website isPrivate="false">https://twitter.com/Stefan</website>
         <remark isPrivate="false"></remark>
     </persons>
     <persons>
@@ -78,7 +78,7 @@
         <phone isPrivate="false">8482131</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">chicago ave</address>
-        <website isPrivate="false">https://github.com/Martin</website>
+        <website isPrivate="false">https://twitter.com/Martin</website>
         <remark isPrivate="false"></remark>
     </persons>
 </addressbook>
