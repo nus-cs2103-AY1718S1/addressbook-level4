@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -146,5 +147,10 @@ public class ModelManager extends ComponentManager implements Model {
         if (addressBook.removeTag(str)) {
             indicateAddressBookChanged();
         }
+    }
+
+    @Override
+    public TreeSet<Integer> generateMeetingTime(Index[] ListOfIndex){
+        return addressBook.generateMeetingTime(ListOfIndex);
     }
 }

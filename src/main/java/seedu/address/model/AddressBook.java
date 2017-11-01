@@ -11,11 +11,15 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.PossibleDays;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.core.PossibleTimes;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -127,6 +131,24 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, editedPerson);
+    }
+
+
+    public TreeSet<Integer> generateMeetingTime(Index[] ListOfIndex){
+        TreeSet<Integer> satisfiedTimeSet = new TreeSet<>();
+        for(int i = 0; i < PossibleDays.days.length; i++){
+            for(int k = 0; k < PossibleTimes.times.length;)
+            satisfiedTimeSet.add(PossibleDays.days[i] * PossibleDays.dayCoefficient + PossibleTimes.times[k]);
+        }
+        for(int j = 0; j < ListOfIndex.length; j++){
+            Schedule currentSchedule = getPersonList().get(ListOfIndex[j].getZeroBased()).getSchedule();
+            for(Integer timeNumber : satisfiedTimeSet){
+                if(currentSchedule.containsTimeNumber(timeNumber)){
+                    satisfiedTimeSet.remove(timeNumber);
+                }
+            }
+        }
+        return satisfiedTimeSet;
     }
 
     /**
