@@ -16,11 +16,23 @@ By: `CS2103AUG2017-W15-B4`      Since: `Oct 2017`      Licence: `MIT`
 
 == Welcome to 3W
 
-3W stands for "Who, What & Where". It is an application for University students, business people and all those who have a busy daily schedule.
-3W stores information about your contact, your tasks, and build linkage between them for cross references.
-3W supports map show for contact address and task venue with a Google map window.
-3W bases on command line to interact.
-Live neat with 3W.
+* 3W stands for "Who, What & Where". It is an application for University students, business people and all those who have a busy daily schedule.
+* 3W stores information about your contact, your tasks, and build linkage between them for cross references.
+* 3W supports map show for contact address and task venue with a Google map window.
+* 3W bases on command line to interact.
+* Live neat with 3W.
+
+=== Cool features
+
+==== Routes Planning
+
+3W uses google map functions to plan the routes to contacts' address. +
+Usage: Click the certain person(Or use the `select` command), then enter your current position in starting point
+
+==== Contact&Task Linkage
+
+3W support building linkage between contacts and tasks. +
+Usage: By a link command, refer to link:#link_Operations[Link Operations] for details.
 
 == Quick Start
 
@@ -61,23 +73,16 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Cool features
-
-==== Routes Planning
-
-using google map functions to plan the routes to contacts' address +
-Usage: click the certain person(Or use the `select` command), then enter your current position in starting point
-
 === General Operation
 
 ==== Viewing help : `help`
 
-Format: `help`
+Format: `help`/`?`
 
 ==== Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: `history`/`h`
 
 [NOTE]
 ====
