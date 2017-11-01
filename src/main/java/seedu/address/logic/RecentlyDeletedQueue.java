@@ -18,6 +18,11 @@ public class RecentlyDeletedQueue {
         count = 0;
     }
 
+    public RecentlyDeletedQueue(LinkedList<ReadOnlyPerson> newQueue) {
+        recentlyDeletedQueue = newQueue;
+        count = newQueue.size();
+    }
+
     /**
      * Offers the @param person in the queue when the @param person is deleted by
      * {@code DeleteCommand} or {@code DeleterMultipleCommand}.
@@ -39,5 +44,8 @@ public class RecentlyDeletedQueue {
         return new LinkedList<>(recentlyDeletedQueue);
     }
 
+    public void setQueue(LinkedList<ReadOnlyPerson> newQueue) {
+        recentlyDeletedQueue = newQueue;
+    }
 
 }

@@ -35,5 +35,6 @@ public class UndoCommand extends Command {
                         UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue) {
         this.model = model;
         this.undoRedoStack = undoRedoStack;
+        this.queue = queue;
     }
 }
