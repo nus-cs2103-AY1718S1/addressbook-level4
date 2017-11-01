@@ -35,19 +35,9 @@ public class ScheduleCommand extends Command {
     private final Index targetIndex;
     private final Calendar date;
 
-    public ScheduleCommand() {
-        this.targetIndex = null;
-        this.date = null;
-    }
-
     public ScheduleCommand(Index targetIndex, Calendar date) {
         this.targetIndex = targetIndex;
         this.date = date;
-    }
-
-    public ScheduleCommand(Index targetIndex) {
-        this.targetIndex = targetIndex;
-        this.date = null;
     }
 
     @Override
