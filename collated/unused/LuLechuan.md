@@ -1,5 +1,5 @@
-# LuLechuan-unused
-###### \Birthday.java
+# LuLechuan
+###### /Birthday.java
 ``` java
 /**
  * Represents a Person's birthday in the address book.
@@ -45,7 +45,7 @@ public class Birthday {
 
 }
 ```
-###### \BirthdayCommand.java
+###### /BirthdayCommand.java
 ``` java
 /**
  * Adds or updates the birthday of a person identified using it's last displayed index from the address book.
@@ -113,7 +113,7 @@ public class BirthdayCommand extends UndoableCommand {
     }
 }
 ```
-###### \BirthdayCommandParser.java
+###### /BirthdayCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new BirthDayCommand object
@@ -147,7 +147,7 @@ public class BirthdayCommandParser implements Parser<BirthdayCommand> {
 
 }
 ```
-###### \BirthdayCommandTest.java
+###### /BirthdayCommandTest.java
 ``` java
 public class BirthdayCommandTest {
 
