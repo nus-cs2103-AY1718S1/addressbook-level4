@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlID;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
@@ -17,6 +18,8 @@ import seedu.address.model.task.Task;
  */
 public class XmlAdaptedTask {
 
+    @XmlElement
+    public static Integer nextId = 0;
     @XmlElement(required = true)
     private String taskName;
     @XmlElement(required = true)
@@ -26,9 +29,13 @@ public class XmlAdaptedTask {
     @XmlElement(required = true)
     private String endDateTime;
     @XmlElement
+    private Integer id;
+    @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
     @XmlElement(required = true)
     private Boolean complete;
+    @XmlElement
+    private List<Integer> peopleIndices = new ArrayList<>();
     @XmlElement(required = true)
     private Integer priority;
 
@@ -51,10 +58,12 @@ public class XmlAdaptedTask {
         startDateTime = source.getStartDateTime();
         endDateTime = source.getEndDateTime();
         tagged = new ArrayList<>();
+        id = source.getId();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
         complete = source.getComplete();
+        peopleIndices = source.getPeopleIds();
         priority = source.getPriority();
     }
 
@@ -74,7 +83,11 @@ public class XmlAdaptedTask {
         final String endDateTime = this.endDateTime;
         final Set<Tag> tags = new HashSet<>(personTags);
         final Boolean complete = this.complete;
+        final ArrayList<Integer> peopleIndices = new ArrayList<>(this.peopleIndices);
         final Integer priority = this.priority;
-        return new Task(taskName, taskDescription, startDateTime, endDateTime, tags, complete, priority);
+        final Integer id = this.id;
+        return new Task(taskName, taskDescription, startDateTime, endDateTime, tags, complete, priority, id,
+                peopleIndices);
     }
+
 }

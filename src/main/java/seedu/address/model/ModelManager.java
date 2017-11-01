@@ -159,6 +159,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateTaskBookChanged();
     }
 
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**

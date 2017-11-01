@@ -33,7 +33,6 @@ public class MarkTaskCommandTest {
     public void execute_validIndexList_success() throws Exception {
 
         ReadOnlyTask taskToMark = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
-        ReadOnlyTask expectedTask = new Task(taskToMark, true);
 
         //System.out.println(taskToMark);
         MarkTaskCommand markTaskCommand = prepareCommand(INDEX_FIRST_TASK);

@@ -73,4 +73,5 @@ public interface Model {
     void taskByEnd();
 
     void taskByPriority();
+
 }

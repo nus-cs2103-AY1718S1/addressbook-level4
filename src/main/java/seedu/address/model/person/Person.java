@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.storage.XmlAdaptedPerson.nextId;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -23,6 +24,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<Remark> remark;
+    private ObjectProperty<Integer> id;
 
     private ObjectProperty<UniqueTagList> tags;
 
@@ -36,6 +38,20 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(remark);
+        this.id = new SimpleObjectProperty<>(nextId);
+        nextId++;
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+    }
+
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags, Integer id) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.remark = new SimpleObjectProperty<>(remark);
+        this.id = new SimpleObjectProperty<>(id);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -45,7 +61,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRemark(),
-                source.getTags());
+                source.getTags(), source.getId());
     }
 
     public void setName(Name name) {
@@ -116,6 +132,16 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Remark getRemark() {
         return remark.get();
+    }
+
+    @Override
+    public ObjectProperty<Integer> idProperty() {
+        return id;
+    }
+
+    @Override
+    public Integer getId() {
+        return id.get();
     }
 
     /**
