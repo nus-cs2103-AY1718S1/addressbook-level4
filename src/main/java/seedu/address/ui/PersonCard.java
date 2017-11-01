@@ -21,6 +21,7 @@ public class PersonCard extends UiPart<Region> {
     private static HashMap<String, String> tagColors = new HashMap<>();
     private static HashMap<String, String> webLinkColors = new HashMap<>();
 
+    //@@author hansiang93
     static {
         webLinkColors.put("facebook", "#3b5998");
         webLinkColors.put("twitter", "#00aced");
@@ -28,6 +29,7 @@ public class PersonCard extends UiPart<Region> {
         webLinkColors.put("instagram", "#8a3ab9");
         webLinkColors.put("others", "grey");
     }
+    //@@author
 
     private static Random random = new Random();
 
