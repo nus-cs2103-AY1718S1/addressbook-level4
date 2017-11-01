@@ -129,6 +129,39 @@ image::SettingsPaneInOut.png[width="700"]
 
 ---
 
+=== Enhancement Added: Meeting Display Panel
+
+==== External Behavior
+
+Displays the list of upcoming meetings to the user on the main display window. Accessible through the `choose` command to select the display type.
+
+image::meeting_panel.png[width="700"]
+
+==== Justification
+
+Key part of OurAB that is targeted at university students to help facilitate managing their meetings
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+
+When the user executes the `choose` command under the `meeting` keyword, an event is raised to hide the current display, which is a WebView.
+Since the meeting display cannot be implemented using a WebView, the root view of the BrowserPanel.fxml is first removed from the placeholder, then the view of MeetingPanel.fxml is added into the placeholder instead.
+The meeting information is retrieved from a ReadOnlyMeetingList converted into an ObservableList<Meeting>, and stored into a list view with list cells containing 5x1 GridPanes, each populated with information on the meeting.
+
+==== Design Considerations
+
+**Aspect:** Constructor of the MeetingPanel class +
+**Alternative:** Instead of taking in logic, directly take in an ObservableList<Meeting> that is called from MainWindow.java. +
+**Pros:** Less coupling since there is no logic component in the MeetingPanel class. +
+**Cons:** Since the Meeting class does not have getter methods to obtain person strings and instead uses a mapped unique id system to obtain each person's name through the ReadOnlyAddressBook, a instance of the model object is required to obtain the strings of each person's name in the meeting object. +
+**Alternative 2:** Implement a direct getter method for the person's string in the meeting object. +
+**Pros:** Lesser code complexity; we no longer need a method in the LogicManager class to obtain person strings through the ReadOnlyAddressBook using the Meeting class' unique IDs. +
+**Pros:** Less coupling since there is no logic component in the MeetingPanel class. +
+**Cons:** Invalidates the unique id system currently in place for the meeting class.
+
+---
+
 === Enhancement Proposed:
 
 === Other contributions
