@@ -176,6 +176,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.remove(t);
     }
 
+    //@@author limcel
     //// schedule-level operations
 
     public void addSchedule(Schedule s) {
@@ -185,6 +186,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removeSchedule(Schedule s) throws ScheduleNotFoundException {
         schedules.remove(s);
     }
+    //@@author limcel
 
     //// util methods
 
@@ -204,10 +206,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         return tags.asObservableList();
     }
 
+    //@@author limcel
     public ObservableList<Schedule> getScheduleList() {
         System.out.println(schedules.asObservableList());
         return schedules.asObservableList();
     }
+    //@@author limcel
 
     @Override
     public boolean equals(Object other) {
@@ -223,7 +227,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         return Objects.hash(persons, tags);
     }
 
+    //@@author limcel
     public ObservableList<ReadOnlyPerson> listOfPersonNameSorted() {
         return persons.asObservableListSortedByName();
     }
+    //@@author limcel
 }

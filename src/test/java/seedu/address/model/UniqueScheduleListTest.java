@@ -17,7 +17,7 @@ import seedu.address.model.schedule.UniqueScheduleList;
 import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 import seedu.address.testutil.TypicalPersons;
 
-
+//@@author limcel
 public class UniqueScheduleListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

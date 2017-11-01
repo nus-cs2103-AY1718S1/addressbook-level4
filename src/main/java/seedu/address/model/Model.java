@@ -40,6 +40,7 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    //@@author limcel
     /**
      * Deletes the given {@code tag} associated with any person in the addressbook.
      *
@@ -47,6 +48,7 @@ public interface Model {
      * @throws DuplicatePersonException if there are multiple same {@code tag} on a person.
      */
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException;
+    //@@author limcel
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
@@ -57,6 +59,7 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    //@@author limcel
     /**
      * Sorts the list in alphabetical order.
      * @throws NullPointerException if {@code contactList} is null.
@@ -71,4 +74,5 @@ public interface Model {
 
     /** Returns an unmodifiable view of the schedules list */
     ObservableList<Schedule> getScheduleList();
+    //@@author limcel
 }

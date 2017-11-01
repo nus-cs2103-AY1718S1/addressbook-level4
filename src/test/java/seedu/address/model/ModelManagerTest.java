@@ -30,6 +30,7 @@ public class ModelManagerTest {
         modelManager.getFilteredPersonList().remove(0);
     }
 
+    //@@author limcel
     @Test
     public void testDeleteTag() throws PersonNotFoundException, IllegalValueException, TagNotFoundException {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
@@ -42,6 +43,7 @@ public class ModelManagerTest {
         AddressBook oldAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         assertFalse(addressBook.getPersonList().equals(oldAddressBook));
     }
+    //@@author limcel
     @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();

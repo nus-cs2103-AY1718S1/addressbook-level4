@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 
+//@@author limcel
 /**
  * A list of schedules that enforces no nulls between its elements.
  *

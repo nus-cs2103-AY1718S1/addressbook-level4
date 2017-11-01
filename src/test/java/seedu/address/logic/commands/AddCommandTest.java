@@ -126,6 +126,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author limcel
         @Override
         public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
@@ -152,6 +153,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return getScheduleList();
         }
+        //@@author limcel
 
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {

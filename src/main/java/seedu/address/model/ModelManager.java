@@ -89,6 +89,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author limcel
     @Override
     public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException {
         for (int i = 0; i < addressBook.getPersonList().size(); i++) {
@@ -131,6 +132,7 @@ public class ModelManager extends ComponentManager implements Model {
         ObservableList<Schedule> list = addressBook.getScheduleList();
         return FXCollections.unmodifiableObservableList(list);
     }
+    //@@author limcel
 
     //=========== Filtered Person List Accessors =============================================================
 

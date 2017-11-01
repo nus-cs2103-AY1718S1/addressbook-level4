@@ -25,6 +25,7 @@ import seedu.address.model.schedule.UniqueScheduleList;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
+//@@author limcel
 public class ScheduleCommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();

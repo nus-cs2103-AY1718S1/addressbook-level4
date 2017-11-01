@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.schedule.Schedule;
 
+//@@author limcel
 /**
  * JAXB-friendly adapted version of the Schedule.
  */

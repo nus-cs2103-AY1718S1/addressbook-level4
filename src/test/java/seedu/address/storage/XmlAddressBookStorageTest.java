@@ -141,6 +141,7 @@ public class XmlAddressBookStorageTest {
         saveAddressBook(new AddressBook(), null);
     }
 
+    //@@author limcel
     @Test
     public void createNewXmlAdaptedScheduleTest() throws IllegalValueException {
         Calendar date = Calendar.getInstance();
@@ -167,5 +168,6 @@ public class XmlAddressBookStorageTest {
         }
         return false;
     }
+    //@@author limcel
 
 }

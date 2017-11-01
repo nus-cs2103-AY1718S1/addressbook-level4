@@ -22,11 +22,12 @@ public interface ReadOnlyAddressBook {
      */
     ObservableList<Tag> getTagList();
 
-
+    //@@author limcel
     /**
      * Returns an unmodifiable view of the schedules list.
      * This list will not contain any duplicate schedules.
      */
     ObservableList<Schedule> getScheduleList();
+    //@@author limcel
 
 }

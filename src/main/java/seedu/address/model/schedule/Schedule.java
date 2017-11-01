@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
+//@@author limcel
 /**
  * Represents the user's schedule in the address book.
  */
