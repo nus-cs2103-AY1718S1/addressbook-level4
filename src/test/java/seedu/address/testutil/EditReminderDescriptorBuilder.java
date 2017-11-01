@@ -1,4 +1,4 @@
-//@@ author inGall
+//@@author inGall
 package seedu.address.testutil;
 
 import java.util.Arrays;
