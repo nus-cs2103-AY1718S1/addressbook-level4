@@ -22,7 +22,7 @@ public class AddCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
-            + "Parameters: "
+            + "\n n/NAME is a compulsory field \n" + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
@@ -57,7 +57,6 @@ public class AddCommand extends UndoableCommand {
         } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
-
     }
 
     @Override
