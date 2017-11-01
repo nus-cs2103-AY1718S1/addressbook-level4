@@ -31,7 +31,6 @@ public class Autocompleter {
 
     private int resultIndex;
     private int countingIndex;
-    private int maxIndex;
     private String textInCommandBox;
     private AutocompleteState state;
     private AutocompleteCommand currentCommand;
@@ -101,7 +100,7 @@ public class Autocompleter {
 
     private int cycleCountingIndex() {
         int currentIndex = countingIndex;
-        maxIndex = logic.getFilteredParcelList().size();
+        int maxIndex = logic.getFilteredParcelList().size();
         countingIndex = (countingIndex + 1) % (maxIndex + 1);
         if (countingIndex == 0) {
             countingIndex = 1;
@@ -137,7 +136,6 @@ public class Autocompleter {
         }
 
         if (AutocompleteCommand.hasIndexParameter(commandWord)) {
-            //System.out.println(needIndex(arguments));
             if(!(AutocompleteCommand.hasPrefixParameter(commandWord)) || needIndex(arguments)) {
                 resetCountingAndMaxIndexIfNeeded();
                 state = AutocompleteState.INDEX;
@@ -146,12 +144,12 @@ public class Autocompleter {
         }
 
         if (AutocompleteCommand.hasPrefixParameter(commandWord)) {
-            possibleAutocompleteResults = getMissingPrefixes(arguments);
             if (lastTwoCharactersArePrefix(commandBoxText)) {
                 resetIndexIfNeeded();
                 state = AutocompleteState.COMMAND_CYCLE_PREFIX;
                 return;
             }
+            possibleAutocompleteResults = getMissingPrefixes(arguments);
             state = AutocompleteState.COMMAND_NEXT_PREFIX;
         }
 
