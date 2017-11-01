@@ -1,11 +1,16 @@
 package seedu.address.model.person;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+
 import java.time.LocalDateTime;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.util.TimeConvertUtil.convertTimeToString;
 
 public class TodoItem implements Comparable<TodoItem>{
+
+    public static final String MESSAGE_TODOITEM_CONSTRAINTS =
+            "The end time should be late than start time. The start time should be the future.";
 
     public final LocalDateTime start;
     public final LocalDateTime end;
@@ -17,18 +22,31 @@ public class TodoItem implements Comparable<TodoItem>{
      * @param end : the end time of the task, can be null
      * @param task : task in string, cannot be null
      */
-    public TodoItem(LocalDateTime start, LocalDateTime end, String task) {
+    public TodoItem(LocalDateTime start, LocalDateTime end, String task)
+            throws IllegalValueException {
         requireNonNull(start, task);
+        if (!isValidTodoItem(start, end)) {
+            throw new IllegalValueException(MESSAGE_TODOITEM_CONSTRAINTS);
+        }
         this.start = start;
         this.end = end;
         this.task = task.trim();
     }
 
+    public boolean isValidTodoItem(LocalDateTime start, LocalDateTime end) {
+        if (end != null && end.compareTo(start) < 0) {
+            return false;
+        } else if (start.compareTo(LocalDateTime.now()) < 0) {
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public String toString() {
         return "From:" + convertTimeToString(start)
-                + "\tTo:"+convertTimeToString(end)
-                + "\t" + task;
+                + " To:"+convertTimeToString(end)
+                + " Task:" + task;
     }
 
     @Override

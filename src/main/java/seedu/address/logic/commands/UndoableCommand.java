@@ -63,19 +63,6 @@ public abstract class UndoableCommand extends Command {
     @Override
     public final CommandResult execute() throws CommandException {
         saveAddressBookSnapshot();
-        System.out.println("1");
-        List<ReadOnlyPerson> personList = previousAddressBook.getPersonList();
-        for (ReadOnlyPerson person : personList) {
-            System.out.println(person.getTodoItems());
-        }
-
-        CommandResult commandResult = executeUndoableCommand();
-
-        System.out.println("2");
-        personList = previousAddressBook.getPersonList();
-        for (ReadOnlyPerson person : personList) {
-            System.out.println(person.getTodoItems());
-        }
-        return commandResult;
+        return executeUndoableCommand();
     }
 }
