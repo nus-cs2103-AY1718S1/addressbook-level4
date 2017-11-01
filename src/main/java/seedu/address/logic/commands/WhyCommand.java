@@ -23,7 +23,7 @@ public class WhyCommand extends Command {
     public static final String COMMAND_WORD = "why";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Tells you why.\n"
-            + "Example: " + COMMAND_WORD + "1";
+            + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_WHY_REMARK_SUCCESS = "Added remark to Person: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
