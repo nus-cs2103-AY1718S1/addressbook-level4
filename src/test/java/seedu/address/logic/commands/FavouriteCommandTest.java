@@ -1,5 +1,5 @@
 package seedu.address.logic.commands;
-        
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
@@ -31,7 +31,7 @@ public class FavouriteCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-    @Test 
+    @Test
     public void execute_favourite_success() throws Exception {
         Person favouritedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased()))
                 .withFavouriteStatus(true).build();
@@ -56,7 +56,7 @@ public class FavouriteCommandTest {
         assertCommandSuccess(favouriteCommand, model, expectedMessage, expectedModel);
     }
 
-    @Test 
+    @Test
     public void execute_filteredList_success() throws Exception {
         showFirstPersonOnly(model);
         ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
