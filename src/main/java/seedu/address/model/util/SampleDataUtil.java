@@ -18,7 +18,6 @@ import seedu.address.model.property.Name;
 import seedu.address.model.property.Phone;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
-import seedu.address.model.reminder.Reminder;
 import seedu.address.model.tag.Tag;
 
 /**
