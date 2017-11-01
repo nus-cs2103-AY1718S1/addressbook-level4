@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -80,14 +81,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
 
-    /* Given a time span, add it to the person's busy time slot so that this time span will not be considered when
+    /* Given a time span, add it to the person's free time slot so that this time span will  be considered when
        arranging a meeting.
      */
     public void addScheduleToPerson(Integer index, TreeSet<Integer> timeSpan) throws PersonNotFoundException {
         persons.addSchedule(index, timeSpan);
     }
 
-    /* Given a time span, add it to the person's free time slot so that this time span will be considered when
+    /* Given a time span, add it to the person's busy time slot so that this time span will not be considered when
        arranging a meeting.
      */
     public void clearScheduleForPerson(Integer index, TreeSet<Integer> timeSpan) throws PersonNotFoundException {
@@ -137,14 +138,18 @@ public class AddressBook implements ReadOnlyAddressBook {
     public TreeSet<Integer> generateMeetingTime(Index[] ListOfIndex){
         TreeSet<Integer> satisfiedTimeSet = new TreeSet<>();
         for(int i = 0; i < PossibleDays.days.length; i++){
-            for(int k = 0; k < PossibleTimes.times.length;)
-            satisfiedTimeSet.add(PossibleDays.days[i] * PossibleDays.dayCoefficient + PossibleTimes.times[k]);
+            for(int k = 0; k < PossibleTimes.times.length; k++) {
+                satisfiedTimeSet.add(PossibleDays.days[i] * PossibleDays.dayCoefficient + PossibleTimes.times[k]);
+            }
         }
+
         for(int j = 0; j < ListOfIndex.length; j++){
+            Iterator<Integer> iterator = satisfiedTimeSet.iterator();
             Schedule currentSchedule = getPersonList().get(ListOfIndex[j].getZeroBased()).getSchedule();
-            for(Integer timeNumber : satisfiedTimeSet){
-                if(currentSchedule.containsTimeNumber(timeNumber)){
-                    satisfiedTimeSet.remove(timeNumber);
+            while (iterator.hasNext()) {
+                Integer timeNumber = iterator.next();
+                if (!currentSchedule.containsTimeNumber(timeNumber)) {
+                    iterator.remove();
                 }
             }
         }
