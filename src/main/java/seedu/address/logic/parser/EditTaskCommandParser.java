@@ -24,6 +24,7 @@ import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.StartDate;
 import seedu.address.model.task.TaskDates;
+
 //@@author raisa2010
 /**
  * Parses input arguments and creates a new EditTaskCommand object
@@ -71,7 +72,8 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
 
         return new EditTaskCommand(index, editTaskDescriptor);
     }
-//@@author
+
+    //@@author
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
      * If {@code tags} contain only one element which is an empty string, it will be parsed into a
@@ -86,7 +88,8 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
     }
-//@@author raisa2010
+
+    //@@author raisa2010
     /**
      * Parses {@code List<String> dates} into a {@code Optional<StartDate>} containing the last date in the list,
      * if {@code dates} is non-empty.

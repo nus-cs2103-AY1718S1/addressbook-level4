@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import static seedu.address.logic.parser.CliSyntax.SUFFIX_NO_RECUR_INTERVAL;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.Suffix;
 
 //@@author raisa2010
