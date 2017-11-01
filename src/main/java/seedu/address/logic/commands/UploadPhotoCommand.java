@@ -116,7 +116,7 @@ public class UploadPhotoCommand extends UndoableCommand {
      */
     private File saveFile(File file, Email email) {
 
-        File path = new File("src/main/photos/" + email.toString() + ".png");
+        File path = new File("photos/" + email.toString() + ".png");
 
         try {
             path.mkdirs();

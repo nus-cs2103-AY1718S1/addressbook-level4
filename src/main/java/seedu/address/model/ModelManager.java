@@ -52,7 +52,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
-        File dir = new File("src/main/photos/");
+        File dir = new File("photos/");
         for (File file : dir.listFiles()) {
             if (file.getName().equals("default.jpeg")) {
             } else {
@@ -84,7 +84,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
-        File photoPath = new File("src/main/photos/" + target.getEmail().toString() + ".png");
+        File photoPath = new File("photos/" + target.getEmail().toString() + ".png");
         photoPath.delete();
         indicateAddressBookChanged();
     }
