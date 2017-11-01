@@ -182,6 +182,7 @@ public class ParserUtil {
         throw new IllegalValueException(MESSAGE_INVALID_ARGUMENTS);
     }
 
+    //@@author LimeFallacie
     /**
      * Parses a String argument for tag. Leading and trailing whitespaces will be removed
      */
@@ -190,8 +191,7 @@ public class ParserUtil {
         return trimmedTag;
 
     }
-
-    //@@author LimeFallacie
+    
     /**
      * Parses a String argument for a file path destination for Export.
      * Leading and trailing whitespaces will be removed
