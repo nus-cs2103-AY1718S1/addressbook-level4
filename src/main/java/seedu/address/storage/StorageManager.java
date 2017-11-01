@@ -1,8 +1,20 @@
 package seedu.address.storage;
 
+import java.awt.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Optional;
 import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -23,6 +35,7 @@ public class StorageManager extends ComponentManager implements Storage {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private static final String READ_FILE_MESSAGE = "Attempting to read to data file: ";
     private static final String WRITE_FILE_MESSAGE = "Attempting to write to data file: ";
+    public static final String CACHE_DIR = "cache/";
     private AddressBookStorage addressBookStorage;
     private MeetingListStorage meetingListStorage;
     private UserPrefsStorage userPrefsStorage;
@@ -34,6 +47,12 @@ public class StorageManager extends ComponentManager implements Storage {
         this.addressBookStorage = addressBookStorage;
         this.meetingListStorage = meetingListStorage;
         this.userPrefsStorage = userPrefsStorage;
+
+        // Create cache folder in case it is not there
+        File cache = new File(CACHE_DIR);
+        if (cache.mkdir()) {
+            logger.info("Creating new folder cache/");
+        }
     }
 
     // ================ UserPrefs methods ==============================
@@ -129,4 +148,31 @@ public class StorageManager extends ComponentManager implements Storage {
         meetingListStorage.saveMeetingList(meetingList, filePath);
     }
 
+    // ============= Cache & Download methods =======================
+
+    @Override
+    public void saveFileFromUrl(String urlString, String filename) {
+        try {
+            URL url = new URL(urlString);
+            InputStream in = new BufferedInputStream(url.openStream());
+            String filePath = CACHE_DIR + filename;
+
+            File file = new File(filePath);
+            file.createNewFile();
+
+            OutputStream out = new BufferedOutputStream(new FileOutputStream(filePath));
+
+            for (int i; (i = in.read()) != -1; ) {
+                out.write(i);
+            }
+            in.close();
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
