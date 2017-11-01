@@ -45,13 +45,25 @@ public class Person implements ReadOnlyPerson {
         initiateSchedule();
     }
 
+    public Person(Name name, Phone phone, Email email, Address address, Mrt mrt, Set<Tag> tags, Schedule schedule) {
+        requireAllNonNull(name, phone, email, address, tags, schedule);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.mrt = new SimpleObjectProperty<>(mrt);
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.schedule = new SimpleObjectProperty<>(schedule);
+    }
+
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getMrt(), source.getTags());
-        initiateSchedule();
+        setSchedule(source.getSchedule());
     }
 
     public void setName(Name name) {
