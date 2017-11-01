@@ -77,7 +77,9 @@ public class Phone {
             formattedPhone.insert(0, trimmedPhone.charAt(count));
 
             digitAdded += 1;
-            if (count == 0) { continue; }
+            if (count == 0) {
+                continue;
+            }
 
             if (isHyphenNeeded(digitAdded)) {
                 formattedPhone.insert(0, "-");
