@@ -280,7 +280,8 @@ Examples:
 ==== Selecting a task : `selectTask`
 
 Selects the task identified by the index number used in the last task listing. +
-Format: `selectTask INDEX`
+Format: `selectTask`/`st` +
+Details: `selectTask INDEX`
 
 ****
 * Selects the task and display the task at the specified `INDEX`.
@@ -296,7 +297,8 @@ Selects the 2nd task in the task book.
 ==== Editing a new task : `editTask`
 
 Edits an existing task in the address book +
-Format: `editTask INDEX [n/TaskName] [d/Description] [s/startDateTime] [f/finishDateTime] [t/TAG]...` +
+Format: `editTask`/`edt` +
+Details: `editTask INDEX [n/TaskName] [d/Description] [s/startDateTime] [f/finishDateTime] [t/TAG]...` +
 
 ****
 * Edits the task at the specified `INDEX`. The index refers to the index number shown in the last task listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -314,7 +316,8 @@ Edits the tag of the 2nd task to be `teammates` only and others remain same.
 ==== Exporting a task to a string of addTask command: `exportTask`
 
 Export the details of the task by the index number +
-Format: `export INDEX`
+Format: `exportTask`/`ept` +
+Details: `exportTask INDEX`
 
 ****
 * Exports the task at the specified `INDEX`, selects the task.
@@ -330,7 +333,8 @@ Returns `addTask n/picnic d/have fun at Botanic Garden s/1/1/2099 12:00pm e/1/1/
 ==== Deleting a task : `deleteTask`
 
 Deletes the specific task from the task book. +
-Format: `deleteTask IDNEX`
+Format: `deleteTask`/`dt` +
+Details: `deleteTask IDNEX`
 
 ****
 * Deletes the task at the specified `INDEX`.
