@@ -10,11 +10,12 @@ import java.util.Date;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.ParserUtil;
 
+private final static String DATE_NULL = "30-12-2999";
+
 /**
  * A task comparator that compares the days of deadline from today
  */
 public class TaskComparator implements Comparator {
-    private final static String DATE_NULL = "30-12-2999";
 
     @Override
     public int compare(Object obj, Object obj1) {
