@@ -10,7 +10,7 @@ import static seedu.address.model.util.TimeConvertUtil.convertTimeToString;
 public class TodoItem implements Comparable<TodoItem>{
 
     public static final String MESSAGE_TODOITEM_CONSTRAINTS =
-            "The end time should be late than start time. The start time should be the future.";
+            "The end time should be late than start time.";
 
     public final LocalDateTime start;
     public final LocalDateTime end;
@@ -35,8 +35,6 @@ public class TodoItem implements Comparable<TodoItem>{
 
     public boolean isValidTodoItem(LocalDateTime start, LocalDateTime end) {
         if (end != null && end.compareTo(start) < 0) {
-            return false;
-        } else if (start.compareTo(LocalDateTime.now()) < 0) {
             return false;
         }
         return true;
