@@ -2,6 +2,9 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -11,7 +14,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Person's birthday should be in format: DD/MM/YYYY";
+            "Person's birthday should be in format: DD/MM/YYYY and the date should be valid.";
 
     /*
      * Birthday must be in the following format: DD/MM/YYYY,
@@ -39,6 +42,15 @@ public class Birthday {
      * Returns if a given string is a valid person birthday.
      */
     public static boolean isValidBirthday(String test) {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        formatter.setLenient(false);
+
+        try {
+            formatter.parse(test); // throws exception if the date is invalid
+        } catch (ParseException pe) {
+            return false;
+        }
         return test.matches(BIRTHDAY_VALIDATION_REGEX);
     }
 

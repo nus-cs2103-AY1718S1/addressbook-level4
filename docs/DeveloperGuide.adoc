@@ -421,9 +421,9 @@ Examples for a valid birthday:
 
 * `14/12/1993`
 * `22/02/2001`
-* `99/99/9999`
+* `29/02/2008`
 
-Notice that the current implementation doesn't validate the validity of the date, only the format of the birthday and this was a conscious decision. This implementation manages to preserve the simplicity of this class. It could have been possible to use for example Java's Date class to implement a second validator for also the date, but this would have created inconsistency between the other attribute classes. Also, because the end product is an address book which only has to store the birthday, the validity of the date is not a concern for the program.
+The date of the birthday is validated using Java's SimpleDateFormatter class. The formatter parses user's input and if the parsing is successful, the date is valid. The parser also accounts for leap days.
 
 === Phone attribute
 
