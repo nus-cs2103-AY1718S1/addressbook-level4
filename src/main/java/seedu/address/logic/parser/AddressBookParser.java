@@ -102,13 +102,11 @@ public class AddressBookParser {
         case REDO:
             return new RedoCommand();
 
-        //@@author arnollim
         case PRINT:
-            return new PrintCommandParser().parse(arguments);
+            return new PrintCommand(arguments);
 
         case WHY:
             return new WhyCommandParser().parse(arguments);
-        //@@author arnollim
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
@@ -193,7 +191,6 @@ public class AddressBookParser {
             }
         }
 
-        //@@author arnollim
         for (String word : WhyCommand.COMMAND_WORDS) {
             if (commandWord.contentEquals(word)) {
                 return CommandType.WHY;
@@ -204,7 +201,6 @@ public class AddressBookParser {
                 return CommandType.PRINT;
             }
         }
-        //@@author arnollim
 
         return CommandType.NONE;
     }

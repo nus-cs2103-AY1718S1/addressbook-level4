@@ -54,7 +54,6 @@ public class WhyCommand extends Command {
         Name name = personToAnswer.getName();
         Address address = personToAnswer.getAddress();
         String reason = personToAnswer.getReason();
-        //return new CommandResult(String.format(SHOWING_WHY_MESSAGE, name, address));
         return new CommandResult(reason);
     }
 }

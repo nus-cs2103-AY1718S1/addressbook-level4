@@ -186,18 +186,18 @@ public class Person implements ReadOnlyPerson {
     //@@author arnollim
     @Override
     public String getReason() {
-        Address a = this.getAddress();
-        Name n = this.getName();
-        Email e = this.getEmail();
-        DateOfBirth d = this.getDateOfBirth();
+        Address address = this.getAddress();
+        Name name = this.getName();
+        Email email = this.getEmail();
+        DateOfBirth dob = this.getDateOfBirth();
         Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(3);
         if (randomInt == 0) {
-            this.reason = String.format(SHOWING_WHY_MESSAGE, n, a);
+            this.reason = String.format(SHOWING_WHY_MESSAGE, name, address);
         } else if (randomInt == 1) {
-            this.reason = String.format(SHOWING_WHY_MESSAGE_2, n, d);
+            this.reason = String.format(SHOWING_WHY_MESSAGE_2, name, dob);
         } else if (randomInt == 2) {
-            this.reason = String.format(SHOWING_WHY_MESSAGE_3, n, e);
+            this.reason = String.format(SHOWING_WHY_MESSAGE_3, name, email);
         }
         return reason;
     }

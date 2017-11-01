@@ -37,10 +37,10 @@ public class PrintCommand extends Command {
 
     private final String fileName;
 
-    public PrintCommand(String filename) {
-        requireNonNull(filename);
+    public PrintCommand(String fileName) {
+        requireNonNull(fileName);
 
-        this.fileName = filename;
+        this.fileName = fileName;
     }
 
 
@@ -82,8 +82,8 @@ public class PrintCommand extends Command {
         Path file = Paths.get("docs/books/" + fileName + ".txt");
         try {
             Files.write(file, lines, Charset.forName("UTF-8"));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
         }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, this.fileName));

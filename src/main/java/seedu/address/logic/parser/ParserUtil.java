@@ -56,15 +56,15 @@ public class ParserUtil {
      * @return "filename" for example.
      * @throws IllegalValueException if there is no specified filepath.
      */
+
     public static String parseFilePath(String args) throws IllegalValueException {
         final Matcher matcher = PRINT_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
-        {
-            return matcher.group("filename");
-        }
+        return matcher.group("filename");
     }
+
     //author
 
     /**
