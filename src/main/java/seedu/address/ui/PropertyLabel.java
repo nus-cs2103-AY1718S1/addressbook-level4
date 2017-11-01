@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import javafx.scene.control.Label;
 
+//@@author yunpengn
 /**
  * A customize JavaFX {@link Label} class used to display the key-value pairs of all properties.
  */

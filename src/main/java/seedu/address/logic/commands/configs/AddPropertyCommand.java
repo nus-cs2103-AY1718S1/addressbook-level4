@@ -8,6 +8,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
 
+//@@author yunpengn
 /**
  * Adds a new property to the application.
  */

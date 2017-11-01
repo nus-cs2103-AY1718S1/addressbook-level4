@@ -10,6 +10,7 @@ import java.util.regex.PatternSyntaxException;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
 
+//@@author yunpengn
 /**
  * Manages the different properties (both pre-loaded ones and customize ones) of all persons stored in the
  * application.

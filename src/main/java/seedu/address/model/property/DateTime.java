@@ -1,7 +1,12 @@
 package seedu.address.model.property;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
+
 //@@author junyango
 /**
  * Represents an event's date/time in the address book.
@@ -9,9 +14,15 @@ import seedu.address.model.property.exceptions.PropertyNotFoundException;
  */
 public class DateTime extends Property {
     private static final String PROPERTY_SHORT_NAME = "dt";
+    // Change the regular expression in PropertyManager whenever you change this.
+    private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("ddMMyyyy HH:mm");
 
     public DateTime(String value) throws IllegalValueException, PropertyNotFoundException {
         super(PROPERTY_SHORT_NAME, value);
+    }
+
+    public DateTime(Date value) throws IllegalValueException, PropertyNotFoundException {
+        super(PROPERTY_SHORT_NAME, dateFormatter.format(value));
     }
 
     /**
@@ -19,5 +30,9 @@ public class DateTime extends Property {
      */
     public static boolean isValidTime(String test) {
         return test.matches(PropertyManager.getPropertyValidationRegex(PROPERTY_SHORT_NAME));
+    }
+
+    public static Date formatDateTime(String value) throws ParseException {
+        return dateFormatter.parse(value);
     }
 }

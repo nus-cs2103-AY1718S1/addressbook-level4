@@ -7,6 +7,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
+//@@author yunpengn
 /**
  * JAXB-friendly adapted version of the {@link Property}, stored within each person.
  */

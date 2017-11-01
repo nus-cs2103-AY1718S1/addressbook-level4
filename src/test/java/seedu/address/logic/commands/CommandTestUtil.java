@@ -86,17 +86,32 @@ public class CommandTestUtil {
     public static final String VALID_CONFIG_ADD_PROPERTY = " --add-property ";
     public static final String VALID_NEW_PROPERTY = " s/b f/birthday m/something r/[^\\s].*";
     public static final String VALID_NEW_PROPERTY_NO_REGEX = " s/m f/major";
-    public static final String VALID_CONFIG_IMPORT_CALENDER = " --import-calendar ";
-    public static final String VALID_CONFIG_URL = " https://www.url.com/";
 
     public static final String INVALID_CONFIG_TYPE = " --some-config-type-unknown ";
     public static final String INVALID_CONFIG_VALUE = " unknown value(s)";
     public static final String INVALID_TAG_COLOR = " bee";
     public static final String INVALID_NEW_PROPERTY = " s/b r/[^\\s].*";
-    public static final String INVALID_URL = " https://123,tg/";
 
     public static final String INVALID_IMPORT_TYPE = " --some-import-type-unknown ";
     public static final String INVALID_IMPORT_PATH = " unknown path";
+
+    public static final String VALID_URL = "https://www.google.com.sg/contacts?day=monday";
+    public static final String VALID_URL_ENCODED = "https%3A%2F%2Fwww.google.com.sg%2Fcontacts%3Fday%3Dmonday";
+    public static final String INVALID_URL_COMMA = " https://123,tg/";
+    public static final String IMPORT_NO_PATH = "--nusmods ";
+
+    public static final String NUSMODS_VALID_URL =
+            " https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01";
+    public static final String NUSMODS_INVALID_URL =
+            " https://nusmods.com/timetable/2017-2018//sem?CS2103T[TUT]=C01";
+    public static final String NUSMODS_INVALID_URL_YEAR_START =
+            " https://nusmods.com/timetable/1999-2000/sem1?CS2103T[TUT]=C01";
+    public static final String NUSMODS_INVALID_URL_YEAR_OFFSET =
+            " https://nusmods.com/timetable/2017-2019/sem1?CS2103T[TUT]=C01";
+    public static final String NUSMODS_VALID_IMPORT = "--nusmods " + NUSMODS_VALID_URL;
+    public static final String NUSMODS_INVALID_IMPORT = "--nusmods " + NUSMODS_INVALID_URL;
+    public static final String NOT_FROM_NUSMODS_IMPORT = "--nusmods " + VALID_URL;
+    public static final String VALID_EXPORT_PATH = "something.xml";
 
     static {
         PropertyManager.initializePropertyManager();
