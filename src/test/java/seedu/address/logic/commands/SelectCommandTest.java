@@ -23,6 +23,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.ui.BrowserSearchMode;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
@@ -75,14 +76,17 @@ public class SelectCommandTest {
 
     @Test
     public void equals() {
-        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_PERSON);
-        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_PERSON);
+        SelectCommand selectFirstCommand =
+                new SelectCommand(INDEX_FIRST_PERSON, BrowserSearchMode.GOOGLE_SEARCH_EMAIL);
+        SelectCommand selectSecondCommand =
+                new SelectCommand(INDEX_SECOND_PERSON, BrowserSearchMode.GOOGLE_SEARCH_EMAIL);
 
         // same object -> returns true
         assertTrue(selectFirstCommand.equals(selectFirstCommand));
 
         // same values -> returns true
-        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_PERSON);
+        SelectCommand selectFirstCommandCopy =
+                new SelectCommand(INDEX_FIRST_PERSON, BrowserSearchMode.GOOGLE_SEARCH_EMAIL);
         assertTrue(selectFirstCommand.equals(selectFirstCommandCopy));
 
         // different types -> returns false
@@ -134,7 +138,7 @@ public class SelectCommandTest {
      * Returns a {@code SelectCommand} with parameters {@code index}.
      */
     private SelectCommand prepareCommand(Index index) {
-        SelectCommand selectCommand = new SelectCommand(index);
+        SelectCommand selectCommand = new SelectCommand(index, BrowserSearchMode.GOOGLE_SEARCH_PHONE);
         selectCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return selectCommand;
     }

@@ -1,7 +1,10 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -12,8 +15,10 @@ import java.util.Set;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TodoItem;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.DuplicateTodoItemException;
 //@@author qihao27
 import seedu.address.model.person.exceptions.NoPersonFoundException;
 //@@author
@@ -155,6 +160,57 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
     //@@author
+
+    /**
+     * Adds a todoItem to target person.
+     */
+    public void addTodoItem(ReadOnlyPerson target, TodoItem todoItem)
+            throws PersonNotFoundException, DuplicatePersonException, DuplicateTodoItemException {
+        requireNonNull(target);
+
+        Person person = new Person(target);
+        List<TodoItem> todoItemList = new ArrayList<>(target.getTodoItems());
+
+        if (todoItemList.contains(todoItem)) {
+            throw new DuplicateTodoItemException();
+        }
+
+        todoItemList.add(todoItem);
+        Collections.sort(todoItemList);
+
+        person.setTodoItems(todoItemList);
+
+        persons.setPerson(target, person);
+    }
+
+    /**
+     * Deletes the given todoItem from target person.
+     */
+    public void deleteTodoItem(ReadOnlyPerson target, TodoItem todoItem)
+            throws PersonNotFoundException, DuplicatePersonException {
+        requireAllNonNull(target, todoItem);
+
+        Person person = new Person(target);
+        List<TodoItem> todoItemList = new ArrayList<>(target.getTodoItems());
+
+        todoItemList.remove(todoItem);
+        person.setTodoItems(todoItemList);
+
+        persons.setPerson(target, person);
+    }
+
+    /**
+     * Resets all todoItem for target person.
+     */
+    public void resetTodoItem(ReadOnlyPerson target)
+            throws PersonNotFoundException, DuplicatePersonException {
+        requireNonNull(target);
+        Person person = new Person(target);
+        person.setTodoItems(new ArrayList<>());
+
+        persons.setPerson(target, person);
+    }
+
     /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}

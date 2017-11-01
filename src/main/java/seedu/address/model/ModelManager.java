@@ -12,8 +12,11 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.ShowAllTodoItemsEvent;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TodoItem;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.DuplicateTodoItemException;
 //@@author qihao27
 import seedu.address.model.person.exceptions.NoPersonFoundException;
 //@@author
@@ -99,6 +102,39 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author qihao27
+    @Override
+    public void addTodoItem(ReadOnlyPerson target, TodoItem todoItem)
+            throws DuplicatePersonException, PersonNotFoundException, DuplicateTodoItemException {
+        requireAllNonNull(target, todoItem);
+
+        addressBook.addTodoItem(target, todoItem);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void deleteTodoItem(ReadOnlyPerson target, TodoItem todoItem)
+            throws DuplicatePersonException, PersonNotFoundException {
+        requireAllNonNull(target, todoItem);
+
+        addressBook.deleteTodoItem(target, todoItem);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void resetTodoItem(ReadOnlyPerson target)
+            throws DuplicatePersonException, PersonNotFoundException {
+        requireNonNull(target);
+
+        addressBook.resetTodoItem(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateTodoItemList() {
+        raise(new ShowAllTodoItemsEvent());
+    }
+
+    //@@author
     @Override
     public void sortPerson(String option) throws NoPersonFoundException {
         requireNonNull(option);

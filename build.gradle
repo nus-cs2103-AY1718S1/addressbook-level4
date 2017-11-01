@@ -15,6 +15,16 @@ plugins {
 // Specifies the entry point of the application
 mainClassName = 'seedu.address.MainApp'
 
+jar {
+    manifest {
+        attributes "Main-Class": "$mainClassName"
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 allprojects {
     apply plugin: 'idea'
     apply plugin: 'java'
