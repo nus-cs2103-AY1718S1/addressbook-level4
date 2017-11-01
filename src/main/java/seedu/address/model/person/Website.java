@@ -27,7 +27,7 @@ public class Website {
             this.value = "";
         } else {
             String trimmedWebsite = website.trim();
-            if (!isValidWebsite(trimmedWebsite)) {
+            if (trimmedWebsite.length() > 0 && !isValidWebsite(trimmedWebsite)) {
                 throw new IllegalValueException(MESSAGE_WEBSITE_CONSTRAINTS);
             }
             this.value = trimmedWebsite;
