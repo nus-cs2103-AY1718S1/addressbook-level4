@@ -1,5 +1,11 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.TodoCommand;
@@ -10,18 +16,16 @@ import seedu.address.logic.parser.optionparser.TodoOptionDeleteAll;
 import seedu.address.logic.parser.optionparser.TodoOptionDeleteOne;
 import seedu.address.logic.parser.optionparser.TodoOptionList;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
+/**
+ * Parses input arguments and creates a new TodoCommand object
+ */
 public class TodoCommandParser implements Parser<TodoCommand> {
 
     public static final String PARSE_EXCEPTION_MESSAGE =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, TodoCommand.MESSAGE_USAGE);
 
     private static final String REGEX = "^(\\d+)";
+    private static final int FIRST_INDEX_GROUP = 0;
 
     /**
      * Parses the given {@code String} of arguments in the context of the TodoCommand
@@ -42,7 +46,6 @@ public class TodoCommandParser implements Parser<TodoCommand> {
         String optionPrefix = CommandOptionUtil.getOptionPrefix(option);
         String optionArgs = CommandOptionUtil.getOptionArgs(optionPrefix, option);
 
-        System.out.println("oneBasedIndex:" + oneBasedIndex + "   optionPrefix:" + optionPrefix + "   optionArgs:" + optionArgs);
         Index index;
         try {
             index = ParserUtil.parseIndex(oneBasedIndex);
@@ -65,12 +68,14 @@ public class TodoCommandParser implements Parser<TodoCommand> {
         }
     }
 
+    /**
+     * Parses the {@code Index} from argument string.
+     */
     public static String parseIndexString(String trimmedArgs) throws ParseException {
-        int FirstIndexGroup = 0;
         Matcher matcher = Pattern.compile(REGEX).matcher(trimmedArgs);
         try {
             if (matcher.find()) {
-                return matcher.group(FirstIndexGroup);
+                return matcher.group(FIRST_INDEX_GROUP);
             }
         } catch (Exception e) {
             throw new ParseException(PARSE_EXCEPTION_MESSAGE);
@@ -78,6 +83,10 @@ public class TodoCommandParser implements Parser<TodoCommand> {
         throw new ParseException(PARSE_EXCEPTION_MESSAGE);
     }
 
+    /**
+     * Gets the rest of string after parsing {@code Index}
+     * @see #parseIndexString(String)
+     */
     public static String parseStrAfterIndex(String index, String args) {
         return args.substring(args.indexOf(index) + index.length()).trim();
     }

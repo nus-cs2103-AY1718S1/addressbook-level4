@@ -1,15 +1,18 @@
 package seedu.address.storage;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.TodoItem;
-
-import javax.xml.bind.annotation.XmlElement;
-
-import java.time.LocalDateTime;
-
 import static seedu.address.model.util.TimeConvertUtil.convertStringToTime;
 import static seedu.address.model.util.TimeConvertUtil.convertTimeToString;
 
+import java.time.LocalDateTime;
+
+import javax.xml.bind.annotation.XmlElement;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.TodoItem;
+
+/**
+ * JAXB-friendly adapted version of the TodoItem.
+ */
 public class XmlAdapterTodoItem {
 
     @XmlElement(required = true)

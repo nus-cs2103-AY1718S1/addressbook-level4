@@ -130,9 +130,9 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
-
         todoPanel = new TodoPanel(logic.getFilteredPersonList());
-        switchablePlaceholder.getChildren().add(todoPanel.getRoot());
+
+        switchablePlaceholder.getChildren().add(browserPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -189,6 +189,9 @@ public class MainWindow extends UiPart<Region> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
+    /**
+     * Switches the display between TodoList and browser in {@code switchablePlaceholder}.
+     */
     private void switchPlaceholderDisplay(int mode) {
         switchablePlaceholder.getChildren().clear();
         switch (mode) {
@@ -197,6 +200,8 @@ public class MainWindow extends UiPart<Region> {
             break;
         case SwitchCommand.SWITCH_TO_BROWSER:
             switchablePlaceholder.getChildren().add(browserPanel.getRoot());
+            break;
+        default:
             break;
         }
     }

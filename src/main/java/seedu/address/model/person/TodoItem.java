@@ -1,13 +1,16 @@
 package seedu.address.model.person;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
-import java.time.LocalDateTime;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.util.TimeConvertUtil.convertTimeToString;
 
-public class TodoItem implements Comparable<TodoItem>{
+import java.time.LocalDateTime;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
+/**
+ * Represents a TodoItem in the address book.
+ */
+public class TodoItem implements Comparable<TodoItem> {
 
     public static final String MESSAGE_TODOITEM_CONSTRAINTS =
             "The end time should be late than start time.";
@@ -33,6 +36,9 @@ public class TodoItem implements Comparable<TodoItem>{
         this.task = task.trim();
     }
 
+    /**
+     * Checks whether the inputs are valid.
+     */
     public boolean isValidTodoItem(LocalDateTime start, LocalDateTime end) {
         if (end != null && end.compareTo(start) < 0) {
             return false;
@@ -43,7 +49,7 @@ public class TodoItem implements Comparable<TodoItem>{
     @Override
     public String toString() {
         return "From:" + convertTimeToString(start)
-                + " To:"+convertTimeToString(end)
+                + " To:" + convertTimeToString(end)
                 + " Task:" + task;
     }
 

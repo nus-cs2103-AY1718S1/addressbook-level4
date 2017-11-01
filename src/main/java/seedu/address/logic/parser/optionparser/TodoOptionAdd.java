@@ -1,19 +1,19 @@
 package seedu.address.logic.parser.optionparser;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
+import static seedu.address.logic.parser.TodoCommandParser.PARSE_EXCEPTION_MESSAGE;
+import static seedu.address.model.util.TimeConvertUtil.convertStringToTime;
+
+import java.time.LocalDateTime;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.TodoCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.TodoItem;
-
-import java.time.LocalDateTime;
-
-import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
-import static seedu.address.logic.parser.TodoCommandParser.PARSE_EXCEPTION_MESSAGE;
-import static seedu.address.model.util.TimeConvertUtil.convertStringToTime;
 
 /**
  * Adds a new TodoItem.

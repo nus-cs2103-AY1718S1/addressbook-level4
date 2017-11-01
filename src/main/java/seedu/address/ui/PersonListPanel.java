@@ -24,8 +24,11 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonListPanel extends UiPart<Region> {
     private static final String FXML = "PersonListPanel.fxml";
+
+    private static final int CANCEL_SELECTION_INDEX = -1;
+
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
-    private final static int CANCEL_SELECTION_INDEX = -1;
+
 
     @FXML
     private ListView<PersonCard> personListView;

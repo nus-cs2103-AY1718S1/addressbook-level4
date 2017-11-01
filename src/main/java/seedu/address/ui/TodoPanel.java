@@ -1,13 +1,19 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
+import org.fxmisc.easybind.EasyBind;
+
 import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
-import org.fxmisc.easybind.EasyBind;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.ShowAllTodoItemsEvent;
@@ -15,10 +21,9 @@ import seedu.address.commons.events.ui.ShowPersonTodoEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TodoItem;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
+/**
+ * Panel containing the list of {@code TodoItem}.
+ */
 public class TodoPanel extends UiPart<Region> {
     private static final String FXML = "TodoPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(TodoPanel.class);
@@ -71,6 +76,9 @@ public class TodoPanel extends UiPart<Region> {
         setConnections(personList.get(event.targetIndex).getTodoItems());
     }
 
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code TodoCard}.
+     */
     class TodoListViewCell extends ListCell<TodoCard> {
 
         @Override

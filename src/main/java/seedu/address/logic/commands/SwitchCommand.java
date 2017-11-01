@@ -1,12 +1,15 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.SwitchDisplayEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
+/**
+ * Switches between TodoList and browser
+ */
 public class SwitchCommand extends Command {
 
     public static final String COMMAND_WORD = "switch";
@@ -26,6 +29,9 @@ public class SwitchCommand extends Command {
 
     private final int mode;
 
+    /**
+     * Creates an SwitchCommand to switch according to the argument
+     */
     public SwitchCommand(String args) throws ParseException {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {

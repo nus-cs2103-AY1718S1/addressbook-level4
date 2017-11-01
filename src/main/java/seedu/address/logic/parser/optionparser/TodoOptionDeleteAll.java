@@ -1,10 +1,10 @@
 package seedu.address.logic.parser.optionparser;
 
+import static seedu.address.logic.parser.TodoCommandParser.PARSE_EXCEPTION_MESSAGE;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.TodoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-
-import static seedu.address.logic.parser.TodoCommandParser.PARSE_EXCEPTION_MESSAGE;
 
 /**
  * Deletes all TodoItem from given person.

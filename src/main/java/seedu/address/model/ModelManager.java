@@ -13,7 +13,6 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.ShowAllTodoItemsEvent;
-import seedu.address.commons.events.ui.ShowPersonTodoEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TodoItem;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
