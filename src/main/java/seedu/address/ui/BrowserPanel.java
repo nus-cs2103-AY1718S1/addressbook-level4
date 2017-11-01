@@ -43,6 +43,7 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author DarrenCzen
     /**
      * Access website through browser panel based on person's link
      * @param website
@@ -56,6 +57,7 @@ public class BrowserPanel extends UiPart<Region> {
                 + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
+    //@@author
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
@@ -88,6 +90,7 @@ public class BrowserPanel extends UiPart<Region> {
         browser = null;
     }
 
+    //@@author DarrenCzen
     @Subscribe
     private void handleAccessWebsiteEvent(AccessWebsiteRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

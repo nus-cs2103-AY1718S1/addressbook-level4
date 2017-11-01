@@ -16,6 +16,7 @@ import guitests.guihandles.BrowserPanelHandle;
 import seedu.address.MainApp;
 import seedu.address.commons.events.ui.AccessWebsiteRequestEvent;
 
+//@@author DarrenCzen
 public class BrowserPanelTest extends GuiUnitTest {
     private static final String ALICE_WEBSITE = "https://twitter.com/alice";
 

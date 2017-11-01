@@ -250,6 +250,7 @@ public class ParserUtilTest {
         assertEquals(expectedSchEmail, actualSchEmail.get());
     }
 
+    //@@author DarrenCzen
     @Test
     public void parseWebsite_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
@@ -267,6 +268,7 @@ public class ParserUtilTest {
         assertFalse(ParserUtil.parseWebsite(Optional.empty()).isPresent());
     }
 
+
     @Test
     public void parseWebsite_validValue_returnsWebsite() throws Exception {
         Website expectedWebsite = new Website(VALID_WEBSITE);
@@ -275,6 +277,7 @@ public class ParserUtilTest {
         assertEquals(expectedWebsite, actualWebsite.get());
     }
 
+    //@@author
     @Test
     public void parseTags_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);

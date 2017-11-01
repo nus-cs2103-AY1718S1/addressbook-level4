@@ -52,6 +52,7 @@ public class AddressBookParserTest {
         assertEquals(new AddCommand(person), command);
     }
 
+    //@@author DarrenCzen
     @Test
     public void parseCommand_access() throws Exception {
         AccessCommand command = (AccessCommand) parser.parseCommand(
@@ -59,6 +60,7 @@ public class AddressBookParserTest {
         assertEquals(new AccessCommand(INDEX_FIRST_PERSON), command);
     }
 
+    //@@author
     @Test
     public void parseCommand_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
@@ -120,6 +122,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
     }
 
+    //@@author DarrenCzen
     @Test
     public void parseCommand_location() throws Exception {
         LocationCommand command = (LocationCommand) parser.parseCommand(
@@ -133,6 +136,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD + " 3") instanceof SortCommand);
     }
 
+    //@@author
     @Test
     public void parseCommand_select() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(

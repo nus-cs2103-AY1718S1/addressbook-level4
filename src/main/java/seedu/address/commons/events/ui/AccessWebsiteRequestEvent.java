@@ -2,6 +2,7 @@ package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
 
+//@@author DarrenCzen
 /**
  * An event requesting to view the website of a person.
  */

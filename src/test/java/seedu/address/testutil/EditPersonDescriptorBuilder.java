@@ -99,6 +99,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author DarrenCzen
     /**
      * Sets the {@code Website} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -111,6 +112,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author
     /**
      * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
      */

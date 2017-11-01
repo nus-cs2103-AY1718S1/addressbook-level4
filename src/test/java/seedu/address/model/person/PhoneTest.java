@@ -25,6 +25,7 @@ public class PhoneTest {
         assertTrue(Phone.isValidPhone("124293842033123")); // long phone numbers
     }
 
+    //@@author DarrenCzen
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
         // equals and hashCode check phone field value

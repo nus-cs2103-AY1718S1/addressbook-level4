@@ -215,6 +215,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return themes;
     }
 
+    //@@author DarrenCzen
     /** Ensures that every person in the AddressBook
      *  is sorted in an alphabetical order.
      */
@@ -222,6 +223,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.sort();
     }
 
+    //@@author
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {

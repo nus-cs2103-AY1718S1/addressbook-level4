@@ -108,7 +108,6 @@ public class ParserUtil {
         return website.isPresent() ? Optional.of(new Website(website.get())) : Optional.empty();
     }
 
-
     /**
      * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.

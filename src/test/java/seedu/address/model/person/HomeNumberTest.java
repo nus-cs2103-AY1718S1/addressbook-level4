@@ -28,6 +28,7 @@ public class HomeNumberTest {
         assertTrue(HomeNumber.isValidHomeNumber(HomeNumber.HOME_NUMBER_TEMPORARY));
     }
 
+    //@@author DarrenCzen
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
         // equals and hashCode check home number field value

@@ -25,6 +25,7 @@ public class NameTest {
         assertTrue(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
     }
 
+    //@@author DarrenCzen
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
         // equals and hashCode check name field value

@@ -24,6 +24,7 @@ public class AddressTest {
         assertTrue(Address.isValidAddress(Address.ADDRESS_TEMPORARY));
     }
 
+    //@@author DarrenCzen
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
         // equals and hashCode check address field value
