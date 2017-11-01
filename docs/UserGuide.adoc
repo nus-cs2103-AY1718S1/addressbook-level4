@@ -52,8 +52,9 @@ Each person can now be assigned a group. The group is used to sort people into s
 The address book stores all user created groups and allows the user to add people into existing groups. Since v1.3
 
 Format:
-`group [name]` creates a group called [name] if one doesn't already exist. If one does, it will be deleted.
-`group [name] [names...]` creates a group called [name] and will add the people in the following arguments to it.
+
+* `group [name]` creates a group called [name] if one doesn't already exist. If one does, it will be deleted.
+* `group [name] [names...]` creates a group called [name] and will add the people in the following arguments to it.
 
 Example:
 
