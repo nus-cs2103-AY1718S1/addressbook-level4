@@ -28,6 +28,8 @@ public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         try {
             return new Person[] {
+                //@@author icehawker
+                // Phone, Country fields edited to ensure sample persons are populated with Country information
                 new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Country(""),
                         getEmailSet("alexyeoh@example.com"),
                     new Address("30, Geylang Street 29, #06-40, Singapore 760770"), getScheduleSet(asList("15-01-2017",
@@ -58,6 +60,7 @@ public class SampleDataUtil {
                     new Address("45, Aljunied Street 85, #11-31, singapore 304444"),
                     getScheduleSet(asList("15-01-2017", "25-12-2017"), asList("Team meeting", "Christmas dinner"),
                             asList("Roy Balakrishnan", "Roy Balakrishnan")), getTagSet("colleagues"))
+                //@@author
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);

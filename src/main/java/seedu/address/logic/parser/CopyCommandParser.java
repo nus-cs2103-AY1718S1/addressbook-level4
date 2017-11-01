@@ -8,10 +8,11 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.CopyCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-
+//@@author icehawker
 /**
  * Parses input arguments and creates a new CopyCommand object
  */
+
 public class CopyCommandParser implements Parser<CopyCommand> {
 
     /**

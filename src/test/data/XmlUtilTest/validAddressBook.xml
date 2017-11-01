@@ -52,14 +52,14 @@
     <persons>
         <name>Stefan Meier</name>
         <phone isPrivate="false">8482424</phone>
-        <country isPrivate="false">232</country>
+        <country isPrivate="false">65</country>
         <emails isPrivate="false">stefan@example.com</emails>
         <address isPrivate="false">little india</address>
     </persons>
     <persons>
         <name>Martin Mueller</name>
         <phone isPrivate="false">8482131</phone>
-        <country isPrivate="false">1721</country>
+        <country isPrivate="false">65</country>
         <emails isPrivate="false">hans@example.com</emails>
         <address isPrivate="false">chicago ave</address>
     </persons>

@@ -83,6 +83,10 @@ public class Person implements ReadOnlyPerson {
         return phone.get();
     }
 
+    //@@author icehawker
+    /**
+     * Replaces this person's emails with the emails in the argument tag set.
+     */
     public void setCountry(Country country) {
         this.country.set(requireNonNull(country));
     }

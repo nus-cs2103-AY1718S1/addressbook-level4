@@ -100,11 +100,7 @@ public class EditCommand extends UndoableCommand {
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Country updatedCountry = personToEdit.getCountry();
-        if (!updatedPhone.equals(personToEdit.getPhone())) {
-            // if phone was changed, country should be updated accordingly
-            updatedCountry = new Country(updatedPhone.getCountryCode());
-        }
+        Country updatedCountry = new Country(updatedPhone.getCountryCode());
         Set<Email> updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmails());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Schedule> updatedSchedule = personToEdit.getSchedules(); //ScheduleCommand does not allow editing schedule
@@ -179,6 +175,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(phone);
         }
 
+        //@@author icehawker
         public void setCountry(Country country) {
             this.country = country;
         }

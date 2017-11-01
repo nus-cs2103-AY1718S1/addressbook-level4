@@ -105,8 +105,9 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author icehawker
     /**
-     * Sets the {@code Phone} of the {@code Person} that we are building.
+     * Sets the {@code Country} of the {@code Person} that we are building.
      */
     public PersonBuilder withCountry(String countryCode) {
         this.person.setCountry(new Country(countryCode));

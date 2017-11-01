@@ -9,6 +9,7 @@ import java.util.Map;
  * Corresponding alias list of each country code and its corresponding .countryName().
  * Guarantees: immutable; is valid as declared in {@link #isValidCode(String)}
  */
+//@@author icehawker
 public class Country {
 
     public static final String DEFAULT_COUNTRY_CODE = "";
@@ -24,7 +25,7 @@ public class Country {
     public Country(String countryCode) {
         requireNonNull(countryCode);
         this.countryMap = createMap();
-        this.value = getName(countryCode); // value is a country name
+        this.value = getCountryName(countryCode); // value is a country name
     }
 
     /**
@@ -280,7 +281,7 @@ public class Country {
         return countries;
     }
 
-    public String getName(String code) {
+    public String getCountryName(String code) {
         return countryMap.getOrDefault(code, MESSAGE_COUNTRY_ERROR);
     }
 
