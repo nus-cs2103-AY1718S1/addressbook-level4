@@ -1,5 +1,7 @@
 package seedu.address.logic.statistics;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.stream.DoubleStream;
 
@@ -147,5 +149,12 @@ public class Statistics {
         }
     }
 
+    public static String round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return Double.toString(bd.doubleValue()) ;
+    }
 
 }
