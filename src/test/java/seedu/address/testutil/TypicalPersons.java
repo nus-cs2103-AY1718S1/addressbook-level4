@@ -119,6 +119,7 @@ public class TypicalPersons {
 
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
+    public static final String TAG_MATCHING_DANIEL = "colleagues"; // A tag that matches DANIEL
 
     private TypicalPersons() {} // prevents instantiation
 
