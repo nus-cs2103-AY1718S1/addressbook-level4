@@ -35,6 +35,9 @@ public class ImportCommandParser implements Parser<ImportCommand> {
             );
             chooser.setTitle("Select import file.");
             file = chooser.showOpenDialog(new Stage());
+            if (file == null) {
+                throw new ParseException("Import cancelled");
+            }
         } else {
             file = new File(userInput.trim());
         }
