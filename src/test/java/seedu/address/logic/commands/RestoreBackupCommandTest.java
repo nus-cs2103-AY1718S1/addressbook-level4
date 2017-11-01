@@ -23,6 +23,7 @@ import seedu.address.storage.StorageManager;
 import seedu.address.storage.XmlAddressBookStorage;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
+//@@author LimYangSheng
 public class RestoreBackupCommandTest {
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();

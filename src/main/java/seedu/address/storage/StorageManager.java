@@ -81,6 +81,7 @@ public class StorageManager extends ComponentManager implements Storage {
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
+    //@@author LimYangSheng
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) {
         String backupAddressBookFilePath = createBackupAddressBookFilePath(addressBookStorage.getAddressBookFilePath());
@@ -102,6 +103,7 @@ public class StorageManager extends ComponentManager implements Storage {
         String nameOfBackupFile = nameOfFile + "-backup.xml";
         return nameOfBackupFile;
     }
+    //@@author
 
     @Override
     @Subscribe
@@ -114,6 +116,7 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    //@@author LimYangSheng
     @Override
     @Subscribe
     public void handleBackupDataEvent(BackupDataEvent event) {
@@ -142,5 +145,6 @@ public class StorageManager extends ComponentManager implements Storage {
             event.updateBackupFilePresenceStatus(false);
         }
     }
+    //@@author
 
 }

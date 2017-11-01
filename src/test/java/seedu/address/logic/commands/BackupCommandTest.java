@@ -20,6 +20,7 @@ import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.XmlAddressBookStorage;
 
+//@@author LimYangSheng
 public class BackupCommandTest {
 
     @Rule
