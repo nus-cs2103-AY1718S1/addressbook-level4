@@ -33,6 +33,7 @@ public class DeleteCommand extends UndoableCommand {
     }
 
 
+    //@@author Vanessa
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
@@ -62,6 +63,7 @@ public class DeleteCommand extends UndoableCommand {
                 && this.targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
     }
 
+    //@@author Vanessa
     @Override
     public void setData(Model model, CommandHistory commandHistory,
                         UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue) {

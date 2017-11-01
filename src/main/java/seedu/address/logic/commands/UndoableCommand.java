@@ -18,6 +18,7 @@ public abstract class UndoableCommand extends Command {
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
+    //@@author Vanessa
     /**
      * Stores the current state of {@code model#addressBook}.
      */
@@ -27,6 +28,7 @@ public abstract class UndoableCommand extends Command {
         this.previousQueue = new RecentlyDeletedQueue(queue.getQueue());
     }
 
+    //@@author Vanessa
     /**
      * Reverts the AddressBook to the state before this command
      * was executed and updates the filtered person list to
