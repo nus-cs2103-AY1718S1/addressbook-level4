@@ -45,6 +45,7 @@ public class ResultDisplay extends UiPart<Region> {
         Platform.runLater(() -> displayed.setValue(event.message));
     }
 
+    //@@author raisa2010
     /**
      * Sets the command box style to indicate a failed command.
      */
@@ -58,6 +59,7 @@ public class ResultDisplay extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    //@@author
     /**
      * Sets the result display style to use the default style.
      */
