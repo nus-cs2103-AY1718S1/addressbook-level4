@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-//@@author raisa2010
+//@@author tby1994
 public class DescriptionTest {
     @Test
     public void isValid() {

@@ -180,7 +180,7 @@ public class AddCommandTest {
         public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
             fail("This method should not be called");
         }
-
+        //@@author tby1994
         @Override
         public void changeCommandMode(String mode) throws IllegalValueException {
             fail("This method should not be called");
@@ -191,6 +191,7 @@ public class AddCommandTest {
             fail("This method should not be called ");
             return null;
         }
+        //@@author
     }
 
     /**

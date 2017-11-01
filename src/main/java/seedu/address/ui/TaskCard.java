@@ -18,6 +18,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.task.ReadOnlyTask;
 
+//@@author tby1994
 /**
  * An UI component that displays information of a {@code Task}.
  */
@@ -69,6 +70,7 @@ public class TaskCard extends UiPart<Region> {
         deadline.textProperty().bind(Bindings.convert(task.deadlineProperty()));
         setColour();
     }
+    //@@author
 
     //@@author tpq95
     /**
@@ -110,6 +112,7 @@ public class TaskCard extends UiPart<Region> {
     }
     //@@author
 
+    //@@author tby1994
     /**
      * Set the colour of label for the same tag
      * @param task

@@ -104,11 +104,11 @@ public abstract class AddressBookSystemTest {
     public ResultDisplayHandle getResultDisplay() {
         return mainWindowHandle.getResultDisplay();
     }
-
+    //@@author tby1994
     public TaskListPanelHandle getTaskListPanel() {
         return mainWindowHandle.getTaskListPanel();
     }
-
+    //@@author
     /**
      * Executes {@code command} in the application's {@code CommandBox}.
      * Method returns after UI components have been updated.
@@ -131,7 +131,7 @@ public abstract class AddressBookSystemTest {
         executeCommand(ListCommand.COMMAND_WORD);
         assert getModel().getAddressBook().getPersonList().size() == getModel().getFilteredPersonList().size();
     }
-
+    //@@author tby1994
     /**
      * Displays all tasks in the address book.
      */
@@ -140,7 +140,7 @@ public abstract class AddressBookSystemTest {
         executeCommand(ListTasksCommand.COMMAND_WORD);
         assert getModel().getAddressBook().getTaskList().size() == getModel().getFilteredTaskList().size();
     }
-
+    //@@author
     /**
      * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
      */
@@ -148,7 +148,7 @@ public abstract class AddressBookSystemTest {
         executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
         assert getModel().getFilteredPersonList().size() < getModel().getAddressBook().getPersonList().size();
     }
-
+    //@@author tby1994
     /**
      * Displays all tasks with any parts of their description matching {@code keyword} (case-insensitive).
      */
@@ -156,7 +156,7 @@ public abstract class AddressBookSystemTest {
         executeCommand(FindTaskCommand.COMMAND_WORD + " " + keyword);
         assert getModel().getFilteredTaskList().size() < getModel().getAddressBook().getTaskList().size();
     }
-
+    //@@author
     /**
      * Selects the person at {@code index} of the displayed list.
      */
@@ -164,7 +164,7 @@ public abstract class AddressBookSystemTest {
         executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
         assert getPersonListPanel().getSelectedCardIndex() == index.getZeroBased();
     }
-
+    //@@author tby1994
     /**
      * Selects the task at {@code index} of the displayed list.
      */
@@ -172,7 +172,7 @@ public abstract class AddressBookSystemTest {
         executeCommand(SelectTaskCommand.COMMAND_WORD + " " + index.getOneBased());
         assert getTaskListPanel().getSelectedTaskCardIndex() == index.getZeroBased();
     }
-
+    //@@author
     /**
      * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
      * {@code expectedResultMessage}, the model and storage contains the same person objects as {@code expectedModel}
@@ -188,6 +188,7 @@ public abstract class AddressBookSystemTest {
         assertTaskListMatching(getTaskListPanel(), expectedModel.getFilteredTaskList());
     }
 
+    //@@author tby1994
     /**
      * Calls {@code BrowserPanelHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
      * their current state.
@@ -200,7 +201,7 @@ public abstract class AddressBookSystemTest {
         getPersonListPanel().rememberSelectedPersonCard();
         getTaskListPanel().rememberSelectedTaskCard();
     }
-
+    //@@author
     /**
      * Asserts that the previously selected card is now deselected and the browser's url remains displaying the details
      * of the previously selected person.
@@ -241,7 +242,7 @@ public abstract class AddressBookSystemTest {
         assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isSelectedPersonCardChanged());
     }
-
+    //@@author tby1994
     /**
      * Asserts that the previously selected card is now deselected
      */
@@ -265,7 +266,7 @@ public abstract class AddressBookSystemTest {
     protected void assertSelectedTaskCardUnchanged() {
         assertFalse(getTaskListPanel().isSelectedTaskCardChanged());
     }
-
+    //@@author
     /**
      * Asserts that the command box's shows the default style.
      */

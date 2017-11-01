@@ -25,6 +25,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Birthday> birthday;
     private ObjectProperty<UniqueTagList> tags;
 
+    //@@author eryao95
     /**
      * Every field must be present and not null.
      */
@@ -46,6 +47,7 @@ public class Person implements ReadOnlyPerson {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getBirthday(), source.getTags());
     }
+    //@@author
 
     public void setName(Name name) {
         this.name.set(requireNonNull(name));
@@ -103,6 +105,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author eryao95
     public void setBirthday(Birthday birthday) {
         this.birthday.set(requireNonNull(birthday));
     }
@@ -116,7 +119,7 @@ public class Person implements ReadOnlyPerson {
     public Birthday getBirthday() {
         return birthday.get();
     }
-
+    //@@author
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
