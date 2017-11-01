@@ -286,5 +286,5 @@ public class InfoPanel extends UiPart<Region> {
     private void handleChangeInternalListEvent(ChangeInternalListEvent event) {
         unregisterAsAnEventHandler(this);
     }
-    
+
 }
