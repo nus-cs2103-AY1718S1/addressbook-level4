@@ -39,10 +39,10 @@ public class PrintCommand extends Command {
 
     private final String fileName;
 
-    public PrintCommand(String filename) {
-        requireNonNull(filename);
+    public PrintCommand(String fileName) {
+        requireNonNull(fileName);
 
-        this.fileName = filename;
+        this.fileName = fileName;
     }
 
 
@@ -84,8 +84,8 @@ public class PrintCommand extends Command {
         Path file = Paths.get("docs/books/" + fileName + ".txt");
         try {
             Files.write(file, lines, Charset.forName("UTF-8"));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
         }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, this.fileName));
@@ -150,126 +150,8 @@ public class WhyCommand extends Command {
         Name name = personToAnswer.getName();
         Address address = personToAnswer.getAddress();
         String reason = personToAnswer.getReason();
-        //return new CommandResult(String.format(SHOWING_WHY_MESSAGE, name, address));
         return new CommandResult(reason);
     }
-}
-```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
-``` java
-        case PRINT:
-            return new PrintCommandParser().parse(arguments);
-
-        case WHY:
-            return new WhyCommandParser().parse(arguments);
-```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
-``` java
-
-        default:
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
-        }
-    }
-
-    /**
-     * Searches the entire list of acceptable command words in each command and returns the enumerated value type.
-     * @param commandWord
-     * @return enumerated value for the switch statement to process
-     */
-
-    private CommandType getCommandType(String commandWord) {
-        for (String word : AddCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.ADD;
-            }
-        }
-        for (String word : AddLifeInsuranceCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.ADDLI;
-            }
-        }
-        for (String word : ClearCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.CLEAR;
-            }
-        }
-        for (String word : DeleteCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.DEL;
-            }
-        }
-        for (String word : EditCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.EDIT;
-            }
-        }
-        for (String word : ExitCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.EXIT;
-            }
-        }
-        for (String word : FindCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.FIND;
-            }
-        }
-        for (String word : PartialFindCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.PFIND;
-            }
-        }
-        for (String word : HelpCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.HELP;
-            }
-        }
-        for (String word : HistoryCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.HISTORY;
-            }
-        }
-        for (String word : ListCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.LIST;
-            }
-        }
-        for (String word : RedoCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.REDO;
-            }
-        }
-        for (String word : SelectCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.SELECT;
-            }
-        }
-        for (String word : UndoCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.UNDO;
-            }
-        }
-
-```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
-``` java
-        for (String word : WhyCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.WHY;
-            }
-        }
-        for (String word : PrintCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.PRINT;
-            }
-        }
-```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
-``` java
-
-        return CommandType.NONE;
-    }
-
-
 }
 ```
 ###### /java/seedu/address/logic/parser/PrintCommandParser.java
@@ -339,18 +221,18 @@ public class WhyCommandParser implements Parser<WhyCommand> {
 ``` java
     @Override
     public String getReason() {
-        Address a = this.getAddress();
-        Name n = this.getName();
-        Email e = this.getEmail();
-        DateOfBirth d = this.getDateOfBirth();
+        Address address = this.getAddress();
+        Name name = this.getName();
+        Email email = this.getEmail();
+        DateOfBirth dob = this.getDateOfBirth();
         Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(3);
         if (randomInt == 0) {
-            this.reason = String.format(SHOWING_WHY_MESSAGE, n, a);
+            this.reason = String.format(SHOWING_WHY_MESSAGE, name, address);
         } else if (randomInt == 1) {
-            this.reason = String.format(SHOWING_WHY_MESSAGE_2, n, d);
+            this.reason = String.format(SHOWING_WHY_MESSAGE_2, name, dob);
         } else if (randomInt == 2) {
-            this.reason = String.format(SHOWING_WHY_MESSAGE_3, n, e);
+            this.reason = String.format(SHOWING_WHY_MESSAGE_3, name, email);
         }
         return reason;
     }
