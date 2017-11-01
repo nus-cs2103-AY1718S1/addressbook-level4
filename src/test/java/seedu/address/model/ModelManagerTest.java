@@ -31,6 +31,7 @@ public class ModelManagerTest {
         modelManager.getFilteredParcelList().remove(0);
     }
 
+    //@@author kennard123661
     @Test
     public void addAllParcelsTest() {
         AddressBook addressBook = new AddressBookBuilder().withParcel(ALICE).withParcel(BENSON).build();

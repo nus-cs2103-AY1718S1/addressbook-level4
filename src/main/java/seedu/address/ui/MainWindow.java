@@ -229,10 +229,12 @@ public class MainWindow extends UiPart<Region> {
         splitPanePlaceholder.setDividerPositions(0.6);
     }
 
+    //@@author kennard123661
     @FXML @Subscribe
     private void handleTabEvent(JumpToTabRequestEvent event) {
         logic.setActiveList(event.targetIndex == INDEX_SECOND_TAB.getZeroBased());
     }
+    //@@author
 
     @FXML @Subscribe
     private void handleShowParcelListEvent(ShowParcelListEvent event) {

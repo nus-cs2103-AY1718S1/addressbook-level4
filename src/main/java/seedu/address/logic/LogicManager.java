@@ -45,6 +45,7 @@ public class LogicManager extends ComponentManager implements Logic {
         }
     }
 
+    //@@author kennard123661
     @Override
     public ObservableList<ReadOnlyParcel> getFilteredParcelList() {
         return model.getFilteredParcelList();
@@ -64,6 +65,7 @@ public class LogicManager extends ComponentManager implements Logic {
     public ObservableList<ReadOnlyParcel> getUndeliveredParcelList() {
         return model.getFilteredUndeliveredParcelList();
     }
+    //@@ author
 
     @Override
     public ListElementPointer getHistorySnapshot() {

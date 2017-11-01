@@ -49,6 +49,7 @@ public class ParcelListPanelTest extends GuiUnitTest {
                 ParcelListPanelHandle.UNDELIVERED_PARCEL_LIST_VIEW_ID));
     }
 
+    //@@author kennard123661
     @Test
     public void display() {
         postNow(JUMP_TO_SECOND_TAB_EVENT);
@@ -79,6 +80,7 @@ public class ParcelListPanelTest extends GuiUnitTest {
             assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
         }
     }
+    //@@author
 
     @Test
     public void handleJumpToListRequestEvent() {

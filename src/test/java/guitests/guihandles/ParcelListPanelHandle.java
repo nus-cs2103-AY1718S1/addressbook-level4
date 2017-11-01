@@ -133,6 +133,7 @@ public class ParcelListPanelHandle extends NodeHandle<ListView<ParcelCard>> {
         return getRootNode().getItems().size();
     }
 
+    //@@author kennard123661
     @Override
     public boolean equals(Object object) {
         ParcelListPanelHandle parcelList;

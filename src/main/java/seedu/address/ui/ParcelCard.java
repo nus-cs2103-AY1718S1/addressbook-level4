@@ -79,6 +79,7 @@ public class ParcelCard extends UiPart<Region> {
         });
     }
 
+    //@@author kennard123661
     /**
      * Sets color for the status labels based on the current status.
      */
@@ -103,6 +104,7 @@ public class ParcelCard extends UiPart<Region> {
 
         }
     }
+    //@@author
 
     /**
      * Initializes tags and sets their style based on their tag label

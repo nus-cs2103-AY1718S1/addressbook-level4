@@ -24,6 +24,7 @@ public class MainWindowHandle extends StageHandle {
         browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
     }
 
+    //@@author kennard123661
     public ParcelListPanelHandle getActiveParcelListPanel() {
         return tabPane.getActiveParcelList();
     }
@@ -39,6 +40,7 @@ public class MainWindowHandle extends StageHandle {
     public TabPaneHandle getTabPane() {
         return tabPane;
     }
+    //@@author
 
     public ResultDisplayHandle getResultDisplay() {
         return resultDisplay;

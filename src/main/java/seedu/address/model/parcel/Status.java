@@ -2,6 +2,7 @@ package seedu.address.model.parcel;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author kennard123661
 /**
  * Status represents the delivery status of a parcel
  * It can only be one of these values: PENDING, DELIVER, COMPLETED

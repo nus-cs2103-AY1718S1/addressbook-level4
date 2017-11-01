@@ -39,6 +39,7 @@ public class AddCommandIntegrationTest {
                 String.format(AddCommand.MESSAGE_SUCCESS, validParcel), expectedModel);
     }
 
+    //@@author kennard123661
     @Test
     public void execute_duplicateParcel_throwsCommandException() {
         Parcel parcelInList = new Parcel(model.getAddressBook().getParcelList().get(0));
