@@ -133,11 +133,13 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author Aaron Soh Yu Han
         @Override
         public void favouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
         }
+        //@@author
 
         @Override
         public void addTodoItem(ReadOnlyPerson target, TodoItem todoItem)

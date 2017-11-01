@@ -123,6 +123,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
 
     }
+    //@@author aaronyhsoh
     /**
      * Replaces the given person {@code target} in the list with {@code favouritedReadOnlyPerson}.
      * Sorts the list to show favourite contacts first.
@@ -158,6 +159,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             persons.add(person);
         }
     }
+    //@@author
 
     /**
      * Adds a todoItem to target person.

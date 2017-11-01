@@ -44,8 +44,17 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    //@@author aaronyhsoh
+    /**
+     * Replaces the given person {@code target} with {@code favouritedPerson}.
+     *
+     * @throws DuplicatePersonException if favouriting the person causes the person to be equivalent to
+     *      another existing person in the list.
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     */
     void favouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
+    //@@author
 
     /** Adds the given todoItem to target person */
     void addTodoItem(ReadOnlyPerson target, TodoItem todoItem)

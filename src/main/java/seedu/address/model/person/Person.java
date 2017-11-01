@@ -23,7 +23,6 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-
     private ObjectProperty<UniqueTagList> tags;
     private List<TodoItem> todoItems;
 
@@ -128,6 +127,7 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
+    //@@author aaronyhsoh
     public boolean getFavourite() {
         return favourite;
     }
@@ -135,6 +135,7 @@ public class Person implements ReadOnlyPerson {
     public void setFavourite(boolean favourite) {
         this.favourite = favourite;
     }
+    //@@author
 
     @Override
     public List<TodoItem> getTodoItems() {
