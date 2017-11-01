@@ -457,6 +457,8 @@ in `.xml` format. It is unnecessary to explicitly state `import --xml FILEPATH`,
 * `FILEPATH` must end with an extension of `.xml`.
 * The file name in `FILEPATH` should not contain any prohibited characters `?!%*+:|"<>`.
 * If a relative path is provided, the data will be imported from a location relative to the *BoNUS* installation directory.
+* Persons and events that exist in *BoNUS* and the specified file will not be imported.
+* Data in the specified XML file must be in the format as recognized by *BoNUS*.
 ****
 
 Examples:
@@ -550,6 +552,12 @@ Examples:
 * For `macOS` and `Linux` users: +
 `export /Users/John Doe/Documents/bonus.xml`
 
+[NOTE]
+====
+For `Windows` users, use `\` as the name-separator in your `FILEPATH`. +
+For `macOS` and `Linux` users, use `/` instead.
+====
+
 ==== To Microsoft Excel^TM^ Worksheet
 
 _(Coming in v2.0)_
@@ -569,6 +577,12 @@ Examples:
 
 * For `macOS` and `Linux` users: +
 `export --excel /Users/John Doe/Documents/bonus.xls`
+
+[NOTE]
+====
+For `Windows` users, use `\` as the name-separator in your `FILEPATH`. +
+For `macOS` and `Linux` users, use `/` instead.
+====
 
 === Advance setting : `(cfg)config`
 
