@@ -8,7 +8,7 @@ import seedu.address.logic.commands.event.DeleteEventCommand;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-
+//@@author junyango
 /**
  * Parses input arguments and creates a new DeleteEventCommand object
  */

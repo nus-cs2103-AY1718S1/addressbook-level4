@@ -10,7 +10,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.property.Address;
 import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Name;
-
+//@@author junyango
 /**
  * Represents an Event in the address book.
  * Guarantees: details are present and not null, field values are validated.

@@ -11,7 +11,7 @@ import javafx.scene.layout.Region;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.ui.UiPart;
 import seedu.address.ui.person.PersonCard;
-
+//@@author junyango
 /**
  * An UI component that displays information of a {@code Event}.
  */
