@@ -539,11 +539,23 @@ command-line implementation, this file is then copied to the
 === Sorting of persons list
 
 When viewing the persons list, user is able to sort them according to `Name`, `Tags`, `Priority` or `Status`. This
-allows the user to be able to view the list much easier by sorting them to whichever preference he/she wants/needs.
+allows the user to be able to view the list much easier by sorting them to whichever preference the user wants/needs.
 
 This enhancement is achieved by first creating a new SortCommand and SortCommandParser that processes the user input
-command and calls the suitable method to achieve it. Since this enhancement is not able to reuse some of the method
-in other components, new methods have to be created.
+command that performs the suitable sorting method to achieve the user wants. Since this enhancement is not able to
+reuse some of the method in other components, new methods have to be created.
+
+The user input command will be passed to the SortCommandParsers which parses the input by checking to see if it is
+empty. If the input string is empty, it will throw a *ParseException* which throws a new *ParseException* and displays
+ to the user that the input format is incorrect and the usage of the command. If it is not an empty string, it will
+ return a new instance of the SortCommand with the input as the parameter. SortCommand performs the
+ executeUndoableCommand by calling the sortPerson method in the *ModelManager* class which will call the sortPerson
+ method from the *AddressBook* class which class the method sortPersonList from the *UniquePersonList*. All of the
+ parameter passed in in each method are the input string which indicates the type of sorting the user wants/needs.
+
+In *UniquePersonList*, the string passed will then be checked using a `switch case`. If the type is found, it will
+perform the corresponding sorting algorithm. If not it will throw a *InvalidSortTypeException* which tells the user
+that the sorting type the user keyed in does not exist.
 
 [NOTE]
 Explanation of how this is achieved will be done soon. A sequence diagram will be updated here to illustrate how the
@@ -552,18 +564,25 @@ SortCommand and SortCommandParser operates.
 // tag::Setting relationship[]
 === Setting relationship between two persons
 
-When viewing the persons list, user finds out if that specific person as my relationship with any other person. The
-user is also able to set relationships between 2 persons if they are related to one another. Each person is able to
-have multiple relationships.
+When viewing the persons list, user finds out if that a specific person has a relationship with another person. Thus,
+the user is able to set relationships between 2 persons if they are related to one another. The user can also delete
+the specific relationship that the two persons are connected and also clear all relationships in the two persons. Each
+person is able to have multiple relationships but only one relationship per person. The user will also be able to
+edit the relationship of the two persons.
 
 This feature is achieved by first creating the Relationship and UniqueRelList class that handles the relationship
  name and the list of relationship of each person. Next, creating the command to add/edit/delete relationship between 2
  persons.
 
-This will be done using the command `set [INDEX] [INDEX] [RELATIONSHIP]`.
+This will be done using the command `set [INDEX] [INDEX] [PREFIX]RELATIONSHIP`. There are 3 different prefixes which
+performs different things. *ar/* add the relationship, *dr/* deletes the relationship and *cr/* clears all
+relationships between the two persons.
 
 It will set the relationship for INDEX 1
 and INDEX 2. Thus the command that executes this will perform twice.
+
+The SetRelCommandParser parses the input and returns a new SetRelCommand which has the parameters of the two indexes
+and the new edited person.
 
 [NOTE]
 More information on this will be done soon once this feature is almost complete.
