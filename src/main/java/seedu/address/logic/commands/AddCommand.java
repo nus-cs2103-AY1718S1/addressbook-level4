@@ -38,6 +38,14 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_TAG + "owesMoney "
             + PREFIX_WEB_LINK + "https://www.facebook.com/jiasheng.an";
 
+    public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " "
+            + PREFIX_NAME + "{NAME} "
+            + PREFIX_PHONE + "{PHONE} "
+            + PREFIX_EMAIL + "{EMAIL} "
+            + PREFIX_ADDRESS + "{ADDRESS} "
+            + "[" + PREFIX_TAG + "TAG]... "
+            + "[" + PREFIX_WEB_LINK + "WEB LINK]...";
+
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 

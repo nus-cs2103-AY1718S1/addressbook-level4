@@ -18,6 +18,8 @@ public class DeleteTagCommand extends UndoableCommand {
             + "Parameters: tag (must be one of the existing tag on any one person\n"
             + "Example: " + COMMAND_WORD + " classmate";
 
+    public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {tag}";
+
     public static final String MESSAGE_DELETE_ALL_TAG_SUCCESS = "Deleted tag: %1$s";
 
     private final Tag targetTag;

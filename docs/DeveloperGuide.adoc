@@ -354,7 +354,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 // tag::websiteselectionevent[]
 === Web command for Social Links
 
-The web selection commmand mechanism is executed with the use of a `WebsiteSelectionRequestEvent`, which resides inside `commons.events.ui`. This allows for the event to be handled by the Ui component required.
+The web selection commmand mechanism is executed with the use of a `WebsiteSelectionRequestEvent`, which resides inside `commons.events.ui`. This allows for the event to be handled by the UI component required.
 
 image::WebsiteSelectionEvent.png[width="800"]
 

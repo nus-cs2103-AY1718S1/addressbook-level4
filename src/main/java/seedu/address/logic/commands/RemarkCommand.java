@@ -32,6 +32,10 @@ public class RemarkCommand extends UndoableCommand {
             + "EXAMPLE: " + COMMAND_WORD + " 1 "
             + PREFIX_REMARK + "likes dogs.";
 
+    public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " "
+            + "{Index} "
+            + PREFIX_REMARK + "{Remark}";
+
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Remark: %2$s";
     public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added remark to Person: %1$s";
     public static final String MESSAGE_DELETE_REMARK_SUCCESS = "Removed remark to Person: %1$s";
@@ -41,11 +45,10 @@ public class RemarkCommand extends UndoableCommand {
     private final Remark remark;
 
     /**
-     *
-     * @param index of the person in the filtered person list to edit the remark
+     * @param index  of the person in the filtered person list to edit the remark
      * @param remark of the person
      */
-    public RemarkCommand (Index index, Remark remark) {
+    public RemarkCommand(Index index, Remark remark) {
         requireNonNull(index);
         requireNonNull(remark);
 
@@ -78,8 +81,8 @@ public class RemarkCommand extends UndoableCommand {
     }
 
     /**
-    * Returns command success message
-    */
+     * Returns command success message
+     */
 
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
         if (!remark.value.isEmpty()) {
