@@ -213,6 +213,52 @@ public class SortCommandTest {
     }
 }
 ```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_sort() throws Exception {
+        assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD) instanceof SortCommand);
+        assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD + " 3") instanceof SortCommand);
+    }
+
+    @Test
+    public void parseCommand_alias_sort() throws Exception {
+        assertTrue(parser.parseCommand(SortCommand.COMMAND_ALIAS) instanceof SortCommand);
+        assertTrue(parser.parseCommand(SortCommand.COMMAND_ALIAS + " 3") instanceof SortCommand);
+    }
+    @Test
+    public void parseCommand_schedule() throws Exception {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(ScheduleCommandParser.DATE_FORMAT.parse("2018-12-27 17:00:00"));
+        ScheduleCommand command = (ScheduleCommand) parser.parseCommand(
+                ScheduleCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_SCHEDULE
+                        + "27 December 2018 at 5pm");
+        assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, calendar), command);
+    }
+
+    @Test
+    public void parseCommand_alias_schedule() throws Exception {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(ScheduleCommandParser.DATE_FORMAT.parse("2018-12-25 10:00:00"));
+        ScheduleCommand command = (ScheduleCommand) parser.parseCommand(
+                ScheduleCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_SCHEDULE
+                        + "25 December 2018 at 10am");
+        assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, calendar), command);
+    }
+```
+###### /java/seedu/address/logic/parser/ParserUtilTest.java
+``` java
+    @Test
+    public void parseSchedule_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseSchedule(null);
+    }
+
+    @Test
+    public void parseSchedule_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseSchedule(Optional.empty()).isPresent());
+    }
+```
 ###### /java/seedu/address/logic/parser/ScheduleCommandParserTest.java
 ``` java
 public class ScheduleCommandParserTest {
@@ -254,6 +300,14 @@ public class ScheduleCommandParserTest {
 ```
 ###### /java/seedu/address/model/AddressBookTest.java
 ``` java
+    @Test
+    public void getScheduleList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getScheduleList().remove(0);
+    }
+```
+###### /java/seedu/address/model/AddressBookTest.java
+``` java
         @Override
         public ObservableList<Schedule> getScheduleList() {
             return schedules;
@@ -261,6 +315,27 @@ public class ScheduleCommandParserTest {
 ```
 ###### /java/seedu/address/model/ModelManagerTest.java
 ``` java
+    @Test
+    public void getScheduleList_modifyList_throwsUnsupportedOperationException() {
+        ModelManager modelManager = new ModelManager();
+        thrown.expect(UnsupportedOperationException.class);
+        modelManager.getScheduleList().remove(0);
+    }
+
+    @Test
+    public void removeAndAddScheduleUnitTests() throws ScheduleNotFoundException {
+        Calendar date = Calendar.getInstance();
+        String personToAdd = TypicalPersons.ALICE.getName().toString();
+        Schedule newSchedule = new Schedule(personToAdd, date);
+        ModelManager modelManager = new ModelManager();
+
+        modelManager.addSchedule(newSchedule);
+        assertTrue(modelManager.getScheduleList().get(0).equals(newSchedule));
+
+        modelManager.removeSchedule(newSchedule);
+        assertTrue(modelManager.getScheduleList().size() == 0);
+    }
+
     @Test
     public void testDeleteTag() throws PersonNotFoundException, IllegalValueException, TagNotFoundException {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();

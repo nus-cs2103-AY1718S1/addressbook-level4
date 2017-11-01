@@ -72,6 +72,14 @@ public class AddressBookTest {
         addressBook.getTagList().remove(0);
     }
 
+    //@@author limcel
+    @Test
+    public void getScheduleList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getScheduleList().remove(0);
+    }
+    //@@author
+
     /**
      * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
      */

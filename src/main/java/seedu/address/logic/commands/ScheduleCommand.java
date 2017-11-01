@@ -27,7 +27,7 @@ public class ScheduleCommand extends Command {
             + ": Schedules the selected indexed person to a consultation timeslot.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_SCHEDULE + " today, 5.45pm";
+            + PREFIX_SCHEDULE + "today, 5.45pm";
 
     public static final String MESSAGE_SCHEDULE_PERSON_SUCCESS = "Scheduled Person: %1$s";
     public static final String PERSON_NOT_FOUND = "This person cannot be found";
