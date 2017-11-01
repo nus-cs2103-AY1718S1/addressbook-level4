@@ -99,6 +99,7 @@ A person can have any number of tags (including 0) +
 The parameters for add command can be in any order. +
 Entering `n/NAME, p/PHONE’ or ‘p/PHONE, n/NAME` will work as well. +
 The tag parameter (t/TAG) can be left empty if there are no tags for the person +
+The fields  `PHONE`, `EMAIL`, `ADDRESS` and `BIRTHDAY` are optional fields. +
 You cannot add the exact same person into the Circles.
 
 === Listing all persons : `list`
