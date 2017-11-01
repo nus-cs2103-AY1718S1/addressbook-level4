@@ -28,7 +28,7 @@ public class StatisticsPanelHandle extends NodeHandle<Node> {
     private final Label quartile1Label;
     private final Label interquartileLabel;
 
-    protected StatisticsPanelHandle(Node node) {
+    public StatisticsPanelHandle(Node node) {
         super(node);
 
         this.meanLabel = getChildNode(MEAN_FIELD_ID);
