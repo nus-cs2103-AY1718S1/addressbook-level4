@@ -57,9 +57,40 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
-    /** Raises an event to indicate the model has changed */
+    /**
+     * Raises an event to indicate the model has changed
+     */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
+    }
+
+    @Override
+    public synchronized void mergeAddressBook(ObservableList<ReadOnlyPerson> newFilePersonList) {
+        Boolean isAddressBookChanged = false;
+        ObservableList<ReadOnlyPerson> defaultFilePersonList = addressBook.getPersonList();
+
+        for (ReadOnlyPerson newDataPerson : newFilePersonList) {
+            boolean isSamePerson = false;
+            for (ReadOnlyPerson defaultDataPerson : defaultFilePersonList) {
+                if (defaultDataPerson.equals(newDataPerson)) {
+                    isSamePerson = true;
+                    break;
+                }
+            }
+            if (!isSamePerson) {
+                try {
+                    addressBook.addPerson(new Person(newDataPerson));
+                } catch (DuplicatePersonException dpe) {
+                    assert false : "Unexpected exception " + dpe.getMessage();
+                }
+                isAddressBookChanged = true;
+            }
+        }
+
+        if (isAddressBookChanged) {
+            updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            indicateAddressBookChanged();
+        }
     }
 
     @Override
@@ -86,7 +117,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
-        for (ReadOnlyPerson oldPerson: addressBook.getPersonList()) {
+        for (ReadOnlyPerson oldPerson : addressBook.getPersonList()) {
             Person newPerson = new Person(oldPerson);
             Set<Tag> newTags = newPerson.getTags();
             newTags.remove(tag);

@@ -28,7 +28,7 @@ public class ListCommandTest {
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
         listCommand = new ListCommand();
-        listCommand.setData(model, new CommandHistory(), new UndoRedoStack(), null, null);
+        listCommand.setData(model, new CommandHistory(), new UndoRedoStack(), null);
     }
 
     @Test

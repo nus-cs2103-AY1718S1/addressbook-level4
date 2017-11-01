@@ -19,7 +19,7 @@ public class ExportCommandTest {
     public void accessDeniedFolder() throws CommandException{
         //when trying to create parent folder
         ExportCommand command = new ExportCommand(".txt", "C:/Windows/a");
-        command.setData(model, null, null, null, null);
+        command.setData(model, null, null, null);
         assertEquals(command.execute(), new CommandException(MESSAGE_ACCESS_DENIED));
 
     }
@@ -28,14 +28,14 @@ public class ExportCommandTest {
     public void accessDeniedFile() throws CommandException{
         //when trying to create file
         ExportCommand command = new ExportCommand(".txt", "C:/Windows/a");
-        command.setData(model, null, null, null, null);
+        command.setData(model, null, null, null);
         assertEquals(command.execute(), new CommandException(MESSAGE_ACCESS_DENIED));
     }
 
     @Test
     public void success() throws CommandException {
         ExportCommand command = new ExportCommand(".txt", "C:/a");
-        command.setData(model, null, null, null, null);
+        command.setData(model, null, null, null);
         assertTrue(command.execute().feedbackToUser.equals(new CommandResult(MESSAGE_SUCCESS).feedbackToUser));
     }
 }

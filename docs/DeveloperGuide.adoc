@@ -529,6 +529,41 @@ The implementation process consisted of first creating the appoint command which
 2) Make multiple appointments for one person
 3) Contruct a new GUI where all the appointments can be viewed on one screen
 
+// tag::merge[]
+
+=== Merging AddressBook data file
+
+The feature to merge a new address book data into the current address book default storage file (i.e. `addressBookFilePath` specified in `preferences.json`) is facilitated by `MergeCommand`.
+The `MergeCommand` extends `UndoableCommand` i.e. it execution method is `executeUndoableCommand`.
+
+When the command is executed, the data of the new file is loaded with XmlFileStorage then it is transformed to `Observable<ReadOnlyPerson>`.
+Thereafter, the model will merge the person in `Observable<ReadOnlyPerson>` list with the default data.
+
+In the merging process the model will compare the data (i.e. persons contain inside the `UniquePersonsList`) in `addressBook` with the `ReadOnlyPerson` object.
+While duplicated persons are ignored, unique persons will be added into the default data storage with the `ModelManager` 's `addPerson(ReadOnlyPerson)` method.
+
+The following sequence diagram shows how the merge operation works:
+
+image::MergeCommandSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `MergeCommand` +
+**Alternative 1 (current choice):** Utilizes the `ModelManager` 's `addPerson` method to merge new persons into the default data file +
+**Pros:** Retain the current design of `Model` component without adding new attributes in `ModelManager` . +
+**Cons:** When the new file to merge contain large amount unique persons that can be merged, the `Logger` will log a large number of person added during the merge. +
+**Alternative 2:** Using the `EventsCenter` in `MergeCommand` to post and event to allow the storage to handle the request +
+**Pros:** Allow `Storage` components to handle the merging of data. +
+**Cons:** Hard to catch unexpected exceptions as `EventsCenter` 's `post` method do not throw exceptions.
+**Alternative 3:** Include `AddressBookStorage` as an attribute of `ModelManager` +
+**Pros:** Allow `Storage` components to handle the merging of data. +
+**Cons:** Tighter coupling as now `AddressBookStorage` is associated with `ModelManager` . +
+**Alternative 4:** Include `AddressBookStorage` as an attribute of `LogicManager` +
+**Pros:** Allow `Storage` components to handle the merging of data. +
+**Cons:** Disrupt the design of `Logic` component. +
+
+// end::merge[]
+
 == Documentation
 
 We use asciidoc for writing documentation.
