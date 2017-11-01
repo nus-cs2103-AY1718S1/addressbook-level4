@@ -1,4 +1,4 @@
-= AcquaNote - User Guide
+= AcquaiNote - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/CS2103AUG2017-T10-B1/AcquaNote
+:repoURL: https://github.com/CS2103AUG2017-T10-B1/main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -329,12 +329,6 @@ Format: `unlock PASSWORD`
 * Person contact list will reload.
 ****
 
-== Coming in v2.0
-
-=== Popup dialog window during editing
-
-A dialog window pops up during contact editing.
-
 === Favouriting a person : `favourite`
 
 Favourites the person identified by the index number used in the last person listing. +
@@ -361,6 +355,12 @@ Favourites the 1st person in the results of the `find` command.
 Favourites the 1st person in the address book. +
 `favourite 1` +
 Unfavourite the 1st person in the address book.
+
+== Coming in v2.0
+
+=== Popup dialog window during editing
+
+A dialog window pops up during contact editing.
 
 === To-do list: `sch`
 
