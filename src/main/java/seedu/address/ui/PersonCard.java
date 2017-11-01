@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
@@ -109,9 +110,9 @@ public class PersonCard extends UiPart<Region> {
      */
     private void initBirthdayLabel(ReadOnlyPerson person) {
         String initialBirthday = person.getBirthday().getBirthdayNumber();
-        String birthdayToDisplay = "-";
+        String birthdayToDisplay = Birthday.DEFAULT_BIRTHDAY;
 
-        if (initialBirthday.length() >= 4) {
+        if (initialBirthday.length() >= 4 && !initialBirthday.equals(Birthday.DEFAULT_BIRTHDAY)) {
             birthdayToDisplay = generateBirthdayMsg(initialBirthday);
         }
 

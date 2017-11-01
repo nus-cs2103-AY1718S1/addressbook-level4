@@ -41,15 +41,28 @@ public class BirthdayTest {
     @Test
     public void isValidBirthday() {
 
-        assertFalse(Birthday.isValidBirthdayNumber("234521893032")); // exceeding number limit
+        assertFalse(Birthday.isValidBirthdayFormat("234521893032")); // exceeding number limit
+        assertFalse(Birthday.isValidBirthdayFormat("234")); // less than number required
 
         // non integer used
-        assertFalse(Birthday.isValidBirthdayNumber("example.com")); // invalid alphabet used
-        assertFalse(Birthday.isValidBirthdayNumber(">.<??!")); // invalid random syntax used
+        assertFalse(Birthday.isValidBirthdayFormat("example.com")); // invalid alphabet used
+        assertFalse(Birthday.isValidBirthdayFormat(">.<??!")); // invalid random syntax used
+
+        // incorrect day entered
+        assertFalse(Birthday.isValidDayEntered("320594")); // day entered more than range
+        assertFalse(Birthday.isValidDayEntered("000594")); // day entered less than range
+
+        // incorrect month entered
+        assertFalse(Birthday.isValidMonthEntered("231394")); // month entered more than range
+        assertFalse(Birthday.isValidMonthEntered("020094")); // month entered less than range
 
         // valid birthday
-        assertTrue(Birthday.isValidBirthdayNumber("040598"));
-        assertTrue(Birthday.isValidBirthdayNumber(Birthday.DEFAULT_BIRTHDAY));  // non used
+        assertTrue(Birthday.isValidBirthdayFormat("0405")); // 4 digits DDMM
+        assertTrue(Birthday.isValidBirthdayFormat("040598")); // 6 digits DDMMYY
+        assertTrue(Birthday.isValidBirthdayFormat("04051998")); // 8 digits DDMMYYYY
+        assertTrue(Birthday.isValidDayEntered("040598"));
+        assertTrue(Birthday.isValidMonthEntered("040598"));
+        assertTrue(Birthday.isValidBirthdayFormat(Birthday.DEFAULT_BIRTHDAY));  // non used
 
     }
 
