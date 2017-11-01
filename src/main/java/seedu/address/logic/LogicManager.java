@@ -13,6 +13,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.trie.CommandTrie;
 import seedu.address.logic.trie.Trie;
 import seedu.address.model.Model;
+import seedu.address.model.person.Group;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -61,5 +62,10 @@ public class LogicManager extends ComponentManager implements Logic {
 
     public Trie getCommandTrie() {
         return commandTrie;
+    }
+
+    @Override
+    public ObservableList<Group> getGroupList() {
+        return model.getGroupList();
     }
 }

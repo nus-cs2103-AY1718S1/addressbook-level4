@@ -1,6 +1,12 @@
+Collate-TUI.jar
+Collate-GUI.jar
+collate/
 .gitignore
+test.txt
 build/
 .gradle/
+gradle/wrapper/gradle-wrapper.properties
+gradle.properties
 .checkstyle
 .settings/
 .idea/
@@ -20,3 +26,4 @@ classes/
 /bin/
 src/main/resources/docs/
 out/
+images/

@@ -12,6 +12,7 @@ public class Node {
 
     private char key;
 
+    //@@author grantcm
     public Node(char key , Node next, Node child) {
         requireNonNull(key);
         this.key = key;
@@ -31,10 +32,6 @@ public class Node {
         return key;
     }
 
-    public void setKey(char key) {
-        this.key = key;
-    }
-
     public Node getChild() {
         return child;
     }
@@ -50,4 +47,5 @@ public class Node {
     public void setNext(Node next) {
         this.next = next;
     }
+    //@@author
 }

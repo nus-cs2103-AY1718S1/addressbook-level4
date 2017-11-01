@@ -7,27 +7,34 @@ package seedu.address.model.person;
  */
 public class Group {
 
-    private String groupName;
-    private String groupComment;
+    //Must be a single word without spaces
+    public static final String GROUP_VALIDATION_REGEX = "[\\p{Alpha}]*";
 
-    public Group (String groupName, String groupComment) {
+    public final String groupName;
+
+    public Group (Group group) {
+        this.groupName = group.getGroupName();
+    }
+
+    public Group (String groupName) {
         this.groupName = groupName;
-        this.groupComment = groupComment;
     }
 
     public String getGroupName () {
         return groupName;
     }
 
-    public String getgroupComment () {
-        return groupComment;
+    /**
+     * Determines if groupName is valid
+     */
+    public static boolean isValidGroup (String groupName) {
+        return groupName.matches(GROUP_VALIDATION_REGEX);
     }
 
-    public void setGroupName (String groupName) {
-        this.groupName = groupName;
-    }
-
-    public void setgroupComment (String groupComment) {
-        this.groupComment = groupComment;
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof Group
+                && this.groupName.equals(((Group) other).groupName));
     }
 }

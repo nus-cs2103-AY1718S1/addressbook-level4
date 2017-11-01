@@ -24,35 +24,44 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
 
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<ExpiryDate> expiryDate;
     private ObjectProperty<Remark> remarks;
 
     private ObjectProperty<Group> group;
+    private ObjectProperty<Image> image;
 
     /**
      * Every field must be present and not null.
      */
 
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Remark remarks) {
-        requireAllNonNull(name, phone, email, address, tags, remarks);
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Set<Tag> tags, ExpiryDate expiryDate, Remark remarks, Image image) {
+        requireAllNonNull(name, phone, email, address, tags, expiryDate, remarks, image);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.expiryDate = new SimpleObjectProperty<>(expiryDate);
         this.remarks = new SimpleObjectProperty<>(remarks);
+        this.group = new SimpleObjectProperty<>(new Group("none"));
+        this.image = new SimpleObjectProperty<>(image);
     }
 
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Remark remarks, Group group) {
-        requireAllNonNull(name, phone, email, address, tags, remarks, group);
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Set<Tag> tags, ExpiryDate expiryDate, Remark remarks, Group group, Image image) {
+        requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.expiryDate = new SimpleObjectProperty<>(expiryDate);
         this.remarks = new SimpleObjectProperty<>(remarks);
         this.group = new SimpleObjectProperty<>(group);
+        this.image = new SimpleObjectProperty<>(image);
     }
 
     /**
@@ -60,7 +69,8 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags(), source.getRemark());
+             source.getTags(), source.getExpiryDate(), source.getRemark(), source.getGroup(), source.getImage());
+
     }
 
     public void setName(Name name) {
@@ -115,6 +125,11 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
+    public ObjectProperty<Group> groupProperty() {
+        return group;
+    }
+
+    @Override
     public Address getAddress() {
         return address.get();
     }
@@ -126,6 +141,20 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags.get().toSet());
+    }
+
+    public void setExpiryDate(ExpiryDate date) {
+        this.expiryDate.set(date);
+    }
+
+    @Override
+    public ObjectProperty<ExpiryDate> expiryDateProperty() {
+        return expiryDate;
+    }
+
+    @Override
+    public ExpiryDate getExpiryDate() {
+        return expiryDate.get();
     }
 
     @Override
@@ -145,6 +174,30 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Group getGroup() {
         return group.get();
+    }
+
+    /**
+     * For setting the value of the group ObjectProperty
+     * @param group
+     */
+    public void setGroup(Group group) {
+        this.group.set(group);
+    }
+
+    public void setImage(Image image) {
+        requireNonNull(image);
+        this.image.set(image);
+    }
+
+    @Override
+    public ObjectProperty<Image> imageProperty() {
+        return image;
+    }
+
+    @Override
+    public Image getImage() {
+        return image.get();
+
     }
 
     public ObjectProperty<UniqueTagList> tagProperty() {

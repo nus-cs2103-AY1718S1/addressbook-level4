@@ -96,6 +96,7 @@ public class CommandBox extends UiPart<Region> {
         replaceText(historySnapshot.next());
     }
 
+    //@@author grantcm
     /**
      * Handles the Tab button pressed event.
      */
@@ -124,6 +125,7 @@ public class CommandBox extends UiPart<Region> {
 
 
     }
+    //@@author
 
     /**
      * Sets {@code CommandBox}'s text field with {@code text} and
@@ -141,6 +143,30 @@ public class CommandBox extends UiPart<Region> {
     private void handleCommandInputChanged() {
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
+            initHistory();
+            historySnapshot.next();
+            // process result of the command
+            commandTextField.setText("");
+            logger.info("Result: " + commandResult.feedbackToUser);
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+
+        } catch (CommandException | ParseException e) {
+            initHistory();
+            // handle command failure
+            setStyleToIndicateCommandFailure();
+            logger.info("Invalid command: " + commandTextField.getText());
+            raise(new NewResultAvailableEvent(e.getMessage()));
+        }
+    }
+
+    /**
+     * Takes a command transparently to the CLI
+     */
+    @FXML
+    public void handleCommandInputChanged(String command) {
+        logger.info("Trying to handle " + command + " transparently");
+        try {
+            CommandResult commandResult = logic.execute(command);
             initHistory();
             historySnapshot.next();
             // process result of the command
@@ -186,5 +212,4 @@ public class CommandBox extends UiPart<Region> {
 
         styleClass.add(ERROR_STYLE_CLASS);
     }
-
 }

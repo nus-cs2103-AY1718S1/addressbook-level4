@@ -22,9 +22,14 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<ExpiryDate> expiryDateProperty();
+    ExpiryDate getExpiryDate();
     ObjectProperty<Remark> remarkProperty();
     Remark getRemark();
+    ObjectProperty<Group> groupProperty();
     Group getGroup();
+    ObjectProperty<Image> imageProperty();
+    Image getImage();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -36,7 +41,10 @@ public interface ReadOnlyPerson {
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress()))
-                && other.getRemark().equals(this.getRemark());
+                && other.getRemark().equals(this.getRemark())
+                && other.getGroup().groupName.equals(this.getGroup().groupName)
+                && other.getExpiryDate().equals(this.getExpiryDate())
+                && other.getImage().equals(this.getImage());
     }
 
     /**
@@ -53,7 +61,9 @@ public interface ReadOnlyPerson {
                 .append(getAddress())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
-        builder.append(" Remarks: ")
+        builder.append(" Expiry Date: ")
+                .append(getExpiryDate())
+                .append(" Remarks: ")
                 .append(getRemark());
         return builder.toString();
     }
