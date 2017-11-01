@@ -1,3 +1,4 @@
+//@@author inGall
 package seedu.address.model.reminder;
 
 import java.util.Comparator;

@@ -1,4 +1,4 @@
-﻿= Gentleman's Guide (V1.3) - User Guide
+= Gentleman's Guide (V1.3) - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,17 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T09-B1/main
 
-By: `Team T09-B1 CS2103AUG2017`      Since: `Sep 2017`      Licence: `MIT`
+By: `Team T09-B1 CS2103AUG2017`      Since: `Sep 2017`      Licence: `MIT` +
+image:CoverPage.png[width="350"]
+
+== Introduction
+
+Looking way of keeping track of your contacts? Unsatisfied with ugly clunky designs currently available?
+
+Look no further with the Gentleman's Guide. With a superb user interface and sleek, professional touch, Gentleman's Guide provides you with a contact book that even James Bond would love, shaken not stirred.
+
+At the Heart of our Design is the idea that every man wants to be a Gentleman. Encompassing that idea is a system that respects you as you respect it. It provides the gentleman with exactly what he needed, when he needs it. Nothing more, nothing less
+
 
 == Quick Start
 
@@ -26,7 +36,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::Gentleman's Guide.jpeg[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -85,6 +95,11 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+=== Listing all reminders : `listReminder`
+
+Shows a list of all persons in the address book. +
+Format: `listReminder`
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
@@ -125,6 +140,24 @@ Edits the priority and message of the 1st reminder to be `Low` and `venue at NUS
 * `edit 2 z/Progress Report t/` +
 Edits the task name of the 2nd reminder to be `Progress Report` and clears all existing tags.
 
+=== Modifying birthday to person: `birthday`
+
+Adds / Edits / Removes a birthday parameter to an existing person in the address book. +
+Format: `birthday INDEX [b/dd/mm/yyyy]`
+
+****
+* Add / Edits / Removes birthday parameter to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* For adding / editing : Format must be of " `dd/mm/yyyy` " including the " `/` "
+* For removing : input nothing after " `b/` "
+****
+
+Examples:
+
+* `birthday 1 b/20/07/1995` +
+Adds / changes birthday of the 1st person to be `20/07/1995`
+* `birthday 3 b/` +
+Removes the birthday of the 3rd person.
+
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
@@ -144,6 +177,82 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+=== Locating persons by emails: `findEmail`
+
+Finds persons whose emails is same as the keyword. +
+Format: `findEmail KEYWORD [MORE_KEYWORDS]`
+
+****
+* Only the email is searched.
+* Only full words will be matched e.g. `johnny` will not match `johnny@example.con`
+* Multiple emails can be searched at one time.
+****
+
+Examples:
+
+* `findEmail alex@example.com` +
+Returns person with the email `alex@example.com`
+* `findEmail alex@example.com jamie@example.com` +
+Returns person with emails `alex@example.com` , `jamie@example.com`
+
+=== Locating persons by emails: `findPhone`
+
+Finds persons whose phone is same as the keyword. +
+Format: `findPhone KEYWORD [MORE_KEYWORDS]`
+
+****
+* Only the numbers is searched.
+* Only full words will be matched e.g. `9567` will not match `95678432`
+* Multiple phone numbers can be searched at one time.
+****
+
+Examples:
+
+* `findPhone 86564385` +
+Returns person with the phone number `96564385`
+* `findPhone 87655678 98435670` +
+Returns person with numbers `87655678` , `98435670`
+
+=== Locating reminders by task names: `findReminder`
+
+Finds reminderss whose task names contain any of the given keywords. +
+Format: `findReminder KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `proposals` will match `Proposals`
+* The order of the keywords does not matter. e.g. `Proposal Submission` will match `Submission Proposal`
+* Only the task name is searched.
+* Only full words will be matched e.g. `proposal` will not match `proposals`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Proposal Submission` will return `Proposal Draft`, `Project Submission`
+****
+
+Examples:
+
+* `findReminder Proposal` +
+Returns `Proposal` and `Proposal Submission`
+* `findReminder Meeting Project Work` +
+Returns any reminder having task names `Meeting`, `Proposal Submission`
+
+
+=== Locating reminders by priority: `findPriority`
+
+Finds reminders whose priority is same as the keyword. +
+Format: `findPriority KEYWORD [MORE_KEYWORDS]`
+
+****
+* Only Low / Medium / High is searched.
+* The search is case sensitive. e.g `low` will not match `Low`
+* Only full words will be matched e.g. `Hig` will not match `High`
+* Multiple priorities can be searched at one time.
+****
+
+Examples:
+
+* `findPriority High` +
+Returns reminder with the priority `High`
+* `findPriority Medium Low` +
+Returns reminders with priority `Medium` , `Low`
 
 === Deleting a person : `delete`
 
@@ -202,24 +311,6 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Modifying birthday to person: `birthday`
-
-Adds / Edits / Removes a birthday parameter to an existing person in the address book. +
-Format: `birthday INDEX [b/dd/mm/yyyy]`
-
-****
-* Add / Edits / Removes birthday parameter to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* For adding / editing : Format must be of " `dd/mm/yyyy` " including the " `/` "
-* For removing : input nothing after " `b/` "
-****
-
-Examples:
-
-* `birthday 1 b/20/07/1995` +
-Adds / changes birthday of the 1st person to be `20/07/1995`
-* `birthday 3 b/` +
-Removes the birthday of the 3rd person.
-
 === Sorting all entries by name: `sort`
 
 Sorts all entries in the address book by alphabetical order. +
@@ -230,10 +321,12 @@ Below is an illustration of an unsorted and sort list of contacts.
 **Before**
 
 image::unsortedlist.png[width="300"]
+_Figure 3.16.1 : Unsorted reminder list ._
 
 **After**
 
 image::sortedlist.png[width="300"]
+_Figure 3.16.2 : Sorted reminder list (In alphabetical order) ._
 
 === Sorting all entries by age : `sortAge`
 
@@ -253,26 +346,26 @@ Format: `sortPriority`
 === Retrieving all persons having an existing tag : `retrieve`
 
 Lists all contacts having a certain existing tag in the address book. +
-Format: `retrieve TAGNAME`
+Format: `retrieve TAG`
 
 ****
-* Retrieves all person having the specified `TAGNAME` tag.
+* Retrieves all persons having the specified `TAG` tag.
 * The tag name *must be alphanumeric*
 ****
 
 Examples:
 
 * `retrieve friends` +
-Retrieves all persons with friends tag in the address book.
+Retrieves all persons with the "friends" tag in the address book.
 
 === Tagging multiple persons : `tag`
 
 Tags the persons identified by the index numbers used in the last person listing. +
-Format: `tag INDEX,[MORE_INDEXES]... TAGNAME`
+Format: `tag INDEX,[MORE_INDEXES],... TAG`
 
 ****
-* Tags the persons at the specified `INDEX,[MORE_INDEXES]...` with the `TAGNAME` tag.
-* The indexes refers to the index numbers shown in the most recent listing.
+* Tags the persons at the specified `INDEX,[MORE_INDEXES],...` with the `TAG` tag.
+* The indexes refer to the index numbers shown in the most recent listing.
 * The indexes *must be positive integers* `1, 2, 3, ...`
 * The tag name *must be alphanumeric*
 ****
@@ -281,7 +374,55 @@ Examples:
 
 * `list` +
 `tag 1,2,3 friends` +
-Tags the 1st and 2nd person with the friends tag in the address book.
+Assigns the "friends" tag to the 1st, 2nd and 3rd persons in the results of the `list` command.
+
+=== Untagging multiple persons : `untag`
+
+Removes the specified tags from the persons identified by the index numbers used in the last person listing. +
+Format: `tag INDEX,[MORE_INDEXES],... TAG/[MORE_TAGS]/...`
+
+****
+* Removes all `TAG/[MORE_TAGS]/...` tags from the persons at the specified `INDEX,[MORE_INDEXES],...`.
+* The indexes refer to the index numbers shown in the most recent listing.
+* The indexes *must be positive integers* `1, 2, 3, ...`
+* The tag names *must be alphanumeric*
+* You can choose to remove the specified tags from all persons in the last person listing by replacing `INDEX,[MORE_INDEXES],...` with `-a`.
+* All tags will be removed from the persons at the specified indexes if `TAG/[MORE_TAGS]/...` is left blank.
+****
+
+Examples:
+
+* `list` +
+`untag 1,2,3 friends/enemies` +
+Removes the "friends" and "enemies" tags from the 1st, 2nd and 3rd persons in the results of the `list` command.
+
+* `list` +
+`untag 1,2,3` +
+Removes all tags from the 1st, 2nd and 3rd persons in the results of the `list` command.
+
+* `list` +
+`untag -a friends/enemies` +
+Removes the "friends" and "enemies" tags from all persons in the results of the `list` command.
+
+* `list` +
+`untag -a` +
+Removes all tags from all persons in the results of the `list` command.
+
+=== Renaming an existing tag : `retag`
+
+Renames a certain existing tag to a new tag name. +
+Format: `retag OLD_TAG NEW_TAG`
+
+****
+* Renames the existing `OLD_TAG` tag to `NEW_TAG`.
+* All persons having the `OLD_TAG` tag will be updated accordingly.
+* The tag names *must be alphanumeric*
+****
+
+Examples:
+
+* `retag enemies friends` +
+Renames the existing "enemies" tag in the address book to "friends".
 
 === Listing entered commands : `history`
 
@@ -353,6 +494,16 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
+=== Logging in to private database : `login`
+
+Login into a Private Database +
+Format: `login u/private p/password`
+
+=== Logging out of private database : `logout`
+
+Logout of a Private Database +
+Format: `logout`
+
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
@@ -365,30 +516,50 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add Person* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add Reminder* : `addReminder z/TASK p/PRIORITY d/DATE and TIME m/MESSAGE [t/TAG]...` +
+e.g. `addReminder z/Proposal Submission p/Low d/20/12/2017 1500 m/Submit to John t/work`
 * *Clear* : `clear`
-* *Delete* : `delete INDEX` +
+* *Delete Person* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Delete Reminder* : `deleteReminder INDEX` +
+e.g. `deleteReminder 5`
+* *Edit Person* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *Edit Reminder* : `editReminder INDEX [z/TASK] [p/PRIORITY] [d/DATE and TIME] [M/MESSAGE] [t/TAG]...` +
+e.g. `editReminder 2 p/Medium m/Venue changed to Office`
+* *Update Birthday*: `birthday INDEX b/BIRTHDAY` +
+e.g. `birthday 4 b/20/10/1995`
+* *Find Person* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
+* *Find Email* : `findEmail KEYWORD [MORE_KEYWORDS]` +
+e.g. `findEmail james@example.com`
+* *Find Phone* : `findPhone KEYWORD [MORE_KEYWORDS]` +
+e.g. `findPhone 87654321`
+* *Find Reminder* : `findReminder KEYWORD [MORE_KEYWORDS]` +
+e.g. `findReminder Project`
+* *Find Priority* : `findPriority KEYWORD [MORE_KEYWORDS]` +
+e.g. `findPriority High`
+* *List Persons* : `list`
+* *List Reminders* : `listReminder`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
-* *Retrieve* : `retrieve TAGNAME` +
+* *Sort by Name* : `sort`
+* *Sort by Age* : `sortAge`
+* *Sort by Birthday* : `sortBirthday`
+* *Sort by Priority* : `sortPriority`
+* *Retrieve* : `retrieve TAG` +
 e.g.`retrieve family`
-* *Tag* : `tag INDEX,[MORE_INDEXES]... TAGNAME` +
+* *Tag* : `tag INDEX,[MORE_INDEXES],... TAG` +
 e.g.`tag 1,2,3 friends`
+* *Untag* : `untag INDEX,[MORE_INDEXES],... TAG/[MORE_TAGS]/...` +
+e.g.`untag 1,2,3 friends/enemies`
+* *Retag* : `retag OLD_TAG NEW_TAG` +
+e.g.`retag enemies friends`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *Birthday*: `birthday INDEX b/BIRTHDAY` +
-e.g. `birthday 4 b/20/10/1995`
-* *Sort* : `sort`
-* *SortAge* : `sortAge`
-* *SortBirthday* : `sortBirthday`
-* *Retrieve* : `retrieve TAGNAME` +
-e.g. `retrieve friends`
+* *Log in to private database* : `login u/private p/password`
+* *Log out of private database* : `logout`

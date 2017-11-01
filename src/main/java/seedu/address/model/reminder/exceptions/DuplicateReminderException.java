@@ -1,3 +1,5 @@
+//@@author duyson98
+
 package seedu.address.model.reminder.exceptions;
 
 import seedu.address.commons.exceptions.DuplicateDataException;

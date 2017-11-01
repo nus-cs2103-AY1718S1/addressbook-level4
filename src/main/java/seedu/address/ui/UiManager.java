@@ -46,7 +46,7 @@ public class UiManager extends ComponentManager implements Ui {
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
     private static final String ICON_APPLICATION = "/images/address_book_32.png";
     private static Stage primaryStage;
-    private static Stage publicStage;
+
     private static Logic logic;
     private static Config config;
     private static UserPrefs prefs;
@@ -68,7 +68,6 @@ public class UiManager extends ComponentManager implements Ui {
     @Override
     public void start(Stage primaryStage) {
 
-
         primaryStage.setTitle(config.getAppTitle());
         try {
             mainWindow = new MainWindow(primaryStage, config, prefs, logic);
@@ -81,10 +80,9 @@ public class UiManager extends ComponentManager implements Ui {
         }
 
     }
-
+    //@@author cqhchan
     @Override
     public void restart(String userName) {
-        logger.info("0");
         stop();
         primaryStage = new Stage();
 
@@ -177,6 +175,7 @@ public class UiManager extends ComponentManager implements Ui {
 
         return new ModelManager(initialData, userPrefs);
     }
+    //@@author
 
 
     @Override

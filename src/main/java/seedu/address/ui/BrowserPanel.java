@@ -27,7 +27,7 @@ public class BrowserPanel extends UiPart<Region> {
     private DisplayPanel displayPanel;
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-
+    //@@author cqhchan
     @FXML
     private StackPane browserPanel;
 
@@ -83,16 +83,20 @@ public class BrowserPanel extends UiPart<Region> {
     public void freeResources() {
         browser.freeResources();
     }
+    //@@author
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
     }
+    //@@author cqhchan
+
 
     @Subscribe
     private void handleReminderPanelSelectionChangedEvent(ReminderPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         displayReminder(event.getNewSelection().reminder);
     }
+    //@@author
 }

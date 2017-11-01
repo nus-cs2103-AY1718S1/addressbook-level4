@@ -1,3 +1,5 @@
+//@@author duyson98
+
 package seedu.address.model.tag;
 
 import static junit.framework.TestCase.assertFalse;

@@ -93,6 +93,7 @@ public class StatusBarFooter extends UiPart<Region> {
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
     }
 
+    //@@author duyson98
     /**
      * Starts running the clock display.
      */
@@ -108,5 +109,6 @@ public class StatusBarFooter extends UiPart<Region> {
         };
         timer.scheduleAtFixedRate(task, 0, 1000);
     }
+    //@@author
 
 }
