@@ -1,3 +1,4 @@
+//@@ author eeching
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.fail;
@@ -22,15 +23,14 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Birthday;
+import seedu.address.model.person.Gender;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
-//@@author LuLechuan
-public class BirthdayCommandTest {
+public class GenderCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -38,26 +38,26 @@ public class BirthdayCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_personAcceptedByModel_updateBirthdaySuccessful() throws Exception {
+    public void execute_personAcceptedByModel_updateGenderSuccessful() throws Exception {
         Person updatedPerson = new PersonBuilder(model.getFilteredPersonList()
-                .get(INDEX_FIRST_PERSON.getZeroBased())).withBirthday("29/02/1996").build();
+                .get(INDEX_FIRST_PERSON.getZeroBased())).withGender("male").build();
 
-        Birthday birthday = new Birthday("29/02/1996");
-        BirthdayCommand birthdayCommand = prepareCommand(INDEX_FIRST_PERSON, birthday);
+        Gender gender = new Gender("male");
+        GenderCommand genderCommand = prepareCommand(INDEX_FIRST_PERSON, gender);
 
-        String expectedMessage = String.format(BirthdayCommand.MESSAGE_UPDATE_PERSON_BIRTHDAY_SUCCESS, updatedPerson);
+        String expectedMessage = String.format(GenderCommand.MESSAGE_UPDATE_PERSON_GENDER_SUCCESS, updatedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), updatedPerson);
 
-        assertCommandSuccess(birthdayCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(genderCommand, model, expectedMessage, expectedModel);
     }
 
     /**
      * Returns a {@code BirthdayCommand} with the parameters {@code index + Birthday}.
      */
-    private BirthdayCommand prepareCommand(Index index, Birthday birthday) {
-        BirthdayCommand command = new BirthdayCommand(index, birthday);
+    private GenderCommand prepareCommand(Index index, Gender gender) {
+        GenderCommand command = new GenderCommand(index, gender);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -71,7 +71,7 @@ public class BirthdayCommandTest {
             fail("This method should not be called.");
         }
 
-        public void addPersonAndUpdateBirthday(ReadOnlyPerson person) throws IllegalValueException {
+        public void addPersonAndUpdateGender(ReadOnlyPerson person) throws IllegalValueException {
             fail("This method should not be called.");
         }
 
@@ -112,14 +112,14 @@ public class BirthdayCommandTest {
     /**
      * A Model stub that always accept the person being added.
      */
-    private class ModelStubAcceptingPersonBirthdayChanged extends BirthdayCommandTest.ModelStub {
+    private class ModelStubAcceptingPersonGenderChanged extends GenderCommandTest.ModelStub {
         final ArrayList<Person> personsAdded = new ArrayList<>();
 
         @Override
-        public void addPersonAndUpdateBirthday(ReadOnlyPerson person) throws IllegalValueException {
+        public void addPersonAndUpdateGender(ReadOnlyPerson person) throws IllegalValueException {
             personsAdded.add(new Person(person));
             Person personToUpdate = personsAdded.get(0);
-            personToUpdate.setBirthday(new Birthday("29/02/1996"));
+            personToUpdate.setGender(new Gender("male"));
         }
 
         @Override

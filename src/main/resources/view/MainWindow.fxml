@@ -29,7 +29,7 @@
             <MenuItem mnemonicParsing="false" onAction="#handleExit" styleClass="menu-bar-item" text="Exit" />
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
-           <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" styleClass="menu-bar-item" text="Help" /> 
+           <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" styleClass="menu-bar-item" text="Help" />
         </Menu>
     </MenuBar>
 </AnchorPane>

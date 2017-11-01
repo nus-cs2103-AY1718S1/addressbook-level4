@@ -2,7 +2,7 @@ package seedu.address.model.person;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
-//@@author LuLechuan-unused
+//@@author LuLechuan
 /**
  * Represents a Person's birthday in the address book.
  * Guarantees: immutable.

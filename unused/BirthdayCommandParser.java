@@ -11,7 +11,7 @@ import seedu.address.logic.commands.BirthdayCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Birthday;
 
-//@@author LuLechuan-unused
+//@@author LuLechuan
 /**
  * Parses input arguments and creates a new BirthDayCommand object
  */
