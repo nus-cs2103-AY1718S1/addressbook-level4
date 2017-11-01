@@ -380,6 +380,29 @@ You will see the following after typing `list` and `selectE 2`: +
 image::UG_selectEvent.png[width='790']
 _Figure 3.11: select events result_
 
+=== Displaying emails of every person in an event : `displayEmails`
+
+You can use it to view the emails of every person in an event. +
+Format: `displayEmails INDEX`
+
+****
+* Shows emails of every person in the event specified by `INDEX`.
+* The index refers to the index number shown in the most recent event listing.
+* The index *must be a positive integer* `1, 2, 3, ...`.
+****
+
+Examples: +
+Assuming that you have typed `join p/1 e/1` and `join p/2 e/1` before this example.
+
+* `list` +
+`displayEmails 1` +
+Shows the email of every person who is in the first event in the address book.
+
+You will see the following after typing `list` and `displayEmails 1`: +
+
+image::UG_displayEmails.png[width='790']
+_Figure 3.12:  display emails result_
+
 === Attaching a portrait to a person: `portrait`
 
 You can use this command to attach a portrait to a person so that you can identify him easily.
