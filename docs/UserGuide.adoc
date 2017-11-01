@@ -388,7 +388,7 @@ Changes the addressbook theme to theme `INDEX` of one, which is default *DarkThe
 User can now add a person with just name and phone details. +
 All other details that are not given will be filled in by default values.
 
-image::Default_for_empty_fields.png[width="790"]
+image::Default_for_empty_fields.png[width="400"]
 _Figure 3.5.1 : Default values for empty fields_
 
 === Coming soon in `v2.0`
