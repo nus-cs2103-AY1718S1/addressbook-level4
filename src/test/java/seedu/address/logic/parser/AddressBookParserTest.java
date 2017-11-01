@@ -64,6 +64,7 @@ public class AddressBookParserTest {
         assertEquals(new AddCommand(person), command);
     }
 
+    //@@author LeeYingZheng
     @Test
     public void parseCommand_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORDVAR_1.toUpperCase()) instanceof ClearCommand);

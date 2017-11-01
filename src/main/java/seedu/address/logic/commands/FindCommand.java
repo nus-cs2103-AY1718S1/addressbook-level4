@@ -10,8 +10,10 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
  */
 public class FindCommand extends Command {
 
+    //@@author LeeYingZheng
     public static final String COMMAND_WORDVAR_1 = "find";
     public static final String COMMAND_WORDVAR_2 = "f";
+    //@@author
 
     public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1
             + " OR "

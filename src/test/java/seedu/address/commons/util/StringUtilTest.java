@@ -142,7 +142,7 @@ public class StringUtilTest {
         assertTrue(StringUtil.containsWordIgnoreCase("AAA bBb ccc  bbb", "bbB"));
     }
 
-
+    //@@author LeeYingZheng
     //---------------- Tests for containsTag ------------------------------------------
 
     /*
@@ -239,7 +239,7 @@ public class StringUtilTest {
         assertTrue(StringUtil.containsTag(testTag , "friend colleague")); // query contains multiple words
         assertTrue(StringUtil.containsTag(testTag , "family tutor")); //query contains a matched and unmatched word
     }
-
+    //@@author
 
     //---------------- Tests for getDetails --------------------------------------
 

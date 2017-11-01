@@ -12,8 +12,10 @@ import seedu.address.model.Model;
  */
 public class RedoCommand extends Command {
 
+    //@@author LeeYingZheng
     public static final String COMMAND_WORDVAR_1 = "redo";
     public static final String COMMAND_WORDVAR_2 = "r";
+    //@@author
     public static final String COMMAND_WORDVAR_3 = "redomult";
     public static final String MESSAGE_SUCCESS = "Redo success!";
     public static final String MESSAGE_FAILURE = "No more commands to redo!";

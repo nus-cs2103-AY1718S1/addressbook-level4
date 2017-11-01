@@ -7,8 +7,10 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
  */
 public class ListCommand extends Command {
 
+    //@@author LeeYingZheng
     public static final String COMMAND_WORDVAR_1 = "list";
     public static final String COMMAND_WORDVAR_2 = "l";
+    //@@author
 
     public static final String MESSAGE_SUCCESS = "Listed all persons";
 

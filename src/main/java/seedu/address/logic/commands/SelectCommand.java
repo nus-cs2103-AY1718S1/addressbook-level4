@@ -14,9 +14,10 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class SelectCommand extends Command {
 
-
+    //@@author LeeYingZheng
     public static final String COMMAND_WORDVAR_1 = "select";
     public static final String COMMAND_WORDVAR_2 = "s";
+    //@@author
 
     public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1
             + " OR "

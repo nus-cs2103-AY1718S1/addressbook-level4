@@ -1,11 +1,11 @@
 # vivekscl
-###### /java/seedu/address/commons/core/Messages.java
+###### \java\seedu\address\commons\core\Messages.java
 ``` java
     public static final String MESSAGE_NO_PERSON_FOUND = " Did you mean %1$s" + "?";
 
 }
 ```
-###### /java/seedu/address/logic/commands/AddTagCommand.java
+###### \java\seedu\address\logic\commands\AddTagCommand.java
 ``` java
 /**
  * Adds a tag to the identified persons using the last displayed indexes from the address book.
@@ -105,7 +105,7 @@ public class AddTagCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/FindCommand.java
+###### \java\seedu\address\logic\commands\FindCommand.java
 ``` java
     @Override
     public CommandResult execute() {
@@ -120,7 +120,7 @@ public class AddTagCommand extends UndoableCommand {
     }
 
 ```
-###### /java/seedu/address/logic/commands/RedoCommand.java
+###### \java\seedu\address\logic\commands\RedoCommand.java
 ``` java
     private final int numberOfCommands;
 
@@ -146,7 +146,7 @@ public class AddTagCommand extends UndoableCommand {
     }
 
 ```
-###### /java/seedu/address/logic/commands/RemoveTagCommand.java
+###### \java\seedu\address\logic\commands\RemoveTagCommand.java
 ``` java
 /**
  * Removes a tag from identified persons using the last displayed indexes from the address book.
@@ -246,7 +246,7 @@ public class RemoveTagCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/UndoCommand.java
+###### \java\seedu\address\logic\commands\UndoCommand.java
 ``` java
     private final int numberOfCommands;
 
@@ -272,7 +272,7 @@ public class RemoveTagCommand extends UndoableCommand {
     }
 
 ```
-###### /java/seedu/address/logic/parser/AddTagCommandParser.java
+###### \java\seedu\address\logic\parser\AddTagCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AddTagCommand object
@@ -327,7 +327,7 @@ public class AddTagCommandParser implements Parser<AddTagCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/RedoCommandParser.java
+###### \java\seedu\address\logic\parser\RedoCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new RedoCommand object
@@ -350,7 +350,7 @@ public class RedoCommandParser implements Parser<RedoCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/RemoveTagCommandParser.java
+###### \java\seedu\address\logic\parser\RemoveTagCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new RemoveTagCommand object
@@ -405,7 +405,7 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/UndoCommandParser.java
+###### \java\seedu\address\logic\parser\UndoCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new UndoCommand object
@@ -427,14 +427,14 @@ public class UndoCommandParser implements Parser<UndoCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /** Deletes given tag from every of the given persons */
     void removeTag(ArrayList<Index> targetIndexes, Tag toRemove) throws PersonNotFoundException,
             DuplicatePersonException;
 
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /** Adds given tag to every of the given persons */
     void addTag(ArrayList<Index> targetIndexes, Tag toAdd) throws PersonNotFoundException,
@@ -460,7 +460,7 @@ public class UndoCommandParser implements Parser<UndoCommand> {
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /**
      * Uses the JaroWinklerDistance function from the Apache Commons library to find the closest matching name when
@@ -470,7 +470,7 @@ public class UndoCommandParser implements Parser<UndoCommand> {
     public String getClosestMatchingName(NameContainsKeywordsPredicate predicate);
 
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     /* JaroWinklerDistance method uses double values ranging from 0 to 1. Set initial value to match very similar
      * names only as setting the value to any value less than or equal to 0 will match the first name in filteredPersons
@@ -478,7 +478,7 @@ public class UndoCommandParser implements Parser<UndoCommand> {
     private final double initialToleranceValue = 0.5;
 
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     /**
      * Removes given tag from the given indexes of the target persons shown in the last person listing.
@@ -523,7 +523,7 @@ public class UndoCommandParser implements Parser<UndoCommand> {
     }
 
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public String getClosestMatchingName(NameContainsKeywordsPredicate predicate) {
@@ -590,7 +590,7 @@ public class UndoCommandParser implements Parser<UndoCommand> {
     }
 
 ```
-###### /java/seedu/address/model/person/NameContainsKeywordsPredicate.java
+###### \java\seedu\address\model\person\NameContainsKeywordsPredicate.java
 ``` java
     public List<String> getKeywords() {
         return this.keywords;
@@ -598,7 +598,7 @@ public class UndoCommandParser implements Parser<UndoCommand> {
 
 }
 ```
-###### /resources/view/DarkTheme.css
+###### \resources\view\DarkTheme.css
 ``` css
 #personListView {
     -fx-background-color: #383838;

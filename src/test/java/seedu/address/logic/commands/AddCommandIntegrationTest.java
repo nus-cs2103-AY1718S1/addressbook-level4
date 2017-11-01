@@ -21,6 +21,7 @@ import seedu.address.testutil.PersonBuilder;
  */
 public class AddCommandIntegrationTest {
 
+    //@@author LeeYingZheng
     private Model model;
 
     @Before

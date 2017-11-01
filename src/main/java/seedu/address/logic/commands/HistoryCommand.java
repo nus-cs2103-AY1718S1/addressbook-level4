@@ -14,8 +14,10 @@ import seedu.address.model.Model;
  */
 public class HistoryCommand extends Command {
 
+    //@@author LeeYingZheng
     public static final String COMMAND_WORDVAR_1 = "history";
     public static final String COMMAND_WORDVAR_2 = "h";
+    //@@author
     public static final String MESSAGE_SUCCESS = "Entered commands (from most recent to earliest):\n%1$s";
     public static final String MESSAGE_NO_HISTORY = "You have not yet entered any commands.";
 

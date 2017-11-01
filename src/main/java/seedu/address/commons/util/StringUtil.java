@@ -47,7 +47,8 @@ public class StringUtil {
         }
         return false;
     }
-
+    
+    //@@author LeeYingZheng
     /**
      * Returns true if the {@code tagList} contains the {@code word}.
      *   case sensitive and a full word match is required.
@@ -97,6 +98,7 @@ public class StringUtil {
         String encapsulatedTag = tag.toString();
         return tagFilters.contains(encapsulatedTag.substring(1, encapsulatedTag.length() - 1));
     }
+    //@@author
 
     /**
      * Returns a detailed message of the t, including the stack trace.

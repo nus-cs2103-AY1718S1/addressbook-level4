@@ -1,11 +1,11 @@
 # taojiashu
-###### /java/seedu/address/logic/commands/ExitCommand.java
+###### \java\seedu\address\logic\commands\ExitCommand.java
 ``` java
     public static final String MESSAGE_CONFIRMATION = "Type 'exit' again to confirm to exit";
     public static final String MESSAGE_EXIT_ACKNOWLEDGEMENT = "Exiting Address Book as requested ...";
 
 ```
-###### /java/seedu/address/logic/commands/ExitCommand.java
+###### \java\seedu\address\logic\commands\ExitCommand.java
 ``` java
     @Override
     public CommandResult execute() {
@@ -25,7 +25,7 @@
     }
 
 ```
-###### /java/seedu/address/logic/commands/FavouriteCommand.java
+###### \java\seedu\address\logic\commands\FavouriteCommand.java
 ``` java
 /**
  * Mark a person in the contact as favourite
@@ -118,7 +118,7 @@ public class FavouriteCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/commands/ShowFavouriteCommand.java
+###### \java\seedu\address\logic\commands\ShowFavouriteCommand.java
 ``` java
 /**
  * List all favourite persons
@@ -140,7 +140,7 @@ public class ShowFavouriteCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/FavouriteCommandParser.java
+###### \java\seedu\address\logic\parser\FavouriteCommandParser.java
 ``` java
 /**
  * Parser for FavouriteCommand
@@ -163,7 +163,7 @@ public class FavouriteCommandParser implements Parser<FavouriteCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/person/Favourite.java
+###### \java\seedu\address\model\person\Favourite.java
 ``` java
 /**
  *  Represents whether a Person is a favourite contact or not
@@ -229,7 +229,7 @@ public class Favourite {
     }
 }
 ```
-###### /java/seedu/address/model/person/IsFavouritePredicate.java
+###### \java\seedu\address\model\person\IsFavouritePredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Favourite} is "True".
@@ -248,7 +248,7 @@ public class IsFavouritePredicate implements Predicate<ReadOnlyPerson> {
     }
 }
 ```
-###### /java/seedu/address/model/util/SampleDataUtil.java
+###### \java\seedu\address\model\util\SampleDataUtil.java
 ``` java
             return new Person[] {
                 new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
@@ -301,16 +301,16 @@ public class IsFavouritePredicate implements Predicate<ReadOnlyPerson> {
 
 }
 ```
-###### /java/seedu/address/storage/XmlAdaptedPerson.java
+###### \java\seedu\address\storage\XmlAdaptedPerson.java
 ``` java
     @XmlElement(required = true)
     private String favourite;
 ```
-###### /java/seedu/address/storage/XmlAdaptedPerson.java
+###### \java\seedu\address\storage\XmlAdaptedPerson.java
 ``` java
         favourite = source.getFavourite().getStatus();
 ```
-###### /java/seedu/address/storage/XmlAdaptedPerson.java
+###### \java\seedu\address\storage\XmlAdaptedPerson.java
 ``` java
         final Favourite favourite = new Favourite();
         if (this.favourite.equals("True")) {
@@ -319,7 +319,7 @@ public class IsFavouritePredicate implements Predicate<ReadOnlyPerson> {
             throw new IllegalValueException("Illegal favourite status");
         }
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
         initFavouriteLabel(person);
         initBirthdayLabel(person);
@@ -337,7 +337,7 @@ public class IsFavouritePredicate implements Predicate<ReadOnlyPerson> {
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
         person.favouriteProperty().addListener((observable, oldValue, newValue) -> initFavouriteLabel(person));
         //birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
@@ -349,7 +349,7 @@ public class IsFavouritePredicate implements Predicate<ReadOnlyPerson> {
     }
 
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
     /**
      * Sets the colour of a favourite label based on its favourite status

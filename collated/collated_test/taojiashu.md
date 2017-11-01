@@ -1,11 +1,11 @@
 # taojiashu
-###### /java/seedu/address/logic/commands/ExitCommandTest.java
+###### \java\seedu\address\logic\commands\ExitCommandTest.java
 ``` java
     private ExitCommand exitCommand;
     private CommandHistory history;
 
 ```
-###### /java/seedu/address/logic/commands/ExitCommandTest.java
+###### \java\seedu\address\logic\commands\ExitCommandTest.java
 ``` java
     @Before
     public void setUp() {
@@ -16,7 +16,7 @@
     }
 
 ```
-###### /java/seedu/address/logic/commands/ExitCommandTest.java
+###### \java\seedu\address\logic\commands\ExitCommandTest.java
 ``` java
     @Test
     public void execute_exit_stalled() {
@@ -31,7 +31,7 @@
     @Test
     public void execute_exit_success() {
 ```
-###### /java/seedu/address/logic/commands/ExitCommandTest.java
+###### \java\seedu\address\logic\commands\ExitCommandTest.java
 ``` java
         history.add("exit");
 
@@ -41,7 +41,7 @@
     }
 
 ```
-###### /java/seedu/address/logic/commands/FavouriteCommandTest.java
+###### \java\seedu\address\logic\commands\FavouriteCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for FavouriteCommand.
@@ -94,7 +94,7 @@ public class FavouriteCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ShowFavouriteCommandTest.java
+###### \java\seedu\address\logic\commands\ShowFavouriteCommandTest.java
 ``` java
 /**
  * JUnit tests of ShowFavouriteCommand
@@ -124,7 +124,7 @@ public class ShowFavouriteCommandTest {
     }
 
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_favourite() throws Exception {
@@ -190,7 +190,7 @@ public class ShowFavouriteCommandTest {
     }
 
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_showFavourite() throws Exception {
@@ -220,7 +220,7 @@ public class ShowFavouriteCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/FavouriteCommandParserTest.java
+###### \java\seedu\address\logic\parser\FavouriteCommandParserTest.java
 ``` java
 public class FavouriteCommandParserTest {
     private FavouriteCommandParser parser = new FavouriteCommandParser();
@@ -236,7 +236,7 @@ public class FavouriteCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/model/person/FavouriteTest.java
+###### \java\seedu\address\model\person\FavouriteTest.java
 ``` java
 public class FavouriteTest {
 
@@ -264,7 +264,7 @@ public class FavouriteTest {
     }
 }
 ```
-###### /java/seedu/address/testutil/PersonBuilder.java
+###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
     /**
      * Sets the {@code Favourite} of the {@code Person} that we are building
