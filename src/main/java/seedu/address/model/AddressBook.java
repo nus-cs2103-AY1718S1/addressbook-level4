@@ -71,11 +71,26 @@ public class AddressBook implements ReadOnlyAddressBook {
      *****************************************************/
 
     /**
+     * Adds all persons in the argument person list to this list.
+     */
+    public void addPersons(List<? extends ReadOnlyPerson> persons) {
+        this.persons.addPersons(persons);
+    }
+
+    /**
      * Replaces all persons in this list with those in the argument person list.
      */
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
         this.persons.setPersons(persons);
     }
+
+    /**
+     * Adds all events in the argument event list to this list.
+     */
+    public void addEvents(List<? extends ReadOnlyEvent> events) {
+        this.events.addEvents(events);
+    }
+
 
     /**
      * Replaces all events in this list with those in the argument event list.
@@ -85,10 +100,29 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Adds all tags in the argument tag list to this list.
+     */
+    public void addTags(Set<Tag> tags) {
+        this.tags.addTags(tags);
+    }
+
+    /**
      * Replaces all tags in this list with those in the argument tag list.
      */
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
+    }
+
+    /**
+     * Adds extra {@code newData} into the existing data of this {@code AddressBook}.
+     */
+    public void addData(ReadOnlyAddressBook newData) {
+        requireNonNull(newData);
+
+        addPersons(newData.getPersonList());
+        addEvents(newData.getEventList());
+        addTags(new HashSet<>(newData.getTagList()));
+        syncMasterTagListWith(persons);
     }
 
     /**

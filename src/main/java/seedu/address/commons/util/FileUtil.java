@@ -117,9 +117,9 @@ public class FileUtil {
     }
 
     /**
-     * Checks whether the non-existent file name and folder names in {@filePath} are valid
+     * Checks whether the file name and non-existent folder names in {@filePath} are valid
      */
-    public static boolean hasInvalidNonExistentNames(String filePath) {
+    public static boolean hasInvalidNames(String filePath) {
         File file = new File(filePath);
         // taking account into relative paths with non-existent parent folders
         if (!file.isAbsolute()) {

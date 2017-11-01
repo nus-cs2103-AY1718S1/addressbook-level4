@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.InvalidFilePathException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -151,7 +152,7 @@ public class ExportCommandTest {
             CommandResult result = command.execute();
             assertEquals(expectedMessage, result.feedbackToUser);
             assertEquals(model.getAddressBook(), new AddressBook(storage.readAddressBook(filePath).get()));
-        } catch (CommandException | DataConversionException | IOException e) {
+        } catch (CommandException | DataConversionException | IOException | InvalidFilePathException e) {
             throw new AssertionError("Execution of command should not fail.", e);
         }
     }

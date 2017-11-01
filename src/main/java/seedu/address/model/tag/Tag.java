@@ -48,6 +48,19 @@ public class Tag {
     }
 
     /**
+     * Creates a copy of the given Tag.
+     */
+    public Tag(Tag tag) {
+        requireNonNull(tag);
+        this.tagName = tag.tagName;
+
+        // Adds an entry in TagColorManager if there is no entry yet.
+        if (!TagColorManager.contains(this)) {
+            TagColorManager.setColor(this);
+        }
+    }
+
+    /**
      * Returns true if a given string is a valid tag name.
      */
     public static boolean isValidTagName(String test) {
