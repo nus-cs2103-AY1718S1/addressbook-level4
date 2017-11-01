@@ -239,6 +239,7 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author Houjisan
     @Subscribe
     private void handleShowPersonListEvent(ShowPersonListViewEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

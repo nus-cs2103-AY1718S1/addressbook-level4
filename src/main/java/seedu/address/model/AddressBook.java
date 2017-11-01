@@ -140,6 +140,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.forEach(this::syncMasterTagListWith);
     }
 
+    //@@author Houjisan
     /**
      * After a person has been removed/replaced in the list,
      * check if the person's tags are still in use and remove them if they aren't
@@ -160,6 +161,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
