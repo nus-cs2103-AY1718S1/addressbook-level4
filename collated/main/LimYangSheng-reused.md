@@ -1,18 +1,45 @@
-package seedu.address.ui;
+# LimYangSheng-reused
+###### \java\seedu\address\ui\MeetingCard.java
+``` java
+/**
+ * An UI component that displays meetings of a person.
+ */
+public class MeetingCard extends UiPart<Region> {
 
-import java.util.logging.Logger;
+    private static final String FXML = "MeetingListCard.fxml";
 
-import org.fxmisc.easybind.EasyBind;
+    public final Meeting meeting;
 
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.Region;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.meeting.Meeting;
+    @FXML
+    private HBox meetingCardPane;
+    @FXML
+    private Label name;
+    @FXML
+    private Label id;
+    @FXML
+    private FlowPane meetings;
 
-//@@author LimYangSheng-reused
+    public MeetingCard(Meeting meeting, int displayedIndex) {
+        super(FXML);
+        this.meeting = meeting;
+        id.setText(displayedIndex + ". ");
+        bindListeners(meeting);
+    }
+
+    /**
+     * Binds the individual UI elements to observe their respective {@code Person} properties
+     * so that they will be notified of any changes.
+     */
+    private void bindListeners(Meeting meeting) {
+        name.textProperty().bind(Bindings.convert(meeting.nameProperty()));
+        Label tagLabel = new Label(meeting.value);
+        meetings.getChildren().add(tagLabel);
+    }
+
+}
+```
+###### \java\seedu\address\ui\MeetingListPanel.java
+``` java
 /**
  * Panel containing the list of meetings.
  */
@@ -54,3 +81,4 @@ public class MeetingListPanel extends UiPart<Region> {
         }
     }
 }
+```

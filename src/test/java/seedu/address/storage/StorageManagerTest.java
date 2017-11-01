@@ -72,6 +72,7 @@ public class StorageManagerTest {
         assertNotNull(storageManager.getAddressBookFilePath());
     }
 
+    //@@author LimYangSheng
     @Test
     public void successfulBackupOfAddressBook() throws Exception {
         ReadOnlyAddressBook original = getTypicalAddressBook();
@@ -97,6 +98,7 @@ public class StorageManagerTest {
         storage.handleAddressBookChangedEvent(new AddressBookChangedEvent(new AddressBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
+    //@@author
 
     /**
      * A Stub class to throw an exception when the save method is called

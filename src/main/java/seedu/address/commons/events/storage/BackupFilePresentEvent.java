@@ -2,6 +2,7 @@ package seedu.address.commons.events.storage;
 
 import seedu.address.commons.events.BaseEvent;
 
+//@@author LimYangSheng
 /**
  * Requests to check if there is a backup file in the default path.
  */

@@ -1,9 +1,6 @@
-package guitests.guihandles;
-
-import javafx.scene.control.ListView;
-import seedu.address.ui.MeetingCard;
-
-//@@author LimYangSheng-reused
+# LimYangSheng-reused
+###### \java\guitests\guihandles\MeetingListPanelHandle.java
+``` java
 /**
  * Provides a handle for {@code MeetingListPanel} containing the list of {@code MeetingCard}.
  */
@@ -15,3 +12,4 @@ public class MeetingListPanelHandle extends NodeHandle<ListView<MeetingCard>> {
     }
 
 }
+```
