@@ -35,7 +35,7 @@ public class TestUtil {
      * Returns the middle index of the parcel in the {@code model}'s parcel list.
      */
     public static Index getMidIndex(Model model) {
-        return Index.fromOneBased(model.getAddressBook().getParcelList().size() / 2);
+        return Index.fromOneBased(model.getActiveList().size() / 2);
     }
 
     /**

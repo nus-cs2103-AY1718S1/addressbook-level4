@@ -142,7 +142,7 @@ public class CommandTestUtil {
      * Updates {@code model}'s filtered list to show only the first parcel in the {@code model}'s address book.
      */
     public static void showFirstParcelOnly(Model model) {
-        ReadOnlyParcel parcel = model.getAddressBook().getParcelList().get(0);
+        ReadOnlyParcel parcel = model.getActiveList().get(0);
         final String[] splitName = parcel.getName().fullName.split("\\s+");
         model.updateFilteredParcelList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
@@ -168,6 +168,7 @@ public class CommandTestUtil {
         final String[] splitName = firstParcelOptional.get().getName().fullName.split("\\s+");
         model.updateFilteredParcelList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
+        assert model.getActiveList().size() == 1;
         assert model.getFilteredParcelList().size() == 1;
     }
 

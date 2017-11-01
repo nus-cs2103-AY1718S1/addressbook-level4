@@ -12,6 +12,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstParcelInActiveListOnly;
+import static seedu.address.model.ModelManager.getDeliveredPredicate;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PARCEL;
 import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;
@@ -162,7 +163,8 @@ public class EditCommandTest {
         Index outOfBoundIndex = INDEX_SECOND_PARCEL;
 
         // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getParcelList().size());
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getParcelList().stream()
+                .filter(getDeliveredPredicate().negate()).count());
 
         EditCommand editCommand = prepareCommand(outOfBoundIndex,
                 new EditParcelDescriptorBuilder().withName(VALID_NAME_BOB).build());
