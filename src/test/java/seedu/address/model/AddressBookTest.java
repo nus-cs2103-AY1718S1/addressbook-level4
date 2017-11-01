@@ -144,7 +144,7 @@ public class AddressBookTest {
     /*****************************************************
      * Test cases for events.
      *****************************************************/
-
+    //@@author junyango
     @Test
     public void getEventList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
