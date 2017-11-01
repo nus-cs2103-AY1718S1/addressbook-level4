@@ -127,8 +127,7 @@ public class LoginWindow extends UiPart<Region> {
                 loginAttemptBool = true;
             } else {
                 //TODO - In case wrong details entered
-                errorMessage += "Incorrect username or password." +
-                        " Please enter correct details to start the app.";
+                errorMessage += "Incorrect username or password. Please enter correct details to start the app.";
             }
 
             if (errorMessage.length() != 0) {
