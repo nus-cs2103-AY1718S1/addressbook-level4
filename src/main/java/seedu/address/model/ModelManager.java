@@ -76,6 +76,7 @@ public class ModelManager extends ComponentManager implements Model {
             if (!person.getDeadline().value.equals("No deadline set.")) {
                 Date deadline = DateUtil.convertStringToDate(person.getDeadline().valueToDisplay);
                 if (deadline.before(new Date())) {
+                    logger.info(person.getName().toString() + " has overduedebt");
                     this.addressBook.addOverdueDebtPerson(person);
                 }
             }
@@ -250,6 +251,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
+        syncOverdueList();
         indicateAddressBookChanged();
     }
 
