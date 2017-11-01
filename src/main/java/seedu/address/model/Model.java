@@ -7,7 +7,9 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TodoItem;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.DuplicateTodoItemException;
+//@@author qihao27
 import seedu.address.model.person.exceptions.NoPersonFoundException;
+//@@author
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -69,9 +71,11 @@ public interface Model {
     /** Updates the UI to show all todoItems for all persons */
     void updateTodoItemList();
 
+    //@@author qihao27
     /**
      * Sorts the list by the specified @param parameter.
      * @throws NoPersonFoundException if no persons found in {@code AddressBook}.
      */
     void sortPerson (String option) throws NoPersonFoundException;
+    //@@author
 }

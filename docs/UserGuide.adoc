@@ -356,6 +356,23 @@ Favourites the 1st person in the address book. +
 `favourite 1` +
 Unfavourite the 1st person in the address book.
 
+=== Exporting address book : `export`
+
+Exports a copy of the address book. +
+Format: `export FILEPATH`
+
+****
+* Exports the address book into specified `FILEPATH`.
+* The filepath refers to a local directory in the computer.
+* The filepath *must be suffixed with .xml* e.g. 'C:\', 'docs/', ...
+* If specified directory is missing, it will be automatically created when exporting.
+****
+
+Examples:
+
+* `export C:\exported\AcquaiNote.xml` +
+Exports the address book into exported folder in C drive in xml file format.
+
 == Coming in v2.0
 
 === Popup dialog window during editing
@@ -374,7 +391,7 @@ Adds schedule with the 1st person: `dinner at 7`.
 * `sch 2 s/` +
 Clears all existing schedules with the 2nd person.
 
-=== real time highlight
+=== Real time highlight
 
 Real time highlight when input command is not correct.
 
@@ -409,3 +426,5 @@ e.g. `sort -n`
 * *Redo* : `redo`
 * *Lock* : `lock PASSWORD`
 * *Unlock* : `unlock PASSWORD`
+* *export* : `export FILEPATH` +
+e.g. `export C:\exported\MyAddressBook.xml`

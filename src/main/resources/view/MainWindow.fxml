@@ -11,7 +11,9 @@
 
 <VBox minHeight="450.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
+        <!-- @@author qihao27 -->
         <URL value="@LightTheme.css" />
+        <!-- @@author -->
         <URL value="@Extensions.css" />
     </stylesheets>
 
@@ -19,12 +21,6 @@
         <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
         </Menu>
-      <!--<Menu mnemonicParsing="false" text="Theme">-->
-        <!--<items>-->
-          <!--<MenuItem mnemonicParsing="false" text="Default (Dark)" />-->
-            <!--<MenuItem mnemonicParsing="false" text="Light" />-->
-        <!--</items>-->
-      <!--</Menu>-->
         <Menu mnemonicParsing="false" text="Help">
             <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
         </Menu>

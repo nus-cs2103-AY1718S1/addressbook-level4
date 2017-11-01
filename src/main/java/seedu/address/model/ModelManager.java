@@ -17,7 +17,9 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TodoItem;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.DuplicateTodoItemException;
+//@@author qihao27
 import seedu.address.model.person.exceptions.NoPersonFoundException;
+//@@author
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -99,6 +101,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author qihao27
     @Override
     public void addTodoItem(ReadOnlyPerson target, TodoItem todoItem)
             throws DuplicatePersonException, PersonNotFoundException, DuplicateTodoItemException {
@@ -131,6 +134,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new ShowAllTodoItemsEvent());
     }
 
+    //@@author
     @Override
     public void sortPerson(String option) throws NoPersonFoundException {
         requireNonNull(option);
@@ -138,6 +142,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.sortPerson(option);
         indicateAddressBookChanged();
     }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 

@@ -10,10 +10,15 @@ import java.util.regex.Pattern;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
+//@@author qihao27
 import seedu.address.logic.commands.DeleteAltCommand;
+//@@author
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+//@@author qihao27
+import seedu.address.logic.commands.ExportCommand;
+//@@author
 import seedu.address.logic.commands.FavouriteCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -22,7 +27,9 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LockCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+//@@author qihao27
 import seedu.address.logic.commands.SortCommand;
+//@@author
 import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.logic.commands.TodoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -80,8 +87,10 @@ public class AddressBookParser {
         case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
 
+        //@@author qihao27
         case DeleteAltCommand.COMMAND_WORD:
             return new DeleteAltCommandParser().parse(arguments);
+        //@@author
 
         case TodoCommand.COMMAND_WORD:
             return new TodoCommandParser().parse(arguments);
@@ -130,8 +139,14 @@ public class AddressBookParser {
         case FavouriteCommand.COMMAND_ALIAS:
             return new FavouriteCommandParser().parse(arguments);
 
+        //@@author qihao27
         case SortCommand.COMMAND_WORD:
             return new SortCommandParser().parse(arguments);
+
+        case ExportCommand.COMMAND_WORD:
+        case ExportCommand.COMMAND_ALIAS:
+            return new ExportCommandParser().parse(arguments);
+        //@@author
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

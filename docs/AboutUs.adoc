@@ -16,7 +16,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::aaronyhsoh.png[width="150", align="left"]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: Model
 
 ...
 
@@ -24,7 +24,7 @@ Responsibilities: UI
 image::qihao27.png[width="150", align="left"]
 
 Role: Developer +
-Responsibilities: Storage
+Responsibilities: UI
 
 ...
 
@@ -32,7 +32,7 @@ Responsibilities: Storage
 image::valensia0711.png[width="150", align="left"]
 
 Role: Developer +
-Responsibilities: Model
+Responsibilities: Storage
 
 ...
 

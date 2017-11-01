@@ -41,8 +41,10 @@ public interface AddressBookStorage extends SecureStorage {
      */
     void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException;
 
+    //@@author qihao27
     /**
      * @see #backupAddressBook(ReadOnlyAddressBook)
      */
     void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
+    //@@author
 }
