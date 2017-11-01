@@ -9,47 +9,35 @@ public class ExportCommand extends Command {
     public static final String COMMAND_USAGE = COMMAND_WORD;
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports contacts into a .vcf file.";
+    public static final String MESSAGE_WRONG_FILE_TYPE = "Export only exports .vcf and .xml file.";
+    public static final String MESSAGE_FILE_NOT_FOUND = "File was not found in specified directory.";
 
     public static final String MESSAGE_SUCCESS = "Successfully exported contacts.";
+    public final String filePath;
+
+    public ExportCommand(String path) {
+        this.filePath = path;
+    }
 
     @Override
     public CommandResult execute() throws CommandException {
-        File export = new File(System.getProperty("user.home"), "Desktop/export.vcf");
-        BufferedWriter bw = null;
-        try {
-            bw = new BufferedWriter(new FileWriter(export));
-            ObservableList<ReadOnlyPerson> list = model.getFilteredPersonList();
-
-            for (int i = 0; i < list.size(); i++) {
-                ReadOnlyPerson person = list.get(i);
-                Set<Tag> tagList = person.getTags();
-                bw.write("BEGIN:VCARD\n");
-                bw.write("VERSON:2.1\n");
-                bw.write("FN:" + person.getName() + "\n");
-                bw.write("EMAIL:" + person.getEmail() + "\n");
-                bw.write("TEL:" + person.getPhone() + "\n");
-                bw.write("ADR:" + person.getAddress() + "\n");
-                if (!person.getRemark().isEmpty()) {
-                    bw.write("RM:" + person.getRemark() + "\n");
-                }
-                for (Tag tag : tagList) {
-                    bw.write("TAG:" + tag.getTagName() + "\n");
-                }
-                bw.write("END:VCARD\n");
-            }
-        } catch (IOException ioe) {
-            throw new CommandException("Problem writing to file");
-        } finally {
+        File export = new File(filePath);
+        ReadOnlyAddressBook addressBook = model.getAddressBook();
+        if (export.getName().endsWith(".xml")) {
+            XmlSerializableAddressBook xmlAddressBook = new XmlSerializableAddressBook(addressBook);
             try {
-                if (bw != null) {
-                    bw.close();
-                }
+                export.createNewFile();
+                XmlFileStorage.saveDataToFile(export, xmlAddressBook);
             } catch (IOException ioe) {
-                throw new CommandException("Problem closing file");
+                throw new CommandException(MESSAGE_FILE_NOT_FOUND);
+            }
+        } else if (export.getName().endsWith(".vcf")) {
+            try {
+                VcfExport.saveDataToFile(export, addressBook.getPersonList());
+            } catch (IOException ioe) {
+                throw new CommandException(MESSAGE_FILE_NOT_FOUND);
             }
         }
-
-
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
@@ -68,83 +56,24 @@ public class ImportCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Imports contacts from a .vcf file.";
 
     public static final String MESSAGE_SUCCESS = "Successfully imported contacts. %1$s duplicates were found";
-    public static final String MESSAGE_FILEERROR = "Please ensure that VCard file contents are correct.";
-    public static final String MESSAGE_NOFILECHOSEN = "No files were selected";
+    public static final String MESSAGE_WRONG_FORMAT = "File chosen is not of .vcf or .xml type";
+    public static final String MESSAGE_FILE_CORRUPT = "File is corrupted. Please check.";
+    public static final String MESSAGE_FILE_NOT_FOUND = "File was not found in specified directory.";
 
-    private final BufferedReader br;
+    private final List<ReadOnlyPerson> toImport;
 
-    public ImportCommand (FileInputStream fis) {
-        br = new BufferedReader(new InputStreamReader(fis));
+    public ImportCommand (List<ReadOnlyPerson> importList) {
+        toImport = importList;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         int duplicate = 0;
-
-        try {
-            String newLine = br.readLine();
-
-            while (newLine != null) {
-                if (newLine.equals("BEGIN:VCARD")) {
-                    Name name = null;
-                    Email email = null;
-                    Phone phone = null;
-                    Address address = null;
-                    Remark remark = new Remark("");
-                    Set<Tag> tagList = new HashSet<>();
-
-                    newLine = br.readLine();
-                    while (!newLine.equals("END:VCARD")) {
-                        String type = newLine.split(":")[0];
-                        String parameter = newLine.split(":")[1];
-
-                        switch (type) {
-                        case "FN":
-                            name = new Name(parameter);
-                            break;
-
-                        case "EMAIL":
-                            email = new Email(parameter);
-                            break;
-
-                        case "TEL":
-                            phone = new Phone(parameter);
-                            break;
-
-                        case "ADR":
-                            address = new Address(parameter);
-                            break;
-                        case "RM":
-                            remark = new Remark(parameter);
-                            break;
-                        case "TAG":
-                            Tag tag = new Tag(parameter);
-                            tagList.add(tag);
-                            break;
-                        default :
-                        }
-                        newLine = br.readLine();
-                    }
-                    newLine = br.readLine();
-                    ReadOnlyPerson toAdd = new Person(name, phone, email, address, remark, tagList);
-                    try {
-                        model.addPerson(toAdd);
-                    } catch (DuplicatePersonException dpe) {
-                        duplicate++;
-                    }
-                } else {
-                    newLine = br.readLine();
-                }
-            }
-        } catch (IOException ioe) {
-            throw new CommandException(MESSAGE_FILEERROR);
-        } catch (IllegalValueException ive) {
-            throw new CommandException("Data problem");
-        } finally {
+        for (ReadOnlyPerson toAdd : toImport) {
             try {
-                br.close();
-            } catch (IOException ioe) {
-                throw new CommandException("Problem Closing File");
+                model.addPerson(toAdd);
+            } catch (DuplicatePersonException dpe) {
+                duplicate++;
             }
         }
         return new CommandResult(String.format(MESSAGE_SUCCESS, duplicate));
@@ -247,6 +176,23 @@ public class SortCommand extends Command {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\ExportCommandParser.java
+``` java
+/**
+ * Parses path of file given by user and ensures that it is of .vcf or .xml file type
+ */
+public class ExportCommandParser implements Parser<ExportCommand> {
+
+    @Override
+    public ExportCommand parse(String userInput) throws ParseException {
+        String path = userInput.trim();
+        if (!path.endsWith(".xml") && !path.endsWith(".vcf")) {
+            throw new ParseException(ExportCommand.MESSAGE_WRONG_FILE_TYPE);
+        }
+        return new ExportCommand(path);
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\ImportCommandParser.java
 ``` java
 /**
@@ -257,24 +203,49 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
     @Override
     public ImportCommand parse(String userInput) throws ParseException {
-        JButton open = new JButton();
-        JFileChooser fc = new JFileChooser();
-        fc.setCurrentDirectory(new java.io.File("C:/"));
-        fc.setDialogTitle("Select your vCard file");
-        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        if (fc.showOpenDialog(open) == JFileChooser.APPROVE_OPTION) {
-            File file = fc.getSelectedFile();
-            try {
-                FileInputStream fis = new FileInputStream(file);
-                return new ImportCommand(fis);
-            } catch (IOException ioe) {
-                throw new ParseException(ImportCommand.MESSAGE_FILEERROR);
+        File file;
+        if (userInput.trim().isEmpty()) {
+            FileChooser chooser = new FileChooser();
+            chooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("All", "*.*"),
+                    new FileChooser.ExtensionFilter("vCard (.vcf)", "*.vcf"),
+                    new FileChooser.ExtensionFilter("XML (.xml)", "*.xml")
+            );
+            chooser.setTitle("Select import file.");
+            file = chooser.showOpenDialog(new Stage());
+            if (file == null) {
+                throw new ParseException("Import cancelled");
             }
         } else {
-            throw new ParseException(ImportCommand.MESSAGE_NOFILECHOSEN);
+            file = new File(userInput.trim());
         }
+        if (file.getName().endsWith(".xml")) {
+            try {
+                ReadOnlyAddressBook importingBook = XmlFileStorage.loadDataFromSaveFile(file);
+                List<ReadOnlyPerson> importList = importingBook.getPersonList();
 
+                return new ImportCommand(importList);
+            } catch (DataConversionException dce) {
+                throw new ParseException(ImportCommand.MESSAGE_FILE_CORRUPT);
+            } catch (FileNotFoundException fnfe) {
+                throw new ParseException(ImportCommand.MESSAGE_FILE_NOT_FOUND);
+            }
+
+        } else if (file.getName().endsWith(".vcf")) {
+            try {
+                List<ReadOnlyPerson> importList = VcfImport.getPersonList(file);
+                return new ImportCommand(importList);
+            } catch (IllegalValueException ive) {
+                throw new ParseException(ImportCommand.MESSAGE_FILE_CORRUPT);
+            } catch (IOException ioe) {
+                throw new ParseException(ImportCommand.MESSAGE_FILE_NOT_FOUND);
+            }
+
+        } else {
+            throw new ParseException(ImportCommand.MESSAGE_WRONG_FORMAT);
+        }
     }
+
 }
 ```
 ###### \java\seedu\address\logic\parser\RemoveTagCommandParser.java
@@ -407,4 +378,105 @@ public class SortCommandParser implements Parser<SortCommand> {
     public void sortFilteredPersonList(Comparator<ReadOnlyPerson> comparator) {
         sortedPersons.setComparator(comparator);
     }
+```
+###### \java\seedu\address\storage\VcfExport.java
+``` java
+/**
+ * Parses a list of {@code ReadOnlyPerson} into a .vcf file.
+ */
+public class VcfExport {
+
+    /**
+     * Parses a .vcf file into a list of {@code ReadOnlyPerson}.
+     * Throws a IOException if file is not found.
+     */
+    public static void saveDataToFile(File file, List<ReadOnlyPerson> list) throws IOException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+
+        for (int i = 0; i < list.size(); i++) {
+            ReadOnlyPerson person = list.get(i);
+            Set<Tag> tagList = person.getTags();
+            bw.write("BEGIN:VCARD\n");
+            bw.write("VERSON:2.1\n");
+            bw.write("FN:" + person.getName() + "\n");
+            bw.write("EMAIL:" + person.getEmail() + "\n");
+            bw.write("TEL:" + person.getPhone() + "\n");
+            bw.write("ADR:" + person.getAddress() + "\n");
+            if (!person.getRemark().isEmpty()) {
+                bw.write("RM:" + person.getRemark() + "\n");
+            }
+            for (Tag tag : tagList) {
+                bw.write("TAG:" + tag.getTagName() + "\n");
+            }
+            bw.write("END:VCARD\n");
+        }
+        bw.close();
+    }
+
+}
+```
+###### \java\seedu\address\storage\VcfImport.java
+``` java
+/**
+ * Parses a .vcf file into a list of {@code ReadOnlyPerson}.
+ */
+public class VcfImport {
+
+    public static List<ReadOnlyPerson> getPersonList(File file) throws IOException, IllegalValueException {
+        BufferedReader br = new BufferedReader(
+                new InputStreamReader(new FileInputStream(file)));
+        String newLine = br.readLine();
+        List<ReadOnlyPerson> importList = new ArrayList<>();
+        while (newLine != null) {
+            if (newLine.equals("BEGIN:VCARD")) {
+                Name name = null;
+                Email email = null;
+                Phone phone = null;
+                Address address = null;
+                Remark remark = new Remark("");
+                Set<Tag> tagList = new HashSet<>();
+
+                newLine = br.readLine();
+                while (!newLine.equals("END:VCARD")) {
+                    String type = newLine.split(":")[0];
+                    String parameter = newLine.split(":")[1];
+
+                    switch (type) {
+                    case "FN":
+                        name = new Name(parameter);
+                        break;
+
+                    case "EMAIL":
+                        email = new Email(parameter);
+                        break;
+
+                    case "TEL":
+                        phone = new Phone(parameter);
+                        break;
+
+                    case "ADR":
+                        address = new Address(parameter);
+                        break;
+                    case "RM":
+                        remark = new Remark(parameter);
+                        break;
+                    case "TAG":
+                        Tag tag = new Tag(parameter);
+                        tagList.add(tag);
+                        break;
+                    default:
+                    }
+                    newLine = br.readLine();
+                }
+                newLine = br.readLine();
+                ReadOnlyPerson toAdd = new Person(name, phone, email, address, remark, tagList);
+                importList.add(toAdd);
+            } else {
+                newLine = br.readLine();
+            }
+        }
+        br.close();
+        return importList;
+    }
+}
 ```
