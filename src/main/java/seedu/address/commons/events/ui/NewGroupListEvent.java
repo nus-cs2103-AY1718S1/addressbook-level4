@@ -3,6 +3,7 @@ package seedu.address.commons.events.ui;
 import javafx.collections.ObservableList;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.group.ReadOnlyGroup;
+
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author eldonng
@@ -31,5 +32,4 @@ public class NewGroupListEvent extends BaseEvent {
     public String toString() {
         return this.getClass().getSimpleName();
     }
-
 }

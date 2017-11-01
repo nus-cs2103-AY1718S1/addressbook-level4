@@ -106,6 +106,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
         raise(new NewGroupListEvent(getGroupList(), addressBook.getPersonList()));
+
         indicateAddressBookChanged();
     }
 

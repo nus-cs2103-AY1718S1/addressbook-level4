@@ -78,9 +78,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         try {
             setPersons(newData.getPersonList());
-            setGroups(newData.getGroupList());
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
+        }
+
+        try {
+            setGroups(newData.getGroupList());
         } catch (DuplicateGroupException e) {
             assert false : "AddressBooks should not have duplicate groups";
         }
@@ -165,6 +168,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
         if (persons.remove(key)) {
+            groups.removePerson(key);
             return true;
         } else {
             throw new PersonNotFoundException();
