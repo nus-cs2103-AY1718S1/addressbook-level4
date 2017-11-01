@@ -15,6 +15,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
         this.keywords = keywords;
     }
 
+    //@@author eldonng
     @Override
     public boolean test(ReadOnlyPerson person) {
         return keywords.stream()
@@ -26,6 +27,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
         return personName.toString().toLowerCase().contains(keyword.trim().toLowerCase());
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

@@ -273,6 +273,15 @@ public class ListCommandParser implements Parser<ListCommand> {
 ###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
+     * Parses a String argument for tag. Leading and trailing whitespaces will be removed
+     */
+    public static String parseTag(String tag) {
+        String trimmedTag = tag.trim();
+        return trimmedTag;
+
+    }
+
+    /**
      * Parses a String argument for a file path destination for Export.
      * Leading and trailing whitespaces will be removed
      */

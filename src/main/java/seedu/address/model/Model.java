@@ -21,6 +21,7 @@ import seedu.address.model.tag.UniqueTagList;
  * The API of the Model component.
  */
 public interface Model {
+    //@@author eldonng
     /**
      * Comparators for sorting purposes
      */
@@ -39,6 +40,7 @@ public interface Model {
     Predicate<ReadOnlyGroup> PREDICATE_SHOW_ALL_GROUPS = unused -> true;
 
 
+    //@@author
     /**
      * Clears existing backing model and replaces with the provided new data.
      */
@@ -59,6 +61,7 @@ public interface Model {
      */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
+    //@@author eldonng
     /**
      * Adds the given group
      */
@@ -88,6 +91,7 @@ public interface Model {
 
     HashMap<Tag, String> getTagColours();
 
+    //@@author
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *

@@ -71,12 +71,14 @@ public class PersonListPanel extends UiPart<Region> {
         scrollTo(event.targetIndex);
     }
 
+    //@@author eldonng
     @Subscribe
     private void handleNewPersonListEvent(NewPersonListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         setConnections(event.getPersonsList());
     }
 
+    //@@author
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
      */

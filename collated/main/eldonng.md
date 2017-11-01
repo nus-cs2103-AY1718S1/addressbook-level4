@@ -48,7 +48,30 @@ public class NewGroupListEvent extends BaseEvent {
     public String toString() {
         return this.getClass().getSimpleName();
     }
+}
+```
+###### \java\seedu\address\commons\events\ui\NewPersonInfoEvent.java
+``` java
 
+/**
+ * Indicates that Person's information has been changed
+ */
+public class NewPersonInfoEvent extends BaseEvent {
+
+    private ReadOnlyPerson person;
+
+    public NewPersonInfoEvent(ReadOnlyPerson person) {
+        this.person = person;
+    }
+
+    public ReadOnlyPerson getPerson() {
+        return person;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }
 ```
 ###### \java\seedu\address\commons\events\ui\NewPersonListEvent.java
@@ -255,7 +278,7 @@ public class SetColourCommand extends Command {
 
     public static final String SETCOLOUR_SUCCESS = "All tags [%1s] are now coloured %2s";
     public static final String SETCOLOUR_INVALID_COLOUR = "Unfortunately, %1s is unavailable to be set in addressbook";
-    private static final String[] colours = {"blue", " red", "brown", "green", "black", "purple", "indigo", "grey",
+    private static final String[] colours = {"blue", "red", "brown", "green", "black", "purple", "indigo", "grey",
         "chocolate", "orange", "aquamarine"};
 
     private String tag;
@@ -325,7 +348,6 @@ public class UnpinCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
@@ -459,15 +481,6 @@ public class GroupCommandParser implements  Parser<CreateGroupCommand> {
             return splitArgs;
         }
         throw new IllegalValueException(MESSAGE_INVALID_ARGUMENTS);
-    }
-
-    /**
-     * Parses a String argument for tag. Leading and trailing whitespaces will be removed
-     */
-    public static String parseTag(String tag) {
-        String trimmedTag = tag.trim();
-        return trimmedTag;
-
     }
 
 ```
@@ -803,6 +816,19 @@ public class UniqueGroupList implements Iterable<Group> {
         return groupFoundAndDeleted;
     }
 
+    /**
+     * Removes the equivalent person from all groups
+     * @param toRemove
+     */
+    public void removePerson(ReadOnlyPerson toRemove) {
+        requireNonNull(toRemove);
+        internalList.forEach(group -> {
+            if (group.getGroupMembers().contains(toRemove)) {
+                group.getGroupMembers().remove(toRemove);
+            }
+        });
+    }
+
     public void setGroups(UniqueGroupList replacement) {
         this.internalList.setAll(replacement.internalList);
     }
@@ -842,12 +868,66 @@ public class UniqueGroupList implements Iterable<Group> {
 
 }
 ```
+###### \java\seedu\address\model\Model.java
+``` java
+    /**
+     * Comparators for sorting purposes
+     */
+    Comparator<ReadOnlyPerson> COMPARATOR_SORT_BY_NAME = (
+        ReadOnlyPerson p1, ReadOnlyPerson p2) -> p1.getName().compareTo(p2.getName());
+    Comparator<ReadOnlyPerson> COMPARATOR_SORT_BY_PHONE = (
+        ReadOnlyPerson p1, ReadOnlyPerson p2) -> p1.getPhone().compareTo(p2.getPhone());
+    Comparator<ReadOnlyPerson> COMPARATOR_SORT_BY_EMAIL = (
+        ReadOnlyPerson p1, ReadOnlyPerson p2) -> p1.getEmail().compareTo(p2.getEmail());
+    /**
+     * {@code Predicate} that always evaluate to true
+     */
+    Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<ReadOnlyPerson> PREDICATE_SHOW_PINNED_PERSONS = p -> UniqueTagList.containsPinTag(p);
+    Predicate<ReadOnlyPerson> PREDICATE_SHOW_UNPINNED_PERSONS = p -> !UniqueTagList.containsPinTag(p);
+    Predicate<ReadOnlyGroup> PREDICATE_SHOW_ALL_GROUPS = unused -> true;
+
+
+```
+###### \java\seedu\address\model\Model.java
+``` java
+    /**
+     * Adds the given group
+     */
+    void addGroup(ReadOnlyGroup group) throws DuplicateGroupException;
+
+    /**
+     * Deletes the given group
+     */
+    void deleteGroup(ReadOnlyGroup group) throws GroupNotFoundException;
+
+    /**
+     * Pins the given person
+     */
+    void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException;
+
+    /**
+     * Unpins the given person
+     */
+    void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException;
+
+    /**
+     * Set the colour for the specific tag
+     * @param tag
+     * @param colour
+     */
+    void setTagColour(String tag, String colour) throws IllegalValueException;
+
+    HashMap<Tag, String> getTagColours();
+
+```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
         raise(new NewGroupListEvent(getGroupList(), addressBook.getPersonList()));
+
         indicateAddressBookChanged();
     }
 
@@ -992,6 +1072,20 @@ public class UniqueGroupList implements Iterable<Group> {
         raise(new NewPersonListEvent(getFilteredPersonList()));
     }
 }
+```
+###### \java\seedu\address\model\person\PersonContainsKeywordsPredicate.java
+``` java
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getSearchText(), keyword))
+                || keywords.stream().anyMatch(keyword -> checkName(person.getName(), keyword));
+    }
+
+    private boolean checkName(Name personName, String keyword) {
+        return personName.toString().toLowerCase().contains(keyword.trim().toLowerCase());
+    }
+
 ```
 ###### \java\seedu\address\model\tag\UniqueTagList.java
 ``` java
@@ -1214,6 +1308,12 @@ public class XmlAdaptedGroup {
 
 }
 ```
+###### \java\seedu\address\ui\CommandBox.java
+``` java
+        TextFields.bindAutoCompletion(commandTextField, Messages.MESSAGE_AUTOCOMPLETE_LIST);
+    }
+
+```
 ###### \java\seedu\address\ui\GroupCard.java
 ``` java
 /**
@@ -1340,11 +1440,6 @@ public class GroupListPanel extends UiPart<Region> {
                     }
                 });
     }
-    @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        scrollTo(event.targetIndex);
-    }
 
     @Subscribe
     private void handleNewGroupListEvent(NewGroupListEvent event) {
@@ -1381,24 +1476,9 @@ public class GroupListPanel extends UiPart<Region> {
         }
     }
 
-    @Override
-    public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
-            return false;
-        }
-
-        // state check
-        PersonCard card = (PersonCard) other;
-        return id.getText().equals(card.id.getText())
-                && person.equals(card.person);
-    }
-
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
     private Image setPinIcon(ReadOnlyPerson person) {
         if (person.isPinned()) {
             return new Image(PIN_ICON);
@@ -1422,7 +1502,7 @@ public class PersonInfo extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    private HashMap<String, String> colourMap;
+    private ObjectProperty<HashMap<String, String>> colourMap;
 
     @FXML
     private Circle circle;
@@ -1452,10 +1532,7 @@ public class PersonInfo extends UiPart<Region> {
     public PersonInfo(HashMap<String, String> colourMap) {
         super(FXML);
 
-        this.colourMap = colourMap;
-
-        // To prevent triggering events for typing inside the loaded Web page.
-        getRoot().setOnKeyPressed(Event::consume);
+        this.colourMap = new SimpleObjectProperty<>(colourMap);
 
         loadDefaultPage();
         registerAsAnEventHandler(this);
@@ -1481,18 +1558,30 @@ public class PersonInfo extends UiPart<Region> {
     public void loadPage(ReadOnlyPerson person) {
         circle.setRadius(70);
         initial.setText(person.getName().fullName.substring(0, 1));
-        name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
         circle.setFill(colors[initial.getText().hashCode() % colors.length]);
         emailHeader.setText("Email:");
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
         addressHeader.setText("Address:");
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
         birthdayHeader.setText("Birthday: ");
-        birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         tagsHeader.setText("Tags:");
+        bindListeners(person);
+
+    }
+
+    /**
+     * Binds the individual UI elements to observe their respective {@code Person} properties
+     * so that they will be notified of any changes.
+     */
+    private void bindListeners(ReadOnlyPerson person) {
+        name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        address.textProperty().bind(Bindings.convert(person.addressProperty()));
+        birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
+        person.tagProperty().addListener(((observable, oldValue, newValue) -> initTags(person)));
+        colourMap.addListener(((observable, oldValue, newValue) -> initTags(person)));
         initTags(person);
     }
+
 
     /**
      * Initializes tags for the person
@@ -1508,11 +1597,15 @@ public class PersonInfo extends UiPart<Region> {
     }
 
     private void setTagColour(Label tagLabel, Tag tag) {
-        if (colourMap.containsKey(tag.tagName)) {
-            tagLabel.setStyle("-fx-background-color: " + colourMap.get(tag.tagName));
+        if (colourProperty().containsKey(tag.tagName)) {
+            tagLabel.setStyle("-fx-background-color: " + colourProperty().get(tag.tagName));
         } else {
             tagLabel.setStyle(null);
         }
+    }
+
+    private HashMap<String, String> colourProperty() {
+        return colourMap.get();
     }
 
     @Subscribe
@@ -1520,7 +1613,22 @@ public class PersonInfo extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
     }
+
+    @Subscribe
+    private void handleNewPersonInfoEvent(NewPersonInfoEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonPage(event.getPerson());
+    }
 }
+```
+###### \java\seedu\address\ui\PersonListPanel.java
+``` java
+    @Subscribe
+    private void handleNewPersonListEvent(NewPersonListEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setConnections(event.getPersonsList());
+    }
+
 ```
 ###### \resources\view\GroupListCard.fxml
 ``` fxml
