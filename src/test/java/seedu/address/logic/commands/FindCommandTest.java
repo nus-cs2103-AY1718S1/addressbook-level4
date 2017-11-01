@@ -33,7 +33,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class FindCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
+    //@@author NabeelZaheer
     @Test
     public void equals() {
         List<String> keywords1 = Arrays.asList("first", "third");
@@ -108,7 +108,7 @@ public class FindCommandTest {
         FindCommand command = prepareCommand(" t/owesMoney");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
     }
-
+    //@@author
     /**
      * Parses {@code userInput} into a {@code FindCommand}.
      */

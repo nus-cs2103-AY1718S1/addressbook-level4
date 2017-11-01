@@ -175,7 +175,7 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
     }
-
+    //@@author NabeelZaheer
     @Override
     public void removeTag(Set<Tag> tag, List<String> index) throws DuplicatePersonException,
             PersonNotFoundException {
@@ -310,7 +310,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
         return updated;
     }
-
+    //@@author
 
 
 }

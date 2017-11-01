@@ -25,7 +25,7 @@ import seedu.address.model.UserPrefs;
 
 import seedu.address.model.tag.Tag;
 
-
+//@@author NabeelZaheer
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code RemoveTagCommand}.
  */
