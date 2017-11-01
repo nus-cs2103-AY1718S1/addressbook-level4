@@ -21,6 +21,7 @@ import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_COMPLETED;
 import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_DELIVERING;
+import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_PENDING;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FLAMMABLE;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FROZEN;
 import static seedu.address.logic.commands.CommandTestUtil.TRACKING_NUMBER_DESC_AMY;
@@ -234,7 +235,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a parcel with tags, command with parameters in random order -> added */
         toAdd = BOB;
         command = AddCommand.COMMAND_WORD + TAG_DESC_FLAMMABLE + PHONE_DESC_BOB + ADDRESS_DESC_BOB
-                + STATUS_DESC_COMPLETED + NAME_DESC_BOB + TAG_DESC_FROZEN + EMAIL_DESC_BOB
+                + STATUS_DESC_PENDING + NAME_DESC_BOB + TAG_DESC_FROZEN + EMAIL_DESC_BOB
                 + TRACKING_NUMBER_DESC_BOB + DELIVERY_DATE_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 

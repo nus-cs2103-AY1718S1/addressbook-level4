@@ -36,6 +36,8 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
     private static final Predicate<ReadOnlyParcel> deliveredPredicate = p -> p.getStatus().equals(Status.COMPLETED);
 
+    private static boolean selected = false;
+    private static ReadOnlyParcel prevSelectedParcel = null;
     private final AddressBook addressBook;
 
     private final FilteredList<ReadOnlyParcel> filteredParcels;
@@ -78,7 +80,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void setActiveList(boolean isDelivered) {
-        System.out.println("LOOK HERE: " + isDelivered);
         activeFilteredList = isDelivered ? filteredDeliveredParcels : filteredUndeliveredParcels;
     }
     //@@author
@@ -228,6 +229,21 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public boolean hasSelected() {
+        return selected;
+    }
+
+    @Override
+    public void select() {
+        selected = true;
+    }
+
+    @Override
+    public void unselect() {
+        selected = false;
+    }
+
+    @Override
     public void forceSelect(Index target) {
         EventsCenter.getInstance().post(new JumpToListRequestEvent(target));
     }
@@ -237,12 +253,38 @@ public class ModelManager extends ComponentManager implements Model {
         forceSelect(Index.fromZeroBased(findIndex(target)));
     }
 
+    @Override
+    public void reselect(ReadOnlyParcel parcel) {
+        // With sorting, we lose our selected card. As such we have to reselect the
+        // parcel that was previously selected. This leads to the need to have some way of
+        // keeping track of which card had been previously selected. Hence the prevIndex
+        // attribute in the ModelManager class and also it's corresponding to get and set it.
+        // We first get the identity of the previously selected parcel.
+        ReadOnlyParcel previous = getPrevSelectedParcel();
+        // if the previous parcel belongs after the editedParcel, we just reselect the parcel
+        // at the previous index because all the parcels get pushed down.
+        forceSelect(Index.fromZeroBased(findIndex(previous)));
+    }
+
     /**
      * Method to retrieve the index of a given parcel in the active list.
      */
     private int findIndex(ReadOnlyParcel target) {
         return getActiveList().indexOf(target);
     }
+
+
+    @Override
+    public ReadOnlyParcel getPrevSelectedParcel() {
+        return prevSelectedParcel;
+    }
+
+    @Override
+    public void setPrevSelectedParcel(ReadOnlyParcel selectedParcel) {
+        select();
+        prevSelectedParcel = selectedParcel;
+    }
+
 
     @Override
     public boolean equals(Object obj) {

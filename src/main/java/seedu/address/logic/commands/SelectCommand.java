@@ -39,7 +39,6 @@ public class SelectCommand extends Command {
         }
 
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
-        model.setPrevSelectedParcel(lastShownList.get(targetIndex.getZeroBased()));
         return new CommandResult(String.format(MESSAGE_SELECT_PARCEL_SUCCESS, targetIndex.getOneBased()));
 
     }
