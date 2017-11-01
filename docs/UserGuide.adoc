@@ -125,7 +125,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 * `find Betsy 85355255 Heinz@example.com 10th street` +
 Returns Betsy, Alice, Carl and Daniel.
 
-=== Locating person by number: `findnum` 
+=== Locating person by number: `findnum`
 
 Finds persons whose phone numbers contain any of the given keywords. +
 Format: `findnum KEYWORD [MORE_KEYWORDS]`
