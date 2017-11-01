@@ -245,7 +245,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ObservableList<Group> getGroupList() {
         return groups.asObservableList();
     }
-    
+
     public Set<Appointment> getAllAppointments() {
         return persons.getAllAppointments();
     }
