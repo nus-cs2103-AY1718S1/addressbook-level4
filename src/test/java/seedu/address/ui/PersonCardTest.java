@@ -15,8 +15,23 @@ import seedu.address.testutil.PersonBuilder;
 
 public class PersonCardTest extends GuiUnitTest {
 
+    /**
+     * Tests if a person's attributes is binded in each individual person card
+     */
     @Test
     public void display() {
+        Person personWithRightAttributes = new PersonBuilder().withFormClass("6E1").withName("Alice Pauline")
+                .withPhone("student: 97272031 parent: 97979797").withTags().build();
+        PersonCard personCard = new PersonCard(personWithRightAttributes, 1);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personWithRightAttributes, 1);
+    }
+
+    /**
+     * Tests if the person is initialised with tags on the individual person card
+     */
+    @Test
+    public void displayPerson() {
         // no tags
         Person personWithNoTags = new PersonBuilder().withTags(new String[0]).build();
         PersonCard personCard = new PersonCard(personWithNoTags, 1);
@@ -28,17 +43,46 @@ public class PersonCardTest extends GuiUnitTest {
         personCard = new PersonCard(personWithTags, 2);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithTags, 2);
+        //Check if tag color is removed from the arraylist of colors after being assigned to a tag
+        assertFalse(personCard.getAvailableColorsLeft().contains(personCard.getAssignedTagColor()));
 
         // changes made to Person reflects on card
         guiRobot.interact(() -> {
             personWithTags.setName(ALICE.getName());
-            personWithTags.setAddress(ALICE.getAddress());
-            personWithTags.setEmail(ALICE.getEmail());
             personWithTags.setPhone(ALICE.getPhone());
+            personWithTags.setAddress(ALICE.getAddress());
+            personWithTags.setFormClass(ALICE.getFormClass());
+            personWithTags.setGrades(ALICE.getGrades());
+            personWithTags.setEmail(ALICE.getEmail());
+            personWithTags.setPostalCode(ALICE.getPostalCode());
             personWithTags.setRemark(ALICE.getRemark());
             personWithTags.setTags(ALICE.getTags());
         });
         assertCardDisplay(personCard, personWithTags, 2);
+    }
+
+    @Test
+    public void obtainTagColors() {
+        Person personWithTags = new PersonBuilder().build();
+        PersonCard personCard = new PersonCard(personWithTags, 2);
+        //Check if tag color is removed from the arraylist of colors after being assigned to a tag
+        assertFalse(personCard.getAvailableColorsLeft().contains(personCard.getAssignedTagColor()));
+
+        //Check that the arraylist of colors does not contain gray
+        assertTrue(!personCard.getAvailableColorsLeft().contains("GRAY"));
+
+
+        //Check that  subsequent tags will be assigned gray color after all
+        //the available unique color runs out.
+        int arrayListSize = personCard.getAvailableColorsLeft().size() - 1;
+        while (personCard.getAvailableColorsLeft().size() != 0) {
+            personCard.getAvailableColorsLeft().remove(arrayListSize);
+            arrayListSize--;
+        }
+        assertEquals(personCard.obtainTagColors("tag"), "GRAY");
+        assertEquals(personCard.obtainTagColors("tag2"), "GRAY");
+        assertEquals(personCard.obtainTagColors("tag3"), "GRAY");
+        assertEquals(personCard.obtainTagColors("tag4"), "GRAY");
     }
 
     @Test

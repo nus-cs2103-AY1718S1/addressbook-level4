@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/CS2103AUG2017-T16-B2/main
+:repoURL: https://github.com/CS2103AUG2017-T16-B2/main/blob/master
 
-By: `CS2103AUG2017 T16-B2`      Since: `SEP 2017`      Licence: `MIT`
+By: `CS2103AUG2017 T16-B2`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
 

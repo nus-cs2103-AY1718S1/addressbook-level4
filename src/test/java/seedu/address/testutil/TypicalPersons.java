@@ -42,23 +42,23 @@ public class TypicalPersons {
             .build();
     public static final ReadOnlyPerson CARL = new PersonBuilder().withName("Carl Kurz")
             .withPhone("student/97272031 parent/97979797").withEmail("heinz@example.com").withAddress("wall street")
-            .withFormClass("12S23").withGrades("125.0").withPostalCode("279392")
+            .withFormClass("12S23").withGrades("165.0").withPostalCode("279392")
             .build();
     public static final ReadOnlyPerson DANIEL = new PersonBuilder().withName("Daniel Meier")
             .withPhone("student/97272031 parent/97979797").withEmail("cornelia@example.com").withAddress("10th street")
-            .withFormClass("12S23").withGrades("125.0").withPostalCode("279392")
+            .withFormClass("12S23").withGrades("100.0").withPostalCode("279392")
             .build();
     public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer")
             .withPhone("student/97272031 parent/97979797").withEmail("werner@example.com").withAddress("michegan ave")
-            .withFormClass("12S23").withGrades("125.0").withPostalCode("279392")
+            .withFormClass("12S23").withGrades("150.0").withPostalCode("279392")
             .build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz")
             .withPhone("student/97272031 parent/97979797").withEmail("lydia@example.com").withAddress("little tokyo")
-            .withFormClass("12S23").withGrades("125.0").withPostalCode("279392")
+            .withFormClass("12S23").withGrades("75.0").withPostalCode("279392")
             .build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best")
             .withPhone("student/97272031 parent/97979797").withEmail("anna@example.com").withAddress("4th street")
-            .withFormClass("12S23").withGrades("125.0").withPostalCode("279392").withRemark("Likes to swim")
+            .withFormClass("12S23").withGrades("50.0").withPostalCode("279392").withRemark("Likes to swim")
             .build();
 
 

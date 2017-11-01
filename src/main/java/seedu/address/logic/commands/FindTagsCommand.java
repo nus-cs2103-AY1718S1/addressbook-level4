@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import seedu.address.logic.statistics.Statistics;
 import seedu.address.model.person.TagsContainsKeywordsPredicate;
 
 /**
@@ -25,6 +26,9 @@ public class FindTagsCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
+        Statistics stats = new Statistics(model.getFilteredPersonList().filtered(predicate));
+        stats.printAverages();
+        stats.printPercentiles();
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
