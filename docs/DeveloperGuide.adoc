@@ -409,12 +409,20 @@ The following link:#sequence-diagram[sequence diagram] shows how the list comman
 
 image::ListCommandSequenceDiagram.jpg[width="900"]
 
+The following link:#activity-diagram[activity diagram] summarize what happens when an user execute list command.
+
+image::ListCommandActivityDiagram.png[width="900"]
+
 `FixedCodePredicate` and `FixedLocationPredicate` are used to facilitate the implementation of `view` command.
 According to current listing type, which we can obtain from `ListingUnit`, we create either a `FixedCodePredicate` or a `FixedLocationPredicate` to filter the lesson list and set `currentListingUnit` to be `Lesson`.
 
 The following link:#sequence-diagram[sequence diagram] shows how the view command works:
 
 image::ViewCommandSequenceDiagram.jpg[width="900"]
+
+The following link:#activity-diagram[activity diagram] summarize what happens when an user execute view command.
+
+image::ViewCommandActivityDiagram.png[width="900"]
 
 ==== Design Considerations
 
@@ -514,6 +522,10 @@ While the index in `delete -d INDEX` is the index of the remark we want to delet
 The following link:#sequence-diagram[sequence diagram] summarize what happens when an user execute remark command.
 
 image::RemarkCommandSequenceDiagram.jpg[width="900"]
+
+The following link:#activity-diagram[activity diagram] summarize what happens when an user execute remark command.
+
+image::RemarkCommandActivityDiagram.png[width="900"]
 
 ==== Design Considerations
 
