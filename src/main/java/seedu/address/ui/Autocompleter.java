@@ -192,12 +192,12 @@ public class Autocompleter {
      * Check if the index field in the {@code String} has already been entered
      */
     private boolean containsIndex(String arguments) {
-        String arg = arguments;
+        String parameters = arguments;
         Prefix[] prefixes = AutocompleteCommand.ALL_PREFIXES;
         if (lastTwoCharactersArePrefix(arguments)) {
-            arguments += SPACE;
+            parameters = arguments + SPACE;
         }
-        ArgumentMultimap argMap = ArgumentTokenizer.tokenize(arguments, prefixes);
+        ArgumentMultimap argMap = ArgumentTokenizer.tokenize(parameters, prefixes);
 
         String index = argMap.getPreamble();
         return !index.equals(EMPTY_STRING);
