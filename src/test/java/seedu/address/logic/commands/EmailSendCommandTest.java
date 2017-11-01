@@ -1,3 +1,4 @@
+//@@author Hoang
 package seedu.address.logic.commands;
 
 import org.junit.Test;
@@ -35,3 +36,4 @@ public class EmailSendCommandTest {
         assertEquals("One or more of the given emails is not valid", result.feedbackToUser);
     }
 }
+//@@author Hoang

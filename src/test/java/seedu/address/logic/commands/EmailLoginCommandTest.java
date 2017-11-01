@@ -1,3 +1,4 @@
+//@@author Hoang
 package seedu.address.logic.commands;
 
 import org.junit.Test;
@@ -33,3 +34,4 @@ public class EmailLoginCommandTest {
                 result.feedbackToUser);
     }
 }
+//@@author Hoang

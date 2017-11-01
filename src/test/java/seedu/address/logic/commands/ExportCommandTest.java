@@ -1,3 +1,4 @@
+//@@author Hoang
 package seedu.address.logic.commands;
 
 import org.junit.Test;
@@ -39,3 +40,4 @@ public class ExportCommandTest {
         assertTrue(command.execute().feedbackToUser.equals(new CommandResult(MESSAGE_SUCCESS).feedbackToUser));
     }
 }
+//@@author Hoang

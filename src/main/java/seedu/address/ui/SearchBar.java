@@ -1,3 +1,4 @@
+//@@author Hoang
 package seedu.address.ui;
 
 import java.util.logging.Logger;
@@ -130,3 +131,4 @@ public class SearchBar extends UiPart<Region> {
         }
     }
 }
+//@@author Hoang
