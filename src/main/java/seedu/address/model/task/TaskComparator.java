@@ -32,13 +32,13 @@ public class TaskComparator implements Comparator {
                 Date deadline0 = ParserUtil.parseDate(d.getDeadline().toString());
                 date0 = dateFormat.format(deadline0);
             } else {
-                date0 = DATE_NULL;
+                date0 = dateNull;
             }
             if (!d1.getDeadline().isEmpty()) {
                 Date deadline1 = ParserUtil.parseDate(d1.getDeadline().toString());
                 date1 = dateFormat.format(deadline1);
             } else {
-                date1 = DATE_NULL;
+                date1 = dateNull;
             }
         } catch (IllegalValueException e) {
             e.printStackTrace();
