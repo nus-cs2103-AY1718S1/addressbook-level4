@@ -86,7 +86,7 @@ public class PrintCommand extends Command {
             e.printStackTrace();
         }
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS,this.fileName));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, this.fileName));
     }
 
 }
