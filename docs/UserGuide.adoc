@@ -215,7 +215,7 @@ Examples:
 
 === Adding a person to a group: `gadd` (Since V1.3)
 
-Adds a group to the address book. +
+Adds a person to a group. +
 Format: `gadd g/GROUP INDEX p/PERSON INDEX` +
 Alias: `ga`
 
@@ -232,7 +232,7 @@ Examples:
 
 === Removing a person to a group: `gremove` (Since V1.3)
 
-Adds a group to the address book. +
+Removes a person from a group. +
 Format: `gremove g/GROUP INDEX p/PERSON INDEX` +
 Alias: `gr`
 
@@ -268,7 +268,7 @@ Deletes the 2nd group in the address book.
 === Adding a schedule to a person : `cadd` (Since V1.4)
 
 Adds a person's Google Calendar events to schedules. +
-Format: `cadd p/PERSON INDEX i/GOOGLE CALENDAR ID`
+Format: `cadd p/PERSON INDEX i/GOOGLE CALENDAR ID` +
 Alias: `ca`
 
 ****
@@ -285,7 +285,7 @@ Examples:
 === Setting the photo of a person: `ppset` (Since V1.4)
 
 Sets the photo of a person. +
-Format: `ppset INDEX fp/FILEPATH`
+Format: `ppset INDEX fp/FILEPATH` +
 Alias: pps
 
 ****
@@ -301,7 +301,7 @@ Examples:
 === Resetting the photo of a person: `ppreset` (Since V1.4)
 
 Resets photo of a person to default picture. +
-Format: `ppreset INDEX`
+Format: `ppreset INDEX` +
 Alias: ppr
 
 ****
