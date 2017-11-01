@@ -1,13 +1,17 @@
 package seedu.address.ui;
 
-import seedu.address.logic.commands.*;
-import seedu.address.logic.parser.Prefix;
 
 import java.util.Arrays;
+
+import seedu.address.logic.commands.*;
+import seedu.address.logic.parser.Prefix;
 
 import static seedu.address.logic.parser.CliSyntax.*;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+/**
+ * Represents the current command that the autocompleter recognises in the {@code CommandBox}
+ */
 public enum AutocompleteCommand {
     ADD,
     CLEAR,
@@ -31,11 +35,6 @@ public enum AutocompleteCommand {
 
     public static final Prefix[] allPrefixes = {PREFIX_TRACKING_NUMBER, PREFIX_NAME, PREFIX_ADDRESS,
             PREFIX_DELIVERY_DATE, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_STATUS, PREFIX_TAG};
-
-    public static final Prefix[] requiredPrefixes = {PREFIX_TRACKING_NUMBER, PREFIX_NAME, PREFIX_ADDRESS,
-            PREFIX_DELIVERY_DATE };
-
-    public static final Prefix[] optionalPrefixes = {PREFIX_PHONE, PREFIX_EMAIL, PREFIX_STATUS, PREFIX_TAG};
 
     private static final String[] commandsWithIndexes = {"delete", "edit", "select"};
 

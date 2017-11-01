@@ -1,9 +1,5 @@
 package seedu.address.ui;
 
-import seedu.address.logic.parser.Prefix;
-
-import static seedu.address.logic.parser.CliSyntax.*;
-
 /**
  * Represents the states of the autcompleter
  */

@@ -92,6 +92,11 @@ public class Autocompleter {
 
     }
 
+    /**
+     * returns the current value of countingIndex ,updates the value of maxIndex and then increments
+     * countingIndex by 1 with wrap-around
+     * @return current value of countingIndex
+     */
     private int cycleCountingIndex() {
         int currentIndex = countingIndex;
         int maxIndex = logic.getActiveList().size();
@@ -119,7 +124,7 @@ public class Autocompleter {
         String arguments = currentTextArray[CommandBoxParser.ARGUMENT_INDEX];
         currentCommand = AutocompleteCommand.getInstance(commandWord);
 
-
+        // first word does not match any commands
         if (currentCommand.equals(AutocompleteCommand.NONE)) {
             autocompleteCommandWord(commandBoxText);
             return;
@@ -172,6 +177,11 @@ public class Autocompleter {
                 || !(containsIndex(arguments));
     }
 
+    /**
+     * Check if the index field in the {@code String} has already been entered
+     * @param arguments
+     * @return
+     */
     private boolean containsIndex(String arguments) {
         Prefix[] prefixes = AutocompleteCommand.allPrefixes;
         if (lastTwoCharactersArePrefix(arguments)){
@@ -187,8 +197,6 @@ public class Autocompleter {
         if(text.length() < 1) {
             return false;
         }
-        System.out.println(text.charAt(text.length() - 1));
-        System.out.println(Character.isDigit(text.charAt(text.length() - 1)));
         return Character.isDigit(text.charAt(text.length() - 1));
     }
 
@@ -218,6 +226,10 @@ public class Autocompleter {
         }
     }
 
+    /**
+     * Checks if the last two characters of the {@code String} are prefixes
+     * @param commandBoxText
+     */
     private boolean lastTwoCharactersArePrefix(String commandBoxText) {
         if (commandBoxText.length() < 2) {
             return false;
@@ -227,6 +239,11 @@ public class Autocompleter {
                 .anyMatch(s -> lastTwoCharacters.equals(s.toString()));
     }
 
+    /**
+     * Returns the ArrayList of prefixes that are missing from the {@code String}
+     * @param arguments
+     * @return {@code ArrayList<String>} containing the missing prefixes
+     */
     private ArrayList<String> getMissingPrefixes(String arguments) {
         Prefix[] prefixes = AutocompleteCommand.allPrefixes;
         ArrayList<String> missingPrefixes = new ArrayList<>();
