@@ -65,8 +65,8 @@ public class PrintCommand extends Command {
                 String insured = insurance.getInsured().getName();
                 String beneficiary = insurance.getBeneficiary().getName();
                 String premium = insurance.getPremium().toString();
-                String signingDate = insurance.getSigningDate();
-                String expiryDate = insurance.getExpiryDate();
+                String signingDate = insurance.getSigningDateString();
+                String expiryDate = insurance.getExpiryDateString();
                 lines.add("Owner: " + owner + "\n"
                         + "Insured: " + insured + "\n"
                         + "Beneficiary: " + beneficiary + "\n"
