@@ -11,9 +11,16 @@ import seedu.address.commons.exceptions.EncryptOrDecryptException;
 public class SecurityStubUtil {
 
     /**
-     * Represents a SecurityManager which does not work.
+     * Represents a basic SecurityManager stub.
      */
-    private class UnSecuredSecurityStub implements Security {
+    private class BaseSecurityStub implements Security {
+
+        private boolean isSecured;
+
+        public BaseSecurityStub(boolean isSecured) {
+            super();
+            this.isSecured = isSecured;
+        }
 
         @Override
         public void configSecurity(String... permittedCommands) {
@@ -21,7 +28,7 @@ public class SecurityStubUtil {
 
         @Override
         public boolean isSecured() {
-            return false;
+            return isSecured;
         }
 
         @Override
@@ -35,7 +42,7 @@ public class SecurityStubUtil {
 
         @Override
         public boolean isEncrypted() throws IOException {
-            return false;
+            return isSecured;
         }
 
         @Override
@@ -47,8 +54,61 @@ public class SecurityStubUtil {
         }
     }
 
-    public void initialUnSecuredSecurity() {
-        SecurityManager.getInstance(new UnSecuredSecurityStub());
+    /**
+     * Represents a SecurityManager which indicates that the address book is secured.
+     */
+    private class SecurityStubIoexception extends BaseSecurityStub {
+
+
+        public SecurityStubIoexception(boolean isSecured) {
+            super(isSecured);
+        }
+
+        @Override
+        public void encryptAddressBook(String password) throws IOException, EncryptOrDecryptException {
+            throw new IOException();
+        }
+
+        @Override
+        public void decryptAddressBook(String password) throws IOException, EncryptOrDecryptException {
+            throw new IOException();
+        }
     }
 
+    /**
+     * Represents a SecurityManager which indicates that the address book is secured.
+     */
+    private class SecurityStubEncryptOrDecryptException extends BaseSecurityStub {
+
+
+        public SecurityStubEncryptOrDecryptException(boolean isSecured) {
+            super(isSecured);
+        }
+
+        @Override
+        public void encryptAddressBook(String password) throws IOException, EncryptOrDecryptException {
+            throw new EncryptOrDecryptException();
+        }
+
+        @Override
+        public void decryptAddressBook(String password) throws IOException, EncryptOrDecryptException {
+            throw new EncryptOrDecryptException();
+        }
+    }
+
+    public void initialUnSecuredSecurity() {
+        SecurityManager.getInstance(new BaseSecurityStub(false));
+    }
+
+    public void initialSecuredSecurity() {
+        SecurityManager.getInstance(new BaseSecurityStub(true));
+    }
+
+    public void initialSecurityWithIoexception(boolean isSecured) {
+        SecurityManager.getInstance(new SecurityStubIoexception(isSecured));
+    }
+
+    public void initialSecurityWithEncryptOrDecryptException(boolean isSecured) {
+        SecurityManager.getInstance(new SecurityStubEncryptOrDecryptException(isSecured));
+    }
 }

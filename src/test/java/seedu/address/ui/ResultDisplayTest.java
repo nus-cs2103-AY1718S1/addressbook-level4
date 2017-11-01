@@ -8,10 +8,17 @@ import org.junit.Test;
 
 import guitests.guihandles.ResultDisplayHandle;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+//@@author qihao27
+import seedu.address.commons.events.ui.NewResultCheckEvent;
+//@@author
 
 public class ResultDisplayTest extends GuiUnitTest {
 
     private static final NewResultAvailableEvent NEW_RESULT_EVENT_STUB = new NewResultAvailableEvent("Stub");
+    //@@author qihao27
+    private static final NewResultCheckEvent NEW_CHECK_EVENT_STUB =
+        new NewResultCheckEvent("Stub", true);
+    //@@author
 
     private ResultDisplayHandle resultDisplayHandle;
 
@@ -34,5 +41,12 @@ public class ResultDisplayTest extends GuiUnitTest {
         postNow(NEW_RESULT_EVENT_STUB);
         guiRobot.pauseForHuman();
         assertEquals(NEW_RESULT_EVENT_STUB.message, resultDisplayHandle.getText());
+
+        //@@author qihao27
+        // new result for invalid/wrong command
+        postNow(NEW_CHECK_EVENT_STUB);
+        guiRobot.pauseForHuman();
+        assertEquals(NEW_CHECK_EVENT_STUB.message, resultDisplayHandle.getText());
+        //@@author
     }
 }

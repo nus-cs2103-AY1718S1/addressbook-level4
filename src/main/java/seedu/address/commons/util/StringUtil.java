@@ -71,19 +71,20 @@ public class StringUtil {
         }
     }
 
+    //@@author qihao27
     /**
-     * Returns true if {@code s} represents alphabets
-     * e.g. abc, asfa, gg, ..., <br>
-     * Will return false for any other non-alphabet string input
-     * e.g. empty string, " abc " (untrimmed), "1 a" (contains number)
+     * Returns true if {@code s} represents letters or numbers
+     * e.g. abc, as12, gg, ..., <br>
+     * Will return false for any other non-alnum string input
+     * e.g. empty string, " abc " (untrimmed), "1a#" (contains special character)
      * Will return false if the input string case does not match the string stored (case sensitive)
      * @throws NullPointerException if {@code s} is null.
      */
-    public static boolean isLettersOnly(String s) {
+    public static boolean isAlnumOnly(String s) {
         requireNonNull(s);
 
         try {
-            return s.matches("[\\p{Alpha}][\\p{Alpha} ]*");
+            return s.matches("[\\p{Alnum}][\\p{Alnum} ]*");
         } catch (IllegalArgumentException iae) {
             return false;
         }
@@ -97,13 +98,33 @@ public class StringUtil {
      * "-E" (contains capital letter)
      * @throws NullPointerException if {@code s} is null.
      */
-    public static boolean isStringOption(String s) {
+    public static boolean isSortOption(String s) {
         requireNonNull(s);
 
         try {
-            return s.matches("-\\p{Lower}");
+            return s.equals("-n") || s.equals("-p") || s.equals("-e") || s.equals("-a") || s.equals("-t");
         } catch (IllegalArgumentException iae) {
             return false;
         }
     }
+
+    /**
+     * Returns true if {@code s} represents file path
+     * e.g. data/addressbook.xml, C:\addressbook.xml, ..., <br>
+     * Will return false for any other non-file-path string input
+     * e.g. empty string, " data/addressbook.xml " (untrimmed), "data/ addressbook.xml"(contains whitespace),
+     * "data/addressbook.doc"(non xml file).
+     * @throws NullPointerException if {@code s} is null.
+     */
+    public static boolean isFilePath(String s) {
+        requireNonNull(s);
+
+        try {
+            return s.contains(".xml") && s.matches("[\\p{Alnum}][\\p{Graph} ]*");
+        } catch (IllegalArgumentException ipe) {
+            return false;
+        }
+    }
+    //@@author
+
 }

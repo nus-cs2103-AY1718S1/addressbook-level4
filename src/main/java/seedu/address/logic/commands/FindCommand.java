@@ -72,14 +72,6 @@ public class FindCommand extends Command {
         public FindDetailDescriptor() {
         }
 
-        public FindDetailDescriptor(FindDetailDescriptor toCopy) {
-            this.name = toCopy.name;
-            this.phone = toCopy.phone;
-            this.email = toCopy.email;
-            this.address = toCopy.address;
-            this.tags = toCopy.tags;
-        }
-
         /**
          * @return true if any attribute not null.
          */

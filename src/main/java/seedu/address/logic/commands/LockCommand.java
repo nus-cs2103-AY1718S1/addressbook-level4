@@ -66,4 +66,11 @@ public class LockCommand extends Command {
     private boolean isAddressBookEmpty() {
         return model.getAddressBook().getPersonList().isEmpty();
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof LockCommand // instanceof handles nulls
+                && this.password.equals(((LockCommand) other).password)); // state check
+    }
 }

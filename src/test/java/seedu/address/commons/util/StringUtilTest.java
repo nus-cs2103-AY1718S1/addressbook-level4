@@ -155,56 +155,78 @@ public class StringUtilTest {
         StringUtil.getDetails(null);
     }
 
-    //---------------- Tests for isLettersOnly --------------------------------------
+    //@@author qihao27
+    //---------------- Tests for isAlnumOnly --------------------------------------
 
     @Test
-    public void isLettersOnly() {
+    public void isAlnumOnly() {
 
         // empty strings
-        assertFalse(StringUtil.isLettersOnly("")); // Boundary value
-        assertFalse(StringUtil.isLettersOnly("  "));
-
-        // contains number
-        assertFalse(StringUtil.isLettersOnly("1"));
-        assertFalse(StringUtil.isLettersOnly("john1"));
+        assertFalse(StringUtil.isAlnumOnly("")); // Boundary value
+        assertFalse(StringUtil.isAlnumOnly("  "));
 
         // string with white space
-        assertFalse(StringUtil.isLettersOnly(" john ")); // Leading/trailing spaces
+        assertFalse(StringUtil.isAlnumOnly(" john ")); // Leading/trailing spaces
+
+        // contains special characters
+        assertFalse(StringUtil.isAlnumOnly("j@hn#"));
 
         // EP: valid options, should return true
-        assertTrue(StringUtil.isLettersOnly("john"));
-        assertTrue(StringUtil.isLettersOnly("John"));
-        assertTrue(StringUtil.isLettersOnly("Boom Shakalaka"));
+        assertTrue(StringUtil.isAlnumOnly("john"));
+        assertTrue(StringUtil.isAlnumOnly("John"));
+        assertTrue(StringUtil.isAlnumOnly("Boom Shakalaka"));
+        assertTrue(StringUtil.isAlnumOnly("bOoM ShakAlaKa")); // case insensitive
     }
 
-    //---------------- Tests for isStringOption --------------------------------------
+    //---------------- Tests for isSortOption --------------------------------------
 
     @Test
-    public void isStringOption() {
+    public void isSortOption() {
 
         // empty strings
-        assertFalse(StringUtil.isStringOption("")); // Boundary value
-        assertFalse(StringUtil.isStringOption("  "));
+        assertFalse(StringUtil.isSortOption("")); // Boundary value
+        assertFalse(StringUtil.isSortOption("  "));
 
         // does not contain a prefix option indicator
-        assertFalse(StringUtil.isStringOption("a"));
+        assertFalse(StringUtil.isSortOption("a"));
 
         // contains number
-        assertFalse(StringUtil.isStringOption("-1"));
-        assertFalse(StringUtil.isStringOption("-e1"));
+        assertFalse(StringUtil.isSortOption("-1"));
+        assertFalse(StringUtil.isSortOption("-e1"));
 
         // capital letter
-        assertFalse(StringUtil.isStringOption("-T"));
+        assertFalse(StringUtil.isSortOption("-T"));
 
         // options with white space
-        assertFalse(StringUtil.isStringOption(" -p ")); // Leading/trailing spaces
-        assertFalse(StringUtil.isStringOption("- p"));  // Spaces in the middle
+        assertFalse(StringUtil.isSortOption(" -p ")); // Leading/trailing spaces
+        assertFalse(StringUtil.isSortOption("- p"));  // Spaces in the middle
 
         // EP: valid options, should return true
-        assertTrue(StringUtil.isStringOption("-n"));
-        assertTrue(StringUtil.isStringOption("-p"));
-        assertTrue(StringUtil.isStringOption("-e"));
-        assertTrue(StringUtil.isStringOption("-a"));
-        assertTrue(StringUtil.isStringOption("-t"));
+        assertTrue(StringUtil.isSortOption("-n"));
+        assertTrue(StringUtil.isSortOption("-p"));
+        assertTrue(StringUtil.isSortOption("-e"));
+        assertTrue(StringUtil.isSortOption("-a"));
+        assertTrue(StringUtil.isSortOption("-t"));
     }
+
+    //---------------- Tests for isFilePathOption --------------------------------------
+
+    @Test
+    public void isFilePath() {
+
+        // empty strings
+        assertFalse(StringUtil.isFilePath("")); // Boundary value
+        assertFalse(StringUtil.isFilePath("  "));
+
+        // does not contain a suffix ".xml"
+        assertFalse(StringUtil.isFilePath("data/addressbook"));
+
+        // does not contain a file name
+        assertFalse(StringUtil.isFilePath("data/"));
+
+        // EP: valid file path, should return true
+        assertTrue(StringUtil.isFilePath("data/addressbook.xml"));
+        assertTrue(StringUtil.isFilePath("C:\\shakalaka.xml"));
+    }
+    //@@author
 }

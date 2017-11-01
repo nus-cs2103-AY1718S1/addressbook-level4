@@ -22,11 +22,11 @@ public class LockCommandParser implements Parser<LockCommand> {
      */
     @Override
     public LockCommand parse(String userInput) throws ParseException {
-        if (!SecurityUtil.isPasswordValid(userInput)) {
+        if (!SecurityUtil.isValidPassword(userInput)) {
             throw new ParseException(PARSE_EXCEPTION_MESSAGE);
         }
 
-        return new LockCommand(userInput);
+        return new LockCommand(userInput.trim());
     }
 
 }

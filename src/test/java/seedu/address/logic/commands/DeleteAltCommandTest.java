@@ -1,3 +1,4 @@
+//@@author qihao27
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
@@ -44,6 +45,13 @@ public class DeleteAltCommandTest {
         DeleteAltCommand deleteAltCommand = prepareCommand("invalid name");
 
         assertCommandFailure(deleteAltCommand, model, Messages.MESSAGE_PERSON_NAME_ABSENT);
+    }
+
+    @Test
+    public void execute_insufficientInput_throwsCommandException() throws Exception {
+        DeleteAltCommand deleteAltCommand = prepareCommand("al");
+
+        assertCommandFailure(deleteAltCommand, model, Messages.MESSAGE_PERSON_NAME_INSUFFICIENT);
     }
 
     @Test

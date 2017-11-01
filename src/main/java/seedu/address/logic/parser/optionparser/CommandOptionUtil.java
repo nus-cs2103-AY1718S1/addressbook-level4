@@ -1,10 +1,7 @@
 package seedu.address.logic.parser.optionparser;
 
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import seedu.address.commons.core.LogsCenter;
 
 /**
  * Contains utility methods used for parsing mode prefix and mode arguments.
@@ -16,8 +13,6 @@ public class CommandOptionUtil {
     // All modes start with prefix "-"
     public static final String PREFIX_OPTION_INDICATOR = "-";
 
-    private static final Logger logger = LogsCenter.getLogger(CommandOptionUtil.class);
-
     private static final Pattern OPTION_PATTERN = Pattern.compile("^(-\\w+)");
 
     private static final int DEFAULT_PATTERN_GROUP = 0;
@@ -28,10 +23,10 @@ public class CommandOptionUtil {
             if (matcher.find()) {
                 return matcher.group(DEFAULT_PATTERN_GROUP);
             }
+            return DEFAULT_OPTION_PREFIX;
         } catch (Exception e) {
-            logger.info("use default command");
+            return DEFAULT_OPTION_PREFIX;
         }
-        return DEFAULT_OPTION_PREFIX;
     }
 
     public static String getOptionArgs(String optionPrefix, String args) {

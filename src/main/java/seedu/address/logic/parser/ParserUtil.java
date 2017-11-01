@@ -28,8 +28,11 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    public static final String MESSAGE_INVALID_STRING = "String does not contain alphabets only.";
+    //@@author qihao27
+    public static final String MESSAGE_INVALID_STRING = "String does not contain alphanum only.";
     public static final String MESSAGE_INVALID_OPTION = "String does not contain hyphen and lower case alphabet only.";
+    public static final String MESSAGE_INVALID_FILE_PATH = "String does not contain \".xml\" as suffix.";
+    //@@author
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
     /**
@@ -45,14 +48,15 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    //@@author qihao27
     /**
-     * Parses a String of alphabets into a {@code trimmedString} and returns it. Leading and trailing whitespaces
+     * Parses a String of letters into a {@code trimmedString} and returns it. Leading and trailing whitespaces
      * will be trimmed.
-     * @throws IllegalValueException if the specified string is invalid (not alphabets only).
+     * @throws IllegalValueException if the specified string is invalid (not letters only).
      */
     public static String parseString(String str) throws IllegalValueException {
         String trimmedString = str.trim();
-        if (!StringUtil.isLettersOnly(trimmedString)) {
+        if (!StringUtil.isAlnumOnly(trimmedString) || trimmedString.length() < 3) {
             throw new IllegalValueException(MESSAGE_INVALID_STRING);
         }
         return trimmedString;
@@ -65,11 +69,26 @@ public class ParserUtil {
      */
     public static String parseOption(String str) throws IllegalValueException {
         String trimmedString = str.trim();
-        if (!StringUtil.isStringOption(trimmedString)) {
+        if (!StringUtil.isSortOption(trimmedString)) {
             throw new IllegalValueException(MESSAGE_INVALID_OPTION);
         }
         return trimmedString;
     }
+
+    /**
+     * Parses a String of file path into a {@code trimmedString} and returns it. Leading and trailing whitespaces
+     * will be trimmed.
+     * @throws IllegalValueException if the specified file path is invalid (not a xml file).
+     */
+    public static String parseFilePath(String filePath) throws IllegalValueException {
+        String trimmedString = filePath.trim();
+        if (!StringUtil.isFilePath(trimmedString)) {
+            throw new IllegalValueException(MESSAGE_INVALID_FILE_PATH);
+        }
+        return trimmedString;
+    }
+    //@@author
+
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.

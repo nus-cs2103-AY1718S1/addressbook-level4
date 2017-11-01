@@ -1,3 +1,4 @@
+//@@author qihao27
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -30,7 +31,7 @@ public class SortCommandTest {
         expectedModel.sortPerson(OPTION_NAME);
 
         SortCommand sortByName = prepareCommand(OPTION_NAME);
-        assertCommandSuccess(sortByName, model, SortCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(sortByName, model, SortCommand.MESSAGE_SUCCESS_BY_NAME, expectedModel);
     }
 
     @Test
@@ -39,7 +40,7 @@ public class SortCommandTest {
         expectedModel.sortPerson(OPTION_PHONE);
 
         SortCommand sortByName = prepareCommand(OPTION_PHONE);
-        assertCommandSuccess(sortByName, model, SortCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(sortByName, model, SortCommand.MESSAGE_SUCCESS_BY_PHONE, expectedModel);
     }
 
     @Test
@@ -48,7 +49,7 @@ public class SortCommandTest {
         expectedModel.sortPerson(OPTION_EMAIL);
 
         SortCommand sortByName = prepareCommand(OPTION_EMAIL);
-        assertCommandSuccess(sortByName, model, SortCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(sortByName, model, SortCommand.MESSAGE_SUCCESS_BY_EMAIL, expectedModel);
     }
 
     @Test
@@ -57,7 +58,7 @@ public class SortCommandTest {
         expectedModel.sortPerson(OPTION_ADDRESS);
 
         SortCommand sortByName = prepareCommand(OPTION_ADDRESS);
-        assertCommandSuccess(sortByName, model, SortCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(sortByName, model, SortCommand.MESSAGE_SUCCESS_BY_ADDRESS, expectedModel);
     }
 
     @Test
@@ -66,7 +67,7 @@ public class SortCommandTest {
         expectedModel.sortPerson(OPTION_TAG);
 
         SortCommand sortByName = prepareCommand(OPTION_TAG);
-        assertCommandSuccess(sortByName, model, SortCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(sortByName, model, SortCommand.MESSAGE_SUCCESS_BY_TAG, expectedModel);
     }
 
     /**

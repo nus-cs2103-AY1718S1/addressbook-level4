@@ -23,7 +23,9 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+//@@author qihao27
 import seedu.address.model.person.exceptions.NoPersonFoundException;
+//@@author
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
@@ -146,10 +148,12 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author qihao27
         @Override
-        public void sortPerson (String option) throws NoPersonFoundException {
+        public void sortPerson(String option) throws NoPersonFoundException {
             fail("This method should not be called.");
         }
+        //@@author
     }
 
     /**

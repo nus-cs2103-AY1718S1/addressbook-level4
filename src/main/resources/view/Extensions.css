@@ -5,7 +5,9 @@
 
 .list-cell:empty {
     /* Empty cells will not have alternating colours */
-    -fx-background: #383838;
+    //@@author qihao27
+    -fx-background: transparent;
+    //@@author
 }
 
 .tag-selector {
