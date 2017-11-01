@@ -19,7 +19,7 @@ public class CopyCommand extends Command {
     public static final String COMMAND_ALIAS = "c"; // shorthand equivalent alias
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Copies the email address of the person identified by the index number used in the last person listing.\n"
+            + ": Copies email address of the person identified by index numbers used in the last person listing.\n"
             + COMMAND_ALIAS + ": Shorthand equivalent for Copy. \n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example 1: " + COMMAND_ALIAS + " 1 \n"
