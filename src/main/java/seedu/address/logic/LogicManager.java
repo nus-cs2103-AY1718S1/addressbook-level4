@@ -66,7 +66,7 @@ public class LogicManager extends ComponentManager implements Logic {
         return model.getFilteredUndeliveredParcelList();
     }
     //@@ author
-    
+
     @Override
     public ObservableList<ReadOnlyParcel> getActiveList() {
         return model.getActiveList();

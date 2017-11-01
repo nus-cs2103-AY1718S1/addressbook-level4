@@ -2,20 +2,14 @@ package seedu.address.ui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.Logic;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Prefix;
-
-import javax.swing.text.html.Option;
 
 
 /**
