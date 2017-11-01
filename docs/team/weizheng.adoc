@@ -135,7 +135,7 @@ image::SettingsPaneInOut.png[width="700"]
 
 Displays the list of upcoming meetings to the user on the main display window. Accessible through the `choose` command to select the display type.
 
-image::meeting_panel.png[width="700"]
+image::meeting_panel.PNG[width="700"]
 
 ==== Justification
 
