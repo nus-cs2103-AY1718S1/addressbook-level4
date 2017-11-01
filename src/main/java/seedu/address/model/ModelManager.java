@@ -57,6 +57,7 @@ public class ModelManager extends ComponentManager implements Model {
         this(new AddressBook(), new UserPrefs());
     }
 
+    //@@author low5545
     @Override
     public void addData(ReadOnlyAddressBook newData) {
         addressBook.addData(newData);
@@ -64,6 +65,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.sortEventList();
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
