@@ -33,7 +33,7 @@ public class LinkCommand extends UndoableCommand {
             + PREFIX_PERSON + "2";
 
 
-    public static final String MESSAGE_LINK_SUCCESS = "linked Task %d with Person %2$d, and";
+    public static final String MESSAGE_LINK_SUCCESS = "linked Task %d done";
     public static final String MESSAGE_PERSON_LINKED = "person %d already linked.";
 
     private final Index index;

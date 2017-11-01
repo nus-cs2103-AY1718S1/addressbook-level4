@@ -202,11 +202,6 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
-        @Override
-        public void link(ReadOnlyTask taskToLink, List<ReadOnlyPerson> personsToList) {
-            fail("This method should not be called.");
-        }
-
     }
 
     /**

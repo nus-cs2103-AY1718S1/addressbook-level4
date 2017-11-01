@@ -101,7 +101,7 @@ public class Task implements ReadOnlyTask {
     }
 
     /**
-     * Constructor for copy constructor
+     * Constructor
      * with also a time only to be passed in (third type, start and end) and the complete state
      * @param name, the name of this task
      * @param description, the description of this task

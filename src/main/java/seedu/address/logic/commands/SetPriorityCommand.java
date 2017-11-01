@@ -86,7 +86,9 @@ public class SetPriorityCommand extends UndoableCommand {
                 target.getEndDateTime(),
                 target.getTags(),
                 target.getComplete(),
-                value);
+                value,
+                target.getId(),
+                target.getPeopleIds());
 
         return updatedTask;
     }

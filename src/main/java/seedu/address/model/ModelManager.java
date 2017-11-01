@@ -208,13 +208,6 @@ public class ModelManager extends ComponentManager implements Model {
         sortedTasks.setComparator((t1, t2) -> t1.getPriority().compareTo(t2.getPriority()));
     }
 
-    public void link(ReadOnlyTask taskToLink, List<ReadOnlyPerson> personsToList) {
-        for(ReadOnlyPerson p :personsToList) {
-
-        }
-    }
-
-
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

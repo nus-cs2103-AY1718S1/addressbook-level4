@@ -76,5 +76,4 @@ public interface Model {
 
     void taskByPriority();
 
-    void link(ReadOnlyTask taskToLink, List<ReadOnlyPerson> personsToList);
 }
