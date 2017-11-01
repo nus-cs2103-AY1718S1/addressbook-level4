@@ -118,15 +118,7 @@ public interface Model {
      */
     void unselect();
 
-    /**
-     * Method to set the prevIndex attribute to the specified target.
-     */
-    void setPrevIndex(Index target);
-
-    /**
-     * Method to retrieve Index of last selected Parcel Card.
-     */
-    Index getPrevIndex();
+    ReadOnlyParcel getPrevSelectedParcel();
 
     /**
      * Method to force the model to select a card without using the select command.
@@ -138,6 +130,8 @@ public interface Model {
      */
     void reselect(ReadOnlyParcel parcel);
 
+
+    void setPrevSelectedParcel(ReadOnlyParcel parcel);
 }
 
 

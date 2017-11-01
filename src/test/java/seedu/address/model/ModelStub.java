@@ -113,14 +113,14 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void setPrevIndex(Index target) {
+    public ReadOnlyParcel getPrevSelectedParcel() {
         fail("This method should not be called.");
+        return null;
     }
 
     @Override
-    public Index getPrevIndex() {
+    public void setPrevSelectedParcel(ReadOnlyParcel parcel) {
         fail("This method should not be called.");
-        return null;
     }
 
     @Override
@@ -132,4 +132,5 @@ public class ModelStub implements Model {
     public void reselect(ReadOnlyParcel parcel) {
         fail("This method should not be called.");
     }
+
 }

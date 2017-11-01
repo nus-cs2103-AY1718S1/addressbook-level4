@@ -37,6 +37,7 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Predicate<ReadOnlyParcel> deliveredPredicate = p -> p.getStatus().equals(Status.COMPLETED);
 
     private static boolean selected = false;
+    private static ReadOnlyParcel prevSelectedParcel = null;
     private static Index prevIndex = Index.fromZeroBased(0);
     private final AddressBook addressBook;
 
@@ -254,31 +255,28 @@ public class ModelManager extends ComponentManager implements Model {
         // keeping track of which card had been previously selected. Hence the prevIndex
         // attribute in the ModelManager class and also it's corresponding to get and set it.
         // We first get the identity of the previously selected parcel.
-        ReadOnlyParcel previous = getActiveList().get(getPrevIndex().getZeroBased());
+        ReadOnlyParcel previous = getPrevSelectedParcel();
         // if the previous parcel belongs after the editedParcel, we just reselect the parcel
         // at the previous index because all the parcels get pushed down.
-        if (previous.compareTo(parcel) > 0) {
-            forceSelect(getPrevIndex());
-        } else {
-            // otherwise the parcel toAdd belongs before the previously selected parcel
-            // so we select the parcel with the next index.
-            forceSelect(Index.fromZeroBased(findIndex(previous)));
-        }
+        forceSelect(Index.fromZeroBased(findIndex(previous)));
     }
 
     private int findIndex(ReadOnlyParcel target) {
         return getActiveList().indexOf(target);
     }
 
+
     @Override
-    public void setPrevIndex(Index newIndex) {
-        prevIndex = newIndex;
+    public ReadOnlyParcel getPrevSelectedParcel() {
+        return prevSelectedParcel;
     }
 
     @Override
-    public Index getPrevIndex() {
-        return prevIndex;
+    public void setPrevSelectedParcel(ReadOnlyParcel selectedParcel) {
+        select();
+        prevSelectedParcel = selectedParcel;
     }
+
 
     @Override
     public boolean equals(Object obj) {
