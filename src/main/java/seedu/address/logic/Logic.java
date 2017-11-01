@@ -26,7 +26,7 @@ public interface Logic {
      */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
-    //@@author A0162268B
+    //@@author reginleiff
     /**
      * Returns an unmodifiable view of the filtered list of events
      */

@@ -20,7 +20,7 @@ import seedu.address.model.event.exceptions.EventTimeClashException;
 import seedu.address.model.event.timeslot.Date;
 import seedu.address.model.event.timeslot.Timeslot;
 
-//@@author A0162268B
+//@@author reginleiff
 /**
  * A list of events that does not allow nulls.
  * <p>

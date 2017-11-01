@@ -1,4 +1,3 @@
-//@@author A0162268B
 package seedu.address.logic.commands.event;
 
 import static junit.framework.TestCase.assertEquals;
@@ -28,6 +27,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.EventBuilder;
 
+//@@author reginleiff
 public class AddEventCommandTest {
 
     @Rule

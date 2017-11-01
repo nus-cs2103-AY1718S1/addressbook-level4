@@ -1,10 +1,11 @@
-//@@author A0162268B
+
 package seedu.address.model.event.timeslot;
 
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author reginleiff
 /**
  * Represents an Timeslot's timing in sales navigator.
  * Is valid as declared in {@link #isValidTiming(String)}

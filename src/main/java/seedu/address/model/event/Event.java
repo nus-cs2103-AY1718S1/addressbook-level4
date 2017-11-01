@@ -1,4 +1,3 @@
-//@@author A0162268B
 package seedu.address.model.event;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
@@ -15,6 +14,7 @@ import seedu.address.model.event.timeslot.Date;
 import seedu.address.model.event.timeslot.Timeslot;
 import seedu.address.model.event.timeslot.Timing;
 
+//@@author reginleiff
 /**
  * Represents an Event in the address book.
  * Guarantees: details are present and not null, field values are validated.

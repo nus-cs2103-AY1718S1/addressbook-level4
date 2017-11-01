@@ -30,7 +30,7 @@ public class EventListTest {
         eventList.asObservableList().remove(0);
     }
 
-    //@@author A0162268B
+    //@@author reginleiff
     @Test
     public void getSubList_success() {
         EventList eventList = new EventList();

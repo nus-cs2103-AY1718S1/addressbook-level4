@@ -1,4 +1,3 @@
-//@@author A0162268B
 package seedu.address.model.event.timeslot;
 
 import static java.util.Objects.requireNonNull;
@@ -9,6 +8,7 @@ import java.util.Calendar;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.event.DateParser;
 
+//@@author reginleiff
 /**
  * Represents an Timeslot's date in sales navigator.
  * Is valid as declared in {@link #isValidDate(int, int, int)}

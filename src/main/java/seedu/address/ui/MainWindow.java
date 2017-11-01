@@ -56,7 +56,7 @@ public class MainWindow extends UiPart<Region> {
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
     private EventListPanel eventListPanel;
-    //@@author A0162268B
+    //@@author reginleiff
     private EventPanel schedulePanel;
     private ScheduleListPanel scheduleListPanel;
     //@@author

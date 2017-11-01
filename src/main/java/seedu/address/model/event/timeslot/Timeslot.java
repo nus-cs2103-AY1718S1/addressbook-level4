@@ -1,10 +1,10 @@
-//@@author A0162268B
 package seedu.address.model.event.timeslot;
 
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author reginleiff
 /**
  * Timeslot contains date and time and is comparable based on year, month, day and starting time, in this order.
  */

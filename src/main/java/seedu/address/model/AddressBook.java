@@ -42,7 +42,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private static final Logger logger = LogsCenter.getLogger(AddressBook.class);
 
     private final UniquePersonList persons;
-    //@@author A0162268B
+    //@@author reginleiff
     private Date currentDate;
     private final EventList events;
     //@@author
@@ -61,7 +61,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
-        //@@author A0162268B
+        //@@author reginleiff
         events = new EventList();
         //@@author
         relation = new UniqueRelList();
@@ -84,7 +84,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
-    //@@author A0162268B
+    //@@author reginleiff
     public void setEvents(List<? extends ReadOnlyEvent> events) throws EventTimeClashException {
         this.events.setEvents(events);
     }
@@ -108,7 +108,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             assert false : "AddressBooks should not have duplicate persons";
         }
 
-        //@@author A0162268B
+        //@@author reginleiff
         try {
             setEvents(newData.getEventList());
         } catch (EventTimeClashException e) {
@@ -258,7 +258,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
     //@@author
 
-    //@@author A0162268B
+    //@@author reginleiff
     //// event-level operations
 
     /**
@@ -332,7 +332,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return relation.asObservableList();
     }
 
-    //@@author A0162268B
+    //@@author reginleiff
     @Override
     public ObservableList<ReadOnlyEvent> getEventList() {
         return events.asObservableList();
@@ -358,7 +358,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return Objects.hash(persons, tags);
     }
 
-    //@@author A0162268B
+    //@@author reginleiff
 
     /**
      *

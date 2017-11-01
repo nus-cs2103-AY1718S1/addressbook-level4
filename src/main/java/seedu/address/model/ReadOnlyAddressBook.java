@@ -24,7 +24,7 @@ public interface ReadOnlyAddressBook {
      */
     ObservableList<Tag> getTagList();
 
-    //@@author A0162268B
+    //@@author reginleiff
     /**
      * Returns an unmodifiable view of the events list.
      */

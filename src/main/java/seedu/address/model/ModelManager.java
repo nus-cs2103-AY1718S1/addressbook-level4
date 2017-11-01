@@ -30,7 +30,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
-    //@@author A0162268B
+    //@@author reginleiff
     private FilteredList<ReadOnlyEvent> filteredEvents;
     private FilteredList<ReadOnlyEvent> scheduledEvents;
     //@@author
@@ -131,7 +131,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
-    //@@author A0162268B
+    //@@author reginleiff
     //=========== Schedule Accessors  =========================================================================
 
     @Override

@@ -17,7 +17,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.event.ReadOnlyEvent;
 
-//@@author A0162268B
+//@@author reginleiff
 /**
  * Panel containing the list of events in the schedule.
  *

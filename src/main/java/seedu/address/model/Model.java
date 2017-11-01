@@ -72,7 +72,7 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
-    //@@author A0162268B
+    //@@author reginleiff
     /**
      * Adds the given event
      */
