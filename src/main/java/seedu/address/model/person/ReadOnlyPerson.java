@@ -31,6 +31,8 @@ public interface ReadOnlyPerson {
     Cluster getCluster();
     ObjectProperty<Debt> debtProperty();
     Debt getDebt();
+    ObjectProperty<Debt> totalDebtProperty();
+    Debt getTotalDebt();
     ObjectProperty<Interest> interestProperty();
     Interest getInterest();
     ObjectProperty<DateBorrow> dateBorrowProperty();
@@ -125,8 +127,10 @@ public interface ReadOnlyPerson {
                 .append(getPostalCode())
                 .append(" Cluster: ")
                 .append(getCluster())
-                .append(" Debt: ")
+                .append(" Current Debt: ")
                 .append(getDebt())
+                .append(" Total Debt: ")
+                .append(getTotalDebt())
                 .append(" Interest: ")
                 .append(getInterest())
                 .append(" Date borrowed: ")

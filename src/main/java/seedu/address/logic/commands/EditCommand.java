@@ -153,6 +153,7 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         PostalCode updatedPostalCode = editPersonDescriptor.getPostalCode().orElse(personToEdit.getPostalCode());
         Debt updatedDebt = editPersonDescriptor.getDebt().orElse(personToEdit.getDebt());
+        Debt updatedTotalDebt = editPersonDescriptor.getTotalDebt().orElse(personToEdit.getTotalDebt());
         Interest updatedInterest = editPersonDescriptor.getInterest().orElse(personToEdit.getInterest());
         Deadline updatedDeadline = editPersonDescriptor.getDeadline().orElse(personToEdit.getDeadline());
         try {
@@ -165,7 +166,11 @@ public class EditCommand extends UndoableCommand {
         Person personCreated = new Person(updatedName, updatedHandphone, updatedHomePhone, updatedOfficePhone,
                 updatedEmail, updatedAddress, updatedPostalCode, updatedDebt, updatedInterest, updatedDeadline,
                 updatedTags);
-
+        try {
+            personCreated.setTotalDebt(updatedTotalDebt);
+        } catch (IllegalValueException ive) {
+            throw new CommandException(ive.getMessage());
+        }
         personCreated.setDateBorrow(personToEdit.getDateBorrow());
         personCreated.setDateRepaid(personToEdit.getDateRepaid());
         personCreated.setIsBlacklisted(personToEdit.isBlacklisted());
@@ -195,6 +200,7 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private PostalCode postalCode;
         private Debt debt;
+        private Debt totalDebt;
         private Interest interest;
         private Deadline deadline;
         private Set<Tag> tags;
@@ -210,6 +216,8 @@ public class EditCommand extends UndoableCommand {
             this.address = toCopy.address;
             this.postalCode = toCopy.postalCode;
             this.debt = toCopy.debt;
+            this.totalDebt = toCopy.totalDebt;
+            this.totalDebt = toCopy.totalDebt;
             this.interest = toCopy.interest;
             this.deadline = toCopy.deadline;
             this.tags = toCopy.tags;
@@ -285,6 +293,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Debt> getDebt() {
             return Optional.ofNullable(debt);
+        }
+
+        public void setTotalDebt(Debt totalDebt) {
+            this.totalDebt = totalDebt;
+        }
+
+        public Optional<Debt> getTotalDebt() {
+            return Optional.ofNullable(totalDebt);
         }
 
         public void setInterest(Interest interest) {

@@ -72,7 +72,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             }
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            //{@code DateBorrow} and {@code DateRepaid} fields are created within {@code Person} class
+            //{@code DateBorrow}, {@code DateRepaid} and {@code totalDebt} fields are created
+            // within {@code Person} class
             ReadOnlyPerson person = new Person(name, handphone, homePhone, officePhone, email, address, postalCode,
                     debt, interest, deadline, tagList);
 
