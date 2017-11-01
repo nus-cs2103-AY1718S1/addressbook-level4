@@ -45,6 +45,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
         StatusBarFooter.setClock(originalClock);
     }
 
+    //@@author jacoblipech
     @Before
     public void setUp() {
         StatusBarFooter statusBarFooter = new StatusBarFooter(STUB_SAVE_LOCATION, TOTAL_NUMBER_PEOPLE);

@@ -7,9 +7,12 @@ import java.util.List;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
@@ -55,6 +58,7 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
+        //@@author taojiashu
         initFavouriteLabel(person);
         initBirthdayLabel(person);
         initTags(person);
@@ -70,6 +74,7 @@ public class PersonCard extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        //@@author taojiashu
         person.favouriteProperty().addListener((observable, oldValue, newValue) -> initFavouriteLabel(person));
         //birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         person.birthdayProperty().addListener((observable, oldValue, newValue) -> initBirthdayLabel(person));
@@ -79,30 +84,36 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    //@@author taojiashu
     /**
      * Sets the colour of a favourite label based on its favourite status
      */
     private void initFavouriteLabel(ReadOnlyPerson person) {
         boolean favouriteStatus = person.getFavourite().getFavourite();
-        String textToDisplay = favouriteStatus ? "Fav" : "";
-        Label favouriteLabel = new Label(textToDisplay);
+        Label favouriteLabel = new Label();
+        Image starFilled = new Image(getClass().getResource("/images/Gold_Star.png").toExternalForm());
+        Image starTransparent = new Image(getClass().getResource("/images/Star_star.png").toExternalForm());
         if (favouriteStatus) {
-            favouriteLabel.setStyle("-fx-background-color: orangered");
+            favouriteLabel.setGraphic(new ImageView(starFilled));
+            favouriteLabel.setStyle("-fx-background-color: transparent; -fx-border-color: transparent");
         } else {
-            favouriteLabel.setStyle("-fx-background-color: cornflowerblue");
+            favouriteLabel.setGraphic(new ImageView((starTransparent)));
+            favouriteLabel.setStyle("-fx-background-color: transparent; -fx-border-color: transparent");
+
         }
         cardPane.getChildren().add(favouriteLabel);
     }
 
+    //@@author jacoblipech
     /**
      * Binds the birthday string together for each contact to display in a better format
      * so that it is clearer for the user.
      */
     private void initBirthdayLabel(ReadOnlyPerson person) {
         String initialBirthday = person.getBirthday().getBirthdayNumber();
-        String birthdayToDisplay = "-";
+        String birthdayToDisplay = Birthday.DEFAULT_BIRTHDAY;
 
-        if (initialBirthday.length() >= 4) {
+        if (initialBirthday.length() >= 4 && !initialBirthday.equals(Birthday.DEFAULT_BIRTHDAY)) {
             birthdayToDisplay = generateBirthdayMsg(initialBirthday);
         }
 
@@ -179,6 +190,7 @@ public class PersonCard extends UiPart<Region> {
         return tagColors.get(tagValue);
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

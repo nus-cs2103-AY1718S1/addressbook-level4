@@ -13,6 +13,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.PersonBuilder;
 
+//@@author jacoblipech
 public class SortCommandTest {
 
     private Model model;

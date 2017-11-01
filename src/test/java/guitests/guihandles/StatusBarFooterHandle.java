@@ -36,6 +36,7 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
         return syncStatusNode.getText();
     }
 
+    //@@author jacoblipech
     /**
      * Returns the text of 'total number of people' in contacts of the status bar
      */
@@ -43,6 +44,7 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
         return totalPeople.getText();
     }
 
+    //@@author
     /**
      * Returns the text of the 'save location' portion of the status bar.
      */

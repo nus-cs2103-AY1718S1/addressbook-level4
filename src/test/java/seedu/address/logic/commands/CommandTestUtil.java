@@ -58,6 +58,8 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_BIRTHDAY_DESC = " " + PREFIX_BIRTHDAY
             + "24 July"; // letters not allowed for birthday
+    public static final String INVALID_DAY_DESC = " " + PREFIX_BIRTHDAY + "320294"; // invalid day entered
+    public static final String INVALID_MONTH_DESC = " " + PREFIX_BIRTHDAY + "201394"; // invalid month entered
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;

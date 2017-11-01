@@ -19,8 +19,8 @@ import seedu.address.model.util.SampleDataUtil;
  */
 public class PersonBuilder {
 
-    public static final String DEFAULT_NAME = "Alice Pauline";
-    public static final String DEFAULT_PHONE = "85355255";
+    public static final String DEFAULT_NAME = "Cassandra Tee";
+    public static final String DEFAULT_PHONE = "94445565";
     //public static final String DEFAULT_EMAIL = "alice@gmail.com";
     //public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TAGS = "friends";
@@ -113,6 +113,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author taojiashu
     /**
      * Sets the {@code Favourite} of the {@code Person} that we are building
      */
@@ -125,6 +126,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author jacoblipech
     /**
      * Sets the {@code Birthday} of the {@code Person} that we are building.
      */

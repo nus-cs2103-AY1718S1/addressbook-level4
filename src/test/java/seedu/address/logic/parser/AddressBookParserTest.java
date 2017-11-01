@@ -92,6 +92,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
     }
 
+    //@@author taojiashu
     @Test
     public void parseCommand_favourite() throws Exception {
         FavouriteCommand command = (FavouriteCommand) parser.parseCommand(FavouriteCommand.COMMAND_WORD_1 + " "
@@ -155,12 +156,14 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(FacebookCommand.COMMAND_WORDVAR_1) instanceof FacebookCommand);
     }
 
+    //@@author jacoblipech
     @Test
     public void parseCommand_sort() throws Exception {
         assertTrue(parser.parseCommand(SortCommand.COMMAND_WORDVAR_1.toUpperCase()) instanceof SortCommand);
         assertTrue(parser.parseCommand(SortCommand.COMMAND_WORDVAR_2.toUpperCase() + " 3") instanceof SortCommand);
     }
 
+    //@@author
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORDVAR_1) instanceof RedoCommand);
@@ -168,6 +171,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand("redomult 1") instanceof RedoCommand);
     }
 
+    //@@author jacoblipech
     @Test
     public void parseCommand_birthday() throws Exception {
         final String birthdayName = "240795";
@@ -213,7 +217,7 @@ public class AddressBookParserTest {
         assertEquals(new AddTagCommand(indexes, toAdd), command);
     }
 
-    //@@author
+    //@@author taojiashu
     @Test
     public void parseCommand_showFavourite() throws Exception {
         assertTrue(parser.parseCommand(ShowFavouriteCommand.COMMAND_WORD_1) instanceof ShowFavouriteCommand);
