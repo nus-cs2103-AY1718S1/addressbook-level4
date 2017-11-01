@@ -91,7 +91,7 @@
 }
 
 .list-view {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(#1d1d1d, 10%);
     -fx-background-insets: 0;
     -fx-padding: 0;
 }
@@ -107,11 +107,11 @@
 }
 
 .list-cell:hover {
-    -fx-background-color: derive(#1d1d1d, 40%);
+    -fx-background-color: derive(#1d1d1d, 30%);
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: derive(#1d1d1d, 40%);
+    -fx-background-color: derive(#1d1d1d, 30%);
 }
 
 .list-cell:filled:selected #cardPane {
@@ -307,7 +307,7 @@
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: derive(#1d1d1d, 40%);
+    -fx-background-color: derive(#1d1d1d, 30%);
     -fx-background-insets: 3;
 }
 
