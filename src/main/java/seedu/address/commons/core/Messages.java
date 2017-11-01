@@ -12,6 +12,7 @@ public class Messages {
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_PHONES_LISTED_OVERVIEW = "%1$d phones listed!";
     public static final String MESSAGE_EMAILS_LISTED_OVERVIEW = "%1$d emails listed!";
+    public static final String MESSAGE_PRIORITY_LISTED_OVERVIEW = "%1$d priorities listed!";
     public static final String MESSAGE_REMINDERS_LISTED_OVERVIEW = "%1$d reminders listed!";
 
 }

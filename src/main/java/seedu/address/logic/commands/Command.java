@@ -45,6 +45,16 @@ public abstract class Command {
     }
 
     /**
+     * Constructs a feedback message to summarise an operation that displayed a listing of persons.
+     *
+     * @param displaySize used to generate summary
+     * @return summary message for persons displayed
+     */
+    public static String getMessageForPriorityListShownSummary(int displaySize) {
+        return String.format(Messages.MESSAGE_PRIORITY_LISTED_OVERVIEW, displaySize);
+    }
+
+    /**
      * Constructs a feedback message to summarise an operation that displayed a listing of phones.
      *
      * @param displaySize
