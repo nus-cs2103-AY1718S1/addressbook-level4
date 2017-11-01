@@ -1,35 +1,7 @@
 # Vanessa
 ###### /java/seedu/address/logic/commands/DeleteCommand.java
 ``` java
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
-
-
-        try {
-            model.deletePerson(personToDelete);
             queue.offer(personToDelete);
-        } catch (PersonNotFoundException pnfe) {
-            assert false : "The target person cannot be missing";
-        }
-
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof DeleteCommand // instanceof handles nulls
-                && this.targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
-    }
-
 ```
 ###### /java/seedu/address/logic/commands/DeleteCommand.java
 ``` java
@@ -149,6 +121,21 @@ public class RecentlyDeletedCommand extends Command {
     }
 }
 ```
+###### /java/seedu/address/logic/LogicManager.java
+``` java
+    private final RecentlyDeletedQueue queue;
+
+```
+###### /java/seedu/address/logic/LogicManager.java
+``` java
+        this.queue = new RecentlyDeletedQueue();
+    }
+
+```
+###### /java/seedu/address/logic/LogicManager.java
+``` java
+            command.setData(model, history, undoRedoStack, queue);
+```
 ###### /java/seedu/address/logic/RecentlyDeletedQueue.java
 ``` java
 package seedu.address.logic;
@@ -199,6 +186,29 @@ public class RecentlyDeletedQueue {
 
     public void setQueue(LinkedList<ReadOnlyPerson> newQueue) {
         recentlyDeletedQueue = newQueue;
+    }
+
+}
+```
+###### /java/seedu/address/storage/AddressBookStorage.java
+``` java
+    void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
+
+}
+```
+###### /java/seedu/address/storage/StorageManager.java
+``` java
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-backup.xml");
+    }
+
+```
+###### /java/seedu/address/storage/XmlAddressBookStorage.java
+``` java
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        saveAddressBook(addressBook, filePath + "-backup.xml");
     }
 
 }
