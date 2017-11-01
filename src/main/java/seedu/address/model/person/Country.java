@@ -11,10 +11,11 @@ import java.util.Map;
  */
 public class Country {
 
+    public static final String COMMAND_WORD = "codes";
     public static final String DEFAULT_COUNTRY_CODE = "";
     public static final String DEFAULT_COUNTRY = "Country Unavailable";
-    public static final String MESSAGE_COUNTRY_ERROR =
-            "Country not detected";
+    public static final String MESSAGE_COUNTRY_ERROR = "Country not detected";
+    private static String codeList;
     public final String value;
     public final Map <String, String> countryMap;
 
@@ -277,7 +278,12 @@ public class Country {
         countries.put("967", "Yemen");
         countries.put("260", "Zambia");
         countries.put("263", "Zimbabwe");
+        codeList = countries.keySet().toString();
         return countries;
+    }
+
+    public static String getCodeList() {
+        return codeList;
     }
 
     public String getName(String code) {
