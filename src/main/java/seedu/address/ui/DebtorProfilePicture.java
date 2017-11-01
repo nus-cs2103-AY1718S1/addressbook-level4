@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import java.io.File;
+import java.net.MalformedURLException;
+
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,8 +18,22 @@ public class DebtorProfilePicture extends UiPart<Region> {
     public DebtorProfilePicture(ReadOnlyPerson person) {
         super(FXML);
         String imageName = person.getName().toString().replaceAll("\\s+", "");
-        String imagePath = "test.jpg";
-        Image image = new Image("file:../docs/images/jaivigneshvenugopal.jpg");
+        String imagePath = "C:/Users/acer/Desktop/SE/profilepic/" + imageName + ".jpg";
+
+        File file = new File(imagePath);
+
+        if (!file.exists()) {
+            file = new File("docs/images/unknown.jpg");
+        }
+
+        Image image = null;
+
+        try {
+            image = new Image(file.toURI().toURL().toExternalForm());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
         profilePic.setImage(image);
         profilePic.setFitWidth(300);
         profilePic.setFitHeight(300);
