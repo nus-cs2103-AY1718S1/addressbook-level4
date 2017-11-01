@@ -355,7 +355,7 @@ Removes a single event with the index 1.
 * `s-remove 1 2 3` +
 Removes 3 events with the index 1, 2 and 3.
 
-=== Making a backup address book: `export` _[Coming in v2.0]_
+=== Making a backup address book: `export` _[Coming in v1.4]_
 
 Backup your contact details to the given path.
 
