@@ -86,7 +86,7 @@ public class AddRemarkCommand extends UndoableCommand {
      * @return String that shows whether add was successfully done
      */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
-            return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
+        return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
     }
 
     @Override
