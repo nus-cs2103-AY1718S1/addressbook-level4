@@ -38,7 +38,7 @@ public class PersonBuilder {
     public static final String DEFAULT_NOTE = "NIL";
     //@@author
     public static final String DEFAULT_TAGS = "friends";
-    public static final String DEFAULT_RELATIONSHIP = "siblings";
+    public static final String DEFAULT_RELATIONSHIP = "";
 
     public static final String FILE_SEPERATOR = File.separator;
 

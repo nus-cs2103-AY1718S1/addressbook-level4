@@ -1,3 +1,4 @@
+//@@author huiyiiih
 package seedu.address.logic.commands;
 
 import seedu.address.model.person.exceptions.InvalidSortTypeException;
@@ -38,3 +39,4 @@ public class SortCommand extends UndoableCommand {
                 && this.type == (((SortCommand) other).type)); // state check
     }
 }
+//@@author

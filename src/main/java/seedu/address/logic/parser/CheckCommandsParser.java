@@ -1,3 +1,4 @@
+//@@author huiyiiih
 package seedu.address.logic.parser;
 
 import java.util.Arrays;
@@ -33,19 +34,19 @@ public class CheckCommandsParser {
         /**
          * All the synonyms/aliases of the different commands
          */
-        final String[] subAddCommands = new String[] {"add", "a", "input", "create", "insert"};
-        final String[] subClearCommands = new String[] {"clear", "c", "empty", "clean"};
-        final String[] subDeleteCommands = new String[] {"delete", "d", "remove", "throw", "erase"};
-        final String[] subEditCommands = new String[] {"edit", "e", "change", "revise", "modify"};
-        final String[] subExitCommands = new String[] {"exit", "quit"};
-        final String[] subFindCommands = new String[] {"find", "f", "look", "search", "check"};
-        final String[] subHelpCommands = new String[] {"help", "info"};
-        final String[] subHistoryCommands = new String[] {"history", "h", "past"};
-        final String[] subListCommands = new String[] {"list", "l", "show", "display"};
-        final String[] subRedoCommands = new String[] {"redo", "r"};
-        final String[] subSelectCommands = new String[] {"select", "s", "choose", "pick"};
-        final String[] subSortCommands = new String[] {"sort", "arrange", "organise"};
-        final String[] subUndoCommands = new String[] {"undo", "u"};
+        final String[] subAddCommands = new String[] { "add", "a", "input", "create", "insert" };
+        final String[] subClearCommands = new String[] { "clear", "c", "empty", "clean" };
+        final String[] subDeleteCommands = new String[] { "delete", "d", "remove", "throw", "erase" };
+        final String[] subEditCommands = new String[] { "edit", "e", "change", "revise", "modify" };
+        final String[] subExitCommands = new String[] { "exit", "quit" };
+        final String[] subFindCommands = new String[] { "find", "f", "look", "search", "check" };
+        final String[] subHelpCommands = new String[] { "help", "info" };
+        final String[] subHistoryCommands = new String[] { "history", "h", "past" };
+        final String[] subListCommands = new String[] { "list", "l", "show", "display" };
+        final String[] subRedoCommands = new String[] { "redo", "r" };
+        final String[] subSelectCommands = new String[] { "select", "s", "choose", "pick" };
+        final String[] subSortCommands = new String[] { "sort", "arrange", "organise" };
+        final String[] subUndoCommands = new String[] { "undo", "u" };
         final String[] subCheckScheduleCommands = new String[] {"thisweek",
             "schedule", "checkschedule", "tw", "cs"};
         final String[] subAddEventsCommands = new String[] { "eventadd", "addevent", "ae", "ea" };
@@ -53,7 +54,7 @@ public class CheckCommandsParser {
             "delevent", "deleteevent", "eventdelete", "de", "ed" };
         final String[] subEditEventsCommands = new String[] { "eventedit", "editevent", "ee" };
         final String[] subFindEventsCommands = new String[] { "eventfind", "findevent", "fe", "ef" };
-        final String[] subSetRelCommands = new String[] {"set"};
+        final String[] subSetRelCommands = new String[] { "set", "rel", "setrel" };
 
 
         /**
@@ -125,3 +126,4 @@ public class CheckCommandsParser {
         return finalUserCommand;
     }
 }
+//@@author

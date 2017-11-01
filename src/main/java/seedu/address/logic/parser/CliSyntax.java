@@ -19,13 +19,14 @@ public class CliSyntax {
     //@@author
     public static final Prefix PREFIX_TAG = new Prefix("t/");
     public static final Prefix PREFIX_PHOTO = new Prefix("ph/");
-    public static final Prefix PREFIX_RELATIONSHIP = new Prefix("r/");
 
     /* Prefix definitions for Event*/
     public static final Prefix PREFIX_DESCRIPTION = new Prefix("d/");
     public static final Prefix PREFIX_TIMESLOT = new Prefix("t/");
+    //@@author huiyiiih
     /* Prefix definitions for Relationship*/
     public static final Prefix PREFIX_ADD_RELATIONSHIP = new Prefix("ar/");
     public static final Prefix PREFIX_DELETE_RELATIONSHIP = new Prefix("dr/");
-    public static final Prefix PREFIX_EMPTY_RELATIONSHIP = new Prefix("er/");
+    public static final Prefix PREFIX_EMPTY_RELATIONSHIP = new Prefix("cr/");
+    //@author
 }

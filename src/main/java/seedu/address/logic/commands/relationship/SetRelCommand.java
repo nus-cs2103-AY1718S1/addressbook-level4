@@ -1,4 +1,3 @@
-//@@A0160452N
 package seedu.address.logic.commands.relationship;
 
 import static java.util.Objects.requireNonNull;
@@ -44,8 +43,8 @@ public class SetRelCommand extends UndoableCommand {
         + "Existing values will be overwritten by the input values.\n"
         + "Parameters: INDEX (must be a positive integer) "
         + "[" + PREFIX_ADD_RELATIONSHIP + "RELATIONSHIP]"
-        + "Example: " + COMMAND_WORD + " 1 "
-        + PREFIX_ADD_RELATIONSHIP + "SIBLINGS";
+        + "Example: " + COMMAND_WORD + " 1 2 "
+        + PREFIX_ADD_RELATIONSHIP + "colleagues";
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Relationship Added for Person: %1$s\n"
         + "& Person: %2$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -53,48 +52,49 @@ public class SetRelCommand extends UndoableCommand {
 
     private final Index indexOne;
     private final Index indexTwo;
-    private final EditPersonDescriptor editPersonDescriptor;
+    private final EditPerson editPerson;
 
     /**
-     * @param indexOne                first index of the person in the filtered person list to add relationship
-     * @param indexTwo                second index of the person in the filtered person list to add relationship
-     * @param editPersonDescriptor details to edit the person with
+     * @param indexOne   first index of the person in the filtered person list to add relationship
+     * @param indexTwo   second index of the person in the filtered person list to add relationship
+     * @param editPerson details to edit the person with
      */
-    public SetRelCommand(Index indexOne, Index indexTwo, EditPersonDescriptor editPersonDescriptor) {
+    public SetRelCommand(Index indexOne, Index indexTwo, EditPerson editPerson) {
         requireNonNull(indexOne);
         requireNonNull(indexTwo);
 
         this.indexOne = indexOne;
         this.indexTwo = indexTwo;
-        this.editPersonDescriptor = editPersonDescriptor;
+        this.editPerson = editPerson;
     }
 
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Person createEditedPerson(ReadOnlyPerson personToEdit, EditPersonDescriptor editPersonDescriptor) {
+    private static Person createEditedPerson(ReadOnlyPerson personToEdit, EditPerson editPerson,
+                                             ReadOnlyPerson personTwo) {
         assert personToEdit != null;
 
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Company updatedCompany = editPersonDescriptor.getCompany().orElse(personToEdit.getCompany());
-        Position updatedPosition = editPersonDescriptor.getPosition().orElse(personToEdit.getPosition());
-        Status updatedStatus = editPersonDescriptor.getStatus().orElse(personToEdit.getStatus());
-        Priority updatedPriority = editPersonDescriptor.getPriority().orElse(personToEdit.getPriority());
-        Note updatedNote = editPersonDescriptor.getNote().orElse(personToEdit.getNote());
-        Photo updatedPhoto = editPersonDescriptor.getPhoto().orElse(personToEdit
+        Name updatedName = editPerson.getName().orElse(personToEdit.getName());
+        Phone updatedPhone = editPerson.getPhone().orElse(personToEdit.getPhone());
+        Email updatedEmail = editPerson.getEmail().orElse(personToEdit.getEmail());
+        Address updatedAddress = editPerson.getAddress().orElse(personToEdit.getAddress());
+        Company updatedCompany = editPerson.getCompany().orElse(personToEdit.getCompany());
+        Position updatedPosition = editPerson.getPosition().orElse(personToEdit.getPosition());
+        Status updatedStatus = editPerson.getStatus().orElse(personToEdit.getStatus());
+        Priority updatedPriority = editPerson.getPriority().orElse(personToEdit.getPriority());
+        Note updatedNote = editPerson.getNote().orElse(personToEdit.getNote());
+        Photo updatedPhoto = editPerson.getPhoto().orElse(personToEdit
             .getPhoto());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-        //Set<Relationship> updatedRel = editPersonDescriptor.getRelation().orElse(personToEdit.getRelation());
+        Set<Tag> updatedTags = editPerson.getTags().orElse(personToEdit.getTags());
+        Set<Relationship> relation = personToEdit.getRelation();
         final Set<Relationship> updatedRel = new HashSet<>();
-        if (!editPersonDescriptor.shouldClear()) {
-            updatedRel.addAll(personToEdit.getRelation());
+        if (!editPerson.shouldClear()) {
+            updatedRel.addAll(relation);
         }
-        editPersonDescriptor.getToAdd().ifPresent(updatedRel::addAll);
-        editPersonDescriptor.getToRemove().ifPresent(updatedRel::removeAll);
+        editPerson.getToAddRel(personTwo).ifPresent(updatedRel::addAll);
+        editPerson.getToDeleteRel(personTwo).ifPresent(updatedRel::removeAll);
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCompany,
         updatedPosition, updatedStatus, updatedPriority, updatedNote, updatedPhoto, updatedTags, updatedRel);
     }
@@ -108,9 +108,9 @@ public class SetRelCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToEditOne = lastShownList.get(indexOne.getZeroBased());
-        Person editedPersonOne = createEditedPerson(personToEditOne, editPersonDescriptor);
         ReadOnlyPerson personToEditTwo = lastShownList.get(indexTwo.getZeroBased());
-        Person editedPersonTwo = createEditedPerson(personToEditTwo, editPersonDescriptor);
+        Person editedPersonOne = createEditedPerson(personToEditOne, editPerson, personToEditTwo);
+        Person editedPersonTwo = createEditedPerson(personToEditTwo, editPerson, personToEditOne);
 
         try {
             model.updatePerson(personToEditOne, editedPersonOne);
@@ -132,20 +132,20 @@ public class SetRelCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EditCommand)) {
+        if (!(other instanceof SetRelCommand)) {
             return false;
         }
 
         // state check
         SetRelCommand e = (SetRelCommand) other;
-        return indexOne.equals(e.indexOne) && editPersonDescriptor.equals(e.editPersonDescriptor);
+        return indexOne.equals(e.indexOne) && editPerson.equals(e.editPerson);
     }
 
     /**
      * Stores the details to edit the person with. Each non-empty field value will replace the
      * corresponding field value of the person.
      */
-    public static class EditPersonDescriptor {
+    public static class EditPerson {
         private Name name;
         private Phone phone;
         private Email email;
@@ -158,13 +158,13 @@ public class SetRelCommand extends UndoableCommand {
         private Photo photo;
         private Set<Tag> tags;
         private boolean clearRels = false;
-        private Set<Relationship> toAdd;
-        private Set<Relationship> toRemove;
+        private Set<Relationship> addRel;
+        private Set<Relationship> deleteRel;
 
-        public EditPersonDescriptor() {
+        public EditPerson() {
         }
 
-        public EditPersonDescriptor(EditPersonDescriptor toCopy) {
+        public EditPerson(EditPerson toCopy) {
             this.name = toCopy.name;
             this.phone = toCopy.phone;
             this.email = toCopy.email;
@@ -177,8 +177,8 @@ public class SetRelCommand extends UndoableCommand {
             this.photo = toCopy.photo;
             this.tags = toCopy.tags;
             this.clearRels = toCopy.clearRels;
-            this.toAdd = toCopy.toAdd;
-            this.toRemove = toCopy.toRemove;
+            this.addRel = toCopy.addRel;
+            this.deleteRel = toCopy.deleteRel;
         }
 
         /**
@@ -186,7 +186,7 @@ public class SetRelCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.company,
-            this.position, this.status, this.priority, this.note, this.tags, this.toAdd, this.toRemove) || clearRels;
+            this.position, this.status, this.priority, this.note, this.tags, this.addRel, this.deleteRel) || clearRels;
         }
 
         public Optional<Name> getName() {
@@ -277,18 +277,32 @@ public class SetRelCommand extends UndoableCommand {
             this.tags = tags;
         }
 
-        public void setToAdd(Set<Relationship> toAdd) {
-            this.toAdd = toAdd;
-        }
-        public void setToRemove(Set<Relationship> toRemove) {
-            this.toRemove = toRemove;
+        public void setToAdd(Set<Relationship> addRel) {
+            this.addRel = addRel;
         }
 
-        public Optional<Set<Relationship>> getToAdd() {
-            return Optional.ofNullable(toAdd);
+        public void setToRemove(Set<Relationship> deleteRel) {
+            this.deleteRel = deleteRel;
         }
-        public Optional<Set<Relationship>> getToRemove() {
-            return Optional.ofNullable(toRemove);
+        public Optional<Set<Relationship>> getToAddRel() {
+            return Optional.ofNullable(addRel);
+        }
+        public Optional<Set<Relationship>> getToAddRel(ReadOnlyPerson person) {
+            Set<Relationship> relWithName = new HashSet<>();
+            if (addRel == null) {
+                return Optional.ofNullable(null);
+            }
+            relWithName.add(new Relationship(person.getName().toString(), addRel));
+
+            return Optional.of(relWithName);
+        }
+        public Optional<Set<Relationship>> getToDeleteRel() {
+            return Optional.ofNullable(deleteRel);
+        }
+        public Optional<Set<Relationship>> getToDeleteRel(ReadOnlyPerson person) {
+            Set<Relationship> relWithName = new HashSet<>();
+            relWithName.add(new Relationship(person.getName().toString(), deleteRel));
+            return Optional.of(relWithName);
         }
         public boolean shouldClear() {
             return clearRels;
@@ -296,7 +310,6 @@ public class SetRelCommand extends UndoableCommand {
         public void setClearRels(boolean clearRels) {
             this.clearRels = clearRels;
         }
-
         @Override
         public boolean equals(Object other) {
             // short circuit if same object
@@ -310,7 +323,7 @@ public class SetRelCommand extends UndoableCommand {
             }
 
             // state check
-            EditPersonDescriptor e = (EditPersonDescriptor) other;
+            EditPerson e = (EditPerson) other;
 
             return getName().equals(e.getName())
                 && getPhone().equals(e.getPhone())
@@ -323,10 +336,9 @@ public class SetRelCommand extends UndoableCommand {
                 && getNote().equals(e.getNote())
                 && getPhoto().equals(e.getPhoto())
                 && getTags().equals(e.getTags())
-                && getToAdd().equals(e.getToAdd())
-                && getToRemove().equals(e.getToRemove())
+                && getToAddRel().equals(e.getToAddRel())
+                && getToDeleteRel().equals(e.getToDeleteRel())
                 && clearRels == e.clearRels;
         }
     }
 }
-
