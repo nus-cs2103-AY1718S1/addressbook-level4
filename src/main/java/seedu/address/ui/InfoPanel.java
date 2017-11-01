@@ -9,6 +9,7 @@ import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -48,6 +49,7 @@ public class InfoPanel extends UiPart<Region> {
 
     private NearbyPersonListPanel nearbyPersonListPanel;
     private DebtRepaymentProgressBar debtRepaymentProgressBar;
+    private DebtorProfilePicture debtorProfilePicture;
 
     @FXML
     private Pane pane;
@@ -114,6 +116,8 @@ public class InfoPanel extends UiPart<Region> {
     @FXML
     private StackPane progressBarPlaceholder;
     @FXML
+    private StackPane profilePicPlaceholder;
+    @FXML
     private Text debtRepaymentField;
 
     public InfoPanel(Logic logic) {
@@ -166,6 +170,11 @@ public class InfoPanel extends UiPart<Region> {
         progressBarPlaceholder.getChildren().add(debtRepaymentProgressBar.getRoot());
     }
     //@@author
+
+    private void resetDebtorProfilePicture(ReadOnlyPerson person) {
+        debtorProfilePicture = new DebtorProfilePicture(person);
+        profilePicPlaceholder.getChildren().add(debtorProfilePicture.getImageView());
+    }
 
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
@@ -278,5 +287,6 @@ public class InfoPanel extends UiPart<Region> {
         logic.updateSelectedPerson(event.getNewSelection().person);
         resetNearbyPersonListPanel(event.getNewSelection().person);
         resetDebtRepaymentProgressBar(event.getNewSelection().person);
+        resetDebtorProfilePicture(event.getNewSelection().person);
     }
 }
