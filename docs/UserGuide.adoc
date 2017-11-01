@@ -116,7 +116,7 @@ Remove the lesson from the marked list.
 
 === Remarking a module: `remark`
 
-remark a module with given content. +
+`remark a module with given content.` +
 Format: `remark INDEX CONTENT`
 
 ****
@@ -127,23 +127,19 @@ Format: `remark INDEX CONTENT`
 Examples:
 
 * `list module` +
-`Remark 1 This is a very interesting Module` +
-Remark the module of index 1 with comment "This is a very interesting module".
+`Remark 1 This is a very interesting Module` +Remark the module of index 1 with comment "This is a very interesting module".
 
-=== Deleting a remark: `delete -r`
-
-delete a remark with given index. +
-Format: `delete -r INDEX`
+`delete a remark with given index.` +
+Format: `remark -d INDEX`
 
 ****
-* The index here is the index of the remark we want to delete while the index in `remark INDEX CONTENT ` refers to the index of the module we want to add our remark to.
+* The index here is the index of the remark we want to delete while the index in `remark INDEX CONTENT` refers to the index of the module we want to add our remark to.
 ****
 
 Examples:
 
 * `delete -r 1` +
 Delete the remark in current remark panel with index 1.
-
 
 === Listing all lesson : `list`
 
