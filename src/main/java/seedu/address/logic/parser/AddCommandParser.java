@@ -21,6 +21,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProfilePicture;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
@@ -48,10 +49,12 @@ public class AddCommandParser implements Parser<AddCommand> {
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Appointment appointment = new Appointment("");
+            ProfilePicture profilePicture = new ProfilePicture(ProfilePicture.DEFAULT_PICTURE);
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             Set<Group> groupList = new HashSet<>();
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, appointment, groupList, tagList);
+            ReadOnlyPerson person = new Person(
+                    name, phone, email, address, appointment, profilePicture, groupList, tagList);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

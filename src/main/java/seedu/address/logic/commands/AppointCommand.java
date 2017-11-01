@@ -53,7 +53,7 @@ public class AppointCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), appointment,
+                personToEdit.getAddress(), appointment, personToEdit.getProfilePicture(),
                 personToEdit.getGroups(), personToEdit.getTags());
 
         try {
