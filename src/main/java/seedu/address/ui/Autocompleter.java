@@ -53,7 +53,7 @@ public class Autocompleter {
         switch (state) {
         case COMMAND:
             clearResultsWindow();
-            return (possibleAutocompleteResults.isEmpty())? EMPTY_STRING : possibleAutocompleteResults.get(0);
+            return (possibleAutocompleteResults.isEmpty()) ? EMPTY_STRING : possibleAutocompleteResults.get(0);
 
         case EMPTY:
             raise(new NewResultAvailableEvent(PROMPT_USER_TO_USE_HELP_MESSAGE, false));
@@ -190,7 +190,6 @@ public class Autocompleter {
 
     /**
      * Check if the index field in the {@code String} has already been entered
-     * @param arguments
      */
     private boolean containsIndex(String arguments) {
         Prefix[] prefixes = AutocompleteCommand.ALL_PREFIXES;
@@ -205,10 +204,9 @@ public class Autocompleter {
 
     /**
      * Returns true if the last character of the {@code String} is a digit
-     * @param text
      */
     private boolean lastCharIsDigit(String text) {
-        if(text.length() < 1) {
+        if (text.length() < 1) {
             return false;
         }
         return Character.isDigit(text.charAt(text.length() - 1));
@@ -218,8 +216,6 @@ public class Autocompleter {
 
     /**
      * Handle autocomplete when there is only word in the command box
-     * @param commandBoxText
-     * @return result to be placed in side text box
      */
     private void autocompleteCommandWord(String commandBoxText) {
         ArrayList<String> possibleResults = getClosestCommands(commandBoxText);
@@ -242,7 +238,6 @@ public class Autocompleter {
 
     /**
      * Checks if the last two characters of the {@code String} are prefixes
-     * @param commandBoxText
      */
     private boolean lastTwoCharactersArePrefix(String commandBoxText) {
         if (commandBoxText.length() < 2) {
@@ -255,8 +250,6 @@ public class Autocompleter {
 
     /**
      * Returns the ArrayList of prefixes that are missing from the {@code String}
-     * @param arguments
-     * @return {@code ArrayList<String>} containing the missing prefixes
      */
     private ArrayList<String> getMissingPrefixes(String arguments) {
         Prefix[] prefixes = AutocompleteCommand.ALL_PREFIXES;
@@ -272,8 +265,6 @@ public class Autocompleter {
 
     /**
      * Get a list of possible commands to autocomplete
-     * @param commandBoxText
-     * @return ArrayList of possible autocomplete results
      */
     private ArrayList<String> getClosestCommands (String commandBoxText) {
         ArrayList<String> possibleResults = new ArrayList<>();
@@ -285,8 +276,6 @@ public class Autocompleter {
 
     /**
      * Checks if the text in the command box is a substring of a particular command word
-     * @param commandBoxText
-     * @param commandWord
      */
     private boolean isPossibleMatch(String commandBoxText, String commandWord) {
         return (commandBoxText.length() <= commandWord.length()
@@ -295,7 +284,6 @@ public class Autocompleter {
 
     /**
      * Creates message to tell user that there are multiple results
-     * @param results
      */
     private void displayMultipleResults(ArrayList<String> results) {
         String resultToDisplay = MULTIPLE_RESULT_MESSAGE + ":\n";
@@ -319,7 +307,6 @@ public class Autocompleter {
 
     /**
      * Raises the event via {@link EventsCenter#post(BaseEvent)}
-     * @param event
      */
     private void raise(BaseEvent event) {
         EventsCenter.getInstance().post(event);
