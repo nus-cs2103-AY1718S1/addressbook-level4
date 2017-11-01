@@ -240,7 +240,8 @@ public class AddressBookParserTest {
         SetPathCommand command = (SetPathCommand) parser.parseCommand(
                 SetPathCommand.COMMAND_WORD + " " + "C:/Users/acer/Desktop/SE/profilepic/");
         assertTrue(parser.parseCommand(SetPathCommand.COMMAND_WORD) instanceof SetPathCommand);
-        assertTrue(parser.parseCommand("setpath" + " " + "C:/Users/acer/Desktop/SE/profilepic/") instanceof SetPathCommand);
+        assertTrue(parser.parseCommand("setpath" + " "
+                + "C:/Users/acer/Desktop/SE/profilepic/") instanceof SetPathCommand);
     }
 
     @Test
