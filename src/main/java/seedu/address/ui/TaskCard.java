@@ -8,10 +8,15 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.image.Image;
 import seedu.address.model.task.ReadOnlyTask;
+
+import javax.swing.*;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -49,14 +54,19 @@ public class TaskCard extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private Label priority;
+    @FXML
+    private ImageView mark;
+
+    private static final String ICON = "/images/click.png";
 
     public TaskCard(ReadOnlyTask task, int displayedIndex) {
         super(FXML);
         this.task = task;
-        if (!task.getComplete()) {
+        //if (!task.getComplete()) {
             id.setText(displayedIndex + ". ");
             initTags(task);
-        }
+        //}
+        initMark(task);
         bindListeners(task);
 
     }
@@ -87,10 +97,13 @@ public class TaskCard extends UiPart<Region> {
         endDateTime.textProperty().bind(Bindings.convert(task.endTimeProperty()));
         priority.textProperty().bind(Bindings.convert(
                 new SimpleObjectProperty<>(priorityStringValueConverter(task.priorityProperty().get()))));
+        //mark.textProperty().bind(Bindings.convert(task.nameProperty()));
         task.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(task);
         });
+
+
     }
 
     /**
@@ -121,6 +134,11 @@ public class TaskCard extends UiPart<Region> {
         });
     }
 
+    private  void initMark(ReadOnlyTask task) {
+        Image markIcon = new Image(ICON);
+        if(task.getComplete()) mark.setImage(markIcon);
+
+    }
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

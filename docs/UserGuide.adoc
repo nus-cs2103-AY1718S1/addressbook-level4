@@ -66,257 +66,15 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ==== Routes Planning
 
 using google map functions to plan the routes to contacts' address +
-Usage: click the certain person, then enter your current position in starting point
+Usage: click the certain person(Or use the `select` command), then enter your current position in starting point
 
+=== General Operation
 
-=== Viewing help : `help`
+==== Viewing help : `help`
 
 Format: `help`
 
-=== Adding a person: `add`
-
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
-
-[TIP]
-A person can have any number of tags (including 0)
-
-Examples:
-
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-
-=== Adding a new task : `addTask`
-
-Adds a new task to the task book +
-Format: `addTask n/TaskName d/Description s/startDateTime f/finishDateTime c/priority [t/TAG]...` +
-
-[TIP]
-A task can have any number of tags (including 0), the tag mechanism is the same as that for person. A task has a special field called priority (ranges from 1 to 5, with 1 being the most important). If a priority is not specified during adding of this task, a `normal` (3) priority  wil be set by default.
-
-Examples:
-
-* `addTask n/picnic d/have fun at Botanic Garden s/1/1/2017 12:00pm f/1/1/2017 15:00pm c/3 t/friends`
-
-=== Listing all persons : `list`
-
-Shows a list of all persons in the address book. +
-Format: `list`
-
-=== Sorting tasks by end date : `taskbyend`
-
-Sorts the list of tasks by their end date
-
-=== Editing a person : `edit`
-
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
-
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
-
-Examples:
-
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
-=== Editing a new task : `editTask`
-
-Edits an existing task in the address book +
-Format: `editTask INDEX [n/TaskName] [d/Description] [s/startDateTime] [f/finishDateTime] [t/TAG]...` +
-
-****
-* Edits the task at the specified `INDEX`. The index refers to the index number shown in the last task listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-****
-
-Examples:
-
-* `editTask 1 n/picnic d/have fun at Botanic Garden s/1/1/2017 12:00pm f/1/1/2017 15:00pm t/friends`
-Edits the name, description, start time, finish time ad tag of the 1st task to be `picnic`, `have fun at Botanic Garden`, `1/1/2017 12:00pm`, `1/1/2017 15:00pm` and `friends` respectively.
-* `editTask 2 t/teammates`
-Edits the tag of the 2nd task to be `teammates` only and others remain same.
-
-=== Locating persons by name: `find`
-
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
-=== Exporting a person to a sting of add command: `export`
-
-Export the details of the person by the index number +
-Format: `export INDEX`
-
-****
-* Exports the person at the specified `INDEX`, selects the person and loads the Google Map page.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `export 1` in the default setting +
-Returns `add n/Alex Yeoh p/87438807 e/alexyeoh@example.com a/Blk 30 Geylang Street 29, #06-40 r/ t/friends`
-
-=== Exporting a task to a sting of addTask command: `exportTask`
-
-Export the details of the task by the index number +
-Format: `export INDEX`
-
-****
-* Exports the task at the specified `INDEX`, selects the task.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `export 1` in the default setting +
-Returns `addTask n/picnic d/have fun at Botanic Garden s/1/1/2099 12:00pm e/1/1/2099 15:00pm t/friends `
-
-=== Deleting a person : `delete`
-
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
-
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
-
-=== Deleting a task : `deleteTask`
-
-Deletes the specific task from the task book. +
-Format: `deleteTask IDNEX`
-
-****
-* Deletes the task at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-* `deleteTask` 1 +
-Deletes the 1st task in the task book.
-
-=== Marking a task : `markTask`
-
-Marks the specific task from the task book. +
-Format: `markTask INDEX`
-
-****
-* Marks the task at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-* `markTask 1` +
-Marks the 1st task in the task book to be completed.
-
-=== Setting a priority for a task : `setPriority`
-
-Sets the priority field of a task that is already present in ths taskBook with an integer value between 1 to 5. +
-Format: `setPriority INDEX c/new value specified`
-
-****
-* Sets the priority value of the current task with the specific INDEX provided.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-* The new value of the task's priority should still be between 1 to 5 (inclusive).
-****
-
-Examples:
-
-* `setPriority 1 c/1` +
-Sets the priority of this task to be `Super Important`.
-
-* `setPriority 1 c/6` +
-An Exception is thrown: A priority value is defined within integer range of 1 to 5.
-
-=== Selecting a person : `select`
-
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
-
-****
-* Selects the person and loads the Google Map page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing of persons.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
-
-=== Selecting a task : `selectTask`
-
-Selects the task identified by the index number used in the last task listing. +
-Format: `selectTask INDEX`
-
-****
-* Selects the task and display the task at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing of tasks.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `select 2` +
-Selects the 2nd task in the task book.
-
-=== Sorting the current taskBook by their priority : `taskByPriority`
-Sorts the task currently present in the taskBook by priority.
-Format: `taskByPriority`
-
-[NOTE]
-====
-This sorting will not affect the order of the tasks currently in the storage. However, the current index shown will be the index used for a specific task to `edit`, `delete`, `setPriority`, `mark`...
-====
-
-=== Listing entered commands : `history`
+==== Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
@@ -327,15 +85,15 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+==== Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
-====
+=====
 Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
-====
+=====
 
 Examples:
 
@@ -353,7 +111,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+==== Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
 Format: `redo`
@@ -376,26 +134,287 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+==== Clearing all entries : `clear`
 
 Clears all entries from the address book. +
 Format: `clear`
 
-=== Exiting the program : `exit`
+==== Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit`
 
-=== Saving the data
+==== Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+=== Contacts Operations
+
+==== Adding a person: `add`
+
+Adds a person to the address book +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+
+[TIP]
+A person can have any number of tags (including 0)
+
+Examples:
+
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+
+==== Listing all persons : `list`
+
+Shows a list of all persons in the address book. +
+Format: `list`
+
+==== Locating persons by name: `find`
+
+Finds persons whose names contain any of the given keywords. +
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the name is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+* `find John` +
+Returns `john` and `John Doe`
+* `find Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
+
+==== Selecting a person : `select`
+
+Selects the person identified by the index number used in the last person listing. +
+Format: `select INDEX`
+
+****
+* Selects the person and loads the Google Map page the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing of persons.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2nd person in the address book.
+* `find Betsy` +
+`select 1` +
+Selects the 1st person in the results of the `find` command.
+
+==== Editing a person : `edit`
+
+Edits an existing person in the address book. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+
+****
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+****
+
+Examples:
+
+* `edit 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+* `edit 2 n/Betsy Crower t/` +
+Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+==== Exporting a person to a string of add command : `export`
+
+Export the details of the person by the index number +
+Format: `export INDEX`
+
+****
+* Exports the person at the specified `INDEX`, selects the person and loads the Google Map page.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `export 1` in the default setting +
+Returns `add n/Alex Yeoh p/87438807 e/alexyeoh@example.com a/Blk 30 Geylang Street 29, #06-40 r/ t/friends`
+
+==== Adding/Updating remark of a person : `remark`
+
+Adds a new remark or updates existing remark of a person +
+Format: `remark 1 r/[remark]`
+
+****
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Existing values will be updated to the input values.
+* if new remark is not provided, it will clear the remark.
+****
+
+Examples:
+
+* `remark 1 r/likes to swim ` +
+   adds or updates remark of the first person to be `likes to swim`
+* `remark 1` +
+   clear remark of the first person
+
+
+=== Tasks Operations
+
+==== Selecting a task : `selectTask`
+
+Selects the task identified by the index number used in the last task listing. +
+Format: `selectTask INDEX`
+
+****
+* Selects the task and display the task at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing of tasks.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `select 2` +
+Selects the 2nd task in the task book.
+
+==== Editing a new task : `editTask`
+
+Edits an existing task in the address book +
+Format: `editTask INDEX [n/TaskName] [d/Description] [s/startDateTime] [f/finishDateTime] [t/TAG]...` +
+
+****
+* Edits the task at the specified `INDEX`. The index refers to the index number shown in the last task listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+****
+
+Examples:
+
+* `editTask 1 n/picnic d/have fun at Botanic Garden s/1/1/2017 12:00pm f/1/1/2017 15:00pm t/friends`
+Edits the name, description, start time, finish time ad tag of the 1st task to be `picnic`, `have fun at Botanic Garden`, `1/1/2017 12:00pm`, `1/1/2017 15:00pm` and `friends` respectively.
+* `editTask 2 t/teammates`
+Edits the tag of the 2nd task to be `teammates` only and others remain same.
+
+==== Exporting a task to a string of addTask command: `exportTask`
+
+Export the details of the task by the index number +
+Format: `export INDEX`
+
+****
+* Exports the task at the specified `INDEX`, selects the task.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `export 1` in the default setting +
+Returns `addTask n/picnic d/have fun at Botanic Garden s/1/1/2099 12:00pm e/1/1/2099 15:00pm t/friends `
+
+==== Deleting a task : `deleteTask`
+
+Deletes the specific task from the task book. +
+Format: `deleteTask IDNEX`
+
+****
+* Deletes the task at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+* `deleteTask` 1 +
+Deletes the 1st task in the task book.
+
+==== Marking a task : `markTask`
+
+Marks the specific task from the task book. +
+Format: `markTask INDEX`
+
+****
+* Marks the task at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+* `markTask 1` +
+Marks the 1st task in the task book to be completed.
+
+==== Setting a priority for a task : `setPriority`
+
+Sets the priority field of a task that is already present in ths taskBook with an integer value between 1 to 5. +
+Format: `setPriority INDEX c/new value specified`
+
+****
+* Sets the priority value of the current task with the specific INDEX provided.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The new value of the task's priority should still be between 1 to 5 (inclusive).
+****
+
+Examples:
+
+* `setPriority 1 c/1` +
+Sets the priority of this task to be `Super Important`.
+
+* `setPriority 1 c/6` +
+An Exception is thrown: A priority value is defined within integer range of 1 to 5.
+
+==== Sorting tasks by their priority : `taskByPriority`
+Sorts the task currently present in the taskBook by priority. +
+Format: `taskByPriority`
+
+==== Sorting tasks by end date : `taskbyend`
+
+Sorts the list of tasks by their end date +
+Format: `taskbyend`
+
+[NOTE]
+====
+This sorting will not affect the order of the tasks currently in the storage. However, the current index shown will be the index used for a specific task to `edit`, `delete`, `setPriority`, `mark`...
+====
+
+==== Adding a new task : `addTask`
+
+Adds a new task to the task book +
+Format: `addTask n/TaskName d/Description s/startDateTime f/finishDateTime c/priority [t/TAG]...` +
+
+[TIP]
+A task can have any number of tags (including 0), the tag mechanism is the same as that for person. A task has a special field called priority (ranges from 1 to 5, with 1 being the most important). If a priority is not specified during adding of this task, a `normal` (3) priority  wil be set by default.
+
+Examples:
+
+* `addTask n/picnic d/have fun at Botanic Garden s/1/1/2017 12:00pm f/1/1/2017 15:00pm c/3 t/friends`
+
+=== link Operations
+
+==== link task with people: `link`
+
+Linking a task with provided people +
+Format: `link Index p/personIndex [p/personIndex]`
+
+Examples:
+
+* `link 1 p/1` +
+link task 1 with person 1 in the current displaying list
+
+* `link 1 p/1 p/2` +
+link task 1 with person 1 and person 2 in the current displaying list
 
 == Coming in v2.0
 === Auto-focusing on input bar at the start of the application
 === Setting a task to be recurring
 === Listing tasks by tag
-=== Linking a task to a person
 === Viewing one task details with the relevant person in the addressbook
 === Viewing one person details with the relevant tasks displayed in the addressbook
 === Listing last few contacts the user have found

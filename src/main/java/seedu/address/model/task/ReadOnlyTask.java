@@ -1,5 +1,6 @@
 package seedu.address.model.task;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
@@ -29,6 +30,10 @@ public interface ReadOnlyTask {
     Set<Tag> getTags();
     ObjectProperty<Boolean> completeProperty();
     Boolean getComplete();
+    ObjectProperty<Integer> idProperty();
+    Integer getId();
+    ObjectProperty<ArrayList<Integer>> peopleIdsProperty();
+    ArrayList<Integer> getPeopleIds();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -41,9 +46,11 @@ public interface ReadOnlyTask {
                 && other.getDescription().equals(this.getDescription())
                 && other.getStartDateTime().equals(this.getStartDateTime())
                 && other.getEndDateTime().equals(this.getEndDateTime())
+                && other.getComplete().equals(this.getComplete())
+                && other.getId().equals(this.getId()))
                 && other.getPriority().equals(this.getPriority())
                 && other.getTags().equals(this.getTags())
-                && other.getComplete().equals(this.getComplete()));
+                && other.getComplete().equals(this.getComplete());
     }
 
     /**

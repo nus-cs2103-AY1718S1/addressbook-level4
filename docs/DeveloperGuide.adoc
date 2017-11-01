@@ -470,6 +470,17 @@ The Route planner is done using the embedded webview component of JavaFX.
 Thus only the lite version is available. Also, location cannot be retrieved. +
 **solution:** We directly use the google map direction url, and fill in the ending point by the address. User can simply enter his current location.
 
+=== link task to people
+
+**Aspect**: Implementation of `link` +
+**Alternative 1 (current choice):** add indexes to each person and task, store linking people's index in task. +
+**Pros:** don't need additional overhead. +
+**Cons:** linking and searching linked items are inefficient. +
+
+**Alternative 2 :** store the data in relational database, link is a join table. +
+**Pros:** more efficient to do linking and searching linked items. +
+**Cons:** need users have relational database installed. +
+
 == Documentation
 
 We use asciidoc for writing documentation.

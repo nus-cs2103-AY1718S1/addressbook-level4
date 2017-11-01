@@ -22,6 +22,8 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<Remark> remarkProperty();
     Remark getRemark();
+    ObjectProperty<Integer> idProperty();
+    Integer getId();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
