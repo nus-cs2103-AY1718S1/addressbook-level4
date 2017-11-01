@@ -14,6 +14,8 @@ import seedu.address.logic.parser.ParserUtil;
  * A task comparator that compares the days of deadline from today
  */
 public class TaskComparator implements Comparator {
+    final static String DATE_NULL = "30-12-2999";
+
     @Override
     public int compare(Object obj, Object obj1) {
         Task d = (Task) obj;
@@ -22,18 +24,30 @@ public class TaskComparator implements Comparator {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String date0 = "";
         String date1 = "";
+        int value = 0;
+
         try {
-            Date deadline0 = ParserUtil.parseDate(d.getDeadline().toString());
-            Date deadline1 = ParserUtil.parseDate(d1.getDeadline().toString());
             DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-            date0 = dateFormat.format(deadline0);
-            date1 = dateFormat.format(deadline1);
+            if (!d.getDeadline().isEmpty()) {
+                Date deadline0 = ParserUtil.parseDate(d.getDeadline().toString());
+                date0 = dateFormat.format(deadline0);
+            } else {
+                date0 = DATE_NULL;
+            }
+            if (!d1.getDeadline().isEmpty()) {
+                Date deadline1 = ParserUtil.parseDate(d1.getDeadline().toString());
+                date1 = dateFormat.format(deadline1);
+            } else {
+                date1 = DATE_NULL;
+            }
         } catch (IllegalValueException e) {
             e.printStackTrace();
         }
+
         LocalDate deaddate0 = LocalDate.parse(date0, formatter);
         LocalDate deaddate1 = LocalDate.parse(date1, formatter);
+        value = deaddate0.compareTo(deaddate1);
 
-        return deaddate0.getDayOfYear() - deaddate1.getDayOfYear();
+        return value;
     }
 }
