@@ -19,8 +19,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.TypicalPersons;
 
-
-
+//@@author rushan-khor
 public class BatchCommandTest {
 
     @Rule

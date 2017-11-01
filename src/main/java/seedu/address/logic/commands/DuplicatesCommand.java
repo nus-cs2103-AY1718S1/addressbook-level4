@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+//@@author rushan-khor
 /**
  * Finds and lists persons in address book with possible duplicate entries (by name).
  * Keyword matching is case insensitive.

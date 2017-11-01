@@ -6,6 +6,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
+//@@author rushan-khor
 /**
  * Deletes a person identified using it's last displayed index from the address book.
  */

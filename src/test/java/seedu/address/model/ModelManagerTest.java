@@ -34,6 +34,7 @@ public class ModelManagerTest {
         modelManager.getFilteredPersonList().remove(0);
     }
 
+    //@@author rushan-khor
     @Test
     public void testDeletePersonsWithTag() {
         // Setup for testing
@@ -64,6 +65,7 @@ public class ModelManagerTest {
         // Test equality
         assertEquals(modelManagerUnderTest, expectedModelManager);
     }
+    //@@author
 
     @Test
     public void equals() {
