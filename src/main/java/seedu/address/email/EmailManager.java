@@ -1,3 +1,4 @@
+//@@author Hoang
 package seedu.address.email;
 
 import java.util.Hashtable;
@@ -164,3 +165,4 @@ public class EmailManager implements Email {
         hostHashTable.put("yahoo", "smtp.mail.yahoo.com");
     }
 }
+//@@author Hoang
