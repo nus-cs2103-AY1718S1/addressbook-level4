@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-
+//@@author raisa2010
 public class DescriptionTest {
     @Test
     public void isValid() {
@@ -17,6 +17,7 @@ public class DescriptionTest {
         assertFalse(Description.isValidDescription("do this/")); //string ending in symbol
         assertFalse(Description.isValidDescription("do'/\"this")); //string containing any symbol
 
+        //@@author tby1994
         //valid description
         assertTrue(Description.isValidDescription("Self evaluation for CS2103T"));
         assertTrue(Description.isValidDescription("a")); //only 1 char
