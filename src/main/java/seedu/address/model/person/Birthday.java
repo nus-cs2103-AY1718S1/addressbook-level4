@@ -12,8 +12,8 @@ public class Birthday {
 
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Birthday has to be in the format dd-mm-yyyy";
-    public static final String BIRTHDAY_VALIDATION_REGEX = "\\d{2}-\\d{2}-\\d{4}";
+            "Birthday has to be in the format dd-mm-yyyy (dd to be 1-31 and mm to be 1-12)";
+    public static final String BIRTHDAY_VALIDATION_REGEX = "(0[1-9]|[12]\\d|3[01])[-](0[1-9]|1[0-2])[-]\\d{4}";
     public final String value;
 
     /**
