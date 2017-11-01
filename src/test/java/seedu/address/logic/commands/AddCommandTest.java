@@ -115,10 +115,12 @@ public class AddCommandTest {
     private class ModelStubAcceptingParcelAdded extends ModelStub {
         final ArrayList<Parcel> parcelsAdded = new ArrayList<>();
 
+        /*
         @Override
         public boolean hasSelected() {
             return false;
         }
+        */
 
         @Override
         public void maintainSorted() {
