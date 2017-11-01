@@ -16,8 +16,8 @@ import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.EditTaskCommand;
-import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
+import seedu.address.logic.commands.tasks.EditTaskCommand;
+import seedu.address.logic.commands.tasks.EditTaskCommand.EditTaskDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
@@ -25,6 +25,7 @@ import seedu.address.model.task.Description;
 import seedu.address.model.task.StartDate;
 import seedu.address.model.task.TaskDates;
 
+//@@author raisa2010
 /**
  * Parses input arguments and creates a new EditTaskCommand object
  */
@@ -72,6 +73,7 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
         return new EditTaskCommand(index, editTaskDescriptor);
     }
 
+    //@@author
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
      * If {@code tags} contain only one element which is an empty string, it will be parsed into a
@@ -87,8 +89,9 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
         return Optional.of(ParserUtil.parseTags(tagSet));
     }
 
+    //@@author raisa2010
     /**
-     * Parses {@code List<String> dates} into a {@code Optional<StartDate} containing the last date in the list,
+     * Parses {@code List<String> dates} into a {@code Optional<StartDate>} containing the last date in the list,
      * if {@code dates} is non-empty.
      * If {@code dates} contain only one element which is an empty string, it will be parsed into a
      * {@code Optional<StartDate>} containing an empty date.
@@ -139,8 +142,8 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
      * Separates the description from the index in the preamble.
      * @param preamble (string before any valid prefix) received from the argument multimap of the tokenized edit
      * task command.
-     * @return {@code Optional<Description>} (parsed) of the task to be edited if it is present in the preamble or
-     * an empty Optional.
+     * @return {@code Optional<Description>} (parsed) of the task to be edited if it is present in the preamble,
+     * otherwise an empty Optional is returned.
      */
     public Optional<Description> parseDescriptionForEdit(String preamble)
             throws IllegalValueException {

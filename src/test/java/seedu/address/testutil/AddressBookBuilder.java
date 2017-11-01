@@ -49,6 +49,7 @@ public class AddressBookBuilder {
         return this;
     }
 
+    //@@author raisa2010
     /**
      * Adds a new {@code Task} to the {@code AddressBook} that we are building.
      */
@@ -61,6 +62,7 @@ public class AddressBookBuilder {
         return this;
     }
 
+    //@@author
     public AddressBook build() {
         return addressBook;
     }

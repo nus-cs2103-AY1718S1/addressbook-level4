@@ -1,4 +1,4 @@
-package seedu.address.logic.commands;
+package seedu.address.logic.commands.tasks;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_BY;
@@ -14,6 +14,8 @@ import java.util.Set;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
@@ -23,7 +25,7 @@ import seedu.address.model.task.StartDate;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
-
+//@@ raisa2010
 /**
  * Edits the details of an existing task in the task manager.
  */
@@ -36,12 +38,12 @@ public class EditTaskCommand extends UndoableCommand {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + "DESCRIPTION] "
-            + "[" + PREFIX_STARTDATE + "START DATE] "
-            + "[" + PREFIX_DEADLINE_BY + "/" + PREFIX_DEADLINE_ON + "DEADLINE] "
+            + "[" + PREFIX_STARTDATE + " START DATE] "
+            + "[" + PREFIX_DEADLINE_BY + "/" + PREFIX_DEADLINE_ON + " DEADLINE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_STARTDATE + "wed "
-            + PREFIX_DEADLINE_BY + "10-25-2017 [dates must be in (M)M(d)d(yy)yy format]";
+            + PREFIX_STARTDATE + " wed "
+            + PREFIX_DEADLINE_BY + " 10-25-2017 [dates must be in (M)M(d)d(yy)yy format]";
 
     public static final String MESSAGE_EDIT_TASK_SUCCESS = "Edited Task: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author raisa2010
 /**
  * Represents a person's task in the application.
  * Guarantees: immutable; is valid as declared in {@link #isValidDescription(String)}

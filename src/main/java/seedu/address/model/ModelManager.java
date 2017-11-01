@@ -115,6 +115,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author raisa2010
     @Override
     public synchronized void addTask(ReadOnlyTask task) throws DuplicateTaskException {
         addressBook.addTask(task);
@@ -131,6 +132,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -150,6 +152,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Filtered Task List Accessors =============================================================
 
+    //@@author raisa2010
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyTask} backed by the internal list of
      * {@code addressBook}
@@ -164,6 +167,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredTasks.setPredicate(predicate);
     }
+    //@@author
 
     //@@author tby1994
     //========== Command Mode ==============================================================================
