@@ -98,6 +98,7 @@ public class ParserUtil {
         return emailSet;
     }
 
+    //@@author CT15
     /**
      * Parses a {@code Optional<String> scheduleDate} into an {@code Optional<ScheduleDate>}
      * if {@code scheduleDate} is present.
@@ -128,7 +129,7 @@ public class ParserUtil {
         return new CommandIdentifier(commandWord.trim());
     }
 
-
+    //@@author
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */

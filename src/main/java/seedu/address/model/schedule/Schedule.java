@@ -8,6 +8,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.person.Name;
 
+//@@author CT15
 /**
  * Represents a Schedule in the address book.
  * Guarantees: details are present and not null, field values are validated.

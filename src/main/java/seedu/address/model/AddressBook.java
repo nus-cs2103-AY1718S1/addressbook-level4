@@ -64,11 +64,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    //@@author CT15
     public void setSchedules(Set<Schedule> schedules) {
         this.schedules.setSchedules(schedules);
         this.schedules.sort();
     }
 
+    //@@author
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
@@ -133,6 +135,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+    //@@author CT15
     /**
      * Ensures that every schedule in this person:
      * - exists in the master list {@link #schedules}
@@ -172,6 +175,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.forEach(this::syncMasterScheduleListWith);
     }
 
+    //@@author
     /**
      * Ensures that every tag in this person:
      * - exists in the master list {@link #tags}
@@ -235,11 +239,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asObservableList();
     }
 
+    //@@author CT15
     @Override
     public ObservableList<Schedule> getScheduleList() {
         return schedules.asObservableList();
     }
 
+    //@@author
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();

@@ -13,6 +13,7 @@ import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.DateUtil;
 
+//@@author CT15
 /**
  * A list of schedules that enforces no nulls and uniqueness between its elements.
  * <p>
@@ -20,6 +21,7 @@ import seedu.address.commons.util.DateUtil;
  *
  * @see Schedule#equals(Object)
  */
+
 public class UniqueScheduleList implements Iterable<Schedule> {
 
     private final ObservableList<Schedule> internalList = FXCollections.observableArrayList();
@@ -117,6 +119,7 @@ public class UniqueScheduleList implements Iterable<Schedule> {
         return FXCollections.unmodifiableObservableList(internalList);
     }
 
+    //@@author
     /**
      * Sorts the list from earliest to latest schedule.
      */
@@ -143,6 +146,7 @@ public class UniqueScheduleList implements Iterable<Schedule> {
         });
     }
 
+    //@@author CT15
     @Override
     public boolean equals(Object other) {
         assert CollectionUtil.elementsAreUnique(internalList);

@@ -9,6 +9,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.model.schedule.Schedule;
 
+//@@author CT15
 /**
  * A utility class for Schedule.
  */

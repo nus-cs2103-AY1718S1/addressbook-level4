@@ -23,6 +23,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
 
+//@@author CT15
 /**
  * Represents the argument that help command takes in.
  * Guarantees: parameter is present and not null, parameter is validated.

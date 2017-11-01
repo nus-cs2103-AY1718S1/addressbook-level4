@@ -15,6 +15,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.ScheduleBuilder;
 
+//@@author CT15
 public class ScheduleCommandTest {
 
     @Rule
