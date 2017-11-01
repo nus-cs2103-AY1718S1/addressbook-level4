@@ -1,3 +1,3 @@
-Name	Phone	Email	Address	Website	Tag
-John Doe	98765432	johnd@example.com	"John street, block 123, #01-01"	https://github.com/JohnDoe	"friend, neighbor"
-Betsy Crowe	1234567	betsycrowe@example.com	Newgate Prison	https://github.com/BetsyCrowe	"friend, criminal"
+Name	Occupation	Phone	Email	Address	Website	Tag
+John Doe	"Google, CEO"	98765432	johnd@example.com	John street, block 123, #01-01	https://github.com/johndoe	"friend, neighbor"
+Betsy Crowe	Microsoft, Software Engineer	1234567	betsycrowe@example.com	Newgate Prison	https://github.com/betsycrowe	"friend, criminal"
