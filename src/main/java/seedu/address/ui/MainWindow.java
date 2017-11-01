@@ -19,8 +19,10 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SwitchDisplayEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -41,12 +43,13 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private TodoPanel todoPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane switchablePlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -127,7 +130,9 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        todoPanel = new TodoPanel(logic.getFilteredPersonList());
+
+        switchablePlaceholder.getChildren().add(browserPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -187,6 +192,23 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
+     * Switches the display between TodoList and browser in {@code switchablePlaceholder}.
+     */
+    private void switchPlaceholderDisplay(int mode) {
+        switchablePlaceholder.getChildren().clear();
+        switch (mode) {
+        case SwitchCommand.SWITCH_TO_TODOLIST:
+            switchablePlaceholder.getChildren().add(todoPanel.getRoot());
+            break;
+        case SwitchCommand.SWITCH_TO_BROWSER:
+            switchablePlaceholder.getChildren().add(browserPanel.getRoot());
+            break;
+        default:
+            break;
+        }
+    }
+
+    /**
      * Opens the help window.
      */
     @FXML
@@ -219,6 +241,12 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleSwitchDisplayEvent(SwitchDisplayEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switchPlaceholderDisplay(event.mode);
     }
 
 }
