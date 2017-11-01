@@ -70,6 +70,7 @@ public class TaskCard extends UiPart<Region> {
         setColour();
     }
 
+    //@@author tpq95
     /**
      * Change colour of taskcard according to urgency of the task
      */
@@ -107,7 +108,7 @@ public class TaskCard extends UiPart<Region> {
                 + "-fx-border-height: 2;"
                 + "-fx-border-color: black;");
     }
-
+    //@@author
 
     /**
      * Set the colour of label for the same tag

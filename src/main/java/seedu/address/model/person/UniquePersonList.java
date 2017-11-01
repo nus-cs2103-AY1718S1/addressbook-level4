@@ -105,12 +105,14 @@ public class UniquePersonList implements Iterable<Person> {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
+    //@@author tpq95
     /**
      * Sort the person according to their name alphabetically and is case-insensitive
      */
     private void sortPersons(ObservableList<Person> persons) {
         Collections.sort(persons, new PersonComparator());
     }
+    //@@author
 
     @Override
     public Iterator<Person> iterator() {
