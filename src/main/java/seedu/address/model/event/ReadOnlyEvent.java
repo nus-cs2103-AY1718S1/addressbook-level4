@@ -1,9 +1,19 @@
 package seedu.address.model.event;
 
+import java.util.ArrayList;
+import java.util.Set;
+
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.property.Address;
 import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Name;
+import seedu.address.model.property.Property;
+import seedu.address.model.property.UniquePropertyMap;
+import seedu.address.model.reminder.ReadOnlyReminder;
+import seedu.address.model.reminder.Reminder;
+import seedu.address.model.reminder.UniqueReminderList;
+import seedu.address.model.reminder.exceptions.DuplicateReminderException;
+
 //@@author junyango
 /**
  * A read-only immutable interface for an Event in the addressbook.
@@ -16,8 +26,13 @@ public interface ReadOnlyEvent {
     Name getName();
     ObjectProperty<DateTime> timeProperty();
     DateTime getTime();
-    ObjectProperty<Address> venueProperty();
-    Address getVenue();
+    ObjectProperty<Address> addressProperty();
+    Address getAddress();
+    ObjectProperty<UniquePropertyMap> properties();
+    Set<Property> getProperties();
+    ObjectProperty<UniqueReminderList> reminderProperty();
+    ArrayList<Reminder> getReminders();
+    void addReminder(ReadOnlyReminder r) throws DuplicateReminderException;
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -27,8 +42,9 @@ public interface ReadOnlyEvent {
                 || (other != null // this is first to avoid NPE below
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getTime().equals(this.getTime())
-                && other.getVenue().equals(this.getVenue()));
+                && other.getAddress().equals(this.getAddress()));
     }
+
 
     /**
      * Formats the event as text, showing all event details.
@@ -41,8 +57,8 @@ public interface ReadOnlyEvent {
                 .append(" Date/Time: ")
                 .append(getTime())
                 .append(" | ")
-                .append(" Venue: ")
-                .append(getVenue());
+                .append(" Address: ")
+                .append(getAddress());
         return builder.toString();
     }
 

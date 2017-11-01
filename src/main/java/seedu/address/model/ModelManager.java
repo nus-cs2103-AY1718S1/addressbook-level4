@@ -14,17 +14,21 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.TagColorChangedEvent;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicateEventException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
+import seedu.address.model.reminder.ReadOnlyReminder;
+import seedu.address.model.reminder.exceptions.DuplicateReminderException;
+import seedu.address.model.reminder.exceptions.ReminderNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagColorManager;
 
@@ -38,6 +42,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyEvent> filteredEvents;
+    private final FilteredList<ReadOnlyReminder> filteredReminders;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -51,6 +56,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredEvents = new FilteredList<>(this.addressBook.getEventList());
+        filteredReminders = new FilteredList<>(this.addressBook.getReminderList());
     }
 
     public ModelManager() {
@@ -78,7 +84,9 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
-    /** Raises an event to indicate the model has changed */
+    /**
+     * Raises an event to indicate the model has changed
+     */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
     }
@@ -89,7 +97,7 @@ public class ModelManager extends ComponentManager implements Model {
      * Adds a new customize property to {@code PropertyManager}.
      *
      * @throws DuplicatePropertyException if there already exists a property with the same {@code shortName}.
-     * @throws PatternSyntaxException if the given regular expression contains invalid syntax.
+     * @throws PatternSyntaxException     if the given regular expression contains invalid syntax.
      */
     @Override
     public void addProperty(String shortName, String fullName, String message, String regex)
@@ -112,8 +120,8 @@ public class ModelManager extends ComponentManager implements Model {
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     *                                  another existing person in the list.
+     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      */
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
@@ -124,7 +132,6 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.sortPersonList();
         indicateAddressBookChanged();
     }
-
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
@@ -142,7 +149,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException {
         // Checks whether each person has that specific tag.
-        for (ReadOnlyPerson target: addressBook.getPersonList()) {
+        for (ReadOnlyPerson target : addressBook.getPersonList()) {
             Person person = new Person(target);
             Set<Tag> updatedTags = new HashSet<>(person.getTags());
             updatedTags.remove(tag);
@@ -194,8 +201,26 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removeEvent(event);
         indicateAddressBookChanged();
     }
+
+    //=========== Model support for activity component =============================================================
+    @Override
+    public synchronized void addReminder(ReadOnlyReminder reminder) throws DuplicateReminderException {
+        requireNonNull(reminder);
+        addressBook.addReminder(reminder);
+        updateFilteredReminderList(PREDICATE_SHOW_ALL_REMINDERS);
+        indicateAddressBookChanged();
+    }
+    @Override
+    public synchronized void deleteReminder(ReadOnlyReminder reminder) throws ReminderNotFoundException {
+        addressBook.removeReminder(reminder);
+        indicateAddressBookChanged();
+    }
+
+
     //@@author
+
     //=========== Filtered Person List Accessors =============================================================
+
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
      * {@code addressBook}
@@ -207,6 +232,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     *
      * @throws NullPointerException if {@code predicate} is null.
      */
     @Override
@@ -224,6 +250,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Updates the filter of the filtered event list to filter by the given {@code predicate}.
+     *
      * @throws NullPointerException if {@code predicate} is null.
      */
     @Override
@@ -231,7 +258,34 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
     }
+
+
+    //=========== Filtered Reminder List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyReminder} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyReminder> getFilteredReminderList() {
+        return FXCollections.unmodifiableObservableList(filteredReminders);
+    }
+
+    /**
+     * Updates the filter of the filtered reminders list to filter by the given {@code predicate}.
+     *
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    @Override
+    public void updateFilteredReminderList(Predicate<ReadOnlyReminder> predicate) {
+        requireNonNull(predicate);
+        filteredReminders.setPredicate(predicate);
+    }
+
+
+
     //@@author
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

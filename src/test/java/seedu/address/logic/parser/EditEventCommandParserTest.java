@@ -83,7 +83,7 @@ public class EditEventCommandParserTest {
         String userInput = targetIndex.getOneBased() + DATE_DESC_EVENT1 + VENUE_DESC_EVENT1 + NAME_DESC_EVENT1;
 
         EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withName(VALID_NAME_EVENT1)
-                .withTime(VALID_DATE_EVENT1).withVenue(VALID_VENUE_EVENT1).build();
+                .withTime(VALID_DATE_EVENT1).withAddress(VALID_VENUE_EVENT1).build();
         EditEventCommand expectedCommand = new EditEventCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -95,7 +95,7 @@ public class EditEventCommandParserTest {
         String userInput = targetIndex.getOneBased() + DATE_DESC_EVENT2 + VENUE_DESC_EVENT1;
 
         EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withTime(VALID_DATE_EVENT2)
-                .withVenue(VALID_VENUE_EVENT1).build();
+                .withAddress(VALID_VENUE_EVENT1).build();
         EditEventCommand expectedCommand = new EditEventCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -118,7 +118,7 @@ public class EditEventCommandParserTest {
 
         // address
         userInput = targetIndex.getOneBased() + VENUE_DESC_EVENT1;
-        descriptor = new EditEventDescriptorBuilder().withVenue(VALID_VENUE_EVENT1).build();
+        descriptor = new EditEventDescriptorBuilder().withAddress(VALID_VENUE_EVENT1).build();
         expectedCommand = new EditEventCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }

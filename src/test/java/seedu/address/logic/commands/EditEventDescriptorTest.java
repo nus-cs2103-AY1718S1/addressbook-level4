@@ -45,7 +45,7 @@ public class EditEventDescriptorTest {
 
 
         // different address -> returns false
-        editedEvent1 = new EditEventDescriptorBuilder(DESC_EVENT1).withVenue(VALID_VENUE_EVENT2).build();
+        editedEvent1 = new EditEventDescriptorBuilder(DESC_EVENT1).withAddress(VALID_VENUE_EVENT2).build();
         assertFalse(DESC_EVENT1.equals(editedEvent1));
     }
 }

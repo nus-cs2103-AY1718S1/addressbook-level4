@@ -5,13 +5,18 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.person.exceptions.DuplicateEventException;
-//@@author junyango
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.reminder.Reminder;
+import seedu.address.model.reminder.exceptions.DuplicateReminderException;
+
 /**
  * Adds an event to the address book.
  */
@@ -45,13 +50,21 @@ public class AddEventCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+        String dateToString = toAdd.getTime().toString().substring(0, 8);
+        LocalDate dateToCompare = LocalDate.parse(dateToString, formatter);
+        LocalDate oneDayBefore = dateToCompare.minusDays(1);
+        String text = oneDayBefore.format(formatter);
+        LocalDate parsedDayBefore = LocalDate.parse(text, formatter);
         try {
             model.addEvent(toAdd);
+            Reminder r = new Reminder(toAdd, parsedDayBefore.toString());
+            toAdd.addReminder(r);
+            model.addReminder(r);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (DuplicateEventException e) {
+        } catch (DuplicateEventException | DuplicateReminderException e) {
             throw new CommandException(MESSAGE_DUPLICATE_EVENT);
         }
-
     }
 
     @Override

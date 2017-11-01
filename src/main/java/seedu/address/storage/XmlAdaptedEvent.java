@@ -1,15 +1,23 @@
 package seedu.address.storage;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.property.Address;
-import seedu.address.model.property.DateTime;
-import seedu.address.model.property.Name;
+import seedu.address.model.property.Property;
+import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
+import seedu.address.model.reminder.Reminder;
+
+
 //@@author junyango
+
 /**
  * JAXB-friendly version of the Event.
  */
@@ -21,6 +29,10 @@ public class XmlAdaptedEvent {
     private String time;
     @XmlElement(required = true)
     private String venue;
+    @XmlElement
+    private List<XmlAdaptedReminder> reminders = new ArrayList<>();
+    @XmlElement
+    private List<XmlAdaptedProperty> properties = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -37,7 +49,15 @@ public class XmlAdaptedEvent {
     public XmlAdaptedEvent(ReadOnlyEvent source) {
         name = source.getName().getValue();
         time = source.getTime().getValue();
-        venue = source.getVenue().getValue();
+        venue = source.getAddress().getValue();
+        properties = new ArrayList<>();
+        for (Property property: source.getProperties()) {
+            properties.add(new XmlAdaptedProperty(property));
+        }
+        reminders = new ArrayList<>();
+        for (Reminder reminder: source.getReminders()) {
+            reminders.add(new XmlAdaptedReminder(reminder));
+        }
     }
 
     /**
@@ -45,10 +65,16 @@ public class XmlAdaptedEvent {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted event
      */
-    public Event toModelType() throws IllegalValueException, PropertyNotFoundException {
-        final Name name = new Name(this.name);
-        final DateTime time = new DateTime(this.time);
-        final Address venue = new Address(this.venue);
-        return new Event(name, time, venue);
+    public Event toModelType() throws IllegalValueException, PropertyNotFoundException, DuplicatePropertyException {
+        final List<Property> eventProperties = new ArrayList<>();
+        for (XmlAdaptedProperty property: properties) {
+            eventProperties.add(property.toModelType());
+        }
+        final ArrayList<Reminder> eventReminders = new ArrayList<>();
+        for (XmlAdaptedReminder reminder : reminders) {
+            eventReminders.add(reminder.toModelType());
+        }
+        final Set<Property> properties = new HashSet<>(eventProperties);
+        return new Event(properties, eventReminders);
     }
 }

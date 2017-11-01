@@ -9,12 +9,15 @@ import javafx.collections.ObservableList;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicateEventException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
+import seedu.address.model.reminder.ReadOnlyReminder;
+import seedu.address.model.reminder.exceptions.DuplicateReminderException;
+import seedu.address.model.reminder.exceptions.ReminderNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -33,6 +36,15 @@ public class ModelStub implements Model {
 
     @Override
     public void deleteEvent(ReadOnlyEvent event) throws EventNotFoundException {
+        fail("This method should not be called.");
+    }
+    @Override
+    public void addReminder(ReadOnlyReminder reminder) throws DuplicateReminderException {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void deleteReminder(ReadOnlyReminder reminder) throws ReminderNotFoundException {
         fail("This method should not be called.");
     }
 
@@ -95,7 +107,16 @@ public class ModelStub implements Model {
     public void updateFilteredEventsList(Predicate<ReadOnlyEvent> predicate) {
         fail("This method should not be called.");
     }
+    @Override
+    public ObservableList<ReadOnlyReminder> getFilteredReminderList() {
+        fail("This method should not be called.");
+        return null;
+    }
 
+    @Override
+    public void updateFilteredReminderList(Predicate<ReadOnlyReminder> predicate) {
+        fail("This method should not be called.");
+    }
     @Override
     public void removeTag(Tag tags) throws DuplicatePersonException, PersonNotFoundException {
         fail("This method should not be called.");

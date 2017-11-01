@@ -1,5 +1,10 @@
 package seedu.address.testutil;
+
+import java.util.ArrayList;
+
+
 //@@author junyango
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -8,6 +13,7 @@ import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Name;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
+import seedu.address.model.reminder.Reminder;
 
 
 /**
@@ -28,8 +34,9 @@ public class EventBuilder {
         try {
             Name defaultEventName = new Name(DEFAULT_EVENT_NAME);
             DateTime defaultTime = new DateTime(DEFAULT_TIME);
-            Address defaultVenue = new Address(DEFAULT_VENUE);
-            this.event = new Event(defaultEventName, defaultTime, defaultVenue);
+            Address defaultAddress = new Address(DEFAULT_VENUE);
+            ArrayList<Reminder> defaultReminder = new ArrayList<>();
+            this.event = new Event(defaultEventName, defaultTime, defaultAddress, defaultReminder);
         } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new AssertionError("Default event's values are invalid.");
         }
@@ -55,13 +62,21 @@ public class EventBuilder {
     }
 
     /**
+     * Adds a reminder into the event.
+     */
+    public EventBuilder withReminder() {
+        this.event.getReminders().add(new Reminder(event.getName().toString(), event.getTime().toString()));
+        return this;
+    }
+
+    /**
      * Sets the {@code Address} of the {@code Event} that we are building.
      */
-    public EventBuilder withVenue(String address) {
+    public EventBuilder withAddress(String address) {
         try {
-            this.event.setVenue(new Address(address));
+            this.event.setAddress(new Address(address));
         } catch (IllegalValueException | PropertyNotFoundException ive) {
-            throw new IllegalArgumentException("venue is expected to be unique.");
+            throw new IllegalArgumentException("address is expected to be unique.");
         }
         return this;
     }
