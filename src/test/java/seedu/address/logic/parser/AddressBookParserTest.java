@@ -140,7 +140,7 @@ public class AddressBookParserTest {
                 SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
     }
-
+    //@@author Nabeel Zaheer
     @Test
     public void parseCommand_remove() throws Exception {
         Tag tag = new Tag("friends");
@@ -166,7 +166,7 @@ public class AddressBookParserTest {
         indexSet.add(INDEX_FIRST_PERSON);
         assertEquals(new AddTagCommand(tagSet, indexSet, "1"), command);
     }
-
+    //@@author
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD) instanceof RedoCommand);
