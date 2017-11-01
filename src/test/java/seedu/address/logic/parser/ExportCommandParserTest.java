@@ -1,15 +1,15 @@
 package seedu.address.logic.parser;
 
-import seedu.address.logic.commands.ExportCommand;
-
-import org.junit.Test;
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalFilePath.FILE_PATH_C_CREATE_NEW_FOLDER;
 import static seedu.address.testutil.TypicalFilePath.FILE_PATH_DOCS;
 import static seedu.address.testutil.TypicalFilePath.FILE_PATH_LOCAL_C_DRIVE;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.ExportCommand;
 
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations

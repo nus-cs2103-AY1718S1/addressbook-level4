@@ -16,21 +16,21 @@ public class ExportCommandTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void execute_export_success_throwsNullPointerException() throws Exception {
+    public void execute_exportSuccess_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         CommandResult result = new ExportCommand(FILE_PATH_DOCS).execute();
         assertEquals(MESSAGE_FILE_EXPORTED + FILE_PATH_DOCS, result.feedbackToUser);
     }
 
     @Test
-    public void execute_export_local_drive_success_throwsNullPointerException() throws Exception {
+    public void execute_exportLocalDriveSuccess_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         CommandResult result = new ExportCommand(FILE_PATH_LOCAL_C_DRIVE).execute();
         assertEquals(MESSAGE_FILE_EXPORTED + FILE_PATH_LOCAL_C_DRIVE, result.feedbackToUser);
     }
 
     @Test
-    public void execute_export_create_new_folder_success_throwsNullPointerException() throws Exception {
+    public void execute_exportCreateNewFolderSuccess_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         CommandResult result = new ExportCommand(FILE_PATH_C_CREATE_NEW_FOLDER).execute();
         assertEquals(MESSAGE_FILE_EXPORTED + FILE_PATH_C_CREATE_NEW_FOLDER, result.feedbackToUser);
