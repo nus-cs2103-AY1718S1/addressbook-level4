@@ -76,4 +76,3 @@ public class SelectTaskCommand extends Command {
             && this.targetIndex.equals(((SelectTaskCommand) other).targetIndex)); // state check
     }
 }
-//@@author tby1994

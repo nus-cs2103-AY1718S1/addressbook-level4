@@ -57,4 +57,3 @@ public class DeleteTaskCommand extends UndoableCommand {
                 && this.targetIndex.equals(((DeleteTaskCommand) other).targetIndex)); // state check
     }
 }
-//@@author eryao95
