@@ -22,6 +22,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.PersonBuilder;
 
+//@@author KhorSL
 public class AddMultipleCommandSystemTest extends AddressBookSystemTest {
 
     @Test
@@ -105,6 +106,7 @@ public class AddMultipleCommandSystemTest extends AddressBookSystemTest {
 
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
     }
+    //@@author
 
     /**
      * Performs the same verification as {@code assertCommandSuccess(String, ArrayList<ReadOnlyPerson>)} except that the result

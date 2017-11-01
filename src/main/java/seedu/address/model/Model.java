@@ -52,7 +52,9 @@ public interface Model {
     /** Deletes all the given tag {@code tag}. */
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 
+    //@@author KhorSL
     /** Merges new file data {@code newFilePersonList} to default addressbook storage **/
     void mergeAddressBook(ObservableList<ReadOnlyPerson> newFilePersonList);
+    //@@author
 
 }

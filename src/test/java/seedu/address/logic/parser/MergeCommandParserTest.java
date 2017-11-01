@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.MergeCommand;
 
+//@@author KhorSL
 public class MergeCommandParserTest {
     private MergeCommandParser parser = new MergeCommandParser();
 

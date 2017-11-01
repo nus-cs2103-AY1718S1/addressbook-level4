@@ -36,6 +36,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author KhorSL
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
@@ -140,6 +141,7 @@ public class FindCommandTest {
         command.setData(model, new CommandHistory(), new UndoRedoStack(), null);
         return command;
     }
+    //@@author
 
     /**
      * Asserts that {@code command} is successfully executed, and<br>

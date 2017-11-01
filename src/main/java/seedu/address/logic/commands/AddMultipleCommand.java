@@ -16,6 +16,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+//@@author KhorSL
 /**
  * Adds a person to the address book.
  */
@@ -56,7 +57,7 @@ public class AddMultipleCommand extends UndoableCommand {
     private ArrayList<ReadOnlyPerson> readOnlyPeople;
 
     /**
-     * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
+     * Creates an AddMultipleCommand to add the specified {@code ReadOnlyPerson}
      */
     public AddMultipleCommand(ArrayList<ReadOnlyPerson> personsList) {
         readOnlyPeople = personsList;
@@ -100,3 +101,4 @@ public class AddMultipleCommand extends UndoableCommand {
                 && toAdd.equals(((AddMultipleCommand) other).toAdd));
     }
 }
+//@@author

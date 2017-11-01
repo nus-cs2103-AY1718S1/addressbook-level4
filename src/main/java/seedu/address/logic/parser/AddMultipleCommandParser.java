@@ -28,6 +28,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
+//@@author KhorSL
 /**
  * Parses input arguments and creates a new AddMultipleCommand object
  */
@@ -99,3 +100,4 @@ public class AddMultipleCommandParser implements Parser<AddMultipleCommand> {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 }
+//@@author
