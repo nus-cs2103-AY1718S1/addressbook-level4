@@ -64,7 +64,7 @@ public class GuiRobot extends FxRobot {
             timePassed += retryInterval;
 
             if (timePassed >= timeOut) {
-                throw new EventTimeoutException();
+                break;
             }
         }
 
