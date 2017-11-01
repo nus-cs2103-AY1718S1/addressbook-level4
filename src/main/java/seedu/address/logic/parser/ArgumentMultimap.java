@@ -45,7 +45,7 @@ public class ArgumentMultimap {
     }
 
     /**
-     * Returns all values of {@code prefix}.
+     * Returns all values of the first prefix in a list of {@code prefixes}.
      * If the prefix does not exist or has no values, this will return an empty list.
      * Modifying the returned list will not affect the underlying data structure of the ArgumentMultimap.
      */

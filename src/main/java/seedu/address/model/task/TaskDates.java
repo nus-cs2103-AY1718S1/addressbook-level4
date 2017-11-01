@@ -7,8 +7,9 @@ import java.util.Optional;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author raisa2010
 /**
- * Represents a date for a task which can be formatted.
+ * Represents a date for a task in the task manager.
  */
 public abstract class TaskDates {
 
@@ -27,7 +28,7 @@ public abstract class TaskDates {
     public static final String MESSAGE_DATE_CONSTRAINTS = "Date is invalid";
 
     /**
-     * Formats the last date of a given Date into a String.
+     * Formats the last date of a given {@code Date} object into a String.
      */
     public static String formatDate(Date date) throws IllegalValueException {
         SimpleDateFormat sdf = new SimpleDateFormat(DISPLAY_DATE_FORMAT);
@@ -35,7 +36,7 @@ public abstract class TaskDates {
     }
 
     /**
-     * Returns true if the {@code startDate} is before the {@code deadline}} or if one of the parameters is empty.
+     * Returns true if the {@code StartDate} is before the {@code Deadline}} or if one of the parameters is empty.
      * Otherwise, an exception is thrown.
      */
     public static boolean isStartDateBeforeDeadline(StartDate startDate, Deadline deadline) {
@@ -52,7 +53,9 @@ public abstract class TaskDates {
     }
 
     /**
-     * Returns true if the {@code startDate} is before the {@code deadline}} or if one of the parameters is empty.
+     * Carries out the same function as {@Link isStartDateBeforeDeadline(StartDate, Deadline)} except the parameters
+     * are wrapped in an Optional.
+     * Returns true if the {@code StartDate} is before the {@code Deadline}} or if one of the parameters is empty.
      * Otherwise, an exception is thrown.
      */
     public static boolean isStartDateBeforeDeadline(Optional<StartDate> startDate, Optional<Deadline> deadline) {
@@ -69,9 +72,7 @@ public abstract class TaskDates {
     }
 
     /**
-     *
-     * @param inputDate
-     * @return
+     * Validates a given {@code String} inputDate given in an MDY format.
      */
     public static boolean isDateValid(String inputDate) {
         String trimmedDate = inputDate.trim();
@@ -93,7 +94,7 @@ public abstract class TaskDates {
     }
 
     /**
-     * Determines the specific dotted date format used by the {@code String inputDate}
+     * Determines the specific dotted date format used by the {@code String} inputDate.
      */
     public static String getDottedFormat(String inputDate) {
         for (String format : DOTTED_DATE_FORMATS) {
