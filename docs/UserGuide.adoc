@@ -1,4 +1,4 @@
-= AcquaNote - User Guide
+= AcquaiNote - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/CS2103AUG2017-T10-B1/AcquaNote
+:repoURL: https://github.com/CS2103AUG2017-T10-B1/main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -331,12 +331,6 @@ Format: `unlock PASSWORD`
 * Person contact list will reload.
 ****
 
-== Coming in v2.0
-
-=== Popup dialog window during editing
-
-A dialog window pops up during contact editing.
-
 === Favouriting a person : `favourite`
 
 Favourites the person identified by the index number used in the last person listing. +
@@ -364,6 +358,29 @@ Favourites the 1st person in the address book. +
 `favourite 1` +
 Unfavourite the 1st person in the address book.
 
+=== Exporting address book : `export`
+
+Exports a copy of the address book. +
+Format: `export FILEPATH`
+
+****
+* Exports the address book into specified `FILEPATH`.
+* The filepath refers to a local directory in the computer.
+* The filepath *must be suffixed with .xml* e.g. 'C:\', 'docs/', ...
+* If specified directory is missing, it will be automatically created when exporting.
+****
+
+Examples:
+
+* `export C:\exported\AcquaiNote.xml` +
+Exports the address book into exported folder in C drive in xml file format.
+
+== Coming in v2.0
+
+=== Popup dialog window during editing
+
+A dialog window pops up during contact editing.
+
 === To-do list: `sch`
 
 Attach a To-do list to a specified person to manage schedule with that person. +
@@ -376,7 +393,7 @@ Adds schedule with the 1st person: `dinner at 7`.
 * `sch 2 s/` +
 Clears all existing schedules with the 2nd person.
 
-=== real time highlight
+=== Real time highlight
 
 Real time highlight when input command is not correct.
 
@@ -411,3 +428,5 @@ e.g. `sort -n`
 * *Redo* : `redo`
 * *Lock* : `lock PASSWORD`
 * *Unlock* : `unlock PASSWORD`
+* *export* : `export FILEPATH` +
+e.g. `export C:\exported\MyAddressBook.xml`

@@ -1,4 +1,4 @@
-= AcquaNote - Developer Guide
+= AcquaiNote - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/CS2103AUG2017-T10-B1/AcquaNote/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T10-B1/main/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -432,6 +432,8 @@ Collection.sort(fruitList, (a, b) -> a.getSize().compareTo(b.getSize()));
 
 [NOTE]
 Lambda expression is equivalent to overriding the 'compare(T o1, T o2)' method in 'Comparator' class.
+
+Sort command takes in command `OPTIONS` to perform sorting by five fields of a person: by name, by phone number, by email, by address and by tag. It determines the user input `OPTION` by string comparision instead of utilising option parser as command options used in `find` command are mode enabling options that enable different modes of finding mechanism.
 
 ==== Design Considerations
 

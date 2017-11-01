@@ -5,7 +5,9 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+//@@author qihao27
 import seedu.address.model.person.exceptions.NoPersonFoundException;
+//@@author
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -52,9 +54,11 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    //@@author qihao27
     /**
      * Sorts the list by the specified @param parameter.
      * @throws NoPersonFoundException if no persons found in {@code AddressBook}.
      */
     void sortPerson (String option) throws NoPersonFoundException;
+    //@@author
 }

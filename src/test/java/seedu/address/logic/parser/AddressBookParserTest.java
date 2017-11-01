@@ -6,9 +6,14 @@ import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_IS_ENCRYPTD;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+//@@author qihao27
+import static seedu.address.testutil.TypicalFilePath.FILE_PATH_DOCS;
+//@@author
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+//@@author qihao27
 import static seedu.address.testutil.TypicalNames.NAME_FIRST_PERSON;
 import static seedu.address.testutil.TypicalOptions.OPTION_NAME;
+//@@author
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,11 +26,16 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
+//@@author qihao27
 import seedu.address.logic.commands.DeleteAltCommand;
+//@@author
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
+//@@author qihao27
+import seedu.address.logic.commands.ExportCommand;
+//@@author
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
@@ -33,7 +43,9 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LockCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+//@@author qihao27
 import seedu.address.logic.commands.SortCommand;
+//@@author
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -97,12 +109,14 @@ public class AddressBookParserTest {
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
 
+    //@@author qihao27
     @Test
     public void parseCommand_delete_alt() throws Exception {
         DeleteAltCommand command = (DeleteAltCommand) parser.parseCommand(
                 DeleteAltCommand.COMMAND_WORD + " " + NAME_FIRST_PERSON);
         assertEquals(new DeleteAltCommand(NAME_FIRST_PERSON), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_lock() throws Exception {
@@ -256,12 +270,28 @@ public class AddressBookParserTest {
         parser.parseCommand("unknownCommand");
     }
 
+    //@@author qihao27
     @Test
     public void parseCommand_sort() throws Exception {
         SortCommand command = (SortCommand) parser.parseCommand(
                 SortCommand.COMMAND_WORD + " " + OPTION_NAME);
         assertEquals(new SortCommand(OPTION_NAME), command);
     }
+
+    @Test
+    public void parseCommand_export() throws Exception {
+        ExportCommand command = (ExportCommand) parser.parseCommand(
+            ExportCommand.COMMAND_WORD + " " + FILE_PATH_DOCS);
+        assertEquals(new ExportCommand(FILE_PATH_DOCS), command);
+    }
+
+    @Test
+    public void parseCommand_export_alias() throws Exception {
+        ExportCommand command = (ExportCommand) parser.parseCommand(
+            ExportCommand.COMMAND_ALIAS + " " + FILE_PATH_DOCS);
+        assertEquals(new ExportCommand(FILE_PATH_DOCS), command);
+    }
+    //@@author
 
     @Test
     public void secured_noCommandReturn() {
