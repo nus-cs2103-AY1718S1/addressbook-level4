@@ -101,7 +101,8 @@ public class TodoCommand extends UndoableCommand {
         model.addTodoItem(person, todoItem);
     }
 
-    private void executeTodoDeleteOne() throws CommandException {
+    private void executeTodoDeleteOne() throws CommandException,
+            PersonNotFoundException, DuplicatePersonException {
         ReadOnlyPerson person = getReadOnlyPersonFromIndex();
         todoItem = person.getTodoItems().get(itemIndex.getZeroBased());
         model.deleteTodoItem(person ,todoItem);

@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -164,7 +165,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(target);
 
         Person person = new Person(target);
-        List<TodoItem> todoItemList = person.getTodoItems();
+        List<TodoItem> todoItemList = new ArrayList<>(target.getTodoItems());
 
         if (todoItemList.contains(todoItem)) {
             throw new DuplicateTodoItemException();
@@ -173,23 +174,37 @@ public class AddressBook implements ReadOnlyAddressBook {
         todoItemList.add(todoItem);
         Collections.sort(todoItemList);
 
+        person.setTodoItems(todoItemList);
+
         persons.setPerson(target, person);
     }
 
     /**
      * Deletes the given todoItem from target person.
      */
-    public void deleteTodoItem(ReadOnlyPerson target, TodoItem todoItem) {
+    public void deleteTodoItem(ReadOnlyPerson target, TodoItem todoItem)
+            throws PersonNotFoundException, DuplicatePersonException {
         requireAllNonNull(target, todoItem);
-        target.getTodoItems().remove(todoItem);
+
+        Person person = new Person(target);
+        List<TodoItem> todoItemList = new ArrayList<>(target.getTodoItems());
+
+        todoItemList.remove(todoItem);
+        person.setTodoItems(todoItemList);
+
+        persons.setPerson(target, person);
     }
 
     /**
      * Resets all todoItem for target person.
      */
-    public void resetTodoItem(ReadOnlyPerson target) {
+    public void resetTodoItem(ReadOnlyPerson target)
+            throws PersonNotFoundException, DuplicatePersonException {
         requireNonNull(target);
-        target.getTodoItems().clear();
+        Person person = new Person(target);
+        person.setTodoItems(new ArrayList<>());
+
+        persons.setPerson(target, person);
     }
 
     /**

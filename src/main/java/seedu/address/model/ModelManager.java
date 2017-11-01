@@ -109,7 +109,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteTodoItem(ReadOnlyPerson target, TodoItem todoItem) {
+    public void deleteTodoItem(ReadOnlyPerson target, TodoItem todoItem)
+            throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, todoItem);
 
         addressBook.deleteTodoItem(target, todoItem);
@@ -117,7 +118,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void resetTodoItem(ReadOnlyPerson target) {
+    public void resetTodoItem(ReadOnlyPerson target)
+            throws DuplicatePersonException, PersonNotFoundException {
         requireNonNull(target);
 
         addressBook.resetTodoItem(target);

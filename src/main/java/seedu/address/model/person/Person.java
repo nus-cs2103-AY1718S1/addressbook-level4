@@ -140,7 +140,7 @@ public class Person implements ReadOnlyPerson {
 
     @Override
     public List<TodoItem> getTodoItems() {
-        return todoItems;
+        return Collections.unmodifiableList(todoItems);
     }
 
     public void setTodoItems(List<TodoItem> newItems) {

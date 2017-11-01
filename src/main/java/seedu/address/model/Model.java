@@ -51,10 +51,12 @@ public interface Model {
             throws DuplicatePersonException, PersonNotFoundException, DuplicateTodoItemException;
 
     /** Deletes the given todoItem from target person */
-    void deleteTodoItem(ReadOnlyPerson target, TodoItem todoItem);
+    void deleteTodoItem(ReadOnlyPerson target, TodoItem todoItem)
+            throws DuplicatePersonException, PersonNotFoundException;
 
     /** Resets all todoItem for target person */
-    void resetTodoItem(ReadOnlyPerson target);
+    void resetTodoItem(ReadOnlyPerson target)
+            throws DuplicatePersonException, PersonNotFoundException;
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
