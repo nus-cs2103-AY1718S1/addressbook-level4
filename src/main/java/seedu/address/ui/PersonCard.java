@@ -127,7 +127,9 @@ public class PersonCard extends UiPart<Region> {
         return tagColors;
     }
 
-    public static HashMap<String, String> getWebLinkColors() { return webLinkColors; }
+    public static HashMap<String, String> getWebLinkColors() {
+        return webLinkColors;
+    }
 
     @Override
     public boolean equals(Object other) {

@@ -22,7 +22,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class DetailedPersonCard extends UiPart<Region> {
 
     private static final String FXML = "DetailedPersonListCard.fxml";
-    private static String[] colors = {"darkblue", "darkolivegreen", "slategray ", "teal", "maroon", "darkslateblue", "black"};
+    private static String[] colors = {"darkblue", "darkolivegreen", "slategray ", "teal", "maroon", "darkslateblue"};
     private static HashMap<String, String> tagColors = new HashMap<>();
     private static HashMap<String, String> webLinkColors = new HashMap<>();
 
