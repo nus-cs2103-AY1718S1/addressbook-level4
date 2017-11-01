@@ -1,5 +1,6 @@
 package seedu.address.model.property;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -28,5 +29,9 @@ public class DateTime extends Property {
      */
     public static boolean isValidTime(String test) {
         return test.matches(PropertyManager.getPropertyValidationRegex(PROPERTY_SHORT_NAME));
+    }
+
+    public static Date formatDateTime(String value) throws ParseException {
+        return dateFormatter.parse(value);
     }
 }
