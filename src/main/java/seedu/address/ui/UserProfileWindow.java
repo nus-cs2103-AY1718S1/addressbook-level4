@@ -120,7 +120,7 @@ public class UserProfileWindow extends UiPart<Region> {
     }
 
     @FXML
-    void handleCancel(){
+    void handleCancel() {
         stage.close();
     }
 
@@ -128,13 +128,13 @@ public class UserProfileWindow extends UiPart<Region> {
      * Handles the OK button
      */
     @FXML
-    void handleOK() {
+    void handleOk() {
         try {
             updateUserPerson();
             raise(new UserPersonChangedEvent(userPerson));
             stage.close();
-        } catch (Exception e){
-
+        } catch (Exception e) {
+            logger.fine("Invalid UserPerson modification");
         }
     }
 
