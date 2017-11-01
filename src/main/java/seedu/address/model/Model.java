@@ -3,8 +3,11 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TodoItem;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.DuplicateTodoItemException;
 import seedu.address.model.person.exceptions.NoPersonFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -42,6 +45,16 @@ public interface Model {
 
     void favouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
+
+    /** Adds the given todoItem to target person */
+    void addTodoItem(ReadOnlyPerson target, TodoItem todoItem)
+            throws DuplicatePersonException, PersonNotFoundException, DuplicateTodoItemException;
+
+    /** Deletes the given todoItem from target person */
+    void deleteTodoItem(ReadOnlyPerson target, TodoItem todoItem);
+
+    /** Resets all todoItem for target person */
+    void resetTodoItem(ReadOnlyPerson target);
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();

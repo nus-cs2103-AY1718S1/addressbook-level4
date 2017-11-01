@@ -127,7 +127,9 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+//        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        TodoPanel todoPanel = new TodoPanel(logic.getFilteredPersonList());
+        browserPlaceholder.getChildren().add(todoPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());

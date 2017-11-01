@@ -20,7 +20,7 @@ public class SelectCommand extends Command {
     public static final String COMMAND_WORD = "select";
     public static final String COMMAND_ALIAS = "s";
 
-    /* Mode prefix definitions */
+    /* Option prefix definitions */
     public static final String PREFIX_SELECT_SEARCH_NAME = PREFIX_OPTION_INDICATOR + "n";
     public static final String PREFIX_SELECT_SEARCH_PHONE = PREFIX_OPTION_INDICATOR + "p";
     public static final String PREFIX_SELECT_SEARCH_EMAIL = PREFIX_OPTION_INDICATOR + "e";

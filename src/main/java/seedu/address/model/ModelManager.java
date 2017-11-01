@@ -12,8 +12,11 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.ShowPersonTodoEvent;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TodoItem;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.DuplicateTodoItemException;
 import seedu.address.model.person.exceptions.NoPersonFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -93,6 +96,31 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, favouritedPerson);
 
         addressBook.favouritePerson(target, favouritedPerson);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void addTodoItem(ReadOnlyPerson target, TodoItem todoItem)
+            throws DuplicatePersonException, PersonNotFoundException, DuplicateTodoItemException {
+        requireAllNonNull(target, todoItem);
+
+        addressBook.addTodoItem(target, todoItem);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void deleteTodoItem(ReadOnlyPerson target, TodoItem todoItem) {
+        requireAllNonNull(target, todoItem);
+
+        addressBook.deleteTodoItem(target, todoItem);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void resetTodoItem(ReadOnlyPerson target) {
+        requireNonNull(target);
+
+        addressBook.resetTodoItem(target);
         indicateAddressBookChanged();
     }
 

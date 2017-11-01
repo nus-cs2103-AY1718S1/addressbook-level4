@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TodoItem;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -88,10 +90,11 @@ public class FavouriteCommand extends UndoableCommand {
         Email originalEmail = personToFavourite.getEmail();
         Address originalAddress = personToFavourite.getAddress();
         Set<Tag> originalTags = personToFavourite.getTags();
+        List<TodoItem> originalTodoItems = personToFavourite.getTodoItems();
         boolean newFavourite = !personToFavourite.getFavourite();
 
         return new Person(originalName, originalPhone, originalEmail, originalAddress,
-                originalTags, newFavourite);
+                originalTags, originalTodoItems, newFavourite);
     }
 
     @Override

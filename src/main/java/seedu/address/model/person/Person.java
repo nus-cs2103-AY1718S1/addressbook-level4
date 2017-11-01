@@ -3,7 +3,9 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -24,6 +26,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
 
     private ObjectProperty<UniqueTagList> tags;
+    private List<TodoItem> todoItems;
 
     private boolean favourite;
 
@@ -32,7 +35,7 @@ public class Person implements ReadOnlyPerson {
      */
 
 
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, boolean favourite) {
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, List<TodoItem> todoItems, boolean favourite) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -40,6 +43,7 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.todoItems = todoItems;
         this.favourite = favourite;
     }
     /**
@@ -47,7 +51,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags(), source.getFavourite());
+                source.getTags(), source.getTodoItems(), source.getFavourite());
     }
 
     public void setName(Name name) {
@@ -132,6 +136,15 @@ public class Person implements ReadOnlyPerson {
 
     public void setFavourite(boolean favourite) {
         this.favourite = favourite;
+    }
+
+    @Override
+    public List<TodoItem> getTodoItems() {
+        return todoItems;
+    }
+
+    public void setTodoItems(List<TodoItem> newItems) {
+        todoItems = newItems;
     }
 
     @Override

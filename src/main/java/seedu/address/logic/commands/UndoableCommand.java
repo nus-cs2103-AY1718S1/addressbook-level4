@@ -4,9 +4,13 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import javafx.collections.ObservableList;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.ReadOnlyPerson;
+
+import java.util.List;
 
 /**
  * Represents a command which can be undone and redone.
@@ -31,6 +35,11 @@ public abstract class UndoableCommand extends Command {
      */
     protected final void undo() {
         requireAllNonNull(model, previousAddressBook);
+        System.out.println("3");
+        List<ReadOnlyPerson> personList = previousAddressBook.getPersonList();
+        for (ReadOnlyPerson person : personList) {
+            System.out.println(person.getTodoItems());
+        }
         model.resetData(previousAddressBook);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
@@ -53,6 +62,19 @@ public abstract class UndoableCommand extends Command {
     @Override
     public final CommandResult execute() throws CommandException {
         saveAddressBookSnapshot();
-        return executeUndoableCommand();
+        System.out.println("1");
+        List<ReadOnlyPerson> personList = previousAddressBook.getPersonList();
+        for (ReadOnlyPerson person : personList) {
+            System.out.println(person.getTodoItems());
+        }
+
+        CommandResult commandResult = executeUndoableCommand();
+
+        System.out.println("2");
+        personList = previousAddressBook.getPersonList();
+        for (ReadOnlyPerson person : personList) {
+            System.out.println(person.getTodoItems());
+        }
+        return commandResult;
     }
 }

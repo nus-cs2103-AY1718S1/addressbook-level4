@@ -1,7 +1,9 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -12,8 +14,10 @@ import java.util.Set;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TodoItem;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.DuplicateTodoItemException;
 import seedu.address.model.person.exceptions.NoPersonFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -151,6 +155,43 @@ public class AddressBook implements ReadOnlyAddressBook {
             persons.add(person);
         }
     }
+
+    /**
+     * Adds a todoItem to target person.
+     */
+    public void addTodoItem(ReadOnlyPerson target, TodoItem todoItem)
+            throws PersonNotFoundException, DuplicatePersonException, DuplicateTodoItemException {
+        requireNonNull(target);
+
+        Person person = new Person(target);
+        List<TodoItem> todoItemList = person.getTodoItems();
+
+        if (todoItemList.contains(todoItem)) {
+            throw new DuplicateTodoItemException();
+        }
+
+        todoItemList.add(todoItem);
+        Collections.sort(todoItemList);
+
+        persons.setPerson(target, person);
+    }
+
+    /**
+     * Deletes the given todoItem from target person.
+     */
+    public void deleteTodoItem(ReadOnlyPerson target, TodoItem todoItem) {
+        requireAllNonNull(target, todoItem);
+        target.getTodoItems().remove(todoItem);
+    }
+
+    /**
+     * Resets all todoItem for target person.
+     */
+    public void resetTodoItem(ReadOnlyPerson target) {
+        requireNonNull(target);
+        target.getTodoItems().clear();
+    }
+
     /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}
