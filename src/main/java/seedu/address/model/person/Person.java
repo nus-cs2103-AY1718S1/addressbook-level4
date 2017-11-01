@@ -211,7 +211,7 @@ public class Person implements ReadOnlyPerson {
         Set<Tag> tags = getTags();
         StringBuilder sb = new StringBuilder();
         for (Tag t : tags) {
-            sb.append(t.getStringTagName());
+            sb.append(t.tagName);
             sb.append(" ");
         }
         return sb.toString();
