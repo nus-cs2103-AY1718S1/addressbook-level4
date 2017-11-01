@@ -50,7 +50,7 @@ public class EventListTest {
             ObservableList<ReadOnlyEvent> actualSublist = eventList.getObservableSubList(testDate);
             assertEquals(actualSublist, expectedSublist.asObservableList());
         } catch (Exception e) {
-
+            return;
         }
     }
     //@@author
