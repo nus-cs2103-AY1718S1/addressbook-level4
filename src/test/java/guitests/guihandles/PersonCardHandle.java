@@ -59,9 +59,11 @@ public class PersonCardHandle extends NodeHandle<Node> {
         return nameLabel.getText();
     }
 
+    //@@author JavynThun
     public String getOccupation() {
         return occupationLabel.getText();
     }
+    //@@author
 
     public String getAddress() {
         return addressLabel.getText();
@@ -75,6 +77,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
         return emailLabel.getText();
     }
 
+    //@@author JavynThun
     public String getRemark() {
         return remarkLabel.getText();
     }
@@ -82,6 +85,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     public String getWebsite() {
         return websiteLabel.getText();
     }
+    //@@author
 
     public List<String> getTags() {
         return tagLabels

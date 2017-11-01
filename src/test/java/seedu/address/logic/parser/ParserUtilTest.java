@@ -94,6 +94,7 @@ public class ParserUtilTest {
         assertEquals(expectedName, actualName.get());
     }
 
+    //@@author JavynThun
     @Test
     public void parseOccupation_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
@@ -117,6 +118,7 @@ public class ParserUtilTest {
         Optional<Occupation> actualOccupation = ParserUtil.parseOccupation(Optional.of(VALID_OCCUPATION));
         assertEquals(expectedOccupation, actualOccupation.get());
     }
+    //@@author
 
     @Test
     public void parsePhone_null_throwsNullPointerException() throws Exception {
@@ -193,6 +195,7 @@ public class ParserUtilTest {
         assertEquals(expectedEmail, actualEmail.get());
     }
 
+    //@@author JavynThun
     @Test
     public void parseWebsite_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
@@ -217,6 +220,7 @@ public class ParserUtilTest {
 
         assertEquals(expectedWebsite, actualWebsite.get());
     }
+    //@@author
 
     @Test
     public void parseTags_null_throwsNullPointerException() throws Exception {
