@@ -52,6 +52,7 @@ public class MainApp extends Application {
     protected UserPrefs userPrefs;
 
 
+    //@@author LimeFallacie
     @Override
     public void init() throws Exception {
         logger.info("=============================[ Drawing Circles ]===========================");
@@ -75,6 +76,7 @@ public class MainApp extends Application {
         initEventsCenter();
     }
 
+    //@@author
     private String getApplicationParameter(String parameterName) {
         Map<String, String> applicationParameters = getParameters().getNamed();
         return applicationParameters.get(parameterName);

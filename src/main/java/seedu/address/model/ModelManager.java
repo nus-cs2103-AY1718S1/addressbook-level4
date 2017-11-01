@@ -47,9 +47,10 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyGroup> filteredGroups;
     private HashMap<Tag, String> tagColours = new HashMap<>();
+    //@@author LimeFallacie
     private UserPrefs colourPrefs;
 
-
+    //@@author LimeFallacie
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -77,6 +78,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateAllPersons(tagColours);
     }
 
+    //@@author
     public ModelManager() {
         this(new AddressBook(), new UserPrefs());
     }
@@ -99,14 +101,15 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //@@author eldonng
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
-        //@@author eldonng
         raise(new NewGroupListEvent(getGroupList(), addressBook.getPersonList()));
         indicateAddressBookChanged();
     }
 
+    //@@author
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
@@ -121,13 +124,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    //@@author eldonng
     @Override
     public synchronized void deleteGroup(ReadOnlyGroup group) throws GroupNotFoundException {
         addressBook.deleteGroup(group);
         indicateAddressBookChanged();
     }
 
+    //@@author
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -149,7 +152,6 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
-    //@@author eldonng
     @Override
     public void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
         try {
@@ -161,7 +163,6 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
-    //@@author eldonng
     @Override
     public void setTagColour(String tagName, String colour) throws IllegalValueException {
         List<Tag> tagList = addressBook.getTagList();
@@ -183,6 +184,7 @@ public class ModelManager extends ComponentManager implements Model {
         return tagColours;
     }
 
+    //@@author LimeFallacie
     private void updateAllPersons(HashMap<Tag, String> allTagColours) {
         colourPrefs.updateColorMap(allTagColours);
     }
@@ -234,6 +236,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //=========== Filtered Person List Accessors =============================================================
 
+    //@@author
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
      * {@code addressBook}
@@ -249,6 +252,7 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredGroups);
     }
 
+    //@@author
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
@@ -262,6 +266,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredGroups.setPredicate(predicate);
     }
 
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -280,6 +285,7 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+    //@@author LimeFallacie
     @Override
     public void sort(String sortType) throws DuplicatePersonException {
         switch (sortType) {
@@ -318,6 +324,7 @@ public class ModelManager extends ComponentManager implements Model {
         return newList;
     }
 
+    //@@author eldonng
     @Subscribe
     private void handleGroupPanelSelectionChangedEvent(GroupPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
