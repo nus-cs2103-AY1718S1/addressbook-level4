@@ -57,14 +57,16 @@ public class RetagCommand extends UndoableCommand {
         for (ReadOnlyPerson person : lastShownList) {
             Person retaggedPerson = new Person(person);
             UniqueTagList updatedTags = new UniqueTagList(retaggedPerson.getTags());
-            if (!updatedTags.contains(newTag)) {
+            if (updatedTags.contains(targetTag)) {
                 try {
+                    updatedTags.remove(targetTag);
                     updatedTags.add(newTag);
                 } catch (UniqueTagList.DuplicateTagException e) {
                     throw new CommandException(MESSAGE_DUPLICATE_TAG);
                 }
+            } else {
+                continue;
             }
-            updatedTags.remove(targetTag);
             retaggedPerson.setTags(updatedTags.toSet());
 
             try {
