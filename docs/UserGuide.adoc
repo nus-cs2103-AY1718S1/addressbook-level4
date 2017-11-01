@@ -65,8 +65,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/[EMAIL] a/[ADDRESS] [t/TAG]...`
 
 ****
 * A person can have any number of tags (including 0) +
-* It is optional to type in email or address, but all prefixes must be present +
-* You can add multiple phone numbers and tag them with type, for example `coming in v2.0`
+* It is optional to type in email or address, but all prefixes must be present
 ****
 
 Examples:
