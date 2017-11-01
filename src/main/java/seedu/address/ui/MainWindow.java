@@ -130,7 +130,7 @@ public class MainWindow extends UiPart<Region> {
             }
         });
     }
-
+    //@@author tby1994
     /**
      * Fills up all the placeholders of this window.
      */
@@ -156,7 +156,7 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
-
+    //@@author
     void hide() {
         primaryStage.hide();
     }

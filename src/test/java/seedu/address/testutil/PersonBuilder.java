@@ -26,7 +26,7 @@ public class PersonBuilder {
     public static final String DEFAULT_TAGS = "friends";
 
     private Person person;
-
+    //@@author eryao95
     public PersonBuilder() {
         try {
             Name defaultName = new Name(DEFAULT_NAME);
@@ -41,7 +41,7 @@ public class PersonBuilder {
             throw new AssertionError("Default person's values are invalid.");
         }
     }
-
+    //@@author
     /**
      * Initializes the PersonBuilder with the data of {@code personToCopy}.
      */
@@ -108,7 +108,7 @@ public class PersonBuilder {
         }
         return this;
     }
-
+    //@@author eryao95
     /**
      * Sets the {@code Birthday} of the {@code Person} that we are building.
      */
@@ -120,7 +120,7 @@ public class PersonBuilder {
         }
         return this;
     }
-
+    //@@author
     public Person build() {
         return this.person;
     }

@@ -36,6 +36,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueTaskList tasks;
     private final CommandMode commandMode;
 
+    //@@author tby1994
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
@@ -49,7 +50,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tasks = new UniqueTaskList();
         commandMode = new CommandMode();
     }
-
+    //@@author
     public AddressBook() {}
 
     /**
@@ -290,7 +291,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new TaskNotFoundException();
         }
     }
-
+    //@@author tby1994
     public void changeCommandMode(String mode) throws IllegalValueException {
         commandMode.setCommandMode(mode);
     }
@@ -298,7 +299,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public String getCommandMode() {
         return commandMode.toString();
     }
-
+    //@@author
     //// util methods
 
     @Override

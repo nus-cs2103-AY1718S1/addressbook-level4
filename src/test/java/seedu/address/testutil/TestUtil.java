@@ -53,6 +53,7 @@ public class TestUtil {
         return model.getAddressBook().getPersonList().get(index.getZeroBased());
     }
 
+    //@@author eryao95
     /**
      * Returns the middle index of the task in the {@code model}'s task list.
      */

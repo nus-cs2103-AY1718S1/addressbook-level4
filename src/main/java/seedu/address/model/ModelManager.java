@@ -163,6 +163,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredTasks.setPredicate(predicate);
     }
 
+    //@@author tby1994
     //========== Command Mode ==============================================================================
     @Override
     public void changeCommandMode(String mode) throws IllegalValueException {
@@ -174,7 +175,7 @@ public class ModelManager extends ComponentManager implements Model {
     public String getCommandMode() {
         return addressBook.getCommandMode();
     }
-
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

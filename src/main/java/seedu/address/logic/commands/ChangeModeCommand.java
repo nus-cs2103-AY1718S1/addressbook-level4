@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+//@@author tby1994
 /**
  * Change the current command mode
  */
@@ -60,3 +61,4 @@ public class ChangeModeCommand extends Command {
             && mode.equals(((ChangeModeCommand) other).mode));
     }
 }
+//@@author tby1994
