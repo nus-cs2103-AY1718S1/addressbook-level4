@@ -21,6 +21,11 @@ public interface Model {
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
     Predicate<ReadOnlyEvent> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
 
+    //@@author low5545
+    /** Adds extra data to the existing model */
+    void addData(ReadOnlyAddressBook newData);
+    //@@author
+
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 
@@ -55,7 +60,7 @@ public interface Model {
 
     /** Changes the color of an existing tag (through TagColorManager) */
     void setTagColor(Tag tag, String color);
-
+    //@@author junyango
     //=========== Model support for activity component =============================================================
 
     /** Adds an event */
@@ -67,7 +72,7 @@ public interface Model {
 
     /** Deletes the given event */
     void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
-
+    //@@author
     //=========== Filtered Person/Activity List support =============================================================
 
     /** Returns an unmodifiable view of the filtered person list */

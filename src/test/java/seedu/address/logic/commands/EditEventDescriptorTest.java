@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.event.EditEventCommand;
 import seedu.address.testutil.EditEventDescriptorBuilder;
-
+//@@author junyango
 public class EditEventDescriptorTest {
 
     @Test

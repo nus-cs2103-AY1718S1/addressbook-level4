@@ -12,6 +12,10 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T09-B3/main
 
+// Workaround for asciidoctor-pdf compatibility issues.
+:up-arrow-key: &#8593;
+:down-arrow-key: &#8595;
+
 By: `CS2103T T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
@@ -66,7 +70,7 @@ considered as a collection of one kind of `data items`.
 [TIP]
 You can use the sidebar on the left-hand side of the application interface to switch between different components.
 
-image::UiSidebarHighlight.png[width="500"]
+image::UiSideBarHighlight.png[width="500"]
 _Figure 3.1 : Sidebar for Switching between Different Components_
 
 They are described in details as follows:
@@ -360,7 +364,7 @@ Example:
 
 [NOTE]
 ====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+Pressing the kbd:[{up-arrow-key}] and kbd:[{down-arrow-key}] arrows will display the previous and next input respectively in the command box.
 ====
 
 // tag::undoredo[]
@@ -451,8 +455,10 @@ in `.xml` format. It is unnecessary to explicitly state `import --xml FILEPATH`,
 ****
 * Imports data from the location and file name specified by `FILEPATH`.
 * `FILEPATH` must end with an extension of `.xml`.
-* The file name and folder names in `FILEPATH` should not contain any prohibited characters `?!%*+:|"<>`.
+* The file name in `FILEPATH` should not contain any prohibited characters `?!%*+:|"<>`.
 * If a relative path is provided, the data will be imported from a location relative to the *BoNUS* installation directory.
+* Persons and events that exist in *BoNUS* and the specified file will not be imported.
+* Data in the specified XML file must be in the format as recognized by *BoNUS*.
 ****
 
 Examples:
@@ -480,7 +486,7 @@ Format: `(i)import --script FILEPATH`
 ****
 * You must explicitly provide the `--script` parameter.
 * `FILEPATH` must end with an extension of `.bo`.
-* The file name and folder names in `FILEPATH` should not contain any prohibited characters `?!%*+:|"<>`.
+* The file name in `FILEPATH` should not contain any prohibited characters `?!%*+:|"<>`.
 * If a relative path is provided, the data will be imported from a location relative to the *BoNUS* installation directory.
 * The provided script file should include one or multiple lines of valid *BoNUS* command(s). Each line can only have **at
 most one** command.
@@ -546,6 +552,12 @@ Examples:
 * For `macOS` and `Linux` users: +
 `export /Users/John Doe/Documents/bonus.xml`
 
+[NOTE]
+====
+For `Windows` users, use `\` as the name-separator in your `FILEPATH`. +
+For `macOS` and `Linux` users, use `/` instead.
+====
+
 ==== To Microsoft Excel^TM^ Worksheet
 
 _(Coming in v2.0)_
@@ -565,6 +577,12 @@ Examples:
 
 * For `macOS` and `Linux` users: +
 `export --excel /Users/John Doe/Documents/bonus.xls`
+
+[NOTE]
+====
+For `Windows` users, use `\` as the name-separator in your `FILEPATH`. +
+For `macOS` and `Linux` users, use `/` instead.
+====
 
 === Advance setting : `(cfg)config`
 

@@ -7,7 +7,7 @@ import guitests.guihandles.NodeHandle;
 import javafx.scene.control.ListView;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.ui.event.EventCard;
-
+//@@author junyango
 /**
  * Provides a handle for {@code EventListPanel} containing the list of {@code EventCard}.
  */

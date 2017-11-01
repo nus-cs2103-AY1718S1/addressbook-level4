@@ -16,7 +16,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicateEventException;
 import seedu.address.model.person.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-
+//@@author junyango
 
 /**
  * A list of events that enforces uniqueness between its elements and does not allow nulls.
@@ -99,6 +99,21 @@ public class UniqueEventList implements Iterable<Event> {
         }
         return eventFoundAndDeleted;
     }
+
+    //@@author low5545
+    /**
+     * Adds all events in the argument events list to this list.
+     */
+    public void addEvents(List<? extends ReadOnlyEvent> events) {
+        for (final ReadOnlyEvent event : events) {
+            try {
+                this.add(new Event(event));
+            } catch (DuplicateEventException e) {
+                // skip event if it exists
+            }
+        }
+    }
+    //@@author
 
     public void setEvents(UniqueEventList replacement) {
         this.internalList.setAll(replacement.internalList);

@@ -163,6 +163,7 @@ public class CommandTestUtil {
 
         assert model.getFilteredPersonList().size() == 1;
     }
+    //@@author junyango
     /**
      * Updates {@code model}'s filtered list to show only the first person in the {@code model}'s address book.
      */
@@ -173,7 +174,7 @@ public class CommandTestUtil {
 
         assert model.getFilteredEventList().size() == 1;
     }
-
+    //@@author
     /**
      * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
      */
