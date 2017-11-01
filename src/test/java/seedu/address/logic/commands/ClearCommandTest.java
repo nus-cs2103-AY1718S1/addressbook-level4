@@ -15,15 +15,17 @@ import seedu.address.model.UserPrefs;
 public class ClearCommandTest {
 
     @Test
-    public void execute_emptyAddressBook_success() {
+    public void executeEmptyAddressBookSuccess() {
         Model model = new ModelManager();
-        assertCommandSuccess(prepareCommand(model), model, ClearCommand.MESSAGE_SUCCESS, model);
+        Model expectedModel = new ModelManager();
+        assertCommandSuccess(prepareCommand(model), model, ClearCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void execute_nonEmptyAddressBook_success() {
+    public void executeNonEmptyAddressBookSuccess() {
         Model model = new ModelManager(getTypicalAddressBook(), getTypicalTaskbook(), new UserPrefs());
-        assertCommandSuccess(prepareCommand(model), model, ClearCommand.MESSAGE_SUCCESS, model);
+        Model expectedModel = new ModelManager();
+        assertCommandSuccess(prepareCommand(model), model, ClearCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     /**
