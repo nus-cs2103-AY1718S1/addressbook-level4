@@ -1,9 +1,15 @@
 package seedu.address.ui;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Logger;
+
+import javax.xml.bind.DatatypeConverter;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -26,6 +32,8 @@ import seedu.address.commons.events.ui.ShowMeetingEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.storage.Storage;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -37,11 +45,13 @@ public class MainWindow extends UiPart<Region> {
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
+    private static final String GRAVATAR_URL_FORMAT = "https://www.gravatar.com/avatar/%1$s.jpg";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Stage primaryStage;
     private Logic logic;
+    private Storage storage;
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
@@ -83,12 +93,13 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane statusbarPlaceholder;
 
-    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
+    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic, Storage storage) {
         super(FXML);
 
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
+        this.storage = storage;
         this.config = config;
         this.prefs = prefs;
 
@@ -170,7 +181,9 @@ public class MainWindow extends UiPart<Region> {
         SettingsSelector settingsSelector = new SettingsSelector();
         settingsSelectorPlaceholder.getChildren().add(settingsSelector.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
+        downloadProfilePictures(persons);
+        personListPanel = new PersonListPanel(persons);
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
@@ -188,6 +201,33 @@ public class MainWindow extends UiPart<Region> {
 
     }
 
+    //@@author liuhang0213
+
+    /**
+     * Downloads gravatar image and save in local storage using each person's email address
+     * @param persons
+     */
+    private void downloadProfilePictures(ObservableList<ReadOnlyPerson> persons) {
+        for (ReadOnlyPerson person : persons) {
+            try {
+                String email = person.getEmail().value.trim().toLowerCase();
+                System.out.println(email);
+                byte[] emailBytes = email.getBytes("UTF-8");
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                String hash = DatatypeConverter.printHexBinary(md.digest(emailBytes)).toUpperCase();
+                String gravatarUrl = String.format(GRAVATAR_URL_FORMAT, hash.toLowerCase());
+                String filename = String.format(PersonCard.GRAVATAR_FILENAME_FORMAT, person.getInternalId().value);
+                storage.saveFileFromUrl(gravatarUrl, filename);
+                logger.info("Downloaded " + gravatarUrl + " to " + filename);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //@@author
     void hide() {
         primaryStage.hide();
     }

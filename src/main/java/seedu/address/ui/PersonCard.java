@@ -1,10 +1,7 @@
 package seedu.address.ui;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import javax.xml.bind.DatatypeConverter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -22,7 +19,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static final String GRAVATAR_URL_FORMAT = "https://www.gravatar.com/avatar/%1$s.jpg";
+    public static final String GRAVATAR_FILENAME_FORMAT = "img_%1$d.jpg";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -95,30 +92,21 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    //@@author liuhang0213
     /**
      * Initializes the profile picture using Gravatar
      */
     private void initPicture(ReadOnlyPerson person) {
         try {
-            String email = person.getEmail().value.trim().toLowerCase();
-            System.out.println(email);
-            byte[] emailBytes = email.getBytes("UTF-8");
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            String hash = DatatypeConverter.printHexBinary(md.digest(emailBytes)).toUpperCase();
-            String gravatarUrl = String.format(GRAVATAR_URL_FORMAT, hash.toLowerCase());
-            System.out.println(gravatarUrl);
-            Image image = new Image(gravatarUrl);
+            FileInputStream imageFile = new FileInputStream("cache/" + String.format(GRAVATAR_FILENAME_FORMAT, person.getInternalId().value));
+            Image image = new Image(imageFile);
             gravatar.setImage(image);
-
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
