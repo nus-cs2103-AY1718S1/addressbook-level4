@@ -221,9 +221,10 @@ public class AddQuickCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Executes the {@code AddQuickCommand} that adds {@code toAdd} to the model and verifies that the command box displays
-     * an empty string, the result display box displays the success message of executing {@code AddQuickCommand} with the
-     * details of {@code toAdd}, and the model related components equal to the current model added with {@code toAdd}.
+     * Executes {@code AddQuickCommand} that adds {@code toAdd} to the model and verifies that the command box displays
+     * an empty string, the result display box displays the success message of executing {@code AddQuickCommand} with
+     * the details of {@code toAdd}, and the model related components equal to the current model
+     * added with {@code toAdd}.
      * These verifications are done by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the command box has the default style class, the status bar's sync status changes,
