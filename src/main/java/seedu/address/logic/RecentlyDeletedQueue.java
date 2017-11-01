@@ -1,3 +1,4 @@
+//@@author vmlimshimin
 package seedu.address.logic;
 
 import java.util.LinkedList;
@@ -16,6 +17,11 @@ public class RecentlyDeletedQueue {
     public RecentlyDeletedQueue() {
         recentlyDeletedQueue = new LinkedList<>();
         count = 0;
+    }
+
+    public RecentlyDeletedQueue(LinkedList<ReadOnlyPerson> newQueue) {
+        recentlyDeletedQueue = newQueue;
+        count = newQueue.size();
     }
 
     /**
@@ -39,5 +45,8 @@ public class RecentlyDeletedQueue {
         return new LinkedList<>(recentlyDeletedQueue);
     }
 
+    public void setQueue(LinkedList<ReadOnlyPerson> newQueue) {
+        recentlyDeletedQueue = newQueue;
+    }
 
 }

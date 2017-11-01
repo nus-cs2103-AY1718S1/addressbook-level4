@@ -96,6 +96,7 @@ public class Person implements ReadOnlyPerson {
         return name.get();
     }
 
+    //@@author JavynThun
     public void setOccupation(Occupation occupation) {
         this.occupation.set(requireNonNull(occupation));
     }
@@ -109,6 +110,7 @@ public class Person implements ReadOnlyPerson {
     public Occupation getOccupation() {
         return occupation.get();
     }
+    //@@author
 
     public void setPhone(Phone phone) {
         this.phone.set(requireNonNull(phone));
@@ -152,6 +154,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author
     public void setRemark(Remark remark) {
         this.remark.set(requireNonNull(remark));
     }
@@ -179,6 +182,7 @@ public class Person implements ReadOnlyPerson {
     public Website getWebsite() {
         return website.get();
     }
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

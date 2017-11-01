@@ -1,3 +1,4 @@
+//@@author TravisPhey
 package seedu.address.logic.commands;
 
 import java.util.ArrayList;
@@ -58,7 +59,9 @@ public class DeleteMultipleCommand extends UndoableCommand {
 
             try {
                 model.deletePerson(personToDelete);
+                //@@author vmlimshimin
                 queue.offer(personToDelete);
+                //@@author TravisPhey
             } catch (PersonNotFoundException pnfe) {
                 assert false : "The target person cannot be missing";
             }
@@ -74,6 +77,7 @@ public class DeleteMultipleCommand extends UndoableCommand {
                 && this.arrayOfIndex.equals(((DeleteMultipleCommand) other).arrayOfIndex)); // state check
     }
 
+    //@@author vmlimshimin
     @Override
     public void setData(Model model, CommandHistory commandHistory,
                         UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue) {

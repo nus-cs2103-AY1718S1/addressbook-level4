@@ -405,7 +405,10 @@ After `readContactFromFile` is finished, `AddMultipleByTsvCommandParser` calls `
 
 Deleting multiple contacts is used so as to allow the user to delete multiple contacts with the use of a single command, saving time and without the need to clear the entire list.
 
-Delete multiple contacts extends from undoable commands, and it can be undone using the undo function. By keying in the command word `deleteMul` along with `indexes`, the command word will be detected in the `AddressBookParser` class where the arguments (indexes in this case) will be passed over to the `DeleteMultipleCommandParser` class.
+image::DeleteMultipleCommandSequenceDiagram.PNG[width="800"]
+_Figure 4.3 : Sequence diagram for deleteMultipleCommand_
+
+Delete multiple contacts extends from undoable commands, and it can be undone using the undo function. By keying in the command word `deleteMul` along with `indexes`, the command word will be detected in the `AddressBookParser` class where the arguments (indexes in this case) will be passed over to the `DeleteMultipleCommandParser` class, as seen from figure 4.3 above.
 
 As our indexes are intended to take in multiple index values, we will use a `String[] listOfIndex = trimmedArgs.split("\\s+");` to split the arguments into individual indexes and store them into the String array for use. We will use a `Collections.reverse(list);` to ensure that the user will be able to delete the correct indexes. The `ArrayList<String> list = new ArrayList<String>(Arrays.asList(listOfIndex));` is used to convert the list of index into an arrayList for use by the collections utility.
 
@@ -416,12 +419,9 @@ In the `DeleteMultipleCommand` class, the commandResult method is used which com
 === Recently Deleted List
 
 Recently deleted command is used to allow the user to have a list of the past 30 recently deleted contacts and their details.
-
-By keying in the command word "recentlyDel", the command word will be detected in the `AddressBookParser` class where the arguments (indexes in this case) will be passed over to the `RecentlyDeletedCommand` class.
-
-We will now create a 'LinkedList<Person> RecentlyDeletedQueue = new LinkedList<>();' to store the recently deleted contacts for up to the past 30 contacts.
-
-In the 'RecentlyDeletedCommand' class, the commandResult method is used which will show the deleted contacts.
+By keying in the command word `recentlyDel`, the command word will be detected in the `AddressBookParser` class where the arguments (indexes in this case) will be passed over to the `RecentlyDeletedCommand` class.
+We will now create a `LinkedList<Person> RecentlyDeletedQueue = new LinkedList<>();` to store the recently deleted contacts for up to the past 30 contacts.
+In the `RecentlyDeletedCommand` class, the `commandResult` method is used which will show the deleted contacts.
 
 === Logging
 
