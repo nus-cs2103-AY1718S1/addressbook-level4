@@ -83,6 +83,7 @@ public class StorageManager extends ComponentManager implements Storage {
         saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-copy.xml");
     }
 
+    //@@author
     @Override
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
