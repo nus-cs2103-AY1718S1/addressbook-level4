@@ -179,6 +179,7 @@ image::btexample.png[width="500"]
 [NOTE]
 BLOODTYPE is case insensitive.
 
+// tag::dups[]
 === Showing duplicate persons: `duplicates` [Since v1.3]
 
 You can use duplicates to show a list of people who share the same name. +
@@ -188,6 +189,7 @@ This makes it convenient for finding and resolving duplicate contacts. +
 
 [NOTE]
 The results are from case-sensitive comparisons.
+// end::dups[]
 
 === Editing a person : `edit`
 
@@ -406,6 +408,7 @@ The index *must be a positive integer* `1, 2, 3, ...`
 
 // end::remark[]
 
+// tag::batch[]
 === Deleting all persons with a particular tag : [Since v1.2]
 
 You can delete multiple contacts by tags +
@@ -414,7 +417,7 @@ You can delete multiple contacts by tags +
 
 [WARNING]
 Command can only delete one tag at a time
-
+// end::batch[]
 
 === KeyBoard Shortcuts [Since v1.2]
 
