@@ -98,17 +98,6 @@ public class PersonInformationPanel extends UiPart<Region> {
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         id.setText(Integer.toString(personid));
-        String path = "m133225.jpg";
-        try {
-            URL url = new File(path).toURI().toURL();
-            Image image = new Image(url.toString());
-            photoContainer = new ImageView();
-            photoContainer.setFitWidth(400);
-            photoContainer.setPreserveRatio(true);
-            photoContainer.setImage(image);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
     /**
      * Sets a background color for each tag.
