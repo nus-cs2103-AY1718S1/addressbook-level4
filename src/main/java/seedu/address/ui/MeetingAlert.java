@@ -29,13 +29,13 @@ public class MeetingAlert extends UiPart<Region> {
     private final Stage dialogStage;
 
     @FXML
-    private Label WarningMessage;
+    private Label warningMessage;
 
     @FXML
-    private Label FirstMeeting;
+    private Label firstMeeting;
 
     @FXML
-    private Label NameMeeting;
+    private Label nameMeeting;
 
 
     public MeetingAlert(ObservableList<ReadOnlyMeeting> list) {
@@ -48,18 +48,17 @@ public class MeetingAlert extends UiPart<Region> {
         dialogStage.setX(475);
         dialogStage.setY(300);
         FxViewUtil.setStageIcon(dialogStage, ICON);
-        WarningMessage.setText(MESSAGE);
+        warningMessage.setText(MESSAGE);
         if (isGroupMeeting(list)) {
             int indexDate = list.get(0).getDate().toString().indexOf(' ');
-            FirstMeeting.setText("Group Meeting with " + list.get(0).getPersonName().toString()
+            firstMeeting.setText("Group Meeting with " + list.get(0).getPersonName().toString()
                     + " at " + list.get(0).getDate().toString().substring(indexDate + 1) + " for");
-            NameMeeting.setText(list.get(0).getName().toString());
-        }
-        else {
+            nameMeeting.setText(list.get(0).getName().toString());
+        } else {
             int indexDate = list.get(0).getDate().toString().indexOf(' ');
-            FirstMeeting.setText("Meeting with " + list.get(0).getPersonName().toString()
+            firstMeeting.setText("Meeting with " + list.get(0).getPersonName().toString()
                     + " at " + list.get(0).getDate().toString().substring(indexDate + 1) + " for");
-            NameMeeting.setText(list.get(0).getName().toString());
+            nameMeeting.setText(list.get(0).getName().toString());
         }
     }
     /**
