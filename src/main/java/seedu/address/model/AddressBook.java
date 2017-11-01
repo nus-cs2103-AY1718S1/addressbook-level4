@@ -258,6 +258,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         return tags.asObservableList();
     }
 
+    public ObservableList<ReadOnlyInsurance> getInsuranceList() {
+        return lifeInsuranceMap.asObservableList();
+    }
+
     //@@author OscarWang114
     @Override
     public Map<UUID, ReadOnlyInsurance> getLifeInsuranceMap() {

@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.logging.Logger;
+
 import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.ObservableList;
@@ -7,8 +9,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.InsurancePanelSelectionChangedEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
-import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author OscarWang114
 /**
@@ -17,6 +20,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class InsuranceListPanel extends UiPart<Region> {
 
     private static final String FXML = "InsuranceListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
     private ListView<InsuranceProfile> insuranceListView;
@@ -27,9 +31,9 @@ public class InsuranceListPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    public InsuranceListPanel(ReadOnlyPerson person) {
+    public InsuranceListPanel(ObservableList<ReadOnlyInsurance> insuranceList) {
         super(FXML);
-        setConnections(person.getLifeInsurances().asObservableList());
+        setConnections(insuranceList);
         registerAsAnEventHandler(this);
     }
     /**
@@ -48,6 +52,19 @@ public class InsuranceListPanel extends UiPart<Region> {
                 insuranceList, (insurance) -> new InsuranceProfile(insurance, insuranceList.indexOf(insurance) + 1));
         insuranceListView.setItems(mappedList);
         insuranceListView.setCellFactory(listView -> new InsuranceListPanel.InsuranceListViewCell());
+        setEventHandlerForSelectionChangeEvent();
+
+    }
+
+
+    private void setEventHandlerForSelectionChangeEvent() {
+        insuranceListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in insurance list panel changed to : '" + newValue + "'");
+                        raise(new InsurancePanelSelectionChangedEvent(newValue));
+                    }
+                });
     }
 
     /**
