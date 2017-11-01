@@ -27,8 +27,6 @@ public class FindCommand extends Command {
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
         Statistics stats = new Statistics(model.getFilteredPersonList().filtered(predicate));
-        stats.printAverages();
-        stats.printPercentiles();
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 

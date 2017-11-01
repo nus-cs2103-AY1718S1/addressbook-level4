@@ -54,14 +54,14 @@ public class StatisticsPanel extends UiPart<Region> {
      * Updates list Statistics in the Statistics panel
      */
     protected void loadListStatistics() {
-        mean.setText(Statistics.getRoundedStringFromDouble(statistics.getMean(), 2));
-        median.setText(Statistics.getRoundedStringFromDouble(statistics.getMedian(), 2));
-        mode.setText(Statistics.getRoundedStringFromDouble(statistics.getMode(), 2));
-        variance.setText(Statistics.getRoundedStringFromDouble(statistics.getVariance(), 2));
-        standardDeviation.setText(Statistics.getRoundedStringFromDouble(statistics.getStdDev(), 2));
-        quartile1.setText(Statistics.getRoundedStringFromDouble(statistics.getQuartile1(), 2));
-        quartile3.setText(Statistics.getRoundedStringFromDouble(statistics.getQuartile3(), 2));
-        interquartileRange.setText(Statistics.getRoundedStringFromDouble(statistics.getInterQuartileRange(), 2));
+        mean.setText(statistics.getMeanString());
+        median.setText(statistics.getMedianString());
+        mode.setText(statistics.getModeString());
+        variance.setText(statistics.getVarianceString());
+        standardDeviation.setText(statistics.getStdDevString());
+        quartile1.setText(statistics.getQuartile1String());
+        quartile3.setText(statistics.getQuartile3String());
+        interquartileRange.setText(statistics.getInterquartileRangeString());
     }
 
     @FXML
