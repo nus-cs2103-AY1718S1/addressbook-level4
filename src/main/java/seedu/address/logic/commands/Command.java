@@ -41,5 +41,7 @@ public abstract class Command {
      */
     public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue) {
         this.model = model;
+        this.undoRedoStack = undoRedoStack;
+        this.queue = queue;
     }
 }
