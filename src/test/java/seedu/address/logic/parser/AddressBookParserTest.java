@@ -54,6 +54,7 @@ public class AddressBookParserTest {
         assertEquals(new AddCommand(person), command);
     }
 
+    //@@author lincredibleJC
     @Test
     public void parseCommand_alias_add() throws Exception {
         Person person = new PersonBuilder().build();
@@ -67,6 +68,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3") instanceof ClearCommand);
     }
 
+    //@@author lincredibleJC
     @Test
     public void parseCommand_alias_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS) instanceof ClearCommand);
@@ -81,6 +83,7 @@ public class AddressBookParserTest {
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
 
+    //@@author lincredibleJC
     @Test
     public void parseCommand_alias_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
@@ -97,6 +100,7 @@ public class AddressBookParserTest {
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
+    //@@author lincredibleJC
     @Test
     public void parseCommand_alias_edit() throws Exception {
         Person person = new PersonBuilder().build();
@@ -120,6 +124,7 @@ public class AddressBookParserTest {
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
+    //@@author lincredibleJC
     @Test
     public void parseCommand_alias_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
@@ -128,6 +133,7 @@ public class AddressBookParserTest {
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
+    //@@author lincredibleJC
     @Test
     public void parseCommand_findtags() throws Exception {
         List<String> keywords = Arrays.asList("tag1", "tag2", "tag3");
@@ -136,6 +142,7 @@ public class AddressBookParserTest {
         assertEquals(new FindTagsCommand(new TagsContainsKeywordsPredicate(keywords)), command);
     }
 
+    //@@author lincredibleJC
     @Test
     public void parseCommand_alias_findtags() throws Exception {
         List<String> keywords = Arrays.asList("tag1", "tag2", "tag3");
@@ -163,6 +170,7 @@ public class AddressBookParserTest {
         }
     }
 
+    //@@author lincredibleJC
     @Test
     public void parseCommand_alias_history() throws Exception {
         assertTrue(parser.parseCommand(HistoryCommand.COMMAND_ALIAS) instanceof HistoryCommand);
@@ -182,6 +190,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
     }
 
+    //@@author lincredibleJC
     @Test
     public void parseCommand_alias_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS) instanceof ListCommand);
@@ -195,6 +204,7 @@ public class AddressBookParserTest {
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
     }
 
+    //@@author lincredibleJC
     @Test
     public void parseCommand_alias_select() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
@@ -220,6 +230,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
     }
 
+    //@@author lincredibleJC
     @Test
     public void parseCommand_redoCommandAlias_returnsRedoCommand() throws Exception {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_ALIAS) instanceof RedoCommand);
@@ -232,6 +243,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
     }
 
+    //@@author lincredibleJC
     @Test
     public void parseCommand_undoCommandAlias_returnsUndoCommand() throws Exception {
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS) instanceof UndoCommand);

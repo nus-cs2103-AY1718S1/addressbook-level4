@@ -24,6 +24,8 @@ public class PersonUtil {
         return AddCommand.COMMAND_WORD + " " + getPersonDetails(person);
     }
 
+    //@@author lincredibleJC
+
     /**
      * Returns an add command alias string for adding the {@code person}.
      */
