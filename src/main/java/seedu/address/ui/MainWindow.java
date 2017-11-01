@@ -31,7 +31,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/TheClassroomLogo.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
@@ -86,10 +86,10 @@ public class MainWindow extends UiPart<Region> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setIcon(ICON);
-        setWindowMinSize();
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
 
         setAccelerators();
         registerAsAnEventHandler(this);
