@@ -16,6 +16,7 @@ image::willxujun.png[width="150", align="left"]
 {empty}[https://github.com/willxujun[github]]
 
 Role: Team lead
+Responsibilities: Logic
 
 '''
 
@@ -23,8 +24,8 @@ Role: Team lead
 image::eeching.png[width="150", align="left"]
 {empty}[https://github.com/eeching[github]]
 
-Role: Developer +
-Responsibilities: Model
+Role: Developer
+Responsibilities: Model + Ui
 
 '''
 
@@ -42,6 +43,6 @@ image::lulechuan.jpg[width="150", align="left"]
 {empty}[https://github.com/lulechuan[github]]
 
 Role: Developer
-Responsibilities: Logic
+Responsibilities: Logic + Storage
 
 '''

@@ -27,9 +27,15 @@ endif::[]
 
 * <<UserGuide#, User Guide>>
 * <<DeveloperGuide#, Developer Guide>>
-* <<LearningOutcomes#, Learning Outcomes>>
 * <<AboutUs#, About Us>>
 * <<ContactUs#, Contact Us>>
+
+== Target Users
+The target users are NUS students. They includes the local students as well as international students.
+For international students, they might have multiple hand phone numbers.
+For students, custom fields such as nickname, birthday might be required for some students but not all, therefore these custom fields might be required
+to store the information of the students.
+Students might like to have their own icon photos so that they are recognised their friends.
 
 == Acknowledgements
 
