@@ -31,7 +31,6 @@ public class Calendar {
         // Create the calendar grid pane
         GridPane calendar = new GridPane();
         calendar.setPrefSize(600, 400);
-        calendar.setGridLinesVisible(true);
         // Create rows and columns with anchor panes for the calendar
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 7; j++) {
@@ -39,6 +38,7 @@ public class Calendar {
                 ap.setPrefSize(200, 200);
                 calendar.add(ap, j, i);
                 allCalendarDays.add(ap);
+                ap.getStyleClass().add("calendar-color");
             }
         }
         // Days of the week labels
@@ -51,6 +51,7 @@ public class Calendar {
         dayLabels.setPrefWidth(600);
         Integer col = 0;
         for (Text txt : dayNames) {
+            txt.getStyleClass().add("calendar-color");
             AnchorPane ap = new AnchorPane();
             ap.setPrefSize(200, 10);
             ap.setBottomAnchor(txt, 5.0);
@@ -60,6 +61,7 @@ public class Calendar {
 
         // Create calendarTitle and buttons to change current month
         calendarTitle = new Text();
+        calendarTitle.getStyleClass().add("calendar-color");
         Button previousMonth = new Button("<");
         previousMonth.setOnAction(e -> previousMonth());
         Button nextMonth = new Button(">");
@@ -90,6 +92,7 @@ public class Calendar {
                 ap.getChildren().remove(0);
             }
             Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
+            txt.getStyleClass().add("calendar-color");
             ap.setDate(calendarDate);
             ap.setTopAnchor(txt, 5.0);
             ap.setLeftAnchor(txt, 5.0);
