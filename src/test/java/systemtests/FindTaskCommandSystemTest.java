@@ -85,6 +85,7 @@ public class FindTaskCommandSystemTest extends AddressBookSystemTest {
         assertSelectedTaskCardUnchanged();
         //@@author
 
+        //@@author tby1994
         /* Case: find multiple tasks in address book, 2 keywords -> 2 tasks found */
         command = FindTaskCommand.COMMAND_WORD + " enhancement art";
         ModelHelper.setFilteredTaskList(expectedModel, ASSIGNMENT, PERSONAL_PROJECT);
@@ -153,6 +154,7 @@ public class FindTaskCommandSystemTest extends AddressBookSystemTest {
         command = FindTaskCommand.COMMAND_WORD + " " + ASSIGNMENT.getStartDate().date;
         assertCommandSuccess(command, expectedModel);
         assertSelectedTaskCardUnchanged();
+        //@@author
 
         //@@author tpq95
         /* Case: find deadline of task in address book, keyword is substring of deadline -> 0 tasks found */
@@ -173,6 +175,7 @@ public class FindTaskCommandSystemTest extends AddressBookSystemTest {
         assertSelectedTaskCardUnchanged();
         //@@author
 
+        //@@author tby1994
         /* Case: find while a task is selected -> selected card deselected */
         showAllTasks();
         selectTask(Index.fromOneBased(1));
