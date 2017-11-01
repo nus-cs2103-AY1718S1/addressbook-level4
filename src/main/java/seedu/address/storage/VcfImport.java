@@ -79,7 +79,7 @@ public class VcfImport {
                 newLine = br.readLine();
             }
         }
-
+        br.close();
         return importList;
     }
 }

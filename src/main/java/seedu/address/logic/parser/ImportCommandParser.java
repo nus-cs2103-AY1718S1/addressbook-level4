@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.ImportCommand;
@@ -23,7 +25,19 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
     @Override
     public ImportCommand parse(String userInput) throws ParseException {
-        File file = new File(userInput.trim());
+        File file;
+        if (userInput.trim().isEmpty()) {
+            FileChooser chooser = new FileChooser();
+            chooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("All", "*.*"),
+                    new FileChooser.ExtensionFilter("vCard (.vcf)", "*.vcf"),
+                    new FileChooser.ExtensionFilter("XML (.xml)", "*.xml")
+            );
+            chooser.setTitle("Select import file.");
+            file = chooser.showOpenDialog(new Stage());
+        } else {
+            file = new File(userInput.trim());
+        }
         if (file.getName().endsWith(".xml")) {
             try {
                 ReadOnlyAddressBook importingBook = XmlFileStorage.loadDataFromSaveFile(file);
