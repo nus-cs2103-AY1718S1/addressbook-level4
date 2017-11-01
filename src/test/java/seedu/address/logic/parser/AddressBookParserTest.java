@@ -188,7 +188,7 @@ public class AddressBookParserTest {
         assertEquals(new FindCommand(new ScheduleContainsKeywordsPredicate(keywords)), commandUsingAlias);
     }
 
-    //@@author
+    //@@author CT15
     @Test
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
@@ -205,6 +205,7 @@ public class AddressBookParserTest {
                 + DeleteCommand.COMMAND_ALIAS) instanceof HelpCommand);
     }
 
+    //@@author
     @Test
     public void parseCommand_history() throws Exception {
         assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD) instanceof HistoryCommand);
@@ -228,6 +229,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
     }
 
+    //@@author CT15
     @Test
     public void parseCommand_schedule() throws Exception {
         Schedule schedule = new ScheduleBuilder().build();
@@ -245,6 +247,7 @@ public class AddressBookParserTest {
                 schedule.getActivity()), commandUsingAlias);
     }
 
+    //@@author
     @Test
     public void parseCommand_select() throws Exception {
         LocateCommand command = (LocateCommand) parser.parseCommand(

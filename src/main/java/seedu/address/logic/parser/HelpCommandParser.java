@@ -7,6 +7,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.commandidentifier.CommandIdentifier;
 
+//author CT15
 /**
  * Parses input arguments and creates a new HelpCommand object
  */

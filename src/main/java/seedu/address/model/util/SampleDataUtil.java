@@ -76,6 +76,7 @@ public class SampleDataUtil {
         }
     }
 
+    //@@author CT15
     /**
      * Returns a schedule set containing the list of schedule dates and activities given.
      * pre-condition: the number of elements in scheduleDates must be the same as that of activities.
@@ -92,6 +93,7 @@ public class SampleDataUtil {
         return schedules;
     }
 
+    //@@author
     /**
      * Returns a tag set containing the list of strings given.
      */

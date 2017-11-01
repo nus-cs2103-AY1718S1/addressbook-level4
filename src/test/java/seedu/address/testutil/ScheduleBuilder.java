@@ -6,6 +6,7 @@ import seedu.address.model.schedule.Activity;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.ScheduleDate;
 
+//@@author CT15
 /**
  * A utility class to help with building Schedule objects.
  */

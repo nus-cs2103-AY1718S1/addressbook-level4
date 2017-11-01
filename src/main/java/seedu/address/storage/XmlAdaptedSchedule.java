@@ -11,6 +11,7 @@ import seedu.address.model.schedule.Activity;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.ScheduleDate;
 
+//@@author CT15
 /**
  * JAXB-friendly adapted version of the Schedule.
  */
@@ -41,6 +42,7 @@ public class XmlAdaptedSchedule {
                 + " Person: " + personInvolvedName.toString();
     }
 
+    //@@author
     /**
      * Converts this jaxb-friendly adapted tag object into the model's Schedule object.
      *

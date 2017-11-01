@@ -22,6 +22,7 @@ public class HelpCommand extends Command {
 
     public static final String SHOWING_HELP_MESSAGE = "Opened help window.";
 
+    //@@author CT15
     private final CommandIdentifier commandIdentifier;
 
     public HelpCommand(CommandIdentifier targetCommandIdentifier) {

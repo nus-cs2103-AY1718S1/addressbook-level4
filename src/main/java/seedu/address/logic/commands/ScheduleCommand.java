@@ -21,6 +21,7 @@ import seedu.address.model.schedule.Activity;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.ScheduleDate;
 
+//@@author CT15
 /**
  * Schedules an Activity with a person.
  */

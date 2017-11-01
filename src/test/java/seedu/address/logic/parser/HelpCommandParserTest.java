@@ -11,6 +11,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.model.commandidentifier.CommandIdentifier;
 import seedu.address.testutil.CommandIdentifierUtils;
 
+//@@author CT15
 public class HelpCommandParserTest {
     private HelpCommandParser parser = new HelpCommandParser();
 

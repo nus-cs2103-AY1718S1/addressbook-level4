@@ -132,6 +132,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author CT15
     /**
      * Replaces this person's schedules with the schedules in the argument schedule set.
      */
@@ -153,6 +154,7 @@ public class Person implements ReadOnlyPerson {
         return Collections.unmodifiableSet(schedules.get().toSet());
     }
 
+    //@@author
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

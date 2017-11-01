@@ -175,6 +175,7 @@ public class ParserUtilTest {
         assertEquals(expectedEmailSet, actualEmailSet);
     }
 
+    //@@author CT15
     @Test
     public void parseScheduleDate_invalidValue_throwIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
@@ -250,6 +251,7 @@ public class ParserUtilTest {
         assertEquals(expectedCommandIdentifier, actualCommandIdentifier);
     }
 
+    //author
     @Test
     public void parseTags_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);

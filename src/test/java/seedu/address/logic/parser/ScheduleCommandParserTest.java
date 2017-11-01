@@ -19,6 +19,7 @@ import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.ScheduleBuilder;
 
+//@@author CT15
 public class ScheduleCommandParserTest {
     private ScheduleCommandParser parser = new ScheduleCommandParser();
 

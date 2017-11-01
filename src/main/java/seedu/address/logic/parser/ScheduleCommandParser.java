@@ -16,6 +16,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.schedule.Activity;
 import seedu.address.model.schedule.ScheduleDate;
 
+//@@author CT15
 /**
  * Parses input arguments and creates a new HelpCommand object
  */
