@@ -108,55 +108,6 @@ public class ExtendedPersonCardHandle extends NodeHandle<Node> {
             return getScheduleList();
         }
 ```
-###### /java/seedu/address/logic/commands/AddCommandTest.java
-``` java
-
-        @Override
-        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
-            fail("This method should not be called.");
-        }
-    }
-
-    /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
-     */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
-        @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-    }
-
-    /**
-     * A Model stub that always accept the person being added.
-     */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
-
-        @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            personsAdded.add(new Person(person));
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-    }
-
-}
-```
 ###### /java/seedu/address/logic/commands/ScheduleCommandTest.java
 ``` java
 public class ScheduleCommandTest {
@@ -307,9 +258,6 @@ public class ScheduleCommandParserTest {
         public ObservableList<Schedule> getScheduleList() {
             return schedules;
         }
-    }
-
-}
 ```
 ###### /java/seedu/address/model/ModelManagerTest.java
 ``` java
@@ -325,46 +273,6 @@ public class ScheduleCommandParserTest {
         AddressBook oldAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         assertFalse(addressBook.getPersonList().equals(oldAddressBook));
     }
-```
-###### /java/seedu/address/model/ModelManagerTest.java
-``` java
-    @Test
-    public void equals() {
-        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
-        AddressBook differentAddressBook = new AddressBook();
-        UserPrefs userPrefs = new UserPrefs();
-
-        // same values -> returns true
-        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
-        ModelManager modelManagerCopy = new ModelManager(addressBook, userPrefs);
-        assertTrue(modelManager.equals(modelManagerCopy));
-
-        // same object -> returns true
-        assertTrue(modelManager.equals(modelManager));
-
-        // null -> returns false
-        assertFalse(modelManager.equals(null));
-
-        // different types -> returns false
-        assertFalse(modelManager.equals(5));
-
-        // different addressBook -> returns false
-        assertFalse(modelManager.equals(new ModelManager(differentAddressBook, userPrefs)));
-
-        // different filteredList -> returns false
-        String[] keywords = ALICE.getName().fullName.split("\\s+");
-        modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
-        assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
-
-        // resets modelManager to initial state for upcoming tests
-        modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-
-        // different userPrefs -> returns true
-        UserPrefs differentUserPrefs = new UserPrefs();
-        differentUserPrefs.setAddressBookName("differentName");
-        assertTrue(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
-    }
-}
 ```
 ###### /java/seedu/address/model/UniqueScheduleListTest.java
 ``` java
@@ -422,7 +330,6 @@ public class UniqueScheduleListTest {
             uniqueTagList.asObservableList().remove(uniqueTagList.asObservableList().remove(i));
         }
     }
-}
 ```
 ###### /java/seedu/address/storage/XmlAddressBookStorageTest.java
 ``` java
@@ -452,11 +359,6 @@ public class UniqueScheduleListTest {
         }
         return false;
     }
-```
-###### /java/seedu/address/storage/XmlAddressBookStorageTest.java
-``` java
-
-}
 ```
 ###### /java/seedu/address/ui/ExtendedPersonCardTest.java
 ``` java
