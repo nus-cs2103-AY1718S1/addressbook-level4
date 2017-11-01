@@ -54,6 +54,7 @@ public class ArgumentMultimap {
         return new ArrayList<>(internalMap.get(prefix));
     }
 
+    //@@author yunpengn
     /**
      * Returns the mapping of {@code Prefix} and their corresponding last values for all {@code prefix}es (only if
      * there is a value present). <b>Notice</b>: the return {@code HashMap} does not include preamble and tags.
@@ -73,6 +74,7 @@ public class ArgumentMultimap {
 
         return values;
     }
+    //@@author
 
     /**
      * Returns the preamble (text before the first valid prefix). Trims any leading/trailing spaces.

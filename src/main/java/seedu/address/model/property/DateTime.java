@@ -2,6 +2,7 @@ package seedu.address.model.property;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
+
 //@@author junyango
 /**
  * Represents an event's date/time in the address book.

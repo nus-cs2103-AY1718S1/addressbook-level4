@@ -6,6 +6,7 @@ import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
 
+//@@author yunpengn
 /**
  * JAXB-friendly adapted version of the {@link Property}, stores the general information of each property.
  */

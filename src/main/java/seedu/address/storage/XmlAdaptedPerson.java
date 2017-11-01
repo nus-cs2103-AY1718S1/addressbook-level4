@@ -40,7 +40,7 @@ public class XmlAdaptedPerson {
      */
     public XmlAdaptedPerson() {}
 
-
+    //@@author yunpengn
     /**
      * Converts a given Person into this class for JAXB use.
      *

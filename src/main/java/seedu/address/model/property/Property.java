@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
+//@@author yunpengn
 /**
  * A generic class that represents a property of a person. All properties of a person (including name, email, phone
  * and address) should inherit from this class.

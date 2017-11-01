@@ -206,6 +206,7 @@ public class MainWindow extends UiPart<Region> {
         browserPanel.freeResources();
     }
 
+    //@@author yunpengn
     /**
      * Take note of the following two methods, which overload each other. The one without parameter is used as the
      * callback when the user clicks on the sidebar button; the other one is used as the subscriber when the user
@@ -247,6 +248,7 @@ public class MainWindow extends UiPart<Region> {
         dataDetailsPanelPlaceholder.getChildren().clear();
         dataDetailsPanelPlaceholder.getChildren().add(new PersonDetailsPanel(person).getRoot());
     }
+    //@@author
 
     /**
      * Opens the help window.

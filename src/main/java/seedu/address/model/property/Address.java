@@ -3,6 +3,7 @@ package seedu.address.model.property;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
+//@@author yunpengn
 /**
  * Represents a Person's address in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
