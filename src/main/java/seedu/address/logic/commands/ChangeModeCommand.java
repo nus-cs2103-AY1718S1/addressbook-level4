@@ -61,4 +61,3 @@ public class ChangeModeCommand extends Command {
             && mode.equals(((ChangeModeCommand) other).mode));
     }
 }
-//@@author tby1994
