@@ -1,4 +1,6 @@
-//@@author namvd2709
+# namvd2709
+###### /java/seedu/address/logic/commands/AppointCommandTest.java
+``` java
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
@@ -112,3 +114,71 @@ public class AppointCommandTest {
         return appointCommand;
     }
 }
+```
+###### /java/seedu/address/logic/parser/AppointCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.APPOINTMENT_DESC;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.AppointCommand;
+
+public class AppointCommandParserTest {
+    private static final String MESSAGE_INVALID_FORMAT =
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, AppointCommand.MESSAGE_USAGE);
+
+    private AppointCommandParser parser = new AppointCommandParser();
+
+    @Test
+    public void parse_missingParts_failure() {
+        // no index specified
+        assertParseFailure(parser, APPOINTMENT_DESC, ParserUtil.MESSAGE_INVALID_INDEX);
+
+        // no index and no field specified
+        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_invalidPreamble_failure() {
+        // negative index
+        assertParseFailure(parser, "-3" + APPOINTMENT_DESC, ParserUtil.MESSAGE_INVALID_INDEX);
+
+        // zero index
+        assertParseFailure(parser, "0" + APPOINTMENT_DESC, ParserUtil.MESSAGE_INVALID_INDEX);
+
+        // invalid arguments being parsed as preamble
+        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
+
+        // invalid prefix being parsed as preamble
+        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
+    }
+}
+```
+###### /java/seedu/address/testutil/PersonBuilder.java
+``` java
+    /**
+     * Sets the {@code Appointment} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withAppointment(String appointment) {
+        try {
+            this.person.setAppointment(new Appointment(appointment));
+        } catch (IllegalValueException ive) {
+            try {
+                throw new IllegalValueException("appointment is expected to be unique");
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+            }
+        }
+        return this;
+    }
+
+    public Person build() {
+        return this.person;
+    }
+
+}
+```

@@ -124,6 +124,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author namvd2709
     /**
      * Sets the {@code Appointment} of the {@code Person} that we are building.
      */
