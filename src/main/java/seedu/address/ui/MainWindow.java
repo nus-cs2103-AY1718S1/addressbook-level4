@@ -142,8 +142,8 @@ public class MainWindow extends UiPart<Region> {
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         tagListPanel = new TagListPanel(logic.getTagList());
-        personAndTagListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
         personAndTagListPanelPlaceholder.getChildren().add(tagListPanel.getRoot());
+        personAndTagListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
         tagListPanel.setVisible(false);
 
         ResultDisplay resultDisplay = new ResultDisplay();
