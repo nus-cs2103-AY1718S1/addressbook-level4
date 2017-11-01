@@ -10,9 +10,11 @@ import static seedu.address.testutil.TypicalEvents.EXAM;
 import static seedu.address.testutil.TypicalEvents.MOURN;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventAddressBook;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.TreeMap;
 
 import org.junit.Test;
 
@@ -25,6 +27,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.TitleContainsKeywordsPredicate;
+import seedu.address.model.event.timeslot.Timeslot;
 
 /**
  * @@reginleiff Contains integration tests (interaction with the Model) for {@code FindEventCommand}.
@@ -70,7 +73,12 @@ public class FindEventCommandTest {
     public void execute_multipleKeywords_multipleEventsFound() {
         String expectedMessage = String.format(MESSAGE_EVENTS_LISTED_OVERVIEW, 3);
         FindEventCommand command = prepareCommand("Jack's Final Ah");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(BIRTHDAY, MOURN, EXAM));
+        TreeMap<Timeslot, ReadOnlyEvent> map = new TreeMap<>();
+        map.put(BIRTHDAY.getTimeslot(), BIRTHDAY);
+        map.put(MOURN.getTimeslot(), MOURN);
+        map.put(EXAM.getTimeslot(), EXAM);
+        List<ReadOnlyEvent> list = new ArrayList<>(map.values());
+        assertCommandSuccess(command, expectedMessage, list);
     }
 
     /**

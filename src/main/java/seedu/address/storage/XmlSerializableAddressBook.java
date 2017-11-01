@@ -108,4 +108,9 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(rel);
     }
+
+    @Override
+    public ReadOnlyEvent getLastChangedEvent() {
+        return null;
+    }
 }

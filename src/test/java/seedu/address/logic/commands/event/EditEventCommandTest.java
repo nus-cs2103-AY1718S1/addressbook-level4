@@ -5,11 +5,14 @@ import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_MIDTERM;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_SOCCER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_SOCCER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_MIDTERM;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_MIDTERM;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_SOCCER;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstEventOnly;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstTwoEventsOnly;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventAddressBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_EVENT;
@@ -36,7 +39,8 @@ public class EditEventCommandTest {
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Event editedEvent = new EventBuilder().build();
+        Event editedEvent = new EventBuilder().withTitle(VALID_TITLE_SOCCER).withTimeslot(VALID_TIMESLOT_MIDTERM)
+                .withDescription(VALID_DESCRIPTION_SOCCER).build();
         EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder(editedEvent).build();
         EditEventCommand editCommand = prepareCommand(INDEX_FIRST_EVENT, descriptor);
 
@@ -85,9 +89,11 @@ public class EditEventCommandTest {
         showFirstEventOnly(model);
 
         ReadOnlyEvent eventInFilteredList = model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
-        Event editedEvent = new EventBuilder(eventInFilteredList).withTitle(VALID_TITLE_MIDTERM).build();
+        Event editedEvent = new EventBuilder(eventInFilteredList).withTitle(VALID_TITLE_SOCCER)
+                .withTimeslot(VALID_TIMESLOT_MIDTERM).build();
         EditEventCommand editCommand = prepareCommand(INDEX_FIRST_EVENT,
-                new EditEventDescriptorBuilder().withTitle(VALID_TITLE_MIDTERM).build());
+                new EditEventDescriptorBuilder().withTitle(VALID_TITLE_SOCCER)
+                        .withTimeslot(VALID_TIMESLOT_MIDTERM).build());
 
         String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_EVENT_SUCCESS, editedEvent);
 
@@ -156,5 +162,35 @@ public class EditEventCommandTest {
         EditEventCommand editCommand = new EditEventCommand(index, descriptor);
         editCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return editCommand;
+    }
+
+    //@@author a0107442n
+
+    @Test
+    public void execute_eventTimeClashUnfilteredList_failure() {
+        Index indexLastEvent = Index.fromOneBased(model.getFilteredEventList().size());
+        ReadOnlyEvent lastEvent = model.getFilteredEventList().get(indexLastEvent.getZeroBased());
+
+        EventBuilder eventInList = new EventBuilder(lastEvent);
+        Event editedEvent = eventInList.withTitle(VALID_TITLE_MIDTERM).build();
+
+        EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder(editedEvent).build();
+        EditEventCommand editEventCommand = prepareCommand(INDEX_FIRST_EVENT, descriptor);
+
+        assertCommandFailure(editEventCommand, model, EditEventCommand.MESSAGE_TIME_CLASH);
+    }
+
+    @Test
+    public void execute_eventTimeClashFilteredList_failure() {
+        showFirstTwoEventsOnly(model);
+
+        //edit event in filtered list to clash with an existing event in address book
+        ReadOnlyEvent secondEventInList = model.getAddressBook().getEventList().get(INDEX_SECOND_EVENT.getOneBased());
+        EventBuilder eventInList = new EventBuilder(secondEventInList);
+        Event editedEvent = eventInList.withTitle(VALID_TITLE_MIDTERM).build();
+        EditEventCommand editEventCommand = prepareCommand(INDEX_FIRST_EVENT,
+                new EditEventDescriptorBuilder(editedEvent).build());
+
+        assertCommandFailure(editEventCommand, model, EditEventCommand.MESSAGE_TIME_CLASH);
     }
 }

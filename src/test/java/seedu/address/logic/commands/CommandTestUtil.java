@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_RELATIONSHIP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMPANY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -12,7 +13,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHOTO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_RELATIONSHIP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMESLOT;
@@ -49,6 +49,7 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
+    //@@author sebtsh
     public static final String VALID_COMPANY_AMY = "Microsoft";
     public static final String VALID_COMPANY_BOB = "Google";
     public static final String VALID_POSITION_AMY = "Manager";
@@ -59,6 +60,7 @@ public class CommandTestUtil {
     public static final String VALID_PRIORITY_BOB = "M";
     public static final String VALID_NOTE_AMY = "Met this person last week";
     public static final String VALID_NOTE_BOB = "Likes coffee";
+    //@@author
     public static final String FILE_SEPARATOR = File.separator;
     public static final String VALID_PHOTO_AMY = "src" + FILE_SEPARATOR + "main" + FILE_SEPARATOR + "resources"
             + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "summer.jpg";
@@ -77,6 +79,7 @@ public class CommandTestUtil {
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
     public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
+    //@@author sebtsh
     public static final String COMPANY_DESC_AMY = " " + PREFIX_COMPANY + VALID_COMPANY_AMY;
     public static final String COMPANY_DESC_BOB = " " + PREFIX_COMPANY + VALID_COMPANY_BOB;
     public static final String POSITION_DESC_AMY = " " + PREFIX_POSITION + VALID_POSITION_AMY;
@@ -87,26 +90,29 @@ public class CommandTestUtil {
     public static final String PRIORITY_DESC_BOB = " " + PREFIX_PRIORITY + VALID_PRIORITY_BOB;
     public static final String NOTE_DESC_AMY = " " + PREFIX_NOTE + VALID_NOTE_AMY;
     public static final String NOTE_DESC_BOB = " " + PREFIX_NOTE + VALID_NOTE_BOB;
+    //@@author
     public static final String PHOTO_DESC_AMY = " " + PREFIX_PHOTO + VALID_PHOTO_AMY;
     public static final String PHOTO_DESC_BOB = " " + PREFIX_PHOTO + VALID_PHOTO_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
-    public static final String REL_DESC_SIBLINGS = " " + PREFIX_RELATIONSHIP + VALID_REL_SIBLINGS;
-    public static final String REL_DESC_COLLEAGUE = " " + PREFIX_RELATIONSHIP + VALID_REL_COLLEAGUE;
+    public static final String REL_DESC_SIBLINGS = " " + PREFIX_ADD_RELATIONSHIP + VALID_REL_SIBLINGS;
+    public static final String REL_DESC_COLLEAGUE = " " + PREFIX_ADD_RELATIONSHIP + VALID_REL_COLLEAGUE;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
+    //@@author sebtsh
     public static final String INVALID_COMPANY_DESC = " " + PREFIX_COMPANY; // empty string not allowed for company
     public static final String INVALID_POSITION_DESC = " " + PREFIX_POSITION; //empty string not allowed for position
     public static final String INVALID_STATUS_DESC = " " + PREFIX_STATUS; //empty string not allowed for status
     public static final String INVALID_PRIORITY_DESC = " " + PREFIX_PRIORITY + "A"; //only H, M, L allowed for priority
     public static final String INVALID_NOTE_DESC = " " + PREFIX_NOTE; //empty string not allowed for status
+    //@@author
     public static final String INVALID_PHOTO_DESC = " " + PREFIX_PHOTO; //empty
     // string not allowed for status
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
-    public static final String INVALID_REL_DESC = " " + PREFIX_RELATIONSHIP + "sibling*"; // '*' not allowed in
+    public static final String INVALID_REL_DESC = " " + PREFIX_ADD_RELATIONSHIP + "sibling*"; // '*' not allowed in
     // relationships
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
@@ -137,7 +143,9 @@ public class CommandTestUtil {
     public static final EditEventCommand.EditEventDescriptor DESC_MIDTERM;
     public static final EditEventCommand.EditEventDescriptor DESC_SOCCER;
 
+
     static {
+        //@@author sebtsh
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withCompany(VALID_COMPANY_AMY).withPosition(VALID_POSITION_AMY)
@@ -152,6 +160,7 @@ public class CommandTestUtil {
                 .withNote(VALID_NOTE_BOB).withPhoto(VALID_PHOTO_BOB).withTags
                 (VALID_TAG_FRIEND).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
                 .withRelation(VALID_REL_SIBLINGS).build();
+        //@@author
 
         DESC_MIDTERM = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_MIDTERM)
                 .withTimeslot(VALID_TIMESLOT_MIDTERM)
@@ -219,6 +228,21 @@ public class CommandTestUtil {
         model.updateFilteredEventList(new TitleContainsKeywordsPredicate(Arrays.asList(splitEvent[0])));
 
         assert model.getFilteredEventList().size() == 1;
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the first two events in the {@code model}'s address book.
+     */
+    public static void showFirstTwoEventsOnly(Model model) {
+        ReadOnlyEvent firstEvent = model.getAddressBook().getEventList().get(0);
+        ReadOnlyEvent secondEvent = model.getAddressBook().getEventList().get(1);
+        String[] splitFirstEvent = firstEvent.getTitle().toString().split("\\s+");
+        String[] splitSecondEvent = secondEvent.getTitle().toString().split("\\s+");
+
+        model.updateFilteredEventList(new TitleContainsKeywordsPredicate(Arrays.asList(splitFirstEvent[0],
+                splitSecondEvent[0])));
+
+        assert model.getFilteredEventList().size() == 2;
     }
 
     /**

@@ -30,11 +30,13 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    //@@author sebtsh
     public static final String DEFAULT_COMPANY = "NIL";
     public static final String DEFAULT_POSITION = "NIL";
     public static final String DEFAULT_STATUS = "NIL";
     public static final String DEFAULT_PRIORITY = "L";
     public static final String DEFAULT_NOTE = "NIL";
+    //@@author
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_RELATIONSHIP = "siblings";
 
@@ -45,6 +47,7 @@ public class PersonBuilder {
 
     private Person person;
 
+    //@@author sebtsh
     public PersonBuilder() {
         try {
             Name defaultName = new Name(DEFAULT_NAME);
@@ -66,6 +69,7 @@ public class PersonBuilder {
             throw new AssertionError("Default person's values are invalid.");
         }
     }
+    //@@author
 
     /**
      * Initializes the PersonBuilder with the data of {@code personToCopy}.
@@ -147,6 +151,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author sebtsh
     /**
      * Sets the {@code Company} of the {@code Person} that we are building.
      */
@@ -206,6 +211,7 @@ public class PersonBuilder {
         }
         return this;
     }
+    //@@author
 
     /**
      * Sets the {@code Photo} of the {@code Person} that we are building.

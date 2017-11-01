@@ -53,6 +53,7 @@ public class CheckCommandsParser {
             "delevent", "deleteevent", "eventdelete", "de", "ed" };
         final String[] subEditEventsCommands = new String[] { "eventedit", "editevent", "ee" };
         final String[] subFindEventsCommands = new String[] { "eventfind", "findevent", "fe", "ef" };
+        final String[] subSetRelCommands = new String[] {"set"};
 
 
         /**
@@ -71,12 +72,13 @@ public class CheckCommandsParser {
         final Set<String> commandsForSelect = new HashSet<>(Arrays.asList(subSelectCommands));
         final Set<String> commandsForSort = new HashSet<>(Arrays.asList(subSortCommands));
         final Set<String> commandsForUndo = new HashSet<>(Arrays.asList(subUndoCommands));
-        final Set<String> commandsForCheckCalendar = new HashSet<>(Arrays.asList
+        final Set<String> commandsForCheckSchedule = new HashSet<>(Arrays.asList
                 (subCheckScheduleCommands));
         final Set<String> commandsForAddEvent = new HashSet<>(Arrays.asList(subAddEventsCommands));
         final Set<String> commandsForDeleteEvent = new HashSet<>(Arrays.asList(subDeleteEventsCommands));
         final Set<String> commandsForEditEvent = new HashSet<>(Arrays.asList(subEditEventsCommands));
         final Set<String> commandsForFindEvent = new HashSet<>(Arrays.asList(subFindEventsCommands));
+        final Set<String> commandsForSetRel = new HashSet<>(Arrays.asList(subSetRelCommands));
 
         /**
          * Compares the userInputCommand with the different commands set
@@ -107,8 +109,8 @@ public class CheckCommandsParser {
             finalUserCommand = "sort";
         } else if (!Collections.disjoint(userInputCommand, commandsForUndo)) {
             finalUserCommand = "undo";
-        } else if (!Collections.disjoint(userInputCommand, commandsForCheckCalendar)) {
-            finalUserCommand = "checkschedule";
+        } else if (!Collections.disjoint(userInputCommand, commandsForCheckSchedule)) {
+            finalUserCommand = "thisweek";
         } else if (!Collections.disjoint(userInputCommand, commandsForAddEvent)) {
             finalUserCommand = "eventadd";
         } else if (!Collections.disjoint(userInputCommand, commandsForDeleteEvent)) {
@@ -117,6 +119,8 @@ public class CheckCommandsParser {
             finalUserCommand = "eventedit";
         } else if (!Collections.disjoint(userInputCommand, commandsForFindEvent)) {
             finalUserCommand = "eventfind";
+        } else if (!Collections.disjoint(userInputCommand, commandsForSetRel)) {
+            finalUserCommand = "set";
         }
         return finalUserCommand;
     }

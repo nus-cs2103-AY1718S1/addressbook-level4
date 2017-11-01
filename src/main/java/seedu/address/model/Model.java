@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.exceptions.EventTimeClashException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.InvalidSortTypeException;
@@ -74,7 +75,7 @@ public interface Model {
     /**
      * @@reginleiff Adds the given event
      */
-    void addEvent(ReadOnlyEvent event);
+    void addEvent(ReadOnlyEvent event) throws EventTimeClashException;
 
     /**
      * @@reginleiff Deletes the given event.
@@ -85,7 +86,8 @@ public interface Model {
      * @throws EventNotFoundException if {@code target} could not be found in the list.
      * @@reginleiff Replaces the given event {@code target} with {@code editedPerson}.
      */
-    void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws EventNotFoundException;
+    void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws EventNotFoundException,
+            EventTimeClashException;
 
     /**
      * @@reginleiff Returns an unmodifiable view of the filtered event list

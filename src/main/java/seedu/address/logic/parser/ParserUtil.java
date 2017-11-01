@@ -92,7 +92,7 @@ public class ParserUtil {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
-
+    //@@author sebtsh
     /**
      * Parses a {@code Optional<String> company} into an {@code Optional<Company>} if {@code company} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -148,31 +148,29 @@ public class ParserUtil {
             throws IllegalValueException {
         requireNonNull(filePath);
 
-        //Initialize file paths
         String originalFilePath;
         String destFilePath = null;
+
         if (filePath.isPresent()) {
             originalFilePath = filePath.get();
 
-            //File separator is '/' in Linux-based systems and '\' in
-            // Windows-based systems
+            //Get the file name.
             String s = File.separator;
-
             int lastDelimiterPosition = originalFilePath.lastIndexOf(s);
             String fileName = originalFilePath.substring
                     (lastDelimiterPosition + 1);
 
             if (lastDelimiterPosition == -1 || !fileName.matches
-                    ("[\\.\\\\\\/\\w].*\\.(jpg|png|jpeg)")) {
+                    (".*\\.(jpg|png|jpeg)")) {
                 throw new IllegalValueException(Photo.MESSAGE_PHOTO_CONSTRAINTS);
             } else {
                 try {
-                    // Construct the destination file and copy the original
-                    // image file to this destination.
                     destFilePath = "src" + s + "main" + s + "resources" + s
                             + "images" + s + fileName;
                     File originalFile = new File(originalFilePath);
                     File destFile = new File(destFilePath);
+
+                    // Copy source image file to specified destination.
                     FileUtil.copyFile(originalFile, destFile);
                 } catch (IOException e) {
                     throw new IllegalValueException("Invalid file. "

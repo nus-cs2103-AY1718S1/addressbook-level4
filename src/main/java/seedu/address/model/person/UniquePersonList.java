@@ -48,6 +48,7 @@ public class UniquePersonList implements Iterable<Person> {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
             throw new DuplicatePersonException();
+
         }
         internalList.add(new Person(toAdd));
     }

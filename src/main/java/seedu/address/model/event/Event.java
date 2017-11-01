@@ -1,9 +1,12 @@
 //@@author A0162268B
 package seedu.address.model.event;
 
+import static java.time.temporal.ChronoUnit.MINUTES;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.Objects;
 
 import javafx.beans.property.ObjectProperty;
@@ -17,7 +20,6 @@ import seedu.address.model.event.timeslot.Timing;
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Event implements ReadOnlyEvent {
-
     private ObjectProperty<Title> title;
     private ObjectProperty<Date> date;
     private ObjectProperty<Timing> timing;
@@ -113,6 +115,68 @@ public class Event implements ReadOnlyEvent {
     public void setDescription(Description description) {
         this.description.set(requireNonNull(description));
     }
+
+    /**
+     * Check if this event happens at an earlier time than the given timeslot.
+     * @return true if indeed earlier.
+     */
+    public boolean happensBefore(Timeslot slot) {
+        int comparison = this.getTimeslot().compareTo(slot);
+        return comparison < 0;
+    }
+
+    /**
+     * Check if this event happens at a later time than the given timeslot.
+     * @return true if indeed earlier.
+     */
+    public boolean happensAfter(Timeslot slot) {
+        int comparison = this.getTimeslot().compareTo(slot);
+        return comparison > 0;
+    }
+
+    /**
+     * Obtain the duration of the event.
+     * @return a Duration object.
+     */
+    public Duration getDuration() {
+        return Duration.ofMinutes(MINUTES.between(this.getStartTime(), this.getEndTime()));
+    }
+
+    /**
+     * Obtain the start time of the event.
+     * @return a LocalTime object.
+     */
+    public LocalTime getStartTime() {
+        int start = this.getTiming().getStart();
+        return LocalTime.of(start / 100, start % 100);
+    }
+
+    /**
+     * Obtain the end time of the event.
+     * @return a LocalTime object.
+     */
+    public LocalTime getEndTime() {
+        int end = this.getTiming().getEnd();
+        return LocalTime.of(end / 100, end % 100);
+    }
+
+    /**
+     * Check if two events have time clash.
+     * @param other Event to compare with
+     * @return true if clashes.
+     */
+    public boolean clashesWith(Event other) {
+        int ts = this.getTiming().getStart();
+        int te = this.getTiming().getEnd();
+        int os = other.getTiming().getStart();
+        int oe = other.getTiming().getEnd();
+
+        if (this.getDate().equals(other.getDate()) && !(ts >= oe) && !(te <= os)) {
+            return true;
+        }
+        return false;
+    }
+
 
     @Override
     public boolean equals(Object other) {
