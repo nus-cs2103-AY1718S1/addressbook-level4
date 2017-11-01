@@ -1,4 +1,4 @@
-= Contact List Pro v1.3 - User Guide
+= The Classroom v1.4 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -15,16 +15,16 @@ endif::[]
 By: `T09-B4`      Since: `Oct 2017`      Licence: `MIT`
 
 == *Introduction*
-The `Contact List Pro v1.3` is a program to maintain your contact list. You can use the `Contact List Pro`
+The `The Classroom v1.4` is a program to maintain your contact list. You can use the _**The Classroom**_
  to add, delete, find, sort,  group contacts and even maintain a to-do list with your contacts.
 
 == *About*
-This guide shows you how to get started using the `Contact List Pro`.
+This guide shows you how to get started using _**The Classroom**_.
 
-This guide gives you an in-depth walk-through on the various features of the `Contact List Pro` and
+This guide gives you an in-depth walk-through on the various features of the _**The Classroom**_ and
 teaches you to perform the various commands with the aid of examples.
 
-Each feature stated in the guide also gives user suggestions on the suitable use of the features and functions.
+Each feature stated in this guide provides you with  suggestions on the suitable use of the features and functions.
 
 == *Getting Started*
 
@@ -33,120 +33,150 @@ Each feature stated in the guide also gives user suggestions on the suitable use
 [NOTE]
 This app will *not work* with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file into the folder that you want to use as the home folder for your Contact List Pro.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest `TheClassroom.jar` link:{repoURL}/releases[here].
+.  Copy the file into the folder that you want to use as the home folder for _**The Classroom**_.
+.  Double-click the file to start the app. The following screen should appear in a few seconds.
 +
 image::Ui.png[width="790"]
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
+.  Type commands in the command box and press kbd:[Enter] to execute it. +
+* e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Contact List Pro.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named John Doe to _**The Classroom**_.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  Refer to the link:#features[Features] section below for the details of each command.
 
 == *Features*
 
+=== Commands
+
 ====
-*Command Format*
+*Understanding Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Words in `UPPER CASE` are the parameters supplied by the user.
+** e.g. In `add n/NAME`, `NAME` is the parameter.
+* Items in `square brackets` are optional.
+** e.g Commands which specify `n/NAME [t/TAG]` can accept `n/John Doe t/friend` or `n/John Doe` as input.
+* Items followed by `{nbsp}` `…`​ `{nbsp}` can be used multiple times.
+** e.g. Commands which specify `[t/TAG]...` can accept  `t/friend` or `t/friend t/family`, etc.
+* Parameters can be input in any order
+** e.g. `n/NAME p/PHONE_NUMBER` and `p/PHONE_NUMBER n/NAME` are both acceptable as input.
 ====
 
-=== Viewing help : `help`
+==== Viewing help : `help`
 
-Format: `help`
+*Description:* Directs you to the User Guide.
 
-=== Adding a person: `add`
+*Format:* `help`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+*Suggestion for use:* If you are unsure on what commands are available or how a particular command work.
 
-[TIP]
-A person can have any number of tags (including 0)
+==== Adding a person: `add`
 
-Examples:
+*Description:* Adds a new person to the contact list.
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+*Format:* `add` `n/NAME` `p/PHONE_NUMBER` `e/EMAIL` `a/ADDRESS` `[t/TAG]...`
 
-=== Listing all persons : `list`
+[NOTE]
+Adding `TAGS` are optional.
 
-Shows a list of all persons in the address book. +
-Format: `list`
+*Examples:*
 
-=== Listing all tags : `tags`
+* `add` `n/John Doe` `p/98765432` `e/johnd@example.com` `a/John street, block 123, #01-01`
+* `add` `n/Betsy Crowe` `t/friend` `e/betsycrowe@example.com` `a/Newgate Prison` `p/1234567` `t/criminal`
 
-Shows a list of all tags in the address book. +
-Format: `tags`
+*Suggestion for use:* You want to add a new contact to you contact list.
 
-=== Editing a person : `edit`
+==== Listing all persons : `list`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG] [MORE_TAGS]`
+*Description:* Shows a list of all persons in the contact list.
 
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be overwritten by the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
+*Format:* `list`
 
-Examples:
+*Suggestion for use:* If you want to view all contacts in the contact list.
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+==== Listing all tags : `tags`
 
-=== Favouriting a person : `favourite`
+*Description:* Shows a list of all tags in the contact list.
 
-Favourites or unfavourites an existing person in the address book. +
-Format: `favourite INDEX`
+*Format:* `tags`
+
+*Suggestion for use:* If you want to view all existing tags in _**The Classroom**_.
+
+==== Editing a person : `edit`
+
+*Description:* Edits contact details of an existing person in the contact list.
+
+*Format:* `edit` `INDEX` `[n/NAME]` `[p/PHONE]` `[e/EMAIL]` `[a/ADDRESS]` `[t/TAG]...`
 
 ****
-* Favourites/Unfavourites the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* If the person at the specified `INDEX` is a favourite contact, the person will be unfavourited, otherwise the person will be favourited.
-* Favourited contacts are automatically sorted to the top of the list
+* Edits the person at the specified `INDEX`. `INDEX` refers to the index number shown in the last person listing. The `INDEX` must be a *positive integer* (1, 2, 3, ...).
+* *At least one* of the optional fields must be provided.
+* Existing values will be *overwritten* by the input values.
+** When editing tags, the existing tags of the person will be removed in place of input values.
+*** You can remove all of the person's tags by just typing `t/` without specifying any tags.
 ****
 
-Examples:
+*Examples:*
+
+* `edit` `1` `p/91234567` `e/johndoe@example.com` +
+** Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+* `edit 2 n/Betsy Crowe t/` +
+** Edits the name of the 2nd person to be `Betsy Crowe` and clears all existing tags.
+
+*Suggestion for use:* If you need to update the contact details of any of your contacts.
+
+==== Favouriting a person : `favourite`
+
+*Description:* Favourites or unfavourites an existing person in the contact list.
+
+*Format:* `favourite` `INDEX`
+
+****
+* Favourites/Unfavourites the person at the specified `INDEX`. `INDEX` refers to the index number shown in the last person listing. The `INDEX` must be a *positive integer* (1, 2, 3, ...).
+* If the person at the specified `INDEX` is already favourited, upon execution of command, the person will be unfavourited.
+* Favourited contacts are automatically placed at the top of the list.
+****
+
+*Examples:*
 
 * `list` +
-`favourite 6` +
-Favourites/Unfavourites the 6th person in the address book.
-* `find n/Betsy` +
+`favourite` `6` +
+Favourites/Unfavourites the 6th person in the contact list.
+* `find` `n/Betsy` +
 `favourite 1` +
-Favourites/Unfavourites the 1st person in the results of the `find` command.
+Favourites/Unfavourites the 1st person from the results of the `find` command.
 
-=== Finding persons : `find`
+*Suggestion for use:* You want to easily access a particular contact.
 
-Finds persons whose given field contain any of the given keywords. +
-Format: `find [PREFIX KEYWORD]...`
+==== Finding persons : `find`
+
+*Description:* Finds persons whose specified _field_ contain any of the given keywords.
+
+*Format:* `find` `[PREFIX KEYWORD]...`
 
 ****
-* Prefix has to be given to specify which field to search for.
-* Keyword must *not* contain whitespaces. (`n/Hans Bo` is *not* accepted)
-* The search is case insensitive for all fields. +
-e.g. `hans` will match `Hans`
+* `PREFIX` has to be given to specify which _field_ to search for.
+* Keyword must *not* contain whitespaces.
+** e.g. `n/Hans Bo` is *not* accepted.
+* The search is *case-insensitive* for all _fields_. +
+** e.g. `hans` will match `Hans`
 //* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Any fields can be searched. (`name`, `phone`, `address`, `email`, `tags`)
-* Partial keyword will be matched e.g. `Han` will match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `n/Hans n/Bo` will return `Hans Gruber`, `Bo Yang`
+* Any _fields_ can be searched.
+** `name`, `phone`, `address`, `email`, `tags`
+* Partial keyword will be matched
+** e.g. `Han` will match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search).
+** e.g. `n/Hans n/Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 [NOTE]
 ====
-PREFIX: +
+PREFIX -> _field_ +
 `n/` -> name +
 `p/` -> phone +
 `a/` -> address +
@@ -154,220 +184,270 @@ PREFIX: +
 `t/` -> tag
 ====
 
-Examples:
+*Examples:*
 
-* `find n/John` +
+* `find` `n/John` +
 Returns `john` and `John Doe`
-* `find n/Betsy n/Tim n/John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-* `find t/friends t/colleagues` +
+* `find` `n/Betsy` `n/Tim` `n/John` +
+Returns any person having names containing `Betsy`, `Tim`, or `John`
+* `find` `t/friends` `t/colleagues` +
 Returns any person having tags `friends`, `colleagues`, or both.
 
-=== Deleting a person : `delete`
+*Suggestion for use:* If you can only remember a contact's address and wants to find the contact in the contact list.
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+==== Deleting a person : `delete`
+
+*Description:* Deletes the specified person from the contact list.
+
+*Format:* `delete` `INDEX`
 
 ****
 * Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* `INDEX` refers to the index number shown in the most recent listing.
+* The `INDEX` must be a *positive integer* (1, 2, 3, ...).
 ****
 
-Examples:
+*Examples:*
 
 * `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find n/Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+`delete` `2` +
+Deletes the 2nd person in the contact list.
+* `find` `n/Betsy` +
+`delete` `1` +
+Deletes the 1st person from the results of the `find` command.
 
-=== Sorting the person list : `sort`
+*Suggestion for use:* If you do not want to keep a contact in the contact list.
 
-Sorts the person list according to the data field the user specifies. +
-Format: `sort DATAFIELD`
+==== Sorting the person list : `sort`
+
+*Description:* Sorts the person list according to the specified _data field_.
+
+*Format:* `sort` `DATAFIELD`
 
 ****
-* Sorts the person list according to the specified `DATAFIELD`.
 * Possible `DATAFIELD` entries are: `Name`, `Phone`, `Email`, `Address`.
-* `DATAFIELD` is case-insensitive.
-* Note that favourite contacts will be shown first.
+* `DATAFIELD` is *case-insensitive*.
+* *Note that favourited contacts will be shown at the top*.
 ****
 
-Examples:
+*Examples:*
 
-* `sort Phone` +
-Sorts the person list according to their phone numbers.
-* `sort address` +
-Sorts the person list according to their addresses.
+* `sort` `Phone` +
+Sorts the contact list according to their phone numbers.
+* `sort` `address` +
+Sorts the contact list according to their addresses.
 
-=== Selecting a person : `select`
+*Suggestion for use:* If you want to view the number of contacts having names starting with the same letter.
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+==== Selecting a person : `select`
+
+*Description:* Selects the person specified by the index number.
+
+*Format:* `select` `INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* Selects the person and loads the Twitter search page of the person at the specified `INDEX`.
+* `INDEX` refers to the index number shown in the most recent listing.
+* The `INDEX` must be a `positive integer* (`1, 2, 3, ...`).
 ****
 
-Examples:
+*Examples:*
 
 * `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find n/Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+`select` `2` +
+Selects the 2nd person in the contact list.
+* `find` `n/Betsy` +
+`select` `1` +
+Selects the 1st person from the results of the `find` command.
 
-=== Listing entered commands : `history`
+**Suggestion for use: ** To view a contact in greater detail.
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+==== Listing entered commands : `history`
+
+*Description:* Lists all the commands that you have entered in reverse chronological order.
+
+*Format:* `history`
 
 [NOTE]
 ====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and following input respectively in the command box.
 ====
+
+**Suggestion for use: ** If you forgot what command was executed previously.
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+==== Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+*Description:* Restores the contact list to the state before the previous _undoable_ command was executed.
+
+*Format:* `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content +
-(`add`, `delete`, `edit`, `remove` and `clear`).
+Undoable commands: those commands that modify the contact list's content +
+(`add`, `delete`, `edit`, `removetag` and `clear`).
 ====
 
-Examples:
+*Examples:*
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
-
-* `select 1` +
+* `delete` `1` +
 `list` +
 `undo` +
-The `undo` command fails as there are no undoable commands executed previously.
+Reverses the `delete` `1` command
 
-* `delete 1` +
+* `select` `1` +
+`list` +
+`undo` +
+The `undo` command fails as no undoable commands were executed previously.
+
+* `delete` `1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`undo`  +
+`undo`  +
+Reverses the `clear` command followed by reversing the `delete` `1` command.
 
-=== Redoing the previously undone command : `redo`
+**Suggestion for use: **If you had made a mistake in executing a command.
 
-Reverses the most recent `undo` command. +
-Format: `redo`
+==== Redoing the previously undone command : `redo`
 
-Examples:
+*Description:* Reverses the most recent `undo` command.
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+*Format:* `redo`
 
-* `delete 1` +
+*Examples:*
+
+* `delete` `1` +
+`undo` +
 `redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
+Reverse the `undo` command and re-execute the `delete` `1` command. +
 
-* `delete 1` +
+* `delete` `1` +
+`redo` +
+The `redo` command fails as no `undo` commands were executed previously.
+
+* `delete` `1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+`undo` +
+`undo` +
+`redo`  +
+`redo`  +
+The first `redo` command reverses the second `undo` command and re-execute the `delete` `1` command. +
+The second `redo` command reverses the first `undo` command and re-execute the `clear` command.
+
+**Suggestion for use: **If you had mistakenly undone a command.
+
 // end::undoredo[]
 
-=== Adding tag(s) : `addtag`
+==== Adding tag(s) : `addtag`
 
-Adds the specified tag(s). +
-Format: `addtag [TAG]... [INDEX]...`
+*Description:* Adds the specified tag(s).
+
+*Format:* `addtag` `TAG...` `INDEX...`
 
 
 ****
-* The index refers to the index number shown in the last person listing.
-* The index must be a positive integer `1, 2, 3, ...`
 * Adds multiple tags to multiple indexes as specified.
+* The `INDEX` refers to the index number shown in the last person listing.
+* The index must be a *positive integer* (`1, 2, 3, ...`).
+* Range of index can be used.
+** Lower limit of range must be *lower than* or *equal to* the upper limit  (`1-4`, `3-3`).
+
 ****
 
-Examples:
+*Examples:*
 
 * `list` +
-`addtag friends 1` +
-Adds the `friends` tag to the first person in the address book.
+`addtag` `friends` `1` +
+Adds the `friends` tag to the first person in the contact list.
 
 * `list` +
-`addtag friends family 2` +
-Adds the `friends` and `family` tag to the second person in the address book.
+`addtag` `friends` `family` `2` +
+Adds the `friends` and `family` tag to the second person in the contact list.
 
 * `list` +
-`addtag friends family 2 5` +
-Adds the `friends` and `family` tag to the second and fifth person in the address book.
+`addtag` `friends` `family` `2` `5` +
+Adds the `friends` and `family` tag to the second and fifth person in the contact list.
+
+* `list` +
+`addtag` `friends` `2-5` +
+Adds the `friends` tag to the person from the second to fifth index in the contact list.
+
+*Suggestion for use:* If you want to add tags cumulatively to a contact's details.
 
 // end::addtag[]
 
-=== Removing tag(s) : `removetag`
+==== Removing tag(s) : `removetag`
 
-Removes the specified tag(s). +
-Format: `removetag [TAG]... [INDEX]...`
+*Description:* Removes the specified tag(s).
+
+*Format:* `removetag` `TAG...` `INDEX...`
 
 [NOTE]
 ====
-Executing command without the INDEX field will remove the given tag(s) from the whole address book.
+Executing command without the INDEX will remove the given tag(s) from the whole contact list.
 ====
 
 ****
-* The index refers to the index number shown in the last person listing.
-* The index must be a positive integer `1, 2, 3, ...`
 * Removes multiple tags from multiple indexes as specified.
+* `INDEX` refers to the index number shown in the last person listing.
+* The `INDEX` must be a *positive integer* ( `1, 2, 3, ...`).
+* Range of index can be used.
+** Lower limit of range must be *lower than* or *equal to* the upper limit  (`1-4`, `3-3`).
+
 ****
 
 Examples:
 
 * `list` +
-`removetag friends 1` +
-Removes the `friends` tag from the first person in the address book.
+`removetag` `friends` `1` +
+Removes the `friends` tag from the first person in the contact list.
 
 * `list` +
-`removetag friends` +
-Removes the `friends` tag from every person in the address book.
+`removetag` `friends` +
+Removes the `friends` tag from every person in the contact list.
 
 * `list` +
-`removetag friends family 2` +
-Removes the `friends` and `family` tag from the second person in the address book.
+`removetag` `friends` `family` `2` +
+Removes the `friends` and `family` tag from the second person in the contact list.
 
 * `list` +
-`removetag friends family 2 5` +
-Removes the `friends` and `family` tag from the second and fifth person in the address book.
+`removetag` `friends` `family` `2` `5` +
+Removes the `friends` and `family` tag from the second and fifth person in the contact list.
 
+* `list` +
+`removetag` `friends` `2-5` +
+Removes the `friends` tag from the second to fifth person in the contact list.
+
+*Suggestion for use:* If you want to mass delete a tag that is no longer in use.
 
 // end::removetag[]
 
-=== Clearing all entries : `clear`
+==== Clearing all entries : `clear`
 
-Clears all entries from the address book. +
-Format: `clear`
+*Description:* Clears all entries in _**The Classroom**_.
 
-=== Exiting the program : `exit`
+*Format:* `clear`
 
-Exits the program. +
-Format: `exit`
+*Suggestion for use:* If you want to begin a brand new contact list.
 
-=== Saving the data
+==== Exiting the program : `exit`
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+*Description:* Exits the program.
+
+*Format:* `exit`
+
+*Suggestion for use:* If you are done using _**The Classroom**_ and wishes to close the program.
+
+=== Saving data
+
+_**The Classroom**_ data are automatically saved in the hard disk after each command execution. +
+You are *not* required to save data manually.
 
 == *Command Summary*
 
 [width="90%",cols="10%,<10%,<70%",options="header",]
 |=======================================================================
-|Feature |Alias |Command Format
+|Command |Alias |Command Format
 | *Help* | *h* | `help` +
 | *Add* | *a* | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 | *List* | *l* | `list` +
@@ -381,24 +461,26 @@ There is no need to save manually.
 | *History* | *hs* | `history` +
 | *Undo* | *u* | `undo` +
 | *Redo* | *r* | `redo` +
-| *Remove tag* | *rt* | `removetag [TAG]... [INDEX]...` +
-| *Add tag* | *at* | `addtag [TAG]... [INDEX]...` +
+| *Removetag* | *rt* | `removetag TAG... INDEX...` +
+| *Addtag* | *at* | `addtag TAG... INDEX...` +
 | *Clear* | *c* | `clear` +
 | *exit* | *x* | `exit` +
 |=======================================================================
 
 The command keywords can be substituted by their aliases. +
-For example:
 
-* To favourite the person at INDEX 4: `fav 4` instead of `favourite 4` can be used. +
-* To undo a command : `u` instead of `undo` can be used.
+**For example: **
+
+* To favourite the person at index 4: `fav 4` or `favourite 4` are both accepted. +
+* To undo a command : `u` or `undo` are both accepted.
 
 == *FAQ*
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
-== *Since v1.2*
+*A*: Install the app on the other computer and replace the empty data file with the file containing your data.
+
+== *Since v1.3*
 
 === Enhanced `find` command to accept different fields
 
@@ -475,6 +557,18 @@ Examples:
 
 * `link 1 l/https://www.twitter.com/john.doe`
 
+=== Enhanced `removetag` command to remove tag from range of index
+
+Allows user to remove tag from multiple persons in the address book by specifying the corresponding range of index. +
+
+Format: `removetag friends 1-4`
+
+=== Enhanced `addtag` command to add tag to a range of index
+
+Allows user to add tag to multiple persons in the address book by specifying the corresponding range of index. +
+
+Format: `addtag friends 1-4`
+
 
 
 == *Coming in v2.0*
@@ -492,7 +586,7 @@ The answer will be used if the user forgets his password.
 
 Examples:
 
-* `create u/johndoeuser p/abcd1234`
+* `create` `u/johndoeuser` `p/abcd1234`
 
 === Ability to login/logout: `login`/`logout`
 
@@ -507,14 +601,14 @@ Logout feature can be used if user wants to access the public contact list witho
 
 Examples:
 
-* `login u/johndoeuser p/abcd1234`
+* `login` `u/johndoeuser` `p/abcd1234`
 * `logout`
 
 === Ability to highlight keyword from the `Find Command` result
 
 Based on the user inputs, the corresponding keywords in the result of the Find Command will be highlighted. +
 
-Command: `find n/ber a/serangoon`
+Command: `find` `n/ber` `a/serangoon`
 
 Result:
 
@@ -524,5 +618,23 @@ image::highlight.png[width=""]
 
 Import/Export contact lists from/to the give path. +
 
-Format: `import PATH`
+Format: `import` `PATH`
+
+=== Ability to change theme of interface
+
+Changes colour theme of display to specified colour theme. +
+
+Format: `theme` `BLUE`
+
+=== Ability to give notifications
+
+Notifications in the form of pop-up windows to indicate error or upcoming event/deadline/
+
+=== Ability to allow scheduling of events/tasks
+
+Schedule tasks/events using calendar and time. +
+May incorporate cloud service to sync with contacts involved.
+
+Format: `schedule` `Math Exam` `21/11/2017` `0900-1100`
+
 
