@@ -33,6 +33,9 @@ public interface Logic {
     void setActiveList(boolean isDelivered);
     //@@author
 
+    /** Returns an unmodifiable view of the filtered list of parcels in the active tab */
+    ObservableList<ReadOnlyParcel> getActiveList();
+
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
 }

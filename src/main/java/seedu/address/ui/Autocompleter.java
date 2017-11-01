@@ -100,7 +100,7 @@ public class Autocompleter {
 
     private int cycleCountingIndex() {
         int currentIndex = countingIndex;
-        int maxIndex = logic.getFilteredParcelList().size();
+        int maxIndex = logic.getActiveList().size();
         countingIndex = (countingIndex + 1) % (maxIndex + 1);
         if (countingIndex == 0) {
             countingIndex = 1;
