@@ -15,7 +15,7 @@ import seedu.address.logic.parser.ParserUtil;
  */
 public class TaskComparator implements Comparator {
     private final String dateNull = "30-12-2999";
-    
+
     @Override
     public int compare(Object obj, Object obj1) {
         Task d = (Task) obj;
