@@ -207,6 +207,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void sortPersonList() {
         persons.sortPersons();
     }
+
     //@@author junyango
     /*****************************************************
      * Event-level operations
@@ -258,8 +259,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void sortEventList() {
         events.sortEvents();
     }
-
     //@@author
+
     /*****************************************************
      * Tag-level operations
      *****************************************************/
