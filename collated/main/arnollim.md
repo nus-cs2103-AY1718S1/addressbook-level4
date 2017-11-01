@@ -34,8 +34,8 @@ public class PrintCommand extends Command {
             + "Example: " + COMMAND_WORD + " filename\n"
             + "file can then be found in the in doc/books folder as filename.txt";
 
-    public static final String MESSAGE_SUCCESS = "Addressbook has been saved! "
-            + "Find your addressbook in the .txt file named by you in the doc/books folder.";
+    public static final String MESSAGE_SUCCESS = "Address Book has been saved!\n"
+            + "Find your Address Book in the %1$s.txt file you created in the doc/books folder.";
 
     private final String fileName;
 
@@ -67,8 +67,8 @@ public class PrintCommand extends Command {
                 String insured = insurance.getInsured().getName();
                 String beneficiary = insurance.getBeneficiary().getName();
                 String premium = insurance.getPremium().toString();
-                String signingDate = insurance.getSigningDate();
-                String expiryDate = insurance.getExpiryDate();
+                String signingDate = insurance.getSigningDateString();
+                String expiryDate = insurance.getExpiryDateString();
                 lines.add("Owner: " + owner + "\n"
                         + "Insured: " + insured + "\n"
                         + "Beneficiary: " + beneficiary + "\n"
@@ -88,8 +88,7 @@ public class PrintCommand extends Command {
             e.printStackTrace();
         }
 
-        //System.out.println("test");
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, this.fileName));
     }
 
 }
@@ -102,10 +101,13 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.ReadOnlyPerson;
+
 
 
 /**
@@ -117,12 +119,14 @@ public class WhyCommand extends Command {
     public static final String COMMAND_WORD = "why";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Tells you why.\n"
-            + "Example: " + COMMAND_WORD;
+            + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_WHY_REMARK_SUCCESS = "Added remark to Person: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
-    public static final String SHOWING_WHY_MESSAGE = "Because %1$s lives in \n%2$s";
+    public static final String SHOWING_WHY_MESSAGE = "Because %1$s lives in %2$s";
+    public static final String SHOWING_WHY_MESSAGE_2 = "Because %1$s is born in %2$s";
+    public static final String SHOWING_WHY_MESSAGE_3 = "Because %1$s's email is %2$s";
 
     private final Index targetIndex;
 
@@ -133,19 +137,19 @@ public class WhyCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
-        //EventsCenter.getInstance().post(new ShowHelpRequestEvent());
+    public CommandResult execute() throws CommandException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            //throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
-        Name name = personToDelete.getName();
-        Address address = personToDelete.getAddress();
-        String reason = personToDelete.getReason();
+
+        ReadOnlyPerson personToAnswer = lastShownList.get(targetIndex.getZeroBased());
+        Name name = personToAnswer.getName();
+        Address address = personToAnswer.getAddress();
+        String reason = personToAnswer.getReason();
         //return new CommandResult(String.format(SHOWING_WHY_MESSAGE, name, address));
         return new CommandResult(reason);
     }
@@ -337,7 +341,17 @@ public class WhyCommandParser implements Parser<WhyCommand> {
     public String getReason() {
         Address a = this.getAddress();
         Name n = this.getName();
-        this.reason = String.format(SHOWING_WHY_MESSAGE, n, a);
+        Email e = this.getEmail();
+        DateOfBirth d = this.getDateOfBirth();
+        Random randomGenerator = new Random();
+        int randomInt = randomGenerator.nextInt(3);
+        if (randomInt == 0) {
+            this.reason = String.format(SHOWING_WHY_MESSAGE, n, a);
+        } else if (randomInt == 1) {
+            this.reason = String.format(SHOWING_WHY_MESSAGE_2, n, d);
+        } else if (randomInt == 2) {
+            this.reason = String.format(SHOWING_WHY_MESSAGE_3, n, e);
+        }
         return reason;
     }
 ```
@@ -407,10 +421,19 @@ public class Reason {
 ```
 ###### /java/seedu/address/model/person/UniquePersonList.java
 ``` java
+    public void sortPersons() throws DuplicatePersonException {
+        ObservableList<Person> listToSort = FXCollections.observableArrayList(internalList);
+        listToSort.sort((ReadOnlyPerson first, ReadOnlyPerson second)-> {
             int x = String.CASE_INSENSITIVE_ORDER.compare(first.getName().fullName, second.getName().fullName);
             if (x == 0) {
                 x = (first.getName().fullName).compareTo(second.getName().fullName);
             }
             return x;
         });
+        UniquePersonList listToReplace = new UniquePersonList();
+        for (ReadOnlyPerson person : listToSort) {
+            listToReplace.add(person);
+        }
+        setPersons(listToReplace);
+    }
 ```
