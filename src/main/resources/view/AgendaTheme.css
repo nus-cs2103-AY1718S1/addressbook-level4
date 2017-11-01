@@ -1,3 +1,4 @@
+/*@@author 17navasaw*/
 .background {
     -fx-background-color: derive(#40593c, 20%);
     background-color: #40593c; /* Used in the default.html file */
