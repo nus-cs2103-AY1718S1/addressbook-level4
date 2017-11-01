@@ -90,7 +90,7 @@ This allows a user view the Social Links and Address of a contact directly withi
 
 === Other contributions
 
-* Updated the GUI color scheme 
+* Updated the GUI color scheme
 
 ---
 #Start of Extract [from: Developer Guide]#
