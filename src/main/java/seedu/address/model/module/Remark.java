@@ -20,7 +20,7 @@ public class Remark {
 
 
     /**
-     * Validates given group number.
+     * Validates given remark content.
      *
      * @throws IllegalValueException if given group string is invalid.
      */

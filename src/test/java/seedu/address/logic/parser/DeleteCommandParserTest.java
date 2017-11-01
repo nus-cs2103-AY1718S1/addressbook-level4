@@ -4,12 +4,10 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_LESSON;
 
 import org.junit.Test;
 
 import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.DeleteRemarkCommand;
 
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
@@ -32,8 +30,4 @@ public class DeleteCommandParserTest {
         assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
     }
 
-    @Test
-    public void parse_deleteRemark_returnsDeleteRemarkCommand() {
-        assertParseSuccess(parser, "-r 2", new DeleteRemarkCommand(INDEX_SECOND_LESSON));
-    }
 }
