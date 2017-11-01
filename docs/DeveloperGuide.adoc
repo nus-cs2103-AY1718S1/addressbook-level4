@@ -1023,56 +1023,34 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
-
-|`* * *` |user |add a new person |
-
-|`* * *` |concerned user |clear all my contacts |not have contacts save in the application if I decide to quit using it
-
-|`* * *` |heavy user |select a person by index |select the correct person by index if I have multiple person with same name
-
+|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use Bluebird
+|`* * *` |parent |add a new contact | manage contacts for my child and I
+|`* * *` |parent |add a new task | manage my child's schedule
+|`* * *` |parent |limit the commands that my child can use| prevent my child from deleting any important contacts or tasks
+|`* * *` |parent |pin important contacts| ensure my child have easy access to them
 |`* * *` |forgetful user |tag important person |find them easily based on tags
-
 |`* * *` |user |list out all persons in address book |select which person I want
-
-|`* * *` |user |delete a person |remove entries that I no longer need
-
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
-
+|`* * *` |user |delete a contact |remove contacts that I no longer need
+|`* * *` |user |delete a task |remove entries that I no longer need
+|`* * *` |user |find a person and task by name |find the contact or tasks that I want easily
 |`* * *` |user with many persons in the address book |view list of people with a certain tag |identify different groups of contacts.
-
 |`* * *` |user with many persons in the address book |sort persons by any field |locate a person easily
-
 |`* * *` |experienced user |input commands using a shortened form |be more efficient when using the application
-
 |`* * *` |travelling user |save and load my contacts from file |use the app on all my devices
-
 |`* * *` |user |save the date of birth of my contacts |know when the birthdays of my contacts are
-
 |`* * *` |heavy user |delete multiple contacts at once |do it at one go and not multiple times
-
 |`* * *` |heavy user |find persons by any fields |find the person if I forget the name.
-
 |`* * *` |conservative user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
-
+|`* *` |concerned user |clear all my contacts |not have contacts save in the application if I decide to quit using it
 |`* *` |social user |connect to social media platforms |find contacts in case I forget who they are
-
 |`* *` |analytical user |view a history of commands I have entered |see what I have done when using the application
-
 |`* *` |clumsy user |undo any action that modifies the address book |not have to repeat commands if it was a mistake
-
 |`* *` |efficient user |redo a command |so that I can use the application quicker without retyping the command after undoing
-
 |`* *` |user |add new tags to a person |update the tags a person will have
-
 |`* *` |forgetful user |make notes for a person |remember important details about the person
-
 |`* *` |user |want to change the window size and font size |view the application with comfort and size
-
 |`* *` |hasty user |customise shortcuts for each command |use the the application at my own pace and comfort
-
 |`* *` |colorblind user |have a colorblind mode for the application |use the application without difficulty
-
 |`*` |user |shift the UI around |use the application with the UI to my liking
 |=======================================================================
 
