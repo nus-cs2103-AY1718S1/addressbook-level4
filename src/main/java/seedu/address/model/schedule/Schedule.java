@@ -49,6 +49,14 @@ public class Schedule {
         return busyTime.toString();
     }
 
+    public TreeSet<Integer> getBusyTime() {
+        return busyTime;
+    }
+
+    public boolean containsTimeNumber(Integer timeNumber){
+        return busyTime.contains(timeNumber);
+    }
+
     @Override
     public int hashCode() {
         return busyTime.hashCode();
