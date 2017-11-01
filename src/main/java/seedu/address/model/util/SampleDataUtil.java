@@ -18,7 +18,6 @@ import seedu.address.model.property.Name;
 import seedu.address.model.property.Phone;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
-import seedu.address.model.reminder.Reminder;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -52,18 +51,22 @@ public class SampleDataUtil {
         }
     }
 
+    //@@author yunpengn
     public static Event[] getSampleEvents() {
         try {
             return new Event[]{
                 new Event(new Name("Volleyball Practice"), new DateTime("25122017 08:30"),
-                        new Address("OCBC ARENA Hall 3, #01-111"), new ArrayList<Reminder>()),
+                        new Address("OCBC ARENA Hall 3, #01-111"), new ArrayList<>()),
                 new Event(new Name("CS2103T Lecture"), new DateTime("20102017 14:00"),
-                        new Address("iCube Auditorium, NUS"), new ArrayList<Reminder>()),
+                        new Address("iCube Auditorium, NUS"), new ArrayList<>()),
+                new Event(new Name("Project Meeting"), new DateTime("20102017 14:00"),
+                        new Address("iCube Auditorium, NUS"), new ArrayList<>())
             };
         } catch (IllegalValueException | PropertyNotFoundException e) {
             throw new AssertionError("sample data cannot be invalid", e);
         }
     }
+    //@@author
 
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {

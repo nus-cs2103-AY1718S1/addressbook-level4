@@ -13,9 +13,11 @@ public class CliSyntax {
     public static final Prefix PREFIX_TAG = new Prefix("t/");
     public static final Prefix PREFIX_REMINDER = new Prefix("r/");
 
+    //@@author yunpengn
     /* Prefix definitions for adding a new customize property. */
     public static final Prefix PREFIX_SHORT_NAME = new Prefix("s/");
     public static final Prefix PREFIX_FULL_NAME = new Prefix("f/");
     public static final Prefix PREFIX_MESSAGE = new Prefix("m/");
     public static final Prefix PREFIX_REGEX = new Prefix("r/");
+    //@@author
 }

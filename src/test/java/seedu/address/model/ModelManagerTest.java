@@ -42,6 +42,7 @@ public class ModelManagerTest {
         assertFalse(modelManager.hasTag(new Tag(VALID_TAG_FRIEND)));
     }
 
+    //@@author yunpengn
     @Test
     public void setTagColor_validFields_success() throws Exception {
         ModelManager modelManager = new ModelManager();
@@ -49,6 +50,7 @@ public class ModelManagerTest {
         modelManager.setTagColor(myTag, VALID_TAG_COLOR);
         assertEquals(VALID_TAG_COLOR, TagColorManager.getColor(myTag));
     }
+    //@@author
 
     @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
@@ -56,6 +58,7 @@ public class ModelManagerTest {
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredPersonList().remove(0);
     }
+
     //@@author junyango
     @Test
     public void getFilteredEventList_modifyList_throwsUnsupportedOperationException() {
@@ -64,6 +67,7 @@ public class ModelManagerTest {
         modelManager.getFilteredEventList().remove(0);
     }
     //@@author
+
     @Test
     public void getFilteredReminderList_modifyList_throwsUnsupportedOperationException() {
         ModelManager modelManager = new ModelManager();
@@ -81,6 +85,7 @@ public class ModelManagerTest {
         int newTagSize = modelManager.getAddressBook().getTagList().size();
         assertEquals(1, originTagSize - newTagSize);
     }
+
     //@@author junyango
     @Test
     public void addPerson_successfullyAddEvent() throws Exception {
@@ -180,6 +185,7 @@ public class ModelManagerTest {
         assertEquals(1, oldReminderListSize - newReminderListSize);
     }
     //@@author
+
     @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();

@@ -18,6 +18,7 @@ import seedu.address.logic.commands.stub.ModelStub;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
+//@@author yunpengn
 public class ChangeTagColorCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

@@ -36,60 +36,9 @@ public class SwitchToEventsListEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\event\AddEventCommand.java
-``` java
-/**
- * Adds an event to the address book.
- */
-public class AddEventCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "addE";
-    public static final String COMMAND_ALIAS = "aE";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to the address book. "
-            + "Parameters: "
-            + PREFIX_NAME + "NAME "
-            + PREFIX_DATE_TIME + "DATE & TIME "
-            + PREFIX_ADDRESS + "VENUE "
-            + "Example: " + COMMAND_WORD + " "
-            + PREFIX_NAME + "John Doe birthday "
-            + PREFIX_DATE_TIME + "25122017 08:30 "
-            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 ";
-
-    public static final String MESSAGE_SUCCESS = "New event added: %1$s";
-    public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the address book";
-
-    private final Event toAdd;
-
-    /**
-     * Creates an AddEventCommand to add the specified {@code ReadOnlyEvent}
-     */
-    public AddEventCommand(ReadOnlyEvent event) {
-        toAdd = new Event(event);
-    }
-
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        requireNonNull(model);
-        try {
-            model.addEvent(toAdd);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (DuplicateEventException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
-        }
-
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof AddEventCommand // instanceof handles nulls
-                && toAdd.equals(((AddEventCommand) other).toAdd));
-    }
-}
-```
 ###### \java\seedu\address\logic\commands\event\DeleteEventCommand.java
 ``` java
+
 /**
  * Deletes an event identified using it's last displayed index from the address book.
  */
@@ -143,6 +92,7 @@ public class DeleteEventCommand extends UndoableCommand {
 ```
 ###### \java\seedu\address\logic\commands\event\EditEventCommand.java
 ``` java
+
 /**
  * Edits the details of an existing person in the address book.
  */
@@ -213,9 +163,10 @@ public class EditEventCommand extends UndoableCommand {
 
         Name updatedName = editEventDescriptor.getName().orElse(eventToEdit.getName());
         DateTime updatedTime = editEventDescriptor.getTime().orElse(eventToEdit.getTime());
-        Address updatedVenue = editEventDescriptor.getVenue().orElse(eventToEdit.getVenue());
+        Address updatedAddress = editEventDescriptor.getAddress().orElse(eventToEdit.getAddress());
+        ArrayList<Reminder> reminders = new ArrayList<Reminder>();
 
-        return new Event(updatedName, updatedTime, updatedVenue);
+        return new Event(updatedName, updatedTime, updatedAddress, reminders);
     }
 
     @Override
@@ -243,21 +194,21 @@ public class EditEventCommand extends UndoableCommand {
     public static class EditEventDescriptor {
         private Name name;
         private DateTime time;
-        private Address venue;
+        private Address address;
 
         public EditEventDescriptor() {}
 
         public EditEventDescriptor(EditEventDescriptor toCopy) {
             this.name = toCopy.name;
             this.time = toCopy.time;
-            this.venue = toCopy.venue;
+            this.address = toCopy.address;
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.time, this.venue);
+            return CollectionUtil.isAnyNonNull(this.name, this.time, this.address);
         }
 
         public void setName(Name name) {
@@ -276,12 +227,12 @@ public class EditEventCommand extends UndoableCommand {
             return Optional.ofNullable(time);
         }
 
-        public void setVenue(Address venue) {
-            this.venue = venue;
+        public void setAddress(Address address) {
+            this.address = address;
         }
 
-        public Optional<Address> getVenue() {
-            return Optional.ofNullable(venue);
+        public Optional<Address> getAddress() {
+            return Optional.ofNullable(address);
         }
 
         @Override
@@ -301,7 +252,7 @@ public class EditEventCommand extends UndoableCommand {
 
             return getName().equals(e.getName())
                     && getTime().equals(e.getTime())
-                    && getVenue().equals(e.getVenue());
+                    && getAddress().equals(e.getAddress());
         }
     }
 }
@@ -360,35 +311,24 @@ public class AddEventParser implements Parser<AddEventCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddEventCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DATE_TIME, PREFIX_ADDRESS);
+        Set<Prefix> prefixes = PropertyManager.getAllPrefixes();
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, prefixes);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_DATE_TIME, PREFIX_ADDRESS)) {
+        // TODO: Keep this checking for now. These pre-loaded properties are compulsory.
+        if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_DATE_TIME)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE));
         }
 
         try {
-            Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-            DateTime dateTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_DATE_TIME)).get();
-            Address venue = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
-
-            ReadOnlyEvent event = new Event(name, dateTime, venue);
-
-            return new AddEventCommand(event);
-        } catch (IllegalValueException | PropertyNotFoundException ive) {
-            throw new ParseException(ive.getMessage(), ive);
+            Set<Property> propertyList = ParserUtil.parseProperties(argMultimap.getAllValues());
+            ArrayList<Reminder> reminderList = new ArrayList<>();
+            return new AddEventCommand(new Event(propertyList, reminderList));
+        } catch (IllegalValueException | PropertyNotFoundException | DuplicatePropertyException e) {
+            throw new ParseException(e.getMessage(), e);
         }
     }
-
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-
 }
+
 ```
 ###### \java\seedu\address\logic\parser\event\DeleteEventParser.java
 ``` java
@@ -444,7 +384,7 @@ public class EditEventParser implements Parser<EditEventCommand> {
         try {
             ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editEventDescriptor::setName);
             ParserUtil.parseTime(argMultimap.getValue(PREFIX_DATE_TIME)).ifPresent(editEventDescriptor::setTime);
-            ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editEventDescriptor::setVenue);
+            ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editEventDescriptor::setAddress);
         } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new ParseException(ive.getMessage());
         }
@@ -459,14 +399,6 @@ public class EditEventParser implements Parser<EditEventCommand> {
 ```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
-    /**
-     * Adds all events in the argument event list to this list.
-     */
-    public void addEvents(List<? extends ReadOnlyEvent> events) {
-        this.events.addEvents(events);
-    }
-
-
     /**
      * Replaces all events in this list with those in the argument event list.
      */
@@ -526,99 +458,25 @@ public class EditEventParser implements Parser<EditEventCommand> {
     public void sortEventList() {
         events.sortEvents();
     }
-
 ```
-###### \java\seedu\address\model\event\Event.java
+###### \java\seedu\address\model\event\exceptions\DuplicateEventException.java
 ``` java
 /**
- * Represents an Event in the address book.
- * Guarantees: details are present and not null, field values are validated.
+ * Signals that the operation will result in duplicate Person objects.
  */
-public class Event implements ReadOnlyEvent {
-
-    private ObjectProperty<Name> name;
-    private ObjectProperty<DateTime> time;
-    private ObjectProperty<Address> venue;
-
-    /**
-     * Every field must be present and not null.
-     */
-    public Event(Name name, DateTime time, Address venue) {
-        requireAllNonNull(name, time, venue);
-        this.name = new SimpleObjectProperty<>(name);
-        this.time = new SimpleObjectProperty<>(time);
-        this.venue = new SimpleObjectProperty<>(venue);
+public class DuplicateEventException extends DuplicateDataException {
+    public DuplicateEventException() {
+        super("Operation would result in duplicate events");
     }
-
-    /**
-     * Creates a copy of the given ReadOnlyEvent.
-     */
-    public Event(ReadOnlyEvent source) {
-        this(source.getName(), source.getTime(), source.getVenue());
-    }
-
-    public void setName(Name name) {
-        this.name.set(requireNonNull(name));
-    }
-
-    @Override
-    public ObjectProperty<Name> nameProperty() {
-        return name;
-    }
-
-    @Override
-    public Name getName() {
-        return name.get();
-    }
-
-    public void setDateTime(DateTime time) {
-        this.time.set(requireNonNull(time));
-    }
-
-    @Override
-    public DateTime getTime() {
-        return time.get();
-    }
-    @Override
-    public ObjectProperty<DateTime> timeProperty() {
-        return time;
-    }
-
-    public void setVenue(Address venue) {
-        this.venue.set(requireNonNull(venue));
-    }
-
-    @Override
-    public ObjectProperty<Address> venueProperty() {
-        return venue;
-    }
-
-    @Override
-    public Address getVenue() {
-        return venue.get();
-    }
-
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof ReadOnlyEvent // instanceof handles nulls
-                && this.isSameStateAs((ReadOnlyEvent) other));
-    }
-
-    @Override
-    public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, time, venue);
-    }
-
-    @Override
-    public String toString() {
-        return getAsText();
-    }
-
 }
+```
+###### \java\seedu\address\model\event\exceptions\EventNotFoundException.java
+``` java
 
+/**
+ * Signals that the operation is unable to find the specified person.
+ */
+public class EventNotFoundException extends Exception {}
 ```
 ###### \java\seedu\address\model\event\ReadOnlyEvent.java
 ``` java
@@ -633,8 +491,13 @@ public interface ReadOnlyEvent {
     Name getName();
     ObjectProperty<DateTime> timeProperty();
     DateTime getTime();
-    ObjectProperty<Address> venueProperty();
-    Address getVenue();
+    ObjectProperty<Address> addressProperty();
+    Address getAddress();
+    ObjectProperty<UniquePropertyMap> properties();
+    Set<Property> getProperties();
+    ObjectProperty<UniqueReminderList> reminderProperty();
+    ArrayList<Reminder> getReminders();
+    void addReminder(ReadOnlyReminder r) throws DuplicateReminderException;
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -644,8 +507,9 @@ public interface ReadOnlyEvent {
                 || (other != null // this is first to avoid NPE below
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getTime().equals(this.getTime())
-                && other.getVenue().equals(this.getVenue()));
+                && other.getAddress().equals(this.getAddress()));
     }
+
 
     /**
      * Formats the event as text, showing all event details.
@@ -658,8 +522,8 @@ public interface ReadOnlyEvent {
                 .append(" Date/Time: ")
                 .append(getTime())
                 .append(" | ")
-                .append(" Venue: ")
-                .append(getVenue());
+                .append(" Address: ")
+                .append(getAddress());
         return builder.toString();
     }
 
@@ -668,7 +532,6 @@ public interface ReadOnlyEvent {
 ```
 ###### \java\seedu\address\model\event\UniqueEventList.java
 ``` java
-
 /**
  * A list of events that enforces uniqueness between its elements and does not allow nulls.
  *
@@ -751,19 +614,9 @@ public class UniqueEventList implements Iterable<Event> {
         return eventFoundAndDeleted;
     }
 
-    /**
-     * Adds all events in the argument events list to this list.
-     */
-    public void addEvents(List<? extends ReadOnlyEvent> events) {
-        for (final ReadOnlyEvent event : events) {
-            try {
-                this.add(new Event(event));
-            } catch (DuplicateEventException e) {
-                // skip event if it exists
-            }
-        }
-    }
-
+```
+###### \java\seedu\address\model\event\UniqueEventList.java
+``` java
     public void setEvents(UniqueEventList replacement) {
         this.internalList.setAll(replacement.internalList);
     }
@@ -813,9 +666,19 @@ public class UniqueEventList implements Iterable<Event> {
     /** Updates the given event */
     void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
             throws DuplicateEventException, EventNotFoundException;
-
     /** Deletes the given event */
     void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
+
+
+    //=========== Model support for reminder component =============================================================
+
+    /** Adds a reminder */
+    void addReminder(ReadOnlyReminder reminder) throws DuplicateReminderException;
+
+    /** Deletes the given event */
+    void deleteReminder(ReadOnlyReminder target) throws ReminderNotFoundException;
+
+
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -844,6 +707,22 @@ public class UniqueEventList implements Iterable<Event> {
         addressBook.removeEvent(event);
         indicateAddressBookChanged();
     }
+
+    //=========== Model support for activity component =============================================================
+    @Override
+    public synchronized void addReminder(ReadOnlyReminder reminder) throws DuplicateReminderException {
+        requireNonNull(reminder);
+        addressBook.addReminder(reminder);
+        updateFilteredReminderList(PREDICATE_SHOW_ALL_REMINDERS);
+        indicateAddressBookChanged();
+    }
+    @Override
+    public synchronized void deleteReminder(ReadOnlyReminder reminder) throws ReminderNotFoundException {
+        addressBook.removeReminder(reminder);
+        indicateAddressBookChanged();
+    }
+
+
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -856,6 +735,7 @@ public class UniqueEventList implements Iterable<Event> {
 
     /**
      * Updates the filter of the filtered event list to filter by the given {@code predicate}.
+     *
      * @throws NullPointerException if {@code predicate} is null.
      */
     @Override
@@ -863,24 +743,29 @@ public class UniqueEventList implements Iterable<Event> {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
     }
-```
-###### \java\seedu\address\model\person\exceptions\DuplicateEventException.java
-``` java
-/**
- * Signals that the operation will result in duplicate Person objects.
- */
-public class DuplicateEventException extends DuplicateDataException {
-    public DuplicateEventException() {
-        super("Operation would result in duplicate events");
+
+
+    //=========== Filtered Reminder List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyReminder} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyReminder> getFilteredReminderList() {
+        return FXCollections.unmodifiableObservableList(filteredReminders);
     }
-}
-```
-###### \java\seedu\address\model\person\exceptions\EventNotFoundException.java
-``` java
-/**
- * Signals that the operation is unable to find the specified person.
- */
-public class EventNotFoundException extends Exception {}
+
+    /**
+     * Updates the filter of the filtered reminders list to filter by the given {@code predicate}.
+     *
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    @Override
+    public void updateFilteredReminderList(Predicate<ReadOnlyReminder> predicate) {
+        requireNonNull(predicate);
+        filteredReminders.setPredicate(predicate);
+    }
 ```
 ###### \java\seedu\address\model\property\DateTime.java
 ``` java
@@ -890,9 +775,15 @@ public class EventNotFoundException extends Exception {}
  */
 public class DateTime extends Property {
     private static final String PROPERTY_SHORT_NAME = "dt";
+    // Change the regular expression in PropertyManager whenever you change this.
+    private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("ddMMyyyy HH:mm");
 
     public DateTime(String value) throws IllegalValueException, PropertyNotFoundException {
         super(PROPERTY_SHORT_NAME, value);
+    }
+
+    public DateTime(Date value) throws IllegalValueException, PropertyNotFoundException {
+        super(PROPERTY_SHORT_NAME, dateFormatter.format(value));
     }
 
     /**
@@ -900,6 +791,10 @@ public class DateTime extends Property {
      */
     public static boolean isValidTime(String test) {
         return test.matches(PropertyManager.getPropertyValidationRegex(PROPERTY_SHORT_NAME));
+    }
+
+    public static Date formatDateTime(String value) throws ParseException {
+        return dateFormatter.parse(value);
     }
 }
 ```
@@ -932,6 +827,7 @@ public class EventNameContainsKeywordsPredicate implements Predicate<ReadOnlyEve
 ```
 ###### \java\seedu\address\storage\XmlAdaptedEvent.java
 ``` java
+
 /**
  * JAXB-friendly version of the Event.
  */
@@ -943,6 +839,10 @@ public class XmlAdaptedEvent {
     private String time;
     @XmlElement(required = true)
     private String venue;
+    @XmlElement
+    private List<XmlAdaptedReminder> reminders = new ArrayList<>();
+    @XmlElement
+    private List<XmlAdaptedProperty> properties = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -959,7 +859,15 @@ public class XmlAdaptedEvent {
     public XmlAdaptedEvent(ReadOnlyEvent source) {
         name = source.getName().getValue();
         time = source.getTime().getValue();
-        venue = source.getVenue().getValue();
+        venue = source.getAddress().getValue();
+        properties = new ArrayList<>();
+        for (Property property: source.getProperties()) {
+            properties.add(new XmlAdaptedProperty(property));
+        }
+        reminders = new ArrayList<>();
+        for (Reminder reminder: source.getReminders()) {
+            reminders.add(new XmlAdaptedReminder(reminder));
+        }
     }
 
     /**
@@ -967,22 +875,29 @@ public class XmlAdaptedEvent {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted event
      */
-    public Event toModelType() throws IllegalValueException, PropertyNotFoundException {
-        final Name name = new Name(this.name);
-        final DateTime time = new DateTime(this.time);
-        final Address venue = new Address(this.venue);
-        return new Event(name, time, venue);
+    public Event toModelType() throws IllegalValueException, PropertyNotFoundException, DuplicatePropertyException {
+        final List<Property> eventProperties = new ArrayList<>();
+        for (XmlAdaptedProperty property: properties) {
+            eventProperties.add(property.toModelType());
+        }
+        final ArrayList<Reminder> eventReminders = new ArrayList<>();
+        for (XmlAdaptedReminder reminder : reminders) {
+            eventReminders.add(reminder.toModelType());
+        }
+        final Set<Property> properties = new HashSet<>(eventProperties);
+        return new Event(properties, eventReminders);
     }
 }
 ```
 ###### \java\seedu\address\storage\XmlSerializableAddressBook.java
 ``` java
+
     @Override
     public ObservableList<ReadOnlyEvent> getEventList() {
         final ObservableList<ReadOnlyEvent> events = this.events.stream().map(p -> {
             try {
                 return p.toModelType();
-            } catch (IllegalValueException | PropertyNotFoundException e) {
+            } catch (IllegalValueException | PropertyNotFoundException | DuplicatePropertyException e) {
                 e.printStackTrace();
                 //TODO: better error handling
                 return null;
@@ -990,106 +905,26 @@ public class XmlAdaptedEvent {
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(events);
     }
-```
-###### \java\seedu\address\ui\event\EventCard.java
-``` java
-/**
- * An UI component that displays information of a {@code Event}.
- */
-public class EventCard extends UiPart<Region> {
-    private static final String FXML = "event/EventListCard.fxml";
-
-    /**
-     * The upper (exclusive) bound should be equal to {@code Math.pow(16, 6)}.
-     */
-    private static final int RGB_BOUND = 16777216;
-
-    // Random number generator (non-secure purpose)
-    private static final Random randomGenerator = new Random();
-
-    /**
-     * Stores the colors for all existing tags here so that the same tag always has the same color. Notice this
-     * {@code HashMap} has to be declared as a class variable.
-     */
-    private static HashMap<String, String> tagColors = new HashMap<>();
-
-    // Keep a list of all persons.
-    public final ReadOnlyEvent event;
-
-    /**
-     * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
-     * As a consequence, UI elements' variable names cannot be set to such keywords
-     * or an exception will be thrown by JavaFX during runtime.
-     *
-     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
-     */
-    @FXML
-    private HBox cardPane;
-    @FXML
-    private Label idEvent;
-    @FXML
-    private Label name;
-    @FXML
-    private Label dateTime;
-    @FXML
-    private Label venue;
-
-
-    public EventCard(ReadOnlyEvent event, int displayedIndex) {
-        super(FXML);
-        this.event = event;
-        idEvent.setText(displayedIndex + ". ");
-        bindListeners(event);
-    }
-
-    /**
-     * Binds the individual UI elements to observe their respective {@code Person} properties
-     * so that they will be notified of any changes.
-     */
-    private void bindListeners(ReadOnlyEvent event) {
-        name.textProperty().bind(Bindings.convert(event.nameProperty()));
-        dateTime.textProperty().bind(Bindings.convert(event.timeProperty()));
-        venue.textProperty().bind(Bindings.convert(event.venueProperty()));
-    }
-
-    /**
-     * Gets the RGB value of a randomly-selected color. Notice the selection is not cryptographically random. It will
-     * use the same color if a tag with the same name already exists.
-     *
-     * @return a 6-character string representation of the hexadecimal RGB value.
-     */
-    private String getRandomColorValue(String tagName) {
-        if (!tagColors.containsKey(tagName)) {
-            tagColors.put(tagName, Integer.toHexString(randomGenerator.nextInt(RGB_BOUND)));
-        }
-
-        return tagColors.get(tagName);
-    }
-
     @Override
-    public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
+    public ObservableList<ReadOnlyReminder> getReminderList() {
+        final ObservableList<ReadOnlyReminder> reminders = this.reminders.stream().map(p -> {
+            try {
 
-        // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
-            return false;
-        }
-
-        // state check
-        EventCard card = (EventCard) other;
-        return idEvent.getText().equals(card.idEvent.getText())
-                && event.equals(card.event);
+                return p.toModelType();
+            } catch (IllegalValueException | PropertyNotFoundException e) {
+                e.printStackTrace();
+                //TODO: better error handling
+                return null;
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(reminders);
     }
 
-}
 ```
 ###### \java\seedu\address\ui\event\EventListPanel.java
 ``` java
 /**
- * Panel containing the list of persons.
+ * Panel containing the list of events.
  */
 public class EventListPanel extends UiPart<Region> {
     private static final String FXML = "event/EventListPanel.fxml";

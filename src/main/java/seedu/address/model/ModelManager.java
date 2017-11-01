@@ -91,6 +91,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //@@author yunpengn
     //=========== Model support for property component =============================================================
 
     /**
@@ -105,6 +106,7 @@ public class ModelManager extends ComponentManager implements Model {
         PropertyManager.addNewProperty(shortName, fullName, message, regex);
         indicateAddressBookChanged();
     }
+    //@@author
 
     //=========== Model support for contact component =============================================================
 
@@ -167,6 +169,7 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.getTagList().contains(tag);
     }
 
+    //@@author yunpengn
     /**
      * Changes the displayed color of an existing tag (through {@link TagColorManager}).
      */
@@ -175,6 +178,8 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
         raise(new TagColorChangedEvent(tag, color));
     }
+    //@@author
+
     //@@author junyango
     //=========== Model support for activity component =============================================================
 
@@ -240,6 +245,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
+
     //@@author junyango
     //=========== Filtered Activity List Accessors =============================================================
 
@@ -281,9 +287,6 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredReminders.setPredicate(predicate);
     }
-
-
-
     //@@author
 
     @Override

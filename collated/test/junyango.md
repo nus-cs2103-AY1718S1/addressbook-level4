@@ -171,7 +171,20 @@ public class EventListPanelHandle extends NodeHandle<ListView<EventCard>> {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\AddEventCommandTest.java
+###### \java\seedu\address\logic\commands\CommandTestUtil.java
+``` java
+    /**
+     * Updates {@code model}'s filtered list to show only the first person in the {@code model}'s address book.
+     */
+    public static void showFirstEventOnly(Model model) {
+        ReadOnlyEvent event = model.getAddressBook().getEventList().get(0);
+        final String[] splitName = event.getName().getValue().split("\\s+");
+        model.updateFilteredEventsList(new EventNameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+
+        assert model.getFilteredEventList().size() == 1;
+    }
+```
+###### \java\seedu\address\logic\commands\event\AddEventCommandTest.java
 ``` java
 public class AddEventCommandTest {
 
@@ -183,23 +196,10 @@ public class AddEventCommandTest {
         thrown.expect(NullPointerException.class);
         new AddEventCommand(null);
     }
-
-    @Test
-    public void execute_eventAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingEventAdded modelStub = new ModelStubAcceptingEventAdded();
-        Event validEvent = new EventBuilder().build();
-
-        CommandResult commandResult = getAddCommandForEvent(validEvent, modelStub).execute();
-
-        assertEquals(String.format(AddEventCommand.MESSAGE_SUCCESS, validEvent), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validEvent), modelStub.eventsAdded);
-    }
-
     @Test
     public void execute_duplicateEvent_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStubThrowingDuplicateEventException();
         Event validEvent = new EventBuilder().build();
-
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddEventCommand.MESSAGE_DUPLICATE_EVENT);
 
@@ -305,20 +305,7 @@ public class AddEventCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\CommandTestUtil.java
-``` java
-    /**
-     * Updates {@code model}'s filtered list to show only the first person in the {@code model}'s address book.
-     */
-    public static void showFirstEventOnly(Model model) {
-        ReadOnlyEvent event = model.getAddressBook().getEventList().get(0);
-        final String[] splitName = event.getName().getValue().split("\\s+");
-        model.updateFilteredEventsList(new EventNameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
-
-        assert model.getFilteredEventList().size() == 1;
-    }
-```
-###### \java\seedu\address\logic\commands\DeleteEventCommandTest.java
+###### \java\seedu\address\logic\commands\event\DeleteEventCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -377,7 +364,7 @@ public class DeleteEventCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\EditEventCommandTest.java
+###### \java\seedu\address\logic\commands\event\EditEventCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditEventCommand.
@@ -533,10 +520,9 @@ public class EditEventCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\EditEventDescriptorTest.java
+###### \java\seedu\address\logic\commands\event\EditEventDescriptorTest.java
 ``` java
 public class EditEventDescriptorTest {
-
     @Test
     public void equals() {
         // same values -> returns true
@@ -567,12 +553,12 @@ public class EditEventDescriptorTest {
 
 
         // different address -> returns false
-        editedEvent1 = new EditEventDescriptorBuilder(DESC_EVENT1).withVenue(VALID_VENUE_EVENT2).build();
+        editedEvent1 = new EditEventDescriptorBuilder(DESC_EVENT1).withAddress(VALID_VENUE_EVENT2).build();
         assertFalse(DESC_EVENT1.equals(editedEvent1));
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ListEventCommandTest.java
+###### \java\seedu\address\logic\commands\event\ListEventCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
@@ -624,7 +610,7 @@ public class ListEventCommandTest {
         assertTrue(parser.parseCommand(ListEventCommand.COMMAND_WORD + " 3") instanceof ListEventCommand);
     }
 ```
-###### \java\seedu\address\logic\parser\DeleteEventParserTest.java
+###### \java\seedu\address\logic\parser\event\DeleteEventParserTest.java
 ``` java
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
@@ -649,36 +635,8 @@ public class DeleteEventParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\EditEventCommandParserTest.java
+###### \java\seedu\address\logic\parser\event\EditEventCommandParserTest.java
 ``` java
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.DATE_DESC_EVENT1;
-import static seedu.address.logic.commands.CommandTestUtil.DATE_DESC_EVENT2;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_EVENT1;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_EVENT1;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_EVENT2;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_EVENT1;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_EVENT1;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_EVENT2;
-import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_EVENT1;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
-
-import org.junit.Test;
-
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.event.EditEventCommand;
-import seedu.address.logic.commands.event.EditEventCommand.EditEventDescriptor;
-import seedu.address.logic.parser.event.EditEventParser;
-import seedu.address.model.property.PropertyManager;
-import seedu.address.testutil.EditEventDescriptorBuilder;
-
 public class EditEventCommandParserTest {
 
     private static final String MESSAGE_INVALID_FORMAT =
@@ -734,7 +692,7 @@ public class EditEventCommandParserTest {
         String userInput = targetIndex.getOneBased() + DATE_DESC_EVENT1 + VENUE_DESC_EVENT1 + NAME_DESC_EVENT1;
 
         EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withName(VALID_NAME_EVENT1)
-                .withTime(VALID_DATE_EVENT1).withVenue(VALID_VENUE_EVENT1).build();
+                .withTime(VALID_DATE_EVENT1).withAddress(VALID_VENUE_EVENT1).build();
         EditEventCommand expectedCommand = new EditEventCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -746,7 +704,7 @@ public class EditEventCommandParserTest {
         String userInput = targetIndex.getOneBased() + DATE_DESC_EVENT2 + VENUE_DESC_EVENT1;
 
         EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withTime(VALID_DATE_EVENT2)
-                .withVenue(VALID_VENUE_EVENT1).build();
+                .withAddress(VALID_VENUE_EVENT1).build();
         EditEventCommand expectedCommand = new EditEventCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -769,7 +727,7 @@ public class EditEventCommandParserTest {
 
         // address
         userInput = targetIndex.getOneBased() + VENUE_DESC_EVENT1;
-        descriptor = new EditEventDescriptorBuilder().withVenue(VALID_VENUE_EVENT1).build();
+        descriptor = new EditEventDescriptorBuilder().withAddress(VALID_VENUE_EVENT1).build();
         expectedCommand = new EditEventCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
@@ -796,12 +754,14 @@ public class EditEventCommandParserTest {
         private final ObservableList<ReadOnlyPerson> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<ReadOnlyEvent> events = FXCollections.observableArrayList();
+        private final ObservableList<ReadOnlyReminder> reminders = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends ReadOnlyEvent> events,
-                        Collection<? extends Tag> tags) {
+                        Collection<? extends Tag> tags, Collection<? extends Reminder> reminders) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
             this.events.setAll(events);
+            this.reminders.setAll(reminders);
         }
 
         @Override
@@ -813,7 +773,10 @@ public class EditEventCommandParserTest {
         public ObservableList<ReadOnlyEvent> getEventList() {
             return events;
         }
-
+        @Override
+        public ObservableList<ReadOnlyReminder> getReminderList() {
+            return reminders;
+        }
         @Override
         public ObservableList<Tag> getTagList() {
             return tags;
@@ -931,7 +894,22 @@ public class DateTimeTest {
         assertTrue(DateTime.isValidTime("25122015 08:30"));
         assertTrue(DateTime.isValidTime("14122016 13:30"));
         assertTrue(DateTime.isValidTime("09121924 23:30"));
+    }
 
+    @Test
+    public void create_viaString_checkCorrectness() throws Exception {
+        DateTime dateTime = new DateTime(VALID_DATE_EVENT1);
+        assertEquals(VALID_DATE_EVENT1, dateTime.getValue());
+    }
+
+    @Test
+    public void create_viaDateObject_checkCorrectness() throws Exception {
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("ddMMyyyy HH:mm");
+        Date date = dateFormatter.parse(VALID_DATE_EVENT1);
+
+        // Create a Datetime property via alternative constructor.
+        DateTime dateTime = new DateTime(date);
+        assertEquals(VALID_DATE_EVENT1, dateTime.getValue());
     }
 }
 ```
@@ -1031,7 +1009,7 @@ public class EditEventDescriptorBuilder {
         descriptor = new EditEventDescriptor();
         descriptor.setName(event.getName());
         descriptor.setTime(event.getTime());
-        descriptor.setVenue(event.getVenue());
+        descriptor.setAddress(event.getAddress());
     }
 
     /**
@@ -1059,13 +1037,13 @@ public class EditEventDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Venue} of the {@code EditEventDescriptor} that we are building.
+     * Sets the {@code Address} of the {@code EditEventDescriptor} that we are building.
      */
-    public EditEventDescriptorBuilder withVenue(String venue) {
+    public EditEventDescriptorBuilder withAddress(String address) {
         try {
-            ParserUtil.parseAddress(Optional.of(venue)).ifPresent(descriptor::setVenue);
+            ParserUtil.parseAddress(Optional.of(address)).ifPresent(descriptor::setAddress);
         } catch (IllegalValueException | PropertyNotFoundException ive) {
-            throw new IllegalArgumentException("Venue is expected to be unique.");
+            throw new IllegalArgumentException("Address is expected to be unique.");
         }
         return this;
     }
@@ -1077,6 +1055,7 @@ public class EditEventDescriptorBuilder {
 ```
 ###### \java\seedu\address\testutil\EventBuilder.java
 ``` java
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -1085,6 +1064,7 @@ import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Name;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
+import seedu.address.model.reminder.Reminder;
 
 
 /**
@@ -1105,8 +1085,9 @@ public class EventBuilder {
         try {
             Name defaultEventName = new Name(DEFAULT_EVENT_NAME);
             DateTime defaultTime = new DateTime(DEFAULT_TIME);
-            Address defaultVenue = new Address(DEFAULT_VENUE);
-            this.event = new Event(defaultEventName, defaultTime, defaultVenue);
+            Address defaultAddress = new Address(DEFAULT_VENUE);
+            ArrayList<Reminder> defaultReminder = new ArrayList<>();
+            this.event = new Event(defaultEventName, defaultTime, defaultAddress, defaultReminder);
         } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new AssertionError("Default event's values are invalid.");
         }
@@ -1132,13 +1113,21 @@ public class EventBuilder {
     }
 
     /**
+     * Adds a reminder into the event.
+     */
+    public EventBuilder withReminder() {
+        this.event.getReminders().add(new Reminder(event.getName().toString(), event.getTime().toString()));
+        return this;
+    }
+
+    /**
      * Sets the {@code Address} of the {@code Event} that we are building.
      */
-    public EventBuilder withVenue(String address) {
+    public EventBuilder withAddress(String address) {
         try {
-            this.event.setVenue(new Address(address));
+            this.event.setAddress(new Address(address));
         } catch (IllegalValueException | PropertyNotFoundException ive) {
-            throw new IllegalArgumentException("venue is expected to be unique.");
+            throw new IllegalArgumentException("address is expected to be unique.");
         }
         return this;
     }
@@ -1182,60 +1171,8 @@ public class EventUtil {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME + event.getName().toString() + " ");
         sb.append(PREFIX_DATE_TIME + event.getTime().toString() + " ");
-        sb.append(PREFIX_ADDRESS + event.getVenue().toString());
+        sb.append(PREFIX_ADDRESS + event.getAddress().toString());
         return sb.toString();
-    }
-}
-```
-###### \java\seedu\address\testutil\TypicalEvents.java
-``` java
-/**
- * A utility class containing a list of {@code Event} objects to be used in tests.
- */
-public class TypicalEvents {
-
-    public static final ReadOnlyEvent EVENT1 = new EventBuilder().withName("HHN 6001")
-            .withDateTime("22022015 08:30")
-            .withVenue("123, Sentosa, #08-111").build();
-    public static final ReadOnlyEvent EVENT2 = new EventBuilder().withName("ZoukOut 6001")
-            .withDateTime("25122017 10:30")
-            .withVenue("123, Clarke Quay #01-111").build();
-
-    // Manually added
-    public static final ReadOnlyEvent EVENTM1 = new EventBuilder().withName("Volleyball Tour 17")
-            .withDateTime("25122017 08:30")
-            .withVenue("OCBC ARENA Hall 3, #01-111").build();
-    public static final ReadOnlyEvent EVENTM2 = new EventBuilder().withName("Meeting with Jason")
-            .withDateTime("25112016 02:30")
-            .withVenue("123, Sheraton Towers , #06-111").build();
-
-    // Manually added - Person's details found in {@code CommandTestUtil}
-    public static final ReadOnlyPerson AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-            .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
-    public static final ReadOnlyPerson BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-            .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-            .build();
-
-
-    private TypicalEvents() {} // prevents instantiation
-
-    /**
-     * Returns an {@code AddressBook} with all the typical persons.
-     */
-    public static AddressBook getTypicalAddressBook() {
-        AddressBook ab = new AddressBook();
-        for (ReadOnlyEvent events : getTypicalEvents()) {
-            try {
-                ab.addEvent(events);
-            } catch (DuplicateEventException e) {
-                assert false : "not possible";
-            }
-        }
-        return ab;
-    }
-
-    public static List<ReadOnlyEvent> getTypicalEvents() {
-        return new ArrayList<>(Arrays.asList(EVENT1, EVENT2));
     }
 }
 ```

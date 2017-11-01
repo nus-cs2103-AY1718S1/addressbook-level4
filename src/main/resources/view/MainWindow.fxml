@@ -38,6 +38,7 @@
     </padding>
   </StackPane>
 
+  <!-- @@author yunpengn -->
   <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" minWidth="600.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
       <VBox fx:id="sideButtonBar" alignment="CENTER" maxWidth="80.0" minWidth="80.0" prefWidth="80.0">
          <padding>
@@ -75,6 +76,7 @@
       </padding>
     </StackPane>
   </SplitPane>
+  <!-- @@author -->
 
   <StackPane fx:id="statusBarPlaceholder" VBox.vgrow="NEVER" />
 </VBox>

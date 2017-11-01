@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
 
+//@@author yunpengn
 /**
  * JAXB-friendly adapted version of the {@link PropertyManager}.
  */

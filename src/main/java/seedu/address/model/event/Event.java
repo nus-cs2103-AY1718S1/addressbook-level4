@@ -39,6 +39,10 @@ public class Event implements ReadOnlyEvent {
     private ObjectProperty<UniqueReminderList> reminders;
     private ObjectProperty<UniquePropertyMap> properties;
 
+    public Event(Name name, DateTime time, Address address) {
+        this(name, time, address, new ArrayList<>());
+    }
+
     /**
      * Every field must be present and not null.
      */
@@ -61,6 +65,7 @@ public class Event implements ReadOnlyEvent {
         }
         this.reminders = new SimpleObjectProperty<>(new UniqueReminderList(reminders));
     }
+
     public Event(Set<Property> properties, ArrayList<Reminder> reminders) throws DuplicateReminderException,
             DuplicatePropertyException {
         requireAllNonNull(properties, reminders);
