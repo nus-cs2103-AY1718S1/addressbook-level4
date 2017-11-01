@@ -37,7 +37,9 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find multiple persons where person list is not displaying the person we are finding -> 2 persons found */
+        /* Case: find multiple persons where person list is not displaying the person we are finding
+         * -> 2 persons found
+         */
         command = FindTagCommand.COMMAND_WORD + " neighbours";
         ModelHelper.setFilteredList(expectedModel, ELLE, FIONA);
         assertCommandSuccess(command, expectedModel);
