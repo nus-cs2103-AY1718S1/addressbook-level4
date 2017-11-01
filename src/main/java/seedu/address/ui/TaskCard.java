@@ -5,11 +5,14 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Random;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.ParserUtil;
@@ -25,6 +28,9 @@ public class TaskCard extends UiPart<Region> {
     private static final int YELLOW_RANGE = 3;
     private static final int RED_RANGE = 0;
     private static final int NULL_RANGE = -9999;
+    private static String[] colours = { "red", "orange", "cyan", "green", "blue", "purple", "pink", "grey", "black" };
+    private static HashMap<String, String> tagColours = new HashMap<String, String>();
+    private static Random random = new Random();
 
     public final ReadOnlyTask task;
 
@@ -43,12 +49,25 @@ public class TaskCard extends UiPart<Region> {
     @FXML
     private Label deadline;
 
+    @FXML
+    private FlowPane tags;
+
     public TaskCard(ReadOnlyTask task, int displayedIndex) {
         super(FXML);
         this.task = task;
         id.setText("  " + displayedIndex + ". ");
+        initTags(task);
         bindListeners(task);
     }
+
+    private static String getColourForTag(String tagValue) {
+        if (!tagColours.containsKey(tagValue)) {
+            tagColours.put(tagValue, colours[random.nextInt(colours.length)]);
+        }
+
+        return tagColours.get(tagValue);
+    }
+
 
     /**
      * Binds the individual UI elements to observe their respective {@code Task} properties
@@ -97,6 +116,19 @@ public class TaskCard extends UiPart<Region> {
                 + "-fx-border-width: 2;"
                 + "-fx-border-height: 2;"
                 + "-fx-border-color: black;");
+    }
+
+
+    /**
+     * Set the colour of label for the same tag
+     * @param task
+     */
+    private void initTags(ReadOnlyTask task) {
+        task.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-background-color: " + getColourForTag(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
     }
 
     @Override
