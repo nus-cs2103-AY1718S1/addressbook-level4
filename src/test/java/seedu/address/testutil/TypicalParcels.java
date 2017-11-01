@@ -47,12 +47,6 @@ public class TypicalParcels {
     public static final String VALID_EMAIL_ALICE = "alice@example.com";
     public static final String VALID_ADDRESS_ALICE = "6, Jurong West Ave 1, #08-111 S649520";
     public static final String VALID_DELIVERY_DATE_ALICE = "01-02-2000";
-    public static final String TRACKING_NUMBER_DESC_ALICE = " " + PREFIX_TRACKING_NUMBER + VALID_TRACKING_NUMBER_ALICE;
-    public static final String NAME_DESC_ALICE = " " + PREFIX_NAME + VALID_NAME_ALICE;
-    public static final String PHONE_DESC_ALICE = " " + PREFIX_PHONE + VALID_PHONE_ALICE;
-    public static final String EMAIL_DESC_ALICE = " " + PREFIX_EMAIL + VALID_EMAIL_ALICE;
-    public static final String ADDRESS_DESC_ALICE = " " + PREFIX_ADDRESS + VALID_ADDRESS_ALICE;
-    public static final String DELIVERY_DATE_DESC_ALICE = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_ALICE;
 
     public static final String VALID_TRACKING_NUMBER_BENSON = "RR111000111SG";
     public static final String VALID_NAME_BENSON = "Benson Meier";

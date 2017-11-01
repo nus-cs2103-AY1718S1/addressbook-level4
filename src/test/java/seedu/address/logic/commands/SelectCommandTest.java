@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstParcelOnly;
+import static seedu.address.model.ModelManager.getDeliveredPredicate;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PARCEL;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PARCEL;
@@ -41,7 +42,7 @@ public class SelectCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        Index lastParcelIndex = Index.fromOneBased(model.getFilteredParcelList().size());
+        Index lastParcelIndex = Index.fromOneBased(model.getActiveList().size());
 
         assertExecutionSuccess(INDEX_FIRST_PARCEL);
         assertExecutionSuccess(INDEX_THIRD_PARCEL);
@@ -50,7 +51,7 @@ public class SelectCommandTest {
 
     @Test
     public void execute_invalidIndexUnfilteredList_failure() {
-        Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredParcelList().size() + 1);
+        Index outOfBoundsIndex = Index.fromOneBased(model.getActiveList().size() + 1);
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);
     }
@@ -68,7 +69,8 @@ public class SelectCommandTest {
 
         Index outOfBoundsIndex = INDEX_SECOND_PARCEL;
         // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getParcelList().size());
+        assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getParcelList().stream()
+                .filter(getDeliveredPredicate().negate()).count());
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);
     }

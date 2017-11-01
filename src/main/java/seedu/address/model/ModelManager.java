@@ -254,9 +254,7 @@ public class ModelManager extends ComponentManager implements Model {
         // keeping track of which card had been previously selected. Hence the prevIndex
         // attribute in the ModelManager class and also it's corresponding to get and set it.
         // We first get the identity of the previously selected parcel.
-        ReadOnlyParcel previous = getAddressBook()
-                .getParcelList()
-                .get(getPrevIndex().getZeroBased());
+        ReadOnlyParcel previous = getActiveList().get(getPrevIndex().getZeroBased());
         // if the previous parcel belongs after the editedParcel, we just reselect the parcel
         // at the previous index because all the parcels get pushed down.
         if (previous.compareTo(parcel) > 0) {
@@ -269,7 +267,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     private int findIndex(ReadOnlyParcel target) {
-        return getAddressBook().getParcelList().indexOf(target);
+        return getActiveList().indexOf(target);
     }
 
     @Override
