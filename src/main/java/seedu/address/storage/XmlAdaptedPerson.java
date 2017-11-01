@@ -56,7 +56,6 @@ public class XmlAdaptedPerson {
         for (Property property: source.getProperties()) {
             properties.add(new XmlAdaptedProperty(property));
         }
-
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));

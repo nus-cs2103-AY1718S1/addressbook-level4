@@ -48,13 +48,11 @@ public class XmlAdaptedEvent {
         name = source.getName().getValue();
         time = source.getTime().getValue();
         venue = source.getAddress().getValue();
-        reminders = new ArrayList<>();
-
         properties = new ArrayList<>();
         for (Property property: source.getProperties()) {
             properties.add(new XmlAdaptedProperty(property));
         }
-
+        reminders = new ArrayList<>();
         for (Reminder reminder: source.getReminders()) {
             reminders.add(new XmlAdaptedReminder(reminder));
         }

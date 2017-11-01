@@ -45,6 +45,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         tags = new ArrayList<>();
         events = new ArrayList<>();
         properties = new XmlAdaptedPropertyManager();
+        reminders = new ArrayList<>();
     }
 
     /**
@@ -55,6 +56,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
         events.addAll(src.getEventList().stream().map(XmlAdaptedEvent::new).collect(Collectors.toList()));
+        reminders.addAll(src.getReminderList().stream().map(XmlAdaptedReminder::new).collect(Collectors.toList()));
     }
 
     @Override
