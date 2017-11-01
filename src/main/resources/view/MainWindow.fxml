@@ -40,7 +40,7 @@
     </StackPane>
 
     <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-        <VBox fx:id="personList" minWidth="535" prefWidth="535" SplitPane.resizableWithParent="false">
+        <VBox fx:id="personList" minWidth="530" prefWidth="530" SplitPane.resizableWithParent="false">
             <padding>
                 <Insets bottom="0" left="20" right="10" top="5" />
             </padding>
