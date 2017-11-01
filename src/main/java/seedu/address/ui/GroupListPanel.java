@@ -16,7 +16,6 @@ import seedu.address.model.person.Group;
 /**
  * A UI Component to display group cards
  */
-
 public class GroupListPanel extends UiPart<Region> {
 
     private static final String FXML = "GroupListPanel.fxml";
@@ -25,6 +24,7 @@ public class GroupListPanel extends UiPart<Region> {
     @FXML
     private ListView<GroupCard> groupListView;
 
+    //@@author grantcm
     public GroupListPanel(ObservableList<Group> groupList) {
         super(FXML);
         setConnections(groupList);
@@ -66,4 +66,5 @@ public class GroupListPanel extends UiPart<Region> {
             }
         }
     }
+    //@@author
 }

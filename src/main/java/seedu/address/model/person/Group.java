@@ -7,6 +7,9 @@ package seedu.address.model.person;
  */
 public class Group {
 
+    //Must be a single word without spaces
+    public static final String GROUP_VALIDATION_REGEX = "[\\p{Alpha}]*";
+
     public final String groupName;
 
     public Group (Group group) {
@@ -19,6 +22,13 @@ public class Group {
 
     public String getGroupName () {
         return groupName;
+    }
+
+    /**
+     * Determines if groupName is valid
+     */
+    public static boolean isValidGroup (String groupName) {
+        return groupName.matches(GROUP_VALIDATION_REGEX);
     }
 
     @Override

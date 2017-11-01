@@ -11,6 +11,7 @@ public class GroupPanelSelectionChangedEvent extends BaseEvent {
 
     private final GroupCard newSelection;
 
+    //@@author grantcm
     public GroupPanelSelectionChangedEvent(GroupCard newSelection) {
         this.newSelection = newSelection;
     }
@@ -23,5 +24,5 @@ public class GroupPanelSelectionChangedEvent extends BaseEvent {
     public GroupCard getNewSelection() {
         return newSelection;
     }
-
+    //@@author
 }

@@ -96,6 +96,7 @@ public class CommandBox extends UiPart<Region> {
         replaceText(historySnapshot.next());
     }
 
+    //@@author grantcm
     /**
      * Handles the Tab button pressed event.
      */
@@ -124,6 +125,7 @@ public class CommandBox extends UiPart<Region> {
 
 
     }
+    //@@author
 
     /**
      * Sets {@code CommandBox}'s text field with {@code text} and

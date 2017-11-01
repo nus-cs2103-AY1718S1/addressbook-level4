@@ -17,6 +17,7 @@ public class GroupCard extends UiPart<Region> {
     @FXML
     private Label name;
 
+    //@@author grantcm
     public GroupCard (Group group) {
         super(FXML);
         this.group = group;
@@ -40,4 +41,5 @@ public class GroupCard extends UiPart<Region> {
         return name.getText().equals(card.name.getText())
                 && group.equals(card.group);
     }
+    //@@author
 }

@@ -26,6 +26,7 @@ public class FilterGroupCommand extends UndoableCommand {
         this.predicate = new GroupContainsKeywordsPredicate(groupName);
     }
 
+    //@@author grantcm
     /**
      * Updates the filtered list to display only people with the proper group predicate
      */
@@ -35,7 +36,7 @@ public class FilterGroupCommand extends UndoableCommand {
             model.updateFilteredPersonList(predicate);
             return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
         } else {
-            throw new CommandException(MESSAGE_GROUP_DOESNT_EXIST);
+            return new CommandResult(MESSAGE_GROUP_DOESNT_EXIST);
         }
 
 
@@ -47,5 +48,5 @@ public class FilterGroupCommand extends UndoableCommand {
                 || (other instanceof FilterGroupCommand // instanceof handles nulls
                 && predicate.equals(((FilterGroupCommand) other).predicate));
     }
-
+    //@@author
 }

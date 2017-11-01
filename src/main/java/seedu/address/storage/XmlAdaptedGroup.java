@@ -18,6 +18,7 @@ public class XmlAdaptedGroup {
      */
     public XmlAdaptedGroup () {}
 
+    //@@author grantcm
     /**
      * Converts group to into JAXB usable object
      */
@@ -33,6 +34,5 @@ public class XmlAdaptedGroup {
     public Group toModelType() throws IllegalValueException {
         return new Group (groupName);
     }
-
-
+    //@@author
 }
