@@ -26,7 +26,7 @@ public class ClearScheduleCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "cs";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Clear a specific time slot, during which a person is supposed to be free.\n"
+            + ": Clear a specific time slot to show that this person is no longer free at this time period.\n"
             + "Parameters: INDEX (must be a positive integer); Day(From Monday to Saturday); start time "
             + "(Should be expressed in standard 24 hours time, no more accurate than 30 minutes and no earlier "
             + "than 0600 and no later than 2330\n"
