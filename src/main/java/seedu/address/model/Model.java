@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.Set;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -43,6 +44,10 @@ public interface Model {
     /** Add tag of given person */
     void attachTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
             DuplicatePersonException, UniqueTagList.DuplicateTagException;
+
+    /** Updates tags of a given person */
+    void updatePersonTags(ReadOnlyPerson person, Set<Tag> newTags)
+            throws PersonNotFoundException, DuplicatePersonException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

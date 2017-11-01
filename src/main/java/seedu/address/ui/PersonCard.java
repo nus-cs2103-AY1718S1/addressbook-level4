@@ -82,8 +82,8 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
-     * Set the colour of label for the same tag
-     * @param person
+     * Initializes the tags attached to each person sets the colour of label for the same tag.
+     * @param person the person whose tags are being initialized.
      */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
