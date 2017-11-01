@@ -49,11 +49,13 @@ public class ArgumentMultimap {
      * If the prefix does not exist or has no values, this will return an empty list.
      * Modifying the returned list will not affect the underlying data structure of the ArgumentMultimap.
      */
-    public List<String> getAllValues(Prefix prefix) {
-        if (!argMultimap.containsKey(prefix)) {
-            return new ArrayList<>();
+    public List<String> getAllValues(Prefix... prefixes) {
+        for (Prefix prefix : prefixes) {
+            if (argMultimap.containsKey(prefix)) {
+                return new ArrayList<>(argMultimap.get(prefix));
+            }
         }
-        return new ArrayList<>(argMultimap.get(prefix));
+        return new ArrayList<>();
     }
 
     /**
@@ -62,4 +64,5 @@ public class ArgumentMultimap {
     public String getPreamble() {
         return getValue(new Prefix("")).orElse("");
     }
+
 }

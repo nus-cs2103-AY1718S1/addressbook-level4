@@ -6,6 +6,8 @@ import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_MONTHLY
 import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_WEEKLY;
 import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_YEARLY;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -119,9 +121,10 @@ public class ParserUtil {
      * Parses a {@code Optional<String> DESCRIPTION} into an {@code Optional<Description>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Description parseDescription(String description) throws IllegalValueException {
+    public static Optional<Description> parseDescription(String description) throws IllegalValueException {
         requireNonNull(description);
-        return new Description(description.replace("\"", ""));
+        return description.isEmpty() ? Optional.empty()
+                : Optional.of(new Description(description.replace("\"", "")));
     }
 
     /**
@@ -130,7 +133,12 @@ public class ParserUtil {
      */
     public static Optional<StartDate> parseStartDate(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
-        return date.isPresent() ? Optional.of(new StartDate(TaskDates.formatDate(parseDate(date.get())),
+        if (date.isPresent() && !TaskDates.getDottedFormat(date.get()).isEmpty()) {
+            return Optional.of(new StartDate(TaskDates.formatDate(parseDottedDate(date.get())),
+                    parseRecurInterval(date.get())));
+        }
+        return (date.isPresent() && !date.get().isEmpty())
+                ? Optional.of(new StartDate(TaskDates.formatDate(parseDate(date.get())),
                 parseRecurInterval(date.get()))) : Optional.empty();
     }
 
@@ -140,19 +148,23 @@ public class ParserUtil {
      */
     public static Optional<Deadline> parseDeadline(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
-        return date.isPresent() ? Optional.of(new Deadline(TaskDates.formatDate(parseDate(date.get())),
-                parseRecurInterval(date.get()))) : Optional.empty();
+        if (date.isPresent() && !TaskDates.getDottedFormat(date.get()).isEmpty()) {
+            return Optional.of(new Deadline(TaskDates.formatDate(parseDottedDate(date.get())),
+                    parseRecurInterval(date.get())));
+        }
+        return (date.isPresent() && !date.get().isEmpty())
+                ? Optional.of(new Deadline(TaskDates.formatDate(parseDate(date.get())), parseRecurInterval(date.get())))
+                : Optional.empty();
     }
 
     /**
-     * Parses Dates using PrettyTime NLP.
-     * @param naturalLanguageInput date input.
-     * @return Date output.
-     * @throws IllegalValueException if string cannot be parsed.
+     * Parses a {@code String naturalLanguageInput} using PrettyTime NLP, into a {@code Date}.
+     * Guarantees: is valid as declared in {@link TaskDates#isDateValid(String)}
+     * @throws IllegalValueException if the date cannot be parsed from the phrase or if the given date is invalid.
      */
     public static Date parseDate(String naturalLanguageInput) throws IllegalValueException {
-        List<DateGroup> dateGroup = new PrettyTimeParser().parseSyntax(naturalLanguageInput);
-        if (dateGroup.isEmpty()) {
+        List<DateGroup> dateGroup = new PrettyTimeParser().parseSyntax(naturalLanguageInput.trim());
+        if (dateGroup.isEmpty() | !TaskDates.isDateValid(naturalLanguageInput)) {
             throw new IllegalValueException(TaskDates.MESSAGE_DATE_CONSTRAINTS);
         }
         List<Date> dates = dateGroup.get(dateGroup.size() - 1).getDates();
@@ -160,9 +172,19 @@ public class ParserUtil {
     }
 
     /**
-     * Parses the recur interval of a date.
-     * @param dateString input string.
-     * @return Suffix of the recur interval.
+     * Parses the {@code String inputDate} into a {@code Date} if the input is given in (M)M.(d)d.(yy)yy format,
+     * which cannot be parsed by the PrettyTime NLP.
+     */
+    public static Date parseDottedDate(String inputDate) throws IllegalValueException {
+        try {
+            return new SimpleDateFormat(TaskDates.getDottedFormat(inputDate)).parse(inputDate);
+        } catch (ParseException p) {
+            throw new IllegalValueException(TaskDates.MESSAGE_DATE_CONSTRAINTS);
+        }
+    }
+
+    /**
+     * Parses the {@code String dateString} of a date into a {@code Suffix} specifying its recur interval.
      */
     public static Suffix parseRecurInterval(String dateString) {
         return (dateString.contains(SUFFIX_RECURRING_DATE_WEEKLY.toString()) ? SUFFIX_RECURRING_DATE_WEEKLY
