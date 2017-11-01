@@ -98,42 +98,22 @@ public interface Model {
      */
     void updateFilteredParcelList(Predicate<ReadOnlyParcel> predicate);
 
+    //@@author fustilio
     /**
      * Method to sort the lists of addresses by delivery date with the earliest date in front
      */
     void maintainSorted();
 
     /**
-     * Method to check if there is a parcel selected.
-     */
-    boolean hasSelected();
-
-    /**
-     * Method to toggle whether or not a parcel has been selected
-     */
-    void select();
-
-    /**
-     * Method to toggle whether or not a parcel has been selected
-     */
-    void unselect();
-
-    ReadOnlyParcel getPrevSelectedParcel();
-
-    /**
      * Method to force the model to select a card without using the select command.
      */
     void forceSelect(Index target);
 
-    void forceSelectParcel(ReadOnlyParcel target);
-
     /**
-     * Method to reselect a parcel card if there is a card selected.
+     * Method to force the model to select a card without using the select command.
      */
-    void reselect(ReadOnlyParcel parcel);
-
-
-    void setPrevSelectedParcel(ReadOnlyParcel parcel);
+    void forceSelectParcel(ReadOnlyParcel target);
+    //@@author
 }
 
 

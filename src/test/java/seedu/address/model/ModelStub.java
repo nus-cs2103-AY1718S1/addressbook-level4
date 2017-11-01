@@ -97,44 +97,12 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public boolean hasSelected() {
-        fail("This method should not be called.");
-        return false;
-    }
-
-    @Override
-    public void select() {
-        fail("This method should not be called.");
-    }
-
-    @Override
-    public void unselect() {
-        fail("This method should not be called.");
-    }
-
-    @Override
-    public ReadOnlyParcel getPrevSelectedParcel() {
-        fail("This method should not be called.");
-        return null;
-    }
-
-    @Override
-    public void setPrevSelectedParcel(ReadOnlyParcel parcel) {
-        fail("This method should not be called.");
-    }
-
-    @Override
     public void forceSelect(Index target) {
         fail("This method should not be called.");
     }
 
     @Override
     public void forceSelectParcel(ReadOnlyParcel target) {
-        fail("This method should not be called.");
-    }
-
-    @Override
-    public void reselect(ReadOnlyParcel parcel) {
         fail("This method should not be called.");
     }
 
