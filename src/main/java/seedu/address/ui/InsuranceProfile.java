@@ -163,6 +163,8 @@ public class InsuranceProfile extends UiPart<Region> {
         insurance = event.getInsurance();
 
         initializeContractFile(insurance);
+
+        enableNameToProfileLink(insurance);
         bindListeners(insurance);
         index.setText(null);
         raise(new SwitchToInsurancePanelRequestEvent());
