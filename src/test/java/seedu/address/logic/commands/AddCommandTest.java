@@ -105,6 +105,7 @@ public class AddCommandTest {
         }
     }
 
+    //@@author fustilio
     /**
      * A Model stub that always accept the parcel being added.
      */
@@ -131,5 +132,6 @@ public class AddCommandTest {
             return new AddressBook();
         }
     }
+    //@@author
 
 }

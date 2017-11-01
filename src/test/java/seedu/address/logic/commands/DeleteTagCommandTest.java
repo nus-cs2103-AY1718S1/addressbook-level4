@@ -1,3 +1,4 @@
+//@@author fustilio
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
@@ -138,3 +139,4 @@ public class DeleteTagCommandTest {
         assertFalse(deleteUrgentTagCommand.equals(deleteFragileTagCommand));
     }
 }
+//@@author
