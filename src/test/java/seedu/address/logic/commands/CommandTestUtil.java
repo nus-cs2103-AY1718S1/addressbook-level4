@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -18,13 +19,14 @@ import java.util.List;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.TaskBook;
 import seedu.address.model.person.ContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.TaskNameContainsKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
-
+import seedu.address.testutil.EditTaskDescriptorBuilder;
 /**
  * Contains helper methods for testing commands.
  */
@@ -62,7 +64,8 @@ public class CommandTestUtil {
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
-
+    public static final EditTaskCommand.EditTaskDescriptor DESC_DEMO;
+    public static final EditTaskCommand.EditTaskDescriptor DESC_HOTPOT;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -86,8 +89,8 @@ public class CommandTestUtil {
 
     public static final String NAME_DESC_HOTPOT = " " + PREFIX_NAME + VALID_NAME_HOTPOT;
     public static final String NAME_DESC_DEMO = " " + PREFIX_NAME + VALID_NAME_DEMO;
-    public static final String DESC_HOTPOT = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_HOTPOT;
-    public static final String DESC_DEMO = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_DEMO;
+    //public static final String DESC_HOTPOT = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_HOTPOT;
+    //public static final String DESC_DEMO = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_DEMO;
     public static final String START_DESC_HOTPOT = " " + PREFIX_START_DATE_TIME + VALID_START_HOTPOT;
     public static final String START_DESC_DEMO = " " + PREFIX_START_DATE_TIME + VALID_START_DEMO;
     public static final String END_DESC_HOTPOT = " " + PREFIX_END_DATE_TIME + VALID_END_HOTPOT;
@@ -95,8 +98,15 @@ public class CommandTestUtil {
     public static final String TAG_DESC_HOTPOT = " " + PREFIX_TAG + VALID_TAG_HOTPOT;
     public static final String TAG_DESC_DEMO = " " + PREFIX_TAG + VALID_TAG_DEMO;
 
-    // public static final EditCommand.EditTaskDescriptor DESC_AMY;
-    // public static final EditCommand.EditTaskDescriptor DESC_BOB;
+
+    static {
+        DESC_DEMO = new EditTaskDescriptorBuilder().withName(VALID_NAME_DEMO)
+                .withDescription(VALID_DESCRIPTION_DEMO).withStart(VALID_START_DEMO).withEnd(VALID_END_DEMO)
+                .withTags(VALID_TAG_DEMO).build();
+        DESC_HOTPOT = new EditTaskDescriptorBuilder().withName(VALID_NAME_HOTPOT)
+                .withDescription(VALID_DESCRIPTION_HOTPOT).withStart(VALID_START_HOTPOT).withEnd(VALID_END_HOTPOT)
+                .withTags(VALID_TAG_HOTPOT).build();
+    }
 
     /**
      * Executes the given {@code command}, confirms that <br>
@@ -133,6 +143,28 @@ public class CommandTestUtil {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedAddressBook, actualModel.getAddressBook());
             assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+        }
+    }
+
+    /**
+     * Executes the given {@code taskCommand}, confirms that <br>
+     * - a {@code CommandException} is thrown <br>
+     * - the TaskCommandException message matches {@code expectedMessage} <br>
+     * - the task book and the filtered task list in the {@code actualModel} remain unchanged
+     */
+    public static void assertTaskCommandFailure(Command command, Model actualModel, String expectedMessage) {
+        // we are unable to defensively copy the model for comparison later, so we can
+        // only do so by copying its components.
+        TaskBook expectedTaskBook = new TaskBook(actualModel.getTaskBook());
+        List<ReadOnlyTask> expectedFilteredList = new ArrayList<>(actualModel.getFilteredTaskList());
+
+        try {
+            command.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException e) {
+            assertEquals(expectedMessage, e.getMessage());
+            assertEquals(expectedTaskBook, actualModel.getTaskBook());
+            assertEquals(expectedFilteredList, actualModel.getFilteredTaskList());
         }
     }
 
