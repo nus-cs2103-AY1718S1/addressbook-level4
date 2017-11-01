@@ -441,7 +441,7 @@ the added tags will be deleted afterwards.
 in any part of the command and the program will be able to execute the user's intention.
 ****
 
-// tag::searchbox[]
+// tag::searchbox
 === Searchbox
 
 The additional searchbox used for quick partial search/filter is a child of `UiParts` and is based on using `Listener` to detect any changes to `TextProperty`.

@@ -88,7 +88,7 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="owner" styleClass="particular-person" text="\$owner" />
+                  <Label fx:id="owner" styleClass="particular-link" text="\$owner" />
                </children>
                <padding>
                   <Insets top="10.0" />
@@ -96,12 +96,12 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="insured" styleClass="particular-person" text="\$insured" />
+                  <Label fx:id="insured" styleClass="particular-link" text="\$insured" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="beneficiary" styleClass="particular-person" text="\$beneficiary" />
+                  <Label fx:id="beneficiary" styleClass="particular-link" text="\$beneficiary" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">

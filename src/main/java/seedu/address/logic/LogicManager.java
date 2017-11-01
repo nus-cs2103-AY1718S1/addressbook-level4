@@ -19,6 +19,7 @@ import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.EmptyFieldException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -94,6 +95,11 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return model.getFilteredPersonList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyInsurance> getInsuranceList() {
+        return model.getInsuranceList();
     }
 
     @Override
