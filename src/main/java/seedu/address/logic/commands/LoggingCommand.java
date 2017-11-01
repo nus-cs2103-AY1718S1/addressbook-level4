@@ -15,7 +15,6 @@ import seedu.address.commons.core.LogsCenter;
  * Method to Keep Track of User Activity Log
  */
 public class LoggingCommand {
-    private final Logger logger = LogsCenter.getLogger(LoggingCommand.class);
     /**
      *keepLog Method to Write Activity Log To The ConnectUsLog.txt file
      */
@@ -27,13 +26,6 @@ public class LoggingCommand {
         } catch (IOException e) {
             System.out.println("Error With ConnectUs.txt Logging");
         }
-    }
-    /**
-     * clearLog Method to clear the Activity Log in the ConnectUsLog.txt file
-     */
-    public void clearLog() {
-        File file = new File("ConnectUsLog.txt");
-        file.delete();
     }
     /**
      * startUpLog Method will record the time when the application starts
