@@ -1,5 +1,5 @@
 # jacoblipech
-###### /java/seedu/address/commons/events/ui/NewResultAvailableEvent.java
+###### \java\seedu\address\commons\events\ui\NewResultAvailableEvent.java
 ``` java
     public NewResultAvailableEvent(String message, boolean isError) {
         this.message = message;
@@ -7,7 +7,7 @@
     }
 
 ```
-###### /java/seedu/address/logic/commands/AddBirthdayCommand.java
+###### \java\seedu\address\logic\commands\AddBirthdayCommand.java
 ``` java
 /**
  * Adds the birthday to the identified persons.
@@ -106,7 +106,7 @@ public class AddBirthdayCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/EditCommand.java
+###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
         public void setBirthday(Birthday birthday) {
             this.birthday = birthday;
@@ -117,7 +117,7 @@ public class AddBirthdayCommand extends UndoableCommand {
         }
 
 ```
-###### /java/seedu/address/logic/commands/SortCommand.java
+###### \java\seedu\address\logic\commands\SortCommand.java
 ``` java
 /**
  * Sort the list of contacts by their names
@@ -158,7 +158,7 @@ public class SortCommand extends Command {
 
 
 ```
-###### /java/seedu/address/logic/parser/AddBirthdayCommandParser.java
+###### \java\seedu\address\logic\parser\AddBirthdayCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AddBirthdayCommand object
@@ -204,7 +204,7 @@ public class AddBirthdayCommandParser implements Parser<AddBirthdayCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/ArgumentMultimap.java
+###### \java\seedu\address\logic\parser\ArgumentMultimap.java
 ``` java
     /**
      * Returns the last address value of the field entered {@code prefix}.
@@ -234,7 +234,7 @@ public class AddBirthdayCommandParser implements Parser<AddBirthdayCommand> {
     }
 
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
@@ -246,14 +246,14 @@ public class AddBirthdayCommandParser implements Parser<AddBirthdayCommand> {
     }
 
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /** Adds the given birthday to a person */
     void addBirthday(Index targetIndex, Birthday toAdd) throws PersonNotFoundException,
             DuplicatePersonException;
 
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /**
      * Sort the given list according to alphabetical order
@@ -263,7 +263,7 @@ public class AddBirthdayCommandParser implements Parser<AddBirthdayCommand> {
 
 }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public synchronized void addBirthday(Index targetIndex, Birthday toAdd) throws PersonNotFoundException,
@@ -280,7 +280,7 @@ public class AddBirthdayCommandParser implements Parser<AddBirthdayCommand> {
     }
 
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList) {
@@ -308,7 +308,7 @@ public class AddBirthdayCommandParser implements Parser<AddBirthdayCommand> {
     //=========== Filtered Person List Accessors =============================================================
 
 ```
-###### /java/seedu/address/model/person/Birthday.java
+###### \java\seedu\address\model\person\Birthday.java
 ``` java
 /**
  * Represents a birthday field in the address book.
@@ -402,7 +402,7 @@ public class Birthday {
     }
 }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     public void setBirthday(Birthday birthday) {
 
@@ -422,7 +422,7 @@ public class Birthday {
     }
 
 ```
-###### /java/seedu/address/storage/XmlAdaptedPerson.java
+###### \java\seedu\address\storage\XmlAdaptedPerson.java
 ``` java
     @XmlElement(required = true)
     private String birthday;
@@ -447,7 +447,7 @@ public class Birthday {
         email = source.getEmail().value;
         address = source.getAddress().value;
 ```
-###### /java/seedu/address/storage/XmlAdaptedPerson.java
+###### \java\seedu\address\storage\XmlAdaptedPerson.java
 ``` java
         birthday = source.getBirthday().getBirthdayNumber();
         tagged = new ArrayList<>();
@@ -471,7 +471,7 @@ public class Birthday {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
 ```
-###### /java/seedu/address/storage/XmlAdaptedPerson.java
+###### \java\seedu\address\storage\XmlAdaptedPerson.java
 ``` java
         final Birthday birthday = new Birthday(this.birthday);
         final Set<Tag> tags = new HashSet<>(personTags);
@@ -479,7 +479,7 @@ public class Birthday {
     }
 }
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
     /**
      * Binds the birthday string together for each contact to display in a better format
@@ -567,7 +567,7 @@ public class Birthday {
     }
 
 ```
-###### /java/seedu/address/ui/ResultDisplay.java
+###### \java\seedu\address\ui\ResultDisplay.java
 ``` java
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
@@ -603,7 +603,7 @@ public class Birthday {
 
 }
 ```
-###### /java/seedu/address/ui/StatusBarFooter.java
+###### \java\seedu\address\ui\StatusBarFooter.java
 ``` java
     /**
      * Display the total number of people in the address book

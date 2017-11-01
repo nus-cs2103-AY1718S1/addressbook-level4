@@ -1,12 +1,12 @@
 # jacoblipech
-###### /java/guitests/guihandles/PersonCardHandle.java
+###### \java\guitests\guihandles\PersonCardHandle.java
 ``` java
     public String getBirthday() {
         return birthdayLabel.getText();
     }
 
 ```
-###### /java/guitests/guihandles/StatusBarFooterHandle.java
+###### \java\guitests\guihandles\StatusBarFooterHandle.java
 ``` java
     /**
      * Returns the text of 'total number of people' in contacts of the status bar
@@ -16,7 +16,7 @@
     }
 
 ```
-###### /java/seedu/address/logic/commands/AddBirthdayCommandTest.java
+###### \java\seedu\address\logic\commands\AddBirthdayCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for AddBirthdayCommand.
@@ -53,7 +53,7 @@ public class AddBirthdayCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/AddCommandTest.java
+###### \java\seedu\address\logic\commands\AddCommandTest.java
 ``` java
         @Override
         public void addBirthday (Index targetIndex, Birthday toAdd) throws PersonNotFoundException {
@@ -68,7 +68,7 @@ public class AddBirthdayCommandTest {
     }
 
 ```
-###### /java/seedu/address/logic/commands/SortCommandTest.java
+###### \java\seedu\address\logic\commands\SortCommandTest.java
 ``` java
 public class SortCommandTest {
 
@@ -104,7 +104,7 @@ public class SortCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddBirthdayCommandParserTest.java
+###### \java\seedu\address\logic\parser\AddBirthdayCommandParserTest.java
 ``` java
 public class AddBirthdayCommandParserTest {
 
@@ -127,7 +127,7 @@ public class AddBirthdayCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_sort() throws Exception {
@@ -136,7 +136,7 @@ public class AddBirthdayCommandParserTest {
     }
 
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_birthday() throws Exception {
@@ -155,7 +155,7 @@ public class AddBirthdayCommandParserTest {
     }
 
 ```
-###### /java/seedu/address/model/ModelManagerTest.java
+###### \java\seedu\address\model\ModelManagerTest.java
 ``` java
     /**
      * Tests if sortPersonByName can return a list of sorted names from an input
@@ -199,7 +199,7 @@ public class AddBirthdayCommandParserTest {
     }
 
 ```
-###### /java/seedu/address/model/person/BirthdayTest.java
+###### \java\seedu\address\model\person\BirthdayTest.java
 ``` java
 public class BirthdayTest {
 
@@ -262,7 +262,7 @@ public class BirthdayTest {
 
 }
 ```
-###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
+###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
 ``` java
     /**
      * Sets the {@code Birthday} of the {@code EditPersonDescriptor} that we are building.
@@ -277,7 +277,7 @@ public class BirthdayTest {
     }
 
 ```
-###### /java/seedu/address/testutil/PersonBuilder.java
+###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
     /**
      * Sets the {@code Birthday} of the {@code Person} that we are building.
@@ -298,7 +298,7 @@ public class BirthdayTest {
 
 }
 ```
-###### /java/seedu/address/ui/StatusBarFooterTest.java
+###### \java\seedu\address\ui\StatusBarFooterTest.java
 ``` java
     @Before
     public void setUp() {

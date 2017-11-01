@@ -13,9 +13,10 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  */
 public class DeleteCommand extends UndoableCommand {
 
+    //@@author LeeYingZheng
     public static final String COMMAND_WORDVAR_1 = "delete";
     public static final String COMMAND_WORDVAR_2 = "d";
-
+    //@@author
     public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1
             + " OR "
             + "d"

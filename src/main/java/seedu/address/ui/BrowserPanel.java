@@ -22,8 +22,8 @@ public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
 
+    //@@author LeeYingZheng
     //different search pages for different commands
-
     //GoogleCommand
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
@@ -56,6 +56,7 @@ public class BrowserPanel extends UiPart<Region> {
     public void loadFacebookPage() {
         loadPage(FACEBOOK_URL);
     }
+    //@@author
 
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));

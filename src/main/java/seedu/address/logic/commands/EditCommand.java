@@ -34,6 +34,7 @@ import seedu.address.model.tag.Tag;
  */
 public class EditCommand extends UndoableCommand {
 
+    //@@author LeeYingZheng
     public static final String COMMAND_WORDVAR_1 = "edit";
     public static final String COMMAND_WORDVAR_2 = "e";
 
@@ -116,6 +117,7 @@ public class EditCommand extends UndoableCommand {
             return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
         }
     }
+    //@@author
 
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
@@ -137,6 +139,7 @@ public class EditCommand extends UndoableCommand {
                 updatedFavourite, updatedBirthday, updatedTags);
     }
 
+    //@@author LeeYingZheng
     public static boolean requiresHandling() {
         return requiresHandling;
     }
@@ -144,6 +147,7 @@ public class EditCommand extends UndoableCommand {
     public static void setHandlingFalse() {
         requiresHandling = false;
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

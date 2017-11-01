@@ -98,7 +98,7 @@ public class StringUtil {
         String encapsulatedTag = tag.toString();
         return tagFilters.contains(encapsulatedTag.substring(1, encapsulatedTag.length() - 1));
     }
-    @@author
+    //@@author
 
     /**
      * Returns a detailed message of the t, including the stack trace.

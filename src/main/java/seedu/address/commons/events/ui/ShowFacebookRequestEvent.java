@@ -1,6 +1,6 @@
-//@@author LeeYingZheng
 package seedu.address.commons.events.ui;
 
+//@@author LeeYingZheng
 import seedu.address.commons.events.BaseEvent;
 
 /**

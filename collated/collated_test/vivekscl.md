@@ -1,5 +1,5 @@
 # vivekscl
-###### /java/seedu/address/logic/commands/AddCommandTest.java
+###### \java\seedu\address\logic\commands\AddCommandTest.java
 ``` java
         @Override
         public void removeTag(ArrayList<Index> targetIndexes, Tag toRemove)  {
@@ -12,7 +12,7 @@
         }
 
 ```
-###### /java/seedu/address/logic/commands/AddCommandTest.java
+###### \java\seedu\address\logic\commands\AddCommandTest.java
 ``` java
         @Override
         public String getClosestMatchingName(NameContainsKeywordsPredicate predicate) {
@@ -21,7 +21,7 @@
         }
 
 ```
-###### /java/seedu/address/logic/commands/AddTagCommandTest.java
+###### \java\seedu\address\logic\commands\AddTagCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code AddTagCommand}.
@@ -171,7 +171,7 @@ public class AddTagCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/FindCommandTest.java
+###### \java\seedu\address\logic\commands\FindCommandTest.java
 ``` java
     @Test
     public void execute_oneKeyword_noPersonFound() {
@@ -197,7 +197,7 @@ public class AddTagCommandTest {
     }
 
 ```
-###### /java/seedu/address/logic/commands/RemoveTagCommandTest.java
+###### \java\seedu\address\logic\commands\RemoveTagCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code RemoveTagCommand}.
@@ -361,7 +361,7 @@ public class RemoveTagCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_removeTag() throws Exception {
@@ -392,7 +392,7 @@ public class RemoveTagCommandTest {
     }
 
 ```
-###### /java/seedu/address/logic/parser/RedoCommandParserTest.java
+###### \java\seedu\address\logic\parser\RedoCommandParserTest.java
 ``` java
 public class RedoCommandParserTest {
 
@@ -404,7 +404,7 @@ public class RedoCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/UndoCommandParserTest.java
+###### \java\seedu\address\logic\parser\UndoCommandParserTest.java
 ``` java
 public class UndoCommandParserTest {
 
@@ -416,7 +416,7 @@ public class UndoCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/model/ModelManagerTest.java
+###### \java\seedu\address\model\ModelManagerTest.java
 ``` java
     /*
      * Tests if the actual output of removeTag is equals to the expected
@@ -489,7 +489,7 @@ public class UndoCommandParserTest {
     }
 
 ```
-###### /java/systemtests/FindCommandSystemTest.java
+###### \java\systemtests\FindCommandSystemTest.java
 ``` java
     /**
      * Executes {@code command} and verifies that the command box displays an empty string, the result display
