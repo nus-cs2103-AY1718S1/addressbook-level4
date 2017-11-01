@@ -48,6 +48,7 @@ public class UniqueTagList implements Iterable<Tag> {
         return new HashSet<>(internalList);
     }
 
+    //@@author low5545
     /**
      * Adds all tags in the argument tag list to this list.
      */
@@ -62,6 +63,7 @@ public class UniqueTagList implements Iterable<Tag> {
             }
         }
     }
+    //@@author
 
     /**
      * Replaces the Tags in this list with those in the argument tag list.

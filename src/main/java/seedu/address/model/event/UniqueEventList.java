@@ -100,6 +100,7 @@ public class UniqueEventList implements Iterable<Event> {
         return eventFoundAndDeleted;
     }
 
+    //@@author low5545
     /**
      * Adds all events in the argument events list to this list.
      */
@@ -112,6 +113,7 @@ public class UniqueEventList implements Iterable<Event> {
             }
         }
     }
+    //@@author
 
     public void setEvents(UniqueEventList replacement) {
         this.internalList.setAll(replacement.internalList);
