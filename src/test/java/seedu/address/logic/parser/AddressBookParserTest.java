@@ -31,6 +31,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RetagCommand;
 import seedu.address.logic.commands.RetrieveCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.TagCommand;
@@ -172,6 +173,13 @@ public class AddressBookParserTest {
 
         command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " -a");
         assertEquals(new UntagCommand(true, Collections.emptyList(), Collections.emptyList()), command);
+    }
+
+    @Test
+    public void parseCommand_retag() throws Exception {
+        RetagCommand command = (RetagCommand) parser.parseCommand(RetagCommand.COMMAND_WORD + " "
+                + "enemies" + " " + "friends");
+        assertEquals(new RetagCommand(new Tag("enemies"), new Tag("friends")), command);
     }
 
     @Test
