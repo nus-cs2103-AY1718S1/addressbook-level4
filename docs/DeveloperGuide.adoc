@@ -666,6 +666,45 @@ public class TutorialPanel extends UiPart<Region> {
 **Pros:** This is the most comprehensive way to teach users of all the features Bluebird has to offer +
 **Cons:** The tutorial will be lengthy and users may just skip it without learning of different features
 
+// tag::add[]
+=== Enhanced Add
+The enhanced add feature no longer requires the user to fill in every field as it now only requires the `n/NAME` field
+to be filled. This feature is done by using a constructor to initialize the default field as empty. This is implemented
+using an additional parameter in the ParserUtil class to determine whether the default constructor for an empty field
+should be called.
+
+image::addSD.png[width="800"]
+
+An extract of the code from ParserUtil class shows how this is being implemented. The command parameter determines
+whether or not a field is required in the parser. If the parser is called from the add command, it will call a
+default constructor where the parsed field is empty. +
+
+[source, java]
+----
+public static Optional<Name> parseName(Optional<String> name, String command) throws IllegalValueException {
+        requireNonNull(name);
+        if (command.equals("add")) {
+            return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.of(new Name(0));
+        } else {
+            return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.empty();
+        }
+    }
+----
+// end::tag[]
+
+==== Design Considerations
+
+**Aspect**: Implementing an option to accept and create the empty fields +
+** Alternative 1 (current choice):** By using a command parameter in the ParserUtil class +
+**Pros:** This will allow felxibility in implementing, or calling the necessary constructors in the respective person
+  field classes +
+**Cons:** There will be a need for overloading of constructors in the classes for the person fields +
+**Alternative 2**: By having a new class to initialise empty fields for person added, similar to the EditPersonDescriptor
+ class in the Edit command +
+**Pros:** This is the most comprehensive way to initialise fields without the need of new constructors in the classes for
+ the respective fields +
+**Cons:** The code will be unnecessarily lengthy and may cause features to break +
+
 == Documentation
 
 We use asciidoc for writing documentation.
