@@ -96,6 +96,7 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
     }
 
+    //@@author lincredibleJC
     @Test
     public void parse_invalidValue_failure() {
         // invalid name
