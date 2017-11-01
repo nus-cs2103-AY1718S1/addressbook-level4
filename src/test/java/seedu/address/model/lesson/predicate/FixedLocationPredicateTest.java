@@ -13,6 +13,7 @@ import seedu.address.model.module.Location;
 import seedu.address.model.module.predicates.FixedLocationPredicate;
 import seedu.address.testutil.LessonBuilder;
 
+//@@author junming403
 public class FixedLocationPredicateTest {
 
     @Test

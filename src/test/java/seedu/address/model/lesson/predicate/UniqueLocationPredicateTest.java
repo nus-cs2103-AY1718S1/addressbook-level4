@@ -13,6 +13,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 
+//@@author junming403
 public class UniqueLocationPredicateTest {
 
     private Model model;

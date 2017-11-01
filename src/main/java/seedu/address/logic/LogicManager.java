@@ -69,6 +69,7 @@ public class LogicManager extends ComponentManager implements Logic {
         return model.getFilteredLessonList();
     }
 
+    //@@author junming403
     @Override
     public ObservableList<Remark> getFilteredRemarkList() {
         return model.getFilteredRemarkList();
@@ -78,6 +79,7 @@ public class LogicManager extends ComponentManager implements Logic {
     public void setRemarkPredicate(Predicate predicate) {
         model.updateFilteredRemarkList(predicate);
     }
+    //@@author
 
     @Override
     public ListElementPointer getHistorySnapshot() {
