@@ -113,14 +113,14 @@ public class EditCommand extends UndoableCommand {
 
         switch (ListingUnit.getCurrentListingUnit()) {
 
-            case LESSON:
-                return executeEditLesson(lastShownList.get(index.getZeroBased()));
+        case LESSON:
+            return executeEditLesson(lastShownList.get(index.getZeroBased()));
 
-            case LOCATION:
-                return executeEditLocation(lastShownList.get(index.getZeroBased()).getLocation());
+        case LOCATION:
+            return executeEditLocation(lastShownList.get(index.getZeroBased()).getLocation());
 
-            default:
-                return executeEditModule(lastShownList.get(index.getZeroBased()).getCode());
+        default:
+            return executeEditModule(lastShownList.get(index.getZeroBased()).getCode());
         }
     }
 
