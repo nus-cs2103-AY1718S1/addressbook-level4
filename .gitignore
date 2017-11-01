@@ -18,3 +18,7 @@ classes/
 /bin/
 src/main/resources/docs/
 out/
+/data/*
+!/data/import
+/data/import/*
+!/data/import/test*

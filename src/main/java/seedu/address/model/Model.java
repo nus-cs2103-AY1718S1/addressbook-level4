@@ -98,6 +98,7 @@ public interface Model {
      */
     void updateFilteredParcelList(Predicate<ReadOnlyParcel> predicate);
 
+    //@@author fustilio
     /**
      * Method to sort the lists of addresses by delivery date with the earliest date in front
      */
@@ -137,7 +138,7 @@ public interface Model {
      * Method to reselect a parcel card if there is a card selected.
      */
     void reselect(ReadOnlyParcel parcel);
-
+    //@@author
 }
 
 
