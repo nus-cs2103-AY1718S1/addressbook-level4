@@ -60,16 +60,19 @@ public class Autocompleter {
                 return EMPTY_STRING;
 
             case COMMAND_NEXT_PREFIX:
+                clearResultsWindow();
                 if (possibleAutocompleteResults.isEmpty()) {
                     return textInCommandBox;
                 }
                 return textInCommandBox.trim() + " " +possibleAutocompleteResults.get(0);
 
             case COMMAND_CYCLE_PREFIX:
+                clearResultsWindow();
                 return textInCommandBox.substring(0, textInCommandBox.length() - 2) +
                         possibleAutocompleteResults.get(cycleIndex());
 
             case INDEX:
+                clearResultsWindow();
                 String[] temp = textInCommandBox.split(" ");
                 return temp[0] + " " + cycleCountingIndex();
 
@@ -77,8 +80,12 @@ public class Autocompleter {
                 displayMultipleResults(possibleAutocompleteResults);
                 return possibleAutocompleteResults.get(cycleIndex());
 
+            case NO_RESULT: //fall through to default
+
+            default:
+                clearResultsWindow();
+                return textInCommandBox;
         }
-        return textInCommandBox;
     }
 
     /**
