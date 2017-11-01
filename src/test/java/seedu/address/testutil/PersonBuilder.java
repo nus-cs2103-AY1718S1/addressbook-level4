@@ -128,7 +128,7 @@ public class PersonBuilder {
         }
         return this;
     }
-
+    //@@author limyongsong
     /**
      * Sets the {@code Link} of the {@code Person} that we are building.
      */
@@ -136,7 +136,7 @@ public class PersonBuilder {
         this.person.setLink(new Link(link));
         return this;
     }
-
+    //@@author
     /**
      * Sets the {@code FavouriteStatus} of the {@code Person} that we are building.
      */

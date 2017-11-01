@@ -39,10 +39,10 @@ public class BrowserPanel extends UiPart<Region> {
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
-
+    //@@author limyongsong
     /**
-     * Loads the facebook page based on Person link.value or if person does not have link,
-     * loads a facebook search for the Person name.fullName
+     * Loads the twitter page based on Person link.value or if person does not have link,
+     * loads a twitter search for the Person name.fullName
      * @param person
      */
     private void loadPersonPage(ReadOnlyPerson person) {
@@ -55,6 +55,7 @@ public class BrowserPanel extends UiPart<Region> {
                     + PossibleLinks.SEARCH_URL_SUFFIX_1);
         }
     }
+    //@@author
 
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));

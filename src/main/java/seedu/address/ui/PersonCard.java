@@ -67,7 +67,7 @@ public class PersonCard extends UiPart<Region> {
         initTags(person);
         bindListeners(person);
     }
-
+    //@@author limyongsong
     /**
      * Assigns different colour to tags w/ different names
      * Defaults to Grey colour when all colours are used up
@@ -80,12 +80,15 @@ public class PersonCard extends UiPart<Region> {
             tagColors.put(tagValue, colors[colourNum++]);
         } else if (colourNum >= colors.length && !tagColors.containsKey(tagValue)) {
             colourNum = 0; //Resets the color num for reuse
+        } else if (tagColors.containsKey(tagValue)) {
+            //if the tag already has a colour in the hasmap, we do not need to do anything
         } else {
-            tagColors.put(tagValue, "grey"); //Defensive programming, just in case anything gets past
+            tagColors.put(tagValue, "grey"); //just in case anything gets past
         }
         return tagColors.get(tagValue);
 
     }
+    //@@author
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
@@ -102,7 +105,7 @@ public class PersonCard extends UiPart<Region> {
             initTags(person);
         });
     }
-
+    //@@author limyongsong
     /**
      * Get the tags from a person and assign a colour to each tag
      * before add the tag as a children (on scenebuilder) of the person on the app list
@@ -115,7 +118,7 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
-
+    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
