@@ -136,9 +136,20 @@ public class RemarkCommand extends UndoableCommand {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof RemarkCommand // instanceof handles nulls
-                && remarkContent.equals(((RemarkCommand) other).remarkContent)
-                && index.equals((((RemarkCommand) other).index)));
+
+        if (isDelete != ((RemarkCommand) other).isDelete) {
+            return false;
+        }
+
+        if (isDelete) {
+            return other == this // short circuit if same object
+                    || (other instanceof RemarkCommand // instanceof handles nulls
+                    && index.equals((((RemarkCommand) other).index)));
+        } else {
+            return other == this // short circuit if same object
+                    || (other instanceof RemarkCommand // instanceof handles nulls
+                    && remarkContent.equals(((RemarkCommand) other).remarkContent)
+                    && index.equals((((RemarkCommand) other).index)));
+        }
     }
 }

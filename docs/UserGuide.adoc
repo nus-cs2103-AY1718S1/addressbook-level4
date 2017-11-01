@@ -138,7 +138,7 @@ Format: `remark -d INDEX`
 
 Examples:
 
-* `delete -r 1` +
+* `remark -d 1` +
 Delete the remark in current remark panel with index 1.
 
 === Listing all lesson : `list`
