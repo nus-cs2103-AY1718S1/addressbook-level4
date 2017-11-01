@@ -28,10 +28,10 @@ import seedu.address.testutil.ParcelBuilder;
 
 public class AddCommandTest {
 
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @Test
     public void constructor_nullParcel_throwsNullPointerException() {
