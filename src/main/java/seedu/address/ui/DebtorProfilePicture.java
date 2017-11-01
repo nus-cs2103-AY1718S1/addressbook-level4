@@ -10,6 +10,9 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.ProfilePicturesFolder;
 import seedu.address.model.person.ReadOnlyPerson;
 
+/**
+ * Displays profile picture of each debtor
+ */
 public class DebtorProfilePicture extends UiPart<Region> {
     private static final String FXML = "DebtorProfilePicture.fxml";
 

@@ -3,6 +3,9 @@ package seedu.address.logic.commands;
 import seedu.address.commons.core.ProfilePicturesFolder;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+/**
+ * Sets the absolute path to the profile pictures folder that is residing in user's workspace.
+ */
 public class SetPathCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "setpath";
