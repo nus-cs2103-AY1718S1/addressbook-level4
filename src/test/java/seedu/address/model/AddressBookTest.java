@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.testutil.TypicalMeetings.AGEING;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -16,6 +17,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -53,7 +55,20 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        List<Meeting> newMeetings = Arrays.asList(new Meeting(AGEING));
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newMeetings);
+
+        thrown.expect(AssertionError.class);
+        addressBook.resetData(newData);
+    }
+
+    @Test
+    public void resetData_withDuplicateMeetings_throwsAssertionError() {
+        // Repeat AGEING twice
+        List<Person> newPersons = Arrays.asList(new Person(ALICE));
+        List<Tag> newTags = new ArrayList<>(ALICE.getTags());
+        List<Meeting> newMeetings = Arrays.asList(new Meeting(AGEING), new Meeting(AGEING));
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newMeetings);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -81,9 +96,11 @@ public class AddressBookTest {
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<ReadOnlyMeeting> meetings = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags) {
+        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags,
+                        Collection<? extends ReadOnlyMeeting> meetings) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
+            this.meetings.setAll(meetings);
         }
 
         @Override
