@@ -201,7 +201,6 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removeEvent(event);
         indicateAddressBookChanged();
     }
-<<<<<<< HEAD
 
     //=========== Model support for activity component =============================================================
     @Override
@@ -217,9 +216,9 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-=======
+
     //@@author
->>>>>>> master
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -259,7 +258,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
     }
-<<<<<<< HEAD
+
 
     //=========== Filtered Reminder List Accessors =============================================================
 
@@ -284,9 +283,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
 
-=======
+
     //@@author
->>>>>>> master
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

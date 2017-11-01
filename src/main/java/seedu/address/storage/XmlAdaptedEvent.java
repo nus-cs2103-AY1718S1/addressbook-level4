@@ -13,12 +13,11 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
-<<<<<<< HEAD
 import seedu.address.model.reminder.Reminder;
 
-=======
+
 //@@author junyango
->>>>>>> master
+
 /**
  * JAXB-friendly version of the Event.
  */

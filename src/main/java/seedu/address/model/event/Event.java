@@ -15,7 +15,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.property.Address;
 import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Name;
-<<<<<<< HEAD
+
 import seedu.address.model.property.Property;
 import seedu.address.model.property.UniquePropertyMap;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
@@ -26,9 +26,7 @@ import seedu.address.model.reminder.UniqueReminderList;
 import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 
 //@@junyang junyango
-=======
-//@@author junyango
->>>>>>> master
+
 /**
  * Represents an Event in the address book.
  * Guarantees: details are present and not null, field values are validated.

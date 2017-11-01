@@ -75,7 +75,7 @@ public interface Model {
             throws DuplicateEventException, EventNotFoundException;
     /** Deletes the given event */
     void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
-<<<<<<< HEAD
+
 
     //=========== Model support for reminder component =============================================================
 
@@ -85,9 +85,8 @@ public interface Model {
     /** Deletes the given event */
     void deleteReminder(ReadOnlyReminder target) throws ReminderNotFoundException;
 
-=======
+
     //@@author
->>>>>>> master
     //=========== Filtered Person/Activity List support =============================================================
 
     /** Returns an unmodifiable view of the filtered person list */
