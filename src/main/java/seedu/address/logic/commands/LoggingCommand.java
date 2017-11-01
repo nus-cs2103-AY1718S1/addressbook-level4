@@ -20,7 +20,7 @@ public class LoggingCommand {
      *keepLog Method to Write Activity Log To The ConnectUsLog.txt file
      */
     public void keepLog(String logText, String functionType) {
-        try (FileWriter fileWrite = new FileWriter("src/test/data/XMLUtilTest/ConnectUsLog.txt", true);
+        try (FileWriter fileWrite = new FileWriter("ConnectUsLog.txt", true);
              BufferedWriter buffWriter = new BufferedWriter(fileWrite);
              PrintWriter out = new PrintWriter(buffWriter)) {
             out.println(functionType + "\t" + logText + "\t" + LocalDateTime.now() + "\n");
@@ -32,14 +32,14 @@ public class LoggingCommand {
      * clearLog Method to clear the Activity Log in the ConnectUsLog.txt file
      */
     public void clearLog() {
-        File file = new File("src/test/data/XMLUtilTest/ConnectUsLog.txt");
+        File file = new File("ConnectUsLog.txt");
         file.delete();
     }
     /**
      * startUpLog Method will record the time when the application starts
      */
     public void startUpLog() {
-        try (FileWriter fileWrite = new FileWriter("src/test/data/XMLUtilTest/ConnectUsLog.txt", true);
+        try (FileWriter fileWrite = new FileWriter("ConnectUsLog.txt", true);
              BufferedWriter buffWriter = new BufferedWriter(fileWrite);
              PrintWriter out = new PrintWriter(buffWriter)) {
             out.println("Application Started on " + LocalDateTime.now());
