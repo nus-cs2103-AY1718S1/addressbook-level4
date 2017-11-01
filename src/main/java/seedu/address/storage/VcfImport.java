@@ -18,13 +18,14 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 
+//@@author freesoup
 /**
  * Parses a .vcf file into a list of {@code ReadOnlyPerson}.
  */
 public class VcfImport {
+
     public static List<ReadOnlyPerson> getPersonList(File file) throws IOException, IllegalValueException {
         BufferedReader br = new BufferedReader(
                 new InputStreamReader(new FileInputStream(file)));
