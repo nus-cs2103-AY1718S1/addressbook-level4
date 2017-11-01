@@ -21,7 +21,7 @@ public class UserPrefs {
 
     //@@author keithsoc
     public UserPrefs() {
-        this.setGuiSettings(1600, 900, 0, 0);
+        this.setGuiSettings(1100, 835, 0, 0);
         this.setThemeSettings("view/ThemeDay.css", "view/ThemeDayExtensions.css");
     }
     //@@author

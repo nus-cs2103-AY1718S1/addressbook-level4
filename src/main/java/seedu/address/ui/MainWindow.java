@@ -36,8 +36,8 @@ public class MainWindow extends UiPart<Region> {
     private static final String ICON = "/images/kaypoh_icon_32.png";
     private static final String FXML = "MainWindow.fxml";
     //@@author keithsoc
-    private static final int MIN_HEIGHT = 900;
-    private static final int MIN_WIDTH = 1600;
+    private static final int MIN_HEIGHT = 700;
+    private static final int MIN_WIDTH = 600;
     //@@author
     private double xOffset = 0;
     private double yOffset = 0;
@@ -106,7 +106,7 @@ public class MainWindow extends UiPart<Region> {
         enableMovableWindow();
         enableMinimiseWindow();
         enableMaximiseWindow();
-        UiResize.enableResizableWindow(primaryStage);
+        UiResize.enableResizableWindow(primaryStage, MIN_WIDTH, MIN_HEIGHT, Double.MAX_VALUE, Double.MAX_VALUE);
         //@@author
 
         setAccelerators();
@@ -277,6 +277,7 @@ public class MainWindow extends UiPart<Region> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
         });
+
         menuBar.setOnMouseDragged((event) -> {
             primaryStage.setX(event.getScreenX() - xOffset);
             primaryStage.setY(event.getScreenY() - yOffset);

@@ -15,7 +15,7 @@ public class UiTheme {
     public static final String THEME_DAY_EXTENSIONS = "view/ThemeDayExtensions.css";
     public static final String THEME_NIGHT_EXTENSIONS = "view/ThemeNightExtensions.css";
 
-    private static UiTheme uiTheme = new UiTheme();
+    private static UiTheme instance;
     private Scene scene;
     private BrowserPanel browserPanel;
 
@@ -27,7 +27,10 @@ public class UiTheme {
      * @return instance of UiTheme
      */
     public static UiTheme getInstance() {
-        return uiTheme;
+        if (instance == null) {
+            instance = new UiTheme();
+        }
+        return instance;
     }
 
     /**
