@@ -32,8 +32,8 @@ public class PrintCommand extends Command {
             + "Example: " + COMMAND_WORD + " filename\n"
             + "file can then be found in the in doc/books folder as filename.txt";
 
-    public static final String MESSAGE_SUCCESS = "Addressbook has been saved! "
-            + "Find your addressbook in the .txt file named by you in the doc/books folder.";
+    public static final String MESSAGE_SUCCESS = "Address Book has been saved!\n"
+            + "Find your Address Book in the %1$s.txt file you created in the doc/books folder.";
 
     private final String fileName;
 
@@ -86,8 +86,7 @@ public class PrintCommand extends Command {
             e.printStackTrace();
         }
 
-        //System.out.println("test");
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(String.format(MESSAGE_SUCCESS,this.fileName));
     }
 
 }
