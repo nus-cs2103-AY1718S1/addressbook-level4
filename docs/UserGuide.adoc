@@ -102,6 +102,19 @@ Format: `addE en/EVENT_NAME ed/EVENT_DESCRIPTION et/EVENT_TIME`
 
 ****
 * You need to type EVENT_TIME as a date format DD/MM/YYYY (Use "/" insetead of "-")
+* Every event will have a number indicating the of days till or since the event date.
+** If the event date has passed, an up arrow will be appended to the numbr to indicate how many days have passed since the evnet date.
+** If the event date is not yet reached, a down arrow will be appended to the number to indicate the number of days till the event.
+****
+
+****
+* If the evnet to be add in an addE command is `out-dated` (ie. event date has passed), an alert dialog will pop up.
+This dialog (shown in Figure 3.1.1) will ask you whether you want to add this out-dated event into Planno.
+** If you want to add this event, click `OK`.
+** If you do not want to add this event anymore, click `CANCEL`.
+
+image::alert_dialog.png[width="790"]
+_Figure 3.2.1: alert dialog for adding out-dated events_
 ****
 
 Example:
@@ -113,7 +126,7 @@ You will see the following after typing 4 above example add command to
 *an empty address book and an empty event list*:
 
 image::UG_add.png[width="790"]
-_Figure 3.2: add command result_
+_Figure 3.2.2: add command result_
 
 === Listing
 
