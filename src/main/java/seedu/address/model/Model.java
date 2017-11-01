@@ -36,6 +36,7 @@ public interface Model {
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
+    //@@author tpq95
     /** Delete tag of given person */
     void deleteTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
             DuplicatePersonException, TagNotFoundException;
@@ -43,6 +44,7 @@ public interface Model {
     /** Add tag of given person */
     void attachTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
             DuplicatePersonException, UniqueTagList.DuplicateTagException;
+    //@@author
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
