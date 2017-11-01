@@ -103,6 +103,7 @@ public class JsonUtil {
         return objectMapper.readValue(json, instanceClass);
     }
 
+    //@@author yunpengn
     /**
      * Read JSON data from a given URL and convert the data to an instance of the given class.
      *
@@ -111,6 +112,7 @@ public class JsonUtil {
     public static <T> T fromJsonUrl(URL url, Class<T> instanceClass) throws IOException {
         return objectMapper.readValue(url, instanceClass);
     }
+    //@@author
 
     /**
      * Converts a given instance of a class into its JSON data string representation

@@ -13,6 +13,7 @@ import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.model.property.DateTime;
 
+//@@author yunpengn
 public class ModuleInfoTest {
     private static ModuleInfo info;
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/ConfigUtilTest/");

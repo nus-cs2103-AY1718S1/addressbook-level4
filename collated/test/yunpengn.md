@@ -1,5 +1,15 @@
 # yunpengn
-###### \java\seedu\address\commons\events\SwitchToContactsListEventTest.java
+###### \java\seedu\address\commons\events\model\TagColorChangedEventTest.java
+``` java
+public class TagColorChangedEventTest {
+    @Test
+    public void createEvent_success() throws Exception {
+        BaseEvent event = new TagColorChangedEvent(new Tag(VALID_TAG_HUSBAND), "7db9a1");
+        assertEquals("The color of tag [husband] has been changed to 7db9a1.", event.toString());
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\SwitchToContactsListEventTest.java
 ``` java
 public class SwitchToContactsListEventTest {
     @Test
@@ -9,23 +19,13 @@ public class SwitchToContactsListEventTest {
     }
 }
 ```
-###### \java\seedu\address\commons\events\SwitchToEventsListEventTest.java
+###### \java\seedu\address\commons\events\ui\SwitchToEventsListEventTest.java
 ``` java
 public class SwitchToEventsListEventTest {
     @Test
     public void createEvent_success() throws Exception {
         BaseEvent event = new SwitchToEventsListEvent();
         assertEquals("SwitchToEventsListEvent", event.toString());
-    }
-}
-```
-###### \java\seedu\address\commons\events\TagColorChangedEventTest.java
-``` java
-public class TagColorChangedEventTest {
-    @Test
-    public void createEvent_success() throws Exception {
-        BaseEvent event = new TagColorChangedEvent(new Tag(VALID_TAG_HUSBAND), "7db9a1");
-        assertEquals("The color of tag [husband] has been changed to 7db9a1.", event.toString());
     }
 }
 ```
@@ -184,6 +184,119 @@ public class ConfigCommandTest {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\imports\ImportNusmodsCommandTest.java
+``` java
+public class ImportNusmodsCommandTest {
+    private static ImportCommand validCommand;
+
+    @BeforeClass
+    public static void setUp() throws Exception {
+        validCommand = new ImportNusmodsCommand(new URL(NUSMODS_VALID_URL));
+    }
+
+    @Test
+    public void createCommand_succeed_checkCorrectness() throws Exception {
+        String expected = "AY2017-2018 Semester 1";
+        assertEquals(expected, validCommand.toString());
+    }
+
+    @Test
+    public void createCommand_wrongSemesterInformation_expectException() throws Exception {
+        assertConstructorFailure(NUSMODS_INVALID_URL_YEAR_START, String.format(INVALID_URL, ""));
+        assertConstructorFailure(NUSMODS_INVALID_URL_YEAR_OFFSET, String.format(INVALID_URL, YEAR_OFFSET_BY_ONE));
+    }
+
+    @Test
+    public void execute_succeed_checkCorrectness() throws Exception {
+        Model modelStub = new ImportNusmodsCommandModelStub();
+        validCommand.setData(modelStub, new CommandHistory(), new UndoRedoStack());
+        CommandResult result = validCommand.execute();
+        ImportNusmodsCommandModelStub stubCount = (ImportNusmodsCommandModelStub) modelStub;
+        assertEquals(1, stubCount.getEventCount());
+        assertEquals(String.format(MESSAGE_SUCCESS, 1), result.feedbackToUser);
+    }
+
+    /**
+     * Constructs an {@link ImportNusmodsCommand} and checks its failure and corresponding error message.
+     */
+    private void assertConstructorFailure(String input, String expectedMessage) throws Exception {
+        ImportCommand command = null;
+        try {
+            command = new ImportNusmodsCommand(new URL(input));
+        } catch (ParseException pe) {
+            assertEquals(expectedMessage, pe.getMessage());
+        }
+        assertNull(command);
+    }
+
+    private class ImportNusmodsCommandModelStub extends ModelStub {
+        private int countEvent = 0;
+
+        ImportNusmodsCommandModelStub() {
+            PropertyManager.initializePropertyManager();
+        }
+
+        @Override
+        public void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
+            countEvent++;
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+
+        int getEventCount() {
+            return countEvent;
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\commands\imports\ModuleInfoTest.java
+``` java
+public class ModuleInfoTest {
+    private static ModuleInfo info;
+    private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/ConfigUtilTest/");
+    private static final String SAMPLE_MODULE_JSON = "SampleModuleInfoJson.json";
+
+    @BeforeClass
+    public static void setUp() throws Exception {
+        info = getSampleModule();
+        assertNotNull(info);
+    }
+
+    @Test
+    @Ignore
+    public void createModuleInfo_fromJsonUrl_checkCorrectness() throws Exception {
+        assertEquals("CS1101S", info.getModuleCode());
+
+        Date expectedDate = DateTime.formatDateTime("29112017 17:00");
+        assertEquals(expectedDate, info.getExamDate());
+    }
+
+    @Test
+    public void equals_returnTrue_checkCorrectness() throws Exception {
+        ModuleInfo another = getSampleModule();
+        assertEquals(info, info);
+        assertEquals(info, another);
+    }
+
+    @Test
+    @Ignore
+    public void toString_checkCorrectness() throws Exception {
+        String expected = "Module Code: CS1101S\n"
+                + "Module Title: Programming Methodology\n"
+                + "Module Credit: 5\n"
+                + "Examination Date: Wed Nov 29 17:00:00 SGT 2017";
+        assertEquals(expected, info.toString());
+    }
+
+    private static ModuleInfo getSampleModule() throws Exception {
+        // Although this method returns an Optional, we do not want to make use of such wrapper here.
+        return JsonUtil.readJsonFile(TEST_DATA_FOLDER + SAMPLE_MODULE_JSON, ModuleInfo.class).orElse(null);
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\ArgumentMultimapTest.java
 ``` java
 public class ArgumentMultimapTest {
@@ -295,13 +408,28 @@ public class ImportCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() throws Exception {
-
+        ImportCommand expected = new ImportNusmodsCommand(new URL(NUSMODS_VALID_URL));
+        assertParseSuccess(parser, NUSMODS_VALID_IMPORT, expected);
     }
 
     @Test
     public void parse_invalidConfigType_expectException() {
         assertParseFailure(parser, INVALID_IMPORT_TYPE + INVALID_IMPORT_PATH,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, IMPORT_TYPE_NOT_FOUND));
+    }
+
+    @Test
+    public void parse_noPathSpecified_expectException() {
+        assertParseFailure(parser, IMPORT_NO_PATH,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidUrlForNusMods_expectException() {
+        assertParseFailure(parser, NOT_FROM_NUSMODS_IMPORT,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportNusmodsCommand.MESSAGE_USAGE));
+
+        assertParseFailure(parser, NUSMODS_INVALID_IMPORT, String.format(INVALID_URL, ""));
     }
 }
 ```
@@ -351,6 +479,7 @@ public class PropertyManagerTest {
         int numPreLoadedProperties = testPrivateFieldsCount("propertyFullNames");
 
         assertEquals(numPreLoadedProperties, testPrivateFieldsCount("propertyConstraintMessages"));
+
         assertEquals(numPreLoadedProperties, testPrivateFieldsCount("propertyValidationRegex"));
     }
 

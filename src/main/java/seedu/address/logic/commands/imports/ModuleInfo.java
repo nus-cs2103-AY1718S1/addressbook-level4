@@ -3,6 +3,7 @@ package seedu.address.logic.commands.imports;
 import java.util.Date;
 import java.util.Objects;
 
+//@@author yunpengn
 /**
  * A Java class representation of module information from NUSMods JSON API.
  *
