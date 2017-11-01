@@ -52,7 +52,7 @@ public class LockCommandTest {
     }
 
     /**
-     * Parses {@code userInput} into a {@code FindCommand} in default mode.
+     * Parses {@code userInput} into a {@code LockCommand} in default mode.
      */
     private LockCommand prepareCommand(String userInput) throws ParseException {
         LockCommand command = new LockCommandParser().parse(userInput);

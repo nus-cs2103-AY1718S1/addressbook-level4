@@ -106,4 +106,23 @@ public class StringUtil {
             return false;
         }
     }
+
+    /**
+     * Returns true if {@code s} represents file path
+     * e.g. data/addressbook.xml, C:\addressbook.xml, ..., <br>
+     * Will return false for any other non-file-path string input
+     * e.g. empty string, " data/addressbook.xml " (untrimmed), "data/ addressbook.xml"(contains whitespace),
+     * "data/addressbook.doc"(non xml file).
+     * @throws NullPointerException if {@code s} is null.
+     */
+    public static boolean isFilePath(String s) {
+        requireNonNull(s);
+
+        try {
+            return s.contains(".xml") && s.matches("[\\p{Alnum}][\\p{Graph} ]*");
+        } catch (IllegalArgumentException ipe) {
+            return false;
+        }
+    }
+
 }
