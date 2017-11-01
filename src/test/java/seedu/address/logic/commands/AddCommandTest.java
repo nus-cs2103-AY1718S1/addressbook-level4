@@ -140,12 +140,14 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addTodoItem(ReadOnlyPerson target, TodoItem todoItem) throws DuplicatePersonException, PersonNotFoundException, DuplicateTodoItemException {
+        public void addTodoItem(ReadOnlyPerson target, TodoItem todoItem)
+                throws DuplicatePersonException, PersonNotFoundException, DuplicateTodoItemException {
             fail("This method should not be called.");
         }
 
         @Override
-        public void deleteTodoItem(ReadOnlyPerson target, TodoItem todoItem) throws DuplicatePersonException, PersonNotFoundException {
+        public void deleteTodoItem(ReadOnlyPerson target, TodoItem todoItem)
+                throws DuplicatePersonException, PersonNotFoundException {
             fail("This method should not be called.");
         }
 
