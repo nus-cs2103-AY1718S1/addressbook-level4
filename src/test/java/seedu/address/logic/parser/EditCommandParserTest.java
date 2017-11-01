@@ -26,7 +26,6 @@ import static seedu.address.logic.commands.CommandTestUtil.PHOTO_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.POSITION_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PRIORITY_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.REL_DESC_COLLEAGUE;
-import static seedu.address.logic.commands.CommandTestUtil.REL_DESC_SIBLINGS;
 import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
@@ -43,11 +42,9 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHOTO_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_REL_COLLEAGUE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_REL_SIBLINGS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_RELATIONSHIP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -70,14 +67,12 @@ import seedu.address.model.person.Photo;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Priority;
 import seedu.address.model.person.Status;
-import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 public class EditCommandParserTest {
 
     private static final String TAG_EMPTY = " " + PREFIX_TAG;
-    private static final String REL_EMPTY = " " + PREFIX_ADD_RELATIONSHIP;
 
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
