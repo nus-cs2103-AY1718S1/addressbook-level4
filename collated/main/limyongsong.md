@@ -112,7 +112,7 @@ public class AddRemarkCommand extends UndoableCommand {
      * @return String that shows whether add was successfully done
      */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
-            return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
+        return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
     }
 
     @Override
@@ -874,8 +874,8 @@ public class RemarkPanel extends UiPart<Region> {
         String printedString = "Remarks regarding " + String.valueOf(event.getNewSelection().person.getName()) + ":\n"
                 + "---------------------------------------------------\n";
         for (int i = 0; i < event.getNewSelection().person.getRemark().size(); i++) {
-                printedString = printedString.concat(i + 1 + "). " //Shows a list of remark numbered from 1 to size()
-                        + event.getNewSelection().person.getRemark().get(i).value + "\n");
+            printedString = printedString.concat(i + 1 + "). " //Shows a list of remark numbered from 1 to size()
+                    + event.getNewSelection().person.getRemark().get(i).value + "\n");
         }
         final String finalString = printedString;
         Platform.runLater(() -> displayed.setValue(finalString));
