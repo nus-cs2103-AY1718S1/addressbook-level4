@@ -77,7 +77,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
         this.persons.setPersons(persons);
     }
-  
     //@@author low5545
     /**
      * Adds all events in the argument event list to this list.
