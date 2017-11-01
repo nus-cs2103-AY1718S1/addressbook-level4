@@ -48,7 +48,7 @@ public class Birthday {
         formatter.setLenient(false);
 
         try {
-            Date parsedDate = formatter.parse(test); // throws exception if the date is invalid
+            formatter.parse(test); // throws exception if the date is invalid
         } catch (ParseException pe) {
             return false;
         }
