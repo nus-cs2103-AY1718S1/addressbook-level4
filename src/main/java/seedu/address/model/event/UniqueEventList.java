@@ -16,8 +16,8 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicateEventException;
 import seedu.address.model.person.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-//@@author junyango
 
+//@@author junyango
 /**
  * A list of events that enforces uniqueness between its elements and does not allow nulls.
  *

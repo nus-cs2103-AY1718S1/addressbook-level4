@@ -460,14 +460,6 @@ public class EditEventParser implements Parser<EditEventCommand> {
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
-     * Adds all events in the argument event list to this list.
-     */
-    public void addEvents(List<? extends ReadOnlyEvent> events) {
-        this.events.addEvents(events);
-    }
-
-
-    /**
      * Replaces all events in this list with those in the argument event list.
      */
     public void setEvents(List<? extends ReadOnlyEvent> events) throws DuplicateEventException {
@@ -668,7 +660,6 @@ public interface ReadOnlyEvent {
 ```
 ###### \java\seedu\address\model\event\UniqueEventList.java
 ``` java
-
 /**
  * A list of events that enforces uniqueness between its elements and does not allow nulls.
  *
@@ -750,57 +741,6 @@ public class UniqueEventList implements Iterable<Event> {
         }
         return eventFoundAndDeleted;
     }
-
-    /**
-     * Adds all events in the argument events list to this list.
-     */
-    public void addEvents(List<? extends ReadOnlyEvent> events) {
-        for (final ReadOnlyEvent event : events) {
-            try {
-                this.add(new Event(event));
-            } catch (DuplicateEventException e) {
-                // skip event if it exists
-            }
-        }
-    }
-
-    public void setEvents(UniqueEventList replacement) {
-        this.internalList.setAll(replacement.internalList);
-    }
-
-    public void setEvents(List<? extends ReadOnlyEvent> events) throws DuplicateEventException {
-        final UniqueEventList replacement = new UniqueEventList();
-        for (final ReadOnlyEvent event : events) {
-            replacement.add(new Event(event));
-        }
-        setEvents(replacement);
-    }
-
-    /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
-     */
-    public ObservableList<ReadOnlyEvent> asObservableList() {
-        return FXCollections.unmodifiableObservableList(mappedList);
-    }
-
-    @Override
-    public Iterator<Event> iterator() {
-        return internalList.iterator();
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof UniqueEventList // instanceof handles nulls
-                && this.internalList.equals(((UniqueEventList) other).internalList));
-    }
-
-    @Override
-    public int hashCode() {
-        return internalList.hashCode();
-    }
-}
-
 
 ```
 ###### \java\seedu\address\model\Model.java
