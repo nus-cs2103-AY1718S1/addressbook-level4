@@ -8,7 +8,6 @@ import com.google.common.eventbus.Subscribe;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -68,9 +67,6 @@ public class PersonInfo extends UiPart<Region> {
 
         this.colourMap = new SimpleObjectProperty<>(colourMap);
 
-        // To prevent triggering events for typing inside the loaded Web page.
-        getRoot().setOnKeyPressed(Event::consume);
-
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
@@ -104,6 +100,10 @@ public class PersonInfo extends UiPart<Region> {
 
     }
 
+    /**
+     * Binds the individual UI elements to observe their respective {@code Person} properties
+     * so that they will be notified of any changes.
+     */
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
