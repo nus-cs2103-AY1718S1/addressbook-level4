@@ -39,11 +39,8 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_BIRTHDAY,
-                PREFIX_TAG);
-
-        //if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_BIRTHDAY, PREFIX_EMAIL)) {
-        //throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));}
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
+                        PREFIX_BIRTHDAY, PREFIX_TAG);
 
         try {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME), "add").get();
@@ -56,7 +53,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             boolean isPrivate = false;
             boolean isPinned = false;
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, birthday, remark, tagList, isPrivate, isPinned);
+            ReadOnlyPerson person = new Person(name, phone, email, address, birthday, remark, tagList,
+                    isPrivate, isPinned);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
@@ -67,9 +65,9 @@ public class AddCommandParser implements Parser<AddCommand> {
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given
      * {@code ArgumentMultimap}.
-     *
+     * <p>
      * private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-     *   return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());}
+     * return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());}
      */
 
     @Override

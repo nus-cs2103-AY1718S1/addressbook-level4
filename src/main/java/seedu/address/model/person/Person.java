@@ -148,13 +148,19 @@ public class Person implements ReadOnlyPerson {
         return remark.get();
     }
 
-    public void setBirthday(Birthday birthday) { this.birthday.set(requireNonNull(birthday)); }
+    public void setBirthday(Birthday birthday) {
+        this.birthday.set(requireNonNull(birthday));
+    }
 
     @Override
-    public ObjectProperty<Birthday> birthdayProperty() { return birthday; }
+    public ObjectProperty<Birthday> birthdayProperty() {
+        return birthday;
+    }
 
     @Override
-    public Birthday getBirthday() { return birthday.get(); }
+    public Birthday getBirthday() {
+        return birthday.get();
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

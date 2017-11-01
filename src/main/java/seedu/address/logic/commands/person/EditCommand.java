@@ -162,7 +162,8 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.birthday, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email,
+                    this.address, this.birthday, this.tags);
         }
 
         public void setName(Name name) {
@@ -197,9 +198,13 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
-        public void setBirthday (Birthday birthday) { this.birthday = birthday; }
+        public void setBirthday(Birthday birthday) {
+            this.birthday = birthday;
+        }
 
-        public Optional<Birthday> getBirthday() { return Optional.ofNullable(birthday); }
+        public Optional<Birthday> getBirthday() {
+            return Optional.ofNullable(birthday);
+        }
 
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
