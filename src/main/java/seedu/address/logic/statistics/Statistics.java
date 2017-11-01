@@ -18,13 +18,7 @@ public class Statistics {
     private int size;
 
     public Statistics(ObservableList<ReadOnlyPerson> personList) {
-        int listSize = personList.size();
-        double[] listArray = new double[listSize];
-        for (int i = 0; i < listSize; i++) {
-            Person person = (Person) personList.get(i);
-            listArray[i] = Double.parseDouble((person.getGrades().value));
-        }
-        initScore(listArray);
+        initScore(personList);
     }
 
     protected Statistics(double[] scoreArray) {
