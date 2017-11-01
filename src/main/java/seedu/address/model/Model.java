@@ -58,7 +58,7 @@ public interface Model {
 
     /** Changes the color of an existing tag (through TagColorManager) */
     void setTagColor(Tag tag, String color);
-
+    //@@author junyango
     //=========== Model support for activity component =============================================================
 
     /** Adds an event */
@@ -70,7 +70,7 @@ public interface Model {
 
     /** Deletes the given event */
     void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
-
+    //@@author
     //=========== Filtered Person/Activity List support =============================================================
 
     /** Returns an unmodifiable view of the filtered person list */

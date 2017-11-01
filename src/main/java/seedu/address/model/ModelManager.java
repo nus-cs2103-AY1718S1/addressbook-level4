@@ -166,7 +166,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
         raise(new TagColorChangedEvent(tag, color));
     }
-
+    //@@author junyango
     //=========== Model support for activity component =============================================================
 
     @Override
@@ -192,7 +192,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removeEvent(event);
         indicateAddressBookChanged();
     }
-
+    //@@author
     //=========== Filtered Person List Accessors =============================================================
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
@@ -212,7 +212,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
-
+    //@@author junyango
     //=========== Filtered Activity List Accessors =============================================================
 
     @Override
@@ -229,7 +229,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
     }
-
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

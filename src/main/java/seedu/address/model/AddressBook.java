@@ -75,7 +75,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
         this.persons.setPersons(persons);
     }
-
+    //@@author junyango
     /**
      * Adds all events in the argument event list to this list.
      */
@@ -90,7 +90,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setEvents(List<? extends ReadOnlyEvent> events) throws DuplicateEventException {
         this.events.setEvents(events);
     }
-
+    //@@author
     /**
      * Adds all tags in the argument tag list to this list.
      */
@@ -198,7 +198,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void sortPersonList() {
         persons.sortPersons();
     }
-
+    //@@author junyango
     /*****************************************************
      * Event-level operations
      *****************************************************/
@@ -250,6 +250,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         events.sortEvents();
     }
 
+    //@@author
     /*****************************************************
      * Tag-level operations
      *****************************************************/
