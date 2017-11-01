@@ -35,6 +35,7 @@ public class ScheduleBuilder {
         this.schedule = new Schedule(scheduleToCopy);
     }
 
+    //@@author 17navasaw
     /**
      * Sets the {@code ScheduleDate} of the {@code Schedule} that we are building.
      */
@@ -61,6 +62,7 @@ public class ScheduleBuilder {
         return this;
     }
 
+    //@@author CT15
     /**
      * Sets the {@code Activity} of the {@code Schedule} that we are building.
      */
