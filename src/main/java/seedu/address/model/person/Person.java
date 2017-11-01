@@ -203,6 +203,7 @@ public class Person implements ReadOnlyPerson {
         return Collections.unmodifiableSet(tags.get().toSet());
     }
 
+    //@@author dennaloh
     /**
      * Returns the set of tags joined into a string
      * @return
