@@ -48,6 +48,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
 
+        //@@author Xenonym
         List<ReadOnlyPerson> persons = src.getPersonList();
         Set<XmlAdaptedRelationship> rels = new HashSet<>(); // prevent duplicate relationships from being added
         for (int i = 0; i < persons.size(); i++) {
@@ -57,6 +58,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
             }
         }
         relationships.addAll(rels);
+        //@@author
     }
 
     @Override
@@ -71,9 +73,11 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
+        //@@author Xenonym
         for (XmlAdaptedRelationship xre : relationships) {
             xre.addToModel(persons);
         }
+        //@@author
 
         return FXCollections.unmodifiableObservableList(persons);
     }

@@ -1,16 +1,6 @@
-package seedu.address.storage;
-
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlElement;
-
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.relationship.Relationship;
-import seedu.address.model.relationship.RelationshipDirection;
-import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
-
-//@@author Xenonym
+# Xenonym
+###### \java\seedu\address\storage\XmlAdaptedRelationship.java
+``` java
 /**
  * JAXB-friendly adapted version of Relationship.
  */
@@ -89,3 +79,22 @@ public class XmlAdaptedRelationship {
         return result;
     }
 }
+```
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+``` java
+        List<ReadOnlyPerson> persons = src.getPersonList();
+        Set<XmlAdaptedRelationship> rels = new HashSet<>(); // prevent duplicate relationships from being added
+        for (int i = 0; i < persons.size(); i++) {
+            for (Relationship r : persons.get(i).getRelationships()) {
+                rels.add(new XmlAdaptedRelationship(persons.indexOf(r.getFromPerson()),
+                        persons.indexOf(r.getToPerson()), r.getDirection()));
+            }
+        }
+        relationships.addAll(rels);
+```
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+``` java
+        for (XmlAdaptedRelationship xre : relationships) {
+            xre.addToModel(persons);
+        }
+```
