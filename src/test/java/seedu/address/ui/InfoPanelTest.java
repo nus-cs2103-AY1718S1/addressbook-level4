@@ -5,8 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.AMY;
-import static seedu.address.testutil.TypicalPersons.BOB;
+import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.ui.testutil.GuiTestAssert.assertInfoDisplaysPerson;
 
 import java.util.ArrayList;
@@ -88,10 +87,10 @@ public class InfoPanelTest extends GuiUnitTest {
         assertFalse(infoPanelHandle.isSelectedPersonChanged());
 
         // associated info of next person
-        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(BOB, 1));
+        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(BENSON, 1));
         postNow(selectionChangedEventStub);
         assertTrue(infoPanelHandle.isSelectedPersonChanged());
-        assertInfoDisplay(infoPanel, BOB);
+        assertInfoDisplay(infoPanel, BENSON);
     }
 
     @Test
@@ -108,10 +107,10 @@ public class InfoPanelTest extends GuiUnitTest {
 
         assertTrue(infoPanel.equals(expectedInfoPanel));
 
-        infoPanel.loadPersonInfo(AMY);
+        infoPanel.loadPersonInfo(ALICE);
         assertFalse(infoPanel.equals(expectedInfoPanel));
 
-        expectedInfoPanel.loadPersonInfo(AMY);
+        expectedInfoPanel.loadPersonInfo(ALICE);
         assertTrue(infoPanel.equals(expectedInfoPanel));
     }
 
