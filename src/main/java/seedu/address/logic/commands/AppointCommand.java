@@ -8,7 +8,7 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Appointment;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -21,6 +21,7 @@ public class AppointCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "appoint";
     public static final String MESSAGE_APPOINT_SUCCESS = "New appointment added: %1$s";
+    public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "Appointment removed for person: %1$s";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add an appointment to a person to the address book "
             + "by the index number in the last person listing. "
@@ -63,9 +64,19 @@ public class AppointCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_APPOINT_SUCCESS, editedPerson));
+        return new CommandResult(generateSuccessMessage(editedPerson));
     }
 
+    /**
+     * Generate corresponding success message
+     */
+    private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
+        if (!appointment.value.isEmpty()) {
+            return String.format(MESSAGE_APPOINT_SUCCESS, personToEdit);
+        } else {
+            return String.format(MESSAGE_DELETE_APPOINTMENT_SUCCESS, personToEdit);
+        }
+    }
 
     @Override
     public boolean equals(Object other) {

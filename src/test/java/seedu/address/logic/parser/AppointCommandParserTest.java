@@ -17,7 +17,7 @@ public class AppointCommandParserTest {
     @Test
     public void parse_missingParts_failure() {
         // no index specified
-        assertParseFailure(parser, APPOINTMENT_DESC, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, APPOINTMENT_DESC, ParserUtil.MESSAGE_INVALID_INDEX);
 
         // no index and no field specified
         assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
@@ -26,10 +26,10 @@ public class AppointCommandParserTest {
     @Test
     public void parse_invalidPreamble_failure() {
         // negative index
-        assertParseFailure(parser, "-3" + APPOINTMENT_DESC, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "-3" + APPOINTMENT_DESC, ParserUtil.MESSAGE_INVALID_INDEX);
 
         // zero index
-        assertParseFailure(parser, "0" + APPOINTMENT_DESC, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "0" + APPOINTMENT_DESC, ParserUtil.MESSAGE_INVALID_INDEX);
 
         // invalid arguments being parsed as preamble
         assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
