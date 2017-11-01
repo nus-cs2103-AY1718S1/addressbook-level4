@@ -45,16 +45,9 @@ public class XmlAdaptedSchedule {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
+    //@@author 17navasaw
     public Schedule toModelType() throws IllegalValueException {
         // extract out schedule date and activity from schedule string
-        /*String[] tokens = schedule.split(" ");
-        String scheduleDate = tokens[1];
-        String activity = tokens[3];
-        String personInvolvedName = tokens[5];
-        for (int i = 6; i < tokens.length; i++) {
-            personInvolvedName += " ";
-            personInvolvedName += tokens[i];
-        }*/
         int personHeaderIndex = schedule.indexOf("Person: ");
 
         String scheduleDate = schedule.substring(6, 16);
