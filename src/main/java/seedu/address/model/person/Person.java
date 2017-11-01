@@ -51,8 +51,8 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRemark(),
-                    source.getTags(), source.getBirthday(), source.isPrivate(), source.isPinned());
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getBirthday(),
+                source.getRemark(), source.getTags(), source.isPrivate(), source.isPinned());
     }
 
     public void setName(Name name) {
@@ -148,7 +148,6 @@ public class Person implements ReadOnlyPerson {
         return remark.get();
     }
 
-    @Override
     public void setBirthday(Birthday birthday) { this.birthday.set(requireNonNull(birthday)); }
 
     @Override

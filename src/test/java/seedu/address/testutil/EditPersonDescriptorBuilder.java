@@ -89,7 +89,7 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withBirthday(String birthday) {
         try {
-            ParserUtil.parseBirthday(Optional.of(birthday)).ifPresent(descriptor::setBirthday);
+            ParserUtil.parseBirthday(Optional.of(birthday), "test").ifPresent(descriptor::setBirthday);
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("address is expected to be unique.");
         }
