@@ -19,10 +19,9 @@ public class ImportCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Imports contacts from a .vcf file.";
 
     public static final String MESSAGE_SUCCESS = "Successfully imported contacts. %1$s duplicates were found";
-    public static final String MESSAGE_NOFILECHOSEN = "No files were selected";
     public static final String MESSAGE_WRONG_FORMAT = "File chosen is not of .vcf or .xml type";
     public static final String MESSAGE_FILE_CORRUPT = "File is corrupted. Please check.";
-    public static final String MESSAGE_FILE_NOTFOUND = "Please ensure file location has not been changed";
+    public static final String MESSAGE_FILE_NOT_FOUND = "File was not found in specified directory.";
 
     private final List<ReadOnlyPerson> toImport;
 
