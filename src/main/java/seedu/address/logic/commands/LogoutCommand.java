@@ -19,7 +19,7 @@ public class LogoutCommand extends Command {
         try {
             ui.restart("address");
             return new CommandResult(MESSAGE_LOGOUT_ACKNOWLEDGEMENT);
-        } catch (Exception e){
+        } catch (Exception e) {
 
             return new CommandResult(MESSAGE_LOGOUT_FAILURE);
         }
