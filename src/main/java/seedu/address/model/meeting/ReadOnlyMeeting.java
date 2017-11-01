@@ -2,6 +2,7 @@ package seedu.address.model.meeting;
 
 import javafx.beans.property.ObjectProperty;
 
+//@@author Melvin-leo
 /**
  * A read-only immutable interface for a Meeting in the addressbook.
  * Implementations should guarantee: details are present and not null, field values are validated.

@@ -3,6 +3,7 @@ package seedu.address.model.meeting;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+//@@author Melvin-leo
 /**
  * Represents a Meeting's place in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}

@@ -12,7 +12,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-
+//@@author Melvin-leo
 public class ListMeetingCommandTest {
     private Model model;
     private Model expectedModel;

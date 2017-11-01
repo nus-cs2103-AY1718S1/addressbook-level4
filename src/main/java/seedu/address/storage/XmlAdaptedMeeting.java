@@ -40,6 +40,7 @@ public class XmlAdaptedMeeting {
     public XmlAdaptedMeeting() {}
 
 
+    //@@author Melvin-leo
     /**
      * Converts a given Meeting into this class for JAXB use.
      *
@@ -52,6 +53,7 @@ public class XmlAdaptedMeeting {
         personToMeet = source.getPersonName().toString();
         phoneNum = source.getPersonPhone().toString();
     }
+    //@@author
 
 
     /**

@@ -12,7 +12,7 @@ import guitests.guihandles.MeetingCardHandle;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.testutil.MeetingBuilder;
-
+//@@author Melvin-leo
 public class MeetingCardTest extends GuiUnitTest {
 
     @Test

@@ -29,6 +29,7 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
+    //@@author Melvin-leo
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
      */
@@ -40,6 +41,7 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getPhoneNum(), actualCard.getPhoneNum());
         assertEquals(expectedCard.getDateTime(), actualCard.getDateTime());
     }
+    //@@author
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
      */
@@ -51,6 +53,7 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
     }
+    //@@author Melvin-leo
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedMeeting}.
      */
@@ -61,6 +64,7 @@ public class GuiTestAssert {
         assertEquals(expectedMeeting.getDate().value, actualCard.getDateTime());
         assertEquals(expectedMeeting.getPersonName().fullName, actualCard.getPersonToMeet());
     }
+    //@@author
 
     /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
@@ -80,8 +84,9 @@ public class GuiTestAssert {
         assertListMatching(personListPanelHandle, persons.toArray(new ReadOnlyPerson[0]));
     }
 
+    //@@author Melvin-leo
     /**
-     * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
+     * Asserts that the list in {@code meetingListPanelHandle} displays the details of {@code meetings} correctly and
      * in the correct order.
      */
     public static void assertListMatching(MeetingListPanelHandle meetingListPanelHandle, ReadOnlyMeeting... meetings) {
@@ -98,6 +103,7 @@ public class GuiTestAssert {
                                           List<ReadOnlyMeeting> meetings) {
         assertListMatching(meetingListPanelHandle, meetings.toArray(new ReadOnlyMeeting[0]));
     }
+    //@@author
 
     /**
      * Asserts the size of the list in {@code personListPanelHandle} equals to {@code size}.

@@ -16,6 +16,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.MeetingPanelSelectionChangedEvent;
 import seedu.address.model.meeting.ReadOnlyMeeting;
+//@@author Melvin-leo
 /**
  * Panel containing the list of meetings.
  */
