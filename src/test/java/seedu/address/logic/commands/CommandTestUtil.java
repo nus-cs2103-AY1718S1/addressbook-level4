@@ -111,9 +111,6 @@ public class CommandTestUtil {
     public static final String NUSMODS_VALID_IMPORT = "--nusmods " + NUSMODS_VALID_URL;
     public static final String NUSMODS_INVALID_IMPORT = "--nusmods " + NUSMODS_INVALID_URL;
     public static final String NOT_FROM_NUSMODS_IMPORT = "--nusmods " + VALID_URL;
-
-    public static final String VALID_MODULE_INFO_JSON_URL =
-            "http://api.nusmods.com/2017-2018/1/modules/CS1101S.json";
     public static final String VALID_EXPORT_PATH = "something.xml";
 
     static {
