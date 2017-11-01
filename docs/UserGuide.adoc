@@ -292,6 +292,22 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Locating persons by their tag : `(ft)findtag`
+
+Finds persons whose corresponding tags contain any of the given keywords. +
+Format: `(ft)findtag KEYWORD [MORE_KEYWORDS]...`
+
+****
+* Same features as locating persons by any property, except this command is only for tags
+****
+
+Examples:
+
+* `findtag family` +
+Returns any person that contains a `family` tag
+* `findtag family colleagues` +
+Returns any person that contains the tags `family` and `colleagues`
+
 === Deleting a person : `(d)delete`
 
 Deletes the specified person from the application. +
