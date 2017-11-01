@@ -351,7 +351,8 @@ Deletes the 1st task in the task book.
 ==== Marking a task : `markTask`
 
 Marks the specific task from the task book. +
-Format: `markTask INDEX`
+Format: `markTask`/`mt` +
+Details: `markTask INDEX`
 
 ****
 * Marks the task at the specified `INDEX`.
@@ -368,7 +369,8 @@ Marks the 1st task in the task book to be completed.
 ==== Setting a priority for a task : `setPriority`
 
 Sets the priority field of a task that is already present in ths taskBook with an integer value between 1 to 5. +
-Format: `setPriority INDEX c/new value specified`
+Format: `setPriority`/`stp` +
+Details: `setPriority INDEX c/new value specified`
 
 ****
 * Sets the priority value of the current task with the specific INDEX provided.
@@ -387,12 +389,12 @@ An Exception is thrown: A priority value is defined within integer range of 1 to
 
 ==== Sorting tasks by their priority : `taskByPriority`
 Sorts the task currently present in the taskBook by priority. +
-Format: `taskByPriority`
+Format: `taskByPriority`/`tbp`
 
 ==== Sorting tasks by end date : `taskbyend`
 
 Sorts the list of tasks by their end date +
-Format: `taskbyend`
+Format: `taskByEnd`/`tbe`
 
 [NOTE]
 ====

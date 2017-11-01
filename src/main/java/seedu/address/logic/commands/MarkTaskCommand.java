@@ -15,7 +15,7 @@ import seedu.address.model.task.exceptions.TaskNotFoundException;
 public class MarkTaskCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "markTask";
-    public static final String COMMAND_ALIAS = "mta";
+    public static final String COMMAND_ALIAS = "mt";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Marks the task identified to be completed by the index number used in the last task listing.\n"

@@ -5,8 +5,8 @@ package seedu.address.logic.commands;
  */
 public class TaskByEndCommand extends Command {
 
-    public static final String COMMAND_WORD = "taskbyend";
-    public static final String COMMAND_ALIAS = "byend";
+    public static final String COMMAND_WORD = "taskByEnd";
+    public static final String COMMAND_ALIAS = "tbe";
 
     public static final String MESSAGE_SUCCESS = "Task sorted by end date now.";
 
