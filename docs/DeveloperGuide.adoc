@@ -433,6 +433,8 @@ Collection.sort(fruitList, (a, b) -> a.getSize().compareTo(b.getSize()));
 [NOTE]
 Lambda expression is equivalent to overriding the 'compare(T o1, T o2)' method in 'Comparator' class.
 
+Sort command takes in command `OPTIONS` to perform sorting by five fields of a person: by name, by phone number, by email, by address and by tag. It determines the user input `OPTION` by string comparision instead of utilising option parser as command options used in `find` command are mode enabling options that enable different modes of finding mechanism.
+
 ==== Design Considerations
 
 **Aspect:** Implementation of 'SortCommand' 'OPTION' +

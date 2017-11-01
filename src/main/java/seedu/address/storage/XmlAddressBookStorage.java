@@ -79,9 +79,11 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
     }
 
+    //@@author qihao27
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, "backup.fxml");
     }
+    //@@author
 
     @Override
     public boolean isEncrypted() throws IOException {

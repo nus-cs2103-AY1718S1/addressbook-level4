@@ -4,14 +4,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+//@@author qihao27
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_FILE_PATH;
+//@@author
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
+//@@author qihao27
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_OPTION;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_STRING;
 import static seedu.address.testutil.TypicalFilePath.FILE_PATH_DOCS;
+//@@author
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+//@@author qihao27
 import static seedu.address.testutil.TypicalNames.NAME_FIRST_PERSON;
 import static seedu.address.testutil.TypicalOptions.OPTION_NAME;
+//@@author
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -69,6 +75,7 @@ public class ParserUtilTest {
         assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
     }
 
+    //@@author qihao27
     @Test
     public void parseString_invalidInput_throwsIllegalValueExceptionException() throws Exception {
         thrown.expect(IllegalValueException.class);
@@ -93,12 +100,12 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseFilePath_validInput_success() throws Exception {
-        // Contains ".xml" as suffix
-        assertEquals(FILE_PATH_DOCS, ParserUtil.parseFilePath("docs/AcquaiNote.xml"));
+    public void parseOption_validInput_success() throws Exception {
+        // No capital letter
+        assertEquals(OPTION_NAME, ParserUtil.parseOption("-n"));
 
         // Leading and trailing whitespaces
-        assertEquals(FILE_PATH_DOCS, ParserUtil.parseFilePath("  docs/AcquaiNote.xml  "));
+        assertEquals(OPTION_NAME, ParserUtil.parseOption("  -n  "));
     }
 
     @Test
@@ -109,13 +116,14 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseOption_validInput_success() throws Exception {
-        // No capital letter
-        assertEquals(OPTION_NAME, ParserUtil.parseOption("-n"));
+    public void parseFilePath_validInput_success() throws Exception {
+        // Contains ".xml" as suffix
+        assertEquals(FILE_PATH_DOCS, ParserUtil.parseFilePath("docs/AcquaiNote.xml"));
 
         // Leading and trailing whitespaces
-        assertEquals(OPTION_NAME, ParserUtil.parseOption("  -n  "));
+        assertEquals(FILE_PATH_DOCS, ParserUtil.parseFilePath("  docs/AcquaiNote.xml  "));
     }
+    //@@author
 
     @Test
     public void parseName_null_throwsNullPointerException() throws Exception {

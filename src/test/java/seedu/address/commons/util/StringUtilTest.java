@@ -155,7 +155,8 @@ public class StringUtilTest {
         StringUtil.getDetails(null);
     }
 
-    //---------------- Tests for isLettersOnly --------------------------------------
+    //@@author qihao27
+    //---------------- Tests for isAlnumOnly --------------------------------------
 
     @Test
     public void isAlnumOnly() {
@@ -177,7 +178,7 @@ public class StringUtilTest {
         assertTrue(StringUtil.isAlnumOnly("bOoM ShakAlaKa")); // case insensitive
     }
 
-    //---------------- Tests for isStringOption --------------------------------------
+    //---------------- Tests for isSortOption --------------------------------------
 
     @Test
     public void isSortOption() {
@@ -227,4 +228,5 @@ public class StringUtilTest {
         assertTrue(StringUtil.isFilePath("data/addressbook.xml"));
         assertTrue(StringUtil.isFilePath("C:\\shakalaka.xml"));
     }
+    //@@author
 }
