@@ -2,6 +2,8 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -13,11 +15,13 @@ import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventList;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.event.exceptions.EventTimeClashException;
+import seedu.address.model.event.timeslot.Date;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -38,9 +42,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     private static final Logger logger = LogsCenter.getLogger(AddressBook.class);
 
     private final UniquePersonList persons;
+    //@@author A0162268B
+    private Date currentDate;
     private final EventList events;
+    //@@author
     private final UniqueTagList tags;
-    private final UniqueTagList eventTags;
     private final UniqueRelList relation;
 
     private ReadOnlyEvent lastChangedEvent;
@@ -55,8 +61,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        //@@author A0162268B
         events = new EventList();
-        eventTags = new UniqueTagList();
+        //@@author
         relation = new UniqueRelList();
     }
 
@@ -67,6 +74,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
+        this.currentDate = toBeCopied.getCurrentDate();
         resetData(toBeCopied);
     }
 
@@ -76,9 +84,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    //@@author A0162268B
     public void setEvents(List<? extends ReadOnlyEvent> events) throws EventTimeClashException {
         this.events.setEvents(events);
     }
+    //@@author
 
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
@@ -98,11 +108,13 @@ public class AddressBook implements ReadOnlyAddressBook {
             assert false : "AddressBooks should not have duplicate persons";
         }
 
+        //@@author A0162268B
         try {
             setEvents(newData.getEventList());
         } catch (EventTimeClashException e) {
             assert false : "AddressBooks should not have time-clashing events";
         }
+        //@@author
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
@@ -246,6 +258,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
     //@@author
 
+    //@@author A0162268B
     //// event-level operations
 
     /**
@@ -281,11 +294,6 @@ public class AddressBook implements ReadOnlyAddressBook {
             throws EventNotFoundException, EventTimeClashException {
         requireNonNull(editedReadOnlyEvent);
         Event editedEvent = new Event(editedReadOnlyEvent);
-        // TODO: create master list for event tags
-        // syncMasterTagListWith(editedEvent);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
         events.setEvent(target, editedEvent);
         lastChangedEvent = target;
     }
@@ -294,6 +302,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ReadOnlyEvent getLastChangedEvent() {
         return this.lastChangedEvent;
     }
+    //@@author
 
     //// tag-level operations
 
@@ -323,10 +332,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         return relation.asObservableList();
     }
 
+    //@@author A0162268B
     @Override
     public ObservableList<ReadOnlyEvent> getEventList() {
         return events.asObservableList();
     }
+
+    @Override
+    public ObservableList<ReadOnlyEvent> getSchedule(Date currentDate) {
+        return events.getObservableSubList(currentDate);
+    }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
@@ -340,5 +356,25 @@ public class AddressBook implements ReadOnlyAddressBook {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(persons, tags);
+    }
+
+    //@@author A0162268B
+
+    /**
+     *
+     * Gets the current date and returns the local implementation of date.
+     *
+     * @return the current date
+     */
+    @Override
+    public Date getCurrentDate() {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date currentDate = new java.util.Date();
+
+        try {
+            return new Date(dateFormat.format(currentDate));
+        } catch (IllegalValueException e) {
+            return null;
+        }
     }
 }

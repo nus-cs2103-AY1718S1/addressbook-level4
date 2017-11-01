@@ -30,7 +30,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    //@@author A0162268B
     private FilteredList<ReadOnlyEvent> filteredEvents;
+    private FilteredList<ReadOnlyEvent> scheduledEvents;
+    //@@author
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -44,7 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredEvents = new FilteredList<>(this.addressBook.getEventList());
-
+        scheduledEvents = new FilteredList<>(this.addressBook.getSchedule(this.addressBook.getCurrentDate()));
     }
 
     public ModelManager() {
@@ -128,6 +131,14 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author A0162268B
+    //=========== Schedule Accessors  =========================================================================
+
+    @Override
+    public ObservableList<ReadOnlyEvent> getSchedule() {
+        return FXCollections.unmodifiableObservableList(scheduledEvents);
+    }
+
     //=========== Filtered Event List Accessors  ==============================================================
 
     @Override
@@ -166,6 +177,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updateEvent(target, editedEvent);
         indicateAddressBookChanged();
     }
+    //@@author
 
     //=========== Miscellaneous Operations  ====================================================================
 
@@ -186,5 +198,4 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
     }
-
 }

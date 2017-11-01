@@ -72,32 +72,40 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    //@@author A0162268B
     /**
-     * @@reginleiff Adds the given event
+     * Adds the given event
      */
     void addEvent(ReadOnlyEvent event) throws EventTimeClashException;
 
     /**
-     * @@reginleiff Deletes the given event.
+     *  Deletes the given event.
      */
     void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
 
     /**
      * @throws EventNotFoundException if {@code target} could not be found in the list.
-     * @@reginleiff Replaces the given event {@code target} with {@code editedPerson}.
+     * Replaces the given event {@code target} with {@code editedPerson}.
      */
     void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws EventNotFoundException,
             EventTimeClashException;
 
     /**
-     * @@reginleiff Returns an unmodifiable view of the filtered event list
+     * Returns an unmodifiable view of the filtered event list
      */
     ObservableList<ReadOnlyEvent> getFilteredEventList();
 
     /**
+     * Returns an unmodifiable view of the schedule
+     */
+    ObservableList<ReadOnlyEvent> getSchedule();
+
+    /**
      * @throws NullPointerException if {@code predicate} is null.
-     * @@reginleiff Updates the filter of the filtered event list to filter by the given {@code predicate}.
+     * Updates the filter of the filtered event list to filter by the given {@code predicate}.
      */
     void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate);
 
+
+    //@@author
 }

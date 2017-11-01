@@ -1,4 +1,4 @@
-//@@author A0162268B
+
 package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
@@ -20,6 +20,7 @@ import seedu.address.model.event.exceptions.EventTimeClashException;
 import seedu.address.model.event.timeslot.Date;
 import seedu.address.model.event.timeslot.Timeslot;
 
+//@@author A0162268B
 /**
  * A list of events that does not allow nulls.
  * <p>
@@ -159,8 +160,9 @@ public class EventList implements Iterable<Event> {
      * Returns all the events on a particular date as an {@code ObservableList}.
      */
     public ObservableList<ReadOnlyEvent> getObservableSubList(Date date) {
-        String startTimeslot = date.toString() + " 0000-0001";
-        String endTimeslot = date.addDays(1).toString() + " 0000-0001";
+        String MIDNIGHT_HOURS = " 0000-0001";
+        String startTimeslot = date.toString() + MIDNIGHT_HOURS;
+        String endTimeslot = date.addDays(1).toString() + MIDNIGHT_HOURS;
 
         try {
             Timeslot start = new Timeslot(startTimeslot);
