@@ -5,8 +5,12 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,10 +19,17 @@ import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.NewGroupListEvent;
+import seedu.address.commons.events.ui.NewPersonInfoEvent;
+import seedu.address.commons.events.ui.NewPersonListEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.group.ReadOnlyGroup;
+import seedu.address.model.group.exceptions.DuplicateGroupException;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -35,8 +46,12 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<ReadOnlyGroup> filteredGroups;
+    private HashMap<Tag, String> tagColours = new HashMap<>();
+    //@@author LimeFallacie
+    private UserPrefs colourPrefs;
 
-
+    //@@author LimeFallacie
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -48,8 +63,23 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredGroups = new FilteredList<>(this.addressBook.getGroupList());
+        colourPrefs = userPrefs;
+        HashMap<String, String> stringColourMap = userPrefs.getColourMap();
+        if (stringColourMap != null) {
+            try {
+                for (HashMap.Entry<String, String> entry : stringColourMap.entrySet()) {
+                    tagColours.put(new Tag(entry.getKey()), entry.getValue());
+                }
+
+            } catch (IllegalValueException ive) {
+                //it shouldn't ever reach here
+            }
+        }
+        updateAllPersons(tagColours);
     }
 
+    //@@author
     public ModelManager() {
         this(new AddressBook(), new UserPrefs());
     }
@@ -72,28 +102,49 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //@@author eldonng
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
+        raise(new NewGroupListEvent(getGroupList(), addressBook.getPersonList()));
+
         indicateAddressBookChanged();
     }
 
+    //@@author
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        raise(new NewPersonInfoEvent(person));
         indicateAddressBookChanged();
     }
 
+    //@@author eldonng
+    @Override
+    public synchronized void addGroup(ReadOnlyGroup group) throws DuplicateGroupException {
+        addressBook.addGroup(group);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteGroup(ReadOnlyGroup group) throws GroupNotFoundException {
+        addressBook.deleteGroup(group);
+        indicateAddressBookChanged();
+    }
+
+    //@@author
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
+        raise(new NewPersonInfoEvent(editedPerson));
         indicateAddressBookChanged();
     }
 
+    //@@author eldonng
     @Override
     public void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
         try {
@@ -116,6 +167,33 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    @Override
+    public void setTagColour(String tagName, String colour) throws IllegalValueException {
+        List<Tag> tagList = addressBook.getTagList();
+        for (Tag tag: tagList) {
+            if (tagName.equals(tag.tagName)) {
+                tagColours.put(tag, colour);
+                updateAllPersons(tagColours);
+                indicateAddressBookChanged();
+                raise(new NewPersonListEvent(getFilteredPersonList()));
+                colourPrefs.updateColorMap(tagColours);
+                return;
+            }
+        }
+        throw new IllegalValueException("No such tag!");
+    }
+
+    @Override
+    public HashMap<Tag, String> getTagColours() {
+        return tagColours;
+    }
+
+    //@@author LimeFallacie
+    private void updateAllPersons(HashMap<Tag, String> allTagColours) {
+        colourPrefs.updateColorMap(allTagColours);
+    }
+
+    //@@author eldonng
     /**
      * @param personToPin
      * @return updated Person with added pin to be added to the address book
@@ -132,6 +210,7 @@ public class ModelManager extends ComponentManager implements Model {
                 personToPin.getEmail(), personToPin.getAddress(), updatedTags.toSet());
     }
 
+    //@@author eldonng
     /**
      * @param personToUnpin
      * @return updated Person with removed pin to be added to the address book
@@ -149,6 +228,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //@@author eldonng
     public Predicate<ReadOnlyPerson> getPredicateForTags(String arg) throws IllegalValueException {
         try {
             Tag targetTag = new Tag(arg);
@@ -160,6 +240,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //=========== Filtered Person List Accessors =============================================================
 
+    //@@author
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
      * {@code addressBook}
@@ -169,12 +250,27 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
+    //@@author eldonng
+    @Override
+    public ObservableList<ReadOnlyGroup> getGroupList() {
+        return FXCollections.unmodifiableObservableList(filteredGroups);
+    }
+
+    //@@author
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author eldonng
+    @Override
+    public void updateFilteredGroupList(Predicate<ReadOnlyGroup> predicate) {
+        requireNonNull(predicate);
+        filteredGroups.setPredicate(predicate);
+    }
+
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -193,6 +289,7 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+    //@@author LimeFallacie
     @Override
     public void sort(String sortType) throws DuplicatePersonException {
         switch (sortType) {
@@ -231,4 +328,11 @@ public class ModelManager extends ComponentManager implements Model {
         return newList;
     }
 
+    //@@author eldonng
+    @Subscribe
+    private void handleGroupPanelSelectionChangedEvent(GroupPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        updateFilteredPersonList(person -> event.getNewSelection().group.getGroupMembers().contains(person));
+        raise(new NewPersonListEvent(getFilteredPersonList()));
+    }
 }

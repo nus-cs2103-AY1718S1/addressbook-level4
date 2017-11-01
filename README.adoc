@@ -8,26 +8,24 @@ https://coveralls.io/github/CS2103AUG2017-T17-B3/main?branch=master[image:https:
 https://www.codacy.com/app/eldonng/main?utm_source=github.com&utm_medium=referral&utm_content=CS2103AUG2017-T17-B3/main&utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/b13e2659a21e448ab8b3b31f4201d504[Codacy Badge]]
 
 ifdef::env-github[]
-image::docs/images/Circles UI.png[width="600"]
+image::docs/images/Ui.png[width="600"]
 endif::[]
 
 ifndef::env-github[]
-image::images/Circles UI.png[width="600"]
+image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level4[level 4]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+* Circles is a desktop Address Book application catered towards University students.
+* Circles allows you to create groups, to manage project groups easily
+* What's new in v1.4:
+** A more sophisticated GUI that includes a list  panel.
+** Export and import your contacts.
+** Enabled optional fields when saving a contact.
 
 == Site Map
 
 * <<UserGuide#, User Guide>>
 * <<DeveloperGuide#, Developer Guide>>
-* <<LearningOutcomes#, Learning Outcomes>>
 * <<AboutUs#, About Us>>
 * <<ContactUs#, Contact Us>>
 

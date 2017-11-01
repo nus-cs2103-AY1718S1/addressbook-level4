@@ -1,9 +1,7 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
 import seedu.address.commons.exceptions.IllegalValueException;
-
+//@@author mavistoh
 /**
  * Represents Person's birthday in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidBirthday(String)}
@@ -14,7 +12,9 @@ public class Birthday {
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
             "Birthday has to be in the format dd-mm-yyyy (dd to be 1-31 and mm to be 1-12)";
     public static final String BIRTHDAY_VALIDATION_REGEX = "(0[1-9]|[12]\\d|3[01])[-](0[1-9]|1[0-2])[-]\\d{4}";
+    public static final String BIRTHDAY_EMPTY = "-";
     public final String value;
+
 
     /**
      * Validates given birthday.
@@ -22,19 +22,22 @@ public class Birthday {
      * @throws IllegalValueException if given birthday is invalid.
      */
     public Birthday(String birthday) throws IllegalValueException {
-        requireNonNull(birthday);
-        String trimmedBirthday = birthday.trim();
-        if (!isValidBirthday(trimmedBirthday)) {
-            throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
+        if (birthday == null) {
+            this.value = BIRTHDAY_EMPTY;
+        } else {
+            String trimmedBirthday = birthday.trim();
+            if (!isValidBirthday(trimmedBirthday)) {
+                throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
+            }
+            this.value = trimmedBirthday;
         }
-        this.value = trimmedBirthday;
     }
 
     /**
      * Returns true if a given string is a valid person birthday.
      */
     public static boolean isValidBirthday(String test) {
-        return test.matches(BIRTHDAY_VALIDATION_REGEX);
+        return test.matches(BIRTHDAY_VALIDATION_REGEX) || test.matches(BIRTHDAY_EMPTY);
     }
 
     @Override

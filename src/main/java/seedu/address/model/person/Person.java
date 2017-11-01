@@ -25,7 +25,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
 
     private ObjectProperty<UniqueTagList> tags;
-    private boolean pinned;
+    private ObjectProperty<Boolean> pinned;
 
     /**
      * Every field must be present and not null.
@@ -39,7 +39,7 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        pinned = checkPinTag(tags);
+        pinned = new SimpleObjectProperty<>(checkPinTag(tags));
     }
 
     /**
@@ -68,6 +68,7 @@ public class Person implements ReadOnlyPerson {
         this.name.set(requireNonNull(name));
     }
 
+    //@@author mavistoh
     @Override
     public ObjectProperty<Name> nameProperty() {
         return name;
@@ -79,7 +80,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     public void setPhone(Phone phone) {
-        this.phone.set(requireNonNull(phone));
+        this.phone.set(phone);
     }
 
     @Override
@@ -93,7 +94,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     public void setBirthday(Birthday birthday) {
-        this.birthday.set(requireNonNull(birthday));
+        this.birthday.set(birthday);
     }
 
     @Override
@@ -107,7 +108,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     public void setEmail(Email email) {
-        this.email.set(requireNonNull(email));
+        this.email.set(email);
     }
 
     @Override
@@ -121,7 +122,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     public void setAddress(Address address) {
-        this.address.set(requireNonNull(address));
+        this.address.set(address);
     }
 
     @Override
@@ -134,6 +135,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -149,8 +151,14 @@ public class Person implements ReadOnlyPerson {
 
     @Override
     public boolean isPinned() {
+        return pinned.get();
+    }
+
+    @Override
+    public ObjectProperty<Boolean> pinnedProperty() {
         return pinned;
     }
+
 
     /**
      * Replaces this person's tags with the tags in the argument tag set.
