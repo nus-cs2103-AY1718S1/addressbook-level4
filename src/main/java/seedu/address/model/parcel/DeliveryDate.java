@@ -72,16 +72,16 @@ public class DeliveryDate {
     private Date formatDate(String inputDate) throws ParseException {
 
         for (String formatString : VALID_STRING_FORMATS) {
+            DateFormat df = new SimpleDateFormat(formatString);
+            df.setLenient(false);
             try {
-                DateFormat df = new SimpleDateFormat(formatString);
-                df.setLenient(false);
                 return df.parse(inputDate);
             } catch (ParseException e) {
                 logger.info("Failed to fit input delivery date in current format, trying next format...");
             }
         }
 
-        logger.info("Exhausted all formats, no valid input.");
+        logger.warning("Exhausted all formats, not a valid input.");
 
         throw new ParseException(inputDate, 0);
 

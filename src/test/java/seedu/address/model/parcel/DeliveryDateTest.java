@@ -17,6 +17,8 @@ public class DeliveryDateTest {
         assertFalse(DeliveryDate.isValidDate(" ")); // spaces only
         assertFalse(DeliveryDate.isValidDate("91")); // less than 3 numbers
         assertFalse(DeliveryDate.isValidDate("date")); // non-numeric
+        assertFalse(DeliveryDate.isValidDate("#(_!@!@(")); // special charactors
+        assertFalse(DeliveryDate.isValidDate("\u200E\uD83D\uDE03\uD83D\uDC81")); // emojis
         assertFalse(DeliveryDate.isValidDate("I love cs2103T")); // non date sentence
         assertFalse(DeliveryDate.isValidDate("32-05-1995")); // too many days in a month
         assertFalse(DeliveryDate.isValidDate("05-13-1995")); // too many months in a year
