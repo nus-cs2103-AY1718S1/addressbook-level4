@@ -126,6 +126,7 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
+    //@@author Aaron Soh Yu Han
     public boolean getFavourite() {
         return favourite;
     }
@@ -133,6 +134,7 @@ public class Person implements ReadOnlyPerson {
     public void setFavourite(boolean favourite) {
         this.favourite = favourite;
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

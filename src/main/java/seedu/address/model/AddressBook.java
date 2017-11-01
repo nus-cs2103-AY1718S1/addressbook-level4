@@ -118,6 +118,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
 
     }
+    //@@author Aaron Soh Yu Han
     /**
      * Replaces the given person {@code target} in the list with {@code favouritedReadOnlyPerson}.
      * Sorts the list to show favourite contacts first.
@@ -153,6 +154,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             persons.add(person);
         }
     }
+    //@@author
     /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}
