@@ -86,6 +86,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author lincredibleJC
     /**
      * Sets the {@code FormClass} of the {@code EditPersonDescriptor} that we are building.
      */

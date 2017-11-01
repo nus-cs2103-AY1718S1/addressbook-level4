@@ -94,6 +94,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author lincredibleJC
     /**
      * Sets the {@code FormClass} of the {@code Person} that we are building.
      */
@@ -107,6 +108,7 @@ public class PersonBuilder {
     }
 
     //@@author lincredibleJC
+
     /**
      * Sets the {@code Grades} of the {@code Person} that we are building.
      */
