@@ -49,6 +49,7 @@ public class ListCommandTest {
         assertCommandSuccess(listCommand, model, String.format(ListCommand.MESSAGE_SUCCESS, "."), expectedModel);
     }
 
+    //@@author LimeFallacie
     @Test
     public void execute_listFriends_success() {
         listCommand = new ListCommand("friends");

@@ -4,6 +4,7 @@ import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.XmlAddressBookStorage;
 
+//@@author LimeFallacie
 /**
  * A utility class containing a constructor for a dummy storage object
  */

@@ -15,7 +15,7 @@ public class Messages {
 
     public static final String[] MESSAGE_AUTOCOMPLETE_LIST = {"add", "clear", "creategroup", "delete", "deletegroup",
         "exit", "find", "help", "undo", "redo", "pin", "unpin", "sort", "edit", "history", "list", "select",
-        "setcolour", "sort name", "sort phone", "sort email"};
+        "setcolour", "sort name", "sort phone", "sort email", "export", "import"};
 
 
 }

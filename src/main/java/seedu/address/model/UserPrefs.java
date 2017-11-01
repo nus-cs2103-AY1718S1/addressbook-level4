@@ -14,6 +14,7 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
 
+    //@@author LimeFallacie
     private HashMap<String, String> colourMap;
     private String addressBookName = "Circles";
 
@@ -22,6 +23,7 @@ public class UserPrefs {
         colourMap = new HashMap<>();
     }
 
+    //@@author
     public GuiSettings getGuiSettings() {
         return guiSettings == null ? new GuiSettings() : guiSettings;
     }
@@ -50,6 +52,7 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
+    //@@author LimeFallacie
     public HashMap<String, String> getColourMap() {
         return colourMap;
     }
@@ -69,6 +72,7 @@ public class UserPrefs {
         }
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         if (other == this) {
