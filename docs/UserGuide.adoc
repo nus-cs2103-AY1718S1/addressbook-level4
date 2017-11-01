@@ -78,9 +78,26 @@ To remove the third person shown on the list from your Death Note:
 > delete 3
 ....
 
-== Features
-====
-*Command Format*
+=== Getting Help
+
+There are several forms of help available.
+
+*User Guide*
+
+In Death Note command box, type `help` and a pop-up window will show up containing this User Guide.
+
+*GitHub Issue*
+
+You can file a GitHub https://github.com/CS2103AUG2017-W10-B3/main/issues[issue] describing you request/problem and
+the developers will look into it.
+
+*Email*
+
+Contact us directly by emailing to `kaihsien.boo[at]u.nus.edu`.
+
+== Basic Usage
+
+=== Command Line Syntax
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
@@ -89,7 +106,6 @@ To remove the third person shown on the list from your Death Note:
 //tag::alias[]
 * Most of the commands have an associated alias, except `help` and `exit`, e.g. you can use `add` and `a` interchangably.
 //end::alias[]
-====
 
 === Viewing help : `help`
 
