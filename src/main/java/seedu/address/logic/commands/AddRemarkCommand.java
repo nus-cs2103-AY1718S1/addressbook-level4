@@ -60,11 +60,7 @@ public class AddRemarkCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         ArrayList<Remark> tempRemarkList;
-        if (!remarkArrayList.get(0).equals("") || !remarkArrayList.get(0).equals(null)) {
-            tempRemarkList = new ArrayList<>(personToEdit.getRemark());
-        } else {
-            tempRemarkList = new ArrayList<>();
-        }
+        tempRemarkList = new ArrayList<>(personToEdit.getRemark());
 
         for (int i = 0; i < remarkArrayList.size(); i++) {
             tempRemarkList.add(remarkArrayList.get(i));
@@ -90,11 +86,7 @@ public class AddRemarkCommand extends UndoableCommand {
      * @return String that shows whether add was successfully done
      */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
-        if (!remarkArrayList.isEmpty() && !remarkArrayList.get(0).value.isEmpty()) {
-            return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
-        } else {
-            return String.format(MESSAGE_ADD_REMARK_FAILURE, personToEdit);
-        }
+        return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
     }
 
     @Override

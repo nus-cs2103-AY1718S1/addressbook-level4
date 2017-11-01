@@ -86,11 +86,7 @@ public class AddRemarkCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         ArrayList<Remark> tempRemarkList;
-        if (!remarkArrayList.get(0).equals("") || !remarkArrayList.get(0).equals(null)) {
-            tempRemarkList = new ArrayList<>(personToEdit.getRemark());
-        } else {
-            tempRemarkList = new ArrayList<>();
-        }
+        tempRemarkList = new ArrayList<>(personToEdit.getRemark());
 
         for (int i = 0; i < remarkArrayList.size(); i++) {
             tempRemarkList.add(remarkArrayList.get(i));
@@ -116,11 +112,7 @@ public class AddRemarkCommand extends UndoableCommand {
      * @return String that shows whether add was successfully done
      */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
-        if (!remarkArrayList.isEmpty() && !remarkArrayList.get(0).value.isEmpty()) {
-            return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
-        } else {
-            return String.format(MESSAGE_ADD_REMARK_FAILURE, personToEdit);
-        }
+        return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
     }
 
     @Override
@@ -813,8 +805,7 @@ public class RemarkListPanel extends UiPart<Region> {
         totalPersonsWithRemarks = 0;
         personListWithRemarks = new ArrayList<>();
         for (int i = 0; i < personObservableList.size(); i++) {
-            if (!personObservableList.get(i).getRemark().isEmpty()
-                    && !personObservableList.get(i).getRemark().get(firstIndexOfArray).value.equals("")) {
+            if (!personObservableList.get(i).getRemark().isEmpty()) {
                 totalPersonsWithRemarks++;
                 personListWithRemarks.add(personObservableList.get(i).getName().fullName);
             }
@@ -883,10 +874,8 @@ public class RemarkPanel extends UiPart<Region> {
         String printedString = "Remarks regarding " + String.valueOf(event.getNewSelection().person.getName()) + ":\n"
                 + "---------------------------------------------------\n";
         for (int i = 0; i < event.getNewSelection().person.getRemark().size(); i++) {
-            if (!event.getNewSelection().person.getRemark().get(i).value.equals("")) {
-                printedString = printedString.concat(i + 1 + "). " //Shows a list of remark numbered from 1 to size()
-                        + event.getNewSelection().person.getRemark().get(i).value + "\n");
-            }
+            printedString = printedString.concat(i + 1 + "). " //Shows a list of remark numbered from 1 to size()
+                    + event.getNewSelection().person.getRemark().get(i).value + "\n");
         }
         final String finalString = printedString;
         Platform.runLater(() -> displayed.setValue(finalString));

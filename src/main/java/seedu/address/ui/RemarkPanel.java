@@ -45,10 +45,8 @@ public class RemarkPanel extends UiPart<Region> {
         String printedString = "Remarks regarding " + String.valueOf(event.getNewSelection().person.getName()) + ":\n"
                 + "---------------------------------------------------\n";
         for (int i = 0; i < event.getNewSelection().person.getRemark().size(); i++) {
-            if (!event.getNewSelection().person.getRemark().get(i).value.equals("")) {
-                printedString = printedString.concat(i + 1 + "). " //Shows a list of remark numbered from 1 to size()
-                        + event.getNewSelection().person.getRemark().get(i).value + "\n");
-            }
+            printedString = printedString.concat(i + 1 + "). " //Shows a list of remark numbered from 1 to size()
+                    + event.getNewSelection().person.getRemark().get(i).value + "\n");
         }
         final String finalString = printedString;
         Platform.runLater(() -> displayed.setValue(finalString));
