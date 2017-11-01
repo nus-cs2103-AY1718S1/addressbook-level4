@@ -64,7 +64,6 @@ public class DeliveryDate {
 
         // Format date correctly
         this.value = df.format(this.date);
-        System.out.println(this.value);
     }
 
     /**
@@ -110,9 +109,6 @@ public class DeliveryDate {
      */
     public static boolean isValidPrettyTimeDate(String test) {
         List<Date> dates = new PrettyTimeParser().parse(test);
-        if (dates.size() > 0) {
-            System.out.println(dates.get(0));
-        }
 
         return dates.size() > 0;
     }
