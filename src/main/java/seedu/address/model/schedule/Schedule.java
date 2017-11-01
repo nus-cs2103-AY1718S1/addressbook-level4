@@ -55,6 +55,7 @@ public class Schedule {
         return activity;
     }
 
+    //@@author 17navasaw
     public void setActivity(Activity activity) {
         this.activity.set(activity);
     }
@@ -71,6 +72,7 @@ public class Schedule {
         this.personInvolvedName.set(personInvolvedName);
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
