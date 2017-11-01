@@ -34,6 +34,7 @@ public class XmlAdaptedPerson {
     //@@author taojiashu
     @XmlElement(required = true)
     private String favourite;
+    //@@author jacoblipech
     @XmlElement(required = true)
     private String birthday;
 
@@ -58,6 +59,7 @@ public class XmlAdaptedPerson {
         address = source.getAddress().value;
         //@@author taojiashu
         favourite = source.getFavourite().getStatus();
+        //@@author jacoblipech
         birthday = source.getBirthday().getBirthdayNumber();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
@@ -86,6 +88,7 @@ public class XmlAdaptedPerson {
         } else if (!this.favourite.equals("False")) {
             throw new IllegalValueException("Illegal favourite status");
         }
+        //@@author jacoblipech
         final Birthday birthday = new Birthday(this.birthday);
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, favourite, birthday, tags);

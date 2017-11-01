@@ -94,6 +94,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author jacoblipech
     @Override
     public synchronized void addBirthday(Index targetIndex, Birthday toAdd) throws PersonNotFoundException,
             DuplicatePersonException {
@@ -226,6 +227,7 @@ public class ModelManager extends ComponentManager implements Model {
         return String.join(" OR ", result);
     }
 
+    //@@author jacoblipech
     @Override
     public Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList) {
 
@@ -251,6 +253,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Filtered Person List Accessors =============================================================
 
+    //@@author
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
      * {@code addressBook}
