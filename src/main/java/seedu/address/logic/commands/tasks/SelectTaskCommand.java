@@ -13,6 +13,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.model.task.ReadOnlyTask;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
 /**
  * Selects a task identified using it's last displayed index from the address book.
  */
@@ -47,6 +49,9 @@ public class SelectTaskCommand extends Command {
         if (!tag.isEmpty()) {
             String[] tagArray = tag.split("\\s+");
             model.updateFilteredPersonList(new PersonContainsKeywordsPredicate(Arrays.asList(tagArray)));
+            if (model.getFilteredPersonList().size() < 1) {
+                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            }
         }
 
         EventsCenter.getInstance().post(new JumpToTaskListRequestEvent(targetIndex));
