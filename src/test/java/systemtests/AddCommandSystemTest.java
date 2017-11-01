@@ -302,8 +302,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: missing status -> accepted */
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_BOB).withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withTags(VALID_TAG_FLAMMABLE)
-                .withStatus("PENDING").build();
+                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withTags(VALID_TAG_FLAMMABLE).build();
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_BOB + NAME_DESC_AMY + PHONE_DESC_BOB
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + TAG_DESC_FLAMMABLE;
         assertCommandSuccess(command, toAdd);
