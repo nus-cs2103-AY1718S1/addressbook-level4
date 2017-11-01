@@ -1,5 +1,7 @@
 package seedu.address.storage;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +14,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.timeslot.Date;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
@@ -96,6 +99,11 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<ReadOnlyEvent> getSchedule(Date currentDate) {
+        return null;
+    }
+
+    @Override
     public ObservableList<Relationship> getRelList() {
         final ObservableList<Relationship> rel = this.relation.stream().map(r -> {
             try {
@@ -112,5 +120,23 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     @Override
     public ReadOnlyEvent getLastChangedEvent() {
         return null;
+    }
+
+    /**
+     *
+     * Gets the current date and returns the local implementation of date.
+     *
+     * @return the current date
+     */
+    @Override
+    public Date getCurrentDate() {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date currentDate = new java.util.Date();
+
+        try {
+            return new Date(dateFormat.format(currentDate));
+        } catch (IllegalValueException e) {
+            return null;
+        }
     }
 }
