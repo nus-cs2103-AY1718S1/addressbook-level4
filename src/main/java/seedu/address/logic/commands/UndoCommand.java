@@ -30,7 +30,7 @@ public class UndoCommand extends Command {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
-    //@@author Vanessa
+    //@@author vmlimshimin
     @Override
     public void setData(Model model, CommandHistory commandHistory,
                         UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue) {

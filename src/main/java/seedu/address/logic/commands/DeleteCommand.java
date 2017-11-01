@@ -47,7 +47,7 @@ public class DeleteCommand extends UndoableCommand {
 
         try {
             model.deletePerson(personToDelete);
-            //@@author Vanessa
+            //@@author vmlimshimin
             queue.offer(personToDelete);
             //@@author
         } catch (PersonNotFoundException pnfe) {
@@ -64,7 +64,7 @@ public class DeleteCommand extends UndoableCommand {
                 && this.targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
     }
 
-    //@@author Vanessa
+    //@@author vmlimshimin
     @Override
     public void setData(Model model, CommandHistory commandHistory,
                         UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue) {

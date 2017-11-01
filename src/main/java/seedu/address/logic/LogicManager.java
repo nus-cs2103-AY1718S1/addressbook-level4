@@ -23,7 +23,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
-    //@@author Vanessa
+    //@@author vmlimshimin
     private final RecentlyDeletedQueue queue;
 
     //@@author
@@ -32,7 +32,7 @@ public class LogicManager extends ComponentManager implements Logic {
         this.history = new CommandHistory();
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
-        //@@author Vanessa
+        //@@author vmlimshimin
         this.queue = new RecentlyDeletedQueue();
     }
 
@@ -42,7 +42,7 @@ public class LogicManager extends ComponentManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
             Command command = addressBookParser.parseCommand(commandText);
-            //@@author Vanessa
+            //@@author vmlimshimin
             command.setData(model, history, undoRedoStack, queue);
             //@@author
             CommandResult result = command.execute();
