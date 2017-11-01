@@ -67,7 +67,7 @@ public class PersonListPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }
-    //@@autho
+    //@@author
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
