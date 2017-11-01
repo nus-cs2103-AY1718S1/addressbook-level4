@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
-
 import java.io.BufferedWriter;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -34,5 +34,17 @@ public class LoggingCommand {
     public void clearLog() {
         File file = new File("src/test/data/XMLUtilTest/ConnectUsLog.txt");
         file.delete();
+    }
+    /**
+     * startUpLog Method will record the time when the application starts
+     */
+    public void startUpLog() {
+        try (FileWriter fileWrite = new FileWriter("src/test/data/XMLUtilTest/ConnectUsLog.txt", true);
+             BufferedWriter buffWriter = new BufferedWriter(fileWrite);
+             PrintWriter out = new PrintWriter(buffWriter)) {
+            out.println("Application Started on " + LocalDateTime.now());
+        } catch (IOException e) {
+            System.out.println("Error With ConnectUs.txt Logging");
+        }
     }
 }

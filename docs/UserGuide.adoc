@@ -110,6 +110,15 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `e 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+Alternatively, you can use the form implementation to edit contacts:
+
+****
+1. Select a person in the list, the textboxes fill up with the individual's particulars.
+2. Select on a field you what to edit, e.g. `Name`
+3. Modify the field by editing the text
+4. To save changes, click the save button.
+****
+
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
@@ -157,10 +166,25 @@ Another way to delete a contact in the list:
 3. Selected person will be deleted from the list
 ****
 
-=== Email a person
+=== Displaying a contact's location
 (added in v1.2)
 
+Shows the contact's location on Google Maps
+
+Select a contact either using:
+
+* `select INDEX`
+* Click on a contact on the list
+
+Their location will be displayed on the browser panel on the right.
+
+
+=== Email a person : `email`
+(added in v1.3)
+
 Opens an email client with the recipient's email address.
+
+Format: `email INDEX`
 
 ****
 1. Select a person in the list
@@ -168,6 +192,10 @@ Opens an email client with the recipient's email address.
 3. Proceed to compose email on email client
 ****
 
+Examples:
+
+* `email 1` +
+Opens an email client with the email of the first person in the address book.
 
 === Selecting a person : `select`
 
@@ -313,12 +341,20 @@ Format: `export` or `ex`
 === Upload photo image for a contact : `photo`
 (added in v1.3)
 
-Uploads the photo to the specified person from the address book. +
+Uploads the photo to the specified person from the address book. You can either upload an image from a file explorer or specify the file path. +
 
+Format: `photo INDEX` or `p INDEX` or `photo INDEX [FILEPATH]` or `p INDEX [FILEPATH]`
+
+If you want to choose the image from a file explorer:
+
+. Type the command until the index.
 . Upon entering the command, a file explorer will appear to allow you to choose the image from your computer.
 . Click "Open" once you choose your image and it will be added to the person you specified.
 
-Format: `photo INDEX` or `p INDEX`
+If you want to specify the image file path:
+
+. Type the file path after the index.
+. The image file will be added to the person you specified if it is valid.
 
 ****
 * Uploads photo to the person at the specified `INDEX`.
@@ -330,7 +366,10 @@ Examples:
 
 * `photo 1` +
 * `p 1` +
-Uploads photo to the 2nd person in the address book.
+Opens file explorer and uploads photo to the 1st person in the address book.
+* `photo 2 C:\Users\Pictures\photo.jpg` +
+* `p 2 C:\Users\Pictures\photo.jpg` +
+Uploads photo of specified image file path to the 2nd person in the address book.
 
 === Clearing all entries : `clear`
 
@@ -396,7 +435,9 @@ e.g. `tag friends classmates`
 * *Import* : `import FILENAME.vcf`
 * *Export* : `export`
 * *Upload Photo* : `photo INDEX` +
-e.g. `photo 3`
+e.g. `photo 3` OR +
+`photo INDEX FILEPATH` +
+e.g. `photo 3 C:\Users\Pictures\photo.jpg`
 
 == Command Shortcuts Summary
 
@@ -421,4 +462,6 @@ e.g.`select 2`
 * *Import* : `im FILENAME.vcf`
 * *Export* : `ex`
 * *Upload Photo* : `p INDEX` +
-e.g. `p 3`
+e.g. `p 3` OR +
+`photo INDEX FILEPATH` +
+e.g. `photo 3 C:\Users\Pictures\photo.jpg`

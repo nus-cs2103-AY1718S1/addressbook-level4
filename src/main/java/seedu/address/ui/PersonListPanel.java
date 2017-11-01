@@ -41,7 +41,7 @@ public class PersonListPanel extends UiPart<Region> {
         personListView.setCellFactory(listView -> new PersonListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
-
+    //@@author blaqkrow
     private void setEventHandlerForSelectionChangeEvent() {
         ObservableList<Integer> index = personListView.getSelectionModel().getSelectedIndices();
         personListView.getSelectionModel().selectedItemProperty()
@@ -52,6 +52,7 @@ public class PersonListPanel extends UiPart<Region> {
                     }
                 });
     }
+    //@@author
 
     /**
      * Scrolls to the {@code PersonCard} at the {@code index} and selects it.

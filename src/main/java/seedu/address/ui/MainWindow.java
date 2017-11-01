@@ -40,7 +40,7 @@ public class MainWindow extends UiPart<Region> {
     private Stage primaryStage;
     private Logic logic;
     private Scene scene;
-
+    //@@author blaqkrow
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
@@ -54,6 +54,8 @@ public class MainWindow extends UiPart<Region> {
     private EmailTextField emailTextField;
     private AddressTextField addressTextField;
     private TagTextField tagTextField;
+    private ClearLogButton clearLogButton;
+    private QrButton qrButton;
     @FXML
     private StackPane browserPlaceholder;
 
@@ -102,6 +104,11 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane editTagTextfieldPlaceholder;
+    @FXML
+    private StackPane clearLogButtonPlaceholder;
+    @FXML
+    private StackPane qrButtonPlaceholder;
+    //@@author
     @FXML
     private VBox vBox;
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
@@ -164,11 +171,13 @@ public class MainWindow extends UiPart<Region> {
             }
         });
     }
-
+    //@@author blaqkrow
     /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+        clearLogButton = new ClearLogButton();
+        clearLogButtonPlaceholder.getChildren().add(clearLogButton.getRoot());
 
         nameTextField = new NameTextField();
         editNameTextfieldPlaceholder.getChildren().add(nameTextField.getRoot());
@@ -196,6 +205,9 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
+        qrButton = new QrButton(browserPanel);
+        qrButtonPlaceholder.getChildren().add(qrButton.getRoot());
+
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -208,6 +220,7 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
+    //@@author
 
     void hide() {
         primaryStage.hide();
@@ -271,6 +284,7 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
+    //@@author JasmineSee
     /**
      * Changes to default dark theme.
      */
@@ -282,6 +296,7 @@ public class MainWindow extends UiPart<Region> {
         vBox.getStylesheets().remove("view/WhiteTheme.css");
         vBox.getStylesheets().remove("view/GreenTheme.css");
         vBox.getStylesheets().add("view/DarkTheme.css");
+        // this.scene.setFill(Color.BLUE);
     }
 
     /**
@@ -310,7 +325,7 @@ public class MainWindow extends UiPart<Region> {
         vBox.getStylesheets().remove("view/DarkTheme.css");
         vBox.getStylesheets().add("view/GreenTheme.css");
     }
-
+    //@@author
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
     }

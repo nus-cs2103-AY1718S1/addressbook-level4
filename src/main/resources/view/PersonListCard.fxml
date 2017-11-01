@@ -12,7 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <!-- @@author JasmineSee-->
    <ImageView fx:id="photo" fitHeight="150.0" fitWidth="157.0" pickOnBounds="true" preserveRatio="true" />
+  <!-- @@author-->
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
