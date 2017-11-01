@@ -1,20 +1,20 @@
 package seedu.address.logic.commands;
 
-import java.util.List;
-
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+import java.util.List;
+
 /**
  * Deletes a person identified using it's last displayed index from the address book.
  */
-public class DeleteCommand extends UndoableCommand {
+public class CopyCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "delete";
-    public static final String COMMAND_ALIAS = "d"; // shorthand equivalent alias
+    public static final String COMMAND_WORD = "copy";
+    public static final String COMMAND_ALIAS = "c"; // shorthand equivalent alias
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the index number used in the last person listing.\n"
@@ -27,7 +27,7 @@ public class DeleteCommand extends UndoableCommand {
 
     private final Index targetIndex;
 
-    public DeleteCommand(Index targetIndex) {
+    public CopyCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
@@ -55,7 +55,7 @@ public class DeleteCommand extends UndoableCommand {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof DeleteCommand // instanceof handles nulls
-                && this.targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
+                || (other instanceof CopyCommand // instanceof handles nulls
+                && this.targetIndex.equals(((CopyCommand) other).targetIndex)); // state check
     }
 }
