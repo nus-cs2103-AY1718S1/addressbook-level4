@@ -1,7 +1,9 @@
 package seedu.address.logic;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
@@ -25,6 +27,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
+
 
     public LogicManager(Model model) {
         this.model = model;

@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import seedu.address.model.task.UniqueTaskList;
+
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
 /**
@@ -15,8 +17,9 @@ public class ListTaskCommand extends Command {
 
     @Override
     public CommandResult execute() {
+
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
-
