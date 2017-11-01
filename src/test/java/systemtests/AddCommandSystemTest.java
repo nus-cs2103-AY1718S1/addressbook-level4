@@ -241,7 +241,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /*
          * Case: selects first card in the parcel list, add a parcel -> added, card selection
-         * remains unchanged
+         * changes to recently added card
          */
         executeCommand(SelectCommand.COMMAND_WORD + " 1");
         selectParcel(INDEX_FIRST_PARCEL);

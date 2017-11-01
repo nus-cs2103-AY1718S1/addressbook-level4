@@ -135,7 +135,7 @@ public class TypicalParcels {
             .withTags(VALID_TAG_FROZEN, VALID_TAG_FLAMMABLE).build();
     public static final ReadOnlyParcel CARL = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_CARL)
             .withName(VALID_NAME_CARL).withPhone(VALID_PHONE_CARL).withEmail(VALID_EMAIL_CARL)
-            .withAddress(VALID_ADDRESS_CARL).withStatus(VALID_STATUS_OVERDUE)
+            .withAddress(VALID_ADDRESS_CARL).withStatus(VALID_STATUS_DELIVERING)
             .withDeliveryDate(VALID_DELIVERY_DATE_CARL).build();
     public static final ReadOnlyParcel DANIEL = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_DANIEL)
             .withName(VALID_NAME_DANIEL).withPhone(VALID_PHONE_DANIEL).withEmail(VALID_EMAIL_DANIEL)
