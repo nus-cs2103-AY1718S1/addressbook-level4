@@ -93,7 +93,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
-
+    //@@author aaronyhsoh
     @Override
     public void favouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
