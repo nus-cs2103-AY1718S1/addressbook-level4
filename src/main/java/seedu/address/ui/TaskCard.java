@@ -70,6 +70,7 @@ public class TaskCard extends UiPart<Region> {
         deadline.textProperty().bind(Bindings.convert(task.deadlineProperty()));
         setColour();
     }
+    //@@author
 
     //@@author tpq95
     /**
@@ -111,6 +112,7 @@ public class TaskCard extends UiPart<Region> {
     }
     //@@author
 
+    //@@author tby1994
     /**
      * Set the colour of label for the same tag
      * @param task
