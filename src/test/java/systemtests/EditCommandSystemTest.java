@@ -20,7 +20,6 @@ import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_COMPLETED;
 import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_DELIVERING;
 import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_PENDING;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FLAMMABLE;
@@ -32,7 +31,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_B
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_COMPLETED;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_DELIVERING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FLAMMABLE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FROZEN;
@@ -40,9 +38,9 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PARCELS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PARCEL;
 import static seedu.address.testutil.TypicalParcels.ADDRESS_DESC_BENSON;
 import static seedu.address.testutil.TypicalParcels.AMY;
-import static seedu.address.testutil.TypicalParcels.BENSON;
 import static seedu.address.testutil.TypicalParcels.DELIVERY_DATE_DESC_BENSON;
 import static seedu.address.testutil.TypicalParcels.EMAIL_DESC_BENSON;
 import static seedu.address.testutil.TypicalParcels.KEYWORD_MATCHING_MEIER;
@@ -103,17 +101,10 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         model.updateParcel(
-                getModel().getFilteredParcelList().get(INDEX_FIRST_PARCEL.getZeroBased()), editedParcel);
+                getModel().getFilteredParcelList().get(index.getZeroBased()), editedParcel);
         model.maintainSorted();
         model.forceSelectParcel(editedParcel);
         assertCommandSuccess(command, model, expectedResultMessage);
-
-        /* Case: edit a parcel with new values same as existing values -> edited */
-        index = INDEX_FIRST_PARCEL;
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TRACKING_NUMBER_DESC_BENSON + NAME_DESC_BENSON
-                + PHONE_DESC_BENSON + EMAIL_DESC_BENSON + ADDRESS_DESC_BENSON + DELIVERY_DATE_DESC_BENSON
-                + STATUS_DESC_PENDING + TAG_DESC_FROZEN + TAG_DESC_FLAMMABLE;
-        assertCommandSuccess(command, index, BENSON);
 
         /* Case: edit some fields -> edited */
         index = INDEX_FIRST_PARCEL;
@@ -163,6 +154,13 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, index, AMY, index);
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
+
+        /* Case: edit a parcel with new values same as existing values -> edited */
+        index = INDEX_SECOND_PARCEL;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TRACKING_NUMBER_DESC_BENSON + NAME_DESC_BENSON
+                + PHONE_DESC_BENSON + EMAIL_DESC_BENSON + ADDRESS_DESC_BENSON + DELIVERY_DATE_DESC_BENSON
+                + STATUS_DESC_PENDING + TAG_DESC_FROZEN + TAG_DESC_FLAMMABLE;
+        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PARCEL);
 
         /* Case: invalid index (0) -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + NAME_DESC_BOB,

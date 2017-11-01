@@ -266,10 +266,10 @@ public class ModelManager extends ComponentManager implements Model {
         forceSelect(Index.fromZeroBased(findIndex(previous)));
     }
 
+    /**
+     * Method to retrieve the index of a given parcel in the active list.
+     */
     private int findIndex(ReadOnlyParcel target) {
-        System.out.println(getActiveList().indexOf(target));
-        System.out.println(target);
-        System.out.println(getActiveList());
         return getActiveList().indexOf(target);
     }
 

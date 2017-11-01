@@ -1,17 +1,19 @@
 package seedu.address.model;
 
 import com.google.common.eventbus.Subscribe;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ParcelPanelSelectionChangedEvent;
 
 /**
- * Created by Francis on 1/11/2017.
+ * SelectionListener listens for events that select a parcel card.
  */
 public class SelectionListener {
 
     private final Model model;
+
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a SelectionLister with the given model.
      */
     public SelectionListener(Model model) {
         this.model = model;
