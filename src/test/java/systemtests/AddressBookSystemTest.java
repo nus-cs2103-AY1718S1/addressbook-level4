@@ -184,8 +184,7 @@ public abstract class AddressBookSystemTest {
         String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
         URL expectedUrl;
         try {
-            expectedUrl = new URL(FACEBOOK_SEARCH_URL_PREFIX + selectedCardName.replaceAll(" ", "%20")
-                    );
+            expectedUrl = new URL(FACEBOOK_SEARCH_URL_PREFIX + selectedCardName.replaceAll(" ", "%20"));
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
