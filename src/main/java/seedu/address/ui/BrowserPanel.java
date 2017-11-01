@@ -41,6 +41,7 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author 17navasaw
     /**
      * Loads google maps web page locating person's address.
      */
@@ -55,6 +56,7 @@ public class BrowserPanel extends UiPart<Region> {
                 + GOOGLE_MAPS_URL_SUFFIX);
     }
 
+    //@@author
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
