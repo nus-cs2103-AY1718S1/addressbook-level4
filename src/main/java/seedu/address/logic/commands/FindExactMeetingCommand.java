@@ -2,8 +2,9 @@ package seedu.address.logic.commands;
 
 import seedu.address.model.meeting.MeetingContainsFullWordPredicate;
 
+//@@author kyngyi
 /**
- * Finds and lists all meetings in address book whose meeting name contains any of the argument keywords.
+ * Finds and lists all meetings in address book whose meeting name contains all of the keywords.
  * Keyword matching is case sensitive.
  */
 public class FindExactMeetingCommand extends Command {

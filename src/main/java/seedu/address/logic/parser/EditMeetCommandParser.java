@@ -11,6 +11,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditMeetingCommand;
 import seedu.address.logic.commands.EditMeetingCommand.EditMeetingDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+
+//@@author kyngyi
 /**
  * Parses input arguments and creates a new EditCommand object
  */

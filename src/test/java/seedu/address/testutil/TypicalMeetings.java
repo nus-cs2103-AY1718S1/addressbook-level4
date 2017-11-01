@@ -21,6 +21,7 @@ import seedu.address.model.meeting.ReadOnlyMeeting;
 //import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
 //import seedu.address.model.meeting.exceptions.MeetingClashException;
 
+//@@author kyngyi
 /**
  * A utility class containing a list of {@code Meeting} objects to be used in tests.
  */
