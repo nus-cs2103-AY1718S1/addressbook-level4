@@ -77,7 +77,7 @@ public class ModelManager extends ComponentManager implements Model {
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
     }
-    
+
     /**
      * Raises an event to indicate the model has changed
      */
