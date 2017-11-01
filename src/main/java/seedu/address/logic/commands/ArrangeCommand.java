@@ -43,7 +43,7 @@ public class ArrangeCommand extends Command {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
         }
-        model.generateMeetingTime(ListOfIndex);
+        System.out.println(model.generateMeetingTime(ListOfIndex));
         return new CommandResult(String.format(MESSAGE_ARRANGE_PERSON_SUCCESS));
 
     }
