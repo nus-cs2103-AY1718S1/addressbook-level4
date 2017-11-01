@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER" fillHeight="false" prefHeight="35.0" prefWidth="200.0" VBox.vgrow="NEVER">
          <children>
@@ -32,7 +32,6 @@
           <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
@@ -56,12 +55,7 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Tag" GridPane.rowIndex="4">
-               <GridPane.margin>
-                  <Insets left="10.0" />
-               </GridPane.margin>
-            </Label>
-            <Label text="Weblink" GridPane.rowIndex="5">
+            <Label text="Weblink" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
@@ -70,18 +64,15 @@
             <TextField fx:id="emailTextField" prefHeight="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="phoneTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="addressTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField text="Currently Unsupported" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
-      <ButtonBar prefHeight="40.0" prefWidth="200.0" VBox.vgrow="NEVER">
+      <Label fx:id="statusLabel" text="Label" />
+      <ButtonBar prefHeight="40.0" prefWidth="200.0">
         <buttons>
-          <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
-            <Button mnemonicParsing="false" onAction="#handleOK" text="OK" />
+          <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+            <Button fx:id="okButton" mnemonicParsing="false" onAction="#handleOK" text="OK" />
         </buttons>
-         <VBox.margin>
-            <Insets left="20.0" right="20.0" />
-         </VBox.margin>
       </ButtonBar>
    </children>
    <padding>

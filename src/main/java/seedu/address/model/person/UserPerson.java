@@ -106,6 +106,16 @@ public class UserPerson implements ReadOnlyPerson {
         return emails.get();
     }
 
+    public String getEmailAsText() {
+        StringBuilder builder = new StringBuilder();
+        for (Email email : getEmail()){
+            builder.append(email.toString());
+            builder.append(", ");
+        }
+        builder.delete(builder.length() - 2, builder.length());
+        return builder.toString();
+    }
+
     public void setAddress(Address address) {
         this.address.set(requireNonNull(address));
     }
