@@ -51,40 +51,40 @@ public class Autocompleter {
      */
     public String autocomplete() {
         switch (state) {
-            case COMMAND:
-                clearResultsWindow();
-                return (possibleAutocompleteResults.isEmpty())? EMPTY_STRING : possibleAutocompleteResults.get(0);
+        case COMMAND:
+            clearResultsWindow();
+            return (possibleAutocompleteResults.isEmpty())? EMPTY_STRING : possibleAutocompleteResults.get(0);
 
-            case EMPTY:
-                raise(new NewResultAvailableEvent(PROMPT_USER_TO_USE_HELP_MESSAGE, false));
-                return EMPTY_STRING;
+        case EMPTY:
+            raise(new NewResultAvailableEvent(PROMPT_USER_TO_USE_HELP_MESSAGE, false));
+            return EMPTY_STRING;
 
-            case COMMAND_NEXT_PREFIX:
-                clearResultsWindow();
-                if (possibleAutocompleteResults.isEmpty()) {
-                    return textInCommandBox;
-                }
-                return textInCommandBox.trim() + " " +possibleAutocompleteResults.get(0);
-
-            case COMMAND_CYCLE_PREFIX:
-                clearResultsWindow();
-                return textInCommandBox.substring(0, textInCommandBox.length() - 2) +
-                        possibleAutocompleteResults.get(cycleIndex());
-
-            case INDEX:
-                clearResultsWindow();
-                String[] temp = textInCommandBox.split(" ");
-                return temp[0] + " " + cycleCountingIndex();
-
-            case MULTIPLE_COMMAND:
-                displayMultipleResults(possibleAutocompleteResults);
-                return possibleAutocompleteResults.get(cycleIndex());
-
-            case NO_RESULT: //fall through to default
-
-            default:
-                clearResultsWindow();
+        case COMMAND_NEXT_PREFIX:
+            clearResultsWindow();
+            if (possibleAutocompleteResults.isEmpty()) {
                 return textInCommandBox;
+            }
+            return textInCommandBox.trim() + " " + possibleAutocompleteResults.get(0);
+
+        case COMMAND_CYCLE_PREFIX:
+            clearResultsWindow();
+            return textInCommandBox.substring(0, textInCommandBox.length() - 2)
+                    + possibleAutocompleteResults.get(cycleIndex());
+
+        case INDEX:
+            clearResultsWindow();
+            String[] temp = textInCommandBox.split(" ");
+            return temp[0] + " " + cycleCountingIndex();
+
+        case MULTIPLE_COMMAND:
+            displayMultipleResults(possibleAutocompleteResults);
+            return possibleAutocompleteResults.get(cycleIndex());
+
+        case NO_RESULT: //fall through to default
+
+        default:
+            clearResultsWindow();
+            return textInCommandBox;
         }
     }
 
@@ -142,7 +142,7 @@ public class Autocompleter {
         }
 
         if (AutocompleteCommand.hasIndexParameter(commandWord)) {
-            if(!(AutocompleteCommand.hasPrefixParameter(commandWord)) || needIndex(arguments)) {
+            if (!(AutocompleteCommand.hasPrefixParameter(commandWord)) || needIndex(arguments)) {
                 resetCountingAndMaxIndexIfNeeded();
                 state = AutocompleteState.INDEX;
                 return;
@@ -165,6 +165,10 @@ public class Autocompleter {
         return state.equals(AutocompleteState.MULTIPLE_COMMAND) && textInCommandBox.length() == commandWord.length();
     }
 
+    /**
+     * Returns true if the the autocompleter was not cycling through possible options
+     * in it's previous state
+     */
     private void resetIndexIfNeeded() {
         if (!state.equals(AutocompleteState.MULTIPLE_COMMAND)
                 && !state.equals(AutocompleteState.COMMAND_CYCLE_PREFIX)) {
@@ -187,11 +191,10 @@ public class Autocompleter {
     /**
      * Check if the index field in the {@code String} has already been entered
      * @param arguments
-     * @return
      */
     private boolean containsIndex(String arguments) {
-        Prefix[] prefixes = AutocompleteCommand.allPrefixes;
-        if (lastTwoCharactersArePrefix(arguments)){
+        Prefix[] prefixes = AutocompleteCommand.ALL_PREFIXES;
+        if (lastTwoCharactersArePrefix(arguments)) {
             arguments += SPACE;
         }
         ArgumentMultimap argMap = ArgumentTokenizer.tokenize(arguments, prefixes);
@@ -200,6 +203,10 @@ public class Autocompleter {
         return !index.equals(EMPTY_STRING);
     }
 
+    /**
+     * Returns true if the last character of the {@code String} is a digit
+     * @param text
+     */
     private boolean lastCharIsDigit(String text) {
         if(text.length() < 1) {
             return false;
@@ -242,7 +249,7 @@ public class Autocompleter {
             return false;
         }
         String lastTwoCharacters = commandBoxText.substring(commandBoxText.length() - 2);
-        return Arrays.stream(AutocompleteCommand.allPrefixes)
+        return Arrays.stream(AutocompleteCommand.ALL_PREFIXES)
                 .anyMatch(s -> lastTwoCharacters.equals(s.toString()));
     }
 
@@ -252,7 +259,7 @@ public class Autocompleter {
      * @return {@code ArrayList<String>} containing the missing prefixes
      */
     private ArrayList<String> getMissingPrefixes(String arguments) {
-        Prefix[] prefixes = AutocompleteCommand.allPrefixes;
+        Prefix[] prefixes = AutocompleteCommand.ALL_PREFIXES;
         ArrayList<String> missingPrefixes = new ArrayList<>();
         ArgumentMultimap argMap = ArgumentTokenizer.tokenize(arguments, prefixes);
         for (Prefix p : prefixes) {
@@ -270,7 +277,7 @@ public class Autocompleter {
      */
     private ArrayList<String> getClosestCommands (String commandBoxText) {
         ArrayList<String> possibleResults = new ArrayList<>();
-        Arrays.stream(AutocompleteCommand.allCommands)
+        Arrays.stream(AutocompleteCommand.ALL_COMMANDS)
                 .filter(s -> isPossibleMatch(commandBoxText.toLowerCase(), s))
                 .forEach(s -> possibleResults.add(s));
         return possibleResults;

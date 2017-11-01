@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,9 +22,8 @@ public class CommandBoxParser {
     public CommandBoxParser() { }
 
     /**
-     * Parses {@param commandBoxText} to see if it contains any instances of a {@code Command} and {@code Prefix}
+     * Parses {@code String} to see if it contains any instances of a {@code Command} and {@code Prefix}
      * @param commandBoxText
-     * @return
      */
     public String[] parseCommandAndPrefixes(String commandBoxText) {
         String[] parseResults = {EMPTY_STRING, EMPTY_STRING };
@@ -43,6 +41,6 @@ public class CommandBoxParser {
     }
 
     private boolean isValidCommand(String commandWord) {
-        return Arrays.asList(AutocompleteCommand.allCommands).contains(commandWord);
+        return Arrays.asList(AutocompleteCommand.ALL_COMMANDS).contains(commandWord);
     }
 }
