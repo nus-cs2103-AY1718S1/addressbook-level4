@@ -98,6 +98,7 @@ public class Autocompleter {
 
         String[] currentTextArray = parser.parseCommandAndPrefixes(commandBoxText);
         String commandWord = currentTextArray[CommandBoxParser.COMMAND_INDEX];
+        String arguments = currentTextArray[CommandBoxParser.ARGUMENT_INDEX];
         currentCommand = AutocompleteCommand.getInstance(commandWord);
 
 
@@ -106,7 +107,7 @@ public class Autocompleter {
             return;
         }
 
-        if (state.equals(AutocompleteState.MULTIPLE_COMMAND) && textInCommandBox.length() == commandWord.length()) {
+        if (isCyclingThroughCommands(commandWord)) {
             return;
         }
 
@@ -117,7 +118,7 @@ public class Autocompleter {
         }
 
         if (AutocompleteCommand.hasPrefixParameter(commandWord)) {
-            possibleAutocompleteResults = getMissingPrefixes(commandBoxText);
+            possibleAutocompleteResults = getMissingPrefixes(arguments);
             if (lastTwoCharactersArePrefix(commandBoxText)) {
                 resetIndexIfNeeded();
                 state = AutocompleteState.COMMAND_CYCLE_PREFIX;
@@ -128,6 +129,10 @@ public class Autocompleter {
         }
 
 
+    }
+
+    private boolean isCyclingThroughCommands(String commandWord) {
+        return state.equals(AutocompleteState.MULTIPLE_COMMAND) && textInCommandBox.length() == commandWord.length();
     }
 
     private void resetIndexIfNeeded() {
@@ -170,10 +175,10 @@ public class Autocompleter {
                 .anyMatch(s -> lastTwoCharacters.equals(s.toString()));
     }
 
-    private ArrayList<String> getMissingPrefixes(String commandBoxText) {
+    private ArrayList<String> getMissingPrefixes(String arguments) {
         Prefix[] prefixes = AutocompleteCommand.allPrefixes;
         ArrayList<String> missingPrefixes = new ArrayList<>();
-        ArgumentMultimap argMap = ArgumentTokenizer.tokenize(commandBoxText, prefixes);
+        ArgumentMultimap argMap = ArgumentTokenizer.tokenize(arguments, prefixes);
         for (Prefix p : prefixes) {
             if (!argMap.getValue(p).isPresent()) {
                 missingPrefixes.add(p.toString());
