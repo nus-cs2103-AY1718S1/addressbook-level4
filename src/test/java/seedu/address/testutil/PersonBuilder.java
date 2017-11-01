@@ -114,6 +114,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author 17navasaw
     /**
      * Parses the {@code emails} into a {@code Set<Email>} and sets it to the {@code Person} that we are building.
      */
@@ -126,6 +127,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author
     public Person build() {
         return this.person;
     }
