@@ -101,7 +101,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         model.updateParcel(
-                getModel().getFilteredParcelList().get(index.getZeroBased()), editedParcel);
+                getModel().getActiveList().get(index.getZeroBased()), editedParcel);
         model.maintainSorted();
         model.forceSelectParcel(editedParcel);
         assertCommandSuccess(command, model, expectedResultMessage);

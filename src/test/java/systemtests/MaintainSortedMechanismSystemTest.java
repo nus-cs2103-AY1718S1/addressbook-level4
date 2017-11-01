@@ -1,6 +1,8 @@
 package systemtests;
 
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_DELIVERING;
@@ -38,16 +40,18 @@ public class MaintainSortedMechanismSystemTest {
     @Test
     public void execute_maintainSorted_success() throws Exception {
         Index indexLastParcel = Index.fromOneBased(model.getActiveList().size());
-        ReadOnlyParcel lastParcel = model.getFilteredParcelList().get(indexLastParcel.getZeroBased());
+        ReadOnlyParcel lastParcel = model.getActiveList().get(indexLastParcel.getZeroBased());
 
         ParcelBuilder parcelInList = new ParcelBuilder(lastParcel);
         Parcel editedParcel = parcelInList.withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withTags(VALID_TAG_FLAMMABLE).withTrackingNumber(VALID_TRACKING_NUMBER_AMY)
-                .withStatus(VALID_STATUS_DELIVERING).build();
+                .withStatus(VALID_STATUS_DELIVERING).withEmail(VALID_EMAIL_AMY)
+                .withAddress(VALID_ADDRESS_AMY).build();
 
         EditParcelDescriptor descriptor = new EditParcelDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withTags(VALID_TAG_FLAMMABLE).withTrackingNumber(VALID_TRACKING_NUMBER_AMY)
-                .withStatus(VALID_STATUS_DELIVERING).build();
+                .withStatus(VALID_STATUS_DELIVERING).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+                .build();
         EditCommand editCommand = prepareCommand(indexLastParcel, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PARCEL_SUCCESS, editedParcel);
