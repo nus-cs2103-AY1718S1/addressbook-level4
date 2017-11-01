@@ -19,6 +19,8 @@ import seedu.address.model.UserPrefs;
  */
 public class StorageManager extends ComponentManager implements Storage {
 
+    public static final String EMPTY_STORAGE_DEFAULT_PATH = "data/";
+
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;

@@ -112,6 +112,11 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        /* Case: find occupation of person in address book -> 0 persons found */
+        command = FindTagCommand.COMMAND_WORD + " " + DANIEL.getOccupation().value;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
         /* Case: find phone number of person in address book -> 0 persons found */
         command = FindTagCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
         assertCommandSuccess(command, expectedModel);
@@ -124,6 +129,11 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: find email of person in address book -> 0 persons found */
         command = FindTagCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find website of person in address book -> 0 persons found */
+        command = FindTagCommand.COMMAND_WORD + " " + DANIEL.getWebsite().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
