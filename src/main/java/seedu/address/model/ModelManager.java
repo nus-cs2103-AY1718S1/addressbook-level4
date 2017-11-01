@@ -12,6 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.ShowAllTodoItemsEvent;
 import seedu.address.commons.events.ui.ShowPersonTodoEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TodoItem;
@@ -124,6 +125,11 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.resetTodoItem(target);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateTodoItemList() {
+        raise(new ShowAllTodoItemsEvent());
     }
 
     @Override

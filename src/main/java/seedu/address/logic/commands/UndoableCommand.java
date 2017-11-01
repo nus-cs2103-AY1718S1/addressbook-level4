@@ -31,7 +31,7 @@ public abstract class UndoableCommand extends Command {
     /**
      * Reverts the AddressBook to the state before this command
      * was executed and updates the filtered person list to
-     * show all persons.
+     * show all persons. Also updates the UI to show all todoItems.
      */
     protected final void undo() {
         requireAllNonNull(model, previousAddressBook);
@@ -42,6 +42,7 @@ public abstract class UndoableCommand extends Command {
         }
         model.resetData(previousAddressBook);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateTodoItemList();
     }
 
     /**

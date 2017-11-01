@@ -67,6 +67,9 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /** Updates the UI to show all todoItems for all persons */
+    void updateTodoItemList();
+
     /**
      * Sorts the list by the specified @param parameter.
      * @throws NoPersonFoundException if no persons found in {@code AddressBook}.
