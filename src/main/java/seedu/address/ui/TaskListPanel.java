@@ -72,11 +72,11 @@ public class TaskListPanel extends UiPart<Region> {
      * Custom {@code ListCell} that displays the graphics of a {@code TaskCard}.
      */
 
-    private boolean showAllTask =false;
+    private boolean showAllTask = false;
 
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
-        if (event.message == "Listed all tasks"){
+        if (event.message == "Listed all tasks") {
             this.showAllTask = true;
             System.out.print("??");
         } else {
@@ -85,13 +85,16 @@ public class TaskListPanel extends UiPart<Region> {
         }
     }
 
+    /**
+     * Some comment
+     */
     class TaskListViewCell extends ListCell<TaskCard> {
 
         @Override
         protected void updateItem(TaskCard task, boolean empty) {
             super.updateItem(task, empty);
 
-            if(showAllTask) {
+            if (showAllTask) {
                 //if (empty || task == null || task.getTask().getComplete()) {
                 if (empty || task == null) {
                     setGraphic(null);

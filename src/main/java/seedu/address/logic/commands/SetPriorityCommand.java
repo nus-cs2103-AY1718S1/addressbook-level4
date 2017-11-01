@@ -23,7 +23,7 @@ public class SetPriorityCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sets the priority by the new value as the user specified, which is between 1~5\n"
-            + "Parameters: INDEX (must be a positive integer) PRIORITY (must be an integer between 1 and 5\n"
+            + "Parameters: INDEX (must be a positive integer) c/PRIORITY (must be an integer between 1 and 5\n"
             + "Example: " + COMMAND_WORD + " 1 c/2";
 
     public static final String MESSAGE_UPDATE_TASK_PRIORITY_SUCCESS = "Updated the Priority of Task %1$s";

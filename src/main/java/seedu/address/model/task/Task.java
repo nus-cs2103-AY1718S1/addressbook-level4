@@ -271,13 +271,17 @@ public class Task implements ReadOnlyTask {
         return peopleIds;
     }
 
-    public ArrayList<Integer> getPeopleIds() { return peopleIds.get(); }
+    public ArrayList<Integer> getPeopleIds() {
+        return peopleIds.get();
+    }
 
     public void setPeopleIds(ArrayList<Integer> peopleIds) {
         this.peopleIds.set(requireNonNull(peopleIds));
     }
 
-    public void setRemark(ArrayList<Integer> peopleIndices) { this.peopleIds.set(requireNonNull(peopleIndices)); }
+    public void setRemark(ArrayList<Integer> peopleIndices) {
+        this.peopleIds.set(requireNonNull(peopleIndices));
+    }
     /**
      * Set a new tag set along with the new task construction
      * This method should not be usd if the

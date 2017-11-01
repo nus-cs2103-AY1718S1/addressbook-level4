@@ -19,7 +19,7 @@ public class Name {
      */
     public static final String NAME_VALIDATION_REGEX = "[^\\s].*";
 
-    public final String Name;
+    public final String name;
 
     /**
      * Validates given name.
@@ -31,7 +31,7 @@ public class Name {
         if (!isValidName(name)) {
             throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
         }
-        this.Name = name;
+        this.name = name;
     }
 
     /**
@@ -44,19 +44,19 @@ public class Name {
 
     @Override
     public String toString() {
-        return Name;
+        return name;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Name // instanceof handles nulls
-                && this.Name.equals(((Name) other).Name)); // state check
+                && this.name.equals(((Name) other).name)); // state check
     }
 
     @Override
     public int hashCode() {
-        return Name.hashCode();
+        return name.hashCode();
     }
 
 }
