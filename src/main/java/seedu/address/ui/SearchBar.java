@@ -20,7 +20,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class SearchBar extends UiPart<Region> {
 
-    private static final String FXML = "SearchBar.FXML";
+    private static final String FXML = "SearchBar.fxml";
 
     private final Logger logger = LogsCenter.getLogger(SearchBar.class);
     private Logic logic;
