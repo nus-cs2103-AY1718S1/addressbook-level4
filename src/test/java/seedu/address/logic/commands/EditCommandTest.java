@@ -88,10 +88,11 @@ public class EditCommandTest {
     //@@author
 
     @Test
-    public void execute_overdueUpdate_AfterEditDeadline() throws Exception {
+    public void execute_overdueUpdate_afterEditDeadline() throws Exception {
         int sizeOfList = model.getFilteredPersonList().size();
         Index lastIdx = Index.fromOneBased(sizeOfList);
-        assertTrue(model.getFilteredPersonList().get(lastIdx.getZeroBased()).hasOverdueDebt()); // person has overdue debt
+        // person has overdue debt
+        assertTrue(model.getFilteredPersonList().get(lastIdx.getZeroBased()).hasOverdueDebt());
 
         Person editedPerson = (Person) model.getFilteredPersonList().get(lastIdx.getZeroBased());
         editedPerson.setDeadline(new Deadline("11-11-2020"));
