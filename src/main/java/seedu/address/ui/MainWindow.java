@@ -216,6 +216,15 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
+     * Displays the user profile to the user
+     */
+    @FXML
+    private void handleUserProfile() {
+        UserProfileWindow userProfileWindow = new UserProfileWindow();
+        userProfileWindow.show();
+    }
+
+    /**
      * Closes the application.
      */
     @FXML
