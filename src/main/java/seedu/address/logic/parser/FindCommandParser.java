@@ -18,7 +18,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.FieldContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
-//@@author Nabeel Zaheer
+//@@author NabeelZaheer
 /**
  * Parses input arguments and creates a new FindCommand object
  */
