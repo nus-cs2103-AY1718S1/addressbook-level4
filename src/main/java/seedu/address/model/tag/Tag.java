@@ -47,6 +47,7 @@ public class Tag {
         TagColorManager.setColor(this, color);
     }
 
+    //@@author low5545
     /**
      * Creates a copy of the given Tag.
      */
@@ -59,6 +60,7 @@ public class Tag {
             TagColorManager.setColor(this);
         }
     }
+    //@@author
 
     /**
      * Returns true if a given string is a valid tag name.
