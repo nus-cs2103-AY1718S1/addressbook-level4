@@ -4,7 +4,9 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TodoItem;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.DuplicateTodoItemException;
 //@@author qihao27
 import seedu.address.model.person.exceptions.NoPersonFoundException;
 //@@author
@@ -54,6 +56,18 @@ public interface Model {
             throws DuplicatePersonException, PersonNotFoundException;
     //@@author
 
+    /** Adds the given todoItem to target person */
+    void addTodoItem(ReadOnlyPerson target, TodoItem todoItem)
+            throws DuplicatePersonException, PersonNotFoundException, DuplicateTodoItemException;
+
+    /** Deletes the given todoItem from target person */
+    void deleteTodoItem(ReadOnlyPerson target, TodoItem todoItem)
+            throws DuplicatePersonException, PersonNotFoundException;
+
+    /** Resets all todoItem for target person */
+    void resetTodoItem(ReadOnlyPerson target)
+            throws DuplicatePersonException, PersonNotFoundException;
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
@@ -62,6 +76,9 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    /** Updates the UI to show all todoItems for all persons */
+    void updateTodoItemList();
 
     //@@author qihao27
     /**

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox minHeight="450.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
+<VBox minHeight="450.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <!-- @@author qihao27 -->
         <URL value="@LightTheme.css" />
@@ -46,7 +46,7 @@
                         <Insets bottom="5" left="10" right="10" top="5" />
                     </padding>
                 </StackPane>
-                <StackPane fx:id="browserPlaceholder" prefHeight="249.0" prefWidth="340">
+                <StackPane fx:id="switchablePlaceholder" prefHeight="249.0" prefWidth="340">
                     <padding>
                         <Insets bottom="10" left="10" right="10" top="10" />
                     </padding>
