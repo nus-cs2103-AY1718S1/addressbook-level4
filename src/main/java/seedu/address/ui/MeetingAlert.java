@@ -1,13 +1,19 @@
 package seedu.address.ui;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.logging.Logger;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.FxViewUtil;
+import seedu.address.model.meeting.ReadOnlyMeeting;
 
 /**
  * To have a pop up window to remind user about the meetings they have today
@@ -18,10 +24,21 @@ public class MeetingAlert extends UiPart<Region> {
     private static final String ICON = "/images/alert_icon.png";
     private static final String FXML = "MeetingAlert.fxml";
     private static final String TITLE = "REMINDER!!";
+    private static final String MESSAGE = "Your Next Meeting is : ";
 
     private final Stage dialogStage;
 
-    public MeetingAlert() {
+    @FXML
+    private Label WarningMessage;
+
+    @FXML
+    private Label FirstMeeting;
+
+    @FXML
+    private Label NameMeeting;
+
+
+    public MeetingAlert(ObservableList<ReadOnlyMeeting> list) {
         super(FXML);
         Scene scene = new Scene(getRoot());
         //Null passed as the parent stage to make it non-modal.
@@ -31,7 +48,19 @@ public class MeetingAlert extends UiPart<Region> {
         dialogStage.setX(475);
         dialogStage.setY(300);
         FxViewUtil.setStageIcon(dialogStage, ICON);
-
+        WarningMessage.setText(MESSAGE);
+        if (isGroupMeeting(list)) {
+            int indexDate = list.get(0).getDate().toString().indexOf(' ');
+            FirstMeeting.setText("Group Meeting with " + list.get(0).getPersonName().toString()
+                    + " at " + list.get(0).getDate().toString().substring(indexDate + 1) + " for");
+            NameMeeting.setText(list.get(0).getName().toString());
+        }
+        else {
+            int indexDate = list.get(0).getDate().toString().indexOf(' ');
+            FirstMeeting.setText("Meeting with " + list.get(0).getPersonName().toString()
+                    + " at " + list.get(0).getDate().toString().substring(indexDate + 1) + " for");
+            NameMeeting.setText(list.get(0).getName().toString());
+        }
     }
     /**
      * Shows the Alert window.
@@ -54,6 +83,30 @@ public class MeetingAlert extends UiPart<Region> {
     public void show() {
         logger.fine("Showing alert page about the application.");
         dialogStage.showAndWait();
+    }
+    /**
+    *Get the number of individual meetings to be shown to user
+     */
+    private boolean isGroupMeeting(ObservableList<ReadOnlyMeeting> list) {
+        int numMeet = 0;
+        for (int i = 0; i < list.size(); i++) {
+            DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+            LocalDateTime currDate = LocalDateTime.now();
+            LocalDateTime meetDate = LocalDateTime.parse(list.get(i).getDate().toString(), formatter);
+            long daysBet = ChronoUnit.DAYS.between(currDate, meetDate);
+            if (daysBet == 0) {
+                int j = i + 1;
+                while (list.get(i).getDate().equals(list.get(j).getDate())) {
+                    numMeet++;
+                    j++;
+                }
+
+            }
+        }
+        if (numMeet > 0) {
+            return true;
+        }
+        return false;
     }
     @FXML
     private void handleExit() {
