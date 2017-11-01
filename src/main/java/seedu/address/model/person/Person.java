@@ -97,6 +97,7 @@ public class Person implements ReadOnlyPerson {
         return country.get();
     }
 
+    //@@author 17navasaw
     /**
     * Replaces this person's emails with the emails in the argument tag set.
     */
@@ -118,6 +119,7 @@ public class Person implements ReadOnlyPerson {
         return Collections.unmodifiableSet(emails.get().toSet());
     }
 
+    //@@author
     public void setAddress(Address address) {
         this.address.set(requireNonNull(address));
     }
