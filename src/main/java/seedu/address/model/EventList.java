@@ -2,17 +2,12 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.exceptions.DeleteOnCascadeException;
 import seedu.address.model.event.Event;
-import seedu.address.model.event.ParticipantList;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.event.exceptions.DuplicateEventException;
@@ -24,9 +19,9 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+//@@author Adoby7
 /**
  * Wraps all events at event list level
- * Duplicates are not allowed (by .equals comparison)
  */
 public class EventList implements ReadOnlyEventList {
     private final UniqueEventList events;
@@ -61,17 +56,13 @@ public class EventList implements ReadOnlyEventList {
 
     /**
      * Adds a event to the event list.
-     * Also checks the new event's particpands and updates {@link #events} with any new persons found,
+     * Also checks the new event's participants and updates {@link #events} with any new persons found,
      * and updates the Person objects in the event to point to those in {@link #events}.
      *
      * @throws DuplicateEventException if an equivalent person already exists.
      */
     public void addEvent(ReadOnlyEvent e) throws DuplicateEventException {
         Event newEvent = new Event(e);
-        syncMasterParticipantListWith(newEvent);
-        // TODO: the participants master list will be updated even though the below line fails.
-        // This can cause the participants master list to have additional persons that are not mapped to any event
-        // in the event list.
         events.add(newEvent);
     }
 
@@ -81,7 +72,6 @@ public class EventList implements ReadOnlyEventList {
      */
     public void addEvent(int position, ReadOnlyEvent e) {
         Event newEvent = new Event(e);
-        syncMasterParticipantListWith(newEvent);
         events.add(position, newEvent);
     }
 
@@ -98,42 +88,7 @@ public class EventList implements ReadOnlyEventList {
         requireNonNull(editedReadOnlyEvent);
 
         Event editedEvent = new Event(editedReadOnlyEvent);
-        syncMasterParticipantListWith(editedEvent);
-        // TODO: the participants master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
         events.setEvent(target, editedEvent);
-    }
-
-    /**
-     * Ensures that every participant in this event:
-     * - exists in the master list
-     * - points to a Person object in the master list
-     */
-    private void syncMasterParticipantListWith(Event event) {
-        final ParticipantList participants = new ParticipantList(event.getParticipants());
-        participants.mergeFrom(participants);
-
-        // Create map with values = tag object references in the master list
-        // used for checking participant references
-        final Map<Person, Person> masterPersonObjects = new HashMap<>();
-        //persons.forEach(person -> masterPersonObjects.put(person, person));
-
-        // Rebuild the list of person tags to point to the relevant tags in the master tag list.
-        final Set<Person> correctPersonReferences = new HashSet<>();
-        participants.forEach(participant -> correctPersonReferences.add(masterPersonObjects.get(participant)));
-        event.setParticipants(correctPersonReferences);
-    }
-
-    /**
-     * Ensures that every tag in these persons:
-     * - exists in the master list {@link #events}
-     * - points to a Tag object in the master list
-     *
-     * @see #syncMasterParticipantListWith (Event)
-     */
-    private void syncMasterParticipantListWith(UniqueEventList events) {
-        events.forEach(this::syncMasterParticipantListWith);
     }
 
 

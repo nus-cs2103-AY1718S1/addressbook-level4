@@ -44,10 +44,12 @@
                      <Label fx:id="birthday" styleClass="cell_small_label" text="\$birthday" />
                    </children>
                 </VBox>
+                   <!-- @@author Adoby7 -->
                   <ImageView fx:id="portrait" fitHeight="78.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                      <HBox.margin>
                         <Insets right="50.0" top="14.0" />
                      </HBox.margin></ImageView>
+                   <!-- @@author HouDenghao -->
                </children>
             </HBox>
         </children>

@@ -42,7 +42,7 @@ This app will not work with earlier versions of Java 8.
 .  Double-click the file to start the app. The GUI should appear in a few seconds, as shown in the figure below.
    Note that you will see some initial data if it is the first time to use.
 +
-image::UG_origin.png[width="790"]
+image::Ui.png[width="790"]
 _Figure 2: GUI_
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
@@ -380,8 +380,15 @@ The image named `sample picture.png` and located at `C:/Users/My Profile/Images/
 * You can use either '\' or '/' to separate two subfolders.
 * The app will report an error if it cannot find the file by the path you provide.
 ****
-Assume this is the `sample picture.png` +
+Assume the `sample picture.png` looks like this:
+
+image::sample.png[]
+_Figure 3.12.1 the sample.png_
+
 Then you will see the following after typing the example portrait command
+
+image::UG_portrait.png[]
+_Figure 3.12.2 attach a portrait_
 
 === Listing entered commands : `history`
 
@@ -395,7 +402,7 @@ Format & Example: `history`
 You will see the following after typing history command: +
 
 image::UG_history.png[width='790']
-_Figure 3.12: history result_
+_Figure 3.13: history result_
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -426,17 +433,17 @@ The `undo` command fails as there are no undoable commands executed previously.
 You will see the following after typing `delete 1` and `clear`:
 
 image::UG_clear.png[width='790']
-_Figure 3.13.1: before undo_
+_Figure 3.14.1: before undo_
 
-You will see the following after typing `undo`:
+You will see the following after typing `undo` (undo `clear`):
 
 image::UG_undo1.png[width='790']
-_Figure 3.13.2: undo once_
+_Figure 3.14.2: undo once_
 
-You will see the following after typing `undo` again:
+You will see the following after typing `undo` again (undo `delete 1`):
 
 image::UG_undo2.png[width='790']
-_Figure 3.13.3: undo twice_
+_Figure 3.14.3: undo twice_
 
 === Redoing the previously undone command : `redo`
 
@@ -463,17 +470,17 @@ The `redo` command fails as there are no `undo` commands executed previously.
 You will see the following after typing `delete 1`, `clear`, `undo` and `undo`:
 
 image::UG_undo2.png[width='790']
-_Figure 3.14.1: before redo_
+_Figure 3.15.1: before redo_
 
-You will see the following after typing `redo`:
+You will see the following after typing `redo` (redo `delete 1`):
 
 image::UG_redo1.png[width='790']
-_Figure 3.14.2: redo once_
+_Figure 3.15.2: redo once_
 
-You will see the following after typing `redo` again:
+You will see the following after typing `redo` again (redo `clear`):
 
 image::UG_redo2.png[width='790']
-_Figure 3.14.2: redo twice
+_Figure 3.15.2: redo twice
 
 // end::undoredo[]
 
@@ -489,7 +496,7 @@ Format & Example: `clear`
 You will see the following after clear command:
 
 image::UG_clear.png[width="790"]
-_Figure 3.15: clear result_
+_Figure 3.16: clear result_
 
 === Viewing help : `help`
 
@@ -524,9 +531,12 @@ e.g. `adde en/Project Meeting ed/Project meeting with CS2103 Team Members et/20/
 * *Adding a person* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 
+* *Attach a portrait to a person* : `portrait PERSON_INDEX p/IMAGE_FILE_PATH`
+e.g. `portrait 1 p/C:/Users/My Profile/Images/sample picture.png`
+
 * *Clear* : `clear`
 
-* *Deleting an event* : `delete INDEX` +
+* *Deleting an event* : `deleteE INDEX` +
 e.g. `deleteE 5`
 
 * *Deleting a person* : `delete INDEX` +

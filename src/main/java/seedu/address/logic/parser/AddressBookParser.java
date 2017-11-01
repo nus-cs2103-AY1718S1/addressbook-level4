@@ -69,6 +69,7 @@ public class AddressBookParser {
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
+        //@@author Adoby7
         case EditEventCommand.COMMAND_WORD:
             return new EditEventCommandParser().parse(arguments);
 
@@ -93,10 +94,11 @@ public class AddressBookParser {
         case DeleteEventCommand.COMMAND_WORD:
             return new DeleteEventCommandParser().parse(arguments);
 
-        //@@author
+        //@@author Adoby7
         case DisJoinCommand.COMMAND_WORD:
             return new DisjoinCommandParser().parse(arguments);
-            // @@author HuWanqing
+
+        //@@author HuWanqing
         case JoinCommand.COMMAND_WORD:
             return new JoinCommandParser().parse(arguments);
 
@@ -104,7 +106,7 @@ public class AddressBookParser {
         case DisplayEmailsCommand.COMMAND_WORD:
             return new DisplayEmailsCommandParser().parse(arguments);
 
-        //@@author
+        //@@author Adoby7
         case PortraitCommand.COMMAND_WORD:
             return new PortraitCommandParser().parse(arguments);
 

@@ -74,13 +74,14 @@ public class AddressBookParserTest {
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
+    //@@author Adoby7
     @Test
     public void parseCommandPortrait() throws Exception {
         PortraitCommand command = (PortraitCommand) parser.parseCommand(PortraitCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PORTRAIT_DESC_FIRST);
         assertEquals(new PortraitCommand(INDEX_FIRST_PERSON, new PortraitPath(VALID_PORTRAIT_PATH_FIRST)), command);
-
     }
+    //@@author
 
     @Test
     public void parseCommand_exit() throws Exception {

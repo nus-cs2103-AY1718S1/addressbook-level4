@@ -9,8 +9,9 @@ import seedu.address.model.event.EventName;
 import seedu.address.model.event.EventTime;
 import seedu.address.model.event.ReadOnlyEvent;
 
+//@@author Adoby7
 /**
- * JAXB-friendly version of the Event.
+ * No participants in this adapted event, to avoid infinite loop when store person
  */
 public class XmlAdaptedEventNoParticipant {
 
@@ -20,7 +21,6 @@ public class XmlAdaptedEventNoParticipant {
     private String eventDesc;
     @XmlElement(required = true)
     private String eventTime;
-
 
     /**
      * Constructs an XmlAdaptedEvent.

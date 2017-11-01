@@ -14,7 +14,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
-//@@author HouDenghao-test
+//@@author HouDenghao
 public class ListEventCommandTest {
 
     private Model model;

@@ -1,32 +1,6 @@
-package seedu.address.logic.commands;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_EVENTS_LISTED_OVERVIEW;
-import static seedu.address.testutil.TypicalEvents.FIRST;
-import static seedu.address.testutil.TypicalEvents.FORTH;
-import static seedu.address.testutil.TypicalEvents.SECOND;
-import static seedu.address.testutil.TypicalEvents.THIRD;
-import static seedu.address.testutil.TypicalEvents.getTypicalEventList;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import org.junit.Test;
-
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.event.EventNameContainsKeywordsPredicate;
-import seedu.address.model.event.ReadOnlyEvent;
-
-//@@author HouDenghao
+# HouDenghao
+###### \java\seedu\address\logic\commands\FindEventCommandTest.java
+``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code FindEventCommand}.
  */
@@ -99,3 +73,67 @@ public class FindEventCommandTest {
         assertEquals(expectedAddressBook, model.getAddressBook());
     }
 }
+```
+###### \java\seedu\address\logic\commands\ListEventCommandTest.java
+``` java
+public class ListEventCommandTest {
+
+    private Model model;
+    private Model expectedModel;
+    private ListEventCommand listECommand;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), getTypicalEventList(), new UserPrefs());
+        expectedModel = new ModelManager(model.getAddressBook(), model.getEventList(), new UserPrefs());
+
+        listECommand = new ListEventCommand();
+        listECommand.setData(model, new CommandHistory(), new UndoRedoStack());
+    }
+
+    @Test
+    public void execute_listIsNotFiltered_showsSameList() {
+        assertCommandSuccess(listECommand, model, ListEventCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void execute_listIsFiltered_showsEverything() {
+        showFirstEventOnly(model);
+        assertCommandSuccess(listECommand, model, ListEventCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+}
+```
+###### \java\seedu\address\logic\commands\SortCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
+ */
+public class SortCommandTest {
+
+    private Model model;
+    private Model expectedModel;
+    private SortCommand sortCommand;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getUnsortedAddressBook(), getUnsortedEventList(), new UserPrefs());
+        expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalEventList(), new UserPrefs());
+
+        sortCommand = new SortCommand();
+        sortCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+    }
+
+    @Test
+    public void execute_listIsNotFiltered_showsSameList() {
+        assertCommandSuccess(sortCommand, model, SortCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void execute_listIsFiltered_showsEverything() {
+        showFirstPersonOnly(model);
+        assertCommandSuccess(sortCommand, model, SortCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+}
+```

@@ -21,6 +21,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 
+//@@author Adoby7
 /**
  * Edits the details of an existing event in the address book.
  */
