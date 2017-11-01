@@ -26,10 +26,18 @@ public interface Logic {
      */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
+    //@@author reginleiff
     /**
      * Returns an unmodifiable view of the filtered list of events
      */
     ObservableList<ReadOnlyEvent> getFilteredEventList();
+
+    /**
+     * Returns an unmodifiable view of the schedule.
+     */
+    ObservableList<ReadOnlyEvent> getSchedule();
+
+    //@@author
 
     /**
      * Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object

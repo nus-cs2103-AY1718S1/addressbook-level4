@@ -1,4 +1,3 @@
-//@@author A0162268B
 package seedu.address.logic.parser.event;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -10,6 +9,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.event.DeleteEventCommand;
 
+//@@author reginleiff
 public class DeleteEventCommandParserTest {
 
     private DeleteEventCommandParser parser = new DeleteEventCommandParser();

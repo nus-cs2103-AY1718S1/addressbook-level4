@@ -68,7 +68,6 @@ public class MainApp extends Application {
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
 
         initLogging(config);
-
         model = initModelManager(storage, userPrefs);
 
         logic = new LogicManager(model);

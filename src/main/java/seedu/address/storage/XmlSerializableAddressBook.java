@@ -1,5 +1,7 @@
 package seedu.address.storage;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +14,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.timeslot.Date;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
@@ -26,8 +29,10 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     private List<XmlAdaptedPerson> persons;
     @XmlElement
     private List<XmlAdaptedTag> tags;
+    //@@author reginleiff
     @XmlElement
     private List<XmlAdaptedEvent> events;
+    //@@author
     @XmlElement
     private List<XmlAdaptedRelationship> relation;
 
@@ -38,7 +43,9 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     public XmlSerializableAddressBook() {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
+        //@@author reginleiff
         events = new ArrayList<>();
+        //@@author
         relation = new ArrayList<>();
     }
 
@@ -48,7 +55,9 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     public XmlSerializableAddressBook(ReadOnlyAddressBook src) {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
+        //@@author reginleiff
         events.addAll(src.getEventList().stream().map(XmlAdaptedEvent::new).collect(Collectors.toList()));
+        //@@author
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
         relation.addAll(src.getRelList().stream().map(XmlAdaptedRelationship::new).collect(Collectors.toList()));
     }
@@ -81,6 +90,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         return FXCollections.unmodifiableObservableList(tags);
     }
 
+    //@@author reginleiff
     @Override
     public ObservableList<ReadOnlyEvent> getEventList() {
         final ObservableList<ReadOnlyEvent> events = this.events.stream().map(event -> {
@@ -94,6 +104,12 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(events);
     }
+
+    @Override
+    public ObservableList<ReadOnlyEvent> getSchedule(Date currentDate) {
+        return null;
+    }
+    //@@author
 
     @Override
     public ObservableList<Relationship> getRelList() {
@@ -112,5 +128,23 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     @Override
     public ReadOnlyEvent getLastChangedEvent() {
         return null;
+    }
+
+    /**
+     *
+     * Gets the current date and returns the local implementation of date.
+     *
+     * @return the current date
+     */
+    @Override
+    public Date getCurrentDate() {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date currentDate = new java.util.Date();
+
+        try {
+            return new Date(dateFormat.format(currentDate));
+        } catch (IllegalValueException e) {
+            return null;
+        }
     }
 }

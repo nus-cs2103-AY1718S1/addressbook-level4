@@ -1,4 +1,4 @@
-//@@author A0162268B
+//@@author reginleiff
 package seedu.address.testutil;
 
 import java.util.ArrayList;
@@ -22,6 +22,8 @@ public class TypicalEvents {
             .withTimeslot("09/12/2017 1300-1500").withDescription("We are screwed").build();
     public static final ReadOnlyEvent MOURN = new EventBuilder().withTitle("Bai Ah Gong")
             .withTimeslot("10/12/2017 1900-2300").withDescription("@ CCK Cemetery").build();
+    public static final ReadOnlyEvent DEADLINE = new EventBuilder().withTitle("Paper Submission")
+            .withTimeslot("10/12/2017 2359-2359").withDescription("Submit on IVLE").build();
 
     private TypicalEvents() {
     } // prevents instantiation

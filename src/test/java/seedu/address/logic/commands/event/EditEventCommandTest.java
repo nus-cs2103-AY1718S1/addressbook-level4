@@ -1,4 +1,3 @@
-//@@author A0162268B
 package seedu.address.logic.commands.event;
 
 import static junit.framework.TestCase.assertFalse;
@@ -33,6 +32,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.testutil.EditEventDescriptorBuilder;
 import seedu.address.testutil.EventBuilder;
 
+//@@author reginleiff
 public class EditEventCommandTest {
 
     private Model model = new ModelManager(getTypicalEventAddressBook(), new UserPrefs());

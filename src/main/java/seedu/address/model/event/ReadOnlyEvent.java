@@ -1,4 +1,4 @@
-//@@author A0162268B
+//@@author reginleiff
 package seedu.address.model.event;
 
 import java.time.Duration;
@@ -9,6 +9,7 @@ import seedu.address.model.event.timeslot.Date;
 import seedu.address.model.event.timeslot.Timeslot;
 import seedu.address.model.event.timeslot.Timing;
 
+//@@author reginleiff
 /**
  * A read-only immutable interface for an Event in the addressbook.
  * Implementations should guarantee: details are present and not null, field values are validated.
