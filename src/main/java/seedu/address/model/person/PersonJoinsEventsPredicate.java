@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import seedu.address.model.event.ReadOnlyEvent;
 
+// @@author HouDenghao
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Participation} matches the event given.
  */

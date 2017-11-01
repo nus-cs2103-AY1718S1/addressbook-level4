@@ -81,6 +81,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         syncMasterTagListWith(persons);
     }
 
+    // @@author HouDenghao
     /**
      * Sorts the person list.
      */
@@ -90,6 +91,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// person-level operations
 
+    // @@author
     /**
      * Adds a person to the address book.
      * Also checks the new person's tags and updates {@link #tags} with any new tags found,

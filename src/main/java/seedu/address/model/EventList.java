@@ -119,8 +119,9 @@ public class EventList implements ReadOnlyEventList {
         events.addParticipant(person, targetEvent);
     }
 
+    // @@author HouDenghao
     /**
-     * Sorts the person list.
+     * Sorts the event list.
      */
     public void sortEvents() {
         events.sort();
@@ -128,6 +129,7 @@ public class EventList implements ReadOnlyEventList {
 
     //// util methods
 
+    // @@author
     @Override
     public ObservableList<ReadOnlyEvent> getEventList() {
         return events.asObservableList();

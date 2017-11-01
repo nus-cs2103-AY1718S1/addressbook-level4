@@ -50,9 +50,11 @@ public interface Model {
      */
     void addPerson(int position, ReadOnlyPerson person);
 
+    // @@author HouDenghao
     /** Sorts the person list */
     void sortPersons();
 
+    // @@author
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -88,9 +90,11 @@ public interface Model {
      */
     void addEvent(int position, ReadOnlyEvent event);
 
+    // @@author HouDenghao
     /** Sorts the event list */
     void sortEvents();
 
+    // @@author
     /** A participant quit a specific event */
     void quitEvent(Person person, Event event) throws PersonNotParticipateException, NotParticipateEventException;
 

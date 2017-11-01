@@ -12,6 +12,7 @@ import seedu.address.logic.commands.exceptions.DeleteOnCascadeException;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 
+//@@author leonchowwenhao
 /**
  * Deletes an event identified using it's last displayed index from the address book.
  */
