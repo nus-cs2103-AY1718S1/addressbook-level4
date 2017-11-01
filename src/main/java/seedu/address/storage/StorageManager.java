@@ -1,6 +1,5 @@
 package seedu.address.storage;
 
-import java.awt.*;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -13,8 +12,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.logging.Logger;
-
-import javax.imageio.ImageIO;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -32,10 +29,10 @@ import seedu.address.model.UserPrefs;
  */
 public class StorageManager extends ComponentManager implements Storage {
 
+    public static final String CACHE_DIR = "cache/";
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private static final String READ_FILE_MESSAGE = "Attempting to read to data file: ";
     private static final String WRITE_FILE_MESSAGE = "Attempting to write to data file: ";
-    public static final String CACHE_DIR = "cache/";
     private AddressBookStorage addressBookStorage;
     private MeetingListStorage meetingListStorage;
     private UserPrefsStorage userPrefsStorage;

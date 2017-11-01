@@ -18,8 +18,8 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonCard extends UiPart<Region> {
 
-    private static final String FXML = "PersonListCard.fxml";
     public static final String GRAVATAR_FILENAME_FORMAT = "img_%1$d.jpg";
+    private static final String FXML = "PersonListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -98,7 +98,8 @@ public class PersonCard extends UiPart<Region> {
      */
     private void initPicture(ReadOnlyPerson person) {
         try {
-            FileInputStream imageFile = new FileInputStream("cache/" + String.format(GRAVATAR_FILENAME_FORMAT, person.getInternalId().value));
+            FileInputStream imageFile = new FileInputStream("cache/" + String.format(GRAVATAR_FILENAME_FORMAT,
+                    person.getInternalId().value));
             Image image = new Image(imageFile);
             gravatar.setImage(image);
         } catch (FileNotFoundException e) {
