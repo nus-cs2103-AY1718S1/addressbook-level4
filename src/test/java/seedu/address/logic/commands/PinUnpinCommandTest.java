@@ -21,7 +21,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
-
+//@@author Alim95
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code PinCommand}
  * and {@code UnpinCommand}.
@@ -83,7 +83,7 @@ public class PinUnpinCommandTest {
         model.unpinPerson(personToUnpin);
         UnpinCommand unpinCommand = prepareUnpinCommand(INDEX_FIRST_PERSON);
 
-        assertCommandFailure(unpinCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(unpinCommand, model, Messages.MESSAGE_PERSON_ALREADY_UNPINNED);
     }
 
     @Test

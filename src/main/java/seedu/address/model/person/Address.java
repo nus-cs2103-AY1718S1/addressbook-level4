@@ -35,6 +35,18 @@ public class Address {
     }
 
     /**
+     * Provides a default address (" ") when field is empty.
+     *
+     * @throws IllegalValueException if given phone string is invalid.
+     */
+    public Address(int checkValue) throws IllegalValueException {
+        if (checkValue != 0) {
+            throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
+        }
+        this.value = " ";
+    }
+
+    /**
      * Returns true if a given string is a valid person email.
      */
     public static boolean isValidAddress(String test) {

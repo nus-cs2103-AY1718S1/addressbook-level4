@@ -3,8 +3,9 @@ package guitests;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+//@@author Alim95
 
-public class SearchFieldTest extends AddressBookGuiTest {
+public class SearchBoxTest extends AddressBookGuiTest {
 
     @Test
     public void useSearchField() {

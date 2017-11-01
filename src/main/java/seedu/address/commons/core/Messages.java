@@ -12,5 +12,5 @@ public class Messages {
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_TASK_LISTED_OVERVIEW = "%1$d tasks listed!";
     public static final String MESSAGE_PERSON_ALREADY_PINNED = "The person is already pinned";
-    public static final String MESSAGE_PERSON_ALREADY_UNPINNED = "The person is already unpinned";
+    public static final String MESSAGE_PERSON_ALREADY_UNPINNED = "The person is not pinned";
 }

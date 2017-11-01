@@ -11,11 +11,12 @@ import org.testfx.api.FxToolkit;
 
 import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.HelpOverlayHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
-import guitests.guihandles.SearchFieldHandle;
+import guitests.guihandles.SearchBoxHandle;
 import guitests.guihandles.SortMenuHandle;
 import guitests.guihandles.StatusBarFooterHandle;
 import javafx.stage.Stage;
@@ -93,12 +94,16 @@ public abstract class AddressBookGuiTest {
         return mainWindowHandle.getResultDisplay();
     }
 
-    protected SearchFieldHandle getSearchField() {
+    protected SearchBoxHandle getSearchField() {
         return mainWindowHandle.getSearchField();
     }
 
     protected SortMenuHandle getSortMenu() {
         return mainWindowHandle.getSortMenu();
+    }
+
+    protected HelpOverlayHandle getHelpOverlay() {
+        return mainWindowHandle.getHelpOverlay();
     }
 
     /**
@@ -122,5 +127,4 @@ public abstract class AddressBookGuiTest {
         EventsCenter.clearSubscribers();
         FxToolkit.cleanupStages();
     }
-
 }

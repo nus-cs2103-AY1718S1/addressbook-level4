@@ -12,6 +12,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
@@ -27,6 +28,9 @@ public class ResultDisplay extends UiPart<Region> {
     private final StringProperty displayed = new SimpleStringProperty("");
 
     @FXML
+    private StackPane placeHolder;
+
+    @FXML
     private TextArea resultDisplay;
 
     @FXML
@@ -38,6 +42,7 @@ public class ResultDisplay extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author Alim95
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -51,5 +56,13 @@ public class ResultDisplay extends UiPart<Region> {
             imageDisplay.setImage(new Image("/images/success.png"));
         }
         Platform.runLater(() -> displayed.setValue(event.message));
+    }
+
+    public void highlight() {
+        this.resultDisplay.setStyle("-fx-border-color: lightgreen; -fx-border-width: 2");
+    }
+
+    public void unhighlight() {
+        this.resultDisplay.setStyle("");
     }
 }

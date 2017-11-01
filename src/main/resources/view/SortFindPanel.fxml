@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- @@author Alim95 -->
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
-
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <MenuButton fx:id="sortMenu" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="90.0" style="-fx-background-color: dimgrey;" text="Sort By:">
+      <MenuButton fx:id="sortMenu" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="97.0" text="Sort By:">
         <items>
           <MenuItem fx:id="nameItem" mnemonicParsing="false" onAction="#handleNameItemPressed" text="Name" />
           <MenuItem fx:id="phoneItem" mnemonicParsing="false" onAction="#handlePhoneItemPressed" text="Phone" />
@@ -16,7 +17,7 @@
             <MenuItem fx:id="addressItem" mnemonicParsing="false" onAction="#handleAddressItemPressed" text="Address" />
         </items>
       </MenuButton>
-      <TextField fx:id="searchField" minHeight="-Infinity" minWidth="-Infinity" onKeyReleased="#handleSearchFieldChanged" prefHeight="32.0" prefWidth="149.0" promptText="Search Person" style="-fx-background-color: dimgrey;" />
+      <TextField fx:id="searchBox" minHeight="-Infinity" minWidth="-Infinity" onKeyReleased="#handleSearchFieldChanged" prefHeight="32.0" prefWidth="149.0" promptText="Search Person..." />
    </children>
    <padding>
       <Insets left="10.0" top="3.0" />

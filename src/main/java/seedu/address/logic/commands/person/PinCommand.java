@@ -2,15 +2,14 @@ package seedu.address.logic.commands.person;
 
 import java.util.List;
 
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.PinPersonEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+//@@author Alim95
 
 /**
  * Pins a person identified using it's last displayed index from the address book.
@@ -53,7 +52,6 @@ public class PinCommand extends Command {
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
-        EventsCenter.getInstance().post(new PinPersonEvent());
         return new CommandResult(String.format(MESSAGE_PIN_PERSON_SUCCESS, personToPin));
     }
 

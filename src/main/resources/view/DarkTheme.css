@@ -359,6 +359,14 @@
     -fx-font-size: 11;
 }
 
+#sortMenu {
+    -fx-background-color: dimgrey;
+}
+
 #sortMenu .label {
     -fx-text-fill: lightgray;
+}
+
+#searchBox {
+    -fx-background-color: dimgrey;
 }

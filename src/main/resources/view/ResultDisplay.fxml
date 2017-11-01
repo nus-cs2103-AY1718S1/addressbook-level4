@@ -13,7 +13,7 @@
    </TextArea>
    <ImageView fx:id="imageDisplay" fitHeight="53.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
       <StackPane.margin>
-         <Insets right="10.0" />
+         <Insets right="5.0" />
       </StackPane.margin>
    </ImageView>
 </StackPane>

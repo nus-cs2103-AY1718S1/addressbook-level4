@@ -2,16 +2,22 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.fxml.FXML;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.ToggleToPersonViewEvent;
+import seedu.address.commons.events.ui.ToggleToTaskViewEvent;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+//@@author Alim95
 
 /**
  * The panel for sort menu and search box of the App.
@@ -27,7 +33,10 @@ public class SortFindPanel extends UiPart<Region> {
     private final Logic logic;
 
     @FXML
-    private TextField searchField;
+    private TextField searchBox;
+
+    @FXML
+    private MenuButton sortMenu;
 
     @FXML
     private MenuItem nameItem;
@@ -44,6 +53,7 @@ public class SortFindPanel extends UiPart<Region> {
     public SortFindPanel(Logic logic) {
         super(FXML);
         this.logic = logic;
+        registerAsAnEventHandler(this);
     }
 
     /**
@@ -52,10 +62,10 @@ public class SortFindPanel extends UiPart<Region> {
     @FXML
     private void handleSearchFieldChanged() {
         try {
-            if (searchField.getText().trim().isEmpty()) {
+            if (searchBox.getText().trim().isEmpty()) {
                 logic.execute(LIST_COMMAND_WORD);
             } else {
-                logic.execute(FIND_COMMAND_WORD + " " + searchField.getText());
+                logic.execute(FIND_COMMAND_WORD + " " + searchBox.getText());
             }
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to find person in search box");
@@ -112,5 +122,58 @@ public class SortFindPanel extends UiPart<Region> {
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort address using sort menu");
         }
+    }
+
+    /**
+     * Handles switch to task view event
+     */
+    @Subscribe
+    private void handleToggleToTaskViewEvent(ToggleToTaskViewEvent event) {
+        switchToTaskView();
+    }
+
+    @Subscribe
+    private void handleToggleToPersonViewEvent(ToggleToPersonViewEvent event) {
+        switchToPersonView();
+    }
+
+    /**
+     * Switches style to person view.
+     */
+    private void switchToPersonView() {
+        searchBox.setPromptText("Search Person...");
+        sortMenu.setVisible(true);
+    }
+
+    /**
+     * Switches style to task view.
+     */
+    private void switchToTaskView() {
+        searchBox.setPromptText("Search Task...");
+        sortMenu.setVisible(false);
+    }
+
+    public MenuButton getSortMenu() {
+        return sortMenu;
+    }
+
+    public TextField getSearchBox() {
+        return searchBox;
+    }
+
+    public void highlightSortMenu() {
+        sortMenu.setStyle("-fx-border-color: lightgreen; -fx-border-width: 2");
+    }
+
+    public void highlightSearchBox() {
+        searchBox.setStyle("-fx-border-color: lightgreen; -fx-border-width: 2");
+    }
+
+    /**
+     * Unhighlights the sort menu and search box.
+     */
+    public void unhighlight() {
+        sortMenu.setStyle("");
+        searchBox.setStyle("");
     }
 }

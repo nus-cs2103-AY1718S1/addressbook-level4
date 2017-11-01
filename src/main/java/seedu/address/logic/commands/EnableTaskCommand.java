@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.model.ModelToggleEvent;
+import seedu.address.commons.events.ui.ToggleToTaskViewEvent;
 
 /**
  * Enables task commands for the user
@@ -15,6 +16,7 @@ public class EnableTaskCommand extends Command {
     @Override
     public CommandResult execute() {
         EventsCenter.getInstance().post(new ModelToggleEvent(ModelToggleEvent.Toggle.taskEnabled));
+        EventsCenter.getInstance().post(new ToggleToTaskViewEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

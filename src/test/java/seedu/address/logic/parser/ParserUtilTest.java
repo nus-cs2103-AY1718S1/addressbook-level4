@@ -72,24 +72,24 @@ public class ParserUtilTest {
     @Test
     public void parseName_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parseName(null);
+        ParserUtil.parseName(null, "test");
     }
 
     @Test
     public void parseName_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseName(Optional.of(INVALID_NAME));
+        ParserUtil.parseName(Optional.of(INVALID_NAME), "test");
     }
 
     @Test
     public void parseName_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseName(Optional.empty()).isPresent());
+        assertFalse(ParserUtil.parseName(Optional.empty(), "test").isPresent());
     }
 
     @Test
     public void parseName_validValue_returnsName() throws Exception {
         Name expectedName = new Name(VALID_NAME);
-        Optional<Name> actualName = ParserUtil.parseName(Optional.of(VALID_NAME));
+        Optional<Name> actualName = ParserUtil.parseName(Optional.of(VALID_NAME), "test");
 
         assertEquals(expectedName, actualName.get());
     }
@@ -97,24 +97,24 @@ public class ParserUtilTest {
     @Test
     public void parsePhone_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parsePhone(null);
+        ParserUtil.parsePhone(null, "test");
     }
 
     @Test
     public void parsePhone_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parsePhone(Optional.of(INVALID_PHONE));
+        ParserUtil.parsePhone(Optional.of(INVALID_PHONE), "test");
     }
 
     @Test
     public void parsePhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parsePhone(Optional.empty()).isPresent());
+        assertFalse(ParserUtil.parsePhone(Optional.empty(), "test").isPresent());
     }
 
     @Test
     public void parsePhone_validValue_returnsPhone() throws Exception {
         Phone expectedPhone = new Phone(VALID_PHONE);
-        Optional<Phone> actualPhone = ParserUtil.parsePhone(Optional.of(VALID_PHONE));
+        Optional<Phone> actualPhone = ParserUtil.parsePhone(Optional.of(VALID_PHONE), "test");
 
         assertEquals(expectedPhone, actualPhone.get());
     }
@@ -122,24 +122,24 @@ public class ParserUtilTest {
     @Test
     public void parseAddress_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parseAddress(null);
+        ParserUtil.parseAddress(null, "test");
     }
 
     @Test
     public void parseAddress_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseAddress(Optional.of(INVALID_ADDRESS));
+        ParserUtil.parseAddress(Optional.of(INVALID_ADDRESS), "test");
     }
 
     @Test
     public void parseAddress_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseAddress(Optional.empty()).isPresent());
+        assertFalse(ParserUtil.parseAddress(Optional.empty(), "test").isPresent());
     }
 
     @Test
     public void parseAddress_validValue_returnsAddress() throws Exception {
         Address expectedAddress = new Address(VALID_ADDRESS);
-        Optional<Address> actualAddress = ParserUtil.parseAddress(Optional.of(VALID_ADDRESS));
+        Optional<Address> actualAddress = ParserUtil.parseAddress(Optional.of(VALID_ADDRESS), "test");
 
         assertEquals(expectedAddress, actualAddress.get());
     }
@@ -147,24 +147,24 @@ public class ParserUtilTest {
     @Test
     public void parseEmail_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parseEmail(null);
+        ParserUtil.parseEmail(null, "test");
     }
 
     @Test
     public void parseEmail_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseEmail(Optional.of(INVALID_EMAIL));
+        ParserUtil.parseEmail(Optional.of(INVALID_EMAIL), "test");
     }
 
     @Test
     public void parseEmail_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseEmail(Optional.empty()).isPresent());
+        assertFalse(ParserUtil.parseEmail(Optional.empty(), "test").isPresent());
     }
 
     @Test
     public void parseEmail_validValue_returnsEmail() throws Exception {
         Email expectedEmail = new Email(VALID_EMAIL);
-        Optional<Email> actualEmail = ParserUtil.parseEmail(Optional.of(VALID_EMAIL));
+        Optional<Email> actualEmail = ParserUtil.parseEmail(Optional.of(VALID_EMAIL), "test");
 
         assertEquals(expectedEmail, actualEmail.get());
     }

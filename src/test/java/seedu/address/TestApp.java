@@ -33,6 +33,7 @@ public class TestApp extends MainApp {
     protected static final String DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
     protected static final String ADDRESS_BOOK_NAME = "Test";
+    private static boolean firstTimeOpen = false;
     protected Supplier<ReadOnlyAddressBook> initialDataSupplier = () -> null;
     protected String saveFileLocation = SAVE_LOCATION_FOR_TESTING;
 
@@ -64,7 +65,7 @@ public class TestApp extends MainApp {
         UserPrefs userPrefs = super.initPrefs(storage);
         double x = Screen.getPrimary().getVisualBounds().getMinX();
         double y = Screen.getPrimary().getVisualBounds().getMinY();
-        userPrefs.updateLastUsedGuiSetting(new GuiSettings(1000.0, 600.0, (int) x, (int) y));
+        userPrefs.updateLastUsedGuiSetting(new GuiSettings(1500.0, 800.0, (int) x, (int) y));
         userPrefs.setAddressBookFilePath(saveFileLocation);
         userPrefs.setAddressBookName(ADDRESS_BOOK_NAME);
         return userPrefs;
@@ -97,6 +98,10 @@ public class TestApp extends MainApp {
         Model copy = new ModelManager((model.getAddressBook()), new UserPrefs());
         ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
         return copy;
+    }
+
+    public static void setFirstTimeOpen() {
+        firstTimeOpen = true;
     }
 
     @Override

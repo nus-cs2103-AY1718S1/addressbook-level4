@@ -35,7 +35,6 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.person.FindCommand;
 import seedu.address.logic.commands.person.ListCommand;
-import seedu.address.logic.commands.person.ListPinCommand;
 import seedu.address.logic.commands.person.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.ui.CommandBox;
@@ -122,16 +121,6 @@ public abstract class AddressBookSystemTest {
     protected void showAllPersons() {
         executeCommand(ListCommand.COMMAND_WORD);
         assert getModel().getAddressBook().getPersonList().size() == getModel().getFilteredPersonList().size();
-    }
-
-    /**
-     * Displays only persons who are pinned.
-     */
-    protected void showOnlyPinned() {
-        executeCommand(ListPinCommand.COMMAND_WORD);
-        Model filteredModel = getModel();
-        filteredModel.updateFilteredPersonList(Model.PREDICATE_SHOW_ONLY_PINNED);
-        assert getModel().getAddressBook().getPersonList().size() >= filteredModel.getFilteredPersonList().size();
     }
 
     /**

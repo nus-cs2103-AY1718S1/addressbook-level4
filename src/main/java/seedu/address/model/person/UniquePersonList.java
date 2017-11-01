@@ -48,6 +48,7 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.add(new Person(toAdd));
     }
 
+    //@@author Alim95
     /**
      * Sorts the list in order.
      */
@@ -70,6 +71,7 @@ public class UniquePersonList implements Iterable<Person> {
         }
     }
 
+    //@@author
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
@@ -121,6 +123,7 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndHidden;
     }
 
+    //@@author Alim95
     /**
      * Pins the equivalent person in the list.
      *
@@ -151,6 +154,7 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndUnpinned;
     }
 
+    //@@author
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);
     }
