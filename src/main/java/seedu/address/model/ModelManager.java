@@ -36,8 +36,8 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
     private static final Predicate<ReadOnlyParcel> deliveredPredicate = p -> p.getStatus().equals(Status.COMPLETED);
 
-    private static boolean selected = false;
-    private static ReadOnlyParcel prevSelectedParcel = null;
+    // private static boolean selected = false;
+    // private static ReadOnlyParcel prevSelectedParcel = null;
     private final AddressBook addressBook;
 
     private final FilteredList<ReadOnlyParcel> filteredParcels;
