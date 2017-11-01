@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author jacoblipech
 /**
  * Sort the list of contacts by their names
  */

@@ -226,6 +226,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
+        //@@author jacoblipech
         public void setBirthday(Birthday birthday) {
             this.birthday = birthday;
         }
@@ -234,6 +235,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(birthday);
         }
 
+        //@@author
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
         }

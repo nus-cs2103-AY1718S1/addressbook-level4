@@ -31,6 +31,7 @@ public interface Model {
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
+    //@@author jacoblipech
     /** Adds the given birthday to a person */
     void addBirthday(Index targetIndex, Birthday toAdd) throws PersonNotFoundException,
             DuplicatePersonException;
@@ -72,6 +73,7 @@ public interface Model {
      */
     public String getClosestMatchingName(NameContainsKeywordsPredicate predicate);
 
+    //@@author jacoblipech
     /**
      * Sort the given list according to alphabetical order
      * @throws NullPointerException if {@code contactList} is null.
