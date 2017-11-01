@@ -1,3 +1,4 @@
+//@@author Hailinx
 package seedu.address.model.person.exceptions;
 
 import seedu.address.commons.exceptions.DuplicateDataException;

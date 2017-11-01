@@ -126,6 +126,7 @@ public class XmlAddressBookStorageTest {
         saveAddressBook(new AddressBook(), null);
     }
 
+    //@@author Hailinx
     @Test
     public void test_isEncrypted() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
@@ -174,5 +175,5 @@ public class XmlAddressBookStorageTest {
         xmlAddressBookStorage.encryptAddressBook("password");
         xmlAddressBookStorage.decryptAddressBook("wrong password");
     }
-
+    //@@author
 }

@@ -130,9 +130,11 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
+        //@@author Hailinx
         todoPanel = new TodoPanel(logic.getFilteredPersonList());
 
         switchablePlaceholder.getChildren().add(browserPanel.getRoot());
+        //@@author
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -191,6 +193,7 @@ public class MainWindow extends UiPart<Region> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
+    //@@author Hailinx
     /**
      * Switches the display between TodoList and browser in {@code switchablePlaceholder}.
      */
@@ -204,9 +207,11 @@ public class MainWindow extends UiPart<Region> {
             switchablePlaceholder.getChildren().add(browserPanel.getRoot());
             break;
         default:
+            // Only two modes, no default option here.
             break;
         }
     }
+    //@@author
 
     /**
      * Opens the help window.
@@ -243,10 +248,12 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author Hailinx
     @Subscribe
     private void handleSwitchDisplayEvent(SwitchDisplayEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchPlaceholderDisplay(event.mode);
     }
+    //@@author
 
 }

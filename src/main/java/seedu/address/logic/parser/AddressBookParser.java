@@ -64,10 +64,12 @@ public class AddressBookParser {
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
 
+        //@@author Hailinx
         Security security = SecurityManager.getInstance();
         if (security.isSecured() && !security.isPermittedCommand(commandWord)) {
             throw new ParseException(MESSAGE_IS_ENCRYPTD);
         }
+        //@@author
 
         switch (commandWord) {
 
@@ -92,6 +94,7 @@ public class AddressBookParser {
             return new DeleteAltCommandParser().parse(arguments);
         //@@author
 
+        //@@author Hailinx
         case TodoCommand.COMMAND_WORD:
             return new TodoCommandParser().parse(arguments);
 
@@ -100,6 +103,7 @@ public class AddressBookParser {
 
         case UnlockCommand.COMMAND_WORD:
             return new UnlockCommandParser().parse(arguments);
+        //@@author
 
         case ClearCommand.COMMAND_WORD:
         case ClearCommand.COMMAND_ALIAS:
@@ -113,9 +117,11 @@ public class AddressBookParser {
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
 
+        //@@author Hailinx
         case SwitchCommand.COMMAND_WORD:
         case SwitchCommand.COMMAND_ALIAS:
             return new SwitchCommand(arguments);
+        //@@author
 
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:

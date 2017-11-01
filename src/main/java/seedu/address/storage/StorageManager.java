@@ -86,6 +86,7 @@ public class StorageManager extends ComponentManager implements Storage {
     }
     //@@author
 
+    //@@author Hailinx
     @Override
     public boolean isEncrypted() throws IOException {
         return addressBookStorage.isEncrypted();
@@ -102,6 +103,7 @@ public class StorageManager extends ComponentManager implements Storage {
             throws IOException, EncryptOrDecryptException {
         addressBookStorage.decryptAddressBook(password);
     }
+    //@@author
 
 
     @Override

@@ -120,10 +120,12 @@ public class MainApp extends Application {
         LogsCenter.init(config);
     }
 
+    //@@author Hailinx
     private void setUpSecurityManager(Storage storage) {
         Security securityManager = SecurityManager.getInstance(storage);
         securityManager.configSecurity(UnlockCommand.COMMAND_WORD);
     }
+    //@@author
 
     /**
      * Returns a {@code Config} using the file at {@code configFilePath}. <br>
@@ -216,11 +218,13 @@ public class MainApp extends Application {
         System.exit(0);
     }
 
+    //@@author Hailinx
     @Subscribe
     public void handleReloadAddressBookEvent(ReloadAddressBookEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         model.setAddressBook(getInitialData());
     }
+    //@@author
 
     @Subscribe
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {

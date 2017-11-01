@@ -34,11 +34,6 @@ public abstract class UndoableCommand extends Command {
      */
     protected final void undo() {
         requireAllNonNull(model, previousAddressBook);
-        System.out.println("3");
-        List<ReadOnlyPerson> personList = previousAddressBook.getPersonList();
-        for (ReadOnlyPerson person : personList) {
-            System.out.println(person.getTodoItems());
-        }
         model.resetData(previousAddressBook);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.updateTodoItemList();

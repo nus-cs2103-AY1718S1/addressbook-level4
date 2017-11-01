@@ -1,3 +1,4 @@
+//@@author Hailinx
 package seedu.address.security;
 
 import java.io.BufferedWriter;
@@ -110,7 +111,7 @@ public class SecurityUtilTest {
     }
 
     /**
-     * Writes {@inputString} into the file.
+     * Writes {@code inputString} into the file.
      */
     public void write_tempXmlFile(String inputString) {
         try {

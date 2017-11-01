@@ -1,3 +1,4 @@
+//@@author Hailinx
 package seedu.address.logic.parser.optionparser;
 
 import static seedu.address.logic.parser.FindCommandParser.PARSE_EXCEPTION_MESSAGE;
