@@ -28,7 +28,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagMatchingKeywordPredicate;
-
+//@@author ZhangH795
 /**
  * Removes a tag from existing person(s) in the address book.
  */

@@ -1,42 +1,233 @@
-package seedu.address.logic.commands;
+# ZhangH795
+###### \java\seedu\address\logic\commands\TagAddCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
+ */
+public class TagAddCommandTest {
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.DESCR_JAMES;
-import static seedu.address.logic.commands.CommandTestUtil.DESCR_LUCY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+    @Test
+    public void executeTagAddSinglePersonSuccess() throws Exception {
+        showFirstPersonOnly(model);
 
-import org.junit.Test;
+        Set<Tag> singleTagSet = new HashSet<Tag>();
+        singleTagSet.add(new Tag(VALID_TAG_HUSBAND));
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.TagRemoveCommand.TagRemoveDescriptor;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.tag.Tag;
-import seedu.address.testutil.PersonBuilder;
-//@@author ZhangH795
+        ArrayList<Index> singlePersonIndexList = new ArrayList<>();
+        singlePersonIndexList.add(INDEX_FIRST_PERSON);
+        ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        TagAddDescriptor tagAddDescriptor = new TagAddDescriptor(personInFilteredList);
+        tagAddDescriptor.setTags(singleTagSet);
+
+        Person editedPerson = new PersonBuilder(personInFilteredList).withATags(VALID_TAG_HUSBAND).build();
+        TagAddCommand tagAddCommand = prepareCommand(singlePersonIndexList, tagAddDescriptor);
+
+        String expectedMessage = String.format(TagAddCommand.MESSAGE_ADD_TAG_SUCCESS, editedPerson);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+
+        assertCommandSuccess(tagAddCommand, model, expectedMessage, expectedModel);
+    }
+
+
+    @Test
+    public void executeInvalidPersonIndexUnfilteredListFailure() {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        ArrayList<Index> singlePersonIndexList = new ArrayList<>();
+        singlePersonIndexList.add(outOfBoundIndex);
+        TagAddCommand tagAddCommand = prepareCommand(singlePersonIndexList,
+                new TagAddDescriptor(new PersonBuilder().withATags(VALID_TAG_HUSBAND).build()));
+
+        assertCommandFailure(tagAddCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    /**
+     * Add tag to a person in a filtered list where index is larger than size of filtered list,
+     * but smaller than size of address book
+     */
+    @Test
+    public void executeInvalidPersonIndexFilteredListFailure() {
+        showFirstPersonOnly(model);
+        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        ArrayList<Index> singlePersonIndexList = new ArrayList<>();
+        singlePersonIndexList.add(outOfBoundIndex);
+
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+
+        TagAddCommand tagAddCommand = prepareCommand(singlePersonIndexList,
+                new TagAddDescriptor(new PersonBuilder().withATags(VALID_TAG_HUSBAND).build()));
+
+        assertCommandFailure(tagAddCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() {
+        ArrayList<Index> singlePersonIndexList1 = new ArrayList<>();
+        singlePersonIndexList1.add(INDEX_FIRST_PERSON);
+        ArrayList<Index> singlePersonIndexList2 = new ArrayList<>();
+        singlePersonIndexList2.add(INDEX_SECOND_PERSON);
+        final TagAddCommand standardCommand = new TagAddCommand(singlePersonIndexList1, DESC_JAMES);
+
+        // same values -> returns true
+        TagAddDescriptor copyDescriptor = new TagAddDescriptor(DESC_JAMES);
+        TagAddDescriptor copyDescriptor1 = new TagAddDescriptor(DESC_LUCY);
+        TagAddCommand commandWithSameValues = new TagAddCommand(singlePersonIndexList1, copyDescriptor);
+        assertTrue(standardCommand.equals(commandWithSameValues));
+
+        // same object -> returns true
+        assertTrue(standardCommand.equals(standardCommand));
+
+        // same object -> returns true
+        assertTrue(copyDescriptor.equals(copyDescriptor));
+
+        // null -> returns false
+        assertFalse(standardCommand == null);
+
+        // different types -> returns false
+        assertFalse(standardCommand.equals(new ClearCommand()));
+
+        // different index -> returns false
+        assertFalse(standardCommand.equals(new TagAddCommand(singlePersonIndexList2, DESC_JAMES)));
+
+        // different command -> returns false
+        assertFalse(standardCommand.equals(new TagAddCommand(singlePersonIndexList1, DESC_LUCY)));
+
+        // different object -> returns false
+        assertFalse(copyDescriptor.equals(standardCommand));
+
+        // different descriptor -> returns false
+        assertFalse(copyDescriptor.equals(copyDescriptor1));
+
+    }
+
+
+    @Test
+    public void tagAddDescriptorTest()throws Exception {
+        Set<Tag> tagSet = new HashSet<>();
+        tagSet.add(new Tag("Tags"));
+        TagAddDescriptor tagAddDescriptor = new TagAddDescriptor();
+        tagAddDescriptor.setName(new Name("Name"));
+        tagAddDescriptor.setAddress(new Address("Address"));
+        tagAddDescriptor.setEmail(new Email("Email@email.com"));
+        tagAddDescriptor.setPhone(new Phone("123"));
+        tagAddDescriptor.setTags(tagSet);
+
+        TagAddDescriptor toCopy = new TagAddDescriptor(tagAddDescriptor);
+
+        assertTrue(tagAddDescriptor.equals(toCopy));
+
+        assertTrue(tagAddDescriptor.getName().equals(toCopy.getName()));
+
+        assertTrue(tagAddDescriptor.getPhone().equals(toCopy.getPhone()));
+
+        assertTrue(tagAddDescriptor.getAddress().equals(toCopy.getAddress()));
+
+        assertTrue(tagAddDescriptor.getEmail().equals(toCopy.getEmail()));
+
+        assertTrue(tagAddDescriptor.getTags().equals(toCopy.getTags()));
+    }
+
+    /**
+     * Returns an {@code TagAddCommand} with parameters {@code index} and {@code descriptor}
+     */
+    private TagAddCommand prepareCommand(ArrayList<Index> index, TagAddDescriptor descriptor) {
+        TagAddCommand tagAddCommand = new TagAddCommand(index, descriptor);
+        tagAddCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return tagAddCommand;
+    }
+
+}
+```
+###### \java\seedu\address\logic\commands\TagFindCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) for {@code TagFindCommand}.
+ */
+public class TagFindCommandTest {
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void equals() {
+        TagMatchingKeywordPredicate firstPredicate =
+                new TagMatchingKeywordPredicate("first");
+        TagMatchingKeywordPredicate secondPredicate =
+                new TagMatchingKeywordPredicate("second");
+
+        TagFindCommand findFirstCommand = new TagFindCommand(firstPredicate);
+        TagFindCommand findSecondCommand = new TagFindCommand(secondPredicate);
+
+        // same object -> returns true
+        assertTrue(findFirstCommand.equals(findFirstCommand));
+
+        // same values -> returns true
+        TagFindCommand findFirstCommandCopy = new TagFindCommand(firstPredicate);
+        assertTrue(findFirstCommand.equals(findFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(findFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(findFirstCommand == null);
+
+        // different person -> returns false
+        assertFalse(findFirstCommand.equals(findSecondCommand));
+    }
+
+    @Test
+    public void executeZeroKeywordNoPersonFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        TagFindCommand command = prepareCommand(" ");
+        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+    }
+
+    @Test
+    public void executeSinglePersonFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        TagFindCommand command = prepareCommand("owesMoney");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
+    }
+
+    @Test
+    public void executeMultiplePersonsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 7);
+        TagFindCommand command = prepareCommand("Friends");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code TagFindCommand}.
+     */
+    private TagFindCommand prepareCommand(String userInput) {
+        TagFindCommand command =
+                new TagFindCommand(new TagMatchingKeywordPredicate(userInput));
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+    /**
+     * Asserts that {@code command} is successfully executed, and<br>
+     *     - the command feedback is equal to {@code expectedMessage}<br>
+     *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
+     *     - the {@code AddressBook} in model remains the same after executing the {@code command}
+     */
+    private void assertCommandSuccess(TagFindCommand command, String expectedMessage,
+                                      List<ReadOnlyPerson> expectedList) {
+        AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
+        CommandResult commandResult = command.execute();
+
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
+        assertEquals(expectedList, model.getFilteredPersonList());
+        assertEquals(expectedAddressBook, model.getAddressBook());
+    }
+}
+```
+###### \java\seedu\address\logic\commands\TagRemoveCommandTest.java
+``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
  */
@@ -252,3 +443,4 @@ public class TagRemoveCommandTest {
         return tagRemoveCommand;
     }
 }
+```
