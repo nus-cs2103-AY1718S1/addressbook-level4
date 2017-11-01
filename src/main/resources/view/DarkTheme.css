@@ -1,7 +1,7 @@
 .background {
     -fx-background-color: derive(#1d1d1d, 20%);
     background-color: #383838; /* Used in the default.html file */
-    background-image: url(../images/yellow_page_tm_image.png);
+    background-image: url(../images/Yellow_background.jpg);
     background-size: 1000px;
 }
 
