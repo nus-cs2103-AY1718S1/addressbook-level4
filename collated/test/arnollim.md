@@ -1,4 +1,6 @@
-//@@author arnollim
+# arnollim
+###### /java/seedu/address/logic/commands/WhyCommandTest.java
+``` java
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
@@ -40,3 +42,4 @@ public class WhyCommandTest {
     }
 
 }
+```
