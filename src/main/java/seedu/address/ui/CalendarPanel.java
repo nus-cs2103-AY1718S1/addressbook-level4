@@ -6,7 +6,9 @@ import java.time.LocalDate;
 import java.time.MonthDay;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 import com.sun.javafx.scene.control.skin.DatePickerContent;
@@ -25,11 +27,12 @@ import javafx.util.Callback;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.ChangeModeCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.commands.persons.FindCommand;
 import seedu.address.logic.commands.tasks.FindTaskCommand;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.task.ReadOnlyTask;
 
@@ -42,17 +45,18 @@ public class CalendarPanel extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private final Logic logic;
+    private final Model model;
 
     private DatePicker datePicker;
 
     @FXML
     private StackPane calendarPane;
 
-    public CalendarPanel(Logic logic, ObservableList<ReadOnlyPerson> personList,
-                         ObservableList<ReadOnlyTask> taskList) {
+    public CalendarPanel(Logic logic, Model model) {
         super(FXML);
         this.logic = logic;
-        setDate(personList, taskList);
+        this.model = model;
+        setDate(model.getAddressBook().getPersonList(), model.getAddressBook().getTaskList());
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
@@ -67,6 +71,7 @@ public class CalendarPanel extends UiPart<Region> {
         popupContent.setPrefHeight(calendarPane.getPrefHeight());
         popupContent.setPrefWidth(calendarPane.getPrefWidth());
         calendarPane.getChildren().add(popupContent);
+        //selectDate(popupContent, "30-10-2017");
     }
 
     /**
@@ -76,8 +81,6 @@ public class CalendarPanel extends UiPart<Region> {
      */
     private void setDate(ObservableList<ReadOnlyPerson> personList, ObservableList<ReadOnlyTask> taskList) {
         datePicker = new DatePicker((LocalDate.now()));
-        //ObservableList<PersonCard> mappedList = EasyBind.map(
-        //        personList, (markdate) -> new PersonCard(personList));
         Callback<DatePicker, DateCell> dayCellFactory = this.getDayCellFactory(personList, taskList);
         datePicker.setDayCellFactory(dayCellFactory);
         findDateForSelection();
@@ -89,20 +92,37 @@ public class CalendarPanel extends UiPart<Region> {
     private void findDateForSelection() {
         // Make datePicker editable (i.e. i think can select and update value)
         datePicker.setEditable(true);
-        // TODO: 23/10/17 Able to execute findCommand when a colour date is selected
-        // TODO: 26/10/17 Able to not execute findCommand when cell is not colour, able to find birthday with dd-MM
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+        // TODO: 26/10/17 Able to not execute findCommand when cell is not colour
         datePicker.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 LocalDate date = datePicker.getValue();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                 String dateString = date.format(formatter);
                 String birthdayString = dateString.substring(0, 5);
                 logger.info("Date selected: " + dateString);
                 try {
-                    //CommandBox.replaceText();
-                    logic.execute(FindTaskCommand.COMMAND_WORD + " " + dateString);
-                    logic.execute(FindCommand.COMMAND_WORD + " " + birthdayString);
+                    String command = FindTaskCommand.COMMAND_WORD;
+                    List<String> mode = new ArrayList<>();
+                    List<String> dateMode = new ArrayList<>();
+                    int order = 0;
+
+                    // load value to be selected base on current mode
+                    mode.add("ab");
+                    mode.add("tm");
+                    dateMode.add(birthdayString);
+                    dateMode.add(dateString);
+
+                    if (model.getCommandMode().equals(mode.get(1))) {
+                        order = 1;
+                    }
+                    int changedOrder = ((order - 1) == 0) ? 0 : 1;
+
+                    logic.execute(command + " " + dateMode.get(order));
+                    logic.execute(ChangeModeCommand.COMMAND_WORD + " " + mode.get(changedOrder));
+                    logic.execute(command + " " + dateMode.get(changedOrder));
+                    logic.execute(ChangeModeCommand.COMMAND_WORD + " " + mode.get(order));
                 } catch (CommandException e) {
                     e.printStackTrace();
                 } catch (ParseException e) {
@@ -134,12 +154,13 @@ public class CalendarPanel extends UiPart<Region> {
                         int bCount = 0;
                         int dCount = 0;
                         StringBuilder colour = new StringBuilder();
-                        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
                         for (ReadOnlyPerson person: personList) {
                             try {
-                                if (MonthDay.from(item).equals
-                                        (MonthDay.from(LocalDate.parse(person.getBirthday().toString(), format)))) {
+                                if (!person.getBirthday().isEmpty() && MonthDay.from(item).equals
+                                            (MonthDay.from(LocalDate.parse(person.getBirthday().toString(),
+                                                    formatter)))) {
                                     if (bCount == 0) {
                                         bCount++;
                                         s.append(person.getName() + "'s Birthday");
@@ -153,6 +174,7 @@ public class CalendarPanel extends UiPart<Region> {
                                         }
                                     }
                                     colour = new StringBuilder("-fx-background-color: #f1a3ff;");
+
                                 }
                             } catch (DateTimeParseException exc) {
                                 logger.warning("Not parsable: " + person.getBirthday().toString());
@@ -160,7 +182,6 @@ public class CalendarPanel extends UiPart<Region> {
                             }
                         }
                         for (ReadOnlyTask task: taskList) {
-                            String finalTaskDate = "";
                             String taskDate = "";
                             try {
                                 if (!task.getDeadline().isEmpty()) {
@@ -171,12 +192,12 @@ public class CalendarPanel extends UiPart<Region> {
                             } catch (IllegalValueException e) {
                                 e.printStackTrace();
                             }
-                            finalTaskDate = taskDate;
+                            String finalTaskDate = taskDate;
                             try {
                                 //ensure that Deadline/Startdate is valid, after computer is invented
-                                assert LocalDate.parse(finalTaskDate, format).getYear()
+                                assert LocalDate.parse(finalTaskDate, formatter).getYear()
                                         >= (LocalDate.now().getYear() - 100);
-                                if (item.equals(LocalDate.parse(finalTaskDate, format))) {
+                                if (item.equals(LocalDate.parse(finalTaskDate, formatter))) {
                                     if ((bCount == 0) && (dCount == 0)) {
                                         dCount++;
                                         s.append(dCount + " Deadline");
@@ -190,11 +211,12 @@ public class CalendarPanel extends UiPart<Region> {
                                         if (dCount == 2) {
                                             s.append("s");
                                         }
-                                        if (bCount == 0) {
-                                            colour = new StringBuilder("-fx-background-color: #ff444d;");
-                                        } else {
-                                            colour = new StringBuilder("-fx-background-color: #feff31;");
-                                        }
+                                    }
+
+                                    if (bCount == 0) {
+                                        colour = new StringBuilder("-fx-background-color: #ff444d;");
+                                    } else {
+                                        colour = new StringBuilder("-fx-background-color: #feff31;");
                                     }
                                 }
                             } catch (DateTimeParseException exc) {
@@ -202,13 +224,34 @@ public class CalendarPanel extends UiPart<Region> {
                                 throw exc;
                             }
                         }
-                        setTooltip(new Tooltip(s.toString()));
+                        if (s.length() == 0) {
+                            setTooltip(new Tooltip(s.toString()));
+                        }
                         setStyle(colour.toString());
                     }
                 };
             }
         };
         return dayCellFactory;
+    }
+
+    /**
+     * Select the date on calendar
+     * @param date
+     */
+    /*private void selectDate(DatePickerContent content, String date) {
+        ObservableList<Node> dateCellList = content.getChildren();
+        LocalDate localDate = LocalDate.parse(date, formatter);
+
+        logger.info("day of month: " + localDate.getDayOfMonth());
+        for (Node cell: dateCellList) {
+            logger.info("cell id: " + cell.getId());
+            if (cell.getId().equals(localDate.getDayOfMonth())) {
+                datePicker.setValue(localDate);
+                logger.info("date picked: " + localDate);
+                break;
+            }
+        }
     }
 
     // TODO: 26/10/17 implement event in the calendar, such that binding of dates is possible

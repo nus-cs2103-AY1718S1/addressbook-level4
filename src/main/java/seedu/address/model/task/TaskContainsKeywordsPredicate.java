@@ -2,6 +2,7 @@ package seedu.address.model.task;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
@@ -23,6 +24,8 @@ public class TaskContainsKeywordsPredicate implements Predicate<ReadOnlyTask> {
     @Override
     public boolean test(ReadOnlyTask task) {
         String testDate = "";
+        String tag = Arrays.toString(task.getTags().toArray())
+                .replaceAll("[\\[\\](),{}]", "");
         try {
             if (!task.getDeadline().isEmpty()) {
                 Date date = ParserUtil.parseDate(task.getDeadline().date);
@@ -35,7 +38,8 @@ public class TaskContainsKeywordsPredicate implements Predicate<ReadOnlyTask> {
         String finalTestDate = testDate;
         return keywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(task.getDescription().taskDescription, keyword)
-                || StringUtil.containsWordIgnoreCase(finalTestDate, keyword));
+                || StringUtil.containsWordIgnoreCase(finalTestDate, keyword)
+                || StringUtil.containsWordIgnoreCase(tag, keyword));
     }
 
     @Override
