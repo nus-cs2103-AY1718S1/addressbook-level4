@@ -1,3 +1,4 @@
+//@@author TravisPhey
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -26,6 +27,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
+        //String[] nameKeywords = trimmedArgs;
 
         return new FindCommand(new FindCommandPredicate(Arrays.asList(nameKeywords)));
     }
