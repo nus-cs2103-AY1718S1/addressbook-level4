@@ -22,12 +22,7 @@ public class Autocompleter {
     private static final String PROMPT_USER_TO_USE_HELP_MESSAGE = "To see what commands are available, type 'help' "
             + "into the command box";
     private static final String MULTIPLE_RESULT_MESSAGE = "Multiple matches found";
-
     private static final String EMPTY_STRING = "";
-    private static final String SPACE = " ";
-
-    private static final String[] commandList = {"add", "clear", "delete", "edit", "exit", "find", "help", "history",
-        "list", "redo", "select", "undo"};
 
     private int resultIndex;
     private String textInCommandBox;
@@ -61,57 +56,21 @@ public class Autocompleter {
                 raise(new NewResultAvailableEvent(PROMPT_USER_TO_USE_HELP_MESSAGE, false));
                 return EMPTY_STRING;
 
-            case ADD:
-                //System.out.println(possibleAutocompleteResults.get(0));
+            case COMMAND_NEXT_PREFIX:
                 if (possibleAutocompleteResults.isEmpty()) {
                     return textInCommandBox;
                 }
                 return textInCommandBox.trim() + " " +possibleAutocompleteResults.get(0);
+
+            case COMMAND_CYCLE_PREFIX:
+                return textInCommandBox.substring(0, textInCommandBox.length() - 2) +
+                        possibleAutocompleteResults.get(cycleIndex());
 
             case MULTIPLE_COMMAND:
                 displayMultipleResults(possibleAutocompleteResults);
                 return possibleAutocompleteResults.get(cycleIndex());
         }
         return textInCommandBox;
-    }
-
-    /**
-     * Updates the state of the autocompleter
-     * @param commandBoxText from CommandBox
-     */
-    public void updateState(String commandBoxText) {
-        textInCommandBox = commandBoxText;
-        if (commandBoxText.equals(EMPTY_STRING)) {
-            state = AutocompleteState.EMPTY;
-            return;
-        }
-        String[] currentTextArray = parser.parseCommandAndPrefixes(commandBoxText);
-        String commandWord = currentTextArray[CommandBoxParser.COMMAND_INDEX];
-        String arguments = currentTextArray[CommandBoxParser.ARGUMENT_INDEX];
-
-        if (commandWord.equals(EMPTY_STRING) && arguments.equals(EMPTY_STRING)) {
-            autocompleteCommandWord(commandBoxText);
-            return;
-        }
-
-        switch (commandWord) {
-            case AddCommand.COMMAND_WORD:
-                state = AutocompleteState.ADD;
-                autocompleteAddCommand(commandBoxText);
-                break;
-
-            case EditCommand.COMMAND_WORD:
-                if (commandBoxText.substring(commandBoxText.length() - 1).equals(SPACE)) {
-                    state = AutocompleteState.EDIT;
-                }
-                break;
-
-            case FindCommand.COMMAND_WORD:
-                state = AutocompleteState.FIND;
-                break;
-        }
-
-
     }
 
     /**
@@ -124,6 +83,62 @@ public class Autocompleter {
         return currentIndex;
 
     }
+
+    /**
+     * Updates the state of the autocompleter
+     * @param commandBoxText from {@code CommandBox}
+     */
+    public void updateState(String commandBoxText) {
+        textInCommandBox = commandBoxText;
+
+        if (commandBoxText.equals(EMPTY_STRING)) {
+            state = AutocompleteState.EMPTY;
+            return;
+        }
+
+        String[] currentTextArray = parser.parseCommandAndPrefixes(commandBoxText);
+        String commandWord = currentTextArray[CommandBoxParser.COMMAND_INDEX];
+        currentCommand = AutocompleteCommand.getInstance(commandWord);
+
+
+        if (currentCommand.equals(AutocompleteCommand.NONE)) {
+            autocompleteCommandWord(commandBoxText);
+            return;
+        }
+
+        if (state.equals(AutocompleteState.MULTIPLE_COMMAND) && textInCommandBox.length() == commandWord.length()) {
+            return;
+        }
+
+        if (AutocompleteCommand.hasIndexParameter(commandWord)) {
+            resetIndexIfNeeded();
+            state = AutocompleteState.INDEX;
+            return;
+        }
+
+        if (AutocompleteCommand.hasPrefixParameter(commandWord)) {
+            possibleAutocompleteResults = getMissingPrefixes(commandBoxText);
+            if (lastTwoCharactersArePrefix(commandBoxText)) {
+                resetIndexIfNeeded();
+                state = AutocompleteState.COMMAND_CYCLE_PREFIX;
+                return;
+            }
+            state = AutocompleteState.COMMAND_NEXT_PREFIX;
+            return;
+        }
+
+
+    }
+
+    private void resetIndexIfNeeded() {
+        if (!state.equals(AutocompleteState.INDEX)
+                && !state.equals(AutocompleteState.MULTIPLE_COMMAND)
+                && !state.equals(AutocompleteState.COMMAND_CYCLE_PREFIX)) {
+            resultIndex = 0;
+        }
+    }
+
+
 
     /**
      * Handle autocomplete when there is only word in the command box
@@ -143,26 +158,28 @@ public class Autocompleter {
             break;
 
         default:
+            resetIndexIfNeeded();
             state = AutocompleteState.MULTIPLE_COMMAND;
-            resultIndex = 0;
             break;
         }
     }
 
-    private void autocompleteAddCommand(String commandBoxText) {
-        Prefix[] prefixes = AutocompleteState.getPrefixes(state);
+    private boolean lastTwoCharactersArePrefix(String commandBoxText) {
+        String lastTwoCharacters = commandBoxText.substring(commandBoxText.length() - 2);
+        return Arrays.stream(AutocompleteCommand.allPrefixes)
+                .anyMatch(s -> lastTwoCharacters.equals(s.toString()));
+    }
+
+    private ArrayList<String> getMissingPrefixes(String commandBoxText) {
+        Prefix[] prefixes = AutocompleteCommand.allPrefixes;
         ArrayList<String> missingPrefixes = new ArrayList<>();
-        if (prefixes.length == 0) {
-            return;
-        }
         ArgumentMultimap argMap = ArgumentTokenizer.tokenize(commandBoxText, prefixes);
         for (Prefix p : prefixes) {
             if (!argMap.getValue(p).isPresent()) {
                 missingPrefixes.add(p.toString());
-                break;
             }
         }
-        possibleAutocompleteResults = missingPrefixes;
+        return missingPrefixes;
     }
 
     /**
@@ -172,7 +189,7 @@ public class Autocompleter {
      */
     private ArrayList<String> getClosestCommands (String commandBoxText) {
         ArrayList<String> possibleResults = new ArrayList<>();
-        Arrays.stream(commandList)
+        Arrays.stream(AutocompleteCommand.allCommands)
                 .filter(s -> isPossibleMatch(commandBoxText.toLowerCase(), s))
                 .forEach(s -> possibleResults.add(s));
         return possibleResults;
@@ -184,7 +201,7 @@ public class Autocompleter {
      * @param commandWord
      */
     private boolean isPossibleMatch(String commandBoxText, String commandWord) {
-        return (commandBoxText.length() < commandWord.length()
+        return (commandBoxText.length() <= commandWord.length()
                 && commandBoxText.equals(commandWord.substring(0, commandBoxText.length())));
     }
 

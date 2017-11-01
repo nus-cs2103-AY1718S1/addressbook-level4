@@ -15,9 +15,6 @@ public class CommandBoxParser {
 
     private static final  String EMPTY_STRING = "";
 
-    private static final String[] commandList = {"add", "clear", "delete", "edit", "exit", "find", "help", "history",
-            "list", "redo", "select", "undo"};
-
     /**
      * Used for initial separation of command word and args.
      */
@@ -25,6 +22,11 @@ public class CommandBoxParser {
 
     public CommandBoxParser() { }
 
+    /**
+     * Parses {@param commandBoxText} to see if it contains any instances of a {@code Command} and {@code Prefix}
+     * @param commandBoxText
+     * @return
+     */
     public String[] parseCommandAndPrefixes(String commandBoxText) {
         String[] parseResults = {EMPTY_STRING, EMPTY_STRING };
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(commandBoxText.trim());
@@ -41,6 +43,6 @@ public class CommandBoxParser {
     }
 
     private boolean isValidCommand(String commandWord) {
-        return Arrays.asList(commandList).contains(commandWord);
+        return Arrays.asList(AutocompleteCommand.allCommands).contains(commandWord);
     }
 }
