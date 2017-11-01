@@ -20,6 +20,8 @@ public class Photo {
 
     private String photoDir;
 
+    private String defaultPhoto = "template.png";
+
     /**
      * Validates given photo.
      *
@@ -40,6 +42,10 @@ public class Photo {
 
     public String getFullPhotoDir() {
         return BASE_DIR + photoDir;
+    }
+
+    public String getTemplatePhotoDir() {
+        return BASE_DIR + defaultPhoto;
     }
 
     /**
