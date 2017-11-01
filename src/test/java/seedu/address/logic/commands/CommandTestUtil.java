@@ -43,7 +43,7 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
-    public static final String VALID_POSTAL_CODE_AMY = "201312";
+    public static final String VALID_POSTAL_CODE_AMY = "101312";
     public static final String VALID_POSTAL_CODE_BOB = "102123";
     public static final String VALID_DEBT_AMY = "100002";
     public static final String VALID_DEBT_BOB = "100001";
