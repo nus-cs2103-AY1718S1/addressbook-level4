@@ -46,6 +46,18 @@ public class SelectTaskCommand extends Command {
 
         String tag = model.getFilteredTaskList().get(targetIndex.getZeroBased()).getTags().toString()
                 .replaceAll("[\\[\\](),{}]", "");
+        conductSearch(tag);
+
+        EventsCenter.getInstance().post(new JumpToTaskListRequestEvent(targetIndex));
+        return new CommandResult(String.format(MESSAGE_SELECT_TASK_SUCCESS, targetIndex.getOneBased()));
+
+    }
+
+    /**
+     * find the tag of task in person list
+     * @param tag
+     */
+    private void conductSearch(String tag) {
         if (!tag.isEmpty()) {
             String[] tagArray = tag.split("\\s+");
             model.updateFilteredPersonList(new PersonContainsKeywordsPredicate(Arrays.asList(tagArray)));
@@ -53,10 +65,6 @@ public class SelectTaskCommand extends Command {
                 model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             }
         }
-
-        EventsCenter.getInstance().post(new JumpToTaskListRequestEvent(targetIndex));
-        return new CommandResult(String.format(MESSAGE_SELECT_TASK_SUCCESS, targetIndex.getOneBased()));
-
     }
 
     @Override
