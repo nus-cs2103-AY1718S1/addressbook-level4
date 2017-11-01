@@ -6,9 +6,7 @@ import java.util.Arrays;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.Logic;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Prefix;
@@ -26,14 +24,16 @@ public class Autocompleter {
 
     private int resultIndex;
     private String textInCommandBox;
-    private CommandBoxParser parser;
     private AutocompleteState state;
     private AutocompleteCommand currentCommand;
     private ArrayList<String> possibleAutocompleteResults;
+    private CommandBoxParser parser;
+    private Logic logic;
 
 
-    public Autocompleter() {
+    public Autocompleter(Logic logic) {
         registerAsAnEventHandler(this);
+        this.logic = logic;
         parser = new CommandBoxParser();
         resultIndex = 0;
         textInCommandBox = EMPTY_STRING;
