@@ -1,5 +1,5 @@
 # eldonng
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
         /* Case: find phone number of person in address book -> 1 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
@@ -8,7 +8,7 @@
         assertSelectedCardUnchanged();
 
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
         /* Case: find address of person in address book -> 3 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getAddress().value;
@@ -17,7 +17,7 @@
         assertSelectedCardUnchanged();
 
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
         /* Case: find email of person in address book -> 1 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
@@ -50,7 +50,7 @@
         assertSelectedCardUnchanged();
 
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
         /* Case: find tags of person in address book -> 1 persons found */
         List<Tag> tags = new ArrayList<>(BENSON.getTags());
@@ -84,7 +84,7 @@
         assertSelectedCardUnchanged();
 
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
         /* Case: find person in address book, keyword is username of email -> 1 person found */
         command = FindCommand.COMMAND_WORD + " johnd";
@@ -92,7 +92,7 @@
         assertCommandSuccess(command, expectedModel);
 
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
         /* Case: find person in address book, keyword is multiple usernames of email -> 2 persons found */
         command = FindCommand.COMMAND_WORD + " johnd" + " alice";
@@ -100,7 +100,7 @@
         assertCommandSuccess(command, expectedModel);
 
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
         /*Case: find person in address book, keyword is domain names of email -> 7 persons found */
         command = FindCommand.COMMAND_WORD + " example.com";
@@ -108,7 +108,7 @@
         assertCommandSuccess(command, expectedModel);
 
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
         /* Case: find person in address book, keyword is invalid domain name of email -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " gmail.com";
@@ -116,14 +116,14 @@
         assertCommandSuccess(command, expectedModel);
 
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
         /* Case: find person in address book, keyword is invalid username of email -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " hello";
         assertCommandSuccess(command, expectedModel);
 
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
         /* Case: find person in address book, keyword is substring of name -> 1 persons found */
         command = FindCommand.COMMAND_WORD + " Mei";
@@ -205,7 +205,7 @@
     }
 }
 ```
-###### \java\systemtests\PinCommandSystemTest.java
+###### /java/systemtests/PinCommandSystemTest.java
 ``` java
 public class PinCommandSystemTest extends AddressBookSystemTest {
 

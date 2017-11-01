@@ -60,6 +60,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author mavistoh
     /**
      * Sets the {@code Birthday} of the {@code EditBirthdayDescriptor} that we are building.
      */
@@ -71,6 +72,7 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
+    //@@author
 
     /**
      * Sets the {@code Email} of the {@code EditPersonDescriptor} that we are building.

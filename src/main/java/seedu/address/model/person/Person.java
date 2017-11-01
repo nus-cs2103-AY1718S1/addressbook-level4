@@ -68,6 +68,7 @@ public class Person implements ReadOnlyPerson {
         this.name.set(requireNonNull(name));
     }
 
+    //@@author mavistoh
     @Override
     public ObjectProperty<Name> nameProperty() {
         return name;
@@ -134,6 +135,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

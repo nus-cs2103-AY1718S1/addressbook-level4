@@ -1,7 +1,7 @@
 package seedu.address.model.person;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-
+//@@author mavistoh
 /**
  * Represents Person's birthday in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidBirthday(String)}
@@ -14,6 +14,7 @@ public class Birthday {
     public static final String BIRTHDAY_VALIDATION_REGEX = "\\d{2}-\\d{2}-\\d{4}";
     public static final String BIRTHDAY_EMPTY = "-";
     public final String value;
+
 
     /**
      * Validates given birthday.
