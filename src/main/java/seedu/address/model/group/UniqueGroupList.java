@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
+import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author eldonng
 /**
@@ -61,6 +62,19 @@ public class UniqueGroupList implements Iterable<Group> {
             throw new GroupNotFoundException();
         }
         return groupFoundAndDeleted;
+    }
+
+    /**
+     * Removes the equivalent person from all groups
+     * @param toRemove
+     */
+    public void removePerson(ReadOnlyPerson toRemove) {
+        requireNonNull(toRemove);
+        internalList.forEach(group -> {
+            if (group.getGroupMembers().contains(toRemove)) {
+                group.getGroupMembers().remove(toRemove);
+            }
+        });
     }
 
     public void setGroups(UniqueGroupList replacement) {
