@@ -1,5 +1,8 @@
 package seedu.address.logic.commands.tasks;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
+import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.commons.core.EventsCenter;
@@ -9,6 +12,7 @@ import seedu.address.commons.events.ui.JumpToTaskListRequestEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.model.task.ReadOnlyTask;
 
 /**
@@ -40,9 +44,27 @@ public class SelectTaskCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
+        String tag = model.getFilteredTaskList().get(targetIndex.getZeroBased()).getTags().toString()
+                .replaceAll("[\\[\\](),{}]", "");
+        conductSearch(tag);
+
         EventsCenter.getInstance().post(new JumpToTaskListRequestEvent(targetIndex));
         return new CommandResult(String.format(MESSAGE_SELECT_TASK_SUCCESS, targetIndex.getOneBased()));
 
+    }
+
+    /**
+     * find the tag of task in person list
+     * @param tag
+     */
+    private void conductSearch(String tag) {
+        if (!tag.isEmpty()) {
+            String[] tagArray = tag.split("\\s+");
+            model.updateFilteredPersonList(new PersonContainsKeywordsPredicate(Arrays.asList(tagArray)));
+            if (model.getFilteredPersonList().size() < 1) {
+                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            }
+        }
     }
 
     @Override
