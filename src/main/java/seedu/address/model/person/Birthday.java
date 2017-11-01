@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -14,6 +12,7 @@ public class Birthday {
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
             "Birthday has to be in the format dd-mm-yyyy";
     public static final String BIRTHDAY_VALIDATION_REGEX = "\\d{2}-\\d{2}-\\d{4}";
+    public static final String BIRTHDAY_EMPTY = "-";
     public final String value;
 
     /**
@@ -22,19 +21,22 @@ public class Birthday {
      * @throws IllegalValueException if given birthday is invalid.
      */
     public Birthday(String birthday) throws IllegalValueException {
-        requireNonNull(birthday);
-        String trimmedBirthday = birthday.trim();
-        if (!isValidBirthday(trimmedBirthday)) {
-            throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
+        if (birthday == null) {
+            this.value = BIRTHDAY_EMPTY;
+        } else {
+            String trimmedBirthday = birthday.trim();
+            if (!isValidBirthday(trimmedBirthday)) {
+                throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
+            }
+            this.value = trimmedBirthday;
         }
-        this.value = trimmedBirthday;
     }
 
     /**
      * Returns true if a given string is a valid person birthday.
      */
     public static boolean isValidBirthday(String test) {
-        return test.matches(BIRTHDAY_VALIDATION_REGEX);
+        return test.matches(BIRTHDAY_VALIDATION_REGEX) || test.matches(BIRTHDAY_EMPTY);
     }
 
     @Override

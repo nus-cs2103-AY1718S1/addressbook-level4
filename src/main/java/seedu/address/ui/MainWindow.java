@@ -143,7 +143,7 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList(), prefs.getColourMap());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        groupListPanel = new GroupListPanel(logic.getGroupList());
+        groupListPanel = new GroupListPanel(logic.getGroupList(), logic.getFilteredPersonList());
         groupListPanelPlaceholder.getChildren().add(groupListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();

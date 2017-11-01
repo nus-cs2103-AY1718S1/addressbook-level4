@@ -14,6 +14,8 @@ import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.storage.Storage;
+import seedu.address.testutil.TypicalStorage;
 
 public class CommandBoxTest extends GuiUnitTest {
 
@@ -28,7 +30,8 @@ public class CommandBoxTest extends GuiUnitTest {
     @Before
     public void setUp() {
         Model model = new ModelManager();
-        Logic logic = new LogicManager(model);
+        Storage storage = new TypicalStorage().setUp();
+        Logic logic = new LogicManager(model, storage);
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxHandle = new CommandBoxHandle(getChildNode(commandBox.getRoot(),

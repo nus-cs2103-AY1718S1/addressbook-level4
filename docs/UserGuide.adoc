@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T17-B3/main
 
-By: `CS2103 T17 - B3`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103 T17 - B3`      Last Updated: `1 Nov 2017`      Licence: `MIT`
 
 == About
 What’s the first thing you think about when you hear the words _“command line interface (CLI)”_?
@@ -271,7 +271,8 @@ Format: `pin INDEX`
 1. Enter `pin 3` to pin the 3rd person in the contacts list.
 2. The pinned contact should now be at the top of the contact list, sorted in alphabetical order.
 
-_Figure XX: Pinning a person_ +
+image::Figure13.png[width="790"]
+_Figure 13: Pinning a person_ +
 
 
 === Pinning a group : `unpin`
@@ -281,7 +282,8 @@ Format: `unpin INDEX`
 1. Enter `pin 1` to unpin the 1st person in the contacts list.
 2. The unpinned contact should now return to its original position in the contact list, sorted in alphabetical order. +
 
-_Figure XX: Unpinning a person_ +
+image::Figure14.png[width="790"]
+_Figure 14: Unpinning a person_ +
 
 
 
@@ -295,7 +297,8 @@ _E.g: creategroup n/CS2103 Project i/1 2 3_ +
 2. The following message will appear if the creation of group is successful. (as shown in Figure XX) +
 _E.g: New group added: CS2103 Project with 3 member(s)_ +
 
-_Figure XX: Creating a group_ +
+image::Figure15.PNG[width="790"]
+_Figure 15: Creating a group_ +
 
 === Deleting a group : `deletegroup`
 Done with your group project and you have no need for the group anymore? Just delete the group with `deletegroup`! +
@@ -303,7 +306,8 @@ Format: `deletegroup INDEX`
 
 1. Enter `deletegroup 1` to delete the 1st group on the Groups list on the right.
 
-_Figure XX: Deleting a group_ +
+image::Figure16.PNG[width="790"]
+_Figure 16: Deleting a group_ +
 
 === Setting colours for tags : `setcolour`
 Circles allows you to differentiate tags from each other by allowing you to manually set colours for you tags. +
@@ -311,11 +315,12 @@ Format: `setcolour TAGS COLOUR`
 
 1. Enter `setcolour friends red` to set all the tags `friends` to red in Circles.
 
-_Figure XX: Changing colour for a tag_ +
+image::Figure17.PNG[width="790"]
+_Figure 17: Changing colour for a tag_ +
 
 [TIP]
 The colour that you entered here must be one of the colours in our library. +
-The suitable colours to be changed are `blue, red, brown, green, black, purple, indigo, gray, chocolate, orange,
+The suitable colours to be changed are `blue, red, brown, green, black, purple, indigo, grey, chocolate, orange,
 aquamarine`.
 
 === Sorting your contacts : `sort`
@@ -326,8 +331,8 @@ Format: `sort` +
 1. Enter `sort name` to sort contacts by name in alphabetical order.
 2. Circles will now have your contacts sorted by name and displayed as shown in Figure 13.
 
-image::Figure13.png[width="790"]
-_Figure 13: Sorting address book by name_ +
+image::Figure18.PNG[width="790"]
+_Figure 18: Sorting address book by name_ +
 
 [TIP]
 You can sort the address book by phone and email too! Just enter `sort phone` or
@@ -337,6 +342,11 @@ You can sort the address book by phone and email too! Just enter `sort phone` or
 Format: `export [directory]\[filename].xml` +
 
 Example: `export C:\user\desktop\circles.xml` +
+
+=== Importing a contacts list in .xml format : `import`
+Format: `import [directory]\[filename].xml` +
+
+Example: `import C:\user\downloads\circles.xml
 
 === Clearing all entries : `clear`
 When changing device used for Circles or to start a new address book, you might want to delete all contacts due to
@@ -348,8 +358,8 @@ Format: `clear` +
 1. Enter `clear` to clear all contacts.
 2. Address book will now be empty as shown in Figure 14.
 
-image::Figure14.png[width="790"]
-_Figure 14: Clearing of address book_ +
+image::Figure19.PNG[width="790"]
+_Figure 19: Clearing of address book_ +
 
 
 === Exiting the program : `exit`

@@ -14,20 +14,24 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.storage.Storage;
+import seedu.address.testutil.TypicalStorage;
 
 
 public class SortCommandTest {
     private Model model;
+    private Storage storage;
 
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        storage = new TypicalStorage().setUp();
     }
 
     @Test
     public void execute_sortByName_success() throws Exception {
         SortCommand sortCommandName = new SortCommand("name");
-        sortCommandName.setData(model, new CommandHistory(), new UndoRedoStack());
+        sortCommandName.setData(model, new CommandHistory(), new UndoRedoStack(), storage);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.sort("name");
@@ -39,7 +43,7 @@ public class SortCommandTest {
     @Test
     public void execute_sortByPhone_success() throws Exception {
         SortCommand sortCommandPhone = new SortCommand("phone");
-        sortCommandPhone.setData(model, new CommandHistory(), new UndoRedoStack());
+        sortCommandPhone.setData(model, new CommandHistory(), new UndoRedoStack(), storage);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.sort("phone");
@@ -51,7 +55,7 @@ public class SortCommandTest {
     @Test
     public void execute_sortByEmail_success() throws Exception {
         SortCommand sortCommandEmail = new SortCommand("email");
-        sortCommandEmail.setData(model, new CommandHistory(), new UndoRedoStack());
+        sortCommandEmail.setData(model, new CommandHistory(), new UndoRedoStack(), storage);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.sort("email");

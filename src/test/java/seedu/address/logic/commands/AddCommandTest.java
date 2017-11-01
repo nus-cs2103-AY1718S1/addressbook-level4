@@ -30,12 +30,16 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.storage.Storage;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.TypicalStorage;
 
 public class AddCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    private Storage storage = new TypicalStorage().setUp();
 
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
@@ -94,7 +98,7 @@ public class AddCommandTest {
      */
     private AddCommand getAddCommandForPerson(Person person, Model model) {
         AddCommand command = new AddCommand(person);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), storage);
         return command;
     }
 

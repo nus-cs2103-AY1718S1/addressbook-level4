@@ -17,6 +17,7 @@ import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author eldonng
 /**
  * Creates a group in the address book
  */

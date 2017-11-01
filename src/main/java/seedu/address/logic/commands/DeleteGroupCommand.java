@@ -8,6 +8,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
 
+//@@author eldonng
 /**
  * Deletes a group from the address book
  */

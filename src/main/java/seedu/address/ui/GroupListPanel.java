@@ -18,7 +18,9 @@ import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.NewGroupListEvent;
 import seedu.address.model.group.ReadOnlyGroup;
+import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author eldonng
 /**
  * Panel containing a list of groups
  */
@@ -30,14 +32,14 @@ public class GroupListPanel extends UiPart<Region> {
     @FXML
     private ListView<GroupCard> groupListView;
 
-    public GroupListPanel(ObservableList<ReadOnlyGroup> groupList) {
+    public GroupListPanel(ObservableList<ReadOnlyGroup> groupList, ObservableList<ReadOnlyPerson> personList) {
         super(FXML);
-        setConnections(groupList);
+        setConnections(groupList, personList);
         registerAsAnEventHandler(this);
     }
-    private void setConnections(ObservableList<ReadOnlyGroup> groupList) {
+    private void setConnections(ObservableList<ReadOnlyGroup> groupList, ObservableList<ReadOnlyPerson> personList) {
         ObservableList<GroupCard> mappedList = EasyBind.map(
-                groupList, (group) -> new GroupCard(group, groupList.indexOf(group) + 1));
+                groupList, (group) -> new GroupCard(group, groupList.indexOf(group) + 1, personList));
         groupListView.setItems(mappedList);
         groupListView.setCellFactory(listView -> new GroupListPanel.GroupListViewCell());
         setEventHandlerForSelectionChangeEvent();
@@ -71,7 +73,7 @@ public class GroupListPanel extends UiPart<Region> {
     @Subscribe
     private void handleNewGroupListEvent(NewGroupListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        setConnections(event.getGroupsList());
+        setConnections(event.getGroupsList(), event.getPersonsList());
     }
 
     /**

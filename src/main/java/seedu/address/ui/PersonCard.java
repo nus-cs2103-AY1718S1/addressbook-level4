@@ -83,6 +83,7 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    //@@author eldonng
     private void setTagColour(Label tagLabel, Tag tag) {
         if (colourMap.containsKey(tag.tagName)) {
             tagLabel.setStyle("-fx-background-color: " + colourMap.get(tag.tagName));

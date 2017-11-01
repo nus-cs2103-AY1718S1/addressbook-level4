@@ -11,6 +11,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+//@@author eldonng
 /**
  * Unpins an existing pinned person from the address book
  */

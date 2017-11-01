@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
 import javafx.beans.binding.Bindings;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -8,7 +10,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import seedu.address.model.group.ReadOnlyGroup;
+import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author eldonng
 /**
  * An UI component that displays information of a {@code Group}.
  */
@@ -18,6 +22,7 @@ public class GroupCard extends UiPart<Region> {
     private static final int TAG_LIMIT = 3;
 
     public final ReadOnlyGroup group;
+    private ObservableList<ReadOnlyPerson> personList;
 
     @FXML
     private HBox cardPane;
@@ -28,9 +33,10 @@ public class GroupCard extends UiPart<Region> {
     @FXML
     private FlowPane members;
 
-    public GroupCard(ReadOnlyGroup group, int displayedIndex) {
+    public GroupCard(ReadOnlyGroup group, int displayedIndex, ObservableList<ReadOnlyPerson> personList) {
         super(FXML);
         this.group = group;
+        this.personList = new FilteredList<>(personList);
         id.setText(displayedIndex + ". ");
         initMembers(group);
         bindListeners(group);
@@ -53,7 +59,8 @@ public class GroupCard extends UiPart<Region> {
      * @param group
      */
     private void initMembers(ReadOnlyGroup group) {
-        int groupSize = group.getGroupMembers().size();
+        personList = personList.filtered(person -> group.getGroupMembers().contains(person));
+        int groupSize = personList.size();
         String labelText = groupSize + " member";
 
         if (groupSize > 1) {

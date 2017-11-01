@@ -6,6 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.SetColourCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author eldonng
 /**
  * Parses input arguments and create a new SetColourCommand object.
  */

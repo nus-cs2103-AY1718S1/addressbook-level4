@@ -175,6 +175,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// group-level operations
 
+    //@@author eldonng
     /**
      * Adds a group to the address book.
      * @throws DuplicateGroupException if an equivalent group already exists.
@@ -184,6 +185,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         groups.add(newGroup);
     }
 
+    //@@author eldonng
     /**
      * Removes a group from the address book
      * @throws GroupNotFoundException if the group is not found
@@ -221,6 +223,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return tags.asObservableList();
     }
 
+    //@@author eldonng
     @Override
     public ObservableList<ReadOnlyGroup> getGroupList() {
         return groups.asObservableList();

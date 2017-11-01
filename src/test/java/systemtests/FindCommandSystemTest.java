@@ -51,18 +51,21 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        //@@author eldonng
         /* Case: find phone number of person in address book -> 1 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
         ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        //@@author eldonng
         /* Case: find address of person in address book -> 3 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getAddress().value;
         ModelHelper.setFilteredList(expectedModel, CARL, DANIEL, GEORGE);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        //@@author eldonng
         /* Case: find email of person in address book -> 1 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
         ModelHelper.setFilteredList(expectedModel, DANIEL);
@@ -93,6 +96,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        //@@author eldonng
         /* Case: find tags of person in address book -> 1 persons found */
         List<Tag> tags = new ArrayList<>(BENSON.getTags());
         command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName;
@@ -124,30 +128,36 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        //@@author eldonng
         /* Case: find person in address book, keyword is username of email -> 1 person found */
         command = FindCommand.COMMAND_WORD + " johnd";
         ModelHelper.setFilteredList(expectedModel, BENSON);
         assertCommandSuccess(command, expectedModel);
 
+        //@@author eldonng
         /* Case: find person in address book, keyword is multiple usernames of email -> 2 persons found */
         command = FindCommand.COMMAND_WORD + " johnd" + " alice";
         ModelHelper.setFilteredList(expectedModel, ALICE, BENSON);
         assertCommandSuccess(command, expectedModel);
 
+        //@@author eldonng
         /*Case: find person in address book, keyword is domain names of email -> 7 persons found */
         command = FindCommand.COMMAND_WORD + " example.com";
         ModelHelper.setFilteredList(expectedModel, ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE);
         assertCommandSuccess(command, expectedModel);
 
+        //@@author eldonng
         /* Case: find person in address book, keyword is invalid domain name of email -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " gmail.com";
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
 
+        //@@author eldonng
         /* Case: find person in address book, keyword is invalid username of email -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " hello";
         assertCommandSuccess(command, expectedModel);
 
+        //@@author eldonng
         /* Case: find person in address book, keyword is substring of name -> 1 persons found */
         command = FindCommand.COMMAND_WORD + " Mei";
         ModelHelper.setFilteredList(expectedModel, DANIEL);
