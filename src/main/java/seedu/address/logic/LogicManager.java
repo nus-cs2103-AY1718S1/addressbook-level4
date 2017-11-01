@@ -30,9 +30,11 @@ public class LogicManager extends ComponentManager implements Logic {
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
 
+    //@@author wenmogu
     private final GraphWrapper graphWrapper;
     private final Viewer graphViewer;
 
+    //@@author
     private final Storage storage;
 
 

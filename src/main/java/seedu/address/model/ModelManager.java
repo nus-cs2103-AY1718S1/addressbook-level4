@@ -103,6 +103,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author wenmogu
     /**
      * Removes a tag with the tagGettingRemoved string
      * @param tagGettingRemoved

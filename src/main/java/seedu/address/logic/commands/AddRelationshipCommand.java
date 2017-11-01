@@ -9,6 +9,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.relationship.RelationshipDirection;
 import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
 
+//@@author wenmogu
 /**
  * This class is to specify a command for adding relationship between two persons
  */

@@ -41,18 +41,22 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    //@@author wenmogu
     void addRelationship(Index indexFromPerson, Index indexToPerson, RelationshipDirection direction)
         throws IllegalValueException, DuplicateRelationshipException;
 
+    //@@author
     /** Sorts the persons object alphanumerically by name. */
     void sortPersons();
 
+    //@@author wenmogu
     /**
      * @throws TagNotFoundException if the tag is not found in tag list of address book
      * @throws IllegalValueException if the input value is not alphanumeric
      */
     void removeTag(String tagToBeRemoved) throws TagNotFoundException, IllegalValueException;
 
+    //@@author
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
