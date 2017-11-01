@@ -22,6 +22,7 @@ public class AddQuickCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+            + "Note: Name and Phone number are compulsory fields.\n"
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
@@ -29,7 +30,6 @@ public class AddQuickCommand extends UndoableCommand {
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Name and Phone are compulsory fields\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
@@ -42,9 +42,6 @@ public class AddQuickCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
     public static final String MESSAGE_PERSON_NOT_FOUND = "This person is not in the address book";
-    //@@author aver0214
-    public static final String MESSAGE_NAME_PHONE_MISSING = "Missing name or phone number";
-    //@@author
 
     private final Person toAdd;
 

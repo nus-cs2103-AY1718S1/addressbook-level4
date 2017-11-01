@@ -104,7 +104,7 @@ public class AddQuickCommandParserTest {
     @Test
     public void parse_compulsoryFieldMissing_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                AddQuickCommand.MESSAGE_NAME_PHONE_MISSING);
+                AddQuickCommand.MESSAGE_USAGE);
 
         // missing name prefix
         assertParseFailure(parser, AddQuickCommand.COMMAND_WORD + VALID_NAME_BOB + PHONE_DESC_BOB

@@ -43,8 +43,7 @@ public class AddQuickCommandParser implements Parser<AddQuickCommand> {
 
         //@@author aver0214
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    AddQuickCommand.MESSAGE_NAME_PHONE_MISSING));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddQuickCommand.MESSAGE_USAGE));
         }
         //@@author
 
@@ -57,7 +56,7 @@ public class AddQuickCommandParser implements Parser<AddQuickCommand> {
                     getDetails(argMultimap.getValue(PREFIX_EMAIL), PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(
                     getDetails(argMultimap.getValue(PREFIX_ADDRESS), PREFIX_ADDRESS)).get();
-            Remark remark = new Remark("");
+            Remark remark = new Remark("No Remark");
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
 

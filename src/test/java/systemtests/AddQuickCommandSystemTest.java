@@ -175,12 +175,12 @@ public class AddQuickCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: missing name -> rejected */
-        expectedResultMessage = AddQuickCommand.MESSAGE_NAME_PHONE_MISSING;
+        expectedResultMessage = AddQuickCommand.MESSAGE_USAGE;
         command = AddQuickCommand.COMMAND_WORD + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, expectedResultMessage));
 
         /* Case: missing phone -> rejected */
-        expectedResultMessage = AddQuickCommand.MESSAGE_NAME_PHONE_MISSING;
+        expectedResultMessage = AddQuickCommand.MESSAGE_USAGE;
         command = AddQuickCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, expectedResultMessage));
         //@@author
