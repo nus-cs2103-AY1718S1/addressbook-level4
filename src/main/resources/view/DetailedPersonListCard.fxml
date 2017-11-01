@@ -19,13 +19,13 @@
       <padding>
         <Insets bottom="5" left="15" right="5" top="5" />
       </padding>
-      <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
+      <Label fx:id="name" styleClass="cell_big_label" text="Select a Person" />
       <FlowPane fx:id="tags" />
       <FlowPane fx:id="webLinks" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-      <Label fx:id="remark" styleClass="cell_small_label" text="\$remark" />
+      <Label fx:id="phone" styleClass="cell_small_label" />
+      <Label fx:id="address" styleClass="cell_small_label" />
+      <Label fx:id="email" styleClass="cell_small_label" />
+      <Label fx:id="remark" styleClass="cell_small_label" />
     </VBox>
       <rowConstraints>
          <RowConstraints />
