@@ -123,6 +123,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
 
+    //@@author aggarwalRuchir
     /**
      * Opens the help window.
      */
@@ -132,6 +133,7 @@ public class MainWindow extends UiPart<Region> {
         LoginWindow loginWindow = new LoginWindow();
         loginWindow.show();
     }
+    //@@author
 
     /**
      * Fills up all the placeholders of this window.

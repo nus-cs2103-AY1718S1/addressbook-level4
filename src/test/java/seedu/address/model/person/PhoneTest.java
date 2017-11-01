@@ -24,6 +24,7 @@ public class PhoneTest {
         assertTrue(Phone.isValidPhone("124293842033123")); // long phone numbers
     }
 
+    //@@author aggarwalRuchir
     @Test
     public void isPhoneFormattingCorrect() {
         assertEquals(Phone.formatPhone("911"), "911");
@@ -35,4 +36,5 @@ public class PhoneTest {
 
         assertEquals(Phone.formatPhone("124293842033123"), "124-2938-4203-3123");
     }
+    //@@author
 }
