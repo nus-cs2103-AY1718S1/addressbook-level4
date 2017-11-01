@@ -139,7 +139,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
          * -> rejected
          */
         showParcelsWithName(KEYWORD_MATCHING_MEIER);
-        int invalidIndex = getModel().getAddressBook().getParcelList().size();
+        int invalidIndex = getModel().getActiveList().size() + 1;
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);
 
