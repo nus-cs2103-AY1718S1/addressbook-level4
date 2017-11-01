@@ -19,7 +19,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  */
 public class AddQuickCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "addq";
+    public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
             + "Parameters: "
@@ -29,6 +29,7 @@ public class AddQuickCommand extends UndoableCommand {
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
             + "[" + PREFIX_TAG + "TAG]...\n"
+            + "Name and Phone are compulsory fields\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "

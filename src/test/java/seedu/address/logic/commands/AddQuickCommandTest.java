@@ -86,7 +86,7 @@ public class AddQuickCommandTest {
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new AddQuickCommand with the details of the given person.
      */
     private AddQuickCommand getAddCommandForPerson(Person person, Model model) {
         AddQuickCommand command = new AddQuickCommand(person);
