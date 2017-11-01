@@ -5,7 +5,8 @@ import static seedu.address.ui.ParcelListPanel.INDEX_FIRST_TAB;
 import javafx.scene.control.TabPane;
 
 /**
- * Provides a handle for {@code ParcelListPanel} containing the list of {@code ParcelCard}.
+ * Provides a handle for {@code ParcelListPanel} containing the both lists of {@code ParcelCard} and their related
+ * tabs.
  */
 public class TabPaneHandle extends NodeHandle<TabPane> {
     public static final String TAB_PANE_ID = "#tabPanePlaceholder";
@@ -20,6 +21,9 @@ public class TabPaneHandle extends NodeHandle<TabPane> {
                 .DELIVERED_PARCEL_LIST_VIEW_ID));
     }
 
+    /**
+     * gets the TabHandle based on the handle index
+     */
     public TabHandle getTabHandle(int index) {
         if (index == INDEX_FIRST_TAB.getZeroBased()) {
             return new TabHandle(getChildNode(TabHandle.UNDELIVERED_PARCEL_TAB_ID));
