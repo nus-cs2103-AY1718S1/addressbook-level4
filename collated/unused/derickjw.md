@@ -1,4 +1,6 @@
-<!--@@author derickjw-->
+# derickjw
+###### \resources\view\LoginWindow.fxml
+``` fxml
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
@@ -37,3 +39,4 @@
       </Button>
    </children>
 </AnchorPane>
+```
