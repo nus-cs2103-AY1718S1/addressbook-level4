@@ -3,8 +3,6 @@ package seedu.address.logic.parser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.AddressBookParser.getUnknownRecommendedCommand;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
@@ -173,14 +171,15 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);
-        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+        thrown.expectMessage(HelpCommand.MESSAGE_USAGE);
         parser.parseCommand("");
     }
 
     @Test
     public void parseCommand_unknownCommand_throwsParseException() throws Exception {
+        String testInput = "unknownCommand";
         thrown.expect(ParseException.class);
-        thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
-        parser.parseCommand("unknownCommand");
+        thrown.expectMessage(getUnknownRecommendedCommand(testInput));
+        parser.parseCommand(testInput);
     }
 }

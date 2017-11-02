@@ -1,7 +1,9 @@
+//@@author hthjthtrh
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
@@ -55,7 +57,8 @@ public class DeleteCommandTest {
 
         DeleteCommand deleteCommand = prepareCommand(testIndexes);
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_INDEX_ALL);
+        assertCommandFailure(deleteCommand, model,
+                MESSAGE_EXECUTION_FAILURE + Messages.MESSAGE_INVALID_PERSON_INDEX_ALL);
     }
 
     @Test
@@ -93,7 +96,8 @@ public class DeleteCommandTest {
 
         DeleteCommand deleteCommand = prepareCommand(testIndexes);
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_INDEX_ALL);
+        assertCommandFailure(deleteCommand, model,
+                MESSAGE_EXECUTION_FAILURE + Messages.MESSAGE_INVALID_PERSON_INDEX_ALL);
     }
 
     @Test
@@ -143,3 +147,4 @@ public class DeleteCommandTest {
         assert model.getFilteredPersonList().isEmpty();
     }
 }
+//@@author

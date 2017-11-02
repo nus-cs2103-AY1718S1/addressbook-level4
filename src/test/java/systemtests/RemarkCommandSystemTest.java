@@ -15,7 +15,6 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
@@ -29,6 +28,9 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class RemarkCommandSystemTest extends AddressBookSystemTest {
+
+    // this message is used to match message in result display, which should be empty for any failed execution
+    private static final String MESSAGE_EXECUTION_FAILURE_EMPTY = "";
 
     @Test
     public void remark() throws Exception {
@@ -83,7 +85,7 @@ public class RemarkCommandSystemTest extends AddressBookSystemTest {
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getAddressBook().getPersonList().size();
         assertCommandFailure(RemarkCommand.COMMAND_WORD + " " + invalidIndex + REMARK_DESC_ANY,
-                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* ---------------------Performing remark operation while a person card is selected ------------------------- */
 
@@ -105,20 +107,20 @@ public class RemarkCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid index (0) -> rejected */
         assertCommandFailure(RemarkCommand.COMMAND_WORD + " 0" + NAME_DESC_BOB,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE));
+                MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: invalid index (-1) -> rejected */
         assertCommandFailure(RemarkCommand.COMMAND_WORD + " -1" + NAME_DESC_BOB,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE));
+                MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: invalid index (size + 1) -> rejected */
         invalidIndex = getModel().getFilteredPersonList().size() + 1;
         assertCommandFailure(RemarkCommand.COMMAND_WORD + " " + invalidIndex + REMARK_DESC_ANY,
-                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: missing index -> rejected */
         assertCommandFailure(RemarkCommand.COMMAND_WORD + NAME_DESC_BOB,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE));
+                MESSAGE_EXECUTION_FAILURE_EMPTY);
 
     }
 
@@ -181,7 +183,7 @@ public class RemarkCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
                                       Index expectedSelectedCardIndex) {
-        executeCommand(command);
+        executeCommand(command, false);
         expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
@@ -202,12 +204,13 @@ public class RemarkCommandSystemTest extends AddressBookSystemTest {
      * 5. Asserts that the command box has the error style.<br>
      * Verifications 1 to 3 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();
 
-        executeCommand(command);
+        executeCommand(command, true);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();

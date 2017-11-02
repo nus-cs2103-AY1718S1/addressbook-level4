@@ -153,12 +153,31 @@ public class AddCommandTest {
         }
 
         @Override
+        public void propagateToGroup(ReadOnlyPerson personToEdit, Person editedPerson, Class commandClass) {
+            fail("This method should not be called.");
+        }
+
         public void propagateToGroup(ReadOnlyPerson personToEdit, Person editedPerson) {
             fail("This method should not be called.");
         }
 
         @Override
         public void deleteGroup(Group grpToDelete) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void setGrpName(Group targetGrp, String detail) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addPersonToGroup(Group targetGrp, ReadOnlyPerson targetPerson) throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void removePersonFromGroup(Group targetGrp, ReadOnlyPerson targetPerson) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
 

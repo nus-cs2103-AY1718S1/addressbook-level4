@@ -14,6 +14,7 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteGroupCommand;
 import seedu.address.logic.commands.DeleteTagCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditGroupCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FavoriteCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -22,12 +23,13 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListAlphabetCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListGroupsCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
-import seedu.address.logic.commands.ViewGroupsCommand;
+import seedu.address.logic.commands.ViewGroupCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -47,8 +49,7 @@ public class AddressBookParser {
      */
     public static String getUnknownRecommendedCommand(String invalidCommand) {
         String recommended = LanguageUtil.getClosestCommand(invalidCommand);
-        return MESSAGE_UNKNOWN_COMMAND
-                + "\nPerhaps you meant '" + recommended + "' ?";
+        return "Perhaps you meant '" + recommended + "' ?";
     }
 
     /**
@@ -61,7 +62,8 @@ public class AddressBookParser {
     public Command parseCommand(String userInput) throws ParseException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+            throw new ParseException(
+                    MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE);
         }
 
         final String commandWord = matcher.group("commandWord");
@@ -99,11 +101,17 @@ public class AddressBookParser {
         case GroupingCommand.COMMAND_WORD:
             return new GroupingCommandParser().parse(arguments);
 
-        case ViewGroupsCommand.COMMAND_WORD:
-            return new ViewGroupsCommand();
+        case ListGroupsCommand.COMMAND_WORD:
+            return new ListGroupsCommand();
 
         case DeleteGroupCommand.COMMAND_WORD:
-            return new DeleteGroupCommand(arguments);
+            return new DeleteGroupCommandParser().parse(arguments);
+
+        case ViewGroupCommand.COMMAND_WORD:
+            return new ViewGroupCommandParser().parse(arguments);
+
+        case EditGroupCommand.COMMAND_WORD:
+            return new EditGroupCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
@@ -154,7 +162,7 @@ public class AddressBookParser {
             return new SortCommandParser().parse(arguments);
 
         default:
-            throw new ParseException(getUnknownRecommendedCommand(commandWord));
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND, getUnknownRecommendedCommand(commandWord));
 
         }
     }

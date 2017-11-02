@@ -1,4 +1,7 @@
+//@@author hthjthtrh
 package seedu.address.logic.commands;
+
+import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
 
 import java.util.List;
 
@@ -35,10 +38,18 @@ public class DeleteGroupCommand extends UndoableCommand {
             model.deleteGroup(grpToDelete);
             return new CommandResult(String.format(MESSAGE_DELETE_GROUP_SUCCESS, groupName));
         } else {
-            throw new CommandException(String.format(MESSAGE_NONEXISTENT_GROUP, groupName));
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE, String.format(MESSAGE_NONEXISTENT_GROUP, groupName));
         }
 
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DeleteGroupCommand // instanceof handles nulls
+                && this.groupName.equals(((DeleteGroupCommand) other).groupName)); // state check
+    }
+
 
     /**
      * Checks if the group to be deleted exists
@@ -54,3 +65,4 @@ public class DeleteGroupCommand extends UndoableCommand {
         return false;
     }
 }
+//@@author

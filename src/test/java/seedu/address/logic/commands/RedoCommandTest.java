@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
 import static seedu.address.logic.UndoRedoStackUtil.prepareStack;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -62,6 +63,6 @@ public class RedoCommandTest {
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // no command in redoStack
-        assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
+        assertCommandFailure(redoCommand, model, MESSAGE_EXECUTION_FAILURE + RedoCommand.MESSAGE_FAILURE);
     }
 }

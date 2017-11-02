@@ -105,13 +105,13 @@ public abstract class AddressBookSystemTest {
      * Executes {@code command} in the application's {@code CommandBox}.
      * Method returns after UI components have been updated.
      */
-    protected void executeCommand(String command) {
+    protected void executeCommand(String command, boolean inValid) {
         rememberStates();
         // Injects a fixed clock before executing a command so that the time stamp shown in the status bar
         // after each command is predictable and also different from the previous command.
         clockRule.setInjectedClockToCurrentTime();
 
-        mainWindowHandle.getCommandBox().run(command);
+        mainWindowHandle.getCommandBox().run(command, inValid);
 
         waitUntilBrowserLoaded(getBrowserPanel());
     }
@@ -120,7 +120,7 @@ public abstract class AddressBookSystemTest {
      * Displays all persons in the address book.
      */
     protected void showAllPersons() {
-        executeCommand(ListCommand.COMMAND_WORD);
+        executeCommand(ListCommand.COMMAND_WORD, false);
         assert getModel().getAddressBook().getPersonList().size() == getModel().getFilteredPersonList().size();
     }
 
@@ -128,7 +128,7 @@ public abstract class AddressBookSystemTest {
      * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
      */
     protected void showPersonsWithName(String keyword) {
-        executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
+        executeCommand(FindCommand.COMMAND_WORD + " " + keyword, false);
         assert getModel().getFilteredPersonList().size() < getModel().getAddressBook().getPersonList().size();
     }
 
@@ -136,7 +136,7 @@ public abstract class AddressBookSystemTest {
      * Selects the person at {@code index} of the displayed list.
      */
     protected void selectPerson(Index index) {
-        executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
+        executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased(), false);
         assert getPersonListPanel().getSelectedCardIndex() == index.getZeroBased();
     }
 

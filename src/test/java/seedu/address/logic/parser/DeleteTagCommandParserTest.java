@@ -15,8 +15,8 @@ public class DeleteTagCommandParserTest {
 
     @Test
     public void parser_emptyArg_throwsParseException() {
-        assertParseFailure(parser, " ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                DeleteTagCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " ",
+                MESSAGE_INVALID_COMMAND_FORMAT + DeleteTagCommand.MESSAGE_USAGE);
     }
 
     @Test

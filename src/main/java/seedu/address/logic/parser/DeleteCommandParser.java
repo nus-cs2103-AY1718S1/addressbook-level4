@@ -1,6 +1,8 @@
+//@@author hthjthtrh
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_VALUE_ARGUMENT;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +27,9 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
      */
     public DeleteCommand parse(String args) throws ParseException {
         args = args.trim();
+        if (args.equals("")) {
+            throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
+        }
         List<String> indexStrs = Arrays.asList(args.split(" "));
         //eliminate duplicates
         HashSet<Integer> indexIntsSet = new HashSet<>();
@@ -33,8 +38,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             try {
                 indexIntsSet.add(ParserUtil.parseInt(indexStr));
             } catch (IllegalValueException e) {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+                throw new ParseException(MESSAGE_INVALID_VALUE_ARGUMENT, DeleteCommand.MESSAGE_USAGE);
             }
         }
         List<Integer> indexInts = new ArrayList<>(indexIntsSet);
@@ -47,3 +51,4 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
     }
 
 }
+//@@author

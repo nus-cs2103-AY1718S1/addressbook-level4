@@ -105,7 +105,7 @@ public class CommandTestUtil {
             command.execute();
             fail("The expected CommandException was not thrown.");
         } catch (CommandException e) {
-            assertEquals(expectedMessage, e.getMessage());
+            assertEquals(expectedMessage, e.getExceptionHeader() + e.getMessage());
             assertEquals(expectedAddressBook, actualModel.getAddressBook());
             assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
         }

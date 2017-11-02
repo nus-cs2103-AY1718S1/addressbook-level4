@@ -1,3 +1,4 @@
+//@@author hthjthtrh
 package seedu.address.model.group;
 
 import static java.util.Objects.requireNonNull;
@@ -8,6 +9,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
  * A list of groups that enforces uniqueness between its elements and does not allow nulls.
@@ -63,10 +65,10 @@ public class UniqueGroupList implements Iterable<Group> {
         return FXCollections.unmodifiableObservableList(internalList);
     }
 
-    public void setGroups(List<? extends Group> groups) throws DuplicateGroupException {
+    public void setGroups(List<? extends Group> groups) throws DuplicateGroupException, DuplicatePersonException {
         final UniqueGroupList replacement = new UniqueGroupList();
         for (final Group grp : groups) {
-            replacement.add(grp);
+            replacement.add(new Group(grp));
         }
         this.internalList.setAll(replacement.internalList);
         sort();
@@ -75,4 +77,21 @@ public class UniqueGroupList implements Iterable<Group> {
     public void removeGroup(Group grpToDelete) {
         internalList.remove(grpToDelete);
     }
+
+    /**
+     * sets the group to the new name
+     * @param targetGrp group to change name
+     * @param newName new name to change to
+     * @throws DuplicateGroupException if a group of newName already exists in the group list
+     */
+    public void setGrpName(Group targetGrp, String newName) throws DuplicateGroupException {
+        for (Group grp : internalList) {
+            if (grp.getGrpName().equals(newName)) {
+                throw new DuplicateGroupException();
+            }
+        }
+
+        targetGrp.setGrpName(newName);
+    }
 }
+//@@author

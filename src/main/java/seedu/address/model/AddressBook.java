@@ -10,6 +10,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.FavoriteCommand;
 import seedu.address.model.group.DuplicateGroupException;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.UniqueGroupList;
@@ -60,9 +62,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
-    public void setGroups(List<? extends Group> groups) throws DuplicateGroupException {
+    //@@author hthjthtrh
+    public void setGroups(List<? extends Group> groups) throws DuplicateGroupException, DuplicatePersonException {
         this.groups.setGroups(groups);
     }
+    //@@author
 
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
@@ -103,6 +107,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.add(newPerson);
     }
 
+    //@@author hthjthtrh
     /**
      * Creates and adds the group into groups
      * @param groupName name of the group
@@ -114,13 +119,29 @@ public class AddressBook implements ReadOnlyAddressBook {
         Group newGroup = new Group(groupName);
         personToGroup.forEach(person -> {
             try {
-                newGroup.add(person);
+                newGroup.add(new Person(person));
             } catch (DuplicatePersonException e) {
                 throw new AssertionError("Shouldn't exist duplicate person");
             }
         });
         groups.add(newGroup);
     }
+
+    /**
+     * adds the grp to the grp list
+     * @param grp
+     * @throws DuplicateGroupException
+     */
+    public void addGroup(Group grp) throws DuplicateGroupException {
+        Group newGroup;
+        try {
+            newGroup = new Group(grp);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("Shouldn't exist duplicate person");
+        }
+        groups.add(newGroup);
+    }
+    //@@author
 
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
@@ -248,14 +269,28 @@ public class AddressBook implements ReadOnlyAddressBook {
         return Objects.hash(persons, tags);
     }
 
+    //@@author hthjthtrh
     /**
      * Deletes or updates the group, if the group contains personToEdit
      * @param personToEdit original person to be updated
      * @param editedPerson the person to update to. If null, it is a deletion
      */
-    public void checkPersonInGroupList(ReadOnlyPerson personToEdit, Person editedPerson) {
-        // special condition for deletion of person
-        if (editedPerson == null) {
+    public void checkPersonInGroupList(ReadOnlyPerson personToEdit, Person editedPerson, Class commandClass) {
+        if (this.groups.asObservableList().size() == 0) {
+            return;
+        }
+
+        if (commandClass.equals(FavoriteCommand.class)) {
+            this.groups.forEach(group -> {
+                if (group.contains(personToEdit)) {
+                    try {
+                        group.favorite(personToEdit);
+                    } catch (PersonNotFoundException pnfe) {
+                        throw new AssertionError("The target person cannot be missing");
+                    }
+                }
+            });
+        } else if (commandClass.equals(DeleteCommand.class)) {
             this.groups.forEach(group -> {
                 if (group.contains(personToEdit)) {
                     try {
@@ -284,4 +319,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removeGroup(Group grpToDelete) {
         groups.removeGroup(grpToDelete);
     }
+
+    public void setGrpName(Group targetGrp, String newName) throws DuplicateGroupException {
+        this.groups.setGrpName(targetGrp, newName);
+    }
+    //@@author
 }

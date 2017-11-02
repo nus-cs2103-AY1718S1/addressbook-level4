@@ -16,12 +16,10 @@ public class SortCommandParserTest {
     @Test
     public void invalid_input_format () {
         // no input
-        assertParseFailure(parser, " ",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " ", MESSAGE_INVALID_COMMAND_FORMAT + SortCommand.MESSAGE_USAGE);
 
         // input is not one of the attributes
-        assertParseFailure(parser, "wrong input",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "wrong input", MESSAGE_INVALID_COMMAND_FORMAT + SortCommand.MESSAGE_USAGE);
     }
 
     @Test

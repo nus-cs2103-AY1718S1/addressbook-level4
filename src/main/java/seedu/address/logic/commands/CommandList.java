@@ -26,6 +26,11 @@ public class CommandList {
         commandList.add(RemarkCommand.COMMAND_WORD);
         commandList.add(SelectCommand.COMMAND_WORD);
         commandList.add(UndoCommand.COMMAND_WORD);
+        commandList.add(GroupingCommand.COMMAND_WORD);
+        commandList.add(ListGroupsCommand.COMMAND_WORD);
+        commandList.add(DeleteGroupCommand.COMMAND_WORD);
+        commandList.add(ViewGroupCommand.COMMAND_WORD);
+        commandList.add(EditGroupCommand.COMMAND_WORD);
     }
 
     public ArrayList<String> getCommandList() {

@@ -2,7 +2,6 @@
 package systemtests;
 
 import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
@@ -20,7 +19,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.FavoriteCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
-import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.model.Model;
 import seedu.address.model.person.Favorite;
 import seedu.address.model.person.Person;
@@ -30,6 +28,9 @@ import seedu.address.model.person.predicates.NameContainsKeywordsPredicate;
 
 
 public class FavoriteCommandSystemTest extends AddressBookSystemTest {
+
+    // this message is used to match message in result display, which should be empty for any failed execution
+    private static final String MESSAGE_EXECUTION_FAILURE_EMPTY = "";
 
     private static final String MESSAGE_INVALID_FAVORITE_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, FavoriteCommand.MESSAGE_USAGE);
@@ -83,7 +84,7 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getAddressBook().getPersonList().size();
         command = FavoriteCommand.COMMAND_WORD + " " + invalidIndex;
-        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(command, MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* --------------- Performing favorite operation while a person card is selected ------------------- */
 
@@ -103,27 +104,27 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid index (0) -> rejected */
         command = FavoriteCommand.COMMAND_WORD + " 0";
-        assertCommandFailure(command, MESSAGE_INVALID_FAVORITE_COMMAND_FORMAT);
+        assertCommandFailure(command, MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: invalid index (-1) -> rejected */
         command = FavoriteCommand.COMMAND_WORD + " -1";
-        assertCommandFailure(command, MESSAGE_INVALID_FAVORITE_COMMAND_FORMAT);
+        assertCommandFailure(command, MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: invalid index (size + 1) -> rejected */
         Index outOfBoundsIndex = Index.fromOneBased(
                 getModel().getAddressBook().getPersonList().size() + 1);
         command = FavoriteCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased();
-        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(command, MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(FavoriteCommand.COMMAND_WORD + " abc", MESSAGE_INVALID_FAVORITE_COMMAND_FORMAT);
+        assertCommandFailure(FavoriteCommand.COMMAND_WORD + " abc", MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: invalid arguments (extra argument) -> rejected */
-        assertCommandFailure(FavoriteCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_FAVORITE_COMMAND_FORMAT);
+        assertCommandFailure(FavoriteCommand.COMMAND_WORD + " 1 abc", MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("FaVORIte 1",
-                AddressBookParser.getUnknownRecommendedCommand("FavORIte"));
+                MESSAGE_EXECUTION_FAILURE_EMPTY);
     }
 
     /**
@@ -200,7 +201,7 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
                                       Index expectedSelectedCardIndex) {
-        executeCommand(command);
+        executeCommand(command, false);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
 
         if (expectedSelectedCardIndex != null) {
@@ -227,7 +228,7 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();
 
-        executeCommand(command);
+        executeCommand(command, true);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();

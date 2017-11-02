@@ -68,11 +68,17 @@ public interface Model {
     /**
      * Propagates the edit to group list
      */
-    void propagateToGroup(ReadOnlyPerson personToEdit, Person editedPerson);
+    void propagateToGroup(ReadOnlyPerson personToEdit, Person editedPerson, Class commandClass);
 
     /**
      * Deletes the group from group list
      * @param grpToDelete
      */
     void deleteGroup(Group grpToDelete);
+
+    void setGrpName(Group targetGrp, String detail) throws DuplicateGroupException;
+
+    void addPersonToGroup(Group targetGrp, ReadOnlyPerson targetPerson) throws DuplicatePersonException;
+
+    void removePersonFromGroup(Group targetGrp, ReadOnlyPerson targetPerson) throws PersonNotFoundException;
 }

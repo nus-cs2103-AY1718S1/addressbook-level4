@@ -83,6 +83,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author hthjthtrh
     @Override
     public void createGroup(String groupName, List<ReadOnlyPerson> personToGroup)
             throws DuplicateGroupException {
@@ -92,20 +93,49 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void propagateToGroup(ReadOnlyPerson personToEdit, Person editedPerson) {
+    public void propagateToGroup(ReadOnlyPerson personToEdit, Person editedPerson, Class commandClass) {
         requireNonNull(personToEdit);
 
-        addressBook.checkPersonInGroupList(personToEdit, editedPerson);
+        addressBook.checkPersonInGroupList(personToEdit, editedPerson, commandClass);
         indicateAddressBookChanged();
     }
 
     @Override
-    public void deleteGroup(Group grpToDelete) {
+    public synchronized void deleteGroup(Group grpToDelete) {
         requireNonNull(grpToDelete);
 
         addressBook.removeGroup(grpToDelete);
         indicateAddressBookChanged();
     }
+
+    @Override
+    public synchronized void setGrpName(Group targetGrp, String newName) throws DuplicateGroupException {
+        requireAllNonNull(targetGrp, newName);
+
+        addressBook.setGrpName(targetGrp, newName);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addPersonToGroup(Group targetGrp, ReadOnlyPerson targetPerson)
+            throws DuplicatePersonException {
+        requireAllNonNull(targetGrp, targetPerson);
+
+        targetGrp.add(targetPerson);
+
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void removePersonFromGroup(Group targetGrp, ReadOnlyPerson targetPerson)
+            throws PersonNotFoundException {
+        requireAllNonNull(targetGrp, targetPerson);
+
+        targetGrp.remove(targetPerson);
+
+        indicateAddressBookChanged();
+    }
+    //@@author
 
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)

@@ -21,8 +21,7 @@ public class ListAlphabetCommandParser implements Parser<ListAlphabetCommand> {
     public ListAlphabetCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListAlphabetCommand.MESSAGE_USAGE));
+            throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, ListAlphabetCommand.MESSAGE_USAGE);
         }
 
         String keyword = trimmedArgs;

@@ -31,8 +31,7 @@ public class SortCommandParser implements Parser<SortCommand> {
             default: return new SortCommand(0);
             }
         } else {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+            throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE);
         }
     }
 }

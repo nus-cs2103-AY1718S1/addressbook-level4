@@ -1,8 +1,10 @@
+//@@author hthjthtrh
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.logic.parser.GroupingCommandParser.MESSAGE_INCORRECT_GROUPNAME_FORMAT;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +36,7 @@ public class GroupingCommandParserTest {
 
     @Test
     public void parse_indexFieldsMissing_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupingCommand.MESSAGE_USAGE);
+        String expectedMessage = MESSAGE_INVALID_COMMAND_FORMAT + GroupingCommand.MESSAGE_USAGE;
 
         assertParseFailure(parser, "test", expectedMessage);
 
@@ -44,8 +46,16 @@ public class GroupingCommandParserTest {
 
     @Test
     public void parse_emptyArgument_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupingCommand.MESSAGE_USAGE);
+        String expectedMessage = MESSAGE_INVALID_COMMAND_FORMAT + GroupingCommand.MESSAGE_USAGE;
 
         assertParseFailure(parser, "",  expectedMessage);
     }
+
+    @Test
+    public void parse_invalidGroupName_failure() {
+        String expectedMessage = MESSAGE_INCORRECT_GROUPNAME_FORMAT + GroupingCommand.MESSAGE_USAGE;
+
+        assertParseFailure(parser, "1234321 1 3 5 ", expectedMessage);
+    }
 }
+//@@author

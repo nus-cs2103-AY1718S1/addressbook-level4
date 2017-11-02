@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
@@ -22,8 +23,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandList;
@@ -173,8 +176,33 @@ public class CommandBox extends UiPart<Region> {
             setStyleToIndicateCommandFailure();
             logger.info("Invalid command: " + commandTextField.getText());
             raise(new NewResultAvailableEvent(e.getMessage(), true));
+
+            alertUser(e);
         }
     }
+
+    //@@author hthjthtrh
+    /**
+     * Opens an alert dialogue to inform user of the error
+     * @param e exception due to parsing / execution
+     */
+    private void alertUser(Exception e) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+        FxViewUtil.setStageIcon(alertStage, "/images/warning_sign.png");
+
+        if (e.getClass().equals(CommandException.class)) {
+            alert.setHeaderText(((CommandException) e).getExceptionHeader());
+        } else {
+            alert.setHeaderText(((ParseException) e).getExceptionHeader());
+        }
+        alert.setContentText(e.getMessage());
+
+        alert.setResizable(true);
+        alert.showAndWait();
+    }
+    //@@author
 
     /**
      * Initializes the history snapshot.

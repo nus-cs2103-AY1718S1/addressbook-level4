@@ -72,7 +72,7 @@ public class TypicalPersons {
     private TypicalPersons() {} // prevents instantiation
 
     /**
-     * Returns an {@code AddressBook} with all the typical persons.
+     * Returns an {@code AddressBook} with all the typical persons and groups.
      */
     public static AddressBook getTypicalAddressBook() {
         AddressBook ab = new AddressBook();
@@ -98,6 +98,14 @@ public class TypicalPersons {
         testGrpPersons.add(AMY);
         try {
             ab.addGroup("testGrp2", testGrpPersons);
+        } catch (DuplicateGroupException e) {
+            assert false : "not possible";
+        }
+
+        TypicalGroups typicalGroups = new TypicalGroups();
+        try {
+            ab.addGroup(typicalGroups.getTestGroup3());
+            ab.addGroup(typicalGroups.getTestGroup4());
         } catch (DuplicateGroupException e) {
             assert false : "not possible";
         }

@@ -106,6 +106,7 @@ public class MainApp extends Application {
         return new ModelManager(initialData, userPrefs);
     }
 
+    //@@author hthjthtrh
     /**
      * Returns a {@code ModelManager} with the data from {@code storage}'s backup address book and
      * {@code userPrefs}. <br>
@@ -131,6 +132,7 @@ public class MainApp extends Application {
         }
         return new ModelManager(initialData, userPrefs);
     }
+    //@@author
 
     private void initLogging(Config config) {
         LogsCenter.init(config);

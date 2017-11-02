@@ -1,3 +1,4 @@
+//@@author hthjthtrh
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
@@ -19,6 +20,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class GroupingCommandParser implements Parser<GroupingCommand> {
 
+    public static final String MESSAGE_INCORRECT_GROUPNAME_FORMAT = "Group name cannot be a integer!";
+
     /**
      * Parses the given {@code String} of arguments in the context of the GroupingCommand
      * and returns an GroupingCommand object for execution.
@@ -33,12 +36,24 @@ public class GroupingCommandParser implements Parser<GroupingCommand> {
         String grpName;
         List<String> indStrList;
 
+        boolean isInteger;
         if (argsList.size() >= 2) {
+            // check if group name is an integer
+            try {
+                ParserUtil.parseInt(argsList.get(0));
+                isInteger = true;
+            } catch (IllegalValueException e) {
+                isInteger = false;
+            }
+
+            // if group name is integer, alert user
+            if (isInteger) {
+                throw new ParseException(MESSAGE_INCORRECT_GROUPNAME_FORMAT, GroupingCommand.MESSAGE_USAGE);
+            }
             grpName = argsList.get(0);
             indStrList = argsList.subList(1, argsList.size());
         } else {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupingCommand.MESSAGE_USAGE));
+            throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, GroupingCommand.MESSAGE_USAGE);
         }
 
         // using hashset to eliminate any duplicates
@@ -48,8 +63,7 @@ public class GroupingCommandParser implements Parser<GroupingCommand> {
             try {
                 indexIntsSet.add(ParserUtil.parseInt(indexStr));
             } catch (IllegalValueException e) {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupingCommand.MESSAGE_USAGE));
+                throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, GroupingCommand.MESSAGE_USAGE);
             }
         }
 
@@ -57,11 +71,7 @@ public class GroupingCommandParser implements Parser<GroupingCommand> {
 
         indexIntsSet.forEach(idx -> indexList.add(Index.fromOneBased(idx)));
 
-        System.out.println("grpName: " + grpName);
-        for (Index idx : indexList) {
-            System.out.println("indexes are: " + idx.getZeroBased());
-        }
-
         return new GroupingCommand(grpName, indexList);
     }
 }
+//@@author

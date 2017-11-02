@@ -19,8 +19,7 @@ public class DeleteTagCommandParser implements Parser<DeleteTagCommand> {
     public DeleteTagCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteTagCommand.MESSAGE_USAGE));
+            throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, DeleteTagCommand.MESSAGE_USAGE);
         }
 
         String keyword = trimmedArgs;

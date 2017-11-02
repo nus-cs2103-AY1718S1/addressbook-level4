@@ -1,7 +1,9 @@
+//@@author hthjthtrh
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -84,7 +86,7 @@ public class GroupingCommandTest {
 
         GroupingCommand testCommand = prepareCommand("testGrp1", testIndexes);
 
-        String expectedMessage = GroupingCommand.MESSAGE_DUPLICATE_GROUP_NAME;
+        String expectedMessage = MESSAGE_EXECUTION_FAILURE + GroupingCommand.MESSAGE_DUPLICATE_GROUP_NAME;
 
         assertCommandFailure(testCommand, model, expectedMessage);
     }
@@ -97,7 +99,7 @@ public class GroupingCommandTest {
 
         GroupingCommand testCommand = prepareCommand("newGroup", testIndexes);
 
-        String expectedMessage = Messages.MESSAGE_INVALID_PERSON_INDEX_ALL;
+        String expectedMessage = MESSAGE_EXECUTION_FAILURE + Messages.MESSAGE_INVALID_PERSON_INDEX_ALL;
 
         assertCommandFailure(testCommand, model, expectedMessage);
     }
@@ -142,3 +144,4 @@ public class GroupingCommandTest {
         return grpCommand;
     }
 }
+//@@author

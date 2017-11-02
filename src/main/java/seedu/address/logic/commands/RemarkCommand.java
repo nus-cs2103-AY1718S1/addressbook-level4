@@ -1,6 +1,7 @@
 //@@author Giang
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -49,7 +50,7 @@ public class RemarkCommand extends UndoableCommand {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
         ReadOnlyPerson personToRemark = lastShownList.get(targetIndex.getZeroBased());
@@ -58,9 +59,9 @@ public class RemarkCommand extends UndoableCommand {
 
         try {
             model.updatePerson(personToRemark, remarkedPerson);
-            model.propagateToGroup(personToRemark, remarkedPerson);
+            model.propagateToGroup(personToRemark, remarkedPerson, this.getClass());
         } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }

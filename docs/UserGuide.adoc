@@ -149,6 +149,7 @@ Format: `createGroup GROUP_NAME INDEX [INDEX]...`
 ****
 * Creates the group with group name `GROUP_NAME` including the list of people specified by `INDEX` s.
 * Group name cannot be empty.
+* Group name cannot be an integer, eg. 1341
 * Creating group with group name already existent in the addressbook will fail.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
@@ -164,6 +165,83 @@ Creates the group of group name SoSmart with the 1st, 3rd and 5th person in the 
 Operation fails because group `SoSmart` already exists in the address book.
 * `createGroup YouSmart?` +
 Operation fails because no `index` is provided.
+* `createGroup 1234 1 2 3 4` +
+Operation fails because group name is an integer
+
+=== Deleting a group: `deleteGroup`
+
+Deletes a group from the addressbook. +
+Format: `deleteGroup GROUP_NAME`
+
+****
+* Deletes the group with group name `GROUP_NAME`.
+* Group name cannot be empty.
+* Group name must be a valid group name (exists in the addressbook and valid format)
+****
+
+Examples:
+
+* `createGroup SoSmart 1 2 3` +
+`deleteGroup SoSmart` +
+Deletes the group `SoSmart` successfully
+
+* `deleteGroup 1234` +
+Operation fails because group name is an integer
+
+* `deleteGroup SoSmart` +
+Operation fails because the group `SoSmart` does not exist
+
+=== Listing all groups: `listGroups`
+
+Lists all groups by group name in the addressbook. +
+Format: `listGroups`
+
+=== Listing persons within a group: `viewGroup`
+
+Lists all persons in the specified group +
+Format: `viewGroup GROUP_NAME` or `viewGroup INDEX`
+
+****
+* First argument is treated as an index if it is an integer, else it is treated like a group name
+* User index in conjuncture with `listGroups`, to see the groups with corresponding index
+****
+
+Examples:
+
+* `viewGroup Hello!` +
+Lists all person in the group `Hello!`.
+
+* `viewGroup 1` +
+Lists all person in the first group.
+
+* `viewGroup 1234` +
+Operation fails if there is not 1234 groups in the addressbook.
+
+=== Editing a group : `editGroup`
+
+Edits the group. +
+Format: `editGroup GROUP_NAME grpName NEW_GROUP_NAME`
+or `editGroup GROUP_NAME add INDEX`
+or `editGROUP GROUP_NAME delete INDEX`
+
+****
+* This command supports three kinds of operations: 1. change group name 2. add a person to the group 3. delete a person from the group
+* `NEW_GROUP_NAME` must fit a valid group name format
+****
+
+Examples:
+
+* `editGroup test grpName testing` +
+`editGroup anotherTest grpName testing` +
+First operation succeeds if no existing group is called `testing` +
+Second operation fails if first operation goes through.
+
+* `editGroup test add 1` +
+Adds the first person from the current view of persons to the group.
+
+* `editGroup test delete 3` +
+Deletes the third person in the group.
+
 
 === Deleting a person : `delete`
 

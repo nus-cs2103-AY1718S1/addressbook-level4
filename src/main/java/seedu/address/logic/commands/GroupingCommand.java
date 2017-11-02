@@ -1,5 +1,7 @@
+//@@author hthjthtrh
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.ArrayList;
@@ -19,7 +21,8 @@ public class GroupingCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "createGroup";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Creates a group for the list of person based on group name and index numbers provided\n"
+            + ": Creates a group for the list of person based on group name(non-integer) "
+            + "and index numbers provided\n"
             + "Parameters: GROUP_NAME INDEX [INDEX]...\n"
             + "Example: " + COMMAND_WORD + " SmartOnes 1 4 2";
 
@@ -51,7 +54,7 @@ public class GroupingCommand extends UndoableCommand {
         }
 
         if (!hasExecutableIdx) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_INDEX_ALL);
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE, Messages.MESSAGE_INVALID_PERSON_INDEX_ALL);
         }
 
         List<ReadOnlyPerson> personToGroup = new ArrayList<>();
@@ -60,7 +63,7 @@ public class GroupingCommand extends UndoableCommand {
         try {
             model.createGroup(groupName, personToGroup);
         } catch (DuplicateGroupException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_GROUP_NAME);
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_DUPLICATE_GROUP_NAME);
         }
 
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -89,3 +92,4 @@ public class GroupingCommand extends UndoableCommand {
         return sb.toString();
     }
 }
+//@@author

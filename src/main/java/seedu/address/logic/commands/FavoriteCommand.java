@@ -1,6 +1,8 @@
 //@@author A0143832J
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
+
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -39,12 +41,13 @@ public class FavoriteCommand extends UndoableCommand {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
         ReadOnlyPerson personToFavorite = lastShownList.get(targetIndex.getZeroBased());
         try {
             model.favoritePerson(personToFavorite);
+            model.propagateToGroup(personToFavorite, null, this.getClass());
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }

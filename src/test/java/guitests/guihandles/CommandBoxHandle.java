@@ -27,12 +27,17 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
      * Enters the given command in the Command Box and presses enter.
      * @return true if the command succeeded, false otherwise.
      */
-    public boolean run(String command) {
+    public boolean run(String command, boolean isInvalid) {
         click();
         guiRobot.interact(() -> getRootNode().setText(command));
         guiRobot.pauseForHuman();
 
         guiRobot.type(KeyCode.ENTER);
+
+        // to close the alert dialogue
+        if (isInvalid) {
+            guiRobot.type(KeyCode.ENTER);
+        }
 
         return !getStyleClass().contains(CommandBox.ERROR_STYLE_CLASS);
     }

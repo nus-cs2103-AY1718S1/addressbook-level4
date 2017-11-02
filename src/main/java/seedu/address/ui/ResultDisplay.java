@@ -40,12 +40,13 @@ public class ResultDisplay extends UiPart<Region> {
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        String messageToDisplay;
         if (event.invalid) {
-            setStyleToIndicateCommandFailure();
+            messageToDisplay = "";
         } else {
-            setStyleToDefault();
+            messageToDisplay = event.message;
         }
-        Platform.runLater(() -> displayed.setValue(event.message));
+        Platform.runLater(() -> displayed.setValue(messageToDisplay));
     }
 
     /**

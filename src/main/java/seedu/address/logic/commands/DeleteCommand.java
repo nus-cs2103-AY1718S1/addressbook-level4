@@ -1,9 +1,11 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_INDEX_ALL;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -20,7 +22,7 @@ public class DeleteCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the list of person identified by the index numbers used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Parameters: INDEX [INDEX]...(must be positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1 4 2";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person:\n";
@@ -48,7 +50,7 @@ public class DeleteCommand extends UndoableCommand {
             }
         }
         if (!hasExecutableIdx) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_INDEX_ALL);
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_INVALID_PERSON_INDEX_ALL);
         }
         ArrayList<ReadOnlyPerson> toDeletePerson = new ArrayList<>();
         for (int idx : executableIdx) {
@@ -57,7 +59,7 @@ public class DeleteCommand extends UndoableCommand {
         for (int i = 0; i < executableIdx.size(); i++) {
             try {
                 model.deletePerson(toDeletePerson.get(i));
-                model.propagateToGroup(toDeletePerson.get(i), null);
+                model.propagateToGroup(toDeletePerson.get(i), null, this.getClass());
             } catch (PersonNotFoundException e) {
                 assert false : "The target person cannot be missing";
             }
