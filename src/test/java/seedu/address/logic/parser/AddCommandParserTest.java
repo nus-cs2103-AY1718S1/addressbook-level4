@@ -111,6 +111,68 @@ public class AddCommandParserTest {
                 + ADDRESS_DESC_AMY + FORMCLASS_DESC_AMY + GRADES_DESC_AMY + POSTALCODE_DESC_AMY,
                 new AddCommand(expectedPerson));
 
+        // no email
+        Person expectedPersonWithNoEmail = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+                .withAddress(VALID_ADDRESS_AMY).withGrades(VALID_GRADES_AMY).withEmail("(Email not recorded)")
+                .withFormClass(VALID_FORMCLASS_AMY).withPostalCode(VALID_POSTALCODE_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                        + ADDRESS_DESC_AMY + FORMCLASS_DESC_AMY + GRADES_DESC_AMY
+                        + POSTALCODE_DESC_AMY + TAG_DESC_FRIEND,
+                new AddCommand(expectedPersonWithNoEmail));
+
+        // no address
+        Person expectedPersonWithNoAddress = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+                .withAddress("(Address not recorded)").withGrades(VALID_GRADES_AMY).withEmail(VALID_EMAIL_AMY)
+                .withFormClass(VALID_FORMCLASS_AMY).withPostalCode(VALID_POSTALCODE_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                        + FORMCLASS_DESC_AMY + GRADES_DESC_AMY + EMAIL_DESC_AMY
+                        + POSTALCODE_DESC_AMY
+                        + TAG_DESC_FRIEND,
+                new AddCommand(expectedPersonWithNoAddress));
+
+        // no postal code
+        Person expectedPersonWithNoPostalCode = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+                .withAddress(VALID_ADDRESS_AMY).withGrades(VALID_GRADES_AMY).withEmail(VALID_EMAIL_AMY)
+                .withFormClass(VALID_FORMCLASS_AMY).withPostalCode("(Postal code not recorded)")
+                .withTags(VALID_TAG_FRIEND).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                        + ADDRESS_DESC_AMY + FORMCLASS_DESC_AMY + GRADES_DESC_AMY + EMAIL_DESC_AMY
+                        + TAG_DESC_FRIEND,
+                new AddCommand(expectedPersonWithNoPostalCode));
+
+        // no address, no postal code
+        Person expectedPersonWithNoAddressNoPostalCode = new PersonBuilder().withName(VALID_NAME_AMY)
+                .withPhone(VALID_PHONE_AMY)
+                .withAddress("(Address not recorded)").withGrades(VALID_GRADES_AMY).withEmail(VALID_EMAIL_AMY)
+                .withFormClass(VALID_FORMCLASS_AMY).withPostalCode("(Postal code not recorded)")
+                .withTags(VALID_TAG_FRIEND).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                        + FORMCLASS_DESC_AMY + GRADES_DESC_AMY + EMAIL_DESC_AMY
+                        + TAG_DESC_FRIEND,
+                new AddCommand(expectedPersonWithNoAddressNoPostalCode));
+
+        // no email, no address, no postal code
+        Person expectedPersonWithNoEmailNoAddressNoPostalCode = new PersonBuilder().withName(VALID_NAME_AMY)
+                .withPhone(VALID_PHONE_AMY)
+                .withAddress("(Address not recorded)").withGrades(VALID_GRADES_AMY).withEmail("(Email not recorded)")
+                .withFormClass(VALID_FORMCLASS_AMY).withPostalCode("(Postal code not recorded)")
+                .withTags(VALID_TAG_FRIEND).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                        + FORMCLASS_DESC_AMY + GRADES_DESC_AMY
+                        + TAG_DESC_FRIEND,
+                new AddCommand(expectedPersonWithNoEmailNoAddressNoPostalCode));
+
+        // no email, no address, no postal code, no tag, meaning don't have all the optional inputs
+        Person expectedPersonWithNoOptionalInputs = new PersonBuilder().withName(VALID_NAME_AMY)
+                .withPhone(VALID_PHONE_AMY)
+                .withAddress("(Address not recorded)").withGrades(VALID_GRADES_AMY).withEmail("(Email not recorded)")
+                .withFormClass(VALID_FORMCLASS_AMY).withPostalCode("(Postal code not recorded)")
+                .withTags().build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                        + FORMCLASS_DESC_AMY + GRADES_DESC_AMY,
+                new AddCommand(expectedPersonWithNoOptionalInputs));
     }
 
     @Test
