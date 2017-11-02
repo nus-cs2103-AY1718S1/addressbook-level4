@@ -60,6 +60,7 @@ public class SampleDataUtil {
                     new Address("45, Aljunied Street 85, #11-31, singapore 304444"),
                     getScheduleSet(asList("15-01-2017", "25-12-2017"), asList("Team meeting", "Christmas dinner"),
                             asList("Roy Balakrishnan", "Roy Balakrishnan")), getTagSet("colleagues"))
+                    //@@author
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
