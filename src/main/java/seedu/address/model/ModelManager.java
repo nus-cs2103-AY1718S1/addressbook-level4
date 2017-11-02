@@ -64,6 +64,37 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //@@author KhorSL
+    @Override
+    public synchronized void mergeAddressBook(ObservableList<ReadOnlyPerson> newFilePersonList) {
+        Boolean isAddressBookChanged = false;
+        ObservableList<ReadOnlyPerson> defaultFilePersonList = addressBook.getPersonList();
+
+        for (ReadOnlyPerson newDataPerson : newFilePersonList) {
+            boolean isSamePerson = false;
+            for (ReadOnlyPerson defaultDataPerson : defaultFilePersonList) {
+                if (defaultDataPerson.equals(newDataPerson)) {
+                    isSamePerson = true;
+                    break;
+                }
+            }
+            if (!isSamePerson) {
+                try {
+                    addressBook.addPerson(new Person(newDataPerson));
+                } catch (DuplicatePersonException dpe) {
+                    assert false : "Unexpected exception " + dpe.getMessage();
+                }
+                isAddressBookChanged = true;
+            }
+        }
+
+        if (isAddressBookChanged) {
+            updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            indicateAddressBookChanged();
+        }
+    }
+    //@@author
+
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);

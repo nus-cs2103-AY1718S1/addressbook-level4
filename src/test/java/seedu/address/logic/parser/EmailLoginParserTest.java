@@ -1,3 +1,4 @@
+//@@author Hoang
 package seedu.address.logic.parser;
 
 import org.junit.Test;
@@ -33,3 +34,4 @@ public class EmailLoginParserTest {
                EmailLoginCommand.MESSAGE_INVALID_EMAIL);
     }
 }
+//@@author Hoang

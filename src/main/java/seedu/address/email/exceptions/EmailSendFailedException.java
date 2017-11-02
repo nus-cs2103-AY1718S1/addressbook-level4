@@ -1,3 +1,4 @@
+//@@author Hoang
 package seedu.address.email.exceptions;
 
 /**
@@ -11,3 +12,4 @@ public class EmailSendFailedException extends Exception {
         super(message);
     }
 }
+//@@author Hoang

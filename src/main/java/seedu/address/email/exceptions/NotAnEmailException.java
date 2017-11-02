@@ -1,3 +1,4 @@
+//@@author Hoang
 package seedu.address.email.exceptions;
 
 /**
@@ -8,3 +9,4 @@ public class NotAnEmailException extends Exception {
         super("One or more of the given emails is not valid");
     }
 }
+//@@author Hoang

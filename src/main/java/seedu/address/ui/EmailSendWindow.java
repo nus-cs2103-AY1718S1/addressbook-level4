@@ -1,3 +1,4 @@
+//@@author Hoang
 package seedu.address.ui;
 
 import java.util.logging.Logger;
@@ -110,3 +111,4 @@ public class EmailSendWindow extends UiPart<Region> {
         }
     }
 }
+//@@author Hoang

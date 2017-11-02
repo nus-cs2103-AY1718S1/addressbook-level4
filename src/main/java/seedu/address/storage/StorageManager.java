@@ -83,18 +83,6 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public void mergeAddressBook(String newFilePath) throws DataConversionException, IOException {
-        mergeAddressBook(newFilePath, addressBookStorage.getAddressBookFilePath());
-    }
-
-    @Override
-    public void mergeAddressBook(String newFilePath, String defaultFilePath) throws DataConversionException,
-            IOException {
-        logger.fine("Attempting to merge data file: " + newFilePath);
-        addressBookStorage.mergeAddressBook(newFilePath, defaultFilePath);
-    }
-
-    @Override
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));

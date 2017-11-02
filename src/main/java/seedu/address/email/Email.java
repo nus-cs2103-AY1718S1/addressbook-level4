@@ -1,3 +1,4 @@
+//@@author Hoang
 package seedu.address.email;
 
 import seedu.address.email.exceptions.EmailSendFailedException;
@@ -54,3 +55,4 @@ public interface Email {
      */
     void logout();
 }
+//@@author Hoang

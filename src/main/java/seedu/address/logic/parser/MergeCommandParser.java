@@ -5,6 +5,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import seedu.address.logic.commands.MergeCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author KhorSL
 /**
  * Parses input arguments and creates a new FindCommand object
  */
@@ -27,3 +28,4 @@ public class MergeCommandParser implements Parser<MergeCommand> {
     }
 
 }
+//@@author

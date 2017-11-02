@@ -1,3 +1,4 @@
+//@@author Hoang
 package seedu.address.logic.commands;
 
 import seedu.address.email.Email;
@@ -5,7 +6,6 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.storage.AddressBookStorage;
 
 /**
  * Get the currently logged in email
@@ -34,8 +34,8 @@ public class GetEmailCommand extends Command {
      * * Overridden as access to email manager is needed
      */
     @Override
-    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, Email emailManager,
-                        AddressBookStorage addressBookStorage) {
+    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, Email emailManager) {
         this.emailManager = emailManager;
     }
 }
+//@@author Hoang

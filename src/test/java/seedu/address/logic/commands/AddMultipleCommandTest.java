@@ -26,6 +26,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
+//@@author KhorSL
 public class AddMultipleCommandTest {
 
     @Rule
@@ -49,7 +50,7 @@ public class AddMultipleCommandTest {
         CommandResult commandResult = getAddMultipleCommandForPerson(validPersonArrayList, modelStub).execute();
 
         StringBuilder successMessage = new StringBuilder();
-        for(ReadOnlyPerson personToAdd: validPersonArrayList) {
+        for (ReadOnlyPerson personToAdd: validPersonArrayList) {
             successMessage.append(System.lineSeparator());
             successMessage.append(personToAdd);
         }
@@ -113,7 +114,7 @@ public class AddMultipleCommandTest {
      */
     private AddMultipleCommand getAddMultipleCommandForPerson(ArrayList<ReadOnlyPerson> personList, Model model) {
         AddMultipleCommand command = new AddMultipleCommand(personList);
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), null, null);
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), null);
         return command;
     }
 
@@ -166,6 +167,11 @@ public class AddMultipleCommandTest {
 
         @Override
         public void updateFilteredListToShowAll() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void mergeAddressBook(ObservableList<ReadOnlyPerson> newFilePersonList) {
             fail("This method should not be called.");
         }
 

@@ -2,21 +2,25 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.email.Email;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.storage.AddressBookStorage;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.storage.XmlFileStorage;
+import seedu.address.storage.XmlSerializableAddressBook;
 
+//@@author KhorSL
 /**
  * Merge the file given with the default storage file
  */
-public class MergeCommand extends Command {
+public class MergeCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "merge";
 
@@ -35,26 +39,25 @@ public class MergeCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
-        requireNonNull(addressBookStorage);
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        XmlSerializableAddressBook newFileData;
         try {
-            addressBookStorage.mergeAddressBook(newFilePath);
+            newFileData = XmlFileStorage.loadDataFromSaveFile(new File(newFilePath));
         } catch (FileNotFoundException fne) {
             throw new CommandException(MESSAGE_FILE_NOT_FOUND);
         } catch (DataConversionException dce) {
             throw new CommandException(MESSAGE_DATA_CONVERSION_ERROR);
-        } catch (IOException ex) {
-            throw new CommandException(ex.getMessage());
         }
 
+        ObservableList<ReadOnlyPerson> newFilePersonList = newFileData.getPersonList();
+        model.mergeAddressBook(newFilePersonList);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
     @Override
-    public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack, Email emailManager,
-                        AddressBookStorage addressBookStorage) {
+    public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack, Email emailManager) {
         this.model = model;
-        this.addressBookStorage = addressBookStorage;
     }
 
     @Override
@@ -64,3 +67,4 @@ public class MergeCommand extends Command {
                 && this.newFilePath.equals(((MergeCommand) other).newFilePath)); // state check
     }
 }
+//@@author KhorSL

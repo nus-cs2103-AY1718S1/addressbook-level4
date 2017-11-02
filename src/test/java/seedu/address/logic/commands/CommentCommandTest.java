@@ -21,9 +21,9 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Comment;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.Comment;
 import seedu.address.testutil.PersonBuilder;
 
 /**
@@ -117,7 +117,7 @@ public class CommentCommandTest {
      */
     private CommentCommand prepareCommand(Index index, String comment) {
         CommentCommand commentCommand = new CommentCommand(index, new Comment(comment));
-        commentCommand.setData(model, new CommandHistory(), new UndoRedoStack(), null, null);
+        commentCommand.setData(model, new CommandHistory(), new UndoRedoStack(), null);
         return commentCommand;
     }
 }

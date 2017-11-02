@@ -13,8 +13,6 @@ import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.storage.AddressBookStorage;
-import seedu.address.storage.XmlAddressBookStorage;
 
 /**
  * The main LogicManager of the app.
@@ -27,15 +25,13 @@ public class LogicManager extends ComponentManager implements Logic {
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
     private final Email emailManager;
-    private final AddressBookStorage addressBookStorage;
 
-    public LogicManager(Model model, Email emailManager, String addressBookFilePath) {
+    public LogicManager(Model model, Email emailManager) {
         this.model = model;
         this.emailManager = emailManager;
         this.history = new CommandHistory();
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
-        this.addressBookStorage = new XmlAddressBookStorage(addressBookFilePath);
     }
 
     @Override
@@ -43,7 +39,7 @@ public class LogicManager extends ComponentManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
             Command command = addressBookParser.parseCommand(commandText);
-            command.setData(model, history, undoRedoStack, emailManager, addressBookStorage);
+            command.setData(model, history, undoRedoStack, emailManager);
             CommandResult result = command.execute();
             undoRedoStack.push(command);
             return result;
