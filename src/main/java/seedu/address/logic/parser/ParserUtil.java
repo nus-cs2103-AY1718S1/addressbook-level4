@@ -13,6 +13,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Gender;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -85,6 +86,14 @@ public class ParserUtil {
     public static Optional<DateOfBirth> parseDateOfBirth(Optional<String> dob) throws IllegalValueException {
         requireNonNull(dob);
         return dob.isPresent() ? Optional.of(new DateOfBirth(dob.get())) : Optional.empty();
+    }
+    /**
+     * Parses a {@code Optional<String> gender} into an {@code Optional<Gender>} if {@code gender} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Gender> parseGender(Optional<String> gender) throws IllegalValueException {
+        requireNonNull(gender);
+        return gender.isPresent() ? Optional.of(new Gender(gender.get())) : Optional.empty();
     }
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
