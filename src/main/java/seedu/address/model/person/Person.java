@@ -92,12 +92,9 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-<<<<<<< HEAD
                 source.getDateOfBirth(), source.getGender(), source.getTags());
-=======
-                source.getDateOfBirth(), source.getTags());
+
         //@@author OscarWang114
->>>>>>> Upstream/master
         if (source.getLifeInsuranceIds() != null) {
             this.lifeInsuranceIds = new SimpleObjectProperty<>(source.getLifeInsuranceIds());
         }
@@ -109,12 +106,10 @@ public class Person implements ReadOnlyPerson {
 
     public Person(ReadOnlyPerson source, LifeInsurance lifeInsurance) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-<<<<<<< HEAD
                 source.getDateOfBirth(), source.getGender(), source.getTags());
-=======
-                source.getDateOfBirth(), source.getTags());
+
         //@@author OscarWang114
->>>>>>> Upstream/master
+
         if (source.getLifeInsuranceIds() != null) {
             this.lifeInsuranceIds = new SimpleObjectProperty<>(source.getLifeInsuranceIds());
         }

@@ -9,8 +9,6 @@ import seedu.address.logic.parser.exceptions.EmptyFieldException;
  * Represents a Person's gender in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidGender(String)}
  */
-
-
 public class Gender {
 
     /**

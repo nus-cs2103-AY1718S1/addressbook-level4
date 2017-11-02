@@ -41,7 +41,6 @@ public interface ThrowingConsumer<T> extends Consumer<T> {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_DOB + "DATE OF BIRTH] "
-            + "[" + PREFIX_GENDER + "GENDER] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
@@ -49,7 +48,6 @@ public interface ThrowingConsumer<T> extends Consumer<T> {
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_DOB + "20 01 1997 "
-            + PREFIX_GENDER + "Male "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 ```
@@ -64,14 +62,12 @@ public interface ThrowingConsumer<T> extends Consumer<T> {
         private Email email;
         private Address address;
         private DateOfBirth dateofbirth;
-        private Gender gender;
 
         public AddPersonOptionalFieldDescriptor() {
             this.phone = new Phone();
             this.email = new Email();
             this.address = new Address();
             this.dateofbirth = new DateOfBirth();
-            this.gender = new Gender();
         }
 
         public void setPhone(Phone phone) {
@@ -106,14 +102,6 @@ public interface ThrowingConsumer<T> extends Consumer<T> {
             return dateofbirth;
         }
 
-        public void setGender(Gender gender) {
-            this.gender = gender;
-        }
-
-        public Gender getGender() {
-            return gender;
-        }
-
         @Override
         public boolean equals(Object other) {
             // short circuit if same object
@@ -133,8 +121,7 @@ public interface ThrowingConsumer<T> extends Consumer<T> {
             return getPhone().equals(a.getPhone())
                     && getEmail().equals(a.getEmail())
                     && getAddress().equals(a.getAddress())
-                    && getDateOfBirth().equals(a.getDateOfBirth())
-                    && getGender().equals(a.getGender());
+                    && getDateOfBirth().equals(a.getDateOfBirth());
         }
     }
 }
@@ -274,7 +261,7 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap;
         argMultimap = ArgumentTokenizer.tokenize(
-                args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_DOB, PREFIX_GENDER, PREFIX_TAG);
+                args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_DOB, PREFIX_TAG);
 
         if (!isNamePrefixPresent(argMultimap, PREFIX_NAME)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
@@ -295,16 +282,13 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
                 .ifPresent(addPersonOptionalFieldDescriptor::setAddress);
             ParserUtil.parseDateOfBirth(argMultimap.getValue(PREFIX_DOB))
                     .ifPresent(addPersonOptionalFieldDescriptor::setDateOfBirth);
-            ParserUtil.parseGender(argMultimap.getValue(PREFIX_GENDER))
-                    .ifPresent(addPersonOptionalFieldDescriptor::setGender);
 
             Phone phone = addPersonOptionalFieldDescriptor.getPhone();
             Email email = addPersonOptionalFieldDescriptor.getEmail();
             Address address = addPersonOptionalFieldDescriptor.getAddress();
             DateOfBirth dob = addPersonOptionalFieldDescriptor.getDateOfBirth();
-            Gender gender = addPersonOptionalFieldDescriptor.getGender();
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, dob, gender, tagList);
+            ReadOnlyPerson person = new Person(name, phone, email, address, dob, tagList);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
@@ -526,8 +510,219 @@ public class LifeInsurance implements ReadOnlyInsurance {
     private DoubleProperty premium;
     private StringProperty premiumString;
     private StringProperty contractPath;
-    private StringProperty signingDateString;
-    private StringProperty expiryDateString;
+    private StringProperty signingDate;
+    private StringProperty expiryDate;
+
+    /**
+     * Constructor for {@code XmlAdaptedLifeInsurance.toModelType()}
+     */
+    public LifeInsurance(String owner, String insured, String beneficiary, Double premium,
+                         String contractPath, String signingDate, String expiryDate) {
+        this.roleToPersonNameMap = new EnumMap<>(Roles.class);
+        this.roleToPersonNameMap.put(Roles.OWNER, owner);
+        this.roleToPersonNameMap.put(Roles.INSURED, insured);
+        this.roleToPersonNameMap.put(Roles.BENEFICIARY, beneficiary);
+        this.owner = new SimpleObjectProperty<>(new InsurancePerson(owner));
+        this.insured = new SimpleObjectProperty<>(new InsurancePerson(insured));
+        this.beneficiary = new SimpleObjectProperty<>(new InsurancePerson(beneficiary));
+        this.premium = new SimpleDoubleProperty(premium);
+        this.contractPath = new SimpleStringProperty(contractPath);
+        this.signingDate = new SimpleStringProperty(signingDate);
+        this.expiryDate = new SimpleStringProperty(expiryDate);
+        this.premiumString = new SimpleStringProperty(this.getPremiumString());
+    }
+
+    /**
+     * Constructor for {@code AddLifeInsuranceCommand}
+     */
+    public LifeInsurance(ReadOnlyPerson owner, ReadOnlyPerson insured, ReadOnlyPerson beneficiary,
+                         Double premium, String contractPath, String signingDate, String expiryDate) {
+        requireAllNonNull(owner, insured, beneficiary, premium, contractPath);
+        this.roleToPersonNameMap = new EnumMap<>(Roles.class);
+        this.roleToPersonNameMap.put(Roles.OWNER, owner.getName().fullName);
+        this.roleToPersonNameMap.put(Roles.INSURED, insured.getName().fullName);
+        this.roleToPersonNameMap.put(Roles.BENEFICIARY, beneficiary.getName().fullName);
+        this.owner = new SimpleObjectProperty<>(new InsurancePerson(owner));
+        this.insured = new SimpleObjectProperty<>(new InsurancePerson(insured));
+        this.beneficiary = new SimpleObjectProperty<>(new InsurancePerson(beneficiary));
+        this.premium = new SimpleDoubleProperty(premium);
+        this.contractPath = new SimpleStringProperty(contractPath);
+        this.signingDate = new SimpleStringProperty(signingDate);
+        this.expiryDate = new SimpleStringProperty(expiryDate);
+        this.premiumString = new SimpleStringProperty(this.getPremiumString());
+    }
+
+    /**
+     * Creates a copy of the given ReadOnlyInsurance.
+     */
+    public LifeInsurance(ReadOnlyInsurance source) {
+        //TODO: fix
+        if (source.ownerProperty() != null) {
+            this.owner = new SimpleObjectProperty<>(source.getOwner());
+        }
+        if (source.insuredProperty() != null) {
+            this.insured = new SimpleObjectProperty<>(source.getInsured());
+        }
+        if (source.beneficiaryProperty() != null) {
+            this.beneficiary = new SimpleObjectProperty<>(source.getBeneficiary());
+        }
+        this.premium = new SimpleDoubleProperty(source.getPremium());
+        this.premiumString = new SimpleStringProperty(this.getPremiumString());
+        this.contractPath = new SimpleStringProperty(source.getContractPath());
+        this.signingDate = new SimpleStringProperty(source.getSigningDate());
+        this.expiryDate = new SimpleStringProperty(source.getExpiryDate());
+        if (source.getRoleToPersonNameMap() != null) {
+            this.roleToPersonNameMap = source.getRoleToPersonNameMap();
+        }
+    }
+
+    public void setInsuranceRole(Person person) {
+        String fullName = person.getName().fullName;
+        roleToPersonNameMap.forEach((role, name) -> {
+            if (name == fullName) {
+                switch (role) {
+                case OWNER:
+                    this.owner = new SimpleObjectProperty<>(new InsurancePerson(person));
+                    break;
+                case INSURED:
+                    this.insured = new SimpleObjectProperty<>(new InsurancePerson(person));
+                    break;
+                case BENEFICIARY:
+                    this.beneficiary = new SimpleObjectProperty<>(new InsurancePerson(person));
+                    break;
+                default:
+                    assert (false);
+                }
+            }
+        });
+    }
+
+    @Override
+    public ObjectProperty<UUID> idProperty() {
+        return id;
+    }
+
+    @Override
+    public String getId() {
+        return id.toString();
+    }
+
+    @Override
+    public EnumMap getRoleToPersonNameMap() {
+        return roleToPersonNameMap;
+    }
+
+    public void setOwner(Person owner) {
+        requireNonNull(owner);
+        this.owner.get().setPerson(owner);
+    }
+
+    @Override
+    public ObjectProperty<InsurancePerson> ownerProperty() {
+        return owner;
+    }
+
+    @Override
+    public InsurancePerson getOwner() {
+        return owner.get();
+    }
+
+    public void setInsured(Person insured) {
+        requireNonNull(insured);
+        this.insured.get().setPerson(insured);
+    }
+
+    @Override
+    public ObjectProperty<InsurancePerson> insuredProperty() {
+        return insured;
+    }
+
+    @Override
+    public InsurancePerson getInsured() {
+        return insured.get();
+    }
+
+    public void setBeneficiary(Person beneficiary) {
+        requireNonNull(beneficiary);
+        this.beneficiary.get().setPerson(beneficiary);
+    }
+
+    @Override
+    public ObjectProperty<InsurancePerson> beneficiaryProperty() {
+        return beneficiary;
+    }
+
+    @Override
+    public InsurancePerson getBeneficiary() {
+        return beneficiary.get();
+    }
+
+    public void setPremium(Double premium) {
+        this.premium.set(requireNonNull(premium));
+    }
+
+    @Override
+    public DoubleProperty premiumProperty() {
+        return premium;
+    }
+
+    @Override
+    public Double getPremium() {
+        return premium.get();
+    }
+
+    @Override
+    public StringProperty premiumStringProperty() {
+        return premiumString;
+    }
+
+    @Override
+    public String getPremiumString() {
+        return "S$ " + String.format("%.2f", premium.get());
+    }
+
+    public void setContractPath(String contractPath) {
+        this.contractPath.set(requireNonNull(contractPath));
+    }
+
+    @Override
+    public StringProperty contractPathProperty() {
+        return contractPath;
+    }
+
+    @Override
+    public String getContractPath() {
+        return contractPath.get();
+    }
+
+    public void setSigningDate(String signingDate) {
+        this.signingDate.set(requireNonNull(signingDate));
+    }
+
+    @Override
+    public StringProperty signingDateProperty() {
+        return signingDate;
+    }
+
+    @Override
+    public String getSigningDate() {
+        return signingDate.get();
+    }
+
+    public void setExpiryDate(String expiryDate) {
+        this.expiryDate.set(requireNonNull(expiryDate));
+    }
+
+    @Override
+    public StringProperty expiryDateProperty() {
+        return expiryDate;
+    }
+
+    @Override
+    public String getExpiryDate() {
+        return expiryDate.get();
+    }
+}
 ```
 ###### \java\seedu\address\model\insurance\ReadOnlyInsurance.java
 ``` java
@@ -682,10 +877,6 @@ public class UniqueLifeInsuranceMap {
         setInsurances(replacement);
     }
 
-    public ObservableList<ReadOnlyInsurance> asObservableList() {
-        return FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(internalMap.values()));
-    }
-
     /**
      * Returns the backing map as an unmodifiable {@code ObservableList}.
      */
@@ -744,7 +935,6 @@ public class UniqueLifeInsuranceMap {
 ```
 ###### \java\seedu\address\model\person\Person.java
 ``` java
->>>>>>> Upstream/master
         if (source.getLifeInsuranceIds() != null) {
             this.lifeInsuranceIds = new SimpleObjectProperty<>(source.getLifeInsuranceIds());
         }
@@ -754,7 +944,6 @@ public class UniqueLifeInsuranceMap {
 ```
 ###### \java\seedu\address\model\person\Person.java
 ``` java
->>>>>>> Upstream/master
         if (source.getLifeInsuranceIds() != null) {
             this.lifeInsuranceIds = new SimpleObjectProperty<>(source.getLifeInsuranceIds());
         }
@@ -896,9 +1085,8 @@ public class XmlAdaptedLifeInsurance {
         final Email email = this.email.equals("") ? new Email() : new Email(this.email);
         final Address address = this.address.equals("") ? new Address() : new Address(this.address);
         final DateOfBirth dob = this.dob.equals("") ? new DateOfBirth() : new DateOfBirth(this.dob);
-        final Gender gender = this.gender.equals("") ? new Gender() : new Gender(this.gender);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, dob, gender, tags, personLifeInsuranceIds);
+        return new Person(name, phone, email, address, dob, tags, personLifeInsuranceIds);
     }
 ```
 ###### \java\seedu\address\storage\XmlSerializableAddressBook.java
@@ -933,7 +1121,6 @@ public class XmlAdaptedLifeInsurance {
 public class InsuranceListPanel extends UiPart<Region> {
 
     private static final String FXML = "InsuranceListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
     private ListView<InsuranceProfile> insuranceListView;
@@ -944,9 +1131,9 @@ public class InsuranceListPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    public InsuranceListPanel(ObservableList<ReadOnlyInsurance> insuranceList) {
+    public InsuranceListPanel(ReadOnlyPerson person) {
         super(FXML);
-        setConnections(insuranceList);
+        setConnections(person.getLifeInsurances().asObservableList());
         registerAsAnEventHandler(this);
     }
     /**
@@ -965,19 +1152,6 @@ public class InsuranceListPanel extends UiPart<Region> {
                 insuranceList, (insurance) -> new InsuranceProfile(insurance, insuranceList.indexOf(insurance) + 1));
         insuranceListView.setItems(mappedList);
         insuranceListView.setCellFactory(listView -> new InsuranceListPanel.InsuranceListViewCell());
-        setEventHandlerForSelectionChangeEvent();
-
-    }
-
-
-    private void setEventHandlerForSelectionChangeEvent() {
-        insuranceListView.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        logger.fine("Selection in insurance list panel changed to : '" + newValue + "'");
-                        raise(new InsurancePanelSelectionChangedEvent(newValue));
-                    }
-                });
     }
 
     /**
@@ -1006,10 +1180,9 @@ public class InsuranceListPanel extends UiPart<Region> {
 public class InsuranceProfile extends UiPart<Region> {
 
     private static final String FXML = "InsuranceProfile.fxml";
-    private static final String PDFFOLDERPATH = "data/";
+
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    private File insuranceFile;
     private ReadOnlyInsurance insurance;
 
     @FXML
@@ -1028,13 +1201,35 @@ public class InsuranceProfile extends UiPart<Region> {
     private Label signingDate;
     @FXML
     private Label expiryDate;
-    public InsuranceProfile() {
-        super(FXML);
-        enableNameToProfileLink(insurance);
-        registerAsAnEventHandler(this);
 
+    public InsuranceProfile(ReadOnlyInsurance insurance, int displayIndex) {
+        super(FXML);
+        this.insurance = insurance;
+        index.setText(displayIndex + ".");
+        owner.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getOwner())));
+        insured.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getInsured())));
+        beneficiary.setOnMouseClicked(e ->
+                raise(new PersonNameClickedEvent(insurance.getBeneficiary())));
+
+        bindListeners(insurance);
+        registerAsAnEventHandler(this);
     }
 
+    /**
+     * Binds the individual UI elements to observe their respective {@code ReadOnlyInsurance} properties
+     * so that they will be notified of any changes.
+     * @param insurance
+     */
+    private void bindListeners(ReadOnlyInsurance insurance) {
+        owner.textProperty().bind(Bindings.convert(insurance.getOwner().nameProperty()));
+        insured.textProperty().bind(Bindings.convert(insurance.getInsured().nameProperty()));
+        beneficiary.textProperty().bind(Bindings.convert(insurance.getBeneficiary().nameProperty()));
+        premium.textProperty().bind(Bindings.convert(insurance.premiumStringProperty()));
+        contractPath.textProperty().bind(Bindings.convert(insurance.contractPathProperty()));
+        signingDate.textProperty().bind(Bindings.convert(insurance.signingDateStringProperty()));
+        expiryDate.textProperty().bind(Bindings.convert(insurance.expiryDateStringProperty()));
+    }
+}
 ```
 ###### \java\seedu\address\ui\ProfilePanel.java
 ``` java
@@ -1049,36 +1244,25 @@ public class InsuranceProfile extends UiPart<Region> {
     @Subscribe
     private void handlePersonNameClickedEvent(PersonNameClickedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        insurance.clear();
         ReadOnlyPerson person = event.getPerson().orElse(null);
         if (person == null) {
             loadPersonPage(event.getPersonName());
         } else {
             loadPersonPage(event.getPerson().get());
         }
-        raise(new SwitchToProfilePanelRequestEvent());
+        raise(new SwitchPanelRequestEvent());
     }
 ```
-###### \resources\view\DarkTheme.css
-``` css
-.list-cell:filled:selected #insuranceCardPane {
-    -fx-border-color: #3e7b91;
-    -fx-border-width: 1;
-}
-```
-###### \resources\view\DarkTheme.css
 ``` css
 #personListView {
     -fx-background-color: transparent #383838 transparent #383838;
 }
 ```
-###### \resources\view\InsuranceListPanel.fxml
 ``` fxml
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <ListView fx:id="insuranceListView" VBox.vgrow="ALWAYS" />
 </VBox>
 ```
-###### \resources\view\InsuranceProfile.fxml
 ``` fxml
       <VBox alignment="CENTER_LEFT" minHeight="150" prefHeight="150.0" prefWidth="176.0" GridPane.columnIndex="1">
          <padding>

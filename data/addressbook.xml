@@ -5,20 +5,19 @@
         <phone>87438807</phone>
         <email>alexyeoh@example.com</email>
         <address>Blk 30 Geylang Street 29, #06-40</address>
-        <dob>27 Jul 1986</dob>
         <gender>MALE</gender>
         <tagged>friends</tagged>
+        <dob>27 Jul 1986</dob>
         <lifeInsuranceId>067e6162-3b6f-4ae2-a171-2470b63dff00</lifeInsuranceId>
         <lifeInsuranceId>ea91ce18-4a4f-415a-a688-62621c241108</lifeInsuranceId>
-
     </persons>
     <persons>
         <name>Bernice Yu</name>
         <phone>99272758</phone>
         <email>berniceyu@example.com</email>
         <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
-        <dob>28 Jan 1997</dob>
         <gender>MALE</gender>
+        <dob>28 Jan 1997</dob>
         <tagged>colleagues</tagged>
         <tagged>friends</tagged>
         <lifeInsuranceId>067e6162-3b6f-4ae2-a171-2470b63dff00</lifeInsuranceId>
@@ -29,8 +28,8 @@
         <phone>93210283</phone>
         <email>charlotte@example.com</email>
         <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
-        <dob>29 Jan 1997</dob>
         <gender>FEMALE</gender>
+        <dob>29 Jan 1997</dob>
         <tagged>neighbours</tagged>
     </persons>
     <persons>
@@ -38,8 +37,8 @@
         <phone>91031282</phone>
         <email>lidavid@example.com</email>
         <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
-        <dob>30 Jan 1997</dob>
         <gender>MALE</gender>
+        <dob>30 Jan 1997</dob>
         <tagged>family</tagged>
     </persons>
     <persons>
@@ -56,8 +55,8 @@
         <phone>98765432</phone>
         <email>maryjane@example.com</email>
         <address>Mary street, block 123</address>
-        <gender>FEMALE</gender>
         <dob>05 May 1990</dob>
+        <gender>FEMALE</gender>
         <lifeInsuranceId>ce003136-c8e2-4cdd-ae2d-860d203a9aa1</lifeInsuranceId>
     </persons>
     <persons>
@@ -65,7 +64,6 @@
         <phone>92624417</phone>
         <email>royb@example.com</email>
         <address>Blk 45 Aljunied Street 85, #11-31</address>
-        <gender>MALE</gender>
         <dob>01 Feb 1997</dob>
         <gender>MALE</gender>
         <tagged>colleagues</tagged>
@@ -75,6 +73,7 @@
     <tags>neighbours</tags>
     <tags>family</tags>
     <tags>friends</tags>
+
     <lifeInsuranceMap>
         <entry>
             <key>067e6162-3b6f-4ae2-a171-2470b63dff00</key>

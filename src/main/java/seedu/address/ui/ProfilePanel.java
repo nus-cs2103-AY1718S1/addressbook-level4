@@ -106,21 +106,12 @@ public class ProfilePanel extends UiPart<Region> {
      */
     private void loadDefaultPage() {
         name.setText(DEFAULT_MESSAGE);
-<<<<<<< HEAD
-        phone.setText("");
-        address.setText("");
-        dob.setText("");
-        gender.setText("");
-        email.setText("");
-    }
-=======
         phone.setText(null);
         address.setText(null);
         dob.setText(null);
+        gender.setText(null);
         email.setText(null);
         insuranceHeader.setText(null);
->>>>>>> Upstream/master
-
     }
     /**
      * To be called everytime a new person is selected and bind all information for real-time update

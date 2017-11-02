@@ -14,11 +14,7 @@
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         DateOfBirth updatedDateOfBirth = editPersonDescriptor.getDateOfBirth().orElse(personToEdit.getDateOfBirth());
-<<<<<<< HEAD
-        Gender updatedGender = editPersonDescriptor.getGender().orElse(personToEdit.getGender());
-=======
 
->>>>>>> Upstream/master
         Set<Tag> updatedTags = personToEdit.getTags();
 
         if (editPersonDescriptor.getTagsToDel().isPresent()) {
@@ -33,8 +29,8 @@
         if (editPersonDescriptor.getTags().isPresent()) {
             updatedTags.addAll(editPersonDescriptor.getTags().get());
         }
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedDateOfBirth, updatedGender, updatedTags);
+
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedDateOfBirth, updatedTags);
     }
 ```
 ###### \java\seedu\address\logic\commands\EditCommand.java
@@ -146,7 +142,7 @@ public class DateParser {
      * @return
      * @throws IllegalValueException
      */
-    public String getValidYear(String year) throws IllegalValueException {
+    private String getValidYear(String year) throws IllegalValueException {
         int currYear = LocalDate.now().getYear();
         if (year.length() > 4) {
             year = year.substring(0, 4);
@@ -155,7 +151,6 @@ public class DateParser {
             throw new IllegalValueException(MESSAGE_INVALID_YEAR);
         } else if (year.length() == 2) {
             int iYear = Integer.parseInt(year);
-            // Change this if condition to edit your auto-correcting range for 2-digit year inputs
             if (iYear > currYear % 100) {
                 return Integer.toString(iYear + (currYear / 100 - 1) * 100);
             } else {
@@ -166,7 +161,7 @@ public class DateParser {
         }
     }
 
-    public String getValidDay(String day) throws IllegalValueException {
+    private String getValidDay(String day) throws IllegalValueException {
         if (Integer.parseInt(day) > 31) {
             throw new IllegalValueException(MESSAGE_INVALID_DAY);
         }
@@ -179,7 +174,7 @@ public class DateParser {
         }
     }
 
-    public String getValidMonth(String month) throws IllegalValueException {
+    private String getValidMonth(String month) throws IllegalValueException {
         int iMonth;
         if (month.matches("\\p{Alpha}+")) {
             iMonth = getMonth(month);
@@ -196,7 +191,7 @@ public class DateParser {
     /**
      * finds int month from string month name
      */
-    public int getMonth(String monthName) throws IllegalValueException {
+    private int getMonth(String monthName) throws IllegalValueException {
         for (int i = 0; i < MONTH_NAME_LONG.length; i++) {
             if (monthName.toLowerCase().equals(MONTH_NAME_LONG[i].toLowerCase())
                     || monthName.toLowerCase().equals(MONTH_NAME_SHORT[i].toLowerCase())) {
@@ -204,15 +199,6 @@ public class DateParser {
             }
         }
         throw new IllegalValueException(MESSAGE_INVALID_MONTH);
-    }
-
-    /**
-     * Takes a LocalDate and produces it in a nice format
-     * @param date
-     * @return
-     */
-    public static String dateString(LocalDate date) {
-        return date.format(DATE_FORMAT);
     }
 }
 ```
@@ -228,7 +214,7 @@ public class DateParser {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(
                         args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_DOB, PREFIX_GENDER, PREFIX_TAG, PREFIX_DELTAG);
+                        PREFIX_DOB, PREFIX_TAG, PREFIX_DELTAG);
 
         Index index;
 
@@ -246,8 +232,6 @@ public class DateParser {
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
             ParserUtil.parseDateOfBirth(argMultimap.getValue(PREFIX_DOB))
                     .ifPresent(editPersonDescriptor::setDateOfBirth);
-            ParserUtil.parseGender(argMultimap.getValue(PREFIX_GENDER))
-                    .ifPresent(editPersonDescriptor::setGender);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
             parseDetagsForEdit(argMultimap.getAllValues(PREFIX_DELTAG)).ifPresent(editPersonDescriptor::setTagsToDel);
         } catch (EmptyFieldException efe) {
@@ -339,6 +323,10 @@ public class EmptyFieldException extends ParseException {
 ```
 ###### \java\seedu\address\model\person\DateOfBirth.java
 ``` java
+    public static final String MESSAGE_DOB_CONSTRAINTS =
+            "Please enter in Day Month Year format where the month can be a number or the name"
+                    + " and the year can be input in 2-digit or 4-digit format.";
+
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
@@ -374,6 +362,16 @@ public class EmptyFieldException extends ParseException {
         this.dateSet = true;
     }
 
+    /**
+     * Returns true if a given string is a valid person date of birth.
+     */
+    public static boolean isValidDateOfBirth(String test) {
+        return test.matches(DOB_VALIDATION_REGEX);
+    }
+    @Override
+    public String toString() {
+        return dateSet ? dateOfBirth.format(DateParser.DATE_FORMAT) : "";
+    }
 ```
 ###### \java\seedu\address\ui\CommandBox.java
 ``` java
@@ -413,52 +411,4 @@ public class EmptyFieldException extends ParseException {
 #insuranceListView {
     -fx-background-color: derive(#1d1d1d, 20%);
 }
-```
-###### \resources\view\InsuranceProfile.fxml
-``` fxml
-      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
-         <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label fx:id="owner" styleClass="particular-link" text="\$owner" />
-               </children>
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label fx:id="insured" styleClass="particular-link" text="\$insured" />
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label fx:id="beneficiary" styleClass="particular-link" text="\$beneficiary" />
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label fx:id="premium" styleClass="particular-field" text="\$premium" />
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label fx:id="contractPath" styleClass="particular-field" text="\$contractPath" />
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label fx:id="signingDate" styleClass="particular-field" text="\$signingDate" />
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label fx:id="expiryDate" styleClass="particular-field" text="\$expiryDate" />
-               </children>
-               <padding>
-                  <Insets bottom="10.0" />
-               </padding>
-            </HBox>
-         </children>
-      </VBox>
 ```
