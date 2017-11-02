@@ -8,7 +8,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TAB;
 
 import org.junit.Test;
 
-
 import seedu.address.logic.commands.TabCommand;
 
 /**
