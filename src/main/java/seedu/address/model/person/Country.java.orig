@@ -283,11 +283,15 @@ public class Country {
         return countries;
     }
 
+<<<<<<< HEAD
+    public String getCountryName(String code) {
+=======
     public static String getCodeList() {
         return codeList;
     }
 
-    public String getCountryName(String code) {
+    public String getName(String code) {
+>>>>>>> Country_Code
         return countryMap.getOrDefault(code, MESSAGE_COUNTRY_ERROR);
     }
 
