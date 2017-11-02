@@ -95,6 +95,9 @@ public class MeetingAlert extends UiPart<Region> {
             long daysBet = ChronoUnit.DAYS.between(currDate, meetDate);
             if (daysBet == 0) {
                 int j = i + 1;
+                if (j >= list.size()){
+                    break;
+                }
                 while (list.get(i).getDate().equals(list.get(j).getDate())) {
                     numMeet++;
                     j++;
