@@ -13,6 +13,7 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BrowserPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.MapPersonEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -30,6 +31,7 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String LINKEDIN_URL_SUFFIX = "&origin=FACETED_SEARCH";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
+    public static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
     //@@author
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -57,6 +59,12 @@ public class BrowserPanel extends UiPart<Region> {
     private void loadPersonPage(ReadOnlyPerson person) {
         personSelected = person;
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
+                + GOOGLE_SEARCH_URL_SUFFIX);
+    }
+
+    //@@author martyn-wong
+    private void loadPersonMap(ReadOnlyPerson person) {
+        loadPage(GOOGLE_MAPS_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
@@ -106,5 +114,11 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleBrowserPanelSelectionChangedEvent(BrowserPanelSelectionChangedEvent event) {
         loadOtherPages(event.getBrowserSelection());
     }
-    //@@author
+
+    //@author martyn-wong
+    @Subscribe
+    private void handleMapPanelEvent(MapPersonEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonMap(event.getPerson());
+    }
 }

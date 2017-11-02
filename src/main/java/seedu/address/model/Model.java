@@ -82,5 +82,10 @@ public interface Model {
      * Sort everyone in addressbook lexicographically
      */
     void sortPersonListLexicographically();
-    //@@author
+
+    //@@author martyn-wong
+    /**
+     * Shows the google map for the selected person in the browser panel
+     */
+    void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 }
