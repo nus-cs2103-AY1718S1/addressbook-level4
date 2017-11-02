@@ -189,6 +189,11 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+=== Adding a Life Insurance: `addli`
+`since v1.4`
+
+Adds a life insurance in Lisa.
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
