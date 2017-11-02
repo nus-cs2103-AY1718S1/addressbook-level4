@@ -102,6 +102,7 @@ public class ParserUtil {
         return officePhone.isPresent() ? Optional.of(new OfficePhone(officePhone.get())) : Optional.empty();
     }
 
+    //@@author lawwman
     /**
      * Parses a {@code Optional<String> debt} into an {@code Optional<Debt>} if {@code debt} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -111,6 +112,7 @@ public class ParserUtil {
         return debt.isPresent() ? Optional.of(new Debt(debt.get())) : Optional.empty();
     }
 
+    //@@author
     /**
      * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -154,6 +156,7 @@ public class ParserUtil {
                 : Optional.of(new Deadline(Deadline.NO_DEADLINE_SET));
     }
 
+    //@@author lawwman
     /**
      * Parses a {@code Optional<String> deadline} into an {@code Optional<Deadline>} if {@code Deadline}
      * is present.
@@ -177,6 +180,8 @@ public class ParserUtil {
         return interest.isPresent() ? Optional.of(new Interest(interest.get()))
                 : Optional.of(new Interest(Interest.NO_INTEREST_SET));
     }
+
+    //@@author lawwman
     /**
      * Parses a {@code Optional<String> Interest} into an {@code Optional<Interest} if {@code Interest}
      * is present.

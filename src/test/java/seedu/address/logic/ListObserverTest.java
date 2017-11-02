@@ -15,6 +15,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 
+//@@author lawwman
 /**
  * Tests the ListObserver class.
  * It is expected that the TypicalAddressBook in the {@code TypicalPersons} class has a person residing in every list.
