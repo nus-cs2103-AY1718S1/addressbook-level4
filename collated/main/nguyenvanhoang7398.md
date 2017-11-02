@@ -339,6 +339,43 @@ public class AddMultipleByTsvCommandParser implements Parser<AddMultipleByTsvCom
         case AddMultipleByTsvCommand.COMMAND_WORD:
         case AddMultipleByTsvCommand.COMMAND_ALIAS:
             return new AddMultipleByTsvCommandParser().parse(arguments);
+=======
+###### \java\seedu\address\logic\parser\FindTagCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import java.util.Arrays;
+
+import seedu.address.logic.commands.FindTagCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.TagsContainKeywordsPredicate;
+
+/**
+ * Parses input arguments and creates a new FindTagCommand object
+ */
+
+public class FindTagCommandParser implements Parser<FindTagCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the FindTagCommand
+     * and returns an FindTagCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+
+    public FindTagCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindTagCommand.MESSAGE_USAGE));
+        }
+
+        String[] nameKeywords = trimmedArgs.split("\\s+");
+
+        return new FindTagCommand(new TagsContainKeywordsPredicate(Arrays.asList(nameKeywords)));
+    }
+}
 ```
 ###### \java\seedu\address\model\person\TagsContainKeywordsPredicate.java
 ``` java
@@ -395,4 +432,274 @@ public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson> {
                 && this.keywords.equals(((TagsContainKeywordsPredicate) other).keywords)); // state check
     }
 }
+```
+
+###### \java\seedu\address\ui\ProfilePanel.java
+``` java
+package seedu.address.ui;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Random;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+
+import com.google.common.eventbus.Subscribe;
+
+import javafx.beans.binding.Bindings;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import seedu.address.MainApp;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+
+/**
+ * The Profile Panel of the app
+ */
+public class ProfilePanel extends UiPart<Region> {
+
+    private static final String FXML = "ProfilePanel.fxml";
+    private static final String DEFAULT_IMAGE_STORAGE_PREFIX = "data/";
+    private static final String DEFAULT_IMAGE_STORAGE_SUFFIX = ".png";
+    private static final String DEFAULT_PROFILE_PICTURE_PATH = "/images/default_profile_picture.png";
+    private static String[] colors = { "red", "yellow", "blue", "orange", "indigo", "green", "violet", "black" };
+    private static HashMap<String, String> tagColors = new HashMap<String, String>();
+    private static Random random = new Random();
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private final FileChooser fileChooser = new FileChooser();
+    private ReadOnlyPerson person;
+    private Stage primaryStage;
+
+    @FXML
+    private HBox profilePane;
+    @FXML
+    private Label name;
+    @FXML
+    private Label id;
+    @FXML
+    private Label occupation;
+    @FXML
+    private Label phone;
+    @FXML
+    private Label address;
+    @FXML
+    private Label email;
+    @FXML
+    private Label remark;
+    @FXML
+    private Label website;
+    @FXML
+    private FlowPane tags;
+    @FXML
+    private javafx.scene.image.ImageView profilePicture;
+    @FXML
+    private Button changePictureButton;
+
+    public ProfilePanel(Stage primaryStage) {
+        super(FXML);
+        this.person = new Person();
+        this.primaryStage = primaryStage;
+        initChangePictureButton();
+        initStyle();
+        refreshState();
+        registerAsAnEventHandler(this);
+    }
+
+    private void refreshState() {
+        bindListeners();
+        initPicture();
+        initTags();
+    }
+
+    /**
+     * Initialize change picture button
+     */
+    private void initChangePictureButton() {
+        changePictureButton.setOnAction(
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        setExtFilters(fileChooser);
+                        File file = fileChooser.showOpenDialog(primaryStage);
+                        if (file != null) {
+                            saveImageToStorage(file);
+                            refreshState();
+                        }
+                    }
+                }
+        );
+    }
+
+    private void setExtFilters(FileChooser chooser) {
+        chooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("All Images", "*.*"),
+                new FileChooser.ExtensionFilter("PNG", "*.png")
+        );
+    }
+
+    /**
+     * Save a given image file to storage
+     * @param file
+     */
+    private void saveImageToStorage(File file) {
+        Image image = new Image(file.toURI().toString());
+        String phoneNum = person.getPhone().value;
+
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png",
+                    new File(DEFAULT_IMAGE_STORAGE_PREFIX + phoneNum + DEFAULT_IMAGE_STORAGE_SUFFIX));
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
+    /**
+     * Initialize profile picture
+     */
+    private void initPicture() {
+        BufferedImage bufferedImage;
+        String phoneNum = person.getPhone().value;
+
+        try {
+            bufferedImage = ImageIO.read(new File(DEFAULT_IMAGE_STORAGE_PREFIX + phoneNum
+                    + DEFAULT_IMAGE_STORAGE_SUFFIX));
+            Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+            profilePicture.setImage(image);
+        } catch (IOException ioe1) {
+            Image image = new Image(MainApp.class.getResourceAsStream(DEFAULT_PROFILE_PICTURE_PATH));
+            profilePicture.setImage(image);
+        }
+    }
+
+    /**
+     * Initialize panel's style such as color
+     */
+    private void initStyle() {
+        profilePane.setStyle("-fx-background-color: #FFFFFF;");
+    }
+
+    /**
+     * Change current displayed profile
+     * @param person
+     */
+    public void changeProfile(ReadOnlyPerson person) {
+        this.person = person;
+        refreshState();
+    }
+
+    /**
+     * Binds the individual UI elements to observe their respective {@code Person} properties
+     * so that they will be notified of any changes.
+     */
+    private void bindListeners() {
+        name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        occupation.textProperty().bind(Bindings.convert(person.occupationProperty()));
+        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        address.textProperty().bind(Bindings.convert(person.addressProperty()));
+        email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
+        website.textProperty().bind(Bindings.convert(person.websiteProperty()));
+        person.tagProperty().addListener((observable, oldValue, newValue) -> {
+            tags.getChildren().clear();
+            //person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            initTags();
+        });
+    }
+
+    /**
+     *javadoc comment
+     */
+    private void initTags() {
+        //person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        tags.getChildren().clear();
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
+    }
+
+    //The method below retrieves the color for the specific tag
+    private static String getColorForTag(String tagValue) {
+        if (!tagColors.containsKey(tagValue)) {
+            tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
+        }
+        return tagColors.get(tagValue);
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        changeProfile(event.getNewSelection().person);
+    }
+}
+```
+###### \resources\view\ProfilePanel.fxml
+``` fxml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox id="profilePane" fx:id="profilePane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <GridPane HBox.hgrow="ALWAYS">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+        </columnConstraints>
+        <VBox alignment="CENTER" minHeight="105" GridPane.columnIndex="0">
+            <padding>
+                <Insets bottom="5" left="15" right="5" top="5" />
+            </padding>
+         <ImageView fx:id="profilePicture" fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+            <VBox.margin>
+               <Insets bottom="15" top="15" />
+            </VBox.margin>
+         </ImageView>
+            <HBox alignment="CENTER" spacing="5">
+                <Label fx:id="id" styleClass="cell_big_label">
+                    <minWidth>
+                        <!-- Ensures that the label text is never truncated -->
+                        <Region fx:constant="USE_PREF_SIZE" />
+                    </minWidth>
+                </Label>
+                <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
+            </HBox>
+            <FlowPane fx:id="tags" alignment="CENTER" />
+            <Label fx:id="occupation" styleClass="cell_small_label" text="\$occupation" />
+            <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
+            <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
+            <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
+            <Label fx:id="website" styleClass="cell_small_label" text="\$website" />
+            <Label fx:id="remark" styleClass="cell_small_label" text="\$remark" />
+         <Button fx:id="changePictureButton" mnemonicParsing="false" prefWidth="119.0" text="Change" />
+        </VBox>
+      <rowConstraints>
+         <RowConstraints />
+      </rowConstraints>
+    </GridPane>
+</HBox>
 ```
