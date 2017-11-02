@@ -178,6 +178,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Sorting Person List =============================================================
 
+    //@@author sushinoya
     /**
      * Sorts the Resident Book by name, phone, room or phone depending on the sortCriteria
      */
@@ -188,6 +189,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //=========== Swapping Residents' Rooms =============================================================
 
+    //@@author sushinoya
     /**
      * Swaps the rooms between two residents.
      *

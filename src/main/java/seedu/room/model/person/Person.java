@@ -182,6 +182,7 @@ public class Person implements ReadOnlyPerson {
         return getAsText();
     }
 
+    //@@author sushinoya
     /**
      * Sets the field the list should be sorted by
      */
@@ -197,6 +198,10 @@ public class Person implements ReadOnlyPerson {
         }
     }
 
+    //@@author sushinoya
+    /**
+    * CompareTo function to allow implementing Comparable
+    */
     @Override
     public int compareTo(Object otherPerson) {
 

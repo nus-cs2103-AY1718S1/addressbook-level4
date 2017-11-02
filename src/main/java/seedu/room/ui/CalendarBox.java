@@ -29,7 +29,7 @@ public class CalendarBox {
         currentYearMonth = yearMonth;
         // Create the calendar grid pane
         GridPane calendar = new GridPane();
-        calendar.setPrefSize(700, 500);
+        calendar.setPrefSize(500, 500);
         calendar.setGridLinesVisible(true);
         // Create rows and columns with anchor panes for the calendar
         for (int i = 0; i < 5; i++) {

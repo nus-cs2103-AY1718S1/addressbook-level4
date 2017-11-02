@@ -8,7 +8,7 @@ import seedu.room.logic.commands.exceptions.CommandException;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
 
-
+//@@author sushinoya
 /**
  * Swaps two residents identified using their last displayed indexes from the resident book.
  */

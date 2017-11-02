@@ -21,6 +21,7 @@ import seedu.room.model.ModelManager;
 import seedu.room.model.UserPrefs;
 import seedu.room.model.person.ReadOnlyPerson;
 
+//@@author sushinoya
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code SwaproomCommand}.
  */

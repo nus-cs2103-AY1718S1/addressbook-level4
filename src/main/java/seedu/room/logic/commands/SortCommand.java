@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import seedu.room.logic.commands.exceptions.AlreadySortedException;
 import seedu.room.logic.commands.exceptions.CommandException;
 
+//@@author sushinoya
 /**
  * Adds a person to the resident book.
  */

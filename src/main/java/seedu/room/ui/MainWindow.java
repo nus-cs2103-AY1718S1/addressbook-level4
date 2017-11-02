@@ -70,6 +70,9 @@ public class MainWindow extends UiPart<Region> {
     private StackPane personListPanelPlaceholder;
 
     @FXML
+    private StackPane personPanelPlaceholder;
+
+    @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
@@ -139,14 +142,15 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-//        browserPanel = new BrowserPanel();
-//        browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         calandarBoxPanel = new CalendarBoxPanel();
         calendarPlaceholder.getChildren().add(calandarBoxPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        PersonPanel personPanel = new PersonPanel();
+        personPanelPlaceholder.getChildren().add(personPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -208,6 +212,7 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+    //@@author blackroxs
     /**
      * Handles import and allows user to choose file
      */
@@ -233,6 +238,7 @@ public class MainWindow extends UiPart<Region> {
         }
     }
 
+    //@@author
     void show() {
         primaryStage.show();
     }

@@ -210,6 +210,7 @@ public class ResidentBook implements ReadOnlyResidentBook {
     }
 
     //// sort resident book
+    //@@author sushinoya
     /**
      * Sorts the UniquePersonList, persons.
      *
@@ -225,6 +226,7 @@ public class ResidentBook implements ReadOnlyResidentBook {
     }
 
     ////
+    //@@author sushinoya
     /**
      * Swaps the rooms between two residents.
      * @throws PersonNotFoundException if the persons specified are not found in the list.
