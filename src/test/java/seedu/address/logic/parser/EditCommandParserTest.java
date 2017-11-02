@@ -100,8 +100,15 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_EMAIL_CONSTRAINTS); // invalid email
         assertParseFailure(parser, "1" + ADDRESS_EMPTY_DESC,
                 String.format(EXCEPTION_EMPTYFIELD, PREFIX_ADDRESS.getPrefix())); // trigger autofill
+<<<<<<< HEAD
+
         assertParseFailure(parser, "1" + INVALID_GENDER_DESC, Gender.MESSAGE_GENDER_CONSTRAINTS); // invalid gender
+
+        assertParseFailure(parser, "1" + INVALID_DOB_DESC, DateOfBirth.MESSAGE_INVALID_MONTH); // invalid dob
+
+=======
         assertParseFailure(parser, "1" + INVALID_DOB_DESC, DateParser.MESSAGE_INVALID_MONTH); // invalid dob
+>>>>>>> Upstream/master
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
 
         // invalid phone followed by valid email

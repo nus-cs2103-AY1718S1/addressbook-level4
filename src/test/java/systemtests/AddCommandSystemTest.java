@@ -229,14 +229,18 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, Email.MESSAGE_EMAIL_CONSTRAINTS);
         /* Case: invalid dob -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+<<<<<<< HEAD
                 + GENDER_DESC_AMY + ADDRESS_DESC_AMY + INVALID_DOB_DESC;
-        assertCommandFailure(command, DateParser.MESSAGE_INVALID_MONTH);
-        //@@author Pujitha97
+        assertCommandFailure(command, DateOfBirth.MESSAGE_INVALID_MONTH);
         /* Case: invalid gender -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + INVALID_GENDER_DESC + ADDRESS_DESC_AMY + DOB_DESC_AMY;
         assertCommandFailure(command, Gender.MESSAGE_GENDER_CONSTRAINTS);
-        //@@author Pujitha97
+
+=======
+                + ADDRESS_DESC_AMY + INVALID_DOB_DESC;
+        assertCommandFailure(command, DateParser.MESSAGE_INVALID_MONTH);
+>>>>>>> Upstream/master
         /* Case: invalid tag -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + GENDER_DESC_AMY + DOB_DESC_AMY + INVALID_TAG_DESC;

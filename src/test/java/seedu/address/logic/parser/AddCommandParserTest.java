@@ -177,17 +177,23 @@ public class AddCommandParserTest {
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                         + DOB_DESC_BOB + ADDRESS_EMPTY_DESC + GENDER_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 String.format(EXCEPTION_EMPTYFIELD, PREFIX_ADDRESS.getPrefix()));
-        //@@author Pujitha97
+        //@@author
         // invalid dob
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+<<<<<<< HEAD
                         + ADDRESS_DESC_BOB + GENDER_DESC_BOB + INVALID_DOB_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                DateOfBirth.MESSAGE_INVALID_MONTH);
+=======
+                        + ADDRESS_DESC_BOB + INVALID_DOB_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 DateParser.MESSAGE_INVALID_MONTH);
+>>>>>>> Upstream/master
+
 
         // invalid gender
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                         + ADDRESS_DESC_BOB + DOB_DESC_BOB + INVALID_GENDER_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 Gender.MESSAGE_GENDER_CONSTRAINTS);
-        //@@author Pujitha97
+
         // invalid tag
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                         + ADDRESS_DESC_BOB + DOB_DESC_BOB + GENDER_DESC_BOB + INVALID_TAG_DESC

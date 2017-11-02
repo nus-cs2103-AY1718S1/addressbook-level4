@@ -1,5 +1,51 @@
-package seedu.address.model.person;
-//@@author Pujitha97
+# Pujitha97
+###### \java\seedu\address\model\person\DateOfBirth.java
+``` java
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
+
+import java.time.LocalDate;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.DateParser;
+import seedu.address.logic.parser.exceptions.EmptyFieldException;
+
+/**
+ * Represents a Person's date of birth in the address book.
+ */
+public class DateOfBirth {
+    public static final String MESSAGE_DOB_CONSTRAINTS =
+            "Please enter in Day Month Year format where the month can be a number or the name"
+                    + " and the year can be input in 2-digit or 4-digit format.";
+```
+###### \java\seedu\address\model\person\DateOfBirth.java
+``` java
+    /**
+     * Returns true if a given string is a valid person date of birth.
+     */
+    public static boolean isValidDateOfBirth(String test) {
+        return test.matches(DOB_VALIDATION_REGEX);
+    }
+    @Override
+    public String toString() {
+        return dateSet ? dateOfBirth.format(DateParser.DATE_FORMAT) : "";
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DateOfBirth // instanceof handles nulls
+                && this.dateOfBirth.equals(((DateOfBirth) other).dateOfBirth)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return dateOfBirth.hashCode();
+    }
+}
+```
+###### \java\seedu\address\model\person\Gender.java
+``` java
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GENDER;
 
@@ -95,3 +141,4 @@ public class Gender {
     }
 
 }
+```
