@@ -26,6 +26,7 @@ import seedu.address.model.person.UserPerson;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
+//@@author bladerail
 /**
  * Contains integration tests (interaction with the Model) and unit tests for UpdateUserCommand.
  */

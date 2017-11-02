@@ -3,6 +3,7 @@ package seedu.address.commons.events.model;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.UserPerson;
 
+//@@author bladerail
 /** Indicates the UserProfileManager in the model has changed*/
 public class UserPersonChangedEvent extends BaseEvent {
 

@@ -27,6 +27,7 @@ import seedu.address.model.person.Remark;
 import seedu.address.model.person.UserPerson;
 import seedu.address.testutil.PersonBuilder;
 
+//@@author bladerail
 /**
  * Contains integration tests (interaction with the Model) for {@code RemarkCommand}.
  */
