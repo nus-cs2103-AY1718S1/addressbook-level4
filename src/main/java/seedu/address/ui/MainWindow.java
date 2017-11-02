@@ -272,7 +272,16 @@ public class MainWindow extends UiPart<Region> {
 
     @Subscribe
     private void handleShowMeetingEvent(ShowMeetingEvent event) {
-        browserPlaceholder.getChildren().remove(browserPanel.getRoot());
-        browserPlaceholder.getChildren().add(meetingPanel.getRoot());
+        try {
+            browserPlaceholder.getChildren().remove(browserPanel.getRoot());
+        } catch (IllegalArgumentException e) {
+            logger.info("Error removing browser panel : " + e.getMessage());
+        }
+
+        try {
+            browserPlaceholder.getChildren().add(meetingPanel.getRoot());
+        } catch (IllegalArgumentException e) {
+            logger.info("Meeting panel is already displayed!");
+        }
     }
 }

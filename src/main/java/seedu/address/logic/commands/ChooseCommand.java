@@ -32,6 +32,7 @@ public class ChooseCommand extends Command {
     public CommandResult execute() throws CommandException {
         if (targetDisplay.equals("meeting")) {
             EventsCenter.getInstance().post(new ShowMeetingEvent());
+            EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
         } else {
             EventsCenter.getInstance().post(new ShowBrowserEvent());
             EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
