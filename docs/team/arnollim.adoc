@@ -8,7 +8,7 @@ LISA: Levels Integrated Secretarial Agent is a desktop address book application 
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== Enhancement Added: 'why' command easter egg
+=== Enhancement Added: 'why' command easter egg, 'print' command function, 'sort' function (with help from @Juxarius)
 
 ==== External behavior
 

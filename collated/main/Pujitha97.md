@@ -1,5 +1,6 @@
-package seedu.address.model.person;
-//@@author Pujitha97
+# Pujitha97
+###### \java\seedu\address\model\person\Gender.java
+``` java
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GENDER;
 
@@ -93,3 +94,4 @@ public class Gender {
     }
 
 }
+```
