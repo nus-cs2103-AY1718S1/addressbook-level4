@@ -33,6 +33,9 @@ public class WebsiteTest {
         assertTrue(Website.isValidWebsite("https://www.google.net"));
         assertTrue(Website.isValidWebsite("https://www.linkedin.com"));
         assertTrue(Website.isValidWebsite("https://www.facebook.net"));
+
+        // website not filled in
+        assertTrue(Website.isValidWebsite("NIL"));
     }
 
     @Test

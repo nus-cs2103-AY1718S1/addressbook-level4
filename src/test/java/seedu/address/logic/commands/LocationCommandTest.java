@@ -8,8 +8,11 @@ import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+import static seedu.address.testutil.TypicalPersons.ETHAN;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -22,10 +25,12 @@ import seedu.address.commons.events.ui.AccessLocationRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
@@ -36,9 +41,25 @@ public class LocationCommandTest {
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     private Model model;
+    private Model onePersonModel;
+    private LocationCommand locationCommandOne;
+
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        onePersonModel = new ModelManager(getOnePersonAddressBook(), new UserPrefs());
+        locationCommandOne = new LocationCommand(INDEX_FIRST_PERSON);
+        locationCommandOne.setData(onePersonModel, new CommandHistory(), new UndoRedoStack());
+    }
+
+    @Test
+    public void execute_invalidLocation_failure() {
+        try {
+            locationCommandOne.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException ce) {
+            assertEquals(Messages.MESSAGE_INVALID_LOCATION, ce.getMessage());
+        }
     }
 
     @Test
@@ -144,4 +165,23 @@ public class LocationCommandTest {
         locationCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return locationCommand;
     }
+    /**
+     * Returns an {@code AddressBook} with people in unsorted names.
+     */
+    private static AddressBook getOnePersonAddressBook() {
+        AddressBook ab = new AddressBook();
+        for (ReadOnlyPerson person : getUnsortedPersons()) {
+            try {
+                ab.addPerson(person);
+            } catch (DuplicatePersonException e) {
+                assert false : "not possible";
+            }
+        }
+        return ab;
+    }
+
+    private static List<ReadOnlyPerson> getUnsortedPersons() {
+        return new ArrayList<>(Arrays.asList(ETHAN));
+    }
+
 }
