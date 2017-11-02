@@ -513,6 +513,7 @@ e.g. `access 2`
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com w/https://www.facebook.com/jamesHo a/123, Clementi Rd, 1234665 h/65812131 se/jamesho@u.nus.edu b/12/11/1972 t/friend t/colleague`
 * *AddEvent* `addevent n/NAME d/DATE a/ADDRESS` +
 e.g. `addevent n/IHG Floorball d/16/01/2018 a/NUS Sports Recreation Centre`
+* *Birthday* : `birthdays`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
@@ -533,6 +534,7 @@ e.g. `locate 2`
 * *Redo* : `redo`
 * *Select* : `select INDEX` +
 e.g. `select 2`
+* *Sort* : `sort`
 * *SwitchTheme* : `switchtheme INDEX` +
 e.g. `switchtheme 2`
 * *ThemesList* : `themeslist`
