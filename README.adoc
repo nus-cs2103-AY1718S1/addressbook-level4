@@ -17,16 +17,10 @@ endif::[]
 
 This is a CLI(Command Line Interface)-based desktop Address Book application written in Java.
 
-`Our address book is aimed at increasing meeting productivity :`
+Our address book is aimed at increasing meeting productivity :
 
 ** Connect with other contacts easily through linkedIn
 ** Sorts your meetings by date to help you schedule your meetings better
-
-Key aspects of OurAB :
-
-** Connect with other contacts easily on LinkedIn
-** Conveniently set up meetings using Google Maps
-** View your upcoming meetings so you can plan your schedule
 
 == Site Map
 
