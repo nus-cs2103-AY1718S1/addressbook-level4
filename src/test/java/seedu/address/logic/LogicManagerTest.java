@@ -8,6 +8,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javafx.collections.ObservableList;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -16,6 +17,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
 
 
 public class LogicManagerTest {
@@ -42,7 +44,8 @@ public class LogicManagerTest {
     @Test
     public void execute_validCommand_success() {
         String listCommand = ListCommand.COMMAND_WORD;
-        assertCommandSuccess(listCommand, ListCommand.MESSAGE_SUCCESS, model);
+        assertCommandSuccess(listCommand, ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + ListCommand.MESSAGE_SUCCESS, model);
         assertHistoryCorrect(listCommand);
     }
 
@@ -51,6 +54,27 @@ public class LogicManagerTest {
         thrown.expect(UnsupportedOperationException.class);
         logic.getFilteredPersonList().remove(0);
     }
+
+    @Test
+    public void getFilteredBlacklistedPersonList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        logic.getFilteredBlacklistedPersonList().remove(0);
+    }
+
+    @Test
+    public void getFilteredWhitelistedPersonList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        logic.getFilteredWhitelistedPersonList().remove(0);
+    }
+
+    @Test
+    public void resetFilteredPersonList() {
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
+        ObservableList<ReadOnlyPerson> expectedList = logic.getAllPersons();
+        logic.resetFilteredPersonList();
+        assertEquals(expectedList, logic.getFilteredPersonList());
+    }
+
 
     /**
      * Executes the command, confirms that no exceptions are thrown and that the result message is correct.

@@ -57,6 +57,30 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         return FXCollections.unmodifiableObservableList(persons);
     }
 
+    /**
+     * @return {@code ObservableList} of blacklisted persons.
+     */
+    @Override
+    public ObservableList<ReadOnlyPerson> getBlacklistedPersonList() {
+        ObservableList<ReadOnlyPerson> persons = getPersonList();
+        ObservableList<ReadOnlyPerson> blacklistedPersons = persons.stream()
+                .filter(person -> person.isBlacklisted())
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(blacklistedPersons);
+    }
+
+    /**
+     * @return {@code ObservableList} of whitelisted persons.
+     */
+    @Override
+    public ObservableList<ReadOnlyPerson> getWhitelistedPersonList() {
+        ObservableList<ReadOnlyPerson> persons = getPersonList();
+        ObservableList<ReadOnlyPerson> whitelistedPersons = persons.stream()
+                .filter(person -> person.isWhitelisted())
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(whitelistedPersons);
+    }
+
     @Override
     public ObservableList<Tag> getTagList() {
         final ObservableList<Tag> tags = this.tags.stream().map(t -> {
@@ -70,5 +94,4 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(tags);
     }
-
 }

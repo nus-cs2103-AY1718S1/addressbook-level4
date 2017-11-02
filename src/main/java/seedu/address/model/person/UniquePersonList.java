@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.toCollection;
 
 import java.util.Iterator;
 import java.util.List;
@@ -36,6 +37,20 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Returns index of {@code ReadOnlyPerson} in list.
+     */
+    public int getIndexOf(ReadOnlyPerson key) {
+        return internalList.indexOf(key);
+    }
+
+    /**
+     * Returns {@code ReadOnlyPerson} in list from given {@param index}.
+     */
+    public ReadOnlyPerson getReadOnlyPerson(int index) {
+        return mappedList.get(index);
+    }
+
+    /**
      * Adds a person to the list.
      *
      * @throws DuplicatePersonException if the person to add is a duplicate of an existing person in the list.
@@ -46,6 +61,19 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
         internalList.add(new Person(toAdd));
+    }
+
+    /**
+     * Adds a person to the list in a specific position.
+     *
+     * @throws DuplicatePersonException if the person to add is a duplicate of an existing person in the list.
+     */
+    public void add(int index, ReadOnlyPerson toAdd) throws DuplicatePersonException {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new DuplicatePersonException();
+        }
+        internalList.add(index, new Person(toAdd));
     }
 
     /**
@@ -96,11 +124,52 @@ public class UniquePersonList implements Iterable<Person> {
         setPersons(replacement);
     }
 
+    //@@author khooroko
+    /**
+     * Sorts the unique person list by the specified order.
+     * @param order to sort the list by.
+     */
+    public void sortBy(String order) throws IllegalArgumentException {
+        switch (order) {
+        case "name":
+            internalList.sort((Person p1, Person p2) -> p1.getName().compareTo(p2.getName()));
+            break;
+        case "debt":
+            internalList.sort((Person p1, Person p2) -> p2.getDebt().compareTo(p1.getDebt()));
+            break;
+        case "cluster":
+            internalList.sort((Person p1, Person p2) -> p1.getCluster().compareTo(p2.getCluster()));
+            break;
+        case "deadline":
+            internalList.sort((Person p1, Person p2) -> p1.getDeadline().compareTo(p2.getDeadline()));
+            break;
+        default:
+            throw new IllegalArgumentException("Invalid sort ordering");
+        }
+    }
+
+    //@@author
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<ReadOnlyPerson> asObservableList() {
         return FXCollections.unmodifiableObservableList(mappedList);
+    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<ReadOnlyPerson> asObservableBlacklist() {
+        return FXCollections.unmodifiableObservableList(mappedList.stream()
+                .filter(person -> person.isBlacklisted()).collect(toCollection(FXCollections::observableArrayList)));
+    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<ReadOnlyPerson> asObservableWhitelist() {
+        return FXCollections.unmodifiableObservableList(mappedList.stream()
+                .filter(person -> person.isWhitelisted()).collect(toCollection(FXCollections::observableArrayList)));
     }
 
     @Override

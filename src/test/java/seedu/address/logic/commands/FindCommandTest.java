@@ -16,6 +16,7 @@ import java.util.List;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.ListObserver;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -28,6 +29,8 @@ import seedu.address.model.person.ReadOnlyPerson;
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
 public class FindCommandTest {
+    public static final String ONE_OR_MORE_SPACES_REGEX = "\\s+";
+
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
@@ -59,14 +62,16 @@ public class FindCommandTest {
 
     @Test
     public void execute_zeroKeywords_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         FindCommand command = prepareCommand(" ");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
@@ -76,7 +81,8 @@ public class FindCommandTest {
      */
     private FindCommand prepareCommand(String userInput) {
         FindCommand command =
-                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput
+                        .split(ONE_OR_MORE_SPACES_REGEX))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

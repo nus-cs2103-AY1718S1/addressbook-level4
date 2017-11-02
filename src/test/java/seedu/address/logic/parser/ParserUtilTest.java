@@ -19,9 +19,14 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Handphone;
+import seedu.address.model.person.HomePhone;
+import seedu.address.model.person.Interest;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.OfficePhone;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.PostalCode;
 import seedu.address.model.tag.Tag;
@@ -33,14 +38,18 @@ public class ParserUtilTest {
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_POSTAL_CODE = "00111";
     private static final String INVALID_DEBT = "1234a";
+    private static final String INVALID_INTEREST = "one";
+    private static final String INVALID_DEADLINE = "0-0-2017";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
-    private static final String VALID_PHONE = "123456";
+    private static final String VALID_PHONE = "61123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_POSTAL_CODE = "321123";
     private static final String VALID_DEBT = "1234";
+    private static final String VALID_INTEREST = "1";
+    private static final String VALID_DEADLINE = "11-11-2020";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -95,26 +104,76 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parsePhone_null_throwsNullPointerException() throws Exception {
+    public void parseHandphone_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parsePhone(null);
+        ParserUtil.parseHandphone(null);
     }
 
     @Test
-    public void parsePhone_invalidValue_throwsIllegalValueException() throws Exception {
+    public void parseHandphone_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parsePhone(Optional.of(INVALID_PHONE));
+        ParserUtil.parseHandphone(Optional.of(INVALID_PHONE));
     }
 
     @Test
-    public void parsePhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parsePhone(Optional.empty()).isPresent());
+    public void parseHandphone_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseHandphone(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parsePhone_validValue_returnsPhone() throws Exception {
-        Phone expectedPhone = new Phone(VALID_PHONE);
-        Optional<Phone> actualPhone = ParserUtil.parsePhone(Optional.of(VALID_PHONE));
+    public void parseHandphone_validValue_returnsPhone() throws Exception {
+        Phone expectedPhone = new Handphone(VALID_PHONE);
+        Optional<Handphone> actualPhone = ParserUtil.parseHandphone(Optional.of(VALID_PHONE));
+
+        assertEquals(expectedPhone, actualPhone.get());
+    }
+
+    @Test
+    public void parseHomePhone_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseHomePhone(null);
+    }
+
+    @Test
+    public void parseHomePhone_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseHomePhone(Optional.of(INVALID_PHONE));
+    }
+
+    @Test
+    public void parseHomePhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseHomePhone(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseHomePhone_validValue_returnsPhone() throws Exception {
+        Phone expectedPhone = new HomePhone(VALID_PHONE);
+        Optional<HomePhone> actualPhone = ParserUtil.parseHomePhone(Optional.of(VALID_PHONE));
+
+        assertEquals(expectedPhone, actualPhone.get());
+    }
+
+    @Test
+    public void parseOfficePhone_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseOfficePhone(null);
+    }
+
+    @Test
+    public void parseOfficePhone_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseOfficePhone(Optional.of(INVALID_PHONE));
+    }
+
+    @Test
+    public void parseOfficePhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseOfficePhoneForEdit(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseOfficePhone_validValue_returnsPhone() throws Exception {
+        Phone expectedPhone = new OfficePhone(VALID_PHONE);
+        Optional<OfficePhone> actualPhone = ParserUtil.parseOfficePhone(Optional.of(VALID_PHONE));
 
         assertEquals(expectedPhone, actualPhone.get());
     }
@@ -142,6 +201,31 @@ public class ParserUtilTest {
         Optional<Debt> actualDebt = ParserUtil.parseDebt(Optional.of(VALID_DEBT));
 
         assertEquals(expectedDebt, actualDebt.get());
+    }
+
+    @Test
+    public void parseInterest_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseInterest(null);
+    }
+
+    @Test
+    public void parseInterest_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseInterest(Optional.of(INVALID_INTEREST));
+    }
+
+    @Test
+    public void parseInterestForEdit_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseInterestForEdit(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseInterest_validValue_returnsInterest() throws Exception {
+        Interest expectedInterest = new Interest(VALID_INTEREST);
+        Optional<Interest> actualInterest = ParserUtil.parseInterest(Optional.of(VALID_INTEREST));
+
+        assertEquals(expectedInterest, actualInterest.get());
     }
 
     @Test
@@ -217,6 +301,31 @@ public class ParserUtilTest {
         Optional<PostalCode> actualPostalCode = ParserUtil.parsePostalCode(Optional.of(VALID_POSTAL_CODE));
 
         assertEquals(expectedPostalCode, actualPostalCode.get());
+    }
+
+    @Test
+    public void parseDeadlineForEdit_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseDeadlineForEdit(null);
+    }
+
+    @Test
+    public void parseDeadline_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseDeadline(Optional.of(INVALID_DEADLINE));
+    }
+
+    @Test
+    public void parseDeadlineForEdit_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseDeadlineForEdit(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseDeadline_validValue_returnsDeadLine() throws Exception {
+        Deadline expectedDeadline = new Deadline(VALID_DEADLINE);
+        Optional<Deadline> actualDeadline = ParserUtil.parseDeadline(Optional.of(VALID_DEADLINE));
+
+        assertEquals(expectedDeadline, actualDeadline.get());
     }
 
     @Test

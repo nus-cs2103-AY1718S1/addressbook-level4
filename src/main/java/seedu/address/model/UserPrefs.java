@@ -1,5 +1,9 @@
 package seedu.address.model;
 
+import static seedu.address.storage.PasswordSecurity.getSalt;
+import static seedu.address.storage.PasswordSecurity.getSha512SecurePassword;
+
+import java.util.Base64;
 import java.util.Objects;
 
 import seedu.address.commons.core.GuiSettings;
@@ -11,9 +15,11 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
-    private String addressBookName = "MyAddressBook";
+    private String addressBookName = "Codii";
     private String adminUsername = "loanShark97";
-    private String adminPassword = "hitMeUp123";
+    private String adminPassword = "89a6a0f1d74b471f96018a84ab9b5562a39e0d09e3f48872a5fca8fb8b01c404a993e47ce384495196d"
+            + "f6eba140af5e83eb98d20b7e3dbb361a94bfe8827a695";
+    private String passwordSaltInString = "KeAnoJrBdpqc0AnhiZDSPw==";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -55,14 +61,21 @@ public class UserPrefs {
         return adminUsername;
     }
 
-    public void setAdminPassword(String adminUsername) {
-        this.adminPassword = adminPassword;
+    public void setAdminPassword(String adminPassword) {
+        byte[] salt = getSalt();
+        String hashedPassword = getSha512SecurePassword(adminPassword, salt);
+
+        this.adminPassword = hashedPassword;
+        this.passwordSaltInString = Base64.getEncoder().encodeToString(salt);
     }
 
     public String getAdminPassword() {
         return adminPassword;
     }
 
+    public byte[] getPasswordSalt() {
+        return Base64.getDecoder().decode(passwordSaltInString);
+    }
 
     @Override
     public boolean equals(Object other) {

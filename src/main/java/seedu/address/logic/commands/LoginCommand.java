@@ -16,16 +16,25 @@ public class LoginCommand extends Command {
 
     public static final String MESSAGE_LOGIN_ACKNOWLEDGEMENT = "Login successful";
     public static final String MESSAGE_LOGIN_UNSUCCESSFUL = "Unable to log into Address Book";
+    public static final String MESSAGE_LOGIN_REQUEST = "Please log in first";
+    public static final String MESSAGE_LOGIN_FORMAT = COMMAND_WORD + " USERNAME PASSWORD";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " USERNAME PASSWORD\nExample: "
             + COMMAND_WORD + " JohnDoe hiIAmJohnDoe123";
-
+    private static boolean isLoggedIn = false;
     private final Username username;
     private final Password password;
-    private final boolean ableToLogin = false;
 
     public LoginCommand(Username username, Password password) {
         this.username = username;
         this.password = password;
+    }
+
+    public static boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public static void setLoginStatus(boolean val) {
+        isLoggedIn = val;
     }
 
     /**

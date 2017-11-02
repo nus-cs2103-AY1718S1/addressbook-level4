@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- @@author khooroko -->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<StackPane fx:id="infoPanel" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+      <StackPane.margin>
+         <Insets />
+      </StackPane.margin>
+   <VBox fx:id="pane" prefHeight="600.0" prefWidth="800.0">
+      <children>
+         <Label fx:id="name" alignment="TOP_LEFT" prefHeight="80.0" prefWidth="360.0" styleClass="window_big_label" text="\$name" wrapText="true">
+            <VBox.margin>
+               <Insets top="5.0" />
+            </VBox.margin></Label>
+         <Text fx:id="debtRepaymentField" fill="GREY" text="Debt repayment progress" />
+         <StackPane fx:id="progressBarPlaceholder" alignment="CENTER_LEFT" maxHeight="50.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="50.0" prefWidth="200.0">
+            <VBox.margin>
+               <Insets bottom="10.0" />
+            </VBox.margin>
+         </StackPane>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="debtField" fill="gray" styleClass="window_small_label" text="Current Debt: " />
+               <Label fx:id="debt" styleClass="window_small_label" text="\$debt" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="totalDebtField" fill="gray" styleClass="window_small_label" text="Total Debt: " />
+               <Label fx:id="totalDebt" styleClass="window_small_label" text="\$totalDebt" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="interestField" fill="GREY" styleClass="window_small_label" text="Interest: " />
+               <Label fx:id="interest" styleClass="window_small_label" text="\$interest" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="handphoneField" fill="gray" styleClass="window_small_label" text="HP: " />
+               <Label fx:id="handphone" styleClass="window_small_label" text="\$phone" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="homePhoneField" fill="gray" styleClass="window_small_label" text="HP: " />
+               <Label fx:id="homePhone" styleClass="window_small_label" text="\$phone" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="officePhoneField" fill="gray" styleClass="window_small_label" text="HP: " />
+               <Label fx:id="officePhone" styleClass="window_small_label" text="\$phone" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="dateBorrowField" fill="gray" styleClass="window_small_label" text="Date borrowed: " />
+               <Label fx:id="dateBorrow" styleClass="window_small_label" text="\$dateBorrow" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="deadlineField" fill="GREY" styleClass="window_small_label" text="Deadline: " />
+               <Label fx:id="deadline" styleClass="window_small_label" text="\$deadline" />
+            </children>
+          </TextFlow>
+          <TextFlow prefHeight="50.0" prefWidth="400.0">
+              <children>
+               <Text fx:id="dateRepaidField" fill="gray" styleClass="window_small_label" text="Date Repaid: " />
+               <Label fx:id="dateRepaid" styleClass="window_small_label" text="\$dateRepaid" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="addressField" fill="gray" styleClass="window_small_label" text="Address: " />
+               <Label fx:id="address" alignment="TOP_LEFT" maxHeight="800.0" styleClass="window_small_label" text="\$address" wrapText="true" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="postalCodeField" fill="gray" styleClass="window_small_label" text="S" />
+               <Label fx:id="postalCode" styleClass="window_small_label" text="\$postalCode" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="clusterField" fill="gray" styleClass="window_small_label" text="General Location: " />
+               <Label fx:id="cluster" styleClass="window_small_label" text="\$cluster" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="emailField" fill="gray" styleClass="window_small_label" text="Email: " />
+               <Label fx:id="email" styleClass="window_small_label" text="\$email" />
+            </children>
+         </TextFlow>
+         <FlowPane fx:id="tags" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="774.0" />
+         <Text fx:id="nearbyPersonField" fill="gray" styleClass="window_small_label" text="Other contacts nearby: " />
+         <HBox fx:id="nearbyPersonList" minHeight="200" prefHeight="200" prefWidth="340">
+            <padding>
+               <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+            <StackPane fx:id="nearbyPersonListPanelPlaceholder" HBox.hgrow="ALWAYS" />
+         </HBox>
+      </children>
+   </VBox>
+</StackPane>

@@ -69,18 +69,20 @@ public class StorageManagerTest {
         AddressBook original = getTypicalAddressBook();
         storageManager.saveAddressBook(original);
         ReadOnlyAddressBook retrieved = storageManager.readAddressBook().get();
-        assertEquals(original, new AddressBook(retrieved));
+        assertEquals(original.toString(), new AddressBook(retrieved).toString());
     }
 
+    //@@author khooroko
     @Test
-    public void backupAddressBookReadSave() throws  Exception {
+    public void backupAddressBookReadSave() throws Exception {
         AddressBook original = getTypicalAddressBook();
         storageManager.saveAddressBook(original);
         storageManager.backupAddressBook();
         ReadOnlyAddressBook retrieved = storageManager.readBackupAddressBook().get();
-        assertEquals(original, new AddressBook(retrieved));
+        assertEquals(original.toString(), new AddressBook(retrieved).toString());
     }
 
+    //@@author
     @Test
     public void getAddressBookFilePath() {
         assertNotNull(storageManager.getAddressBookFilePath());
