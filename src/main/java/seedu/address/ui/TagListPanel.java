@@ -1,3 +1,4 @@
+//@@author Houjisan
 package seedu.address.ui;
 
 import java.util.logging.Logger;
@@ -10,7 +11,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.TagPanelSelectionChangedEvent;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -38,17 +38,6 @@ public class TagListPanel extends UiPart<Region> {
                 tagList, (tag) -> new TagCard(tag, tagList.indexOf(tag) + 1));
         tagListView.setItems(mappedList);
         tagListView.setCellFactory(listView -> new TagListViewCell());
-        setEventHandlerForSelectionChangeEvent();
-    }
-
-    private void setEventHandlerForSelectionChangeEvent() {
-        tagListView.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
-                        raise(new TagPanelSelectionChangedEvent(newValue));
-                    }
-                });
     }
 
     /**

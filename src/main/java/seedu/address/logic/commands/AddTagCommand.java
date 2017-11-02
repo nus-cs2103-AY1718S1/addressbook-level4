@@ -14,7 +14,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
-
+//@@author NabeelZaheer
 /**
  * Add the specified tag to the address book
  */
@@ -26,7 +26,7 @@ public class AddTagCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Add the tag to a person by the index number used "
             + "in the last person listing.\n"
-            + "Parameters: [TAG]... [INDEX]...(INDEX must be positive integer)\n"
+            + "Parameters: TAG... INDEX...(INDEX must be positive integer)\n"
             + "[INDEX] can be set as a range."
             + "Example: " + COMMAND_WORD + " friends 1"
             + "Example: " + COMMAND_WORD + " friends 1-4";

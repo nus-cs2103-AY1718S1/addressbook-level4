@@ -14,11 +14,12 @@ public class NewResultAvailableEvent extends BaseEvent {
         this.message = message;
         this.isError = false;
     }
-
+    //@@author limyongsong
     public NewResultAvailableEvent(String message, Boolean isError) {
         this.message = message;
         this.isError = isError;
     }
+    //@@author
     @Override
     public String toString() {
         return this.getClass().getSimpleName();

@@ -1,3 +1,4 @@
+//@@author limyongsong
 package seedu.address.ui;
 
 import java.util.ArrayList;
@@ -49,8 +50,7 @@ public class RemarkListPanel extends UiPart<Region> {
         totalPersonsWithRemarks = 0;
         personListWithRemarks = new ArrayList<>();
         for (int i = 0; i < personObservableList.size(); i++) {
-            if (!personObservableList.get(i).getRemark().isEmpty()
-                    && !personObservableList.get(i).getRemark().get(firstIndexOfArray).value.equals("")) {
+            if (!personObservableList.get(i).getRemark().isEmpty()) {
                 totalPersonsWithRemarks++;
                 personListWithRemarks.add(personObservableList.get(i).getName().fullName);
             }
