@@ -69,7 +69,11 @@ public class PersonPanel extends UiPart<Region> {
     }
 
     private void loadDefaultScreen() {
-        this.person = null; }
+        name.textProperty().setValue("No Resident Selected");
+        phone.textProperty().setValue("-");
+        address.textProperty().setValue("-");
+        email.textProperty().setValue("-");
+    }
 
     /**
      * loads the selected person's information to be displayed.
