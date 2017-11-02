@@ -76,7 +76,7 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void MeetingListReadSave() throws Exception {
+    public void meetingListReadSave() throws Exception {
         /*
          * Note: This is an integration test that verifies the StorageManager is properly wired to the
          * {@link XmlMeetingListStorage} class.
@@ -109,6 +109,7 @@ public class StorageManagerTest {
             storageManager.loadCacheFile("notValidCacheFile.no");
             fail();
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -118,6 +119,7 @@ public class StorageManagerTest {
             storageManager.loadResourceImage("notValidImage.png");
             fail();
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
