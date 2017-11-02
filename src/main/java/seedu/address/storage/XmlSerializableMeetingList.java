@@ -13,8 +13,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Meeting;
 import seedu.address.model.ReadOnlyMeetingList;
 
+//@@author liuhang0213
 /**
- * An Immutable AddressBook that is serializable to XML format
+ * An Immutable MeetingList that is serializable to XML format
  */
 @XmlRootElement(name = "meetingList")
 public class XmlSerializableMeetingList extends XmlSerializableData implements ReadOnlyMeetingList {
