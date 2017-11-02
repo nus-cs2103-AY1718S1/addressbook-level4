@@ -139,6 +139,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.getReadOnlyPerson(index);
     }
 
+    //@@author lawwman
     /**
      * Adds a person to the overdue debt list in the address book.
      * @return ReadOnly newOverduePerson
@@ -159,6 +160,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.getReadOnlyPerson(index);
     }
 
+    //@@author
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
@@ -268,6 +270,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.getReadOnlyPerson(index);
     }
 
+    //@@author lawwman
     /**
      * Updates {@code key} to exclude {@code key} from the overdue list in this {@code AddressBook}.
      * @return ReadOnly newOverdueDebtPerson
@@ -291,6 +294,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// tag-level operations
 
+    //@@author
     /**
      * Adds a {@code Tag} to the tag list.
      * @param t the tag to be added.

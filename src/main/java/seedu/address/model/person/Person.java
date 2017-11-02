@@ -374,7 +374,7 @@ public class Person implements ReadOnlyPerson {
         this.isWhitelisted = isWhitelisted;
     }
 
-
+    //@@author lawwman
     /**
      * Returns boolean status of a person's debt status.
      */
@@ -438,6 +438,7 @@ public class Person implements ReadOnlyPerson {
         return other.getCluster().equals(this.getCluster());
     }
 
+    //@@author lawwman
     /**
      * Calculates increase in debt based on interest rate and amount of months
      */
@@ -464,6 +465,7 @@ public class Person implements ReadOnlyPerson {
         }
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
