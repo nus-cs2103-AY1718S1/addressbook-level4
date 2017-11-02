@@ -20,7 +20,9 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ShowBrowserEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowMeetingEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -43,6 +45,7 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private MeetingPanel meetingPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
@@ -161,6 +164,7 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
+        meetingPanel = new MeetingPanel(logic);
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         SettingsSelector settingsSelector = new SettingsSelector();
@@ -258,5 +262,17 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleShowBrowserEvent(ShowBrowserEvent event) {
+        browserPlaceholder.getChildren().remove(meetingPanel.getRoot());
+        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+    }
+
+    @Subscribe
+    private void handleShowMeetingEvent(ShowMeetingEvent event) {
+        browserPlaceholder.getChildren().remove(browserPanel.getRoot());
+        browserPlaceholder.getChildren().add(meetingPanel.getRoot());
     }
 }

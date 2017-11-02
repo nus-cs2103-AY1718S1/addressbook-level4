@@ -134,6 +134,26 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Search for persons by parameter: 'Search'
+
+Finds persons whose details match the given keywords. +
+Format: 'search KEYWORD [MORE KEYWORD]'
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Parameters are searched
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+* `search John` +
+Returns `john` and `John Doe`
+* `search Serangoon` +
+Returns `Bernice` and `David`, who stay in Serangoon
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -338,6 +358,8 @@ Can also use shortcut 'lms'
 * *List* : `list`
 Can also use shortcut 'l'
 * *Help* : `help`
+* *Search* : `search KEYWORD [KEYWORD]`
+Can also use shortcut 'se'
 * *Select* : `select INDEX` +
 e.g.`select 2`
 Can also use shortcut 's'

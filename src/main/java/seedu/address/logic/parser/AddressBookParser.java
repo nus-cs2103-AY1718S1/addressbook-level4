@@ -23,6 +23,7 @@ import seedu.address.logic.commands.MapCommand;
 import seedu.address.logic.commands.NextMeetingCommand;
 import seedu.address.logic.commands.PrefCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -74,7 +75,6 @@ public class AddressBookParser {
         case DeleteTagCommand.COMMAND_ALIAS:
             return new DeleteTagCommandParser().parse(arguments);
 
-
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
@@ -123,7 +123,12 @@ public class AddressBookParser {
         case MapCommand.COMMAND_ALIAS:
             return new MapCommandParser().parse(arguments);
 
-            default:
+        case SearchCommand.COMMAND_WORD:
+        case SearchCommand.COMMAND_ALIAS:
+            return new SearchCommandParser().parse(arguments);
+
+        default:
+
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }

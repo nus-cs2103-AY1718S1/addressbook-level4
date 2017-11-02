@@ -6,7 +6,7 @@ import seedu.address.model.person.InternalId;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Lists all persons in the address book to the user.
+ * Lists all upcoming meetings to the user.
  */
 public class NextMeetingCommand extends Command {
 
