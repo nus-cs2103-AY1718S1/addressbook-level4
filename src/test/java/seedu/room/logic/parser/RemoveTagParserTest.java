@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import seedu.room.logic.commands.RemoveTagCommand;
 
-
+//@@author blackroxs
 public class RemoveTagParserTest {
 
     private static final String MESSAGE_EMPTY_TAG_INPUT = "";

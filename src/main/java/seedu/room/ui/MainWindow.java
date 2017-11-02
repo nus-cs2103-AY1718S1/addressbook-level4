@@ -200,6 +200,7 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+    //@@author blackroxs
     /**
      * Handles import and allows user to choose file
      */
@@ -225,6 +226,7 @@ public class MainWindow extends UiPart<Region> {
         }
     }
 
+    //@@author
     void show() {
         primaryStage.show();
     }

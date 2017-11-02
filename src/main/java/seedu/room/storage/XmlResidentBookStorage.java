@@ -76,6 +76,7 @@ public class XmlResidentBookStorage implements ResidentBookStorage {
         XmlFileStorage.saveDataToFile(file, new XmlSerializableResidentBook(residentBook));
     }
 
+    //@@author blackroxs
     @Override
     public void backupResidentBook(ReadOnlyResidentBook residentBook) throws IOException {
         saveResidentBook(residentBook, filePath + "-backup.xml");

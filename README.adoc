@@ -1,4 +1,4 @@
-= Immunity Book
+= Resident Book
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
@@ -16,13 +16,15 @@ image::images/Ui.png[width="600"]
 endif::[]
 
 * This is a desktop Resident Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* Immunity Book is a newly conceptualised contact book that is secure, efficient and handy for users with everchanging contact list.
-* It is a Java sample application intended for CS2103 Software Engineering in AY2017/18 while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+* Resident Book is a newly conceptualised administrative tool catered for staffs handling hostel and college operations.
+* Administrative staff often face difficulties in collating and gathering information from off-the-shelf software such as Excel, and may miss out important details using a large spreadsheet.
+* Some common features include
+** Events handling mechanism
+** Tags to keep track of exchange/guests stays
+** Temporary contacts for exchange/guests stays
+** Import and backup of data for easier maintenance
+** Typing and GUI available for efficient and effective operations
+** Auto-complete to increase efficiency
 
 == Site Map
 
