@@ -6,6 +6,7 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * Indicates a request to jump to the list of parcels
  */
+//@@author vicisapotato
 public class JumpToTabRequestEvent extends BaseEvent {
 
     public final int targetIndex;
@@ -20,3 +21,4 @@ public class JumpToTabRequestEvent extends BaseEvent {
     }
 
 }
+//@@author

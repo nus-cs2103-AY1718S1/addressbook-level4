@@ -28,7 +28,7 @@
     -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Semibold";
 }
-
+/* @@author vicisapotato */
 .tab-pane .tab-header-area .tab-header-background {
     -fx-opacity: 0;
 }
@@ -63,6 +63,7 @@
     -fx-alignment: CENTER;
     -fx-text-fill: #aab981;
 }
+/* @@author */
 
 .table-view {
     -fx-base: #1d1d1d;

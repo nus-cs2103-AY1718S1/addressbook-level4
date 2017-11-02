@@ -40,10 +40,11 @@ public class BrowserPanel extends UiPart<Region> {
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
-
+    //@@author vicisapotato
     private void loadParcelLocationPage(ReadOnlyParcel parcel) {
         loadPage(GOOGLE_MAP_URL_PREFIX + getMapQueryStringFromPostalString(parcel.getAddress().postalCode.toString()));
     }
+    //@@author
 
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
@@ -64,11 +65,13 @@ public class BrowserPanel extends UiPart<Region> {
         browser = null;
     }
 
+    //@@author vicisapotato
     @Subscribe
     private void handleParcelPanelSelectionChangedEvent(ParcelPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadParcelLocationPage(event.getNewSelection().parcel);
     }
+    //@@author
 
     //@@author kennard123661
     public static String getMapQueryStringFromPostalString(String postalCode) {

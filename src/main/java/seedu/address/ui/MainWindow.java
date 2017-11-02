@@ -223,11 +223,13 @@ public class MainWindow extends UiPart<Region> {
         browserPanel.freeResources();
     }
 
+    //@@author vicisapotato
     @FXML @Subscribe
     private void handleMinimizeParcelListEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         splitPanePlaceholder.setDividerPositions(0.6);
     }
+    //@@author
 
     //@@author kennard123661
     @FXML @Subscribe
@@ -236,12 +238,13 @@ public class MainWindow extends UiPart<Region> {
     }
     //@@author
 
+    //@@author vicisapotato
     @FXML @Subscribe
     private void handleShowParcelListEvent(ShowParcelListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         splitPanePlaceholder.setDividerPositions(0.0);
     }
-
+    //@@author
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

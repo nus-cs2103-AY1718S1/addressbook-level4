@@ -13,6 +13,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.TabCommand;
 import seedu.address.model.Model;
 
+//@@author vicisapotato
 public class TabCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void tab() {
@@ -53,6 +54,7 @@ public class TabCommandSystemTest extends AddressBookSystemTest {
         assert getModel().getAddressBook().getParcelList().size() == 0;
         assertCommandSuccess(command, INDEX_FIRST_TAB);
     }
+    //@@author
 
     /**
      * Executes {@code command} and verifies that the command box displays an empty string, the result display
