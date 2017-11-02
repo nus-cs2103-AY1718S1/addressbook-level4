@@ -1,4 +1,4 @@
-package seedu.address.commons.util.googleCalendarUtil;
+package seedu.address.commons.util.googlecalendarutil;
 
 import java.io.IOException;
 
