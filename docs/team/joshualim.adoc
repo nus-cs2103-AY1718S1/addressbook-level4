@@ -4,7 +4,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: ConnectUs
-ConnectUs is a desktop address book application used to store contact information such as name, phone, email and address. 
+ConnectUs is a desktop address book application used to store contact information such as name, phone, email and address.
 The user can tag entries for more efficient search and can open up an email client to send an email. The GUI displays the list of contacts as well as additional information
 such as his/her address on Google Maps. The user interacts with it using a CLI, although there are additional GUI elements created in JavaFX such as a form to edit contacts, and a QR generator for you to scan
 the contact's number and automatically port it to your smartphone. It is written in Java, and has about 6 kLoC.

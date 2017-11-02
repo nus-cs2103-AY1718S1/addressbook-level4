@@ -250,7 +250,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
-// tag::joshua[] 
+// tag::joshua[]
 === Email Function
 (added in v1.2)
 
@@ -316,7 +316,7 @@ The browser will then render the new URL it has received. Below is the code snip
 [NOTE]
 The browser's user agent had to be set to ** "Mozilla/5.0 "
                                                           + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0" **because
-there were unicode issue's when load Google Maps on Mac computers.  
+there were unicode issue's when load Google Maps on Mac computers.
 
 === Mapping a command to a JavaFX Button
 (added in v1.2)
