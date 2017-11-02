@@ -16,7 +16,7 @@ import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
 import seedu.room.model.tag.Tag;
 
-
+//@@author blackroxs
 /**
  * Removes a tag that is shared by a group of contacts.
  */

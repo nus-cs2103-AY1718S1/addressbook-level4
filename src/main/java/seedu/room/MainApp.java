@@ -208,10 +208,11 @@ public class MainApp extends Application {
         this.stop();
     }
 
+    //@@author blackroxs
     public static Storage getBackup() {
         return backup;
     }
-
+    //@@author
     public static void main(String[] args) {
         launch(args);
     }
