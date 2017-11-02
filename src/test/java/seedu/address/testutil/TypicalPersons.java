@@ -28,13 +28,13 @@ public class TypicalPersons {
     public static final ReadOnlyPerson ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("85355255")
-            .withTags("friends")
+            .withTags("friend")
             .withWebLinks("https://www.facebook.com/alice, https://www.instagram.com/alice/")
             .build();
     public static final ReadOnlyPerson BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432")
-            .withTags("owesMoney", "friends")
+            .withTags("owesMoney", "friend")
             .withWebLinks("https://www.facebook.com/benson, https://www.instagram.com/benson/")
             .build();
     public static final ReadOnlyPerson CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
@@ -43,12 +43,12 @@ public class TypicalPersons {
             .build();
     public static final ReadOnlyPerson DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street")
-            .withTags("owesMoney", "friends")
+            .withTags("owesMoney", "friend")
             .withWebLinks("https://www.facebook.com/daniel, https://www.instagram.com/daniel/")
             .build();
     public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
             .withEmail("werner@example.com").withAddress("michegan ave")
-            .withTags("owesMoney", "friends")
+            .withTags("owesMoney", "friend")
             .withWebLinks("https://www.facebook.com/elle, https://www.instagram.com/elle/")
             .build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
@@ -68,11 +68,11 @@ public class TypicalPersons {
     public static final ReadOnlyPerson JULIAN = new PersonBuilder().withName("Julian Kaiser")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("julian@example.com")
             .withPhone("85325555")
-            .withTags("friends").build();
+            .withTags("friend").build();
     public static final ReadOnlyPerson KENDRICK = new PersonBuilder().withName("Kendrick Lopez")
             .withAddress("311, Jurong Ave 2, #02-25")
             .withEmail("kendrick@example.com").withPhone("86324716")
-            .withTags("friends").build();
+            .withTags("friend").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final ReadOnlyPerson AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)

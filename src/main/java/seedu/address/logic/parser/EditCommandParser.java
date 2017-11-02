@@ -3,10 +3,12 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CLEAR_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REM_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEB_LINK;
 
 import java.util.ArrayList;
@@ -38,7 +40,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_ADDRESS, PREFIX_TAG, PREFIX_WEB_LINK);
+                        PREFIX_ADDRESS, PREFIX_ADD_TAG, PREFIX_CLEAR_TAG, PREFIX_REM_TAG, PREFIX_WEB_LINK);
 
         Index index;
 
@@ -54,7 +56,9 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editPersonDescriptor::setPhone);
             parseEmailsForEdit(argMultimap.getAllValues(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
-            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
+            parseTagsForEdit(argMultimap.getAllValues(PREFIX_ADD_TAG)).ifPresent(editPersonDescriptor::setToAdd);
+            parseTagsForEdit(argMultimap.getAllValues(PREFIX_REM_TAG)).ifPresent(editPersonDescriptor::setToRemove);
+            editPersonDescriptor.setClearTags(argMultimap.containsPrefix(PREFIX_CLEAR_TAG));
             parseWebLinkForEdit(argMultimap.getAllValues(PREFIX_WEB_LINK)).ifPresent(editPersonDescriptor::setWebLinks);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
@@ -87,6 +91,7 @@ public class EditCommandParser implements Parser<EditCommand> {
      * If {@code emails} contain only one element which is an empty string, it will be parsed into a
      * {@code Set<Email>} containing zero emails.
      */
+    //@@author zhoukai07
     private Optional<ArrayList<Email>> parseEmailsForEdit(Collection<String> emails) throws IllegalValueException {
         assert emails != null;
 
@@ -102,6 +107,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         return Optional.of(ParserUtil.parseEmail(emailSetToParse));
     }
+    //@@author
     /**
      * Parses {@code Collection<String> webLinks} into a {@code Set<weblink>} if {@code webLinks} is non-empty.
      * If {@code webLinks} contain only one element which is an empty string, it will be parsed into a
