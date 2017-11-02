@@ -76,7 +76,9 @@ Set and show an image for a person in the addressbook. Uses the index of a perso
 e.g. `image 1 /home/user/someexample.jpg`
 
 === Exporting Database
-Export a working version of the database and the images associated to it to a directory specified. Coming v1.4
+Export a working version of the database and the images associated to it to a directory specified.
+`Currently WIP but allows exporting to the addressbook home directry` +
+e.g. `export /home/user/`
 
 === Condensed Help
 Open a condensed help screen by default in place of the Google brwoser integration. Coming v1.5
