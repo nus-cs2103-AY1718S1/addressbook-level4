@@ -263,8 +263,26 @@ image::ProfileJump.PNG[width="380"]
 
 Person name will be highlighted upon hover to indicate it is a link
 
+=== Printing the Address book : `print`
+`since v1.4`
+
+Saves the entire address book into a printable .txt file. +
+Format: `print FILENAME`
+
+After executing the command, the user can find the saved file in the docs/books folder as FILENAME.txt
+
+=== Easter egg : `why`
+`since v1.2`
+
+Prints out a line telling the user a reason why for a particular person
+Format: `why INDEX`
+
+After executing, the user will be presented with a feedback which looks something like this:
+"Because John Joe lives in 123 Clementi Ave 2"
 
 === Exiting the program : `exit`
+
+
 
 Exits the program. +
 Format: `exit`

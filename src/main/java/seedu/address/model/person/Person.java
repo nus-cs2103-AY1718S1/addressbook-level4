@@ -3,6 +3,8 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE;
+import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_2;
+import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_3;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELTAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
@@ -15,6 +17,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
@@ -200,14 +203,26 @@ public class Person implements ReadOnlyPerson {
     public Gender getGender() {
         return gender.get();
     }
-
+  
+    //@@author arnollim
     @Override
     public String getReason() {
-        Address a = this.getAddress();
-        Name n = this.getName();
-        this.reason = String.format(SHOWING_WHY_MESSAGE, n, a);
+        Address address = this.getAddress();
+        Name name = this.getName();
+        Email email = this.getEmail();
+        DateOfBirth dob = this.getDateOfBirth();
+        Random randomGenerator = new Random();
+        int randomInt = randomGenerator.nextInt(3);
+        if (randomInt == 0) {
+            this.reason = String.format(SHOWING_WHY_MESSAGE, name, address);
+        } else if (randomInt == 1) {
+            this.reason = String.format(SHOWING_WHY_MESSAGE_2, name, dob);
+        } else if (randomInt == 2) {
+            this.reason = String.format(SHOWING_WHY_MESSAGE_3, name, email);
+        }
         return reason;
     }
+    //@@author
 
     //@@author OscarWang114
     @Override

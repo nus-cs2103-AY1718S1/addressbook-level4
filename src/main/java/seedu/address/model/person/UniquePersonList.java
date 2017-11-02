@@ -101,6 +101,7 @@ public class UniquePersonList implements Iterable<Person> {
     /**
      * Sorts the internal list of people
      */
+    //@@author arnollim
     public void sortPersons() throws DuplicatePersonException {
         ObservableList<Person> listToSort = FXCollections.observableArrayList(internalList);
         listToSort.sort((ReadOnlyPerson first, ReadOnlyPerson second)-> {
@@ -116,6 +117,7 @@ public class UniquePersonList implements Iterable<Person> {
         }
         setPersons(listToReplace);
     }
+    //@@author
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.

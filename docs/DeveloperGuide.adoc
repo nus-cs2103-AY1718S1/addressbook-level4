@@ -570,6 +570,43 @@ Case (1) is to restore the default list of all contacts after users have used th
 
 The rest of the execution then, follows closely to the case where the command is executed through `CommandBox`
 
+=== Addition of Print Command
+The print command enables the user to save his/her addressbook into a printable .txt file
+
+The print command has the following format:
+print [FILENAME]
+
+There is no need to specify the .txt extension as the program does this automatically.
+----
+int personIndex = 1;
+        for (ReadOnlyPerson person: lastShownList) {
+            String entry = personIndex + ". " + person.getAsText();
+            lines.add(entry);
+
+            UniqueLifeInsuranceList insurances = person.getLifeInsurances();
+            for (ReadOnlyInsurance insurance: insurances) {
+                lines.add("Insurance Policy: =========");
+                String owner = insurance.getOwner().getName();
+                String insured = insurance.getInsured().getName();
+                String beneficiary = insurance.getBeneficiary().getName();
+                String premium = insurance.getPremium().toString();
+                String signingDate = insurance.getSigningDateString();
+                String expiryDate = insurance.getExpiryDateString();
+                lines.add("Owner: " + owner + "\n"
+                        + "Insured: " + insured + "\n"
+                        + "Beneficiary: " + beneficiary + "\n"
+                        + "Premium: " + premium + "\n"
+                        + "Signing Date: " + signingDate + "\n"
+                        + "Expiry Date: " + expiryDate + "\n"
+                );
+                lines.add("============");
+            }
+            personIndex++;
+        }
+----
+Print Command iterates through each contact in the addressbook and prints out his/her basic details first.
+For each person, print command then iterates through ALL insurance policies he is involved in (whether as an
+owner/beneficiary/insured) and prints out the policy details.
 
 ==== Design Considerations
 
