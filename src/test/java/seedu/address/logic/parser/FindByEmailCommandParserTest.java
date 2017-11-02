@@ -11,6 +11,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.FindByEmailCommand;
 import seedu.address.model.person.EmailContainsKeywordsPredicate;
 
+//@@author hj2304
 public class FindByEmailCommandParserTest {
 
     private FindByEmailCommandParser parser = new FindByEmailCommandParser();
@@ -33,3 +34,4 @@ public class FindByEmailCommandParserTest {
     }
 
 }
+//@@author hj2304

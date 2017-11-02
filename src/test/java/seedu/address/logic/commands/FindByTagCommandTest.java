@@ -22,6 +22,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TagContainsKeywordsPredicate;
 
+//@@author hj2304
 /**
  * Contains integration tests (interaction with the Model) for {@code FindByTagCommand}.
  */
@@ -95,3 +96,4 @@ public class FindByTagCommandTest {
         assertEquals(expectedAddressBook, model.getAddressBook());
     }
 }
+//@@author hj2304

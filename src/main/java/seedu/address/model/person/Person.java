@@ -24,8 +24,9 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    //@@author hj2304
     private ObjectProperty<Mrt> mrt;
-
+    //@@author hj2304
     private ObjectProperty<UniqueTagList> tags;
 
     private ObjectProperty<Schedule> schedule;
@@ -39,7 +40,9 @@ public class Person implements ReadOnlyPerson {
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        //@@author hj2304
         this.mrt = new SimpleObjectProperty<>(mrt);
+        //@@author hj2304
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         initiateSchedule();
@@ -110,6 +113,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author hj2304
     public void setMrt(Mrt mrt) {
         this.mrt.set(requireNonNull(mrt));
     }
@@ -123,6 +127,7 @@ public class Person implements ReadOnlyPerson {
     public Mrt getMrt() {
         return mrt.get();
     }
+    //@@author hj2304
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

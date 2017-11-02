@@ -12,6 +12,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.testutil.TypicalPersons;
 
+//@@author hj2304
 public class SortCommandTest {
     private Model model;
 
@@ -44,3 +45,4 @@ public class SortCommandTest {
         return sortCommand;
     }
 }
+//@@author hj2304

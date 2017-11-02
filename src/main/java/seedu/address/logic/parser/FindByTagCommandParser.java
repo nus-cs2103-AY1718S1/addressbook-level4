@@ -8,6 +8,7 @@ import seedu.address.logic.commands.FindByTagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.TagContainsKeywordsPredicate;
 
+//@@author hj2304
 /**
  * Parses input arguments and creates a new FindByTagCommand object
  */
@@ -31,3 +32,4 @@ public class FindByTagCommandParser implements Parser<FindByTagCommand> {
     }
 
 }
+//@@author hj2304
