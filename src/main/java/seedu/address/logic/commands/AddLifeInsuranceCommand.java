@@ -53,10 +53,10 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
     /**
      * Creates an AddLifeInsuranceCommand to add the specified {@code ReadOnlyInsurance}
      */
-    public AddLifeInsuranceCommand(String ownerName, String insuredName, String beneficiaryName,
+    public AddLifeInsuranceCommand(String insuranceName, String ownerName, String insuredName, String beneficiaryName,
                                    Double premium, String contractPath, LocalDate signingDate,
                                    LocalDate expiryDate) {
-        this.lifeInsuranceToAdd = new LifeInsurance(ownerName, insuredName, beneficiaryName,
+        this.lifeInsuranceToAdd = new LifeInsurance(insuranceName, ownerName, insuredName, beneficiaryName,
                 premium, contractPath, signingDate, expiryDate);
     }
 

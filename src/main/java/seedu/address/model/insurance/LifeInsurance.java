@@ -49,9 +49,10 @@ public class LifeInsurance implements ReadOnlyInsurance {
     /**
      * Constructor for {@code XmlAdaptedLifeInsurance.toModelType()}
      */
-    public LifeInsurance(String owner, String insured, String beneficiary, Double premium,
+    public LifeInsurance(String insuranceName, String owner, String insured, String beneficiary, Double premium,
                          String contractPath, String signingDateInput, String expiryDateInput)
             throws IllegalValueException {
+        this.insuranceName = new SimpleStringProperty(insuranceName);
         this.roleToPersonNameMap = new EnumMap<>(Roles.class);
         this.roleToPersonNameMap.put(Roles.OWNER, owner);
         this.roleToPersonNameMap.put(Roles.INSURED, insured);
@@ -71,9 +72,10 @@ public class LifeInsurance implements ReadOnlyInsurance {
     /**
      * Constructor for {@code AddLifeInsuranceCommand}
      */
-    public LifeInsurance(String owner, String insured, String beneficiary, Double premium,
+    public LifeInsurance(String insuranceName, String owner, String insured, String beneficiary, Double premium,
                          String contractPath, LocalDate signingDate, LocalDate expiryDate) {
         requireAllNonNull(owner, insured, beneficiary, premium, contractPath);
+        this.insuranceName = new SimpleStringProperty(insuranceName);
         this.roleToPersonNameMap = new EnumMap<>(Roles.class);
         this.roleToPersonNameMap.put(Roles.OWNER, owner);
         this.roleToPersonNameMap.put(Roles.INSURED, insured);
@@ -183,6 +185,16 @@ public class LifeInsurance implements ReadOnlyInsurance {
     }
 
     //@author Juxarius
+    @Override
+    public StringProperty insuranceNameProperty() {
+        return insuranceName;
+    }
+
+    @Override
+    public String getInsuranceName() {
+        return insuranceName.get();
+    }
+
     @Override
     public StringProperty premiumStringProperty() {
         return premiumString;

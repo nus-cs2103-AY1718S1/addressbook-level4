@@ -12,6 +12,8 @@ import seedu.address.model.insurance.ReadOnlyInsurance;
  */
 public class XmlAdaptedLifeInsurance {
     @XmlElement(required = true)
+    private String insuranceName;
+    @XmlElement(required = true)
     private String owner;
     @XmlElement(required = true)
     private String insured;
@@ -39,6 +41,7 @@ public class XmlAdaptedLifeInsurance {
      * @param source future changes to this will not affect the created XmlAdaptedLifeInsurance
      */
     public XmlAdaptedLifeInsurance(ReadOnlyInsurance source) {
+        insuranceName = source.getInsuranceName();
         owner = source.getOwner().getName();
         insured = source.getInsured().getName();
         beneficiary = source.getBeneficiary().getName();
@@ -55,7 +58,7 @@ public class XmlAdaptedLifeInsurance {
      */
 
     public LifeInsurance toModelType() throws IllegalValueException {
-        return new LifeInsurance(this.owner, this.insured, this.beneficiary, this.premium,
+        return new LifeInsurance(this.insuranceName, this.owner, this.insured, this.beneficiary, this.premium,
                 this.contractPath, this.signingDate, this.expiryDate);
     }
 }

@@ -13,6 +13,8 @@ import javafx.beans.property.StringProperty;
  */
 public interface ReadOnlyInsurance {
 
+    String getInsuranceName();
+    StringProperty insuranceNameProperty();
     ObjectProperty<UUID> idProperty();
     String getId();
     EnumMap getRoleToPersonNameMap();

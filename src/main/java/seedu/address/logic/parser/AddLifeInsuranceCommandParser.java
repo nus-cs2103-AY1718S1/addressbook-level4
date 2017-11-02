@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BENEFICIARY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTRACT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRY_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURED;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PREMIUM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SIGNING_DATE;
@@ -31,16 +32,17 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
 
         ArgumentMultimap argMultimap;
         argMultimap = ArgumentTokenizer.tokenize(
-                args, PREFIX_OWNER, PREFIX_INSURED, PREFIX_BENEFICIARY, PREFIX_PREMIUM,
+                args, PREFIX_NAME, PREFIX_OWNER, PREFIX_INSURED, PREFIX_BENEFICIARY, PREFIX_PREMIUM,
                 PREFIX_CONTRACT, PREFIX_SIGNING_DATE, PREFIX_EXPIRY_DATE);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_OWNER, PREFIX_INSURED, PREFIX_BENEFICIARY,
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_OWNER, PREFIX_INSURED, PREFIX_BENEFICIARY,
                 PREFIX_PREMIUM, PREFIX_CONTRACT, PREFIX_SIGNING_DATE, PREFIX_EXPIRY_DATE)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AddLifeInsuranceCommand.MESSAGE_USAGE));
         }
 
         try {
+            String insuranceName = ParserUtil.parseNameForInsurance(argMultimap.getValue(PREFIX_NAME)).get();
             String owner = ParserUtil.parseNameForInsurance(argMultimap.getValue(PREFIX_OWNER)).get();
             String insured = ParserUtil.parseNameForInsurance(argMultimap.getValue(PREFIX_INSURED)).get();
             String beneficiary = ParserUtil.parseNameForInsurance(argMultimap.getValue(PREFIX_BENEFICIARY)).get();
@@ -53,7 +55,8 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
                     ParserUtil.parseContract(argMultimap.getValue(PREFIX_EXPIRY_DATE)).get()
             );
 
-            return new AddLifeInsuranceCommand(owner, insured, beneficiary, premium, contract, signingDate, expiryDate);
+            return new AddLifeInsuranceCommand(insuranceName, owner, insured, beneficiary, premium,
+                    contract, signingDate, expiryDate);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
