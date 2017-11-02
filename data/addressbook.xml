@@ -2,9 +2,11 @@
 <addressbook>
     <persons>
         <name>Alex Yeoh</name>
-        <phone>91234567</phone>
-        <email>johndoe@example.com</email>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
         <address>Blk 30 Geylang Street 29, #06-40</address>
+        <gender>MALE</gender>
+        <tagged>friends</tagged>
         <dob>27 Jul 1986</dob>
         <lifeInsuranceId>067e6162-3b6f-4ae2-a171-2470b63dff00</lifeInsuranceId>
         <lifeInsuranceId>ea91ce18-4a4f-415a-a688-62621c241108</lifeInsuranceId>
@@ -14,6 +16,7 @@
         <phone>99272758</phone>
         <email>berniceyu@example.com</email>
         <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <gender>MALE</gender>
         <dob>28 Jan 1997</dob>
         <tagged>colleagues</tagged>
         <tagged>friends</tagged>
@@ -25,15 +28,16 @@
         <phone>93210283</phone>
         <email>charlotte@example.com</email>
         <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <gender>FEMALE</gender>
         <dob>29 Jan 1997</dob>
         <tagged>neighbours</tagged>
-        <lifeInsuranceId>067e6162-3b6f-4ae2-a171-2470b63dff00</lifeInsuranceId>
     </persons>
     <persons>
         <name>David Li</name>
         <phone>91031282</phone>
         <email>lidavid@example.com</email>
         <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <gender>MALE</gender>
         <dob>30 Jan 1997</dob>
         <tagged>family</tagged>
     </persons>
@@ -43,6 +47,7 @@
         <email>irfan@example.com</email>
         <address>Blk 47 Tampines Street 20, #17-35</address>
         <dob>31 Jan 1997</dob>
+        <gender>MALE</gender>
         <tagged>classmates</tagged>
     </persons>
     <persons>
@@ -51,6 +56,7 @@
         <email>maryjane@example.com</email>
         <address>Mary street, block 123</address>
         <dob>05 May 1990</dob>
+        <gender>FEMALE</gender>
         <lifeInsuranceId>ce003136-c8e2-4cdd-ae2d-860d203a9aa1</lifeInsuranceId>
     </persons>
     <persons>
@@ -59,15 +65,15 @@
         <email>royb@example.com</email>
         <address>Blk 45 Aljunied Street 85, #11-31</address>
         <dob>01 Feb 1997</dob>
+        <gender>MALE</gender>
         <tagged>colleagues</tagged>
-        <lifeInsuranceId>ce003136-c8e2-4cdd-ae2d-860d203a9aa1</lifeInsuranceId>
     </persons>
     <tags>colleagues</tags>
     <tags>classmates</tags>
     <tags>neighbours</tags>
     <tags>family</tags>
-    <tags>ppl</tags>
     <tags>friends</tags>
+
     <lifeInsuranceMap>
         <entry>
             <key>067e6162-3b6f-4ae2-a171-2470b63dff00</key>
