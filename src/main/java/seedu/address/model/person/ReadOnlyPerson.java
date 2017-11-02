@@ -14,21 +14,37 @@ import seedu.address.model.tag.UniqueTagList;
 public interface ReadOnlyPerson {
 
     ObjectProperty<Name> nameProperty();
+
     Name getName();
+
     ObjectProperty<Phone> phoneProperty();
+
     Phone getPhone();
+
     ObjectProperty<Email> emailProperty();
+
     Email getEmail();
+
     ObjectProperty<Address> addressProperty();
+
     Address getAddress();
+
     ObjectProperty<Comment> commentProperty();
+
     Comment getComment();
+
     ObjectProperty<Avatar> avatarProperty();
+
     Avatar getAvatar();
+
     ObjectProperty<Appoint> appointProperty();
+
     Appoint getAppoint();
+
     ObjectProperty<UniqueTagList> tagProperty();
+
     Set<Tag> getTags();
+
     boolean containTags(List<String> tags);
 
     /**
@@ -42,8 +58,7 @@ public interface ReadOnlyPerson {
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress())
                 && other.getComment().equals(this.getComment())
-                && other.getAppoint().equals(this.getAppoint())
-                );
+                && other.getAppoint().equals(this.getAppoint()));
     }
 
     /**

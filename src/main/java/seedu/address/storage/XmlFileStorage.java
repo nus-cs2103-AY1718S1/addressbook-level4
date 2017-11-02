@@ -37,7 +37,7 @@ public class XmlFileStorage {
      * Returns address book in the file or an empty address book
      */
     public static XmlSerializableAddressBook loadDataFromSaveFile(File file) throws DataConversionException,
-                                                                            FileNotFoundException {
+            FileNotFoundException {
         try {
             return XmlUtil.getDataFromFile(file, XmlSerializableAddressBook.class);
         } catch (JAXBException e) {
@@ -55,7 +55,7 @@ public class XmlFileStorage {
 
         AddressBook mergedAddressBook = new AddressBook();
 
-        for (ReadOnlyPerson defaultDataPerson: defaultFilePersonList) {
+        for (ReadOnlyPerson defaultDataPerson : defaultFilePersonList) {
             try {
                 mergedAddressBook.addPerson(new Person(defaultDataPerson));
             } catch (DuplicatePersonException dpe) {
@@ -64,9 +64,9 @@ public class XmlFileStorage {
             }
         }
 
-        for (ReadOnlyPerson newDataPerson: newFilePersonList) {
+        for (ReadOnlyPerson newDataPerson : newFilePersonList) {
             boolean isSamePerson = false;
-            for (ReadOnlyPerson defaultDataPerson: defaultFilePersonList) {
+            for (ReadOnlyPerson defaultDataPerson : defaultFilePersonList) {
                 if (defaultDataPerson.equals(newDataPerson)) {
                     isSamePerson = true;
                     break;

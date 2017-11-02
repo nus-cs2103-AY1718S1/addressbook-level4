@@ -1,0 +1,7 @@
+Alice Pauline Phone: 85355255 Email: alice@example.com Address: 123, Jurong West Ave 6, #08-111 Comments: 123, Jurong West Ave 6, #08-111 Appointments:  Tags: [friends]
+Benson Meier Phone: 98765432 Email: johnd@example.com Address: 311, Clementi Ave 2, #02-25 Comments: 311, Clementi Ave 2, #02-25 Appointments:  Tags: [owesMoney][friends]
+Carl Kurz Phone: 95352563 Email: heinz@example.com Address: wall street Comments: wall street Appointments:  Tags: [friends]
+Daniel Meier Phone: 87652533 Email: cornelia@example.com Address: 10th street Comments: 10th street Appointments:  Tags: [friends]
+Elle Meyer Phone: 9482224 Email: werner@example.com Address: michegan ave Comments: michegan ave Appointments:  Tags: [friends]
+Fiona Kunz Phone: 9482427 Email: lydia@example.com Address: little tokyo Comments: little tokyo Appointments:  Tags: [friends]
+George Best Phone: 9482442 Email: anna@example.com Address: 4th street Comments: 4th street Appointments:  Tags: [friends]

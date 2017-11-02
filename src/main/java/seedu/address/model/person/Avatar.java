@@ -50,15 +50,17 @@ public class Avatar {
 
     /**
      * validate the file path
+     *
      * @param avatarFilePath file path
      * @return true or false
      */
-    public static boolean validFile(String avatarFilePath) throws NullPointerException {
+    public static boolean validFile(String avatarFilePath) {
         try {
             File f = new File(MainApp.class.getResource(avatarFilePath).getFile());
             return f.exists() && f.canRead();
         } catch (NullPointerException e) {
-            throw(e);
+            //throw(e);
+            return false;
         }
     }
 }
