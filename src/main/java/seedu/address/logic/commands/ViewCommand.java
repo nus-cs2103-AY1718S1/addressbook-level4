@@ -51,21 +51,10 @@ public class ViewCommand extends Command {
 
         ReadOnlyLesson toView = lastShownList.get(targetIndex.getZeroBased());
 
+        setViewingPanelAttribute();
         model.setCurrentViewingLesson(toView);
 
         String resultMessage = updateFilterList(toView);
-
-        switch (getCurrentListingUnit()) {
-        case MODULE:
-            model.setViewingPanelAttribute("module");
-            break;
-        case LOCATION:
-            model.setViewingPanelAttribute("location");
-            break;
-        default:
-            model.setViewingPanelAttribute("default");
-            break;
-        }
 
         ListingUnit.setCurrentListingUnit(LESSON);
 
@@ -105,6 +94,19 @@ public class ViewCommand extends Command {
         return result;
     }
 
+    public void setViewingPanelAttribute() {
+        switch (getCurrentListingUnit()) {
+        case MODULE:
+            model.setViewingPanelAttribute("module");
+            break;
+        case LOCATION:
+            model.setViewingPanelAttribute("location");
+            break;
+        default:
+            model.setViewingPanelAttribute("default");
+            break;
+        }
+    }
 
     @Override
     public boolean equals(Object other) {

@@ -17,6 +17,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class RemarkCommandParser implements Parser<RemarkCommand> {
 
+    static final Pattern DELETE_INDEX_PATTERN = Pattern.compile("-d\\s*(\\d+)");
     static final Pattern FIRST_INT_PATTERN = Pattern.compile("^(\\d+)");
 
     /**
@@ -31,8 +32,15 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
         Index index;
         String remarkContent;
         Matcher matcherFirstInt = FIRST_INT_PATTERN.matcher(trimmedArgs);
+        Matcher matcherDeleteRmk = DELETE_INDEX_PATTERN.matcher(trimmedArgs);
 
         try {
+
+            if (matcherDeleteRmk.find()) {
+                index = ParserUtil.parseIndex(matcherDeleteRmk.group(1));
+                return new RemarkCommand(index);
+            }
+
             if (matcherFirstInt.find()) {
                 index = ParserUtil.parseIndex(matcherFirstInt.group(0));
                 remarkContent = trimmedArgs.substring(matcherFirstInt.group(0).length()).trim();
