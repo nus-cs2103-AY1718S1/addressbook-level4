@@ -32,7 +32,7 @@ public class RemoveAccountCommand extends Command {
                 model.getUserPrefs().setDefaultUsername("");
                 model.getUserPrefs().setDefaultPassword("");
             }
-                return new CommandResult(MESSAGE_REMOVE_SUCCESS);
+            return new CommandResult(MESSAGE_REMOVE_SUCCESS);
         }
     }
 }

@@ -7,21 +7,22 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-    //@@author derickjw
+//@@author derickjw
+
+/**
+ * Parses input arguments and creates a new ChangePasswordCommand object
+ */
+
+public class RemoveAccountCommandParser implements Parser<RemoveAccountCommand> {
+
     /**
-     * Parses input arguments and creates a new ChangePasswordCommand object
+     * Parses the given {@code String} of arguments in the context of the ChangePasswordCommand
+     * and returns an ChangePasswordCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
      */
-    public class RemoveAccountCommandParser implements Parser<RemoveAccountCommand> {
-
-        /**
-         * Parses the given {@code String} of arguments in the context of the ChangePasswordCommand
-         * and returns an ChangePasswordCommand object for execution.
-         * @throws ParseException if the user input does not conform the expected format
-         */
-        public RemoveAccountCommand parse(String args) throws ParseException {
-            try {
-                String[] commandTokenized = args.split(" ");
-
+    public RemoveAccountCommand parse(String args) throws ParseException {
+        try {
+            String[] commandTokenized = args.split(" ");
                 if (commandTokenized.length != 3){
                     throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                             RemoveAccountCommand.MESSAGE_USAGE));
