@@ -131,7 +131,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: find tags of parcel in address book -> 0 parcels found */
         List<Tag> tags = new ArrayList<>(DANIEL.getTags());
-        command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName;
+        command = FindCommand.COMMAND_WORD + " " + tags.get(0).toString();
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
