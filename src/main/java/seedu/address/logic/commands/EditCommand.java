@@ -53,7 +53,7 @@ public class EditCommand extends UndoableCommand {
             //@@author zhoukai07
             + "[" + PREFIX_ADD_TAG + "TAG]..."
             + "[" + PREFIX_REM_TAG + "TAG]..."
-            //@@author 
+            //@@author
             + PREFIX_CLEAR_TAG + "\n"
             + "[" + PREFIX_WEB_LINK + "WEB LINK]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
