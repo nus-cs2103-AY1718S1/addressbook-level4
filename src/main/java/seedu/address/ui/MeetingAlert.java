@@ -101,6 +101,9 @@ public class MeetingAlert extends UiPart<Region> {
                 while (list.get(i).getDate().equals(list.get(j).getDate())) {
                     numMeet++;
                     j++;
+                    if (j >= list.size()){
+                        break;
+                    }
                 }
 
             }
