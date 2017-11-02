@@ -15,7 +15,7 @@ endif::[]
 By: `CS2103AUG2017-T09-B2`      Since: `AUG 2017`      Licence: `MIT`
 
 == Introduction/Product overview
-The ScheduBook V1.4 is a program that helps you create and store a list of contacts and also helps you schedule your meetings so that you can better manage your time with other people. You can use Schedubook to remind you of a certain meeting you have on a day and Schedubook will remind you, further providing you information about the location you planned to meet.
+The ScheduBook V1.4 is a program that helps studentas like you create and store a list of contacts and also helps you schedule your meetings so that you can better manage your time with your friends, your peers or even your professors or teachers. You can use Schedubook to remind you of a certain meeting you have on a day and Schedubook will remind you, further providing you information about the location you planned to meet.
 
 == About
 
@@ -221,7 +221,7 @@ Examples:
 deletemeeting by index of meeting in the Meeting
 
 Deletes a meeting in the address book at the specified INDEX +
-Format: `dm INDEX`
+Format: `deletemeeting INDEX`
 
 [NOTE]
 INDEX must be a positive integer
