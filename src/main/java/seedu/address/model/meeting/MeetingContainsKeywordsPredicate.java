@@ -1,3 +1,4 @@
+/* @@author Syabil */
 package seedu.address.model.meeting;
 
 import java.util.List;
