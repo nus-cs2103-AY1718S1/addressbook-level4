@@ -20,17 +20,20 @@ import seedu.room.commons.util.ConfigUtil;
 import seedu.room.commons.util.StringUtil;
 import seedu.room.logic.Logic;
 import seedu.room.logic.LogicManager;
+import seedu.room.model.EventBook;
 import seedu.room.model.Model;
 import seedu.room.model.ModelManager;
 import seedu.room.model.ReadOnlyResidentBook;
 import seedu.room.model.ResidentBook;
 import seedu.room.model.UserPrefs;
 import seedu.room.model.util.SampleDataUtil;
+import seedu.room.storage.EventBookStorage;
 import seedu.room.storage.JsonUserPrefsStorage;
 import seedu.room.storage.ResidentBookStorage;
 import seedu.room.storage.Storage;
 import seedu.room.storage.StorageManager;
 import seedu.room.storage.UserPrefsStorage;
+import seedu.room.storage.XmlEventBookStorage;
 import seedu.room.storage.XmlResidentBookStorage;
 import seedu.room.ui.Ui;
 import seedu.room.ui.UiManager;
@@ -63,7 +66,8 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         ResidentBookStorage residentBookStorage = new XmlResidentBookStorage(userPrefs.getResidentBookFilePath());
-        storage = new StorageManager(residentBookStorage, userPrefsStorage);
+        EventBookStorage eventBookStorage = new XmlEventBookStorage(userPrefs.getEventBookFilePath());
+        storage = new StorageManager(residentBookStorage, eventBookStorage, userPrefsStorage);
         backup = storage;
 
         initLogging(config);
@@ -104,7 +108,7 @@ public class MainApp extends Application {
             initialData = new ResidentBook();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        return new ModelManager(initialData, new EventBook(), userPrefs);
     }
 
     private void initLogging(Config config) {
