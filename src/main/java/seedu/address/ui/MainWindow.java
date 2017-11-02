@@ -219,6 +219,7 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.show();
     }
 
+    //@@author bladerail
     /**
      * Displays the user profile to the user
      */
@@ -228,6 +229,7 @@ public class MainWindow extends UiPart<Region> {
         userProfileWindow.show();
     }
 
+    //@@author
     /**
      * Closes the application.
      */

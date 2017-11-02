@@ -54,6 +54,7 @@ public class StorageManager extends ComponentManager implements Storage {
 
     // ================ UserProfile methods ==============================
 
+    //@@author bladerail
     @Override
     public String getUserProfileFilePath() {
         return userProfileStorage.getUserProfileFilePath();
@@ -86,6 +87,7 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    //@@author
     // ================ AddressBook methods ==============================
 
     @Override

@@ -2,9 +2,7 @@ package seedu.address.ui;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.logging.Logger;
 
@@ -30,6 +28,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.UserPerson;
 import seedu.address.model.person.weblink.WebLink;
 
+//@@author bladerail
 /**
  * Controller for the User Profile Window
  */
@@ -39,7 +38,7 @@ public class UserProfileWindow extends UiPart<Region> {
     private static final String FXML = "UserProfileWindow.fxml";
     private static final String TITLE = "User Profile";
 
-    private UserPerson userPerson;
+    private final UserPerson userPerson;
 
     @FXML
     private TextField nameTextField;
@@ -131,7 +130,7 @@ public class UserProfileWindow extends UiPart<Region> {
     }
 
     @FXML
-    void handleCancel() {
+    private void handleCancel() {
         stage.close();
     }
 
@@ -139,7 +138,7 @@ public class UserProfileWindow extends UiPart<Region> {
      * Handles the OK button
      */
     @FXML
-    void handleOk() {
+    private void handleOk() {
         try {
             updateUserPerson();
             raise(new UserPersonChangedEvent(userPerson));
@@ -198,7 +197,7 @@ public class UserProfileWindow extends UiPart<Region> {
 
             Comparator<WebLink> comparator = Comparator.comparing(WebLink::toStringWebLink);
 
-            Set<WebLink> webLinkSet = new TreeSet(comparator);
+            Set<WebLink> webLinkSet = new TreeSet<WebLink>(comparator);
 
             for (String curr : webLinks) {
                 webLinkSet.add(new WebLink(curr));

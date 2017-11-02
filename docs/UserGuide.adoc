@@ -130,16 +130,18 @@ Nothing will happen if no such tag is present in any person in the address book
 
 // end::tagDelete[]
 
+// tag::find[]
 === Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
+Finds persons whose attributes contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* Everything will be searched. (Name, phone, email, address, tag & webLinks)
 * Only full words will be matched e.g. `Han` will not match `Hans`
+* Conversely, `Ha`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
@@ -149,6 +151,10 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+* `find John Clementi` +
+returns any person that has either `John` as the name, or address is `Clementi`. Need not be both.
+// end::find[]
 
 // tag::filtercommand[]
 === Locating persons by tags: `filter`
@@ -302,6 +308,9 @@ Examples:
 Updates the name and phone number of the User Person, saved to userProfile.xml. +
 
 Any new information added will overwrite previous data.
+
+The User Profile can also be edited via the User Interface by clicking on "File" -> "User Profile".
+More information
 // end::updateUserPerson[]
 
 === Clearing all entries : `clear`
@@ -345,6 +354,18 @@ Contact must be selected before selecting the buttons.
 
 Allows the user to switch between dark and light themes.
 // end::changeTheme[]
+
+// tag::userProfileUI[]
+=== User Profile in the UI
+
+The User Profile Window can be accessed by clicking on "File" -> "User Profile". Pressing "F2" will also bring up the User
+ Profile window.+
+
+You can edit the User Profile directly from here. Changes, if any, are only saved when the "OK" button is clicked. +
+Invalid values will not be accepted, and changes will not be saved. For multiple emails, add emails with a comma followed
+by a space, then the next email address.
+Pressing "Enter" has the same action as clicking the "Cancel" button, to avoid unwanted changes.
+// end::userProfileUI[]
 
 === Saving the data
 

@@ -6,12 +6,13 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+//@@author AngularJiaSheng
+
 /**
  * Helper functions for handling strings.
  */
 public class StringUtil {
 
-    //@@author jiasheng
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
      * Ignores case, but a full word match is required.

@@ -90,7 +90,6 @@ public class StringUtilTest {
         assertExceptionThrown(NullPointerException.class, null, "abc", Optional.empty());
     }
 
-    //@@author jiasheng
     /*
      * Valid equivalence partitions for word:
      *   - any word

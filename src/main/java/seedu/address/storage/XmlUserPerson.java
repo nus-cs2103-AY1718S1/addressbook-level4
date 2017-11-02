@@ -16,6 +16,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.UserPerson;
 import seedu.address.model.person.weblink.WebLink;
 
+//@@author bladerail
 /**
  * An Immutable UserPerson that is serializable to XML format
  */
