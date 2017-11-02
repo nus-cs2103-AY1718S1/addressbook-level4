@@ -1,19 +1,22 @@
 package seedu.address.ui;
 
-import java.util.HashMap;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.HashMap;
+
 import javax.imageio.ImageIO;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.DisplayGmapEvent;
 import seedu.address.commons.events.ui.PersonPanelOptionsDelete;
@@ -131,7 +134,7 @@ public class PersonCard extends UiPart<Region> {
     public void handleAddImage() {
         FileChooser picChooser = new FileChooser();
         File selectedPic = picChooser.showOpenDialog(null);
-        if(selectedPic != null){
+        if (selectedPic != null) {
             try {
                 person.getPicture().setPictureUrl(person.getName().toString() + person.getPhone().toString() + ".jpg");
                 ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
@@ -167,7 +170,7 @@ public class PersonCard extends UiPart<Region> {
      * Initialize image for ever person
      */
     private void initImage() {
-        try{
+        try {
             File picFile = new File(person.getPicture().getPictureUrl());
             FileInputStream fileStream = new FileInputStream(picFile);
             Image personPicture = new Image(fileStream);
@@ -175,7 +178,7 @@ public class PersonCard extends UiPart<Region> {
             picture.setFitWidth(person.getPicture().PIC_WIDTH);
             picture.setImage(personPicture);
             cardPane.getChildren().add(picture);
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Image not found");
         }
     }

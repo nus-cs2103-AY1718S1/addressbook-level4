@@ -123,7 +123,9 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public Birthday getBirthday() { return birthday.get(); }
+    public Birthday getBirthday() {
+        return birthday.get();
+    }
 
     public void setRemark(Remark remark) {
         this.remark.set(requireNonNull(remark));
@@ -153,15 +155,13 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public ObjectProperty<Picture> pictureProperty(){
+    public ObjectProperty<Picture> pictureProperty() {
         return picture;
     }
-
     @Override
-    public Picture getPicture(){
+    public Picture getPicture() {
         return picture.get();
     }
-
     /**
      * Replaces this person's tags with the tags in the argument tag set.
      */
