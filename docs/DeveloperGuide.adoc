@@ -447,7 +447,7 @@ It is implemented this way to ensure that all person names in the UniquePersonLi
 // end::sort[]
 
 // tag::studentparentcontact[]
-=== Add student/parent phone contact mechanism
+=== Add Student/Parent Phone Contact Mechanism
 
 The student/parent phone contact mechanism is facilitated by making changes
 to the Phone class in the model component. It enables the input
@@ -533,7 +533,7 @@ public Phone(String phone) throws IllegalValueException {
 // end::studentparentcontact[]
 
 // tag::uniquetagcolor[]
-=== Add unique color tag mechanism
+=== Add Unique Color Tag Mechanism
 
 The unique tag mechanism is facilitated by making changes to PersonCard class in the UI component. This feature enables
 the assignment of unique colors to tags.
@@ -610,7 +610,7 @@ to a tag with different description in subsequent iterations by randomising a di
 generated. The method will then return `assignedColor`.
 
 Lastly, in the code below, `obtainTagColors(tag.tagName)`, the hexadecimal String representation of the color, will be appended
-to the tag background color.
+to the tag background color. This sets the background color of the tag to be that of the assigned color.
 ----
 private void initialiseTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
@@ -624,13 +624,13 @@ private void initialiseTags(ReadOnlyPerson person) {
 
 ==== Design Considerations
 
-Aspect: +
+Aspect: Randomness of the assigned color. +
 Alternative 1 (current choice): +
-Pros: +
-Cons: +
-Alternative 2: +
-Pros: +
-Cons: +
+Pros: Easy for developers to understand the mechanism of this feature. +
+Cons: User has no control over the assigning of tag colors. +
+Alternative 2: Allow user to assign the colors to the tags themselves. +
+Pros: User will have more freedom in personalising the tags. +
+Cons: The range of colors will be more limited. +
 // end::uniquetagcolor[]
 
 // tag::remark[]
