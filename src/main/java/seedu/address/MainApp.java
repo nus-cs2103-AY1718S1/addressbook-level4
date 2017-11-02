@@ -27,6 +27,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyMeetingList;
 import seedu.address.model.UniqueMeetingList;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
@@ -119,6 +120,10 @@ public class MainApp extends Application {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialAddressBookData = new AddressBook();
             initialMeetingListData = new UniqueMeetingList();
+        }
+
+        for (ReadOnlyPerson person : initialAddressBookData.getPersonList()) {
+            storage.downloadProfilePhoto(person, userPrefs.getDefaultProfilePhoto());
         }
 
         return new ModelManager(initialAddressBookData, initialMeetingListData, userPrefs);

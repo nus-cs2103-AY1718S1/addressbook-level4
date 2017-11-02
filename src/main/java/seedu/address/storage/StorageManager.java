@@ -19,6 +19,7 @@ import com.google.common.eventbus.Subscribe;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.PersonChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.StringUtil;
@@ -124,6 +125,15 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    @Override
+    @Subscribe
+    public void handlePersonChangedEvent(PersonChangedEvent event) {
+        if (event.type == PersonChangedEvent.ChangeType.ADD ||
+                event.type == PersonChangedEvent.ChangeType.EDIT) {
+            downloadProfilePhoto(event.person, event.prefs.getDefaultProfilePhoto());
+        }
+    }
+
     // ============ Meeting List methods ==================
     @Override
     public String getMeetingsFilePath() {
@@ -204,12 +214,7 @@ public class StorageManager extends ComponentManager implements Storage {
 
     // Gravatar
 
-    //@@author liuhang0213
-    /**
-     * Downloads gravatar image and save in local storage using each person's email address
-     * @param person The person whose profile photo is requried
-     * @param def The default style of profile photo
-     */
+    @Override
     public void downloadProfilePhoto(ReadOnlyPerson person, String def) {
         try {
             String gravatarUrl = StringUtil.generateGravatarUrl(person.getEmail().value,
