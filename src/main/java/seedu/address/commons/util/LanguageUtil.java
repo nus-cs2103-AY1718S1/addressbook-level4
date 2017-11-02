@@ -18,6 +18,7 @@ public class LanguageUtil {
      * @return the closest correct command
      */
     public static String getClosestCommand(String commandWord) {
+        commandWord = commandWord.toLowerCase();
         ArrayList<String> commandListString = new CommandList().getCommandList();
         List<CommandWord> commandListCommand = new ArrayList<>();
 
