@@ -1,4 +1,4 @@
-= Contact List Pro v1.3 - Developer Guide
+= The Classroom - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -16,8 +16,9 @@ By: `T09-B4`      Since: `Oct 2017`      Licence: `MIT`
 
 [big]#*Introduction*#
 
-Contact List Pro is a software address book that allows users to store contacts and manage them using a variety of features.
-This guide provides information for you to set up and get started as a Contact List Pro developer, and is detailed enough to be useful to experienced developers as well.
+The Classroom is a software address book that allows users to store contacts and manage them using a variety of features.
+This guide provides information for you to set up and get started as a The Classroom developer, and is detailed enough to be useful to experienced developers as well.
+Developers are recommended to be proficient in java before they make changes and update the existing code as there is heavy emphasis on specific java syntax and features.
 
 == Setting up
 
