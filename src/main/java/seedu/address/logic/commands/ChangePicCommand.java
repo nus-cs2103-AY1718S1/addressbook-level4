@@ -68,8 +68,6 @@ public class ChangePicCommand extends UndoableCommand {
             throw new CommandException("The person cannot be duplicated when changing the profile picture");
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
-        } catch (IllegalValueException ive) {
-            throw new CommandException(ive.getMessage());
         }
         model.updateFilteredPersonList(p ->true);
         return new CommandResult(generateSuccessMessage(editedPerson));
