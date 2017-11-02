@@ -193,6 +193,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
     }
     //@author
 
+    //@author OscarWang114
     public void setContractPath(String contractPath) {
         this.contractPath.set(requireNonNull(contractPath));
     }

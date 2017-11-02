@@ -218,7 +218,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             String insured = insurance.getInsured().getName();
             String beneficiary = insurance.getBeneficiary().getName();
             persons.forEach(person -> {
-                person.clearLifeInsuranceIds();
+                //person.clearLifeInsuranceIds();
                 if (person.getName().fullName.equals(owner)) {
                     insurance.setOwner(person);
                     person.addLifeInsuranceIds(id);

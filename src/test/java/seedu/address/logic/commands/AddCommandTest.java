@@ -146,7 +146,7 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
-        
+
         public void updateInsuranceList(Predicate<ReadOnlyInsurance> predicate) {
             fail("This method should not be called.");
         }
