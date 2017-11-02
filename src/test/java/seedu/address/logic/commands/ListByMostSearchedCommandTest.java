@@ -1,3 +1,4 @@
+//@@author Sri-vatsa
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertTrue;
@@ -15,7 +16,6 @@ import seedu.address.model.UserPrefs;
 
 /***
  * Class of tests for ListByMostSearchedCommandTest
- * @author Sri-vatsa
  */
 public class ListByMostSearchedCommandTest {
     private Model model;

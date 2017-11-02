@@ -1,10 +1,13 @@
+//@@author Sri-vatsa
 package seedu.address.model.person;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /***
- * @author Sri-vatsa
+ * Represents number of times a person is searched for
+ * Guarantees: Not editable through user interface; auto updates after each search
  */
+
 
 public class SearchData {
 

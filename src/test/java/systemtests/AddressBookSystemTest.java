@@ -3,6 +3,7 @@ package systemtests;
 import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
@@ -171,10 +172,11 @@ public abstract class AddressBookSystemTest {
      * @see BrowserPanelHandle#isUrlChanged()
      */
     protected void assertSelectedCardDeselected() {
+
         assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isAnyCardSelected());
     }
-
+    //@@author Sri-vatsa
     /**
      * Asserts that the browser's url is changed to display the details of the person in the person list panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
@@ -194,7 +196,7 @@ public abstract class AddressBookSystemTest {
 
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
-
+    //@@author
     /**
      * Asserts that the browser's url and the selected card in the person list panel remain unchanged.
      * @see BrowserPanelHandle#isUrlChanged()

@@ -79,10 +79,9 @@ public class FindCommandTest {
         FindCommand command = prepareCommand("Kurz Elle Kunz");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
-
+    //@@author Sri-vatsa
     /***
      * Ensures that with each successful find, the search count of the contact is updated by 1
-     * @author Sri-vatsa
      */
     @Test
     public  void execute_recordStorage() {
@@ -103,6 +102,7 @@ public class FindCommandTest {
         int countAfterFind = Integer.parseInt(model.getFilteredPersonList().get(0).getSearchData().getSearchCount());
         assertEquals(countBeforeFind + 1, countAfterFind);
     }
+    //@@author
 
     /**
      * Parses {@code userInput} into a {@code FindCommand}.
