@@ -168,6 +168,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author arturs68
     /**
      * Ensures that every group in this person:
      *  - exists in the master list {@link #groups}
@@ -197,6 +198,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private void syncMasterGroupListWith(SortedUniquePersonList persons) {
         persons.forEach(this::syncMasterGroupListWith);
     }
+    //@@author
 
     //// tag-level operations
 

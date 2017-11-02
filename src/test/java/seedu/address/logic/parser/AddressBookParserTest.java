@@ -101,8 +101,8 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_group() throws Exception {
         final String groupName = "Some group name";
-        GroupCommand command = (GroupCommand) parser.parseCommand(GroupCommand.COMMAND_WORD + " "
-                        + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GROUP_NAME + " " + groupName);
+        GroupCommand command = (GroupCommand) parser.parseCommand(GroupCommand.COMMAND_WORD
+                + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GROUP_NAME + " " + groupName);
         assertEquals(new GroupCommand(INDEX_FIRST_PERSON, new Group(groupName)), command);
     }
 
@@ -113,6 +113,7 @@ public class AddressBookParserTest {
             + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GROUP_NAME + " " + group.groupName);
         assertEquals(new UngroupCommand(INDEX_FIRST_PERSON, group), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_changePic() throws Exception {

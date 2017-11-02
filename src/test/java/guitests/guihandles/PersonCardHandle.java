@@ -46,12 +46,14 @@ public class PersonCardHandle extends NodeHandle<Node> {
                 .map(Label.class::cast)
                 .collect(Collectors.toList());
 
+        //@@author arturs68
         Region groupContainer = getChildNode(GROUPS_FIELD_ID);
         this.groupLabels = groupContainer
                 .getChildrenUnmodifiable()
                 .stream()
                 .map(Label.class::cast)
                 .collect(Collectors.toList());
+        //@@author
     }
 
     public String getId() {
@@ -85,6 +87,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
                 .collect(Collectors.toList());
     }
 
+    //@@author arturs68
     public List<String> getGroups() {
         return groupLabels
                 .stream()

@@ -1,5 +1,5 @@
 # namvd2709
-###### /java/seedu/address/commons/util/StringUtil.java
+###### \java\seedu\address\commons\util\StringUtil.java
 ``` java
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
@@ -23,7 +23,7 @@
         return sentence.toLowerCase().contains(phrase.toLowerCase());
     }
 ```
-###### /java/seedu/address/commons/util/StringUtil.java
+###### \java\seedu\address\commons\util\StringUtil.java
 ``` java
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
@@ -55,7 +55,7 @@
         return false;
     }
 ```
-###### /java/seedu/address/logic/AutocompleteManager.java
+###### \java\seedu\address\logic\AutocompleteManager.java
 ``` java
 package seedu.address.logic;
 
@@ -94,7 +94,7 @@ public class AutocompleteManager {
     public AutocompleteManager() {}
 
 ```
-###### /java/seedu/address/logic/AutocompleteManager.java
+###### \java\seedu\address\logic\AutocompleteManager.java
 ``` java
     /**
      * attempt to autocomplete input into one of the commands
@@ -116,7 +116,7 @@ public class AutocompleteManager {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/AppointCommand.java
+###### \java\seedu\address\logic\commands\AppointCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -173,7 +173,7 @@ public class AppointCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), appointment,
+                personToEdit.getAddress(), appointment, personToEdit.getProfilePicture(),
                 personToEdit.getGroups(), personToEdit.getTags());
 
         try {
@@ -217,7 +217,7 @@ public class AppointCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AppointCommandParser.java
+###### \java\seedu\address\logic\parser\AppointCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -270,7 +270,7 @@ public class AppointCommandParser implements Parser<AppointCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> appointment} into {@code Optional<Appointment>} if {@code appointment} present.
@@ -281,7 +281,7 @@ public class AppointCommandParser implements Parser<AppointCommand> {
         return appointment.isPresent() ? Optional.of(new Appointment(appointment.get())) : Optional.empty();
     }
 ```
-###### /java/seedu/address/model/appointment/Appointment.java
+###### \java\seedu\address\model\appointment\Appointment.java
 ``` java
 package seedu.address.model.appointment;
 
@@ -387,7 +387,7 @@ public class Appointment {
     }
 }
 ```
-###### /java/seedu/address/model/appointment/UniqueAppointmentList.java
+###### \java\seedu\address\model\appointment\UniqueAppointmentList.java
 ``` java
 package seedu.address.model.appointment;
 
@@ -397,7 +397,7 @@ package seedu.address.model.appointment;
 public class UniqueAppointmentList {
 }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     public void setAppointment(Appointment appointment) {
         this.appointment.set(requireNonNull(appointment));
