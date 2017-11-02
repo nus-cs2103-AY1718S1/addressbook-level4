@@ -4,6 +4,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BENEFICIARY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTRACT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRY_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURED;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PREMIUM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SIGNING_DATE;
@@ -20,7 +21,9 @@ public class AddLifeInsuranceCommandParserTest {
     @Test
     public void testParse() {
         // parser works
-        String command = " " + PREFIX_OWNER + "Me";
+        String command = " " + PREFIX_NAME + "Most Expensive Insurance Ever";
+        assertCommandFail(parser, command);
+        command += " " + PREFIX_OWNER + "Me";
         assertCommandFail(parser, command);
         command += " " + PREFIX_INSURED + "You";
         assertCommandFail(parser, command);
