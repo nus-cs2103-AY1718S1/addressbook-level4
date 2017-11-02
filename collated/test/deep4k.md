@@ -1,5 +1,5 @@
 # deep4k
-###### /java/seedu/address/logic/commands/AddTaskCommandTest.java
+###### \java\seedu\address\logic\commands\AddTaskCommandTest.java
 ``` java
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -267,7 +267,7 @@ public class AddTaskCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/AliasCommandTest.java
+###### \java\seedu\address\logic\commands\AliasCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for AliasCommand.
@@ -495,7 +495,7 @@ public class AliasCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/RemarkCommandTest.java
+###### \java\seedu\address\logic\commands\RemarkCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for RemarkCommand.
@@ -609,7 +609,7 @@ public class RemarkCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/UnaliasCommandTest.java
+###### \java\seedu\address\logic\commands\UnaliasCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for UnaliasCommand.
@@ -659,7 +659,7 @@ public class UnaliasCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AliasCommandParserTest.java
+###### \java\seedu\address\logic\parser\AliasCommandParserTest.java
 ``` java
 public class AliasCommandParserTest {
 
@@ -693,7 +693,7 @@ public class AliasCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/RemarkCommandParserTest.java
+###### \java\seedu\address\logic\parser\RemarkCommandParserTest.java
 ``` java
 public class RemarkCommandParserTest {
     private RemarkCommandParser parser = new RemarkCommandParser();
@@ -723,7 +723,7 @@ public class RemarkCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/UnaliasCommandParserTest.java
+###### \java\seedu\address\logic\parser\UnaliasCommandParserTest.java
 ``` java
 public class UnaliasCommandParserTest {
 
@@ -745,7 +745,7 @@ public class UnaliasCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/model/alias/KeywordTest.java
+###### \java\seedu\address\model\alias\KeywordTest.java
 ``` java
 public class KeywordTest {
 
@@ -764,7 +764,7 @@ public class KeywordTest {
     }
 }
 ```
-###### /java/seedu/address/model/alias/RepresentationTest.java
+###### \java\seedu\address\model\alias\RepresentationTest.java
 ``` java
 public class RepresentationTest {
 
@@ -779,7 +779,7 @@ public class RepresentationTest {
     }
 }
 ```
-###### /java/seedu/address/model/task/HeaderTest.java
+###### \java\seedu\address\model\task\HeaderTest.java
 ``` java
 public class HeaderTest {
     @Test
@@ -799,7 +799,7 @@ public class HeaderTest {
     }
 }
 ```
-###### /java/seedu/address/model/task/TaskHasKeywordsPredicateTest.java
+###### \java\seedu\address\model\task\TaskHasKeywordsPredicateTest.java
 ``` java
 public class TaskHasKeywordsPredicateTest {
     @Test
@@ -871,7 +871,7 @@ public class TaskHasKeywordsPredicateTest {
     }
 }
 ```
-###### /java/seedu/address/model/UniqueAliasTokenListTest.java
+###### \java\seedu\address\model\UniqueAliasTokenListTest.java
 ``` java
 public class UniqueAliasTokenListTest {
     @Rule
@@ -885,7 +885,7 @@ public class UniqueAliasTokenListTest {
     }
 }
 ```
-###### /java/seedu/address/model/UniquePersonListTest.java
+###### \java\seedu\address\model\UniquePersonListTest.java
 ``` java
 public class UniquePersonListTest {
     @Rule
@@ -899,7 +899,7 @@ public class UniquePersonListTest {
     }
 }
 ```
-###### /java/seedu/address/model/UniqueTagListTest.java
+###### \java\seedu\address\model\UniqueTagListTest.java
 ``` java
 public class UniqueTagListTest {
     @Rule
@@ -913,7 +913,7 @@ public class UniqueTagListTest {
     }
 }
 ```
-###### /java/seedu/address/model/UniqueTaskListTest.java
+###### \java\seedu\address\model\UniqueTaskListTest.java
 ``` java
 public class UniqueTaskListTest {
     @Rule
@@ -927,7 +927,7 @@ public class UniqueTaskListTest {
     }
 }
 ```
-###### /java/seedu/address/testutil/AliasTokenBuilder.java
+###### \java\seedu\address\testutil\AliasTokenBuilder.java
 ``` java
 /**
  * A utility class to help with building AliasToken objects.
@@ -988,7 +988,7 @@ public class AliasTokenBuilder {
 }
 
 ```
-###### /java/seedu/address/testutil/AliasTokenUtil.java
+###### \java\seedu\address\testutil\AliasTokenUtil.java
 ``` java
 /**
  * A utility class for AliasToken.
@@ -1013,7 +1013,7 @@ public class AliasTokenUtil {
     }
 }
 ```
-###### /java/seedu/address/testutil/TaskBuilder.java
+###### \java\seedu\address\testutil\TaskBuilder.java
 ``` java
 /**
  * A utility class to help with building Task objects.
@@ -1091,7 +1091,7 @@ public class TaskBuilder {
 
 }
 ```
-###### /java/seedu/address/testutil/TaskUtil.java
+###### \java\seedu\address\testutil\TaskUtil.java
 ``` java
 /**
  * A utility class for Task.
@@ -1126,7 +1126,7 @@ public class TaskUtil {
     }
 }
 ```
-###### /java/seedu/address/testutil/TypicalAliasTokens.java
+###### \java\seedu\address\testutil\TypicalAliasTokens.java
 ``` java
 /**
  * A utility class containing a list of {@code AliasTokens} objects to be used in tests.
@@ -1179,7 +1179,7 @@ public class TypicalAliasTokens {
     }
 }
 ```
-###### /java/seedu/address/testutil/TypicalTasks.java
+###### \java\seedu\address\testutil\TypicalTasks.java
 ``` java
 /**
  * A utility class containing a list of {@code Tasks} objects to be used in tests.
@@ -1252,7 +1252,7 @@ public class TypicalTasks {
 
 }
 ```
-###### /java/systemtests/AliasCommandSystemTest.java
+###### \java\systemtests\AliasCommandSystemTest.java
 ``` java
 public class AliasCommandSystemTest extends AddressBookSystemTest {
 
