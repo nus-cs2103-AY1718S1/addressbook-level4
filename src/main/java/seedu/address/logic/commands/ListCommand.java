@@ -17,7 +17,7 @@ public class ListCommand extends Command {
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
     public static final String MESSAGE_PERSON_NOT_FOUND = "This person is not in the address book";
 
-
+    //@@author aver0214
     @Override
     public CommandResult execute() throws CommandException {
         try {
@@ -36,4 +36,5 @@ public class ListCommand extends Command {
         this.model.sortAllPersons();
         this.model.sortImportantTag();
     }
+    //@@author
 }
