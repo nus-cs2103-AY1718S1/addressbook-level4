@@ -4,13 +4,8 @@ import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
-import static seedu.address.ui.BrowserPanel.LINKEDIN_SEARCH_PARAM_FIRST_NAME;
-import static seedu.address.ui.BrowserPanel.LINKEDIN_SEARCH_PARAM_LAST_NAME;
-import static seedu.address.ui.BrowserPanel.LINKEDIN_SEARCH_PARAM_LOCATION;
-import static seedu.address.ui.BrowserPanel.LINKEDIN_SEARCH_PEOPLE;
-import static seedu.address.ui.BrowserPanel.LINKEDIN_SEARCH_URL_PREFIX;
-import static seedu.address.ui.BrowserPanel.LINKEDIN_URL_SUFFIX;
+import static seedu.address.ui.BrowserPanel.*;
+import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 
 import java.net.URL;
@@ -49,9 +44,8 @@ public class BrowserPanelTest extends GuiUnitTest {
         postNow(selectionChangedEventStub);
 
         String [] name = ALICE.getName().fullName.split(" ");
-        URL expectedPersonUrl = new URL(LINKEDIN_SEARCH_URL_PREFIX + LINKEDIN_SEARCH_PEOPLE
-                + LINKEDIN_SEARCH_PARAM_LOCATION + LINKEDIN_SEARCH_PARAM_FIRST_NAME + name[0]
-                + LINKEDIN_SEARCH_PARAM_LAST_NAME + name[1] + LINKEDIN_URL_SUFFIX);
+        URL expectedPersonUrl = new URL(GOOGLE_SEARCH_URL_PREFIX
+                + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
