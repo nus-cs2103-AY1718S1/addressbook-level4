@@ -9,7 +9,7 @@ public class ConfidenceEstimate {
     public static final String MESSAGE_CONFIDENCE_ESTIMATE_CONSTRAINTS =
             "Confidence estimates should be a single number without spaces";
 
-    public final Double value;
+    public final double value;
 
     /**
      * The default ConfidenceEstimate constructor when confidence estimate is not specified by the user
@@ -37,7 +37,7 @@ public class ConfidenceEstimate {
      */
     public static boolean isValidConfidenceEstimate(String test) {
         try {
-            Double d = Double.parseDouble(test);
+            double d = Double.parseDouble(test);
         } catch (NumberFormatException nfe) {
             return false;
         }
@@ -54,12 +54,12 @@ public class ConfidenceEstimate {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ConfidenceEstimate // instanceof handles nulls
-                && this.value.equals(((ConfidenceEstimate) other).value)); // state check
+                && this.value == (((ConfidenceEstimate) other).value)); // state check
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        long temp = Double.doubleToLongBits(value);
+        return (int) (temp ^ (temp >>> 32));
     }
-
 }
