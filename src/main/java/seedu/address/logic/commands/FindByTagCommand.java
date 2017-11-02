@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import seedu.address.model.person.TagContainsKeywordsPredicate;
 
+//@@author hj2304
 /**
  * Finds and lists all persons in address book whose emails matches with any of the keywords.
  * Keyword matching is case sensitive.
@@ -35,3 +36,4 @@ public class FindByTagCommand extends Command {
                 && this.predicate.equals(((FindByTagCommand) other).predicate)); // state check
     }
 }
+//@@author hj2304

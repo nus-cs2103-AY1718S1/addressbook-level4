@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import seedu.address.testutil.PersonBuilder;
 
+//@@author hj2304
 public class EmailContainsKeywordsPredicateTest {
 
     @Test
@@ -71,3 +72,4 @@ public class EmailContainsKeywordsPredicateTest {
                 .withEmail("alice@email.com").withAddress("Main Street").build()));
     }
 }
+//@@author hj2304

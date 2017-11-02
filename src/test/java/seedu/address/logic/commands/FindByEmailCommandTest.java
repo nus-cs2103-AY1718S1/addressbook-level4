@@ -24,6 +24,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.EmailContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author hj2304
 /**
  * Contains integration tests (interaction with the Model) for {@code FindByEmailCommand}.
  */
@@ -97,3 +98,4 @@ public class FindByEmailCommandTest {
         assertEquals(expectedAddressBook, model.getAddressBook());
     }
 }
+//@@author hj2304

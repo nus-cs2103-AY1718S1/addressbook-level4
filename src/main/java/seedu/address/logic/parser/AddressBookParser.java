@@ -88,17 +88,21 @@ public class AddressBookParser {
         case FindByAddressCommand.COMMAND_ALIAS:
             return new FindByAddressCommandParser().parse(arguments);
 
+        //@@author hj2304
         case FindByEmailCommand.COMMAND_WORD:
         case FindByEmailCommand.COMMAND_ALIAS:
             return new FindByEmailCommandParser().parse(arguments);
+        //@@author hj2304
 
         case FindByPhoneCommand.COMMAND_WORD:
         case FindByPhoneCommand.COMMAND_ALIAS:
             return new FindByPhoneCommandParser().parse(arguments);
 
+        //@@author hj2304
         case FindByTagCommand.COMMAND_WORD:
         case FindByTagCommand.COMMAND_ALIAS:
             return new FindByTagCommandParser().parse(arguments);
+        //@@author hj2304
 
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:

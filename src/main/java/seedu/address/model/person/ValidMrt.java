@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import java.util.HashMap;
 
+//@@author hj2304
 /**
 * stores valid mrt names and its corresponding coordinates
  */
@@ -216,3 +217,4 @@ class Coordinates {
         return res;
     }
 }
+//@@author hj2304

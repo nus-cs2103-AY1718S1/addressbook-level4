@@ -18,7 +18,9 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
  * A ui for the status bar that is displayed at the header of the application.
  */
 public class ResultDisplay extends UiPart<Region> {
+    //@@author derickjw
     public static final String ERROR_STYLE_CLASS = "error";
+    //@@author
     private static final Logger logger = LogsCenter.getLogger(ResultDisplay.class);
     private static final String FXML = "ResultDisplay.fxml";
 
@@ -38,6 +40,7 @@ public class ResultDisplay extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> displayed.setValue(event.message));
 
+        //@@author derickjw
         if (event.isInvalid) {
             setStyleToIndicateCommandFailure();
         } else {

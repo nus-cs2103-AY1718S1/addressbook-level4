@@ -22,8 +22,10 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
+    //@@author derickjw
     /** Returns the User Preferences */
     UserPrefs getUserPrefs();
+    //@@author
 
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
@@ -55,6 +57,7 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    //@@author hj2304
     void sort();
 
     TreeSet<Integer> generateMeetingTime(Index[] ListOfIndex);
