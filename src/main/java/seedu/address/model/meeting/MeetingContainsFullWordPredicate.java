@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
 
+//@@author kyngyi
 /**
  * Tests that a {@code ReadOnlyMeeting}'s {@code Meeting} matches the whole word given.
  */

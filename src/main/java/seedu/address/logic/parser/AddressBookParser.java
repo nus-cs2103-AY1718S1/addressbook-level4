@@ -16,6 +16,7 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditMeetingCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindExactMeetingCommand;
 import seedu.address.logic.commands.FindMeetingCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
@@ -97,6 +98,10 @@ public class AddressBookParser {
         case FindMeetingCommand.COMMAND_WORD:
         case FindMeetingCommand.COMMAND_ALIAS:
             return new FindMeetingCommandParser().parse(arguments);
+
+        case FindExactMeetingCommand.COMMAND_WORD:
+        case FindExactMeetingCommand.COMMAND_ALIAS:
+            return new FindExactMeetingCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:

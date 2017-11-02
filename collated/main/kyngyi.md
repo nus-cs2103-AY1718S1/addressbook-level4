@@ -1,33 +1,30 @@
-package seedu.address.logic.commands;
+# kyngyi
+###### \java\seedu\address\logic\commands\DeleteCommand.java
+``` java
+        ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
+        String personToDeleteName = personToDelete.getName().toString();
+        String[] nameArray = {personToDeleteName};
+        model.updateFilteredMeetingList(new MeetingContainsFullWordPredicate(Arrays.asList(nameArray)));
+        List<ReadOnlyMeeting> lastShownMeetingList = model.getFilteredMeetingList();
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.AddMeetingCommand.MESSAGE_MEETING_CLASH;
-import static seedu.address.logic.commands.AddMeetingCommand.MESSAGE_OVERDUE_MEETING;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_MEETINGS;
+        while (true) {
+            try {
+                Index firstIndex = ParserUtil.parseIndex("1");
+                ReadOnlyMeeting meetingToDelete = lastShownMeetingList.get(firstIndex.getZeroBased());
+                model.deleteMeeting(meetingToDelete);
+            } catch (IllegalValueException ive) {
+                assert false : "Error in deleting first item";
+            } catch (MeetingNotFoundException mnfe) {
+                assert false : "The target meeting cannot be missing";
+            } catch (IndexOutOfBoundsException ioobe) {
+                break;
+            }
+        }
 
-import java.util.List;
-import java.util.Optional;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.util.CollectionUtil;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.meeting.DateTime;
-import seedu.address.model.meeting.Meeting;
-import seedu.address.model.meeting.NameMeeting;
-import seedu.address.model.meeting.PersonToMeet;
-import seedu.address.model.meeting.PhoneNum;
-import seedu.address.model.meeting.Place;
-import seedu.address.model.meeting.ReadOnlyMeeting;
-import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
-import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
-import seedu.address.model.meeting.exceptions.MeetingClashException;
-import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
-
-//@@author kyngyi
+        model.updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
+```
+###### \java\seedu\address\logic\commands\EditMeetingCommand.java
+``` java
 /**
  * Edits the details of an existing meeting in the address book.
  */
@@ -204,3 +201,133 @@ public class EditMeetingCommand extends UndoableCommand {
         }
     }
 }
+```
+###### \java\seedu\address\logic\commands\FindExactMeetingCommand.java
+``` java
+/**
+ * Finds and lists all meetings in address book whose meeting name contains all of the keywords.
+ * Keyword matching is case sensitive.
+ */
+public class FindExactMeetingCommand extends Command {
+
+    public static final String COMMAND_WORD = "findexactmeeting";
+    public static final String COMMAND_ALIAS = "fem";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all meetings which contains the exactly of "
+            + "the specified words (case-sensitive) and displays them as a list with index numbers.\n"
+            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
+            + "Example: " + COMMAND_ALIAS + " Tuition Class";
+
+    private final MeetingContainsFullWordPredicate predicate;
+
+    public FindExactMeetingCommand(MeetingContainsFullWordPredicate predicate) {
+        this.predicate = predicate;
+    }
+
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredMeetingList(predicate);
+        return new CommandResult(getMessageForMeetingListShownSummary(model.getFilteredMeetingList().size()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FindExactMeetingCommand // instanceof handles nulls
+                && this.predicate.equals(((FindExactMeetingCommand) other).predicate)); // state check
+    }
+}
+```
+###### \java\seedu\address\logic\parser\EditMeetCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new EditCommand object
+ */
+public class EditMeetCommandParser implements Parser<EditMeetingCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the EditCommand
+     * and returns an EditCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public EditMeetingCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DATE, PREFIX_LOCATION);
+
+        Index index;
+
+        try {
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditMeetingCommand.MESSAGE_USAGE));
+        }
+
+        EditMeetingDescriptor editMeetingDescriptor = new EditMeetingDescriptor();
+        try {
+            ParserUtil.parseNameMeeting(argMultimap.getValue(PREFIX_NAME))
+                    .ifPresent(editMeetingDescriptor::setNameMeeting);
+            ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).ifPresent(editMeetingDescriptor::setDate);
+            ParserUtil.parsePlace(argMultimap.getValue(PREFIX_LOCATION)).ifPresent(editMeetingDescriptor::setPlace);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+
+        if (!editMeetingDescriptor.isAnyFieldEdited()) {
+            throw new ParseException(EditMeetingCommand.MESSAGE_NOT_EDITED);
+        }
+
+        return new EditMeetingCommand(index, editMeetingDescriptor);
+    }
+
+}
+```
+###### \java\seedu\address\logic\parser\FindExactMeetingCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new FindCommand object
+ */
+public class FindExactMeetingCommandParser implements Parser<FindExactMeetingCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the FindCommand
+     * and returns an FindCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public FindExactMeetingCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindExactMeetingCommand.MESSAGE_USAGE));
+        }
+
+        return new FindExactMeetingCommand(new MeetingContainsFullWordPredicate(Arrays.asList(trimmedArgs)));
+    }
+}
+```
+###### \java\seedu\address\model\meeting\MeetingContainsFullWordPredicate.java
+``` java
+/**
+ * Tests that a {@code ReadOnlyMeeting}'s {@code Meeting} matches the whole word given.
+ */
+public class MeetingContainsFullWordPredicate implements Predicate<ReadOnlyMeeting> {
+    private final List<String> keywords;
+
+    public MeetingContainsFullWordPredicate(List<String> keywords) {
+        this.keywords = keywords;
+    }
+
+    @Override
+    public boolean test(ReadOnlyMeeting meeting) {
+        return (keywords.stream()
+                .anyMatch(keyword ->
+                        StringUtil.containsFullWordIgnoreCase(meeting.getPersonName().fullName, keyword)));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof MeetingContainsFullWordPredicate // instanceof handles nulls
+                && this.keywords.equals(((MeetingContainsFullWordPredicate) other).keywords)); // state check
+    }
+}
+```
