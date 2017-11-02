@@ -1,5 +1,5 @@
 # Eric
-###### \java\seedu\address\logic\commands\AddAppointmentCommandTest.java
+###### /java/seedu/address/logic/commands/AddAppointmentCommandTest.java
 ``` java
 public class AddAppointmentCommandTest {
 
@@ -88,7 +88,7 @@ public class AddAppointmentCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\ToggleTagCommandTest.java
+###### /java/seedu/address/logic/commands/ToggleTagCommandTest.java
 ``` java
 public class ToggleTagCommandTest {
 
@@ -195,7 +195,7 @@ public class ToggleTagCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\parser\AddAppointmentParserTest.java
+###### /java/seedu/address/logic/parser/AddAppointmentParserTest.java
 ``` java
 public class AddAppointmentParserTest {
 
@@ -276,7 +276,7 @@ public class AddAppointmentParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ToggleTagColorParserTest.java
+###### /java/seedu/address/logic/parser/ToggleTagColorParserTest.java
 ``` java
     @Test
     public void parseMoreThanTwoWords() throws Exception {
@@ -285,7 +285,7 @@ public class AddAppointmentParserTest {
         parser.parse("This is longer than what is accepted");
     }
 ```
-###### \java\seedu\address\model\UniquePersonListTest.java
+###### /java/seedu/address/model/UniquePersonListTest.java
 ``` java
     @Test
     public void addAppointmentReturnsCorrectPerson() throws DuplicatePersonException, PersonNotFoundException {
@@ -339,7 +339,7 @@ public class AddAppointmentParserTest {
 
     }
 ```
-###### \java\seedu\address\model\UniqueTagListTest.java
+###### /java/seedu/address/model/UniqueTagListTest.java
 ``` java
     @Test
     public void tagsTests() throws IllegalValueException {
@@ -419,7 +419,7 @@ public class AddAppointmentParserTest {
 
     }
 ```
-###### \java\seedu\address\testutil\PersonBuilder.java
+###### /java/seedu/address/testutil/PersonBuilder.java
 ``` java
     /**
      * Sets appointment with Date of the person that we are building

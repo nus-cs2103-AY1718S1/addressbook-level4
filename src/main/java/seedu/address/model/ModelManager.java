@@ -68,11 +68,13 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //@@author rushan-khor
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
@@ -101,7 +103,8 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.setTags(tag, tagString, color);
         indicateAddressBookChanged();
     }
-    //@@author
+
+    //@@author rushan-khor
     /**
      * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
      *
@@ -176,8 +179,8 @@ public class ModelManager extends ComponentManager implements Model {
         ObservableList<ReadOnlyPerson> list = addressBook.getPersonListReversed();
         return FXCollections.unmodifiableObservableList(list);
     }
-    //@@author
 
+    //@@author rushan-khor
     /**
      * Gets a list of duplicate names
      */
@@ -194,6 +197,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
         return duplicateNames;
     }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -206,6 +210,7 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
+    //@@author rushan-khor
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
@@ -218,6 +223,7 @@ public class ModelManager extends ComponentManager implements Model {
         HasPotentialDuplicatesPredicate predicate = new HasPotentialDuplicatesPredicate(duplicateNames);
         updateFilteredPersonList(predicate);
     }
+    //@@author
 
     @Override
     public boolean equals(Object obj) {

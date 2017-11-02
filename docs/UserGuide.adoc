@@ -110,6 +110,11 @@ image::addexample.png[width="500"]
     Figure 3: Add Command Usage Diagram
 
 [NOTE]
+Your inputs for NAME and ADDRESS will have the +
+first letter of each word capitalized and the rest small letters. +
+Your inputs for EMAIL will have all words in lower case.
+
+[NOTE]
 You can only use the following twelve inputs for BLOODTYPE. +
 A, A+, A-, B, B+, B-, AB, AB+, AB-, O, O+, O-. +
 Both capital letters and small letters are can be entered. +
@@ -179,6 +184,7 @@ image::btexample.png[width="500"]
 [NOTE]
 BLOODTYPE is case insensitive.
 
+// tag::dups[]
 === Showing duplicate persons: `duplicates` [Since v1.3]
 
 You can use duplicates to show a list of people who share the same name. +
@@ -188,6 +194,7 @@ This makes it convenient for finding and resolving duplicate contacts. +
 
 [NOTE]
 The results are from case-sensitive comparisons.
+// end::dups[]
 
 === Editing a person : `edit`
 
@@ -356,13 +363,14 @@ You can set an appointment to a specific contact at a given index. +
 
 [NOTE]
 Appointment can be set using natural language. +
+If no end time is specified, default appointment time is 1 hour.
 However, please include at least the hour and a day that can be specified.
 
 
-*Format:* `appointment INDEX d/TIME` +
-*Shorthand format:* `appt INDEX d/TIME`
+*Format:* `appointment INDEX d/TIME to TIME` +
+*Shorthand format:* `appt INDEX d/TIME to TIME` +
 
-*Example:*
+*Example:* appt 1 d/5pm to 7pm tomorrow
 
 image::aptexample.png[width="500"]
     Figure 12: Appointment Command Usage Diagram
@@ -381,6 +389,7 @@ To remove appointment,
 
 // end::appointment[]
 
+// tag::remark[]
 === Adding/Removing Remarks to a person : `remark`
 
 You can add or remove a remark from an existing person in the address book. +
@@ -403,6 +412,9 @@ Existing remarks of the person will be removed
 The index refers to the index number shown in the last person listing +
 The index *must be a positive integer* `1, 2, 3, ...`
 
+// end::remark[]
+
+// tag::batch[]
 === Deleting all persons with a particular tag : [Since v1.2]
 
 You can delete multiple contacts by tags +
@@ -411,7 +423,15 @@ You can delete multiple contacts by tags +
 
 [WARNING]
 Command can only delete one tag at a time
+// end::batch[]
 
+// tag::batch[]
+=== Copy a person's email address to your clipboard : [Since v1.4]
+
+You can copy a person's email address to your clipboard +
+*Format:* `copy INDEX` +
+*Shorthand format:* `c INDEX`
+// end::batch[]
 
 === KeyBoard Shortcuts [Since v1.2]
 
@@ -426,15 +446,6 @@ and clicking on `Exit`.
 
 image::exitUI.png[width="500"]
     Figure 14: Methods to access `exit` command
-
-=== Displaying Appointments : [Coming in v2.0]
-****
-* Displays a list of appointments the Medical Professional has that are upcoming
-* Potential Upgrades: +
-1. Input an integer that limits the maximum number of searches displayed
-2. Auto displays a list of x number of appointments upon starting up MedNus
-3. Highlights the list if appointments are lesser than x days away
-****
 
 === Adding/Deleting a Tag to a Person : [Coming in v2.0]
 ****
@@ -543,10 +554,25 @@ You do not need to save data manually.
 
 |*Deleting a Remark* |Removes a remark from a contact |`remark INDEX r/` |`remark 1 r/`
 
+|*Adding an appointment*| Adds an appointment to a contact |`appointment INDEX d/TIME to TIME`
+| `appointment 1 d/Tonight 7pm to 8pm`
+
+|*Adding an appointment Shorthand*| Adds an appointment to a contact | `appt INDEX d/TIME to TIME`
+| `appt 1 d/Tonight 7pm to 10pm`
+
+|*Setting all tag color to random*| Sets all tags to random color | `tagcolor random` | `tagcolor random`
+
+|*Off all tag colors*| Off all colors of tags | `tagcolor off` | `tagcolor off`
+
+|*Set a color to a tag*| Set a tag to a color | `tagcolor TAG COLOR` | `tagcolor Friends blue`
+
+|*Set a color to a tag shorthand*| Set a tag to a color | `tc TAG COLOR` | `tc Friends blue`
+
 |=======================================================================
 
 <<<
 
+// tag::shortcut[]
 === Keyboard Shortcut
 
 [width="59%",cols="22%,<40%,<40%",options="header",]
@@ -569,3 +595,4 @@ You do not need to save data manually.
 
 |*Right* |Add Command Shortcut to autofill Prefixes |"Add" or "A" must be present at the start of the line
 |=======================================================================
+// end::shortcut[]
