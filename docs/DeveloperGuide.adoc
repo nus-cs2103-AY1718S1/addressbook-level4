@@ -31,7 +31,7 @@ Such information include cherBook's software architecture, Components and their 
 
 == Setting up
 
-Follow the instructions below to set up and configure cherBook source code on your computer.
+Follow the instructions below to set up and configure cherBook project files on your computer.
 
 === Prerequisites
 
@@ -106,6 +106,10 @@ When you are ready to start coding,
 2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
 == Design
+
+This section illustrates and identifies the architecture used to design and implement cherBook.
+This section contains an overall view of the system architecture and details the mechanism behind major system components,
+their attributes and interactions between these components.
 
 === Architecture
 
