@@ -3,6 +3,7 @@ package guitests.guihandles;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
+//@@author limcel
 /**
  * Provides a handle to a person card in the person list panel.
  */

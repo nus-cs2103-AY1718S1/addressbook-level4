@@ -8,6 +8,7 @@ import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -15,10 +16,14 @@ import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.UniqueScheduleList;
+import seedu.address.testutil.TypicalPersons;
 
 public class XmlAddressBookStorageTest {
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/XmlAddressBookStorageTest/");
@@ -112,6 +117,15 @@ public class XmlAddressBookStorageTest {
         addressBook.getTagList().remove(0);
     }
 
+    //@@author limcel
+    @Test
+    public void getScheduleList_modifyList_throwsUnsupportedOperationException() {
+        XmlSerializableAddressBook addressBook = new XmlSerializableAddressBook();
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getScheduleList().remove(0);
+    }
+    //@@author
+
     /**
      * Saves {@code addressBook} at the specified {@code filePath}.
      */
@@ -129,5 +143,33 @@ public class XmlAddressBookStorageTest {
         saveAddressBook(new AddressBook(), null);
     }
 
+    //@@author limcel
+    @Test
+    public void createNewXmlAdaptedScheduleTest() throws IllegalValueException {
+        Calendar date = Calendar.getInstance();
+        String personToAdd = TypicalPersons.ALICE.getName().toString();
+
+        Schedule expectedSchedule = new Schedule(personToAdd, date);
+
+        XmlAdaptedSchedule newSchedule = new XmlAdaptedSchedule(expectedSchedule);
+
+        UniqueScheduleList scheduleList = new UniqueScheduleList();
+        scheduleList.add(newSchedule.toModelType());
+
+        assertTrue(expectedSchedule, scheduleList.asObservableList().get(0));
+    }
+
+    //====================================== HELPER METHODS ========================================
+
+    /**
+     * Checks if the expectedSchedule is equals to the schedule in the storage
+     */
+    private boolean assertTrue(Schedule expectedSchedule, Schedule schedule) {
+        if (expectedSchedule.equals(schedule)) {
+            return true;
+        }
+        return false;
+    }
+    //@@author
 
 }
