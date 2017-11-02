@@ -48,7 +48,6 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_INSURANCE = "This insurance already exists in the address book";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
-    //private final UUID id;
     private final LifeInsurance lifeInsuranceToAdd;
 
     /**
@@ -57,7 +56,6 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
     public AddLifeInsuranceCommand(String ownerName, String insuredName, String beneficiaryName,
                                    Double premium, String contractPath, LocalDate signingDate,
                                    LocalDate expiryDate) {
-        //this.id = UUID.randomUUID();
         this.lifeInsuranceToAdd = new LifeInsurance(ownerName, insuredName, beneficiaryName,
                 premium, contractPath, signingDate, expiryDate);
     }
