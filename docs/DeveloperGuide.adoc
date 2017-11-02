@@ -606,7 +606,7 @@ Note: Cookies are stored to maintain login session for the length of the address
 ==== Design considerations
 
 **Aspect:** Implementation of display linked in authorisation
-**Alternative 1:** Manual key in of userid and password into browser
+**Alternative 1 (current option):** Manual key in of user-id and password into browser
 **Pros:** More details of user profile is viewable
 **Pros:** More secure
 **Cons:** Tedious to type login credentials into browser

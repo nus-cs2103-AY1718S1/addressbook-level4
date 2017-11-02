@@ -202,14 +202,17 @@ Otherwise, users will be notified that specified tags are not used in address bo
 
 #End of Extract#
 
-=== Enhancement Proposed: Find LinkedIn Contact
+---
+=== Enhancement Proposed: Display LinkedIn profile
 
 ==== External behavior
 
 #Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: User Guide]]#
 
-* When any of the contacts in the addressbook is selected, their LinkedIn Profile is displayed.
-* e.g When `Alex Yeoh` is selected in the panel the display to the right will show his Linkedin profile.
+* When any of the contacts in the addressbook is selected, a list of closest LinkedIn Profiles are displayed.
+* e.g When `Alex Yeoh` is selected in the panel the display to the right will show his Linkedin profile/ list +
+of profiles that match his details.
+
 +
 image::FindLinkedIn Profile.PNG[width="790"]
 
@@ -219,7 +222,7 @@ image::FindLinkedIn Profile.PNG[width="790"]
 
 ==== Justification
 
-Allows users to conveniently connect with contacts in addressbook.
+Allows users to conveniently connect with contacts in addressbook & get to know more about these contacts.
 
 ---
 
@@ -227,13 +230,35 @@ Allows users to conveniently connect with contacts in addressbook.
 
 #Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
 
-//image::UiClassDiagram.png[width="800"]
+When the `choose` command is activated with the argument `linkedin`, the `BrowserPanel` handles by calling:
+[source, java]
+----
+private void loadOtherPages(String page);
+----
 
-#End of Extract#
+image::LinkedInProfile.png[width="200"]
+
+LinkedIn results page with parameters, such as `Name`, passed in from the selected `Person` class.
+
+Note: Cookies are stored to maintain login session for the length of the addressbook session.
 
 ---
 
-=== Enhancement Proposed: Remarks Feature
+==== Design considerations
+
+**Aspect:** Implementation of display linked in authorisation
+**Alternative 1 (current option):** Manual key in of user-id and password into browser
+**Pros:** More details of user profile is viewable
+**Pros:** More secure
+**Cons:** Tedious to type login credentials into browser
+**Alternative 2:** Use OAuth 2.0 with LinkedIn Api
+**Pros:** More convenient as login credentials are required only once
+**Cons:** LinkedIn API available does not allow for viewing of full profile
+
+#End of Extract#
+---
+
+=== Enhancement Proposed: Add meeting
 
 === Other contributions
 
