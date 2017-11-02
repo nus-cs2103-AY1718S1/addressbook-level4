@@ -16,6 +16,7 @@ public class PartialSearchUtil {
         targetList = new ArrayList<>(targetListOri);
     }
 
+    /** Compare two list and see whether any string in baseList contains(partially) any string in targetList*/
     public boolean compare() {
         boolean flag = false;
         ListIterator<String> baseListItr = baseList.listIterator();

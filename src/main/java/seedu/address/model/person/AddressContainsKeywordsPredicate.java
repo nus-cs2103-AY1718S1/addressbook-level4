@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.PartialSearchUtil;
-import seedu.address.commons.util.StringUtil;
 
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
