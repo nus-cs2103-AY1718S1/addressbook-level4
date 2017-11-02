@@ -178,7 +178,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<Phone> getPhone() {
             return Optional.ofNullable(phone);
         }
-
+        //@@author icehawker
         public void setCountry(Country country) {
             this.country = country;
         }
