@@ -15,7 +15,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_DELIVERI
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_OVERDUE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_PENDING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FLAMMABLE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRAGILE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FROZEN;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HEAVY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER_AMY;
@@ -149,7 +148,7 @@ public class TypicalParcels {
     public static final ReadOnlyParcel GEORGE = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_GEORGE)
             .withName(VALID_NAME_GEORGE).withPhone(VALID_PHONE_GEORGE).withEmail(VALID_EMAIL_GEORGE)
             .withAddress(VALID_ADDRESS_GEORGE).withDeliveryDate(VALID_DELIVERY_DATE_GEORGE)
-            .withTags(VALID_TAG_FRAGILE, VALID_TAG_HEAVY).withStatus(VALID_STATUS_COMPLETED).build();
+            .withTags(VALID_TAG_HEAVY).withStatus(VALID_STATUS_COMPLETED).build();
     public static final ReadOnlyParcel HOON = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_HOON)
             .withName(VALID_NAME_HOON).withPhone(VALID_PHONE_HOON).withEmail(VALID_EMAIL_HOON)
             .withAddress(VALID_ADDRESS_HOON).withDeliveryDate(VALID_DELIVERY_DATE_HOON)

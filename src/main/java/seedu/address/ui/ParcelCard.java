@@ -111,8 +111,8 @@ public class ParcelCard extends UiPart<Region> {
      */
     private void initTags(ReadOnlyParcel parcel) {
         parcel.getTags().forEach(tag -> {
-            Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-background-color: " + setColorForTag(tag.tagName));
+            Label tagLabel = new Label(tag.toString());
+            tagLabel.setStyle("-fx-background-color: " + setColorForTag(tag.toString()));
             tags.getChildren().add(tagLabel);
         });
     }

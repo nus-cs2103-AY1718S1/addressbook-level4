@@ -63,7 +63,7 @@ public interface ReadOnlyParcel extends Comparable {
                 .append(" Status: ")
                 .append(getStatus())
                 .append(" Tags: ");
-        getTags().forEach(builder::append);
+        getTags().stream().map(t -> t.getFormattedString()).forEach(builder::append);
         return builder.toString();
     }
 
