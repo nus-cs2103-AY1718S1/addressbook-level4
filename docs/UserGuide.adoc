@@ -75,6 +75,9 @@ Example:
 Set and show an image for a person in the addressbook. Uses the index of a person to select them and a URL to the image path. Since v1.3. +
 e.g. `image 1 /home/user/someexample.jpg`
 
+=== Expiry Date: `expire`
+Set the expiry date of a person. The entry will be automatically removed from addressbook once it expires. Coming v1.5
+
 === Exporting Database
 Export a working version of the database and the images associated to it to a directory specified.
 `Currently WIP but allows exporting to the addressbook home directry` +
@@ -114,15 +117,16 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG] [d/EXPIRY DATE]...`
 
 [TIP]
 Persons can have any number of tags (including 0)
+Expiry date should be in the format of YYYY/MM/DD
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal d/2017-10-10`
 
 === Listing all persons : `list`
 
@@ -132,7 +136,7 @@ Format: `list`
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG] [d/EXPIRY DATE]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -148,6 +152,8 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 3 t/friend d/2010-01-01` +
+Set the tags of the 3rd person to be `friend` and edit the expiry date to be `2010-01-01`.
 
 === Finding all persons containing any keyword in their name: `find`
 
