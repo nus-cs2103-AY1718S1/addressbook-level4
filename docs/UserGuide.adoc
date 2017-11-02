@@ -344,10 +344,22 @@ Format: `export [directory]\[filename].xml` +
 
 Example: `export C:\user\desktop\circles.xml` +
 
+[TIP]
+The exact destination directory of your export is needed for the feature to work accurately. +
+If the exact directory is not provided, the file will be exported to the directory of the JAR file +
+and the file name may not be accurate.
+
 === Importing a contacts list in .xml format : `import`
 Format: `import [directory]\[filename].xml` +
 
 Example: `import C:\user\downloads\circles.xml
+
+[TIP]
+The exact directory location of your import file is needed for the feature to work accurately. +
+If the exact directory is not provided, Circles will not be able to locate your file, +
+and will not be able to import your contacts.
+To find the exact directory location of your file, right-click the file and select Properties (or Get Info on Mac); +
+and find the "Location" section. The file in question *MUST BE IN .XML FORMAT*.
 
 === Clearing all entries : `clear`
 When changing device used for Circles or to start a new address book, you might want to delete all contacts due to
@@ -444,6 +456,10 @@ e.g. `select 2`
 e.g. `setcolour friends red`
 * *Unpin* : `unpin INDEX` +
 e.g. `unpin 1`
+* *Export* : `export [directory]\[filename]` +
+e.g. `export C:\users\user\desktop\circles.xml`
+* *Import* : `import [directory]\filename]` +
+e.g. `import C:\users\user\desktop\addressbook.xml`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
