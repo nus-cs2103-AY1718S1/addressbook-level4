@@ -68,6 +68,9 @@ public class PersonPanel extends UiPart<Region> {
         return tagColors.get(tagValue);
     }
 
+    /**
+     * Sets the default parameters when the app starts up and no one is selected
+     */
     private void loadDefaultScreen() {
         name.textProperty().setValue("No Resident Selected");
         phone.textProperty().setValue("-");
