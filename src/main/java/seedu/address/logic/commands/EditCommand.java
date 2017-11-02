@@ -56,10 +56,10 @@ public class EditCommand extends UndoableCommand {
 
     //@@author hansiang93
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {Index} "
-            + PREFIX_PHONE + "{Phone} "
+            + PREFIX_PHONE + "{phone} "
             + PREFIX_EMAIL + "{email} "
             + PREFIX_TAG + "{tag} "
-            + PREFIX_WEB_LINK + "{Weblink}";
+            + PREFIX_WEB_LINK + "{weblink}";
     //@@author
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";

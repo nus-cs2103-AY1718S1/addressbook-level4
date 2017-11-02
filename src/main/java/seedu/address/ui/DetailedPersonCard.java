@@ -56,7 +56,7 @@ public class DetailedPersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    public DetailedPersonCard(HashMap tagColors) {
+    public DetailedPersonCard(HashMap<String, String> tagColors) {
         super(FXML);
         registerAsAnEventHandler(this);
         this.tagColors = tagColors;

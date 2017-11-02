@@ -1,6 +1,9 @@
 package seedu.address.ui;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -23,6 +26,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.UserPerson;
+import seedu.address.model.person.weblink.WebLink;
 
 //@@author bladerail
 /**
@@ -34,7 +38,7 @@ public class UserProfileWindow extends UiPart<Region> {
     private static final String FXML = "UserProfileWindow.fxml";
     private static final String TITLE = "User Profile";
 
-    private UserPerson userPerson;
+    private final UserPerson userPerson;
 
     @FXML
     private TextField nameTextField;
@@ -47,6 +51,9 @@ public class UserProfileWindow extends UiPart<Region> {
 
     @FXML
     private TextField addressTextField;
+
+    @FXML
+    private TextField webLinkTextField;
 
     @FXML
     private Label statusLabel;
@@ -71,6 +78,7 @@ public class UserProfileWindow extends UiPart<Region> {
         emailTextField.setText(userPerson.getEmailAsText());
         phoneTextField.setText(userPerson.getPhone().toString());
         addressTextField.setText(userPerson.getAddress().toString());
+        webLinkTextField.setText(userPerson.getWebLinksAsText());
 
         setAccelerators(scene);
 
@@ -93,6 +101,7 @@ public class UserProfileWindow extends UiPart<Region> {
         phoneTextField.textProperty().bind(Bindings.convert(userPerson.phoneProperty()));
         addressTextField.textProperty().bind(Bindings.convert(userPerson.addressProperty()));
         emailTextField.textProperty().bind(Bindings.convert(userPerson.emailProperty()));
+        webLinkTextField.textProperty().bind(Bindings.convert(userPerson.webLinkProperty()));
     }
 
     @Override
@@ -121,7 +130,7 @@ public class UserProfileWindow extends UiPart<Region> {
     }
 
     @FXML
-    void handleCancel() {
+    private void handleCancel() {
         stage.close();
     }
 
@@ -129,7 +138,7 @@ public class UserProfileWindow extends UiPart<Region> {
      * Handles the OK button
      */
     @FXML
-    void handleOk() {
+    private void handleOk() {
         try {
             updateUserPerson();
             raise(new UserPersonChangedEvent(userPerson));
@@ -180,6 +189,25 @@ public class UserProfileWindow extends UiPart<Region> {
             userPerson.setAddress(new Address(addressTextField.getText()));
         } catch (IllegalValueException e) {
             statusLabel.setText("Please input a valid address value");
+            throw new Exception();
+        }
+
+        try {
+            String[] webLinks = webLinkTextField.getText().split(", ");
+
+            Comparator<WebLink> comparator = Comparator.comparing(WebLink::toStringWebLink);
+
+            Set<WebLink> webLinkSet = new TreeSet<WebLink>(comparator);
+
+            for (String curr : webLinks) {
+                webLinkSet.add(new WebLink(curr));
+            }
+            userPerson.setWebLinks(webLinkSet);
+        } catch (IllegalValueException e) {
+            statusLabel.setText("Please input a valid webLink");
+            throw new Exception();
+        } catch (ClassCastException e) {
+            statusLabel.setText("Hey");
             throw new Exception();
         }
     }

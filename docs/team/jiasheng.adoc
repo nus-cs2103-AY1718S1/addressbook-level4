@@ -53,7 +53,7 @@ include::../DeveloperGuide.adoc[tag=model]
 
 ---
 
-== Enhancement Added: `Improvement on existing find command`
+=== Enhancement Added: `Improvement on existing find command`
 
 ==== External behaviour
 

@@ -64,7 +64,7 @@
             <TextField fx:id="emailTextField" prefHeight="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="phoneTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="addressTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField text="Currently Unsupported" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="webLinkTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
       <Label fx:id="statusLabel" text="Label" />

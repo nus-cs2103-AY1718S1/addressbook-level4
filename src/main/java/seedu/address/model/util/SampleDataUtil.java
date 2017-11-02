@@ -79,7 +79,7 @@ public class SampleDataUtil {
      * @throws IllegalValueException
      * */
     public static ArrayList<Email> getEmailSet(String... emails) throws IllegalValueException {
-        ArrayList<Email> emailList = new ArrayList();
+        ArrayList<Email> emailList = new ArrayList<>();
         for (String e : emails) {
             emailList.add(new Email(e));
         }
