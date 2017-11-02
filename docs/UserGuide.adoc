@@ -116,7 +116,7 @@ For more about editing tags, read `Edit Individual Tag` below.
 Use `+t/` or `-t/` in edit command to add or remove tag to specific person with corresponding index.
 
 Examples:
-*`edit 1 +t/happy` adds a `happy` tag to the 1st person with his/her existing tags. 
+*`edit 1 +t/happy` adds a `happy` tag to the 1st person with his/her existing tags.
 *`edit 1 -/sad` removes the `sad` tag from the list of tags tagged to the 1st person.
 // end::editIndividualTag[]
 
