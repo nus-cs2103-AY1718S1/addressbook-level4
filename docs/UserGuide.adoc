@@ -364,15 +364,14 @@ Displays the Facebook account of the first person in the current person list
 
 |Input an `INDEX` that is invalid. +
 e.g. `-1`, `0.1`, `abc`
-|Ensure that the specified [green]`INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the person list*.
+|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the person list*.
 
 |Input a `SOCIAL_MEDIA_PLATFORM` that the user does not have an associated account for. +
 e.g. If the first user in the person list does not have an instagram account, and the command `stalk 1 instagram` is entered.
-a|Ensure that the selected user has an associated account for the `SOCIAL_MEDIA_PLATFORM` specified. The social media accounts associated with
+|Ensure that the selected user has an associated account for the `SOCIAL_MEDIA_PLATFORM` specified. The social media accounts associated with
 a user can be found in the person list.
 
-.Contact information in a person list, with social media accounts highlighted in orange
-image::stalk-command-social-info.png[width="300"]
+image:stalk-command-social-info.png[width="300"]
 |===
 
 [[find-by-tag]]
@@ -411,7 +410,7 @@ Displays persons with names `Betsy`, `Tim`, or `John` in the person list.
 * `[red]#find# [blue]#-tag# [green]#friends colleagues#` +
 Displays persons with tags `friends` or `colleagues` in the person list.
 * `[red]#find# [blue]#-fav#` +
-Displays favorite contacts in the person list.
+Displays `favorite` contacts in the person list.
 
 ==== Sorting the displayed list [Since v1.4]: `sort`
 
@@ -446,10 +445,10 @@ Examples:
 
 * `[red]#list#` +
 `[red]#sort#` +
-lists all person in the address book, sorted first based on their favorite status, then by their name in lexicographic order.
+Lists all person in the address book, sorted first based on their `favorite` status, then by their `name` in lexicographic order.
 * `[red]#find# [green]#john#` +
 `[red]#sort# [blue]#-recent#` +
-lists all the person that contain the keyword `john`, sorted based on when they were last added, updated, or stalked.
+Lists all persons whose `names` contain the keyword `john`, sorted based on when they were last added, updated, or stalked.
 
 
 [[social-media-integrations]]
