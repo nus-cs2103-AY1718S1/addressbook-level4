@@ -10,6 +10,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.WebsiteSelectionRequestEvent;
 
+//@@author hansiang93
 /**
  * The Button Bar above the browser of the App.
  */
