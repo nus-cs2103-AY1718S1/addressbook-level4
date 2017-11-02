@@ -78,7 +78,7 @@ Unify's user interface is split into a few sections. These sections are highligh
 * List of Contacts
 * Contact's Details
 
-image::UG_quicklookui.png[width="590"]
+image::UG_quicklookui.png[width="790"]
 
 == Quick Start
 image::UG_mainheader_installationguide.png[width="900"]
