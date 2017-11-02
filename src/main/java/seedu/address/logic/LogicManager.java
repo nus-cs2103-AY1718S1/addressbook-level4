@@ -56,7 +56,7 @@ public class LogicManager extends ComponentManager implements Logic {
 
         if (!isLoggedInPassword) {
             if (isCorrectPassword(commandText)) {
-                result = new CommandResult("Log in successful! Welcome to H.M.U v1.3!");
+                result = new CommandResult("Log in successful! Welcome to H.M.U v1.4!");
                 return result;
             } else {
                 result = new CommandResult("Invalid Credentials. Please try again!");
@@ -109,6 +109,21 @@ public class LogicManager extends ComponentManager implements Logic {
             return false;
         }
     }
+
+    /**
+     * Setter method for username
+     */
+    private void setDefaultUsername() {
+        model.getUserPrefs().setDefaultUsername("admin");
+    }
+
+    /**
+     * Setter method for password
+     */
+    private void setDefaultPassword() {
+        model.getUserPrefs().setDefaultPassword("8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918");
+    }
+
     //@@author
 
     @Override
