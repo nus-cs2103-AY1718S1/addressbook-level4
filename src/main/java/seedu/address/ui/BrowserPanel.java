@@ -88,7 +88,7 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleBrowserPanelSelectionChangedEvent(BrowserPanelSelectionChangedEvent event) {
         loadOtherPage(event.getBrowserSelection());
     }
-  
+
     //@author martyn-wong
     @Subscribe
     private void handleMapPanelEvent(MapPersonEvent event) {
