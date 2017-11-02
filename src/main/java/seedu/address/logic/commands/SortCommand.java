@@ -1,4 +1,4 @@
-//@@author A0144294A
+//@@author majunting
 package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.exceptions.CommandException;

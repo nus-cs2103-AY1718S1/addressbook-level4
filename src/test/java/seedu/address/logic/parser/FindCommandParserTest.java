@@ -78,7 +78,6 @@ public class FindCommandParserTest {
         //with an tag prefix
         assertParseSuccess(parser, FindCommand.COMMAND_WORD + " t/friends", expectedFindCommand5);
 
-
     }
 
     @Test

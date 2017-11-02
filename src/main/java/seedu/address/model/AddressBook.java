@@ -165,7 +165,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
-    //@@author A0144294A
+    //@@author majunting
     /**
      * sort the unique person list by the given attribute, then put the favorite contacts at the top of the list
      */

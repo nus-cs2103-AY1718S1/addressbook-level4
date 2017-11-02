@@ -25,6 +25,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.predicates.AddressContainsKeywordsPredicate;
 import seedu.address.model.person.predicates.AnyContainsKeywordsPredicate;
 import seedu.address.model.person.predicates.EmailContainsKeywordsPredicate;
+import seedu.address.model.person.predicates.FavoritePersonsPredicate;
 import seedu.address.model.person.predicates.NameContainsKeywordsPredicate;
 import seedu.address.model.person.predicates.PhoneContainsKeywordsPredicate;
 import seedu.address.model.person.predicates.TagContainsKeywordsPredicate;
@@ -72,6 +73,8 @@ public class FindCommandParser implements Parser<FindCommand> {
                 return new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(keywords)));
             } else if (tags.isPresent()) {
                 return new FindCommand(new TagContainsKeywordsPredicate(tags.get()));
+            } else if ("favorite".equals(trimmedArgs) || "unfavorite".equals(trimmedArgs)) {
+                return new FindCommand(new FavoritePersonsPredicate(trimmedArgs));
             } else {
                 keywords = trimmedArgs.split("\\s+");
                 return new FindCommand(new AnyContainsKeywordsPredicate(Arrays.asList(keywords)));

@@ -6,6 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Favorite;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -26,6 +27,7 @@ public class PersonBuilder {
     public static final String DEFAULT_BIRTHDAY = "01/01/1990";
     public static final String DEFAULT_REMARK = "";
     public static final String DEFAULT_TAGS = "friends";
+    public static final boolean DEFAULT_FAVORITE = false;
 
     private Person person;
 
@@ -40,6 +42,7 @@ public class PersonBuilder {
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultPhone,
                     defaultEmail, defaultAddress, defaultBirthday, defaultRemark, defaultTags);
+            this.person.setFavorite(new Favorite(DEFAULT_FAVORITE));
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -128,6 +131,16 @@ public class PersonBuilder {
         }
         return this;
     }
+
+    //@@author majunting
+    /**
+     * Sets the {@code Favorite} of the {@code Person} that we are building
+     */
+    public PersonBuilder withFavorite(boolean favorite) {
+        this.person.setFavorite(new Favorite(favorite));
+        return this;
+    }
+    //@@author
 
     public Person build() {
         return this.person;

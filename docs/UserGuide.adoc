@@ -97,7 +97,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 === Locating persons by name: `find`
 
 *Unrestricted search
-Finds persons whose names, addresses, phones, emails or tags contain any of the given keywords. +
+Finds persons whose names, addresses, phones, emails or tags contain any of the given keywords or find favorite / unfavorite contacts. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
@@ -113,6 +113,10 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find favorite` +
+Returns all favorite persons
+* `find unfavorite` +
+Returns all unfavorite persons
 
 *Restricted search
 Finds persons with one of the attributes: names, addresses, phones, emails or tags +

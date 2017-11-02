@@ -166,7 +166,7 @@ public class UniquePersonList implements Iterable<Person> {
     }
     //@@author
 
-    //@@author A0144294A
+    //@@author majunting
     /**
      * sort the list by a user specified attribute
      */
