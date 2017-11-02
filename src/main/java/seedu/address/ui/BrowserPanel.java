@@ -54,7 +54,7 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(GOOGLE_MAP_URL_PREFIX + person.getAddress().value.replaceAll(" ", "+"));
     }
 
-    private void loadMrtPage(ReadOnlyPerson person){
+    private void loadMrtPage(ReadOnlyPerson person) {
         loadPage(GOOGLE_MAP_URL_PREFIX + person.getMrt().value.replaceAll("", "+")
                 + GOOGLE_MRT_URL_SUFFIX);
     }
