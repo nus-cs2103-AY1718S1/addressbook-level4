@@ -12,6 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.ExpiryDate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -89,5 +90,18 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code Optional<String> dateString} into an {@code Optional<ExpiryDate>}
+     * if {@code dateString} is present.
+     */
+    public static Optional<ExpiryDate> parseExpiryDate(Optional<String> dateString) throws IllegalValueException {
+        requireNonNull(dateString);
+        if (dateString.isPresent()) {
+            return Optional.of(new ExpiryDate(dateString.get()));
+        } else {
+            return Optional.empty();
+        }
     }
 }
