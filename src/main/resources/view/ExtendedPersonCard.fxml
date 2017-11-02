@@ -26,7 +26,7 @@
             <HBox alignment="TOP_LEFT" spacing="10">
             <ImageView>
                <image>
-                  <Image url="@../../../../docs/images/icons/student(32px).png" />
+                  <Image url="@../images/student(32px).png" />
                </image>
             </ImageView>
                 <Label fx:id="name" styleClass="cell_big_label" text="\$first">
@@ -44,7 +44,7 @@
             <graphic>
                <ImageView>
                   <image>
-                     <Image url="@../../../../docs/images/icons/phone.png" />
+                     <Image url="@../images/phone.png" />
                   </image>
                </ImageView>
             </graphic>
@@ -55,7 +55,7 @@
             <graphic>
                <ImageView>
                   <image>
-                     <Image url="@../../../../docs/images/icons/address.png" />
+                     <Image url="@../images/address.png" />
                   </image>
                </ImageView>
             </graphic></Label>
@@ -63,7 +63,7 @@
             <graphic>
                <ImageView>
                   <image>
-                     <Image url="@../../../../docs/images/icons/class.png" />
+                     <Image url="@../images/class.png" />
                   </image>
                </ImageView>
             </graphic></Label>
@@ -71,7 +71,7 @@
             <graphic>
                <ImageView>
                   <image>
-                     <Image url="@../../../../docs/images/icons/grades.png" />
+                     <Image url="@../images/grades.png" />
                   </image>
                </ImageView>
             </graphic></Label>
@@ -79,7 +79,7 @@
                 <graphic>
                     <ImageView>
                         <image>
-                            <Image url="@../../../../docs/images/icons/postalCode.png" />
+                            <Image url="@../images/postalCode.png" />
                         </image>
                     </ImageView>
                 </graphic></Label>
@@ -87,7 +87,7 @@
             <graphic>
                <ImageView>
                   <image>
-                     <Image url="@../../../../docs/images/icons/email.png" />
+                     <Image url="@../images/email.png" />
                   </image>
                </ImageView>
             </graphic></Label>
@@ -95,7 +95,7 @@
             <graphic>
                <ImageView>
                   <image>
-                     <Image url="@../../../../docs/images/icons/remark.png" />
+                     <Image url="@../images/remark.png" />
                   </image>
                </ImageView>
             </graphic></Label>

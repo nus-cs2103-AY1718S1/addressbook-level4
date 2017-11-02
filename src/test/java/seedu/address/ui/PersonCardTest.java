@@ -43,8 +43,6 @@ public class PersonCardTest extends GuiUnitTest {
         personCard = new PersonCard(personWithTags, 2);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithTags, 2);
-        //Check if tag color is removed from the arraylist of colors after being assigned to a tag
-        assertFalse(personCard.getAvailableColorsLeft().contains(personCard.getAssignedTagColor()));
 
         // changes made to Person reflects on card
         guiRobot.interact(() -> {
@@ -65,24 +63,9 @@ public class PersonCardTest extends GuiUnitTest {
     public void obtainTagColors() {
         Person personWithTags = new PersonBuilder().build();
         PersonCard personCard = new PersonCard(personWithTags, 2);
-        //Check if tag color is removed from the arraylist of colors after being assigned to a tag
-        assertFalse(personCard.getAvailableColorsLeft().contains(personCard.getAssignedTagColor()));
 
-        //Check that the arraylist of colors does not contain gray
-        assertTrue(!personCard.getAvailableColorsLeft().contains("GRAY"));
-
-
-        //Check that  subsequent tags will be assigned gray color after all
-        //the available unique color runs out.
-        int arrayListSize = personCard.getAvailableColorsLeft().size() - 1;
-        while (personCard.getAvailableColorsLeft().size() != 0) {
-            personCard.getAvailableColorsLeft().remove(arrayListSize);
-            arrayListSize--;
-        }
-        assertEquals(personCard.obtainTagColors("tag"), "GRAY");
-        assertEquals(personCard.obtainTagColors("tag2"), "GRAY");
-        assertEquals(personCard.obtainTagColors("tag3"), "GRAY");
-        assertEquals(personCard.obtainTagColors("tag4"), "GRAY");
+        //Check if assigned tag color is added into the Arraylist of usedColors after being assigned to a tag.
+        assertTrue(personCard.getUsedColor().contains(personCard.getAssignedTagColor()));
     }
 
     @Test

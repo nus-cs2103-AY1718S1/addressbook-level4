@@ -1,4 +1,4 @@
-= cherBook v1.3 - User Guide
+= cherBook v1.4 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -22,16 +22,16 @@ You will be able to view the 25th, 50th and 75th percentile scores of each class
 
 With the upcoming update in `v1.4`, `cherBook` will soon be able to compare statistics between different groups of students.
 
-`cherBook v1.2` is available for the Linux, Unix and Windows and Mac OS X operating systems
+`cherBook v1.4` is available for the Linux, Unix and Windows and Mac OS X operating systems
 
 == About
 
-This document will help you set up and get started with using `cherBook v1.2`.
-You will be given an overview of the features of `cherBook v1.2`, and shown how to use them and with the help of some examples. +
+This document will help you set up and get started with using `cherBook v1.4`.
+You will be given an overview of the features of `cherBook v1.4`, and shown how to use them and with the help of some examples. +
 
-Some statistical concepts will be used in the explanations of the features `cherBook v1.2` offers.
+Some statistical concepts will be used in the explanations of the features `cherBook v1.4` offers.
 However, no prior technical knowledge is needed to understand this user guide.
-The statistical concepts  --- `percentiles`, `averages` and `standard deviation`--- will be explained and then demonstrated in the the link:#glossary[Glossary] below.
+The statistical concepts  --- link:#percentile[`_percentile_`], link:#average[`average`] and link:#standard-deviation[`_standard deviation_`] --- will be explained and then demonstrated in the the link:#glossary[Glossary] below.
 
 == Set Up and Get Started
 
@@ -76,21 +76,19 @@ Format: `help`
 === Adding a person: `add` `Since v1.0`
 
 Adds a person to the address book +
-Format: `add n/NAME p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER) e/EMAIL a/ADDRESS c/POSTALCODE [t/TAG]...` +
-Shorthand: `a n/NAME p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER) e/EMAIL a/ADDRESS c/POSTALCODE [t/TAG]...`
+Format: `add n/NAME p/[student/(STUDENT_NUMBER)] parent/(PARENT_NUMBER) [e/EMAIL] [a/ADDRESS] f/FORMCLASS g/GRADES [c/POSTALCODE] [t/TAG]...` +
+Shorthand: `a n/NAME p/[student/(STUDENT_NUMBER)] parent/(PARENT_NUMBER) [e/EMAIL] [a/ADDRESS] f/FORMCLASS g/GRADES [c/POSTALCODE] [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0) +
-A person can choose whether to have labels assigned to their contact numbers
-Available labels for the contacts numbers are: +
-H: (Home number) HP: (HandPhone number) O: (Office number)
+Adding of student or/and parent's number must be preceded by the phone prefix `p/`.
 
 Examples:
 
-* `add n/John Doe p/ student/97272032 parent/97979797 e/johnd@example.com a/John street, block 123, #01-01 c/203904`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/ student/97272030 parent/97979797 t/criminal`
-* `a n/Jane Doe p/ student/97272031 parent/97979791 e/janed@example.com a/Jane street, block 456, #01-01`
-* `a n/Lily Crowe t/friend e/lilycrowe@example.com a/Newgate Prison p/ student/97272231 parent/97979997 t/criminal`
+* `add n/John Doe p/parent/97979797 e/johnd@example.com a/John street, block 123, #01-01 f/12S11 g/123.0 c/203904`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/student/97272030 parent/97979797 f/B12 g/100.0 t/criminal`
+* `a n/Jane Doe p/parent/97979791 e/janed@example.com a/Jane street, block 456, #01-01 f/6C g/98`
+* `a n/Lily Crowe t/friend e/lilycrowe@example.com a/Newgate Prison p/student/97272231 parent/97979997 f/12A2 g/66 t/criminal`
 
 === Listing all persons : `list` `Since v1.0`
 
@@ -101,8 +99,8 @@ Shorthand: `l`
 === Editing a person : `edit` `Since v1.0`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)] [e/EMAIL] [a/ADDRESS] [c/POSTALCODE] [t/TAG]...` +
-Shorthand: `e INDEX [n/NAME] [p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)] [e/EMAIL] [a/ADDRESS] [c/POSTALCODE] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)] [e/EMAIL] [a/ADDRESS] [f/FORMCLASS] [g/GRADES] [c/POSTALCODE] [t/TAG]...` +
+Shorthand: `e INDEX [n/NAME] [p/student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)] [e/EMAIL] [a/ADDRESS] [f/FORMCLASS] [g/GRADES] [c/POSTALCODE] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -114,11 +112,11 @@ Shorthand: `e INDEX [n/NAME] [p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)
 
 Examples:
 
-* `edit 1 p/ parent/91234567 e/johndoe@example.com c/309428` +
+* `edit 1 p/parent/91234567 e/johndoe@example.com c/309428` +
 Edits the parent phone number, email address and postal code of the 1st person to be `91234567`, `johndoe@example.com` and `309428` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-* `e 1 p/ student/91234567 parent/91242271 e/johndoe@example.com` +
+* `e 1 p/student/91234567 parent/91242271 e/johndoe@example.com` +
 Edits the student and parent phone number, and email address of the 1st person to be `91234567`, `91242271` and `johndoe@example.com` respectively.
 * `e 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
@@ -196,6 +194,27 @@ Deletes the 1st person in the results of the `find` command.
 * `list` (`list` command) +
 `d 3` (`delete 3` command) +
 Deletes the 3rd person in the address book.
+
+=== Scheduling a person : `schedule` `Since v1.4`
+
+Schedules the person identified by the index number used in the last person listing. +
+Format: `schedule INDEX s/[DATE]` +
+Shorthand: `sche INDEX s/[DATE]`
+
+****
+* Schedules the person at the specified `INDEX` and adds them to the schedule list in the address book.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`schedule 2 s/tomorrow 7pm` +
+Schedules the 2nd person in the address book for tomorrow at 7pm and adds the schedule to the schedule list.
+* `find Betsy` +
+`sche 1 s/25 december 2017 3pm` +
+Schedules the 1st person in the address book on 25 December at 3pm and adds the schedule to the schedule list in the results of the `find` command.
 
 === Selecting a person : `select` `Since v1.0`
 
@@ -369,11 +388,13 @@ Here is a list of shortcuts you can use in cherBook together with some examples.
 | Findtags | `ft` + | `ft KEYWORD [MORE_KEYWORDS]` +
 | List | `l` + | `l` +
 | Help | NA | `help` +
+| Schedule | `sche` + | `sche 1 s/[DATE]` +
 | Select | `s` + | `s INDEX` +
 | Sort | `st` | `st` +
 | History | `h` + | `h` +
 | Undo | `u` + | `u` +
 | Redo | `r` + | `r` +
+| Remark | `rm` + | `rm Index [rm/REMARK]` +
 |=======================================================================
 
 == FAQ
@@ -381,16 +402,38 @@ Here is a list of shortcuts you can use in cherBook together with some examples.
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+*Q*: What happens if I do not input fields that are optional? +
+*A*: A message will appear beside the optional field name in the extended screen, stating that the field is not recorded.
+
 == Glossary
 
 Statistical concepts are explained with examples here:
 
-•  `Percentile` - The percentile indicates that a certain percentage falls below that percentile.
+[[percentile]]
+Percentile
+
+....
+The percentile indicates that a certain percentage falls below that percentile.
 For example, if you score in the 25th percentile, then 25% of test takers are below your score.
 If you score in the 50th percentile, then 50% of test takers are below your score.
 and if you score in the 75th percentile, then 75% of test takers are below your score.
+....
 
-•  `Standard deviation` - Standard deviation is a number used to tell how measurements for a group are spread out from the average (mean), or expected value.
+[[standard-deviation]]
+Standard deviation
+
+....
+Standard deviation is a number used to tell how measurements for a group are spread out from the average (mean), or expected value.
 A low standard deviation means that most of the numbers are very close to the average.
 A high standard deviation means that the numbers are spread out.
+....
 
+[[average]]
+Average
+
+....
+Average is the sum of the numbers divided by how many numbers are being averaged.
+It is also known as the arithmetic mean.
+A low average implies that the class/cohort has underperformed.
+A high average implies that the class/cohort has performed above expectations.
+....
