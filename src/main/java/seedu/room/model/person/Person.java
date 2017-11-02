@@ -109,10 +109,12 @@ public class Person implements ReadOnlyPerson {
         return room.get();
     }
 
+    //@@author shitian007
     @Override
     public ObjectProperty<Picture> pictureProperty() {
         return picture;
     }
+    //@@author
 
     @Override
     public Picture getPicture() {
@@ -149,6 +151,7 @@ public class Person implements ReadOnlyPerson {
         return tags;
     }
 
+    //@@author shitian007
     /**
      * Replaces this person's tags with the tags in the argument tag set.
      */
@@ -163,6 +166,7 @@ public class Person implements ReadOnlyPerson {
     public boolean getHighlightStatus() {
         return this.highlight;
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

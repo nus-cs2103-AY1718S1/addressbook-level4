@@ -167,6 +167,7 @@ public class ModelManager extends ComponentManager implements Model {
         residentBook.removeTag(t);
     }
 
+    //@@author shitian007
     /**
      * Updates the highlight status of a person if tag matches input tag
      */
@@ -175,6 +176,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateResidentBookChanged();
     }
+    //@@author
 
     //=========== Sorting Person List =============================================================
 

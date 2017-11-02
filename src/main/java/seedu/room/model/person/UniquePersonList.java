@@ -57,6 +57,7 @@ public class UniquePersonList implements Iterable<Person> {
         this.sortBy(currentlySortedBy);
     }
 
+    //@@author shitian007
     /**
      * Updates the highlight status of the persons with the specified tag
      */
@@ -71,6 +72,7 @@ public class UniquePersonList implements Iterable<Person> {
             }
         }
     }
+    //@@author
 
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
