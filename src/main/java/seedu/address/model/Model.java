@@ -44,6 +44,8 @@ public interface Model {
     void addRelationship(Index indexFromPerson, Index indexToPerson, RelationshipDirection direction)
         throws IllegalValueException, DuplicateRelationshipException;
 
+    void deleteRelationship(Index indexFromPerson, Index indexToPerson) throws IllegalValueException;
+
     /** Sorts the persons object alphanumerically by name. */
     void sortPersons();
 

@@ -97,6 +97,10 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndDeleted;
     }
 
+    /**
+     * To remove the existence of this relationship completely
+     * As a single relationship is recorded in double-entries under the two persons involved
+     */
     public boolean removeRelationshipFromAddressBook(Relationship relationshipToRemove) {
         ReadOnlyPerson fromPerson = relationshipToRemove.getFromPerson();
         ReadOnlyPerson toPerson = relationshipToRemove.getToPerson();
