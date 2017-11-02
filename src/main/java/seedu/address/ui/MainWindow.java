@@ -13,12 +13,10 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
-import javafx.scene.control.Toggle;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -386,7 +384,7 @@ public class MainWindow extends UiPart<Region> {
     @Subscribe
     public void handleToggleTimetableEvent(ToggleTimetableEvent event) {
         boolean scheduleIsVisible = schedule.visibleProperty().getValue();
-        if(scheduleIsVisible) {
+        if (scheduleIsVisible) {
             hideTimetable();
         } else {
             showTimeTable();
