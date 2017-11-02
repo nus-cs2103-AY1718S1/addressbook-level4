@@ -335,13 +335,14 @@ You can set an appointment to a specific contact at a given index. +
 
 [NOTE]
 Appointment can be set using natural language. +
+If no end time is specified, default appointment time is 1 hour.
 However, please include at least the hour and a day that can be specified.
 
 
-*Format:* `appointment INDEX d/TIME` +
-*Shorthand format:* `appt INDEX d/TIME`
+*Format:* `appointment INDEX d/TIME to TIME` +
+*Shorthand format:* `appt INDEX d/TIME to TIME` +
 
-*Example:*
+*Example:* appt 1 d/5pm to 7pm tomorrow
 
 image::aptexample.png[width="500"]
     Figure 11: Appointment Command Usage Diagram
