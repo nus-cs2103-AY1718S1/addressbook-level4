@@ -13,7 +13,7 @@ plugins {
 }
 
 // Specifies the entry point of the application
-mainClassName = 'seedu.address.MainApp'
+mainClassName = 'seedu.room.MainApp'
 
 allprojects {
     apply plugin: 'idea'
@@ -87,7 +87,7 @@ allprojects {
     }
 
     shadowJar {
-        archiveName = "addressbook.jar"
+        archiveName = "residentbook.jar"
 
         destinationDir = file("${buildDir}/jar/")
     }
@@ -122,8 +122,8 @@ tasks.coveralls {
     onlyIf { System.env.'CI' }
 }
 
-class AddressBookTest extends Test {
-    public AddressBookTest() {
+class ResidentBookTest extends Test {
+    public ResidentBookTest() {
     	  forkEvery = 1
         systemProperty 'testfx.setup.timeout', '60000'
 
@@ -148,10 +148,10 @@ class AddressBookTest extends Test {
     }
 }
 
-task guiTests(type: AddressBookTest) {
+task guiTests(type: ResidentBookTest) {
     include 'guitests/**'
     include 'systemtests/**'
-    include 'seedu/address/ui/**'
+    include 'seedu/room/ui/**'
 
     jacoco {
         destinationFile = new File("${buildDir}/jacoco/test.exec")
@@ -159,9 +159,9 @@ task guiTests(type: AddressBookTest) {
 }
 
 
-task nonGuiTests(type: AddressBookTest) {
-    include 'seedu/address/**'
-    exclude 'seedu/address/ui/**'
+task nonGuiTests(type: ResidentBookTest) {
+    include 'seedu/room/**'
+    exclude 'seedu/room/ui/**'
 
     jacoco {
         destinationFile = new File("${buildDir}/jacoco/test.exec")
@@ -169,7 +169,7 @@ task nonGuiTests(type: AddressBookTest) {
 }
 
 // Test mode depends on whether headless task has been run
-task allTests(type: AddressBookTest) {
+task allTests(type: ResidentBookTest) {
     jacoco {
         destinationFile = new File("${buildDir}/jacoco/test.exec")
     }

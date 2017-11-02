@@ -41,7 +41,7 @@ When running a Gradle task, Gradle will try to figure out if the task needs runn
 == Creating the JAR file
 
 * *`shadowJar`* +
-Creates the `addressbook.jar` file in the `build/jar` folder, _if the current file is outdated_. +
+Creates the `residentbook.jar` file in the `build/jar` folder, _if the current file is outdated_. +
 e.g. `./gradlew shadowJar`
 
 ****
@@ -82,7 +82,7 @@ Runs all tests.
 * **`guiTests`** +
 Runs all tests in the `guitests` package
 * **`nonGuiTests`** +
-Runs all non-GUI tests in the `seedu.address`
+Runs all non-GUI tests in the `seedu.room`
 package
 * **`headless`** +
 Sets the test mode as _headless_. The mode is effective for that Gradle run only so it should be combined with other test tasks.
