@@ -41,4 +41,24 @@ public class Time {
                 || (other instanceof Time) // instanceof handles nulls
                 && (this.time.equals(((Time) other).time)); // state check
     }
+
+    public static String getTimeToString(Integer time) {
+        String toShow;
+        if (time < 1000){
+            toShow = "0" + time;
+        } else {
+            toShow = "" + time;
+        }
+        return toShow;
+    }
+
+    public static Integer IncreaseTimeInteger(Integer time) {
+        if (time % 100 == 30) {
+            time += 70;
+            return time;
+        } else {
+            time += 30;
+            return time;
+        }
+    }
 }
