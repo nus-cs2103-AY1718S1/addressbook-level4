@@ -6,6 +6,7 @@ import seedu.address.commons.events.ui.ShowBrowserEvent;
 import seedu.address.commons.events.ui.ShowMeetingEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+//@@author fongwz
 /**
  * Chooses the display screen mode
  */
