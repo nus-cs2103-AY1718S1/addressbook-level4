@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-//@@author hj2304
 /**
 * sorts the addressbook
  */
@@ -20,4 +19,3 @@ public class SortCommand extends UndoableCommand {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
-//@@author hj2304

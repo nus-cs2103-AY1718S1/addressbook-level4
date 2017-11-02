@@ -128,7 +128,6 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.hashCode();
     }
 
-    //@@author hj2304
     /**
      * Sort based on alphabetical order
      */
@@ -169,7 +168,6 @@ public class UniquePersonList implements Iterable<Person> {
         }
         return checker1;
     }
-    //@@author hj2304
 
     public void addSchedule(Integer toAdd, TreeSet<Integer> timeSpan) {
         internalList.get(toAdd).addSpanToSchedule(timeSpan);

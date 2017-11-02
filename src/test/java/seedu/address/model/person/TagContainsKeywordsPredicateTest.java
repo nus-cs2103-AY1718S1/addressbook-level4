@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import seedu.address.testutil.PersonBuilder;
 
-//@@author hj2304
 public class TagContainsKeywordsPredicateTest {
 
     @Test
@@ -73,4 +72,3 @@ public class TagContainsKeywordsPredicateTest {
         assertFalse(predicate.test(new PersonBuilder().withTags("family").build()));
     }
 }
-//@@author hj2304

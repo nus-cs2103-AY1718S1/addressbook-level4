@@ -139,7 +139,6 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
-    //@@author hj2304
     public void sort() {
         addressBook.sort();
     }
@@ -152,5 +151,4 @@ public class ModelManager extends ComponentManager implements Model {
             indicateAddressBookChanged();
         }
     }
-    //@@author hj2304
 }
