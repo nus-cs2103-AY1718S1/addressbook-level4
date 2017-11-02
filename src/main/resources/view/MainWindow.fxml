@@ -11,8 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 
 <!-- @@author keithsoc -->
+
 <VBox fx:id="rootVBox" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
-    <HBox fx:id="rootHBox">
+    <HBox fx:id="rootHBox" alignment="CENTER_LEFT" minHeight="45" prefHeight="45">
         <MenuBar fx:id="menuBar" HBox.hgrow="ALWAYS">
             <Menu mnemonicParsing="false" text="File">
                 <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
@@ -21,9 +22,9 @@
                 <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
             </Menu>
         </MenuBar>
-        <Button fx:id="minimiseButton" mnemonicParsing="false" />
-        <Button fx:id="maximiseButton" mnemonicParsing="false" />
-        <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleExit" />
+        <Button fx:id="minimiseButton" mnemonicParsing="false" prefHeight="45" prefWidth="60" />
+        <Button fx:id="maximiseButton" mnemonicParsing="false" prefHeight="45" prefWidth="60" />
+        <Button fx:id="closeButton" mnemonicParsing="false" prefHeight="45" prefWidth="60" onAction="#handleExit" />
     </HBox>
     <!-- @@author -->
 

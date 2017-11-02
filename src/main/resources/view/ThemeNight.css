@@ -32,14 +32,14 @@
 
 /* Round Borders */
 
-#rootVBox, #rootHBox {
+#rootVBox {
     -fx-border-radius: 10;
     -fx-background-radius: 10;
 }
 
 #statusBarFooter, #syncStatus, #saveLocationStatus {
     -fx-border-radius: 0 0 10 10;
-    -fx-background-radius: 0 10 10 10;
+    -fx-background-radius: 0 0 10 10;
 }
 
 /* Tab Pane */
@@ -194,7 +194,7 @@
     -fx-text-fill: white;
 }
 
-/* Grid */
+/* Grid Pane used by Status Bar Footer and Command Box */
 
 .grid-pane {
     -fx-background-color: #131411;
@@ -216,14 +216,21 @@
     -fx-text-fill: white;
 }
 
-/* Menu */
+/* HBox containing Menu Bar and Window Buttons */
+
+#rootHBox {
+    -fx-border-radius: 10 10 0 0;
+    -fx-background-radius: 10 10 0 0;
+    -fx-background-color: #d13438;
+
+}
+
+/* Menu Bar */
 
 .menu-bar {
     -fx-background-color: #d13438;
     -fx-border-radius: 10 0 0 0;
     -fx-background-radius: 10 0 0 0;
-    -fx-border-color: #d13438;
-    -fx-border-width: 5px;
 }
 
 .menu-bar .label {
@@ -247,13 +254,10 @@
 /* Button */
 
 .button {
-    -fx-padding: 12 25 12 35;
-    -fx-background-radius: 0;
     -fx-background-color: #d13438;
-    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
-    -fx-font-size: 11pt;
-    -fx-text-fill: #d8d8d8;
-    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 15pt;
+    -fx-text-fill: white;
 }
 
 .button:hover {
