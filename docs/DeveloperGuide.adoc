@@ -478,11 +478,13 @@ where the `PHONE_VALIDATION_REGEX` refers to:
 [source,java]
 ----
 public static final String PHONE_VALIDATION_REGEX =
-"(Student: )(\\d\\d\\d\\d\\d\\d\\d\\d)( Parent: )(\\d\\d\\d\\d\\d\\d\\d\\d)";
+"((Student: )(\d\d\d\d\d\d\d\d)( Parent: )(\d\d\d\d\d\d\d\d))|((Parent: )(\d\d\d\d\d\d\d\d))";
 ----
 The regex ensures that the string for `displayed person card phone information` adheres to the
-correct format of `Student: (STUDENT_NUMBER) Parent: (PARENT_NUMBER)`, and that the
-phone numbers must be exactly 8 digits long.
+correct format of `Student: (STUDENT_NUMBER) Parent: (PARENT_NUMBER)` or `Parent: (PARENT_NUMBER)` as it is optional to
+add the phone number of students.
+
+The phone numbers must be exactly 8 digits long.
 
 image::PhoneDisplay.png[width="400"]
 _Figure 3.3.1 : Valid Displayed Person Card Phone Information_
