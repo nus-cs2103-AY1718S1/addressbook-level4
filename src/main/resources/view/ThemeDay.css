@@ -279,11 +279,11 @@
 /* Dialog */
 
 .dialog-pane {
-    -fx-background-color: #1d1d1d;
+    -fx-background-color: #ffffff;
 }
 
 .dialog-pane > *.button-bar > *.container {
-    -fx-background-color: #1d1d1d;
+    -fx-background-color: #ffffff;
 }
 
 .dialog-pane > *.label.content {
@@ -293,7 +293,7 @@
 }
 
 .dialog-pane:header *.header-panel {
-    -fx-background-color: derive(#1d1d1d, 25%);
+    -fx-background-color: #ffffff;
 }
 
 .dialog-pane:header *.header-panel *.label {
@@ -306,7 +306,7 @@
 /* Scroll Bar */
 
 .scroll-bar {
-    -fx-background-color: transparent;
+    -fx-background-color: #ffffff;
 }
 
 .scroll-bar .thumb {
