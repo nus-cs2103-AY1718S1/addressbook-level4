@@ -1,14 +1,5 @@
 package seedu.address.model.insurance;
 
-import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.ELLE;
-import static seedu.address.testutil.TypicalPersons.FIONA;
-
-import org.junit.Test;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-
 //@@author Juxarius
 public class LifeInsuranceTest {
     /*

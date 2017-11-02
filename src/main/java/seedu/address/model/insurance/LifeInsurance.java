@@ -16,7 +16,6 @@ import javafx.beans.property.StringProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.DateParser;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author OscarWang114
 /**
