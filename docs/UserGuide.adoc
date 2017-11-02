@@ -3,7 +3,6 @@
 :toc-title: Table Of Contents
 :toc-placement: preamble
 :sectnums:
-:pagenums: leader(dotted)
 :imagesDir: images
 :stylesDir: stylesheets````
 :experimental:
@@ -90,6 +89,10 @@ image::MeetingCard3.png[width="200"]
 
 Upon start up of the application, meetings which have already passed the current time of log in will be deleted and no
 longer be shown
+
+=== Loading of Meeting Location in Google Maps
+
+Upon selecting a meeting, the location of meeting will be automatically entered as the destination in Google Maps. The detailed navigational route and directions can be obtained thereafter.
 
 == Commands
 
