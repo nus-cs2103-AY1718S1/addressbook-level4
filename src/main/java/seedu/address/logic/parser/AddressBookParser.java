@@ -116,7 +116,7 @@ public class AddressBookParser {
         }
     }
 
-    
+
     /**
      * Searches the entire list of acceptable command words in each command and returns the enumerated value type.
      * @param commandWord

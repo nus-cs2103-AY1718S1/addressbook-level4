@@ -13,7 +13,9 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.InsurancePanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.PersonNameClickedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -66,6 +68,21 @@ public class PersonListPanel extends UiPart<Region> {
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
+    }
+    //@@author
+
+    //@@author Juxarius
+    @Subscribe
+    private void handleInsurancePanelSelectionChangedEvent(InsurancePanelSelectionChangedEvent event) {
+        personListView.getSelectionModel().clearSelection();
+    }
+
+    @Subscribe
+    private void handlePersonNameClickedEvent(PersonNameClickedEvent event) {
+        PersonCard selected = personListView.getItems().filtered((p) -> {
+            return p.person.getName().toString().equals(event.getPerson().get().getName().toString());
+        }).get(0);
+        personListView.getSelectionModel().select(selected);
     }
     //@@author
 

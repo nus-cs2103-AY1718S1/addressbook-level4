@@ -29,7 +29,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class ProfilePanel extends UiPart<Region> {
 
-    public static final String DEFAULT_MESSAGE = "Ain't Nobody here but us chickens!";
+    public static final String DEFAULT_MESSAGE = "Welcome to LISA!";
     public static final String INSURANCE_LIST_HEADER = "List of Insurance Contracts Involved: ";
     public static final String NO_INSURANCE_MESSAGE = "This person is not related to any Insurance Contracts";
     public static final String PERSON_DOES_NOT_EXIST_MESSAGE = "This person does not exist in Lisa.";

@@ -75,6 +75,7 @@
         <entry>
             <key>ea91ce18-4a4f-415a-a688-62621c241108</key>
             <value>
+                <insuranceName>Cheap Contract for peasants</insuranceName>
                 <owner>Alex Yeoh</owner>
                 <insured>Another person not in Lisa</insured>
                 <beneficiary>Bernice Yu</beneficiary>
@@ -87,6 +88,7 @@
         <entry>
             <key>067e6162-3b6f-4ae2-a171-2470b63dff00</key>
             <value>
+                <insuranceName>Normal contract for commoners</insuranceName>
                 <owner>Alex Yeoh</owner>
                 <insured>Bernice Yu</insured>
                 <beneficiary>Charlotte Oliveiro</beneficiary>
@@ -99,6 +101,7 @@
         <entry>
             <key>a5d63bc4-a975-4994-bb19-d73f8dfc8f97</key>
             <value>
+                <insuranceName>Normal contract for commoners</insuranceName>
                 <owner>Oscar</owner>
                 <insured>Oscar</insured>
                 <beneficiary>David Li</beneficiary>
@@ -111,6 +114,7 @@
         <entry>
             <key>ce003136-c8e2-4cdd-ae2d-860d203a9aa1</key>
             <value>
+                <insuranceName>Expensive Contract for Royalties</insuranceName>
                 <owner>A person not In Lisa</owner>
                 <insured>Roy Balakrishnan</insured>
                 <beneficiary>Mary Jane</beneficiary>
@@ -123,6 +127,7 @@
         <entry>
             <key>c77ca792-fbe9-44bc-b43b-f0423d0e1fc8</key>
             <value>
+                <insuranceName>Prudential Savings Plan</insuranceName>
                 <owner>Alex Yeoh</owner>
                 <insured>Oscar</insured>
                 <beneficiary>Oscar</beneficiary>
@@ -135,6 +140,7 @@
         <entry>
             <key>ad4dc852-e6bb-44e9-800e-fa8a8964e7f1</key>
             <value>
+                <insuranceName>AXA Savings plan</insuranceName>
                 <owner>Oscar</owner>
                 <insured>Oscar</insured>
                 <beneficiary>Oscar</beneficiary>
