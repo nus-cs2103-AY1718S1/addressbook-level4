@@ -39,7 +39,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
-.  Refer to the link:#command summary[Command Summary] section below for summary of each command.
+.  Refer to the link:#command[Command Summary] section below for summary of each command.
 
 == Features
 
