@@ -109,6 +109,21 @@ public class LogicManager extends ComponentManager implements Logic {
             return false;
         }
     }
+
+    /**
+     * Setter method for username
+     */
+    private void setDefaultUsername() {
+        model.getUserPrefs().setDefaultUsername("admin");
+    }
+
+    /**
+     * Setter method for password
+     */
+    private void setDefaultPassword() {
+        model.getUserPrefs().setDefaultPassword("8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918");
+    }
+
     //@@author
 
     @Override
