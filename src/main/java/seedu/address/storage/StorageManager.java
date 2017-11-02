@@ -128,8 +128,8 @@ public class StorageManager extends ComponentManager implements Storage {
     @Override
     @Subscribe
     public void handlePersonChangedEvent(PersonChangedEvent event) {
-        if (event.type == PersonChangedEvent.ChangeType.ADD ||
-                event.type == PersonChangedEvent.ChangeType.EDIT) {
+        if (event.type == PersonChangedEvent.ChangeType.ADD
+                || event.type == PersonChangedEvent.ChangeType.EDIT) {
             downloadProfilePhoto(event.person, event.prefs.getDefaultProfilePhoto());
         }
     }
