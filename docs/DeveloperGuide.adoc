@@ -487,14 +487,14 @@ add the phone number of students.
 The phone numbers must be exactly 8 digits long.
 
 image::PhoneDisplay.png[width="400"]
-_Figure 3.3.1 : Valid Displayed Person Card Phone Information_
+_Figure 4.3.1 : Valid Displayed Person Card Phone Information_
 
 If the string format for `displayed person card phone information` is valid, the
 phone contact information of the student and his/her parent will be displayed
 below the student's name in the person card as seen in the figure above.
 
 image::message_constraint.png[width="1100"]
-_Figure 3.3.2 : Message to prompt Users to Enter Correct Phone Format_
+_Figure 4.3.2 : Message to prompt Users to Enter Correct Phone Format_
 
 If the string format for `displayed person card phone information` is invalid, an IllegalValueException
 is thrown. The user will be prompted to follow the accepted format as seen in the figure above.
@@ -531,6 +531,82 @@ public Phone(String phone) throws IllegalValueException {
 **Pros:** Able to have phone numbers that are local or non-local. +
 **Cons:** Inconsistent phone lengths displayed, might look very messy. +
 // end::studentparentcontact[]
+
+// tag::uniquetagcolor[]
+=== Add unique color tag mechanism
+
+The unique tag mechanism is facilitated by making changes to PersonCard class in the UI component. This feature enables
+the assignment of unique colors to tags.
+
+The color generated to be assigned to tags is random and all tags with the same description will be assigned a same color.
+
+The following method receives tagName (description of the tag) as a String input and returns a HashMap
+containing the String tagName and String assignedColor (color assigned to the tag).
+
+----
+public static String obtainTagColors(String tagName) {
+        if (!currentTagColors.containsKey(tagName)) {
+            do {
+                Random random = new Random();
+                final float hue = random.nextFloat();
+                final float saturation = 0.65f + random.nextFloat()
+                        * (0.90f - 0.65f);
+                final float luminance = 0.60f + random.nextFloat()
+                        * (0.90f - 0.60f);
+
+                Color color = Color.getHSBColor(hue, saturation, luminance);
+
+                Formatter hexRepresentation = new Formatter(new StringBuffer("#"));
+                hexRepresentation.format("%02X", color.getRed());
+                hexRepresentation.format("%02X", color.getGreen());
+                hexRepresentation.format("%02X", color.getBlue());
+                assignedColor = hexRepresentation.toString();
+            } while (usedColors.contains(assignedColor));
+
+            usedColors.add(assignedColor);
+            currentTagColors.put(tagName, assignedColor);
+        }
+        return currentTagColors.get(tagName);
+    }
+----
+
+The section below explains how various parts of the above code segment works.
+
+A color is determined by three factors, hue, saturation and luminance. The code segment shown below randomises the value of each of the three factors,
+and a random color are obtained as a result.
+
+----
+Random random = new Random();
+
+final float hue = random.nextFloat();
+final float saturation = 0.65f + random.nextFloat() * (0.90f - 0.65f);
+final float luminance = 0.60f + random.nextFloat() * (0.90f - 0.60f);
+
+Color color = Color.getHSBColor(hue, saturation, luminance);
+----
+
+[NOTE]
+Random range of saturation and luminance are specified to ensure that the random color generated will always mesh well with the white font of
+the tag description. This can be seen in the picture below.
+
+image::tagColorPic.png[width="400"]
+_Figure 4.4.1 : Valid Displayed Person Card Phone Information_
+
+Next, in the code segment below, the red, green and blue components are extracted from color. It is then formatted into a hexadecimal
+representation of the color, before being converted to a String data type and assigned to assignedColor.
+
+----
+Formatter hexRepresentation = new Formatter(new StringBuffer("#"));
+hexRepresentation.format("%02X", color.getRed());
+hexRepresentation.format("%02X", color.getGreen());
+hexRepresentation.format("%02X", color.getBlue());
+assignedColor = hexRepresentation.toString();
+----
+
+Lastly, the assignedColor is added into an ArrayList<String> usedColors. This ensures no same colors will be assigned
+to a tag with different description in subsequent iterations by randomising a different color again should a same color is
+generated.
+// end::uniquetagcolor[]
 
 // tag::remark[]
 === Add/Remove a remark mechanism
