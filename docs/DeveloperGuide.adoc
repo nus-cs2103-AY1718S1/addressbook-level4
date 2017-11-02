@@ -540,8 +540,8 @@ the assignment of unique colors to tags.
 
 The color generated to be assigned to tags is random and all tags with the same description will be assigned a same color.
 
-The following method receives tagName (description of the tag) as a String input and returns a HashMap
-containing the String tagName and String assignedColor (color assigned to the tag).
+The following method receives `String tagName` (description of the tag) and returns a `HashMap`
+containing the `String tagName` and `String assignedColor` (color assigned to the tag).
 
 ----
 public static String obtainTagColors(String tagName) {
@@ -572,8 +572,8 @@ public static String obtainTagColors(String tagName) {
 
 The section below explains how various parts of the above code segment works.
 
-A color is determined by three factors, hue, saturation and luminance. The code segment shown below randomises the value of each of the three factors,
-and a random color are obtained as a result.
+A color is determined by three factors, `hue`, `saturation` and `luminance`. The code segment shown below randomises the value of each of the three factors,
+and a random `color` are obtained as a result.
 
 ----
 Random random = new Random();
@@ -590,10 +590,10 @@ Random range of saturation and luminance are specified to ensure that the random
 the tag description. This can be seen in the picture below.
 
 image::tagColorPic.png[width="400"]
-_Figure 4.4.1 : Valid Displayed Person Card Phone Information_
+_Figure 4.4.1 : Tag color meshes well with white font of tag description_
 
-Next, in the code segment below, the red, green and blue components are extracted from color. It is then formatted into a hexadecimal
-representation of the color, before being converted to a String data type and assigned to assignedColor.
+Next, in the code segment below, the `red`, `green` and `blue` components are extracted from `color`. It is then formatted into a `hexadecimal
+representation` of the color, before being converted to a String data type and assigned to `assignedColor`.
 
 ----
 Formatter hexRepresentation = new Formatter(new StringBuffer("#"));
@@ -603,7 +603,7 @@ hexRepresentation.format("%02X", color.getBlue());
 assignedColor = hexRepresentation.toString();
 ----
 
-Lastly, the assignedColor is added into an ArrayList<String> usedColors. This ensures no same colors will be assigned
+Lastly, the assignedColor is added into an `ArrayList<String> usedColors`. This ensures no same colors will be assigned
 to a tag with different description in subsequent iterations by randomising a different color again should a same color is
 generated.
 // end::uniquetagcolor[]
