@@ -32,6 +32,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setMrt(person.getMrt());
         descriptor.setTags(person.getTags());
     }
 
@@ -82,6 +83,20 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
+
+    //@@author hj2304
+    /**
+     * Sets the {@code Mrt} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withMrt(String mrt) {
+        try {
+            ParserUtil.parseMrt(Optional.of(mrt)).ifPresent(descriptor::setMrt);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("Mrt is expected to be different.");
+        }
+        return this;
+    }
+    //@@author
 
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
