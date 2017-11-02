@@ -61,7 +61,7 @@ To perform actions in KayPoh!, you will need to type a command into the command 
 .User interface with command box highlighted in blue
 image::command-box.png[width="790"]
 
-=== Command syntax
+=== Breaking down the command syntax
 Commands have the following format: `[red]#COMMAND_WORD# [blue]#-OPTION# [green]#PARAMETERS#` +
 
 * The [red]`COMMAND_WORD` is the first word in the command
@@ -77,27 +77,6 @@ Commands have the following format: `[red]#COMMAND_WORD# [blue]#-OPTION# [green]
 Example:
 
 * `[red]#find# [blue]#-tag# [green]#friends#` can be understood as "[red]#find contacts# [blue]#with the tag# [green]#friends#"
-
-=== Understanding command formats
-In this user guide, you will find information about how commands are to be used explained in the form of *command formats*.
-
-These *command formats* will tell you what the [red]`COMMAND_WORD` for the command is, whether [blue]`OPTIONS` are available for the command,
-and what [green]`PARAMETERS` you need to provide the command with.
-
-[NOTE]
-====
-* Parameters in *square brackets* are optional
-* Parameters followed by an ellipsis `...` can be repeated multiple times
-* Parameters can be in any order
-====
-
-Example:
-
-* `[red]#delete# [blue]#[-OPTION]# [green]#INDEX [ADDITIONAL_INDEXES]...#` means that:
-** The [red]`COMMAND_WORD` is `delete`
-** An [blue]`OPTION` can be specified, but it is optional
-** An [green]`INDEX` must be entered
-** Multiple [green]`ADDITIONAL_INDEXES` can be entered, but are optional
 
 === Representing a person as a parameter
 
@@ -145,118 +124,27 @@ represents a person with:
 
 == Features
 
+=== Understanding command formats
+In this user guide, you will find information about how commands are to be used explained in the form of *command formats*.
+
+These *command formats* will tell you what the [red]`COMMAND_WORD` for the command is, whether [blue]`OPTIONS` are available for the command,
+and what [green]`PARAMETERS` you need to provide the command with.
+
+[NOTE]
 ====
-*Command Format*
-
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-* Some commands provide `OPTIONS` to specify how the command should operate.
-`OPTIONS` should be entered after the command word, and should prefixed with a dash `-`
-(e.g. `find -tag`).
-* Some common commands have a shorter *alias*, which can be used in place of the full command word
-(e.g. `d` can be used in place of `delete`).
+* Parameters in *square brackets* are optional
+* Parameters followed by an ellipsis `...` can be repeated multiple times
+* Parameters can be in any order
+* Some commands have an alternative shorter alias that can be used in place of the [red]`COMMAND_WORD`
 ====
-
-=== Navigating KayPoh!
-
-==== Listing persons: `list`
-
-Shows a specific list of persons based on user's specified option. +
-Format: `list [OPTION]` +
-Alias: `l`
-
-Options: +
-
-* Default (no option specified) +
-Shows a list of all persons in the address book. +
-* `fav` [Since v1.3] +
-Shows a list of all favorite persons in the address book.
 
 Example:
 
-* `list`
-* `list -fav` [Since v1.3] +
-
-==== Selecting a person: `select`
-
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX [SOCIAL_TYPE]` +
-Alias: `s`
-
-****
-* When a person is selected, one of his associated social media feeds will be displayed in the browser.
-* If a `SOCIAL_TYPE` is specified, that social media feed will be displayed. More information about representing social media types can be found in the <<social-media-integrations, Social Media Integrations>> section.
-* If no `SOCIAL_TYPE` is specified, an associated social media feed will be displayed, in the following order:
-** Instagram (if present)
-** Facebook (if present)
-** Google search of the person's name
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book, and displays a social media feed in the browser.
-* `find Betsy` +
-`select 1 facebook` +
-Selects the 1st person in the results of the `find` command, and displays her Facebook feed in the browser.
-
-[[find-by-tag]]
-==== Finding persons: `find`
-
-Finds and displays a list of persons based on user's specified option. +
-Format `find [OPTION] KEYWORD [MORE_KEYWORDS]...` +
-Alias: `f`
-
-Options: +
-
-* Default (no option specified) +
-Finds persons whose name contain any of the given keywords. +
-* `tag` [Since v1.3] +
-Finds persons who are associated with any of the given tags. +
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `find John` +
-Shows a list of persons with the names `john` and `John Doe`.
-* `find Betsy Tim John` +
-Shows a list of persons with names `Betsy`, `Tim`, or `John`.
-* `find -tag friends colleagues` +
-Shows a list of persons with tags `friends` or `colleagues`.
-
-==== Sorting the displayed list [Since v1.4]: `sort`
-
-Sorts the list of persons in the last displayed listing. +
-Format: `sort [OPTION]` +
-
-Options: +
-
-* Default (no option specified) +
-Sorts persons first based on their favorite status, then by their name in alphabetical order.
-* `name` +
-Sorts persons by their name in alphabetical order.
-* `recent` [Coming in v2.0] +
-Sorts persons by how recently they were last added, edited, or selected.
-
-Examples:
-
-* `list` +
-`sort` +
-lists all person in the address book, sorted first based on their favorite status, then by their name in alphabetical order.
-* `find bob` +
-`sort -recent` +
-lists all the person that contain the keyword `bob`, sorted based on when they were last accessed.
+* `[red]#delete# [blue]#[-OPTION]# [green]#INDEX [ADDITIONAL_INDEXES]...#` means that:
+** The [red]`COMMAND_WORD` is `delete`
+** An [blue]`OPTION` can be specified, but it is optional
+** An [green]`INDEX` must be entered
+** Multiple [green]`ADDITIONAL_INDEXES` can be entered, but are optional
 
 === Managing Contacts
 
@@ -439,6 +327,107 @@ Deletes all persons with the tags `school` or `work`
 
 Clears all entries from the address book. +
 Format: `clear`
+
+
+=== Navigating KayPoh!
+
+==== Listing persons: `list`
+
+Shows a specific list of persons based on user's specified option. +
+Format: `list [OPTION]` +
+Alias: `l`
+
+Options: +
+
+* Default (no option specified) +
+Shows a list of all persons in the address book. +
+* `fav` [Since v1.3] +
+Shows a list of all favorite persons in the address book.
+
+Example:
+
+* `list`
+* `list -fav` [Since v1.3] +
+
+==== Selecting a person: `select`
+
+Selects the person identified by the index number used in the last person listing. +
+Format: `select INDEX [SOCIAL_TYPE]` +
+Alias: `s`
+
+****
+* When a person is selected, one of his associated social media feeds will be displayed in the browser.
+* If a `SOCIAL_TYPE` is specified, that social media feed will be displayed. More information about representing social media types can be found in the <<social-media-integrations, Social Media Integrations>> section.
+* If no `SOCIAL_TYPE` is specified, an associated social media feed will be displayed, in the following order:
+** Instagram (if present)
+** Facebook (if present)
+** Google search of the person's name
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2nd person in the address book, and displays a social media feed in the browser.
+* `find Betsy` +
+`select 1 facebook` +
+Selects the 1st person in the results of the `find` command, and displays her Facebook feed in the browser.
+
+[[find-by-tag]]
+==== Finding persons: `find`
+
+Finds and displays a list of persons based on user's specified option. +
+Format `find [OPTION] KEYWORD [MORE_KEYWORDS]...` +
+Alias: `f`
+
+Options: +
+
+* Default (no option specified) +
+Finds persons whose name contain any of the given keywords. +
+* `tag` [Since v1.3] +
+Finds persons who are associated with any of the given tags. +
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+* `find John` +
+Shows a list of persons with the names `john` and `John Doe`.
+* `find Betsy Tim John` +
+Shows a list of persons with names `Betsy`, `Tim`, or `John`.
+* `find -tag friends colleagues` +
+Shows a list of persons with tags `friends` or `colleagues`.
+
+==== Sorting the displayed list [Since v1.4]: `sort`
+
+Sorts the list of persons in the last displayed listing. +
+Format: `sort [OPTION]` +
+
+Options: +
+
+* Default (no option specified) +
+Sorts persons first based on their favorite status, then by their name in alphabetical order.
+* `name` +
+Sorts persons by their name in alphabetical order.
+* `recent` [Coming in v2.0] +
+Sorts persons by how recently they were last added, edited, or selected.
+
+Examples:
+
+* `list` +
+`sort` +
+lists all person in the address book, sorted first based on their favorite status, then by their name in alphabetical order.
+* `find bob` +
+`sort -recent` +
+lists all the person that contain the keyword `bob`, sorted based on when they were last accessed.
+
 
 [[social-media-integrations]]
 === Social Media Integrations [Since v1.2]
