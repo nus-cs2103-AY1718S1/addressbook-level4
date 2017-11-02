@@ -44,9 +44,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            //@@author hj2304
             + "[" + PREFIX_MRT + "MRT] "
-            //@@author hj2304
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -105,9 +103,7 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        //@@author hj2304
         Mrt updatedMrt = editPersonDescriptor.getMrt().orElse(personToEdit.getMrt());
-        //@@author hj2304
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedMrt, updatedTags);
@@ -152,9 +148,7 @@ public class EditCommand extends UndoableCommand {
             this.phone = toCopy.phone;
             this.email = toCopy.email;
             this.address = toCopy.address;
-            //@@author hj2304
             this.mrt = toCopy.mrt;
-            //@@author hj2304
             this.tags = toCopy.tags;
         }
 
@@ -235,9 +229,7 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
-                    //@@author hj2304
                     && getMrt().equals(e.getMrt())
-                    //@@author hj2304
                     && getTags().equals(e.getTags());
         }
     }

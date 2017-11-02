@@ -40,9 +40,7 @@ public class Person implements ReadOnlyPerson {
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
-        //@@author hj2304
         this.mrt = new SimpleObjectProperty<>(mrt);
-        //@@author hj2304
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         initiateSchedule();
