@@ -88,7 +88,7 @@ Cornelia wants his parcel to be delivered to 10th Street Singapore 123114. +
 === More About Parcel List Panel
 
 image::ParcelCard.png[width="890"]
-_Figure 4.1.1 : Labelled Parcel Card_
+_Figure 4.2.1 : Labelled Parcel Card_
 
 1. *Parcel Index* - This is the index number of the parcel in the displayed list.
 2. *Name* - This is the name of the recipient of the parcel.
