@@ -64,10 +64,10 @@ public class PersonCardTest extends GuiUnitTest {
         Person personWithTags = new PersonBuilder().build();
         PersonCard personCard = new PersonCard(personWithTags, 2);
 
-        //Check if assigned tag color is added into the Arraylist of usedColors after being assigned to a tag.
+        //Check if assigned tag color is added into the Arraylist of usedColors to ensure that
+        //colors are unique after being assigned to a tag.
         assertTrue(personCard.getUsedColor().contains(personCard.getAssignedTagColor()));
     }
-    //@@author
 
     @Test
     public void equals() {
