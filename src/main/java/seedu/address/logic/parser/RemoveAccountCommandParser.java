@@ -24,12 +24,14 @@ public class RemoveAccountCommandParser implements Parser<RemoveAccountCommand> 
         try {
             String[] commandTokenized = args.split(" ");
             if (commandTokenized.length != 3) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveAccountCommand.MESSAGE_USAGE));
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        RemoveAccountCommand.MESSAGE_USAGE));
             } else {
                 return new RemoveAccountCommand(commandTokenized[1], commandTokenized[2]);
             }
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePasswordCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ChangePasswordCommand.MESSAGE_USAGE));
         }
     }
 }
