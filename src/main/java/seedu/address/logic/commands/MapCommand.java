@@ -15,7 +15,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class MapCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "map";
-    public static final String COMMAND_ALIAS ="m";
+    public static final String COMMAND_ALIAS = "m";
 
     public static final String MESSAGE_TEMPLATE = COMMAND_WORD + " INDEX";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows the address of person on Google Maps "
