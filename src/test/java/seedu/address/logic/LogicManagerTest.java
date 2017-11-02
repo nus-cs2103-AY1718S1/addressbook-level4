@@ -13,9 +13,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.CreateDefaultAccountCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SortCommand;
-import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
@@ -51,6 +49,7 @@ public class LogicManagerTest {
         assertHistoryCorrect(listCommand);
     }
 
+    //@@author derickjw
     @Test
     public void execute_listCommandSuccess_noDefaultAccount() {
         String listCommand = ListCommand.COMMAND_WORD;
@@ -74,6 +73,7 @@ public class LogicManagerTest {
         assertCommandSuccess(createDefaultAccountCommand, CreateDefaultAccountCommand.MESSAGE_CREATE_SUCCESS, model);
         assertCommandSuccess(sortCommand, SortCommand.MESSAGE_SUCCESS, model);
     }
+    //@@author
 
     @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
