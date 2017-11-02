@@ -1,22 +1,14 @@
 package seedu.address.ui;
 
-import static seedu.address.commons.util.FileUtil.isFileExists;
-
-import java.awt.Desktop;
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
-import javafx.stage.FileChooser;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.InsurancePanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.PersonNameClickedEvent;
@@ -150,7 +142,7 @@ public class InsuranceProfile extends UiPart<Region> {
     }
 
     //@@author Juxarius
-    private void setPremiumLevel(Double premium){
+    private void setPremiumLevel(Double premium) {
         if (premium > 500.0) {
             insuranceName.getStyleClass().add("gold-insurance-header");
             index.getStyleClass().add("gold-insurance-header");

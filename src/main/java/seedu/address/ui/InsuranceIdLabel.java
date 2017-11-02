@@ -32,7 +32,7 @@ public class InsuranceIdLabel extends UiPart<Region> {
     }
 
     //@@author Juxarius
-    private void setPremiumLevel(Double premium){
+    private void setPremiumLevel(Double premium) {
         if (premium > 500.0) {
             insuranceId.getStyleClass().add("gold-insurance-header");
         } else if (premium > 100.0) {
