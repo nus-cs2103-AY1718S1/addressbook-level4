@@ -19,10 +19,13 @@
             <Insets left="60.0" />
          </StackPane.margin>
       </Label>
-      <Label fx:id="daysLeft" text="\\$daysLeft" styleClass="window_small_label" StackPane.alignment="CENTER_LEFT">
+      <Label fx:id="repaymentInfo" text="\\$repaymentInfo" StackPane.alignment="CENTER_LEFT">
          <StackPane.margin>
             <Insets left="170.0" />
          </StackPane.margin>
+         <font>
+            <Font size="8.0" />
+         </font>
       </Label>
    </children>
 </StackPane>
