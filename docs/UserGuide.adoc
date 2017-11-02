@@ -349,7 +349,7 @@ image::ui_import.png[width="400"]
 
 === Remove all Tags with specified name : `rm` (Since v1.3)
 
-This function is useful to remove all deprecated tags. For example, when all residents have moved in, all the tags can be removed as "Pending".
+This function is useful to remove all deprecated tags. For example, when all residents have moved in, all the tags can be removed as "Pending". +
 Format: rm TAG_NAME
 
 ****

@@ -541,7 +541,7 @@ public RemoveTagCommand(String tagName) {
 
 [NOTE]
 If the tagName is invalid, there will be no exception raised or handled as a removal of invalid tagName essentially does not change the address book.
-=======
+
 === Delete persons by tag
 
 This command is implemented to enable the deletion of persons who have a particular tag.
