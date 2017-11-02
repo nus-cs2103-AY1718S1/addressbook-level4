@@ -176,20 +176,17 @@ public class ParserUtilTest {
         ParserUtil.parseGrades(null);
     }
 
-    //@@author lincredibleJC
     @Test
     public void parseGrades_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
         ParserUtil.parseGrades(Optional.of(INVALID_GRADES));
     }
 
-    //@@author lincredibleJC
     @Test
     public void parseGrades_optionalEmpty_returnsOptionalEmpty() throws Exception {
         assertFalse(ParserUtil.parseGrades(Optional.empty()).isPresent());
     }
 
-    //@@author lincredibleJC
     @Test
     public void parseGrades_validValue_returnsGrade() throws Exception {
         Grades expectedGrades = new Grades(VALID_GRADES);
@@ -197,6 +194,7 @@ public class ParserUtilTest {
 
         assertEquals(expectedGrades, actualGrades.get());
     }
+    //@@author
 
     @Test
     public void parseRemark_null_throwsNullPointerException() throws Exception {
