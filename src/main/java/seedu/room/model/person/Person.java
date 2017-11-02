@@ -226,7 +226,6 @@ public class Person implements ReadOnlyPerson {
         } else {
             return firstField.compareTo(secondField);
         }
-
     }
 
 }

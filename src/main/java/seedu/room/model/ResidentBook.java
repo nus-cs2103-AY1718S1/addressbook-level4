@@ -174,7 +174,7 @@ public class ResidentBook implements ReadOnlyResidentBook {
     }
 
     /**
-     * Removes {@code tag} from this {@code AddressBook}.
+     * Removes {@code tag} from this {@code ResidentBook}.
      */
     public void removeTag(Tag t) throws TagNotFoundException {
         boolean isExist = false;
@@ -192,8 +192,6 @@ public class ResidentBook implements ReadOnlyResidentBook {
 
     }
 
-
-    //// sort address book
     /** Updates highlight status of person with specified tag
      */
     public void updateHighlight(String highlightTag) {
@@ -248,7 +246,6 @@ public class ResidentBook implements ReadOnlyResidentBook {
     public UniquePersonList getUniquePersonList() {
         return persons;
     }
-
 
     @Override
     public ObservableList<Tag> getTagList() {
