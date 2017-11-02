@@ -485,7 +485,7 @@ public class FindEmailCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        return new CommandResult(getMessageForEmailListShownSummary(model.getFilteredPersonList().size()));
     }
 
     @Override
@@ -524,7 +524,7 @@ public class FindPhoneCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        return new CommandResult(getMessageForPhoneListShownSummary(model.getFilteredPersonList().size()));
     }
 
     @Override
@@ -532,6 +532,45 @@ public class FindPhoneCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof FindPhoneCommand // instanceof handles nulls
                 && this.predicate.equals(((FindPhoneCommand) other).predicate)); // state check
+    }
+}
+```
+###### \java\seedu\address\logic\commands\FindPriorityCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import seedu.address.model.reminder.PriorityContainsKeywordsPredicate;
+
+/**
+ * Finds and lists all reminders in address book whose priority contains any of the argument keywords.
+ * Keyword matching is case sensitive.
+ */
+public class FindPriorityCommand extends Command {
+
+    public static final String COMMAND_WORD = "findPriority";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all reminders whose priority contain any of "
+            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
+            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
+            + "Example: " + COMMAND_WORD + " High Medium ";
+
+    private final PriorityContainsKeywordsPredicate predicate;
+
+    public FindPriorityCommand(PriorityContainsKeywordsPredicate predicate) {
+        this.predicate = predicate;
+    }
+
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredReminderList(predicate);
+        return new CommandResult(getMessageForPriorityListShownSummary(model.getFilteredReminderList().size()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FindPriorityCommand // instanceof handles nulls
+                && this.predicate.equals(((FindPriorityCommand) other).predicate)); // state check
     }
 }
 ```
@@ -563,7 +602,7 @@ public class FindReminderCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredReminderList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredReminderList().size()));
+        return new CommandResult(getMessageForReminderListShownSummary(model.getFilteredReminderList().size()));
     }
 
     @Override
@@ -1058,6 +1097,42 @@ public class FindPhoneCommandParser implements Parser<FindPhoneCommand> {
 
 }
 ```
+###### \java\seedu\address\logic\parser\FindPriorityCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import java.util.Arrays;
+
+import seedu.address.logic.commands.FindPriorityCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.reminder.PriorityContainsKeywordsPredicate;
+
+/**
+ * Parses input arguments and creates a new FindPriorityCommand object
+ */
+public class FindPriorityCommandParser implements Parser<FindPriorityCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the FindPriorityCommand
+     * and returns an FindPriorityCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public FindPriorityCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindPriorityCommand.MESSAGE_USAGE));
+        }
+
+        String[] priorityKeywords = trimmedArgs.split("\\s+");
+
+        return new FindPriorityCommand(new PriorityContainsKeywordsPredicate(Arrays.asList(priorityKeywords)));
+    }
+
+}
+```
 ###### \java\seedu\address\logic\parser\FindReminderCommandParser.java
 ``` java
 package seedu.address.logic.parser;
@@ -1359,6 +1434,40 @@ public class PriorityComparator implements Comparator<ReadOnlyReminder> {
             return newSecondPrior.compareTo(newFirstPrior);
         }
     }
+}
+```
+###### \java\seedu\address\model\reminder\PriorityContainsKeywordsPredicate.java
+``` java
+package seedu.address.model.reminder;
+
+import java.util.List;
+import java.util.function.Predicate;
+
+import seedu.address.commons.util.StringUtil;
+
+/**
+ * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
+ */
+public class PriorityContainsKeywordsPredicate implements Predicate<ReadOnlyReminder> {
+    private final List<String> keywords;
+
+    public PriorityContainsKeywordsPredicate(List<String> keywords) {
+        this.keywords = keywords;
+    }
+
+    @Override
+    public boolean test(ReadOnlyReminder reminder) {
+        return keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(reminder.getPriority().value, keyword));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof PriorityContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((PriorityContainsKeywordsPredicate) other).keywords)); // state check
+    }
+
 }
 ```
 ###### \java\seedu\address\model\reminder\TaskContainsKeywordsPredicate.java
