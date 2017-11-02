@@ -141,6 +141,22 @@ public class PersonPanel extends UiPart<Region> {
         }
     }
 
+    /**
+     * Handler for deleting a person's image
+     */
+    @FXML
+    private void handleDeleteImage() {
+        try {
+            person.getPicture().resetPictureUrl();
+            File picFile = new File(person.getPicture().getPictureUrl());
+            FileInputStream fileStream = new FileInputStream(picFile);
+            Image personPicture = new Image(fileStream);
+            picture.setImage(personPicture);
+        } catch (Exception e) {
+            System.out.println("Placeholder Image not found");
+        }
+    }
+
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
