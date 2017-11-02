@@ -6,7 +6,6 @@
         <email>johndoe@example.com</email>
         <address>Blk 30 Geylang Street 29, #06-40</address>
         <dob>27 Jul 1986</dob>
-        <lifeInsuranceId>067e6162-3b6f-4ae2-a171-2470b63dff00</lifeInsuranceId>
     </persons>
     <persons>
         <name>Bernice Yu</name>
@@ -16,7 +15,6 @@
         <dob>28 Jan 1997</dob>
         <tagged>colleagues</tagged>
         <tagged>friends</tagged>
-        <lifeInsuranceId>067e6162-3b6f-4ae2-a171-2470b63dff00</lifeInsuranceId>
     </persons>
     <persons>
         <name>Charlotte Oliveiro</name>
@@ -25,7 +23,6 @@
         <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
         <dob>29 Jan 1997</dob>
         <tagged>neighbours</tagged>
-        <lifeInsuranceId>067e6162-3b6f-4ae2-a171-2470b63dff00</lifeInsuranceId>
     </persons>
     <persons>
         <name>David Li</name>
@@ -34,6 +31,7 @@
         <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
         <dob>30 Jan 1997</dob>
         <tagged>family</tagged>
+        <lifeInsuranceId>a5d63bc4-a975-4994-bb19-d73f8dfc8f97</lifeInsuranceId>
     </persons>
     <persons>
         <name>Irfan Ibrahim</name>
@@ -84,6 +82,18 @@
                 <insured>Bernice Yu</insured>
                 <beneficiary>Charlotte Oliveiro</beneficiary>
                 <premium>100.0</premium>
+                <contractPath>contract.pdf</contractPath>
+                <signingDate>01 Nov 2017</signingDate>
+                <expiryDate>01 Nov 2018</expiryDate>
+            </value>
+        </entry>
+        <entry>
+            <key>a5d63bc4-a975-4994-bb19-d73f8dfc8f97</key>
+            <value>
+                <owner>Oscar</owner>
+                <insured>Oscar</insured>
+                <beneficiary>David Li</beneficiary>
+                <premium>1000.0</premium>
                 <contractPath>contract.pdf</contractPath>
                 <signingDate>01 Nov 2017</signingDate>
                 <expiryDate>01 Nov 2018</expiryDate>
