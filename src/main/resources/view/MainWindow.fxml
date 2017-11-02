@@ -170,7 +170,7 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" text="add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/tag]" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <TextField alignment="CENTER" editable="false" text="add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [t/tag]" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="20.0" />
                      </font>
