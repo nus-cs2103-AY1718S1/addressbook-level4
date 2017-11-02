@@ -540,8 +540,8 @@ the assignment of unique colors to tags.
 
 The color generated to be assigned to tags is random and all tags with the same description will be assigned a same color.
 
-The following method receives `String tagName` (description of the tag) and returns a `HashMap`
-containing the `String tagName` and `String assignedColor` (color assigned to the tag).
+The following method receives `String tagName` (description of the tag) and returns the `String assignedColor`
+associated to the tagName.
 
 ----
 public static String obtainTagColors(String tagName) {
@@ -594,6 +594,8 @@ _Figure 4.4.1 : Tag color meshes well with white font of tag description_
 
 Next, in the code segment below, the `red`, `green` and `blue` components are extracted from `color`. It is then formatted into a `hexadecimal
 representation` of the color, before being converted to a String data type and assigned to `assignedColor`.
+[NOTE]
+Hexadecimal representation of the color is compatible with JavaFx.
 
 ----
 Formatter hexRepresentation = new Formatter(new StringBuffer("#"));
@@ -603,9 +605,32 @@ hexRepresentation.format("%02X", color.getBlue());
 assignedColor = hexRepresentation.toString();
 ----
 
-Lastly, the assignedColor is added into an `ArrayList<String> usedColors`. This ensures no same colors will be assigned
+The `assignedColor` is added into an `ArrayList<String> usedColors`. This ensures no same colors will be assigned
 to a tag with different description in subsequent iterations by randomising a different color again should a same color is
-generated.
+generated. The method will then return `assignedColor`.
+
+Lastly, in the code below, `obtainTagColors(tag.tagName)`, the hexadecimal String representation of the color, will be appended
+to the tag background color.
+----
+private void initialiseTags(ReadOnlyPerson person) {
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+
+            tagLabel.setStyle("-fx-background-color: " + obtainTagColors(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
+    }
+----
+
+==== Design Considerations
+
+Aspect: +
+Alternative 1 (current choice): +
+Pros: +
+Cons: +
+Alternative 2: +
+Pros: +
+Cons: +
 // end::uniquetagcolor[]
 
 // tag::remark[]
