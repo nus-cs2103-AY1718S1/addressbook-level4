@@ -14,7 +14,6 @@ public class Email {
             "Person emails should be 2 alphanumeric/period strings separated by '@'";
     //@@author Lenaldnwj
     public static final String EMAIL_VALIDATION_REGEX = "([\\w\\.]+@[\\w\\.]+)|(\\(Email not recorded\\))";
-    //@@author
     public final String value;
 
     /**
@@ -37,7 +36,7 @@ public class Email {
     public static boolean isValidEmail(String test) {
         return test.matches(EMAIL_VALIDATION_REGEX);
     }
-
+    //@@author
     @Override
     public String toString() {
         return value;

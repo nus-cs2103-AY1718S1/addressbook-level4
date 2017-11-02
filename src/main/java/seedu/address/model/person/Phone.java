@@ -1,3 +1,4 @@
+//@@author Lenaldnwj
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
@@ -10,7 +11,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Phone {
 
-    //@@author Lenaldnwj
     public static final String MESSAGE_PHONE_CONSTRAINTS =
             "Users are to enter their numbers in this format, p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)\n"
                     + "For example, p/ student/97271111 parent/97979797\n"
@@ -52,7 +52,6 @@ public class Phone {
         value = value.replace("p", "P");
         return value;
     }
-    //@@author
 
     @Override
     public String toString() {

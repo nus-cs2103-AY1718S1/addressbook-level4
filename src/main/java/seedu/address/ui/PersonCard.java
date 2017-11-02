@@ -19,6 +19,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonCard extends UiPart<Region> {
 
+    //@@author Lenaldnwj
     private static final String FXML = "PersonListCard.fxml";
 
     private static HashMap<String, String> currentTagColors = new HashMap<String, String>();
@@ -50,7 +51,6 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
@@ -58,7 +58,7 @@ public class PersonCard extends UiPart<Region> {
         initialiseTags(person);
         bindListeners(person);
     }
-    //@@author Lenaldnwj
+
     /**
      * This method takes in the tagName, and returns the color associated with that tagName
      * If the if the tag has no associated color, a unique random color will be assigned to the tag.
@@ -116,7 +116,6 @@ public class PersonCard extends UiPart<Region> {
         tags.getChildren().clear();
         initialiseTags(person);
     }
-    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
@@ -134,7 +133,6 @@ public class PersonCard extends UiPart<Region> {
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
     }
-    //@@author Lenaldnwj
     /**
      * Initialise the {@code person} tags
      *
@@ -148,5 +146,5 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
-    //@@author
+
 }
