@@ -46,6 +46,7 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
+    //@@author aali195
     public String getAddressBookImagesPath() {
         return addressBookImagesPath;
     }
@@ -53,6 +54,7 @@ public class UserPrefs {
     public void setAddressBookImagesPath(String addressBookImagesPath) {
         this.addressBookImagesPath = addressBookImagesPath;
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

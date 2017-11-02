@@ -1,4 +1,6 @@
-//@@author aali195
+# aali195
+###### /java/seedu/address/storage/ImageStorageTest.java
+``` java
 package seedu.address.storage;
 
 import static junit.framework.TestCase.assertEquals;
@@ -29,4 +31,4 @@ public class ImageStorageTest {
         addressBookImageStorage.createImageStorageFolder();
     }
 }
-//@@author
+```
