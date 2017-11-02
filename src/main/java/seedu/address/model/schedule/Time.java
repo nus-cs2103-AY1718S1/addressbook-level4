@@ -57,13 +57,13 @@ public class Time {
      * Next time integer. This method is only to be used in visualizing and arraging where exceptions are already
      * thrown so there is no need to check the format.
      */
-    public static Integer increaseTimeInteger(Integer time) {
-        if (time % 100 == 30) {
-            time += 70;
-            return time;
+    public static Integer increaseTimeInteger(Integer timeInteger) {
+        if (timeInteger % 100 == 30) {
+            timeInteger += 70;
+            return timeInteger;
         } else {
-            time += 30;
-            return time;
+            timeInteger += 30;
+            return timeInteger;
         }
     }
 }
