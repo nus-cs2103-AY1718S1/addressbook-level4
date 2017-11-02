@@ -139,7 +139,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void sort() {
         addressBook.sort();
     }
-    
+
     /**
      * Delete tag from contact
      */
