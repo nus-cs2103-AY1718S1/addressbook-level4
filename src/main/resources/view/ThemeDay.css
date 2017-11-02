@@ -49,7 +49,7 @@
 }
 
 .tab-pane .tab-header-area {
-    -fx-padding: 0 0 0 0;
+    -fx-padding: 0;
     -fx-min-height: 0;
     -fx-max-height: 0;
 }
@@ -108,7 +108,7 @@
 /* Profile Photo */
 
 .profile-photo-pane {
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: "Open Sans Light";
     -fx-font-size: 30px;
 }
 
@@ -121,9 +121,9 @@
 }
 
 .list-cell {
-    -fx-label-padding: 0 0 0 0;
+    -fx-label-padding: 0;
     -fx-graphic-text-gap: 0;
-    -fx-padding: 0 0 0 0;
+    -fx-padding: 0;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
 }
@@ -143,16 +143,18 @@
 /* Person List Card Fonts */
 
 .cell_big_label {
-    -fx-font-family: "Helvetica";
+    -fx-font-family: "Segoe UI";
     -fx-font-size: 25px;
     -fx-text-fill: black;
+    -fx-padding: 3 0 3 0;
     -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.5), 1, 0, 0, 0); /* Add extra darkness to font albeit subtly */
 }
 
 .cell_small_label {
-    -fx-font-family: "Helvetica";
+    -fx-font-family: "Segoe UI";
     -fx-font-size: 16px;
     -fx-text-fill: #1f1f1f;
+    -fx-padding: 3 0 3 0;
 }
 
 /* Command Box & Result Display Box Background */
@@ -251,7 +253,7 @@
     -fx-padding: 12 25 12 35;
     -fx-background-radius: 0;
     -fx-background-color: #d13438;
-    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-family: "Segoe UI";
     -fx-font-size: 11pt;
     -fx-text-fill: #d8d8d8;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
@@ -311,7 +313,7 @@
 
 .scroll-bar .increment-button, .scroll-bar .decrement-button {
     -fx-background-color: transparent;
-    -fx-padding: 0 0 0 0;
+    -fx-padding: 0;
 }
 
 .scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
@@ -367,11 +369,10 @@
 }
 
 #tags .label {
-    -fx-font-family: "Helvetica";
+    -fx-font-family: "Segoe UI Bold";
     -fx-font-size: 11pt;
-    -fx-font-weight: bold;
     -fx-text-fill: white;
-    -fx-padding: 1 8 1 8;
+    -fx-padding: 2 8 3 8;
     -fx-background-color: #fc4465;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
