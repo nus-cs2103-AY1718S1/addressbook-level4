@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+//@@author sushinoya
 public class RoomTest {
 
     @Test

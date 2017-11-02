@@ -3,7 +3,7 @@ package seedu.room.model.person;
 import seedu.room.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Person's phone number in the resident book.
+ * Represents a Person's email in the resident book.
  * Guarantees: immutable; is valid as declared in {@link #isValidEmail(String)}
  */
 public class Email {
