@@ -5,13 +5,14 @@ import static java.util.Objects.requireNonNull;
 import java.util.TreeSet;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.core.PossibleDays;
 
 /**
  * Represents a Person's phone number in the address book.
  */
 public class Schedule {
 
-    private TreeSet<Integer> busyTime;
+    private TreeSet<Integer> timeSet;
 
     /**
      * Validates given phone number.
@@ -19,19 +20,19 @@ public class Schedule {
      * @throws IllegalValueException if given phone string is invalid.
      */
     public Schedule() {
-        busyTime = new TreeSet<Integer>();
+        timeSet = new TreeSet<Integer>();
     }
     public Schedule(TreeSet<Integer> busyTime) throws IllegalValueException {
         requireNonNull(busyTime);
-        this.busyTime = busyTime;
+        this.timeSet = busyTime;
     }
 
     /**
      * Add a slot of time with the unit of 30min based on the startTime.
      */
     public void addTime(Integer startTime) {
-        if (!busyTime.contains(startTime)) {
-            busyTime.add(startTime);
+        if (!timeSet.contains(startTime)) {
+            timeSet.add(startTime);
         }
     }
 
@@ -39,27 +40,50 @@ public class Schedule {
      * Clear a slot of time with the unit of 30min based on the startTime.
      */
     public void clearTime(Integer startTime) {
-        if (busyTime.contains(startTime)) {
-            busyTime.remove(startTime);
+        if (timeSet.contains(startTime)) {
+            timeSet.remove(startTime);
         }
     }
 
     @Override
     public String toString() {
-        return busyTime.toString();
+        return timeSet.toString();
     }
 
     public TreeSet<Integer> getBusyTime() {
-        return busyTime;
+        return timeSet;
     }
 
     public boolean containsTimeNumber(Integer timeNumber){
-        return busyTime.contains(timeNumber);
+        return timeSet.contains(timeNumber);
     }
 
     @Override
     public int hashCode() {
-        return busyTime.hashCode();
+        return timeSet.hashCode();
     }
 
+    public TreeSet<Integer>[] splitScheduleToDays() {
+        TreeSet<Integer>[] timeSetArray = new TreeSet[7];
+        for(int i = 0; i < 7; i++){
+            timeSetArray[i] = new TreeSet<>();
+        }
+        for(Integer time : this.timeSet) {
+            int day = (time - time % PossibleDays.dayCoefficient) / PossibleDays.dayCoefficient;
+            timeSetArray[day - 1].add(time % PossibleDays.dayCoefficient);
+        }
+        return timeSetArray;
+    }
+
+    public static TreeSet<Integer>[] splitScheduleToDays(TreeSet<Integer> toBeSplitted) {
+        TreeSet<Integer>[] timeSetArray = new TreeSet[7];
+        for(int i = 0; i < 7; i++){
+            timeSetArray[i] = new TreeSet<>();
+        }
+        for(Integer time : toBeSplitted) {
+            int day = (time - time % PossibleDays.dayCoefficient) / PossibleDays.dayCoefficient;
+            timeSetArray[day - 1].add(time % PossibleDays.dayCoefficient);
+        }
+        return timeSetArray;
+    }
 }
