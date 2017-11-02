@@ -50,8 +50,10 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            //@@zhoukai07
             + "[" + PREFIX_ADD_TAG + "TAG]..."
             + "[" + PREFIX_REM_TAG + "TAG]..."
+            //@@zhoukai07
             + PREFIX_CLEAR_TAG + "\n"
             + "[" + PREFIX_WEB_LINK + "WEB LINK]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -60,11 +62,14 @@ public class EditCommand extends UndoableCommand {
             + PREFIX_TAG + "owesMoney "
             + PREFIX_WEB_LINK + "https://www.facebook.com/jiasheng.an"
             + PREFIX_CLEAR_TAG;
+
+    //@@author hansiang93
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {Index} "
             + PREFIX_PHONE + "{Phone} "
             + PREFIX_EMAIL + "{email} "
             + PREFIX_TAG + "{tag} "
             + PREFIX_WEB_LINK + "{Weblink}";
+    //@@author
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
@@ -220,6 +225,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
+        //@@zhoukai07
         public void setToAdd(Set<Tag> toAdd) {
             this.toAdd = toAdd;
         }
@@ -229,7 +235,7 @@ public class EditCommand extends UndoableCommand {
         public void setClearTags(boolean clearTags) {
             this.clearTags = clearTags;
         }
-
+        //@@zhoukai07
         public void setWebLinks(Set<WebLink> webLinks) {
             this.webLinks = webLinks;
         }

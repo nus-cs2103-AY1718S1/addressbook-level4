@@ -62,11 +62,13 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
+    //@@author bladerail
     @Override
     public UserPerson getUserPerson() {
         return userPerson;
     }
 
+    //@@author
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
@@ -118,6 +120,7 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
+    //@@author bladerail
     @Override
     public void sortFilteredPersonList(String filterType) {
         addressBook.sortPersons(filterType);
@@ -126,12 +129,14 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author bladerail
     @Override
     public void updateUserPerson(ReadOnlyPerson editedPerson) {
         requireAllNonNull(editedPerson);
@@ -139,6 +144,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateUserPersonChanged();
     }
 
+    //@@author
     /** Raises an event to indicate the model has changed */
     public void indicateUserPersonChanged() {
         raise(new UserPersonChangedEvent(userPerson));

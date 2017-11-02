@@ -38,6 +38,7 @@ public class UserPrefs {
         this.addressBookFilePath = addressBookFilePath;
     }
 
+    //@@author bladerail
     public String getUserProfileFilePath() {
         return userProfileFilePath;
     }
@@ -46,6 +47,7 @@ public class UserPrefs {
         this.userProfileFilePath = newProfileFilePath;
     }
 
+    //@@author
     public String getAddressBookName() {
         return addressBookName;
     }

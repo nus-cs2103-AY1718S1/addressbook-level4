@@ -11,6 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author bladerail
 /**
  * Updates the model's UserPerson information.
  */
@@ -30,11 +31,13 @@ public class UpdateUserCommand extends Command {
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
+    //@@author hansiang93
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD
             + " " + PREFIX_NAME + "{NAME} "
             + PREFIX_PHONE + "{PHONE} "
             + PREFIX_EMAIL + "{EMAIL} "
             + PREFIX_ADDRESS + "{ADDRESS} ";
+    //@@author
 
     public static final String MESSAGE_UPDATE_USER_SUCCESS = "Successfully edited User Profile: %1s";
     public static final String MESSAGE_NOT_UPDATED = "At least one field to update must be provided.";

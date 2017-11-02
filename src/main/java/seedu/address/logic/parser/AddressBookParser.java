@@ -78,6 +78,7 @@ public class AddressBookParser {
         case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
 
+        //@@author hansiang93
         case FilterCommand.COMMAND_WORD:
         case FilterCommand.COMMAND_ALIAS:
             return new FilterCommandParser().parse(arguments);
@@ -86,6 +87,7 @@ public class AddressBookParser {
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
 
+        //@@author bladerail
         case SortCommand.COMMAND_WORD:
         case SortCommand.COMMAND_ALIAS:
             return new SortCommandParser().parse(arguments);
@@ -113,18 +115,22 @@ public class AddressBookParser {
         case DeleteTagCommand.COMMAND_ALIAS:
             return new DeleteTagCommandParser().parse(arguments);
 
+        //@@author bladerail
         case RemarkCommand.COMMAND_WORD:
         case RemarkCommand.COMMAND_ALIAS:
             return new RemarkCommandParser().parse(arguments);
 
+        //@@author bladerail
         case UpdateUserCommand.COMMAND_WORD:
         case UpdateUserCommand.COMMAND_ALIAS:
             return new UpdateUserCommandParser().parse(arguments);
 
+        //@@author hansiang93
         case WebCommand.COMMAND_WORD:
         case WebCommand.COMMAND_ALIAS:
             return new WebCommandParser().parse(arguments);
 
+        //@@author
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
