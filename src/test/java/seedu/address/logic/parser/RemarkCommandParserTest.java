@@ -12,6 +12,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.model.person.Remark;
 
+//@@author nahtanojmil
 public class RemarkCommandParserTest {
     private RemarkCommandParser parser = new RemarkCommandParser();
 

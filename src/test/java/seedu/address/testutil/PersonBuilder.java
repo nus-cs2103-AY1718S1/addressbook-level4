@@ -154,6 +154,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author nahtanojmil
     /**
      * Sets the {@code Remark} of the {@code Person} that we are building.
      */
@@ -162,6 +163,7 @@ public class PersonBuilder {
         this.person.setRemark(new Remark(remark));
         return this;
     }
+    //@@author
 
     public Person build() {
         return this.person;

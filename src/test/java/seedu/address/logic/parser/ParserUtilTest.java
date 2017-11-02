@@ -201,6 +201,7 @@ public class ParserUtilTest {
         ParserUtil.parseEmail(null);
     }
 
+    //@@author nahtanojmil
     @Test
     public void parseRemark_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(NullPointerException.class);
@@ -219,6 +220,8 @@ public class ParserUtilTest {
 
         assertEquals(expectedRemark, actualRemark.get());
     }
+    //@@author
+
     @Test
     public void parseTags_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
