@@ -78,7 +78,7 @@ Unify's user interface is split into a few sections. These sections are highligh
 * List of Contacts
 * Contact's Details
 
-image::UG_introui.png[width="790"]
+image::UG_quicklookui.png[width="590"]
 
 == Quick Start
 image::UG_mainheader_installationguide.png[width="900"]
@@ -100,7 +100,7 @@ image:step3.png[width="70"]  Copy the file to the folder you want to use as the 
 
 image:step4.png[width="70"] Double-click the file to start the app. You should see the application open in a few seconds:
 
-image::UG_introui.png[width="790"]
+image::UG_introui.png[width="590"]
 
 image:step5.png[width="70"]  Type the command in the command box and press kbd:[Enter] to execute it. e.g. Typing *`help`* and pressing kbd:[Enter] will open the help window.
 
