@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.FilteredListChangedEvent;
+import seedu.address.commons.events.model.FilteredListChangedEvent;
 import seedu.address.logic.statistics.Statistics;
 import seedu.address.model.person.ReadOnlyPerson;
 
