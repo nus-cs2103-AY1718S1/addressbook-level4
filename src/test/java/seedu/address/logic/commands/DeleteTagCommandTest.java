@@ -1,3 +1,4 @@
+//@@author Sri-vatsa
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
@@ -23,7 +24,6 @@ import seedu.address.model.UniqueMeetingList;
 import seedu.address.model.UserPrefs;
 
 /***
- * @author Sri-vatsa
  * Focuses tests on model's deleteTag method, assumes DeleteTagCommandParser test handles tests for converting User
  * input into type suitable for deleteTag method (i.e. String Array)
  */

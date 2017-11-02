@@ -1,9 +1,10 @@
+//@@author Sri-vatsa
 package seedu.address.logic.commands;
 
 /***
  * Lists all users in the addressbook based on how frequently they are searched
  * Sorts by search frequency
- * @author Sri-vatsa
+ *
  */
 
 public class ListByMostSearchedCommand extends UndoableCommand {
@@ -21,3 +22,4 @@ public class ListByMostSearchedCommand extends UndoableCommand {
     }
 
 }
+

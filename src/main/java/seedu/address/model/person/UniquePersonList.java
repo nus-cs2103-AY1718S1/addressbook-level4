@@ -159,10 +159,9 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     //sorting methods
-
+    //@@author Sri-vatsa
     /***
      * sort addressbook persons by number of times they were searched for
-     * @author Sri-vatsa
      */
     public void sortBySearchCount () {
         internalList.sort(new SearchCountComparator());
@@ -170,12 +169,10 @@ public class UniquePersonList implements Iterable<Person> {
 
     /**
      * Custom Comparator class to compare two ReadOnlyPerson Objects by their search Count
-     * @author Sri-vatsa
      */
     public class SearchCountComparator implements Comparator<ReadOnlyPerson> {
 
         /**
-         * @author Sri-vatsa
          * Basis of comparison between ReadOnlyPerson
          * Compares two persons by Search Count
          *
@@ -199,7 +196,6 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /***
-     * @author Sri-vatsa
      * sort address book persons in alphabetical order
      */
     public void sortLexicographically () {
@@ -207,13 +203,11 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * @author Sri-vatsa
      * Custom Comparator class to compare two ReadOnlyPerson Objects lexicographically
      */
     public class LexicographicComparator implements Comparator<ReadOnlyPerson> {
 
         /**
-         * @author Sri-vatsa
          * Basis of comparison between ReadOnlyPerson
          * Compares two persons lexicographically
          *
@@ -230,4 +224,5 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
     }
+    //@@author
 }

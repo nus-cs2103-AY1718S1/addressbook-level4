@@ -177,9 +177,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //// Sort methods
-
+    //@@author Sri-vatsa
     /***
-     * @author Sri-vatsa
      * sorts persons in the addressbook by number of times they were previously searched
      */
     public void sortBySearchCount() {
@@ -188,12 +187,12 @@ public class AddressBook implements ReadOnlyAddressBook {
 
 
     /***
-     * @author Sri-vatsa
      * sorts persons in the addressbook alphabetically
      */
     public void sortLexicographically() {
         persons.sortLexicographically();
     }
+    //@@author
 
     //// util methods
 
