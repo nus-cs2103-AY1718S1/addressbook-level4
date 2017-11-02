@@ -48,6 +48,7 @@ public class LogicManager extends ComponentManager implements Logic {
         }
     }
 
+    //@@author khooroko
     /**
      * Updates the selected person.
      * @param person the person that has been selected.
@@ -70,6 +71,7 @@ public class LogicManager extends ComponentManager implements Logic {
         return model.getAllPersons();
     }
 
+    //@@author
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return model.getFilteredPersonList();

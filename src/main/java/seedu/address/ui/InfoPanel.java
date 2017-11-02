@@ -167,8 +167,8 @@ public class InfoPanel extends UiPart<Region> {
         debtRepaymentProgressBar = new DebtRepaymentProgressBar(person);
         progressBarPlaceholder.getChildren().add(debtRepaymentProgressBar.getRoot());
     }
-    //@@author
 
+    //@@author khooroko
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
