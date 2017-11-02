@@ -5,7 +5,7 @@ import java.util.List;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.locateMrtCommandEvent;
+import seedu.address.commons.events.ui.LocateMrtCommandEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -41,14 +41,14 @@ public class LocateMrtCommand extends Command {
 
         ReadOnlyPerson personToSearchAddress = lastShownList.get(targetIndex.getZeroBased());
 
-        EventsCenter.getInstance().post(new locateMrtCommandEvent(personToSearchAddress));
+        EventsCenter.getInstance().post(new LocateMrtCommandEvent(personToSearchAddress));
         return new CommandResult(String.format(MESSAGE_LOCATE_PERSON_SUCCESS, personToSearchAddress));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof locateMrtCommand // instanceof handles nulls
-                && this.targetIndex.equals(((locateMrtCommand) other).targetIndex)); // state check
+                || (other instanceof LocateMrtCommand // instanceof handles nulls
+                && this.targetIndex.equals(((LocateMrtCommand) other).targetIndex)); // state check
     }
 }

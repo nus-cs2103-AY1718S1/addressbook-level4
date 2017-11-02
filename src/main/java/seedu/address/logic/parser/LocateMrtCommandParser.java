@@ -4,26 +4,26 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.locateMrtCommand;
+import seedu.address.logic.commands.LocateMrtCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new locateMrtCommand object
+ * Parses input arguments and creates a new LocateMrtCommand object
  */
-public class LocateMrtCommandParser implements Parser<locateMrtCommand> {
+public class LocateMrtCommandParser implements Parser<LocateMrtCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the locateMrtCommand
-     * and returns an locateMrtCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the LocateMrtCommand
+     * and returns an LocateMrtCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public locateMrtCommand parse(String args) throws ParseException {
+    public LocateMrtCommand parse(String args) throws ParseException {
         try {
             Index index = ParserUtil.parseIndex(args);
-            return new locateMrtCommand(index);
+            return new LocateMrtCommand(index);
         } catch (IllegalValueException ive) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, locateMrtCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, LocateMrtCommand.MESSAGE_USAGE));
         }
     }
 
