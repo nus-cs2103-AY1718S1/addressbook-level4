@@ -1,4 +1,3 @@
-//@@author fongwz
 package seedu.address.ui;
 
 import javafx.fxml.FXML;
@@ -7,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 
+//@@author fongwz
 /**
  * A UI component that displays information on the browser display type
  */

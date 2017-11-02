@@ -66,11 +66,9 @@ public class BrowserPanel extends UiPart<Region> {
         browser = null;
     }
 
-    //@@author fongwz
     public void loadOtherPage(String page) {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + page + GOOGLE_SEARCH_URL_SUFFIX);
     }
-    //@@author
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {

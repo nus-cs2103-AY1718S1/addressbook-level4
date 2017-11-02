@@ -1,4 +1,3 @@
-//@@author fongwz
 package seedu.address.ui;
 
 import org.fxmisc.easybind.EasyBind;
@@ -10,6 +9,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.logic.Logic;
 
+//@@author fongwz
 /**
  *  UI component containing a listview to show list of meetings
  */

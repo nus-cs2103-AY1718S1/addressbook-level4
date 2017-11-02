@@ -1,4 +1,3 @@
-//@@author fongwz
 package seedu.address.ui;
 
 import java.util.logging.Logger;
@@ -18,6 +17,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BrowserPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToBrowserListRequestEvent;
 
+//@@author fongwz
 /**
  * Panel containing the list of settings
  */

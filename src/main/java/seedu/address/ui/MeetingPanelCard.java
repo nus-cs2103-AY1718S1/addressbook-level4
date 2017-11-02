@@ -1,4 +1,3 @@
-//@@author fongwz
 package seedu.address.ui;
 
 import java.util.ArrayList;
@@ -8,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import seedu.address.model.Meeting;
 
+//@@author fongwz
 /**
  *  UI component that displays information about upcoming meetings
  */

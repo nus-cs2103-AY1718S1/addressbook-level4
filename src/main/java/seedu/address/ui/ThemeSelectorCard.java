@@ -1,4 +1,3 @@
-//@@author fongwz
 package seedu.address.ui;
 
 import javafx.fxml.FXML;
@@ -7,6 +6,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
+//@@author fongwz
 /**
  * A UI component that displays information on which theme is currently selected
  */

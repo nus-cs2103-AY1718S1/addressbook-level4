@@ -1,4 +1,3 @@
-//@@author fongwz
 package seedu.address.ui;
 
 import javafx.fxml.FXML;
@@ -6,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 
+//@@author fongwz
 /**
  * A ui component that displays commands in the command helper box
  */
