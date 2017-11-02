@@ -18,14 +18,14 @@ import javax.xml.bind.DatatypeConverter;
 public class StringUtil {
 
     private static final String GRAVATAR_SIZE = "90";
-    private static final String GRAVATAR_URL_FORMAT = "https://www.gravatar.com/avatar/%1$s.jpg?d=%2$s&s=" +
-            GRAVATAR_SIZE;
+    private static final String GRAVATAR_URL_FORMAT = "https://www.gravatar.com/avatar/%1$s.jpg?d=%2$s&s="
+            + GRAVATAR_SIZE;
     private static final String GRAVATAR_DEFAULT_FALLBACK = "person";
     private static final HashMap<String, String> defaultGravatar = new HashMap<>();
 
     static {
         defaultGravatar.put("person", "mm");
-        defaultGravatar.put("geometric","identicon");
+        defaultGravatar.put("geometric", "identicon");
         defaultGravatar.put("monster", "monsterid");
         defaultGravatar.put("face", "wavatar");
         defaultGravatar.put("retro", "retro;");
@@ -101,7 +101,7 @@ public class StringUtil {
             byte[] bytes = s.getBytes("UTF-8");
             MessageDigest md = MessageDigest.getInstance("MD5");
             return DatatypeConverter.printHexBinary(md.digest(bytes));
-        } catch (NoSuchAlgorithmException|UnsupportedEncodingException e) {
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
             // Should not happen since they are fixed (UTF-8/MD5)
             e.printStackTrace();
             return "";

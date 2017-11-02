@@ -21,9 +21,12 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyMeetingList;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.ui.PersonCard;
 
 /**
  * Manages storage of AddressBook data in local storage.
@@ -171,6 +174,11 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    /**
+     * Returns a cache file in the local folder
+     * @param filename of file to be opened
+     * @throws IOException if file with given filename is not found
+     */
     public static FileInputStream loadCacheFile(String filename) throws IOException {
         try {
             return new FileInputStream(CACHE_DIR + filename);
@@ -180,12 +188,37 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    /**
+     * Returns a image in the resources folder
+     * @param imageFilename of the image file to be opened
+     * @throws IOException if the image with given filename is not found
+     */
     public static FileInputStream loadResourceImage(String imageFilename) throws IOException {
         try {
             return new FileInputStream(IMAGE_RESOURCE_DIR + imageFilename);
         } catch (FileNotFoundException e) {
             logger.warning(String.format("Image resource %1$s not found.", imageFilename));
             throw new IOException();
+        }
+    }
+
+    // Gravatar
+
+    //@@author liuhang0213
+    /**
+     * Downloads gravatar image and save in local storage using each person's email address
+     * @param person The person whose profile photo is requried
+     * @param def The default style of profile photo
+     */
+    public void downloadProfilePhoto(ReadOnlyPerson person, String def) {
+        try {
+            String gravatarUrl = StringUtil.generateGravatarUrl(person.getEmail().value,
+                    def);
+            String filename = String.format(PersonCard.PROFILE_PHOTO_FILENAME_FORMAT, person.getInternalId().value);
+            saveFileFromUrl(gravatarUrl, filename);
+            logger.info("Downloaded " + gravatarUrl + " to " + filename);
+        } catch (IOException e) {
+            logger.warning(String.format("Gravatar not downloaded for %1$s.", person.getName()));
         }
     }
 }

@@ -178,7 +178,6 @@ public class MainWindow extends UiPart<Region> {
         settingsSelectorPlaceholder.getChildren().add(settingsSelector.getRoot());
 
         ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
-        downloadProfilePictures(persons);
         personListPanel = new PersonListPanel(persons);
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -195,26 +194,6 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic, commandBoxHelperPlaceholder, settingsPane);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-    }
-
-    //@@author liuhang0213
-
-    /**
-     * Downloads gravatar image and save in local storage using each person's email address
-     * @param persons
-     */
-    private void downloadProfilePictures(ObservableList<ReadOnlyPerson> persons) {
-        for (ReadOnlyPerson person : persons) {
-            try {
-                String gravatarUrl = StringUtil.generateGravatarUrl(person.getEmail().value,
-                        prefs.getDefaultProfilePhoto());
-                String filename = String.format(PersonCard.PROFILE_PHOTO_FILENAME_FORMAT, person.getInternalId().value);
-                storage.saveFileFromUrl(gravatarUrl, filename);
-                logger.info("Downloaded " + gravatarUrl + " to " + filename);
-            } catch (IOException e) {
-                logger.warning(String.format("Gravatar not downloaded for %1$s.", person.getName()));
-            }
-        }
     }
 
     //@@author
