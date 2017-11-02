@@ -40,14 +40,14 @@ public class StringUtil {
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
 
-        for (String wordInSentence: wordsInPreppedSentence) {
+        for (String wordInSentence : wordsInPreppedSentence) {
             if (wordInSentence.equalsIgnoreCase(preppedWord)) {
                 return true;
             }
         }
         return false;
     }
-    
+
     //@@author LeeYingZheng
     /**
      * Returns true if the {@code tagList} contains the {@code word}.
