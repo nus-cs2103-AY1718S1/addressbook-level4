@@ -124,6 +124,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public ReadOnlyPerson addOverdueDebtPerson(ReadOnlyPerson person) {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -158,6 +164,12 @@ public class AddCommandTest {
 
         @Override
         public ReadOnlyPerson removeWhitelistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public ReadOnlyPerson removeOverdueDebtPerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
             return null;
         }
@@ -198,6 +210,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<ReadOnlyPerson> getFilteredOverduePersonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public int updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
             return 0;
@@ -211,6 +229,12 @@ public class AddCommandTest {
 
         @Override
         public int updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+            return 0;
+        }
+
+        @Override
+        public int updateFilteredOverduePersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
             return 0;
         }

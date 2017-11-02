@@ -52,6 +52,14 @@ public class AddressBookBuilder {
     }
 
     /**
+     * Adds a new {@code Person} with overdue debt to the {@code AddressBook} that we are building.
+     */
+    public AddressBookBuilder withOverdueDebtPerson(ReadOnlyPerson person) {
+        addressBook.addOverdueDebtPerson(person);
+        return this;
+    }
+
+    /**
      * Parses {@code tagName} into a {@code Tag} and adds it to the {@code AddressBook} that we are building.
      */
     public AddressBookBuilder withTag(String tagName) {

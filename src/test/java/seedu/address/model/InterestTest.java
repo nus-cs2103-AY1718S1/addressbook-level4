@@ -48,7 +48,9 @@ public class InterestTest {
         }
         // model should have handled login event and updated personToTest's debt
         int personToTestIdx = model.getFilteredPersonList().size() - 1;
-        assertEquals("11046.22", model.getFilteredPersonList().get(personToTestIdx).getDebt().toString());
+        String actualDebt = model.getFilteredPersonList().get(personToTestIdx).getDebt().toString();
+        String expectedDebt = generateExpectedDebt(personToTest);
+        assertEquals(expectedDebt, actualDebt);
     }
 
     @Test
@@ -133,5 +135,16 @@ public class InterestTest {
     private Date generateDateFromString(String dateString) {
         String date = DateUtil.formatDate(dateString);
         return DateUtil.convertStringToDate(date);
+    }
+
+    /**
+     * Generate expected debt for person under test.
+     */
+    private String generateExpectedDebt(Person person) {
+        Person personUnderTest = person;
+        int numberOfMonths = personUnderTest.checkLastAccruedDate(new Date());
+        double accruedAmount = Double.parseDouble(personUnderTest.calcAccruedAmount(numberOfMonths));
+        double expectedDebt = accruedAmount + personUnderTest.getDebt().toNumber();
+        return Double.toString(expectedDebt);
     }
 }

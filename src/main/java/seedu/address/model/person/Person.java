@@ -40,6 +40,7 @@ public class Person implements ReadOnlyPerson {
 
     private boolean isBlacklisted = false;
     private boolean isWhitelisted = false;
+    private boolean hasOverdueDebt = false;
     private Date lastAccruedDate; // the last time debt was updated by interest
 
     /**
@@ -82,6 +83,7 @@ public class Person implements ReadOnlyPerson {
         this.isBlacklisted = source.isBlacklisted();
         this.isWhitelisted = source.isWhitelisted();
         this.lastAccruedDate = source.getLastAccruedDate();
+        this.hasOverdueDebt = source.hasOverdueDebt();
     }
 
     /**
@@ -372,6 +374,24 @@ public class Person implements ReadOnlyPerson {
         this.isWhitelisted = isWhitelisted;
     }
 
+
+    /**
+     * Returns boolean status of a person's debt status.
+     */
+    @Override
+    public boolean hasOverdueDebt() {
+        return hasOverdueDebt;
+    }
+
+    /**
+     * Sets boolean status of a person's debt status using the value of {@param hasOverdueDebt}.
+     */
+    @Override
+    public void setHasOverdueDebt(boolean hasOverdueDebt) {
+        this.hasOverdueDebt = hasOverdueDebt;
+    }
+
+    //@@author
     /**
      * Sets date repaid of a person in the given {@code dateRepaid}.
      * @param dateRepaid must not be null.

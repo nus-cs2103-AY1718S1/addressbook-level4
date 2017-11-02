@@ -114,6 +114,12 @@ public class AddressBookTest {
         }
 
         @Override
+        public ObservableList<ReadOnlyPerson> getOverduePersonList() {
+            return persons.stream().filter(person -> person.hasOverdueDebt())
+                    .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        }
+
+        @Override
         public ObservableList<Tag> getTagList() {
             return tags;
         }
