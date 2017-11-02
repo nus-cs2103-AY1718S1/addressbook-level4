@@ -1,6 +1,11 @@
 package seedu.address.ui;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -23,6 +28,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.UserPerson;
+import seedu.address.model.person.weblink.WebLink;
 
 /**
  * Controller for the User Profile Window
@@ -48,6 +54,9 @@ public class UserProfileWindow extends UiPart<Region> {
     private TextField addressTextField;
 
     @FXML
+    private TextField webLinkTextField;
+
+    @FXML
     private Label statusLabel;
 
     @FXML
@@ -70,6 +79,7 @@ public class UserProfileWindow extends UiPart<Region> {
         emailTextField.setText(userPerson.getEmailAsText());
         phoneTextField.setText(userPerson.getPhone().toString());
         addressTextField.setText(userPerson.getAddress().toString());
+        webLinkTextField.setText(userPerson.getWebLinksAsText());
 
         setAccelerators(scene);
 
@@ -92,6 +102,7 @@ public class UserProfileWindow extends UiPart<Region> {
         phoneTextField.textProperty().bind(Bindings.convert(userPerson.phoneProperty()));
         addressTextField.textProperty().bind(Bindings.convert(userPerson.addressProperty()));
         emailTextField.textProperty().bind(Bindings.convert(userPerson.emailProperty()));
+        webLinkTextField.textProperty().bind(Bindings.convert(userPerson.webLinkProperty()));
     }
 
     @Override
@@ -179,6 +190,25 @@ public class UserProfileWindow extends UiPart<Region> {
             userPerson.setAddress(new Address(addressTextField.getText()));
         } catch (IllegalValueException e) {
             statusLabel.setText("Please input a valid address value");
+            throw new Exception();
+        }
+
+        try {
+            String[] webLinks = webLinkTextField.getText().split(", ");
+
+            Comparator<WebLink> comparator = Comparator.comparing(WebLink::toStringWebLink);
+
+            Set<WebLink> webLinkSet = new TreeSet(comparator);
+
+            for (String curr : webLinks) {
+                webLinkSet.add(new WebLink(curr));
+            }
+            userPerson.setWebLinks(webLinkSet);
+        } catch (IllegalValueException e) {
+            statusLabel.setText("Please input a valid webLink");
+            throw new Exception();
+        } catch (ClassCastException e) {
+            statusLabel.setText("Hey");
             throw new Exception();
         }
     }

@@ -33,14 +33,15 @@ public class UserPerson implements ReadOnlyPerson {
         this(SampleUserPersonUtil.getDefaultSamplePerson().getName(),
                 SampleUserPersonUtil.getDefaultSamplePerson().getPhone(),
                 SampleUserPersonUtil.getDefaultSamplePerson().getEmail(),
-                SampleUserPersonUtil.getDefaultSamplePerson().getAddress());
+                SampleUserPersonUtil.getDefaultSamplePerson().getAddress(),
+                SampleUserPersonUtil.getDefaultSamplePerson().getWebLinks());
     }
 
 
     /**
      * Every field must be present and not null.
      */
-    public UserPerson(Name name, Phone phone, ArrayList<Email> email, Address address) {
+    public UserPerson(Name name, Phone phone, ArrayList<Email> email, Address address, Set<WebLink> webLinks) {
         requireAllNonNull(name, phone, email, address);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -48,7 +49,7 @@ public class UserPerson implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(new Remark(""));
         this.tags = new SimpleObjectProperty<>(new UniqueTagList());
-        this.webLinks = new SimpleObjectProperty<>(new UniqueWebLinkList());
+        this.webLinks = new SimpleObjectProperty<>(new UniqueWebLinkList(webLinks));
     }
 
     /**
@@ -110,6 +111,16 @@ public class UserPerson implements ReadOnlyPerson {
         StringBuilder builder = new StringBuilder();
         for (Email email : getEmail()) {
             builder.append(email.toString());
+            builder.append(", ");
+        }
+        builder.delete(builder.length() - 2, builder.length());
+        return builder.toString();
+    }
+
+    public String getWebLinksAsText() {
+        StringBuilder builder = new StringBuilder();
+        for (WebLink webLink : getWebLinks()) {
+            builder.append(webLink.toStringWebLink());
             builder.append(", ");
         }
         builder.delete(builder.length() - 2, builder.length());
@@ -214,7 +225,7 @@ public class UserPerson implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, emails, address, tags);
+        return Objects.hash(name, phone, emails, address, tags, webLinks);
     }
 
     @Override
@@ -227,9 +238,10 @@ public class UserPerson implements ReadOnlyPerson {
      * @param target
      */
     public void update(ReadOnlyPerson target) {
-        this.name = new SimpleObjectProperty<>(target.getName());
-        this.emails = new SimpleObjectProperty<>(target.getEmail());
-        this.phone = new SimpleObjectProperty<>(target.getPhone());
-        this.address = new SimpleObjectProperty<>(target.getAddress());
+        setName(target.getName());
+        setEmail(target.getEmail());
+        setPhone(target.getPhone());
+        setAddress(target.getAddress());
+        setWebLinks(target.getWebLinks());
     }
 }

@@ -101,6 +101,7 @@ public class UniquePersonList implements Iterable<Person> {
         setPersons(replacement);
     }
 
+    //@@author bladerail
     /**
      * Sorts the internal list by order of a comparator, which by default is name.
      */
@@ -139,6 +140,7 @@ public class UniquePersonList implements Iterable<Person> {
         FXCollections.sort(internalList, personComparator);
     }
 
+    //@@author
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
