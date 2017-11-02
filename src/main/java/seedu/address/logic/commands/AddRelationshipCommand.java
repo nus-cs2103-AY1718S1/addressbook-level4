@@ -10,7 +10,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Name;
 import seedu.address.model.relationship.ConfidenceEstimate;
-import seedu.address.model.relationship.Relationship;
 import seedu.address.model.relationship.RelationshipDirection;
 import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
 
@@ -55,7 +54,8 @@ public class AddRelationshipCommand extends UndoableCommand {
      * @param indexTo of the person to whom the relationship is directed in the filtered person list
      * @param direction of the relationship
      */
-    public AddRelationshipCommand(Index indexFrom, Index indexTo, RelationshipDirection direction, Name name, ConfidenceEstimate confidenceEstimate) {
+    public AddRelationshipCommand(Index indexFrom, Index indexTo, RelationshipDirection direction,
+                                  Name name, ConfidenceEstimate confidenceEstimate) {
         requireAllNonNull(indexFrom, indexTo, direction, name, confidenceEstimate);
         this.indexFromPerson = indexFrom;
         this.indexToPerson = indexTo;

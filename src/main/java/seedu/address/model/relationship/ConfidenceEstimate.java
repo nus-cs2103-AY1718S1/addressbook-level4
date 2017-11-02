@@ -1,9 +1,12 @@
 package seedu.address.model.relationship;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+
+/**
+ * This is a value of how confident the user is towards the information recorded.
+ */
 public class ConfidenceEstimate {
     public static final ConfidenceEstimate UNSPECIFIED = new ConfidenceEstimate();
     public static final String MESSAGE_CONFIDENCE_ESTIMATE_CONSTRAINTS =

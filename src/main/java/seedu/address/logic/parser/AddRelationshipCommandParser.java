@@ -13,7 +13,6 @@ import seedu.address.logic.commands.AddRelationshipCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Name;
 import seedu.address.model.relationship.ConfidenceEstimate;
-import seedu.address.model.relationship.Relationship;
 import seedu.address.model.relationship.RelationshipDirection;
 
 /**
@@ -41,7 +40,8 @@ public class AddRelationshipCommandParser implements Parser<AddRelationshipComma
             RelationshipDirection direction = ParserUtil.parseDirection(listOfArgs.get(2));
 
             Name name = ParserUtil.parseRelationshipName(argMultimap.getValue(PREFIX_NAME)).get();
-            ConfidenceEstimate confidenceEstimate = ParserUtil.parseConfidenceEstimate(argMultimap.getValue(PREFIX_CONFIDENCE_ESTIMATE)).get();
+            ConfidenceEstimate confidenceEstimate =
+                    ParserUtil.parseConfidenceEstimate(argMultimap.getValue(PREFIX_CONFIDENCE_ESTIMATE)).get();
             return new AddRelationshipCommand(firstIndex, secondIndex, direction, name, confidenceEstimate);
         } catch (IllegalValueException ive) {
             throw new ParseException(

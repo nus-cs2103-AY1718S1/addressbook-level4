@@ -43,7 +43,8 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
-    void addRelationship(Index indexFromPerson, Index indexToPerson, RelationshipDirection direction, Name name, ConfidenceEstimate confidenceEstimate)
+    void addRelationship(Index indexFromPerson, Index indexToPerson, RelationshipDirection direction,
+                         Name name, ConfidenceEstimate confidenceEstimate)
         throws IllegalValueException, DuplicateRelationshipException;
 
     /** Sorts the persons object alphanumerically by name. */

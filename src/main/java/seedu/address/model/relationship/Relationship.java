@@ -29,7 +29,8 @@ public class Relationship {
         this.confidenceEstimate = ConfidenceEstimate.UNSPECIFIED;
     }
 
-    public Relationship(ReadOnlyPerson fromPerson, ReadOnlyPerson toPerson, RelationshipDirection direction, Name name, ConfidenceEstimate confidenceEstimate) {
+    public Relationship(ReadOnlyPerson fromPerson, ReadOnlyPerson toPerson, RelationshipDirection direction,
+                        Name name, ConfidenceEstimate confidenceEstimate) {
         this(fromPerson, toPerson, direction);
         this.setConfidenceEstimate(confidenceEstimate);
         this.setName(name);
@@ -47,7 +48,9 @@ public class Relationship {
         return direction;
     }
 
-    public Name getName() { return name; }
+    public Name getName() {
+        return name;
+    }
 
     public ConfidenceEstimate getConfidenceEstimate() {
         return confidenceEstimate;
@@ -89,12 +92,15 @@ public class Relationship {
         this.confidenceEstimate = confidenceEstimate;
     }
 
+    /**
+     * A toString method for Relationship
+     */
     public String toString() {
-        String nameAndCE = this.name.toString() + " " + this.confidenceEstimate.toString();
+        String nameAndConfidenceEstimate = this.name.toString() + " " + this.confidenceEstimate.toString();
         if (isUndirected()) {
-            return fromPerson.toString() + " <-> " + toPerson.toString() + " " + nameAndCE;
+            return fromPerson.toString() + " <-> " + toPerson.toString() + " " + nameAndConfidenceEstimate;
         } else {
-            return fromPerson.toString() + " -> " + toPerson.toString() + " " + nameAndCE;
+            return fromPerson.toString() + " -> " + toPerson.toString() + " " + nameAndConfidenceEstimate;
         }
     }
 

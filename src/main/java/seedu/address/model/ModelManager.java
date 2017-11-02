@@ -118,7 +118,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void addRelationship(Index indexFromPerson, Index indexToPerson, RelationshipDirection direction, Name name, ConfidenceEstimate confidenceEstimate)
+    public void addRelationship(Index indexFromPerson, Index indexToPerson, RelationshipDirection direction,
+                                Name name, ConfidenceEstimate confidenceEstimate)
             throws IllegalValueException, DuplicateRelationshipException {
         List<ReadOnlyPerson> lastShownList = getFilteredPersonList();
 
@@ -131,10 +132,12 @@ public class ModelManager extends ComponentManager implements Model {
         ReadOnlyPerson toPerson = lastShownList.get(indexToPerson.getZeroBased());
         ReadOnlyPerson fromPersonCopy = fromPerson.copy();
         ReadOnlyPerson toPersonCopy = toPerson.copy();
-        Relationship relationshipForFromPerson = new Relationship(fromPersonCopy, toPersonCopy, direction, name, confidenceEstimate);
+        Relationship relationshipForFromPerson = new Relationship(fromPersonCopy, toPersonCopy, direction,
+                name, confidenceEstimate);
         Relationship relationshipForToPerson = relationshipForFromPerson;
         if (!direction.isDirected()) {
-            relationshipForToPerson = new Relationship(toPersonCopy, fromPersonCopy, direction, name, confidenceEstimate);
+            relationshipForToPerson = new Relationship(toPersonCopy, fromPersonCopy, direction,
+                    name, confidenceEstimate);
         }
 
 

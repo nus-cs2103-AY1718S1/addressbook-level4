@@ -55,6 +55,11 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.empty();
     }
 
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * If {@code name} is not present, {@code Optional<Name.UNSPECIFIED>} will be returned
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
     public static Optional<Name> parseRelationshipName(Optional<String> name) throws IllegalValueException {
         requireNonNull(name);
         return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.of(Name.UNSPECIFIED);
@@ -149,7 +154,8 @@ public class ParserUtil {
      * If {@code estimate} is not present, {@code Optional<ConfidenceEstimate.Unspecified>} is returned
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<ConfidenceEstimate> parseConfidenceEstimate(Optional<String> estimate) throws IllegalValueException {
+    public static Optional<ConfidenceEstimate> parseConfidenceEstimate(Optional<String> estimate)
+            throws IllegalValueException {
         requireNonNull(estimate);
         return estimate.isPresent() ? Optional.of(new ConfidenceEstimate(estimate.get()))
                 : Optional.of(ConfidenceEstimate.UNSPECIFIED);
