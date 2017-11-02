@@ -96,6 +96,7 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
     }
 
+    //@@author lincredibleJC
     @Test
     public void parse_invalidValue_failure() {
         // invalid name
@@ -137,7 +138,9 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_ADDRESS_AMY + VALID_PHONE_AMY
                 + VALID_POSTALCODE_AMY, Name.MESSAGE_NAME_CONSTRAINTS);
     }
+    //@@author
 
+    //@@author lincredibleJC
     @Test
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_SECOND_PERSON;
@@ -154,6 +157,7 @@ public class EditCommandParserTest {
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }
+    //@@author
 
     @Test
     public void parse_someFieldsSpecified_success() {

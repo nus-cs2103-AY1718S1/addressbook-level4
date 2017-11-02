@@ -3,6 +3,7 @@ package guitests.guihandles;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
+//@@author lincredibleJC
 /**
  * Provides a handle to the Statistics panel.
  */

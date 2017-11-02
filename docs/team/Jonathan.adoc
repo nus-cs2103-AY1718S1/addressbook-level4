@@ -3,19 +3,19 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+== Project: cherBook
+ cherBook is an address book application used by teachers to monitor students' academic progress.
+ The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+ It is written in Java, and has about 8 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
-
-=== Enhancement Added: Undo/Redo
+=== Enhancement Added: Remark
 
 ==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=remark]
 
 #End of Extract#
 
@@ -23,28 +23,31 @@ include::../UserGuide.adoc[tag=undoredo]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+We added remark such that the user can record the progress of students that can be easily known at a glance.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=remark]
 
 #End of Extract#
 
 ---
-
-=== Enhancement Proposed: Add command `remark`
-
-{Explain similar to the Undo/Redo feature above.}
+=== Enhancement Proposed: Add 25 & 75 percentile lines
+adds a horizontal line across the graph to show the 75th and 25th percentile of the current list grades.
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+* Updated the GUI to include graphs of students either in class or tags (pull request https://github.com[#65], https://github.com[#87])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
 
-== Project: PowerPointLabs
+== Project: Tea (Game)
 
-{Optionally (not graded), you may include other projects in your portfolio.}
+A unity made 2D side scroller game that focuses on interacting with the surrounding environment to survive as long as possible.
+Some features include a combat system with wild animals, materials collected to create vase to collect water, wood chopped from
+trees to start fire etc. Some other features are event system where choices are given and there would be penalties (reduction
+of health, etc) or boons (receiving more food). Weapons and shelter can be crafted to aid in survival as well.
+
+

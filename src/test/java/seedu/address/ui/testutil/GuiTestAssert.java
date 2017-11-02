@@ -50,6 +50,7 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getRemark().value, actualCard.getRemark());
     }
 
+    //@@author lincredibleJC
     /**
      * Asserts that {@code statisticsPanelHandle} displays the statistics correctly
      */
@@ -66,6 +67,7 @@ public class GuiTestAssert {
         assertEquals(expectedStatistics.getQuartile1String(), actualPanelHandle.getQuartile1Label());
         assertEquals(expectedStatistics.getInterquartileRangeString(), actualPanelHandle.getInterquartileLabel());
     }
+    //@@author
 
     /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
