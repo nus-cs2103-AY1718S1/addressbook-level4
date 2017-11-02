@@ -45,6 +45,7 @@ public class MainWindow extends UiPart<Region> {
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
+    private String lastSorted = "Name";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -274,6 +275,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     //@@author Alim95
+
     /**
      * Opens the help overlay
      */
@@ -313,7 +315,6 @@ public class MainWindow extends UiPart<Region> {
             logger.warning("Failed to list pinned using label");
         }
     }
-    //@@author
 
     /**
      * Toggles to task view.
@@ -338,6 +339,7 @@ public class MainWindow extends UiPart<Region> {
             logger.warning("Failed to toggle to person view using label");
         }
     }
+    //@@author
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
@@ -400,6 +402,7 @@ public class MainWindow extends UiPart<Region> {
         organizerLabel.setText("Sorted By:");
         personViewLabel.setStyle("-fx-text-fill: white");
         taskViewLabel.setStyle("-fx-text-fill: #555555");
+        sortedByLabel.setText(lastSorted);
     }
 
     /**
@@ -413,6 +416,8 @@ public class MainWindow extends UiPart<Region> {
         organizerLabel.setText("Showing:");
         personViewLabel.setStyle("-fx-text-fill: #555555");
         taskViewLabel.setStyle("-fx-text-fill: white");
+        lastSorted = sortedByLabel.getText();
+        sortedByLabel.setText("All");
     }
 
     private void switchToBrowser() {

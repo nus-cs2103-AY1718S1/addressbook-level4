@@ -17,18 +17,19 @@ public class TutorialMessages {
     public static final String INTRO_FOUR = "This is the sort menu, where you can select how to sort the list.";
     public static final String INTRO_FIVE = "This is the search box, where "
             + "you are able to search for the person you want.";
-    public static final String INTRO_SIX = "This is the person list panel, where you will see your list of contacts";
+    public static final String INTRO_SIX = "This is the person and task list panel, "
+            + "where you will see your list of contacts and tasks";
     public static final String INTRO_END = "Features of Bluebird:\n"
-            + "1. Add a contact\n"
-            + "2. Delete a contact\n"
-            + "3. Edit a contact\n"
+            + "1. Add a contact and task\n"
+            + "2. Delete a contact and task\n"
+            + "3. Edit a contact and task\n"
             + "4. Find a contact\n"
             + "5. Select a contact\n"
             + "6. Pin a contact\n"
             + "7. Unpin a contact\n"
             + "8. Hide a contact\n"
-            + "9. Clear all contacts\n"
-            + "10. List all contacts\n"
+            + "9. Clear all contacts and tasks\n"
+            + "10. List all contacts and tasks\n"
             + "11. Sort list of contacts\n"
             + "12. Help window\n"
             + "13. History of command inputs\n"
@@ -136,6 +137,36 @@ public class ToggleSortByLabelEvent extends BaseEvent {
     public String toString() {
         return this.sortBy;
     }
+}
+```
+###### \java\seedu\address\commons\events\ui\ToggleToPersonViewEvent.java
+``` java
+
+/**
+ * An event requesting to toggle the view to PersonPanel.
+ */
+public class ToggleToPersonViewEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+}
+```
+###### \java\seedu\address\commons\events\ui\ToggleToTaskViewEvent.java
+``` java
+
+/**
+ * An event requesting to toggle the view to TaskPanel.
+ */
+public class ToggleToTaskViewEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
 }
 ```
 ###### \java\seedu\address\commons\events\ui\ValidResultDisplayEvent.java
@@ -676,6 +707,7 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
+
     /**
      * Opens the help overlay
      */
@@ -697,7 +729,6 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
      */
     @FXML
     private void handleListAllClicked() {
-        listAllToggleStyle();
         try {
             logic.execute("list");
         } catch (CommandException | ParseException e) {
@@ -710,11 +741,34 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
      */
     @FXML
     private void handleListPinnedClicked() {
-        listPinToggleStyle();
         try {
             logic.execute("listpin");
         } catch (CommandException | ParseException e) {
             logger.warning("Failed to list pinned using label");
+        }
+    }
+
+    /**
+     * Toggles to task view.
+     */
+    @FXML
+    private void handleTaskViewClicked() {
+        try {
+            logic.execute("task");
+        } catch (CommandException | ParseException e) {
+            logger.warning("Failed to toggle to task view using label");
+        }
+    }
+
+    /**
+     * Toggles to person view.
+     */
+    @FXML
+    private void handlePersonViewClicked() {
+        try {
+            logic.execute("person");
+        } catch (CommandException | ParseException e) {
+            logger.warning("Failed to toggle to person view using label");
         }
     }
 ```
@@ -742,6 +796,46 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     private void handleSortByLabelEvent(ToggleSortByLabelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         sortedByLabel.setText(event.toString());
+    }
+
+    @Subscribe
+    private void handleToggleToTaskViewEvent(ToggleToTaskViewEvent event) {
+        switchToTaskView();
+    }
+
+
+    @Subscribe
+    private void handleToggleToPersonViewEvent(ToggleToPersonViewEvent event) {
+        switchToPersonView();
+    }
+
+    /**
+     * Switches style to person view.
+     */
+    private void switchToPersonView() {
+        personListPanelPlaceholder.getChildren().removeAll(taskListPanel.getRoot());
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        allLabel.setVisible(true);
+        pinLabel.setVisible(true);
+        organizerLabel.setText("Sorted By:");
+        personViewLabel.setStyle("-fx-text-fill: white");
+        taskViewLabel.setStyle("-fx-text-fill: #555555");
+        sortedByLabel.setText(lastSorted);
+    }
+
+    /**
+     * Switches style to task view.
+     */
+    private void switchToTaskView() {
+        personListPanelPlaceholder.getChildren().removeAll(personListPanel.getRoot());
+        personListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
+        allLabel.setVisible(false);
+        pinLabel.setVisible(false);
+        organizerLabel.setText("Showing:");
+        personViewLabel.setStyle("-fx-text-fill: #555555");
+        taskViewLabel.setStyle("-fx-text-fill: white");
+        lastSorted = sortedByLabel.getText();
+        sortedByLabel.setText("All");
     }
 
     private void switchToBrowser() {
@@ -875,6 +969,7 @@ public class SortFindPanel extends UiPart<Region> {
     public SortFindPanel(Logic logic) {
         super(FXML);
         this.logic = logic;
+        registerAsAnEventHandler(this);
     }
 
     /**
@@ -943,6 +1038,35 @@ public class SortFindPanel extends UiPart<Region> {
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort address using sort menu");
         }
+    }
+
+    /**
+     * Handles switch to task view event
+     */
+    @Subscribe
+    private void handleToggleToTaskViewEvent(ToggleToTaskViewEvent event) {
+        switchToTaskView();
+    }
+
+    @Subscribe
+    private void handleToggleToPersonViewEvent(ToggleToPersonViewEvent event) {
+        switchToPersonView();
+    }
+
+    /**
+     * Switches style to person view.
+     */
+    private void switchToPersonView() {
+        searchBox.setPromptText("Search Person...");
+        sortMenu.setVisible(true);
+    }
+
+    /**
+     * Switches style to task view.
+     */
+    private void switchToTaskView() {
+        searchBox.setPromptText("Search Task...");
+        sortMenu.setVisible(false);
     }
 
     public MenuButton getSortMenu() {
@@ -1166,12 +1290,12 @@ public class TutorialPanel extends UiPart<Region> {
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label style="-fx-text-fill: white;" text="Person">
+                              <Label fx:id="personViewLabel" onMouseReleased="#handlePersonViewClicked" style="-fx-text-fill: white;" text="Person">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" left="5.0" />
                                  </GridPane.margin>
                               </Label>
-                              <Label text="Task" GridPane.columnIndex="1">
+                              <Label fx:id="taskViewLabel" onMouseReleased="#handleTaskViewClicked" text="Task" GridPane.columnIndex="1">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" left="10.0" />
                                  </GridPane.margin>
@@ -1185,7 +1309,7 @@ public class TutorialPanel extends UiPart<Region> {
                                  <GridPane.margin>
                                     <Insets bottom="5.0" left="10.0" />
                                  </GridPane.margin></Label>
-                              <Label prefHeight="21.0" prefWidth="76.0" style="-fx-text-fill: white;" text="Sorted By:" GridPane.columnIndex="4">
+                              <Label fx:id="organizerLabel" prefHeight="21.0" prefWidth="76.0" style="-fx-text-fill: white;" text="Sorted By:" GridPane.columnIndex="4">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" />
                                  </GridPane.margin>
@@ -1255,7 +1379,7 @@ public class TutorialPanel extends UiPart<Region> {
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" text="add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/tag]" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <TextField alignment="CENTER" editable="false" text="add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [t/tag]" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="20.0" />
                      </font>

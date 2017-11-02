@@ -19,18 +19,19 @@ public class TutorialMessages {
     public static final String INTRO_FOUR = "This is the sort menu, where you can select how to sort the list.";
     public static final String INTRO_FIVE = "This is the search box, where "
             + "you are able to search for the person you want.";
-    public static final String INTRO_SIX = "This is the person list panel, where you will see your list of contacts";
+    public static final String INTRO_SIX = "This is the person and task list panel, "
+            + "where you will see your list of contacts and tasks";
     public static final String INTRO_END = "Features of Bluebird:\n"
-            + "1. Add a contact\n"
-            + "2. Delete a contact\n"
-            + "3. Edit a contact\n"
+            + "1. Add a contact and task\n"
+            + "2. Delete a contact and task\n"
+            + "3. Edit a contact and task\n"
             + "4. Find a contact\n"
             + "5. Select a contact\n"
             + "6. Pin a contact\n"
             + "7. Unpin a contact\n"
             + "8. Hide a contact\n"
-            + "9. Clear all contacts\n"
-            + "10. List all contacts\n"
+            + "9. Clear all contacts and tasks\n"
+            + "10. List all contacts and tasks\n"
             + "11. Sort list of contacts\n"
             + "12. Help window\n"
             + "13. History of command inputs\n"
