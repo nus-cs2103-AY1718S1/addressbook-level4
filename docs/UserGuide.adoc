@@ -247,7 +247,7 @@ Selects all persons currently displayed.
 Since v1.3
 
 Add an appointment to a person in the addressbook. +
-Format: `appoint INDEX ap/date time duration` +
+Format: `appoint INDEX ap/date (dd/mm/yyyy) time (hh:mm) duration(minutes)` +
 
 ****
 * If the person already have an appointment, the new appointment will override the old one
