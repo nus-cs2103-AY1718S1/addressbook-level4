@@ -108,7 +108,7 @@ When you are ready to start coding,
 == Design
 
 This section illustrates and identifies the architecture used to design and implement cherBook.
-This section contains an overall view of the system architecture and details the mechanism behind major system components,
+This section contains an overall view of the system architecture and details the reasons and mechanisms behind major system components,
 their attributes and interactions between these components.
 
 === Architecture
@@ -860,6 +860,11 @@ _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
+Having integrated unit tests that cover your API's behaviour is important.
+It helps you verify the correctness, functional behaviour and usability of cherBook the app before you release it publicly.
+This section details the different types of tests cherBook uses and how to run them.
+Additionally, the troubleshooting section details the errors you might face while testing cherBook and different ways to solve them.
+
 === Running Tests
 
 There are three ways to run tests.
@@ -909,6 +914,8 @@ e.g. `seedu.address.logic.LogicManagerTest`
  inserting the line `gradlew processResources`.
 
 == Dev Ops
+
+This section teaches you about tools building and provides you with instructions on how to test and release apps faster and	more efficiently.
 
 === Build Automation
 
