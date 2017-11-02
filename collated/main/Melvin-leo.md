@@ -33,7 +33,11 @@ public class ListMeetingCommand extends Command {
     }
 }
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/logic/parser/ParserUtil.java
+=======
+###### \java\seedu\address\logic\parser\ParserUtil.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<PersonToMeet>} if {@code name} is present.
@@ -45,7 +49,11 @@ public class ListMeetingCommand extends Command {
     }
 
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/logic/parser/ParserUtil.java
+=======
+###### \java\seedu\address\logic\parser\ParserUtil.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<NameMeeting>} if {@code name} is present.
@@ -70,7 +78,11 @@ public class ListMeetingCommand extends Command {
 
 }
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/model/AddressBook.java
+=======
+###### \java\seedu\address\model\AddressBook.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
     /**
      * Adds a meeting to the address book.
@@ -586,6 +598,25 @@ public interface ReadOnlyMeeting {
                 .compareTo(m2.getActualDate(m2.getDate().toString())));
     }
 
+<<<<<<< HEAD
+=======
+```
+###### \java\seedu\address\model\meeting\UniqueMeetingList.java
+``` java
+    public void setMeetings(List<? extends ReadOnlyMeeting> meetings) throws DuplicateMeetingException,
+                                MeetingClashException {
+        final UniqueMeetingList replacement = new UniqueMeetingList();
+        for (final ReadOnlyMeeting meeting : meetings) {
+            DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+            LocalDateTime currDate = LocalDateTime.now();
+            LocalDateTime meetDate = LocalDateTime.parse(meeting.getDate().toString(), formatter);
+            if (meetDate.isAfter((currDate))) {
+                replacement.add(new Meeting(meeting));
+            }
+        }
+        setMeetings(replacement);
+    }
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ```
 ###### /java/seedu/address/storage/XmlAdaptedMeeting.java
 ``` java

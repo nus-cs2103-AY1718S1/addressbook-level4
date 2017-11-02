@@ -1,5 +1,9 @@
 # nelsonqyj
+<<<<<<< HEAD
 ###### /java/seedu/address/logic/commands/AddMeetingCommand.java
+=======
+###### \java\seedu\address\logic\commands\AddMeetingCommand.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
 /**
  * Adds a meeting to the address book.
@@ -31,6 +35,7 @@ public class AddMeetingCommand extends UndoableCommand {
     private final Place location;
 
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/logic/commands/AddMeetingCommand.java
 ``` java
     @Override
@@ -60,6 +65,9 @@ public class AddMeetingCommand extends UndoableCommand {
     }
 ```
 ###### /java/seedu/address/logic/commands/AddMeetingCommand.java
+=======
+###### \java\seedu\address\logic\commands\AddMeetingCommand.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
     @Override
     public boolean equals(Object other) {
@@ -72,7 +80,11 @@ public class AddMeetingCommand extends UndoableCommand {
 
 }
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/logic/commands/Command.java
+=======
+###### \java\seedu\address\logic\commands\Command.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
     public static String getMessageForMeetingListShownSummary (int displaySize) {
         return String.format(Messages.MESSAGE_MEETING_LISTED_OVERVIEW, displaySize);
@@ -96,7 +108,11 @@ public class AddMeetingCommand extends UndoableCommand {
     }
 }
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/logic/commands/SelectMeetingCommand.java
+=======
+###### \java\seedu\address\logic\commands\SelectMeetingCommand.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
 /**
  * Selects a meeting identified using it's last displayed index from the address book.
@@ -141,7 +157,11 @@ public class SelectMeetingCommand extends Command {
     }
 }
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/logic/commands/UndoableCommand.java
+=======
+###### \java\seedu\address\logic\commands\UndoableCommand.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
     /**
      * Reverts the AddressBook to the state before this command
@@ -177,7 +197,11 @@ public class SelectMeetingCommand extends Command {
     }
 }
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/logic/Logic.java
+=======
+###### \java\seedu\address\logic\Logic.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
     /** Returns an unmodifiable view of the filtered list of meetings */
     ObservableList<ReadOnlyMeeting> getFilteredMeetingList();
@@ -186,7 +210,11 @@ public class SelectMeetingCommand extends Command {
     ListElementPointer getHistorySnapshot();
 }
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/logic/LogicManager.java
+=======
+###### \java\seedu\address\logic\LogicManager.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
     @Override
     public ObservableList<ReadOnlyMeeting> getFilteredMeetingList() {
@@ -199,7 +227,11 @@ public class SelectMeetingCommand extends Command {
     }
 }
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/logic/parser/AddMeetingCommandParser.java
+=======
+###### \java\seedu\address\logic\parser\AddMeetingCommandParser.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
 /**
  * Parses input arguments and creates a new AddMeetingCommand object
@@ -248,7 +280,11 @@ public class AddMeetingCommandParser implements Parser<AddMeetingCommand> {
 
 }
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/logic/parser/CliSyntax.java
+=======
+###### \java\seedu\address\logic\parser\CliSyntax.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
 /**
  * Contains Command Line Interface (CLI) syntax definitions common to multiple commands
@@ -266,7 +302,11 @@ public class CliSyntax {
 
 }
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/logic/parser/ParserUtil.java
+=======
+###### \java\seedu\address\logic\parser\ParserUtil.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<NameMeeting>} if {@code name} is present.
@@ -278,7 +318,11 @@ public class CliSyntax {
     }
 
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/logic/parser/ParserUtil.java
+=======
+###### \java\seedu\address\logic\parser\ParserUtil.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
     /**
      * Parses a {@code Optional<String> date} into an {@code Optional<Date>} if {@code date} is present.
@@ -290,7 +334,11 @@ public class CliSyntax {
     }
 
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/logic/parser/ParserUtil.java
+=======
+###### \java\seedu\address\logic\parser\ParserUtil.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
     /**
      * Parses a {@code Optional<String> Place} into an {@code Optional<Place>} if {@code place} is present.
@@ -329,7 +377,11 @@ public class CliSyntax {
     }
 
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/logic/parser/SelectMeetingCommandParser.java
+=======
+###### \java\seedu\address\logic\parser\SelectMeetingCommandParser.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
 /**
  * Parses input arguments and creates a new SelectMeetingCommand object
@@ -353,7 +405,11 @@ public class SelectMeetingCommandParser implements Parser<SelectMeetingCommand> 
 
 }
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/model/meeting/exceptions/MeetingClashException.java
+=======
+###### \java\seedu\address\model\meeting\exceptions\MeetingClashException.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
 /**
  * Signals that the operation will result in duplicate Meeting objects.
@@ -366,7 +422,11 @@ public class MeetingClashException extends IllegalValueException {
 }
 
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/model/meeting/UniqueMeetingList.java
+=======
+###### \java\seedu\address\model\meeting\UniqueMeetingList.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
 /**
  * A list of meetings that enforces uniqueness between its elements and does not allow nulls.
@@ -421,7 +481,11 @@ public class UniqueMeetingList implements Iterable<Meeting> {
     }
 
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/model/meeting/UniqueMeetingList.java
+=======
+###### \java\seedu\address\model\meeting\UniqueMeetingList.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
     /**
      * Removes the equivalent meeting from the list.
@@ -441,6 +505,7 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         this.internalMeetingList.setAll(replacement.internalMeetingList);
     }
 
+<<<<<<< HEAD
     public void setMeetings(List<? extends ReadOnlyMeeting> meetings) throws DuplicateMeetingException,
                                 MeetingClashException {
         final UniqueMeetingList replacement = new UniqueMeetingList();
@@ -454,6 +519,11 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         }
         setMeetings(replacement);
     }
+=======
+```
+###### \java\seedu\address\model\meeting\UniqueMeetingList.java
+``` java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
@@ -481,7 +551,11 @@ public class UniqueMeetingList implements Iterable<Meeting> {
 
 }
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/storage/XmlAdaptedMeeting.java
+=======
+###### \java\seedu\address\storage\XmlAdaptedMeeting.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
 /**
  * JAXB-friendly version of the Meeting.
@@ -510,7 +584,11 @@ public class XmlAdaptedMeeting {
 
 
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/storage/XmlAdaptedMeeting.java
+=======
+###### \java\seedu\address\storage\XmlAdaptedMeeting.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
     /**
      * Converts this jaxb-friendly adapted meeting object into the model's Meeting object.
@@ -530,7 +608,11 @@ public class XmlAdaptedMeeting {
 
 }
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/storage/XmlSerializableAddressBook.java
+=======
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
     @Override
     public ObservableList<ReadOnlyMeeting> getMeetingList() {
@@ -546,14 +628,22 @@ public class XmlAdaptedMeeting {
         return FXCollections.unmodifiableObservableList(meetings);
     }
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/ui/BrowserPanel.java
+=======
+###### \java\seedu\address\ui\BrowserPanel.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
     private void loadMeetingPage(ReadOnlyMeeting meeting) {
         loadPage(GOOGLE_MAP_SEARCH_URL_PREFIX + meeting.getPlace().value.replaceAll(" ", "+")
                 + GOOGLE_MAP_SEARCH_URL_SUFFIX);
     }
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/ui/BrowserPanel.java
+=======
+###### \java\seedu\address\ui\BrowserPanel.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
     @Subscribe
     private void handleMeetingPanelSelectionChangedEvent(MeetingPanelSelectionChangedEvent event) {
@@ -561,7 +651,11 @@ public class XmlAdaptedMeeting {
         loadMeetingPage(event.getNewSelection().meeting);
     }
 ```
+<<<<<<< HEAD
 ###### /resources/view/DarkTheme.css
+=======
+###### \resources\view\DarkTheme.css
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` css
 .background {
     background-image: url(../images/splash.jpg); /* Used in the default.html file */

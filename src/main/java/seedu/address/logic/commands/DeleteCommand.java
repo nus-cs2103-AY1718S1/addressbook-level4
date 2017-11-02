@@ -48,6 +48,7 @@ public class DeleteCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
+        //@@author kyngyi
         ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
         String personToDeleteName = personToDelete.getName().toString();
         String[] nameArray = {personToDeleteName};
@@ -69,6 +70,7 @@ public class DeleteCommand extends UndoableCommand {
         }
 
         model.updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
+        //@@author
 
         try {
             model.deletePerson(personToDelete);

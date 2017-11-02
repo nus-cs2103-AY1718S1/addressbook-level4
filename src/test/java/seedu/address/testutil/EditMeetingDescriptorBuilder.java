@@ -7,6 +7,7 @@ import seedu.address.logic.commands.EditMeetingCommand.EditMeetingDescriptor;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 
+//@@author kyngyi
 /**
  * A utility class to help with building EditMeetingDescriptor objects.
  */

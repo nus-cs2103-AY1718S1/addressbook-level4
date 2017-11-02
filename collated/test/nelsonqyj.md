@@ -1,5 +1,9 @@
 # nelsonqyj
+<<<<<<< HEAD
 ###### /java/seedu/address/logic/commands/AddMeetingCommandIntegrationTest.java
+=======
+###### \java\seedu\address\logic\commands\AddMeetingCommandIntegrationTest.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code AddMeetingCommand}.
@@ -51,7 +55,11 @@ public class AddMeetingCommandIntegrationTest {
 
 }
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/logic/commands/AddMeetingCommandTest.java
+=======
+###### \java\seedu\address\logic\commands\AddMeetingCommandTest.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
 public class AddMeetingCommandTest {
 
@@ -238,7 +246,11 @@ public class AddMeetingCommandTest {
 
 }
 ```
+<<<<<<< HEAD
 ###### /java/seedu/address/testutil/MeetingBuilder.java
+=======
+###### \java\seedu\address\testutil\MeetingBuilder.java
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
 /**
  * A utility class to help with building Meeting objects.
@@ -274,6 +286,7 @@ public class MeetingBuilder {
     public MeetingBuilder(ReadOnlyMeeting meetingToCopy) {
         this.meeting = new Meeting(meetingToCopy);
     }
+<<<<<<< HEAD
 
     /**
      * Sets the {@code NameMeeting} of the {@code Meeting} that we are building.
@@ -333,4 +346,6 @@ public class MeetingBuilder {
     }
 
 }
+=======
+>>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ```
