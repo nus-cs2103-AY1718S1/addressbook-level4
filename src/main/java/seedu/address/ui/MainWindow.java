@@ -136,7 +136,7 @@ public class MainWindow extends UiPart<Region> {
         extendedPersonCard = new ExtendedPersonCard();
         extendedPersonCardPlaceholder.getChildren().add(extendedPersonCard.getRoot());
 
-        GraphPanel graphPanel = new GraphPanel(logic.getFilteredPersonList());
+        GraphPanel graphPanel = new GraphPanel(logic);
         graphPanelPlaceholder.getChildren().add(graphPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
