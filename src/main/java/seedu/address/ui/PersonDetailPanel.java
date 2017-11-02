@@ -85,12 +85,22 @@ public class PersonDetailPanel extends UiPart<Region> {
         phone.setText(PERSON_PHONE_ICON + person.getPhone().toString());
         address.setText(PERSON_ADDRESS_ICON + person.getAddress().toString());
         email.setText(PERSON_EMAIL_ICON + person.getEmail().toString());
-        remark.setText(person.getRemark().toString());
+        setRemark(person);
     }
 
     private void setTags(ReadOnlyPerson person) {
         tags.getChildren().clear();
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+    }
+
+    private void setRemark(ReadOnlyPerson person) {
+        remark.setText(person.getRemark().toString());
+
+        if (person.getRemark().isEmpty()) {
+            remark.setManaged(false);
+        } else {
+            remark.setManaged(true);
+        }
     }
 
     /**
