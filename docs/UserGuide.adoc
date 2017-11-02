@@ -42,6 +42,43 @@ image::UG_Validation.png[width="300"]
 * Still lost? You can type `help` to access the User Guide whenever you need. +
 * Unify will guide you along the way so that you can turn from Novice to Master in no time! +
 
+=== How to Use the User Guide
+image::UG_header_howtouseuserguide.png[width="500"]
+{sp}
+
+Everything you need to know about Unify is in this user guide.
+
+You are able to quickly navigate the user guide by clicking on the links found in the table of contents at the top of the user guide.
+
+An example of the user guide for the features is shown below. You are able to identify the feature's title, description, format and easy to follow step by step instructions.
+
+image::UG_howtouse1.png[width="590"]
+{sp}
+
+To find the information you need, just look out for these sub-headers in the user guide. These are the few sub-headers you will find in this user guide below.
+
+These sub-headers are unique, they are marked with a circle surrounding the first letter of the header. This help you find the information quickly. Just look out for the first letter in the circle and you are able to find what you need to know!
+
+For example, the letter "F" in the circle represent format. Hence, you just have to look out for the letter "F" in the circle, to find the format quickly.
+
+image::UG_howtouse2.png[width="590"]
+
+Follow the step by step instructions by doing step 1 first. Step 1 is linked to the numbered icons that labels the section of the user interface you have to interacts with.
+Therefore, you should have a similar user interface of Unify when following the step by step instructions.
+
+image::UG_howtouse3.png[width="590"]
+{sp}
+
+=== A Quick Look At Unify
+
+Unify's user interface is split into a few sections. These sections are highlighted in the image below.
+
+* Command Box
+* Message Box
+* List of Contacts
+* Contact's Details
+
+image::UG_introui.png[width="790"]
 
 == Quick Start
 image::UG_mainheader_installationguide.png[width="900"]
