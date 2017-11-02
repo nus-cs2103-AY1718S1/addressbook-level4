@@ -1,3 +1,4 @@
+//@@author aali195
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
@@ -39,3 +40,4 @@ public class ImageCommandParser implements Parser<ImageCommand> {
         return new ImageCommand(index, new Image(path));
     }
 }
+//@@author

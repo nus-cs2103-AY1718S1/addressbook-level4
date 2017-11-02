@@ -1,3 +1,4 @@
+//@@author aali195
 package seedu.address.storage;
 
 import static java.util.Objects.requireNonNull;
@@ -36,3 +37,4 @@ public class ImageStorage {
 
     }
 }
+//@@author
