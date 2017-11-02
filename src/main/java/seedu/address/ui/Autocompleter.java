@@ -183,7 +183,6 @@ public class Autocompleter {
     }
 
     private boolean needIndex(String arguments) {
-
         return  (state.equals(AutocompleteState.INDEX) && lastCharIsDigit(textInCommandBox))
                 || !(containsIndex(arguments));
     }
