@@ -26,7 +26,9 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
+    //@@author derickjw
     private final UserPrefs userPrefs;
+    //@@author
     private final FilteredList<ReadOnlyPerson> filteredPersons;
 
     /**
@@ -39,7 +41,9 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        //@@author derickjw
         this.userPrefs = userPrefs;
+        //@@author
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
@@ -94,12 +98,12 @@ public class ModelManager extends ComponentManager implements Model {
     public void clearScheduleForPerson(Integer index, TreeSet<Integer> schedule) throws PersonNotFoundException {
         addressBook.clearScheduleForPerson(index, schedule);
     }
-
+    //@@author derickjw
     @Override
     public UserPrefs getUserPrefs() {
         return userPrefs;
     }
-
+    //@@author
     //=========== Filtered Person List Accessors =============================================================
 
     /**

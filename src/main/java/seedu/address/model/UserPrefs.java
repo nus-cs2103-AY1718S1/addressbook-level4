@@ -14,8 +14,10 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
+    //@@author derickjw
     private String password = "";
     private String username = "";
+    //@@author
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -79,6 +81,7 @@ public class UserPrefs {
         return sb.toString();
     }
 
+    //@@author derickjw
     /**
      *
      * @param input (Password typed in command line)
