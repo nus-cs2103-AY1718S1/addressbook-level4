@@ -288,7 +288,7 @@ Format: `clear`
 === Editing user preference : `pref`
 
 Edits the user preference. +
-Format: `pref KEY [NEW_VALUE]` +
+Format: `pref [KEY] [NEW_VALUE]` +
 If  `NEW_VALUE` is blank, the current preference will be displayed. +
 [NOTE]
 ====
@@ -374,13 +374,9 @@ Can also use shortcut 'r'
 * *Preference* : `pref KEY [NEW_VALUE]`
 Can also use shortcut 'p'
 * *Display Mode* : `choose [NEW_VALUE]`
+
 == Features coming in v2.0
 
-* *Enhanced tag* - see more in-depth details of a tag
-* *Address book letters* - user is able to view contacts by starting letter, similar to current address books
-* *Sort by tag*
-* *Finding Linkedin contacts*
-* *Sort contacts lexicographically*
 * *Find nearest meeting location* - finds a common meeting point based on users' addresses
 * *Add meeting time* - Adds a meeting time to the contacts that is removed automatically when the time is reached
 * *Retrieve meeting of the day* - Shows all current meetings for today that have been scheduled
