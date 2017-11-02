@@ -8,10 +8,12 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+//@@author martyn-wong
 /**
  *  Returns selected person's address in google map search in browser panel
  */
 public class MapCommand extends UndoableCommand {
+
     public static final String COMMAND_WORD = "map";
     public static final String COMMAND_ALIAS ="m";
 
