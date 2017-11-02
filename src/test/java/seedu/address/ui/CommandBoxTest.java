@@ -126,7 +126,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.DOWN, "");
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
-
+    //@@author Kowalski985
     @Test
     public void tabAutoCompleteTest_withNoMatchingCommands() {
         // text field is empty
@@ -170,6 +170,7 @@ public class CommandBoxTest extends GuiUnitTest {
         guiRobot.push(KeyCode.E);
         assertInputHistory(KeyCode.TAB, "edit");
     }
+    //@@author
 
     /**
      * Runs a command that fails, then verifies that <br>
