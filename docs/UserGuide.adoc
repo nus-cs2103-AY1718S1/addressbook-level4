@@ -384,6 +384,16 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+=== Clearing ConnectUs LogFile : `clearlog`
+
+Clears the ConnectUs Logfile. +
+Format: 'clearlog' 'cl'
+
+All important actions made by the user such as add,clear,edit,delete,import,list,redo,undo and starting of application +
+are recorded in the ConnectUs.txt logfile. Users have the option of clearing the logfile in order to make the log more+
+organised.
+
+
 == Upcoming Features
 (added in v1.2)
 
