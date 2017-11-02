@@ -167,8 +167,10 @@ public class MainWindow extends UiPart<Region> {
         meetingPanel = new MeetingPanel(logic);
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
+        //@@author fongwz
         SettingsSelector settingsSelector = new SettingsSelector();
         settingsSelectorPlaceholder.getChildren().add(settingsSelector.getRoot());
+        //@@author
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -180,12 +182,13 @@ public class MainWindow extends UiPart<Region> {
                 logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
+        //@@author fongwz
         //Setting initial position of settings panel
         settingsPane.setTranslateX(160);
 
         CommandBox commandBox = new CommandBox(logic, commandBoxHelperPlaceholder, settingsPane);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
-
+        //@@author
     }
 
     void hide() {
@@ -264,6 +267,7 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author fongwz
     @Subscribe
     private void handleShowBrowserEvent(ShowBrowserEvent event) {
         browserPlaceholder.getChildren().remove(meetingPanel.getRoot());
@@ -284,4 +288,5 @@ public class MainWindow extends UiPart<Region> {
             logger.info("Meeting panel is already displayed!");
         }
     }
+    //@@author
 }

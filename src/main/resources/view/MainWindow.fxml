@@ -23,12 +23,13 @@
         </Menu>
     </MenuBar>
 
-
+    <!-- @@author fongwz -->
     <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
         <padding>
             <Insets bottom="5" left="10" right="10" top="5" />
         </padding>
     </StackPane>
+    <!-- @@author -->
 
     <StackPane maxHeight="100.0" minHeight="100.0" prefHeight="100.0">
         <children>
@@ -44,6 +45,7 @@
         </children>
     </StackPane>
 
+    <!-- @@author fongwz -->
           <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
         <VBox fx:id="personList" minWidth="340.0" prefWidth="340.0" SplitPane.resizableWithParent="false">
             <padding>
@@ -73,6 +75,7 @@
          </padding>
       </StackPane>
     </SplitPane>
+    <!-- @@author -->
 
     <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
 </VBox>
