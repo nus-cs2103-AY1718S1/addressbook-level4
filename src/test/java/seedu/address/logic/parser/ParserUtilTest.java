@@ -169,7 +169,7 @@ public class ParserUtilTest {
         assertEquals(expectedEmail, actualEmail.get());
     }
 
-
+    //@@author lincredibleJC
     @Test
     public void parseGrades_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
@@ -194,6 +194,7 @@ public class ParserUtilTest {
 
         assertEquals(expectedGrades, actualGrades.get());
     }
+    //@@author
 
     @Test
     public void parseRemark_null_throwsNullPointerException() throws Exception {

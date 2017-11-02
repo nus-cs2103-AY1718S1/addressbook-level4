@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author lincredibleJC
 /**
  * Calculates statistics of the persons inside an ObservableList
  */

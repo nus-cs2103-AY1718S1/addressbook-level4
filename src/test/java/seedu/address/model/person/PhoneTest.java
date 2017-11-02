@@ -1,3 +1,4 @@
+//@@author Lenaldnwj
 package seedu.address.model.person;
 
 import static org.junit.Assert.assertEquals;
@@ -6,7 +7,6 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-
 
 public class PhoneTest {
 
@@ -26,9 +26,11 @@ public class PhoneTest {
         assertFalse(Phone.isValidPhone("Student: gfxgfx Parent: gfxgfxgfx")); // purely alphabets
         assertFalse(Phone.isValidPhone("Student: 97272031")); // must have at least parent number
         assertFalse(Phone.isValidPhone("Parent: 97979797 "
-                + "Student: 97272031")); // parent number should be entered after student number if both have number.
+                + "Student: 97272031")); // parent number should be entered after student number
+        // if both parent and student number are entered.
         assertFalse(Phone.isValidPhone("Parent: 972701")); // have at least parent number, but not exactly 8 digits.
-
+        assertFalse(Phone.isValidPhone("StudenT: 97272031 "
+                + "ParenT: 97979797")); // only first letter of student and parent can be in upper case
 
         // valid phone numbers
         assertTrue(Phone.isValidPhone("Student: 97272031 "
@@ -53,13 +55,15 @@ public class PhoneTest {
                 "student: 97272011 Parent: 97979700"); // Letter s not capitalised
         assertNotEquals(Phone.changeToAppropriateUiFormat("student/97272030 parent/97979797"),
                 "Student: 97272011 parent: 97979700"); // Letter p not capitalised
+        assertNotEquals(Phone.changeToAppropriateUiFormat("student/97272030 parent/97979797"),
+                ""); // Returned empty string
 
 
         // Valid Ui Format
         assertEquals(Phone.changeToAppropriateUiFormat("student/97272030 parent/97979797"),
                 "Student: 97272030 Parent: 97979797"); // valid Ui format
-        assertEquals(Phone.changeToAppropriateUiFormat("student/97278977 parent/97979776"),
-                "Student: 97278977 Parent: 97979776"); // valid Ui format with another set of numbers
+        assertEquals(Phone.changeToAppropriateUiFormat("parent/97979776"),
+                "Parent: 97979776"); // Student number left out (student number is a optional field)
         assertEquals(Phone.changeToAppropriateUiFormat("student/82278977 parent/97979776"),
                 "Student: 82278977 Parent: 97979776"); // valid Ui format with another set of numbers
     }

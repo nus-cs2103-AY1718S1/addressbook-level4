@@ -11,6 +11,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.FindTagsCommand;
 import seedu.address.model.person.TagsContainsKeywordsPredicate;
 
+//@@author lincredibleJC
 public class FindTagsCommandParserTest {
     private FindTagsCommandParser parser = new FindTagsCommandParser();
 

@@ -146,6 +146,7 @@ Returns `john` and `John Doe`
 * `f Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+// tag::findtags[]
 === Locating persons by tags: `findtags` `Since v1.1`
 
 Finds persons whose tags contain all of the given keywords. +
@@ -170,6 +171,7 @@ Returns any person having both `friends` and `owesMoney` tags
 Returns any person having the tag `friends`
 * `ft Betsy Tim John` +
 Returns any person having both `friends` and `owesMoney` tags
+// end::findtags[]
 
 === Deleting a person : `delete` `Since v1.0`
 

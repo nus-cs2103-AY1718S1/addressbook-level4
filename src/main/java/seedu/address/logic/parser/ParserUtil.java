@@ -75,6 +75,7 @@ public class ParserUtil {
         return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.empty();
     }
 
+    //@@author lincredibleJC
     /**
      * Parses a {@code Optional<String> formClass} into an {@code Optional<FormClass>} if {@code formClass}
      * is present.
@@ -94,6 +95,7 @@ public class ParserUtil {
         requireNonNull(grades);
         return grades.isPresent() ? Optional.of(new Grades(grades.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> postalCode} into an {@code Optional<PostalCode>} if {@code postalCode}

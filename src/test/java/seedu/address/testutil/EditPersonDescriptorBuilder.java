@@ -86,6 +86,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author lincredibleJC
     /**
      * Sets the {@code FormClass} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -97,7 +98,9 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
+    //@@author
 
+    //@@author lincredibleJC
     /**
      * Sets the {@code Grades} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -109,6 +112,8 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
+    //@@author
+
     /**
      * Sets the {@code PostalCode} of the {@code EditPersonDescriptor} that we are building.
      */

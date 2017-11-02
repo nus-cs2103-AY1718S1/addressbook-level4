@@ -3,19 +3,21 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+== Project: cherBook
+cherBook is an address book application used by teachers to monitor students' academic progress.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 8 kLoC.
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== Enhancement Added: Undo/Redo
+=== Enhancement Added: FindTags
 
 ==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag= findtags]
 
 #End of Extract#
 
@@ -23,28 +25,70 @@ include::../UserGuide.adoc[tag=undoredo]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+As an addressbook application, there is a need for users to be able to quickly and efficiently find their contacts.
+Since contacts are also categorised by tags, and there was no way to search by tags, I decided to solve this problem by implementing FindTags.
+
+I decided to use AND search and not OR search for FindTags as it narrows down the contact list by their of tags, making it much more efficient to find people with a specific combination of tags.
+In this scenario, using OR search for FindTags would not make sense as OR search increases the number of search results as more search terms are used.
+This makes it more difficult and less efficient for the user to find the wanted person.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag= findtags]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Added: Statistics Panel
 
-{Explain similar to the Undo/Redo feature above.}
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag= undoredo ]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+As an application for teachers to easily monitor students' academic performance, the ability to extract and draw insights from the data is very important.
+Hence, I decided to added the statistics panel to show teachers the necessary information needed so that they knows who best to focus their efforts on.
+
+In the implementation, I chose for the Statistics Panel to always show the grades, of the list of students currently in the left side.
+This because teachers not only want to know how each student is doing but also how whole classes or groups of students are doing.
+Hence, by always providing statistics for the students in the list currently, the teacher is able to have the big picture view of how the whole school is doing
+and still be able to narrow down the demographic to individual CCA clubs or select groups based on their tags.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag= undoredo ]
+
+#End of Extract#
+
+---
+=== Enhancement Proposed: Add command `compare`
+
+{Explain similar to the feature above.}
 
 === Other contributions
 
 * Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
 
-== Project: PowerPointLabs
+== Project: NUShortcuts
 
-{Optionally (not graded), you may include other projects in your portfolio.}
+https://nushortcuts.herokuapp.com/[NUShortcuts] is a web application to provide step by step picture guides to for shortcuts around NUS.
+This was done for CP2106 - Orbital Programme from May 2017 to Aug 2017. Over the three months, I have implemented all three route types:
+Fastest Route, Sheltered route and Least Stairs. Users can search for their desired locations in NUS, check its details and see the shortest walking path and route by bus to the destination.
+Through the settings menu, users can also customise their choice of transport and their estimated walking speed to get better estimates.
+I also implemented a Ranking system for the most commonly travelled locations and also a feedback page where users can give feedback on how to improve the application.
