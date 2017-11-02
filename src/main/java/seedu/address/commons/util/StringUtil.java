@@ -17,7 +17,9 @@ import javax.xml.bind.DatatypeConverter;
  */
 public class StringUtil {
 
-    private static final String GRAVATAR_URL_FORMAT = "https://www.gravatar.com/avatar/%1$s.jpg?d=%2$s";
+    private static final String GRAVATAR_SIZE = "90";
+    private static final String GRAVATAR_URL_FORMAT = "https://www.gravatar.com/avatar/%1$s.jpg?d=%2$s&s=" +
+            GRAVATAR_SIZE;
     private static final String GRAVATAR_DEFAULT_FALLBACK = "person";
     private static final HashMap<String, String> defaultGravatar = new HashMap<>();
 

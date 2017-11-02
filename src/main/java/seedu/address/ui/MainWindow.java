@@ -206,7 +206,8 @@ public class MainWindow extends UiPart<Region> {
     private void downloadProfilePictures(ObservableList<ReadOnlyPerson> persons) {
         for (ReadOnlyPerson person : persons) {
             try {
-                String gravatarUrl = StringUtil.generateGravatarUrl(person.getEmail().value);
+                String gravatarUrl = StringUtil.generateGravatarUrl(person.getEmail().value,
+                        prefs.getDefaultProfilePhoto());
                 String filename = String.format(PersonCard.PROFILE_PHOTO_FILENAME_FORMAT, person.getInternalId().value);
                 storage.saveFileFromUrl(gravatarUrl, filename);
                 logger.info("Downloaded " + gravatarUrl + " to " + filename);
