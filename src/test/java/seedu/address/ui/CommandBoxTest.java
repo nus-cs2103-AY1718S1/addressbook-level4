@@ -168,7 +168,7 @@ public class CommandBoxTest extends GuiUnitTest {
     @Test
     public void tabAutoCompleteTest_withMultipleMatchingCommands() {
         guiRobot.push(KeyCode.E);
-        assertInputHistory(KeyCode.TAB, "e");
+        assertInputHistory(KeyCode.TAB, "edit");
     }
 
     /**
