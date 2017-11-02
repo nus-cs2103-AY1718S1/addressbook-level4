@@ -381,7 +381,7 @@
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
 
-#tags {
+#tags, #tagsBordered {
     -fx-hgap: 7;
     -fx-vgap: 3;
 }
@@ -389,9 +389,16 @@
 #tags .label {
     -fx-font-family: "Segoe UI", Optima;
     -fx-text-fill: derive(gray, 20%);
+    -fx-padding: 1 0 1 0;
+    -fx-font-size: 14px;
+}
+
+#tagsBordered .label {
+    -fx-font-family: "Segoe UI", Optima;
+    -fx-text-fill: derive(gray, 20%);
     -fx-padding: 1 5 1 5;
     -fx-border-color: derive(gray, 20%);
     -fx-border-width: 1;
     -fx-border-radius: 10;
-    -fx-font-size: 11px;
+    -fx-font-size: 13px;
 }
