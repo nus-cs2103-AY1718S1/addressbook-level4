@@ -12,6 +12,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * Selects a person to Generate QRCode identified using it's last displayed index from the address book.
  */
+//@@author danielweide
 public class QrCallCommand extends Command {
 
     public static final String COMMAND_WORD = "qrcall";

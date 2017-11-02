@@ -10,6 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new QrCallCommand object
  */
+//@@author danielweide
 public class QrCallCommandParser implements Parser<QrCallCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the QrCallCommand

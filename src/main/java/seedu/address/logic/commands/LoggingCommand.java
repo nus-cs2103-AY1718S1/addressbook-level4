@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 /**
  * Method to Keep Track of User Activity Log
  */
+//@@author danielweide
 public class LoggingCommand {
     /**
      *keepLog Method to Write Activity Log To The ConnectUsLog.txt file

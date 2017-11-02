@@ -8,6 +8,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 /**
  * Method to Clear ConnectUsLog.txt Command
  */
+//@@author danielweide
 public class ClearLogCommand extends Command {
     public static final String COMMAND_WORD = "clearlog";
     public static final String COMMAND_ALIAS = "cl";
