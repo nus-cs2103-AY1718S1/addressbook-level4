@@ -89,7 +89,7 @@ public class AliasCommand extends UndoableCommand {
             + PREFIX_ALIAS_KEYWORD + "ph "
             + PREFIX_ALIAS_REPRESENTATION + " Public Holiday";
 
-    public static final String MESSAGE_SUCCESS = "New alias added: %1$s";
+    public static final String MESSAGE_SUCCESS = "New alias added: %1ł$s";
     public static final String MESSAGE_DUPLICATE_ALIAS = "This alias already exists";
     public static final String MESSAGE_INVALID_KEYWORD = "Unable to use a command name as a keyword!";
 
@@ -1993,7 +1993,7 @@ public class UnmarkTaskCommandParser implements Parser<UnmarkTaskCommand> {
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
     // ================ Alias-level operations ==============================
-    
+
     /**
      * Adds an alias token
      *
