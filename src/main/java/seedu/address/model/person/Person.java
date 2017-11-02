@@ -141,12 +141,12 @@ public class Person implements ReadOnlyPerson {
     public ObjectProperty<SearchData> searchDataProperty() {
         return searchCount;
     }
-
+    //@@author Sri-vatsa
     @Override
     public SearchData getSearchData() {
         return searchCount.get();
     }
-
+    //@@author
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;
     }
