@@ -26,6 +26,7 @@ public interface Logic {
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
+    //@@author fongwz
     /** Returns an unmodifiable view of the list of commands */
     ObservableList<String> getCommandList();
 
@@ -37,6 +38,7 @@ public interface Logic {
 
     /** Returns the address book */
     ArrayList<String> getMeetingNames(Meeting meeting);
+    //@@author
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
