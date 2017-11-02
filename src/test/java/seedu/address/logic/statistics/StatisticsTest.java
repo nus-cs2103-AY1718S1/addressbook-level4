@@ -6,6 +6,7 @@ import static seedu.address.logic.statistics.Statistics.NO_PERSONS_MESSAGE;
 
 import org.junit.Test;
 
+//@@author lincredibleJC
 public class StatisticsTest {
 
     private Statistics statistics1 = new Statistics(new double[]{64630, 11735, 14216, 99233, 14470, 4978, 73429, 38120,
@@ -83,6 +84,7 @@ public class StatisticsTest {
         assertEquals(statistics7.getInterquartileRangeString(), INSUFFICIENT_DATA_MESSAGE);
     }
 
+    //TODO:Fix value problems
     @Test
     public void getVarianceString() throws Exception {
         assertEquals(statistics1.getVarianceString(), "1.03137210182E9");

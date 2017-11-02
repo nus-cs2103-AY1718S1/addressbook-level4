@@ -4,6 +4,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.FilteredListChangedEvent;
 import seedu.address.model.person.TagsContainsKeywordsPredicate;
 
+//@@author lincredibleJC
 /**
  * Finds and lists all persons in address book whose tags contains any of the argument keywords.
  * Keyword matching is case sensitive.

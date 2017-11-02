@@ -620,7 +620,7 @@ Only one remark is saved at any one time, if user does 'Remark' on the same pers
 
 //end:: Remark[]
 
-// tag::findtagsmechanism[]
+// tag::findtags[]
 === FindTags Mechanism
 
 The FindTags mechanism is implemented using FindTagsCommand.
@@ -694,7 +694,7 @@ _Figure 3.5.1 : Sequence Diagram of FindTags Operation_
 **Alternative 2:** Create `TagsContainsKeywordsPredicate` as an inner class in `FindTagsCommand` class. +
 **Pros:** It makes the codebase less complex as there are less classes. +
 **Cons:** It adds complexity to the `FindTagsCommand` source file and reduces reusability of the predicate outside of the `FindTagsCommand` +
-// tag::findtagsmechanism[]
+// end::findtags[]
 
 === Logging
 

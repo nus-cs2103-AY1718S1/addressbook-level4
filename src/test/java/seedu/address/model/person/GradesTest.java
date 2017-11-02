@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+//@@author lincredibleJC
 public class GradesTest {
     @Test
     public void isValidGrades() throws Exception {
