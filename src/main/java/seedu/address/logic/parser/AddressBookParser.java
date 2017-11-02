@@ -125,11 +125,12 @@ public class AddressBookParser {
         case UpdateUserCommand.COMMAND_ALIAS:
             return new UpdateUserCommandParser().parse(arguments);
 
-        //@@author AngularJiaSheng
+        //@@author hansiang93
         case WebCommand.COMMAND_WORD:
         case WebCommand.COMMAND_ALIAS:
             return new WebCommandParser().parse(arguments);
 
+        //@@author
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
