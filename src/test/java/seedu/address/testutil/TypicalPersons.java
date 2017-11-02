@@ -86,6 +86,7 @@ public class TypicalPersons {
 
     private TypicalPersons() {} // prevents instantiation
 
+    //@@author bladerail
     /**
      * Returns an {@code AddressBook} with all the typical persons in sorted order.
      */
@@ -123,4 +124,5 @@ public class TypicalPersons {
     public static List<ReadOnlyPerson> getSortedTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
+    //@@author
 }

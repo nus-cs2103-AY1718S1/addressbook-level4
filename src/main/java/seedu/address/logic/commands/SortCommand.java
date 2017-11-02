@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 
+//@@author bladerail
 /**
  * Sorts all persons in the address book by indicated format.
  */

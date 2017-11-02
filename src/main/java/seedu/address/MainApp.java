@@ -199,6 +199,7 @@ public class MainApp extends Application {
         return initializedPrefs;
     }
 
+    //@@author bladerail
     /**
      * Returns a {@code UserPerson} using the file at {@code storage}'s user prefs file path,
      * or a new {@code UserPerson} with default configuration if errors occur when
@@ -231,6 +232,7 @@ public class MainApp extends Application {
         return initializedPerson;
     }
 
+    //@@author
     private void initEventsCenter() {
         EventsCenter.getInstance().registerHandler(this);
     }
@@ -247,7 +249,9 @@ public class MainApp extends Application {
         ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);
+            //@@author bladerail
             storage.saveUserPerson(model.getUserPerson());
+            //@@author
         } catch (IOException e) {
             logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
         }

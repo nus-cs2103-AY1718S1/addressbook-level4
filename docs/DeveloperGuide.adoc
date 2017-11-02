@@ -491,12 +491,12 @@ listing, which is date added.
     }
 ----
 
-+ Sorting by name will display the list with names in ascending alphabetical order, regardless of capitalisation.
-+ Sorting by phone will display the list with phone numbers in ascending order.
-+ Sorting by email will display the list with emails in ascending alphabetical order, with priority given to the first
-email entered for a person. This means that the primary email for a person should be entered first.
-+ Sorting by address will display the list with addresses in ascending alphabetical order.
-+ Sorting by default will do the same as sorting by name currently.
+Sorting by name will display the list with names in ascending alphabetical order, regardless of capitalisation. +
+Sorting by phone will display the list with phone numbers in ascending order. +
+Sorting by email will display the list with emails in ascending alphabetical order, with priority given to the first
+email entered for a person. This means that the primary email for a person should be entered first. +
+Sorting by address will display the list with addresses in ascending alphabetical order. +
+Sorting by default will do the same as sorting by name currently. +
 
 ==== Design Considerations
 **Aspect:** Implementation of sorting. +
@@ -536,6 +536,13 @@ Similarly for UserProfile, the UserPerson is stored as an `XMLAdaptedPerson`, sa
 upon initialisation of the app. Whenever the UserPerson is edited using the `Update Command`, the userProfile is saved
 to the file.
 
+A UserProfile Window was added as a UI Component to display the User Profile information. Additionally, the User Profile
+can be modified from the textfields in the UI directly. The UserProfile is only saved when "OK" is clicked.
+The "Enter" button was added as an accelerator, which will click the "Cancel" button, so that unwanted changes will not be
+accidentally saved. Invalid values will be detected and changes will not be saved.
+
+image::UserProfileWindow.png[width="400" height="300"]
+
 ==== Design Considerations
 **Aspect:** Choice of location for storing UserProfile Data +
 **Alternative 1 (current choice)**: Separately from AddressBook. +
@@ -552,7 +559,6 @@ variables.
 
 ==== Further enhancements
 + Share UserProfile with others
-+ Display UserProfile graphically
 
 // end::UserProfile[]
 

@@ -35,6 +35,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UserPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
+//@@author bladerail
 /**
  * Contains integration tests (interaction with the Model) for {@code SortCommand}.
  */

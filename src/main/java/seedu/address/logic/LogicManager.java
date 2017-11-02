@@ -56,8 +56,10 @@ public class LogicManager extends ComponentManager implements Logic {
         return new ListElementPointer(history.getHistory());
     }
 
+    //@@author bladerail
     @Override
     public UserPerson getUserPerson() {
         return model.getUserPerson();
     }
+    //@@author
 }

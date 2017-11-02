@@ -6,6 +6,8 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.events.model.UserPersonChangedEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.UserPerson;
+
+//@@author bladerail
 /**
  * Represents the user's Profile in the address book.
  *
