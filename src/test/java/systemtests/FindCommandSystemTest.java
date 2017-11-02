@@ -50,11 +50,13 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        //@@author willxujun
         /* Case: find multiple persons in address book, 2 keywords -> 0 persons found because of new AND search*/
         command = FindCommand.COMMAND_WORD + " Benson Daniel";
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
+        //@@author
 
         /* Case: find multiple persons in address book, 2 keywords in reversed order -> 0 persons found*/
         command = FindCommand.COMMAND_WORD + " Daniel Benson";
