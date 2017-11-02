@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+// @@author itsdickson
+
 import static org.junit.Assert.assertEquals;
 import static seedu.address.ui.ThemesWindow.THEMES_FILE_PATH;
 
@@ -31,3 +33,4 @@ public class ThemesWindowTest extends GuiUnitTest {
         assertEquals(expectedThemesPage, themesWindowHandle.getLoadedUrl());
     }
 }
+// @@author

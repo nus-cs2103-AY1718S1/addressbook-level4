@@ -1,5 +1,7 @@
 package guitests.guihandles;
 
+// @@author itsdickson
+
 import java.net.URL;
 
 import guitests.GuiRobot;
@@ -32,3 +34,4 @@ public class ThemesWindowHandle extends StageHandle {
         return WebViewUtil.getLoadedUrl(getChildNode(THEMES_WINDOW_BROWSER_ID));
     }
 }
+// @@author

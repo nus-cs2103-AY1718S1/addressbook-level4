@@ -151,6 +151,7 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    // @@author itsdickson
     /**
      * Sets the command box style to indicate a succeeded command.
      */
@@ -163,5 +164,6 @@ public class CommandBox extends UiPart<Region> {
 
         styleClass.add(SUCCESS_STYLE_CLASS);
     }
+    // @@author
 
 }

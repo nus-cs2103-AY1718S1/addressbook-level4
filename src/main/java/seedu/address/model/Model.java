@@ -33,11 +33,13 @@ public interface Model {
     /** Adds the given event */
     void addEvent(ReadOnlyEvent event) throws DuplicateEventException;
 
+    // @@author itsdickson
     /** Favourites the given person */
     void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /** Unfavourites the given person */
     void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+    // @@author
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -55,6 +57,7 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered event list */
     ObservableList<ReadOnlyEvent> getFilteredEventList();
 
+    // @@author itsdickson
     /** Returns the themes list */
     ArrayList<String> getThemesList();
 
@@ -63,6 +66,7 @@ public interface Model {
 
     /** Returns the current theme */
     String getCurrentTheme();
+    // @@author
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.

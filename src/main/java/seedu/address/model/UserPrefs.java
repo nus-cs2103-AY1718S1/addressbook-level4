@@ -30,6 +30,7 @@ public class UserPrefs {
         guiSettings = new GuiSettings(width, height, x, y);
     }
 
+    // @@author itsdickson
     public String getTheme() {
         return theme == null ? "/view/DarkTheme.css" : theme;
     }
@@ -41,6 +42,7 @@ public class UserPrefs {
     public void updateLastUsedTheme(String theme) {
         this.theme = theme;
     }
+    // @@author
 
     public String getAddressBookFilePath() {
         return addressBookFilePath;

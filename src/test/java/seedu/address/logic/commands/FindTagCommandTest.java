@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+// @@author itsdickson
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -97,3 +99,4 @@ public class FindTagCommandTest {
         assertEquals(expectedAddressBook, model.getAddressBook());
     }
 }
+// @@author
