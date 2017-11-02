@@ -98,6 +98,7 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
+    //@@author
 
     //@@author lincredibleJC
     /**
@@ -111,6 +112,8 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
+    //@@author
+
     /**
      * Sets the {@code PostalCode} of the {@code EditPersonDescriptor} that we are building.
      */
