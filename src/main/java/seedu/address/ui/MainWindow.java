@@ -167,8 +167,8 @@ public class MainWindow extends UiPart<Region> {
             commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
         });
     }
-    //@@author
 
+    //@@author jaivigneshvenugopal
     /**
      * Fills up the placeholders of PersonListPanel with the given list name.
      * Should only display welcome page without contacts.

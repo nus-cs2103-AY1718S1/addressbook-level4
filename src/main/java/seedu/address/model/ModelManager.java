@@ -375,8 +375,8 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
         return repayingPerson;
     }
-    //@@author
 
+    //@@author
     @Override
     public void changeListTo(String listName) {
         raise(new ChangeInternalListEvent(listName));
@@ -490,7 +490,7 @@ public class ModelManager extends ComponentManager implements Model {
         return filteredOverduePersons.size();
     }
 
-    //@@author
+    //@@author khooroko
     /**
      * Obtains and updates the list of persons that share the same cluster as {@param selectedPerson}.
      */
@@ -534,6 +534,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
