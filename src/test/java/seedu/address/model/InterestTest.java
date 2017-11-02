@@ -17,6 +17,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.util.DateUtil;
 import seedu.address.testutil.PersonBuilder;
 
+//@@author lawwman
 public class InterestTest {
     // dates that interest should affect debt
     private final String sampleDateInput1 = "01-11-2017";
