@@ -5,7 +5,7 @@ import java.util.List;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.JumpToNearbyListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -46,10 +46,7 @@ public class NearbyCommand extends Command {
         }
 
         model.updateSelectedPerson(nearbyList.get(targetIndex.getZeroBased()));
-
-        Index index = listObserver.getIndexofSelectedPersonInCurrentList();
-
-        EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
+        EventsCenter.getInstance().post(new JumpToNearbyListRequestEvent(targetIndex));
 
         String currentList = listObserver.getCurrentListName();
 
