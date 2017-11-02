@@ -24,6 +24,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
     private ObjectProperty<Birthday> birthday;
     private ObjectProperty<Remark> remark;
+    private ObjectProperty<Picture> picture;
 
     private ObjectProperty<UniqueTagList> tags;
 
@@ -41,6 +42,7 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(remark);
+        this.picture = new SimpleObjectProperty<>(new Picture());
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -148,6 +150,16 @@ public class Person implements ReadOnlyPerson {
 
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;
+    }
+
+    @Override
+    public ObjectProperty<Picture> pictureProperty(){
+        return picture;
+    }
+
+    @Override
+    public Picture getPicture(){
+        return picture.get();
     }
 
     /**
