@@ -36,11 +36,11 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedResultMessage, new ModelManager());
         assertSelectedCardUnchanged();
 
-        /* Case: selects first card in person list and clears address book -> cleared and no card selected */
+        /* Case: selects first card in person list and clears address book -> cleared and no card selected
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
         selectPerson(Index.fromOneBased(1));
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
-        assertSelectedCardDeselected();
+        assertSelectedCardDeselected(); */
 
         /* Case: filters the person list before clearing -> entire address book cleared */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
