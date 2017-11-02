@@ -1,3 +1,4 @@
+//@@author Lenaldnwj
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
@@ -9,7 +10,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
  */
 public class Phone {
-
 
     public static final String MESSAGE_PHONE_CONSTRAINTS =
             "Users are to enter their numbers in this format, p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)\n"

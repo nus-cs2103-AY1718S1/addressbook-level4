@@ -1,5 +1,5 @@
 # limcel
-###### /java/seedu/address/logic/commands/SortCommand.java
+###### \java\seedu\address\logic\commands\SortCommand.java
 ``` java
 /**
  * Sorts all contacts in alphabetical order by their names from the address book.
@@ -30,18 +30,18 @@ public class SortCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/Logic.java
+###### \java\seedu\address\logic\Logic.java
 ``` java
     /** Returns an unmodifiable view of the schedule list */
     ObservableList<Schedule> getScheduleList();
 ```
-###### /java/seedu/address/logic/LogicManager.java
+###### \java\seedu\address\logic\LogicManager.java
 ``` java
     @Override
     public ObservableList<Schedule> getScheduleList() {
         return model.getScheduleList(); }
 ```
-###### /java/seedu/address/logic/parser/ScheduleCommandParser.java
+###### \java\seedu\address\logic\parser\ScheduleCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ScheduleCommand object
@@ -102,7 +102,7 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     //// schedule-level operations
 
@@ -114,20 +114,20 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
         schedules.remove(s);
     }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     public ObservableList<Schedule> getScheduleList() {
         System.out.println(schedules.asObservableList());
         return schedules.asObservableList();
     }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     public ObservableList<ReadOnlyPerson> listOfPersonNameSorted() {
         return persons.asObservableListSortedByName();
     }
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /**
      * Deletes the given {@code tag} associated with any person in the addressbook.
@@ -137,7 +137,7 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
      */
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException;
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /**
      * Sorts the list in alphabetical order.
@@ -154,7 +154,7 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
     /** Returns an unmodifiable view of the schedules list */
     ObservableList<Schedule> getScheduleList();
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException {
@@ -199,7 +199,7 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
         return FXCollections.unmodifiableObservableList(list);
     }
 ```
-###### /java/seedu/address/model/person/PostalCode.java
+###### \java\seedu\address\model\person\PostalCode.java
 ``` java
 /**
  * Represents a Person's postal code in the address book.
@@ -250,7 +250,7 @@ public class PostalCode {
     }
 }
 ```
-###### /java/seedu/address/model/ReadOnlyAddressBook.java
+###### \java\seedu\address\model\ReadOnlyAddressBook.java
 ``` java
     /**
      * Returns an unmodifiable view of the schedules list.
@@ -258,14 +258,14 @@ public class PostalCode {
      */
     ObservableList<Schedule> getScheduleList();
 ```
-###### /java/seedu/address/model/schedule/exceptions/ScheduleNotFoundException.java
+###### \java\seedu\address\model\schedule\exceptions\ScheduleNotFoundException.java
 ``` java
 /**
  * Signals that the operation is unable to find the specified schedule.
  */
 public class ScheduleNotFoundException extends Exception {}
 ```
-###### /java/seedu/address/model/schedule/Schedule.java
+###### \java\seedu\address\model\schedule\Schedule.java
 ``` java
 /**
  * Represents the user's schedule in the address book.
@@ -318,7 +318,7 @@ public class Schedule {
     }
 }
 ```
-###### /java/seedu/address/model/schedule/UniqueScheduleList.java
+###### \java\seedu\address\model\schedule\UniqueScheduleList.java
 ``` java
 /**
  * A list of schedules that enforces no nulls between its elements.
@@ -426,7 +426,7 @@ public class UniqueScheduleList implements Iterable<Schedule> {
 
 }
 ```
-###### /java/seedu/address/storage/XmlAdaptedSchedule.java
+###### \java\seedu\address\storage\XmlAdaptedSchedule.java
 ``` java
 /**
  * JAXB-friendly adapted version of the Schedule.
@@ -478,7 +478,7 @@ public class XmlAdaptedSchedule {
     }
 }
 ```
-###### /java/seedu/address/storage/XmlSerializableAddressBook.java
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
 ``` java
     @Override
     public ObservableList<Schedule> getScheduleList() {
@@ -494,12 +494,12 @@ public class XmlAdaptedSchedule {
         return FXCollections.unmodifiableObservableList(schedules);
     }
 ```
-###### /java/seedu/address/storage/XmlSerializableAddressBook.java
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
 ``` java
 
 }
 ```
-###### /java/seedu/address/ui/ExtendedPersonCard.java
+###### \java\seedu\address\ui\ExtendedPersonCard.java
 ``` java
 /**
  * Extended Person Card Panel that displays the details of a Person
@@ -557,7 +557,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
 
 }
 ```
-###### /resources/view/ExtendedPersonCard.fxml
+###### \resources\view\ExtendedPersonCard.fxml
 ``` fxml
 
 <?import javafx.geometry.Insets?>
@@ -584,7 +584,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
             <HBox alignment="TOP_LEFT" spacing="10">
             <ImageView>
                <image>
-                  <Image url="@../../../../docs/images/icons/student(32px).png" />
+                  <Image url="@../images/student(32px).png" />
                </image>
             </ImageView>
                 <Label fx:id="name" styleClass="cell_big_label" text="\$first">
@@ -602,7 +602,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
             <graphic>
                <ImageView>
                   <image>
-                     <Image url="@../../../../docs/images/icons/phone.png" />
+                     <Image url="@../images/phone.png" />
                   </image>
                </ImageView>
             </graphic>
@@ -613,7 +613,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
             <graphic>
                <ImageView>
                   <image>
-                     <Image url="@../../../../docs/images/icons/address.png" />
+                     <Image url="@../images/address.png" />
                   </image>
                </ImageView>
             </graphic></Label>
@@ -621,7 +621,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
             <graphic>
                <ImageView>
                   <image>
-                     <Image url="@../../../../docs/images/icons/class.png" />
+                     <Image url="@../images/class.png" />
                   </image>
                </ImageView>
             </graphic></Label>
@@ -629,7 +629,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
             <graphic>
                <ImageView>
                   <image>
-                     <Image url="@../../../../docs/images/icons/grades.png" />
+                     <Image url="@../images/grades.png" />
                   </image>
                </ImageView>
             </graphic></Label>
@@ -637,7 +637,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
                 <graphic>
                     <ImageView>
                         <image>
-                            <Image url="@../../../../docs/images/icons/postalCode.png" />
+                            <Image url="@../images/postalCode.png" />
                         </image>
                     </ImageView>
                 </graphic></Label>
@@ -645,7 +645,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
             <graphic>
                <ImageView>
                   <image>
-                     <Image url="@../../../../docs/images/icons/email.png" />
+                     <Image url="@../images/email.png" />
                   </image>
                </ImageView>
             </graphic></Label>
@@ -653,7 +653,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
             <graphic>
                <ImageView>
                   <image>
-                     <Image url="@../../../../docs/images/icons/remark.png" />
+                     <Image url="@../images/remark.png" />
                   </image>
                </ImageView>
             </graphic></Label>
