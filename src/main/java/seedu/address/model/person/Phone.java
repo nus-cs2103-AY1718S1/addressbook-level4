@@ -20,9 +20,9 @@ public class Phone {
     public final String value;
 
     /**
-     * Validates given phone number.
+     * Validates the UI formatting phone number.
      *
-     * @throws IllegalValueException if given phone string is invalid.
+     * @throws IllegalValueException if phone UI string is of invalid format.
      */
     public Phone(String phone) throws IllegalValueException {
         requireNonNull(phone);
@@ -35,14 +35,15 @@ public class Phone {
     }
 
     /**
-     * Returns true if a given string is a valid person phone number.
+     * Returns true if a given string is a valid person phone number for display in UI.
      */
     public static boolean isValidPhone(String test) {
         return test.matches(PHONE_VALIDATION_REGEX);
     }
 
     /**
-     * Replace all occurrence of "/" with ":" and capitalise first letter of student and parent.
+     * Converts user phone number input into an appropriate UI format by
+     * replacing all occurrence of "/" with ": " and capitalising first letter of student and parent.
      */
     public static String changeToAppropriateUiFormat(String value) {
 
