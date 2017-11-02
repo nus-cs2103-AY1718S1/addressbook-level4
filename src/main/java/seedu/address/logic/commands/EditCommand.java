@@ -112,7 +112,7 @@ public class EditCommand extends UndoableCommand {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-        ExpiryDate updatedExpiryDate = editPersonDescriptor.getExpiryDate().orElse(personToEdit.getExpiryDate());
+        ExpiryDate updatedExpiryDate = personToEdit.getExpiryDate();
         Remark updatedRemark = personToEdit.getRemark();
         Group updatedGroup = editPersonDescriptor.getGroup().orElse(personToEdit.getGroup());
         Image updatedImage = personToEdit.getImage();
@@ -169,8 +169,7 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags,
-                    this.group, this.expiryDate);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags, this.group);
         }
 
         public void setName(Name name) {
@@ -227,14 +226,6 @@ public class EditCommand extends UndoableCommand {
 
         public void setImage(Image image) {
             this.image = image;
-        }
-
-        public void setExpiryDate(ExpiryDate date) {
-            this.expiryDate = date;
-        }
-
-        public Optional<ExpiryDate> getExpiryDate() {
-            return Optional.ofNullable(expiryDate);
         }
 
         @Override
