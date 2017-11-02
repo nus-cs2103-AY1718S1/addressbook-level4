@@ -38,11 +38,13 @@ public class LifeInsurance implements ReadOnlyInsurance {
     private StringProperty contractPath;
     private StringProperty signingDateString;
     private StringProperty expiryDateString;
+
     //@@author Juxarius
     private LocalDate signingDate;
     private LocalDate expiryDate;
     //@@author
 
+    //@author OscarWang114
     /**
      * Constructor for {@code XmlAdaptedLifeInsurance.toModelType()}
      */
@@ -91,18 +93,6 @@ public class LifeInsurance implements ReadOnlyInsurance {
      * Creates a copy of the given ReadOnlyInsurance.
      */
     public LifeInsurance(ReadOnlyInsurance source) {
-        //TODO: fix
-        /*
-        if (source.ownerProperty() != null) {
-            this.owner = new SimpleObjectProperty<>(source.getOwner());
-        }
-        if (source.insuredProperty() != null) {
-            this.insured = new SimpleObjectProperty<>(source.getInsured());
-        }
-        if (source.beneficiaryProperty() != null) {
-            this.beneficiary = new SimpleObjectProperty<>(source.getBeneficiary());
-        }
-        */
         this.roleToPersonNameMap = new EnumMap<>(Roles.class);
         this.roleToPersonNameMap.put(Roles.OWNER, source.getOwner().getName());
         this.roleToPersonNameMap.put(Roles.INSURED, source.getInsured().getName());
@@ -115,27 +105,6 @@ public class LifeInsurance implements ReadOnlyInsurance {
         this.contractPath = new SimpleStringProperty(source.getContractPath());
         this.signingDateString = new SimpleStringProperty(source.getSigningDateString());
         this.expiryDateString = new SimpleStringProperty(source.getExpiryDateString());
-    }
-
-    public void setInsuranceRole(Person person) {
-        String fullName = person.getName().fullName;
-        roleToPersonNameMap.forEach((role, name) -> {
-            if (name == fullName) {
-                switch (role) {
-                case OWNER:
-                    this.owner = new SimpleObjectProperty<>(new InsurancePerson(person));
-                    break;
-                case INSURED:
-                    this.insured = new SimpleObjectProperty<>(new InsurancePerson(person));
-                    break;
-                case BENEFICIARY:
-                    this.beneficiary = new SimpleObjectProperty<>(new InsurancePerson(person));
-                    break;
-                default:
-                    assert (false);
-                }
-            }
-        });
     }
 
     @Override
@@ -266,3 +235,4 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return expiryDateString.get();
     }
 }
+
