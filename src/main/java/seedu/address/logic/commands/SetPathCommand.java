@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import seedu.address.commons.core.ProfilePicturesFolder;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+//@@author jaivigneshvenugopal
 /**
  * Sets the absolute path to the profile pictures folder that is residing in user's workspace.
  */

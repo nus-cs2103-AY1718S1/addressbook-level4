@@ -10,6 +10,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.ProfilePicturesFolder;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author jaivigneshvenugopal
 /**
  * Displays profile picture of each debtor
  */

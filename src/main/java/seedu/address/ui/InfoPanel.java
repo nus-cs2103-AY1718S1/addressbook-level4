@@ -172,10 +172,16 @@ public class InfoPanel extends UiPart<Region> {
     }
     //@@author
 
+    //@@author jaivigneshvenugopal
+    /**
+     * Resets the debtors profile picture to the latest one existing in folder
+     * @param person the person whose person card is selected in the address book
+     */
     private void resetDebtorProfilePicture(ReadOnlyPerson person) {
         debtorProfilePicture = new DebtorProfilePicture(person);
         profilePicPlaceholder.getChildren().add(debtorProfilePicture.getImageView());
     }
+    //@@author jaivigneshvenugopal
 
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties

@@ -1,5 +1,6 @@
 package seedu.address.commons.core;
 
+//@@author jaivigneshvenugopal
 /**
  * Contains path to user's folder that contains profile pictures of all clients.
  */
