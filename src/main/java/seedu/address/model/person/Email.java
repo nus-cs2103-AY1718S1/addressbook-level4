@@ -27,7 +27,7 @@ public class Email {
         if (!isValidEmail(trimmedEmail)) {
             throw new IllegalValueException(MESSAGE_EMAIL_CONSTRAINTS);
         }
-        this.value = trimmedEmail;
+        this.value = trimmedEmail.toLowerCase();
     }
 
     /**
