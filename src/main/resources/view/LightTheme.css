@@ -1,15 +1,7 @@
 .root {
+    -fx-background-color: #f7f5f4;
     -fx-accent: derive(#f7f5f4, -10%);
     -fx-focus-color: derive(#f7f5f4, -10%);
-}
-
-.background {
-    -fx-background-color: #f7f5f4;
-    background-color: #ffffff; /* Used in the default.html file */
-}
-
-.v-box {
-    -fx-background-color: #f7f5f4;
 }
 
 .label {
@@ -157,9 +149,22 @@
      -fx-border-top-width: 1px;
 }
 
+.command-pane {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 18 18 18 18;
+    -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 1, 2);
+}
+
 .result-pane {
      -fx-background-color: #ffffff;
      -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 2, 2);
+}
+
+.result-text-area {
+    -fx-background-color: transparent;
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 12pt;
+    -fx-text-fill: gray;
 }
 
 .person-detail-panel {
@@ -167,20 +172,13 @@
     -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 2, 2);
 }
 
-.person-vbox {
+.person-list-panel {
     -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, -2, 2);
 }
 
 .status-bar {
     -fx-background-color: derive(#f7f5f4, 80%);
     -fx-padding: 0 10 0 10;
-}
-
-.result-display {
-    -fx-background-color: transparent;
-    -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 12pt;
-    -fx-text-fill: gray;
 }
 
 .status-bar .label {
@@ -226,10 +224,6 @@
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: derive(#716f70, -10%);
     -fx-opacity: 0.9;
-}
-
-.menu .left-container {
-    -fx-background-color: black;
 }
 
 /*
@@ -337,14 +331,6 @@
     -fx-background-color: transparent;
     -fx-border-width: 0;
 }
-/*
-#avatarImage {
-    -fx-image: url("../images/avatarGray.png");
-}
-*/
-#phone {
-    -fx-image: url("../images/phone.png");
-}
 
 #initial_small {
     -fx-font-family: "Roboto";
@@ -358,11 +344,6 @@
     -fx-font-size: 45px;
 }
 
-#commandTypeLabel {
-    -fx-font-size: 11px;
-    -fx-text-fill: #f70d1a;
-}
-
 #commandTextField {
     -fx-background-color: transparent;
     -fx-background-insets: 0;
@@ -373,19 +354,18 @@
     -fx-text-fill: gray;
 }
 
-.command-pane {
-    -fx-background-color: #ffffff;
-    -fx-background-radius: 18 18 18 18;
-    -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 1, 2);
-}
-
-#filterField, #personListPanel {
-    -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
+#commandTypeLabel {
+    -fx-font-size: 11px;
+    -fx-text-fill: #f70d1a;
 }
 
 #resultDisplay .content {
     -fx-background-color: transparent, #ffffff, transparent, #ffffff;
     -fx-background-radius: 0;
+}
+
+#filterField, #personListPanel {
+    -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
 
 #tags {
