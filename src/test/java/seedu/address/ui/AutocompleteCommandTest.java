@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+//@@author Kyle
 public class AutocompleteCommandTest {
     @Test
     public void getInstance() throws Exception {

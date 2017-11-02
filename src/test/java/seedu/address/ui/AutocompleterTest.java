@@ -13,7 +13,7 @@ import seedu.address.logic.LogicManager;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
-
+//@@author Kyle
 public class AutocompleterTest extends GuiUnitTest {
 
     private static final String EMPTY_STRING = "";
