@@ -190,12 +190,12 @@ Format: `clear`
 
 === Key features
 
-==== Finding persons by any field : `find` [Since v1.2]
+==== Finding persons by any field : `find` [Since v1.2 and v1.5]
 
 => Alias: `f` <=
 
 Finds person based on the searched  field. +
-Format: `find KEYWORD based on [n/NAME] or  [p/PHONE]  or [e/EMAIL] or [a/ADDRESS] or  [t/TAG]`
+Format: `find KEYWORD based on [n/NAME] or  [p/PHONE]  or [c/COUNTRY] or [e/EMAIL] or [a/ADDRESS] or  [t/TAG] or [act/ACTIVTY]`
 
 
 ****
@@ -237,6 +237,14 @@ Returns person with address `30, Geylang Street 29 , #10-08, Singapore 705678`
 Returns all persons with tag `boss`
 * `find t/CEO boss` +
 Returns all persons with tag `CEO` and `boss`
+
+* `find act/Interview` +
+Returns all persons with scheduled activity `Interview`
+* `find t/Party Presentation` +
+Returns all persons with tag `Party` and `Presentation`
+
+* `find c/Singapore` +
+Returns all persons of country code `Singapore`
 
 ==== Locating a person's address : `locate` [Since v1.2]
 
