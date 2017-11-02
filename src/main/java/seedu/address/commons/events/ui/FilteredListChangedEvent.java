@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author lincredibleJC
 /**
  * Represents a Change in the current Filtered List
  */

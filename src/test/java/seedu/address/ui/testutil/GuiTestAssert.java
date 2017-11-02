@@ -50,6 +50,7 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getRemark().value, actualCard.getRemark());
     }
 
+    //@@author lincredibleJC
     /**
      * Asserts that {@code statisticsPanelHandle} displays the statistics correctly
      */
