@@ -56,5 +56,7 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    //@@author hj2304
     void sort();
+    //@@author hj2304
 }

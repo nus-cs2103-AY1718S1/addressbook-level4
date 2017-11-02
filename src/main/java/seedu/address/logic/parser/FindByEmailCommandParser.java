@@ -8,6 +8,7 @@ import seedu.address.logic.commands.FindByEmailCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.EmailContainsKeywordsPredicate;
 
+//@@author hj2304
 /**
  * Parses input arguments and creates a new FindByEmailCommand object
  */
@@ -31,3 +32,4 @@ public class FindByEmailCommandParser implements Parser<FindByEmailCommand> {
     }
 
 }
+//@@author hj2304

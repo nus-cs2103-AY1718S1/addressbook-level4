@@ -6,6 +6,7 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author hj2304
 /**
  * Represents a Person's mrt station in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidMrt(String)}
@@ -67,4 +68,4 @@ public class Mrt {
     }
 
 }
-
+//@@author hj2304
