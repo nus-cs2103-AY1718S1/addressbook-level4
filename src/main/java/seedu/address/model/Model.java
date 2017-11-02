@@ -30,8 +30,10 @@ public interface Model {
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
+    //@@author chernghann
     /** Adds the given event */
     void addEvent(ReadOnlyEvent event) throws DuplicateEventException;
+    //@@author
 
     /** Favourites the given person */
     void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException;
@@ -52,8 +54,10 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
+    //@@author chernghann
     /** Returns an unmodifiable view of the filtered event list */
     ObservableList<ReadOnlyEvent> getFilteredEventList();
+    //@@author
 
     /** Returns the themes list */
     ArrayList<String> getThemesList();
@@ -70,11 +74,13 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    //@@author chernghann
     /**
      * Updates the filter of the filtered events list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate);
+    //@@author
 
     /** Sorts the address book person list */
     void sort();

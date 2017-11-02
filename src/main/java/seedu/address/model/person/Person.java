@@ -90,6 +90,7 @@ public class Person implements ReadOnlyPerson {
         return phone.get();
     }
 
+    //@@author chernghann
     public void setHomeNumber(HomeNumber homeNumber) {
         this.homeNumber.set(requireNonNull(homeNumber));
     }
@@ -103,6 +104,7 @@ public class Person implements ReadOnlyPerson {
     public HomeNumber getHomeNumber() {
         return homeNumber.get();
     }
+    //@@author
 
     public void setEmail(Email email) {
         this.email.set(requireNonNull(email));
@@ -118,6 +120,7 @@ public class Person implements ReadOnlyPerson {
         return email.get();
     }
 
+    //@@author chernghann
     public void setSchEmail(SchEmail schEmail) {
         this.schEmail.set(requireNonNull(schEmail));
     }
@@ -134,6 +137,7 @@ public class Person implements ReadOnlyPerson {
     public void setWebsite(Website website) {
         this.website.set(requireNonNull(website));
     }
+    //@@author
 
     @Override
     public ObjectProperty<Website> websiteProperty() {

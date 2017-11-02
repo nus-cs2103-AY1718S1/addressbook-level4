@@ -1,5 +1,6 @@
 package seedu.address.model.event.exceptions;
 
+//@@author chernghann
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Date;
 import seedu.address.model.event.Event;

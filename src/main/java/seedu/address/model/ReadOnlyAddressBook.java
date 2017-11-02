@@ -20,7 +20,9 @@ public interface ReadOnlyAddressBook {
      * Returns an unmodifiable view of the event list.
      * This list will not contain any duplicate event.
      */
+    //@@author chernghann
     ObservableList<ReadOnlyEvent> getEventList();
+    //@@author
 
     /**
      * Returns an unmodifiable view of the tags list.

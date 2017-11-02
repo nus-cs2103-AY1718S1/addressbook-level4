@@ -66,9 +66,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    //@@author chernghann
     public void setEvents(List<? extends ReadOnlyEvent> events) throws DuplicateEventException {
         this.events.setEvent(events);
     }
+    //@@author
 
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
@@ -197,10 +199,12 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @throws DuplicateEventException if an equivalent event already exists.
      */
+    //@@author chernghann
     public void addEvent(ReadOnlyEvent p) throws DuplicateEventException {
         Event newEvent = new Event(p);
         events.add(newEvent);
     }
+    //@@author
 
     /**
      * Initialises the Themes ArrayList
@@ -241,10 +245,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asObservableList();
     }
 
+    //@@author chernghann
     @Override
     public ObservableList<ReadOnlyEvent> getEventList() {
         return events.asObservableList();
     }
+    //@@author chernghann
 
     @Override
     public ObservableList<Tag> getTagList() {
