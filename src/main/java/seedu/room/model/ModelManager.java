@@ -77,6 +77,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new ResidentBookChangedEvent(residentBook));
     }
 
+    //@@author Haozhe321
     /**
      * delete temporary persons on start up of the app
      */
@@ -94,6 +95,7 @@ public class ModelManager extends ComponentManager implements Model {
             }
         }
     }
+    //@@author
 
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
@@ -108,11 +110,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateResidentBookChanged();
     }
 
+    //@@author Haozhe321
     @Override
     public synchronized void deleteByTag(Tag tag) throws IllegalValueException, CommandException {
         residentBook.removeByTag(tag);
         indicateResidentBookChanged();
     }
+    //@@author
 
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)

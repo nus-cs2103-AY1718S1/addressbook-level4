@@ -29,6 +29,7 @@ public class ModelManagerTest {
         modelManager.getFilteredPersonList().remove(0);
     }
 
+    //@@author Haozhe321
     @Test
     public void deleteTemporaryTest() throws IllegalValueException, PersonNotFoundException {
         ResidentBook residentBook = new ResidentBookBuilder().withPerson(TEMPORARY_JOE).build();
@@ -44,6 +45,7 @@ public class ModelManagerTest {
         assertFalse(modelManager.getResidentBook().getPersonList().size() == 0);
 
     }
+    //@@author
 
     @Test
     public void equals() {

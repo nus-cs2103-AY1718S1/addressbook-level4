@@ -163,9 +163,11 @@ public class ResidentBook implements ReadOnlyResidentBook {
         }
     }
 
+    //@@author Haozhe321
     public void removeByTag(Tag tag) throws IllegalValueException, CommandException {
         persons.removeByTag(tag);
     }
+    //@@author
 
     //// tag-level operations
 
