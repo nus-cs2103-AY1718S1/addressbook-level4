@@ -56,6 +56,10 @@ public class MainWindow extends UiPart<Region> {
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
     private EventListPanel eventListPanel;
+    //@@author reginleiff
+    private EventPanel schedulePanel;
+    private ScheduleListPanel scheduleListPanel;
+    //@@author
     private CalendarView calendarView;
     private Config config;
     private UserPrefs prefs;
@@ -74,6 +78,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane eventListPanelPlaceholder;
+
+    @FXML
+    private StackPane scheduleListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -166,11 +173,16 @@ public class MainWindow extends UiPart<Region> {
         personPanel = new PersonPanel(logic);
         //@@author
 
+        schedulePanel = new EventPanel(logic);
+
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         eventListPanel = new EventListPanel(logic.getFilteredEventList());
         eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+
+        scheduleListPanel = new ScheduleListPanel(logic.getSchedule());
+        scheduleListPanelPlaceholder.getChildren().add(scheduleListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());

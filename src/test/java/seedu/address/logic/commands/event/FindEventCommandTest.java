@@ -1,4 +1,3 @@
-//@@author A0162268B
 package seedu.address.logic.commands.event;
 
 import static org.junit.Assert.assertEquals;
@@ -29,8 +28,9 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.TitleContainsKeywordsPredicate;
 import seedu.address.model.event.timeslot.Timeslot;
 
+//@@author reginleiff
 /**
- * @@reginleiff Contains integration tests (interaction with the Model) for {@code FindEventCommand}.
+ * Contains integration tests (interaction with the Model) for {@code FindEventCommand}.
  */
 public class FindEventCommandTest {
     private Model model = new ModelManager(getTypicalEventAddressBook(), new UserPrefs());

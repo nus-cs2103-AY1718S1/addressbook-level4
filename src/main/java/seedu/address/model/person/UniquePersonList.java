@@ -100,9 +100,11 @@ public class UniquePersonList implements Iterable<Person> {
         }
         setPersons(replacement);
     }
-
+    //@@author huiyiiih
     /**
-     *
+     * Sorts the person list according to the type entered by user
+     * @param type                          Sorting type entered by user
+     * @throws InvalidSortTypeException     Indicates that the sorting type empty by user is not valid
      */
     public void sortPersonList(String type) throws InvalidSortTypeException {
         final Comparator<Person> sortByName = (
@@ -137,6 +139,7 @@ public class UniquePersonList implements Iterable<Person> {
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
     }
+    //@@author
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.

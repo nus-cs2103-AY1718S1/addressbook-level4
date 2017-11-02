@@ -9,6 +9,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.Title;
 import seedu.address.model.event.timeslot.Timeslot;
 
+//@@author reginleiff
 /**
  * JAXB-friendly version of the Event.
  */

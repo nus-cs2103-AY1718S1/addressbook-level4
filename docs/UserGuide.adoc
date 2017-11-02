@@ -218,6 +218,37 @@ In the `clients's detail` panel, user can use the `import photo` button to
 add/edit photo of the client. Upon clicking the button, a file-chooser window
  will pop up, enabling the easy choosing of image files with GUI.
 
+=== Setting relationship between 2 persons: `set`
+
+Synonyms/Aliases for the command: `rel`, `setrel` +
+Sets the relationship between 2 person. +
+User is advised to add only one relationship between the two indexes.
+
+Format: `set [INDEX] [INDEX] [PREFIX]RELATIONSHIP` +
+
+****
+* This command has three prefixes that performs different functions.
+** *ar/RELATIONSHIP* -> sets *ONLY ONE* relationship between 2 persons
+** *dr/RELATIONSHIP* -> deletes the relationship between 2 persons
+** *cr/* -> clears all the relationship of the two persons
+* This command is executed by specifying the two `INDEX` of the person the user wants to add the relationship.
+* The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2,
+3, ...
+* The command will not be executed if the relationship already exist or if the relationship is not found.
+* You can remove all the person's relationships by typing `er/` without specifying any relationship after it.
+****
+
+Examples:
+
+* `set 1 2 ar/siblings` +
+sets the relationship between the two indexes of the last shown list if it does not exist
+
+* `set 1 2 dr/siblings` +
+deletes the relationship between the two indexes of the last shown list if it exists
+
+* `set 1 2 cr/` +
+clears the all the relationships of the two indexes.
+
 === View all persons with a specific tag : `tag`
 
 `Coming in v2.0` +

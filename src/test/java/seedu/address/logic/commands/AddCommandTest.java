@@ -165,6 +165,12 @@ public class AddCommandTest {
         public void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public ObservableList<ReadOnlyEvent> getSchedule() {
+            fail("This method should not be called.");
+            return null;
+        }
     }
 
     /**

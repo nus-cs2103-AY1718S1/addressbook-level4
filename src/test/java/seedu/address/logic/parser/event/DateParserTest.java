@@ -1,4 +1,3 @@
-//@@author A0162268B
 package seedu.address.logic.parser.event;
 
 import static org.junit.Assert.assertFalse;
@@ -8,6 +7,7 @@ import org.junit.Test;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author reginleiff
 public class DateParserTest {
 
     private static final String invalidDay = "9/05/1999";

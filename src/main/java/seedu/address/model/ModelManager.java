@@ -30,7 +30,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    //@@author reginleiff
     private FilteredList<ReadOnlyEvent> filteredEvents;
+    private FilteredList<ReadOnlyEvent> scheduledEvents;
+    //@@author
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -44,7 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredEvents = new FilteredList<>(this.addressBook.getEventList());
-
+        scheduledEvents = new FilteredList<>(this.addressBook.getSchedule(this.addressBook.getCurrentDate()));
     }
 
     public ModelManager() {
@@ -104,13 +107,14 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
     //@@author
-
+    //@@author huiyiiih
     @Override
     public void sortPerson(String type) throws InvalidSortTypeException {
         addressBook.sortPerson(type);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
+    //@@author
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -126,6 +130,14 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    //@@author reginleiff
+    //=========== Schedule Accessors  =========================================================================
+
+    @Override
+    public ObservableList<ReadOnlyEvent> getSchedule() {
+        return FXCollections.unmodifiableObservableList(scheduledEvents);
     }
 
     //=========== Filtered Event List Accessors  ==============================================================
@@ -166,6 +178,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updateEvent(target, editedEvent);
         indicateAddressBookChanged();
     }
+    //@@author
 
     //=========== Miscellaneous Operations  ====================================================================
 
@@ -186,5 +199,4 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
     }
-
 }

@@ -1,4 +1,3 @@
-//@@author A0162268B
 package seedu.address.logic.commands.event;
 
 import static org.junit.Assert.assertFalse;
@@ -21,6 +20,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.event.ReadOnlyEvent;
 
+//@@author reginleiff
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteEventCommand}.
  */

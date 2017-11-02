@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.timeslot.Date;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
@@ -23,22 +24,30 @@ public interface ReadOnlyAddressBook {
      */
     ObservableList<Tag> getTagList();
 
+    //@@author reginleiff
     /**
      * Returns an unmodifiable view of the events list.
      */
     ObservableList<ReadOnlyEvent> getEventList();
+
+    /**
+     * Returns an unmodifiable view of the schedule.
+     */
+    ObservableList<ReadOnlyEvent> getSchedule(Date currentDate);
+
+    //@@author
+
     /**
      * Returns an unmodifiable view of the tags list.
      * This list will not contain any duplicate tags.
      */
+    //@@author huiyiiih
     ObservableList<Relationship> getRelList();
-
+    //author
     /**
      * Returns the last changed event.
      */
     ReadOnlyEvent getLastChangedEvent();
 
-
-
-
+    Date getCurrentDate();
 }
