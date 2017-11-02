@@ -146,7 +146,7 @@ public class Person implements ReadOnlyPerson {
     public void setComment(Comment comment) {
         this.comment.set(requireNonNull(comment));
     }
-
+    //@@author risashindo7
     @Override
     public ObjectProperty<Comment> commentProperty() {
         return comment;
@@ -156,12 +156,12 @@ public class Person implements ReadOnlyPerson {
     public Comment getComment() {
         return comment.get();
     }
-
+    //@@author
 
     public void setAppoint(Appoint appoint) {
         this.appoint.set(requireNonNull(appoint));
     }
-
+    //@@author risashindo7
     @Override
     public ObjectProperty<Appoint> appointProperty() {
         return appoint;
@@ -171,7 +171,7 @@ public class Person implements ReadOnlyPerson {
     public Appoint getAppoint() {
         return appoint.get();
     }
-
+    //@@author
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

@@ -11,7 +11,7 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AppointCommand;
 import seedu.address.model.person.Appoint;
-
+//@@author risashindo7
 public class AppointCommandParserTest {
     private AppointCommandParser parser = new AppointCommandParser();
 
@@ -39,3 +39,4 @@ public class AppointCommandParserTest {
         assertParseFailure(parser, AppointCommand.COMMAND_WORD, expectedMessage);
     }
 }
+//@@author

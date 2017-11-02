@@ -11,7 +11,7 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.CommentCommand;
 import seedu.address.model.person.Comment;
-
+//@@author risashindo7
 public class CommentCommandParserTest {
     private CommentCommandParser parser = new CommentCommandParser();
 
@@ -39,3 +39,4 @@ public class CommentCommandParserTest {
         assertParseFailure(parser, CommentCommand.COMMAND_WORD, expectedMessage);
     }
 }
+//@@author

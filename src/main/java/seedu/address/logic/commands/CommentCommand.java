@@ -13,7 +13,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-
+//@@author risashindo7
 /**
  * Changes the comment of an existing person in the address book.
  */
@@ -101,3 +101,4 @@ public class CommentCommand extends UndoableCommand {
                 && comment.equals(e.comment);
     }
 }
+//@@author risashindo7

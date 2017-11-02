@@ -9,7 +9,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AppointCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Appoint;
-
+//@@author risashindo7
 /**
  * Parser class for the Appoint feature
  */
@@ -36,3 +36,4 @@ public class AppointCommandParser implements Parser<AppointCommand> {
 
     }
 }
+//@@author
