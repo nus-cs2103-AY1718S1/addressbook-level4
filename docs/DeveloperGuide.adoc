@@ -377,6 +377,88 @@ An alternative implementation would be to implement JAVA 8 to easily calculate t
 
 // end::dob[]
 
+// tag::gender
+=== Addition of Gender field
+
+The Gender field includes information concerning the gender of the user stored in the record.
+Its impact is noticed in the add and edit command.
+
+The `add` command has the following format:
+
+`add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE_OF_BIRTH] [g/GENDER] [t/TAG]...`
+
+The prefix g/ as indicated in the CliSyntax.java denotes the beginning of the gender argument.
+
+The class Gender.java within the Model component , validates the input from the user through the following regex:
+[source,java]
+----
+ public static final String GENDER_VALIDATION_REGEX = "(?i)\\b(female|f|male|m|other|o)\\b";
+----
+The above regex accepts the words : female, male , other , o , f or m regardless of the case they are entered in.
+
+The gender field is of type ENUM and can consist of the following values:
+[source,java]
+----
+enum GenderType {
+        NOT_SPECIFIED, MALE, FEMALE, OTHER
+    }
+----
+
+When the g/ is encountered , the trailing argument is passed into `isValidGender(String test)` for validation when constructing the `Gender` object.
+eg : `add n/John Doe p/98765432 d/27 01 1997 g/m`
+Therefore, in the above example, `"m"` is passed as the argument.
+
+[source,java]
+----
+ /**
+      * Validates given gender.
+      *
+      * @throws IllegalValueException if given gender string is invalid.
+      */
+     public Gender(String gen) throws IllegalValueException {
+         requireNonNull(gen);
+         if (gen.isEmpty()) {
+             throw new EmptyFieldException(PREFIX_GENDER);
+         }
+         if (!isValidGender(gen)) {
+             throw new IllegalValueException(MESSAGE_GENDER_CONSTRAINTS);
+         }
+         switch (gen.toLowerCase()) {
+         case ("female"):
+         case ("f"):
+             this.value = GenderType.FEMALE;
+             break;
+         case ("male"):
+         case ("m"):
+             this.value = GenderType.MALE;
+             break;
+         case ("other"):
+         case("o"):
+             this.value = GenderType.OTHER;
+             break;
+         default:
+             this.value = GenderType.NOT_SPECIFIED;
+         }
+     }
+----
+
+
+As can be seen from the above code snippet , the given argument is converted to lower case and then given a value amongst
+the available enumerated constants : FEMALE , MALE and NOT_SPECIFIED (when no gender is specified)
+
+Gender field is also an optional field , unlike the Name field. When the gender is not specified,
+eg :  add n/Johnny Doe  , the no-argument constructor is used.
+It sets the `value` of the `Gender` object to the following :
+
+[source,java]
+----
+public Gender() {
+        this.value = GenderType.NOT_SPECIFIED;
+    }
+----
+
+// end::gender[]
+
 === Improved Tag Management
 
 The original tag system management with the edit function have several difficulties which cause the user to too much trouble,
@@ -488,6 +570,43 @@ Case (1) is to restore the default list of all contacts after users have used th
 
 The rest of the execution then, follows closely to the case where the command is executed through `CommandBox`
 
+=== Addition of Print Command
+The print command enables the user to save his/her addressbook into a printable .txt file
+
+The print command has the following format:
+print [FILENAME]
+
+There is no need to specify the .txt extension as the program does this automatically.
+----
+int personIndex = 1;
+        for (ReadOnlyPerson person: lastShownList) {
+            String entry = personIndex + ". " + person.getAsText();
+            lines.add(entry);
+
+            UniqueLifeInsuranceList insurances = person.getLifeInsurances();
+            for (ReadOnlyInsurance insurance: insurances) {
+                lines.add("Insurance Policy: =========");
+                String owner = insurance.getOwner().getName();
+                String insured = insurance.getInsured().getName();
+                String beneficiary = insurance.getBeneficiary().getName();
+                String premium = insurance.getPremium().toString();
+                String signingDate = insurance.getSigningDateString();
+                String expiryDate = insurance.getExpiryDateString();
+                lines.add("Owner: " + owner + "\n"
+                        + "Insured: " + insured + "\n"
+                        + "Beneficiary: " + beneficiary + "\n"
+                        + "Premium: " + premium + "\n"
+                        + "Signing Date: " + signingDate + "\n"
+                        + "Expiry Date: " + expiryDate + "\n"
+                );
+                lines.add("============");
+            }
+            personIndex++;
+        }
+----
+Print Command iterates through each contact in the addressbook and prints out his/her basic details first.
+For each person, print command then iterates through ALL insurance policies he is involved in (whether as an
+owner/beneficiary/insured) and prints out the policy details.
 
 ==== Design Considerations
 
