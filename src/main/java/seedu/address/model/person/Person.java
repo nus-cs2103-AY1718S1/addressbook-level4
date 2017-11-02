@@ -73,10 +73,12 @@ public class Person implements ReadOnlyPerson {
         this.phone.set(requireNonNull(phone));
     }
 
+    //@@author wynkheng
     public boolean setPrivate(boolean isPrivate) {
         this.isPrivate = isPrivate;
         return true;
     }
+    //@@author
 
     public boolean isPrivate() {
         return isPrivate;
@@ -150,6 +152,7 @@ public class Person implements ReadOnlyPerson {
         return remark.get();
     }
 
+    //@@author wynkheng
     public void setBirthday(Birthday birthday) {
         this.birthday.set(requireNonNull(birthday));
     }
@@ -163,6 +166,7 @@ public class Person implements ReadOnlyPerson {
     public Birthday getBirthday() {
         return birthday.get();
     }
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
