@@ -10,7 +10,7 @@
         <Insets bottom="5" left="5" right="15" top="5"/>
     </padding>
     <children>
-        <Label layoutX="10.0" layoutY="172.0" text="Group Statistics">
+        <Label layoutX="10.0" layoutY="172.0" text="Group Statistics" fx:id="groupStatistics">
             <font>
                 <Font size="28.0"/>
             </font>

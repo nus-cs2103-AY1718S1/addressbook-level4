@@ -362,3 +362,39 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+#groupStatistics {
+    -fx-text-fill: white;
+}
+
+#mean {
+    -fx-text-fill: white;
+}
+
+#median {
+    -fx-text-fill: white;
+}
+
+#mode {
+    -fx-text-fill: white;
+}
+
+#variance {
+    -fx-text-fill: white;
+}
+
+#standardDeviation {
+    -fx-text-fill: white;
+}
+
+#quartile3 {
+    -fx-text-fill: white;
+}
+
+#quartile1 {
+    -fx-text-fill: white;
+}
+
+#interQuartileRange {
+    -fx-text-fill: white;
+}

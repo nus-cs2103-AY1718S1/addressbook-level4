@@ -10,7 +10,7 @@
             xmlns:fx="http://javafx.com/fxml/1">
 
     <children>
-        <LineChart fx:id="lineChart" layoutY="10.0" maxHeight="1.5" maxWidth="1.5" minHeight="300" minWidth="300"
+        <LineChart fx:id="lineChart" layoutY="10.0" maxHeight="1.5" maxWidth="1.5" minHeight="600" minWidth="500"
                    prefHeight="600" prefWidth="800.0">
             <xAxis>
                 <CategoryAxis minHeight="400.0" minWidth="400.0" side="BOTTOM" fx:id="xNameAxis"/>

@@ -1,87 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- @@author limcel -->
+
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+
 <VBox fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Label fx:id="name" styleClass="cell_big_label" text="\$name">
+        <Label fx:id="name" lineSpacing="10.0" styleClass="cell_big_label" text="\$name">
             <font>
-                <Font name="System Bold" size="18.0"/>
+                <Font name="System Bold" size="18.0" />
             </font>
             <graphic>
                 <ImageView>
                     <image>
-                        <Image url="@../images/student(32px).png"/>
+                        <Image url="@../images/student.png" />
                     </image>
                 </ImageView>
             </graphic>
+         <padding>
+            <Insets bottom="7.0" />
+         </padding>
         </Label>
-        <Label fx:id="phone" styleClass="cell_small_label" text="\$phone">
+        <Label fx:id="phone" lineSpacing="10.0" styleClass="cell_small_label" text="\$phone">
             <graphic>
                 <ImageView>
                     <image>
-                        <Image url="@../images/phone.png"/>
+                        <Image url="@../images/phone.png" />
                     </image>
                 </ImageView>
             </graphic>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+         <font>
+            <Font size="14.0" />
+         </font>
         </Label>
-        <Label fx:id="address" styleClass="cell_small_label" text="\$address">
+        <Label fx:id="address" lineSpacing="10.0" styleClass="cell_small_label" text="\$address">
             <graphic>
                 <ImageView>
                     <image>
-                        <Image url="@../images/address.png"/>
+                        <Image url="@../images/address.png" />
                     </image>
                 </ImageView>
             </graphic>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+         <font>
+            <Font size="14.0" />
+         </font>
         </Label>
-        <Label fx:id="formClass" styleClass="cell_small_label" text="\$formClass">
+        <Label fx:id="formClass" lineSpacing="10.0" styleClass="cell_small_label" text="\$formClass">
             <graphic>
                 <ImageView>
                     <image>
-                        <Image url="@../images/class.png"/>
+                        <Image url="@../images/formClass.png" />
                     </image>
                 </ImageView>
             </graphic>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+         <font>
+            <Font size="14.0" />
+         </font>
         </Label>
-        <Label fx:id="grades" styleClass="cell_small_label" text="\$grades">
+        <Label fx:id="grades" lineSpacing="10.0" styleClass="cell_small_label" text="\$grades">
             <graphic>
                 <ImageView>
                     <image>
-                        <Image url="@../images/grades.png"/>
+                        <Image url="@../images/grades.png" />
                     </image>
                 </ImageView>
             </graphic>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+         <font>
+            <Font size="14.0" />
+         </font>
         </Label>
-        <Label fx:id="postalCode" styleClass="cell_small_label" text="\$postalCode">
+        <Label fx:id="postalCode" lineSpacing="10.0" styleClass="cell_small_label" text="\$postalCode">
             <graphic>
                 <ImageView>
                     <image>
-                        <Image url="@../images/postalCode.png"/>
+                        <Image url="@../images/postalCode.png" />
                     </image>
                 </ImageView>
             </graphic>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+         <font>
+            <Font size="14.0" />
+         </font>
         </Label>
-        <Label fx:id="email" styleClass="cell_small_label" text="\$email">
+        <Label fx:id="email" lineSpacing="10.0" styleClass="cell_small_label" text="\$email">
             <graphic>
                 <ImageView>
                     <image>
-                        <Image url="@../images/email.png"/>
+                        <Image url="@../images/email.png" />
                     </image>
                 </ImageView>
             </graphic>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+         <font>
+            <Font size="14.0" />
+         </font>
         </Label>
-        <Label fx:id="remark" styleClass="cell_small_label" text="\$remark">
+        <Label fx:id="remark" lineSpacing="10.0" styleClass="cell_small_label" text="\$remark">
             <graphic>
                 <ImageView>
                     <image>
-                        <Image url="@../images/remark.png"/>
+                        <Image url="@../images/remark.png" />
                     </image>
                 </ImageView>
             </graphic>
+         <font>
+            <Font size="14.0" />
+         </font>
         </Label>
     </children>
 </VBox>
