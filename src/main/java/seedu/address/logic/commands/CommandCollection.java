@@ -17,7 +17,8 @@ public class CommandCollection {
         EditCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD, FindCommand.COMMAND_WORD,
         HelpCommand.COMMAND_WORD, HistoryCommand.COMMAND_WORD, ListCommand.COMMAND_WORD,
         RedoCommand.COMMAND_WORD, RemarkCommand.COMMAND_WORD, SelectCommand.COMMAND_WORD,
-        UndoCommand.COMMAND_WORD, GroupCommand.COMMAND_WORD, FilterGroupCommand.COMMAND_WORD
+        UndoCommand.COMMAND_WORD, GroupCommand.COMMAND_WORD, FilterGroupCommand.COMMAND_WORD,
+        ExportCommand.COMMAND_WORD
     ).collect(Collectors.toSet());
 
     private static Map<String, String> commandMap;
@@ -31,6 +32,7 @@ public class CommandCollection {
         commandMap.put(SelectCommand.COMMAND_WORD, SelectCommand.MESSAGE_PARAMETERS);
         commandMap.put(GroupCommand.COMMAND_WORD, GroupCommand.MESSAGE_PARAMETERS);
         commandMap.put(FilterGroupCommand.COMMAND_WORD, FilterGroupCommand.MESSAGE_PARAMETERS);
+        commandMap.put(ExportCommand.COMMAND_WORD, ExportCommand.MESSAGE_USAGE);
     }
 
     public CommandCollection (){}
