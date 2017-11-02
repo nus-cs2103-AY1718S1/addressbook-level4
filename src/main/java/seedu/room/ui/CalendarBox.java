@@ -14,6 +14,9 @@ import javafx.scene.text.Text;
 
 //@@author Haozhe321-reused
 
+/**
+ * Create a CalendarBox Object to pass to the CalendarBoxPanel to be displayed
+ */
 public class CalendarBox {
 
     private ArrayList<AnchorPaneNode> allCalendarDays = new ArrayList<>(35);
@@ -35,15 +38,15 @@ public class CalendarBox {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 7; j++) {
                 AnchorPaneNode ap = new AnchorPaneNode();
-                ap.setPrefSize(200,200);
-                calendar.add(ap,j,i);
+                ap.setPrefSize(200, 200);
+                calendar.add(ap, j, i);
                 allCalendarDays.add(ap);
             }
         }
         // Days of the week labels
         Text[] dayNames = new Text[]{ new Text("Sunday"), new Text("Monday"), new Text("Tuesday"),
-                new Text("Wednesday"), new Text("Thursday"), new Text("Friday"),
-                new Text("Saturday") };
+            new Text("Wednesday"), new Text("Thursday"), new Text("Friday"),
+            new Text("Saturday") };
         GridPane dayLabels = new GridPane();
         dayLabels.setPrefWidth(600);
         Integer col = 0;
@@ -76,7 +79,7 @@ public class CalendarBox {
         // Get the date we want to start with on the calendar
         LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
         // Dial back the day until it is SUNDAY (unless the month starts on a sunday)
-        while (!calendarDate.getDayOfWeek().toString().equals("SUNDAY") ) {
+        while (!calendarDate.getDayOfWeek().toString().equals("SUNDAY")) {
             calendarDate = calendarDate.minusDays(1);
         }
         // Populate the calendar with day numbers
