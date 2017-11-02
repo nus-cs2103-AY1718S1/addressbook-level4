@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -26,6 +27,8 @@ import seedu.address.commons.events.ui.ShowMeetingEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.storage.Storage;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -42,6 +45,7 @@ public class MainWindow extends UiPart<Region> {
 
     private Stage primaryStage;
     private Logic logic;
+    private Storage storage;
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
@@ -83,12 +87,13 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane statusbarPlaceholder;
 
-    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
+    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic, Storage storage) {
         super(FXML);
 
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
+        this.storage = storage;
         this.config = config;
         this.prefs = prefs;
 
@@ -170,7 +175,8 @@ public class MainWindow extends UiPart<Region> {
         SettingsSelector settingsSelector = new SettingsSelector();
         settingsSelectorPlaceholder.getChildren().add(settingsSelector.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
+        personListPanel = new PersonListPanel(persons);
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
@@ -188,6 +194,7 @@ public class MainWindow extends UiPart<Region> {
 
     }
 
+    //@@author
     void hide() {
         primaryStage.hide();
     }
@@ -272,7 +279,16 @@ public class MainWindow extends UiPart<Region> {
 
     @Subscribe
     private void handleShowMeetingEvent(ShowMeetingEvent event) {
-        browserPlaceholder.getChildren().remove(browserPanel.getRoot());
-        browserPlaceholder.getChildren().add(meetingPanel.getRoot());
+        try {
+            browserPlaceholder.getChildren().remove(browserPanel.getRoot());
+        } catch (IllegalArgumentException e) {
+            logger.info("Error removing browser panel : " + e.getMessage());
+        }
+
+        try {
+            browserPlaceholder.getChildren().add(meetingPanel.getRoot());
+        } catch (IllegalArgumentException e) {
+            logger.info("Meeting panel is already displayed!");
+        }
     }
 }

@@ -73,7 +73,7 @@ public class SettingsSelector extends UiPart<Region> {
     private void selectBrowser(String browserSelection) {
         for (int i = 0; i <= browserSelectorList.getItems().size(); i++) {
             if (browserSelectorList.getItems().get(i).getImageString().equals(browserSelection)) {
-                browserSelectorList.getSelectionModel().select(i);
+                browserSelectorList.getSelectionModel().clearAndSelect(i);
                 raise(new BrowserPanelSelectionChangedEvent(browserSelection));
                 return;
             }
@@ -82,7 +82,6 @@ public class SettingsSelector extends UiPart<Region> {
 
     @Subscribe
     private void handleJumpToBrowserListRequestEvent(JumpToBrowserListRequestEvent event) {
-        logger.info(event.toString());
         selectBrowser(event.browserItem);
     }
 

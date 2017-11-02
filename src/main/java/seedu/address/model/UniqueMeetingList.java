@@ -6,13 +6,14 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
-
+//@@author liuhang0213
 /**
  * A list of meetings that enforces no nulls and uniqueness between its elements.
  *
@@ -33,7 +34,7 @@ public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList
      * Creates a UniqueMeetingList using given meetings.
      * Enforces no nulls.
      */
-    public UniqueMeetingList(Set<Meeting> meetings) {
+    public UniqueMeetingList(List<Meeting> meetings) {
         requireAllNonNull(meetings);
         internalList.addAll(meetings);
 
@@ -65,7 +66,7 @@ public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList
     /**
      * Replaces the Meetings in this list with those in the argument meeting list.
      */
-    public void setMeetings(Set<Meeting> meetings) {
+    public void setMeetings(List<Meeting> meetings) {
         requireAllNonNull(meetings);
         internalList.setAll(meetings);
         assert CollectionUtil.elementsAreUnique(internalList);
