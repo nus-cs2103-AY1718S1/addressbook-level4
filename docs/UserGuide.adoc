@@ -363,13 +363,14 @@ You can set an appointment to a specific contact at a given index. +
 
 [NOTE]
 Appointment can be set using natural language. +
+If no end time is specified, default appointment time is 1 hour.
 However, please include at least the hour and a day that can be specified.
 
 
-*Format:* `appointment INDEX d/TIME` +
-*Shorthand format:* `appt INDEX d/TIME`
+*Format:* `appointment INDEX d/TIME to TIME` +
+*Shorthand format:* `appt INDEX d/TIME to TIME` +
 
-*Example:*
+*Example:* appt 1 d/5pm to 7pm tomorrow
 
 image::aptexample.png[width="500"]
     Figure 12: Appointment Command Usage Diagram
@@ -445,15 +446,6 @@ and clicking on `Exit`.
 
 image::exitUI.png[width="500"]
     Figure 14: Methods to access `exit` command
-
-=== Displaying Appointments : [Coming in v2.0]
-****
-* Displays a list of appointments the Medical Professional has that are upcoming
-* Potential Upgrades: +
-1. Input an integer that limits the maximum number of searches displayed
-2. Auto displays a list of x number of appointments upon starting up MedNus
-3. Highlights the list if appointments are lesser than x days away
-****
 
 === Adding/Deleting a Tag to a Person : [Coming in v2.0]
 ****
@@ -561,6 +553,20 @@ You do not need to save data manually.
 |*Adding a Remark* |Adds a remark to a contact |`remark INDEX r/REMARK` |`remark 1 r/Likes coffee`
 
 |*Deleting a Remark* |Removes a remark from a contact |`remark INDEX r/` |`remark 1 r/`
+
+|*Adding an appointment*| Adds an appointment to a contact |`appointment INDEX d/TIME to TIME`
+| `appointment 1 d/Tonight 7pm to 8pm`
+
+|*Adding an appointment Shorthand*| Adds an appointment to a contact | `appt INDEX d/TIME to TIME`
+| `appt 1 d/Tonight 7pm to 10pm`
+
+|*Setting all tag color to random*| Sets all tags to random color | `tagcolor random` | `tagcolor random`
+
+|*Off all tag colors*| Off all colors of tags | `tagcolor off` | `tagcolor off`
+
+|*Set a color to a tag*| Set a tag to a color | `tagcolor TAG COLOR` | `tagcolor Friends blue`
+
+|*Set a color to a tag shorthand*| Set a tag to a color | `tc TAG COLOR` | `tc Friends blue`
 
 |=======================================================================
 
