@@ -14,6 +14,7 @@ import seedu.address.model.meeting.PhoneNum;
 import seedu.address.model.meeting.Place;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 
+//@@author nelsonqyj
 /**
  * JAXB-friendly version of the Meeting.
  */
@@ -53,9 +54,8 @@ public class XmlAdaptedMeeting {
         personToMeet = source.getPersonName().toString();
         phoneNum = source.getPersonPhone().toString();
     }
-    //@@author
 
-
+    //@@author nelsonqyj
     /**
      * Converts this jaxb-friendly adapted meeting object into the model's Meeting object.
      *

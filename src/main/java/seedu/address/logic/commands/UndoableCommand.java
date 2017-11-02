@@ -25,10 +25,11 @@ public abstract class UndoableCommand extends Command {
         this.previousAddressBook = new AddressBook(model.getAddressBook());
     }
 
+    //@@author nelsonqyj
     /**
      * Reverts the AddressBook to the state before this command
-     * was executed and updates the filtered person list to
-     * show all persons.
+     * was executed and updates the filtered person list and meeting to
+     * show all persons and meetings.
      */
     protected final void undo() {
         requireAllNonNull(model, previousAddressBook);

@@ -9,6 +9,7 @@ import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 
+//@@author nelsonqyj
 /**
  * Selects a meeting identified using it's last displayed index from the address book.
  */

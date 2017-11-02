@@ -9,7 +9,8 @@ import seedu.address.model.meeting.PhoneNum;
 import seedu.address.model.meeting.Place;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 
-//@@author kyngyi
+
+//@@author nelsonqyj
 /**
  * A utility class to help with building Meeting objects.
  */
@@ -44,7 +45,7 @@ public class MeetingBuilder {
     public MeetingBuilder(ReadOnlyMeeting meetingToCopy) {
         this.meeting = new Meeting(meetingToCopy);
     }
-
+    //@@author kyngyi
     /**
      * Sets the {@code NameMeeting} of the {@code Meeting} that we are building.
      */

@@ -25,6 +25,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 //import seedu.address.model.person.exceptions.DuplicatePersonException;
 //haven implement yet
 
+//@@author nelsonqyj
 /**
  * Adds a meeting to the address book.
  */
@@ -65,6 +66,7 @@ public class AddMeetingCommand extends UndoableCommand {
         this.location = location;
     }
 
+    //@@author nelsonqyj
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
@@ -90,8 +92,7 @@ public class AddMeetingCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_MEETING_CLASH);
         }
     }
-    //@@author
-
+    //@@author nelsonqyj
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
