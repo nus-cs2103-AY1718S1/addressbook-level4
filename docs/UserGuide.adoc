@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-F10-B4/main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -33,11 +33,13 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 b/21/07/1991 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to the link:#features[Features] section below for details of each command.
+
+.  Refer to the link:#command-summary[Command Summary] section below for summary of each command.
 
 == Features
 
@@ -57,7 +59,8 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Only `NAME` and `PHONE NUMBER` are compulsory fields +
+Format: `add n/NAME p/PHONE_NUMBER b/BIRTHDAY e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -92,7 +95,11 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating persons by name: `find` (obsoleted)
+
+[NOTE]
+This 'find' command is obsoleted . +
+Please refer to new link:#since-code-v1-1-code[finds] command.
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -243,7 +250,7 @@ There is no need to save manually.
 
 == New Features
 
-=== Since v1.0
+=== Since `v1.0`
 
 ==== Static `coloured` tags
 
@@ -254,7 +261,7 @@ Similar tags will also be assigned the same colour as long as tags have the same
 
 Total number of person in addressbook will now be displayed at the footer bar.
 
-=== Since v1.1
+=== Since `v1.1`
 
 ==== Locating persons by names or phone numbers or emails or tags: `finds`
 
@@ -301,7 +308,7 @@ Icon is similar to a down arrow.
 This feature can be found under the new `options` menu
 Deletes the user according to the selected option's parent person.
 
-=== Since v1.2
+=== Since `v1.2`
 
 ==== Displaying google map : `gmap`
 
@@ -340,7 +347,7 @@ Reinitializing of myBook will display the previous choice of theme.
 Contacts in user myBook app that has `Important` or `important` tag will always appear at the top of the list. +
 User using versions before v1.2 should add a new person with `important` tag first to enjoy this feature.
 
-=== Since v1.3
+=== Since `v1.3`
 
 ==== Sorted Contacts
 
@@ -393,13 +400,22 @@ Changes the addressbook theme to *Caspian* theme. +
 `theme 1` +
 Changes the addressbook theme to theme `INDEX` of one, which is default *DarkTheme*.
 
+=== Since `v1.4`
 
-=== Coming soon in v2.0
+==== Quick adding using improved `add` Command
 
-==== Import export of addressbook from header menu bar
+User can now add a person with just name and phone details. +
+All other details that are not provided will be filled in by default values as shown in `Figure 3.5.1.1`.
 
-An option to import external addressbook data in xml format. +
-An option to export local addressbook data in xml format.
+image::Default_for_empty_fields.png[width="400"]
+_Figure 3.5.1.1 : Default values for empty fields_
+
+=== Coming soon in `v2.0`
+
+==== Import & export of addressbook
+
+User is able to import or export an xml file of an addressbook from +
+the commandline or menu toolbar
 
 ==== Close panels in UI from `Button`
 
@@ -416,16 +432,6 @@ Functions will be found from improved `delete` command.
 All the tags in user myBook App will be displayed in a new UI panel. +
 Functions wll be found from `new UI panel`.
 
-==== Contact list arranged in alphabetical order from improved `list command`
-
-All contacts in the list will sorted in ascending alphabetical order.  +
-Functions wll be found from improved `list` command.
-
-==== Import & export of addressbook
-
-User is able to import or export an xml file of an addressbook from +
-the commandline or menu toolbar
-
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -433,25 +439,28 @@ the commandline or menu toolbar
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* : `add n/NAME p/PHONE_NUMBER b/BIRTHDAY e/EMAIL a/ADDRESS [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 b/21/07/1991 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Find* : `finds n/KEYWORD [MORE_KEYWORDS]` or `finds p/KEYWORD [MORE_KEYWORDS]` or `finds e/KEYWORD [MORE_KEYWORDS]` or `finds t/[KEYWORD] [MORE_KEYWORDS]` +
+e.g. `finds n/James Jake` +
+e.g  `finds p/98765432` +
+e.g. `finds t/[Friends] [colleagues]`
 * *Google Map* : `gmap INDEX` +
 e.g. `gmap 1`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *Find by names or phone numbers or email or tags* : `finds n/KEYWORD [MORE_KEYWORDS]` or `finds p/KEYWORD [MORE_KEYWORDS]` or `finds e/KEYWORD [MORE_KEYWORDS]` or `finds t/[KEYWORD] [MORE_KEYWORDS]` +
-e.g. `finds n/James Jake`
-e.g  `finds p/98765432`
-e.g. `finds t/[Friends] [colleagues]`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Theme* : `theme INDEX` or `theme NAME` +
+e.g. `theme 1` +
+e.g. `theme caspian`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Remark* : `remark INDEX r/REMARK` +
+e.g. `remark 1 r/CS2103 is fun`

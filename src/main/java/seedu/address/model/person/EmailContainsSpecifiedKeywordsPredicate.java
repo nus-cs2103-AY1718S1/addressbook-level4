@@ -15,11 +15,13 @@ public class EmailContainsSpecifiedKeywordsPredicate implements Predicate<ReadOn
         this.keywords = keywords;
     }
 
+    //@@author aver0214
     @Override
     public boolean test(ReadOnlyPerson person) {
         return keywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getEmail().value, keyword));
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

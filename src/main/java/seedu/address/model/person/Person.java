@@ -24,6 +24,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
     private ObjectProperty<Birthday> birthday;
     private ObjectProperty<Remark> remark;
+    private ObjectProperty<Picture> picture;
 
     private ObjectProperty<UniqueTagList> tags;
 
@@ -33,6 +34,7 @@ public class Person implements ReadOnlyPerson {
 
     public Person(Name name, Phone phone, Birthday birthday, Email email,
                   Address address, Remark remark, Set<Tag> tags) {
+
         requireAllNonNull(name, phone, birthday, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -40,6 +42,7 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(remark);
+        this.picture = new SimpleObjectProperty<>(new Picture());
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -120,7 +123,9 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public Birthday getBirthday() { return birthday.get(); }
+    public Birthday getBirthday() {
+        return birthday.get();
+    }
 
     public void setRemark(Remark remark) {
         this.remark.set(requireNonNull(remark));
@@ -149,6 +154,14 @@ public class Person implements ReadOnlyPerson {
         return tags;
     }
 
+    @Override
+    public ObjectProperty<Picture> pictureProperty() {
+        return picture;
+    }
+    @Override
+    public Picture getPicture() {
+        return picture.get();
+    }
     /**
      * Replaces this person's tags with the tags in the argument tag set.
      */
