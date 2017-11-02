@@ -24,10 +24,10 @@ public class CommandOptionUtil {
             if (matcher.find()) {
                 return matcher.group(DEFAULT_PATTERN_GROUP);
             }
-            return DEFAULT_OPTION_PREFIX;
         } catch (Exception e) {
             return DEFAULT_OPTION_PREFIX;
         }
+        return DEFAULT_OPTION_PREFIX;
     }
 
     public static String getOptionArgs(String optionPrefix, String args) {

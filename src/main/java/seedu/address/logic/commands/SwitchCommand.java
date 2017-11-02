@@ -48,10 +48,20 @@ public class SwitchCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         EventsCenter.getInstance().post(new SwitchDisplayEvent(mode));
-        if (mode == SWITCH_TO_TODOLIST) {
+        switch (mode) {
+        case SWITCH_TO_TODOLIST:
             return new CommandResult(String.format(MESSAGE_SUCCESS, "Todo list"));
-        } else {
+        case SWITCH_TO_BROWSER:
             return new CommandResult(String.format(MESSAGE_SUCCESS, "browser"));
+        default:
+            throw new CommandException(PARSE_EXCEPTION_MESSAGE);
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SwitchCommand // instanceof handles nulls
+                && this.mode == ((SwitchCommand) other).mode); // state check
     }
 }
