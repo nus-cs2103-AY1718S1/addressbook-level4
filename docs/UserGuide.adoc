@@ -54,6 +54,95 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
+== Using Commands
+
+To perform actions in KayPoh!, you will need to type a command into the command input box, followed by the kbd:[enter] key. +
+
+.User interface with command box highlighted in blue
+image::command-box.png[width="790"]
+
+=== Command syntax
+Commands have the following format: `[red]#COMMAND_WORD# [blue]#-OPTION# [green]#PARAMETERS#` +
+
+* The [red]`COMMAND_WORD` is the first word in the command
+** It specifies *what you want to do*
+
+* [blue]`OPTIONS` come after the [red]`COMMAND_WORD`
+** They are prefixed with a dash (e.g. `-tag`)
+** Provides more information on *how the action is to be performed*
+
+* [green]`PARAMETERS` are the last segment of the command
+** They provide the *information required to execute the action*
+
+Example:
+
+* `[red]#find# [blue]#-tag# [green]#friends#` can be understood as "[red]#find contacts# [blue]#with the tag# [green]#friends#"
+
+=== Understanding command formats
+In this user guide, you will find information about how commands are to be used explained in the form of *command formats*.
+
+These *command formats* will tell you what the [red]`COMMAND_WORD` for the command is, whether [blue]`OPTIONS` are available for the command,
+and what [green]`PARAMETERS` you need to provide the command with.
+
+[NOTE]
+====
+* Parameters in *square brackets* are optional
+* Parameters followed by an ellipsis `...` can be repeated multiple times
+* Parameters can be in any order
+====
+
+Example:
+
+* `[red]#delete# [blue]#[-OPTION]# [green]#INDEX [ADDITIONAL_INDEXES]...#` means that:
+** The [red]`COMMAND_WORD` is `delete`
+** An [blue]`OPTION` can be specified, but it is optional
+** An [green]`INDEX` must be entered
+** Multiple [green]`ADDITIONAL_INDEXES` can be entered, but are optional
+
+=== Representing a person as a parameter
+
+When using commands that involves managing contact information, you may be required to enter information about a person as a `[blue]#PARAMETER#`.
+
+Each person stored in the address book has the following attributes:
+
+* *Name* (required)
+** Represented with the prefix `n/` followed by the person's name - e.g. `n/John Doe`
+** The name must be composed of alphanumeric characters and spaces
+
+* *Phone Number* (required)
+** Represented with the prefix `p/` followed by the person's phone number - e.g. `p/81231234`
+** The phone can only contain numbers and must be at least 3 digits long
+
+* *Address* (required)
+** Represented with the prefix `a/` followed by the person's address - e.g. `a/123 Clementi Road, Blk 32, #01-01`
+
+* *Email Address* (required)
+** Represented with the prefix `e/` followed by the person's email address - e.g. `e/johndoe@example.com`
+** The email address must be a valid email address
+
+* *Tag* (optional)
+** Used to describe a person (e.g. `friends` or `family`)
+** Represented with the prefix `t/` followed by the description - e.g. `t/friends`
+** The description must be an alphanumeric string
+** A person can have multiple tags
+
+* *Social Media Account* (optional)
+** Used to describe a social media account associated with the person
+** Represented with the prefix `s/` followed by the the social media platform and the username - e.g. `s/facebook john.doe10`
+** More information on the supported social media types can be found in the <<social-media-integrations, Social Media Integrations>> section.
+** A person can have multiple social media accounts, but can only have one for each social media platform
+
+Example:
+
+* The parameter `n/John Doe p/81234567 a/123 Clementi Road, Blk 32, #01-01 e/johndoe@example.com t/friends t/school s/facebook john.doe10 s/instagram jdoe`
+represents a person with:
+** The name `John Doe`,
+** phone number `81234567`,
+** address `123 Clementi Road, Blk 32, #01-01`,
+** email address `johndoe@example.com`,
+** tags `friends` and `school`,
+** a `facebook` account with the name `john.doe10` and an `instagram` account with the username `jdoe`.
+
 == Features
 
 ====
