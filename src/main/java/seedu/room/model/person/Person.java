@@ -109,16 +109,19 @@ public class Person implements ReadOnlyPerson {
         return room.get();
     }
 
+    //@@author shitian007
     @Override
     public ObjectProperty<Picture> pictureProperty() {
         return picture;
     }
+    //@@author
 
     @Override
     public Picture getPicture() {
         return picture.get();
     }
 
+    //@@author Haozhe321
     @Override
     public ObjectProperty<Timestamp> timestampProperty() {
         return timestamp;
@@ -133,6 +136,8 @@ public class Person implements ReadOnlyPerson {
         this.timestamp.set(requireNonNull(timestamp));
     }
 
+    //@@author
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -146,6 +151,7 @@ public class Person implements ReadOnlyPerson {
         return tags;
     }
 
+    //@@author shitian007
     /**
      * Replaces this person's tags with the tags in the argument tag set.
      */
@@ -160,6 +166,7 @@ public class Person implements ReadOnlyPerson {
     public boolean getHighlightStatus() {
         return this.highlight;
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
@@ -179,6 +186,7 @@ public class Person implements ReadOnlyPerson {
         return getAsText();
     }
 
+    //@@author sushinoya
     /**
      * Sets the field the list should be sorted by
      */
@@ -194,6 +202,10 @@ public class Person implements ReadOnlyPerson {
         }
     }
 
+    //@@author sushinoya
+    /**
+    * CompareTo function to allow implementing Comparable
+    */
     @Override
     public int compareTo(Object otherPerson) {
 

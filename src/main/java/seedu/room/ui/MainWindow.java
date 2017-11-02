@@ -12,6 +12,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
@@ -48,6 +49,7 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private CalendarBoxPanel calandarBoxPanel;
     private PersonListPanel personListPanel;
     private EventListPanel eventListPanel;
     private Config config;
@@ -55,6 +57,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane browserPlaceholder;
+
+    @FXML
+    private Pane calendarPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -67,6 +72,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane eventListPanelPlaceholder;
+
+    @FXML
+    private StackPane personPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -138,14 +146,20 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+
+        calandarBoxPanel = new CalendarBoxPanel();
+        calendarPlaceholder.getChildren().add(calandarBoxPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         eventListPanel = new EventListPanel(logic.getFilteredEventList());
         eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());  //TO BE IMPLEMENTED
+
+        //@@author shitian007
+        PersonPanel personPanel = new PersonPanel();
+        personPanelPlaceholder.getChildren().add(personPanel.getRoot());
+        //@@author
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -207,6 +221,7 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+    //@@author blackroxs
     /**
      * Handles import and allows user to choose file
      */
@@ -232,6 +247,7 @@ public class MainWindow extends UiPart<Region> {
         }
     }
 
+    //@@author
     void show() {
         primaryStage.show();
     }
@@ -249,7 +265,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     void releaseResources() {
-        browserPanel.freeResources();
+        calandarBoxPanel.freeResources();
     }
 
     @Subscribe

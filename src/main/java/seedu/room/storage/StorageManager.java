@@ -92,6 +92,8 @@ public class StorageManager extends ComponentManager implements Storage {
             raise(new DataSavingExceptionEvent(e));
         }
     }
+
+    //@@author blackroxs
     @Override
     public void backupResidentBook(ReadOnlyResidentBook residentBook) throws IOException {
         saveResidentBook(residentBook, residentBookStorage.getResidentBookFilePath() + "-backup.xml");

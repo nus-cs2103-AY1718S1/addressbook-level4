@@ -94,6 +94,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new ResidentBookChangedEvent(residentBook));
     }
 
+    //@@author Haozhe321
     /**
      * delete temporary persons on start up of the app
      */
@@ -111,6 +112,7 @@ public class ModelManager extends ComponentManager implements Model {
             }
         }
     }
+    //@@author
 
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
@@ -125,11 +127,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateResidentBookChanged();
     }
 
+    //@@author Haozhe321
     @Override
     public synchronized void deleteByTag(Tag tag) throws IllegalValueException, CommandException {
         residentBook.removeByTag(tag);
         indicateResidentBookChanged();
     }
+    //@@author
 
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
@@ -180,6 +184,7 @@ public class ModelManager extends ComponentManager implements Model {
         residentBook.removeTag(t);
     }
 
+    //@@author shitian007
     /**
      * Updates the highlight status of a person if tag matches input tag
      */
@@ -188,9 +193,11 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateResidentBookChanged();
     }
+    //@@author
 
     //=========== Sorting Person List =============================================================
 
+    //@@author sushinoya
     /**
      * Sorts the Resident Book by name, phone, room or phone depending on the sortCriteria
      */
@@ -202,6 +209,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Swapping Residents' Rooms =============================================================
 
+    //@@author sushinoya
     /**
      * Swaps the rooms between two residents.
      *

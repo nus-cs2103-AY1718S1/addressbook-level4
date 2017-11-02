@@ -4,9 +4,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-ResidentBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
-{empty} +
+Resident Book was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
+The target audience are administrative staffs handling everyday operations in hostels and colleges. +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
@@ -15,7 +14,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::Haozhe.png[width="150", align="left"]
 {empty}[http://github.com/Haozhe321[github]] [<<haozhe#, portfolio>>]
 
-Role: Developer
+Role: Developer +
 Responsibilities: Software Development
 
 '''
@@ -24,7 +23,7 @@ Responsibilities: Software Development
 image::blackroxs.jpg[width="150", align="left"]
 {empty}[http://github.com/blackroxs[github]] [<<glenicetan#, portfolio>>]
 
-Role: Developer
+Role: Developer +
 Responsibilities: Software Development
 
 '''

@@ -51,10 +51,12 @@ public interface Model {
      */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
+    //@@author Haozhe321
     /**
      * Delete all persons with the given tag
      */
     void deleteByTag(Tag tag) throws IllegalValueException, CommandException;
+    //@@author
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -87,12 +89,14 @@ public interface Model {
      */
     void sortBy(String sortCriteria) throws AlreadySortedException;
 
+    //@@author shitian007
     /**
      * Updates the highlight status of persons with the specified tag
      *
      * @throws TagNotFoundException if no specified tag exists
      */
     void updateHighlightStatus(String highlightTag) throws TagNotFoundException;
+    //@@author
 
     /**
      * Swaps two residents' rooms

@@ -126,10 +126,12 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author Haozhe321
         @Override
         public void deleteByTag(Tag tag) throws IllegalValueException, CommandException {
             fail("this method should not be called.");
         }
+        //@@author
 
         @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
@@ -153,15 +155,19 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author sushinoya
         @Override
         public void sortBy(String sortCriteria) throws AlreadySortedException {
             fail("This method should not be called.");
         }
 
+        //@@author
         @Override
         public void updateHighlightStatus(String highlightTag) {
 
         }
+
+        //@@author sushinoya
         public void swapRooms(ReadOnlyPerson person1, ReadOnlyPerson person2) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
@@ -205,6 +211,7 @@ public class AddCommandTest {
         }
     }
 
+    //@@author
     /**
      * A Model stub that always throw a DuplicatePersonException when trying to add a person.
      */

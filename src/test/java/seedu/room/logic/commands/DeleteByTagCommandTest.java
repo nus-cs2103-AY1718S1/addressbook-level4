@@ -18,7 +18,7 @@ import seedu.room.model.ModelManager;
 import seedu.room.model.UserPrefs;
 import seedu.room.model.tag.Tag;
 
-
+//@@author Haozhe321
 public class DeleteByTagCommandTest {
     private Model model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
 

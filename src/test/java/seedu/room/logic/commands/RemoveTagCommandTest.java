@@ -15,7 +15,7 @@ import seedu.room.model.ModelManager;
 import seedu.room.model.UserPrefs;
 import seedu.room.model.tag.Tag;
 
-
+//@@author blackroxs
 /**
  * Contains integration tests (interaction with the Model) and unit tests for RemoveTagCommand.
  */

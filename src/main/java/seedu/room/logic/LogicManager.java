@@ -34,6 +34,7 @@ public class LogicManager extends ComponentManager implements Logic {
         this.autoCompleteList = new AutoComplete(model);
     }
 
+    //@@author shitian007
     @Override
     public void updateAutoCompleteList(String userInput) {
         autoCompleteList.updateAutoCompleteList(userInput);
@@ -43,6 +44,7 @@ public class LogicManager extends ComponentManager implements Logic {
     public String[] getAutoCompleteList() {
         return autoCompleteList.getAutoCompleteList();
     }
+    //@@author
 
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {

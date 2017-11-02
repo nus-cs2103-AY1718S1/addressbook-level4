@@ -95,18 +95,29 @@ Examples:
 
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 temp/2 t/criminal`
 
-=== Adding a picture: `GUI button`
+=== Adding a picture: `GUI image`
 
+Adds a picture of a person to the resident book +
+Format: `click on the placeholder image after adding the person into the addressbook`
+=======
 Adds a person to the resident book +
 Format: `click on '+' button after adding the person into the residentbook`
 
 [TIP]
-Once person can only have 1 picture, adding additional images replaces the current one
+One person can only have 1 picture, adding additional images replaces the current one
 
 Examples:
 
-image::add_person1.png[width="400"]
-image::add_person2.png[width="400"]
+image::add_person.png[width="400"]
+
+=== Deleting a picture: `GUI button`
+
+Deletes a person's picture from the address book +
+Format: `click on the placeholder image after adding the person into the addressbook`
+
+Examples:
+
+image::delete_person.png[width="400"]
 
 === Highlighting by tag : `highlight`
 
@@ -229,8 +240,6 @@ Examples:
 
 * `deletebytag friend` will delete all persons who have a tag of `friend`
 
-
-
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
@@ -333,7 +342,7 @@ Format: `backup`
 
 === Import data : `import` (Since v1.2)
 
-Add contact details from external xml file into current resident book. +
+Add contact details from external xml file into current resident book. This can be done through typing commands or selecting from the UI.+
 Format: import FILE_PATH
 
 ****
@@ -343,12 +352,37 @@ Format: import FILE_PATH
 
 Examples:
 
-* `import C:\Desktop\colleagues.xml` +
+* `import C:\Desktop\exchangeStudents.xml` +
 Imports colleagues.xml into current resident book.
+
+Through the UI:
+image::ui_import.png[width="400"]
+
+=== Remove all Tags with specified name : `rm` (Since v1.3)
+
+This function is useful to remove all deprecated tags. For example, when all residents have moved in, all the tags can be removed as "Pending". +
+Format: rm TAG_NAME
+
+****
+* The TAG_NAME must be present in the Resident Book.
+****
+
+Examples:
+
+* `rm pending` +
+Remove all "pending" tags from list of residents.
 
 === Facebook Search (coming in V2.0)
 
 Query Facebook using list of emails from resident book.
+
+=== Calendar Interface (Since v1.4)
+
+Events can be seen on calendar interface for clearer view.
+
+=== Events (Since v1.4)
+
+Events can be managed through the Resident book. It supports add, remove and edit functions.
 
 == FAQ
 

@@ -163,9 +163,11 @@ public class ResidentBook implements ReadOnlyResidentBook {
         }
     }
 
+    //@@author Haozhe321
     public void removeByTag(Tag tag) throws IllegalValueException, CommandException {
         persons.removeByTag(tag);
     }
+    //@@author
 
     //// tag-level operations
 
@@ -192,6 +194,7 @@ public class ResidentBook implements ReadOnlyResidentBook {
 
     }
 
+    //@@author shitian007
     /** Updates highlight status of person with specified tag
      */
     public void updateHighlight(String highlightTag) {
@@ -204,8 +207,10 @@ public class ResidentBook implements ReadOnlyResidentBook {
             throw new TagNotFoundException("Tag not found");
         }
     }
+    //@@author
 
     //// sort resident book
+    //@@author sushinoya
     /**
      * Sorts the UniquePersonList, persons.
      *
@@ -221,6 +226,7 @@ public class ResidentBook implements ReadOnlyResidentBook {
     }
 
     ////
+    //@@author sushinoya
     /**
      * Swaps the rooms between two residents.
      * @throws PersonNotFoundException if the persons specified are not found in the list.

@@ -53,11 +53,16 @@
       </TabPane>
     </VBox>
 
-    <StackPane fx:id="browserPlaceholder" prefWidth="340">
-      <padding>
-        <Insets bottom="10" left="10" right="10" top="10" />
-      </padding>
+      <StackPane fx:id="personPanelPlaceholder" minWidth="325" maxWidth="350" VBox.vgrow="NEVER" SplitPane.resizableWithParent="false">
+      </StackPane>
+
+    <StackPane fx:id="calendarPlaceholder" prefWidth="340">
+        <padding>
+            <Insets bottom="10" left="10" right="10" top="10" />
+        </padding>
     </StackPane>
+
+
   </SplitPane>
 
   <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
