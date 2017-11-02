@@ -21,21 +21,19 @@ public class ArrangeCommandParser implements Parser<ArrangeCommand> {
     public ArrangeCommand parse(String args) throws ParseException {
 
         try {
-            String[] ListOfPerson = args.trim().split("\\s+");
+            String[] listOfPerson = args.trim().split("\\s+");
             // Correct Format: changepw username old_password new_password
-            int[] ListOfIndex = new int[ListOfPerson.length];
-            for(int i = 0; i < ListOfPerson.length; i++) {
+            int[] listOfIndex = new int[listOfPerson.length];
+            for(int i = 0; i < listOfPerson.length; i++) {
                 try {
-                    ListOfIndex[i] = Integer.parseInt(ListOfPerson[i]);
-                }
-                catch (NumberFormatException e){
+                    listOfIndex[i] = Integer.parseInt(listOfPerson[i]);
+                } catch (NumberFormatException e) {
                     throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                             ArrangeCommand.MESSAGE_USAGE));
                 }
             }
-            return new ArrangeCommand(ListOfIndex);
-        }
-        catch (IllegalValueException ive) {
+            return new ArrangeCommand(listOfIndex);
+        } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ChangePasswordCommand.MESSAGE_USAGE));
         }

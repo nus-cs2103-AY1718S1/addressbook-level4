@@ -45,7 +45,7 @@ public class Time {
 
     public static String getTimeToString(Integer time) {
         String toShow;
-        if (time < 1000){
+        if (time < 1000) {
             toShow = "0" + time;
         } else {
             toShow = "" + time;
@@ -53,7 +53,7 @@ public class Time {
         return toShow;
     }
 
-    public static Integer IncreaseTimeInteger(Integer time) {
+    public static Integer increaseTimeInteger(Integer time) {
         if (time % 100 == 30) {
             time += 70;
             return time;

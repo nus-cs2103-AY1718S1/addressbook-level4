@@ -60,5 +60,5 @@ public interface Model {
 
     void sort();
 
-    TreeSet<Integer> generateMeetingTime(Index[] ListOfIndex);
+    TreeSet<Integer> generateMeetingTime(Index[] listOfIndex);
 }

@@ -140,9 +140,9 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public TreeSet<Integer> generateMeetingTime(Index[] listOfIndex) {
         TreeSet<Integer> satisfiedTimeSet = new TreeSet<>();
-        for (int i = 0; i < PossibleDays.days.length; i++) {
-            for (int k = 0; k < PossibleTimes.times.length; k++) {
-                satisfiedTimeSet.add(PossibleDays.days[i] * PossibleDays.dayCoefficient + PossibleTimes.times[k]);
+        for (int i = 0; i < PossibleDays.DAYS.length; i++) {
+            for (int k = 0; k < PossibleTimes.TIMES.length; k++) {
+                satisfiedTimeSet.add(PossibleDays.DAYS[i] * PossibleDays.DAY_COEFFICIENT + PossibleTimes.TIMES[k]);
             }
         }
 

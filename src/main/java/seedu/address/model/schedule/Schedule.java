@@ -4,8 +4,8 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.TreeSet;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.core.PossibleDays;
+import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author YuchenHe98
 /**
@@ -55,7 +55,7 @@ public class Schedule {
         return timeSet;
     }
 
-    public boolean containsTimeNumber(Integer timeNumber){
+    public boolean containsTimeNumber(Integer timeNumber) {
         return timeSet.contains(timeNumber);
     }
 
@@ -64,26 +64,32 @@ public class Schedule {
         return timeSet.hashCode();
     }
 
+    /**
+     * Split the time set into seven sets according to the days.
+     */
     public TreeSet<Integer>[] splitScheduleToDays() {
         TreeSet<Integer>[] timeSetArray = new TreeSet[7];
-        for(int i = 0; i < 7; i++){
+        for (int i = 0; i < 7; i++) {
             timeSetArray[i] = new TreeSet<>();
         }
-        for(Integer time : this.timeSet) {
-            int day = (time - time % PossibleDays.dayCoefficient) / PossibleDays.dayCoefficient;
-            timeSetArray[day - 1].add(time % PossibleDays.dayCoefficient);
+        for (Integer time : this.timeSet) {
+            int day = (time - time % PossibleDays.DAY_COEFFICIENT) / PossibleDays.DAY_COEFFICIENT;
+            timeSetArray[day - 1].add(time % PossibleDays.DAY_COEFFICIENT);
         }
         return timeSetArray;
     }
 
+    /**
+     * Split the time set into seven sets according to the days given a time set.
+     */
     public static TreeSet<Integer>[] splitScheduleToDays(TreeSet<Integer> toBeSplitted) {
         TreeSet<Integer>[] timeSetArray = new TreeSet[7];
-        for(int i = 0; i < 7; i++){
+        for (int i = 0; i < 7; i++) {
             timeSetArray[i] = new TreeSet<>();
         }
-        for(Integer time : toBeSplitted) {
-            int day = (time - time % PossibleDays.dayCoefficient) / PossibleDays.dayCoefficient;
-            timeSetArray[day - 1].add(time % PossibleDays.dayCoefficient);
+        for (Integer time : toBeSplitted) {
+            int day = (time - time % PossibleDays.DAY_COEFFICIENT) / PossibleDays.DAY_COEFFICIENT;
+            timeSetArray[day - 1].add(time % PossibleDays.DAY_COEFFICIENT);
         }
         return timeSetArray;
     }

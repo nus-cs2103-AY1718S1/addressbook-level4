@@ -29,10 +29,10 @@ public class ArrangeCommand extends Command {
 
     private final Index[] listOfIndex;
 
-    public ArrangeCommand(int[] ListOfIndex) {
-        this.listOfIndex = new Index[ListOfIndex.length];
-        for(int i = 0; i < ListOfIndex.length; i++){
-            this.listOfIndex[i] = Index.fromOneBased(ListOfIndex[i]);
+    public ArrangeCommand(int[] listOfIndex) {
+        this.listOfIndex = new Index[listOfIndex.length];
+        for (int i = 0; i < listOfIndex.length; i++) {
+            this.listOfIndex[i] = Index.fromOneBased(listOfIndex[i]);
         }
     }
 
@@ -49,10 +49,10 @@ public class ArrangeCommand extends Command {
         TreeSet<Integer>[] timeSetArray = Schedule.splitScheduleToDays(model.generateMeetingTime(listOfIndex));
         String toShow = "\nAll common free time: \n";
         for (int i = 0; i < timeSetArray.length; i++) {
-            toShow = toShow + PossibleDays.dayName[i] + ":\n";
+            toShow = toShow + PossibleDays.DAY_TIME[i] + ":\n";
             for (Integer time : timeSetArray[i]) {
                 toShow = toShow + Time.getTimeToString(time) + "--"
-                        + Time.getTimeToString(Time.IncreaseTimeInteger(time)) + " ";
+                        + Time.getTimeToString(Time.increaseTimeInteger(time)) + " ";
             }
             toShow += "\n";
         }

@@ -43,15 +43,15 @@ public class VisualizeCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        Schedule ScheduleToBeShown =
+        Schedule scheduleToBeShown =
                 model.getAddressBook().getPersonList().get(targetIndex.getZeroBased()).getSchedule();
-        TreeSet<Integer>[] timeSetArray = ScheduleToBeShown.splitScheduleToDays();
+        TreeSet<Integer>[] timeSetArray = scheduleToBeShown.splitScheduleToDays();
         String toShow = "\nAll free time: \n";
         for(int i = 0; i < timeSetArray.length; i++) {
-            toShow = toShow + PossibleDays.dayName[i] + ":\n";
+            toShow = toShow + PossibleDays.DAY_TIME[i] + ":\n";
             for(Integer time : timeSetArray[i]) {
                 toShow = toShow + Time.getTimeToString(time) + "--"
-                        + Time.getTimeToString(Time.IncreaseTimeInteger(time)) + " ";
+                        + Time.getTimeToString(Time.increaseTimeInteger(time)) + " ";
             }
             toShow += "\n";
         }
