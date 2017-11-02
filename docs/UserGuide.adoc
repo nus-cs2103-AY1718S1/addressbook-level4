@@ -95,13 +95,11 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find` (Obsolete)
+=== Locating persons by name: `find` (obsoleted)
 
-+
 [NOTE]
 This 'find' command is obsoleted . +
-Please refer to new 'link:#since-v1-1[finds]' command.
-+
+Please refer to new link:#since-v1-1[finds] command.
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
