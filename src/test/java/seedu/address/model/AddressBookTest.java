@@ -9,6 +9,7 @@ import static seedu.address.testutil.TypicalPersons.ALICE_UPDATED;
 import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.HOON;
+import static seedu.address.testutil.TypicalPersons.TUTORIAL;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -160,6 +162,13 @@ public class AddressBookTest {
     public void getEventList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getEventList().remove(0);
+    }
+    @Test
+    public void removeEvent_eventNotFound_expectException() throws Exception {
+        thrown.expect(EventNotFoundException.class);
+
+        AddressBook addressBook = getTypicalAddressBook();
+        addressBook.removeEvent(EVENT1);
     }
 
     @Test
