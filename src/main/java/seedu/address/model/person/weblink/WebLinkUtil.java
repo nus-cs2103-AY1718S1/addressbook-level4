@@ -1,5 +1,6 @@
 package seedu.address.model.person.weblink;
 
+//@@author AngularJiaSheng
 /**
  * Contains Command Line Interface (CLI) syntax definitions common to multiple commands
  */

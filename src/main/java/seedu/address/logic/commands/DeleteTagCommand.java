@@ -5,6 +5,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
+//@@author AngularJiaSheng
 /**
  * Deletes a tag from all contacts in the address book.
  */

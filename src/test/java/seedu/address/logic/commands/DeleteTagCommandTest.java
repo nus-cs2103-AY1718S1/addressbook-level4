@@ -13,6 +13,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.UserPerson;
 import seedu.address.model.tag.Tag;
 
+//@@author AngularJiaSheng
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteTagCommand}.
  */
