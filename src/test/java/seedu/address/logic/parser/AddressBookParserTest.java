@@ -116,7 +116,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_copy() throws Exception {
+    public void parseCommandCopy() throws Exception {
         CopyCommand command = (CopyCommand) parser.parseCommand(
                 CopyCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new CopyCommand(INDEX_FIRST_PERSON), command);

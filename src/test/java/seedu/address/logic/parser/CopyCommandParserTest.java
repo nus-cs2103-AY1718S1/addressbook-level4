@@ -15,12 +15,12 @@ public class CopyCommandParserTest {
     private CopyCommandParser parser = new CopyCommandParser();
 
     @Test
-    public void parse_validArgs_returnsCopyCommand() {
+    public void parseValidArgsReturnsCopyCommand() {
         assertParseSuccess(parser, "1", new CopyCommand(INDEX_FIRST_PERSON));
     }
 
     @Test
-    public void parse_invalidArgs_throwsParseException() {
+    public void parseInvalidArgsThrowsParseException() {
         assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, CopyCommand.MESSAGE_USAGE));
     }
 }
