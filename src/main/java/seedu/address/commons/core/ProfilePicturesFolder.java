@@ -5,7 +5,7 @@ package seedu.address.commons.core;
  */
 public class ProfilePicturesFolder {
 
-    private static String profilePicsFolderPath = "out/production/resources/images/unknown.jpg";
+    private static String profilePicsFolderPath = "out/production/resources/images/";
 
     public static void setPath(String path) {
         profilePicsFolderPath = path;
