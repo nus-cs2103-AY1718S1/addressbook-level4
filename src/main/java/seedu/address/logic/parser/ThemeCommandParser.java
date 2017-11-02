@@ -20,6 +20,12 @@ public class ThemeCommandParser implements Parser<ThemeCommand> {
      */
     public ThemeCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
+
+        if (trimmedArgs.equals("")) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
+        }
+
         if (Character.isDigit(trimmedArgs.charAt(0))) {
             try {
                 Index index = ParserUtil.parseIndex(args);
@@ -28,12 +34,8 @@ public class ThemeCommandParser implements Parser<ThemeCommand> {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
             }
-        } else {
-            if (trimmedArgs.isEmpty()) {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
-            }
-            return new ThemeCommand(trimmedArgs);
         }
+
+        return new ThemeCommand(trimmedArgs);
     }
 }
