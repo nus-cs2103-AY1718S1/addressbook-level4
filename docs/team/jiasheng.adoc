@@ -53,11 +53,19 @@ include::../DeveloperGuide.adoc[tag=model]
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+== Enhancement Added: `Improvement on existing find command`
 
-{Explain similar to the Undo/Redo feature above.}
+==== External behaviour
 
-=== Other contributions
+---#Start of Extract [from: User Guide]#
 
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+==== Justification
+
+The existing version of find command can only search under name of users.
+In addition, if name contains the search keyword, it is not accepted, which is not useful for users.
 
 
