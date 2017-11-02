@@ -2,6 +2,7 @@
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
+:collatedDir: ../../collated
 
 == Project: MedNus
 MedNus is a desktop address book application used by Medical Professionals. +
@@ -9,8 +10,8 @@ The user interacts with it using a CLI, and it has a GUI created with JavaFX. +
 It is written in Java, and has about 6 kLoC.
 
 *Code contributed*: +
-link:main/Eric.md[Functional code] +
-link:test/Eric.md[Test code] +
+link:{collatedDir}/main/Eric.md[Functional code] +
+link:{collatedDir}/test/Eric.md[Test code] +
 
 === Enhancement Added: Setting Tag Color
 
