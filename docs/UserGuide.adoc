@@ -18,16 +18,26 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 === What is Rubrika?
 
-Rubrika is a desktop Address Book application that lets you store and manage your contacts in a convenient manner. +
-Rubrika has a simple GUI interface and focuses on using CLI to interact.
+Welcome to Rubrika! +
+
+Rubrika is a desktop Address Book application that lets you store and manage your contacts in a convenient manner.
+
+Rubrika revolutionises the way you interact with an Address Book Application. We have done away with the traditional buttons, and now allow users to interact through the Command Line Interface.
+
+This guide will familiarise you with the basic commands that you will need to start using Rubrika.
+
 
 == Quick Start
+
+Before we start, please make sure you follow the steps below to install Rubrika.
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This app will not work with earlier versions of Java 8. +
+If you are missing Java 8, you may download it for free [http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[here]]
+
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
@@ -46,11 +56,16 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to the link:#Features[Features] section below for details of each command.
 
-== What's New in Version 1.2
+== What's New in Version 1.4
 
 === Enhanced Autocomplete
 
-Autocomplete should now be able to autocomplete person data as well, based on the information current stored in the application.
+Autocomplete should now be able to autocomplete person data based on command word given too.
+
+Example: `removetag fa` +
+Autocompletes to all tags starting with `fa`.
+
+Autocomplete should also work no matter where in the input you are currently trying to modify, unless there are no options to autocomplete.
 
 === FindTag
 
@@ -225,7 +240,7 @@ Sort feature available since v1.3
 
 Sorts the list of person in the addressbook. +
 You may choose to sort based on a parameter and display in +
-ascending or descending order.
+ascending or descending order. +
 Format: `sort FIELD ORDER` +
 
 ****
@@ -259,9 +274,42 @@ Examples:
 * `theme` `DarkTheme` +
 Change the theme of the Rubrika to DarkTheme.
 
-=== Import/Export : `import`/`export`
+=== Importing contacts: `import`
+
 [NOTE]
-Coming soon in v2.0
+Import feature available since v1.4.
+
+Imports a list of contacts from the selected vCard file. +
+Format: `import`
+
+****
+* The function only imports user that do not exist in the current address book.
+* Duplicate persons will be ignored.
+****
+
+=== Exporting contacts: `export`
+
+[NOTE]
+Export feature available since v1.4. +
+Currently due to save path, it only works on windows platform.
+
+
+Exports the list of contact shown on the addressbook into a vCard file. +
+Format: `export`
+
+****
+* Exports only the list that is being shown to the user. +
+* Exported contacts are saved into export.vcf file in the user's Desktop folder.
+****
+
+Examples:
+
+* `list` +
+`import` +
+Exports the whole list of addressbook.
+* `findtag prospective` +
+`export` +
+Exports the list of people with prospective `TAG`.
 
 === Selecting a person : `select`
 
@@ -361,24 +409,49 @@ There is no need to save manually.
 // tag::autocomplete[]
 == Autocomplete
 
-Use `Tab` key to automatically generate a command 'skeleton' from an incomplete command word input. +
-Besides commands, the `Tab` key can also help autocomplete person data using information from existing persons stored in Rubrika.
-There must be a prefix (`n/` or `p/`) present in order to use this autocomplete feature, and you can only use autocomplete at the end of your command input.
+The Autocomplete feature comes together with Rubrika, and further improves your experience with using CLI, shortening time required to input commands greatly. +
+Autocomplete comes in many shapes and forms, and shall be explained to you in detail as follows.
+
+=== Autocomplete Command
+
+You may use `Tab` key to automatically generate a command 'skeleton' from an incomplete command word input. +
+Long command words are no longer a hassle to type and some command syntax that are too tough to remember are also generated for you.
 
 Examples:
 
 * `c` becomes `clear` after pressing `Tab` once
 * nothing happens to `b` (no command starting with letter `b`)
 * `h` becomes `history`, and then `help` if you press `Tab` again
+
+=== Autocomplete Person Data Based on Prefix
+
+You may also use `Tab` key to automatically complete personal data, based on prefix like `n/` or `a/` given. +
+This helps with wordy addresses or long names and other person data you do not want to type out in full.
+
 * `add n/J` becomes `add n/John Hawkins` if you have a person with the name `John Hawkins` stored
 * `edit 2 t/co t/owesMoney` does not autocomplete the `t/co` because it is in the middle of the input
-* `find G` does not autocomplete because there is no prefix present
+* `select ` does not autocomplete because there is no prefix present, and no person data should be involved
+
+=== Autocomplete Person Data Based on Command Word
+
+`Tab` key also automatically complete person data based on the command word given. +
+You can even find someone without executing the `find` command, but just let Autocomplete feature help you.
+
+* `find A` gets completed with all possible keywords starting with `A`
+* `removetag fa` becomes `removetag` followed by all possible tags starting with `fa`
+* `delete ` does not autocomplete because the command does not involve person data
+
+=== Autocompleting Anywhere in the Command Input Box
+
+`Tab` key can be used almost anywhere in the command input box. +
+You can go back to complete or modify any particulars you may have missed out.
+
 // end::autocomplete[]
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. Alternatively, you may export your contacts into a vCard file and transfer the file to the other Computer and import the vCard file from there.
 
 == Command Summary
 
@@ -401,6 +474,8 @@ e.g.`select 2`
 * *Sort* : `sort FIELD ORDER` +
 e.g. `sort name asc` +
 e.g. `sort email dsc`
+* *Import* : `ìmport`
+* *Export* : `export`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`

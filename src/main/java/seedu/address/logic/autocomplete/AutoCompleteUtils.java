@@ -1,5 +1,6 @@
 package seedu.address.logic.autocomplete;
 
+//@@author john19950730
 /** Utility class that contains commonly used methods in AutoComplete feature */
 public class AutoCompleteUtils {
 
@@ -45,6 +46,13 @@ public class AutoCompleteUtils {
         int prefixIndex = argsString.lastIndexOf(" " + prefix);
         return prefixIndex == -1 ? -1
                 : prefixIndex + 3; // +3 as offset for whitespace and prefix
+    }
+
+    /**
+     *
+     */
+    public static String getCommandWordInStub(String stub) {
+        return stub.split(" ")[0];
     }
 
 }

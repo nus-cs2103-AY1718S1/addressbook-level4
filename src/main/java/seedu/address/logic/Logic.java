@@ -25,6 +25,7 @@ public interface Logic {
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
 
+    //@@author john19950730
     /** Returns the list of commands that autocomplete function should complete for the user */
     ListElementPointer getAutoCompleteSnapshot();
 
