@@ -164,6 +164,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
+    //@@author lawwman
     /**
      * Deletes a specific person from overdue debt list in the AddressBook.
      * @param target to be removed from overdue list.
@@ -178,6 +179,7 @@ public class ModelManager extends ComponentManager implements Model {
         return overdueDebtPerson;
     }
 
+    //@@author
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
@@ -235,6 +237,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
+    //@@author lawwman
     /**
      * Adds a specific person to overdue list in the AddressBook.
      * @param person to be updated.
@@ -249,6 +252,7 @@ public class ModelManager extends ComponentManager implements Model {
         return overdueDebtPerson;
     }
 
+    //@@author
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -296,6 +300,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
+    //@@author lawwman
     /**
      * Reads the masterlist and updates the overdue list accordingly.
      */
@@ -436,6 +441,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
+    //@@author lawwman
     /**
      * Returns an unmodifiable view of the overdue list of {@code ReadOnlyPerson} backed by the internal list of
      * {@code addressBook}
@@ -448,6 +454,7 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredOverduePersons);
     }
 
+    //@@author
     @Override
     public int updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
@@ -482,6 +489,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
+    //@@author lawwman
     /**
      * Filters {@code filteredOverduePersons} according to given {@param predicate}
      * @return size of current displayed filtered list.
@@ -494,6 +502,7 @@ public class ModelManager extends ComponentManager implements Model {
         return filteredOverduePersons.size();
     }
 
+    //@@author
     /**
      * Obtains and updates the list of persons that share the same cluster as {@param selectedPerson}.
      */
@@ -560,6 +569,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //==================== Event Handling Code ===============================================================
 
+    //@@author lawwman
     @Subscribe
     public void handleLoginUpdateDebt(LoginAppRequestEvent event) {
         // login is successful
