@@ -1198,13 +1198,23 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |teacher |have contact information of students and parents|contact either of them
 
-|`* * *` |busy teacher |auto tag students according to their grades|get a quick overview of their progress [Coming in v2.0]
-
-|`* * *` |concerned teacher |display statistics for the current group of students in the list|analyse the individual groups' academic progress
+|`* * *` |concerned teacher |display statistics for different group of students with the same tags|analyse and track their academic progress easily
 
 |`* * *` |precise teacher |find out the 25th, 50th and 75th percentile scores for each class|get a better idea of students' academic progress
 
 |`* * *` |precise teacher |compare the grades statistics between any two groups of students|make a quick comparison [Coming in v2.0]
+
+|`* *` |teacher |schedule my timetable according to my classes|plan my timetable to fit other activities
+
+|`* *` |caring teacher |schedule appointments with my students|conduct extra classes when they ask for it
+
+|`* *` |user |have different colours of the tags for different tag names |can differentiate different groups easily
+
+|`* *` |forgetful user |see a history of my last used commands|
+
+|`* *` |expert user |have shorthand commands |so that I can search for contacts faster
+
+|`* *` |user |redo an action |redo an undone action
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident [Coming in v2.0]
 
@@ -1222,11 +1232,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |lazy user |addressBook to auto delete contacts after a certain date | [Coming in v2.0]
 
-|`* *` |user |redo an action |redo an undone action
-
 |`* *` |expert user |have separate address books |can separate my work and personal contacts [Coming in v2.0]
-
-|`* *` |expert user |customise shorthand commands |so that I can search for contacts faster
 
 |`* *` |user |a calendar to sync my events |can plan them more efficiently [Coming in v2.0]
 
@@ -1236,23 +1242,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |password protect my addressBook |protect my contacts' information [Coming in v2.0]
 
-|`* *` |forgetful user |see a history of my last used commands|
-
 |`* *` |caring teacher| help students find suitable study buddies|motivate and aid them in their academic progress [Coming in v2.0]
 
 |`* *` |caring teacher |be able to see my students' home location in extended screen using google maps|conduct house visits easily if they fall sick [Coming in v2.0]
 
-|`* *` |caring teacher |schedule appointments with my students|conduct extra classes when they ask for it
+|`*` |busy teacher |auto tag students according to their grades|get a quick overview of their progress [Coming in v2.0]
 
 |`*` |user |add profile pictures to contacts |find my friends easily [Coming in v2.0]
-
-|`*` |user |have different colours of the tags for different tag names |can view the tags easily
 
 |`*` |user |use facial recognition |enhance security [Coming in v2.0]
 
 |`*` |user |call/message directly from my address book |reach them easily [Coming in v2.0]
-
-|`*` |teacher |schedule my timetable according to my classes|plan my timetable to fit other activities
 
 |`*` |thoughtful teacher |remind students about homework assignments| [Coming in v2.0]
 |=======================================================================
