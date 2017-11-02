@@ -5,12 +5,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
-import static seedu.address.ui.BrowserPanel.LINKEDIN_SEARCH_PARAM_FIRST_NAME;
-import static seedu.address.ui.BrowserPanel.LINKEDIN_SEARCH_PARAM_LAST_NAME;
-import static seedu.address.ui.BrowserPanel.LINKEDIN_SEARCH_PARAM_LOCATION;
-import static seedu.address.ui.BrowserPanel.LINKEDIN_SEARCH_PEOPLE;
-import static seedu.address.ui.BrowserPanel.LINKEDIN_SEARCH_URL_PREFIX;
-import static seedu.address.ui.BrowserPanel.LINKEDIN_URL_SUFFIX;
+import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
+import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
@@ -191,10 +187,8 @@ public abstract class AddressBookSystemTest {
         String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
         URL expectedUrl;
         try {
-            String [] name = selectedCardName.split(" ");
-            expectedUrl = new URL(LINKEDIN_SEARCH_URL_PREFIX + LINKEDIN_SEARCH_PEOPLE
-                    + LINKEDIN_SEARCH_PARAM_LOCATION + LINKEDIN_SEARCH_PARAM_FIRST_NAME + name[0]
-                    + LINKEDIN_SEARCH_PARAM_LAST_NAME + name[1] + LINKEDIN_URL_SUFFIX);
+            expectedUrl = new URL(GOOGLE_SEARCH_URL_PREFIX + selectedCardName.replaceAll(" ", "+")
+                    + GOOGLE_SEARCH_URL_SUFFIX);
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
