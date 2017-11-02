@@ -5,7 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 
-
+//@@author deep4k
 /**
  * Represents an event where the user has changed an AliasToken
  */

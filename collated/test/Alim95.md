@@ -1,5 +1,5 @@
 # Alim95
-###### \java\guitests\HelpOverlayTest.java
+###### /java/guitests/HelpOverlayTest.java
 ``` java
 public class HelpOverlayTest extends AddressBookGuiTest {
     private static final String ERROR_MESSAGE = "ATTENTION!!!! : On some computers, this test may fail when run on "
@@ -58,7 +58,7 @@ public class HelpOverlayTest extends AddressBookGuiTest {
     }
 }
 ```
-###### \java\guitests\SearchBoxTest.java
+###### /java/guitests/SearchBoxTest.java
 ``` java
 
 public class SearchBoxTest extends AddressBookGuiTest {
@@ -93,7 +93,7 @@ public class SearchBoxTest extends AddressBookGuiTest {
     }
 }
 ```
-###### \java\guitests\SortMenuTest.java
+###### /java/guitests/SortMenuTest.java
 ``` java
 
 public class SortMenuTest extends AddressBookGuiTest {
@@ -187,7 +187,7 @@ public class SortMenuTest extends AddressBookGuiTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ListPinCommandTest.java
+###### /java/seedu/address/logic/commands/ListPinCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListPinCommand.
@@ -221,7 +221,7 @@ public class ListPinCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\PinUnpinCommandTest.java
+###### /java/seedu/address/logic/commands/PinUnpinCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code PinCommand}
@@ -378,7 +378,7 @@ public class PinUnpinCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\SortCommandTest.java
+###### /java/seedu/address/logic/commands/SortCommandTest.java
 ``` java
 
 public class SortCommandTest {
@@ -448,7 +448,7 @@ public class SortCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\PinCommandParserTest.java
+###### /java/seedu/address/logic/parser/PinCommandParserTest.java
 ``` java
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
@@ -472,7 +472,7 @@ public class PinCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\SortCommandParserTest.java
+###### /java/seedu/address/logic/parser/SortCommandParserTest.java
 ``` java
 public class SortCommandParserTest {
 
@@ -511,7 +511,7 @@ public class SortCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\UnpinCommandParserTest.java
+###### /java/seedu/address/logic/parser/UnpinCommandParserTest.java
 ``` java
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
@@ -535,7 +535,7 @@ public class UnpinCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\ui\CommandBoxTest.java
+###### /java/seedu/address/ui/CommandBoxTest.java
 ``` java
     @Test
     public void commandBoxHighlight() {
@@ -550,7 +550,7 @@ public class UnpinCommandParserTest {
                 "-fx-border-color: #383838 #383838 #ffffff #383838; -fx-border-width: 1");
     }
 ```
-###### \java\seedu\address\ui\PersonListPanelTest.java
+###### /java/seedu/address/ui/PersonListPanelTest.java
 ``` java
     @Test
     public void personListPanelHighlight() {
@@ -565,7 +565,7 @@ public class UnpinCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\ui\ResultDisplayTest.java
+###### /java/seedu/address/ui/ResultDisplayTest.java
 ``` java
     @Test
     public void resultDisplayHighlight() {
@@ -580,7 +580,7 @@ public class UnpinCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\ui\SortFindPanelTest.java
+###### /java/seedu/address/ui/SortFindPanelTest.java
 ``` java
     @Test
     public void sortMenuHighlight() {
@@ -602,7 +602,7 @@ public class UnpinCommandParserTest {
     }
 }
 ```
-###### \java\systemtests\PinUnpinCommandSystemTest.java
+###### /java/systemtests/PinUnpinCommandSystemTest.java
 ``` java
 public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
 
@@ -904,8 +904,9 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
     }
 }
 ```
-###### \java\systemtests\SortCommandSystemTest.java
+###### /java/systemtests/SortCommandSystemTest.java
 ``` java
+
 public class SortCommandSystemTest extends AddressBookSystemTest {
 
     private static final String MESSAGE_INVALID_SORT_COMMAND_FORMAT =
