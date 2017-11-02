@@ -44,7 +44,7 @@
         <Label fx:id="email" styleClass="cell_big_label" text="\$email" GridPane.columnIndex="4" />
         <Label fx:id="trackingNumber" styleClass="cell_big_label" text="\$trackingNumber" GridPane.columnIndex="5" />
         <Label fx:id="deliveryDate" styleClass="cell_big_label" text="\$deliveryDate" GridPane.columnIndex="6" />
-          <FlowPane fx:id="tags" GridPane.columnIndex="8" />
+          <FlowPane fx:id="tags" alignment="CENTER_LEFT" GridPane.columnIndex="8" />
          </children>
       </GridPane>
   </VBox>
