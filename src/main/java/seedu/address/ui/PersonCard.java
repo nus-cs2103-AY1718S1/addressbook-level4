@@ -86,7 +86,7 @@ public class PersonCard extends UiPart<Region> {
 
         if (!person.getImage().getPath().equals("")) {
 
-            Image imageToSet = new Image("file:" + "images/" + person.getImage().getPath() + ".png",
+            Image imageToSet = new Image("file:" + "data/" + person.getImage().getPath() + ".png",
                     100, 100, false, false);
 
             centerImage();
