@@ -302,6 +302,9 @@ Examples:
 Updates the name and phone number of the User Person, saved to userProfile.xml. +
 
 Any new information added will overwrite previous data.
+
+The User Profile can also be edited via the User Interface by clicking on "File" -> "User Profile".
+More information
 // end::updateUserPerson[]
 
 === Clearing all entries : `clear`
@@ -345,6 +348,18 @@ Contact must be selected before selecting the buttons.
 
 Allows the user to switch between dark and light themes.
 // end::changeTheme[]
+
+// tag::userProfileUI[]
+=== User Profile in the UI
+
+The User Profile Window can be accessed by clicking on "File" -> "User Profile". Pressing "F2" will also bring up the User
+ Profile window.+
+
+You can edit the User Profile directly from here. Changes, if any, are only saved when the "OK" button is clicked. +
+Invalid values will not be accepted, and changes will not be saved. For multiple emails, add emails with a comma followed
+by a space, then the next email address.
+Pressing "Enter" has the same action as clicking the "Cancel" button, to avoid unwanted changes.
+// end::userProfileUI[]
 
 === Saving the data
 
