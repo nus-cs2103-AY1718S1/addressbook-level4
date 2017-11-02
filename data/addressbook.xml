@@ -5,27 +5,31 @@
         <phone>87438807</phone>
         <email>alexyeoh@example.com</email>
         <address>Blk 30 Geylang Street 29, #06-40</address>
-        <dob>27 08 1997</dob>
         <gender>MALE</gender>
         <tagged>friends</tagged>
+        <dob>27 Jul 1986</dob>
+        <lifeInsuranceId>067e6162-3b6f-4ae2-a171-2470b63dff00</lifeInsuranceId>
+        <lifeInsuranceId>ea91ce18-4a4f-415a-a688-62621c241108</lifeInsuranceId>
     </persons>
     <persons>
         <name>Bernice Yu</name>
         <phone>99272758</phone>
         <email>berniceyu@example.com</email>
         <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
-        <dob>28 01 1997</dob>
         <gender>MALE</gender>
+        <dob>28 Jan 1997</dob>
         <tagged>colleagues</tagged>
         <tagged>friends</tagged>
+        <lifeInsuranceId>067e6162-3b6f-4ae2-a171-2470b63dff00</lifeInsuranceId>
+        <lifeInsuranceId>ea91ce18-4a4f-415a-a688-62621c241108</lifeInsuranceId>
     </persons>
     <persons>
         <name>Charlotte Oliveiro</name>
         <phone>93210283</phone>
         <email>charlotte@example.com</email>
-        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
-        <dob>29 01 1997</dob>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>  
         <gender>FEMALE</gender>
+        <dob>29 Jan 1997</dob>
         <tagged>neighbours</tagged>
     </persons>
     <persons>
@@ -33,8 +37,8 @@
         <phone>91031282</phone>
         <email>lidavid@example.com</email>
         <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
-        <dob>30 01 1997</dob>
         <gender>MALE</gender>
+        <dob>30 Jan 1997</dob>
         <tagged>family</tagged>
     </persons>
     <persons>
@@ -42,32 +46,25 @@
         <phone>92492021</phone>
         <email>irfan@example.com</email>
         <address>Blk 47 Tampines Street 20, #17-35</address>
-        <dob>31 01 1997</dob>
+        <dob>31 Jan 1997</dob>
         <gender>MALE</gender>
         <tagged>classmates</tagged>
     </persons>
     <persons>
-        <name>Pujitha</name>
-        <phone>7654795369</phone>
-        <email></email>
-        <address></address>
-        <dob></dob>
-        <gender>NOT_SPECIFIED</gender>
-    </persons>
-    <persons>
-        <name>Pujitha Desiraju</name>
-        <phone></phone>
-        <email></email>
-        <address></address>
-        <dob></dob>
+        <name>Mary Jane</name>
+        <phone>98765432</phone>
+        <email>maryjane@example.com</email>
+        <address>Mary street, block 123</address>
+        <dob>05 May 1990</dob>
         <gender>FEMALE</gender>
+        <lifeInsuranceId>ce003136-c8e2-4cdd-ae2d-860d203a9aa1</lifeInsuranceId>
     </persons>
     <persons>
         <name>Roy Balakrishnan</name>
         <phone>92624417</phone>
         <email>royb@example.com</email>
         <address>Blk 45 Aljunied Street 85, #11-31</address>
-        <dob>01 02 1997</dob>
+        <dob>01 Feb 1997</dob>
         <gender>MALE</gender>
         <tagged>colleagues</tagged>
     </persons>
@@ -76,5 +73,43 @@
     <tags>neighbours</tags>
     <tags>family</tags>
     <tags>friends</tags>
-    <lifeInsuranceMap/>
+
+    <lifeInsuranceMap>
+        <entry>
+            <key>067e6162-3b6f-4ae2-a171-2470b63dff00</key>
+            <value>
+                <owner>Alex Yeoh</owner>
+                <insured>Bernice Yu</insured>
+                <beneficiary>Charlotte Oliveiro</beneficiary>
+                <premium>100.0</premium>
+                <contractPath>contract.pdf</contractPath>
+                <signingDate>01 11 2017</signingDate>
+                <expiryDate>1 11 2018</expiryDate>
+            </value>
+        </entry>
+        <entry>
+            <key>ce003136-c8e2-4cdd-ae2d-860d203a9aa1</key>
+            <value>
+                <owner>A person not In Lisa</owner>
+                <insured>Roy Balakrishnan</insured>
+                <beneficiary>Mary Jane</beneficiary>
+                <premium>500.0</premium>
+                <contractPath>expensiveContract.pdf</contractPath>
+                <signingDate>1 11 2017</signingDate>
+                <expiryDate>1 11 2020</expiryDate>
+            </value>
+        </entry>
+        <entry>
+            <key>ea91ce18-4a4f-415a-a688-62621c241108</key>
+            <value>
+                <owner>Alex Yeoh</owner>
+                <insured>Another person not in Lisa</insured>
+                <beneficiary>Bernice Yu</beneficiary>
+                <premium>50.0</premium>
+                <contractPath>cheapContract.pdf</contractPath>
+                <signingDate>1 11 2017</signingDate>
+                <expiryDate>1 11 2018</expiryDate>
+            </value>
+        </entry>
+    </lifeInsuranceMap>
 </addressbook>

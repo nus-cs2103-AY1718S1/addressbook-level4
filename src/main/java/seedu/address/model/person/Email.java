@@ -18,13 +18,15 @@ public class Email {
 
     public final String value;
 
+    //@@author OscarWang114
     /**
-     * Initialise a Email object with value of empty String. This can ONLY be used in the default field of
+     * Initialize a Email object with value of empty String. This can ONLY be used in the default field of
      * {@code AddPersonOptionalFieldDescriptor}
      */
     public Email() {
         this.value = "";
     }
+    //@@author
 
     /**
      * Validates given email.

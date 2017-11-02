@@ -44,7 +44,6 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Gender;
 import seedu.address.model.person.Name;
@@ -93,6 +92,7 @@ public class AddCommandParserTest {
                 new AddCommand(expectedPersonMultipleTags));
     }
 
+    //@@author OscarWang114
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
@@ -141,6 +141,7 @@ public class AddCommandParserTest {
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DOB_DESC_AMY, new AddCommand(expectedPerson));
     }
+    //@@author
 
     @Test
     public void parse_compulsoryFieldMissing_failure() {
@@ -171,23 +172,22 @@ public class AddCommandParserTest {
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + INVALID_EMAIL_DESC
                         + ADDRESS_DESC_BOB + DOB_DESC_BOB + GENDER_DESC_BOB + TAG_DESC_HUSBAND
                         + TAG_DESC_FRIEND, Email.MESSAGE_EMAIL_CONSTRAINTS);
-
+        //@@author Juxarius
         // autofilled address
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                         + DOB_DESC_BOB + ADDRESS_EMPTY_DESC + GENDER_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 String.format(EXCEPTION_EMPTYFIELD, PREFIX_ADDRESS.getPrefix()));
-
+        //@@author Pujitha97
         // invalid dob
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                         + ADDRESS_DESC_BOB + GENDER_DESC_BOB + INVALID_DOB_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                DateOfBirth.MESSAGE_INVALID_MONTH);
-
+                DateParser.MESSAGE_INVALID_MONTH);
 
         // invalid gender
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                         + ADDRESS_DESC_BOB + DOB_DESC_BOB + INVALID_GENDER_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 Gender.MESSAGE_GENDER_CONSTRAINTS);
-
+        //@@author Pujitha97
         // invalid tag
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                         + ADDRESS_DESC_BOB + DOB_DESC_BOB + GENDER_DESC_BOB + INVALID_TAG_DESC

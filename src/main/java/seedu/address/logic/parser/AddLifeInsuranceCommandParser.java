@@ -15,6 +15,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddLifeInsuranceCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author OscarWang114
 /**
  * Parses input arguments and creates a new AddLifeInsuranceCommand object
  */

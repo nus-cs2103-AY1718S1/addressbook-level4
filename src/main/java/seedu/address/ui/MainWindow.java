@@ -18,9 +18,9 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
-import seedu.address.commons.events.ui.SwitchPanelRequestEvent;
+import seedu.address.commons.events.ui.SwitchToInsurancePanelRequestEvent;
+import seedu.address.commons.events.ui.SwitchToProfilePanelRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -36,6 +36,7 @@ public class MainWindow extends UiPart<Region> {
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
 
+
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Stage primaryStage;
@@ -43,6 +44,7 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private InsuranceListPanel insuranceListPanel;
+    private InsuranceProfile insuranceProfile;
     private ProfilePanel profilePanel;
     private PersonListPanel personListPanel;
     private Config config;
@@ -62,6 +64,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane insuranceListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -132,10 +137,13 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        insuranceListPanel = new InsuranceListPanel();
-        rightPanelPlaceholder.getChildren().add(insuranceListPanel.getRoot());
+        insuranceListPanel = new InsuranceListPanel(logic.getInsuranceList());
+        insuranceListPanelPlaceholder.getChildren().add(insuranceListPanel.getRoot());
+
+        insuranceProfile = new InsuranceProfile();
 
         profilePanel = new ProfilePanel();
+        rightPanelPlaceholder.getChildren().add(profilePanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -227,7 +235,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleSwitchPanelRequestEvent(SwitchPanelRequestEvent event) {
+    private void handleSwitchToProfilePanelRequestEvent(SwitchToProfilePanelRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
         rightPanelPlaceholder.getChildren().clear();
@@ -235,10 +243,11 @@ public class MainWindow extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    private void handleSwitchToInsurancePanelRequestEvent(SwitchToInsurancePanelRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        insuranceListPanel = new InsuranceListPanel(event.getNewSelection().person);
+
         rightPanelPlaceholder.getChildren().clear();
-        rightPanelPlaceholder.getChildren().add(insuranceListPanel.getRoot());
+        rightPanelPlaceholder.getChildren().add(insuranceProfile.getRoot());
+
     }
 }

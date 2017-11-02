@@ -27,6 +27,7 @@ public class AddCommand extends UndoableCommand {
     public static final String[] COMMAND_WORDS = {"add", "a", "+"};
     public static final String COMMAND_WORD = "add";
 
+    //@@author OscarWang114
     public static final String MESSAGE_USAGE = concatenateCommandWords(COMMAND_WORDS)
             + ": Adds a person to the address book. "
             + "Parameters: "
@@ -46,6 +47,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_GENDER + "Male "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
+    //@@author
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
@@ -78,6 +80,7 @@ public class AddCommand extends UndoableCommand {
                 && toAdd.equals(((AddCommand) other).toAdd));
     }
 
+    //@@author OscarWang114
     /**
      * Stores the optional details to add the person with. By default each field is an object
      * with value of empty String.

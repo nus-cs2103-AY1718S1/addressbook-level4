@@ -39,8 +39,10 @@ public class XmlAdaptedPerson {
 
     @XmlElement(name = "tagged")
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    //@@author OscarWang114
     @XmlElement(name = "lifeInsuranceId")
     private List<String> lifeInsuranceIds = new ArrayList<>();
+    //@@author
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -72,6 +74,7 @@ public class XmlAdaptedPerson {
         }
     }
 
+    //@@author OscarWang114
     /**
      * Converts this jaxb-friendly adapted person object into the model's Person object.
      *
@@ -95,5 +98,5 @@ public class XmlAdaptedPerson {
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, dob, gender, tags, personLifeInsuranceIds);
     }
-
+    //@@author
 }

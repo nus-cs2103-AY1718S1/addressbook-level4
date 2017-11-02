@@ -19,6 +19,7 @@ import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.EmptyFieldException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -38,7 +39,7 @@ public class LogicManager extends ComponentManager implements Logic {
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
     }
-
+    //@@author Juxarius
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
@@ -48,6 +49,7 @@ public class LogicManager extends ComponentManager implements Logic {
             CommandResult result = command.execute();
             undoRedoStack.push(command);
             return result;
+
         } catch (EmptyFieldException efe) {
             // index check was bypassed, this checks the index before filling empty prefix
             if (efe.getIndex().getOneBased() > model.getFilteredPersonList().size()) {
@@ -59,7 +61,8 @@ public class LogicManager extends ComponentManager implements Logic {
             history.add(commandText);
         }
     }
-
+    //@@author
+    //@@author Juxarius
     /**
      * Replaces the given command text with filled command text
      * @param commandText original input command text
@@ -87,10 +90,16 @@ public class LogicManager extends ComponentManager implements Logic {
         }
         return commandText.trim();
     }
+    //@@author
 
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return model.getFilteredPersonList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyInsurance> getInsuranceList() {
+        return model.getInsuranceList();
     }
 
     @Override

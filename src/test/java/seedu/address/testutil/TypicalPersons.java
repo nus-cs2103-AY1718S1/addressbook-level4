@@ -72,6 +72,9 @@ public class TypicalPersons {
     public static final ReadOnlyPerson AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
             .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
             .withDateOfBirth(VALID_DOB_AMY).withGender(VALID_GENDER_AMY).withTags(VALID_TAG_FRIEND).build();
+
+    //@@author OscarWang114
+
     public static final ReadOnlyPerson AMY_NO_PHONE = new PersonBuilder().withName(VALID_NAME_AMY).withEmptyPhone()
             .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
             .withDateOfBirth(VALID_DOB_AMY).withGender(VALID_GENDER_AMY).withTags(VALID_TAG_FRIEND).build();
@@ -83,10 +86,14 @@ public class TypicalPersons {
             .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withEmptyAddress()
             .withDateOfBirth(VALID_DOB_AMY).withTags(VALID_TAG_FRIEND)
             .withGender(VALID_GENDER_AMY).build();
+
+    //@@author
+
     public static final ReadOnlyPerson AMY_NO_DOB = new PersonBuilder().withName(VALID_NAME_AMY)
             .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
             .withEmptyDateOfBirth().withTags(VALID_TAG_FRIEND)
             .withGender(VALID_GENDER_AMY).build();
+  //@@author Pujitha97
     public static final ReadOnlyPerson AMY_NO_GENDER = new PersonBuilder().withName(VALID_NAME_AMY)
             .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
             .withDateOfBirth(VALID_DOB_AMY).withEmptyGender().withTags(VALID_TAG_FRIEND)

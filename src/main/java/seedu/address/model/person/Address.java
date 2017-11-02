@@ -23,13 +23,15 @@ public class Address {
 
     public final String value;
 
+    //@@author OscarWang114
     /**
-     * Initialise a Address object with value of empty String. This can ONLY be used in the default field of
+     * Initialize a Address object with value of empty String. This can ONLY be used in the default field of
      * {@code AddPersonOptionalFieldDescriptor}
      */
     public Address() {
         this.value = "";
     }
+    //@@author
 
     /**
      * Validates given address.
@@ -38,9 +40,11 @@ public class Address {
      */
     public Address(String address) throws IllegalValueException {
         requireNonNull(address);
+        //@@author Juxarius
         if (address.isEmpty()) {
             throw new EmptyFieldException(PREFIX_ADDRESS);
         }
+        //@@author
         if (!isValidAddress(address)) {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }

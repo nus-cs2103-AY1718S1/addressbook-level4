@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 
@@ -9,6 +10,7 @@ import org.junit.Test;
 
 import guitests.guihandles.ProfilePanelHandle;
 import seedu.address.commons.events.ui.PersonNameClickedEvent;
+import seedu.address.model.insurance.InsurancePerson;
 import seedu.address.model.person.ReadOnlyPerson;
 
 public class ProfilePanelTest extends GuiUnitTest {
@@ -19,7 +21,8 @@ public class ProfilePanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        personNameClickedEventStub = new PersonNameClickedEvent(ALICE);
+        InsurancePerson insurancePerson = new InsurancePerson(ALICE);
+        personNameClickedEventStub = new PersonNameClickedEvent(insurancePerson);
 
         guiRobot.interact(() -> profilePanel = new ProfilePanel());
         uiPartRule.setUiPart(profilePanel);
@@ -32,13 +35,12 @@ public class ProfilePanelTest extends GuiUnitTest {
     public void display() throws Exception {
         // default profile page
         final String expectedDefaultName = ProfilePanel.DEFAULT_MESSAGE;
-        final String emptyText = "";
 
         assertEquals(expectedDefaultName, profilePanelHandle.getName());
-        assertEquals(emptyText, profilePanelHandle.getEmail());
-        assertEquals(emptyText, profilePanelHandle.getPhone());
-        assertEquals(emptyText, profilePanelHandle.getDateOfBirth());
-        assertEquals(emptyText, profilePanelHandle.getAddress());
+        assertNull(profilePanelHandle.getEmail());
+        assertNull(profilePanelHandle.getPhone());
+        assertNull(profilePanelHandle.getDateOfBirth());
+        assertNull(profilePanelHandle.getAddress());
 
         // select Stub Person
         postNow(personNameClickedEventStub);
