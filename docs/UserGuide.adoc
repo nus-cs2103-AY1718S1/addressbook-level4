@@ -438,6 +438,18 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::setpath[]
+=== Setting the path to local profile pictures folder : `setpath`
+
+Sets the folder location to access debtors profile pictures. +
+Format: `setpath`
+
+Examples:
+
+* `setpath C:/Users/acer/Desktop/SE/profilepic/` +
+* `setpath out/production/resources/images/` +
+// end::setpath[]
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -539,6 +551,8 @@ e.g.`select 2`
 * *Nearby* : `nearby`
 * *Sort* : `sort [ORDERING]` +
 e.g. `sort debt`
+* *Setpath* : `setpath`
+e.g. `setpath C:/Users/acer/Desktop/SE/profilepic/`
 * *Filter* : `filter TAG1 TAG2 ...` +
 e.g `filter friendly cooperative`
 * *Undo* : `undo`
@@ -579,17 +593,15 @@ e.g `filter friendly cooperative`
 
 * Filter contacts by tags (since v1.4)
 * Replace `Phone` field with `Handphone`, `Home phone` and `Office phone` (since v1.4)
+* Profile pictures of clients shown next to their details. (since v1.4)
+* List of people who have overdue debts. (since v1.4)
+* A progress bar to indicate how much of the person's debt has been paid off. (since v1.4)
 
 == Features to be included by `V2.0`
 
-//[V1.4]
-* List of people who have overdue debts.
-* A progress bar to indicate how much of the person's debt has been paid off.
-* A feature to export a person's contact in another format.
-* Profile pictures of clients shown next to their details.
-* Different appearance themes.
-//[end of V1.4]
 //[V1.5]
+* Different appearance themes.
+* A feature to export a person's contact in another format.
 * `Help` command that displays screenshots of positive examples.
 * Able to view the last login time.
 * Able to impose different periods of ban on a specified person in the blacklist

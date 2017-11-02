@@ -49,6 +49,7 @@ public class InfoPanel extends UiPart<Region> {
 
     private NearbyPersonListPanel nearbyPersonListPanel;
     private DebtRepaymentProgressBar debtRepaymentProgressBar;
+    private DebtorProfilePicture debtorProfilePicture;
 
     @FXML
     private Pane pane;
@@ -115,6 +116,8 @@ public class InfoPanel extends UiPart<Region> {
     @FXML
     private StackPane progressBarPlaceholder;
     @FXML
+    private StackPane profilePicPlaceholder;
+    @FXML
     private Text debtRepaymentField;
 
     public InfoPanel(Logic logic) {
@@ -167,7 +170,17 @@ public class InfoPanel extends UiPart<Region> {
         debtRepaymentProgressBar = new DebtRepaymentProgressBar(person);
         progressBarPlaceholder.getChildren().add(debtRepaymentProgressBar.getRoot());
     }
-
+  
+    //@@author jaivigneshvenugopal
+    /**
+     * Resets the debtors profile picture to the latest one existing in folder
+     * @param person the person whose person card is selected in the address book
+     */
+    private void resetDebtorProfilePicture(ReadOnlyPerson person) {
+        debtorProfilePicture = new DebtorProfilePicture(person);
+        profilePicPlaceholder.getChildren().add(debtorProfilePicture.getImageView());
+    }
+  
     //@@author khooroko
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
@@ -280,6 +293,7 @@ public class InfoPanel extends UiPart<Region> {
         logic.updateSelectedPerson(event.getNewSelection().person);
         resetNearbyPersonListPanel(event.getNewSelection().person);
         resetDebtRepaymentProgressBar(event.getNewSelection().person);
+        resetDebtorProfilePicture(event.getNewSelection().person);
     }
 
     @Subscribe
