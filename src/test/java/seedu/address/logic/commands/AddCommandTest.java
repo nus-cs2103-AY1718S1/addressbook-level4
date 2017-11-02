@@ -160,7 +160,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public TreeSet<Integer> generateMeetingTime(Index[] index){
+        public TreeSet<Integer> generateMeetingTime(Index[] index) {
             fail("This method should not be called.");
             return null;
         }
