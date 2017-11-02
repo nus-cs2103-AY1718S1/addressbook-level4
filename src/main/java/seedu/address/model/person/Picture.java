@@ -105,7 +105,7 @@ public class Picture {
             return true;
         }
 
-        if (fileLocation.equals("")) {
+        if ("".equals(fileLocation)) {
             return false;
         }
 
