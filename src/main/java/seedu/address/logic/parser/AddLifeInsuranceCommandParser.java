@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PREMIUM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SIGNING_DATE;
 
+import java.time.LocalDate;
 import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -45,8 +46,12 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
             String beneficiary = ParserUtil.parseNameForInsurance(argMultimap.getValue(PREFIX_BENEFICIARY)).get();
             Double premium = ParserUtil.parsePremium(argMultimap.getValue(PREFIX_PREMIUM)).get();
             String contract = ParserUtil.parseContract(argMultimap.getValue(PREFIX_CONTRACT)).get();
-            String signingDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_SIGNING_DATE)).get();
-            String expiryDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_EXPIRY_DATE)).get();
+            LocalDate signingDate = new DateParser().parse(
+                    ParserUtil.parseContract(argMultimap.getValue(PREFIX_SIGNING_DATE)).get()
+            );
+            LocalDate expiryDate = new DateParser().parse(
+                    ParserUtil.parseContract(argMultimap.getValue(PREFIX_EXPIRY_DATE)).get()
+            );
 
             return new AddLifeInsuranceCommand(owner, insured, beneficiary, premium, contract, signingDate, expiryDate);
         } catch (IllegalValueException ive) {

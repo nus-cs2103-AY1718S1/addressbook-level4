@@ -1,5 +1,5 @@
 # OscarWang114
-###### \java\seedu\address\commons\events\ui\PersonNameClickedEvent.java
+###### /java/seedu/address/commons/events/ui/PersonNameClickedEvent.java
 ``` java
     public Optional<ReadOnlyPerson> getPerson() {
         return target.getOptionalPerson();
@@ -9,7 +9,7 @@
         return target.nameProperty();
     }
 ```
-###### \java\seedu\address\commons\function\ThrowingConsumer.java
+###### /java/seedu/address/commons/function/ThrowingConsumer.java
 ``` java
 /**
  * A Consumer that allows lambda expressions to throw exception.
@@ -31,7 +31,7 @@ public interface ThrowingConsumer<T> extends Consumer<T> {
 
 }
 ```
-###### \java\seedu\address\logic\commands\AddCommand.java
+###### /java/seedu/address/logic/commands/AddCommand.java
 ``` java
     public static final String MESSAGE_USAGE = concatenateCommandWords(COMMAND_WORDS)
             + ": Adds a person to the address book. "
@@ -51,7 +51,7 @@ public interface ThrowingConsumer<T> extends Consumer<T> {
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 ```
-###### \java\seedu\address\logic\commands\AddCommand.java
+###### /java/seedu/address/logic/commands/AddCommand.java
 ``` java
     /**
      * Stores the optional details to add the person with. By default each field is an object
@@ -126,7 +126,7 @@ public interface ThrowingConsumer<T> extends Consumer<T> {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\AddLifeInsuranceCommand.java
+###### /java/seedu/address/logic/commands/AddLifeInsuranceCommand.java
 ``` java
 /**
  * Creates an insurance relationship in the address book.
@@ -158,59 +158,27 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_INSURANCE = "This insurance already exists in the address book";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
-    private final String ownerName;
-    private final String insuredName;
-    private final String beneficiaryName;
-    private final Double premium;
-    private final String contractPath;
-    private final String signingDate;
-    private final String expiryDate;
-
-    private ReadOnlyPerson personForOwner;
-    private ReadOnlyPerson personForInsured;
-    private ReadOnlyPerson personForBeneficiary;
+    private final LifeInsurance lifeInsuranceToAdd;
 
     /**
      * Creates an AddLifeInsuranceCommand to add the specified {@code ReadOnlyInsurance}
      */
     public AddLifeInsuranceCommand(String ownerName, String insuredName, String beneficiaryName,
-                                   Double premium, String contractPath, String signingDate, String expiryDate) {
-
-        this.ownerName = ownerName;
-        this.insuredName = insuredName;
-        this.beneficiaryName = beneficiaryName;
-        this.premium = premium;
-        this.contractPath = contractPath;
-        this.signingDate = signingDate;
-        this.expiryDate = expiryDate;
+                                   Double premium, String contractPath, LocalDate signingDate,
+                                   LocalDate expiryDate) {
+        this.lifeInsuranceToAdd = new LifeInsurance(ownerName, insuredName, beneficiaryName,
+                premium, contractPath, signingDate, expiryDate);
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyPerson> personList = model.getFilteredPersonList();
+        List<ReadOnlyInsurance> insuranceList = model.getInsuranceList();
+        isAnyPersonInList(personList, lifeInsuranceToAdd);
+        model.addInsurance(lifeInsuranceToAdd);
 
-        if (!arePersonsAllInList(lastShownList, ownerName, insuredName, beneficiaryName)) {
-            throw new CommandException(Messages.MESSAGE_PERSON_NOT_FOUND);
-        }
-
-        try {
-            LifeInsurance lifeInsuranceToAdd = new LifeInsurance(personForOwner, personForInsured, personForBeneficiary,
-                premium, contractPath, signingDate, expiryDate);
-            model.updatePerson(personForOwner, new Person(personForOwner, lifeInsuranceToAdd));
-            model.updatePerson(personForInsured, new Person(personForInsured, lifeInsuranceToAdd));
-            model.updatePerson(personForBeneficiary, new Person(personForBeneficiary, lifeInsuranceToAdd));
-            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-
-            return new CommandResult(String.format(MESSAGE_SUCCESS, lifeInsuranceToAdd));
-        } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
-        } catch (IllegalValueException ive) {
-            throw new CommandException(ive.getMessage());
-        }
-
+        return new CommandResult(String.format(MESSAGE_SUCCESS, lifeInsuranceToAdd));
     }
 
     @Override
@@ -224,34 +192,26 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
     /**
      * Check if all the Person parameters required to create an insurance are inside the list
      */
-    public boolean arePersonsAllInList(List<ReadOnlyPerson> list, String owner, String insured, String beneficiary) {
-        boolean ownerFlag = false;
-        boolean insuredFlag = false;
-        boolean beneficiaryFlag = false;
-
+    public void isAnyPersonInList(List<ReadOnlyPerson> list, LifeInsurance lifeInsurance) {
+        String ownerName = lifeInsurance.getOwner().getName();
+        String insuredName = lifeInsurance.getInsured().getName();
+        String beneficiaryName = lifeInsurance.getBeneficiary().getName();
         for (ReadOnlyPerson person: list) {
-            String personFullNameLowerCase = person.getName().toString().toLowerCase();
-            if (personFullNameLowerCase.equals(owner.toLowerCase())) {
-                ownerFlag = true;
-                this.personForOwner = person;
+            String lowerCaseName = person.getName().toString().toLowerCase();
+            if (lowerCaseName.equals(ownerName)) {
+                lifeInsurance.getOwner().setPerson(person);
             }
-            if (personFullNameLowerCase.equals(insured.toLowerCase())) {
-                insuredFlag = true;
-                this.personForInsured = person;
+            if (lowerCaseName.equals(insuredName)) {
+                lifeInsurance.getInsured().setPerson(person);
             }
-            if (personFullNameLowerCase.equals(beneficiary.toLowerCase())) {
-                beneficiaryFlag = true;
-                this.personForBeneficiary = person;
-            }
-            if (ownerFlag && beneficiaryFlag && insuredFlag) {
-                return true;
+            if (lowerCaseName.equals(beneficiaryName)) {
+                lifeInsurance.getBeneficiary().setPerson(person);
             }
         }
-        return false;
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddCommandParser.java
+###### /java/seedu/address/logic/parser/AddCommandParser.java
 ``` java
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
@@ -304,7 +264,7 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
         return argumentMultimap.getValue(namePrefix).isPresent();
     }
 ```
-###### \java\seedu\address\logic\parser\AddLifeInsuranceCommandParser.java
+###### /java/seedu/address/logic/parser/AddLifeInsuranceCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AddLifeInsuranceCommand object
@@ -335,8 +295,12 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
             String beneficiary = ParserUtil.parseNameForInsurance(argMultimap.getValue(PREFIX_BENEFICIARY)).get();
             Double premium = ParserUtil.parsePremium(argMultimap.getValue(PREFIX_PREMIUM)).get();
             String contract = ParserUtil.parseContract(argMultimap.getValue(PREFIX_CONTRACT)).get();
-            String signingDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_SIGNING_DATE)).get();
-            String expiryDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_EXPIRY_DATE)).get();
+            LocalDate signingDate = new DateParser().parse(
+                    ParserUtil.parseContract(argMultimap.getValue(PREFIX_SIGNING_DATE)).get()
+            );
+            LocalDate expiryDate = new DateParser().parse(
+                    ParserUtil.parseContract(argMultimap.getValue(PREFIX_EXPIRY_DATE)).get()
+            );
 
             return new AddLifeInsuranceCommand(owner, insured, beneficiary, premium, contract, signingDate, expiryDate);
         } catch (IllegalValueException ive) {
@@ -353,36 +317,37 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
     }
 }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     private final UniqueLifeInsuranceMap lifeInsuranceMap;
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
         lifeInsuranceMap = new UniqueLifeInsuranceMap();
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     public void setLifeInsurances(Map<UUID, ReadOnlyInsurance> insurances) throws DuplicateInsuranceException {
         this.lifeInsuranceMap.setInsurances(insurances);
     }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
+    /**
+     *Adds an insurance to the address book.
+     */
+    public void addInsurance(ReadOnlyInsurance i) {
+        UUID id = UUID.randomUUID();
+        LifeInsurance lifeInsurance = new LifeInsurance(i);
         try {
-            setLifeInsurances(newData.getLifeInsuranceMap());
+            lifeInsuranceMap.put(id, lifeInsurance);
         } catch (DuplicateInsuranceException e) {
             assert false : "AddressBooks should not have duplicate insurances";
         }
         syncMasterLifeInsuranceMapWith(persons);
-
-        try {
-            syncMasterPersonListWith(lifeInsuranceMap);
-        } catch (InsuranceNotFoundException e) {
-            assert false : "AddressBooks should not contain id that doesn't match to an insurance";
-        }
+    }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     /**
      * Ensures that every insurance in the master map:
@@ -394,14 +359,18 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
             String insured = insurance.getInsured().getName();
             String beneficiary = insurance.getBeneficiary().getName();
             persons.forEach(person -> {
+                person.clearLifeInsuranceIds();
                 if (person.getName().fullName.equals(owner)) {
                     insurance.setOwner(person);
+                    person.addLifeInsuranceIds(id);
                 }
                 if (person.getName().fullName.equals(insured)) {
                     insurance.setInsured(person);
+                    person.addLifeInsuranceIds(id);
                 }
                 if (person.getName().fullName.equals(beneficiary)) {
                     insurance.setBeneficiary(person);
+                    person.addLifeInsuranceIds(id);
                 }
             });
         });
@@ -424,14 +393,14 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
         });
     }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     @Override
     public Map<UUID, ReadOnlyInsurance> getLifeInsuranceMap() {
         return lifeInsuranceMap.asMap();
     }
 ```
-###### \java\seedu\address\model\insurance\exceptions\DuplicateInsuranceException.java
+###### /java/seedu/address/model/insurance/exceptions/DuplicateInsuranceException.java
 ``` java
 /**
  * Signals that the operation will result in duplicate Insurance objects.
@@ -442,14 +411,14 @@ public class DuplicateInsuranceException extends DuplicateDataException {
     }
 }
 ```
-###### \java\seedu\address\model\insurance\exceptions\InsuranceNotFoundException.java
+###### /java/seedu/address/model/insurance/exceptions/InsuranceNotFoundException.java
 ``` java
 /**
  * Signals that the operation is unable to find the specified insurance.
  */
 public class InsuranceNotFoundException extends Exception {}
 ```
-###### \java\seedu\address\model\insurance\InsurancePerson.java
+###### /java/seedu/address/model/insurance/InsurancePerson.java
 ``` java
 /**
  * Represents a person and his/her name in an insurance in LISA.
@@ -490,7 +459,7 @@ public class InsurancePerson {
     }
 }
 ```
-###### \java\seedu\address\model\insurance\LifeInsurance.java
+###### /java/seedu/address/model/insurance/LifeInsurance.java
 ``` java
 /**
  * Represents a life insurance in LISA.
@@ -510,221 +479,11 @@ public class LifeInsurance implements ReadOnlyInsurance {
     private DoubleProperty premium;
     private StringProperty premiumString;
     private StringProperty contractPath;
-    private StringProperty signingDate;
-    private StringProperty expiryDate;
+    private StringProperty signingDateString;
+    private StringProperty expiryDateString;
 
-    /**
-     * Constructor for {@code XmlAdaptedLifeInsurance.toModelType()}
-     */
-    public LifeInsurance(String owner, String insured, String beneficiary, Double premium,
-                         String contractPath, String signingDate, String expiryDate) {
-        this.roleToPersonNameMap = new EnumMap<>(Roles.class);
-        this.roleToPersonNameMap.put(Roles.OWNER, owner);
-        this.roleToPersonNameMap.put(Roles.INSURED, insured);
-        this.roleToPersonNameMap.put(Roles.BENEFICIARY, beneficiary);
-        this.owner = new SimpleObjectProperty<>(new InsurancePerson(owner));
-        this.insured = new SimpleObjectProperty<>(new InsurancePerson(insured));
-        this.beneficiary = new SimpleObjectProperty<>(new InsurancePerson(beneficiary));
-        this.premium = new SimpleDoubleProperty(premium);
-        this.contractPath = new SimpleStringProperty(contractPath);
-        this.signingDate = new SimpleStringProperty(signingDate);
-        this.expiryDate = new SimpleStringProperty(expiryDate);
-        this.premiumString = new SimpleStringProperty(this.getPremiumString());
-    }
-
-    /**
-     * Constructor for {@code AddLifeInsuranceCommand}
-     */
-    public LifeInsurance(ReadOnlyPerson owner, ReadOnlyPerson insured, ReadOnlyPerson beneficiary,
-                         Double premium, String contractPath, String signingDate, String expiryDate) {
-        requireAllNonNull(owner, insured, beneficiary, premium, contractPath);
-        this.roleToPersonNameMap = new EnumMap<>(Roles.class);
-        this.roleToPersonNameMap.put(Roles.OWNER, owner.getName().fullName);
-        this.roleToPersonNameMap.put(Roles.INSURED, insured.getName().fullName);
-        this.roleToPersonNameMap.put(Roles.BENEFICIARY, beneficiary.getName().fullName);
-        this.owner = new SimpleObjectProperty<>(new InsurancePerson(owner));
-        this.insured = new SimpleObjectProperty<>(new InsurancePerson(insured));
-        this.beneficiary = new SimpleObjectProperty<>(new InsurancePerson(beneficiary));
-        this.premium = new SimpleDoubleProperty(premium);
-        this.contractPath = new SimpleStringProperty(contractPath);
-        this.signingDate = new SimpleStringProperty(signingDate);
-        this.expiryDate = new SimpleStringProperty(expiryDate);
-        this.premiumString = new SimpleStringProperty(this.getPremiumString());
-    }
-
-    /**
-     * Creates a copy of the given ReadOnlyInsurance.
-     */
-    public LifeInsurance(ReadOnlyInsurance source) {
-        //TODO: fix
-        if (source.ownerProperty() != null) {
-            this.owner = new SimpleObjectProperty<>(source.getOwner());
-        }
-        if (source.insuredProperty() != null) {
-            this.insured = new SimpleObjectProperty<>(source.getInsured());
-        }
-        if (source.beneficiaryProperty() != null) {
-            this.beneficiary = new SimpleObjectProperty<>(source.getBeneficiary());
-        }
-        this.premium = new SimpleDoubleProperty(source.getPremium());
-        this.premiumString = new SimpleStringProperty(this.getPremiumString());
-        this.contractPath = new SimpleStringProperty(source.getContractPath());
-        this.signingDate = new SimpleStringProperty(source.getSigningDate());
-        this.expiryDate = new SimpleStringProperty(source.getExpiryDate());
-        if (source.getRoleToPersonNameMap() != null) {
-            this.roleToPersonNameMap = source.getRoleToPersonNameMap();
-        }
-    }
-
-    public void setInsuranceRole(Person person) {
-        String fullName = person.getName().fullName;
-        roleToPersonNameMap.forEach((role, name) -> {
-            if (name == fullName) {
-                switch (role) {
-                case OWNER:
-                    this.owner = new SimpleObjectProperty<>(new InsurancePerson(person));
-                    break;
-                case INSURED:
-                    this.insured = new SimpleObjectProperty<>(new InsurancePerson(person));
-                    break;
-                case BENEFICIARY:
-                    this.beneficiary = new SimpleObjectProperty<>(new InsurancePerson(person));
-                    break;
-                default:
-                    assert (false);
-                }
-            }
-        });
-    }
-
-    @Override
-    public ObjectProperty<UUID> idProperty() {
-        return id;
-    }
-
-    @Override
-    public String getId() {
-        return id.toString();
-    }
-
-    @Override
-    public EnumMap getRoleToPersonNameMap() {
-        return roleToPersonNameMap;
-    }
-
-    public void setOwner(Person owner) {
-        requireNonNull(owner);
-        this.owner.get().setPerson(owner);
-    }
-
-    @Override
-    public ObjectProperty<InsurancePerson> ownerProperty() {
-        return owner;
-    }
-
-    @Override
-    public InsurancePerson getOwner() {
-        return owner.get();
-    }
-
-    public void setInsured(Person insured) {
-        requireNonNull(insured);
-        this.insured.get().setPerson(insured);
-    }
-
-    @Override
-    public ObjectProperty<InsurancePerson> insuredProperty() {
-        return insured;
-    }
-
-    @Override
-    public InsurancePerson getInsured() {
-        return insured.get();
-    }
-
-    public void setBeneficiary(Person beneficiary) {
-        requireNonNull(beneficiary);
-        this.beneficiary.get().setPerson(beneficiary);
-    }
-
-    @Override
-    public ObjectProperty<InsurancePerson> beneficiaryProperty() {
-        return beneficiary;
-    }
-
-    @Override
-    public InsurancePerson getBeneficiary() {
-        return beneficiary.get();
-    }
-
-    public void setPremium(Double premium) {
-        this.premium.set(requireNonNull(premium));
-    }
-
-    @Override
-    public DoubleProperty premiumProperty() {
-        return premium;
-    }
-
-    @Override
-    public Double getPremium() {
-        return premium.get();
-    }
-
-    @Override
-    public StringProperty premiumStringProperty() {
-        return premiumString;
-    }
-
-    @Override
-    public String getPremiumString() {
-        return "S$ " + String.format("%.2f", premium.get());
-    }
-
-    public void setContractPath(String contractPath) {
-        this.contractPath.set(requireNonNull(contractPath));
-    }
-
-    @Override
-    public StringProperty contractPathProperty() {
-        return contractPath;
-    }
-
-    @Override
-    public String getContractPath() {
-        return contractPath.get();
-    }
-
-    public void setSigningDate(String signingDate) {
-        this.signingDate.set(requireNonNull(signingDate));
-    }
-
-    @Override
-    public StringProperty signingDateProperty() {
-        return signingDate;
-    }
-
-    @Override
-    public String getSigningDate() {
-        return signingDate.get();
-    }
-
-    public void setExpiryDate(String expiryDate) {
-        this.expiryDate.set(requireNonNull(expiryDate));
-    }
-
-    @Override
-    public StringProperty expiryDateProperty() {
-        return expiryDate;
-    }
-
-    @Override
-    public String getExpiryDate() {
-        return expiryDate.get();
-    }
-}
 ```
-###### \java\seedu\address\model\insurance\ReadOnlyInsurance.java
+###### /java/seedu/address/model/insurance/ReadOnlyInsurance.java
 ``` java
 /**
  * Represents an insurance.
@@ -752,7 +511,7 @@ public interface ReadOnlyInsurance {
     String getExpiryDateString();
 }
 ```
-###### \java\seedu\address\model\insurance\UniqueLifeInsuranceList.java
+###### /java/seedu/address/model/insurance/UniqueLifeInsuranceList.java
 ``` java
 /**
  * A list of insurances that enforces uniqueness between its elements and does not allow nulls.
@@ -802,7 +561,7 @@ public class UniqueLifeInsuranceList implements Iterable<LifeInsurance> {
     }
 }
 ```
-###### \java\seedu\address\model\insurance\UniqueLifeInsuranceMap.java
+###### /java/seedu/address/model/insurance/UniqueLifeInsuranceMap.java
 ``` java
 /**
  * A map of life insurances that enforces uniqueness between its elements and does not allow nulls.
@@ -877,6 +636,10 @@ public class UniqueLifeInsuranceMap {
         setInsurances(replacement);
     }
 
+    public ObservableList<ReadOnlyInsurance> asObservableList() {
+        return FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(internalMap.values()));
+    }
+
     /**
      * Returns the backing map as an unmodifiable {@code ObservableList}.
      */
@@ -898,7 +661,7 @@ public class UniqueLifeInsuranceMap {
     }
 }
 ```
-###### \java\seedu\address\model\person\Address.java
+###### /java/seedu/address/model/person/Address.java
 ``` java
     /**
      * Initialize a Address object with value of empty String. This can ONLY be used in the default field of
@@ -908,7 +671,7 @@ public class UniqueLifeInsuranceMap {
         this.value = "";
     }
 ```
-###### \java\seedu\address\model\person\Email.java
+###### /java/seedu/address/model/person/Email.java
 ``` java
     /**
      * Initialize a Email object with value of empty String. This can ONLY be used in the default field of
@@ -918,39 +681,65 @@ public class UniqueLifeInsuranceMap {
         this.value = "";
     }
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
     private ObjectProperty<List<UUID>> lifeInsuranceIds;
     private ObjectProperty<UniqueLifeInsuranceList> lifeInsurances;
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
         this.lifeInsuranceIds = new SimpleObjectProperty<>(lifeInsuranceIds);
         this.lifeInsurances = new SimpleObjectProperty<>(new UniqueLifeInsuranceList());
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
-        this.lifeInsuranceIds = new SimpleObjectProperty<>(new ArrayList<UUID>());
-        this.lifeInsurances = new SimpleObjectProperty<>(new UniqueLifeInsuranceList());
-```
-###### \java\seedu\address\model\person\Person.java
-``` java
+    /**
+     * Creates a copy of the given ReadOnlyPerson.
+     */
+    public Person(ReadOnlyPerson source) {
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+                source.getDateOfBirth(), source.getTags());
         if (source.getLifeInsuranceIds() != null) {
             this.lifeInsuranceIds = new SimpleObjectProperty<>(source.getLifeInsuranceIds());
         }
         if (source.getLifeInsurances() != null) {
             this.lifeInsurances = new SimpleObjectProperty<>(source.getLifeInsurances());
         }
+
+    }
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
+    public Person(ReadOnlyPerson source, LifeInsurance lifeInsurance) {
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+                source.getDateOfBirth(), source.getTags());
         if (source.getLifeInsuranceIds() != null) {
             this.lifeInsuranceIds = new SimpleObjectProperty<>(source.getLifeInsuranceIds());
         }
         addLifeInsurances(lifeInsurance);
+
+    }
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
+
+    /**
+     * adds an Id
+     * @param idToAdd
+     */
+    public void addLifeInsuranceIds(UUID idToAdd) {
+        for (UUID id : lifeInsuranceIds.get()) {
+            if (id.equals(idToAdd)) {
+                return;
+            }
+        }
+        lifeInsuranceIds.get().add(idToAdd);
+    }
+
+    public void clearLifeInsuranceIds() {
+        lifeInsuranceIds = new SimpleObjectProperty<>(new ArrayList<UUID>());
+    }
+
     @Override
     public ObjectProperty<List<UUID> > lifeInsuranceIdProperty() {
         return this.lifeInsuranceIds;
@@ -979,7 +768,7 @@ public class UniqueLifeInsuranceMap {
         return this.lifeInsurances.get();
     }
 ```
-###### \java\seedu\address\model\person\Phone.java
+###### /java/seedu/address/model/person/Phone.java
 ``` java
     /**
      * Initialize a Phone object with value of empty String. This can ONLY be used in the default field of
@@ -989,14 +778,14 @@ public class UniqueLifeInsuranceMap {
         this.value = "";
     }
 ```
-###### \java\seedu\address\model\person\ReadOnlyPerson.java
+###### /java/seedu/address/model/person/ReadOnlyPerson.java
 ``` java
     ObjectProperty<List<UUID>> lifeInsuranceIdProperty();
     List<UUID> getLifeInsuranceIds();
     ObjectProperty<UniqueLifeInsuranceList> lifeInsuranceProperty();
     UniqueLifeInsuranceList getLifeInsurances();
 ```
-###### \java\seedu\address\model\ReadOnlyAddressBook.java
+###### /java/seedu/address/model/ReadOnlyAddressBook.java
 ``` java
     /**
      * Returns an unmodifiable view of the life insurances map.
@@ -1004,7 +793,7 @@ public class UniqueLifeInsuranceMap {
      */
     Map<UUID, ReadOnlyInsurance> getLifeInsuranceMap();
 ```
-###### \java\seedu\address\storage\XmlAdaptedLifeInsurance.java
+###### /java/seedu/address/storage/XmlAdaptedLifeInsurance.java
 ``` java
 /**
  * JAXB-friendly version of the LifeInsurance.
@@ -1059,12 +848,12 @@ public class XmlAdaptedLifeInsurance {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlAdaptedPerson.java
+###### /java/seedu/address/storage/XmlAdaptedPerson.java
 ``` java
     @XmlElement(name = "lifeInsuranceId")
     private List<String> lifeInsuranceIds = new ArrayList<>();
 ```
-###### \java\seedu\address\storage\XmlAdaptedPerson.java
+###### /java/seedu/address/storage/XmlAdaptedPerson.java
 ``` java
     /**
      * Converts this jaxb-friendly adapted person object into the model's Person object.
@@ -1089,12 +878,12 @@ public class XmlAdaptedLifeInsurance {
         return new Person(name, phone, email, address, dob, tags, personLifeInsuranceIds);
     }
 ```
-###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+###### /java/seedu/address/storage/XmlSerializableAddressBook.java
 ``` java
     @XmlElement(name = "lifeInsuranceMap")
     private Map<String, XmlAdaptedLifeInsurance> lifeInsuranceMap;
 ```
-###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+###### /java/seedu/address/storage/XmlSerializableAddressBook.java
 ``` java
     @Override
     public Map<UUID, ReadOnlyInsurance> getLifeInsuranceMap() {
@@ -1113,7 +902,7 @@ public class XmlAdaptedLifeInsurance {
         return lifeInsurances;
     }
 ```
-###### \java\seedu\address\ui\InsuranceListPanel.java
+###### /java/seedu/address/ui/InsuranceListPanel.java
 ``` java
 /**
  * The Insurance Panel of the App.
@@ -1121,6 +910,7 @@ public class XmlAdaptedLifeInsurance {
 public class InsuranceListPanel extends UiPart<Region> {
 
     private static final String FXML = "InsuranceListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
     private ListView<InsuranceProfile> insuranceListView;
@@ -1131,9 +921,9 @@ public class InsuranceListPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    public InsuranceListPanel(ReadOnlyPerson person) {
+    public InsuranceListPanel(ObservableList<ReadOnlyInsurance> insuranceList) {
         super(FXML);
-        setConnections(person.getLifeInsurances().asObservableList());
+        setConnections(insuranceList);
         registerAsAnEventHandler(this);
     }
     /**
@@ -1152,6 +942,19 @@ public class InsuranceListPanel extends UiPart<Region> {
                 insuranceList, (insurance) -> new InsuranceProfile(insurance, insuranceList.indexOf(insurance) + 1));
         insuranceListView.setItems(mappedList);
         insuranceListView.setCellFactory(listView -> new InsuranceListPanel.InsuranceListViewCell());
+        setEventHandlerForSelectionChangeEvent();
+
+    }
+
+
+    private void setEventHandlerForSelectionChangeEvent() {
+        insuranceListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in insurance list panel changed to : '" + newValue + "'");
+                        raise(new InsurancePanelSelectionChangedEvent(newValue));
+                    }
+                });
     }
 
     /**
@@ -1172,7 +975,7 @@ public class InsuranceListPanel extends UiPart<Region> {
     }
 }
 ```
-###### \java\seedu\address\ui\InsuranceProfile.java
+###### /java/seedu/address/ui/InsuranceProfile.java
 ``` java
 /**
  * The Profile Panel of the App.
@@ -1180,9 +983,10 @@ public class InsuranceListPanel extends UiPart<Region> {
 public class InsuranceProfile extends UiPart<Region> {
 
     private static final String FXML = "InsuranceProfile.fxml";
-
+    private static final String PDFFOLDERPATH = "data/";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
+    private File insuranceFile;
     private ReadOnlyInsurance insurance;
 
     @FXML
@@ -1201,68 +1005,79 @@ public class InsuranceProfile extends UiPart<Region> {
     private Label signingDate;
     @FXML
     private Label expiryDate;
-
-    public InsuranceProfile(ReadOnlyInsurance insurance, int displayIndex) {
+    public InsuranceProfile() {
         super(FXML);
-        this.insurance = insurance;
-        index.setText(displayIndex + ".");
-        owner.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getOwner())));
-        insured.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getInsured())));
-        beneficiary.setOnMouseClicked(e ->
-                raise(new PersonNameClickedEvent(insurance.getBeneficiary())));
-
-        bindListeners(insurance);
+        enableNameToProfileLink(insurance);
         registerAsAnEventHandler(this);
+
     }
 
-    /**
-     * Binds the individual UI elements to observe their respective {@code ReadOnlyInsurance} properties
-     * so that they will be notified of any changes.
-     * @param insurance
-     */
-    private void bindListeners(ReadOnlyInsurance insurance) {
-        owner.textProperty().bind(Bindings.convert(insurance.getOwner().nameProperty()));
-        insured.textProperty().bind(Bindings.convert(insurance.getInsured().nameProperty()));
-        beneficiary.textProperty().bind(Bindings.convert(insurance.getBeneficiary().nameProperty()));
-        premium.textProperty().bind(Bindings.convert(insurance.premiumStringProperty()));
-        contractPath.textProperty().bind(Bindings.convert(insurance.contractPathProperty()));
-        signingDate.textProperty().bind(Bindings.convert(insurance.signingDateStringProperty()));
-        expiryDate.textProperty().bind(Bindings.convert(insurance.expiryDateStringProperty()));
-    }
-}
 ```
-###### \java\seedu\address\ui\ProfilePanel.java
+###### /java/seedu/address/ui/ProfilePanel.java
 ``` java
+    /**
+     * Load person page with empty fields and default message
+     */
     private void loadPersonPage(StringProperty name) {
+        unbindListenersAndClearText();
         this.name.textProperty().bind(Bindings.convert(name));
-        this.address.textProperty().unbind();
         this.address.setText(PERSON_DOES_NOT_EXIST_MESSAGE);
     }
 ```
-###### \java\seedu\address\ui\ProfilePanel.java
+###### /java/seedu/address/ui/ProfilePanel.java
+``` java
+    /**
+     * unbind all listeners
+     */
+    private void unbindListenersAndClearText() {
+        name.textProperty().unbind();
+        phone.textProperty().unbind();
+        address.textProperty().unbind();
+        dob.textProperty().unbind();
+        email.textProperty().unbind();
+        name.setText(null);
+        phone.setText(null);
+        address.setText(null);
+        dob.setText(null);
+        email.setText(null);
+        insuranceHeader.setText(null);
+    }
+```
+###### /java/seedu/address/ui/ProfilePanel.java
 ``` java
     @Subscribe
     private void handlePersonNameClickedEvent(PersonNameClickedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        insurance.clear();
         ReadOnlyPerson person = event.getPerson().orElse(null);
         if (person == null) {
             loadPersonPage(event.getPersonName());
         } else {
             loadPersonPage(event.getPerson().get());
         }
-        raise(new SwitchPanelRequestEvent());
+        raise(new SwitchToProfilePanelRequestEvent());
     }
 ```
+###### /resources/view/DarkTheme.css
+``` css
+.list-cell:filled:selected #insuranceCardPane {
+    -fx-border-color: #3e7b91;
+    -fx-border-width: 1;
+}
+```
+###### /resources/view/DarkTheme.css
 ``` css
 #personListView {
     -fx-background-color: transparent #383838 transparent #383838;
 }
 ```
+###### /resources/view/InsuranceListPanel.fxml
 ``` fxml
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <ListView fx:id="insuranceListView" VBox.vgrow="ALWAYS" />
 </VBox>
 ```
+###### /resources/view/InsuranceProfile.fxml
 ``` fxml
       <VBox alignment="CENTER_LEFT" minHeight="150" prefHeight="150.0" prefWidth="176.0" GridPane.columnIndex="1">
          <padding>
