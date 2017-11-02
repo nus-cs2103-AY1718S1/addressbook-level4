@@ -269,29 +269,26 @@ Shows the updated list of hidden contacts.
 Creates an alias based on given keyword and representation. +
 Format: `alias` `k/KEYWORD` `s/REPRESENTATION`
 
-****
-* Adds an alias with the keyword as as a substitute for the respective representation.
-* The keyword is case-insensitive.
-****
-
 Examples:
 
 * `alias` `k/disappear` `s/hide` +
 Creates an alias command 'disappear' that is understood as the 'hide' command word.
 * `alias` `k/ph` `s/Public Holiday` +
 Creates an alias shortcut that translates ph into Public Holiday every time it is entered by user.
+
+****
+* Adds an alias with the keyword as a substitute for the respective representation.
+* The keyword is case-insensitive.
+* This allows the user to create personalised commands for the existing default Bluebird commands for a more user-friendly
+experience.
+****
 // end::alias[]
 
 // tag::unalias[]
 === Removes an alias for command or shortcut : `unalias`
 
-Removes an existing alias based on given keyword and representation. +
+Removes an existing alias based on given keyword and representation that the user has previously assigned. +
 Format: `unalias` `k/KEYWORD`
-
-****
-* Removes an existing alias that has been made with the same keyword.
-* The keyword is case-insensitive.
-****
 
 Examples:
 
@@ -299,6 +296,11 @@ Examples:
 Removes the alias command 'disappear'. Next instances of disappear will no longer be a hide command.
 * `unalias` `k/ph` +
 Removes the alias shortcut 'ph'. Next instances of ph will no longer translate to Public Holiday.
+
+****
+* Removes an existing alias that has been made with the same keyword.
+* The keyword is case-insensitive.
+****
 // end::unalias[]
 
 // tag::pinunpin[]
@@ -307,10 +309,18 @@ Removes the alias shortcut 'ph'. Next instances of ph will no longer translate t
 Pins a person to a pin panel for easy access. +
 Format: `pin` `INDEX`
 
+Examples:
+
+* `pin` `1` +
+Pins the person at index 1.
+
 ****
 * Pins the person at the specified `INDEX`.
+* A star icon will appear next to the pinned person's contact information.
+* The pinned person(s) will also appear on the pinned persons panel that the user can toggle between.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
+
 ****
 
 === Unpin a person: `unpin`
@@ -318,17 +328,36 @@ Format: `pin` `INDEX`
 Unpins a person from the list +
 Format: `unpin` `INDEX`
 
+Examples
+
+* `unpin` `1` +
+Unpins the person at index 1.
+
 ****
 * Unpins the person at the specified `INDEX`.
+* The star icon next to the person's contact information will disappear.
+* The unpinned person(s) will also disappear from the pinned persons panel.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 // end::pinunpin[]
 
+// tag::delete[]
 === Deleting person(s) : `delete`
 
-Deletes the specified person(s) from the address book. +
-Format: `delete` `INDEX` `2nd INDEX` `INDEX RANGE`
+Deletes the specified person(s) from Bluebird's address book. +
+Format: `delete` `EXAMPLEINDEX1` `EXAMPLEINDEX2` `INDEX RANGE`
+
+Examples:
+
+* `delete` `2` `3` `4~7` +
+Deletes the 2nd, 3rd and the 4th to 7th (*both inclusive*) person in Bluebird's address book.
+* `find` `Betsy` +
+`delete` `1` +
+Deletes the 1st person in the results of the `find` command.
+* `list` +
+`delete` `2~5` +
+Deletes 2nd to 5th person (*both inclusive*) in Bluebird's address book.
 
 ****
 * Deletes the person at the specified `INDEX` or the specified `INDEX RANGE`.
@@ -338,76 +367,74 @@ Format: `delete` `INDEX` `2nd INDEX` `INDEX RANGE`
 ** The input *can be multiple positive integers with a space in between* 1 2 3 ...
 ** The input *can be a range of positive integers, denoted by a "~" in between the minimum and maximum index (both inclusive)* 1~4, 2~7, ...
 ****
-
-Examples:
-
-* `list` +
-`delete` `2` `3` `4~7`+
-Deletes the 2nd, 3rd and the 4th to 7th (*both inclusive*) person in the address book.
-* `find` `Betsy` +
-`delete` `1` +
-Deletes the 1st person in the results of the `find` command.
-* `list` +
-`delete` `2~5`
-Deletes 2nd to 5th person (*both inclusive*) in the address book.
+// end::delete[]
 
 
+// tag::select[]
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select` `INDEX`
+
+Examples:
+
+* `list` +
+`select` `2` +
+Selects the 2nd person in Bluebird's address book.
+* `find` `Betsy` +
+`select` `1` +
+Selects the 1st person in the results of the `find` command.
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
+// end::select[]
 
-Examples:
-
-* `list` +
-`select` `2` +
-Selects the 2nd person in the address book.
-* `find` `Betsy` +
-`select` `1` +
-Selects the 1st person in the results of the `find` command.
-
+// tag::history[]
 === Listing entered commands : `history`
 
-Lists all the commands that you have entered in reverse chronological order. +
+Lists all the commands that the user has entered in reverse chronological order. +
 Format: `history`
 
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+// end::history[]
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undo previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the address book to the state before the previous _undoable_ command was executed in case the user wants to revert
+when a contact was unintentionally modified in Bluebird. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify Bluebird's address book content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
 
 * `delete` `1` +
 `list` +
-`undo` (reverses the `delete 1` command) +
+`undo` +
+The `undo` command here reverses the `delete` `1` command.
 
 * `select` `1` +
 `list` +
 `undo` +
-The `undo` command fails as there are no undoable commands executed previously.
+The `undo` command here fails as there are no undoable commands executed previously.
 
 * `delete` `1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete` `1` command) +
+`undo` +
+`undo` +
+The `undo` command entered right after `clear` reverses the `clear` command. +
+The next `undo` command reverts the `delete` `1` command, i.e. reverting the next Bluebird address book contact
+modifying command.
 
 === Redoing the previously undone command : `redo`
 
