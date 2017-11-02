@@ -66,7 +66,6 @@ public class AddMeetingCommand extends UndoableCommand {
         this.location = location;
     }
 
-    //@@author nelsonqyj
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);

@@ -58,6 +58,43 @@ public class ListMeetingCommand extends Command {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\ParserUtil.java
+``` java
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<PersonToMeet>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<PersonToMeet> parsePersonToMeet(Optional<String> personName) throws IllegalValueException {
+        requireNonNull(personName);
+        return personName.isPresent() ? Optional.of(new PersonToMeet(personName.get())) : Optional.empty();
+    }
+
+```
+###### \java\seedu\address\logic\parser\ParserUtil.java
+``` java
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<NameMeeting>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<PhoneNum> parsePhoneNum(Optional<String> phoneNum) throws IllegalValueException {
+        requireNonNull(phoneNum);
+        return phoneNum.isPresent() ? Optional.of(new PhoneNum(phoneNum.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
+     */
+    public static Set<Tag> parseTags(Collection<String> tags) throws IllegalValueException {
+        requireNonNull(tags);
+        final Set<Tag> tagSet = new HashSet<>();
+        for (String tagName : tags) {
+            tagSet.add(new Tag(tagName));
+        }
+        return tagSet;
+    }
+
+}
+```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
@@ -573,6 +610,23 @@ public interface ReadOnlyMeeting {
         internalMeetingList.sort((m1, m2)-> m1.getActualDate(m1.getDate().toString())
                 .compareTo(m2.getActualDate(m2.getDate().toString())));
     }
+
+```
+###### \java\seedu\address\model\meeting\UniqueMeetingList.java
+``` java
+    public void setMeetings(List<? extends ReadOnlyMeeting> meetings) throws DuplicateMeetingException,
+                                MeetingClashException {
+        final UniqueMeetingList replacement = new UniqueMeetingList();
+        for (final ReadOnlyMeeting meeting : meetings) {
+            DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+            LocalDateTime currDate = LocalDateTime.now();
+            LocalDateTime meetDate = LocalDateTime.parse(meeting.getDate().toString(), formatter);
+            if (meetDate.isAfter((currDate))) {
+                replacement.add(new Meeting(meeting));
+            }
+        }
+        setMeetings(replacement);
+    }
 ```
 ###### \java\seedu\address\storage\XmlAdaptedMeeting.java
 ``` java
@@ -588,6 +642,7 @@ public interface ReadOnlyMeeting {
         personToMeet = source.getPersonName().toString();
         phoneNum = source.getPersonPhone().toString();
     }
+
 ```
 ###### \java\seedu\address\ui\MeetingAlert.java
 ``` java
@@ -868,6 +923,7 @@ public class MeetingListPanel extends UiPart<Region> {
 ```
 ###### \resources\view\MeetingAlert.fxml
 ``` fxml
+
 <StackPane fx:id="helpWindowRoot" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <StackPane prefHeight="600.0" prefWidth="1000.0" styleClass="background" stylesheets="@DarkTheme.css">
@@ -877,16 +933,16 @@ public class MeetingListPanel extends UiPart<Region> {
                   <Insets bottom="20.0" />
                </StackPane.margin>
             </Button>
-            <Label fx:id="WarningMessage" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="700.0" styleClass="label-warning" stylesheets="@DarkTheme.css" text="\$Warning" StackPane.alignment="TOP_CENTER">
+            <Label fx:id="warningMessage" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="700.0" styleClass="label-warning" stylesheets="@DarkTheme.css" text="\$Warning" StackPane.alignment="TOP_CENTER">
                <StackPane.margin>
                   <Insets top="60.0" />
                </StackPane.margin></Label>
-            <Label fx:id="FirstMeeting" alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="800.0" styleClass="label-warning" stylesheets="@DarkTheme.css" text="\$PersonName" StackPane.alignment="CENTER">
+            <Label fx:id="firstMeeting" alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="800.0" styleClass="label-warning" stylesheets="@DarkTheme.css" text="\$PersonName" StackPane.alignment="CENTER">
                <StackPane.margin>
                   <Insets bottom="80.0" />
                </StackPane.margin>
             </Label>
-            <Label fx:id="NameMeeting" alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="700.0" styleClass="label-warning" stylesheets="@DarkTheme.css" text="\$Meeting" StackPane.alignment="CENTER">
+            <Label fx:id="nameMeeting" alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="700.0" styleClass="label-warning" stylesheets="@DarkTheme.css" text="\$Meeting" StackPane.alignment="CENTER">
                <StackPane.margin>
                   <Insets top="100.0" />
                </StackPane.margin>
