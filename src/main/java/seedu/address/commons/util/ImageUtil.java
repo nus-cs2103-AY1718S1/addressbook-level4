@@ -1,3 +1,4 @@
+//@@author aali195
 package seedu.address.commons.util;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_IMAGE;
@@ -47,3 +48,4 @@ public class ImageUtil {
     }
 
 }
+//@@author

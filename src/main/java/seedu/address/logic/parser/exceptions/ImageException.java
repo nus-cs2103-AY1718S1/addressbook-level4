@@ -1,3 +1,4 @@
+//@@author aali195
 package seedu.address.logic.parser.exceptions;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -15,3 +16,4 @@ public class ImageException extends IllegalValueException {
         super(message, cause);
     }
 }
+//@@author

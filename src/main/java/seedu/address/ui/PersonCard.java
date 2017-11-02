@@ -78,6 +78,7 @@ public class PersonCard extends UiPart<Region> {
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
+    //@@author aali195-reused
     /**
      *  Assigns URL to the image depending on the path
      *  @param person image to be shown
@@ -121,6 +122,7 @@ public class PersonCard extends UiPart<Region> {
 
         }
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
