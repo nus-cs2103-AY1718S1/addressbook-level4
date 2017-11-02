@@ -28,6 +28,8 @@ public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         try {
             return new Person[] {
+                //@@author icehawker
+                // Phone, Country fields edited to ensure sample persons are populated with Country information
                 new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Country(""),
                         getEmailSet("alexyeoh@example.com"),
                     new Address("30, Geylang Street 29, #06-40, Singapore 760770"), getScheduleSet(asList("15-01-2017",
