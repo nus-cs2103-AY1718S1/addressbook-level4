@@ -419,6 +419,14 @@ You can delete multiple contacts by tags +
 Command can only delete one tag at a time
 // end::batch[]
 
+// tag::batch[]
+=== Copy a person's email address to your clipboard : [Since v1.4]
+
+You can copy a person's email address to your clipboard +
+*Format:* `copy INDEX` +
+*Shorthand format:* `c INDEX`
+// end::batch[]
+
 === KeyBoard Shortcuts [Since v1.2]
 
 You can use keyboard shortcuts in the command box to use the address book more efficiently.
