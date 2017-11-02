@@ -9,15 +9,12 @@ import java.util.Objects;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.InternalId;
-
+//@@author liuhang0213
 /**
  * Represents a Meeting
  * Guarantees: immutable; meeting time is in the future
  */
 public class Meeting implements Comparable<Meeting> {
-
-    //public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
-    //public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
 
     public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
