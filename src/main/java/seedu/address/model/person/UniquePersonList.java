@@ -36,6 +36,7 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.contains(toCheck);
     }
 
+    //@@author jaivigneshvenugopal
     /**
      * Returns index of {@code ReadOnlyPerson} in list.
      */
@@ -49,6 +50,7 @@ public class UniquePersonList implements Iterable<Person> {
     public ReadOnlyPerson getReadOnlyPerson(int index) {
         return mappedList.get(index);
     }
+    //@@author
 
     /**
      * Adds a person to the list.
@@ -156,6 +158,7 @@ public class UniquePersonList implements Iterable<Person> {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
+    //@@author jaivigneshvenugopal
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
@@ -170,6 +173,15 @@ public class UniquePersonList implements Iterable<Person> {
     public ObservableList<ReadOnlyPerson> asObservableWhitelist() {
         return FXCollections.unmodifiableObservableList(mappedList.stream()
                 .filter(person -> person.isWhitelisted()).collect(toCollection(FXCollections::observableArrayList)));
+    }
+    //@@author
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<ReadOnlyPerson> asObservableOverdueList() {
+        return FXCollections.unmodifiableObservableList(mappedList.stream()
+                .filter(person -> person.hasOverdueDebt()).collect(toCollection(FXCollections::observableArrayList)));
     }
 
     @Override

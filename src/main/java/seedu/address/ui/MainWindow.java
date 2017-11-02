@@ -167,8 +167,8 @@ public class MainWindow extends UiPart<Region> {
             commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
         });
     }
-    //@@author
 
+    //@@author jaivigneshvenugopal
     /**
      * Fills up the placeholders of PersonListPanel with the given list name.
      * Should only display welcome page without contacts.
@@ -183,6 +183,9 @@ public class MainWindow extends UiPart<Region> {
         case "whitelist":
             personListPanel = new PersonListPanel(logic.getFilteredWhitelistedPersonList());
             break;
+        case "overduelist":
+            personListPanel = new PersonListPanel(logic.getFilteredOverduePersonList());
+            break;
         default:
             personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         }
@@ -193,6 +196,7 @@ public class MainWindow extends UiPart<Region> {
         infoPanelPlaceholder.getChildren().clear();
         infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
     }
+    //@@author
 
     void hide() {
         primaryStage.hide();

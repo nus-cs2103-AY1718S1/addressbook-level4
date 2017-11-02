@@ -68,6 +68,11 @@ public class LogicManagerTest {
     }
 
     @Test
+    public void getFilteredOverduePersonList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        logic.getFilteredOverduePersonList().remove(0);
+    }
+    @Test
     public void resetFilteredPersonList() {
         model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
         ObservableList<ReadOnlyPerson> expectedList = logic.getAllPersons();

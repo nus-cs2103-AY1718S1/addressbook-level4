@@ -34,10 +34,12 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.NearbyCommand;
+import seedu.address.logic.commands.OverdueListCommand;
 import seedu.address.logic.commands.PaybackCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RepaidCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SetPathCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UnbanCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -202,6 +204,12 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_overdueList() throws Exception {
+        assertTrue(parser.parseCommand(OverdueListCommand.COMMAND_WORD) instanceof OverdueListCommand);
+        assertTrue(parser.parseCommand(OverdueListCommand.COMMAND_WORD + " 3") instanceof OverdueListCommand);
+    }
+
+    @Test
     public void parseCommand_select() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
@@ -232,6 +240,15 @@ public class AddressBookParserTest {
     public void parseCommand_undoCommandWord_returnsUndoCommand() throws Exception {
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD) instanceof UndoCommand);
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
+    }
+
+    @Test
+    public void parseCommand_setPathCommandWord_returnsSetPathCommand() throws Exception {
+        SetPathCommand command = (SetPathCommand) parser.parseCommand(
+                SetPathCommand.COMMAND_WORD + " " + "C:/Users/acer/Desktop/SE/profilepic/");
+        assertTrue(parser.parseCommand(SetPathCommand.COMMAND_WORD) instanceof SetPathCommand);
+        assertTrue(parser.parseCommand("setpath" + " "
+                + "C:/Users/acer/Desktop/SE/profilepic/") instanceof SetPathCommand);
     }
 
     @Test

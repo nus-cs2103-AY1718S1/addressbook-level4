@@ -2,7 +2,7 @@
 ###### \java\seedu\address\commons\events\ui\JumpToNearbyListRequestEvent.java
 ``` java
 /**
- * Indicates a request to jump to the nearby list of persons
+ * Indicates a request to jump to the list of nearby persons
  */
 public class JumpToNearbyListRequestEvent extends BaseEvent {
 
@@ -19,12 +19,38 @@ public class JumpToNearbyListRequestEvent extends BaseEvent {
 
 }
 ```
+###### \java\seedu\address\commons\events\ui\NearbyPersonNotInCurrentListEvent.java
+``` java
+/**
+ * Represents a selection change in the Nearby Person List Panel to a person that is not in the current Person List
+ * Panel.
+ */
+public class NearbyPersonNotInCurrentListEvent extends BaseEvent {
+
+
+    private final PersonCard newSelection;
+
+    public NearbyPersonNotInCurrentListEvent(PersonCard newSelection) {
+        this.newSelection = newSelection;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public PersonCard getNewSelection() {
+        return newSelection;
+    }
+}
+```
 ###### \java\seedu\address\commons\events\ui\NearbyPersonPanelSelectionChangedEvent.java
 ``` java
 /**
  * Represents a selection change in the Nearby Person List Panel
  */
 public class NearbyPersonPanelSelectionChangedEvent extends BaseEvent {
+
 
     private final PersonCard newSelection;
 
@@ -50,6 +76,7 @@ public class NearbyPersonPanelSelectionChangedEvent extends BaseEvent {
 public class NearbyCommand extends Command {
 
     public static final String COMMAND_WORD = "nearby";
+    public static final String COMMAND_WORD_ALIAS = "n";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the person identified by the index number used in the currently selected person's "
@@ -80,7 +107,10 @@ public class NearbyCommand extends Command {
 
         model.updateSelectedPerson(nearbyList.get(targetIndex.getZeroBased()));
         EventsCenter.getInstance().post(new JumpToNearbyListRequestEvent(targetIndex));
-        return new CommandResult(String.format(MESSAGE_NEARBY_PERSON_SUCCESS, targetIndex.getOneBased()));
+
+        String currentList = listObserver.getCurrentListName();
+
+        return new CommandResult(currentList + String.format(MESSAGE_NEARBY_PERSON_SUCCESS, targetIndex.getOneBased()));
 
     }
 
@@ -100,7 +130,7 @@ public class NearbyCommand extends Command {
 public class SortCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "sort";
-    public static final String MESSAGE_SUCCESS = "Address book has been sorted by %1$s!";
+    public static final String MESSAGE_SUCCESS = "List has been sorted by %1$s!";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the addressbook by specified ordering in "
             + "intuitive order. If no ordering is specified, the addressbook is sorted by name.\n"
             + "Parameters: ORDERING (i.e. \"name\", \"debt\", \"deadline\" or \"cluster\")\n"
@@ -125,7 +155,12 @@ public class SortCommand extends UndoableCommand {
         } catch (IllegalArgumentException ive) {
             throw new CommandException(ive.getMessage());
         }
-        return new CommandResult(String.format(MESSAGE_SUCCESS, order));
+
+        listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+
+        String currentList = listObserver.getCurrentListName();
+
+        return new CommandResult(currentList + String.format(MESSAGE_SUCCESS, order));
     }
 
     @Override
@@ -145,6 +180,31 @@ public class SortCommand extends UndoableCommand {
         return order.equals(s.order);
     }
 }
+```
+###### \java\seedu\address\logic\LogicManager.java
+``` java
+    /**
+     * Updates the selected person.
+     * @param person the person that has been selected.
+     */
+    @Override
+    public void updateSelectedPerson(ReadOnlyPerson person) {
+        model.updateSelectedPerson(person);
+    }
+
+    /**
+     * Resets the filteredPersonList to be a list of all persons.
+     */
+    @Override
+    public void resetFilteredPersonList() {
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+    }
+
+    @Override
+    public ObservableList<ReadOnlyPerson> getAllPersons() {
+        return model.getAllPersons();
+    }
+
 ```
 ###### \java\seedu\address\logic\parser\NearbyCommandParser.java
 ``` java
@@ -209,6 +269,52 @@ public class SortCommandParser implements Parser<SortCommand> {
     }
 }
 ```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    /**
+     * Obtains and updates the list of persons that share the same cluster as {@param selectedPerson}.
+     */
+    @Override
+    public void updateSelectedPerson(ReadOnlyPerson selectedPerson) {
+        this.selectedPerson = selectedPerson;
+        nearbyPersons = allPersons.stream().filter(person -> person.isSameCluster(selectedPerson))
+                .collect(toCollection(FXCollections::observableArrayList));
+    }
+
+    /**
+     * Retrieves the full list of persons nearby a particular person.
+     */
+    @Override
+    public ObservableList<ReadOnlyPerson> getNearbyPersons() {
+        return nearbyPersons;
+    }
+
+    /**
+     * Retrieves the current selected person.
+     */
+    @Override
+    public ReadOnlyPerson getSelectedPerson() {
+        return selectedPerson;
+    }
+
+    /**
+     * Retrieves the full list of persons in addressbook.
+     */
+    @Override
+    public ObservableList<ReadOnlyPerson> getAllPersons() {
+        return allPersons;
+    }
+
+    /**
+     * Sorts the {@code internal list} in addressbook according to {@param order}
+     */
+    @Override
+    public void sortBy(String order) throws IllegalArgumentException {
+        addressBook.sortBy(order);
+        indicateAddressBookChanged();
+    }
+
+```
 ###### \java\seedu\address\model\person\Cluster.java
 ``` java
 /**
@@ -253,6 +359,48 @@ public class Cluster {
     @Override
     public int hashCode() {
         return value.hashCode();
+    }
+
+}
+```
+###### \java\seedu\address\model\person\Handphone.java
+``` java
+/**
+ * Represents a Person's handphone number in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
+ */
+public class Handphone extends Phone {
+
+    public Handphone(String phone) throws IllegalValueException {
+        super(phone);
+    }
+
+}
+```
+###### \java\seedu\address\model\person\HomePhone.java
+``` java
+/**
+ * Represents a Person's home number in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
+ */
+public class HomePhone extends Phone {
+
+    public HomePhone (String phone) throws IllegalValueException {
+        super(phone);
+    }
+
+}
+```
+###### \java\seedu\address\model\person\OfficePhone.java
+``` java
+/**
+ * Represents a Person's office phone number in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
+ */
+public class OfficePhone extends Phone {
+
+    public OfficePhone (String phone) throws IllegalValueException {
+        super(phone);
     }
 
 }
@@ -614,30 +762,43 @@ public class InfoPanel extends UiPart<Region> {
 
     private static final String FXML = "InfoPanel.fxml";
     private static final String MESSAGE_INFO_ADDRESS_FIELD = "Address: ";
-    private static final String MESSAGE_INFO_PHONE_FIELD = "HP: ";
+    private static final String MESSAGE_INFO_HANDPHONE_FIELD = "HP: ";
+    private static final String MESSAGE_INFO_HOME_PHONE_FIELD = "Home: ";
+    private static final String MESSAGE_INFO_OFFICE_PHONE_FIELD = "Office: ";
     private static final String MESSAGE_INFO_EMAIL_FIELD = "Email: ";
     private static final String MESSAGE_INFO_POSTAL_CODE_FIELD = "S";
     private static final String MESSAGE_INFO_CLUSTER_FIELD = "General Location: ";
-    private static final String MESSAGE_INFO_DEBT_FIELD = "Debt: $";
+    private static final String MESSAGE_INFO_DEBT_FIELD = "Current Debt: $";
+    private static final String MESSAGE_INFO_TOTAL_DEBT_FIELD = "Total Debt: $";
     private static final String MESSAGE_INFO_INTEREST_FIELD = "Interest: ";
     private static final String MESSAGE_INFO_DATE_BORROW_FIELD = "Date Borrowed: ";
     private static final String MESSAGE_INFO_DEADLINE_FIELD = "Deadline: ";
     private static final String MESSAGE_INFO_DATE_REPAID_FIELD = "Date Repaid: ";
     private static final String MESSAGE_INFO_NEARBY_PERSON_FIELD = "All contacts in this area: ";
+    private static final String MESSAGE_INFO_DEBT_REPAYMENT_FIELD = "Debt repayment progress: ";
 
     private Logic logic;
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private NearbyPersonListPanel nearbyPersonListPanel;
+    private DebtRepaymentProgressBar debtRepaymentProgressBar;
 
     @FXML
     private Pane pane;
     @FXML
     private Label name;
     @FXML
-    private Text phoneField;
+    private Text handphoneField;
     @FXML
-    private Label phone;
+    private Label handphone;
+    @FXML
+    private Text homePhoneField;
+    @FXML
+    private Label homePhone;
+    @FXML
+    private Text officePhoneField;
+    @FXML
+    private Label officePhone;
     @FXML
     private Text addressField;
     @FXML
@@ -658,6 +819,10 @@ public class InfoPanel extends UiPart<Region> {
     private Text debtField;
     @FXML
     private Label debt;
+    @FXML
+    private Text totalDebtField;
+    @FXML
+    private Label totalDebt;
     @FXML
     private Text interestField;
     @FXML
@@ -680,6 +845,10 @@ public class InfoPanel extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private StackPane nearbyPersonListPanelPlaceholder;
+    @FXML
+    private StackPane progressBarPlaceholder;
+    @FXML
+    private Text debtRepaymentField;
 
     public InfoPanel(Logic logic) {
         super(FXML);
@@ -694,17 +863,21 @@ public class InfoPanel extends UiPart<Region> {
      * @param person the selected person to display the full info of.
      */
     public void loadPersonInfo(ReadOnlyPerson person) {
-        phoneField.setText(MESSAGE_INFO_PHONE_FIELD);
+        handphoneField.setText(MESSAGE_INFO_HANDPHONE_FIELD);
+        homePhoneField.setText(MESSAGE_INFO_HOME_PHONE_FIELD);
+        officePhoneField.setText(MESSAGE_INFO_OFFICE_PHONE_FIELD);
         addressField.setText(MESSAGE_INFO_ADDRESS_FIELD);
         emailField.setText(MESSAGE_INFO_EMAIL_FIELD);
         postalCodeField.setText(MESSAGE_INFO_POSTAL_CODE_FIELD);
         clusterField.setText(MESSAGE_INFO_CLUSTER_FIELD);
         debtField.setText(MESSAGE_INFO_DEBT_FIELD);
+        totalDebtField.setText(MESSAGE_INFO_TOTAL_DEBT_FIELD);
         interestField.setText(MESSAGE_INFO_INTEREST_FIELD);
         dateBorrowField.setText(MESSAGE_INFO_DATE_BORROW_FIELD);
         deadlineField.setText(MESSAGE_INFO_DEADLINE_FIELD);
         dateRepaidField.setText(MESSAGE_INFO_DATE_REPAID_FIELD);
         nearbyPersonField.setText(MESSAGE_INFO_NEARBY_PERSON_FIELD);
+        debtRepaymentField.setText(MESSAGE_INFO_DEBT_REPAYMENT_FIELD);
         bindListeners(person);
     }
 
@@ -714,21 +887,28 @@ public class InfoPanel extends UiPart<Region> {
      */
     public void resetNearbyPersonListPanel(ReadOnlyPerson person) {
         nearbyPersonListPanel = new NearbyPersonListPanel(logic.getAllPersons(), person);
+        nearbyPersonListPanelPlaceholder.getChildren().clear();
         nearbyPersonListPanelPlaceholder.getChildren().add(nearbyPersonListPanel.getRoot());
     }
 
+```
+###### \java\seedu\address\ui\InfoPanel.java
+``` java
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
      */
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        handphone.textProperty().bind(Bindings.convert(person.handphoneProperty()));
+        homePhone.textProperty().bind(Bindings.convert(person.homePhoneProperty()));
+        officePhone.textProperty().bind(Bindings.convert(person.officePhoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         postalCode.textProperty().bind(Bindings.convert(person.postalCodeProperty()));
         cluster.textProperty().bind(Bindings.convert(person.clusterProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         debt.textProperty().bind(Bindings.convert(person.debtProperty()));
+        totalDebt.textProperty().bind(Bindings.convert(person.totalDebtProperty()));
         interest.textProperty().bind(Bindings.convert(person.interestProperty()));
         dateBorrow.textProperty().bind(Bindings.convert(person.dateBorrowProperty()));
         deadline.textProperty().bind(Bindings.convert(person.deadlineProperty()));
@@ -793,11 +973,14 @@ public class InfoPanel extends UiPart<Region> {
 
         InfoPanel infoPanel = (InfoPanel) other;
         return name.getText().equals(infoPanel.name.getText())
-                && phone.getText().equals(infoPanel.phone.getText())
+                && handphone.getText().equals(infoPanel.handphone.getText())
+                && homePhone.getText().equals(infoPanel.homePhone.getText())
+                && officePhone.getText().equals(infoPanel.officePhone.getText())
                 && address.getText().equals(infoPanel.address.getText())
                 && postalCode.getText().equals(infoPanel.postalCode.getText())
                 && cluster.getText().equals(infoPanel.cluster.getText())
                 && debt.getText().equals(infoPanel.debt.getText())
+                && totalDebt.getText().equals(infoPanel.totalDebt.getText())
                 && interest.getText().equals(infoPanel.interest.getText())
                 && email.getText().equals(infoPanel.email.getText())
                 && deadline.getText().equals(infoPanel.deadline.getText())
@@ -821,14 +1004,31 @@ public class InfoPanel extends UiPart<Region> {
         loadPersonInfo(event.getNewSelection().person);
         logic.updateSelectedPerson(event.getNewSelection().person);
         resetNearbyPersonListPanel(event.getNewSelection().person);
+        resetDebtRepaymentProgressBar(event.getNewSelection().person);
     }
 
     @Subscribe
-    private void handleNearbyPersonPanelSelectionChangedEvent(NearbyPersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        logic.updateSelectedPerson(event.getNewSelection().person);
-        loadPersonInfo(event.getNewSelection().person);
+    private void handleChangeInternalListEvent(ChangeInternalListEvent event) {
+        unregisterAsAnEventHandler(this);
+    }
 
+}
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    /**
+     * Sets the person panel to display the unfiltered masterlist and raises a {@code JumpToListRequestEvent}.
+     * @param event
+     */
+    @Subscribe
+    private void handleNearbyPersonNotInCurrentListEvent(NearbyPersonNotInCurrentListEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        logic.resetFilteredPersonList();
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanelPlaceholder.getChildren().removeAll();
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        raise(new JumpToListRequestEvent(Index.fromZeroBased(logic.getFilteredPersonList()
+                .indexOf(event.getNewSelection().person))));
     }
 }
 ```
@@ -855,6 +1055,7 @@ public class NearbyPersonListPanel extends UiPart<Region> {
                 .collect(toCollection(FXCollections::observableArrayList));
         setConnections(nearbyList);
         registerAsAnEventHandler(this);
+        scrollTo(nearbyList.indexOf(currentPerson));
     }
 
     private void setConnections(ObservableList<ReadOnlyPerson> personList) {
@@ -868,8 +1069,8 @@ public class NearbyPersonListPanel extends UiPart<Region> {
     private void setEventHandlerForSelectionChangeEvent() {
         nearbyPersonListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                    if (oldValue != null && newValue != null) {
+                        logger.fine("Selection in nearby person list panel changed to : '" + newValue + "'");
                         raise(new NearbyPersonPanelSelectionChangedEvent(newValue));
                     }
                 });
@@ -886,9 +1087,14 @@ public class NearbyPersonListPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleJumpToNearbyListRequestEvent(JumpToNearbyListRequestEvent event) {
+    private void handleJumpToListRequestEvent(JumpToNearbyListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
+    }
+
+    @Subscribe
+    private void handleChangeInternalListEvent(ChangeInternalListEvent event) {
+        unregisterAsAnEventHandler(this);
     }
 
     /**
@@ -911,79 +1117,189 @@ public class NearbyPersonListPanel extends UiPart<Region> {
 
 }
 ```
+###### \java\seedu\address\ui\PersonListPanel.java
+``` java
+    /**
+     * When there is a change in selection in nearby panel, scroll to the selected person in this person list panel,
+     * if it exists. If it does not exist, a {@code NearbyPersonNotInCurrentListEvent} is raised and this panel is
+     * unregistered as an event handler as it will be replaced by a new {@code PersonListPanel} in the
+     * {@code MainWindow}.
+     */
+    @Subscribe
+    private void handleNearbyPersonPanelSelectionChangedEvent(NearbyPersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        boolean currentListContainsPerson = false;
+        for (PersonCard pc : personListView.getItems()) {
+            if (pc.person.equals(event.getNewSelection().person)) {
+                scrollTo(personListView.getItems().indexOf(pc));
+                currentListContainsPerson = true;
+            }
+        }
+        if (!currentListContainsPerson) {
+            raise(new NearbyPersonNotInCurrentListEvent(event.getNewSelection()));
+            unregisterAsAnEventHandler(this);
+        }
+    }
+
+    @Subscribe
+    private void handleChangeInternalListEvent(ChangeInternalListEvent event) {
+        unregisterAsAnEventHandler(this);
+    }
+
+```
+###### \java\seedu\address\ui\UiPart.java
+``` java
+    /**
+     * Unregisters the object as an event handler at the {@link EventsCenter}
+     * @param handler usually {@code this}
+     */
+    protected void unregisterAsAnEventHandler(Object handler) {
+        EventsCenter.getInstance().unregisterHandler(handler);
+    }
+
+```
 ###### \resources\view\InfoPanel.fxml
 ``` fxml
 <StackPane fx:id="infoPanel" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+      <StackPane.margin>
+         <Insets />
+      </StackPane.margin>
    <VBox fx:id="pane" prefHeight="600.0" prefWidth="800.0">
       <children>
-         <Label fx:id="name" alignment="TOP_LEFT" prefHeight="80.0" prefWidth="360.0" styleClass="window_big_label" text="\$name" wrapText="true" />
+         <Label fx:id="name" alignment="TOP_LEFT" prefHeight="80.0" prefWidth="360.0" styleClass="window_big_label" text="\$name" wrapText="true">
+            <VBox.margin>
+               <Insets bottom="2.0" top="5.0" />
+            </VBox.margin></Label>
+         <Text fx:id="debtRepaymentField" fill="GREY" text="Debt repayment progress" />
+         <StackPane fx:id="progressBarPlaceholder" alignment="CENTER_LEFT" maxHeight="50.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="50.0" prefWidth="200.0">
+            <VBox.margin>
+               <Insets bottom="10.0" />
+            </VBox.margin>
+         </StackPane>
          <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
-               <Text fx:id="debtField" fill="gray" styleClass="window_small_label" text="Debt: " />
+               <Text fx:id="debtField" fill="gray" styleClass="window_small_label" text="Current Debt: " />
                <Label fx:id="debt" styleClass="window_small_label" text="\$debt" />
             </children>
+            <VBox.margin>
+               <Insets top="3.0" />
+            </VBox.margin>
+         </TextFlow>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="totalDebtField" fill="gray" styleClass="window_small_label" text="Total Debt: " />
+               <Label fx:id="totalDebt" styleClass="window_small_label" text="\$totalDebt" />
+            </children>
+            <VBox.margin>
+               <Insets top="3.0" />
+            </VBox.margin>
          </TextFlow>
          <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
                <Text fx:id="interestField" fill="GREY" styleClass="window_small_label" text="Interest: " />
                <Label fx:id="interest" styleClass="window_small_label" text="\$interest" />
             </children>
-         </TextFlow>
-         <TextFlow prefHeight="50.0" prefWidth="400.0">
-            <children>
-               <Text fx:id="phoneField" fill="gray" styleClass="window_small_label" text="HP: " />
-               <Label fx:id="phone" styleClass="window_small_label" text="\$phone" />
-            </children>
+            <VBox.margin>
+               <Insets top="3.0" />
+            </VBox.margin>
          </TextFlow>
          <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
                <Text fx:id="dateBorrowField" fill="gray" styleClass="window_small_label" text="Date borrowed: " />
                <Label fx:id="dateBorrow" styleClass="window_small_label" text="\$dateBorrow" />
             </children>
+            <VBox.margin>
+               <Insets top="3.0" />
+            </VBox.margin>
          </TextFlow>
          <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
                <Text fx:id="deadlineField" fill="GREY" styleClass="window_small_label" text="Deadline: " />
                <Label fx:id="deadline" styleClass="window_small_label" text="\$deadline" />
             </children>
+            <VBox.margin>
+               <Insets top="3.0" />
+            </VBox.margin>
           </TextFlow>
           <TextFlow prefHeight="50.0" prefWidth="400.0">
               <children>
                <Text fx:id="dateRepaidField" fill="gray" styleClass="window_small_label" text="Date Repaid: " />
                <Label fx:id="dateRepaid" styleClass="window_small_label" text="\$dateRepaid" />
             </children>
+            <VBox.margin>
+               <Insets bottom="12.0" top="3.0" />
+            </VBox.margin>
+         </TextFlow>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="handphoneField" fill="gray" styleClass="window_small_label" text="HP: " />
+               <Label fx:id="handphone" styleClass="window_small_label" text="\$phone" />
+            </children>
+            <VBox.margin>
+               <Insets top="3.0" />
+            </VBox.margin>
+         </TextFlow>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="homePhoneField" fill="gray" styleClass="window_small_label" text="HP: " />
+               <Label fx:id="homePhone" styleClass="window_small_label" text="\$phone" />
+            </children>
+            <VBox.margin>
+               <Insets top="3.0" />
+            </VBox.margin>
+         </TextFlow>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="officePhoneField" fill="gray" styleClass="window_small_label" text="HP: " />
+               <Label fx:id="officePhone" styleClass="window_small_label" text="\$phone" />
+            </children>
+            <VBox.margin>
+               <Insets top="3.0" />
+            </VBox.margin>
          </TextFlow>
          <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
                <Text fx:id="addressField" fill="gray" styleClass="window_small_label" text="Address: " />
                <Label fx:id="address" alignment="TOP_LEFT" maxHeight="800.0" styleClass="window_small_label" text="\$address" wrapText="true" />
             </children>
+            <VBox.margin>
+               <Insets top="3.0" />
+            </VBox.margin>
          </TextFlow>
          <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
                <Text fx:id="postalCodeField" fill="gray" styleClass="window_small_label" text="S" />
                <Label fx:id="postalCode" styleClass="window_small_label" text="\$postalCode" />
             </children>
+            <VBox.margin>
+               <Insets top="3.0" />
+            </VBox.margin>
          </TextFlow>
          <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
                <Text fx:id="clusterField" fill="gray" styleClass="window_small_label" text="General Location: " />
                <Label fx:id="cluster" styleClass="window_small_label" text="\$cluster" />
             </children>
+            <VBox.margin>
+               <Insets top="3.0" />
+            </VBox.margin>
          </TextFlow>
          <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
                <Text fx:id="emailField" fill="gray" styleClass="window_small_label" text="Email: " />
                <Label fx:id="email" styleClass="window_small_label" text="\$email" />
             </children>
+            <VBox.margin>
+               <Insets bottom="10.0" top="3.0" />
+            </VBox.margin>
          </TextFlow>
          <FlowPane fx:id="tags" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="774.0" />
          <Text fx:id="nearbyPersonField" fill="gray" styleClass="window_small_label" text="Other contacts nearby: " />
          <HBox fx:id="nearbyPersonList" minHeight="200" prefHeight="200" prefWidth="340">
             <padding>
-               <Insets top="10" right="10" bottom="10" left="10" />
+               <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
-            <StackPane fx:id="nearbyPersonListPanelPlaceholder" HBox.hgrow="ALWAYS"/>
+            <StackPane fx:id="nearbyPersonListPanelPlaceholder" HBox.hgrow="ALWAYS" />
          </HBox>
       </children>
    </VBox>

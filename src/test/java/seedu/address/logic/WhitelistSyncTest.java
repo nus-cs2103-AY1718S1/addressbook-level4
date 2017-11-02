@@ -33,6 +33,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
+//@@author jaivigneshvenugopal
 public class WhitelistSyncTest {
 
     private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
