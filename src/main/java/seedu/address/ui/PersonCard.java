@@ -62,6 +62,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
+    //@@author hansiang93
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
@@ -81,6 +82,7 @@ public class PersonCard extends UiPart<Region> {
     private static String getColorForWeblinks(String webLinkTag) {
         return webLinkColors.get(webLinkTag);
     }
+    //@@author
 
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
