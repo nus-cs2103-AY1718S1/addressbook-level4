@@ -1,11 +1,10 @@
-/* @@author nelsonqyj */
+/* @@author Syabil */
 .background {
-    //@@author Syabil
     background-image: url(../images/splash.jpg); /* Used in the default.html file */
     background-size: cover;
     -fx-background-color: derive(#3d4691, 50%);
 }
-
+/* @@author nelsonqyj */
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";

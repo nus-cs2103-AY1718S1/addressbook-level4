@@ -75,15 +75,15 @@ To show you the nearing of upcoming meetings, colours are assigned to the card b
 
     * `darkRed` : Meeting is in next 24 hours.
 +
-image::MeetingCard1.png[width="200"]
+image::MeetingCard1.png[align="center"][width="200"]
 +
     * `red` : Meeting is in next 48 hours.
 +
-image::MeetingCard2.png[width="200"]
+image::MeetingCard2.png[align="center"][width="200"]
 +
     * `orangeRed` : Meeting is in next 72 hours.
 +
-image::MeetingCard3.png[width="200"]
+image::MeetingCard3.png[align="center"][width="200"]
 
 === Auto Deletion of Meeting Cards
 
@@ -215,11 +215,11 @@ Input format for Date and Time is "DD-MM-YYYY HH:MM"
 * Creation of group meetings
 ** You can create meetings with multiple people at the same timing for an event(NameMeeting). In this case, multiple `Meeting Cards` will be created. A group meeting consists of meetings that have the same `NameMeeting`,`DateTime` and `Place` but with different person.
 +
-image::MeetingGroup.png[width="200"]
+image::MeetingGroup.png[align="center"][width="200"]
 +
 ** However, when opening Schedubook, if your next meeting is a group meeting, the reminder will show.
 +
-image::Reminder(1).png[width="600"]
+image::Reminder(1).png[align="center"][width="600"]
 +
 * When adding a new meeting, you will be prompted to change the date and time of meeting if it will result in a clash with an existing meeting.
 +
