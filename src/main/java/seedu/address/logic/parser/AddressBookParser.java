@@ -13,6 +13,7 @@ import seedu.address.logic.commands.ChangeUsernameCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ClearScheduleCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CreateDefaultAccountCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -141,6 +142,9 @@ public class AddressBookParser {
         case ClearScheduleCommand.COMMAND_WORD:
         case ClearScheduleCommand.COMMAND_ALIAS:
             return new ClearScheduleCommandParser().parse(arguments);
+
+        case CreateDefaultAccountCommand.COMMAND_WORD:
+            return new CreateDefaultAccountCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
