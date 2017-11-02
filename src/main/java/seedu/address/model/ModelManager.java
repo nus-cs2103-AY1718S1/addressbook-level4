@@ -90,12 +90,14 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author YuchenHe98
     @Override
     public void addScheduleToPerson(Integer index, TreeSet<Integer> schedule) throws PersonNotFoundException {
         addressBook.addScheduleToPerson(index, schedule);
         indicateAddressBookChanged();
     }
 
+    //@@author YuchenHe98
     @Override
     public void clearScheduleForPerson(Integer index, TreeSet<Integer> schedule) throws PersonNotFoundException {
         addressBook.clearScheduleForPerson(index, schedule);
@@ -149,13 +151,14 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Delete tag from contact
      */
+    //@@author hj2304
     public void deleteTag(String str) {
         if (addressBook.removeTag(str)) {
             indicateAddressBookChanged();
         }
     }
-    //@@author hj2304
 
+    //@@author YuchenHe98
     @Override
     public TreeSet<Integer> generateMeetingTime(Index[] ListOfIndex) {
         return addressBook.generateMeetingTime(ListOfIndex);

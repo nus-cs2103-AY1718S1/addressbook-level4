@@ -51,6 +51,14 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
+    public void setDefaultUsername(String username) {
+        this.username = username;
+    }
+
+    public void setDefaultPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

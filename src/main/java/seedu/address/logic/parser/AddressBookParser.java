@@ -14,6 +14,7 @@ import seedu.address.logic.commands.ChangeUsernameCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ClearScheduleCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CreateDefaultAccountCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -28,6 +29,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.LocateMrtCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemoveAccountCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -155,6 +157,12 @@ public class AddressBookParser {
         case VisualizeCommand.COMMAND_WORD:
         case VisualizeCommand.COMMAND_ALIAS:
             return new VisualizeCommandParser().parse(arguments);
+
+        case CreateDefaultAccountCommand.COMMAND_WORD:
+            return new CreateDefaultAccountCommand();
+
+        case RemoveAccountCommand.COMMAND_WORD:
+            return new RemoveAccountCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
