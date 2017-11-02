@@ -391,3 +391,6 @@ Can also use shortcut 'p'
 * `AddressBookFilePath` : indicates where the address book is stored in local storage
 * `Display Modes: linkedin, facebook, meetings`
 * `Theme`: Customizes the appearance of the application. Possible values are `Light`, `Blue` and `Dark`
+* `DefaultProfilePhoto`: The default photo used if the person does not have a personal Gravatar. Possible values are
+`person`, `geometric`, `monster`, `face`, `retro`, `robot` and `blank`. +
+ See link:https://en.gravatar.com/site/implement/images/[here] for examples.
