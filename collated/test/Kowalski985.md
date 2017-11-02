@@ -1,4 +1,4 @@
-# Kyle
+# Kowalski985
 ###### \java\seedu\address\ui\AutocompleteCommandTest.java
 ``` java
 public class AutocompleteCommandTest {
@@ -226,4 +226,50 @@ public class AutocompleterTest extends GuiUnitTest {
     }
 
 }
+```
+###### \java\seedu\address\ui\CommandBoxTest.java
+``` java
+    @Test
+    public void tabAutoCompleteTest_withNoMatchingCommands() {
+        // text field is empty
+        assertInputHistory(KeyCode.TAB, "");
+
+        // one letter in text field
+        guiRobot.push(KeyCode.Y);
+        assertInputHistory(KeyCode.TAB, "y");
+
+        // two letters in text field
+        guiRobot.push(KeyCode.T);
+        assertInputHistory(KeyCode.TAB, "yt");
+
+        // current text in text field is longer than some commands
+        guiRobot.push(KeyCode.Y);
+        guiRobot.push(KeyCode.SPACE);
+        guiRobot.push(KeyCode.Y);
+        assertInputHistory(KeyCode.TAB, "yty y");
+    }
+
+    @Test
+    public void tabAutoCompleteTest_withOneMatchingCommand() {
+        // text in text filed is in lowercase
+        guiRobot.push(KeyCode.L);
+        assertInputHistory(KeyCode.TAB, COMMAND_THAT_SUCCEEDS);
+        guiRobot.push(KeyCode.ENTER);
+
+        // text in text filed is in uppercase
+        guiRobot.push(new KeyCodeCombination(KeyCode.L, KeyCombination.SHIFT_DOWN));
+        assertInputHistory(KeyCode.TAB, COMMAND_THAT_SUCCEEDS);
+        guiRobot.push(KeyCode.ENTER);
+
+        // text in text filed is in mix of uppercase and lowercase
+        guiRobot.push(new KeyCodeCombination(KeyCode.E, KeyCombination.SHIFT_DOWN));
+        guiRobot.push(KeyCode.D);
+        assertInputHistory(KeyCode.TAB, "edit");
+    }
+
+    @Test
+    public void tabAutoCompleteTest_withMultipleMatchingCommands() {
+        guiRobot.push(KeyCode.E);
+        assertInputHistory(KeyCode.TAB, "edit");
+    }
 ```
