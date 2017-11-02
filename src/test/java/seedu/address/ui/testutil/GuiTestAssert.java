@@ -8,6 +8,9 @@ import guitests.guihandles.ExtendedPersonCardHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.StatisticsPanelHandle;
+import javafx.collections.ObservableList;
+import seedu.address.logic.statistics.Statistics;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -45,6 +48,23 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getPostalCode().value, actualCard.getPostalCode());
         assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
         assertEquals(expectedPerson.getRemark().value, actualCard.getRemark());
+    }
+
+    /**
+     * Asserts that {@code statisticsPanelHandle} displays the statistics correctly
+     */
+    public static void assertPanelDisplaysStatistics(ObservableList<ReadOnlyPerson> actualList,
+                                               StatisticsPanelHandle actualPanelHandle) {
+        Statistics expectedStatistics = new Statistics(actualList);
+
+        assertEquals(expectedStatistics.getMeanString(), actualPanelHandle.getMeanLabel());
+        assertEquals(expectedStatistics.getMedianString(), actualPanelHandle.getMedianLabel());
+        assertEquals(expectedStatistics.getModeString(), actualPanelHandle.getModeLabel());
+        assertEquals(expectedStatistics.getVarianceString(), actualPanelHandle.getVarianceLabel());
+        assertEquals(expectedStatistics.getStdDevString(), actualPanelHandle.getStandardDeviationLabel());
+        assertEquals(expectedStatistics.getQuartile3String(), actualPanelHandle.getQuartile3Label());
+        assertEquals(expectedStatistics.getQuartile1String(), actualPanelHandle.getQuartile1Label());
+        assertEquals(expectedStatistics.getInterquartileRangeString(), actualPanelHandle.getInterquartileLabel());
     }
 
     /**

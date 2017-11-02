@@ -41,6 +41,7 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private ExtendedPersonCard extendedPersonCard;
+    private StatisticsPanel statisticsPanel;
     private GraphPanel graphPanel;
     private PersonListPanel personListPanel;
     private Config config;
@@ -48,6 +49,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane extendedPersonCardPlaceholder;
+
+    @FXML
+    private StackPane statisticsPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -98,6 +102,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -139,6 +144,9 @@ public class MainWindow extends UiPart<Region> {
         GraphPanel graphPanel = new GraphPanel(logic.getFilteredPersonList());
         graphPanelPlaceholder.getChildren().add(graphPanel.getRoot());
 
+        StatisticsPanel statisticsPanel = new StatisticsPanel(logic.getFilteredPersonList());
+        statisticsPanelPlaceholder.getChildren().add(statisticsPanel.getRoot());
+
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -159,6 +167,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the given image as the icon of the main window.
+     *
      * @param iconSource e.g. {@code "/images/help_icon.png"}
      */
     private void setIcon(String iconSource) {
@@ -221,6 +230,10 @@ public class MainWindow extends UiPart<Region> {
 
     public GraphPanel getGraphPanel() {
         return this.graphPanel;
+    }
+
+    public StatisticsPanel getStatisticsPanel() {
+        return this.statisticsPanel;
     }
 
     @Subscribe
