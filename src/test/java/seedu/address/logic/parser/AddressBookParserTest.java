@@ -7,7 +7,9 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.APPOINTMENT_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PICTURE_PATH;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PATH;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -20,6 +22,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AppointCommand;
+import seedu.address.logic.commands.ChangePicCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -35,8 +38,8 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UngroupCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.group.Group;
-import seedu.address.model.person.Appointment;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -85,18 +88,21 @@ public class AddressBookParserTest {
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
+    //@@author namvd2709
     @Test
     public void parseCommand_appoint() throws Exception {
         AppointCommand command = (AppointCommand) parser.parseCommand(AppointCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + APPOINTMENT_DESC);
         assertEquals(new AppointCommand(INDEX_FIRST_PERSON, new Appointment(VALID_APPOINTMENT)), command);
     }
+    //@@author
 
+    //@@author arturs68
     @Test
     public void parseCommand_group() throws Exception {
         final String groupName = "Some group name";
-        GroupCommand command = (GroupCommand) parser.parseCommand(GroupCommand.COMMAND_WORD + " "
-                        + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GROUP_NAME + " " + groupName);
+        GroupCommand command = (GroupCommand) parser.parseCommand(GroupCommand.COMMAND_WORD
+                + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GROUP_NAME + " " + groupName);
         assertEquals(new GroupCommand(INDEX_FIRST_PERSON, new Group(groupName)), command);
     }
 
@@ -107,6 +113,16 @@ public class AddressBookParserTest {
             + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GROUP_NAME + " " + group.groupName);
         assertEquals(new UngroupCommand(INDEX_FIRST_PERSON, group), command);
     }
+    //@@author
+
+    @Test
+    public void parseCommand_changePic() throws Exception {
+        final String picturePath = VALID_PICTURE_PATH;
+        ChangePicCommand command = (ChangePicCommand) parser.parseCommand(ChangePicCommand.COMMAND_WORD + " "
+                    + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_PATH + " " + picturePath);
+        assertEquals(new ChangePicCommand(INDEX_FIRST_PERSON, picturePath), command);
+    }
+    //@@author
 
     @Test
     public void parseCommand_exit() throws Exception {

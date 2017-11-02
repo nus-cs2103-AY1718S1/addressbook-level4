@@ -14,6 +14,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -86,6 +87,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author arturs68
     @Override
     public void updateGroups(Group group) {
         if (!addressBook.getGroupList().contains(group)) {
@@ -104,6 +106,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.setGroups(newGroups);
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
@@ -131,6 +134,12 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public Set<Appointment> getAllAppointments() {
+        return addressBook.getAllAppointments();
+    }
+
+    //@@author
     //=========== Filtered Person List Accessors =============================================================
 
     /**

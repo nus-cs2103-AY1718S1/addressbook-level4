@@ -62,6 +62,7 @@ public class AddressBookTest {
         addressBook.resetData(newData);
     }
 
+    //@@author arturs68
     @Test
     public void sorted() {
         AddressBook newData = getTypicalAddressBook();
@@ -70,6 +71,7 @@ public class AddressBookTest {
                         .sorted(Comparator.comparing((ReadOnlyPerson person) -> person.getName().toString()));
         assertEquals(sorted, newData.getPersonList());
     }
+    //@@author
 
     @Test
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {
@@ -83,11 +85,13 @@ public class AddressBookTest {
         addressBook.getTagList().remove(0);
     }
 
+    //@@author arturs68
     @Test
     public void getGroupList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getGroupList().remove(0);
     }
+    //@@author
 
     /**
      * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.

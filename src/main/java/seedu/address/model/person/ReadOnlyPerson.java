@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.tag.Tag;
@@ -24,6 +25,8 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<Appointment> appointmentProperty();
     Appointment getAppointment();
+    ObjectProperty<ProfilePicture> profilePictureProperty();
+    ProfilePicture getProfilePicture();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
     ObjectProperty<UniqueGroupList> groupProperty();
@@ -38,8 +41,7 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress())
-                && other.getAppointment().equals(this.getAppointment()));
+                && other.getAddress().equals(this.getAddress()));
     }
 
     /**

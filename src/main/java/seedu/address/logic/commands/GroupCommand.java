@@ -1,3 +1,4 @@
+//@@author arturs68
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
@@ -63,8 +64,8 @@ public class GroupCommand extends UndoableCommand {
         try {
             editedGroups.add(group);
             editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                    personToEdit.getAddress(), personToEdit.getAppointment(), editedGroups.toSet(),
-                    personToEdit.getTags());
+                    personToEdit.getAddress(), personToEdit.getAppointment(), personToEdit.getProfilePicture(),
+                    editedGroups.toSet(), personToEdit.getTags());
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException("The person cannot be duplicated when adding to a group");

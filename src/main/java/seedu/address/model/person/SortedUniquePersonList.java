@@ -3,14 +3,16 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -21,7 +23,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * Supports a minimal set of list operations.
  *
  * @see Person#equals(Object)
- * @see CollectionUtil#elementsAreUnique(Collection)
  */
 public class SortedUniquePersonList implements Iterable<Person> {
 
@@ -29,12 +30,14 @@ public class SortedUniquePersonList implements Iterable<Person> {
     // used by asObservableList()
     private final ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(internalList, (person) -> person);
 
+    //@@author arturs68
     /**
      * Sorts the list of unique persons
      */
     public void sort() {
         internalList.sort(Comparator.comparing((ReadOnlyPerson person) -> person.getName().toString()));
     }
+    //@@author
 
     /**
      * Returns true if the list contains an equivalent person as the given argument.
@@ -106,6 +109,22 @@ public class SortedUniquePersonList implements Iterable<Person> {
             replacement.add(new Person(person));
         }
         setPersons(replacement);
+    }
+
+    //@@author namvd2709
+
+    /**
+     * Returns all the appointments in the internal list
+     */
+    public Set<Appointment> getAllAppointments() {
+        Set<Appointment> appointments = new HashSet<>();
+
+        for (Person p: internalList) {
+            if (!p.getAppointment().value.equals("")) {
+                appointments.add(p.getAppointment());
+            }
+        }
+        return appointments;
     }
 
     /**

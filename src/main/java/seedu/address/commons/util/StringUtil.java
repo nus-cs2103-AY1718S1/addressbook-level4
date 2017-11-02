@@ -12,6 +12,7 @@ import java.io.StringWriter;
  */
 public class StringUtil {
 
+    //@@author namvd2709
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
      *   Ignores case.
@@ -33,6 +34,7 @@ public class StringUtil {
 
         return sentence.toLowerCase().contains(phrase.toLowerCase());
     }
+    //@@author
 
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
@@ -64,6 +66,7 @@ public class StringUtil {
         return false;
     }
 
+    //@@author namvd2709
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
      *   Ignores case.
@@ -93,6 +96,7 @@ public class StringUtil {
         }
         return false;
     }
+    //@@author
 
     /**
      * Returns a detailed message of the t, including the stack trace.

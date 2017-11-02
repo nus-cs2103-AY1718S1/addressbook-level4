@@ -7,7 +7,7 @@ import seedu.address.model.person.PersonContainsKeywordsPredicate;
  * Keyword matching is case sensitive.
  */
 public class FilterCommand extends Command {
-
+    //@@author adileyzekmoon
     public static final String COMMAND_WORD = "filter";
     public static final String COMMAND_ALIAS = "fi";
 
@@ -27,7 +27,7 @@ public class FilterCommand extends Command {
         model.updateFilteredPersonList(predicate);
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
-
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

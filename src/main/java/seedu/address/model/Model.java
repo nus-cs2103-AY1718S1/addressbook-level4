@@ -1,8 +1,10 @@
 package seedu.address.model;
 
+import java.util.Set;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -38,6 +40,7 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    //@@author arturs68
     /** Removes the given tag from everyone in the address book and deletes it from the addressBook tag list. */
     void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException;
 
@@ -45,6 +48,7 @@ public interface Model {
      * otherwise removes the group from the group list of the addressBook */
     void updateGroups(Group group);
 
+    //@@author
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
@@ -53,4 +57,8 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    //@@author namvd2709
+    /** Returns list of all appointments */
+    Set<Appointment> getAllAppointments();
 }
