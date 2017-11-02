@@ -18,7 +18,6 @@ endif::[]
 * This is a desktop Resident Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
 * Resident Book is a newly conceptualised administrative tool catered for staffs handling hostel and college operations.
 * Administrative staff often face difficulties in collating and gathering information from off-the-shelf software such as Excel, and may miss out important details using a large spreadsheet.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
 * Some common features include
 ** Events handling mechanism
 ** Tags to keep track of exchange/guests stays

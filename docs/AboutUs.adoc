@@ -14,7 +14,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::Haozhe.png[width="150", align="left"]
 {empty}[http://github.com/Haozhe321[github]] [<<haozhe#, portfolio>>]
 
-Role: Developer
+Role: Developer +
 Responsibilities: Software Development
 
 '''

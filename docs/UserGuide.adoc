@@ -347,7 +347,7 @@ Imports colleagues.xml into current resident book.
 Through the UI:
 image::ui_import.png[width="400"]
 
-=== Remove all Tags with specified name (Since v1.3)
+=== Remove all Tags with specified name : `rm` (Since v1.3)
 
 This function is useful to remove all deprecated tags. For example, when all residents have moved in, all the tags can be removed as "Pending".
 Format: rm TAG_NAME
@@ -372,7 +372,6 @@ Events can be seen on calendar interface for clearer view.
 === Events (Since v1.4)
 
 Events can be managed through the Resident book. It supports add, remove and edit functions.
-
 
 == FAQ
 
