@@ -6,6 +6,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.storage.Storage;
 
+//@@author Xenonym
 /**
  * Clears the command history and the undo/redo stack.
  */
