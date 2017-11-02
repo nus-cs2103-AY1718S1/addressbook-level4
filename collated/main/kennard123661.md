@@ -124,6 +124,11 @@ public class ImportCommand extends UndoableCommand {
     //@@ author
 
     @Override
+    public ObservableList<ReadOnlyParcel> getActiveList() {
+        return model.getActiveList();
+    }
+
+    @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
     }

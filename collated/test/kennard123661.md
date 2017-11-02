@@ -428,7 +428,7 @@ public class ImportCommandParserTest {
         }
 
         // ensure that addressbook updated
-        assertEquals(4, modelManager.getAddressBook().getTagList().size());
+        assertEquals(3, modelManager.getAddressBook().getTagList().size());
         assertEquals(8, modelManager.getAddressBook().getParcelList().size());
         assertEquals(2, modelManager.getFilteredDeliveredParcelList().size());
         assertEquals(6, modelManager.getFilteredUndeliveredParcelList().size());
@@ -691,7 +691,7 @@ public class TrackingNumberTest {
 
         assertEquals(trackingNumber, sameTrackingNumber);
 
-        // check toString() equality
+        // check getFormattedString() equality
         assertFalse(trackingNumber.toString().equals(differentTrackingNumber.toString()));
         assertEquals(trackingNumber.toString(), sameTrackingNumber.toString());
         assertEquals(trackingNumber.toString(), "RR001231230SG");
@@ -896,7 +896,7 @@ public class TrackingNumberTest {
     public static final ReadOnlyParcel GEORGE = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_GEORGE)
             .withName(VALID_NAME_GEORGE).withPhone(VALID_PHONE_GEORGE).withEmail(VALID_EMAIL_GEORGE)
             .withAddress(VALID_ADDRESS_GEORGE).withDeliveryDate(VALID_DELIVERY_DATE_GEORGE)
-            .withTags(VALID_TAG_FRAGILE, VALID_TAG_HEAVY).withStatus(VALID_STATUS_COMPLETED).build();
+            .withTags(VALID_TAG_HEAVY).withStatus(VALID_STATUS_COMPLETED).build();
     public static final ReadOnlyParcel HOON = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_HOON)
             .withName(VALID_NAME_HOON).withPhone(VALID_PHONE_HOON).withEmail(VALID_EMAIL_HOON)
             .withAddress(VALID_ADDRESS_HOON).withDeliveryDate(VALID_DELIVERY_DATE_HOON)
@@ -1010,8 +1010,8 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: import an addressbook xml file containing duplicate parcels except with different tags -> rejected */
         // AddressBook#addAllParcels(List<ReadOnlyParcel>)
-        addressBook = new AddressBookBuilder().withParcel(new ParcelBuilder(AMY).withTags("DURABLE").build())
-                .withParcel(new ParcelBuilder(BOB).withTags("FRAGILE").build()).build();
+        addressBook = new AddressBookBuilder().withParcel(new ParcelBuilder(AMY).withTags(Tag.HEAVY.toString()).build())
+                .withParcel(new ParcelBuilder(BOB).withTags(Tag.FRAGILE.toString()).build()).build();
         storage.saveAddressBook(addressBook);
         command = ImportCommand.COMMAND_WORD + " " + STORAGE_FILE;
         assertCommandFailure(command, ImportCommand.MESSAGE_DUPLICATE_PARCELS);
