@@ -16,6 +16,7 @@ public class MapCommandParser implements Parser<MapCommand> {
      * and returns an MapCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
+
     public MapCommand parse(String args) throws ParseException {
         try {
             Index index = ParserUtil.parseIndex(args);

@@ -647,6 +647,21 @@ people is then continually updated, before it is finally returned to the user
 
 ---
 
+=== Command: `Map`
+
+
+
+==== Implementation
+
+
+
+
+==== Design Considerations
+
+
+
+---
+
 == Documentation
 
 We use asciidoc for writing documentation.
