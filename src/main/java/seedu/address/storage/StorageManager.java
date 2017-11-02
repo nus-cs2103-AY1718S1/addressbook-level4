@@ -105,6 +105,7 @@ public class StorageManager extends ComponentManager implements Storage {
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
+    //@@author liuhang0213
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         addressBookStorage.backupAddressBook(addressBook);
@@ -114,6 +115,7 @@ public class StorageManager extends ComponentManager implements Storage {
         return addressBookStorage.restoreAddressBook();
     }
 
+    //@@author
     @Override
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
@@ -125,6 +127,7 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    //@@author liuhang0213
     @Override
     @Subscribe
     public void handlePersonChangedEvent(PersonChangedEvent event) {

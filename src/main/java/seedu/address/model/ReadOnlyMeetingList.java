@@ -1,7 +1,7 @@
 package seedu.address.model;
 
 import javafx.collections.ObservableList;
-
+//@@author liuhang0213
 /**
  * Unmodifiable view of a meeting list
  */

@@ -13,7 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
-
+//@@author liuhang0213
 /**
  * A list of meetings that enforces no nulls and uniqueness between its elements.
  *

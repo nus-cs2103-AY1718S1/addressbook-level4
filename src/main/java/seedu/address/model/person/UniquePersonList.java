@@ -102,6 +102,7 @@ public class UniquePersonList implements Iterable<Person> {
         setPersons(replacement);
     }
 
+    //@@author liuhang0213
     /**
      * Returns the maximum internal index among all persons in the address book
      */
@@ -118,6 +119,7 @@ public class UniquePersonList implements Iterable<Person> {
         throw new PersonNotFoundException();
     }
 
+    //@@author
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
@@ -142,6 +144,7 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.hashCode();
     }
 
+    //@@author liuhang0213
     /**
      * Updates the maximum internal index among all persons in the person list
      * Currently not used; implemented previously for remove(), but it was unnecessary to update
@@ -158,6 +161,7 @@ public class UniquePersonList implements Iterable<Person> {
         return maxIndex;
     }
 
+    //@@author
     //sorting methods
 
     /***
