@@ -116,6 +116,7 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
+    //@@author nahtanojmil
     /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark}
      * is present.

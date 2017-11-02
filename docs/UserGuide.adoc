@@ -263,6 +263,7 @@ Sorts the list in alphabetical order.
 `st` +
 Sorts the list in alphabetical order.
 
+// tag::remark[]
 === Adding/Deleting a remark to a person : `remark` `Since v1.2`
 
 Adds or removes a remark from the specified person in the address book +
@@ -288,6 +289,8 @@ Overwrites/adds the 1st person in the results of `find` command.
 * `list` +
 `remark 2 rm/` +
 removes remark from the 2nd person in the address book.
+
+// end::remark[]
 
 === Listing entered commands : `history` `Since v1.0`
 

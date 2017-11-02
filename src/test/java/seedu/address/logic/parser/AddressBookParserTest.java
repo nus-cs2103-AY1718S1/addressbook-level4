@@ -286,6 +286,7 @@ public class AddressBookParserTest {
     }
     //@@author
 
+    //@@author nahtanojmil
     @Test
     public void parseCommand_remarkCommandWord_returnsRemarkCommand() throws Exception {
         final Remark remarks = new Remark("I'm so done.");
@@ -294,6 +295,7 @@ public class AddressBookParserTest {
         assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remarks), testCommand);
     }
 
+    //@@author nahtanojmil
     @Test
     public void parseCommand_remarkCommandAlias_returnsRemarkCommand() throws Exception {
         final Remark remarks = new Remark("I'm so done.");

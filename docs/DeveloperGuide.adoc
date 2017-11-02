@@ -530,7 +530,7 @@ public Phone(String phone) throws IllegalValueException {
 **Cons:** Inconsistent phone lengths displayed, might look very messy. +
 // end::studentparentcontact[]
 
-// tag:: Remark[]
+// tag::remark[]
 === Add/Remove a remark mechanism
 The remark mechanism is facilitated by making changes to the Remark class in the model component. It enables the user to add or remove a single remark of the student.
 
@@ -617,8 +617,8 @@ Only one remark is saved at any one time, if user does 'Remark' on the same pers
 **Cons:** Much harder and longer to implement a feature to solely change the remarks.
 
 ---
+// end::remark[]
 
-//end:: Remark[]
 
 // tag::findtags[]
 === FindTags Mechanism
