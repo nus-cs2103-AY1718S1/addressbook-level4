@@ -137,6 +137,7 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         this.internalMeetingList.setAll(replacement.internalMeetingList);
     }
 
+    //@@author Melvin-leo
     public void setMeetings(List<? extends ReadOnlyMeeting> meetings) throws DuplicateMeetingException,
                                 MeetingClashException {
         final UniqueMeetingList replacement = new UniqueMeetingList();
@@ -150,6 +151,7 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         }
         setMeetings(replacement);
     }
+    //@@author nelsonqyj
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
