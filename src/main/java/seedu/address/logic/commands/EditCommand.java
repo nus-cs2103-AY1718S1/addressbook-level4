@@ -62,7 +62,6 @@ public class EditCommand extends UndoableCommand {
             + PREFIX_TAG + "owesMoney "
             + PREFIX_WEB_LINK + "https://www.facebook.com/jiasheng.an"
             + PREFIX_CLEAR_TAG;
-
     //@@author hansiang93
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {Index} "
             + PREFIX_PHONE + "{Phone} "
