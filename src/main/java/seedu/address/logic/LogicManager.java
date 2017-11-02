@@ -75,6 +75,7 @@ public class LogicManager extends ComponentManager implements Logic {
         }
     }
 
+    //@@author deep4k
     /**
      * Registers all commands with parsers into addressBookParser
      */

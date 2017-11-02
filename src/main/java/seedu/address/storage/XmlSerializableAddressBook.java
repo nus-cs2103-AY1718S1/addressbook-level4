@@ -85,6 +85,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         return FXCollections.unmodifiableObservableList(tags);
     }
 
+    //@@author deep4k
     @Override
     public ObservableList<ReadOnlyAliasToken> getAliasTokenList() {
         final ObservableList<ReadOnlyAliasToken> aliasTokens = this.aliasTokens.stream().map(a -> {
@@ -114,4 +115,5 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(tasks);
     }
+    //@@author 
 }

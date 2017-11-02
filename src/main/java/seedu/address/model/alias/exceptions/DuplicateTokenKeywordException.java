@@ -2,6 +2,7 @@ package seedu.address.model.alias.exceptions;
 
 import seedu.address.commons.exceptions.DuplicateDataException;
 
+//@@author deep4k
 /**
  * Signals that the operation will result in duplicate AliasToken objects.
  */
