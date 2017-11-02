@@ -11,46 +11,40 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Ng Choon Heng
+image::choonheng.jpg[width="150", align="left"]
+{empty} [https://github.com/Choony93[github]]
 
-Role: Project Advisor
+Role: Project Advisor +
+Responsibilities: Dev Ops + Integration
+
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+=== Soh Hong Hwee
+image::honghwee.jpg[width="150", align="left"]
+{empty}[https://github.com/aver0214[github]]
 
 Role: Team Lead +
-Responsibilities: UI
+Responsibilities: Code quality + Assist Members
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Wei Ren Kai
+image::renkai.jpg[width="150", align="left"]
+{empty}[https://github.com/renkai91[github]]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Data + Testing
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Beh Bee Yee
+image::meiyi.jpg[width="150", align="left"]
+{empty}[https://github.com/meiyi1234[github]]
 
-Role: Developer +
-Responsibilities: Dev Ops + Threading
-
-'''
-
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: UI
+Role: Documentation +
+Responsibilities: Scheduling
 
 '''
+

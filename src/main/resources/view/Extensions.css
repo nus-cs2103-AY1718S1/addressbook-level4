@@ -1,11 +1,19 @@
+.menu-personcard {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+	-fx-mark-color: grey;
+	-fx-pref-width: 120px;
+	-fx-text-alignment: right;
+}
+
+.menu-personcard:showing {
+    -fx-mark-color: #00FFFF;
+}
 
 .error {
     -fx-text-fill: #d06651 !important; /* The error class should always override the default text-fill style */
-}
-
-.list-cell:empty {
-    /* Empty cells will not have alternating colours */
-    -fx-background: #383838;
 }
 
 .tag-selector {
@@ -17,4 +25,18 @@
 
 .tooltip-text {
     -fx-text-fill: white;
+}
+
+#tags {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#tags .label {
+    -fx-text-fill: white;
+    -fx-background-color: #3e7b91;
+    -fx-padding: 1 3 1 3;
+    -fx-border-radius: 2;
+    -fx-background-radius: 2;
+    -fx-font-size: 11;
 }
