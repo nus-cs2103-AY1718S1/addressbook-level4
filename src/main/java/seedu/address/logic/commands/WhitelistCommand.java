@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_WHITELISTED_PERSONS;
 
+//@@author jaivigneshvenugopal
 /**
  * Lists all persons who have cleared their debts.
  */

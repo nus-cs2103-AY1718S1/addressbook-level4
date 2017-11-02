@@ -111,6 +111,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author jaivigneshvenugopal
         @Override
         public ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person) {
             fail("This method should not be called.");
@@ -122,6 +123,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return null;
         }
+        //@@author
 
         @Override
         public ReadOnlyPerson addOverdueDebtPerson(ReadOnlyPerson person) {
@@ -140,6 +142,7 @@ public class AddCommandTest {
             return null;
         }
 
+        //@@author jaivigneshvenugopal
         @Override
         public String getCurrentListName() {
             fail("This method should not be called.");
@@ -150,12 +153,14 @@ public class AddCommandTest {
         public void setCurrentListName(String currentList) {
             fail("This method should not be called.");
         }
+        //@@author
 
         @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
 
+        //@@author jaivigneshvenugopal
         @Override
         public ReadOnlyPerson removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
@@ -167,6 +172,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return null;
         }
+        //@@author
 
         @Override
         public ReadOnlyPerson removeOverdueDebtPerson(ReadOnlyPerson target) throws PersonNotFoundException {
@@ -198,6 +204,7 @@ public class AddCommandTest {
             return null;
         }
 
+        //@@author jaivigneshvenugopal
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList() {
             fail("This method should not be called.");
@@ -208,6 +215,7 @@ public class AddCommandTest {
         public ObservableList<ReadOnlyPerson> getFilteredWhitelistedPersonList() {
             return null;
         }
+        //@@author
 
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredOverduePersonList() {
@@ -221,6 +229,7 @@ public class AddCommandTest {
             return 0;
         }
 
+        //@@author jaivigneshvenugopal
         @Override
         public int updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
@@ -232,6 +241,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return 0;
         }
+        //@@author
 
         @Override
         public int updateFilteredOverduePersonList(Predicate<ReadOnlyPerson> predicate) {
@@ -314,10 +324,12 @@ public class AddCommandTest {
             return null;
         }
 
+        //@@author jaivigneshvenugopal
         @Override
         public String getCurrentListName() {
             return "list";
         }
+        //@@author
 
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
@@ -347,10 +359,12 @@ public class AddCommandTest {
             return null;
         }
 
+        //@@author jaivigneshvenugopal
         @Override
         public String getCurrentListName() {
             return "list";
         }
+        //@@author
 
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {

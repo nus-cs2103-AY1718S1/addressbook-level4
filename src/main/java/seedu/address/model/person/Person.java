@@ -342,6 +342,7 @@ public class Person implements ReadOnlyPerson {
     }
     //@@author
 
+    //@@author jaivigneshvenugopal
     /**
      * Returns boolean status of a person's blacklist-status.
      */
@@ -392,6 +393,8 @@ public class Person implements ReadOnlyPerson {
     }
 
     //@@author
+
+    //@@author jaivigneshvenugopal
     /**
      * Sets date repaid of a person in the given {@code dateRepaid}.
      * @param dateRepaid must not be null.
@@ -409,6 +412,7 @@ public class Person implements ReadOnlyPerson {
     public DateRepaid getDateRepaid() {
         return dateRepaid.get();
     }
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

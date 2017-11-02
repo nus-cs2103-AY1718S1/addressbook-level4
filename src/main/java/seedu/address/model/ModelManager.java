@@ -102,6 +102,7 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
+    //@@author jaivigneshvenugopal
     /**
      * @return String value of the current displayed list
      */
@@ -115,10 +116,9 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public void setCurrentListName(String currentList) {
-
-
         this.currentList = currentList;
     }
+    //@@author
 
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
@@ -134,6 +134,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author jaivigneshvenugopal
     /**
      * Removes a specific person from blacklist in the AddressBook.
      * @param target to be removed from blacklist.
@@ -161,6 +162,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
         return whitelistedPerson;
     }
+    //@@author
 
     //@@author lawwman
     /**
@@ -185,6 +187,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author jaivigneshvenugopal
     /**
      * Adds a specific person to blacklist in the AddressBook.
      * @param person to be updated.
@@ -232,6 +235,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
         return whitelistedPerson;
     }
+    //@@author
 
     //@@author lawwman
     /**
@@ -280,6 +284,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removeTag(tag);
     }
 
+    //@@author jaivigneshvenugopal
     /**
      * Reads the masterlist and updates the blacklist accordingly.
      */
@@ -293,6 +298,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void syncWhitelist() {
         filteredWhitelistedPersons = new FilteredList<>(this.addressBook.getWhitelistedPersonList());
     }
+    //@@author
 
     //@@author lawwman
     /**
@@ -376,11 +382,12 @@ public class ModelManager extends ComponentManager implements Model {
         return repayingPerson;
     }
 
-    //@@author
+    //@@author jaivigneshvenugopal
     @Override
     public void changeListTo(String listName) {
         raise(new ChangeInternalListEvent(listName));
     }
+    //@@author
 
     @Override
     public void updateDebtFromInterest(ReadOnlyPerson person, int differenceInMonths) {
@@ -407,6 +414,7 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
+    //@@author jaivigneshvenugopal
     /**
      * Returns an unmodifiable view of the blacklist of {@code ReadOnlyPerson} backed by the internal list of
      * {@code addressBook}
@@ -430,6 +438,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredWhitelistedPersons.setPredicate(currentPredicate);
         return FXCollections.unmodifiableObservableList(filteredWhitelistedPersons);
     }
+    //@@author
 
     //@@author lawwman
     /**
@@ -453,6 +462,7 @@ public class ModelManager extends ComponentManager implements Model {
         return filteredPersons.size();
     }
 
+    //@@author jaivigneshvenugopal
     /**
      * Filters {@code filteredBlacklistedPersons} according to given {@param predicate}
      * @return size of current displayed filtered list.
@@ -476,6 +486,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredWhitelistedPersons.setPredicate(predicate);
         return filteredWhitelistedPersons.size();
     }
+    //@@author
 
     //@@author lawwman
     /**

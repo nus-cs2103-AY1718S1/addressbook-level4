@@ -10,6 +10,7 @@ import seedu.address.logic.commands.WhitelistCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author jaivigneshvenugopal
 /**
  * Monitors current displayed list on person list panel.
  * Obtains or updates the various lists according to the changes made to the current displayed list.

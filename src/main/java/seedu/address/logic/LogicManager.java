@@ -77,6 +77,7 @@ public class LogicManager extends ComponentManager implements Logic {
         return model.getFilteredPersonList();
     }
 
+    //@@author jaivigneshvenugopal
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList() {
         return model.getFilteredBlacklistedPersonList();
@@ -86,6 +87,7 @@ public class LogicManager extends ComponentManager implements Logic {
     public ObservableList<ReadOnlyPerson> getFilteredWhitelistedPersonList() {
         return model.getFilteredWhitelistedPersonList();
     }
+    //@@author
 
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredOverduePersonList() {

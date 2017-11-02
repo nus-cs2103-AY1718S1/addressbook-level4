@@ -98,6 +98,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.add(newPerson);
     }
 
+    //@@author jaivigneshvenugopal
     /**
      * Adds a person to the blacklist in the address book.
      * @return ReadOnly newBlacklistedPerson
@@ -138,6 +139,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
         return persons.getReadOnlyPerson(index);
     }
+    //@@author
 
     //@@author lawwman
     /**
@@ -221,6 +223,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.remove(key);
     }
 
+    //@@author jaivigneshvenugopal
     /**
      * Updates {@code key} to exclude {@code key} from the blacklist in this {@code AddressBook}.
      * @return ReadOnly newUnBlacklistedPerson
@@ -269,6 +272,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
         return persons.getReadOnlyPerson(index);
     }
+    //@@author
 
     //@@author lawwman
     /**
@@ -447,6 +451,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asObservableList();
     }
 
+    //@@author jaivigneshvenugopal
     @Override
     public ObservableList<ReadOnlyPerson> getBlacklistedPersonList() {
         return persons.asObservableBlacklist();
@@ -456,6 +461,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ObservableList<ReadOnlyPerson> getWhitelistedPersonList() {
         return persons.asObservableWhitelist();
     }
+    //@@author
 
     @Override
     public ObservableList<ReadOnlyPerson> getOverduePersonList() {
