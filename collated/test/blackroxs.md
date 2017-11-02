@@ -1,5 +1,5 @@
 # blackroxs
-###### \java\seedu\room\logic\commands\RemoveTagCommandTest.java
+###### /java/seedu/room/logic/commands/RemoveTagCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for RemoveTagCommand.
@@ -36,7 +36,7 @@ public class RemoveTagCommandTest {
     }
 }
 ```
-###### \java\seedu\room\logic\parser\ImportCommandParserTest.java
+###### /java/seedu/room/logic/parser/ImportCommandParserTest.java
 ``` java
 public class ImportCommandParserTest {
     @Rule
@@ -50,7 +50,7 @@ public class ImportCommandParserTest {
     }
 }
 ```
-###### \java\seedu\room\logic\parser\RemoveTagParserTest.java
+###### /java/seedu/room/logic/parser/RemoveTagParserTest.java
 ``` java
 public class RemoveTagParserTest {
 
