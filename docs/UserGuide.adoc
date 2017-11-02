@@ -77,8 +77,6 @@ Opens up the help window.
 //tag::bday[]
 Adds a person to Death Note +
 
-> ##Version 1.4 (Current)## +
-
   Format: `add n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
 
   Shorthand: `a n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
@@ -86,16 +84,6 @@ Adds a person to Death Note +
 * Only the *NAME* field is compulsory +
 * Birthday is in dd/MM/yyyy format +
 * Picture should be in PNG format +
-
-> ###Version 2.0### +
-
-  Format: `add n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...`
-
-  Shorthand: `a n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...`
-
-* Only the *NAME* field is compulsory
-* Birthday is in dd/MM/yyyy format
-
 
 TIPS: +
 
@@ -129,24 +117,12 @@ Listed persons are sorted automatically in alphabetical order. No command is req
 
 Edits an existing person in Death Note. +
 
-> ##Version 1.4 (Current)## +
-
   Format: `edit INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
 
   Shorthand: `e INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
 
-* Only the *NAME* field is compulsory +
 * Birthday is in dd/MM/yyyy format +
 * Picture should be in PNG format +
-
-> ##Version 2.0## +
-
-  Format: `edit INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
-
-  Shorthand: `e INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
-
-* Only the *NAME* field is compulsory +
-* Birthday is in dd/MM/yyyy format +
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
@@ -168,14 +144,6 @@ Edits the picture of the 1st person to the picture specified in the path i.e. cl
 === Locating persons: `find` / `f`
 
 Finds persons who matches the given attributes. +
-
-> ##Version 1.4 (Current)## +
-
-  Format: `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [w/WEBSITE] [t/TAG]... `
-
-  Shorthand: `f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [w/WEBSITE] [t/TAG]...`
-
-> ##Version 2.0## +
 
   Format: `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [w/WEBSITE] [t/TAG]... `
 

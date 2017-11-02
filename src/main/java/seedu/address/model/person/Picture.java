@@ -105,6 +105,10 @@ public class Picture {
             return true;
         }
 
+        if (fileLocation.equals("")) {
+            return false;
+        }
+
         // For default people
         if (fileLocation.equals(Picture.DEFAULT_ALEX) || fileLocation.equals(Picture.DEFAULT_BALAKRISHNAN)
                 || fileLocation.equals(Picture.DEFAULT_BERNICE) || fileLocation.equals(Picture.DEFAULT_CHARLOTTE)
