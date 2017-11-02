@@ -38,6 +38,8 @@ public class BrowserSelectorCard extends UiPart<Region> {
             browserCardImage.setImage(new Image("/images/facebook.png"));
         } else if (imageName.equals("meeting")) {
             browserCardImage.setImage(new Image("/images/meeting.png"));
+        } else if (imageName.equals("maps")) {
+            browserCardImage.setImage(new Image("/images/maps.png"));
         }
     }
 
