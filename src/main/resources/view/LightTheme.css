@@ -116,13 +116,13 @@
     -fx-border-width: 1;
 }
 
-.cell_big_label {
+.cell-name-label {
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 16px;
     -fx-text-fill: #444344;
 }
 
-.cell_id_label {
+.cell-id-label {
     -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: derive(gray, 35%);
     -fx-font-size: 15px;
@@ -345,16 +345,16 @@
     -fx-border-width: 0;
 }
 
-#initial_small {
+#initialSmall {
     -fx-font-family: "Roboto";
     -fx-text-fill: #ffffff;
     -fx-font-size: 25px;
 }
 
-#initial_big {
+#initialBig {
     -fx-font-family: "Roboto";
     -fx-text-fill: #ffffff;
-    -fx-font-size: 45px;
+    -fx-font-size: 65px;
 }
 
 #commandTextField {
