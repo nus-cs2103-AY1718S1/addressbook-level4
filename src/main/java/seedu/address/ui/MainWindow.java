@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
@@ -16,6 +17,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -76,11 +78,16 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane personListPanelPlaceholder;
 
+    //@@author reginleiff
     @FXML
     private StackPane eventListPanelPlaceholder;
 
     @FXML
     private StackPane scheduleListPanelPlaceholder;
+
+    @FXML
+    private SplitPane schedule;
+    //@@author
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -177,6 +184,8 @@ public class MainWindow extends UiPart<Region> {
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        schedule.managedProperty().bind(schedule.visibleProperty());
+
 
         eventListPanel = new EventListPanel(logic.getFilteredEventList());
         eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
@@ -369,4 +378,22 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleEventPanelSelected();
     }
+    //@@author
+
+    //@@author reginleiff
+
+    /**
+     * Hides the timetable view.
+     */
+    void hideTimetable() {
+        schedule.setVisible(false);
+    }
+
+    /**
+     * Shows the timetable view.
+     */
+    void showTimeTable() {
+        schedule.setVisible(true);
+    }
+    //@@author
 }
