@@ -243,4 +243,16 @@ public class ParserUtilTest {
 
         assertEquals(expectedTagSet, actualTagSet);
     }
+    //@@author limcel
+    @Test
+    public void parseSchedule_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseSchedule(null);
+    }
+
+    @Test
+    public void parseSchedule_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseSchedule(Optional.empty()).isPresent());
+    }
+    //@@author
 }

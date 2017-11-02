@@ -7,6 +7,7 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
 import java.util.Arrays;
+import java.util.Calendar;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -15,9 +16,12 @@ import org.junit.rules.ExpectedException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.TypicalPersons;
 
 public class ModelManagerTest {
     @Rule
@@ -28,6 +32,28 @@ public class ModelManagerTest {
         ModelManager modelManager = new ModelManager();
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredPersonList().remove(0);
+    }
+
+    //@@author limcel
+    @Test
+    public void getScheduleList_modifyList_throwsUnsupportedOperationException() {
+        ModelManager modelManager = new ModelManager();
+        thrown.expect(UnsupportedOperationException.class);
+        modelManager.getScheduleList().remove(0);
+    }
+
+    @Test
+    public void removeAndAddScheduleUnitTests() throws ScheduleNotFoundException {
+        Calendar date = Calendar.getInstance();
+        String personToAdd = TypicalPersons.ALICE.getName().toString();
+        Schedule newSchedule = new Schedule(personToAdd, date);
+        ModelManager modelManager = new ModelManager();
+
+        modelManager.addSchedule(newSchedule);
+        assertTrue(modelManager.getScheduleList().get(0).equals(newSchedule));
+
+        modelManager.removeSchedule(newSchedule);
+        assertTrue(modelManager.getScheduleList().size() == 0);
     }
 
     @Test
@@ -42,6 +68,7 @@ public class ModelManagerTest {
         AddressBook oldAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         assertFalse(addressBook.getPersonList().equals(oldAddressBook));
     }
+    //@@author
     @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();

@@ -17,6 +17,7 @@ public class UniqueTagListTest {
         uniqueTagList.asObservableList().remove(0);
     }
 
+    //@@author limcel
     @Test
     public void testForDuplicateTags() {
         UniqueTagList uniqueTagList = new UniqueTagList();
@@ -25,4 +26,5 @@ public class UniqueTagListTest {
             uniqueTagList.asObservableList().remove(uniqueTagList.asObservableList().remove(i));
         }
     }
+    //@@author
 }

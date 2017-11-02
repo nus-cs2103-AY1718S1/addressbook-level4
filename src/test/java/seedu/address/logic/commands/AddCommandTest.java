@@ -24,6 +24,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
@@ -124,6 +126,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author limcel
         @Override
         public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
@@ -134,6 +137,23 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return getFilteredPersonList();
         }
+
+        @Override
+        public void addSchedule(Schedule schedule) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void removeSchedule(Schedule schedule) throws ScheduleNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Schedule> getScheduleList() {
+            fail("This method should not be called.");
+            return getScheduleList();
+        }
+        //@@author
 
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
