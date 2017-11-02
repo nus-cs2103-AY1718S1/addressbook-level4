@@ -95,18 +95,29 @@ Examples:
 
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 temp/2 t/criminal`
 
-=== Adding a picture: `GUI button`
+=== Adding a picture: `GUI image`
 
+Adds a picture of a person to the resident book +
+Format: `click on the placeholder image after adding the person into the addressbook`
+=======
 Adds a person to the resident book +
 Format: `click on '+' button after adding the person into the residentbook`
 
 [TIP]
-Once person can only have 1 picture, adding additional images replaces the current one
+One person can only have 1 picture, adding additional images replaces the current one
 
 Examples:
 
-image::add_person1.png[width="400"]
-image::add_person2.png[width="400"]
+image::add_person.png[width="400"]
+
+=== Deleting a picture: `GUI button`
+
+Deletes a person's picture from the address book +
+Format: `click on the placeholder image after adding the person into the addressbook`
+
+Examples:
+
+image::delete_person.png[width="400"]
 
 === Highlighting by tag : `highlight`
 

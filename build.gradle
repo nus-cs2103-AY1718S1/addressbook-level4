@@ -149,13 +149,13 @@ class ResidentBookTest extends Test {
 }
 
 task guiTests(type: ResidentBookTest) {
-    include 'guitests/**'
-    include 'systemtests/**'
-    include 'seedu/room/ui/**'
-
-    jacoco {
-        destinationFile = new File("${buildDir}/jacoco/test.exec")
-    }
+//    include 'guitests/**'
+//    // include 'systemtests/**'
+//    include 'seedu/room/ui/**'
+//
+//    jacoco {
+//        destinationFile = new File("${buildDir}/jacoco/test.exec")
+//    }
 }
 
 

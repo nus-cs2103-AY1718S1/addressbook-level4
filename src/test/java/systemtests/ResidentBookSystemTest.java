@@ -112,7 +112,7 @@ public abstract class ResidentBookSystemTest {
 
         mainWindowHandle.getCommandBox().run(command);
 
-        waitUntilBrowserLoaded(getBrowserPanel());
+        // waitUntilBrowserLoaded(getBrowserPanel());
     }
 
     /**

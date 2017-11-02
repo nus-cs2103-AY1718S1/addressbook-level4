@@ -1,22 +1,16 @@
 package seedu.room.ui;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
-import javax.imageio.ImageIO;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.stage.FileChooser;
 import seedu.room.model.person.ReadOnlyPerson;
 
 
@@ -46,19 +40,13 @@ public class PersonCard extends UiPart<Region> {
     public final ReadOnlyPerson person;
 
     @FXML
-    private ImageView picture;
-    @FXML
     private HBox cardPane;
     @FXML
     private Label name;
     @FXML
     private Label id;
     @FXML
-    private Label phone;
-    @FXML
     private Label room;
-    @FXML
-    private Label email;
     @FXML
     private FlowPane tags;
 
@@ -68,8 +56,6 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
-        picture = new ImageView();
-        initImage();
         initHighlightStatus();
     }
 
@@ -79,30 +65,11 @@ public class PersonCard extends UiPart<Region> {
      */
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         room.textProperty().bind(Bindings.convert(person.roomProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);
         });
-    }
-
-    /**
-     * Initializes image for every person in person card
-     */
-    private void initImage() {
-        try {
-            File picFile = new File(person.getPicture().getPictureUrl());
-            FileInputStream fileStream = new FileInputStream(picFile);
-            Image personPicture = new Image(fileStream);
-            picture.setFitHeight(person.getPicture().PIC_HEIGHT);
-            picture.setFitWidth(person.getPicture().PIC_WIDTH);
-            picture.setImage(personPicture);
-            cardPane.getChildren().add(picture);
-        } catch (Exception e) {
-            System.out.println("Image not found");
-        }
     }
 
     /**
@@ -115,28 +82,6 @@ public class PersonCard extends UiPart<Region> {
         }
     }
 
-    /**
-     * Handler for adding image to person
-     */
-    @FXML
-    private void handleAddImage() {
-        FileChooser picChooser = new FileChooser();
-        File selectedPic = picChooser.showOpenDialog(null);
-        if (selectedPic != null) {
-            try {
-                person.getPicture().setPictureUrl(person.getName().toString() + person.getPhone().toString() + ".jpg");
-                ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
-                FileInputStream fileStream = new FileInputStream(person.getPicture().getPictureUrl());
-                Image newPicture = new Image(fileStream);
-                picture.setImage(newPicture);
-            } catch (Exception e) {
-                System.out.println(e + "Invalid File");
-            }
-        } else {
-            System.out.println("Invalid File");
-        }
-    }
-
     //following method gets the color related to a specified tag
     private static String getColorForTag(String tag) {
         if (!tagColor.containsKey(tag)) { //if the hashmap does not have this tag
@@ -145,7 +90,6 @@ public class PersonCard extends UiPart<Region> {
             /*after this color is chosen, remove from the available list of colors to avoid
             repeating */
         }
-
         return tagColor.get(tag);
     }
 
