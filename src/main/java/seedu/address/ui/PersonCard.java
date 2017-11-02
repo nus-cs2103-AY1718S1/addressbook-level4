@@ -105,6 +105,9 @@ public class PersonCard extends UiPart<Region> {
         profilePicture.setImage(im);
     }
 
+    /**
+     * Initializes the group labels and sets style to them
+     */
     private void initGroups(ReadOnlyPerson person) {
         person.getGroups().forEach(group -> groups.getChildren().add(new Label(group.groupName)));
         groups.getChildren()
