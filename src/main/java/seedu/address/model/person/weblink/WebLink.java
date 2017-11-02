@@ -12,6 +12,7 @@ import static seedu.address.model.person.weblink.WebLinkUtil.TWITTER_TAG;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author AngularJiaSheng
 /**
  * Represents a WebLink in the address book.
  * Guarantees: immutable; name is valid as declared in {@link #isValidWebLink(String)}

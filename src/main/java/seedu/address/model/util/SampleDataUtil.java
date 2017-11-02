@@ -86,6 +86,7 @@ public class SampleDataUtil {
         return emailList;
     }
 
+    //@@author AngularJiaSheng
     public static Set<WebLink> getWebLinkSet(String... strings) throws IllegalValueException {
         HashSet<WebLink> webLinks = new HashSet<>();
         for (String s : strings) {

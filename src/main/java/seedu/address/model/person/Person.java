@@ -157,6 +157,8 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
+    //@@author AngularJiaSheng
+
     /**
      * Replaces this person's web links with the web links in the argument tag set.
      */
@@ -166,11 +168,12 @@ public class Person implements ReadOnlyPerson {
 
     /**
      * returns a ArrayList of string websites for UI usage.
+     *
      * @code WebLinkUtil for the list of webLinkTags can be used as category.
      */
-    public ArrayList<String> listOfWebLinkByCategory (String category) {
+    public ArrayList<String> listOfWebLinkByCategory(String category) {
         ArrayList<String> outputWebLinkList = new ArrayList<String>();
-        for (Iterator<WebLink> iterateWebLinkSet = getWebLinks().iterator(); iterateWebLinkSet.hasNext();) {
+        for (Iterator<WebLink> iterateWebLinkSet = getWebLinks().iterator(); iterateWebLinkSet.hasNext(); ) {
             WebLink checkWebLink = iterateWebLinkSet.next();
             String webLinkAddedToList = checkWebLink.toStringWebLink();
             String checkWebLinkTag = checkWebLink.toStringWebLinkTag();
@@ -181,6 +184,7 @@ public class Person implements ReadOnlyPerson {
         return outputWebLinkList;
     }
 
+    //@@author
 
     @Override
     public boolean equals(Object other) {
