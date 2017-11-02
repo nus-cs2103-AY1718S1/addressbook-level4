@@ -9,62 +9,61 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<HBox id="insuranceCardPane" fx:id="insuranceCardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="insuranceCardPane" fx:id="insuranceCardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <GridPane HBox.hgrow="ALWAYS">
       <columnConstraints>
-         <ColumnConstraints hgrow="SOMETIMES" maxWidth="494.0" minWidth="10.0" prefWidth="46.20001220703125" />
-         <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="201.99996948242188" />
-         <ColumnConstraints hgrow="SOMETIMES" maxWidth="495.60003662109375" minWidth="10.0" prefWidth="413.0000305175781" />
+         <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="10.0" prefWidth="30.0" />
+         <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="100.0" prefWidth="130.0" />
+         <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="200.0" prefWidth="240.0" />
       </columnConstraints>
       <!-- @@author OscarWang114 -->
-      <VBox alignment="CENTER_LEFT" minHeight="150" prefHeight="150.0" prefWidth="176.0" GridPane.columnIndex="1">
+      <VBox alignment="CENTER_LEFT" minHeight="100.0" prefHeight="160.0" prefWidth="150.0" GridPane.columnIndex="1">
          <padding>
             <Insets bottom="5" left="15" right="5" top="5" />
          </padding>
          <HBox>
             <children>
-               <Label styleClass="particular-field" text="Owner: ">
+               <Label styleClass="static-insurance-labels" text="Owner: ">
                   <padding>
-                     <Insets top="10.0" />
+                     <Insets top="5.0" />
                   </padding></Label>
             </children>
          </HBox>
          <HBox>
             <children>
-               <Label styleClass="particular-field" text="Insured: " />
+               <Label styleClass="static-insurance-labels" text="Insured: " />
             </children>
          </HBox>
          <HBox>
             <children>
-               <Label styleClass="particular-field" text="Beneficiary: " />
+               <Label styleClass="static-insurance-labels" text="Beneficiary: " />
             </children>
          </HBox>
          <HBox>
             <children>
-               <Label styleClass="particular-field" text="Premium: " />
+               <Label styleClass="static-insurance-labels" text="Premium: " />
             </children>
          </HBox>
          <HBox>
             <children>
-               <Label styleClass="particular-field" text="Contract File: " />
+               <Label styleClass="static-insurance-labels" text="Contract File: " />
             </children>
          </HBox>
          <HBox layoutX="10.0" layoutY="70.0">
             <children>
-               <Label styleClass="particular-field" text="Signing Date: " />
+               <Label styleClass="static-insurance-labels" text="Signing Date: " />
             </children>
          </HBox>
          <HBox>
             <children>
-               <Label styleClass="particular-field" text="Expiry Date: ">
+               <Label styleClass="static-insurance-labels" text="Expiry Date: ">
                   <padding>
-                     <Insets bottom="10.0" />
+                     <Insets bottom="5.0" />
                   </padding></Label>
             </children>
          </HBox>
       </VBox>
-      <VBox prefHeight="200.0" prefWidth="100.0">
+      <VBox prefHeight="150.0" prefWidth="80.0">
          <children>
             <Label fx:id="index" styleClass="particular-name" text="\$name">
                <VBox.margin>
@@ -84,47 +83,47 @@
       </VBox>
       <!-- @@author -->
       <!-- @@author Juxarius -->
-      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
+      <VBox alignment="CENTER_LEFT" minHeight="150.0" prefHeight="160.0" prefWidth="200.0" GridPane.columnIndex="2">
          <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox>
                <children>
                   <Label fx:id="owner" styleClass="particular-link" text="\$owner" />
                </children>
                <padding>
-                  <Insets top="10.0" />
+                  <Insets top="5.0" />
                </padding>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox>
                <children>
                   <Label fx:id="insured" styleClass="particular-link" text="\$insured" />
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox>
                <children>
                   <Label fx:id="beneficiary" styleClass="particular-link" text="\$beneficiary" />
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox>
                <children>
                   <Label fx:id="premium" styleClass="particular-field" text="\$premium" />
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox>
                <children>
                   <Label fx:id="contractPath" styleClass="particular-field" text="\$contractPath" />
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox>
                <children>
                   <Label fx:id="signingDate" styleClass="particular-field" text="\$signingDate" />
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox>
                <children>
                   <Label fx:id="expiryDate" styleClass="particular-field" text="\$expiryDate" />
                </children>
                <padding>
-                  <Insets bottom="10.0" />
+                  <Insets bottom="5.0" />
                </padding>
             </HBox>
          </children>

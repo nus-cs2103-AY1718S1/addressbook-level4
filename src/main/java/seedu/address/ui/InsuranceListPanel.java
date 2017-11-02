@@ -4,6 +4,8 @@ import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
@@ -11,6 +13,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.InsurancePanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.SwitchToProfilePanelRequestEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 
 //@@author OscarWang114
@@ -66,6 +69,21 @@ public class InsuranceListPanel extends UiPart<Region> {
                     }
                 });
     }
+    //@@author
+
+    //@@author Juxarius
+    @Subscribe
+    private void handleSwitchToProfilePanelRequestEvent(SwitchToProfilePanelRequestEvent event) {
+        insuranceListView.getSelectionModel().clearSelection();
+    }
+
+    /*@Subscribe
+    private void handleInsurancePanelSelectionChangedEvent(InsurancePanelSelectionChangedEvent event) {
+        InsuranceProfile selected = insuranceListView.getItems().filtered(insuranceProfile -> {
+            return insuranceProfile.getInsurance().equals(event.getInsurance());
+        }).get(0);
+        insuranceListView.getSelectionModel().select(selected);
+    }*/
     //@@author
 
     /**

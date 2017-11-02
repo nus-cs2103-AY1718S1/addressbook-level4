@@ -40,6 +40,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
     private StringProperty expiryDateString;
 
     //@@author Juxarius
+    private StringProperty insuranceName;
     private LocalDate signingDate;
     private LocalDate expiryDate;
     //@@author
@@ -234,6 +235,16 @@ public class LifeInsurance implements ReadOnlyInsurance {
     @Override
     public String getExpiryDateString() {
         return expiryDateString.get();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        //TODO: Increase the validity of equals
+        return other == this // short circuit if same object
+                || (other instanceof LifeInsurance // instanceof handles nulls
+                && ((LifeInsurance) other).premiumString.equals(this.premiumString)
+                && ((LifeInsurance) other).signingDate.isEqual(this.signingDate)
+                && ((LifeInsurance) other).expiryDate.isEqual(this.expiryDate)); // state check
     }
 }
 
