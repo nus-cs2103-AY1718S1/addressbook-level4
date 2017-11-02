@@ -189,9 +189,6 @@ Selects the 2nd person in the address book.
 Selects the 1st person in the results of the `find` command.
 
 === Adding a meeting: `addmeeting`
-Upcoming in V2.0 (Since V1.2): addmeeting by index of person in Contacts +
-Since V1.2: Shows name of contact whom user is meeting with along with the contact's phone number
-
 Adds a meeting to the address book +
 Format: `addmeeting INDEX [n/NAME] [d/DATE_TIME] [l/LOCATION]`
 
@@ -200,11 +197,19 @@ Input format for Date and Time is "DD-MM-YYYY HH:MM"
 
 ****
 * Adds meeting with person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer 1,2,3, ...
-* Creation of meeting with multiple people at the same timing for an event is possible. i.e Group meeting. In this case, multiple Meeting Cards will be created. However, when opening Schedubook, if your next meeting is a group meeting, the reminder will show.
+* Creation of group meetings
+** Creation of meeting with multiple people at the same timing for an event is possible. In this case, multiple `Meeting Cards` will be created. A group meeting consists of meetings that have the same `NameMeeting`,`DateTime` and `Place` but with different person.
++
+image::MeetingGroup.png[width="200"]
++
+** However, when opening Schedubook, if your next meeting is a group meeting, the reminder will show.
 +
 image::Reminder(1).png[width="600"]
 +
 * When adding a new meeting, you will be prompted to change the date and time of meeting if it will result in a clash with an existing meeting.
++
+image::MeetingClash.png[width="500"]
++
 ****
 
 Examples:
@@ -213,8 +218,7 @@ Examples:
 * `addmeeting 2 n/Project meeting d/27-12-2017 08:30 l/iCube Auditorium, NUS`
 
 === Deleting a meeting: `deletemeeting`
-Upcoming in V2.0 (Since V1.2): deletemeeting by index of meeting in the Meeting
-Since V1.2:
+deletemeeting by index of meeting in the Meeting
 
 Deletes a meeting in the address book at the specified INDEX +
 Format: `dm INDEX`
@@ -226,6 +230,9 @@ INDEX must be a positive integer
 * Deletes meeting with person at the specified INDEX. The index refers to the index number shown in the meetings tab
 ****
 
+[TIP]
+An overdue meeting will be automatically deleted when you open Schedubook
+
 Examples:
 
 * `dm 1`
@@ -235,6 +242,9 @@ Examples:
 
 Shows a list of all meetings in the address book. +
 Format: `listmeeting`
+
+[TIP]
+Meetings are always sorted according to the closest date
 
 === Editing a meeting : `editmeeting`
 
