@@ -174,6 +174,11 @@ public class ModelManager extends ComponentManager implements Model {
         return this.userPrefs;
     }
 
+    //@@author Sri-vatsa
+    /***
+     * Records how many times each person in addressbook is searched for
+     * @throws CommandException
+     */
     @Override
     public void recordSearchHistory() throws CommandException {
 
@@ -197,10 +202,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //=========== Sort addressBook methods =============================================================
-
     /***
      * Sorts persons in address book by searchCount
-     * @author Sri-vatsa
      */
     @Override
     public void sortPersonListBySearchCount() {
@@ -218,7 +221,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
-
+    //@@author
 
     //=========== Util methods =============================================================
 
