@@ -1,10 +1,10 @@
 = __ScheduBook __- User Guide
-:toc: right
+:toc:
 :toc-title: Table Of Contents
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
-:stylesDir: stylesheets````
+:stylesDir: stylesheets
 :experimental:
 ifdef::env-github[]
 :tip-caption: :bulb:
