@@ -8,18 +8,14 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PREMIUM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SIGNING_DATE;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.time.LocalDate;
 import java.util.List;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.insurance.LifeInsurance;
-import seedu.address.model.person.Person;
+import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 //@@author OscarWang114
 /**
@@ -52,59 +48,27 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_INSURANCE = "This insurance already exists in the address book";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
-    private final String ownerName;
-    private final String insuredName;
-    private final String beneficiaryName;
-    private final Double premium;
-    private final String contractPath;
-    private final String signingDate;
-    private final String expiryDate;
-
-    private ReadOnlyPerson personForOwner;
-    private ReadOnlyPerson personForInsured;
-    private ReadOnlyPerson personForBeneficiary;
+    private final LifeInsurance lifeInsuranceToAdd;
 
     /**
      * Creates an AddLifeInsuranceCommand to add the specified {@code ReadOnlyInsurance}
      */
     public AddLifeInsuranceCommand(String ownerName, String insuredName, String beneficiaryName,
-                                   Double premium, String contractPath, String signingDate, String expiryDate) {
-
-        this.ownerName = ownerName;
-        this.insuredName = insuredName;
-        this.beneficiaryName = beneficiaryName;
-        this.premium = premium;
-        this.contractPath = contractPath;
-        this.signingDate = signingDate;
-        this.expiryDate = expiryDate;
+                                   Double premium, String contractPath, LocalDate signingDate,
+                                   LocalDate expiryDate) {
+        this.lifeInsuranceToAdd = new LifeInsurance(ownerName, insuredName, beneficiaryName,
+                premium, contractPath, signingDate, expiryDate);
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyPerson> personList = model.getFilteredPersonList();
+        List<ReadOnlyInsurance> insuranceList = model.getInsuranceList();
+        isAnyPersonInList(personList, lifeInsuranceToAdd);
+        model.addInsurance(lifeInsuranceToAdd);
 
-        if (!arePersonsAllInList(lastShownList, ownerName, insuredName, beneficiaryName)) {
-            throw new CommandException(Messages.MESSAGE_PERSON_NOT_FOUND);
-        }
-
-        try {
-            LifeInsurance lifeInsuranceToAdd = new LifeInsurance(personForOwner, personForInsured, personForBeneficiary,
-                premium, contractPath, signingDate, expiryDate);
-            model.updatePerson(personForOwner, new Person(personForOwner, lifeInsuranceToAdd));
-            model.updatePerson(personForInsured, new Person(personForInsured, lifeInsuranceToAdd));
-            model.updatePerson(personForBeneficiary, new Person(personForBeneficiary, lifeInsuranceToAdd));
-            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-
-            return new CommandResult(String.format(MESSAGE_SUCCESS, lifeInsuranceToAdd));
-        } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
-        } catch (IllegalValueException ive) {
-            throw new CommandException(ive.getMessage());
-        }
-
+        return new CommandResult(String.format(MESSAGE_SUCCESS, lifeInsuranceToAdd));
     }
 
     @Override
@@ -118,29 +82,21 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
     /**
      * Check if all the Person parameters required to create an insurance are inside the list
      */
-    public boolean arePersonsAllInList(List<ReadOnlyPerson> list, String owner, String insured, String beneficiary) {
-        boolean ownerFlag = false;
-        boolean insuredFlag = false;
-        boolean beneficiaryFlag = false;
-
+    public void isAnyPersonInList(List<ReadOnlyPerson> list, LifeInsurance lifeInsurance) {
+        String ownerName = lifeInsurance.getOwner().getName();
+        String insuredName = lifeInsurance.getInsured().getName();
+        String beneficiaryName = lifeInsurance.getBeneficiary().getName();
         for (ReadOnlyPerson person: list) {
-            String personFullNameLowerCase = person.getName().toString().toLowerCase();
-            if (personFullNameLowerCase.equals(owner.toLowerCase())) {
-                ownerFlag = true;
-                this.personForOwner = person;
+            String lowerCaseName = person.getName().toString().toLowerCase();
+            if (lowerCaseName.equals(ownerName)) {
+                lifeInsurance.getOwner().setPerson(person);
             }
-            if (personFullNameLowerCase.equals(insured.toLowerCase())) {
-                insuredFlag = true;
-                this.personForInsured = person;
+            if (lowerCaseName.equals(insuredName)) {
+                lifeInsurance.getInsured().setPerson(person);
             }
-            if (personFullNameLowerCase.equals(beneficiary.toLowerCase())) {
-                beneficiaryFlag = true;
-                this.personForBeneficiary = person;
-            }
-            if (ownerFlag && beneficiaryFlag && insuredFlag) {
-                return true;
+            if (lowerCaseName.equals(beneficiaryName)) {
+                lifeInsurance.getBeneficiary().setPerson(person);
             }
         }
-        return false;
     }
 }

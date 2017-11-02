@@ -23,6 +23,7 @@ import seedu.address.commons.events.ui.SwitchToProfilePanelRequestEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author RSJunior37
 /**
  * The Profile Panel of the App.
  */
@@ -51,6 +52,8 @@ public class ProfilePanel extends UiPart<Region> {
     private Label address;
     @FXML
     private Label dob;
+    @FXML
+    private Label gender;
     @FXML
     private Label email;
     @FXML
@@ -86,19 +89,19 @@ public class ProfilePanel extends UiPart<Region> {
         }
         insuranceListView.setItems(insurance);
         insuranceListView.setCellFactory(insuranceListView -> new ProfilePanel.InsuranceIdListViewCell());
-
-
     }
 
     //@@author OscarWang114
+    /**
+     * Load person page with empty fields and default message
+     */
     private void loadPersonPage(StringProperty name) {
+        unbindListenersAndClearText();
         this.name.textProperty().bind(Bindings.convert(name));
-        this.address.textProperty().unbind();
         this.address.setText(PERSON_DOES_NOT_EXIST_MESSAGE);
     }
     //@@author
 
-    //@@author RSJunior37
     /**
      * Load default page with empty fields and default message
      */
@@ -107,10 +110,11 @@ public class ProfilePanel extends UiPart<Region> {
         phone.setText(null);
         address.setText(null);
         dob.setText(null);
+        gender.setText(null);
         email.setText(null);
         insuranceHeader.setText(null);
-
     }
+
     /**
      * To be called everytime a new person is selected and bind all information for real-time update
      * @param person
@@ -120,9 +124,28 @@ public class ProfilePanel extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         dob.textProperty().bind(Bindings.convert(person.dobProperty()));
+        gender.textProperty().bind(Bindings.convert(person.genderProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
     }
 
+    //@@author OscarWang114
+    /**
+     * unbind all listeners
+     */
+    private void unbindListenersAndClearText() {
+        name.textProperty().unbind();
+        phone.textProperty().unbind();
+        address.textProperty().unbind();
+        dob.textProperty().unbind();
+        email.textProperty().unbind();
+        name.setText(null);
+        phone.setText(null);
+        address.setText(null);
+        dob.setText(null);
+        email.setText(null);
+        insuranceHeader.setText(null);
+    }
+    //@@author
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code InsuranceIdLabel}.
@@ -149,7 +172,6 @@ public class ProfilePanel extends UiPart<Region> {
         raise(new SwitchToProfilePanelRequestEvent());
     }
 
-    //@@author
 
     //@@author OscarWang114
     @Subscribe

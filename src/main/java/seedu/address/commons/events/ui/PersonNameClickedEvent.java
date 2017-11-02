@@ -7,6 +7,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.insurance.InsurancePerson;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author RSJunior37
 /**
  * Represents a click on one of the names in Insurance Profile
  */

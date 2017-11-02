@@ -4,6 +4,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.ui.InsuranceProfile;
 
+//@@author RSJunior37
 /**
  * Represents a selection change in the Person List Panel
  */

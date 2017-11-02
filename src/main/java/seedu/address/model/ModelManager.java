@@ -82,11 +82,18 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    //=========== Insurance List Accessors ===================================================================
+    @Override
+    public synchronized void addInsurance(ReadOnlyInsurance insurance) {
+        addressBook.addInsurance(insurance);
+        indicateAddressBookChanged();
+    }
+    //=========== Insurance List Accessors ==================================================================
+    //@@author RSJunior37
     @Override
     public ObservableList<ReadOnlyInsurance> getInsuranceList() {
         return addressBook.getInsuranceList();
     }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -104,6 +111,12 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
+
+    @Override
+    public void updateInsuranceList(Predicate<ReadOnlyInsurance> predicate) {
+
+    }
+
 
     @Override
     public boolean equals(Object obj) {

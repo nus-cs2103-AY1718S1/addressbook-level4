@@ -89,9 +89,16 @@ public class UniqueLifeInsuranceMap {
         setInsurances(replacement);
     }
 
+    //@@author RSJunior37
+    /**
+     * Accessor to insurance list
+     * @return all existing insurances as ReadOnly, ObservableList
+     */
     public ObservableList<ReadOnlyInsurance> asObservableList() {
+        assert CollectionUtil.elementsAreUnique(internalMap.values());
         return FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(internalMap.values()));
     }
+    //@@author
 
     /**
      * Returns the backing map as an unmodifiable {@code ObservableList}.

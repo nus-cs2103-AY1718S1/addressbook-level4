@@ -12,6 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Gender;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -33,6 +34,8 @@ public class XmlAdaptedPerson {
     private String address;
     @XmlElement(required = true)
     private String dob;
+    @XmlElement(required = true)
+    private String gender;
 
     @XmlElement(name = "tagged")
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -58,7 +61,9 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        gender = source.getGender().toString();
         dob = source.getDateOfBirth().toString();
+
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -89,8 +94,9 @@ public class XmlAdaptedPerson {
         final Email email = this.email.equals("") ? new Email() : new Email(this.email);
         final Address address = this.address.equals("") ? new Address() : new Address(this.address);
         final DateOfBirth dob = this.dob.equals("") ? new DateOfBirth() : new DateOfBirth(this.dob);
+        final Gender gender = this.gender.equals("") ? new Gender() : new Gender(this.gender);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, dob, tags, personLifeInsuranceIds);
+        return new Person(name, phone, email, address, dob, gender, tags, personLifeInsuranceIds);
     }
     //@@author
 }

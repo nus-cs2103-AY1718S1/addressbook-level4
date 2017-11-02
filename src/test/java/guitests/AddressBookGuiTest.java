@@ -80,9 +80,11 @@ public abstract class AddressBookGuiTest {
         return mainWindowHandle.getMainMenu();
     }
 
+    //@@author RSJunior37
     protected ProfilePanelHandle getProfilePanel() {
         return mainWindowHandle.getProfilePanelHandle();
     }
+    //@@author
 
     protected InsuranceListPanelHandle getInsuranceListPanelHandle() {
         return mainWindowHandle.getInsuranceListPanelHandle();

@@ -46,6 +46,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label gender;
+    @FXML
     private FlowPane tags;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
@@ -56,6 +58,7 @@ public class PersonCard extends UiPart<Region> {
         bindListeners(person);
     }
 
+    //@@author RSJunior37
     /**
      * Generate random colour with slight dark tint
      * and return it as hexadecimal String
@@ -82,6 +85,7 @@ public class PersonCard extends UiPart<Region> {
         }
         return tagToColor.get(tagName);
     }
+    //@@author
 
 
     /**
@@ -94,12 +98,14 @@ public class PersonCard extends UiPart<Region> {
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         dob.textProperty().bind(Bindings.convert(person.dobProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        gender.textProperty().bind(Bindings.convert(person.genderProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);
         });
     }
 
+    //@@author RSJunior37
     /**
      * Retrieve all tags from a person and initialize them
      * with a unique tag colour
@@ -111,6 +117,7 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(uniqueTagLabel);
         });
     }
+    //@@author
 
 
     @Override

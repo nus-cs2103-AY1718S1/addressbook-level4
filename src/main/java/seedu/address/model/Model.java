@@ -37,10 +37,18 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    /** Adds the given insurance */
+    void addInsurance(ReadOnlyInsurance insurance);
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
+    //@@author RSJunior37
+    /**
+     * Returns an unmodifiable view of the insurances list
+     */
     ObservableList<ReadOnlyInsurance> getInsuranceList();
+    //@@author
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
@@ -48,5 +56,5 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
-
+    void updateInsuranceList(Predicate<ReadOnlyInsurance> predicate);
 }
