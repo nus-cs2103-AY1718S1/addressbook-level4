@@ -10,6 +10,10 @@ import java.util.Set;
 import seedu.room.commons.core.index.Index;
 import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.commons.util.StringUtil;
+import seedu.room.model.event.Datetime;
+import seedu.room.model.event.Description;
+import seedu.room.model.event.Location;
+import seedu.room.model.event.Title;
 import seedu.room.model.person.Email;
 import seedu.room.model.person.Name;
 import seedu.room.model.person.Phone;
@@ -93,5 +97,42 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code Optional<String> title} into an {@code Optional<Title>} if {@code title} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Title> parseTitle(Optional<String> title) throws IllegalValueException {
+        requireNonNull(title);
+        return title.isPresent() ? Optional.of(new Title(title.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> description} into an {@code Optional<Description>}
+     * if {@code description} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Description> parseDescription(Optional<String> description) throws IllegalValueException {
+        requireNonNull(description);
+        return description.isPresent() ? Optional.of(new Description(description.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> location} into an {@code Optional<Location>} if {@code location} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Location> parseLocation(Optional<String> location) throws IllegalValueException {
+        requireNonNull(location);
+        return location.isPresent() ? Optional.of(new Location(location.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> datetime} into an {@code Optional<Datetime>} if {@code datetime} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Datetime> parseDatetime(Optional<String> datetime) throws IllegalValueException {
+        requireNonNull(datetime);
+        return datetime.isPresent() ? Optional.of(new Datetime(datetime.get())) : Optional.empty();
     }
 }
