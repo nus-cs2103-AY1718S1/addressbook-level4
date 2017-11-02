@@ -33,15 +33,23 @@ public class PersonListPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Creates a list of {@code PersonCard} from {@code personList}, sets them to the {@code personListView}
+     * and adds listener to {@code personListView} for selection change.
+     */
     private void setConnections(ObservableList<ReadOnlyPerson> personList) {
         ObservableList<PersonCard> mappedList = EasyBind.map(
                 personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
         personListView.setItems(mappedList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
-        setEventHandlerForSelectionChangeEvent();
+        addListenerForSelectionChangeEvent();
     }
 
-    private void setEventHandlerForSelectionChangeEvent() {
+    /**
+     * Adds a listener to {@code personListView} so that
+     * selected item raises {@code PersonPanelSelectionChangedEvent}.
+     */
+    private void addListenerForSelectionChangeEvent() {
         personListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
