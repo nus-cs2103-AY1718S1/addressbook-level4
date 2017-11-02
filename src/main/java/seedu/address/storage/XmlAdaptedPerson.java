@@ -84,14 +84,14 @@ public class XmlAdaptedPerson {
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
-
+        //@@author vsudhakar
         final Avatar avatar;
         if (Avatar.validFile(this.avatar)) {
             avatar = new Avatar(this.avatar);
         } else {
             avatar = new Avatar();
         }
-
+        //@@author
         final Comment comment = new Comment(this.comment);
         final Appoint appoint = new Appoint(this.appoint);
         final Set<Tag> tags = new HashSet<>(personTags);

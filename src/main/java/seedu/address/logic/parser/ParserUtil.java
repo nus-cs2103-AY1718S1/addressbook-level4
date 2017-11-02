@@ -81,6 +81,7 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
+    //@@author vsudhakar
     /**
      * Parses a {@code Optional<String> avatarImagePath} into an {@code Optional<Avatar>} if {@code avatarImagePath}
      * is present.
@@ -92,6 +93,7 @@ public class ParserUtil {
                 new Avatar(Avatar.getDirectoryPath(
                         avatarImagePath.get()))) : Optional.of(new Avatar());
     }
+    //@@author
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.

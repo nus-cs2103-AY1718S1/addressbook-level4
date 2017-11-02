@@ -1,3 +1,5 @@
+//@@author vsudhakar
+
 package seedu.address.model.person;
 
 import java.io.File;
@@ -64,3 +66,5 @@ public class Avatar {
         }
     }
 }
+
+//@@author
