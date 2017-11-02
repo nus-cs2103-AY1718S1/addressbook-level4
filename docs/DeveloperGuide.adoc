@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T09-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG2017-T09-B2`      Since: `AUG 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -226,6 +226,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 3.1.1 : Inheritance Diagram for commands_
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -265,10 +266,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 3.1.2 : Diagram to show stack_
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 3.1.3 : Diagram to show stack with another command_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -278,6 +281,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 3.1.3 : Diagram to show how undo works_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -285,6 +289,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 3.1.4 : Sequence diagram for undo_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -294,14 +299,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 3.1.5 : Diagram to show stack with more commands_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 3.1.6 : Diagram to show undoable command not added to stack_
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 3.1.7 : Activity diagram to show UndoRedoStack_
 
 ==== Design Considerations
 
@@ -368,7 +376,7 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 The Meeting class is a new class just like the Person class, which resides inside `model`. It features commands that modifies the state of the address book
 such as AddMeeting, DeleteMeeting, EditMeeting, ListMeeting and FindMeeting.
-The attributes of Meeting class includes NameMeeting, DateTime, Place, PersonToMeet and PhoneNum.
+The attributes of Meeting class include `NameMeeting`, `DateTime`, `Place`, `PersonToMeet` and `PhoneNum`.
 
 
 ==== Design Considerations
@@ -388,7 +396,7 @@ The add meeting command inherits from UndoableCommand which allows user to add m
 
 Implementation:
 
-When the 'addmeeting' command is called with the appropriate parameters, an instance of the 'Meeting' object is created with the
+When the `addmeeting` command is called with the appropriate parameters, an instance of the `Meeting` object is created with the
 corresponding parameters. For example,
 
 [source,java]
@@ -406,12 +414,13 @@ PhoneNum: 87438807
 Location: Hillion Mall
 ----
 
-Furthermore, the 'INDEX' of person provided would allow the newly-created 'Meeting' object to get the Name as well as Phone Number
+Furthermore, the `INDEX` of person provided would allow the newly-created `Meeting` object to get the `Name` as well as `Phone`
 of the corresponding contact as shown in the example above.
 
 The following sequence diagram below shows how AddMeeting operation works:
 
 image::addMeetingSequenceDiagram.png[width="800"]
+_Figure 3.5.1 : Sequence diagram of Add Meeting_
 
 === Delete Meeting
 
@@ -419,7 +428,7 @@ The delete meeting command inherits from UndoableCommand which allows user to de
 
 Implementation:
 
-When the 'deletemeeting' command is called with the appropriate parameters, the instance of the 'Meeting' object created during addmeeting
+When the `deletemeeting` command is called with the appropriate parameters, the instance of the `Meeting` object created during addmeeting
 is called upon and removed.
 For example,
 
@@ -434,7 +443,7 @@ Deletes an object with the following parameters
 INDEX: 1
 ----
 
-The 'INDEX' of meeting provides the name, date and location of the meeting which is used to remove it
+The `INDEX` of meeting provides the name, date and location of the meeting which is used to remove it
 from the meeting list.
 
 === Find Meeting
@@ -443,7 +452,7 @@ The find meeting command inherits from Command which allows users to find meetin
 
 Implementation:
 
-When the 'findmeeting' command is called with the appropriate parameters, a search for the instance of the 'Meeting' object created during addmeeting
+When the `findmeeting` command is called with the appropriate parameters, a search for the instance of the `Meeting` object created during addmeeting
 with keywords are listed.
 For example,
 
@@ -458,9 +467,9 @@ Finds an object with the following parameters
 KEYWORD: makan
 ----
 
-The 'KEYWORD' of meeting provides the name, date and location of the meeting which is used to list it.
+The `KEYWORD` of meeting provides the name, date and location of the meeting which is used to list it.
 
-If none of the meetings contains the 'KEYWORD', the results would show 'No meetings found'.
+If none of the meetings contains the `KEYWORD`, the results would show "No meetings found".
 
 
 === Edit Meeting
@@ -521,24 +530,29 @@ The implementation of meeting card starts of from creating 'Meeting' class which
 * These object properties of the meeting class are assigned to the labels in the Meeting card of MeetingCard.java, handled by UI manager.
 
 image::UiMeetingCardSequenceDiagram.png[width="800"]
+_Figure 3.9.1 : Sequence diagram of Ui of Meeting Card_
 
 * The list of meeting cards are assigned to the panel at the right of the program. The list are created with 'UniqueMeetingList'. This list of meetings are always sorted according to date and time, with the nearest date and time first.
 
 image::MeetingCard.png[width="250"]
+_Figure 3.9.2 : Meeting Card_
 
 To show the urgency of the meeting. Colours are assigned to the card by comparing the date and time in the meeting class to the date and time of the log in.
 
 * `darkRed` : Meeting is in next 24 hours.
 
-image::MeetingCard1.png[width="250"]
+image::MeetingCard1.png[align="center'][width="250"]
+_Figure 3.9.3 : Meeting card that due within 24 hours_
 
 * `red` : Meeting is in next 48 hours.
 
 image::MeetingCard2.png[width="250"]
+_Figure 3.9.4 : Meeting Card that due within 48 hours_
 
 * `orangeRed` : Meeting is in next 72 hours.
 
 image::MeetingCard3.png[width="250"]
+_Figure 3.9.5 : Meeting Card that due within 72 hours_
 
 ==== Design Considerations
 
