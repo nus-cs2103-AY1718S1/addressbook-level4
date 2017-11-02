@@ -136,7 +136,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + TAG_DESC_HUSBAND + EMAIL_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: selects first card in the person list, add a person -> added, card selection remains unchanged */
+        /* Case: selects first card in the person list, add a person -> added, card selection remains unchanged*/
         executeCommand(SelectCommand.COMMAND_WORD + " 1");
         assert getPersonListPanel().isAnyCardSelected();
         assertCommandSuccess(CARL);
