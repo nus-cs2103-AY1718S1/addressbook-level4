@@ -1,5 +1,5 @@
 # Melvin-leo
-###### /java/guitests/guihandles/MeetingCardHandle.java
+###### \java\guitests\guihandles\MeetingCardHandle.java
 ``` java
 /**
  * Provides a handle to a meeting card in the meeting list panel.
@@ -57,7 +57,7 @@ public class MeetingCardHandle extends NodeHandle<Node> {
 
 }
 ```
-###### /java/guitests/guihandles/MeetingListPanelHandle.java
+###### \java\guitests\guihandles\MeetingListPanelHandle.java
 ``` java
 /**
  * Provides a handle for {@code MeetingListPanel} containing the list of {@code MeetingCard}.
@@ -186,7 +186,7 @@ public class MeetingListPanelHandle extends NodeHandle<ListView<MeetingCard>> {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ListMeetingCommandTest.java
+###### \java\seedu\address\logic\commands\ListMeetingCommandTest.java
 ``` java
 public class ListMeetingCommandTest {
     private Model model;
@@ -214,7 +214,7 @@ public class ListMeetingCommandTest {
     }
 }
 ```
-###### /java/seedu/address/model/AddressBookTest.java
+###### \java\seedu\address\model\AddressBookTest.java
 ``` java
     @Test
     public void resetData_withDuplicateMeetings_throwsAssertionError() {
@@ -228,7 +228,7 @@ public class ListMeetingCommandTest {
         addressBook.resetData(newData);
     }
 ```
-###### /java/seedu/address/model/meeting/DateTimeTest.java
+###### \java\seedu\address\model\meeting\DateTimeTest.java
 ``` java
 public class DateTimeTest {
     @Test
@@ -242,7 +242,7 @@ public class DateTimeTest {
     }
 }
 ```
-###### /java/seedu/address/model/meeting/MeetingContainsFullwordPredicateTest.java
+###### \java\seedu\address\model\meeting\MeetingContainsFullwordPredicateTest.java
 ``` java
 public class MeetingContainsFullwordPredicateTest {
 
@@ -311,7 +311,7 @@ public class MeetingContainsFullwordPredicateTest {
     }
 }
 ```
-###### /java/seedu/address/model/meeting/MeetingContainsKeywordsPredicateTest.java
+###### \java\seedu\address\model\meeting\MeetingContainsKeywordsPredicateTest.java
 ``` java
 public class MeetingContainsKeywordsPredicateTest {
 
@@ -380,7 +380,7 @@ public class MeetingContainsKeywordsPredicateTest {
     }
 }
 ```
-###### /java/seedu/address/model/meeting/NameMeetingTest.java
+###### \java\seedu\address\model\meeting\NameMeetingTest.java
 ``` java
 public class NameMeetingTest {
     @Test
@@ -398,7 +398,7 @@ public class NameMeetingTest {
     }
 }
 ```
-###### /java/seedu/address/model/meeting/PlaceTest.java
+###### \java\seedu\address\model\meeting\PlaceTest.java
 ``` java
 public class PlaceTest {
     @Test
@@ -414,7 +414,7 @@ public class PlaceTest {
     }
 }
 ```
-###### /java/seedu/address/model/UniqueMeetingListTest.java
+###### \java\seedu\address\model\UniqueMeetingListTest.java
 ``` java
 public class UniqueMeetingListTest {
     @Rule
@@ -428,7 +428,7 @@ public class UniqueMeetingListTest {
     }
 }
 ```
-###### /java/seedu/address/ui/MeetingCardTest.java
+###### \java\seedu\address\ui\MeetingCardTest.java
 ``` java
 public class MeetingCardTest extends GuiUnitTest {
 
@@ -494,7 +494,7 @@ public class MeetingCardTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/seedu/address/ui/MeetingListPanelTest.java
+###### \java\seedu\address\ui\MeetingListPanelTest.java
 ``` java
 public class MeetingListPanelTest extends GuiUnitTest {
 
@@ -538,7 +538,7 @@ public class MeetingListPanelTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/seedu/address/ui/testutil/GuiTestAssert.java
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
 ``` java
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
@@ -552,7 +552,7 @@ public class MeetingListPanelTest extends GuiUnitTest {
         assertEquals(expectedCard.getDateTime(), actualCard.getDateTime());
     }
 ```
-###### /java/seedu/address/ui/testutil/GuiTestAssert.java
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
 ``` java
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedMeeting}.
@@ -565,7 +565,7 @@ public class MeetingListPanelTest extends GuiUnitTest {
         assertEquals(expectedMeeting.getPersonName().fullName, actualCard.getPersonToMeet());
     }
 ```
-###### /java/seedu/address/ui/testutil/GuiTestAssert.java
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
 ``` java
     /**
      * Asserts that the list in {@code meetingListPanelHandle} displays the details of {@code meetings} correctly and

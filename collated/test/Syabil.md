@@ -1,4 +1,5 @@
-###### \src\test\java\seedu\address\logic\commands\DeleteMeetingCommandTest.java
+# Syabil
+###### \java\seedu\address\logic\commands\DeleteMeetingCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -124,7 +125,7 @@ public class DeleteMeetingCommandTest {
     }
 }
 ```
-###### \src\test\java\seedu\address\logic\commands\FindMeetingCommandTest.java
+###### \java\seedu\address\logic\commands\FindMeetingCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
