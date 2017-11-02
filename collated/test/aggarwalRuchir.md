@@ -1,4 +1,6 @@
-//@@author aggarwalRuchir
+# aggarwalRuchir
+###### /java/seedu/address/logic/commands/ListCommandTest.java
+``` java
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -43,3 +45,18 @@ public class ListCommandTest {
         assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }
+```
+###### /java/seedu/address/model/person/PhoneTest.java
+``` java
+    @Test
+    public void isPhoneFormattingCorrect() {
+        assertEquals(Phone.formatPhone("911"), "911");
+
+        assertEquals(Phone.formatPhone("6593121534"), "65-9312-1534"); //Singapore number
+        assertEquals(Phone.formatPhone("9191121444"), "91-9112-1444"); //Indian number
+        assertEquals(Phone.formatPhone("17651230101"), "176-5123-0101"); //US number
+        assertEquals(Phone.formatPhone("447881234567"), "4478-8123-4567"); //UK number
+
+        assertEquals(Phone.formatPhone("124293842033123"), "124-2938-4203-3123");
+    }
+```

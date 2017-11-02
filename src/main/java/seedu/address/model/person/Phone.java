@@ -55,6 +55,7 @@ public class Phone {
         return value.hashCode();
     }
 
+    //@@author aggarwalRuchir
     /**
      * Format given phone number into typical mobile format
      * For example for Singapore numbers: xxxx-xxxx
@@ -97,5 +98,5 @@ public class Phone {
     private static boolean isHyphenNeeded(int digitAdded) {
         return (digitAdded % 4 == 0);
     }
-
+    //@@author
 }
