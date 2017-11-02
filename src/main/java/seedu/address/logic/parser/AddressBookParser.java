@@ -30,6 +30,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class AddressBookParser {
 
+    //@@author Juxarius
     /**
      * Enumerator list to define the types of commands.
      */
@@ -64,8 +65,10 @@ public class AddressBookParser {
 
         case ADD:
             return new AddCommandParser().parse(arguments);
+
         case ADDLI:
             return new AddLifeInsuranceCommandParser().parse(arguments);
+
         case EDIT:
             return new EditCommandParser().parse(arguments);
 
@@ -113,6 +116,7 @@ public class AddressBookParser {
         }
     }
 
+    
     /**
      * Searches the entire list of acceptable command words in each command and returns the enumerated value type.
      * @param commandWord
@@ -204,6 +208,6 @@ public class AddressBookParser {
 
         return CommandType.NONE;
     }
-
+    //@@author
 
 }
