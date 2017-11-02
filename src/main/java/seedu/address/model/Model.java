@@ -3,10 +3,11 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-
+import seedu.address.model.tag.Tag;
 /**
  * The API of the Model component.
  */
@@ -20,8 +21,14 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
+    /** Returns the meeting list */
+    ReadOnlyMeetingList getMeetingList();
+
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
+    /** Deletes given tag from everyone in the addressbook */
+    boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException;
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
@@ -43,6 +50,38 @@ public interface Model {
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
+    default void updateFilteredPersonList() {
+        updateFilteredPersonList();
+    }
+
+    /**
+     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /**
+     * Returns the userPref which the model is initialized with
+     * @return UserPrefs object
+     */
+    UserPrefs getUserPrefs();
+
+    /**
+     * @author Sri-vatsa
+     * Updates search count for each person who is searched using {@code FindCommand}
+     * Assumes filtered List of persons contains search results
+     */
+    void recordSearchHistory() throws CommandException;
+
+    /**
+     * @author Sri-vatsa
+     * Sort everyone in addressbook by searchCount
+     */
+    void sortPersonListBySearchCount();
+
+    /**
+     * @author Sri-vatsa
+     * Sort everyone in addressbook lexicographically
+     */
+    void sortPersonListLexicographically();
 }

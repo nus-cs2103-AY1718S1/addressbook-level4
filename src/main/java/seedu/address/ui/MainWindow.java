@@ -8,17 +8,21 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ShowBrowserEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowMeetingEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -41,6 +45,7 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private MeetingPanel meetingPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
@@ -52,7 +57,22 @@ public class MainWindow extends UiPart<Region> {
     private StackPane commandBoxPlaceholder;
 
     @FXML
+    private StackPane commandBoxHelperPlaceholder;
+
+    @FXML
     private MenuItem helpMenuItem;
+
+    @FXML
+    private SplitPane settingsPane;
+
+    @FXML
+    private StackPane settingsSelectorPlaceholder;
+
+    @FXML
+    private StackPane themeSelectorPlaceholder;
+
+    @FXML
+    private VBox personListBox;
 
     @FXML
     private StackPane personListPanelPlaceholder;
@@ -79,6 +99,23 @@ public class MainWindow extends UiPart<Region> {
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
+
+        String style = prefs.getTheme();
+        String cssPath = "view/";
+
+        switch (style) {
+        case "Light":
+            cssPath += "LightTheme.css";
+            break;
+        case "Blue":
+            cssPath += "BlueTheme.css";
+            break;
+        default:
+            cssPath += "DarkTheme.css";
+            break;
+        }
+
+        scene.getStylesheets().add(cssPath);
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -127,7 +164,11 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
+        meetingPanel = new MeetingPanel(logic);
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
+
+        SettingsSelector settingsSelector = new SettingsSelector();
+        settingsSelectorPlaceholder.getChildren().add(settingsSelector.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -135,11 +176,16 @@ public class MainWindow extends UiPart<Region> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+                logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic);
+        //Setting initial position of settings panel
+        settingsPane.setTranslateX(160);
+
+        CommandBox commandBox = new CommandBox(logic, commandBoxHelperPlaceholder, settingsPane);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
     }
 
     void hide() {
@@ -216,5 +262,17 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleShowBrowserEvent(ShowBrowserEvent event) {
+        browserPlaceholder.getChildren().remove(meetingPanel.getRoot());
+        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+    }
+
+    @Subscribe
+    private void handleShowMeetingEvent(ShowMeetingEvent event) {
+        browserPlaceholder.getChildren().remove(browserPanel.getRoot());
+        browserPlaceholder.getChildren().add(meetingPanel.getRoot());
     }
 }

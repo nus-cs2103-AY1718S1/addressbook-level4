@@ -63,8 +63,24 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Initializes the tags with text values and alternating colours between each index
+     * in the list
+     */
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            if (Integer.parseInt(id.getText().replace(". " , "")) % 2 == 0) {
+                tagLabel.setStyle("-fx-background-color: deepskyblue;"
+                        + " -fx-font-size: 15px;"
+                        + " -fx-text-fill: black");
+            } else {
+                tagLabel.setStyle("-fx-background-color: snow;"
+                        + " -fx-font-size: 15px;"
+                        + " -fx-text-fill: black");
+            }
+            tags.getChildren().add(tagLabel);
+        });
     }
 
     @Override

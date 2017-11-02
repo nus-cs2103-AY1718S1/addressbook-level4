@@ -1,0 +1,115 @@
+= Liu Hang - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: OurAb
+OurAb is a CLI(Command Line Interface)-based desktop Address Book application written in Java, targeted at university students.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/test[Test code]]
+
+=== Enhancement Added: Display Next Meeting
+
+==== External Behaviour
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: User Guide]]#
+
+Displays information about the next upcoming meeting. +
+
+image::liuhang-next-meeting-command.png[width="800"]
+
+#End of Extract#
+
+==== Justification
+
+To allow users to view the next meeting conveniently.
+
+---
+
+=== Enhancement Added: Meetings Storage
+
+==== External behavior
+
+* Provides storage for meetings managment, which will be implemented in future verions (> v1.3).
+
+==== Justification
+
+To provide functionality for storing meeting data
+
+---
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+
+image::StorageClassDiagram.png[width="800"]
+
+#End of Extract#
+
+---
+=== Enhancement Added: User Preferences Management
+
+==== External behavior
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: User Guide]]#
+
+* Edits the user preference. +
+
+#End of Extract#
+
+User can change the value of a preference by entering `pref PREFERENCE_KEY NEW_PREFERENCE_VALUE`.
+
+image::liuhang-pref-command-ss.png[width="800"]
+
+If no new value is entered, the current value for the preference will be displayed.
+
+image::liuhang-pref-command-ss2.png[width="800"]
+
+---
+
+==== Justification
+
+To allow users to customize the address book application conveniently.
+
+---
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+
+When a `pref` command is entered, the `PrefCommand` will attempt to find and execute `get<PreferenceKey>`
+method in the `UserPrefs` class using Java Reflection API. If an exception is encountered, it is assumed that the method
+does not exist and the preference key entered by the user was invalid. Similarly, if two arguments were entered, `PrefCommand`
+will again try to find and execute `set<PreferenceKey>` method.
+
+#End of Extract#
+
+---
+=== Enhancement Added: Backup and restoring data
+
+==== External behavior
+
+* When the addressbook is loaded when the application starts, a backup copy will be saved in another folder.
+
+---
+
+==== Justification
+
+To ensure safety of data in case of runtime exceptions or crashes
+
+---
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+
+image::StorageClassDiagram.png[width="800"]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Encryption
+
+=== Other contributions
+

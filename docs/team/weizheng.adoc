@@ -1,0 +1,136 @@
+= Fong Wei Zheng - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: OurAb
+This is a CLI(Command Line Interface)-based desktop Address Book application written in Java, targeted at university students.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/test[Test code]]
+
+=== Enhancement Added: Command Box Helper
+
+==== External behavior
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: User Guide]]#
+
+* When you start typing in the command line, a helper box appears to show you the list of commands available.
+* e.g Typing `e` in the command line will show both the `edit` and `exit` commands in the command helper box.
+* You can use the arrow keys to select commands that are displayed and press enter or tab to make it autofill for you in the command line.
++
+image::commandboxhelper.PNG[width="790"]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Speed up the use of the address book and make it easier for new users to learn the commands quickly.
+
+---
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+
+The command box helper is meant to work similarly to the auto fill functions in IDEs. Two different classes are created, `CommandBoxHelper` and `HelperCard`.
+`CommandBoxHelper` contains a ListView which is populated by VBox containers holding the `HelperCard` class. `CommandBoxHelper` retrieves a list of commands and command templates from the `logic` class and performs a check to populate the listview everytime the user enters a key in the command box
+The commands are matched using the `contain()` function and comparing the first character of the user's input. Commands that are matched are placed in a list and mapped to their corresponding `HelperCard` classes.
+For example, an "add" command will create a new instance of `HelperCard` using "add" as a parameter for the `HelperCard` constructor.
+
+To emulate the behaviour of command helpers in IDEs, the use can also navigate the list of commands using the arrow keys. To prevent it from overwriting the existing code of loading input history, an if-else statement is used. The command box helper takes priority in this case; as long as there is a command
+that corresponds to the user's entered string in the CLI, i.e. the command box helper is shown, interaction with the command helper will take precedence over interactions with the CLI. This is implemented similarly in the key inputs `TAB` and `ENTER`, which are used to fill in the CLI after the user has selected his
+desired command in the command helper.
+
+==== Design Considerations
+
+**Aspect:** Implementation of the list view in `CommandBoxHelper` +
+**Alternative:** Instead of creating a new class to populate the ListView, use a StackPane instead of a ListView and add Strings to it +
+**Pros:** Easier to implement the display for command helper +
+**Cons:** Fragile architecture, have to change a few functions every time an extra command is added. This involves hardcoding the additional command Strings into the functions.
+Slightly harder to display selection of command in the helper box to the user.
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Settings Pane and Choose command
+
+==== External behavior
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: User Guide]]#
+
+Chooses what to display on the main screen. +
+Format: `choose [NEW_VALUE]` +
+[NOTE]
+====
+List of editable preferences : linkedin, facebook, meetings
+====
+
+Typing this command will bring up the settings panel at the side of the application. `Since v1.3`
+
+Examples:
+
+* `choose linkedin` +
+Displays the linkedin page of the current selected user on the display screen.
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To allow users to switch between different display views such as linked in.
+Animated settings pane allow users to easily view their settings only when they want to edit it, otherwise it is hidden out of sight and not a hindrance on the screen
+
+---
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+
+The last selected display mode will be stored in `preferences.json` by default, which is set in `config.json` (coming in v1.4). The default mode of display will be set to `linkedin`.
+When a display mode is selected by the user via its command `choose`, an event is raised by the `ChooseCommand` object, via the following line :
+[source,java]
+----
+EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
+----
+This event is then handled by the `SettingsSelector` object. It selects and highlights the user's selected display mode, and then raises another event :
+[source,java]
+----
+raise(new BrowserPanelSelectionChangedEvent(browserSelection));
+----
+Which is handled by the `BrowserPanel` object to display their selected display type.
+
+==== Command: `choose`
+The `choose` command allows users to select the display type they prefer. When the String found in the command box is detected to contain either `choose` or `pref`, both of which are
+commands related to settings, the settings panel is brought in via a translation timeline animation. When the `MainWindow` is originally initialized, the container for the settings panel
+is translated on the X axis outside of the application view, and is then brought into view via the animation. When the String in the command box does not contain `choose` or `pref`, the
+settings panel is then translated out of sight again.
+
+image::SettingsPaneInOut.png[width="700"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of choose command
+**Alternative:** Combine it with the pref command to come under a "mega" "settings" command.
+**Pros:** Lesser commands for the user to remember, higher code modularity, easier for future command implementations on settings.
+**Cons:** Harder to code and debug due to requirement to parse more arguments
+
+---
+
+**Aspect:** Animation of settings panel
+**Alternative:** Use transitions instead of timeline
+**Pros:** Transitions are easier to implement and understand
+**Cons:** KeyValue objects are fit into a keyframe which is then fit into the timeline, which fits more into the concept of java's OOP and allows for more code reusability when we want to, for example, animate bouncing
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed:
+
+=== Other contributions
+
+* Updated the GUI color scheme (Alternating tag colours and different command line colour)

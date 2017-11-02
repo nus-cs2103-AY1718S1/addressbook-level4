@@ -161,9 +161,10 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
      * and the model related components equal to {@code expectedModel}.
      * These verifications are done by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the status bar remains unchanged, and the command box has the default style class, and the
+     * The status bar changes so it only verifies that the command box has the default style class, and the
      * selected card updated accordingly, depending on {@code cardStatus}.
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * Edited by: Sri-vatsa
      */
     private void assertCommandSuccess(String command, Model expectedModel) {
         String expectedResultMessage = String.format(
@@ -172,7 +173,6 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
-        assertStatusBarUnchanged();
     }
 
     /**

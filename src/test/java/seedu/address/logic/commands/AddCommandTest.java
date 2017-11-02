@@ -20,10 +20,13 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyMeetingList;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -113,8 +116,20 @@ public class AddCommandTest {
         }
 
         @Override
+        public ReadOnlyMeetingList getMeetingList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public boolean deleteTag(Tag[] tags) throws PersonNotFoundException, DuplicatePersonException {
+            fail("This method should not be called.");
+            return false;
         }
 
         @Override
@@ -130,7 +145,33 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateFilteredPersonList() {
+            updateFilteredPersonList();
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public UserPrefs getUserPrefs() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void recordSearchHistory() throws CommandException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortPersonListBySearchCount() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortPersonListLexicographically() {
             fail("This method should not be called.");
         }
     }
