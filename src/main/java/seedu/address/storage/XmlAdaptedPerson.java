@@ -37,6 +37,7 @@ public class XmlAdaptedPerson {
     private String remark;
     @XmlElement(required = true)
     private String image;
+    @XmlElement(required = true)
     private String expiryDate;
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
