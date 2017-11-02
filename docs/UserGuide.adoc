@@ -154,7 +154,7 @@ __Constraints:__
 * Every TAG must be preceded by a tag prefix, t/.
 ****
 
-==== Finding contacts by name: `find`
+==== Finding contacts: `find`
 
 Whether you’re a social butterfly or a networking pro, sifting through contacts can be a tedious task. +
 
@@ -186,7 +186,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 * `find friends` +
 Returns any person having tags `friends` or `Friends`
 * `find 17-07` +
-Returns any person having birthday of `17-07`
+Returns any person having birthday on `17-07`
 
 __Constraints:__
 
@@ -601,6 +601,24 @@ Format: `clear`
 To exit the program, without using the pointer, use: +
 
 Format: `exit`
+
+==== Selecting of date : `find`
+
+[**TODO**]
+To find any event (either birthday or deadline) happening on the date, use +
+Format: `find d/DD-MM-YYYY`
+
+Examples:
+
+* `find 29-10-2017` +
+Returns any person having birthday and/or any task having deadlines on `29-10-2017`
+
+__Constraints:__
+
+****
+* Only the birthday and deadline are searched.
+* Only valid date will be matched e.g `291017` will not match `29-10-2017`.
+****
 
 === Saving the data
 
