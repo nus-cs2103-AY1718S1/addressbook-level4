@@ -8,10 +8,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.CreateDefaultAccountCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
@@ -53,6 +57,22 @@ public class LogicManagerTest {
         String createDefaultAccountCommand = CreateDefaultAccountCommand.COMMAND_WORD;
         assertCommandSuccess(createDefaultAccountCommand, CreateDefaultAccountCommand.MESSAGE_CREATE_SUCCESS, model);
         assertCommandSuccess(listCommand, ListCommand.MESSAGE_SUCCESS, model);
+    }
+
+    @Test
+    public void execute_clearCommandSuccess_noDefaultAccount() {
+        String clearCommand = ClearCommand.COMMAND_WORD;
+        String createDefaultAccountCommand = CreateDefaultAccountCommand.COMMAND_WORD;
+        assertCommandSuccess(createDefaultAccountCommand, CreateDefaultAccountCommand.MESSAGE_CREATE_SUCCESS, model);
+        assertCommandSuccess(clearCommand, ClearCommand.MESSAGE_SUCCESS, model);
+    }
+
+    @Test
+    public void execute_sortCommandSuccess_noDefaultAccount() {
+        String sortCommand = SortCommand.COMMAND_WORD;
+        String createDefaultAccountCommand = CreateDefaultAccountCommand.COMMAND_WORD;
+        assertCommandSuccess(createDefaultAccountCommand, CreateDefaultAccountCommand.MESSAGE_CREATE_SUCCESS, model);
+        assertCommandSuccess(sortCommand, SortCommand.MESSAGE_SUCCESS, model);
     }
 
     @Test
