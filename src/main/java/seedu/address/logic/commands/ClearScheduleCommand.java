@@ -17,6 +17,7 @@ import seedu.address.model.schedule.Day;
 import seedu.address.model.schedule.Slot;
 import seedu.address.model.schedule.Time;
 
+//@@author YuchenHe98
 /**
  * Clear a time span for a person identified using it's last displayed index from the address book.
  */

@@ -159,8 +159,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author YuchenHe98
+    /**
+     * Generate possible meeting time slots based on a list of indices.
+     */
     @Override
-    public TreeSet<Integer> generateMeetingTime(Index[] ListOfIndex) {
-        return addressBook.generateMeetingTime(ListOfIndex);
+    public TreeSet<Integer> generateMeetingTime(Index[] listOfIndex) {
+        return addressBook.generateMeetingTime(listOfIndex);
     }
 }

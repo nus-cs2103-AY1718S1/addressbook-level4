@@ -1,7 +1,8 @@
 package seedu.address.commons.core;
 
+//@@author YuchenHe98
 /**
- * Container for user visible messages.
+ * Possible Days.
  */
 public class PossibleDays {
 

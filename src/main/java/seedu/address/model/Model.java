@@ -33,11 +33,12 @@ public interface Model {
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
-
+    //@@author YuchenHe98
     void addScheduleToPerson(Integer index, TreeSet<Integer> schedule) throws PersonNotFoundException;
 
+    //@@author YuchenHe98
     void clearScheduleForPerson(Integer index, TreeSet<Integer> schedule) throws PersonNotFoundException;
-
+    //@@author
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *

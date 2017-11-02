@@ -2,6 +2,7 @@ package seedu.address.model.schedule;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author YuchenHe98
 /**
  * The object representing the time of the start of a 30-minute-span when a person is busy.
  */

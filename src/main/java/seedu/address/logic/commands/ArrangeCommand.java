@@ -11,6 +11,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.Time;
 
+//@@author YuchenHe98
 /**
  * Selects a person identified using it's last displayed index from the address book.
  */

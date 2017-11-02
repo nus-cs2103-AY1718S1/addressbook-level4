@@ -1,5 +1,9 @@
 package seedu.address.commons.core;
 
+//@@author YuchenHe98
+/**
+ * Possible time integer values..
+ */
 public class PossibleTimes {
     public final static int[] times = {
             600, 630, 700, 730, 800, 830, 900, 930, 1000, 1030, 1100, 1130, 1200, 1230, 1300, 1330, 1400, 1430, 1500,

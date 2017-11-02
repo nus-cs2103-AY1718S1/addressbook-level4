@@ -45,6 +45,7 @@ public class Person implements ReadOnlyPerson {
         initiateSchedule();
     }
 
+    //@@author YuchenHe98
     public Person(Name name, Phone phone, Email email, Address address, Mrt mrt, Set<Tag> tags, Schedule schedule) {
         requireAllNonNull(name, phone, email, address, tags, schedule);
         this.name = new SimpleObjectProperty<>(name);
@@ -56,6 +57,7 @@ public class Person implements ReadOnlyPerson {
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.schedule = new SimpleObjectProperty<>(schedule);
     }
+    //@@author
 
     /**
      * Creates a copy of the given ReadOnlyPerson.
@@ -156,15 +158,18 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
+    //@@author YuchenHe98
     @Override
     public Schedule getSchedule() {
         return schedule.get();
     }
 
+    //@@author YuchenHe98
     public ObjectProperty<Schedule> scheduleProperty() {
         return schedule;
     }
 
+    //@@author YuchenHe98
     /**
      * Create an empty schedule object
      */
@@ -173,6 +178,7 @@ public class Person implements ReadOnlyPerson {
         this.schedule = new SimpleObjectProperty<>(schedule);
     }
 
+    //@@author YuchenHe98
     /**
      * Set the person's schedule based on a given schedule.
      */
@@ -180,8 +186,9 @@ public class Person implements ReadOnlyPerson {
         this.schedule.set(schedule);
     }
 
+    //@@author YuchenHe98
     /**
-     * Add a time span to a person's schedule to indicate that he is busy at this time.
+     * Add a time span to a person's schedule to indicate that he is free at this time.
      */
     public void addSpanToSchedule(TreeSet<Integer> span) {
         for (Integer startTime : span) {
@@ -189,8 +196,9 @@ public class Person implements ReadOnlyPerson {
         }
     }
 
+    //@@author YuchenHe98
     /**
-     *Clear a time span to a person's schedule to indicate that he is free at this time.
+     *Clear a time span to a person's schedule to indicate that he is busy at this time.
      */
     public void clearSpanForSchedule(TreeSet<Integer> span) {
         for (Integer startTime : span) {
