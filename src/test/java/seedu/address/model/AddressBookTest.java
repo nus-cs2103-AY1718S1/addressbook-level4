@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,8 +19,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.UniquePersonList;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 
 public class AddressBookTest {
@@ -33,6 +32,7 @@ public class AddressBookTest {
     public void constructor() {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
         assertEquals(Collections.emptyList(), addressBook.getBlacklistedPersonList());
+        assertEquals(Collections.emptyList(), addressBook.getWhitelistedPersonList());
         assertEquals(Collections.emptyList(), addressBook.getTagList());
     }
 
@@ -73,6 +73,12 @@ public class AddressBookTest {
     }
 
     @Test
+    public void getWhitelistedPersonList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getWhitelistedPersonList().remove(0);
+    }
+
+    @Test
     public void getTagList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getTagList().remove(0);
@@ -97,27 +103,19 @@ public class AddressBookTest {
 
         @Override
         public ObservableList<ReadOnlyPerson> getBlacklistedPersonList() {
-            return getBlacklistedPersons(persons).asObservableList();
+            return persons.stream().filter(person -> person.isBlacklisted())
+                    .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getWhitelistedPersonList() {
+            return persons.stream().filter(person -> person.isWhitelisted())
+                    .collect(Collectors.toCollection(FXCollections::observableArrayList));
         }
 
         @Override
         public ObservableList<Tag> getTagList() {
             return tags;
-        }
-
-        public UniquePersonList getBlacklistedPersons(ObservableList<ReadOnlyPerson> persons) {
-            UniquePersonList blacklistedPersons = new UniquePersonList();
-            for (ReadOnlyPerson readOnlyPerson : persons) {
-                Person person = new Person(readOnlyPerson);
-                if (person.getIsBlacklisted()) {
-                    try {
-                        blacklistedPersons.add(person);
-                    } catch (DuplicatePersonException e) {
-                        assert false : "This is not possible as prior checks have been done";
-                    }
-                }
-            }
-            return blacklistedPersons;
         }
 
     }

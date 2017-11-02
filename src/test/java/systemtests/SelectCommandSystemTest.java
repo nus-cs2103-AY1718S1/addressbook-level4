@@ -11,6 +11,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.ListObserver;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -106,7 +107,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(String command, Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
-        String expectedResultMessage = String.format(
+        String expectedResultMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT + String.format(
                 MESSAGE_SELECT_PERSON_SUCCESS, expectedSelectedCardIndex.getOneBased());
         int preExecutionSelectedCardIndex = getPersonListPanel().getSelectedCardIndex();
 

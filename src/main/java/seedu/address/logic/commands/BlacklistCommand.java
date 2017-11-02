@@ -10,14 +10,15 @@ public class BlacklistCommand extends Command {
     public static final String COMMAND_WORD = "blacklist";
     public static final String COMMAND_WORD_ALIAS = "bl";
 
-    public static final String MESSAGE_SUCCESS = "Blacklist: Listed all clients "
+    public static final String MESSAGE_SUCCESS = "Listed all debtors "
             + "who are prohibited from borrowing money";
 
 
     @Override
     public CommandResult execute() {
-        model.updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
         model.changeListTo(COMMAND_WORD);
-        return new CommandResult(MESSAGE_SUCCESS);
+        model.updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
+        String currentList = listObserver.getCurrentListName();
+        return new CommandResult(currentList + MESSAGE_SUCCESS);
     }
 }

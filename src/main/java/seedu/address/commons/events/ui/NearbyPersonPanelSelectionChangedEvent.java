@@ -9,6 +9,7 @@ import seedu.address.ui.PersonCard;
  */
 public class NearbyPersonPanelSelectionChangedEvent extends BaseEvent {
 
+
     private final PersonCard newSelection;
 
     public NearbyPersonPanelSelectionChangedEvent(PersonCard newSelection) {

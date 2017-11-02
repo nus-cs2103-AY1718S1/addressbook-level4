@@ -41,7 +41,10 @@ public class LogicManager extends ComponentManager implements Logic {
             undoRedoStack.push(command);
             return result;
         } finally {
-            history.add(commandText);
+            // prevent login details from being stored
+            if (!commandText.contains("login")) {
+                history.add(commandText);
+            }
         }
     }
 
@@ -52,6 +55,14 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public void updateSelectedPerson(ReadOnlyPerson person) {
         model.updateSelectedPerson(person);
+    }
+
+    /**
+     * Resets the filteredPersonList to be a list of all persons.
+     */
+    @Override
+    public void resetFilteredPersonList() {
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override
@@ -67,6 +78,11 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList() {
         return model.getFilteredBlacklistedPersonList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyPerson> getFilteredWhitelistedPersonList() {
+        return model.getFilteredWhitelistedPersonList();
     }
 
     @Override

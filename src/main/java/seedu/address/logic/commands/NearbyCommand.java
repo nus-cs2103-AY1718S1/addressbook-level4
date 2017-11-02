@@ -16,6 +16,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class NearbyCommand extends Command {
 
     public static final String COMMAND_WORD = "nearby";
+    public static final String COMMAND_WORD_ALIAS = "n";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the person identified by the index number used in the currently selected person's "
@@ -46,7 +47,10 @@ public class NearbyCommand extends Command {
 
         model.updateSelectedPerson(nearbyList.get(targetIndex.getZeroBased()));
         EventsCenter.getInstance().post(new JumpToNearbyListRequestEvent(targetIndex));
-        return new CommandResult(String.format(MESSAGE_NEARBY_PERSON_SUCCESS, targetIndex.getOneBased()));
+
+        String currentList = listObserver.getCurrentListName();
+
+        return new CommandResult(currentList + String.format(MESSAGE_NEARBY_PERSON_SUCCESS, targetIndex.getOneBased()));
 
     }
 

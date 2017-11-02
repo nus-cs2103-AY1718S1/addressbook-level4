@@ -26,7 +26,6 @@ public class NearbyPersonListPanelTest extends GuiUnitTest {
 
     private static final JumpToNearbyListRequestEvent JUMP_TO_SECOND_EVENT =
             new JumpToNearbyListRequestEvent(INDEX_SECOND_PERSON);
-
     private NearbyPersonListPanelHandle nearbyPersonListPanelHandle;
 
     @Before
@@ -58,7 +57,7 @@ public class NearbyPersonListPanelTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleJumpToNearbyListRequestEvent() {
+    public void handleJumpNearbyToListRequestEvent() {
         postNow(JUMP_TO_SECOND_EVENT);
         guiRobot.pauseForHuman();
 

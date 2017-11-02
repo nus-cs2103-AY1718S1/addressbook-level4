@@ -16,6 +16,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeInternalListEvent;
 import seedu.address.commons.events.ui.JumpToNearbyListRequestEvent;
 import seedu.address.commons.events.ui.NearbyPersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -42,6 +43,7 @@ public class NearbyPersonListPanel extends UiPart<Region> {
                 .collect(toCollection(FXCollections::observableArrayList));
         setConnections(nearbyList);
         registerAsAnEventHandler(this);
+        scrollTo(nearbyList.indexOf(currentPerson));
     }
 
     private void setConnections(ObservableList<ReadOnlyPerson> personList) {
@@ -55,8 +57,8 @@ public class NearbyPersonListPanel extends UiPart<Region> {
     private void setEventHandlerForSelectionChangeEvent() {
         nearbyPersonListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                    if (oldValue != null && newValue != null) {
+                        logger.fine("Selection in nearby person list panel changed to : '" + newValue + "'");
                         raise(new NearbyPersonPanelSelectionChangedEvent(newValue));
                     }
                 });
@@ -73,9 +75,14 @@ public class NearbyPersonListPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleJumpToNearbyListRequestEvent(JumpToNearbyListRequestEvent event) {
+    private void handleJumpToListRequestEvent(JumpToNearbyListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
+    }
+
+    @Subscribe
+    private void handleChangeInternalListEvent(ChangeInternalListEvent event) {
+        unregisterAsAnEventHandler(this);
     }
 
     /**

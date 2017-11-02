@@ -26,18 +26,22 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.NearbyCommand;
 import seedu.address.logic.commands.PaybackCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RepaidCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UnbanCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.WhitelistCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -116,9 +120,23 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_repaid() throws Exception {
+        RepaidCommand command = (RepaidCommand) parser.parseCommand(
+                RepaidCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new RepaidCommand(INDEX_FIRST_PERSON), command);
+    }
+
+
+    @Test
     public void parseCommand_exit() throws Exception {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
+    }
+
+    @Test
+    public void parseCommand_logout() throws Exception {
+        assertTrue(parser.parseCommand(LogoutCommand.COMMAND_WORD) instanceof LogoutCommand);
+        assertTrue(parser.parseCommand(LogoutCommand.COMMAND_WORD + " 3") instanceof LogoutCommand);
     }
 
     @Test
@@ -127,6 +145,14 @@ public class AddressBookParserTest {
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+    }
+
+    @Test
+    public void parseCommand_filter() throws Exception {
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        FilterCommand command = (FilterCommand) parser.parseCommand(
+                FilterCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FilterCommand(keywords), command);
     }
 
     @Test
@@ -167,6 +193,12 @@ public class AddressBookParserTest {
     public void parseCommand_blacklist() throws Exception {
         assertTrue(parser.parseCommand(BlacklistCommand.COMMAND_WORD) instanceof BlacklistCommand);
         assertTrue(parser.parseCommand(BlacklistCommand.COMMAND_WORD + " 3") instanceof BlacklistCommand);
+    }
+
+    @Test
+    public void parseCommand_whitelist() throws Exception {
+        assertTrue(parser.parseCommand(WhitelistCommand.COMMAND_WORD) instanceof WhitelistCommand);
+        assertTrue(parser.parseCommand(WhitelistCommand.COMMAND_WORD + " 3") instanceof WhitelistCommand);
     }
 
     @Test

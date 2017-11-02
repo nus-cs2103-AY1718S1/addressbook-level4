@@ -1,8 +1,7 @@
 package seedu.address.logic.commands;
 
-import java.util.List;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -20,16 +19,22 @@ public class PaybackCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": decrease the debt of a person by "
             + "the amount of money entered.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: INDEX (optional, must be a positive integer if present)\n"
             + "AMOUNT (must have at least 1 digit and either a positive integer or a positive number with "
             + "two decimal places)\n"
-            + "Example: " + COMMAND_WORD + " 1 100.50";
+            + "Example 1: " + COMMAND_WORD + " 1 100.50\n"
+            + "Example 2: " + COMMAND_WORD + " 100.50";
 
     public static final String MESSAGE_PAYBACK_SUCCESS = "%1$s has paid $%2$s back";
     public static final String MESSAGE_PAYBACK_FAILURE = "Amount paid back cannot be more than the debt owed.";
 
     private final Index targetIndex;
     private final Debt amount;
+
+    public PaybackCommand(Debt amount) {
+        this.targetIndex = null;
+        this.amount = amount;
+    }
 
     public PaybackCommand(Index targetIndex, Debt amount) {
         this.targetIndex = targetIndex;
@@ -38,40 +43,33 @@ public class PaybackCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        ReadOnlyPerson personThatPaidBack = lastShownList.get(targetIndex.getZeroBased());
+        ReadOnlyPerson personThatPaidBack = selectPerson(targetIndex);
 
         try {
-            model.deductDebtFromPerson(personThatPaidBack, amount);
+            personThatPaidBack = model.deductDebtFromPerson(personThatPaidBack, amount);
+            if (personThatPaidBack.getDebt().toNumber() == 0 && !personThatPaidBack.isBlacklisted()) {
+                model.addWhitelistedPerson(personThatPaidBack);
+            }
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         } catch (IllegalValueException ive) {
             throw new CommandException(ive.getMessage());
         }
 
-        return new CommandResult(String.format(MESSAGE_PAYBACK_SUCCESS, personThatPaidBack.getName(), amount));
+        listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+
+        String currentList = listObserver.getCurrentListName();
+
+        return new CommandResult(currentList
+                + String.format(MESSAGE_PAYBACK_SUCCESS, personThatPaidBack.getName(), amount));
     }
 
     @Override
     public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof PaybackCommand)) {
-            return false;
-        }
-
-        // state check
-        PaybackCommand e = (PaybackCommand) other;
-        return targetIndex.equals(e.targetIndex)
-                && amount.equals(e.amount);
+        return other == this // short circuit if same object
+                || (other instanceof PaybackCommand // instanceof handles nulls
+                && ((this.targetIndex == null && ((PaybackCommand) other).targetIndex == null) // both targetIndex null
+                || this.targetIndex.equals(((PaybackCommand) other).targetIndex)
+                && this.amount.equals(((PaybackCommand) other).amount))); // state check
     }
 }

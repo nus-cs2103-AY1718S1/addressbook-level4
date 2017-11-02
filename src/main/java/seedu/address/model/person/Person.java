@@ -4,13 +4,16 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.util.DateUtil;
 
 /**
  * Represents a Person in the address book.
@@ -19,12 +22,15 @@ import seedu.address.model.tag.UniqueTagList;
 public class Person implements ReadOnlyPerson {
 
     private ObjectProperty<Name> name;
-    private ObjectProperty<Phone> phone;
+    private ObjectProperty<Handphone> handphone;
+    private ObjectProperty<HomePhone> homePhone;
+    private ObjectProperty<OfficePhone> officePhone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<PostalCode> postalCode;
     private ObjectProperty<Cluster> cluster;
     private ObjectProperty<Debt> debt;
+    private ObjectProperty<Debt> totalDebt;
     private ObjectProperty<Interest> interest;
     private ObjectProperty<DateBorrow> dateBorrow;
     private ObjectProperty<Deadline> deadline;
@@ -33,24 +39,31 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<UniqueTagList> tags;
 
     private boolean isBlacklisted = false;
+    private boolean isWhitelisted = false;
+    private Date lastAccruedDate; // the last time debt was updated by interest
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, PostalCode postalCode,
-                  Debt debt, Interest interest, Deadline deadline, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, postalCode, debt, interest, deadline, tags);
+    public Person(Name name, Phone handphone, Phone homePhone, Phone officePhone, Email email, Address address,
+                  PostalCode postalCode, Debt debt, Interest interest, Deadline deadline, Set<Tag> tags) {
+        requireAllNonNull(name, handphone, homePhone, officePhone, email, address, postalCode, debt, interest, deadline,
+                tags);
         this.name = new SimpleObjectProperty<>(name);
-        this.phone = new SimpleObjectProperty<>(phone);
+        this.handphone = new SimpleObjectProperty<>((Handphone) handphone);
+        this.homePhone = new SimpleObjectProperty<>((HomePhone) homePhone);
+        this.officePhone = new SimpleObjectProperty<>((OfficePhone) officePhone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.postalCode = new SimpleObjectProperty<>(postalCode);
         this.cluster = new SimpleObjectProperty<>(new Cluster(postalCode));
         this.debt = new SimpleObjectProperty<>(debt);
+        this.totalDebt = new SimpleObjectProperty<>(debt);
         this.interest = new SimpleObjectProperty<>(interest);
         this.dateBorrow = new SimpleObjectProperty<>(new DateBorrow());
         this.deadline = new SimpleObjectProperty<>(deadline);
         this.dateRepaid = new SimpleObjectProperty<>(new DateRepaid());
+        this.lastAccruedDate = new Date();
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -59,12 +72,16 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getPostalCode(),
-                source.getDebt(), source.getInterest(), source.getDeadline(), source.getTags());
+        this(source.getName(), source.getHandphone(), source.getHomePhone(), source.getOfficePhone(), source.getEmail(),
+                source.getAddress(), source.getPostalCode(), source.getDebt(), source.getInterest(),
+                source.getDeadline(), source.getTags());
+        this.totalDebt = new SimpleObjectProperty<>(source.getTotalDebt());
         this.dateBorrow = new SimpleObjectProperty<>(source.getDateBorrow());
         this.dateRepaid = new SimpleObjectProperty<>(source.getDateRepaid());
         this.cluster = new SimpleObjectProperty<>(new Cluster(postalCode.get()));
-        this.isBlacklisted = source.getIsBlacklisted();
+        this.isBlacklisted = source.isBlacklisted();
+        this.isWhitelisted = source.isWhitelisted();
+        this.lastAccruedDate = source.getLastAccruedDate();
     }
 
     /**
@@ -86,21 +103,57 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
-     * Sets phone number of a person to the given Phone.
+     * Sets handphone number of a person to the given Phone.
      * @param phone must not be null.
      */
-    public void setPhone(Phone phone) {
-        this.phone.set(requireNonNull(phone));
+    public void setHandphone(Phone phone) {
+        this.handphone.set(requireNonNull((Handphone) phone));
     }
 
     @Override
-    public ObjectProperty<Phone> phoneProperty() {
-        return phone;
+    public ObjectProperty<Handphone> handphoneProperty() {
+        return handphone;
     }
 
     @Override
-    public Phone getPhone() {
-        return phone.get();
+    public Handphone getHandphone() {
+        return handphone.get();
+    }
+
+    /**
+     * Sets home phone number of a person to the given Phone.
+     * @param phone must not be null.
+     */
+    public void setHomePhone(Phone phone) {
+        this.homePhone.set(requireNonNull((HomePhone) phone));
+    }
+
+    @Override
+    public ObjectProperty<HomePhone> homePhoneProperty() {
+        return homePhone;
+    }
+
+    @Override
+    public HomePhone getHomePhone() {
+        return homePhone.get();
+    }
+
+    /**
+     * Sets office phone number of a person to the given Phone.
+     * @param phone must not be null.
+     */
+    public void setOfficePhone(Phone phone) {
+        this.officePhone.set(requireNonNull((OfficePhone) phone));
+    }
+
+    @Override
+    public ObjectProperty<OfficePhone> officePhoneProperty() {
+        return officePhone;
+    }
+
+    @Override
+    public OfficePhone getOfficePhone() {
+        return officePhone.get();
     }
 
     /**
@@ -195,7 +248,6 @@ public class Person implements ReadOnlyPerson {
         return interest.get();
     }
 
-    //@@author lawwman
     /**
      * Sets current debt of a person to the given Debt.
      * @param debt must not be null.
@@ -232,8 +284,6 @@ public class Person implements ReadOnlyPerson {
         return dateBorrow.get();
     }
 
-    //@@author lawwman
-
     /**
      * Sets associated deadline of a person to the given Deadline.
      * @param deadline must not be null.
@@ -253,10 +303,48 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
+     * Sets date of last accrued date.
+     * @param lastAccruedDate must not be null.
+     */
+    public void setLastAccruedDate(Date lastAccruedDate) {
+        requireNonNull(lastAccruedDate);
+        this.lastAccruedDate = lastAccruedDate;
+    }
+
+    @Override
+    public Date getLastAccruedDate() {
+        return lastAccruedDate;
+    }
+
+    //@@author jelneo
+    /**
+     * Sets total debt of a person to the given Debt.
+     * @param totalDebt must not be null and cannot be less than current debt
+     */
+    public void setTotalDebt(Debt totalDebt) throws IllegalValueException {
+        requireNonNull(totalDebt);
+        if (totalDebt.toNumber() < debt.get().toNumber()) {
+            throw new IllegalValueException("Total debt cannot be less than current debt");
+        }
+        this.totalDebt.set(totalDebt);
+    }
+
+    @Override
+    public ObjectProperty<Debt> totalDebtProperty() {
+        return totalDebt;
+    }
+
+    @Override
+    public Debt getTotalDebt() {
+        return totalDebt.get();
+    }
+    //@@author
+
+    /**
      * Returns boolean status of a person's blacklist-status.
      */
     @Override
-    public boolean getIsBlacklisted() {
+    public boolean isBlacklisted() {
         return isBlacklisted;
     }
 
@@ -268,7 +356,22 @@ public class Person implements ReadOnlyPerson {
         this.isBlacklisted = isBlacklisted;
     }
 
-    //@@author
+    /**
+     * Returns boolean status of a person's whitelist-status.
+     */
+    @Override
+    public boolean isWhitelisted() {
+        return isWhitelisted;
+    }
+
+    /**
+     * Sets boolean status of a person's whitelist-status using the value of {@param isWhitelisted}.
+     */
+    @Override
+    public void setIsWhitelisted(boolean isWhitelisted) {
+        this.isWhitelisted = isWhitelisted;
+    }
+
     /**
      * Sets date repaid of a person in the given {@code dateRepaid}.
      * @param dateRepaid must not be null.
@@ -315,6 +418,32 @@ public class Person implements ReadOnlyPerson {
         return other.getCluster().equals(this.getCluster());
     }
 
+    /**
+     * Calculates increase in debt based on interest rate and amount of months
+     */
+    @Override
+    public String calcAccruedAmount(int differenceInMonths) {
+        this.lastAccruedDate = new Date(); // update last accrued date
+        double principal = this.getDebt().toNumber();
+        double interestRate = (double) Integer.parseInt(this.getInterest().toString()) / 100;
+        double accruedInterest = principal * Math.pow((1 + interestRate), differenceInMonths) - principal;
+        return String.format("%.2f", accruedInterest);
+    }
+
+    /**
+     * Compares date of last accrued against current date.
+     * @return number of months the current date is ahead of last accrued date. Returns 0 if
+     * there is no need to increment debt.
+     */
+    @Override
+    public int checkLastAccruedDate(Date currentDate) {
+        if (lastAccruedDate.before(currentDate)) {
+            return DateUtil.getNumberOfMonthBetweenDates(currentDate, lastAccruedDate);
+        } else {
+            return 0;
+        }
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -325,7 +454,8 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, postalCode, debt, interest, deadline, tags);
+        return Objects.hash(name, handphone, homePhone, officePhone, email, address, postalCode, debt, interest,
+                deadline, tags);
     }
 
     @Override

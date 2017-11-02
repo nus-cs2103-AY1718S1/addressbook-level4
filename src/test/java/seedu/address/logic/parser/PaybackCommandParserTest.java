@@ -25,12 +25,6 @@ public class PaybackCommandParserTest {
 
     @Test
     public void parse_missingParts_failure() {
-        // no index specified
-        assertParseFailure(parser, VALID_DEBT_FIGURE, MESSAGE_INVALID_FORMAT);
-
-        // no debt amount specified
-        assertParseFailure(parser, VALID_INDEX, MESSAGE_INVALID_FORMAT);
-
         // no index and no field specified
         assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
     }
@@ -54,6 +48,10 @@ public class PaybackCommandParserTest {
             Debt amount = new Debt(VALID_DEBT_FIGURE);
             PaybackCommand expectedPaybackCommand = new PaybackCommand(index, amount);
             assertParseSuccess(parser, VALID_INDEX + " " + VALID_DEBT_FIGURE, expectedPaybackCommand);
+
+            amount = new Debt(VALID_DEBT_FIGURE);
+            expectedPaybackCommand = new PaybackCommand(amount);
+            assertParseSuccess(parser, " " + VALID_DEBT_FIGURE, expectedPaybackCommand);
         } catch (IllegalValueException ive) {
             ive.printStackTrace();
         }

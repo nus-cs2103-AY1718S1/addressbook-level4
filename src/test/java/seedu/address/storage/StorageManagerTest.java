@@ -72,6 +72,7 @@ public class StorageManagerTest {
         assertEquals(original.toString(), new AddressBook(retrieved).toString());
     }
 
+    //@@author khooroko
     @Test
     public void backupAddressBookReadSave() throws Exception {
         AddressBook original = getTypicalAddressBook();
@@ -81,6 +82,7 @@ public class StorageManagerTest {
         assertEquals(original.toString(), new AddressBook(retrieved).toString());
     }
 
+    //@@author
     @Test
     public void getAddressBookFilePath() {
         assertNotNull(storageManager.getAddressBookFilePath());

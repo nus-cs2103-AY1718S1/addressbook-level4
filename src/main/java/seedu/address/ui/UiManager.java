@@ -16,6 +16,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.events.ui.ChangeInternalListEvent;
 import seedu.address.commons.events.ui.LoginAppRequestEvent;
+import seedu.address.commons.events.ui.LogoutAppRequestEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.LoginCommand;
@@ -139,8 +140,23 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
     /**
+     * Handles logout event.
+     * Displays login page when user logs out
+     */
+    @Subscribe
+    public void handleLogoutAppRequestEvent(LogoutAppRequestEvent event) {
+        // logout is successful
+        if (event.getLogoutStatus() == true) {
+            logger.info("Logout successful");
+            LoginCommand.setLoginStatus(false);
+            //show login page
+            Platform.runLater(() -> mainWindow.fillInnerPartsForStartUp());
+        }
+    }
+
+    /**
      * Handles change internal list event.
-     * Displays the list that user requested(e.g mainlist, blacklist etc)
+     * Displays the list that user requested(e.g masterlist, blacklist etc)
      */
     @Subscribe
     private void handleChangeInternalListEvent(ChangeInternalListEvent event) {

@@ -32,15 +32,10 @@ public class LoginCommandTest {
     @Test
     public void execute_login_success() {
         try {
-            Username username = new Username(TEST_USERNAME);
-            Password password = new Password(TEST_PASSWORD);
-            LoginCommand loginCommand = new LoginCommand(username, password);
-            loginCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+            LoginCommand loginCommand = prepareCommand(TEST_USERNAME, TEST_PASSWORD);
             CommandResult result = loginCommand.execute();
             assertEquals(hasLoggedIn, event.getLoginStatus());
             assertEquals(MESSAGE_LOGIN_ACKNOWLEDGEMENT, result.feedbackToUser);
-        } catch (IllegalValueException ive) {
-            ive.printStackTrace();
         } catch (CommandException ce) {
             ce.printStackTrace();
         }
@@ -49,15 +44,10 @@ public class LoginCommandTest {
     @Test
     public void execute_login_failure() {
         try {
-            Username username = new Username(TEST_USERNAME);
-            Password password = new Password(TEST_PASSWORD);
-            LoginCommand loginCommand = new LoginCommand(username, password);
-            loginCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+            LoginCommand loginCommand = prepareCommand(TEST_USERNAME, TEST_PASSWORD);
             CommandResult result = loginCommand.execute();
             assertEquals(!hasLoggedIn, event.getLoginStatus());
             assertEquals(MESSAGE_LOGIN_UNSUCCESSFUL, result.feedbackToUser);
-        } catch (IllegalValueException ive) {
-            ive.printStackTrace();
         } catch (CommandException ce) {
             ce.printStackTrace();
         }
@@ -92,5 +82,21 @@ public class LoginCommandTest {
         } catch (IllegalValueException ive) {
             ive.printStackTrace();
         }
+    }
+
+    /**
+     * Parses {@code uname} and {@pwd} into a {@code LoginCommand}.
+     */
+    private LoginCommand prepareCommand(String uname, String pwd) {
+        LoginCommand command = null;
+        try {
+            Username username = new Username(uname);
+            Password password = new Password(pwd);
+            command = new LoginCommand(username, password);
+            command.setData(model, new CommandHistory(), new UndoRedoStack());
+        } catch (IllegalValueException ive) {
+            ive.printStackTrace();
+        }
+        return command;
     }
 }

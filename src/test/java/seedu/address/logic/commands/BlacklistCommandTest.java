@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.ListObserver;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -31,13 +32,17 @@ public class BlacklistCommandTest {
 
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
-        assertCommandSuccess(blacklistCommand, model, blacklistCommand.MESSAGE_SUCCESS, expectedModel);
+        model.setCurrentListName("blacklist");
+        assertCommandSuccess(blacklistCommand, model, ListObserver.BLACKLIST_NAME_DISPLAY_FORMAT
+                + blacklistCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
+        model.setCurrentListName("blacklist");
         showFirstBlacklistedPersonOnly(model);
-        assertCommandSuccess(blacklistCommand, model, blacklistCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(blacklistCommand, model, ListObserver.BLACKLIST_NAME_DISPLAY_FORMAT
+                + blacklistCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }
 

@@ -17,18 +17,22 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.NearbyCommand;
 import seedu.address.logic.commands.PaybackCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RepaidCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UnbanCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.WhitelistCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -71,9 +75,18 @@ public class AddressBookParser {
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
             return new BlacklistCommand();
 
+        case WhitelistCommand.COMMAND_WORD_ALIAS:
+        case WhitelistCommand.COMMAND_WORD:
+            logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
+            return new WhitelistCommand();
+
         case BanCommand.COMMAND_WORD:
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
             return new BanCommandParser().parse(arguments);
+
+        case RepaidCommand.COMMAND_WORD:
+            logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
+            return new RepaidCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD_ALIAS:
         case EditCommand.COMMAND_WORD:
@@ -109,6 +122,10 @@ public class AddressBookParser {
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
             return new SortCommandParser().parse(arguments);
 
+        case FilterCommand.COMMAND_WORD:
+            logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
+            return new FilterCommandParser().parse(arguments);
+
         case HistoryCommand.COMMAND_WORD_ALIAS:
         case HistoryCommand.COMMAND_WORD:
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
@@ -117,6 +134,10 @@ public class AddressBookParser {
         case LoginCommand.COMMAND_WORD:
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
             return new LoginCommandParser().parse(arguments);
+
+        case LogoutCommand.COMMAND_WORD:
+            logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
+            return new LogoutCommand();
 
         case ExitCommand.COMMAND_WORD:
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
@@ -146,6 +167,7 @@ public class AddressBookParser {
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
             return new PaybackCommandParser().parse(arguments);
 
+        case NearbyCommand.COMMAND_WORD_ALIAS:
         case NearbyCommand.COMMAND_WORD:
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
             return new NearbyCommandParser().parse(arguments);

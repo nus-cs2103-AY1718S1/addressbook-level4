@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.toCollection;
 
 import java.util.Iterator;
 import java.util.List;
@@ -36,17 +37,17 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Returns {@code ObservableList} of all objects in list.
-     */
-    public ObservableList<Person> getInternalList() {
-        return internalList;
-    }
-
-    /**
      * Returns index of {@code ReadOnlyPerson} in list.
      */
     public int getIndexOf(ReadOnlyPerson key) {
         return internalList.indexOf(key);
+    }
+
+    /**
+     * Returns {@code ReadOnlyPerson} in list from given {@param index}.
+     */
+    public ReadOnlyPerson getReadOnlyPerson(int index) {
+        return mappedList.get(index);
     }
 
     /**
@@ -123,6 +124,7 @@ public class UniquePersonList implements Iterable<Person> {
         setPersons(replacement);
     }
 
+    //@@author khooroko
     /**
      * Sorts the unique person list by the specified order.
      * @param order to sort the list by.
@@ -146,11 +148,28 @@ public class UniquePersonList implements Iterable<Person> {
         }
     }
 
+    //@@author
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<ReadOnlyPerson> asObservableList() {
         return FXCollections.unmodifiableObservableList(mappedList);
+    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<ReadOnlyPerson> asObservableBlacklist() {
+        return FXCollections.unmodifiableObservableList(mappedList.stream()
+                .filter(person -> person.isBlacklisted()).collect(toCollection(FXCollections::observableArrayList)));
+    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<ReadOnlyPerson> asObservableWhitelist() {
+        return FXCollections.unmodifiableObservableList(mappedList.stream()
+                .filter(person -> person.isWhitelisted()).collect(toCollection(FXCollections::observableArrayList)));
     }
 
     @Override

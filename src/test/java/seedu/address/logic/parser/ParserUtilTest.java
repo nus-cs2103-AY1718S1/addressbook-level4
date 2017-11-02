@@ -22,8 +22,11 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Handphone;
+import seedu.address.model.person.HomePhone;
 import seedu.address.model.person.Interest;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.OfficePhone;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.PostalCode;
 import seedu.address.model.tag.Tag;
@@ -40,7 +43,7 @@ public class ParserUtilTest {
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
-    private static final String VALID_PHONE = "123456";
+    private static final String VALID_PHONE = "61123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_POSTAL_CODE = "321123";
@@ -101,26 +104,76 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parsePhone_null_throwsNullPointerException() throws Exception {
+    public void parseHandphone_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parsePhone(null);
+        ParserUtil.parseHandphone(null);
     }
 
     @Test
-    public void parsePhone_invalidValue_throwsIllegalValueException() throws Exception {
+    public void parseHandphone_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parsePhone(Optional.of(INVALID_PHONE));
+        ParserUtil.parseHandphone(Optional.of(INVALID_PHONE));
     }
 
     @Test
-    public void parsePhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parsePhone(Optional.empty()).isPresent());
+    public void parseHandphone_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseHandphone(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parsePhone_validValue_returnsPhone() throws Exception {
-        Phone expectedPhone = new Phone(VALID_PHONE);
-        Optional<Phone> actualPhone = ParserUtil.parsePhone(Optional.of(VALID_PHONE));
+    public void parseHandphone_validValue_returnsPhone() throws Exception {
+        Phone expectedPhone = new Handphone(VALID_PHONE);
+        Optional<Handphone> actualPhone = ParserUtil.parseHandphone(Optional.of(VALID_PHONE));
+
+        assertEquals(expectedPhone, actualPhone.get());
+    }
+
+    @Test
+    public void parseHomePhone_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseHomePhone(null);
+    }
+
+    @Test
+    public void parseHomePhone_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseHomePhone(Optional.of(INVALID_PHONE));
+    }
+
+    @Test
+    public void parseHomePhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseHomePhone(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseHomePhone_validValue_returnsPhone() throws Exception {
+        Phone expectedPhone = new HomePhone(VALID_PHONE);
+        Optional<HomePhone> actualPhone = ParserUtil.parseHomePhone(Optional.of(VALID_PHONE));
+
+        assertEquals(expectedPhone, actualPhone.get());
+    }
+
+    @Test
+    public void parseOfficePhone_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseOfficePhone(null);
+    }
+
+    @Test
+    public void parseOfficePhone_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseOfficePhone(Optional.of(INVALID_PHONE));
+    }
+
+    @Test
+    public void parseOfficePhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseOfficePhoneForEdit(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseOfficePhone_validValue_returnsPhone() throws Exception {
+        Phone expectedPhone = new OfficePhone(VALID_PHONE);
+        Optional<OfficePhone> actualPhone = ParserUtil.parseOfficePhone(Optional.of(VALID_PHONE));
 
         assertEquals(expectedPhone, actualPhone.get());
     }
