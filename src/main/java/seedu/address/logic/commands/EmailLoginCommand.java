@@ -16,8 +16,8 @@ public class EmailLoginCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Successfully logged in as ";
     public static final String MESSAGE_FAILED = "Log in failed: ";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": log in with an email address\n"
-                                            + "Parameters: email_login \"[EMAIL]\" \"[PASSWORD]\"\n"
-                                            + "Example: email_login \"example@gmail.com\"\" example password\"";
+            + "Parameters: email_login \"[EMAIL]\" \"[PASSWORD]\"\n"
+            + "Example: email_login \"example@gmail.com\"\" example password\"";
     public static final String MESSAGE_INVALID_EMAIL = "The given email is not valid";
 
     private String email;

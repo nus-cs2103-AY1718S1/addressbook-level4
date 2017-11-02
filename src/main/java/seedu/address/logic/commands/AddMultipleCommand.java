@@ -49,7 +49,7 @@ public class AddMultipleCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "New person(s) added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON =
-                        "The persons list contains person(s) that already exists in the address book.";
+            "The persons list contains person(s) that already exists in the address book.";
     public static final String MESSAGE_INVALID_FILE = "Unable to open file '%1$s'";
     public static final String MESSAGE_ERROR_FILE = "Error reading file '%1$s'";
 
@@ -62,7 +62,7 @@ public class AddMultipleCommand extends UndoableCommand {
     public AddMultipleCommand(ArrayList<ReadOnlyPerson> personsList) {
         readOnlyPeople = personsList;
         toAdd = new ArrayList<>();
-        for (ReadOnlyPerson person: personsList) {
+        for (ReadOnlyPerson person : personsList) {
             toAdd.add(new Person(person));
         }
     }
@@ -73,7 +73,7 @@ public class AddMultipleCommand extends UndoableCommand {
         StringBuilder successMessage = new StringBuilder();
         requireNonNull(model);
         try {
-            for (Person personToAdd: toAdd) {
+            for (Person personToAdd : toAdd) {
                 model.addPerson(personToAdd);
                 successMessage.append(System.lineSeparator());
                 successMessage.append(personToAdd);

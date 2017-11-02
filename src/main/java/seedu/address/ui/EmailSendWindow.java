@@ -96,9 +96,9 @@ public class EmailSendWindow extends UiPart<Region> {
 
         try {
             CommandResult commandResult = logic.execute("email_send "
-                                        + "\"" + recipients + "\"" + " "
-                                        + "\"" + title + "\"" + " "
-                                        + "\"" + body + "\"");
+                    + "\"" + recipients + "\"" + " "
+                    + "\"" + title + "\"" + " "
+                    + "\"" + body + "\"");
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
             feedbackLabel.setText(commandResult.feedbackToUser);

@@ -64,7 +64,6 @@ public class Person implements ReadOnlyPerson {
     }
 
 
-
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
@@ -134,6 +133,7 @@ public class Person implements ReadOnlyPerson {
         return avatar;
     }
 
+    //@@author vsudhakar
     @Override
     public Avatar getAvatar() {
         return avatar.get();
@@ -146,6 +146,7 @@ public class Person implements ReadOnlyPerson {
     public void setComment(Comment comment) {
         this.comment.set(requireNonNull(comment));
     }
+    //@@author
 
     @Override
     public ObjectProperty<Comment> commentProperty() {

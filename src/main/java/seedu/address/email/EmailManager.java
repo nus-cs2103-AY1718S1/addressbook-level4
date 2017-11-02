@@ -3,6 +3,7 @@ package seedu.address.email;
 
 import java.util.Hashtable;
 import java.util.Properties;
+
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -76,8 +77,8 @@ public class EmailManager implements Email {
     }
 
     @Override
-    public void sendEmail(String[] recipients, String subject, String body) throws NotAnEmailException,
-                                                                                    EmailSendFailedException {
+    public void sendEmail(String[] recipients, String subject, String body)
+            throws NotAnEmailException, EmailSendFailedException {
         //Parse email string into internet addresses
         InternetAddress[] recipientsAddresses = new InternetAddress[recipients.length];
         for (int i = 0; i < recipients.length; i++) {
@@ -102,8 +103,8 @@ public class EmailManager implements Email {
 
         } catch (MessagingException e) {
             throw new EmailSendFailedException("It could be one of the following reasons: \n"
-                                        + "1. Your Internet connection is not working\n"
-                                        + "2. One or more of the recipients' emails does not exist");
+                    + "1. Your Internet connection is not working\n"
+                    + "2. One or more of the recipients' emails does not exist");
         }
 
     }
@@ -128,9 +129,9 @@ public class EmailManager implements Email {
     }
 
 
-
     /**
      * Initiate the host address hash table based on the given email
+     *
      * @param email given email string
      * @throws LoginFailedException
      */
