@@ -23,7 +23,7 @@ public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
-    public static final String DEFAULT_COUNTRY_CODE = "Singapore";
+    public static final String DEFAULT_COUNTRY_CODE = "";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, Singapore 408769";
     public static final String DEFAULT_SCHEDULE_DATE = "15-01-1997";
@@ -51,7 +51,8 @@ public class PersonBuilder {
     }
 
     /**
-     * Initializes the PersonBuilder with the data of {@code personToCopy}.
+     * Initializes the PersonBuilder with th
+     * e data of {@code personToCopy}.
      */
     public PersonBuilder(ReadOnlyPerson personToCopy) {
         this.person = new Person(personToCopy);
