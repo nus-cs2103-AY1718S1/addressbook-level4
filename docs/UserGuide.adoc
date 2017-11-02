@@ -44,23 +44,6 @@ image::AddresbookLabels.png[width="790"]
 d. Meetings List +
 &#160;e. Footer bar
 
-..  If there is a meeting scheduled on the day of logging in, a reminder will pop up for you to acknowledge.
-+
-image::Reminder.png[width="600"]
-+
-..  To show the urgency of the meeting. Colours are assigned to the card by comparing the date and time in the meeting class to the date and time of the log in.
-
-    * `darkRed` : Meeting is in next 24 hours.
-+
-image::MeetingCard1.png[width="200"]
-+
-    * `red` : Meeting is in next 48 hours.
-+
-image::MeetingCard2.png[width="200"]
-+
-    * `orangeRed` : Meeting is in next 72 hours.
-+
-image::MeetingCard3.png[width="200"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -76,6 +59,38 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Refer to the link:#features[Features] section below for details of each command.
 
 == Features
+
+=== Meeting Alerts
+
+
+image::Reminder.png[width="600"]
+
+. Upon opening up the application, if there is a meeting(s) on the same day, you will be reminded via a pop-up message
+. As Shown to you in the example above, the information regarding the next upcoming meeting is displayed in the message
+
+=== Meeting Card Colours
+
+To show you the nearing of upcoming meetings, colours are assigned to the card by comparing the date and time in the meeting
+ class to the date and time of the log in. The meanings of the different assigned colours are:
+
+    * `darkRed` : Meeting is in next 24 hours.
++
+image::MeetingCard1.png[width="200"]
++
+    * `red` : Meeting is in next 48 hours.
++
+image::MeetingCard2.png[width="200"]
++
+    * `orangeRed` : Meeting is in next 72 hours.
++
+image::MeetingCard3.png[width="200"]
+
+=== Auto Deletion of Meeting Cards
+
+Upon start up of the application, meetings which have already passed the current time of log in will be deleted and no
+longer be shown
+
+== Commands
 
 ====
 *Command Format*
@@ -265,7 +280,7 @@ Edits the name and location of the 1st meeting to be `John` and `Clementi` respe
 === Locating meetings by name: `findmeeting`
 
 Finds meetings whose names contain any of the given keywords. +
-Format: `findMeeting KEYWORD [MORE_KEYWORDS]`
+Format: `findmeeting KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -283,6 +298,20 @@ Returns meetings with `John` and `John Doe`
 Returns any meeting having names `Study` or `Shopping`
 * `findmeeting Shopping Study John` +
 Returns any meeting having `John` as the person to meet and any meetings having names `Study` and `Shopping`
+
+=== Locating meetings with a particular person: `findexactmeeting`
+Finds meetings with people whose names match exactly with the phrase entered.
+Format: `findexactmeeting PHRASE`
+
+****
+* The search is case insensitive. e.g `john tan` will match `John Tan`
+* Only meetings with the full name of the person will be found
+****
+
+Example:
+
+* `findexactmeeting John Tan` +
+returns only the meetings with people named `John Tan`
 
 === Listing entered commands : `history`
 
