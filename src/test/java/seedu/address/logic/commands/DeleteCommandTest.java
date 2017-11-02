@@ -32,6 +32,7 @@ public class DeleteCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
+    //@@author aziziazfar
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
         ReadOnlyPerson person1 = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -64,6 +65,7 @@ public class DeleteCommandTest {
         }
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
+    //@@author
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
@@ -133,6 +135,7 @@ public class DeleteCommandTest {
         return deleteCommand;
     }
 
+    //@@author aziziazfar
     /**
      * Returns a {@code DeleteCommand} with the parameter {@code index}.
      */
@@ -141,7 +144,7 @@ public class DeleteCommandTest {
         deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return deleteCommand;
     }
-
+    //@@author
     /**
      * Updates {@code model}'s filtered list to show no one.
      */

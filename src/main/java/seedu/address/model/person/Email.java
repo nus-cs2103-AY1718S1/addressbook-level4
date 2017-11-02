@@ -30,10 +30,11 @@ public class Email {
         this.value = trimmedEmail;
     }
 
+    //@@author aziziazfar
     /**
      * Provides a default email (" ") when field is empty.
      *
-     * @throws IllegalValueException if given phone string is invalid.
+     * @throws IllegalValueException if given email string is invalid.
      */
     public Email(int checkValue) throws IllegalValueException {
         if (checkValue != 0) {
@@ -41,7 +42,7 @@ public class Email {
         }
         this.value = " ";
     }
-
+    //@@author
     /**
      * Returns if a given string is a valid person email.
      */
