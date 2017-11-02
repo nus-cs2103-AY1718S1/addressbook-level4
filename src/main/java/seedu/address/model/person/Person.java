@@ -200,7 +200,6 @@ public class Person implements ReadOnlyPerson {
     public Gender getGender() {
         return gender.get();
     }
-  
     //@@author arnollim
     @Override
     public String getReason() {
