@@ -16,6 +16,7 @@
     </stylesheets>
     <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
         <Menu mnemonicParsing="false" text="File">
+         <MenuItem fx:id="userProfileMenuItem" mnemonicParsing="false" onAction="#handleUserProfile" text="UserProfile" />
             <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
         </Menu>
         <Menu mnemonicParsing="false" text="Help">

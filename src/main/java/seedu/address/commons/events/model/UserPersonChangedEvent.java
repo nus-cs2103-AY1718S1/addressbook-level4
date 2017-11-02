@@ -6,14 +6,18 @@ import seedu.address.model.person.UserPerson;
 /** Indicates the UserProfileManager in the model has changed*/
 public class UserPersonChangedEvent extends BaseEvent {
 
-    public final UserPerson data;
+    public final UserPerson userPerson;
 
     public UserPersonChangedEvent(UserPerson data) {
-        this.data = data;
+        this.userPerson = data;
     }
 
     @Override
     public String toString() {
-        return "UserPerson changed: " + data.getName();
+        return "UserPerson changed: " + userPerson.getName();
+    }
+
+    public UserPerson getUserPerson() {
+        return userPerson;
     }
 }
