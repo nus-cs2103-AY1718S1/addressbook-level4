@@ -44,10 +44,12 @@ public interface Model {
      */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
+    //@@author Haozhe321
     /**
      * Delete all persons with the given tag
      */
     void deleteByTag(Tag tag) throws IllegalValueException, CommandException;
+    //@@author
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

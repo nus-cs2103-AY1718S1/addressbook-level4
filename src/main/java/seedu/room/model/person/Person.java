@@ -119,6 +119,7 @@ public class Person implements ReadOnlyPerson {
         return picture.get();
     }
 
+    //@@author Haozhe321
     @Override
     public ObjectProperty<Timestamp> timestampProperty() {
         return timestamp;
@@ -132,6 +133,8 @@ public class Person implements ReadOnlyPerson {
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp.set(requireNonNull(timestamp));
     }
+
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
