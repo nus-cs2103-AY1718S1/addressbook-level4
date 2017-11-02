@@ -2,6 +2,7 @@ package seedu.address.commons.util;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -153,6 +154,12 @@ public class StringUtilTest {
     public void getDetails_nullGiven_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         StringUtil.getDetails(null);
+    }
+
+    //--------- Test for md5 generation --------------------
+    @Test
+    public void generateMd5_stringGiven_returnsMd5() {
+        assertEquals("ae2b1fca515949e5d54fb22b8ed95575", StringUtil.generateMd5("testing").toLowerCase());
     }
 
 
