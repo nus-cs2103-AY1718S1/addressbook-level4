@@ -2,14 +2,18 @@ package seedu.address.logic.commands;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.TreeSet;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.PossibleDays;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.Time;
 
 /**
  * Selects a person identified using it's last displayed index from the address book.
@@ -43,11 +47,17 @@ public class VisualizeCommand extends Command {
 
         Schedule ScheduleToBeShown =
                 model.getAddressBook().getPersonList().get(targetIndex.getZeroBased()).getSchedule();
-        System.out.println(ScheduleToBeShown.getBusyTime());
-        for(Integer time : ScheduleToBeShown.getBusyTime()){
-            System.out.println(time);
+        TreeSet<Integer>[] timeSetArray = ScheduleToBeShown.splitScheduleToDays();
+        String toShow = "\nAll free time: \n";
+        for(int i = 0; i < timeSetArray.length; i++) {
+            toShow = toShow + PossibleDays.dayName[i] + ":\n";
+            for(Integer time : timeSetArray[i]) {
+                toShow = toShow + Time.getTimeToString(time) + "--"
+                        + Time.getTimeToString(Time.IncreaseTimeInteger(time)) + " ";
+            }
+            toShow += "\n";
         }
-        return new CommandResult(String.format(MESSAGE_VISUALIZE_PERSON_SUCCESS, targetIndex.getOneBased()));
+        return new CommandResult(String.format(MESSAGE_VISUALIZE_PERSON_SUCCESS, targetIndex.getOneBased() + toShow));
 
     }
 
