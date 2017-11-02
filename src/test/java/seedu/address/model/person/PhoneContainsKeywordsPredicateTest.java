@@ -41,6 +41,7 @@ public class PhoneContainsKeywordsPredicateTest {
         assertFalse(firstPredicate.equals(secondPredicate));
     }
 
+    //@@author derickjw
     @Test
     public void testPhoneContainsKeywordsReturnsTrue() {
         // One phone number search
