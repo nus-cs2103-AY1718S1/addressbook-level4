@@ -7,7 +7,6 @@
         <address>Blk 30 Geylang Street 29, #06-40</address>
         <dob>27 Jul 1986</dob>
         <lifeInsuranceId>067e6162-3b6f-4ae2-a171-2470b63dff00</lifeInsuranceId>
-        <lifeInsuranceId>ea91ce18-4a4f-415a-a688-62621c241108</lifeInsuranceId>
     </persons>
     <persons>
         <name>Bernice Yu</name>
@@ -18,7 +17,6 @@
         <tagged>colleagues</tagged>
         <tagged>friends</tagged>
         <lifeInsuranceId>067e6162-3b6f-4ae2-a171-2470b63dff00</lifeInsuranceId>
-        <lifeInsuranceId>ea91ce18-4a4f-415a-a688-62621c241108</lifeInsuranceId>
     </persons>
     <persons>
         <name>Charlotte Oliveiro</name>
@@ -51,7 +49,6 @@
         <email>maryjane@example.com</email>
         <address>Mary street, block 123</address>
         <dob>05 May 1990</dob>
-        <lifeInsuranceId>ce003136-c8e2-4cdd-ae2d-860d203a9aa1</lifeInsuranceId>
     </persons>
     <persons>
         <name>Roy Balakrishnan</name>
@@ -60,7 +57,6 @@
         <address>Blk 45 Aljunied Street 85, #11-31</address>
         <dob>01 Feb 1997</dob>
         <tagged>colleagues</tagged>
-        <lifeInsuranceId>ce003136-c8e2-4cdd-ae2d-860d203a9aa1</lifeInsuranceId>
     </persons>
     <tags>colleagues</tags>
     <tags>classmates</tags>
@@ -70,6 +66,18 @@
     <tags>friends</tags>
     <lifeInsuranceMap>
         <entry>
+            <key>ea91ce18-4a4f-415a-a688-62621c241108</key>
+            <value>
+                <owner>Alex Yeoh</owner>
+                <insured>Another person not in Lisa</insured>
+                <beneficiary>Bernice Yu</beneficiary>
+                <premium>50.0</premium>
+                <contractPath>cheapContract.pdf</contractPath>
+                <signingDate>01 Nov 2017</signingDate>
+                <expiryDate>01 Nov 2018</expiryDate>
+            </value>
+        </entry>
+        <entry>
             <key>067e6162-3b6f-4ae2-a171-2470b63dff00</key>
             <value>
                 <owner>Alex Yeoh</owner>
@@ -77,8 +85,8 @@
                 <beneficiary>Charlotte Oliveiro</beneficiary>
                 <premium>100.0</premium>
                 <contractPath>contract.pdf</contractPath>
-                <signingDate>01 11 2017</signingDate>
-                <expiryDate>1 11 2018</expiryDate>
+                <signingDate>01 Nov 2017</signingDate>
+                <expiryDate>01 Nov 2018</expiryDate>
             </value>
         </entry>
         <entry>
@@ -89,20 +97,32 @@
                 <beneficiary>Mary Jane</beneficiary>
                 <premium>500.0</premium>
                 <contractPath>expensiveContract.pdf</contractPath>
-                <signingDate>1 11 2017</signingDate>
-                <expiryDate>1 11 2020</expiryDate>
+                <signingDate>01 Nov 2017</signingDate>
+                <expiryDate>01 Nov 2020</expiryDate>
             </value>
         </entry>
         <entry>
-            <key>ea91ce18-4a4f-415a-a688-62621c241108</key>
+            <key>c77ca792-fbe9-44bc-b43b-f0423d0e1fc8</key>
             <value>
                 <owner>Alex Yeoh</owner>
-                <insured>Another person not in Lisa</insured>
-                <beneficiary>Bernice Yu</beneficiary>
-                <premium>50.0</premium>
-                <contractPath>cheapContract.pdf</contractPath>
-                <signingDate>1 11 2017</signingDate>
-                <expiryDate>1 11 2018</expiryDate>
+                <insured>Oscar</insured>
+                <beneficiary>Oscar</beneficiary>
+                <premium>1000.0</premium>
+                <contractPath>contract.pdf</contractPath>
+                <signingDate>01 Nov 2017</signingDate>
+                <expiryDate>01 Nov 2018</expiryDate>
+            </value>
+        </entry>
+        <entry>
+            <key>ad4dc852-e6bb-44e9-800e-fa8a8964e7f1</key>
+            <value>
+                <owner>Oscar</owner>
+                <insured>Oscar</insured>
+                <beneficiary>Oscar</beneficiary>
+                <premium>1000.0</premium>
+                <contractPath>contract.pdf</contractPath>
+                <signingDate>01 Nov 2017</signingDate>
+                <expiryDate>01 Nov 2018</expiryDate>
             </value>
         </entry>
     </lifeInsuranceMap>
