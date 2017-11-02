@@ -87,12 +87,13 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addInsurance(insurance);
         indicateAddressBookChanged();
     }
-
-    //=========== Insurance List Accessors ===================================================================
+    //=========== Insurance List Accessors ==================================================================
+    //@@author RSJunior37
     @Override
     public ObservableList<ReadOnlyInsurance> getInsuranceList() {
         return addressBook.getInsuranceList();
     }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 

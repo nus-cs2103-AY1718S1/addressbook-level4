@@ -38,13 +38,13 @@
 
   <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" VBox.vgrow="ALWAYS">
     <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+      <!-- @@author RSJunior37 -->
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
          <StackPane fx:id="searchBoxPlaceholder" prefHeight="0.0" prefWidth="320.0" />
       <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
-
     <StackPane fx:id="rightPanelPlaceholder" prefWidth="101.0">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
@@ -58,6 +58,7 @@
             <StackPane fx:id="insuranceListPanelPlaceholder" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
+    <!-- @@author -->
   </SplitPane>
 
   <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />

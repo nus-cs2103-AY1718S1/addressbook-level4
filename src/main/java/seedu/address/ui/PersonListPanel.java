@@ -61,11 +61,13 @@ public class PersonListPanel extends UiPart<Region> {
         });
     }
 
+    //@@author RSJunior37
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }
+    //@@author
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.

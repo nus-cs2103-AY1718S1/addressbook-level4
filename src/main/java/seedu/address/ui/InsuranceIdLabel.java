@@ -9,6 +9,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.InsurancePanelSelectionChangedEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 
+//@@author RSJunior37
 /**
  * To be used in ProfilePanel ListView, displaying list of associated insurance
  */

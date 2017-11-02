@@ -126,16 +126,11 @@ public class InsuranceProfile extends UiPart<Region> {
      */
     private void activateLinkToInsuranceFile() {
         contractPath.getStyleClass().add("particular-link");
-        contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                try {
-                    Desktop.getDesktop().open(insuranceFile);
-                    // HostServices hostServices = getRoot().getHostservices();
-                    // hostServices.showDocument(file.getAbsolutePath());
-                } catch (IOException ee) {
-                    logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractPath());
-                }
+        contractPath.setOnMouseClicked(event -> {
+            try {
+                Desktop.getDesktop().open(insuranceFile);
+            } catch (IOException ee) {
+                logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractPath());
             }
         });
     }
@@ -157,15 +152,17 @@ public class InsuranceProfile extends UiPart<Region> {
     }
 
 
+    //@@author RSJunior37
     @Subscribe
     private void handleInsurancePanelSelectionChangedEvent(InsurancePanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         insurance = event.getInsurance();
 
         initializeContractFile(insurance);
+        enableNameToProfileLink(insurance);
         bindListeners(insurance);
         index.setText(null);
         raise(new SwitchToInsurancePanelRequestEvent());
-
     }
+    //@@author
 }

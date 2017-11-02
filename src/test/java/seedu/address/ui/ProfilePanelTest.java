@@ -13,6 +13,7 @@ import seedu.address.commons.events.ui.PersonNameClickedEvent;
 import seedu.address.model.insurance.InsurancePerson;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author RSJunior37
 public class ProfilePanelTest extends GuiUnitTest {
     private PersonNameClickedEvent personNameClickedEventStub;
 

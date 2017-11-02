@@ -23,6 +23,7 @@ import seedu.address.commons.events.ui.SwitchToProfilePanelRequestEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author RSJunior37
 /**
  * The Profile Panel of the App.
  */
@@ -101,7 +102,6 @@ public class ProfilePanel extends UiPart<Region> {
     }
     //@@author
 
-    //@@author RSJunior37
     /**
      * Load default page with empty fields and default message
      */
@@ -172,7 +172,6 @@ public class ProfilePanel extends UiPart<Region> {
         raise(new SwitchToProfilePanelRequestEvent());
     }
 
-    //@@author
 
     //@@author OscarWang114
     @Subscribe
