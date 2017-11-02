@@ -1,5 +1,5 @@
 # namvd2709
-###### \java\seedu\address\commons\util\StringUtil.java
+###### /java/seedu/address/commons/util/StringUtil.java
 ``` java
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
@@ -23,7 +23,7 @@
         return sentence.toLowerCase().contains(phrase.toLowerCase());
     }
 ```
-###### \java\seedu\address\commons\util\StringUtil.java
+###### /java/seedu/address/commons/util/StringUtil.java
 ``` java
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
@@ -55,7 +55,7 @@
         return false;
     }
 ```
-###### \java\seedu\address\logic\AutocompleteManager.java
+###### /java/seedu/address/logic/AutocompleteManager.java
 ``` java
 package seedu.address.logic;
 
@@ -94,7 +94,7 @@ public class AutocompleteManager {
     public AutocompleteManager() {}
 
 ```
-###### \java\seedu\address\logic\AutocompleteManager.java
+###### /java/seedu/address/logic/AutocompleteManager.java
 ``` java
     /**
      * attempt to autocomplete input into one of the commands
@@ -116,7 +116,7 @@ public class AutocompleteManager {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\AppointCommand.java
+###### /java/seedu/address/logic/commands/AppointCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -124,11 +124,13 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
+import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -142,6 +144,7 @@ public class AppointCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "appoint";
     public static final String MESSAGE_APPOINT_SUCCESS = "New appointment added: %1$s";
     public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "Appointment removed for person: %1$s";
+    public static final String MESSAGE_APPOINTMENT_CLASH = "Appointment clash";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add an appointment to a person to the address book "
             + "by the index number in the last person listing. "
@@ -166,9 +169,16 @@ public class AppointCommand extends UndoableCommand {
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        Set<Appointment> appointments = model.getAllAppointments();
+        UniqueAppointmentList uniqueAppointmentList = new UniqueAppointmentList();
+        uniqueAppointmentList.setAppointments(appointments);
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        if (uniqueAppointmentList.hasClash(appointment)) {
+            throw new CommandException("Appointment clash with another in address book");
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
@@ -217,7 +227,7 @@ public class AppointCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AppointCommandParser.java
+###### /java/seedu/address/logic/parser/AppointCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -270,7 +280,7 @@ public class AppointCommandParser implements Parser<AppointCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> appointment} into {@code Optional<Appointment>} if {@code appointment} present.
@@ -281,7 +291,14 @@ public class AppointCommandParser implements Parser<AppointCommand> {
         return appointment.isPresent() ? Optional.of(new Appointment(appointment.get())) : Optional.empty();
     }
 ```
-###### \java\seedu\address\model\appointment\Appointment.java
+###### /java/seedu/address/model/AddressBook.java
+``` java
+    public Set<Appointment> getAllAppointments() {
+        return persons.getAllAppointments();
+    }
+
+```
+###### /java/seedu/address/model/appointment/Appointment.java
 ``` java
 package seedu.address.model.appointment;
 
@@ -300,8 +317,8 @@ public class Appointment {
     public static final String MESSAGE_APPOINTMENT_CONSTRAINTS =
             "Appointment must be in exact format dd/MM/yyyy hh:mm duration, the date must be older than today";
     public static final String DATETIME_PATTERN = "dd/MM/yyyy HH:mm";
-    private static final String MESSAGE_DURATION_CONSTRAINT = "Duration must be an integer";
-    private static final String MESSAGE_DATETIME_CONSTRAINT = "Date time must be valid format, dd/MM/yyyy HH:mm";
+    private static final String MESSAGE_DURATION_CONSTRAINT = "Duration must be a positive integer in minutes";
+    private static final String MESSAGE_DATETIME_CONSTRAINT = "Date time cannot be in the past";
 
     public final String value;
     public final LocalDateTime start;
@@ -361,7 +378,8 @@ public class Appointment {
      * Returns true if given duration is an integer, using regex
      */
     public static boolean isValidDuration(String duration) {
-        return duration.matches("^-?\\d+$");
+        return duration.matches("^-?\\d+$")
+                    && Integer.parseInt(duration) > 0;
     }
 
     /**
@@ -372,6 +390,14 @@ public class Appointment {
      */
     private static LocalDateTime getEndDateTime(LocalDateTime startDateTime, String duration) {
         return startDateTime.plusMinutes(Integer.parseInt(duration));
+    }
+
+    public LocalDateTime getStart() {
+        return this.start;
+    }
+
+    public LocalDateTime getEnd() {
+        return end;
     }
 
     @Override
@@ -387,17 +413,159 @@ public class Appointment {
     }
 }
 ```
-###### \java\seedu\address\model\appointment\UniqueAppointmentList.java
+###### /java/seedu/address/model/appointment/UniqueAppointmentList.java
 ``` java
 package seedu.address.model.appointment;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+import java.time.LocalDateTime;
+import java.util.Iterator;
+import java.util.Set;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.DuplicateDataException;
+import seedu.address.commons.util.CollectionUtil;
+import seedu.address.logic.commands.exceptions.CommandException;
+
 /**
- * Class makes sure that there is no clash in appointment
+ /**
+ * A list of appointments that enforces no nulls and no clash time.
+ *
+ * Supports minimal set of list operations for the app's features.
+ *
+ * @see Appointment#equals(Object)
  */
-public class UniqueAppointmentList {
+public class UniqueAppointmentList implements Iterable<Appointment> {
+
+    private final ObservableList<Appointment> internalList = FXCollections.observableArrayList();
+
+    /**
+     * Constructs empty AppointmentList.
+     */
+    public UniqueAppointmentList() {}
+
+    /**
+     * Creates a Unique Appointment List.
+     * Enforces no nulls.
+     */
+    public UniqueAppointmentList(Set<Appointment> appointments) {
+        requireAllNonNull(appointments);
+        internalList.addAll(appointments);
+
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    /**
+     * Replaces the Appointments in this list with those in the argument appointment list.
+     */
+    public void setAppointments(Set<Appointment> appointments) {
+        requireAllNonNull(appointments);
+        internalList.setAll(appointments);
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    /**
+     * Returns true if the list contains an equivalent appointment as the given argument.
+     */
+    public boolean contains(Appointment toCheck) {
+        requireNonNull(toCheck);
+        return internalList.contains(toCheck);
+    }
+
+    /**
+     * Returns true if the list contains an appointment that clashes with the one given.
+     */
+    public boolean hasClash(Appointment toCheck) {
+        requireNonNull(toCheck);
+        if (!toCheck.value.equals("")) {
+            for (Appointment appointment : internalList) {
+                LocalDateTime startA = appointment.getStart();
+                LocalDateTime endA = appointment.getEnd();
+                LocalDateTime startB = toCheck.getStart();
+                LocalDateTime endB = toCheck.getEnd();
+                if (startA.isBefore(endB) && endA.isAfter(startB)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Adds a Appointment to the list.
+     *
+     * @throws DuplicateAppointmentException if the Appointment duplicates of an existing Appointment in the list.
+     * @throws ClashAppointmentException if Appointment to add clashes with an existing Appointment in the list.
+     */
+    public void add(Appointment toAdd) throws DuplicateAppointmentException, ClashAppointmentException {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new DuplicateAppointmentException();
+        } else if (hasClash(toAdd)) {
+            throw new ClashAppointmentException();
+        }
+        internalList.add(toAdd);
+
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    @Override
+    public Iterator<Appointment> iterator() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return internalList.iterator();
+    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<Appointment> asObservableList() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return FXCollections.unmodifiableObservableList(internalList);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return other == this // short circuit if same object
+                || (other instanceof UniqueAppointmentList // instanceof handles nulls
+                && this.internalList.equals(((UniqueAppointmentList) other).internalList));
+    }
+
+    @Override
+    public int hashCode() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return internalList.hashCode();
+    }
+
+    /**
+     * Signals that an operation would have violated the 'no duplicates' property of the list.
+     */
+    public static class DuplicateAppointmentException extends DuplicateDataException {
+        protected DuplicateAppointmentException() {
+            super("Operation would result in duplicate appointment");
+        }
+    }
+
+    /**
+     * Signals that an operation would have violated the 'no clash' property of appointments.
+     */
+    public static class ClashAppointmentException extends CommandException {
+        public ClashAppointmentException() {
+            super("Operation would result in clashing appointments");
+        }
+    }
 }
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/Model.java
+``` java
+    /** Returns list of all appointments */
+    Set<Appointment> getAllAppointments();
+}
+```
+###### /java/seedu/address/model/person/Person.java
 ``` java
     public void setAppointment(Appointment appointment) {
         this.appointment.set(requireNonNull(appointment));
@@ -413,4 +581,46 @@ public class UniqueAppointmentList {
         return appointment.get();
     }
 
+```
+###### /java/seedu/address/model/person/SortedUniquePersonList.java
+``` java
+
+    /**
+     * Returns all the appointments in the internal list
+     */
+    public Set<Appointment> getAllAppointments() {
+        Set<Appointment> appointments = new HashSet<>();
+
+        for (Person p: internalList) {
+            if (!p.getAppointment().value.equals("")) {
+                appointments.add(p.getAppointment());
+            }
+        }
+        return appointments;
+    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<ReadOnlyPerson> asObservableList() {
+        return FXCollections.unmodifiableObservableList(mappedList);
+    }
+
+    @Override
+    public Iterator<Person> iterator() {
+        return internalList.iterator();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SortedUniquePersonList // instanceof handles nulls
+                        && this.internalList.equals(((SortedUniquePersonList) other).internalList));
+    }
+
+    @Override
+    public int hashCode() {
+        return internalList.hashCode();
+    }
+}
 ```

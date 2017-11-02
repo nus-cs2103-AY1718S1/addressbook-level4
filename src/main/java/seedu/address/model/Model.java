@@ -1,8 +1,10 @@
 package seedu.address.model;
 
+import java.util.Set;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -55,4 +57,8 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    //@@author namvd2709
+    /** Returns list of all appointments */
+    Set<Appointment> getAllAppointments();
 }

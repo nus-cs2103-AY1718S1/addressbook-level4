@@ -10,6 +10,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.person.Person;
@@ -29,6 +31,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final SortedUniquePersonList persons;
     private final UniqueTagList tags;
     private final UniqueGroupList groups;
+    private final UniqueAppointmentList appointments;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -41,6 +44,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new SortedUniquePersonList();
         tags = new UniqueTagList();
         groups = new UniqueGroupList();
+        appointments = new UniqueAppointmentList();
     }
 
     public AddressBook() {}
@@ -211,7 +215,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addGroup(Group g) throws UniqueGroupList.DuplicateGroupException {
         groups.add(g);
     }
-
     //// util methods
 
     @Override
@@ -236,6 +239,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         return groups.asObservableList();
     }
 
+    //@@author namvd2709
+    public Set<Appointment> getAllAppointments() {
+        return persons.getAllAppointments();
+    }
+
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

@@ -1,5 +1,5 @@
 # namvd2709
-###### \java\seedu\address\logic\AutocompleteManagerTest.java
+###### /java/seedu/address/logic/AutocompleteManagerTest.java
 ``` java
 package seedu.address.logic;
 
@@ -42,7 +42,7 @@ public class AutocompleteManagerTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\AppointCommandTest.java
+###### /java/seedu/address/logic/commands/AppointCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -158,7 +158,7 @@ public class AppointCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_appoint() throws Exception {
@@ -167,7 +167,7 @@ public class AppointCommandTest {
         assertEquals(new AppointCommand(INDEX_FIRST_PERSON, new Appointment(VALID_APPOINTMENT)), command);
     }
 ```
-###### \java\seedu\address\logic\parser\AppointCommandParserTest.java
+###### /java/seedu/address/logic/parser/AppointCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -210,7 +210,7 @@ public class AppointCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\testutil\PersonBuilder.java
+###### /java/seedu/address/testutil/PersonBuilder.java
 ``` java
     /**
      * Sets the {@code Appointment} of the {@code Person} that we are building.
@@ -234,7 +234,7 @@ public class AppointCommandParserTest {
 
 }
 ```
-###### \java\seedu\address\ui\CommandBoxTest.java
+###### /java/seedu/address/ui/CommandBoxTest.java
 ``` java
     @Test
     public void handleKeyPress_startingWithTab() {

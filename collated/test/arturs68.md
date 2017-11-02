@@ -1,5 +1,5 @@
 # arturs68
-###### \java\guitests\guihandles\PersonCardHandle.java
+###### /java/guitests/guihandles/PersonCardHandle.java
 ``` java
         Region groupContainer = getChildNode(GROUPS_FIELD_ID);
         this.groupLabels = groupContainer
@@ -8,7 +8,7 @@
                 .map(Label.class::cast)
                 .collect(Collectors.toList());
 ```
-###### \java\guitests\guihandles\PersonCardHandle.java
+###### /java/guitests/guihandles/PersonCardHandle.java
 ``` java
     public List<String> getGroups() {
         return groupLabels
@@ -18,7 +18,7 @@
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ChangePicCommandTest.java
+###### /java/seedu/address/logic/commands/ChangePicCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -145,7 +145,7 @@ public class ChangePicCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\GroupCommandTest.java
+###### /java/seedu/address/logic/commands/GroupCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -274,7 +274,7 @@ public class GroupCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\UngroupCommandTest.java
+###### /java/seedu/address/logic/commands/UngroupCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -407,7 +407,7 @@ public class UngroupCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_group() throws Exception {
@@ -425,7 +425,7 @@ public class UngroupCommandTest {
         assertEquals(new UngroupCommand(INDEX_FIRST_PERSON, group), command);
     }
 ```
-###### \java\seedu\address\logic\parser\ChangePicCommandParserTest.java
+###### /java/seedu/address/logic/parser/ChangePicCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -469,7 +469,7 @@ public class ChangePicCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\GroupCommandParserTest.java
+###### /java/seedu/address/logic/parser/GroupCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -518,7 +518,7 @@ public class GroupCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\UngroupCommandParserTest.java
+###### /java/seedu/address/logic/parser/UngroupCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -556,7 +556,7 @@ public class UngroupCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\model\AddressBookTest.java
+###### /java/seedu/address/model/AddressBookTest.java
 ``` java
     @Test
     public void sorted() {
@@ -567,7 +567,7 @@ public class UngroupCommandParserTest {
         assertEquals(sorted, newData.getPersonList());
     }
 ```
-###### \java\seedu\address\model\AddressBookTest.java
+###### /java/seedu/address/model/AddressBookTest.java
 ``` java
     @Test
     public void getGroupList_modifyList_throwsUnsupportedOperationException() {
@@ -575,7 +575,7 @@ public class UngroupCommandParserTest {
         addressBook.getGroupList().remove(0);
     }
 ```
-###### \java\seedu\address\model\ModelManagerTest.java
+###### /java/seedu/address/model/ModelManagerTest.java
 ``` java
     @Test
     public void removeTag() throws IllegalValueException, PersonNotFoundException {
@@ -604,7 +604,7 @@ public class UngroupCommandParserTest {
         }
     }
 ```
-###### \java\seedu\address\testutil\PersonBuilder.java
+###### /java/seedu/address/testutil/PersonBuilder.java
 ``` java
     /**
      * Parses the {@code groups} into a {@code Set<Group>} and set it to the {@code Person} that we are building.

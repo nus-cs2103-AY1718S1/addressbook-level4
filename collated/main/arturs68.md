@@ -1,5 +1,5 @@
 # arturs68
-###### \java\seedu\address\logic\commands\ChangePicCommand.java
+###### /java/seedu/address/logic/commands/ChangePicCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -100,7 +100,7 @@ public class ChangePicCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\GroupCommand.java
+###### /java/seedu/address/logic/commands/GroupCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -204,7 +204,7 @@ public class GroupCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\UngroupCommand.java
+###### /java/seedu/address/logic/commands/UngroupCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -310,7 +310,7 @@ public class UngroupCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ChangePicCommandParser.java
+###### /java/seedu/address/logic/parser/ChangePicCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -351,7 +351,7 @@ public class ChangePicCommandParser implements Parser<ChangePicCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\GroupCommandParser.java
+###### /java/seedu/address/logic/parser/GroupCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -390,7 +390,7 @@ public class GroupCommandParser implements Parser<GroupCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> Group} into an {@code Optional<Group>} if {@code group} is present.
@@ -401,7 +401,7 @@ public class GroupCommandParser implements Parser<GroupCommand> {
         return groupName.isPresent() ? Optional.of(new Group(groupName.get())) : Optional.empty();
     }
 ```
-###### \java\seedu\address\logic\parser\UngroupCommandParser.java
+###### /java/seedu/address/logic/parser/UngroupCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -440,7 +440,7 @@ public class UngroupCommandParser implements Parser<UngroupCommand> {
     }
 }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     /**
      * Ensures that every group in this person:
@@ -472,7 +472,7 @@ public class UngroupCommandParser implements Parser<UngroupCommand> {
         persons.forEach(this::syncMasterGroupListWith);
     }
 ```
-###### \java\seedu\address\model\group\Group.java
+###### /java/seedu/address/model/group/Group.java
 ``` java
 package seedu.address.model.group;
 
@@ -538,7 +538,7 @@ public class Group {
 
 }
 ```
-###### \java\seedu\address\model\group\UniqueGroupList.java
+###### /java/seedu/address/model/group/UniqueGroupList.java
 ``` java
 package seedu.address.model.group;
 
@@ -697,7 +697,7 @@ public class UniqueGroupList implements Iterable<Group> {
 
 }
 ```
-###### \java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
     /** Removes the given tag from everyone in the address book and deletes it from the addressBook tag list. */
     void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException;
@@ -707,7 +707,7 @@ public class UniqueGroupList implements Iterable<Group> {
     void updateGroups(Group group);
 
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public void updateGroups(Group group) {
@@ -728,7 +728,7 @@ public class UniqueGroupList implements Iterable<Group> {
         indicateAddressBookChanged();
     }
 ```
-###### \java\seedu\address\model\person\exceptions\GroupNotFoundException.java
+###### /java/seedu/address/model/person/exceptions/GroupNotFoundException.java
 ``` java
 package seedu.address.model.person.exceptions;
 
@@ -738,7 +738,7 @@ package seedu.address.model.person.exceptions;
 public class GroupNotFoundException extends Exception {
 }
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
     public void setProfilePicture(ProfilePicture profilePicture) {
         this.profilePicture.set(requireNonNull(profilePicture));
@@ -754,7 +754,7 @@ public class GroupNotFoundException extends Exception {
         return profilePicture.get();
     }
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
     /**
      * Replaces this person's groups with the groups in the argument group set.
@@ -776,7 +776,7 @@ public class GroupNotFoundException extends Exception {
         return groups;
     }
 ```
-###### \java\seedu\address\model\person\ProfilePicture.java
+###### /java/seedu/address/model/person/ProfilePicture.java
 ``` java
 package seedu.address.model.person;
 
@@ -824,7 +824,7 @@ public class ProfilePicture {
 
 }
 ```
-###### \java\seedu\address\model\person\SortedUniquePersonList.java
+###### /java/seedu/address/model/person/SortedUniquePersonList.java
 ``` java
     /**
      * Sorts the list of unique persons
@@ -833,7 +833,7 @@ public class ProfilePicture {
         internalList.sort(Comparator.comparing((ReadOnlyPerson person) -> person.getName().toString()));
     }
 ```
-###### \java\seedu\address\storage\AddressBookStorage.java
+###### /java/seedu/address/storage/AddressBookStorage.java
 ``` java
     /**
      * Saves the given {@link ReadOnlyAddressBook} to the fixed temporary location (standard location + "-backup.xml")
@@ -843,12 +843,12 @@ public class ProfilePicture {
     void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
 }
 ```
-###### \java\seedu\address\storage\Storage.java
+###### /java/seedu/address/storage/Storage.java
 ``` java
     @Override
     void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
 ```
-###### \java\seedu\address\storage\XmlAdaptedGroup.java
+###### /java/seedu/address/storage/XmlAdaptedGroup.java
 ``` java
 package seedu.address.storage;
 
@@ -891,14 +891,14 @@ public class XmlAdaptedGroup {
 
 }
 ```
-###### \java\seedu\address\storage\XmlAddressBookStorage.java
+###### /java/seedu/address/storage/XmlAddressBookStorage.java
 ``` java
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, filePath + "-backup.xml");
     }
 ```
-###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+###### /java/seedu/address/storage/XmlSerializableAddressBook.java
 ``` java
     @Override
     public ObservableList<Group> getGroupList() {
@@ -913,17 +913,16 @@ public class XmlAdaptedGroup {
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(groups);
     }
-
 }
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
         person.groupProperty().addListener((observable, oldValue, newValue) -> {
             groups.getChildren().clear();
             person.getGroups().forEach(group -> groups.getChildren().add((new Label(group.groupName))));
         });
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
     /**
      * Initializes the group labels and sets style to them
@@ -951,11 +950,11 @@ public class XmlAdaptedGroup {
                                 + "-fx-effect: dropshadow( one-pass-box , gray , 8 , 0.0 , 2 , 0 );"));
     }
 ```
-###### \resources\view\PersonListCard.fxml
+###### /resources/view/PersonListCard.fxml
 ``` fxml
       <FlowPane fx:id="groups" />
 ```
-###### \resources\view\PersonListCard.fxml
+###### /resources/view/PersonListCard.fxml
 ``` fxml
    <ImageView fx:id="profilePicture" fitHeight="150.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
       <image>

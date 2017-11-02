@@ -27,5 +27,4 @@ public interface ReadOnlyAddressBook {
      * This list will not contain any duplicate groups.
      */
     ObservableList<Group> getGroupList();
-
 }
