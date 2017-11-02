@@ -25,17 +25,17 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
 
     private boolean containsKeyWordInName(ReadOnlyPerson person) {
         return keywords.stream().anyMatch(keyword
-                -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+            -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
     }
 
     private boolean containsKeyWordInPhone(ReadOnlyPerson person) {
         return keywords.stream().anyMatch(keyword
-                -> StringUtil.containsWordIgnoreCase(person.getPhone().value, keyword));
+            -> StringUtil.containsWordIgnoreCase(person.getPhone().value, keyword));
     }
 
     private boolean containsKeyWordInAddress(ReadOnlyPerson person) {
         return keywords.stream().anyMatch(keyword
-                -> StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword));
+            -> StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword));
     }
 
 
