@@ -131,7 +131,8 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updateGroups(Group group) { fail("This method should not be called."); }
+        public void updateGroups(Group group) {
+            fail("This method should not be called."); }
 
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {

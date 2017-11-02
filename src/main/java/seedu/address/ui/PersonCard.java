@@ -1,8 +1,13 @@
 package seedu.address.ui;
 
+import static seedu.address.model.person.ProfilePicture.DEFAULT_PICTURE;
+import static seedu.address.model.person.ProfilePicture.getPath;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -40,6 +45,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label appointment;
     @FXML
+    private ImageView profilePicture;
+    @FXML
     private FlowPane groups;
     @FXML
     private FlowPane tags;
@@ -51,6 +58,7 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(person);
         initGroups(person);
+        initPicture(person);
         bindListeners(person);
     }
 
@@ -64,6 +72,7 @@ public class PersonCard extends UiPart<Region> {
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         appointment.textProperty().bind(Bindings.convert(person.appointmentProperty()));
+        person.profilePictureProperty().addListener(((observable, oldValue, newValue) -> initPicture(person)));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
@@ -83,7 +92,19 @@ public class PersonCard extends UiPart<Region> {
     //@@author arturs68
     /**
      * Initializes the group labels and sets style to them
+     *
+     * If the path of the image is valid, initializes the image. Otherwise leaves the picture blank.
      */
+    private void initPicture(ReadOnlyPerson person) {
+        Image im;
+        try {
+            im = new Image(getPath(person.getProfilePicture().value));
+        } catch (IllegalArgumentException iae) {
+            im = new Image(getPath(DEFAULT_PICTURE));
+        }
+        profilePicture.setImage(im);
+    }
+
     private void initGroups(ReadOnlyPerson person) {
         person.getGroups().forEach(group -> groups.getChildren().add(new Label(group.groupName)));
         groups.getChildren()
