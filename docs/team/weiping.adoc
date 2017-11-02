@@ -107,7 +107,6 @@ Debt collectors may want to see details of nearby contacts to plan a more effect
 ==== Miscellaneous
 * Assist teammates with debugging tests
 
-
 == Project: Dog Mario
 
 [https://github.com/DogMario/Dog-Mario[Dog Mario]] is a game developed with [https://github.com/tbhbhbh[Tan Bing Hwang]] as an independent project for Orbital 2017.
