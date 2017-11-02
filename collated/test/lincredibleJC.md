@@ -132,13 +132,6 @@ public class FindTagsCommandTest {
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddAlias(person));
         assertEquals(new AddCommand(person), command);
     }
-
-    @Test
-    public void parseCommand_clear() throws Exception {
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3") instanceof ClearCommand);
-    }
-
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
@@ -147,15 +140,6 @@ public class FindTagsCommandTest {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS) instanceof ClearCommand);
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS + " 3") instanceof ClearCommand);
     }
-
-
-    @Test
-    public void parseCommand_delete() throws Exception {
-        DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
-    }
-
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
@@ -165,16 +149,6 @@ public class FindTagsCommandTest {
                 DeleteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
-
-    @Test
-    public void parseCommand_edit() throws Exception {
-        Person person = new PersonBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
-        EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person));
-        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
-    }
-
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
@@ -186,21 +160,6 @@ public class FindTagsCommandTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person));
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
-
-    @Test
-    public void parseCommand_exit() throws Exception {
-        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
-        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
-    }
-
-    @Test
-    public void parseCommand_find() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
-    }
-
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
@@ -211,7 +170,6 @@ public class FindTagsCommandTest {
                 FindCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
-
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
@@ -222,7 +180,6 @@ public class FindTagsCommandTest {
                 FindTagsCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindTagsCommand(new TagsContainsKeywordsPredicate(keywords)), command);
     }
-
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
@@ -233,26 +190,6 @@ public class FindTagsCommandTest {
                 FindTagsCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindTagsCommand(new TagsContainsKeywordsPredicate(keywords)), command);
     }
-
-    @Test
-    public void parseCommand_help() throws Exception {
-        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
-        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
-    }
-
-    @Test
-    public void parseCommand_history() throws Exception {
-        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD) instanceof HistoryCommand);
-        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD + " 3") instanceof HistoryCommand);
-
-        try {
-            parser.parseCommand("histories");
-            fail("The expected ParseException was not thrown.");
-        } catch (ParseException pe) {
-            assertEquals(MESSAGE_UNKNOWN_COMMAND, pe.getMessage());
-        }
-    }
-
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
@@ -268,13 +205,6 @@ public class FindTagsCommandTest {
             assertEquals(MESSAGE_UNKNOWN_COMMAND, pe.getMessage());
         }
     }
-
-    @Test
-    public void parseCommand_list() throws Exception {
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
-    }
-
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
@@ -283,14 +213,6 @@ public class FindTagsCommandTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
     }
-
-    @Test
-    public void parseCommand_select() throws Exception {
-        SelectCommand command = (SelectCommand) parser.parseCommand(
-                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
-    }
-
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
@@ -300,7 +222,6 @@ public class FindTagsCommandTest {
                 SelectCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
     }
-
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
@@ -309,13 +230,6 @@ public class FindTagsCommandTest {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_ALIAS) instanceof RedoCommand);
         assertTrue(parser.parseCommand("r 1") instanceof RedoCommand);
     }
-
-    @Test
-    public void parseCommand_undoCommandWord_returnsUndoCommand() throws Exception {
-        assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD) instanceof UndoCommand);
-        assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
-    }
-
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
@@ -324,37 +238,6 @@ public class FindTagsCommandTest {
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS) instanceof UndoCommand);
         assertTrue(parser.parseCommand("u 3") instanceof UndoCommand);
     }
-
-    @Test
-    public void parseCommand_remarkCommandWord_returnsRemarkCommand() throws Exception {
-        final Remark remarks = new Remark("I'm so done.");
-        RemarkCommand testCommand = (RemarkCommand) parser.parseCommand(RemarkCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + " " + remarks.value);
-        assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remarks), testCommand);
-    }
-
-    @Test
-    public void parseCommand_remarkCommandAlias_returnsRemarkCommand() throws Exception {
-        final Remark remarks = new Remark("I'm so done.");
-        RemarkCommand testCommand = (RemarkCommand) parser.parseCommand(RemarkCommand.COMMAND_ALIAS + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + " " + remarks.value);
-        assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remarks), testCommand);
-    }
-
-    @Test
-    public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
-        thrown.expect(ParseException.class);
-        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
-        parser.parseCommand("");
-    }
-
-    @Test
-    public void parseCommand_unknownCommand_throwsParseException() throws Exception {
-        thrown.expect(ParseException.class);
-        thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
-        parser.parseCommand("unknownCommand");
-    }
-}
 ```
 ###### \java\seedu\address\logic\parser\EditCommandParserTest.java
 ``` java
@@ -399,7 +282,9 @@ public class FindTagsCommandTest {
         assertParseFailure(parser, "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_ADDRESS_AMY + VALID_PHONE_AMY
                 + VALID_POSTALCODE_AMY, Name.MESSAGE_NAME_CONSTRAINTS);
     }
-
+```
+###### \java\seedu\address\logic\parser\EditCommandParserTest.java
+``` java
     @Test
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_SECOND_PERSON;
@@ -416,118 +301,6 @@ public class FindTagsCommandTest {
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }
-
-    @Test
-    public void parse_someFieldsSpecified_success() {
-        Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + EMAIL_DESC_AMY;
-
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB)
-                .withEmail(VALID_EMAIL_AMY).build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-
-    @Test
-    public void parse_oneFieldSpecified_success() {
-        // name
-        Index targetIndex = INDEX_THIRD_PERSON;
-        String userInput = targetIndex.getOneBased() + NAME_DESC_AMY;
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY).build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        // phone
-        userInput = targetIndex.getOneBased() + PHONE_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_AMY).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        // email
-        userInput = targetIndex.getOneBased() + EMAIL_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withEmail(VALID_EMAIL_AMY).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        // address
-        userInput = targetIndex.getOneBased() + ADDRESS_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withAddress(VALID_ADDRESS_AMY).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        // formClass
-        userInput = targetIndex.getOneBased() + FORMCLASS_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withFormClass(VALID_FORMCLASS_AMY).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        // grades
-        userInput = targetIndex.getOneBased() + GRADES_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withGrades(VALID_GRADES_AMY).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        // postal code
-        userInput = targetIndex.getOneBased() + POSTALCODE_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withPostalCode(VALID_POSTALCODE_AMY).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        // tags
-        userInput = targetIndex.getOneBased() + TAG_DESC_FRIEND;
-        descriptor = new EditPersonDescriptorBuilder().withTags(VALID_TAG_FRIEND).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-
-    @Test
-    public void parse_multipleRepeatedFields_acceptsLast() {
-        Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY
-                + TAG_DESC_FRIEND + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY + POSTALCODE_DESC_AMY
-                + TAG_DESC_FRIEND + PHONE_DESC_BOB + ADDRESS_DESC_BOB + EMAIL_DESC_BOB + POSTALCODE_DESC_BOB
-                + GRADES_DESC_BOB + GRADES_DESC_AMY + TAG_DESC_HUSBAND;
-
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB)
-                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withGrades(VALID_GRADES_AMY)
-                .withPostalCode(VALID_POSTALCODE_BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
-                .build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-
-    @Test
-    public void parse_invalidValueFollowedByValidValue_success() {
-        // no other valid values specified
-        Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + INVALID_PHONE_DESC + PHONE_DESC_BOB + POSTALCODE_DESC_BOB;
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB)
-                .withPostalCode(VALID_POSTALCODE_BOB).build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        // other valid values specified
-        userInput = targetIndex.getOneBased() + EMAIL_DESC_BOB + INVALID_PHONE_DESC + ADDRESS_DESC_BOB
-                + PHONE_DESC_BOB;
-        descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_BOB).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-
-    @Test
-    public void parse_resetTags_success() {
-        Index targetIndex = INDEX_THIRD_PERSON;
-        String userInput = targetIndex.getOneBased() + TAG_EMPTY;
-
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withTags().build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-}
 ```
 ###### \java\seedu\address\logic\parser\FindTagsCommandParserTest.java
 ``` java
@@ -562,81 +335,23 @@ public class FindTagsCommandParserTest {
         ParserUtil.parseGrades(null);
     }
 
-```
-###### \java\seedu\address\logic\parser\ParserUtilTest.java
-``` java
     @Test
     public void parseGrades_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
         ParserUtil.parseGrades(Optional.of(INVALID_GRADES));
     }
 
-```
-###### \java\seedu\address\logic\parser\ParserUtilTest.java
-``` java
     @Test
     public void parseGrades_optionalEmpty_returnsOptionalEmpty() throws Exception {
         assertFalse(ParserUtil.parseGrades(Optional.empty()).isPresent());
     }
 
-```
-###### \java\seedu\address\logic\parser\ParserUtilTest.java
-``` java
     @Test
     public void parseGrades_validValue_returnsGrade() throws Exception {
         Grades expectedGrades = new Grades(VALID_GRADES);
         Optional<Grades> actualGrades = ParserUtil.parseGrades(Optional.of(VALID_GRADES));
 
         assertEquals(expectedGrades, actualGrades.get());
-    }
-
-    @Test
-    public void parseRemark_null_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        ParserUtil.parseEmail(null);
-    }
-
-    @Test
-    public void parseRemark_invalidValue_throwsIllegalValueException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        ParserUtil.parseRemark(Optional.of(INVALID_REMARK));
-    }
-
-    @Test
-    public void parseRemark_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseRemark(Optional.empty()).isPresent());
-    }
-
-    @Test
-    public void parseRemark_validValue_returnsEmail() throws Exception {
-        Remark expectedRemark = new Remark(VALID_REMARK);
-        Optional<Remark> actualRemark = ParserUtil.parseRemark(Optional.of(VALID_REMARK));
-
-        assertEquals(expectedRemark, actualRemark.get());
-    }
-    @Test
-    public void parseTags_null_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        ParserUtil.parseTags(null);
-    }
-
-    @Test
-    public void parseTags_collectionWithInvalidTags_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, INVALID_TAG));
-    }
-
-    @Test
-    public void parseTags_emptyCollection_returnsEmptySet() throws Exception {
-        assertTrue(ParserUtil.parseTags(Collections.emptyList()).isEmpty());
-    }
-
-    @Test
-    public void parseTags_collectionWithValidTags_returnsTagSet() throws Exception {
-        Set<Tag> actualTagSet = ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
-        Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
-
-        assertEquals(expectedTagSet, actualTagSet);
     }
 ```
 ###### \java\seedu\address\logic\statistics\StatisticsTest.java
@@ -863,7 +578,6 @@ public class TagsContainsKeywordsPredicateTest {
         }
         return this;
     }
-
 ```
 ###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
 ``` java
@@ -878,35 +592,6 @@ public class TagsContainsKeywordsPredicateTest {
         }
         return this;
     }
-    /**
-     * Sets the {@code PostalCode} of the {@code EditPersonDescriptor} that we are building.
-     */
-    public EditPersonDescriptorBuilder withPostalCode(String postalCode) {
-        try {
-            ParserUtil.parsePostalCode(Optional.of(postalCode)).ifPresent(descriptor::setPostalCode);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("postal code is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
-     * that we are building.
-     */
-    public EditPersonDescriptorBuilder withTags(String... tags) {
-        try {
-            descriptor.setTags(ParserUtil.parseTags(Arrays.asList(tags)));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("tags are expected to be unique.");
-        }
-        return this;
-    }
-
-    public EditPersonDescriptor build() {
-        return descriptor;
-    }
-}
 ```
 ###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
@@ -921,11 +606,9 @@ public class TagsContainsKeywordsPredicateTest {
         }
         return this;
     }
-
 ```
 ###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
-
     /**
      * Sets the {@code Grades} of the {@code Person} that we are building.
      */
@@ -937,86 +620,15 @@ public class TagsContainsKeywordsPredicateTest {
         }
         return this;
     }
-
-    /**
-     * Sets the {@code PostalCode} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withPostalCode(String postalCode) {
-        try {
-            this.person.setPostalCode(new PostalCode(postalCode));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("postal code is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Sets the {@code Phone} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withPhone(String phone) {
-        try {
-            this.person.setPhone(new Phone(phone));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("phone is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Sets the {@code Email} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withEmail(String email) {
-        try {
-            this.person.setEmail(new Email(email));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("email is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Sets the {@code Remark} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withRemark(String remark) {
-
-        this.person.setRemark(new Remark(remark));
-        return this;
-    }
-
-    public Person build() {
-        return this.person;
-    }
-
-}
 ```
 ###### \java\seedu\address\testutil\PersonUtil.java
 ``` java
-
     /**
      * Returns an add command alias string for adding the {@code person}.
      */
     public static String getAddAlias(ReadOnlyPerson person) {
         return AddCommand.COMMAND_ALIAS + " " + getPersonDetails(person);
     }
-
-    /**
-     * Returns the part of command string for the given {@code person}'s details.
-     */
-    public static String getPersonDetails(ReadOnlyPerson person) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_NAME + person.getName().fullName + " ");
-        sb.append(PREFIX_PHONE + person.getPhone().value + " ");
-        sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
-        sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
-        sb.append(PREFIX_FORMCLASS + person.getFormClass().value + " ");
-        sb.append(PREFIX_GRADES + person.getGrades().value + " ");
-        sb.append(PREFIX_POSTALCODE + person.getPostalCode().value + " ");
-        person.getTags().stream().forEach(
-            s -> sb.append(PREFIX_TAG + s.tagName + " ")
-        );
-        return sb.toString();
-    }
-}
 ```
 ###### \java\seedu\address\ui\StatisticsPanelTest.java
 ``` java
@@ -1068,49 +680,4 @@ public class StatisticsPanelTest extends GuiUnitTest {
         assertEquals(expectedStatistics.getQuartile1String(), actualPanelHandle.getQuartile1Label());
         assertEquals(expectedStatistics.getInterquartileRangeString(), actualPanelHandle.getInterquartileLabel());
     }
-
-    /**
-     * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
-     * in the correct order.
-     */
-    public static void assertListMatching(PersonListPanelHandle personListPanelHandle, ReadOnlyPerson... persons) {
-        for (int i = 0; i < persons.length; i++) {
-            assertCardDisplaysPerson(persons[i], personListPanelHandle.getPersonCardHandle(i));
-        }
-    }
-
-    /**
-     * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
-     * in the correct order.
-     */
-    public static void assertListMatching(PersonListPanelHandle personListPanelHandle, List<ReadOnlyPerson> persons) {
-        assertListMatching(personListPanelHandle, persons.toArray(new ReadOnlyPerson[0]));
-    }
-
-    /**
-     * Replace all occurrence of "/" with ":" and capitalise first letter of student and parent.
-     */
-    public String changeToAppropriateUiFormat(String value) {
-
-        value = value.replace("/", ": ");
-        value = value.replace("s", "S");
-        value = value.replace("p", "P");
-        return value;
-    }
-
-    /**
-     * Asserts the size of the list in {@code personListPanelHandle} equals to {@code size}.
-     */
-    public static void assertListSize(PersonListPanelHandle personListPanelHandle, int size) {
-        int numberOfPeople = personListPanelHandle.getListSize();
-        assertEquals(size, numberOfPeople);
-    }
-
-    /**
-     * Asserts the message shown in {@code resultDisplayHandle} equals to {@code expected}.
-     */
-    public static void assertResultMessage(ResultDisplayHandle resultDisplayHandle, String expected) {
-        assertEquals(expected, resultDisplayHandle.getText());
-    }
-}
 ```

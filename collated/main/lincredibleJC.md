@@ -145,8 +145,6 @@ public class FindTagsCommand extends Command {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
-
-}
 ```
 ###### \java\seedu\address\logic\parser\FindTagsCommandParser.java
 ``` java
@@ -187,9 +185,6 @@ public class FindTagsCommandParser implements Parser<FindTagsCommand> {
         return formClass.isPresent() ? Optional.of(new FormClass(formClass.get())) : Optional.empty();
     }
 
-```
-###### \java\seedu\address\logic\parser\ParserUtil.java
-``` java
     /**
      * Parses a {@code Optional<String> grades} into an {@code Optional<PostalCode>} if {@code grades}
      * is present.
@@ -199,59 +194,6 @@ public class FindTagsCommandParser implements Parser<FindTagsCommand> {
         requireNonNull(grades);
         return grades.isPresent() ? Optional.of(new Grades(grades.get())) : Optional.empty();
     }
-
-    /**
-     * Parses a {@code Optional<String> postalCode} into an {@code Optional<PostalCode>} if {@code postalCode}
-     * is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<PostalCode> parsePostalCode(Optional<String> postalCode) throws IllegalValueException {
-        requireNonNull(postalCode);
-        return postalCode.isPresent() ? Optional.of(new PostalCode(postalCode.get())) : Optional.empty();
-    }
-
-    /**
-     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
-        requireNonNull(email);
-        return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
-    }
-
-    /**
-     * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark}
-     * is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Remark> parseRemark(Optional<String> remark) throws IllegalValueException {
-        requireNonNull(remark);
-        return remark.isPresent() ? Optional.of(new Remark(remark.get())) : Optional.empty();
-    }
-
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
-     */
-    public static Set<Tag> parseTags(Collection<String> tags) throws IllegalValueException {
-        requireNonNull(tags);
-        final Set<Tag> tagSet = new HashSet<>();
-        for (String tagName : tags) {
-            tagSet.add(new Tag(tagName));
-        }
-        return tagSet;
-    }
-
-    /**
-     * Parses a {@code Optional<String> schedule} into an {@code Optional<Schedule>} if {@code schedule}
-     * is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Schedule> parseSchedule(Optional<String> schedule) throws IllegalValueException {
-        requireNonNull(schedule);
-        return schedule.isPresent() ? Optional.of(new Schedule(schedule.get())) : Optional.empty();
-    }
-
-}
 ```
 ###### \java\seedu\address\logic\statistics\Statistics.java
 ``` java
@@ -591,8 +533,6 @@ public class Grades {
         getTags().forEach(tag -> sb.append(tag.tagName + " "));
         return sb.toString();
     }
-
-}
 ```
 ###### \java\seedu\address\model\person\TagsContainsKeywordsPredicate.java
 ``` java
