@@ -170,7 +170,7 @@ public class InfoPanel extends UiPart<Region> {
         debtRepaymentProgressBar = new DebtRepaymentProgressBar(person);
         progressBarPlaceholder.getChildren().add(debtRepaymentProgressBar.getRoot());
     }
-  
+
     //@@author jaivigneshvenugopal
     /**
      * Resets the debtors profile picture to the latest one existing in folder
@@ -180,7 +180,7 @@ public class InfoPanel extends UiPart<Region> {
         debtorProfilePicture = new DebtorProfilePicture(person);
         profilePicPlaceholder.getChildren().add(debtorProfilePicture.getImageView());
     }
-  
+
     //@@author khooroko
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
