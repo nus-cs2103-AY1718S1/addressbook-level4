@@ -56,6 +56,7 @@ public class LogicManager extends ComponentManager implements Logic {
         return model.getFilteredPersonList();
     }
 
+    //@@author fongwz
     @Override
     public ObservableList<String> getCommandList() {
         List<String> commandList = Arrays.asList(
@@ -109,11 +110,6 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public ListElementPointer getHistorySnapshot() {
-        return new ListElementPointer(history.getHistory());
-    }
-
-    @Override
     public ObservableList<Meeting> getMeetingList() {
         return model.getMeetingList().getMeetingList();
     }
@@ -130,5 +126,11 @@ public class LogicManager extends ComponentManager implements Logic {
             logger.info(e.getMessage());
             return nameList;
         }
+    }
+    //@@author
+
+    @Override
+    public ListElementPointer getHistorySnapshot() {
+        return new ListElementPointer(history.getHistory());
     }
 }

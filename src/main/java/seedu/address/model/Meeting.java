@@ -9,15 +9,12 @@ import java.util.Objects;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.InternalId;
-
+//@@author liuhang0213
 /**
  * Represents a Meeting
  * Guarantees: immutable; meeting time is in the future
  */
 public class Meeting implements Comparable<Meeting> {
-
-    //public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
-    //public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
 
     public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -26,25 +23,34 @@ public class Meeting implements Comparable<Meeting> {
     private String location;
     private String notes;
     private ArrayList<InternalId> listOfPersonsId;
+    private Boolean isMeetingInFuture;
 
     /**
      * Validates params given for meeting
      *
      * @throws IllegalValueException if the given meeting time is not in the future
      */
-    public Meeting(LocalDateTime dateTime, String location, String notes, ArrayList<InternalId> listOfPersonsId)
-            throws IllegalValueException {
+    public Meeting(LocalDateTime dateTime, String location, String notes, ArrayList<InternalId> listOfPersonsId) {
         requireNonNull(dateTime);
         requireNonNull(location);
         requireNonNull(listOfPersonsId);
         if (dateTime.isBefore(LocalDateTime.now())) {
-            throw new IllegalValueException(MESSAGE_INVALID_DATE);
+            isMeetingInFuture = false;
+        } else {
+            isMeetingInFuture = true;
         }
 
         this.dateTime = dateTime;
         this.location = location.trim();
         this.notes = notes.trim();
         this.listOfPersonsId = listOfPersonsId;
+    }
+
+    /**
+     * Creates a copy of the given meeting
+     */
+    public Meeting(Meeting source) {
+        this(source.dateTime, source.location, source.notes, source.listOfPersonsId);
     }
 
     // Get methods

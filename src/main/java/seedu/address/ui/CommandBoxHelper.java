@@ -15,6 +15,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 
+//@@author fongwz
 /**
  * The UI component that is responsible for listing out possible commands based on user input in CLI
  */
@@ -47,7 +48,7 @@ public class CommandBoxHelper extends UiPart<Region> {
             commandString = commandText.getText();
             firstChar = commandText.getText().charAt(0);
         } catch (Exception e) {
-            logger.info("Invalid String or String is empty: " + e.toString());
+            logger.info("Invalid String or String is empty");
             logger.info("Hiding command helper");
             return false;
         }

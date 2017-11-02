@@ -6,6 +6,7 @@ import seedu.address.commons.events.ui.ShowBrowserEvent;
 import seedu.address.commons.events.ui.ShowMeetingEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+//@@author fongwz
 /**
  * Chooses the display screen mode
  */
@@ -32,6 +33,7 @@ public class ChooseCommand extends Command {
     public CommandResult execute() throws CommandException {
         if (targetDisplay.equals("meeting")) {
             EventsCenter.getInstance().post(new ShowMeetingEvent());
+            EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
         } else {
             EventsCenter.getInstance().post(new ShowBrowserEvent());
             EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
