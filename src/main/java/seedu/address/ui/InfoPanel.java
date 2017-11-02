@@ -16,6 +16,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeInternalListEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -153,6 +154,7 @@ public class InfoPanel extends UiPart<Region> {
      */
     public void resetNearbyPersonListPanel(ReadOnlyPerson person) {
         nearbyPersonListPanel = new NearbyPersonListPanel(logic.getAllPersons(), person);
+        nearbyPersonListPanelPlaceholder.getChildren().clear();
         nearbyPersonListPanelPlaceholder.getChildren().add(nearbyPersonListPanel.getRoot());
     }
 
@@ -279,4 +281,10 @@ public class InfoPanel extends UiPart<Region> {
         resetNearbyPersonListPanel(event.getNewSelection().person);
         resetDebtRepaymentProgressBar(event.getNewSelection().person);
     }
+
+    @Subscribe
+    private void handleChangeInternalListEvent(ChangeInternalListEvent event) {
+        unregisterAsAnEventHandler(this);
+    }
+
 }

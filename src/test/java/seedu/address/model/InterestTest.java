@@ -48,7 +48,7 @@ public class InterestTest {
         }
         // model should have handled login event and updated personToTest's debt
         int personToTestIdx = model.getFilteredPersonList().size() - 1;
-        assertEquals("10936.85", model.getFilteredPersonList().get(personToTestIdx).getDebt().toString());
+        assertEquals("11046.22", model.getFilteredPersonList().get(personToTestIdx).getDebt().toString());
     }
 
     @Test
