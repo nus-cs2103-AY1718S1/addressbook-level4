@@ -76,4 +76,9 @@ public interface Model {
      * Sort everyone in addressbook lexicographically
      */
     void sortPersonListLexicographically();
+
+    /**
+     * Shows the google map for the selected person in the browser panel
+     */
+    void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 }
