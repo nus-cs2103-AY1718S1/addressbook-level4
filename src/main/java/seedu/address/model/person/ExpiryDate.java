@@ -40,7 +40,7 @@ public class ExpiryDate {
         } else if (!isValidExpiryDate(date)) {
             throw new IllegalValueException(MESSAGE_EXPIRY_DATE_CONSTRAINTS);
         }
-        // catches invalid month/day combination .NOT
+        // catches invalid month/day combination
         ParsePosition parsePos = new ParsePosition(0);
         this.value = DATE_FORMATTER.parse(date, parsePos);
 

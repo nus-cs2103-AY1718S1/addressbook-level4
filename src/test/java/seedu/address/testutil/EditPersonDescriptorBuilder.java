@@ -6,6 +6,7 @@ import java.util.Optional;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.ParserUtil;
+import seedu.address.model.person.ExpiryDate;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -33,6 +34,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setTags(person.getTags());
+        descriptor.setExpiryDate(person.getExpiryDate());
     }
 
     /**
@@ -92,6 +94,23 @@ public class EditPersonDescriptorBuilder {
             descriptor.setTags(ParserUtil.parseTags(Arrays.asList(tags)));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code ExpiryDate} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withExpiryDate(String dateString) {
+        try {
+            if (dateString.isEmpty()) {
+                descriptor.setExpiryDate(new ExpiryDate(""));
+            } else {
+                ExpiryDate date = new ExpiryDate(dateString);
+                descriptor.setExpiryDate(date);
+            }
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("address is expected to be unique.");
         }
         return this;
     }
