@@ -59,11 +59,11 @@ public class Time {
      */
     public static Integer increaseTimeInteger(Integer timeInteger) {
         if (timeInteger % 100 == 30) {
-            timeInteger += 70;
-            return timeInteger;
+            int newTime = timeInteger + 70;
+            return newTime;
         } else {
-            timeInteger += 30;
-            return timeInteger;
+            int newTime = timeInteger + 30;
+            return newTime;
         }
     }
 }
