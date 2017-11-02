@@ -33,21 +33,21 @@
 }
 
 .particular-link {
-    -fx-font-size: 11pt;
+    -fx-font-size: 13pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
     -fx-opacity: 1;
 }
 
 /*@@author Juxarius*/
-.profile-header {
+#scrollPane .profile-header {
     -fx-font-size: 35pt;
-    -fx-font-family: "Segoe UI Bold";
+    -fx-font-weight: bolder;
     -fx-text-fill: white;
     -fx-opacity: 1;
 }
 
-.profile-field {
+#profilePanel .profile-field {
     -fx-font-size: 15pt;
     -fx-font-family: "Segoe UI SemiLight";
     -fx-text-fill: white;
@@ -55,10 +55,35 @@
 }
 
 .static-insurance-labels {
-    -fx-font-size: 11pt;
+    -fx-font-size: 13pt;
     -fx-font-family: "Segoe UI SemiBold";
     -fx-text-fill: white;
     -fx-opacity: 1;
+}
+
+#insuranceListView #owner:hover, #insured:hover, #beneficiary:hover {
+    -fx-font-size: 13pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: #ff4500;
+    -fx-opacity: 1;
+}
+
+#insuranceListView .insurance-header {
+    -fx-font-size: 17pt;
+    -fx-font-family: "Impact";
+    -fx-opacity: 1;
+}
+
+#insuranceListView .gold-insurance-header {
+    -fx-text-fill: #daa520;
+}
+
+#insuranceListView .silver-insurance-header {
+    -fx-text-fill: #a9a9a9;
+}
+
+#insuranceListView .normal-insurance-header {
+    -fx-text-fill: white;
 }
 /*@@author*/
 

@@ -96,6 +96,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
      * Creates a copy of the given ReadOnlyInsurance.
      */
     public LifeInsurance(ReadOnlyInsurance source) {
+        this.insuranceName = new SimpleStringProperty(source.getInsuranceName());
         this.roleToPersonNameMap = new EnumMap<>(Roles.class);
         this.roleToPersonNameMap.put(Roles.OWNER, source.getOwner().getName());
         this.roleToPersonNameMap.put(Roles.INSURED, source.getInsured().getName());

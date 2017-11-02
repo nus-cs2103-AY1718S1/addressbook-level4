@@ -26,9 +26,20 @@ public class InsuranceIdLabel extends UiPart<Region> {
     //@@author RSJunior37
     public InsuranceIdLabel(ReadOnlyInsurance insurance) {
         super(FXML);
-        insuranceId.textProperty().bind(insurance.signingDateStringProperty());
+        insuranceId.textProperty().bind(insurance.insuranceNameProperty());
+        setPremiumLevel(insurance.getPremium());
         insuranceId.setOnMouseClicked(e -> raise(new InsurancePanelSelectionChangedEvent(insurance)));
-
-
     }
+
+    //@@author Juxarius
+    private void setPremiumLevel(Double premium){
+        if (premium > 500.0) {
+            insuranceId.getStyleClass().add("gold-insurance-header");
+        } else if (premium > 100.0) {
+            insuranceId.getStyleClass().add("silver-insurance-header");
+        } else {
+            insuranceId.getStyleClass().add("normal-insurance-header");
+        }
+    }
+    //@@author
 }
