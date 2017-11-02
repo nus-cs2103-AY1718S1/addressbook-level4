@@ -49,7 +49,7 @@ public class TypicalParcels {
     public static final String VALID_PHONE_ALICE = "85355255";
     public static final String VALID_EMAIL_ALICE = "alice@example.com";
     public static final String VALID_ADDRESS_ALICE = "6, Jurong West Ave 1, #08-111 S649520";
-    public static final String VALID_DELIVERY_DATE_ALICE = "05-05-2018";//DATE_TOMORROW;
+    public static final String VALID_DELIVERY_DATE_ALICE = "05-05-2018";
 
     public static final String VALID_TRACKING_NUMBER_BENSON = "RR111000111SG";
     public static final String VALID_NAME_BENSON = "Benson Meier";
