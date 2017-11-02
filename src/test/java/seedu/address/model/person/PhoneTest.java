@@ -29,8 +29,8 @@ public class PhoneTest {
                 + "Student: 97272031")); // parent number should be entered after student number
         // if both parent and student number are entered.
         assertFalse(Phone.isValidPhone("Parent: 972701")); // have at least parent number, but not exactly 8 digits.
-        assertFalse(Phone.isValidPhone("Student: 97272031 "
-                + "Parent: 97979797")); // not all letters in lower case
+        assertFalse(Phone.isValidPhone("StudenT: 97272031 "
+                + "ParenT: 97979797")); // only first letter of student and parent can be in upper case
 
         // valid phone numbers
         assertTrue(Phone.isValidPhone("Student: 97272031 "
