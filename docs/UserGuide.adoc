@@ -304,7 +304,7 @@ Displays the current value for `AddressBookName`
 * `pref AddressBookName MyBook` +
 Changes `AddressBookName` to `MyBook`
 
-=== Editing display screen : `choose` `Since v1.3`
+=== Editing display screen : `choose` `Since v1.4`
 
 Chooses what to display on the main screen. +
 Format: `choose [NEW_VALUE]` +
@@ -318,7 +318,7 @@ Typing this command will bring up the settings panel at the side of the applicat
 Examples:
 
 * `choose linkedin` +
-Displays the linkedin page of the current selected user on the display screen.
+Displays the linkedin results page of profiles that match user selected.
 
 === Exiting the program : `exit`
 

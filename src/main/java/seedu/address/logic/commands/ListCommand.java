@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+
 /**
  * Lists all persons in the address book to the user.
  */
@@ -11,12 +12,13 @@ public class ListCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "Listed all persons in alphabetical order";
     public static final String MESSAGE_TEMPLATE = COMMAND_WORD;
 
-
+    //@@author Sri-vatsa
     @Override
     public CommandResult executeUndoableCommand() {
         model.sortPersonListLexicographically();
         return new CommandResult(MESSAGE_SUCCESS);
     }
+    //@@author
 }
 
 

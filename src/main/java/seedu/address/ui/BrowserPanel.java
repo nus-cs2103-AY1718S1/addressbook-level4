@@ -28,6 +28,8 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String LINKEDIN_SEARCH_PARAM_FIRST_NAME = "&firstName=";
     public static final String LINKEDIN_SEARCH_PARAM_LAST_NAME = "&lastName=";
     public static final String LINKEDIN_URL_SUFFIX = "&origin=FACETED_SEARCH";
+    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
+    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
     //@@author
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -48,12 +50,14 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /***
+     * Loads person page
+     * @param person
+     */
     private void loadPersonPage(ReadOnlyPerson person) {
-        String [] Name = person.getName().fullName.split(" ");
         personSelected = person;
-        loadPage(LINKEDIN_SEARCH_URL_PREFIX + LINKEDIN_SEARCH_PEOPLE + LINKEDIN_SEARCH_PARAM_LOCATION
-                + LINKEDIN_SEARCH_PARAM_FIRST_NAME + Name[0] + LINKEDIN_SEARCH_PARAM_LAST_NAME + Name[1]
-                + LINKEDIN_URL_SUFFIX);
+        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
+                + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
     public void loadPage(String url) {
@@ -61,12 +65,17 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     //@@author Sri-vatsa
+
+    /***
+     * Loads pages based on choose command selection
+     * @param page
+     */
     private void loadOtherPages(String page) {
-        if(page == "linkedin") {
-            String[] Name = personSelected.getName().fullName.split(" ");
+        if (page == "linkedin") {
+            String[] name = personSelected.getName().fullName.split(" ");
 
             loadPage(LINKEDIN_SEARCH_URL_PREFIX + LINKEDIN_SEARCH_PEOPLE + LINKEDIN_SEARCH_PARAM_LOCATION
-                    + LINKEDIN_SEARCH_PARAM_FIRST_NAME + Name[0] + LINKEDIN_SEARCH_PARAM_LAST_NAME + Name[1]
+                    + LINKEDIN_SEARCH_PARAM_FIRST_NAME + name[0] + LINKEDIN_SEARCH_PARAM_LAST_NAME + name[1]
                     + LINKEDIN_URL_SUFFIX);
         }
     }
