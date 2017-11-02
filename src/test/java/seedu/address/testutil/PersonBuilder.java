@@ -11,6 +11,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProfilePicture;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
@@ -35,11 +36,12 @@ public class PersonBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Appointment defaultAppointment = new Appointment(DEFAULT_APPOINTMENTS);
+            ProfilePicture defaultPicture = new ProfilePicture(ProfilePicture.DEFAULT_PICTURE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             Set<Group> defaultGroups = new HashSet<>();
             this.person =
                     new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultAppointment,
-                            defaultGroups, defaultTags);
+                            defaultPicture, defaultGroups, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -76,6 +78,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author arturs68
     /**
      * Parses the {@code groups} into a {@code Set<Group>} and set it to the {@code Person} that we are building.
      */
@@ -87,6 +90,7 @@ public class PersonBuilder {
         }
         return this;
     }
+    //@@author
 
     /**
      * Sets the {@code Address} of the {@code Person} that we are building.
@@ -124,6 +128,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author namvd2709
     /**
      * Sets the {@code Appointment} of the {@code Person} that we are building.
      */

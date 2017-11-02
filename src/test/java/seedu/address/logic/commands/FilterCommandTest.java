@@ -20,60 +20,62 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.tag.TagContainsKeywordsPredicate;
 
 
-public class FindTagCommandTest {
+
+public class FilterCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
+    //@@author adileyzekmoon
     @Test
     public void equals() throws Exception {
-        TagContainsKeywordsPredicate firstPredicate =
-                new TagContainsKeywordsPredicate(Collections.singletonList("first"));
-        TagContainsKeywordsPredicate secondPredicate =
-                new TagContainsKeywordsPredicate(Collections.singletonList("second"));
+        PersonContainsKeywordsPredicate firstPredicate =
+                new PersonContainsKeywordsPredicate(Collections.singletonList("first"));
+        PersonContainsKeywordsPredicate secondPredicate =
+                new PersonContainsKeywordsPredicate(Collections.singletonList("second"));
 
-        FindTagCommand findFirstCommand = new FindTagCommand(firstPredicate);
-        FindTagCommand findSecondCommand = new FindTagCommand(secondPredicate);
+        FilterCommand FilterFirstCommand = new FilterCommand(firstPredicate);
+        FilterCommand FilterSecondCommand = new FilterCommand(secondPredicate);
 
         // same object -> returns true
-        assertTrue(findFirstCommand.equals(findFirstCommand));
+        assertTrue(FilterFirstCommand.equals(FilterFirstCommand));
 
         // same values -> returns true
-        FindTagCommand findFirstCommandCopy = new FindTagCommand(firstPredicate);
-        assertTrue(findFirstCommand.equals(findFirstCommandCopy));
+        FilterCommand FilterFirstCommandCopy = new FilterCommand(firstPredicate);
+        assertTrue(FilterFirstCommand.equals(FilterFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(findFirstCommand.equals(1));
+        assertFalse(FilterFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(findFirstCommand.equals(null));
+        assertFalse(FilterFirstCommand.equals(null));
 
         // different person -> returns false
-        assertFalse(findFirstCommand.equals(findSecondCommand));
+        assertFalse(FilterFirstCommand.equals(FilterSecondCommand));
     }
 
     @Test
     public void execute_zeroKeywords_noPersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        FindTagCommand command = prepareCommand(" ");
+        FilterCommand command = prepareCommand(" ");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
-        FindTagCommand command = prepareCommand("owesMoney colleagues");
+        FilterCommand command = prepareCommand("owesMoney colleagues");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON));
     }
+    //@@author
 
     /**
-     * Parses {@code userInput} into a {@code FindTagCommand}.
+     * Parses {@code userInput} into a {@code FilterCommand}.
      */
-    private FindTagCommand prepareCommand(String userInput) {
-        FindTagCommand command =
-                new FindTagCommand(new TagContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+    private FilterCommand prepareCommand(String userInput) {
+        FilterCommand command =
+                new FilterCommand(new PersonContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -84,7 +86,7 @@ public class FindTagCommandTest {
      *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(FindTagCommand command, String expMessage, List<ReadOnlyPerson> expList) {
+    private void assertCommandSuccess(FilterCommand command, String expMessage, List<ReadOnlyPerson> expList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
 

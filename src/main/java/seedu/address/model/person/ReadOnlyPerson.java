@@ -25,6 +25,8 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<Appointment> appointmentProperty();
     Appointment getAppointment();
+    ObjectProperty<ProfilePicture> profilePictureProperty();
+    ProfilePicture getProfilePicture();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
     ObjectProperty<UniqueGroupList> groupProperty();

@@ -54,6 +54,7 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.empty();
     }
 
+    //@@author arturs68
     /**
      * Parses a {@code Optional<String> Group} into an {@code Optional<Group>} if {@code group} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -62,6 +63,7 @@ public class ParserUtil {
         requireNonNull(groupName);
         return groupName.isPresent() ? Optional.of(new Group(groupName.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
@@ -90,6 +92,7 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
+    //@@author namvd2709
     /**
      * Parses a {@code Optional<String> appointment} into {@code Optional<Appointment>} if {@code appointment} present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -98,6 +101,7 @@ public class ParserUtil {
         requireNonNull(appointment);
         return appointment.isPresent() ? Optional.of(new Appointment(appointment.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.

@@ -26,6 +26,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<Appointment> appointment;
+    private ObjectProperty<ProfilePicture> profilePicture;
 
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<UniqueGroupList> groups;
@@ -34,13 +35,14 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Appointment appointment,
-                                        Set<Group> groups, Set<Tag> tags) {
+                                        ProfilePicture profilePicture, Set<Group> groups, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.appointment = new SimpleObjectProperty<>(appointment);
+        this.profilePicture = new SimpleObjectProperty<>(profilePicture);
         // protect internal tags and groups from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.groups = new SimpleObjectProperty<>(new UniqueGroupList(groups));
@@ -51,7 +53,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getAppointment(),
-                source.getGroups(), source.getTags());
+                source.getProfilePicture(), source.getGroups(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -110,6 +112,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author namvd2709
     public void setAppointment(Appointment appointment) {
         this.appointment.set(requireNonNull(appointment));
     }
@@ -123,6 +126,22 @@ public class Person implements ReadOnlyPerson {
     public Appointment getAppointment() {
         return appointment.get();
     }
+
+    //@@author arturs68
+    public void setProfilePicture(ProfilePicture profilePicture) {
+        this.profilePicture.set(requireNonNull(profilePicture));
+    }
+
+    @Override
+    public ObjectProperty<ProfilePicture> profilePictureProperty() {
+        return profilePicture;
+    }
+
+    @Override
+    public ProfilePicture getProfilePicture() {
+        return profilePicture.get();
+    }
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
@@ -144,6 +163,7 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
+    //@@author arturs68
     /**
      * Replaces this person's groups with the groups in the argument group set.
      */
@@ -163,6 +183,7 @@ public class Person implements ReadOnlyPerson {
     public ObjectProperty<UniqueGroupList> groupProperty() {
         return groups;
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
@@ -174,7 +195,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, appointment, profilePicture, groups, tags);
     }
 
     @Override

@@ -31,6 +31,7 @@ public class ModelManagerTest {
         modelManager.getFilteredPersonList().remove(0);
     }
 
+    //@@author arturs68
     @Test
     public void removeTag() throws IllegalValueException, PersonNotFoundException {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
@@ -57,6 +58,7 @@ public class ModelManagerTest {
             assertFalse(person.getTags().contains(new Tag("friends")));
         }
     }
+    //@@author
 
     @Test
     public void equals() {

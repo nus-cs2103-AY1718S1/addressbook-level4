@@ -13,7 +13,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
-
+    //@@author adileyzekmoon
     public TagContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
@@ -30,7 +30,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return keywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(finalString, '[' + keyword + ']'));
     }
-
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
