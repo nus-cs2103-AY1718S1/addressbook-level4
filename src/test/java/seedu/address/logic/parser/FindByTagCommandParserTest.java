@@ -11,7 +11,6 @@ import org.junit.Test;
 import seedu.address.logic.commands.FindByTagCommand;
 import seedu.address.model.person.TagContainsKeywordsPredicate;
 
-//@@author hj2304
 public class FindByTagCommandParserTest {
 
     private FindByTagCommandParser parser = new FindByTagCommandParser();
@@ -33,4 +32,3 @@ public class FindByTagCommandParserTest {
         assertParseSuccess(parser, " \n friends \n \t family \t", expectedCommand);
     }
 }
-//@@author hj2304
