@@ -116,9 +116,11 @@ public class ResidentBookParser {
         case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();
 
+        //@@author shitian007
         case HighlightCommand.COMMAND_WORD:
         case HighlightCommand.COMMAND_ALIAS:
             return new HighlightCommandParser().parse(arguments);
+        //@@author
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

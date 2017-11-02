@@ -80,12 +80,14 @@ public interface Model {
      */
     void sortBy(String sortCriteria) throws AlreadySortedException;
 
+    //@@author shitian007
     /**
      * Updates the highlight status of persons with the specified tag
      *
      * @throws TagNotFoundException if no specified tag exists
      */
     void updateHighlightStatus(String highlightTag) throws TagNotFoundException;
+    //@@author
 
     /**
      * Swaps two residents' rooms

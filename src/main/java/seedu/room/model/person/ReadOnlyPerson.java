@@ -20,8 +20,10 @@ public interface ReadOnlyPerson extends Comparable {
     Email getEmail();
     ObjectProperty<Room> roomProperty();
     Room getRoom();
+    //@@author shitian007
     ObjectProperty<Picture> pictureProperty();
     Picture getPicture();
+    //@@author
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
     ObjectProperty<Timestamp> timestampProperty();
