@@ -138,6 +138,36 @@ public class ToggleSortByLabelEvent extends BaseEvent {
     }
 }
 ```
+###### \java\seedu\address\commons\events\ui\ToggleToPersonViewEvent.java
+``` java
+
+/**
+ * An event requesting to toggle the view to PersonPanel.
+ */
+public class ToggleToPersonViewEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+}
+```
+###### \java\seedu\address\commons\events\ui\ToggleToTaskViewEvent.java
+``` java
+
+/**
+ * An event requesting to toggle the view to TaskPanel.
+ */
+public class ToggleToTaskViewEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+}
+```
 ###### \java\seedu\address\commons\events\ui\ValidResultDisplayEvent.java
 ``` java
 
@@ -697,7 +727,6 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
      */
     @FXML
     private void handleListAllClicked() {
-        listAllToggleStyle();
         try {
             logic.execute("list");
         } catch (CommandException | ParseException e) {
@@ -710,7 +739,6 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
      */
     @FXML
     private void handleListPinnedClicked() {
-        listPinToggleStyle();
         try {
             logic.execute("listpin");
         } catch (CommandException | ParseException e) {
@@ -742,6 +770,43 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     private void handleSortByLabelEvent(ToggleSortByLabelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         sortedByLabel.setText(event.toString());
+    }
+
+    @Subscribe
+    private void handleToggleToTaskViewEvent(ToggleToTaskViewEvent event) {
+        switchToTaskView();
+    }
+
+
+    @Subscribe
+    private void handleToggleToPersonViewEvent(ToggleToPersonViewEvent event) {
+        switchToPersonView();
+    }
+
+    /**
+     * Switches style to person view.
+     */
+    private void switchToPersonView() {
+        personListPanelPlaceholder.getChildren().removeAll(taskListPanel.getRoot());
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        allLabel.setVisible(true);
+        pinLabel.setVisible(true);
+        organizerLabel.setText("Sorted By:");
+        personViewLabel.setStyle("-fx-text-fill: white");
+        taskViewLabel.setStyle("-fx-text-fill: #555555");
+    }
+
+    /**
+     * Switches style to task view.
+     */
+    private void switchToTaskView() {
+        personListPanelPlaceholder.getChildren().removeAll(personListPanel.getRoot());
+        personListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
+        allLabel.setVisible(false);
+        pinLabel.setVisible(false);
+        organizerLabel.setText("Showing:");
+        personViewLabel.setStyle("-fx-text-fill: #555555");
+        taskViewLabel.setStyle("-fx-text-fill: white");
     }
 
     private void switchToBrowser() {
@@ -875,6 +940,7 @@ public class SortFindPanel extends UiPart<Region> {
     public SortFindPanel(Logic logic) {
         super(FXML);
         this.logic = logic;
+        registerAsAnEventHandler(this);
     }
 
     /**
@@ -943,6 +1009,35 @@ public class SortFindPanel extends UiPart<Region> {
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to sort address using sort menu");
         }
+    }
+
+    /**
+     * Handles switch to task view event
+     */
+    @Subscribe
+    private void handleToggleToTaskViewEvent(ToggleToTaskViewEvent event) {
+        switchToTaskView();
+    }
+
+    @Subscribe
+    private void handleToggleToPersonViewEvent(ToggleToPersonViewEvent event) {
+        switchToPersonView();
+    }
+
+    /**
+     * Switches style to person view.
+     */
+    private void switchToPersonView() {
+        searchBox.setPromptText("Search Person...");
+        sortMenu.setVisible(true);
+    }
+
+    /**
+     * Switches style to task view.
+     */
+    private void switchToTaskView() {
+        searchBox.setPromptText("Search Task...");
+        sortMenu.setVisible(false);
     }
 
     public MenuButton getSortMenu() {
@@ -1166,12 +1261,12 @@ public class TutorialPanel extends UiPart<Region> {
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label style="-fx-text-fill: white;" text="Person">
+                              <Label fx:id="personViewLabel" onMouseReleased="#handlePersonViewClicked" style="-fx-text-fill: white;" text="Person">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" left="5.0" />
                                  </GridPane.margin>
                               </Label>
-                              <Label text="Task" GridPane.columnIndex="1">
+                              <Label fx:id="taskViewLabel" onMouseReleased="#handleTaskViewClicked" text="Task" GridPane.columnIndex="1">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" left="10.0" />
                                  </GridPane.margin>
@@ -1185,7 +1280,7 @@ public class TutorialPanel extends UiPart<Region> {
                                  <GridPane.margin>
                                     <Insets bottom="5.0" left="10.0" />
                                  </GridPane.margin></Label>
-                              <Label prefHeight="21.0" prefWidth="76.0" style="-fx-text-fill: white;" text="Sorted By:" GridPane.columnIndex="4">
+                              <Label fx:id="organizerLabel" prefHeight="21.0" prefWidth="76.0" style="-fx-text-fill: white;" text="Sorted By:" GridPane.columnIndex="4">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" />
                                  </GridPane.margin>

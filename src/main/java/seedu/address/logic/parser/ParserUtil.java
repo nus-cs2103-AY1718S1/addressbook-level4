@@ -47,6 +47,7 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    //@@author aziziazfar
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -113,6 +114,7 @@ public class ParserUtil {
             return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
         }
     }
+    //@@author
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
