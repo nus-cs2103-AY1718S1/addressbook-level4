@@ -93,5 +93,4 @@ public class BrowserPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonMap(event.getPerson());
     }
-
 }
