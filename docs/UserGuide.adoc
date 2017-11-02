@@ -79,16 +79,19 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Listing all persons : `list`
-`From V1.3`
+`From v1.3`
 
 Shows a list of all persons in the address book in alphabetical order. +
 Format: `list`
 
 
-=== Listing all persons, sorted by search frequency : `listByMostSearched`
+=== Listing all persons, sorted by search frequency : `listByMostSearched` `Since v1.2`
 
 Shows a list of all persons in the address book, sorted by descending order of search frequency +
 Format: `listByMostSearched`
+
+`From v1.3`
+This list view is now undoable.
 
 ****
 * Each time a person is searched for using `find`, the search frequency of the person is updated.
@@ -285,7 +288,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
-=== Editing user preference : `pref`
+=== Editing user preference : `pref` `Since v1.2`
 
 Edits the user preference. +
 Format: `pref [KEY] [NEW_VALUE]` +
