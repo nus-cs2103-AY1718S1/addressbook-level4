@@ -13,6 +13,7 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.LocateCommandEvent;
+import seedu.address.commons.events.ui.LocateMrtCommandEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -24,6 +25,7 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String DEFAULT_PAGE = "default.html";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_MAP_URL_PREFIX = "https://www.google.com.sg/maps/search/";
+    public static final String GOOGLE_MRT_URL_SUFFIX = "+MRT";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 
     private static final String FXML = "BrowserPanel.fxml";
@@ -50,6 +52,11 @@ public class BrowserPanel extends UiPart<Region> {
 
     private void loadLocationPage(ReadOnlyPerson person) {
         loadPage(GOOGLE_MAP_URL_PREFIX + person.getAddress().value.replaceAll(" ", "+"));
+    }
+
+    private void loadMrtPage(ReadOnlyPerson person) {
+        loadPage(GOOGLE_MAP_URL_PREFIX + person.getMrt().value.replaceAll("", "+")
+                + GOOGLE_MRT_URL_SUFFIX);
     }
 
     public void loadPage(String url) {
@@ -81,5 +88,11 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleLocateCommandEvent(LocateCommandEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadLocationPage(event.getPerson());
+    }
+
+    @Subscribe
+    private void handleLocateMrtCommandEvent(LocateMrtCommandEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadMrtPage(event.getPerson());
     }
 }
