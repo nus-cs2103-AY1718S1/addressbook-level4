@@ -32,9 +32,11 @@ public class RemarkCommand extends UndoableCommand {
             + "EXAMPLE: " + COMMAND_WORD + " 1 "
             + PREFIX_REMARK + "likes dogs.";
 
+    //@@author hansiang93
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " "
             + "{Index} "
             + PREFIX_REMARK + "{Remark}";
+    //@@author
 
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Remark: %2$s";
     public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added remark to Person: %1$s";

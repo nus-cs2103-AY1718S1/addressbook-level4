@@ -20,7 +20,9 @@ public class SortCommand extends Command {
             + " [name/email/phone/address/tag]\n"
             + "Example: " + COMMAND_WORD + " name";
 
+    //@@author hansiang93
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {[name/email/phone/address/tag]}";
+    //@@author
 
     public static final String MESSAGE_SUCCESS = "Sorted successfully by %1$s, Listed all persons.";
 

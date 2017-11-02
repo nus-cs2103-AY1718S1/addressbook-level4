@@ -17,11 +17,11 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    //@@author hansiang93
     private static String[] colors = {"darkblue", "darkolivegreen", "slategray ", "teal", "maroon", "darkslateblue"};
     private static HashMap<String, String> tagColors = new HashMap<>();
     private static HashMap<String, String> webLinkColors = new HashMap<>();
 
-    //@@author hansiang93
     static {
         webLinkColors.put("facebook", "#3b5998");
         webLinkColors.put("twitter", "#00aced");

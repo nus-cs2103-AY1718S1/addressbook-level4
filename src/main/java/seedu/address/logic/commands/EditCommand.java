@@ -54,11 +54,13 @@ public class EditCommand extends UndoableCommand {
             + PREFIX_TAG + "owesMoney "
             + PREFIX_WEB_LINK + "https://www.facebook.com/jiasheng.an";
 
+    //@@author hansiang93
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {Index} "
             + PREFIX_PHONE + "{Phone} "
             + PREFIX_EMAIL + "{email} "
             + PREFIX_TAG + "{tag} "
             + PREFIX_WEB_LINK + "{Weblink}";
+    //@@author
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";

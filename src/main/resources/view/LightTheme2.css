@@ -1,3 +1,4 @@
+/*@@author hansiang93*/
 * {
     -fx-base-background-color-0: #69D2E7;
     -fx-base-background-color-1: #A7DBD8;
@@ -11,6 +12,7 @@
     -fx-list-cell-selected-border: #3e7b91;
     -fx-list-cell-empty: #E0E4CC;
 }
+/*@@author*/
 
 .background {
     -fx-background-color: derive(-fx-base-background-color-0, 20%);
