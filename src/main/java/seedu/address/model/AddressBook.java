@@ -93,7 +93,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
 
-        //@@author OscarWang114
         try {
             setLifeInsurances(newData.getLifeInsuranceMap());
         } catch (DuplicateInsuranceException e) {
@@ -106,7 +105,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (InsuranceNotFoundException e) {
             assert false : "AddressBooks should not contain id that doesn't match to an insurance";
         }
-        //@@author
     }
 
     //// person-level operations
@@ -149,6 +147,23 @@ public class AddressBook implements ReadOnlyAddressBook {
         // in the person list.
         persons.setPerson(target, editedPerson);
     }
+
+    //@@author OscarWang114
+    /**
+     *Adds an insurance to the address book.
+     */
+    public void addInsurance(ReadOnlyInsurance i) {
+        UUID id = UUID.randomUUID();
+        LifeInsurance lifeInsurance = new LifeInsurance(i);
+        try {
+            lifeInsuranceMap.put(id, lifeInsurance);
+        } catch (DuplicateInsuranceException e) {
+            assert false : "AddressBooks should not have duplicate insurances";
+        }
+        syncMasterLifeInsuranceMapWith(persons);
+    }
+    //@@author
+
 
     /**
      * Ensures that every tag in this person:
@@ -203,14 +218,18 @@ public class AddressBook implements ReadOnlyAddressBook {
             String insured = insurance.getInsured().getName();
             String beneficiary = insurance.getBeneficiary().getName();
             persons.forEach(person -> {
+                person.clearLifeInsuranceIds();
                 if (person.getName().fullName.equals(owner)) {
                     insurance.setOwner(person);
+                    person.addLifeInsuranceIds(id);
                 }
                 if (person.getName().fullName.equals(insured)) {
                     insurance.setInsured(person);
+                    person.addLifeInsuranceIds(id);
                 }
                 if (person.getName().fullName.equals(beneficiary)) {
                     insurance.setBeneficiary(person);
+                    person.addLifeInsuranceIds(id);
                 }
             });
         });
