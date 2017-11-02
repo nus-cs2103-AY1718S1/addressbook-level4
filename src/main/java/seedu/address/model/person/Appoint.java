@@ -3,6 +3,8 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 
 
+//@@author risashindo7
+
 /**
  * Represents a Person's appoint in the address book.
  * Guarantees: immutable; is always valid
@@ -36,3 +38,4 @@ public class Appoint {
         return value.hashCode();
     }
 }
+//@@author

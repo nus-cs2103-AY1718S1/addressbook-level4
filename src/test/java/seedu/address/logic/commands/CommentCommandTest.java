@@ -25,7 +25,7 @@ import seedu.address.model.person.Comment;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.PersonBuilder;
-
+//@@author risashindo7
 /**
  * Contains integration tests (interaction with the Model) and unit tests for CommentCommand.
  */
@@ -121,3 +121,4 @@ public class CommentCommandTest {
         return commentCommand;
     }
 }
+//@@author

@@ -14,7 +14,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Appoint;
-
+//@@author risashindo7
 /**
  * Contains integration tests (interaction with the Model) and unit tests for AppointCommand.
  */
@@ -57,3 +57,4 @@ public class AppointCommandTest {
     }
     */
 }
+//@@author

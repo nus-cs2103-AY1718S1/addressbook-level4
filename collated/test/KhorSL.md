@@ -1,5 +1,5 @@
 # KhorSL
-###### /java/seedu/address/logic/commands/AddMultipleCommandTest.java
+###### \java\seedu\address\logic\commands\AddMultipleCommandTest.java
 ``` java
 public class AddMultipleCommandTest {
 
@@ -185,7 +185,7 @@ public class AddMultipleCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/FindCommandTest.java
+###### \java\seedu\address\logic\commands\FindCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -292,7 +292,7 @@ public class FindCommandTest {
         return command;
     }
 ```
-###### /java/seedu/address/logic/commands/MergeCommandTest.java
+###### \java\seedu\address\logic\commands\MergeCommandTest.java
 ``` java
 /**
  * Contains integration test (interaction with Model) for {@code MergeCommand}
@@ -461,7 +461,7 @@ public class MergeCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/MergeCommandParserTest.java
+###### \java\seedu\address\logic\parser\MergeCommandParserTest.java
 ``` java
 public class MergeCommandParserTest {
     private MergeCommandParser parser = new MergeCommandParser();
@@ -482,7 +482,7 @@ public class MergeCommandParserTest {
 
 }
 ```
-###### /java/systemtests/AddMultipleCommandSystemTest.java
+###### \java\systemtests\AddMultipleCommandSystemTest.java
 ``` java
 public class AddMultipleCommandSystemTest extends AddressBookSystemTest {
 
@@ -568,7 +568,7 @@ public class AddMultipleCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
     }
 ```
-###### /java/systemtests/MergeCommandSystemTest.java
+###### \java\systemtests\MergeCommandSystemTest.java
 ``` java
 public class MergeCommandSystemTest extends AddressBookSystemTest {
 

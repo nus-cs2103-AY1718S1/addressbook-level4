@@ -4,7 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-
+//@@author risashindo7
 public class CommentTest {
 
     @Test
@@ -29,3 +29,4 @@ public class CommentTest {
         assertFalse(comment.equals(differentComment));
     }
 }
+//@@author
