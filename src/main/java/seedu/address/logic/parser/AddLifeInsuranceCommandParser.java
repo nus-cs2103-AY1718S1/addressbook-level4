@@ -16,6 +16,8 @@ import java.util.stream.Stream;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddLifeInsuranceCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.insurance.LifeInsurance;
+import seedu.address.model.insurance.ReadOnlyInsurance;
 
 //@@author OscarWang114
 /**
@@ -55,8 +57,10 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
                     ParserUtil.parseContract(argMultimap.getValue(PREFIX_EXPIRY_DATE)).get()
             );
 
-            return new AddLifeInsuranceCommand(insuranceName, owner, insured, beneficiary, premium,
+            ReadOnlyInsurance lifeInsurance = new LifeInsurance(insuranceName, owner, insured, beneficiary, premium,
                     contract, signingDate, expiryDate);
+
+            return new AddLifeInsuranceCommand(lifeInsurance);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
