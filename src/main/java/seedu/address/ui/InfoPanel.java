@@ -170,7 +170,6 @@ public class InfoPanel extends UiPart<Region> {
         debtRepaymentProgressBar = new DebtRepaymentProgressBar(person);
         progressBarPlaceholder.getChildren().add(debtRepaymentProgressBar.getRoot());
     }
-    //@@author
 
     //@@author jaivigneshvenugopal
     /**
@@ -181,8 +180,8 @@ public class InfoPanel extends UiPart<Region> {
         debtorProfilePicture = new DebtorProfilePicture(person);
         profilePicPlaceholder.getChildren().add(debtorProfilePicture.getImageView());
     }
-    //@@author jaivigneshvenugopal
 
+    //@@author khooroko
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.

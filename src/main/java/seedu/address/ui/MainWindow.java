@@ -167,7 +167,6 @@ public class MainWindow extends UiPart<Region> {
             commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
         });
     }
-    //@@author
 
     //@@author jaivigneshvenugopal
     /**
