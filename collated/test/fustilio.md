@@ -35,6 +35,8 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FLAMMABLE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRAGILE;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;
@@ -105,7 +107,7 @@ public class DeleteTagCommandTest {
     public void execute_deleteTag_tagNotFoundFailure() throws Exception {
 
         try {
-            tagToDelete = new Tag("testFailureTag");
+            tagToDelete = Tag.getInstance(Tag.FRAGILE.toString());
         } catch (IllegalValueException e) {
             e.printStackTrace();
         }
@@ -123,7 +125,7 @@ public class DeleteTagCommandTest {
         String exceptionMessage = "";
 
         try {
-            tagToDelete = new Tag("!@#$%^&*()");
+            tagToDelete = Tag.getInstance("!@#$%^&*()");
         } catch (IllegalValueException e) {
             exceptionMessage = e.getMessage();
         }
@@ -141,23 +143,23 @@ public class DeleteTagCommandTest {
 
     @Test
     public void equals() {
-        Tag urgent = null;
+        Tag flammable = null;
         Tag fragile = null;
         try {
-            urgent = new Tag("urgent");
-            fragile = new Tag("fragile");
+            flammable = Tag.getInstance(VALID_TAG_FLAMMABLE.toLowerCase());
+            fragile = Tag.getInstance(VALID_TAG_FRAGILE);
         } catch (IllegalValueException e) {
             e.printStackTrace();
         }
 
-        DeleteTagCommand deleteUrgentTagCommand = new DeleteTagCommand(urgent);
+        DeleteTagCommand deleteUrgentTagCommand = new DeleteTagCommand(flammable);
         DeleteTagCommand deleteFragileTagCommand = new DeleteTagCommand(fragile);
 
         // same object -> returns true
         assertTrue(deleteUrgentTagCommand.equals(deleteUrgentTagCommand));
 
         // same values -> returns true
-        DeleteTagCommand deleteUrgentTagCommandCopy = new DeleteTagCommand(urgent);
+        DeleteTagCommand deleteUrgentTagCommandCopy = new DeleteTagCommand(flammable);
         assertTrue(deleteUrgentTagCommand.equals(deleteUrgentTagCommandCopy));
 
         // different types -> returns false
@@ -233,6 +235,7 @@ package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FLAMMABLE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FROZEN;
 import static seedu.address.logic.commands.DeleteTagCommand.MESSAGE_DELETE_TAG_SUCCESS;
 import static seedu.address.logic.commands.DeleteTagCommand.MESSAGE_INVALID_DELETE_TAG_NOT_FOUND;
 import static seedu.address.testutil.TestUtil.getParcel;
@@ -271,14 +274,14 @@ public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
             targetTag = targetTags.next();
         }
 
-        String command = "     " + DeleteTagCommand.COMMAND_WORD + "      " + targetTag.tagName + "       ";
+        String command = "     " + DeleteTagCommand.COMMAND_WORD + "      " + targetTag.toString() + "       ";
 
         Tag deletedTag = removeTag(expectedModel, targetTag);
         String expectedResultMessage = String.format(MESSAGE_DELETE_TAG_SUCCESS, deletedTag);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
         Model modelBeforeDeletingLast = getModel();
-        targetTag = new Tag(VALID_TAG_FLAMMABLE);
+        targetTag = Tag.getInstance(VALID_TAG_FLAMMABLE);
 
         assertCommandSuccess(targetTag);
 
@@ -297,8 +300,8 @@ public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid arguments (tag not founds) -> rejected */
         expectedResultMessage = String.format(MESSAGE_INVALID_DELETE_TAG_NOT_FOUND,
-                new Tag("relatives"));
-        assertCommandFailure(DeleteTagCommand.COMMAND_WORD + " relatives",
+                Tag.getInstance(Tag.FROZEN.toString()));
+        assertCommandFailure(DeleteTagCommand.COMMAND_WORD + " " + VALID_TAG_FROZEN.toString(),
                 expectedResultMessage);
 
         /* Case: mixed case command word -> rejected */
@@ -329,7 +332,7 @@ public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
         String expectedResultMessage = String.format(MESSAGE_DELETE_TAG_SUCCESS, deletedTag);
 
         assertCommandSuccess(
-                DeleteTagCommand.COMMAND_WORD + " " + toDelete.tagName, expectedModel, expectedResultMessage);
+                DeleteTagCommand.COMMAND_WORD + " " + toDelete.toString(), expectedModel, expectedResultMessage);
     }
 
     /**
