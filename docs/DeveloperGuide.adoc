@@ -461,6 +461,7 @@ just its size
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file
 (default: `config.json`).
 
+//tag::browser[]
 === Google Maps Search Browser
 
 The google maps search browser enhancement resides within the `BrowserPanel`.
@@ -478,6 +479,7 @@ to the back of Google Map's search URL prefix to get a URL for the browser to lo
 ** **Pros:** Makes it easier for implementing additional features that utilizes the Maps API which would be required +
  in future versions of the Ark application. +
 ** **Cons:** More difficult to implement and integrate into a command line interface.
+//end::browser[]
 
 //tag::deleteTag[]
 
