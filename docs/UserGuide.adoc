@@ -77,7 +77,6 @@ This app will not work with earlier versions of Java 8.
 image::introUiUG.png[width="790"]
 +
 . The different sections of the UI are as follows:
-
 .. Command Box - This is where you type your commands
 .. Result Display - The outcome of your commands will display here
 .. Sort menu - You can use this menu to sort the list
