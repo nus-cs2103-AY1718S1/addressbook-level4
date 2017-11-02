@@ -195,6 +195,7 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
+* stores the meeting list data.
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
@@ -208,7 +209,7 @@ _Figure 2.5.1 : Structure of the Storage Component_
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save the Address Book and Meeting List data in xml format and read it back.
 * can save a backup of the Address Book and restore from a backup file.
 
 === Common classes
@@ -345,6 +346,26 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+// tag::meetings[]
+=== Meetings
+
+The mechanism and data structure of meetings are similar to that of the address book. The local storage is located at
+`data/meetinglist.xml` by default. For each meeting, the date, time location and participants are recorded. The participants
+must be from the address book.
+
+[NOTE]
+The meeting functionality is not fully implemented yet. There is currently no command to add or edit meetings.
+
+==== Design Considerations
+
+**Aspect:** Local storage of the meeting list +
+**Alternative 1 (current choice):** Use XML and separate from the address book storage+
+**Pros:** Follows the single responsibility principle and simplifies both the address book and meeting list data structre +
+**Cons:** Potentially duplicate code, violates the DRY principle +
+**Alternative 2:** Use XML together in the address book storage +
+**Pros:** Less extra components needed, some information shared between the two parts can be accessed more conveniently +
+**Cons:** The data structure of `addressbook.xml` would become too complicated
 
 === Logging
 
@@ -497,7 +518,7 @@ public void sortBySearchCount () {
     internalList.sort(new ReadOnlyPersonComparator());
 }
 ----
-The `ReadOnlyPersonComparator` compares the search count between two Persons. This updates the address book storage file.+
+The `ReadOnlyPersonComparator` compares the search count between two Persons. This updates the address book storage file.
 When model calls for `filteredPersons` list, all persons are read from +
 the address book storage and then displayed on `PersonListPanel` on the GUI.
 
@@ -512,7 +533,6 @@ the address book storage and then displayed on `PersonListPanel` on the GUI.
 **Pros:** Minimal changes to `Addressbook.xml` +
 **Cons:** Unnecessary repetition in storage; replication of `Person` details +
 
-
 ---
 
 **Aspect:** Persistent sort +
@@ -523,6 +543,49 @@ the address book storage and then displayed on `PersonListPanel` on the GUI.
 **Pros:** Reduce operations on storage file, `Addressbook.xml` +
 **Cons:** Use of additional storage to copy all contacts is inefficient in terms of time & storage
 
+---
+
+=== Choosing display mode
+
+This allows the user to select what they want displayed on the main screen. Since our application is targeted at university students to facillitate project meeting, who use a variety of social media
+platforms, the ability to select their preferred display is vital so they can view different social media platforms.
+
+==== Implementation
+
+The last selected display mode will be stored in `preferences.json` by default, which is set in `config.json` (coming in v1.4). The default mode of display will be set to `linkedin`.
+When a display mode is selected by the user via its command `choose`, an event is raised by the `ChooseCommand` object, via the following line :
+[source,java]
+----
+EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
+----
+This event is then handled by the `SettingsSelector` object. It selects and highlights the user's selected display mode, and then raises another event :
+[source,java]
+----
+raise(new BrowserPanelSelectionChangedEvent(browserSelection));
+----
+Which is handled by the `BrowserPanel` object to display their selected display type.
+
+==== Command: `choose`
+The `choose` command allows users to select the display type they prefer. When the String found in the command box is detected to contain either `choose` or `pref`, both of which are
+commands related to settings, the settings panel is brought in via a translation timeline animation. When the `MainWindow` is originally initialized, the container for the settings panel
+is translated on the X axis outside of the application view, and is then brought into view via the animation. When the String in the command box does not contain `choose` or `pref`, the
+settings panel is then translated out of sight again.
+
+image::SettingsPaneInOut.png[width="700"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of choose command
+**Alternative:** Combine it with the pref command to come under a "mega" "settings" command.
+**Pros:** Lesser commands for the user to remember, higher code modularity, easier for future command implementations on settings.
+**Cons:** Harder to code and debug due to requirement to parse more arguments
+
+---
+
+**Aspect:** Animation of settings panel
+**Alternative:** Use transitions instead of timeline
+**Pros:** Transitions are easier to implement and understand
+**Cons:** KeyValue objects are fit into a keyframe which is then fit into the timeline, which fits more into the concept of java's OOP and allows for more code reusability when we want to, for example, animate bouncing
 
 ---
 
@@ -559,6 +622,28 @@ Otherwise, users will be notified that specified tags are not used in address bo
 **Pros:** Fewer `remove` operations +
 **Cons:** [Space complexity (O(n)) is higher] More storage elements required to store temorary lists +
 **Cons:** More complex implementation
+
+---
+
+=== Command: `Search`
+
+`Search` lets users search for contacts in the address book by keywords in parameters of their details. +
+The feature is more powerful and useful than find which only searches by name.
+
+==== Implementation
+
+The keywords are generated as list of strings, which is then checked against the details of the persons
+in address book.
+
+The details are returned as strings, by the ReadOnlyPerson method in the person model. The list of searched
+people is then continually updated, before it is finally returned to the user
+
+
+==== Design Considerations
+
+**Aspect:** implementation of `Search` command over `Find`  +
+**Pros:** More powerful search tool +
+**Cons:** Unnecessary results may be returned for larger address books
 
 ---
 

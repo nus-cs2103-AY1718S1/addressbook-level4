@@ -50,7 +50,7 @@ public class UiManager extends ComponentManager implements Ui {
         primaryStage.setTitle(config.getAppTitle());
 
         //Set the application icon.
-        primaryStage.getIcons().add(getImage(ICON_APPLICATION));
+        primaryStage.getIcons().add(new Image("/images/address_book_32.png"));
 
         try {
             mainWindow = new MainWindow(primaryStage, config, prefs, logic);

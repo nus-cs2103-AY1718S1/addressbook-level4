@@ -12,6 +12,8 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public interface ReadOnlyPerson {
 
+    ObjectProperty<InternalId> internalIdProperty();
+    InternalId getInternalId();
     ObjectProperty<Name> nameProperty();
     Name getName();
     ObjectProperty<Phone> phoneProperty();

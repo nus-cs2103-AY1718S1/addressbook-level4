@@ -10,6 +10,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.UniqueMeetingList;
 import seedu.address.model.UserPrefs;
 
 /***
@@ -22,7 +23,7 @@ public class ListByMostSearchedCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), new UniqueMeetingList(), new UserPrefs());
 
         lmsCommand = new ListByMostSearchedCommand();
         lmsCommand.setData(model, new CommandHistory(), new UndoRedoStack());

@@ -49,6 +49,12 @@ image::martyn-wong.jpg[width="150", align="left"]
 Role: Developer +
 Responsibilities: Logic
 
+a) Technical :
+
+** Implement shortcut logic for commands
+** Working with Google API for potential Calendar and Map function
+** Implement Search Command for more powerful search, when more details are added
+
 '''
 
 === Fong Wei Zheng

@@ -1,5 +1,6 @@
 package seedu.address.logic;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
@@ -9,6 +10,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ChooseCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -21,15 +23,20 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListByMostSearchedCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.NextMeetingCommand;
 import seedu.address.logic.commands.PrefCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.Meeting;
 import seedu.address.model.Model;
+import seedu.address.model.person.InternalId;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * The main LogicManager of the app.
@@ -85,7 +92,10 @@ public class LogicManager extends ComponentManager implements Logic {
                 RedoCommand.COMMAND_WORD,
                 SelectCommand.COMMAND_WORD,
                 UndoCommand.COMMAND_WORD,
-                PrefCommand.COMMAND_WORD
+                PrefCommand.COMMAND_WORD,
+                ChooseCommand.COMMAND_WORD,
+                NextMeetingCommand.COMMAND_WORD,
+                SearchCommand.COMMAND_WORD
         );
         return FXCollections.observableList(commandList);
     }
@@ -107,7 +117,10 @@ public class LogicManager extends ComponentManager implements Logic {
                 RedoCommand.MESSAGE_TEMPLATE,
                 SelectCommand.MESSAGE_TEMPLATE,
                 UndoCommand.MESSAGE_TEMPLATE,
-                PrefCommand.MESSAGE_TEMPLATE
+                PrefCommand.MESSAGE_TEMPLATE,
+                ChooseCommand.MESSAGE_TEMPLATE,
+                NextMeetingCommand.MESSAGE_TEMPLATE,
+                SearchCommand.MESSAGE_TEMPLATE
         );
         return templateList;
     }
@@ -115,5 +128,24 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
+    }
+
+    @Override
+    public ObservableList<Meeting> getMeetingList() {
+        return model.getMeetingList().getMeetingList();
+    }
+
+    @Override
+    public ArrayList<String> getMeetingNames(Meeting meeting) {
+        ArrayList<String> nameList = new ArrayList<>();
+        try {
+            for (InternalId id : meeting.getListOfPersonsId()) {
+                nameList.add(model.getAddressBook().getPersonByInternalIndex(id.getId()).getName().fullName);
+            }
+            return nameList;
+        } catch (PersonNotFoundException e) {
+            logger.info(e.getMessage());
+            return nameList;
+        }
     }
 }

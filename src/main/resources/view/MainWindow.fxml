@@ -23,6 +23,7 @@
         </Menu>
     </MenuBar>
 
+
     <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
         <padding>
             <Insets bottom="5" left="10" right="10" top="5" />
@@ -43,19 +44,34 @@
         </children>
     </StackPane>
 
-    <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-        <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+          <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
+        <VBox fx:id="personList" minWidth="340.0" prefWidth="340.0" SplitPane.resizableWithParent="false">
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
-            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+            <StackPane fx:id="personListPanelPlaceholder" alignment="TOP_LEFT" VBox.vgrow="ALWAYS" />
         </VBox>
-
-        <StackPane fx:id="browserPlaceholder" prefWidth="340">
-            <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
-            </padding>
-        </StackPane>
+      <StackPane prefWidth="340.0">
+         <children>
+                          <StackPane fx:id="browserPlaceholder" prefWidth="340.0" StackPane.alignment="CENTER">
+                  <padding>
+                      <Insets bottom="10" left="10" right="10" top="10" />
+                  </padding>
+              </StackPane>
+            <SplitPane fx:id="settingsPane" maxWidth="150.0" minWidth="150.0" orientation="VERTICAL" prefWidth="150.0" StackPane.alignment="CENTER_RIGHT">
+               <items>
+                  <VBox maxWidth="150.0" minWidth="150.0" prefWidth="150.0" SplitPane.resizableWithParent="false">
+                     <children>
+                        <StackPane fx:id="settingsSelectorPlaceholder" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+                     </children>
+                  </VBox>
+               </items>
+            </SplitPane>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </StackPane>
     </SplitPane>
 
     <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />

@@ -58,6 +58,8 @@ public class AddCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
+            int nextIndex = model.getAddressBook().getMaxInternalIndex() + 1;
+            toAdd.setInternalId(nextIndex);
             model.addPerson(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicatePersonException e) {

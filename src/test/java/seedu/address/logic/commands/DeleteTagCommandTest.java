@@ -19,6 +19,7 @@ import seedu.address.logic.UndoRedoStack;
 
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.UniqueMeetingList;
 import seedu.address.model.UserPrefs;
 
 /***
@@ -32,7 +33,7 @@ public class DeleteTagCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), new UniqueMeetingList(), new UserPrefs());
 
     @Test
     public void constructor_nullArgument_throwsNullPointerException() {
