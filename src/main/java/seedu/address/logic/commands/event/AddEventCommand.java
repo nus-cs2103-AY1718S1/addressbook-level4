@@ -1,4 +1,3 @@
-//@@author reginleiff
 package seedu.address.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
@@ -14,6 +13,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.EventTimeClashException;
 
+//@@author reginleiff
 /**
  * Adds an event to the address book.
  */
