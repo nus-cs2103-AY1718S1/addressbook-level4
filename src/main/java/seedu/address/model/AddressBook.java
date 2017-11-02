@@ -140,6 +140,26 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Adds a person to the overdue debt list in the address book.
+     * @return ReadOnly newOverduePerson
+     */
+    public ReadOnlyPerson addOverdueDebtPerson(ReadOnlyPerson p) {
+        int index;
+        index = persons.getIndexOf(p);
+
+        Person newOverduePerson = new Person(p);
+        newOverduePerson.setHasOverdueDebt(true);
+        try {
+            updatePerson(p, newOverduePerson);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("The target person cannot be a duplicate");
+        } catch (PersonNotFoundException e) {
+            throw new AssertionError("This is not possible as prior checks have been done");
+        }
+        return persons.getReadOnlyPerson(index);
+    }
+
+    /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
      *
@@ -241,6 +261,27 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.remove(key);
         try {
             persons.add(index, newWhitelistedPerson);
+        } catch (DuplicatePersonException e) {
+            assert false : "This is not possible as prior checks have"
+                    + " been done to ensure AddressBook does not have duplicate persons";
+        }
+        return persons.getReadOnlyPerson(index);
+    }
+
+    /**
+     * Updates {@code key} to exclude {@code key} from the overdue list in this {@code AddressBook}.
+     * @return ReadOnly newOverdueDebtPerson
+     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public ReadOnlyPerson removeOverdueDebtPerson(ReadOnlyPerson key) throws PersonNotFoundException {
+        int index;
+        index = persons.getIndexOf(key);
+
+        Person newOverdueDebtPerson = new Person(key);
+        newOverdueDebtPerson.setHasOverdueDebt(false);
+        persons.remove(key);
+        try {
+            persons.add(index, newOverdueDebtPerson);
         } catch (DuplicatePersonException e) {
             assert false : "This is not possible as prior checks have"
                     + " been done to ensure AddressBook does not have duplicate persons";
@@ -410,6 +451,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<ReadOnlyPerson> getWhitelistedPersonList() {
         return persons.asObservableWhitelist();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyPerson> getOverduePersonList() {
+        return persons.asObservableOverdueList();
     }
 
     @Override

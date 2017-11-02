@@ -17,6 +17,7 @@ public class AddressBookChangedEvent extends BaseEvent {
         return "number of persons " + data.getPersonList().size()
                 + ", number of blacklisted persons " + data.getBlacklistedPersonList().size()
                 + ", number of whitelisted persons " + data.getWhitelistedPersonList().size()
+                + ", number of overdue persons " + data.getOverduePersonList().size()
                 + ", number of tags " + data.getTagList().size();
     }
 }
