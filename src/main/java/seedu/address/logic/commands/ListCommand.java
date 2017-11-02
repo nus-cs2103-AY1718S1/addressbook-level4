@@ -18,7 +18,9 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
+        //@@author vicisapotato
         EventsCenter.getInstance().post(new ShowParcelListEvent());
+        //@@author
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

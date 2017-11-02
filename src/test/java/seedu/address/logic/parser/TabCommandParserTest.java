@@ -14,6 +14,7 @@ import seedu.address.logic.commands.TabCommand;
  * Test scope: similar to {@code SelectCommandParserTest}.
  * @see SelectCommandParserTest
  */
+//@@author vicisapotato
 public class TabCommandParserTest {
 
     private TabCommandParser parser = new TabCommandParser();
@@ -28,3 +29,4 @@ public class TabCommandParserTest {
         assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, TabCommand.MESSAGE_USAGE));
     }
 }
+//@@author vicisapotato

@@ -289,6 +289,41 @@ Selects the 2nd parcel in the Ark. Expands browser section.
 `select 1` +
 Selects the 1st parcel in the results of the `find` command.
 
+//tag::tabs[]
+=== Selecting a tab : `tab`
+
+Selects the tab identified by the index number and switches the tab shown in the Parcel List Panel.
+The selected tab will then display its respective parcel list according to its tab title.
+
+The "All Parcels" tab shows all the parcels in Ark with the status of `PENDING`, `DELIVERING`, `OVERDUE` only.
+The "Completed Parcels" tab shows all the parcels with the status `COMPLETED` only.
+
+Format: `tab INDEX`
+
+[TIP]
+You can also select a tab by clicking on the specified tab you wish to switch to in the Parcel List Panel.
+
+[NOTE]
+====
+Pressing the kbd:[&larr;] and kbd:[&rarr;] arrows when selecting a tab
+will switch to the tab in that respective direction
+====
+
+****
+* Selects the tab of the specified `INDEX` and switchs the current tab shown to the new selected tab.
+* The index must be within the number of tabs shown.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`tab 2` +
+Selects the second tab "Completed Parcels" in the Parcel List Panel and displays its respective parcel list.
+* `tab 1` +
+Selects the first tab "All Parcels" in the Parcel List Panel and displays it respective parcel list .
+//end::tabs[]
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -422,12 +457,14 @@ requires additional care when handling.
 
 //end::status[]
 
+//tag::browser[]
 === Google Maps Browser
 
 Ark has an in-built Google Maps browser section in the main window and can be used to show you the locations
 of the delivery addresses of each parcel. This feature will be automatically used whenever you type `select`
 into the command box, and will display a Google Maps search of the postal code of the parcel's address in the
 browser section of the main window.
+//end::browser[]
 
 //tag::autocomplete[]
 === Autocomplete

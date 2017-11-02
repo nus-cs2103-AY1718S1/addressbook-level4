@@ -5,6 +5,7 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * Indicates a request to show the parcel list panel
  */
+//@@author vicisapotato
 public class ShowParcelListEvent extends BaseEvent {
 
     @Override
@@ -13,3 +14,4 @@ public class ShowParcelListEvent extends BaseEvent {
     }
 
 }
+//@@author
