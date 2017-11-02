@@ -65,7 +65,6 @@ public class CommandTestUtil {
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_ADD_TAG_DESC = " " + PREFIX_ADD_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_REM_TAG_DESC = " " + PREFIX_REM_TAG + "hubby*"; // '*' not allowed in tags
-    
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;

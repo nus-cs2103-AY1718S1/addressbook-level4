@@ -52,14 +52,14 @@ public class PersonUtil {
         sb.append(PREFIX_NAME + person.getName().fullName + " ");
         sb.append(PREFIX_PHONE + person.getPhone().value + " ");
         person.getEmail().stream().forEach(
-                s -> sb.append(PREFIX_EMAIL + s.value + " ")
+            s -> sb.append(PREFIX_EMAIL + s.value + " ")
         );
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
         person.getTags().stream().forEach(
-                s -> sb.append(PREFIX_ADD_TAG + s.tagName + " ")
+            s -> sb.append(PREFIX_ADD_TAG + s.tagName + " ")
         );
         person.getWebLinks().stream().forEach(
-                s -> sb.append(PREFIX_WEB_LINK + s.webLinkInput + " ")
+            s -> sb.append(PREFIX_WEB_LINK + s.webLinkInput + " ")
         );
 
         return sb.toString();
