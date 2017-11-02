@@ -22,6 +22,7 @@ import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.model.person.Country;
 
 //@@author CT15
 /**
@@ -34,6 +35,7 @@ public class CommandIdentifier {
             + AddCommand.COMMAND_WORD + ", "
             + CalendarCommand.COMMAND_WORD + ", "
             + ClearCommand.COMMAND_WORD + ", "
+            + Country.COMMAND_WORD + ", "
             + CopyCommand.COMMAND_WORD + ", "
             + DeleteCommand.COMMAND_WORD + ", "
             + EditCommand.COMMAND_WORD + ", "
@@ -50,7 +52,7 @@ public class CommandIdentifier {
     public static final List<String> COMMAND_VALIDATION_LIST = ImmutableList.of(
             AddCommand.COMMAND_WORD, AddCommand.COMMAND_ALIAS,
             CalendarCommand.COMMAND_WORD, CalendarCommand.COMMAND_ALIAS,
-            ClearCommand.COMMAND_WORD, ClearCommand.COMMAND_ALIAS,
+            ClearCommand.COMMAND_WORD, ClearCommand.COMMAND_ALIAS, Country.COMMAND_WORD,
             CopyCommand.COMMAND_WORD, CopyCommand.COMMAND_ALIAS,
             DeleteCommand.COMMAND_WORD, DeleteCommand.COMMAND_ALIAS,
             EditCommand.COMMAND_WORD, EditCommand.COMMAND_ALIAS,
