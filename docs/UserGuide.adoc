@@ -10,12 +10,12 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T09-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG2017-T09-B2`      Since: `AUG 2017`      Licence: `MIT`
 
 == Introduction/Product overview
-The ScheduBook V1.3 is a program that helps you create and store a list of contacts and also helps you schedule your meetings so that you can better manage your time with other people. You can use Schedubook to remind you of a certain meeting you have on a day and Schedubook will remind you, further providing you information about the location you planned to meet.
+The ScheduBook V1.4 is a program that helps you create and store a list of contacts and also helps you schedule your meetings so that you can better manage your time with other people. You can use Schedubook to remind you of a certain meeting you have on a day and Schedubook will remind you, further providing you information about the location you planned to meet.
 
 == About
 
@@ -198,7 +198,7 @@ Input format for Date and Time is "DD-MM-YYYY HH:MM"
 ****
 * Adds meeting with person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer 1,2,3, ...
 * Creation of group meetings
-** Creation of meeting with multiple people at the same timing for an event is possible. In this case, multiple `Meeting Cards` will be created. A group meeting consists of meetings that have the same `NameMeeting`,`DateTime` and `Place` but with different person.
+** You can create meetings with multiple people at the same timing for an event(NameMeeting). In this case, multiple `Meeting Cards` will be created. A group meeting consists of meetings that have the same `NameMeeting`,`DateTime` and `Place` but with different person.
 +
 image::MeetingGroup.png[width="200"]
 +
