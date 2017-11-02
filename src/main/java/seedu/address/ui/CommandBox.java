@@ -46,6 +46,7 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private TextField commandTextField;
 
+    //@@author fongwz
     public CommandBox(Logic logic, StackPane commandBoxHelp, SplitPane settingsPane) {
         super(FXML);
         this.logic = logic;
@@ -74,6 +75,7 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.setStyle("-fx-font-style: italic;" + " -fx-text-fill: lime");
         historySnapshot = logic.getHistorySnapshot();
     }
+    //@@author
 
     /**
      * Handles the key press event, {@code keyEvent}.
@@ -222,6 +224,7 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    //@@author fongwz
     /**
      * Shows the command helper
      */
@@ -284,4 +287,5 @@ public class CommandBox extends UiPart<Region> {
         KeyFrame kfRight = new KeyFrame(Duration.millis(200), kvRight1);
         timelineRight.getKeyFrames().add(kfRight);
     }
+    //@@author
 }

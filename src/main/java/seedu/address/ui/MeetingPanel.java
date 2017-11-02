@@ -9,6 +9,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.logic.Logic;
 
+//@@author fongwz
 /**
  *  UI component containing a listview to show list of meetings
  */

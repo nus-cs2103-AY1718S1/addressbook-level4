@@ -75,6 +75,7 @@ public class LogicManager extends ComponentManager implements Logic {
         return model.getFilteredPersonList();
     }
 
+    //@@author fongwz
     @Override
     public ObservableList<String> getCommandList() {
         List<String> commandList = Arrays.asList(
@@ -143,6 +144,7 @@ public class LogicManager extends ComponentManager implements Logic {
             return nameList;
         }
     }
+    //@@author
 
     @Override
     public ListElementPointer getHistorySnapshot() {

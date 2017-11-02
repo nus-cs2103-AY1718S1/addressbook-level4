@@ -136,6 +136,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
 
+    //@@author fongwz
     /**
      * Testing the command box helper
      */
@@ -192,6 +193,7 @@ public class CommandBoxTest extends GuiUnitTest {
             guiRobot.push(KeyCode.BACK_SPACE);
         }
     }
+    //@@author
 
     /**
      * Runs a command that fails, then verifies that <br>
