@@ -529,7 +529,7 @@ The current implementation of this feature is based on https://github.com/nus-cs
 **Cons:** Longer code that requires more testing +
 **Alternative 2:** Store the bytes of each image encoded using base64 +
 **Pros:** Shorter code and easier to move the addressbook database. +
-**Cons:** More complex code and a bloated addressbook file size that is easily corruptible.
+**Cons:** More complex code and a bloated addressbook file size that is easily corruptible. +
 **Alternative 3:** Allow only images from the web to be added using their URL +
 **Pros:** No need to store the image locally so less space needed and an easier way to export/import the database. +
 **Cons:** Image is lost if there is no internet connection or if the image is taken down.
@@ -542,6 +542,19 @@ The current implementation of this feature is based on https://github.com/nus-cs
 **Pros:** Readable by humans and easy to associate with a person in the addressbook +
 **Cons:** Causes conflicts when different contacts have the same properties (email addresses have to be unique)
 
+=== Export
+
+A feature that allows the user to export the addressbook and images saved to a compressed file.
+
+`The command is a WIP.`
+
+==== Design Considerations
+
+**Aspect:** Export file type. +
+
+**Aspect:** Export path. +
+
+`WIP`
 
 == Testing
 
