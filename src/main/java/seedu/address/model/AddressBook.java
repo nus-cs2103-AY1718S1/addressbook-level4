@@ -70,7 +70,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setGroups(Set<Group> groups) {
         this.groups.setGroups(groups);
     }
-    
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
