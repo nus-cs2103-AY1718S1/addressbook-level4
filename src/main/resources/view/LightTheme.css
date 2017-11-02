@@ -104,9 +104,6 @@
 
 .list-view {
     -fx-background-insets: 0;
-    /* @@author qihao27 */
-    -fx-background-radius: 5;
-    /* @@author */
     -fx-padding: 0;
 }
 
@@ -433,8 +430,8 @@
 #resultDisplay .content {
     /* @@author qihao27 */
     -fx-background-color: transparent, #f3e4c6, transparent, #f3e4c6;
+    -fx-background-radius: 5;
     /* @@author */
-    -fx-background-radius: 0;
 }
 
 #tags {
@@ -449,4 +446,9 @@
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
+}
+
+/* @@author qihao27 */
+#favouriteStar {
+    -fx-image: url("../images/favStar.png");
 }

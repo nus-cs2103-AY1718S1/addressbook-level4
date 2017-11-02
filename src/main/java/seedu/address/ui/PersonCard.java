@@ -3,6 +3,7 @@ package seedu.address.ui;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -42,6 +43,8 @@ public class PersonCard extends UiPart<Region> {
     private Label email;
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView favourite;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
@@ -56,9 +59,9 @@ public class PersonCard extends UiPart<Region> {
      * so that they will be notified of any changes.
      */
     private void bindListeners(ReadOnlyPerson person) {
-        //@@author aaronyhsoh
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        highlightName(person);
+        //@@author aaronyhsoh-unsed
+        //highlightName(person);
         //@@author
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
@@ -67,6 +70,9 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().clear();
             initTags(person);
         });
+        //@@author qihao27
+        addFavouriteStar(person);
+        //@@author
     }
 
     /**
@@ -81,13 +87,22 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
-    //@@author aaronyhsoh
-    private void highlightName(ReadOnlyPerson person) {
+
+    //@@author qihao27
+    private void addFavouriteStar(ReadOnlyPerson person) {
         if (person.getFavourite()) {
-            name.setStyle("-fx-text-fill: red");
+            favourite.setId("favouriteStar");
         }
     }
     //@@author
+
+    //@@author aaronyhsoh-unsed
+    /*private void highlightName(ReadOnlyPerson person) {
+        if (person.getFavourite()) {
+            name.setStyle("-fx-text-fill: red");
+        }
+    }*/
+    //@@auther
 
     @Override
     public boolean equals(Object other) {
