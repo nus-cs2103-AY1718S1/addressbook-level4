@@ -389,6 +389,9 @@
 #tags .label {
     -fx-font-family: "Segoe UI", Optima;
     -fx-text-fill: derive(gray, 20%);
-    -fx-padding: 1 0 1 0;
-    -fx-font-size: 14px;
+    -fx-padding: 1 5 1 5;
+    -fx-border-color: derive(gray, 20%);
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-font-size: 11px;
 }
