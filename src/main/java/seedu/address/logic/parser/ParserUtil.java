@@ -18,6 +18,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.PostalCode;
 import seedu.address.model.person.Remark;
+import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -133,6 +134,16 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code Optional<String> schedule} into an {@code Optional<Schedule>} if {@code schedule}
+     * is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Schedule> parseSchedule(Optional<String> schedule) throws IllegalValueException {
+        requireNonNull(schedule);
+        return schedule.isPresent() ? Optional.of(new Schedule(schedule.get())) : Optional.empty();
     }
 
 }

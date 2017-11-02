@@ -1,7 +1,8 @@
 package seedu.address.ui;
 
+import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Formatter;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -18,24 +19,14 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonCard extends UiPart<Region> {
 
+    //@@author Lenaldnwj
     private static final String FXML = "PersonListCard.fxml";
-    private static ArrayList<String> availableColorsLeft = new ArrayList<String>(
-            Arrays.asList(
-                    "TOMATO",
-                    "TURQUOISE",
-                    "LIGHTGRAY",
-                    "GOLDENROD",
-                    "LAWNGREEN",
-                    "BURLYWOOD",
-                    "PALEVIOLETRED",
-                    "CORNFLOWERBLUE",
-                    "CORAL",
-                    "MOCCASIN",
-                    "SPRINGGREEN",
-                    "ORANGERED"));
+
     private static HashMap<String, String> currentTagColors = new HashMap<String, String>();
 
     private static String assignedColor;
+
+    private static ArrayList<String> usedColors = new ArrayList<>();
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -60,7 +51,6 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
@@ -71,24 +61,32 @@ public class PersonCard extends UiPart<Region> {
 
     /**
      * This method takes in the tagName, and returns the color associated with that tagName
-     * If the if the tag has no associated color, a random one from the list available will be given.
-     * Once the list runs out, all other tags will be grey.
-     *
+     * If the if the tag has no associated color, a unique random color will be assigned to the tag.
+=     *
      * @param tagName is the String name of the tag
      * @return the color associated to the tagName
      */
     public static String obtainTagColors(String tagName) {
         if (!currentTagColors.containsKey(tagName)) {
-            if (availableColorsLeft.size() != 0) {
-                Random rand = new Random();
-                int randIndex = rand.nextInt(availableColorsLeft.size());
-                assignedColor = availableColorsLeft.get(randIndex);
+            do {
+                Random random = new Random();
+                final float hue = random.nextFloat();
+                final float saturation = 0.65f + random.nextFloat()
+                        * (0.90f - 0.65f);
+                final float luminance = 0.60f + random.nextFloat()
+                        * (0.90f - 0.60f);
 
-                currentTagColors.put(tagName, assignedColor);
-                availableColorsLeft.remove(randIndex);
-            } else {
-                currentTagColors.put(tagName, "GRAY");
-            }
+                Color color = Color.getHSBColor(hue, saturation, luminance);
+
+                Formatter hexRepresentation = new Formatter(new StringBuffer("#"));
+                hexRepresentation.format("%02X", color.getRed());
+                hexRepresentation.format("%02X", color.getGreen());
+                hexRepresentation.format("%02X", color.getBlue());
+                assignedColor = hexRepresentation.toString();
+            } while (usedColors.contains(assignedColor));
+
+            usedColors.add(assignedColor);
+            currentTagColors.put(tagName, assignedColor);
         }
         return currentTagColors.get(tagName);
     }
@@ -101,17 +99,10 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
-     * To access private ArrayList availableColorsLeft for testing
+     * To access private ArrayList usedColor for testing
      */
-    public ArrayList<String> getAvailableColorsLeft() {
-        return this.availableColorsLeft;
-    }
-
-    /**
-     * To clear colors inside private ArrayList availableColorsLeft for testing
-     */
-    public ArrayList<String> changeAvailableColorsLeft(ArrayList<String> changeListOfColor) {
-        return this.availableColorsLeft = changeListOfColor;
+    public ArrayList getUsedColor() {
+        return this.usedColors;
     }
 
     /**
@@ -125,7 +116,6 @@ public class PersonCard extends UiPart<Region> {
         tags.getChildren().clear();
         initialiseTags(person);
     }
-
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
@@ -143,7 +133,6 @@ public class PersonCard extends UiPart<Region> {
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
     }
-
     /**
      * Initialise the {@code person} tags
      *
@@ -152,8 +141,10 @@ public class PersonCard extends UiPart<Region> {
     private void initialiseTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
+
             tagLabel.setStyle("-fx-background-color: " + obtainTagColors(tag.tagName));
             tags.getChildren().add(tagLabel);
         });
     }
+
 }

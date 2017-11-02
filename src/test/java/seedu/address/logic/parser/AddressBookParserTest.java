@@ -6,9 +6,11 @@ import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +31,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -202,6 +205,7 @@ public class AddressBookParserTest {
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
     }
 
+    //@@author limcel
     @Test
     public void parseCommand_sort() throws Exception {
         assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD) instanceof SortCommand);
@@ -213,6 +217,26 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(SortCommand.COMMAND_ALIAS) instanceof SortCommand);
         assertTrue(parser.parseCommand(SortCommand.COMMAND_ALIAS + " 3") instanceof SortCommand);
     }
+    @Test
+    public void parseCommand_schedule() throws Exception {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(ScheduleCommandParser.DATE_FORMAT.parse("2018-12-27 17:00:00"));
+        ScheduleCommand command = (ScheduleCommand) parser.parseCommand(
+                ScheduleCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_SCHEDULE
+                        + "27 December 2018 at 5pm");
+        assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, calendar), command);
+    }
+
+    @Test
+    public void parseCommand_alias_schedule() throws Exception {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(ScheduleCommandParser.DATE_FORMAT.parse("2018-12-25 10:00:00"));
+        ScheduleCommand command = (ScheduleCommand) parser.parseCommand(
+                ScheduleCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_SCHEDULE
+                        + "25 December 2018 at 10am");
+        assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, calendar), command);
+    }
+    //@@author
 
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {

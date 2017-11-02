@@ -1,5 +1,7 @@
 package seedu.address.logic.statistics;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.stream.DoubleStream;
 
@@ -8,14 +10,31 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * Calculates statistics of the persons inside the addressbook
+ * Calculates statistics of the persons inside an ObservableList
  */
 public class Statistics {
+
+    static final String NO_PERSONS_MESSAGE = "There are no persons";
+    static final String INSUFFICIENT_DATA_MESSAGE = "Insufficient Data";
+    private final int numDecimalPlace = 2;
 
     private double[] scoreArray;
     private int size;
 
     public Statistics(ObservableList<ReadOnlyPerson> personList) {
+        initScore(personList);
+    }
+
+    protected Statistics(double[] scoreArray) {
+        initScore(scoreArray);
+    }
+
+    /**
+     * Takes in a PersonList and initialises the appropriate values to the Statistics instance
+     *
+     * @param personList the list of persons being taken in
+     */
+    public void initScore(ObservableList<ReadOnlyPerson> personList) {
         int listSize = personList.size();
         double[] listArray = new double[listSize];
         for (int i = 0; i < listSize; i++) {
@@ -25,12 +44,8 @@ public class Statistics {
         initScore(listArray);
     }
 
-    protected Statistics(double[] scoreArray) {
-        initScore(scoreArray);
-    }
-
     /**
-     * Sorts an array and assigns the appropriate values to the Statistics instance
+     * Takes in an array and assigns the appropriate values to the Statistics instance
      *
      * @param scoreArray the array of doubles used fo calculating statistics
      */
@@ -40,24 +55,40 @@ public class Statistics {
         this.size = scoreArray.length;
     }
 
-    public double getMean() {
+    private double getMean() {
         return DoubleStream.of(scoreArray).sum() / size;
     }
 
-    public double getMedian() {
+    public String getMeanString() {
+        if (size > 0) {
+            return getRoundedStringFromDouble(getMean(), numDecimalPlace);
+        } else {
+            return NO_PERSONS_MESSAGE;
+        }
+    }
+
+    private double getMedian() {
         return (size % 2 == 1)
                 ? scoreArray[(size - 1) / 2]
                 : (scoreArray[(size - 1) / 2] + scoreArray[((size - 1) / 2) + 1]) / 2;
     }
 
-    public double getMedianWithIndexes(double[] arr, int startIndex, int endIndex) {
+    public String getMedianString() {
+        if (size > 0) {
+            return getRoundedStringFromDouble(getMedian(), numDecimalPlace);
+        } else {
+            return NO_PERSONS_MESSAGE;
+        }
+    }
+
+    private double getMedianWithIndexes(double[] arr, int startIndex, int endIndex) {
         int currSize = endIndex - startIndex + 1;
         return (currSize % 2 == 0)
                 ? (arr[startIndex + currSize / 2 - 1] + arr[startIndex + currSize / 2]) / 2
                 : arr[startIndex + (currSize - 1) / 2];
     }
 
-    public double getMode() {
+    private double getMode() {
         double mode = 0;
         double currPersonScore;
         int maxCount = 0;
@@ -77,25 +108,73 @@ public class Statistics {
         return mode;
     }
 
-    public double getQuartile1() {
+    public String getModeString() {
+        if (size > 0) {
+            return getRoundedStringFromDouble(getMode(), numDecimalPlace);
+        } else {
+            return NO_PERSONS_MESSAGE;
+        }
+    }
+
+    private double getQuartile1() {
         return getMedianWithIndexes(scoreArray, 0, size / 2 - 1);
     }
 
-    public double getQuartile2() {
+    public String getQuartile1String() {
+        if (size > 1) {
+            return getRoundedStringFromDouble(getQuartile1(), numDecimalPlace);
+        } else if (size > 0) {
+            return INSUFFICIENT_DATA_MESSAGE;
+        } else {
+            return NO_PERSONS_MESSAGE;
+        }
+    }
+
+    private double getQuartile2() {
         return getMedianWithIndexes(scoreArray, 0, size - 1);
     }
 
-    public double getQuartile3() {
+    public String getQuartile2String() {
+        if (size > 1) {
+            return getRoundedStringFromDouble(getQuartile2(), numDecimalPlace);
+        } else if (size > 0) {
+            return INSUFFICIENT_DATA_MESSAGE;
+        } else {
+            return NO_PERSONS_MESSAGE;
+        }
+    }
+
+    private double getQuartile3() {
         return (size % 2 == 0)
                 ? getMedianWithIndexes(scoreArray, size / 2, size - 1)
                 : getMedianWithIndexes(scoreArray, size / 2 + 1, size - 1);
     }
 
-    public double getInterQuartileRange() {
+    public String getQuartile3String() {
+        if (size > 1) {
+            return getRoundedStringFromDouble(getQuartile3(), numDecimalPlace);
+        } else if (size > 0) {
+            return INSUFFICIENT_DATA_MESSAGE;
+        } else {
+            return NO_PERSONS_MESSAGE;
+        }
+    }
+
+    private double getInterQuartileRange() {
         return getQuartile3() - getQuartile1();
     }
 
-    public double getVariance() {
+    public String getInterquartileRangeString() {
+        if (size > 1) {
+            return getRoundedStringFromDouble(getInterQuartileRange(), numDecimalPlace);
+        } else if (size > 0) {
+            return INSUFFICIENT_DATA_MESSAGE;
+        } else {
+            return NO_PERSONS_MESSAGE;
+        }
+    }
+
+    private double getVariance() {
         double temp = 0;
         double mean = getMean();
         for (double score : scoreArray) {
@@ -104,48 +183,44 @@ public class Statistics {
         return temp / (size - 1);
     }
 
-    public double getStdDev() {
+    public String getVarianceString() {
+        if (size > 1) {
+            return getRoundedStringFromDouble(getVariance(), numDecimalPlace);
+        } else if (size > 0) {
+            return INSUFFICIENT_DATA_MESSAGE;
+        } else {
+            return NO_PERSONS_MESSAGE;
+        }
+    }
+
+    private double getStdDev() {
         return Math.sqrt(getVariance());
     }
 
-    /**
-     * Prints to the console the mean, median, mode, variance and standard deviation
-     * of all the scores of all persons in the personList
-     **/
-    public void printAverages() {
-        if (size > 0) {
-            System.out.println("Mean score: " + getMean());
-            System.out.println("Median score: " + getMedian());
-            System.out.println("Mode score: " + getMode());
-            if (size > 1) {
-                System.out.println("Variance: " + getVariance());
-                System.out.println("Standard Deviation: " + getStdDev());
-            } else {
-                System.out.println("Too few data to calculate Variance and StD");
-            }
+    public String getStdDevString() {
+        if (size > 1) {
+            return getRoundedStringFromDouble(getStdDev(), numDecimalPlace);
+        } else if (size > 0) {
+            return INSUFFICIENT_DATA_MESSAGE;
         } else {
-            System.out.println("There are no persons in the list to calculate averages with");
+            return NO_PERSONS_MESSAGE;
         }
     }
 
     /**
-     * Prints to the console the first, second, third quartiles and interquartile range
-     * of all the scores of all persons in the personList
+     * Formats and returns a double into a fixed number of decimal places and returns it as a string
+     *
+     * @param value  the double to be formatted
+     * @param places number of decimal places of the output string
+     * @return value formatted to places decimal places in a String
      */
-    public void printPercentiles() {
-        if (size > 0) {
-            if (size > 1) {
-                System.out.println("First Quartile: " + getQuartile1());
-                System.out.println("Second Quartile: " + getQuartile2());
-                System.out.println("Third Quartile: " + getQuartile3());
-                System.out.println("Interquartile Range: " + getInterQuartileRange());
-            } else {
-                System.out.println("Too few data to calculate deciles");
-            }
-        } else {
-            System.out.println("There are no persons in the list to calculate percentiles with");
+    private static String getRoundedStringFromDouble(double value, int places) {
+        if (places < 0) {
+            throw new IllegalArgumentException();
         }
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return Double.toString(bd.doubleValue());
     }
-
 
 }
