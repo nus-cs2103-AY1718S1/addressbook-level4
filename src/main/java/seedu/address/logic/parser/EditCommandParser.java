@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
@@ -54,7 +55,12 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
 
-            ExpiryDate editedDate = ParserUtil.parseExpiryDate(argMultimap.getValue(PREFIX_EXPIRE)).get();
+            ExpiryDate editedDate;
+            try {
+                editedDate = ParserUtil.parseExpiryDate(argMultimap.getValue(PREFIX_EXPIRE)).get();
+            } catch (NoSuchElementException nsee) {
+                editedDate = null;
+            }
             editPersonDescriptor.setExpiryDate(editedDate);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
