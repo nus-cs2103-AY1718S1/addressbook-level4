@@ -58,7 +58,7 @@ public class PersonCard extends UiPart<Region> {
         initialiseTags(person);
         bindListeners(person);
     }
-
+    //@@author Lenaldnwj
     /**
      * This method takes in the tagName, and returns the color associated with that tagName
      * If the if the tag has no associated color, a unique random color will be assigned to the tag.
@@ -116,7 +116,7 @@ public class PersonCard extends UiPart<Region> {
         tags.getChildren().clear();
         initialiseTags(person);
     }
-
+    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
@@ -134,7 +134,7 @@ public class PersonCard extends UiPart<Region> {
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
     }
-
+    //@@author Lenaldnwj
     /**
      * Initialise the {@code person} tags
      *
@@ -148,4 +148,5 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
+    //@@author
 }

@@ -81,7 +81,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
-
+    //@@author Lenaldnwj
     /**
      * Returns a appended string stating that specific optional inputs are not recorded if user decides to not enter
      * any of the optional inputs.
@@ -98,5 +98,5 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
         return input;
     }
-
+    //@@author
 }
