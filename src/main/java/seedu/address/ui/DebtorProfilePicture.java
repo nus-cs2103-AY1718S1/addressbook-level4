@@ -27,7 +27,7 @@ public class DebtorProfilePicture extends UiPart<Region> {
         File file = new File(imagePath);
 
         if (!file.exists()) {
-            file = new File("docs/images/unknown.jpg");
+            file = new File("out/production/resources/images/unknown.jpg");
         }
 
         Image image = null;
