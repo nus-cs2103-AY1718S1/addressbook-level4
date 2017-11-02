@@ -46,6 +46,7 @@ public interface ReadOnlyPerson {
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
+    //@@author jaivigneshvenugopal
     /**
      * Returns true if person is blacklisted.
      */
@@ -68,6 +69,7 @@ public interface ReadOnlyPerson {
      * Sets {@code boolean} variable as the value of {@param isWhitelisted}
      */
     void setIsWhitelisted(boolean isWhitelisted);
+    //@@author
 
     /**
      * Returns true if person has overdue debt.

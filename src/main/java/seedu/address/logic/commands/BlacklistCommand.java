@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS;
 
+//@@author jaivigneshvenugopal
 /**
  * Lists all blacklisted persons in the address book to the user.
  */

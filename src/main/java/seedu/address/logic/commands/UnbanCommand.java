@@ -10,7 +10,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
-
+//@@author jaivigneshvenugopal
 /**
  * Removes a person identified using it's last displayed index from the blacklist.
  */

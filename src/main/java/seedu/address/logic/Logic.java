@@ -31,11 +31,13 @@ public interface Logic {
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
+    //@@author jaivigneshvenugopal
     /** Returns an unmodifiable view of the filtered list of blacklisted persons */
     ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList();
 
     /** Returns an unmodifiable view of the filtered list of whitelisted persons */
     ObservableList<ReadOnlyPerson> getFilteredWhitelistedPersonList();
+    //@@author
 
     /** Returns an unmodifiable view of the filtered list of persons with overdue debt */
     ObservableList<ReadOnlyPerson> getFilteredOverduePersonList();

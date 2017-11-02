@@ -169,6 +169,7 @@ public class MainWindow extends UiPart<Region> {
     }
     //@@author
 
+    //@@author jaivigneshvenugopal
     /**
      * Fills up the placeholders of PersonListPanel with the given list name.
      * Should only display welcome page without contacts.
@@ -196,6 +197,7 @@ public class MainWindow extends UiPart<Region> {
         infoPanelPlaceholder.getChildren().clear();
         infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
     }
+    //@@author
 
     void hide() {
         primaryStage.hide();

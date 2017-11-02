@@ -21,11 +21,13 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    //@@author jaivigneshvenugopal
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS = unused -> true;
 
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_WHITELISTED_PERSONS = unused -> true;
+    //@@author
 
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_OVERDUE_PERSONS = unused -> true;
@@ -36,20 +38,24 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
+    //@@author jaivigneshvenugopal
     /** Returns the name of current displayed list */
     String getCurrentListName();
 
     /** Sets the name of current displayed list */
     void setCurrentListName(String currentList);
+    //@@author
 
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
+    //@@author jaivigneshvenugopal
     /** Deletes the given person from blacklist and returns the deleted person */
     ReadOnlyPerson removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /** Removes the given person from whitelist and returns the updated person */
     ReadOnlyPerson removeWhitelistedPerson(ReadOnlyPerson target) throws PersonNotFoundException;
+    //@@author
 
     /** Removes the given person from overdue list and returns the updated person */
     ReadOnlyPerson removeOverdueDebtPerson(ReadOnlyPerson target) throws PersonNotFoundException;
@@ -57,11 +63,13 @@ public interface Model {
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
+    //@@author jaivigneshvenugopal
     /** Adds the given person into blacklist and returns the added person*/
     ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person);
 
     /** Adds the given person into whitelist and returns the added person */
     ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson person);
+    //@@author
 
     /** Adds the given person into overdue list and returns the added person */
     ReadOnlyPerson addOverdueDebtPerson(ReadOnlyPerson person);
@@ -79,11 +87,13 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
+    //@@author jaivigneshvenugopal
     /** Returns an unmodifiable view of the blacklisted filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList();
 
     /** Returns an unmodifiable view of the whitelisted filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredWhitelistedPersonList();
+    //@@author
 
     /** Returns an unmodifiable view of the filtered person list with overdue debt */
     ObservableList<ReadOnlyPerson> getFilteredOverduePersonList();
@@ -95,6 +105,7 @@ public interface Model {
      */
     int updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    //@@author jaivigneshvenugopal
     /**
      * Updates the filter of the filtered blacklisted person list to filter by the given {@code predicate}.
      * @return size of current displayed filtered list.
@@ -108,6 +119,7 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     int updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate);
+    //@@author
 
     /**
      * Updates the filter of the filtered person list with overdue debt to filter by the given {@code predicate}.
@@ -145,10 +157,12 @@ public interface Model {
      */
     void logout();
 
+    //@@author jaivigneshvenugopal
     /**
      * Updates the list shown in Person List Panel to the requested list.
      */
     void changeListTo(String listName);
+    //@@author
 
     /**
      * Retrieves the full list of persons.
