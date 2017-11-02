@@ -128,17 +128,30 @@
     -fx-font-size: 15px;
 }
 
-.person_big_label {
+.person-big-label {
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 26px;
     -fx-text-fill: #444344;
 }
 
-.person_small_label {
+.person-small-label {
     -fx-font-family: "Lucida Grande", "Segoe UI", Optima;
     -fx-font-size: 15px;
     -fx-text-fill: #848484;
 }
+
+.person-remark-label {
+
+}
+
+.person-name-label {
+/*
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+*/
+}
+
+
 
 .anchor-pane {
      -fx-background-color: transparent;
