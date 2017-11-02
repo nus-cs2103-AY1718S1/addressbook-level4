@@ -747,6 +747,30 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
             logger.warning("Failed to list pinned using label");
         }
     }
+
+    /**
+     * Toggles to task view.
+     */
+    @FXML
+    private void handleTaskViewClicked() {
+        try {
+            logic.execute("task");
+        } catch (CommandException | ParseException e) {
+            logger.warning("Failed to toggle to task view using label");
+        }
+    }
+
+    /**
+     * Toggles to person view.
+     */
+    @FXML
+    private void handlePersonViewClicked() {
+        try {
+            logic.execute("person");
+        } catch (CommandException | ParseException e) {
+            logger.warning("Failed to toggle to person view using label");
+        }
+    }
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
