@@ -5,6 +5,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
+//@@author AngularJiaSheng
 /**
  * Deletes a tag from all contacts in the address book.
  */
@@ -17,6 +18,8 @@ public class DeleteTagCommand extends UndoableCommand {
             + ": Deletes all the tag specified in all person in the list.\n"
             + "Parameters: tag (must be one of the existing tag on any one person\n"
             + "Example: " + COMMAND_WORD + " classmate";
+
+    public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {tag}";
 
     public static final String MESSAGE_DELETE_ALL_TAG_SUCCESS = "Deleted tag: %1$s";
 

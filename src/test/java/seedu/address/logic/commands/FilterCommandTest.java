@@ -25,6 +25,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TagContainsKeywordsPredicate;
 import seedu.address.model.person.UserPerson;
 
+//@@author hansiang93
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */

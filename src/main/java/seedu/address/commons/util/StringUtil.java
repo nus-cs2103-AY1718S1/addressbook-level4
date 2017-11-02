@@ -6,6 +6,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+//@@author AngularJiaSheng
+
 /**
  * Helper functions for handling strings.
  */
@@ -35,7 +37,7 @@ public class StringUtil {
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
         for (String wordInSentence : wordsInPreppedSentence) {
-            if (wordInSentence.equalsIgnoreCase(preppedWord)) {
+            if (wordInSentence.toLowerCase().contains(preppedWord.toLowerCase())) {
                 return true;
             }
         }

@@ -1,15 +1,16 @@
+/*@@author hansiang93*/
 * {
-    -fx-base-background-color-0: #EFF1F3;
-    -fx-base-background-color-1: #DBD3D8;
-    -fx-base-text-fill-color: #14141f;
-    -fx-base-text-fill-color-alt: white;
+    -fx-base-background-color-0: #0b0c0d;
+    -fx-base-background-color-1: #45484B;
+    -fx-base-text-fill-color: white;
+    -fx-base-text-fill-color-alt: black;
     -fx-base-text-fill-color-labels: white;
-    -fx-label-text-fill-color: #b3b3b3;
-    -fx-list-cell-even: #D8B4A0;
-    -fx-list-cell-odd: #DBD3D8;
-    -fx-list-cell-selected: #C4C6C7;
-    -fx-list-cell-selected-border: #C4C6C7;
-    -fx-list-cell-empty: #f2f2f2;
+    -fx-label-text-fill-color: #010505;
+    -fx-list-cell-even: #676556;
+    -fx-list-cell-odd: #524e3b;
+    -fx-list-cell-selected: #a09b73;
+    -fx-list-cell-selected-border: #a29a8e;
+    -fx-list-cell-empty: #36393b;
 }
 
 .background {

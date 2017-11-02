@@ -16,6 +16,7 @@
     </stylesheets>
     <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
         <Menu mnemonicParsing="false" text="File">
+         <MenuItem fx:id="userProfileMenuItem" mnemonicParsing="false" onAction="#handleUserProfile" text="UserProfile" />
             <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
@@ -23,7 +24,9 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Theme">
             <MenuItem mnemonicParsing="false" onAction="#handleDarkTheme" text="Dark Theme" />
+            <MenuItem mnemonicParsing="false" onAction="#handleDarkTheme2" text="Dark Theme 2" />
             <MenuItem mnemonicParsing="false" onAction="#handleLightTheme" text="Light Theme" />
+            <MenuItem mnemonicParsing="false" onAction="#handleLightTheme2" text="Light Theme 2" />
         </Menu>
     </MenuBar>
 
@@ -39,6 +42,7 @@
         </padding>
     </StackPane>
 
+    <!--@@author hansiang93-->
     <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
         <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
             <padding>

@@ -60,6 +60,12 @@ public class EditCommand extends UndoableCommand {
             + PREFIX_TAG + "owesMoney "
             + PREFIX_WEB_LINK + "https://www.facebook.com/jiasheng.an"
             + PREFIX_CLEAR_TAG;
+    public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {Index} "
+            + PREFIX_PHONE + "{Phone} "
+            + PREFIX_EMAIL + "{email} "
+            + PREFIX_TAG + "{tag} "
+            + PREFIX_WEB_LINK + "{Weblink}";
+    
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
@@ -68,7 +74,7 @@ public class EditCommand extends UndoableCommand {
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param index                of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
     public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
@@ -110,7 +116,7 @@ public class EditCommand extends UndoableCommand {
      * edited with {@code editPersonDescriptor}.
      */
     public static Person createEditedPerson(ReadOnlyPerson personToEdit,
-                                             EditPersonDescriptor editPersonDescriptor) {
+                                            EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
@@ -161,7 +167,8 @@ public class EditCommand extends UndoableCommand {
         private Set<Tag> toRemove;
         private Set<WebLink> webLinks;
 
-        public EditPersonDescriptor() {}
+        public EditPersonDescriptor() {
+        }
 
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             this.name = toCopy.name;

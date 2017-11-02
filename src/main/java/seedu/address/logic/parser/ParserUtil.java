@@ -101,6 +101,7 @@ public class ParserUtil {
         return tagSet;
     }
 
+    //@@author AngularJiaSheng
     /**
      * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -139,8 +140,8 @@ public class ParserUtil {
 
             for (Iterator<WebLink> iterateInternalList = webLinkSet.iterator(); iterateInternalList.hasNext(); ) {
                 WebLink checkWebLink = iterateInternalList.next();
-                String checkWeblinkTag = checkWebLink.toStringWebLinkTag();
-                if (inputWebLink.contains(checkWeblinkTag)) {
+                String checkWebLinkTag = checkWebLink.toStringWebLinkTag();
+                if (inputWebLink.contains(checkWebLinkTag)) {
                     duplicateCheck = FALSE;
                     break;
                 }
