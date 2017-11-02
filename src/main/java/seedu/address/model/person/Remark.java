@@ -1,7 +1,7 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
-
+//@@author kosyoz
 /**
  * Represents a Person's remark in the address book.
  * Guarantees: immutable; is always valid

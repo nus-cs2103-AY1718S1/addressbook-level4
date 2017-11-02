@@ -224,13 +224,15 @@ public class MainWindow extends UiPart<Region> {
         browserPanel.freeResources();
         mapPanel.freeResources();
     }
-
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
-
+    //@@author kosyoz
+    /**
+     * Change the theme of teh application.
+     */
     @Subscribe
     public void handleChangeThemeEvent(ChangeThemeEvent event) {
         if (event.getTheme().equals("DarkTheme"))
