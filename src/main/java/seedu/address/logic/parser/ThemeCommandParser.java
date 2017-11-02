@@ -21,7 +21,7 @@ public class ThemeCommandParser implements Parser<ThemeCommand> {
     public ThemeCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
 
-        if (trimmedArgs.equals("")) {
+        if (trimmedArgs.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
         }
