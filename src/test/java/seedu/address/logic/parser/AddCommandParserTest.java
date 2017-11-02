@@ -100,7 +100,7 @@ public class AddCommandParserTest {
                 + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + FORMCLASS_DESC_BOB + GRADES_DESC_BOB + POSTALCODE_DESC_BOB
                 + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, new AddCommand(expectedPersonMultipleTags));
     }
-
+    //@@author Lenaldnwj
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
@@ -174,7 +174,7 @@ public class AddCommandParserTest {
                         + FORMCLASS_DESC_AMY + GRADES_DESC_AMY,
                 new AddCommand(expectedPersonWithNoOptionalInputs));
     }
-
+    //@@author
     @Test
     public void parse_compulsoryFieldMissing_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
@@ -260,7 +260,7 @@ public class AddCommandParserTest {
                 + ADDRESS_DESC_BOB + FORMCLASS_DESC_BOB + GRADES_DESC_BOB + POSTALCODE_DESC_BOB + REMARK_DESC_BOB,
                 MESSAGE_ADDEDITCOMMANDREMARK_INVALID);
     }
-
+    //@@author Lenaldnwj
     @Test
     public void optionalInput() {
 
@@ -302,4 +302,5 @@ public class AddCommandParserTest {
                 + "a/311, Clementi Ave 2, #02-25 f/12S23 g/123.0 "
                 + "c/673349 t/friends t/owesMoney");
     }
+    //@@author
 }
