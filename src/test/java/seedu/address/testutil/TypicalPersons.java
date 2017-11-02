@@ -93,7 +93,7 @@ public class TypicalPersons {
             .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
             .withEmptyDateOfBirth().withTags(VALID_TAG_FRIEND)
             .withGender(VALID_GENDER_AMY).build();
-  //@@author Pujitha97
+    //@@author Pujitha97
     public static final ReadOnlyPerson AMY_NO_GENDER = new PersonBuilder().withName(VALID_NAME_AMY)
             .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
             .withDateOfBirth(VALID_DOB_AMY).withEmptyGender().withTags(VALID_TAG_FRIEND)
