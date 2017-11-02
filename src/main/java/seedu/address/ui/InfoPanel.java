@@ -165,6 +165,7 @@ public class InfoPanel extends UiPart<Region> {
      */
     private void resetDebtRepaymentProgressBar(ReadOnlyPerson person) {
         debtRepaymentProgressBar = new DebtRepaymentProgressBar(person);
+        progressBarPlaceholder.getChildren().clear();
         progressBarPlaceholder.getChildren().add(debtRepaymentProgressBar.getRoot());
     }
     //@@author
