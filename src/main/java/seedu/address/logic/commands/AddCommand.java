@@ -28,7 +28,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
             + "[" + PREFIX_TAG + "TAG] "
-            + "[" + PREFIX_EXPIRE + "EXPIRY DATE in form of YYYY-MM-DD]...\n"
+            + "[" + PREFIX_EXPIRE + "EXPIRY DATE]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
@@ -43,7 +43,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
             + "[" + PREFIX_TAG + "TAG] "
-            + "[" + PREFIX_EXPIRE + "EXPIRY DATE in form of YYYY-MM-DD]\n";
+            + "[" + PREFIX_EXPIRE + "EXPIRY DATE]\n";
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 

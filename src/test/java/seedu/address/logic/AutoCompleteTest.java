@@ -40,7 +40,7 @@ public class AutoCompleteTest {
 
     @Test
     public void testExtendedAutoComplete() {
-        assert commandTrie.attemptAutoComplete("add").equals(" n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]\n");
+        assert commandTrie.attemptAutoComplete("add").equals(" n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG] [d/EXPIRY DATE]\n");
         assert commandTrie.attemptAutoComplete("delete").equals(" INDEX\n");
         assert commandTrie.attemptAutoComplete("edit").equals(" INDEX [n/NAME] [p/PHONE] [e/EMAIL] "
                 + "[a/ADDRESS] [t/TAG]\n");
