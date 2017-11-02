@@ -1,6 +1,6 @@
-= ScheduBook - User Guide
+= __ScheduBook __- User Guide
 :toc:
-:toc-title:
+:toc-title: Table Of Contents
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
@@ -15,11 +15,11 @@ endif::[]
 By: `CS2103AUG2017-T09-B2`      Since: `AUG 2017`      Licence: `MIT`
 
 == Introduction/Product overview
-The ScheduBook V1.4 is a program that helps studentas like you create and store a list of contacts and also helps you schedule your meetings so that you can better manage your time with your friends, your peers or even your professors or teachers. You can use Schedubook to remind you of a certain meeting you have on a day and Schedubook will remind you, further providing you information about the location you planned to meet.
+The __ScheduBook __V1.4 is an application that helps students like you create and store a list of contacts and also helps you schedule your meetings so that you can better manage your time with your friends, peers or even your professors or teachers. You can use __Schedubook __to remind you of a certain meeting you have on a day and __Schedubook __will remind you, further providing you information about the location you planned to meet.
 
 == About
 
-This user guide provides an overview of all commands that you can use in ScheduBook to set up or schedule your meetings and shows you how to get started using ScheduBook.
+This user guide provides an overview of all commands that you can use in __ScheduBook __to set up or schedule your meetings and shows you how to get started using _ScheduBook._
 
 This user guide gives you the information of how the urgency of your scheduled meetings are presented to you.
 
@@ -56,7 +56,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`addmeeting`** `2 n/Shopping d/01-01-01-2020 12:00 l/Orchard Road` adds a meeting with the 2nd contact shown in the current list
 * *`exit`* : exits the application
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  Refer to the link:#features[Features] section below for more details of each command.
 
 == Features
 
@@ -90,6 +90,10 @@ image::MeetingCard3.png[align="center"][width="200"]
 Upon start up of the application, meetings which have already passed the current time of log in will be deleted and no
 longer be shown
 
+=== Loading of Meeting Location in Google Maps
+
+Upon selecting a meeting, the location of meeting will be automatically entered as the destination in Google Maps. The detailed navigational route and directions can be obtained thereafter.
+
 == Commands
 
 ====
@@ -99,6 +103,7 @@ longer be shown
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Abbreviations in parenthesis before the command word represents the alias used for the corresponding commands. e.g. in `(am)addmeeting`, `am` is the short form notation for the `addmeeting` command.
 ====
 
 === Viewing help : `help`
@@ -108,7 +113,7 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `(a)add [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -121,12 +126,12 @@ Examples:
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
-Format: `list`
+Format: `(l)list`
 
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `(e)edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -146,7 +151,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `(f)find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -166,7 +171,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Format: `(d)delete INDEX`
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -186,7 +191,7 @@ Deletes the 1st person in the results of the `find` command.
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Format: `(s)select INDEX`
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -205,7 +210,7 @@ Selects the 1st person in the results of the `find` command.
 
 === Adding a meeting: `addmeeting`
 Adds a meeting to the address book +
-Format: `addmeeting INDEX [n/NAME] [d/DATE_TIME] [l/LOCATION]`
+Format: `(am)addmeeting INDEX [n/NAME] [d/DATE_TIME] [l/LOCATION]`
 
 [NOTE]
 Input format for Date and Time is "DD-MM-YYYY HH:MM"
@@ -236,7 +241,7 @@ Examples:
 deletemeeting by index of meeting in the Meeting
 
 Deletes a meeting in the address book at the specified INDEX +
-Format: `deletemeeting INDEX`
+Format: `(dm)deletemeeting INDEX`
 
 [NOTE]
 INDEX must be a positive integer
@@ -253,18 +258,40 @@ Examples:
 * `dm 1`
 * `dm 2`
 
+=== Selecting a meeting : `selectmeeting`
+
+Selects the meeting identified by the index number used in the last meeting listing. +
+Format: `(sm)selectmeeting INDEX`
+
+****
+* Selects the meeting at the specified `INDEX` and loads the GoogleMaps with the location of meeting as the destination.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `listmeeting` +
+`selectmeeting 5` +
+Selects the 5th meeting in the address book.
+* `findmeeting Alex` +
+`selectmeeting 1` +
+Selects the 1st meeting in the results of the `findmeeting` command.
+
 === Listing all meetings : `listmeeting`
 
 Shows a list of all meetings in the address book. +
-Format: `listmeeting`
+Format: `(lm)listmeeting`
 
 [TIP]
 Meetings are always sorted according to the closest date
 
+
+
 === Editing a meeting : `editmeeting`
 
 Edits an existing meeting in the address book. +
-Format: `edit INDEX [n/NAME] [d/DATETIME] [l/LOCATION]`
+Format: `(em)editmeeting INDEX [n/NAME] [d/DATETIME] [l/LOCATION]`
 
 ****
 * Edits the meeting at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -274,13 +301,13 @@ Format: `edit INDEX [n/NAME] [d/DATETIME] [l/LOCATION]`
 
 Examples:
 
-* `edit 1 n/John l/Clementi` +
+* `editmeeting 1 n/John l/Clementi` +
 Edits the name and location of the 1st meeting to be `John` and `Clementi` respectively.
 
 === Locating meetings by name: `findmeeting`
 
 Finds meetings whose names contain any of the given keywords. +
-Format: `findmeeting KEYWORD [MORE_KEYWORDS]`
+Format: `(fm)findmeeting KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -301,10 +328,11 @@ Returns any meeting having `John` as the person to meet and any meetings having 
 
 === Locating meetings with a particular person: `findexactmeeting`
 Finds meetings with people whose names match exactly with the phrase entered.
-Format: `findexactmeeting PHRASE`
+Format: `(fem)findexactmeeting PHRASE`
 
 ****
-* The search is case insensitive. e.g `john tan` will match `John Tan`
+* The search is case insensitive. +
+e.g `john tan` will match `John Tan`
 * Only meetings with the full name of the person will be found
 ****
 
@@ -316,7 +344,7 @@ returns only the meetings with people named `John Tan`
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: `(h)history`
 
 [NOTE]
 ====
@@ -327,7 +355,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Format: `(u)undo`
 
 [NOTE]
 ====
@@ -353,7 +381,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `(r)redo`
 
 Examples:
 
@@ -376,7 +404,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
-Format: `clear`
+Format: `(c)clear`
 
 === Exiting the program : `exit`
 
@@ -407,11 +435,14 @@ e.g. `find James Jake`
 * *List* : `list`
 * *Add Meeting* `addmeeting INDEX [n/NAME] [d/DATE_TIME] [l/LOCATION]` +
 e.g. `addmeeting 5 n/Shopping d/22-11-2017 l/Vivo City`
-* *Delete Meeting* `deletemeeting INDEX` + e.g. `dm 1`
+* *Delete Meeting* `deletemeeting INDEX` +
+e.g. `deletemeeting 1`
 * *Edit Meeting* `editmeeting INDEX [n/NAME] [d/DATETIME] [l/LOCATION]`
 * *List Meeting* : `listmeeting`
 * *Find Meeting* : `findmeeting KeyWORD [MORE_KEYWORDS]` +
 e.g. `find Shopping Study Jake`
+* *Select Meeting* : `selectmeeting INDEX` +
+e.g selectmeeting 7
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
