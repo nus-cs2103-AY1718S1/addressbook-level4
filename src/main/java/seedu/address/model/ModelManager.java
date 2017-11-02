@@ -16,11 +16,13 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
+import seedu.address.model.relationship.ConfidenceEstimate;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.relationship.RelationshipDirection;
 import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
@@ -116,7 +118,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void addRelationship(Index indexFromPerson, Index indexToPerson, RelationshipDirection direction)
+    public void addRelationship(Index indexFromPerson, Index indexToPerson, RelationshipDirection direction, Name name, ConfidenceEstimate confidenceEstimate)
             throws IllegalValueException, DuplicateRelationshipException {
         List<ReadOnlyPerson> lastShownList = getFilteredPersonList();
 
@@ -129,10 +131,10 @@ public class ModelManager extends ComponentManager implements Model {
         ReadOnlyPerson toPerson = lastShownList.get(indexToPerson.getZeroBased());
         ReadOnlyPerson fromPersonCopy = fromPerson.copy();
         ReadOnlyPerson toPersonCopy = toPerson.copy();
-        Relationship relationshipForFromPerson = new Relationship(fromPersonCopy, toPersonCopy, direction);
+        Relationship relationshipForFromPerson = new Relationship(fromPersonCopy, toPersonCopy, direction, name, confidenceEstimate);
         Relationship relationshipForToPerson = relationshipForFromPerson;
         if (!direction.isDirected()) {
-            relationshipForToPerson = new Relationship(toPersonCopy, fromPersonCopy, direction);
+            relationshipForToPerson = new Relationship(toPersonCopy, fromPersonCopy, direction, name, confidenceEstimate);
         }
 
 
