@@ -36,4 +36,4 @@ public class FindByEmailCommand extends Command {
                 && this.predicate.equals(((FindByEmailCommand) other).predicate)); // state check
     }
 }
-//@@author hj2304
+//@@author

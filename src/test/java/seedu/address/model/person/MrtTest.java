@@ -34,4 +34,4 @@ public class MrtTest {
         assertTrue(Mrt.isValidMrt("Kallang"));
     }
 }
-//@@author hj2304
+//@@author

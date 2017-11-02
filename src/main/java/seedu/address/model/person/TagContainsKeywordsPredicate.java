@@ -35,4 +35,4 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
                 && this.keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check
     }
 }
-//@@author hj2304
+//@@author

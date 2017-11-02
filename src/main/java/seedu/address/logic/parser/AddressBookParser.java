@@ -91,7 +91,7 @@ public class AddressBookParser {
         case FindByEmailCommand.COMMAND_WORD:
         case FindByEmailCommand.COMMAND_ALIAS:
             return new FindByEmailCommandParser().parse(arguments);
-        //@@author hj2304
+        //@@author
 
         case FindByPhoneCommand.COMMAND_WORD:
         case FindByPhoneCommand.COMMAND_ALIAS:
@@ -101,7 +101,7 @@ public class AddressBookParser {
         case FindByTagCommand.COMMAND_WORD:
         case FindByTagCommand.COMMAND_ALIAS:
             return new FindByTagCommandParser().parse(arguments);
-        //@@author hj2304
+        //@@author
 
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:

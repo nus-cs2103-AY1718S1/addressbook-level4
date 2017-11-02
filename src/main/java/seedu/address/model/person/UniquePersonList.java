@@ -169,7 +169,7 @@ public class UniquePersonList implements Iterable<Person> {
         }
         return checker1;
     }
-    //@@author hj2304
+    //@@author
 
     public void addSchedule(Integer toAdd, TreeSet<Integer> timeSpan) {
         internalList.get(toAdd).addSpanToSchedule(timeSpan);

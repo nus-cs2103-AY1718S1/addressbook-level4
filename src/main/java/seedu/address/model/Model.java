@@ -56,5 +56,5 @@ public interface Model {
 
     //@@author hj2304
     void sort();
-    //@@author hj2304
+    //@@author
 }

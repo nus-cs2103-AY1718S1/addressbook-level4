@@ -73,4 +73,4 @@ public class TagContainsKeywordsPredicateTest {
         assertFalse(predicate.test(new PersonBuilder().withTags("family").build()));
     }
 }
-//@@author hj2304
+//@@author

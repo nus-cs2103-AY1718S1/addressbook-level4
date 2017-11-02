@@ -26,7 +26,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
     //@@author hj2304
     private ObjectProperty<Mrt> mrt;
-    //@@author hj2304
+    //@@author
     private ObjectProperty<UniqueTagList> tags;
 
     private ObjectProperty<Schedule> schedule;
@@ -125,7 +125,7 @@ public class Person implements ReadOnlyPerson {
     public Mrt getMrt() {
         return mrt.get();
     }
-    //@@author hj2304
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

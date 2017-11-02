@@ -227,5 +227,5 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void sort() {
         persons.sort();
     }
-    //@@author hj2304
+    //@@author
 }

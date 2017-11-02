@@ -36,4 +36,4 @@ public class FindByTagCommand extends Command {
                 && this.predicate.equals(((FindByTagCommand) other).predicate)); // state check
     }
 }
-//@@author hj2304
+//@@author

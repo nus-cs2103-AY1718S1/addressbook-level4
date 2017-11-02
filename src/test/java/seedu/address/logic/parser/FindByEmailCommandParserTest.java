@@ -34,4 +34,4 @@ public class FindByEmailCommandParserTest {
     }
 
 }
-//@@author hj2304
+//@@author

@@ -31,4 +31,4 @@ public class EmailContainsKeywordsPredicate implements Predicate<ReadOnlyPerson>
     }
 
 }
-//@@author hj2304
+//@@author

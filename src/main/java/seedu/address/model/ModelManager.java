@@ -148,5 +148,5 @@ public class ModelManager extends ComponentManager implements Model {
             indicateAddressBookChanged();
         }
     }
-    //@@author hj2304
+    //@@author
 }

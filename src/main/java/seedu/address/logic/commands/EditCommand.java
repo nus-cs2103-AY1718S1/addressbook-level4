@@ -136,9 +136,7 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
-        //@@author hj2304
         private Mrt mrt;
-        //@@author hj2304
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -200,7 +198,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<Mrt> getMrt() {
             return Optional.ofNullable(mrt);
         }
-        //@@author hj2304
+        //@@author
 
         public void setTags(Set<Tag> tags) {
             this.tags = tags;

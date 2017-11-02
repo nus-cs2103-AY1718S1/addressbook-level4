@@ -24,7 +24,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     //@@author hj2304
     public static final String DEFAULT_MRT = "Boon Lay";
-    //@@author hj2304
+    //@@author
     public static final String DEFAULT_TAGS = "friends";
 
     private Person person;
@@ -37,7 +37,7 @@ public class PersonBuilder {
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             //@@author hj2304
             Mrt defaultMrt = new Mrt(DEFAULT_MRT);
-            //@@author hj2304
+            //@@author
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultMrt, defaultTags);
         } catch (IllegalValueException ive) {
@@ -124,7 +124,7 @@ public class PersonBuilder {
         }
         return this;
     }
-    //@@author hj2304
+    //@@author
 
     public Person build() {
         return this.person;
