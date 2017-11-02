@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+/** Helper functions to  produce for name examination predicates*/
 public class PartialSearchUtil {
 
     private final ArrayList<String> baseList; // the list of words that is going to be find about
@@ -22,12 +23,11 @@ public class PartialSearchUtil {
             String baseString = baseListItr.next();
             ListIterator<String> targetListItr = targetList.listIterator();
             while (targetListItr.hasNext()) {
-                if(targetListItr.next().contains(baseString)) {
+                if (targetListItr.next().contains(baseString)) {
                     flag = true;
                     break;
                 }
             }
-            break;
         }
         return flag;
     }

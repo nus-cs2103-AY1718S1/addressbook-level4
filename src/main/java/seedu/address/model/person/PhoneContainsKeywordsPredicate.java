@@ -1,8 +1,10 @@
 package seedu.address.model.person;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
+import seedu.address.commons.util.PartialSearchUtil;
 import seedu.address.commons.util.StringUtil;
 
 /**
@@ -17,8 +19,9 @@ public class PhoneContainsKeywordsPredicate implements Predicate<ReadOnlyPerson>
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getPhone().toString(), keyword));
+        List baseList = Arrays.asList(person.getPhone().value.split(" "));
+        PartialSearchUtil mySearch = new PartialSearchUtil(keywords, baseList);
+        return mySearch.compare();
     }
 
     @Override

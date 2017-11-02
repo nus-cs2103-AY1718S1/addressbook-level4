@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
@@ -18,7 +19,8 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        PartialSearchUtil mySearch = new PartialSearchUtil(keywords, Arrays.asList(person.getName().fullNameInit.split(" ")));
+        List baseList = Arrays.asList(person.getName().fullNameInit.split(" "));
+        PartialSearchUtil mySearch = new PartialSearchUtil(keywords, baseList);
         return mySearch.compare();
     }
 

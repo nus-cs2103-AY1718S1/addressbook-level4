@@ -1,4 +1,4 @@
-package seedu.address.commons.util.GoogleCalendarUtil;
+package seedu.address.commons.util.googleCalendarUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
