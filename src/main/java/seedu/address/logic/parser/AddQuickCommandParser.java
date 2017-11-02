@@ -56,7 +56,7 @@ public class AddQuickCommandParser implements Parser<AddQuickCommand> {
                     getDetails(argMultimap.getValue(PREFIX_EMAIL), PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(
                     getDetails(argMultimap.getValue(PREFIX_ADDRESS), PREFIX_ADDRESS)).get();
-            Remark remark = new Remark("No Remark");
+            Remark remark = new Remark("No remark");
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
 
@@ -86,11 +86,11 @@ public class AddQuickCommandParser implements Parser<AddQuickCommand> {
             if (prefix.equals(PREFIX_BIRTHDAY)) {
                 return value.ofNullable("00/00/0000");
             } else if (prefix.equals(PREFIX_EMAIL)) {
-                return value.ofNullable("No_Email@default.email");
+                return value.ofNullable("default@default.email");
             } else if (prefix.equals(PREFIX_ADDRESS)) {
-                return value.ofNullable("No address recorded");
+                return value.ofNullable("No address");
             } else if (prefix.equals(PREFIX_REMARK)) {
-                return value.ofNullable("No remark recorded");
+                return value.ofNullable("No remark");
             }
         }
 
