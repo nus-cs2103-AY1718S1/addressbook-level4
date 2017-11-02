@@ -52,20 +52,24 @@ public class AppointCommand extends UndoableCommand {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         Set<Appointment> appointments = model.getAllAppointments();
         UniqueAppointmentList uniqueAppointmentList = new UniqueAppointmentList();
-        uniqueAppointmentList.setAppointments(appointments);
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        if (uniqueAppointmentList.hasClash(appointment)) {
-            throw new CommandException("Appointment clash with another in address book");
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), appointment, personToEdit.getProfilePicture(),
                 personToEdit.getGroups(), personToEdit.getTags());
+
+        if (!personToEdit.getAppointment().value.equals("")) {
+            appointments.remove(personToEdit.getAppointment());
+        }
+        uniqueAppointmentList.setAppointments(appointments);
+
+        if (uniqueAppointmentList.hasClash(appointment)) {
+            throw new CommandException("Appointment clash with another in address book");
+        }
 
         try {
             model.updatePerson(personToEdit, editedPerson);

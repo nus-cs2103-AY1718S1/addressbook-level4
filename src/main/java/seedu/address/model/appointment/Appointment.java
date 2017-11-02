@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
@@ -18,6 +19,7 @@ public class Appointment {
     public static final String DATETIME_PATTERN = "dd/MM/yyyy HH:mm";
     private static final String MESSAGE_DURATION_CONSTRAINT = "Duration must be a positive integer in minutes";
     private static final String MESSAGE_DATETIME_CONSTRAINT = "Date time cannot be in the past";
+    private static final String MESSAGE_INVALID_DATETIME = "Date or time is invalid";
 
     public final String value;
     public final LocalDateTime start;
@@ -51,6 +53,8 @@ public class Appointment {
                 this.end = endDateTime;
             } catch (ArrayIndexOutOfBoundsException iob) {
                 throw new IllegalValueException(MESSAGE_APPOINTMENT_CONSTRAINTS);
+            } catch (DateTimeParseException dtpe) {
+                throw new IllegalValueException(MESSAGE_INVALID_DATETIME);
             }
         }
     }
@@ -60,7 +64,7 @@ public class Appointment {
         return value;
     }
 
-    public static LocalDateTime getDateTime(String datetime) {
+    public static LocalDateTime getDateTime(String datetime) throws DateTimeParseException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATETIME_PATTERN);
         return LocalDateTime.parse(datetime, formatter);
     }
