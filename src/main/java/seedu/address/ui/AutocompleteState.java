@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+//@@author Kowalski985
 /**
  * Represents the states of the autcompleter
  */
