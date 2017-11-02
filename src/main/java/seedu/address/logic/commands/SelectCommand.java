@@ -20,6 +20,7 @@ public class SelectCommand extends Command {
     public static final String COMMAND_WORD = "select";
     public static final String COMMAND_ALIAS = "s";
 
+    //@@author Hailinx
     /* Option prefix definitions */
     public static final String PREFIX_SELECT_SEARCH_NAME = PREFIX_OPTION_INDICATOR + "n";
     public static final String PREFIX_SELECT_SEARCH_PHONE = PREFIX_OPTION_INDICATOR + "p";
@@ -35,6 +36,7 @@ public class SelectCommand extends Command {
             + "\t" + PREFIX_SELECT_SEARCH_PHONE + "\t\tsearch phone on browser\n"
             + "\t" + PREFIX_SELECT_SEARCH_EMAIL + "\t\tsearch email on browser\n"
             + "\t" + PREFIX_SELECT_SEARCH_ADDRESS + "\t\tshow address on google map";
+    //@@author
 
     public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Selected Person: %1$s";
 
@@ -58,7 +60,6 @@ public class SelectCommand extends Command {
         EventsCenter.getInstance().post(new ChangeSearchEvent(searchMode));
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
-
     }
 
     @Override

@@ -111,10 +111,12 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author Hailinx
         @Override
         public void setAddressBook(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
+        //@@author
 
         @Override
         public ReadOnlyAddressBook getAddressBook() {
@@ -141,6 +143,7 @@ public class AddCommandTest {
         }
         //@@author
 
+        //@@author Hailinx
         @Override
         public void addTodoItem(ReadOnlyPerson target, TodoItem todoItem)
                 throws DuplicatePersonException, PersonNotFoundException, DuplicateTodoItemException {
@@ -157,6 +160,7 @@ public class AddCommandTest {
         public void resetTodoItem(ReadOnlyPerson target) throws DuplicatePersonException, PersonNotFoundException {
             fail("This method should not be called.");
         }
+        //@@author
 
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
@@ -169,10 +173,12 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author Hailinx
         @Override
         public void updateTodoItemList() {
             fail("This method should not be called.");
         }
+        //@@author
 
         //@@author qihao27
         @Override

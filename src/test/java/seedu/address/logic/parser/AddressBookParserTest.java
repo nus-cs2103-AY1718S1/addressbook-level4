@@ -66,10 +66,12 @@ public class AddressBookParserTest {
 
     private final SecurityStubUtil securityStubUtil = new SecurityStubUtil();
 
+    //@@author Hailinx
     @Before
     public void initialSecurityManager() {
         securityStubUtil.initialUnSecuredSecurity();
     }
+    //@@author
 
     @Test
     public void parseCommand_add() throws Exception {
@@ -78,12 +80,14 @@ public class AddressBookParserTest {
         assertEquals(new AddCommand(person), command);
     }
 
+    //@@author Hailinx
     @Test
     public void parseCommand_add_alias() throws Exception {
         Person person = new PersonBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddAliasCommand(person));
         assertEquals(new AddCommand(person), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_clear() throws Exception {
@@ -91,11 +95,13 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3") instanceof ClearCommand);
     }
 
+    //@@author Hailinx
     @Test
     public void parseCommand_clear_alias() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS) instanceof ClearCommand);
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS + " 3") instanceof ClearCommand);
     }
+    //@@author
 
     @Test
     public void parseCommand_delete() throws Exception {
@@ -104,12 +110,14 @@ public class AddressBookParserTest {
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
 
+    //@@author Hailinx
     @Test
     public void parseCommand_delete_alias() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
+    //@@author
 
     //@@author qihao27
     @Test
@@ -120,6 +128,7 @@ public class AddressBookParserTest {
     }
     //@@author
 
+    //@@author Hailinx
     @Test
     public void parseCommand_lock() throws Exception {
         String password = "typicalPassword";
@@ -135,6 +144,7 @@ public class AddressBookParserTest {
                 UnlockCommand.COMMAND_WORD + " " + password);
         assertEquals(new UnlockCommand(password), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_edit() throws Exception {
@@ -145,6 +155,7 @@ public class AddressBookParserTest {
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
+    //@@author Hailinx
     @Test
     public void parseCommand_edit_alias() throws Exception {
         Person person = new PersonBuilder().build();
@@ -153,6 +164,7 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person));
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_exit() throws Exception {
@@ -168,6 +180,7 @@ public class AddressBookParserTest {
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
+    //@@author Hailinx
     @Test
     public void parseCommand_find_alias() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
@@ -175,6 +188,7 @@ public class AddressBookParserTest {
                 FindCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_help() throws Exception {
@@ -195,6 +209,7 @@ public class AddressBookParserTest {
         }
     }
 
+    //@@author Hailinx
     @Test
     public void parseCommand_history_alias() throws Exception {
         assertTrue(parser.parseCommand(HistoryCommand.COMMAND_ALIAS) instanceof HistoryCommand);
@@ -207,6 +222,7 @@ public class AddressBookParserTest {
             assertEquals(MESSAGE_UNKNOWN_COMMAND, pe.getMessage());
         }
     }
+    //@@author
 
     @Test
     public void parseCommand_list() throws Exception {
@@ -214,11 +230,13 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
     }
 
+    //@@author Hailinx
     @Test
     public void parseCommand_list_alias() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
     }
+    //@@author
 
     @Test
     public void parseCommand_select() throws Exception {
@@ -228,6 +246,7 @@ public class AddressBookParserTest {
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON, BrowserSearchMode.GOOGLE_SEARCH_NAME), command);
     }
 
+    //@@author Hailinx
     @Test
     public void parseCommand_select_alias() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
@@ -235,6 +254,7 @@ public class AddressBookParserTest {
                         + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON, BrowserSearchMode.GOOGLE_SEARCH_ADDRESS), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
@@ -242,11 +262,13 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
     }
 
+    //@@author Hailinx
     @Test
     public void parseCommand_redoCommandAlias_returnsRedoCommand() throws Exception {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_ALIAS) instanceof RedoCommand);
         assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
     }
+    //@@author
 
     @Test
     public void parseCommand_undoCommandWord_returnsUndoCommand() throws Exception {
@@ -254,11 +276,13 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
     }
 
+    //@@author Hailinx
     @Test
     public void parseCommand_undoCommandAlias_returnsUndoCommand() throws Exception {
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS) instanceof UndoCommand);
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
     }
+    //@@author
 
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
@@ -297,6 +321,7 @@ public class AddressBookParserTest {
     }
     //@@author
 
+    //@@author Hailinx
     @Test
     public void secured_noCommandReturn() {
         securityStubUtil.initialSecuredSecurity();
@@ -319,4 +344,5 @@ public class AddressBookParserTest {
             assertEquals(e.getMessage(), MESSAGE_IS_ENCRYPTD);
         }
     }
+    //@@author
 }

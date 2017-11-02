@@ -56,6 +56,7 @@ public class BrowserPanelTest extends GuiUnitTest {
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
     }
 
+    //@@author Hailinx
     @Test
     public void test_getUrl() {
         ReadOnlyPerson person = ALICE;
@@ -76,4 +77,5 @@ public class BrowserPanelTest extends GuiUnitTest {
         String searchAddressUrl = GOOGLE_MAP_URL_PREFIX + "123,+Jurong+West+Ave+6,+#08-111";
         assertEquals(browserPanel.getUrl(person), searchAddressUrl);
     }
+    //@@author
 }

@@ -55,10 +55,12 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author Hailinx
     @Override
     public void setAddressBook(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
     }
+    //@@author
 
     @Override
     public ReadOnlyAddressBook getAddressBook() {
@@ -101,7 +103,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    //@@author qihao27
+    //@@author Hailinx
     @Override
     public void addTodoItem(ReadOnlyPerson target, TodoItem todoItem)
             throws DuplicatePersonException, PersonNotFoundException, DuplicateTodoItemException {
@@ -133,8 +135,9 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateTodoItemList() {
         raise(new ShowAllTodoItemsEvent());
     }
-
     //@@author
+
+    //@@author qihao27
     @Override
     public void sortPerson(String option) throws NoPersonFoundException {
         requireNonNull(option);

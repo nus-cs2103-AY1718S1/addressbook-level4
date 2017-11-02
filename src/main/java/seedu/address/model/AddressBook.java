@@ -161,6 +161,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
     //@@author
 
+    //@@author Hailinx
     /**
      * Adds a todoItem to target person.
      */
@@ -210,6 +211,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         persons.setPerson(target, person);
     }
+    //@@author
 
     /**
      * Ensures that every tag in this person:

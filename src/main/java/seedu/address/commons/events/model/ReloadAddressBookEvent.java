@@ -1,3 +1,4 @@
+//@@author Hailinx
 package seedu.address.commons.events.model;
 
 import seedu.address.commons.events.BaseEvent;

@@ -137,6 +137,7 @@ public class Person implements ReadOnlyPerson {
     }
     //@@author
 
+    //@@author Hailinx
     @Override
     public List<TodoItem> getTodoItems() {
         return Collections.unmodifiableList(todoItems);
@@ -145,6 +146,7 @@ public class Person implements ReadOnlyPerson {
     public void setTodoItems(List<TodoItem> newItems) {
         todoItems = newItems;
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

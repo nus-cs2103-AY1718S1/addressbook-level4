@@ -14,7 +14,9 @@ public class Messages {
             + "\nRequire more than 3 characters";
     //@@author
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
+    //@@author Hailinx
     public static final String MESSAGE_IS_ENCRYPTD = "The address book is encrypted. "
             + "Please unlock it first!";
+            //@@author
 
 }
