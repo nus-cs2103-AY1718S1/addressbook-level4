@@ -4,7 +4,9 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TodoItem;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.DuplicateTodoItemException;
 //@@author qihao27
 import seedu.address.model.person.exceptions.NoPersonFoundException;
 //@@author
@@ -20,8 +22,10 @@ public interface Model {
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 
-    /** Replaces the data in the ModelManager with the given addressBook */
+    //@@author Hailinx
+    /** Replaces the data in the ModelManager with the given addressBook without writing to Storage */
     void setAddressBook(ReadOnlyAddressBook newData);
+    //@@author
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
@@ -42,8 +46,31 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    //@@author aaronyhsoh
+    /**
+     * Replaces the given person {@code target} with {@code favouritedPerson}.
+     *
+     * @throws DuplicatePersonException if favouriting the person causes the person to be equivalent to
+     *      another existing person in the list.
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     */
     void favouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
+    //@@author
+
+    //@@author Hailinx
+    /** Adds the given todoItem to target person */
+    void addTodoItem(ReadOnlyPerson target, TodoItem todoItem)
+            throws DuplicatePersonException, PersonNotFoundException, DuplicateTodoItemException;
+
+    /** Deletes the given todoItem from target person */
+    void deleteTodoItem(ReadOnlyPerson target, TodoItem todoItem)
+            throws DuplicatePersonException, PersonNotFoundException;
+
+    /** Resets all todoItem for target person */
+    void resetTodoItem(ReadOnlyPerson target)
+            throws DuplicatePersonException, PersonNotFoundException;
+    //@@author
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
@@ -53,6 +80,11 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    //@@author Hailinx
+    /** Updates the UI to show all todoItems for all persons */
+    void updateTodoItemList();
+    //@@author
 
     //@@author qihao27
     /**

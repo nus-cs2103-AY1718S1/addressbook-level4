@@ -22,7 +22,9 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TodoItem;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.DuplicateTodoItemException;
 //@@author qihao27
 import seedu.address.model.person.exceptions.NoPersonFoundException;
 //@@author
@@ -109,10 +111,12 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author Hailinx
         @Override
         public void setAddressBook(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
+        //@@author
 
         @Override
         public ReadOnlyAddressBook getAddressBook() {
@@ -131,11 +135,32 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author Aaron Soh Yu Han
         @Override
         public void favouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
         }
+        //@@author
+
+        //@@author Hailinx
+        @Override
+        public void addTodoItem(ReadOnlyPerson target, TodoItem todoItem)
+                throws DuplicatePersonException, PersonNotFoundException, DuplicateTodoItemException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteTodoItem(ReadOnlyPerson target, TodoItem todoItem)
+                throws DuplicatePersonException, PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void resetTodoItem(ReadOnlyPerson target) throws DuplicatePersonException, PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+        //@@author
 
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
@@ -148,9 +173,16 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author Hailinx
+        @Override
+        public void updateTodoItemList() {
+            fail("This method should not be called.");
+        }
+        //@@author
+
         //@@author qihao27
         @Override
-        public void sortPerson(String option) throws NoPersonFoundException {
+        public void sortPerson (String option) throws NoPersonFoundException {
             fail("This method should not be called.");
         }
         //@@author

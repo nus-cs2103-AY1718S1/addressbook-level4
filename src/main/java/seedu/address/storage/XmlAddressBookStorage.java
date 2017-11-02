@@ -85,6 +85,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     }
     //@@author
 
+    //@@author Hailinx
     @Override
     public boolean isEncrypted() throws IOException {
         return isEncrypted(filePath);
@@ -139,5 +140,6 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         File file = new File(filePath);
         SecurityUtil.decrypt(file, password);
     }
+    //@@author
 
 }

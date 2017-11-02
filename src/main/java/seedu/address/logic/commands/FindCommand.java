@@ -19,13 +19,14 @@ public class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
     public static final String COMMAND_ALIAS = "f";
 
-    /* Mode prefix definitions */
+    //@@author Hailinx
+    /* Option prefix definitions */
     public static final String PREFIX_FIND_IN_DETAIL = PREFIX_OPTION_INDICATOR + "d";
     public static final String PREFIX_FIND_FUZZY_FIND = PREFIX_OPTION_INDICATOR + "u";
     public static final String PREFIX_FIND_BY_NAME = "";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons who are matched\n"
-            + "Parameters: KEYWORD [OPTION] ARGUMENTS...\n"
+            + "Format: KEYWORD [OPTION] ARGUMENTS...\n"
             + "\tDefault: " + COMMAND_WORD + " ARGUMENT [ARGUMENTS]\n"
             + "\t\tFinds all persons whose names contain any of the specified keywords (case-sensitive)"
             + "\t\tand displays them as a list with index numbers.\n"
@@ -37,7 +38,7 @@ public class FindCommand extends Command {
             + "\t  " + PREFIX_FIND_FUZZY_FIND + " ARGUMENT\n"
             + "\t\tFuzzy search for people whose details contain the argument\n"
             + "\t\tExample: " + COMMAND_WORD + " " + PREFIX_FIND_FUZZY_FIND + " @u.nus.edu";
-
+    //@@author
 
     private final Predicate<ReadOnlyPerson> predicate;
 
@@ -58,6 +59,7 @@ public class FindCommand extends Command {
                 && this.predicate.equals(((FindCommand) other).predicate)); // state check
     }
 
+    //@@author Hailinx
     /**
      * Stores the details to find the person with. Each non-empty field value will be used to compare
      * to contacts in the list.
@@ -156,4 +158,5 @@ public class FindCommand extends Command {
                     + '}';
         }
     }
+    //@@author
 }

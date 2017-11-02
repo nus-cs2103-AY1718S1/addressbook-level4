@@ -13,8 +13,10 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ClearListSelectionEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowPersonTodoEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -22,7 +24,11 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonListPanel extends UiPart<Region> {
     private static final String FXML = "PersonListPanel.fxml";
+
+    private static final int CANCEL_SELECTION_INDEX = -1;
+
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
+
 
     @FXML
     private ListView<PersonCard> personListView;
@@ -48,6 +54,7 @@ public class PersonListPanel extends UiPart<Region> {
                     if (newValue != null) {
                         logger.fine("Selection in person list panel changed to : '" + newValue + "'");
                         raise(new PersonPanelSelectionChangedEvent(newValue));
+                        raise(new ShowPersonTodoEvent(newValue.person));
                     }
                 });
     }
@@ -67,6 +74,14 @@ public class PersonListPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }
+
+    //@@author Hailinx
+    @Subscribe
+    private void handleClearListSelectionEvent(ClearListSelectionEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollTo(CANCEL_SELECTION_INDEX);
+    }
+    //@@author
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
