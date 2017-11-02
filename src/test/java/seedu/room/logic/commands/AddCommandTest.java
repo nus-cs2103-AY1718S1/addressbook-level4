@@ -149,20 +149,25 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author sushinoya
         @Override
         public void sortBy(String sortCriteria) throws AlreadySortedException {
             fail("This method should not be called.");
         }
 
+        //@@author
         @Override
         public void updateHighlightStatus(String highlightTag) {
 
         }
+
+        //@@author sushinoya
         public void swapRooms(ReadOnlyPerson person1, ReadOnlyPerson person2) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
     }
 
+    //@@author
     /**
      * A Model stub that always throw a DuplicatePersonException when trying to add a person.
      */
