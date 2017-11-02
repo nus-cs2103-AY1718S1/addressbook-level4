@@ -47,9 +47,9 @@ public class VisualizeCommand extends Command {
                 model.getAddressBook().getPersonList().get(targetIndex.getZeroBased()).getSchedule();
         TreeSet<Integer>[] timeSetArray = scheduleToBeShown.splitScheduleToDays();
         String toShow = "\nAll free time: \n";
-        for(int i = 0; i < timeSetArray.length; i++) {
+        for (int i = 0; i < timeSetArray.length; i++) {
             toShow = toShow + PossibleDays.DAY_TIME[i] + ":\n";
-            for(Integer time : timeSetArray[i]) {
+            for (Integer time : timeSetArray[i]) {
                 toShow = toShow + Time.getTimeToString(time) + "--"
                         + Time.getTimeToString(Time.increaseTimeInteger(time)) + " ";
             }

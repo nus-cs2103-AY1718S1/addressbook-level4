@@ -53,6 +53,10 @@ public class Time {
         return toShow;
     }
 
+    /**
+     * Next time integer. This method is only to be used in visualizing and arraging where exceptions are already
+     * thrown so there is no need to check the format.
+     */
     public static Integer increaseTimeInteger(Integer time) {
         if (time % 100 == 30) {
             time += 70;
