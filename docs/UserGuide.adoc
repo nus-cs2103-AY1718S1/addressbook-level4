@@ -39,6 +39,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
+.  Refer to the link:#command summary[Command Summary] section below for summary of each command.
+
 == Features
 
 ====
@@ -417,11 +419,11 @@ e.g. `gmap 1`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
-* *Theme* : `theme INDEX` or `theme NAME`
+* *Theme* : `theme INDEX` or `theme NAME` +
 e.g. `theme 1` +
 e.g. `theme caspian`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *Remark* : `remark INDEX r/REMARK`
+* *Remark* : `remark INDEX r/REMARK` +
 e.g. `remark 1 r/CS2103 is fun`
