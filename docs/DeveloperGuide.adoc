@@ -1091,7 +1091,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |teacher |sort students by name and classes |find students easily
 
-|`* * *` |busy teacher |be able to see who are the underperforming students|find out who I should spend more time on [Coming in v2.0]
+|`* * *` |busy teacher |be able to see who are the underperforming students|find out who I should spend more time on
 
 |`* * *` |teacher |have contact information of students and parents|contact either of them
 
@@ -1139,17 +1139,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |caring teacher |be able to see my students' home location in extended screen using google maps|conduct house visits easily if they fall sick [Coming in v2.0]
 
-|`* *` |caring teacher |schedule appointments with my students|conduct extra classes when they ask for it [Coming in v2.0]
+|`* *` |caring teacher |schedule appointments with my students|conduct extra classes when they ask for it
 
 |`*` |user |add profile pictures to contacts |find my friends easily [Coming in v2.0]
 
-|`*` |user |set the colour of the tags |can view the tags easily [Coming in v2.0]
+|`*` |user |have different colours of the tags for different tag names |can view the tags easily
 
 |`*` |user |use facial recognition |enhance security [Coming in v2.0]
 
 |`*` |user |call/message directly from my address book |reach them easily [Coming in v2.0]
 
-|`*` |teacher |schedule my timetable according to my classes|plan my timetable to fit other activities [Coming in v2.0]
+|`*` |teacher |schedule my timetable according to my classes|plan my timetable to fit other activities
 
 |`*` |thoughtful teacher |remind students about homework assignments| [Coming in v2.0]
 |=======================================================================
@@ -1344,6 +1344,31 @@ Use case ends.
 +
 Use case ends.
 
+[discrete]
+=== Use case: Schedule
+
+*MSS*
+
+1.  User requests to schedule person
+2.  AddressBook adds the scheduled person to the schedule list
+3.  AddressBook displays the result of user's request
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Addressbook does not contain any person
++
+** 2a1. AddressBook shows an error message
+
+Use case ends.
+
+* 3a. The given input or command is invalid (Wrong format, etc)
++
+** 3a1. AddressBook shows an error message
++
+Use case resumes at step 1.
 
 [discrete]
 === Use case: Undo
