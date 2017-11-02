@@ -74,8 +74,16 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::introUiUG.png[width="790"]
 +
+. The different sections of the UI are as follows:
+.. Command Box - This is where you type your commands
+.. Result Display - The outcome of your commands will display here
+.. Sort menu - You can use this menu to sort the list
+.. Search Box - You can search for your contacts and tasks here
+.. Person and task list - Your list of contacts and tasks will be shown here
+.. Browser Panel - This is where the browser will appear
+
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
@@ -85,7 +93,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  Refer to the link:#features[Features] section below for details of all commands.
 
 == Get to know Bluebird
 
