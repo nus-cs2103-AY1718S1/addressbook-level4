@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox id="stackPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <padding>
+        <Insets bottom="5" left="5" right="15" top="5" />
+    </padding>
+    <children>
+        <Label layoutX="10.0" layoutY="172.0" text="Group Statistics">
+            <font>
+                <Font size="28.0" />
+            </font>
+        </Label>
+        <Label id="mean" fx:id="mean" text="\$mean">
+            <graphic>
+                <Label text="Mean:" />
+            </graphic>
+        </Label>
+        <Label id="median" fx:id="median" text="\$median">
+            <graphic>
+                <Label text="Median" />
+            </graphic>
+        </Label>
+        <Label id="mode" fx:id="mode" layoutX="10.0" layoutY="37.0" text="\$mode">
+            <graphic>
+                <Label text="Mode:" />
+            </graphic>
+        </Label>
+        <Label id="variance" fx:id="variance" layoutX="10.0" layoutY="10.0" text="\$variance">
+            <graphic>
+                <Label text="Variance:" />
+            </graphic>
+        </Label>
+        <Label id="standardDeviation" fx:id="standardDeviation" layoutX="10.0" layoutY="10.0" text="\$standardDeviation">
+            <graphic>
+                <Label text="StandardDeviation" />
+            </graphic>
+        </Label>
+        <Label id="quartile3" fx:id="quartile3" text="\$quartile3">
+            <graphic>
+                <Label text="75th Percentile:" />
+            </graphic>
+        </Label>
+        <Label id="quartile1" fx:id="quartile1" layoutX="10.0" layoutY="37.0" text="\$quartile1">
+            <graphic>
+                <Label text="25th Percentile:" />
+            </graphic>
+        </Label>
+        <Label id="interQuartileRange" fx:id="interquartileRange" layoutX="10.0" layoutY="91.0" text="\$interquartileRange">
+            <graphic>
+                <Label text="Interquartile Range:" />
+            </graphic>
+        </Label>
+    </children>
+</VBox>
