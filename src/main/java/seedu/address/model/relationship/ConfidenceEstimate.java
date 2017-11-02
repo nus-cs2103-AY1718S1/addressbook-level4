@@ -9,13 +9,13 @@ public class ConfidenceEstimate {
     public static final String MESSAGE_CONFIDENCE_ESTIMATE_CONSTRAINTS =
             "Confidence estimates should be a single number without spaces";
 
-    public final String value;
+    public final Double value;
 
     /**
      * The default ConfidenceEstimate constructor when confidence estimate is not specified by the user
      */
     private ConfidenceEstimate() {
-        value = "";
+        value = (double) 0;
     }
 
     /**
@@ -29,7 +29,7 @@ public class ConfidenceEstimate {
         if (!isValidConfidenceEstimate(trimmedEstimate)) {
             throw new IllegalValueException(MESSAGE_CONFIDENCE_ESTIMATE_CONSTRAINTS);
         }
-        this.value = trimmedEstimate;
+        this.value = Double.parseDouble(trimmedEstimate);
     }
 
     /**
@@ -47,7 +47,7 @@ public class ConfidenceEstimate {
 
     @Override
     public String toString() {
-        return value;
+        return Double.toString(value);
     }
 
     @Override

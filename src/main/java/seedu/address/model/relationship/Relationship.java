@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
-import java.util.concurrent.locks.Condition;
 
 import seedu.address.model.person.Name;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -91,7 +90,7 @@ public class Relationship {
     }
 
     public String toString() {
-        String nameAndCE = this.name.toString() + " " + this.confidenceEstimate.value;
+        String nameAndCE = this.name.toString() + " " + this.confidenceEstimate.toString();
         if (isUndirected()) {
             return fromPerson.toString() + " <-> " + toPerson.toString() + " " + nameAndCE;
         } else {
