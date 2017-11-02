@@ -24,7 +24,9 @@ public class Person implements ReadOnlyPerson {
 
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
+    //@@author zhoukai07
     private ObjectProperty<ArrayList<Email>> emails;
+    //@@author
     private ObjectProperty<Address> address;
     private ObjectProperty<Remark> remark;
     private ObjectProperty<UniqueTagList> tags;
@@ -82,9 +84,11 @@ public class Person implements ReadOnlyPerson {
         return phone.get();
     }
 
+    //@@author zhoukai07
     public void setEmail(ArrayList<Email> email) {
         this.emails.set(requireNonNull(email));
     }
+    //@@author
 
     @Override
     public ObjectProperty<ArrayList<Email>> emailProperty() {

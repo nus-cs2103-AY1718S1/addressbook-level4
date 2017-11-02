@@ -88,11 +88,13 @@ public class MainWindow extends UiPart<Region> {
         setIcon(ICON);
         setWindowMinSize();
         setWindowDefaultSize(prefs);
+        //@@author zhoukai07
         Scene scene = new Scene(getRoot());
         String original = getClass().getResource("/view/DarkTheme.css").toExternalForm();
         scene.getStylesheets().add(original);
         this.scene2 = scene;
         primaryStage.setScene(scene);
+        //@@author
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -238,6 +240,7 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
+    //@@author zhoukai07
     /**
      * Allows for theme changes
      */
@@ -270,6 +273,7 @@ public class MainWindow extends UiPart<Region> {
         scene2.getStylesheets().add(themeUrl);
         primaryStage.setScene(scene2);
     }
+    //@@author
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
