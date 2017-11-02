@@ -289,9 +289,17 @@ Examples:
 
 * `sort` +
 Sorts the list based on `NAME` +
+* `sort n/` +
+Sorts the list based on `NAME` +
 * `sort p/` +
-Sorts the list based on `PHONE`
-
+Sorts the list based on `PHONE` +
+* `sort e/` +
+Sorts the list based on `EMAIL` +
+* `sort a/` +
+Sorts the list based on `ADDRESS` +
+* `sort o/` +
+Sorts the list based on `AGE`
+-
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
