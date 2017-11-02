@@ -541,6 +541,8 @@ can be modified from the textfields in the UI directly. The UserProfile is only 
 The "Enter" button was added as an accelerator, which will click the "Cancel" button, so that unwanted changes will not be
 accidentally saved. Invalid values will be detected and changes will not be saved.
 
+image::UserProfileWindow.png[width="400" height="300"]
+
 ==== Design Considerations
 **Aspect:** Choice of location for storing UserProfile Data +
 **Alternative 1 (current choice)**: Separately from AddressBook. +
