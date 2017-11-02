@@ -89,14 +89,15 @@ public class ProfilePanel extends UiPart<Region> {
         }
         insuranceListView.setItems(insurance);
         insuranceListView.setCellFactory(insuranceListView -> new ProfilePanel.InsuranceIdListViewCell());
-
-
     }
 
     //@@author OscarWang114
+    /**
+     * Load person page with empty fields and default message
+     */
     private void loadPersonPage(StringProperty name) {
+        unbindListenersAndClearText();
         this.name.textProperty().bind(Bindings.convert(name));
-        this.address.textProperty().unbind();
         this.address.setText(PERSON_DOES_NOT_EXIST_MESSAGE);
     }
     //@@author
@@ -113,6 +114,7 @@ public class ProfilePanel extends UiPart<Region> {
         email.setText(null);
         insuranceHeader.setText(null);
     }
+
     /**
      * To be called everytime a new person is selected and bind all information for real-time update
      * @param person
@@ -126,6 +128,24 @@ public class ProfilePanel extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
     }
 
+    //@@author OscarWang114
+    /**
+     * unbind all listeners
+     */
+    private void unbindListenersAndClearText() {
+        name.textProperty().unbind();
+        phone.textProperty().unbind();
+        address.textProperty().unbind();
+        dob.textProperty().unbind();
+        email.textProperty().unbind();
+        name.setText(null);
+        phone.setText(null);
+        address.setText(null);
+        dob.setText(null);
+        email.setText(null);
+        insuranceHeader.setText(null);
+    }
+    //@@author
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code InsuranceIdLabel}.

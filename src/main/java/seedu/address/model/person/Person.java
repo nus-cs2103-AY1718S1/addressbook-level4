@@ -84,41 +84,38 @@ public class Person implements ReadOnlyPerson {
         this.gender = new SimpleObjectProperty<>(gender);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        //@@author OscarWang114
         this.lifeInsuranceIds = new SimpleObjectProperty<>(new ArrayList<UUID>());
         this.lifeInsurances = new SimpleObjectProperty<>(new UniqueLifeInsuranceList());
-        //@@author
     }
 
+    //@@author OscarWang114
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getDateOfBirth(), source.getGender(), source.getTags());
-
-        //@@author OscarWang114
         if (source.getLifeInsuranceIds() != null) {
             this.lifeInsuranceIds = new SimpleObjectProperty<>(source.getLifeInsuranceIds());
         }
         if (source.getLifeInsurances() != null) {
             this.lifeInsurances = new SimpleObjectProperty<>(source.getLifeInsurances());
         }
-        //@@author
-    }
 
+    }
+    //@@author
+
+    //@@author OscarWang114
     public Person(ReadOnlyPerson source, LifeInsurance lifeInsurance) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getDateOfBirth(), source.getGender(), source.getTags());
-
-        //@@author OscarWang114
-
         if (source.getLifeInsuranceIds() != null) {
             this.lifeInsuranceIds = new SimpleObjectProperty<>(source.getLifeInsuranceIds());
         }
         addLifeInsurances(lifeInsurance);
-        //@@author
+
     }
+    //@@author
 
     public void setName(Name name) {
         this.name.set(requireNonNull(name));
@@ -203,7 +200,6 @@ public class Person implements ReadOnlyPerson {
     public Gender getGender() {
         return gender.get();
     }
-  
     //@@author arnollim
     @Override
     public String getReason() {
@@ -225,6 +221,24 @@ public class Person implements ReadOnlyPerson {
     //@@author
 
     //@@author OscarWang114
+
+    /**
+     * adds an Id
+     * @param idToAdd
+     */
+    public void addLifeInsuranceIds(UUID idToAdd) {
+        for (UUID id : lifeInsuranceIds.get()) {
+            if (id.equals(idToAdd)) {
+                return;
+            }
+        }
+        lifeInsuranceIds.get().add(idToAdd);
+    }
+
+    public void clearLifeInsuranceIds() {
+        lifeInsuranceIds = new SimpleObjectProperty<>(new ArrayList<UUID>());
+    }
+
     @Override
     public ObjectProperty<List<UUID> > lifeInsuranceIdProperty() {
         return this.lifeInsuranceIds;
