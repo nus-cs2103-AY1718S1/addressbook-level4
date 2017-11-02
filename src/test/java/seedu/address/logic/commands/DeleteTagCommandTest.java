@@ -1,8 +1,11 @@
+//@@author fustilio
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FLAMMABLE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRAGILE;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;
@@ -73,7 +76,7 @@ public class DeleteTagCommandTest {
     public void execute_deleteTag_tagNotFoundFailure() throws Exception {
 
         try {
-            tagToDelete = new Tag("testFailureTag");
+            tagToDelete = Tag.getInstance(Tag.FRAGILE.toString());
         } catch (IllegalValueException e) {
             e.printStackTrace();
         }
@@ -91,7 +94,7 @@ public class DeleteTagCommandTest {
         String exceptionMessage = "";
 
         try {
-            tagToDelete = new Tag("!@#$%^&*()");
+            tagToDelete = Tag.getInstance("!@#$%^&*()");
         } catch (IllegalValueException e) {
             exceptionMessage = e.getMessage();
         }
@@ -109,23 +112,23 @@ public class DeleteTagCommandTest {
 
     @Test
     public void equals() {
-        Tag urgent = null;
+        Tag flammable = null;
         Tag fragile = null;
         try {
-            urgent = new Tag("urgent");
-            fragile = new Tag("fragile");
+            flammable = Tag.getInstance(VALID_TAG_FLAMMABLE.toLowerCase());
+            fragile = Tag.getInstance(VALID_TAG_FRAGILE);
         } catch (IllegalValueException e) {
             e.printStackTrace();
         }
 
-        DeleteTagCommand deleteUrgentTagCommand = new DeleteTagCommand(urgent);
+        DeleteTagCommand deleteUrgentTagCommand = new DeleteTagCommand(flammable);
         DeleteTagCommand deleteFragileTagCommand = new DeleteTagCommand(fragile);
 
         // same object -> returns true
         assertTrue(deleteUrgentTagCommand.equals(deleteUrgentTagCommand));
 
         // same values -> returns true
-        DeleteTagCommand deleteUrgentTagCommandCopy = new DeleteTagCommand(urgent);
+        DeleteTagCommand deleteUrgentTagCommandCopy = new DeleteTagCommand(flammable);
         assertTrue(deleteUrgentTagCommand.equals(deleteUrgentTagCommandCopy));
 
         // different types -> returns false
@@ -138,3 +141,4 @@ public class DeleteTagCommandTest {
         assertFalse(deleteUrgentTagCommand.equals(deleteFragileTagCommand));
     }
 }
+//@@author

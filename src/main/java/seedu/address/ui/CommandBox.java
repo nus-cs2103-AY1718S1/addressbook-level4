@@ -25,7 +25,7 @@ public class CommandBox extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
-    private Autocompleter autocompleter = new Autocompleter();
+    private Autocompleter autocompleter;
     private ListElementPointer historySnapshot;
 
     @FXML
@@ -34,8 +34,11 @@ public class CommandBox extends UiPart<Region> {
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
+        autocompleter = new Autocompleter(logic);
+        registerAsAnEventHandler(this);
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+        commandTextField.textProperty().addListener((observable, oldInput, newInput) -> updateAutocompleter());
         historySnapshot = logic.getHistorySnapshot();
     }
 
@@ -51,14 +54,17 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToPreviousInput();
             break;
+
         case DOWN:
             keyEvent.consume();
             navigateToNextInput();
             break;
+
         case TAB:
             keyEvent.consume();
             processAutocomplete();
             break;
+
         default:
             // let JavaFx handle the keypress
         }
@@ -68,9 +74,15 @@ public class CommandBox extends UiPart<Region> {
      * Updates the text field with the command that is the closest to the current text field string
      */
     private void processAutocomplete() {
+        replaceText(autocompleter.autocomplete());
+    }
+
+    /**
+     * Updates the state of the autocompleter
+     */
+    private void updateAutocompleter() {
         String currentText = commandTextField.getText();
-        String autocompleteText = autocompleter.autocomplete(currentText);
-        replaceText(autocompleteText);
+        autocompleter.updateState(currentText);
     }
 
     /**

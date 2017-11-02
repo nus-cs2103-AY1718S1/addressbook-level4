@@ -37,7 +37,7 @@ public class ParcelUtil {
         sb.append(PREFIX_DELIVERY_DATE + parcel.getDeliveryDate().toString() + " ");
         sb.append(PREFIX_STATUS + parcel.getStatus().toString() + " ");
         parcel.getTags().stream().forEach(
-            s -> sb.append(PREFIX_TAG + s.tagName + " ")
+            s -> sb.append(PREFIX_TAG + s.toString() + " ")
         );
         return sb.toString();
     }

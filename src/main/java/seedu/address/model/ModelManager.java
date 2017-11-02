@@ -137,6 +137,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public synchronized void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {
@@ -222,6 +223,7 @@ public class ModelManager extends ComponentManager implements Model {
         updatedDeliveredAndUndeliveredList();
     }
 
+    //@@author fustilio
     @Override
     public void maintainSorted() {
         addressBook.sort();
@@ -306,6 +308,7 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredUndeliveredParcels.equals(other.filteredUndeliveredParcels)
                 && activeFilteredList.equals(other.activeFilteredList);
     }
+    //@@author
 
     public static Predicate<ReadOnlyParcel> getDeliveredPredicate() {
         return deliveredPredicate;

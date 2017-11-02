@@ -148,7 +148,7 @@ public class ParserUtil {
         requireNonNull(tags);
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
-            tagSet.add(new Tag(tagName));
+            tagSet.add(Tag.getInstance(tagName));
         }
         return tagSet;
     }
@@ -158,7 +158,7 @@ public class ParserUtil {
      */
     public static Tag parseTag(String tag) throws IllegalValueException {
         requireNonNull(tag);
-        Tag parsedTag = new Tag(tag);
+        Tag parsedTag = Tag.getInstance(tag);
         return parsedTag;
     }
 }

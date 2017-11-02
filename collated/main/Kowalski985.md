@@ -1,17 +1,103 @@
-package seedu.address.ui;
+# Kowalski985
+###### \java\seedu\address\ui\AutocompleteCommand.java
+``` java
+/**
+ * Represents the current command that the autocompleter recognises in the {@code CommandBox}
+ */
+public enum AutocompleteCommand {
+    ADD,
+    CLEAR,
+    DELETE,
+    DELETE_TAG,
+    EDIT,
+    EXIT,
+    FIND,
+    HELP,
+    HISTORY,
+    IMPORT,
+    LIST,
+    NONE,
+    REDO,
+    SELECT,
+    TAB,
+    UNDO;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+    public static final String[] ALL_COMMANDS = {"add", "clear", "delete", "deleteTag", "edit", "exit", "find", "help",
+        "history", "import", "list", "redo", "select", "tab", "undo"};
 
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.BaseEvent;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
-import seedu.address.logic.Logic;
-import seedu.address.logic.parser.ArgumentMultimap;
-import seedu.address.logic.parser.ArgumentTokenizer;
-import seedu.address.logic.parser.Prefix;
+    public static final Prefix[] ALL_PREFIXES = {PREFIX_TRACKING_NUMBER, PREFIX_NAME, PREFIX_ADDRESS,
+        PREFIX_DELIVERY_DATE, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_STATUS, PREFIX_TAG};
 
-//@@author Kowalski985
+    private static final String[] commandsWithIndexes = {"delete", "edit", "select"};
+
+    private static final String[] commandsWithPrefixes = {"add", "edit"};
+
+    public static AutocompleteCommand getInstance(String commandName) {
+
+        switch (commandName) {
+        case AddCommand.COMMAND_WORD:
+            return ADD;
+
+        case ClearCommand.COMMAND_WORD:
+            return CLEAR;
+
+        case DeleteCommand.COMMAND_WORD:
+            return DELETE;
+
+        case DeleteTagCommand.COMMAND_WORD:
+            return DELETE_TAG;
+
+        case EditCommand.COMMAND_WORD:
+            return EDIT;
+
+        case ExitCommand.COMMAND_WORD:
+            return EXIT;
+
+        case FindCommand.COMMAND_WORD:
+            return FIND;
+
+        case HelpCommand.COMMAND_WORD:
+            return HELP;
+
+        case HistoryCommand.COMMAND_WORD:
+            return HISTORY;
+
+        case ImportCommand.COMMAND_WORD:
+            return IMPORT;
+
+        case ListCommand.COMMAND_WORD:
+            return LIST;
+
+        case RedoCommand.COMMAND_WORD:
+            return REDO;
+
+        case SelectCommand.COMMAND_WORD:
+            return SELECT;
+
+        case TabCommand.COMMAND_WORD:
+            return TAB;
+
+        case UndoCommand.COMMAND_WORD:
+            return UNDO;
+
+        default:
+            return NONE;
+        }
+    }
+
+    public static boolean hasIndexParameter (String command) {
+        return Arrays.asList(commandsWithIndexes).contains(command);
+    }
+
+    public static boolean hasPrefixParameter (String command) {
+        return Arrays.asList(commandsWithPrefixes).contains(command);
+    }
+
+
+}
+```
+###### \java\seedu\address\ui\Autocompleter.java
+``` java
 /**
  * Autocomplete utility used in the command box
  */
@@ -312,3 +398,60 @@ public class Autocompleter {
         EventsCenter.getInstance().post(event);
     }
 }
+```
+###### \java\seedu\address\ui\AutocompleteState.java
+``` java
+/**
+ * Represents the states of the autcompleter
+ */
+public enum AutocompleteState {
+    COMMAND,
+    COMMAND_NEXT_PREFIX,
+    COMMAND_CYCLE_PREFIX,
+    EMPTY,
+    MULTIPLE_COMMAND,
+    NO_RESULT,
+    INDEX
+}
+```
+###### \java\seedu\address\ui\CommandBoxParser.java
+``` java
+/**
+ * Parses text that the user has entered in the command box
+ */
+public class CommandBoxParser {
+
+    protected static final int COMMAND_INDEX = 0;
+    protected static final int ARGUMENT_INDEX = 1;
+
+    private static final  String EMPTY_STRING = "";
+
+    /**
+     * Used for initial separation of command word and args.
+     */
+    private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+
+    /**
+     * Parses {@code String} to see if it contains any instances of a {@code Command} and {@code Prefix}
+     * @param commandBoxText
+     */
+    public String[] parseCommandAndPrefixes(String commandBoxText) {
+        String[] parseResults = {EMPTY_STRING, EMPTY_STRING };
+        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(commandBoxText.trim());
+        if (!matcher.matches()) {
+            return parseResults;
+        }
+        final String commandWord = matcher.group("commandWord");
+        final String arguments = matcher.group("arguments");
+        if (isValidCommand(commandWord)) {
+            parseResults[COMMAND_INDEX] = commandWord;
+        }
+        parseResults[ARGUMENT_INDEX] = arguments;
+        return parseResults;
+    }
+
+    private boolean isValidCommand(String commandWord) {
+        return Arrays.asList(AutocompleteCommand.ALL_COMMANDS).contains(commandWord);
+    }
+}
+```

@@ -17,9 +17,11 @@ import seedu.address.model.parcel.ReadOnlyParcel;
 public class ParcelCard extends UiPart<Region> {
 
     private static final String FXML = "ParcelListCard.fxml";
+    //@@author vicisapotato
     private static String[] colors = { "#cc4f4f", "#57b233", "#2696b5", "#5045c6", "#7739ba", "#b534a1", "black" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
+    //@@author
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -106,13 +108,14 @@ public class ParcelCard extends UiPart<Region> {
     }
     //@@author
 
+    //@@author vicisapotato
     /**
      * Initializes tags and sets their style based on their tag label
      */
     private void initTags(ReadOnlyParcel parcel) {
         parcel.getTags().forEach(tag -> {
-            Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-background-color: " + setColorForTag(tag.tagName));
+            Label tagLabel = new Label(tag.toString());
+            tagLabel.setStyle("-fx-background-color: " + setColorForTag(tag.toString()));
             tags.getChildren().add(tagLabel);
         });
     }
@@ -127,6 +130,7 @@ public class ParcelCard extends UiPart<Region> {
 
         return tagColors.get(tagValue);
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

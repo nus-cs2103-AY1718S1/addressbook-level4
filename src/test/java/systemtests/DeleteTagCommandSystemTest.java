@@ -1,7 +1,9 @@
+//@@author fustilio
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FLAMMABLE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FROZEN;
 import static seedu.address.logic.commands.DeleteTagCommand.MESSAGE_DELETE_TAG_SUCCESS;
 import static seedu.address.logic.commands.DeleteTagCommand.MESSAGE_INVALID_DELETE_TAG_NOT_FOUND;
 import static seedu.address.testutil.TestUtil.getParcel;
@@ -40,14 +42,14 @@ public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
             targetTag = targetTags.next();
         }
 
-        String command = "     " + DeleteTagCommand.COMMAND_WORD + "      " + targetTag.tagName + "       ";
+        String command = "     " + DeleteTagCommand.COMMAND_WORD + "      " + targetTag.toString() + "       ";
 
         Tag deletedTag = removeTag(expectedModel, targetTag);
         String expectedResultMessage = String.format(MESSAGE_DELETE_TAG_SUCCESS, deletedTag);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
         Model modelBeforeDeletingLast = getModel();
-        targetTag = new Tag(VALID_TAG_FLAMMABLE);
+        targetTag = Tag.getInstance(VALID_TAG_FLAMMABLE);
 
         assertCommandSuccess(targetTag);
 
@@ -66,8 +68,8 @@ public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid arguments (tag not founds) -> rejected */
         expectedResultMessage = String.format(MESSAGE_INVALID_DELETE_TAG_NOT_FOUND,
-                new Tag("relatives"));
-        assertCommandFailure(DeleteTagCommand.COMMAND_WORD + " relatives",
+                Tag.getInstance(Tag.FROZEN.toString()));
+        assertCommandFailure(DeleteTagCommand.COMMAND_WORD + " " + VALID_TAG_FROZEN.toString(),
                 expectedResultMessage);
 
         /* Case: mixed case command word -> rejected */
@@ -98,7 +100,7 @@ public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
         String expectedResultMessage = String.format(MESSAGE_DELETE_TAG_SUCCESS, deletedTag);
 
         assertCommandSuccess(
-                DeleteTagCommand.COMMAND_WORD + " " + toDelete.tagName, expectedModel, expectedResultMessage);
+                DeleteTagCommand.COMMAND_WORD + " " + toDelete.toString(), expectedModel, expectedResultMessage);
     }
 
     /**
@@ -136,3 +138,4 @@ public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
         assertStatusBarUnchanged();
     }
 }
+//@@author fustilio
