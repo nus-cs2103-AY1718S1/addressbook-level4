@@ -1,4 +1,124 @@
 # sushinoya
+###### /java/seedu/room/logic/commands/exceptions/AlreadySortedException.java
+``` java
+/**
+ * Represents an error which occurs during execution of a Sort Command Execution.
+ */
+public class AlreadySortedException extends Exception {
+    public AlreadySortedException(String message) {
+        super(message);
+    }
+}
+```
+###### /java/seedu/room/logic/commands/SortCommand.java
+``` java
+/**
+ * Adds a person to the resident book.
+ */
+public class SortCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "sort";
+    public static final String COMMAND_ALIAS = "srt";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the displayed resident book. "
+            + "Parameters: "
+            + "Sorting-Criteria" + " "
+            + "Example: " + COMMAND_WORD + " "
+            + "name";
+
+    public static final String MESSAGE_SUCCESS = "Sorted resident book by: %1$s";
+    public static final String MESSAGE_FAILURE = "Resident book already sorted by: %1$s";
+
+    private final String sortCriteria;
+
+    /**
+     * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
+     */
+    public SortCommand(String sortBy) {
+        this.sortCriteria = sortBy;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.sortBy(sortCriteria);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, sortCriteria));
+        } catch (AlreadySortedException e) {
+            String failureMessage = String.format(MESSAGE_FAILURE, sortCriteria);
+            throw new CommandException(failureMessage);
+        }
+
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SortCommand // instanceof handles nulls
+                && sortCriteria.equals(((SortCommand) other).sortCriteria));
+    }
+}
+```
+###### /java/seedu/room/logic/commands/SwaproomCommand.java
+``` java
+/**
+ * Swaps two residents identified using their last displayed indexes from the resident book.
+ */
+public class SwaproomCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "swaproom";
+    public static final String COMMAND_ALIAS = "sr";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Swaps the rooms for the two residents identified by index numbers used in the last person listing.\n"
+            + "Parameters: INDEX1 and INDEX2 (both must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1 2";
+
+    public static final String MESSAGE_SWAP_PERSONS_SUCCESS = "Swapped Rooms : %1$s and %2$s";
+
+    private final Index targetIndex1;
+    private final Index targetIndex2;
+
+    public SwaproomCommand(Index targetIndex1, Index targetIndex2) {
+        this.targetIndex1 = targetIndex1;
+        this.targetIndex2 = targetIndex2;
+    }
+
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex1.getZeroBased() >= lastShownList.size()
+                || targetIndex2.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson person1 = lastShownList.get(targetIndex1.getZeroBased());
+        ReadOnlyPerson person2 = lastShownList.get(targetIndex2.getZeroBased());
+
+        try {
+            model.swapRooms(person1, person2);
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "The target person(s) cannot be missing";
+        }
+
+        return new CommandResult(String.format(MESSAGE_SWAP_PERSONS_SUCCESS, person1.getName(), person2.getName()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SwaproomCommand // instanceof handles nulls
+                && this.targetIndex1.equals(((SwaproomCommand) other).targetIndex1)
+                && this.targetIndex2.equals(((SwaproomCommand) other).targetIndex2)) // state check
+                || (other instanceof SwaproomCommand // instanceof handles nulls
+                && this.targetIndex1.equals(((SwaproomCommand) other).targetIndex2)
+                && this.targetIndex2.equals(((SwaproomCommand) other).targetIndex1)); // state check
+    }
+}
+```
 ###### /java/seedu/room/logic/parser/AddCommandParser.java
 ``` java
     /**
@@ -80,6 +200,37 @@
 
 }
 ```
+###### /java/seedu/room/logic/parser/SortCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new AddCommand object
+ */
+public class SortCommandParser implements Parser<SortCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the SortCommand
+     * and returns an SortCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public SortCommand parse(String args) throws ParseException {
+
+        String sortCriteria = args.trim();
+
+        if (!isValidField(sortCriteria)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        } else {
+            return new SortCommand(sortCriteria);
+        }
+    }
+
+    private static boolean isValidField(String sortCriteria) {
+        Set<String> validFields = new HashSet<String>(Arrays.asList(
+                new String[] {"name", "phone", "email", "room"}));
+        return validFields.contains(sortCriteria);
+    }
+
+}
+```
 ###### /java/seedu/room/logic/parser/SwaproomCommandParser.java
 ``` java
 /**
@@ -112,155 +263,92 @@ public class SwaproomCommandParser implements Parser<SwaproomCommand> {
 
 }
 ```
-###### /java/seedu/room/logic/parser/SortCommandParser.java
+###### /java/seedu/room/model/ModelManager.java
 ``` java
-/**
- * Parses input arguments and creates a new AddCommand object
- */
-public class SortCommandParser implements Parser<SortCommand> {
-
     /**
-     * Parses the given {@code String} of arguments in the context of the SortCommand
-     * and returns an SortCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * Sorts the Resident Book by name, phone, room or phone depending on the sortCriteria
      */
-    public SortCommand parse(String args) throws ParseException {
-
-        String sortCriteria = args.trim();
-
-        if (!isValidField(sortCriteria)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-        } else {
-            return new SortCommand(sortCriteria);
-        }
+    public void sortBy(String sortCriteria) throws AlreadySortedException {
+        residentBook.sortBy(sortCriteria);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateResidentBookChanged();
     }
+    //=========== Swapping Residents' Rooms =============================================================
 
-    private static boolean isValidField(String sortCriteria) {
+```
+###### /java/seedu/room/model/ModelManager.java
+``` java
+    /**
+     * Swaps the rooms between two residents.
+     *
+     * @throws PersonNotFoundException if the persons specified are not found in the list.
+     */
+    @Override
+    public void swapRooms(ReadOnlyPerson person1, ReadOnlyPerson person2)
+            throws PersonNotFoundException {
+        residentBook.swapRooms(person1, person2);
+        indicateResidentBookChanged();
+    }
+}
+```
+###### /java/seedu/room/model/person/Person.java
+``` java
+    /**
+     * Sets the field the list should be sorted by
+     */
+    public void setComparator(String field) {
         Set<String> validFields = new HashSet<String>(Arrays.asList(
-                new String[] {"name", "phone", "email", "room"}));
-        return validFields.contains(sortCriteria);
+                new String[] {"name", "phone", "email", "room"}
+        ));
+
+        if (validFields.contains(field)) {
+            this.sortCriteria = field;
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
-}
 ```
-###### /java/seedu/room/logic/commands/SortCommand.java
+###### /java/seedu/room/model/person/Person.java
 ``` java
-/**
- * Adds a person to the resident book.
- */
-public class SortCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "sort";
-    public static final String COMMAND_ALIAS = "srt";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the displayed resident book. "
-            + "Parameters: "
-            + "Sorting-Criteria" + " "
-            + "Example: " + COMMAND_WORD + " "
-            + "name";
-
-    public static final String MESSAGE_SUCCESS = "Sorted resident book by: %1$s";
-    public static final String MESSAGE_FAILURE = "Resident book already sorted by: %1$s";
-
-    private final String sortCriteria;
-
     /**
-     * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
-     */
-    public SortCommand(String sortBy) {
-        this.sortCriteria = sortBy;
-    }
-
+    * CompareTo function to allow implementing Comparable
+    */
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        requireNonNull(model);
-        try {
-            model.sortBy(sortCriteria);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, sortCriteria));
-        } catch (AlreadySortedException e) {
-            String failureMessage = String.format(MESSAGE_FAILURE, sortCriteria);
-            throw new CommandException(failureMessage);
+    public int compareTo(Object otherPerson) {
+
+        ReadOnlyPerson person = (ReadOnlyPerson) otherPerson;
+        String firstField = this.getName().toString();
+        String secondField = person.getName().toString();
+
+        if (sortCriteria.equals("email")) {
+            firstField = this.getEmail().toString();
+            secondField = person.getEmail().toString();
+
+        } else if (sortCriteria.equals("phone")) {
+            firstField = this.getPhone().toString();
+            secondField = person.getPhone().toString();
+
+        } else if (sortCriteria.equals("room")) {
+            firstField = this.getRoom().toString();
+            secondField = person.getRoom().toString();
+        } else {
+            return firstField.compareTo(secondField);
+        }
+
+        // If a field is "Not Set" put the corresponding person at the end of the list.
+        if (firstField.equals("Not Set") && secondField.equals("Not Set")) {
+            return 0;
+        } else if (!firstField.equals("Not Set") && secondField.equals("Not Set")) {
+            return -1;
+        } else if (firstField.equals("Not Set") && !secondField.equals("Not Set")) {
+            return 1;
+        } else {
+            return firstField.compareTo(secondField);
         }
 
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof SortCommand // instanceof handles nulls
-                && sortCriteria.equals(((SortCommand) other).sortCriteria));
-    }
-}
-```
-###### /java/seedu/room/logic/commands/exceptions/AlreadySortedException.java
-``` java
-/**
- * Represents an error which occurs during execution of a Sort Command Execution.
- */
-public class AlreadySortedException extends Exception {
-    public AlreadySortedException(String message) {
-        super(message);
-    }
-}
-```
-###### /java/seedu/room/logic/commands/SwaproomCommand.java
-``` java
-/**
- * Swaps two residents identified using their last displayed indexes from the resident book.
- */
-public class SwaproomCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "swaproom";
-    public static final String COMMAND_ALIAS = "sr";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Swaps the rooms for the two residents identified by index numbers used in the last person listing.\n"
-            + "Parameters: INDEX1 and INDEX2 (both must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1 2";
-
-    public static final String MESSAGE_SWAP_PERSONS_SUCCESS = "Swapped Rooms : %1$s and %2$s";
-
-    private final Index targetIndex1;
-    private final Index targetIndex2;
-
-    public SwaproomCommand(Index targetIndex1, Index targetIndex2) {
-        this.targetIndex1 = targetIndex1;
-        this.targetIndex2 = targetIndex2;
-    }
-
-
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-        if (targetIndex1.getZeroBased() >= lastShownList.size()
-                || targetIndex2.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        ReadOnlyPerson person1 = lastShownList.get(targetIndex1.getZeroBased());
-        ReadOnlyPerson person2 = lastShownList.get(targetIndex2.getZeroBased());
-
-        try {
-            model.swapRooms(person1, person2);
-        } catch (PersonNotFoundException pnfe) {
-            assert false : "The target person(s) cannot be missing";
-        }
-
-        return new CommandResult(String.format(MESSAGE_SWAP_PERSONS_SUCCESS, person1.getName(), person2.getName()));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof SwaproomCommand // instanceof handles nulls
-                && this.targetIndex1.equals(((SwaproomCommand) other).targetIndex1)
-                && this.targetIndex2.equals(((SwaproomCommand) other).targetIndex2)) // state check
-                || (other instanceof SwaproomCommand // instanceof handles nulls
-                && this.targetIndex1.equals(((SwaproomCommand) other).targetIndex2)
-                && this.targetIndex2.equals(((SwaproomCommand) other).targetIndex1)); // state check
-    }
 }
 ```
 ###### /java/seedu/room/model/person/Room.java
@@ -323,66 +411,6 @@ public class Room {
     @Override
     public int hashCode() {
         return value.hashCode();
-    }
-
-}
-```
-###### /java/seedu/room/model/person/Person.java
-``` java
-    /**
-     * Sets the field the list should be sorted by
-     */
-    public void setComparator(String field) {
-        Set<String> validFields = new HashSet<String>(Arrays.asList(
-                new String[] {"name", "phone", "email", "room"}
-        ));
-
-        if (validFields.contains(field)) {
-            this.sortCriteria = field;
-        } else {
-            throw new IllegalArgumentException();
-        }
-    }
-
-```
-###### /java/seedu/room/model/person/Person.java
-``` java
-    /**
-    * CompareTo function to allow implementing Comparable
-    */
-    @Override
-    public int compareTo(Object otherPerson) {
-
-        ReadOnlyPerson person = (ReadOnlyPerson) otherPerson;
-        String firstField = this.getName().toString();
-        String secondField = person.getName().toString();
-
-        if (sortCriteria.equals("email")) {
-            firstField = this.getEmail().toString();
-            secondField = person.getEmail().toString();
-
-        } else if (sortCriteria.equals("phone")) {
-            firstField = this.getPhone().toString();
-            secondField = person.getPhone().toString();
-
-        } else if (sortCriteria.equals("room")) {
-            firstField = this.getRoom().toString();
-            secondField = person.getRoom().toString();
-        } else {
-            return firstField.compareTo(secondField);
-        }
-
-        // If a field is "Not Set" put the corresponding person at the end of the list.
-        if (firstField.equals("Not Set") && secondField.equals("Not Set")) {
-            return 0;
-        } else if (!firstField.equals("Not Set") && secondField.equals("Not Set")) {
-            return -1;
-        } else if (firstField.equals("Not Set") && !secondField.equals("Not Set")) {
-            return 1;
-        } else {
-            return firstField.compareTo(secondField);
-        }
-
     }
 
 }
@@ -453,33 +481,5 @@ public class Room {
         return Objects.hash(persons, tags);
     }
 
-}
-```
-###### /java/seedu/room/model/ModelManager.java
-``` java
-    /**
-     * Sorts the Resident Book by name, phone, room or phone depending on the sortCriteria
-     */
-    public void sortBy(String sortCriteria) throws AlreadySortedException {
-        residentBook.sortBy(sortCriteria);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateResidentBookChanged();
-    }
-    //=========== Swapping Residents' Rooms =============================================================
-
-```
-###### /java/seedu/room/model/ModelManager.java
-``` java
-    /**
-     * Swaps the rooms between two residents.
-     *
-     * @throws PersonNotFoundException if the persons specified are not found in the list.
-     */
-    @Override
-    public void swapRooms(ReadOnlyPerson person1, ReadOnlyPerson person2)
-            throws PersonNotFoundException {
-        residentBook.swapRooms(person1, person2);
-        indicateResidentBookChanged();
-    }
 }
 ```

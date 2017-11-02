@@ -1,5 +1,5 @@
 # blackroxs
-###### \java\seedu\room\logic\commands\BackupCommand.java
+###### /java/seedu/room/logic/commands/BackupCommand.java
 ``` java
 /**
  * Create backup copy of resident book.
@@ -26,7 +26,7 @@ public class BackupCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\room\logic\commands\ImportCommand.java
+###### /java/seedu/room/logic/commands/ImportCommand.java
 ``` java
 /**
  * Import contacts from xml file.
@@ -93,7 +93,7 @@ public class ImportCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\room\logic\commands\RemoveTagCommand.java
+###### /java/seedu/room/logic/commands/RemoveTagCommand.java
 ``` java
 /**
  * Removes a tag that is shared by a group of contacts.
@@ -195,7 +195,7 @@ public class RemoveTagCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\room\logic\parser\ImportCommandParser.java
+###### /java/seedu/room/logic/parser/ImportCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ImportCommand object
@@ -217,7 +217,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     }
 }
 ```
-###### \java\seedu\room\logic\parser\RemoveTagParser.java
+###### /java/seedu/room/logic/parser/RemoveTagParser.java
 ``` java
 /**
  * Parses input arguments and creates a new RemoveTagCommand object
@@ -239,13 +239,13 @@ public class RemoveTagParser implements Parser<RemoveTagCommand> {
     }
 }
 ```
-###### \java\seedu\room\MainApp.java
+###### /java/seedu/room/MainApp.java
 ``` java
     public static Storage getBackup() {
         return backup;
     }
 ```
-###### \java\seedu\room\storage\StorageManager.java
+###### /java/seedu/room/storage/StorageManager.java
 ``` java
     @Override
     public void backupResidentBook(ReadOnlyResidentBook residentBook) throws IOException {
@@ -257,7 +257,7 @@ public class RemoveTagParser implements Parser<RemoveTagCommand> {
     }
 }
 ```
-###### \java\seedu\room\storage\XmlResidentBookStorage.java
+###### /java/seedu/room/storage/XmlResidentBookStorage.java
 ``` java
     @Override
     public void backupResidentBook(ReadOnlyResidentBook residentBook) throws IOException {
@@ -266,7 +266,7 @@ public class RemoveTagParser implements Parser<RemoveTagCommand> {
 
 }
 ```
-###### \java\seedu\room\ui\MainWindow.java
+###### /java/seedu/room/ui/MainWindow.java
 ``` java
     /**
      * Handles import and allows user to choose file

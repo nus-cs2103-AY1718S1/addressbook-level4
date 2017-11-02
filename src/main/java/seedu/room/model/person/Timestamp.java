@@ -2,6 +2,7 @@ package seedu.room.model.person;
 
 import java.time.LocalDateTime;
 
+//@@author Haozhe321
 /**
  Create a timestamp in each person to record the time created and time that this temporary person will expire
  */

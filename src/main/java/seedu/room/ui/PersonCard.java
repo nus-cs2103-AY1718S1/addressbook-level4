@@ -82,6 +82,7 @@ public class PersonCard extends UiPart<Region> {
         }
     }
 
+    //@@author Haozhe321
     //following method gets the color related to a specified tag
     private static String getColorForTag(String tag) {
         if (!tagColor.containsKey(tag)) { //if the hashmap does not have this tag
@@ -104,6 +105,7 @@ public class PersonCard extends UiPart<Region> {
 
         });
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

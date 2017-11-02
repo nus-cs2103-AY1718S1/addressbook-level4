@@ -5,6 +5,7 @@ import seedu.room.logic.commands.exceptions.CommandException;
 
 import seedu.room.model.tag.Tag;
 
+//@@author Haozhe321
 /**
  * Deletes a person identified by a tag supplied
  */
