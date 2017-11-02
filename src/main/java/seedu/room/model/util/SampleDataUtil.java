@@ -57,11 +57,11 @@ public class SampleDataUtil {
     public static Event[] getSampleEvents() {
         try {
             return new Event[]{
-                    new Event(new Title("End of Semester Dinner"), new Description("Organised by USC"),
-                            new Location("Cinnamon College"), new Datetime("25-11-17 2030")),
-                    new Event(new Title("USPolymath Talk"), new Description("Talk by Students"),
-                            new Location("Chatterbox"), new Datetime("1-11-17 0800")),
-                    new Event(new Title("USProductions"), new Description("Drama performance"),
+                new Event(new Title("End of Semester Dinner"), new Description("Organised by USC"),
+                        new Location("Cinnamon College"), new Datetime("25-11-17 2030")),
+                new Event(new Title("USPolymath Talk"), new Description("Talk by Students"),
+                        new Location("Chatterbox"), new Datetime("1-11-17 0800")),
+                new Event(new Title("USProductions"), new Description("Drama performance"),
                             new Location("Blackbox"), new Datetime("17-10-17 1200"))
             };
         } catch (IllegalValueException e) {

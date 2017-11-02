@@ -85,7 +85,6 @@ public class ResidentBookParser {
         case DeleteByTagCommand.COMMAND_ALIAS:
             return new DeleteByTagCommandParser().parse(arguments);
 
-
         case SortCommand.COMMAND_WORD:
         case SortCommand.COMMAND_ALIAS:
             return new SortCommandParser().parse(arguments);
@@ -102,7 +101,7 @@ public class ResidentBookParser {
         case DeleteEventCommand.COMMAND_ALIAS:
             return new DeleteEventCommandParser().parse(arguments);
 
-            case ClearCommand.COMMAND_WORD:
+        case ClearCommand.COMMAND_WORD:
         case ClearCommand.COMMAND_ALIAS:
             return new ClearCommand();
 

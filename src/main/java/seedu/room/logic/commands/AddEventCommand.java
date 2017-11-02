@@ -1,15 +1,15 @@
 package seedu.room.logic.commands;
 
-import seedu.room.logic.commands.exceptions.CommandException;
-import seedu.room.model.event.Event;
-import seedu.room.model.event.ReadOnlyEvent;
-import seedu.room.model.event.exceptions.DuplicateEventException;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_DATETIME;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_TITLE;
+
+import seedu.room.logic.commands.exceptions.CommandException;
+import seedu.room.model.event.Event;
+import seedu.room.model.event.ReadOnlyEvent;
+import seedu.room.model.event.exceptions.DuplicateEventException;
 
 /**
  * Adds a person to the resident book.

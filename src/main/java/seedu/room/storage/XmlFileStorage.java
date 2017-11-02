@@ -44,7 +44,7 @@ public class XmlFileStorage {
     /**
      * Saves the given eventbook data to the specified file.
      */
-    public static void saveDataToFile(File file, XmlSerializableEventBook eventBook)
+    public static void saveEventDataToFile(File file, XmlSerializableEventBook eventBook)
             throws FileNotFoundException {
         try {
             XmlUtil.saveDataToFile(file, eventBook);

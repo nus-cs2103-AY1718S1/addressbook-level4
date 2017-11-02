@@ -26,6 +26,10 @@ public interface Model {
      */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    /**
+     * {@code Predicate} that always evaluate to true
+     */
+    Predicate<ReadOnlyEvent> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
 
     /**
      * Clears existing backing model and replaces with the provided new data.
@@ -94,11 +98,6 @@ public interface Model {
      * Swaps two residents' rooms
      */
     void swapRooms(ReadOnlyPerson person1, ReadOnlyPerson person2) throws PersonNotFoundException;
-
-    /**
-     * {@code Predicate} that always evaluate to true
-     */
-    Predicate<ReadOnlyEvent> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
 
     /**
      * Returns the ResidentBook

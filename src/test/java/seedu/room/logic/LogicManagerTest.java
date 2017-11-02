@@ -21,6 +21,7 @@ import seedu.room.model.UserPrefs;
 import seedu.room.storage.JsonUserPrefsStorage;
 import seedu.room.storage.Storage;
 import seedu.room.storage.StorageManager;
+import seedu.room.storage.XmlEventBookStorage;
 import seedu.room.storage.XmlResidentBookStorage;
 
 
@@ -36,8 +37,9 @@ public class LogicManagerTest {
     @Before
     public void setUp() {
         XmlResidentBookStorage residentBookStorage = new XmlResidentBookStorage(getTempFilePath("ab"));
+        XmlEventBookStorage eventBookStorage = new XmlEventBookStorage(getTempFilePath("bc"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storage = new StorageManager(residentBookStorage, userPrefsStorage);
+        storage = new StorageManager(residentBookStorage, eventBookStorage, userPrefsStorage);
     }
 
     private String getTempFilePath(String fileName) {

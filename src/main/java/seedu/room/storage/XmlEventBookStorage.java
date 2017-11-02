@@ -75,7 +75,7 @@ public class XmlEventBookStorage implements EventBookStorage {
 
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
-        XmlFileStorage.saveDataToFile(file, new XmlSerializableEventBook(eventBook));
+        XmlFileStorage.saveEventDataToFile(file, new XmlSerializableEventBook(eventBook));
     }
 
     @Override

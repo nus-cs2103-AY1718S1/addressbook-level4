@@ -10,8 +10,8 @@ import seedu.room.logic.commands.CommandResult;
 import seedu.room.logic.commands.exceptions.CommandException;
 import seedu.room.logic.parser.ResidentBookParser;
 import seedu.room.logic.parser.exceptions.ParseException;
-import seedu.room.model.event.ReadOnlyEvent;
 import seedu.room.model.Model;
+import seedu.room.model.event.ReadOnlyEvent;
 import seedu.room.model.person.ReadOnlyPerson;
 
 /**

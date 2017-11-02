@@ -1,5 +1,14 @@
 package seedu.room.logic.parser;
 
+import static seedu.room.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.room.logic.parser.CliSyntax.PREFIX_DATETIME;
+import static seedu.room.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.room.logic.parser.CliSyntax.PREFIX_LOCATION;
+import static seedu.room.logic.parser.CliSyntax.PREFIX_TITLE;
+
+import java.util.Optional;
+import java.util.stream.Stream;
+
 import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.commands.AddEventCommand;
 import seedu.room.logic.parser.exceptions.ParseException;
@@ -9,15 +18,6 @@ import seedu.room.model.event.Event;
 import seedu.room.model.event.Location;
 import seedu.room.model.event.ReadOnlyEvent;
 import seedu.room.model.event.Title;
-
-import java.util.Optional;
-import java.util.stream.Stream;
-
-import static seedu.room.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.room.logic.parser.CliSyntax.PREFIX_DATETIME;
-import static seedu.room.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
-import static seedu.room.logic.parser.CliSyntax.PREFIX_LOCATION;
-import static seedu.room.logic.parser.CliSyntax.PREFIX_TITLE;
 
 
 //@@author sushinoya

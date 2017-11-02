@@ -53,8 +53,8 @@ public class ModelManager extends ComponentManager implements Model {
         super();
         requireAllNonNull(residentBook, userPrefs);
 
-        logger.fine("Initializing with resident book: " + residentBook + ", event book: " + eventBook +
-                " and user prefs " + userPrefs);
+        logger.fine("Initializing with resident book: " + residentBook + ", event book: " + eventBook
+                + " and user prefs " + userPrefs);
 
         this.residentBook = new ResidentBook(residentBook);
         this.eventBook = new EventBook(eventBook);
@@ -70,6 +70,11 @@ public class ModelManager extends ComponentManager implements Model {
     public ModelManager() {
         this(new ResidentBook(), new EventBook() , new UserPrefs());
     }
+
+    public ModelManager(ReadOnlyResidentBook residentBook, UserPrefs userPrefs) {
+        this(residentBook, new EventBook() , userPrefs);
+    }
+
 
     @Override
     public void resetData(ReadOnlyResidentBook newData) {

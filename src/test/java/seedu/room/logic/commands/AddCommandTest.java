@@ -21,8 +21,12 @@ import seedu.room.logic.UndoRedoStack;
 import seedu.room.logic.commands.exceptions.AlreadySortedException;
 import seedu.room.logic.commands.exceptions.CommandException;
 import seedu.room.model.Model;
+import seedu.room.model.ReadOnlyEventBook;
 import seedu.room.model.ReadOnlyResidentBook;
 import seedu.room.model.ResidentBook;
+import seedu.room.model.event.ReadOnlyEvent;
+import seedu.room.model.event.exceptions.DuplicateEventException;
+import seedu.room.model.event.exceptions.EventNotFoundException;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
@@ -159,6 +163,44 @@ public class AddCommandTest {
 
         }
         public void swapRooms(ReadOnlyPerson person1, ReadOnlyPerson person2) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyEventBook getEventBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addEvent(ReadOnlyEvent person) throws DuplicateEventException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws DuplicateEventException,
+                                                                                            EventNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyEvent> getFilteredEventList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortEventsBy(String sortCriteria) throws AlreadySortedException {
             fail("This method should not be called.");
         }
     }

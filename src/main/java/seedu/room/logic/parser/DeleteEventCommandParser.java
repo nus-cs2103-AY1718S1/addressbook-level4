@@ -1,11 +1,12 @@
 package seedu.room.logic.parser;
 
+import static seedu.room.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import seedu.room.commons.core.index.Index;
 import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.commands.DeleteEventCommand;
 import seedu.room.logic.parser.exceptions.ParseException;
 
-import static seedu.room.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 //@@author sushinoya
 /**

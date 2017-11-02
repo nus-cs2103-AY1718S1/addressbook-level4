@@ -1,12 +1,12 @@
 package seedu.room.logic.commands;
 
+import java.util.List;
+
 import seedu.room.commons.core.Messages;
 import seedu.room.commons.core.index.Index;
 import seedu.room.logic.commands.exceptions.CommandException;
 import seedu.room.model.event.ReadOnlyEvent;
 import seedu.room.model.event.exceptions.EventNotFoundException;
-
-import java.util.List;
 
 /**
  * Deletes a event identified using it's last displayed index from the resident book.
