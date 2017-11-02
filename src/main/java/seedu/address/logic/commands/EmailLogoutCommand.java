@@ -1,3 +1,4 @@
+//@@author Hoang
 package seedu.address.logic.commands;
 
 import seedu.address.email.Email;
@@ -5,7 +6,6 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.storage.AddressBookStorage;
 
 /**
  * Log out any email currently logged in
@@ -13,7 +13,7 @@ import seedu.address.storage.AddressBookStorage;
 public class EmailLogoutCommand extends Command {
     public static final String COMMAND_WORD = "email_logout";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Log out from any logged in email\n"
-                                                + "Parameter: email_logout";
+            + "Parameter: email_logout";
     public static final String MESSAGE_SUCCESS = "Logged out";
 
     public EmailLogoutCommand() {
@@ -34,3 +34,4 @@ public class EmailLogoutCommand extends Command {
         this.emailManager = emailManager;
     }
 }
+//@@author Hoang

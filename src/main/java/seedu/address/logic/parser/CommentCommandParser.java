@@ -17,6 +17,7 @@ public class CommentCommandParser implements Parser<CommentCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the CommentCommand
      * and returns an CommentCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public CommentCommand parse(String args) throws ParseException {

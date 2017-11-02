@@ -1,3 +1,4 @@
+//@@author Hoang
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -22,6 +23,7 @@ public class FindContainCommandParser implements Parser<FindContainCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns an FindContainCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindContainCommand parse(String args) throws ParseException {
@@ -32,7 +34,7 @@ public class FindContainCommandParser implements Parser<FindContainCommand> {
         }
 
         ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                                                                                PREFIX_ADDRESS, PREFIX_TAG);
+                PREFIX_ADDRESS, PREFIX_TAG);
 
         HashMap<String, String> mapKeywords = new HashMap<>();
 
@@ -41,37 +43,37 @@ public class FindContainCommandParser implements Parser<FindContainCommand> {
                 String trimmedArgsName = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_NAME)).get().trim();
                 if (trimmedArgsName.isEmpty()) {
                     throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                                                        FindContainCommand.MESSAGE_USAGE));
+                            FindContainCommand.MESSAGE_USAGE));
                 }
                 mapKeywords.put(PREFIX_NAME.toString(), trimmedArgsName);
             }
 
             if (argumentMultimap.getValue(PREFIX_PHONE).isPresent()) {
                 String trimmedArgsPhone = ParserUtil.parseKeywords(argumentMultimap
-                                                            .getValue(PREFIX_PHONE)).get().trim();
+                        .getValue(PREFIX_PHONE)).get().trim();
                 if (trimmedArgsPhone.isEmpty()) {
                     throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                                                        FindContainCommand.MESSAGE_USAGE));
+                            FindContainCommand.MESSAGE_USAGE));
                 }
                 mapKeywords.put(PREFIX_PHONE.toString(), trimmedArgsPhone);
             }
 
             if (argumentMultimap.getValue(PREFIX_EMAIL).isPresent()) {
                 String trimmedArgsEmail = ParserUtil.parseKeywords(argumentMultimap
-                                                            .getValue(PREFIX_EMAIL)).get().trim();
+                        .getValue(PREFIX_EMAIL)).get().trim();
                 if (trimmedArgsEmail.isEmpty()) {
                     throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                                                        FindContainCommand.MESSAGE_USAGE));
+                            FindContainCommand.MESSAGE_USAGE));
                 }
                 mapKeywords.put(PREFIX_EMAIL.toString(), trimmedArgsEmail);
             }
 
             if (argumentMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
                 String trimmedArgsAddress = ParserUtil.parseKeywords(argumentMultimap
-                                                            .getValue(PREFIX_ADDRESS)).get().trim();
+                        .getValue(PREFIX_ADDRESS)).get().trim();
                 if (trimmedArgsAddress.isEmpty()) {
                     throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                                                        FindContainCommand.MESSAGE_USAGE));
+                            FindContainCommand.MESSAGE_USAGE));
                 }
                 mapKeywords.put(PREFIX_ADDRESS.toString(), trimmedArgsAddress);
             }
@@ -80,7 +82,7 @@ public class FindContainCommandParser implements Parser<FindContainCommand> {
                 String trimmedArgsTag = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_TAG)).get().trim();
                 if (trimmedArgsTag.isEmpty()) {
                     throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                                                        FindContainCommand.MESSAGE_USAGE));
+                            FindContainCommand.MESSAGE_USAGE));
                 }
                 mapKeywords.put(PREFIX_TAG.toString(), trimmedArgsTag);
             }
@@ -96,3 +98,4 @@ public class FindContainCommandParser implements Parser<FindContainCommand> {
         return new FindContainCommand(new PersonContainsLettersPredicate(mapKeywords));
     }
 }
+//@@author Hoang
