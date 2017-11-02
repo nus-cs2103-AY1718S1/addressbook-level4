@@ -17,11 +17,12 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 /**
  * Adds a person to the address book.
  */
-public class AddCommand extends UndoableCommand {
+public class AddQuickCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+            + "Note: Name and Phone number are compulsory fields.\n"
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
@@ -45,9 +46,9 @@ public class AddCommand extends UndoableCommand {
     private final Person toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
+     * Creates an AddQuickCommand to add the specified {@code ReadOnlyPerson}
      */
-    public AddCommand(ReadOnlyPerson person) {
+    public AddQuickCommand(ReadOnlyPerson person) {
         toAdd = new Person(person);
     }
 
@@ -56,6 +57,7 @@ public class AddCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.addPerson(toAdd);
+            //@@author aver0214
             model.sortAllPersons();
             model.sortImportantTag();
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
@@ -64,13 +66,14 @@ public class AddCommand extends UndoableCommand {
         } catch (PersonNotFoundException e) {
             throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
         }
+        //@@author
 
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddCommand // instanceof handles nulls
-                && toAdd.equals(((AddCommand) other).toAdd));
+                || (other instanceof AddQuickCommand // instanceof handles nulls
+                && toAdd.equals(((AddQuickCommand) other).toAdd));
     }
 }

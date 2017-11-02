@@ -40,11 +40,13 @@ public interface Model {
 
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 
+    //@@author aver0214
     /** Sort the contacts with import tag to the top. */
     void sortImportantTag () throws PersonNotFoundException, DuplicatePersonException;
 
     /** Sort the contacts in ascending alphabetical order. */
     void sortAllPersons() throws DuplicatePersonException;
+    //@@author
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
