@@ -16,12 +16,17 @@ By: `CS2103AUG2017 T16-B2`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
 
+=== Software Overview
+
 Welcome to cherBook, the Command Line made for teachers to monitor students' academic performance easily.
 cherBook's statistical analysis tools breaks down the students' grades and enables teachers to identify students in need of help.
 cherBook also provide teachers an easy way to contact their students' parents when required.
 
-This developer guide provides future contributors and maintainers of cherBook with the information necessary for understanding the source code and contributing to the repository.
-The relevant information include cherBook's software architecture, Component APIs, documentation and contributing guidelines.
+=== About this guide
+
+This developer guide provides future contributors and maintainers of cherBook with the necessary information for understanding
+the cherBook source code and guidelines for contributing to the repository.
+Such information includes cherBook's software architecture, Components and their APIs, documentation and contributing guidelines.
 
 == Setting up
 
