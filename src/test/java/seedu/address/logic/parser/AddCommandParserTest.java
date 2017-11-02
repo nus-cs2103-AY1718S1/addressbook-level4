@@ -132,7 +132,7 @@ public class AddCommandParserTest {
                         + TAG_DESC_FRIEND,
                 new AddCommand(expectedPersonWithNoAddress));
 
-        // no email
+        // no postal code
         Person expectedPersonWithNoPostalCode = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withGrades(VALID_GRADES_AMY).withEmail(VALID_EMAIL_AMY)
                 .withFormClass(VALID_FORMCLASS_AMY).withPostalCode("(Postal code not recorded)")
