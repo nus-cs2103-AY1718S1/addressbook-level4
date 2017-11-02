@@ -56,7 +56,7 @@ public class LogicManager extends ComponentManager implements Logic {
 
         if (!isLoggedInPassword) {
             if (isCorrectPassword(commandText)) {
-                result = new CommandResult("Log in successful! Welcome to H.M.U v1.3!");
+                result = new CommandResult("Log in successful! Welcome to H.M.U v1.4!");
                 return result;
             } else {
                 result = new CommandResult("Invalid Credentials. Please try again!");
