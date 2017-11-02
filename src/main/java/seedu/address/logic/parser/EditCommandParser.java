@@ -91,7 +91,7 @@ public class EditCommandParser implements Parser<EditCommand> {
      * If {@code emails} contain only one element which is an empty string, it will be parsed into a
      * {@code Set<Email>} containing zero emails.
      */
-    //@@zhoukai07
+    //@@author zhoukai07
     private Optional<ArrayList<Email>> parseEmailsForEdit(Collection<String> emails) throws IllegalValueException {
         assert emails != null;
 
@@ -107,7 +107,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         return Optional.of(ParserUtil.parseEmail(emailSetToParse));
     }
-    //@@zhoukai07
+    //@@author
     /**
      * Parses {@code Collection<String> webLinks} into a {@code Set<weblink>} if {@code webLinks} is non-empty.
      * If {@code webLinks} contain only one element which is an empty string, it will be parsed into a

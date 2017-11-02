@@ -50,10 +50,10 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            //@@zhoukai07
+            //@@author zhoukai07
             + "[" + PREFIX_ADD_TAG + "TAG]..."
             + "[" + PREFIX_REM_TAG + "TAG]..."
-            //@@zhoukai07
+            //@@author 
             + PREFIX_CLEAR_TAG + "\n"
             + "[" + PREFIX_WEB_LINK + "WEB LINK]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -165,9 +165,11 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private ArrayList<Email> email;
         private Address address;
+        //@@author zhoukai07
         private boolean clearTags = false;
         private Set<Tag> toAdd;
         private Set<Tag> toRemove;
+        //@@author
         private Set<WebLink> webLinks;
 
         public EditPersonDescriptor() {
@@ -224,7 +226,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
-        //@@zhoukai07
+        //@@author zhoukai07
         public void setToAdd(Set<Tag> toAdd) {
             this.toAdd = toAdd;
         }
@@ -234,7 +236,7 @@ public class EditCommand extends UndoableCommand {
         public void setClearTags(boolean clearTags) {
             this.clearTags = clearTags;
         }
-        //@@zhoukai07
+        //@@author
         public void setWebLinks(Set<WebLink> webLinks) {
             this.webLinks = webLinks;
         }
