@@ -545,6 +545,14 @@ In version v1.3, users will be able to: +
 
 {{More to be added}}
 
+=== Features added in v1.3
+In version v1.3, users will be able to: +
+
+* Click on tabs to select between two lists, one of which contains undelivered and the other, delivered parcels
+* Add parcel-related tags to inform delivery personnel on additional precautions to take while delivering a parcel.
+
+{{More to be added}}
+
 == Features Coming in v2.0
 
 In `Ark v2.0`, the delivery vendor will be able to do the following: +
