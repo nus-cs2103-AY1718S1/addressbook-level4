@@ -33,9 +33,11 @@ import seedu.address.testutil.EditMeetingDescriptorBuilder;
 import seedu.address.testutil.MeetingBuilder;
 
 
+//@@author kyngyi
 public class EditMeetingCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
     /**
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
@@ -105,6 +107,7 @@ public class EditMeetingCommandTest {
 
         assertCommandSuccess(editMeetingCommand, model, expectedMessage, expectedModel);
     }
+
     /**
     @Test
     public void execute_duplicateMeetingUnfilteredList_failure() {
