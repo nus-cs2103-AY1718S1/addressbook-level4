@@ -9,7 +9,7 @@ https://coveralls.io/github/CS2103AUG2017-T09-B2/main?branch=master[image:https:
 https://www.codacy.com/app/damith/addressbook-level4?utm_source=github.com&utm_medium=referral&utm_content=se-edu/addressbook-level4&utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/fc0b7775cf7f4fdeaf08776f3d8e364a[Codacy Badge]]
 
 ifndef::env-github[]
-image::../docs/images/UI(ScheduBook).png[width="600"]
+image::/docs/images/UI(ScheduBook).png[width="600"]
 endif::[]
 
 * This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
