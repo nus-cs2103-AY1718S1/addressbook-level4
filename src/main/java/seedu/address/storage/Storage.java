@@ -43,6 +43,6 @@ public interface Storage extends AddressBookStorage, MeetingListStorage, UserPre
     @Override
     void saveMeetingList(ReadOnlyMeetingList meetingList) throws IOException;
 
-    void saveFileFromUrl(String urlString, String filePath);
+    void saveFileFromUrl(String urlString, String filePath) throws IOException;
 
 }

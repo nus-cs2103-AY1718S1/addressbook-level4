@@ -1,11 +1,7 @@
 package seedu.address.ui;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.io.IOException;
 import java.util.logging.Logger;
-
-import javax.xml.bind.DatatypeConverter;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -30,6 +26,7 @@ import seedu.address.commons.events.ui.ShowBrowserEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowMeetingEvent;
 import seedu.address.commons.util.FxViewUtil;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -45,7 +42,6 @@ public class MainWindow extends UiPart<Region> {
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
-    private static final String GRAVATAR_URL_FORMAT = "https://www.gravatar.com/avatar/%1$s.jpg";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -210,19 +206,12 @@ public class MainWindow extends UiPart<Region> {
     private void downloadProfilePictures(ObservableList<ReadOnlyPerson> persons) {
         for (ReadOnlyPerson person : persons) {
             try {
-                String email = person.getEmail().value.trim().toLowerCase();
-                System.out.println(email);
-                byte[] emailBytes = email.getBytes("UTF-8");
-                MessageDigest md = MessageDigest.getInstance("MD5");
-                String hash = DatatypeConverter.printHexBinary(md.digest(emailBytes)).toUpperCase();
-                String gravatarUrl = String.format(GRAVATAR_URL_FORMAT, hash.toLowerCase());
-                String filename = String.format(PersonCard.GRAVATAR_FILENAME_FORMAT, person.getInternalId().value);
+                String gravatarUrl = StringUtil.generateGravatarUrl(person.getEmail().value);
+                String filename = String.format(PersonCard.PROFILE_PHOTO_FILENAME_FORMAT, person.getInternalId().value);
                 storage.saveFileFromUrl(gravatarUrl, filename);
                 logger.info("Downloaded " + gravatarUrl + " to " + filename);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
+            } catch (IOException e) {
+                logger.warning(String.format("Gravatar not downloaded for %1$s.", person.getName()));
             }
         }
     }

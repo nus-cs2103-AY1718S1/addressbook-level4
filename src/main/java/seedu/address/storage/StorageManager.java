@@ -3,6 +3,7 @@ package seedu.address.storage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -30,6 +31,7 @@ import seedu.address.model.UserPrefs;
 public class StorageManager extends ComponentManager implements Storage {
 
     public static final String CACHE_DIR = "cache/";
+    public static final String IMAGE_RESOURCE_DIR = "src/main/resources/images/";
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private static final String READ_FILE_MESSAGE = "Attempting to read to data file: ";
     private static final String WRITE_FILE_MESSAGE = "Attempting to write to data file: ";
@@ -148,7 +150,7 @@ public class StorageManager extends ComponentManager implements Storage {
     // ============= Cache & Download methods =======================
 
     @Override
-    public void saveFileFromUrl(String urlString, String filename) {
+    public void saveFileFromUrl(String urlString, String filename) throws IOException {
         try {
             URL url = new URL(urlString);
             InputStream in = new BufferedInputStream(url.openStream());
@@ -164,12 +166,26 @@ public class StorageManager extends ComponentManager implements Storage {
             }
             in.close();
             out.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            logger.warning(String.format("URL %1$s is not valid. File not downloaded.", urlString));
+        }
+    }
+
+    public static FileInputStream loadCacheFile(String filename) throws IOException {
+        try {
+            return new FileInputStream(CACHE_DIR + filename);
+        } catch (FileNotFoundException e) {
+            logger.warning(String.format("Cache file %1$s not found.", filename));
+            throw new IOException();
+        }
+    }
+
+    public static FileInputStream loadResourceImage(String imageFilename) throws IOException {
+        try {
+            return new FileInputStream(IMAGE_RESOURCE_DIR + imageFilename);
+        } catch (FileNotFoundException e) {
+            logger.warning(String.format("Image resource %1$s not found.", imageFilename));
+            throw new IOException();
         }
     }
 }
