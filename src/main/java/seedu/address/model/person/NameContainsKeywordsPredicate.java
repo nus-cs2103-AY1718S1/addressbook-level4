@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
 
+//@@author jiasheng
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
  */
@@ -17,8 +18,40 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+        return (containsKeyWordInName(person) || containsKeyWordInAddress(person)
+                || containsKeyWordInPhone(person) || containsKeyWordInTag(person)
+                || containsKeyWordInWebLink(person) || containsKeyWordInEmail(person));
+    }
+
+    private boolean containsKeyWordInName(ReadOnlyPerson person) {
+        return keywords.stream().anyMatch(keyword
+            -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+    }
+
+    private boolean containsKeyWordInPhone(ReadOnlyPerson person) {
+        return keywords.stream().anyMatch(keyword
+            -> StringUtil.containsWordIgnoreCase(person.getPhone().value, keyword));
+    }
+
+    private boolean containsKeyWordInAddress(ReadOnlyPerson person) {
+        return keywords.stream().anyMatch(keyword
+            -> StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword));
+    }
+
+
+    private boolean containsKeyWordInTag(ReadOnlyPerson person) {
+        return person.getTags().stream().anyMatch(s -> keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(s.toStringFilter(), keyword)));
+    }
+
+    private boolean containsKeyWordInWebLink(ReadOnlyPerson person) {
+        return person.getWebLinks().stream().anyMatch(s -> keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(s.toStringWebLink(), keyword)));
+    }
+
+    private boolean containsKeyWordInEmail(ReadOnlyPerson person) {
+        return person.getEmail().stream().anyMatch(s -> keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(s.toString(), keyword)));
     }
 
     @Override

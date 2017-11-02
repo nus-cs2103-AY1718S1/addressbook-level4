@@ -90,6 +90,7 @@ public class StringUtilTest {
         assertExceptionThrown(NullPointerException.class, null, "abc", Optional.empty());
     }
 
+    //@@author jiasheng
     /*
      * Valid equivalence partitions for word:
      *   - any word
@@ -122,8 +123,6 @@ public class StringUtilTest {
         assertFalse(StringUtil.containsWordIgnoreCase("", "abc")); // Boundary case
         assertFalse(StringUtil.containsWordIgnoreCase("    ", "123"));
 
-        // Matches a partial word only
-        assertFalse(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "bb")); // Sentence word bigger than query word
         assertFalse(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "bbbb")); // Query word bigger than sentence word
 
         // Matches word in the sentence, different upper/lower case letters
@@ -135,6 +134,9 @@ public class StringUtilTest {
 
         // Matches multiple words in sentence
         assertTrue(StringUtil.containsWordIgnoreCase("AAA bBb ccc  bbb", "bbB"));
+
+        // Matches a partial word in a contained in a longer word
+        assertTrue(StringUtil.containsWordIgnoreCase("aaa bbbbbbb ccc", "bb")); // Sentence word bigger than query word
     }
 
     //---------------- Tests for getDetails --------------------------------------
