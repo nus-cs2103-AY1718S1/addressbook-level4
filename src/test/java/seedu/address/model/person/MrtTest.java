@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-//@@author hj2304
 public class MrtTest {
     @Test
     public void isValidMrt() throws Exception {
@@ -34,4 +33,3 @@ public class MrtTest {
         assertTrue(Mrt.isValidMrt("Kallang"));
     }
 }
-//@@author hj2304

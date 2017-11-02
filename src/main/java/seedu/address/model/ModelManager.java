@@ -11,8 +11,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -142,7 +142,6 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
-    //@@author hj2304
     public void sort() {
         addressBook.sort();
     }
@@ -158,7 +157,7 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author hj2304
 
     @Override
-    public TreeSet<Integer> generateMeetingTime(Index[] ListOfIndex){
+    public TreeSet<Integer> generateMeetingTime(Index[] ListOfIndex) {
         return addressBook.generateMeetingTime(ListOfIndex);
     }
 }

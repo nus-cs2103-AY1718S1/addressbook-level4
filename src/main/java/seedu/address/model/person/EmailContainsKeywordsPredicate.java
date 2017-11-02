@@ -5,7 +5,6 @@ import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
 
-//@@author hj2304
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Email} matches any of the keywords given.
  */
@@ -31,4 +30,3 @@ public class EmailContainsKeywordsPredicate implements Predicate<ReadOnlyPerson>
     }
 
 }
-//@@author hj2304

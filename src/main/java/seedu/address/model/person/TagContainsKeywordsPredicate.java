@@ -7,7 +7,6 @@ import java.util.function.Predicate;
 
 import seedu.address.model.tag.Tag;
 
-//@@author hj2304
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Tag} matches any of the keywords given.
  */
@@ -34,5 +33,5 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
                 || (other instanceof TagContainsKeywordsPredicate // instanceof handles nulls
                 && this.keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check
     }
+
 }
-//@@author hj2304

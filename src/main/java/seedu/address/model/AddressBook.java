@@ -13,8 +13,8 @@ import java.util.TreeSet;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.PossibleDays;
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.core.PossibleTimes;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -81,8 +81,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
 
-    /* Given a time span, add it to the person's free time slot so that this time span will  be considered when
-       arranging a meeting.
+    /**
+     * Given a time span, add it to the person's free time slot so that this time span will  be considered when
+     * arranging a meeting.
      */
     public void addScheduleToPerson(Integer index, TreeSet<Integer> timeSpan) throws PersonNotFoundException {
         persons.addSchedule(index, timeSpan);
@@ -134,18 +135,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
-
-    public TreeSet<Integer> generateMeetingTime(Index[] ListOfIndex){
+    /**
+     * Generating Meeting Time based on the list of Index.
+     */
+    public TreeSet<Integer> generateMeetingTime(Index[] listOfIndex) {
         TreeSet<Integer> satisfiedTimeSet = new TreeSet<>();
-        for(int i = 0; i < PossibleDays.days.length; i++){
-            for(int k = 0; k < PossibleTimes.times.length; k++) {
+        for (int i = 0; i < PossibleDays.days.length; i++) {
+            for (int k = 0; k < PossibleTimes.times.length; k++) {
                 satisfiedTimeSet.add(PossibleDays.days[i] * PossibleDays.dayCoefficient + PossibleTimes.times[k]);
             }
         }
 
-        for(int j = 0; j < ListOfIndex.length; j++){
+        for (int j = 0; j < listOfIndex.length; j++) {
             Iterator<Integer> iterator = satisfiedTimeSet.iterator();
-            Schedule currentSchedule = getPersonList().get(ListOfIndex[j].getZeroBased()).getSchedule();
+            Schedule currentSchedule = getPersonList().get(listOfIndex[j].getZeroBased()).getSchedule();
             while (iterator.hasNext()) {
                 Integer timeNumber = iterator.next();
                 if (!currentSchedule.containsTimeNumber(timeNumber)) {
@@ -236,7 +239,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         return Objects.hash(persons, tags);
     }
 
-    //@@author hj2304
     /**
      * Remove tag from persson
      * Returns true if tag is successfully removed
@@ -254,5 +256,4 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void sort() {
         persons.sort();
     }
-    //@@author hj2304
 }

@@ -84,7 +84,6 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
-    //@@author hj2304
     /**
      * Sets the {@code Mrt} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -96,7 +95,6 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
-    //@@author hj2304
 
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}

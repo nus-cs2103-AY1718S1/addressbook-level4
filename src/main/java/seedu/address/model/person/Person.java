@@ -24,9 +24,8 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-    //@@author hj2304
     private ObjectProperty<Mrt> mrt;
-    //@@author hj2304
+
     private ObjectProperty<UniqueTagList> tags;
 
     private ObjectProperty<Schedule> schedule;
@@ -123,7 +122,6 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
-    //@@author hj2304
     public void setMrt(Mrt mrt) {
         this.mrt.set(requireNonNull(mrt));
     }
@@ -137,7 +135,6 @@ public class Person implements ReadOnlyPerson {
     public Mrt getMrt() {
         return mrt.get();
     }
-    //@@author hj2304
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
