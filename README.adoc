@@ -17,7 +17,7 @@ endif::[]
 
 * This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
 * It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
+* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC) than what students usually write in beginner-level SE modules.
 * What's different from https://github.com/se-edu/addressbook-level4[level 4]:
 ** Quicker adding as only name and phone number are compulsory fields.
 ** Able to find person(s) with other details (phone numbers, emails, tags).
@@ -28,6 +28,7 @@ endif::[]
 ** Auto generated persistent coloured tags.
 ** Able to import other XML addressbook.
 ** Can attach a photo to each person in addressbook.
+** Person with 'important' (case-insensitive) tag will appear on top of list.
 
 == Site Map
 
