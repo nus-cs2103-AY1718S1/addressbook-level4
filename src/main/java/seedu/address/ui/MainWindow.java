@@ -135,7 +135,7 @@ public class MainWindow extends UiPart<Region> {
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList(), "list");
         personListPanelPlaceholder.getChildren().clear();
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -178,16 +178,16 @@ public class MainWindow extends UiPart<Region> {
         switch(listName) {
 
         case "blacklist":
-            personListPanel = new PersonListPanel(logic.getFilteredBlacklistedPersonList());
+            personListPanel = new PersonListPanel(logic.getFilteredBlacklistedPersonList(), listName);
             break;
         case "whitelist":
-            personListPanel = new PersonListPanel(logic.getFilteredWhitelistedPersonList());
+            personListPanel = new PersonListPanel(logic.getFilteredWhitelistedPersonList(), listName);
             break;
         case "overduelist":
-            personListPanel = new PersonListPanel(logic.getFilteredOverduePersonList());
+            personListPanel = new PersonListPanel(logic.getFilteredOverduePersonList(), listName);
             break;
         default:
-            personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+            personListPanel = new PersonListPanel(logic.getFilteredPersonList(), "MASTERLIST");
         }
 
         personListPanelPlaceholder.getChildren().clear();
@@ -275,7 +275,7 @@ public class MainWindow extends UiPart<Region> {
     private void handleNearbyPersonNotInCurrentListEvent(NearbyPersonNotInCurrentListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         logic.resetFilteredPersonList();
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList(), "list");
         personListPanelPlaceholder.getChildren().removeAll();
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
         raise(new JumpToListRequestEvent(Index.fromZeroBased(logic.getFilteredPersonList()
