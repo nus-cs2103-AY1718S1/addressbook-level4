@@ -1,4 +1,4 @@
-package seedu.address.commons.events.ui;
+package seedu.address.commons.events.model;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.events.BaseEvent;
