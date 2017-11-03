@@ -15,6 +15,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -200,6 +201,19 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addEvent(ReadOnlyEvent p) throws DuplicateEventException {
         Event newEvent = new Event(p);
         events.add(newEvent);
+    }
+
+    /**
+     * Deletes an event from the address book.
+     *
+     * @throws EventNotFoundException if the {@code event} is not in this {@code AddressBook}.
+     */
+    public boolean deleteEvent(ReadOnlyEvent event) throws EventNotFoundException {
+        if (events.remove(event)) {
+            return true;
+        } else {
+            throw new EventNotFoundException();
+        }
     }
 
     /**
