@@ -15,8 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.task.ReadOnlyTask;
 
-import javax.swing.*;
-
 /**
  * An UI component that displays information of a {@code Person}.
  */
@@ -133,7 +131,11 @@ public class TaskCard extends UiPart<Region> {
         });
     }
 
-    private  void initMark(ReadOnlyTask task) {
+    /**
+     * Initialize mark for task card
+     * @param task
+     */
+    private void initMark(ReadOnlyTask task) {
         Image markIcon = new Image(ICON);
         if (task.getComplete()) {
             mark.setImage(markIcon);
