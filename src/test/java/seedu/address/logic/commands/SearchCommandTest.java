@@ -1,8 +1,12 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UniqueMeetingList;
@@ -11,16 +15,11 @@ import seedu.address.model.person.PersonContainsKeywordsPredicate;
 
 import java.util.Collections;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+//@@author martyn-wong
 
 /**
  * Contains integration tests (interaction with the Model) for {@code SearchCommand}.
  */
-
-//@@author martyn-wong
-
 public class SearchCommandTest {
 
     @Rule
