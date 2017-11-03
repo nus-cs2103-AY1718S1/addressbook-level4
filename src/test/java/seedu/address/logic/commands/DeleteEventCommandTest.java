@@ -4,9 +4,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalEvents.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalEvents.getTypicalAddressBook;
 
 import org.junit.Test;
 
@@ -46,35 +46,6 @@ public class DeleteEventCommandTest {
 
         assertCommandFailure(deleteEventCommand, model, Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
     }
-
-//    @Test
-//    public void execute_validIndexFilteredList_success() throws Exception {
-//        //showFirstPersonOnly(model);
-//
-//        ReadOnlyEvent eventToDelete = model.getFilteredEventList().get(INDEX_FIRST_PERSON.getZeroBased());
-//        DeleteEventCommand deleteEventCommand = prepareCommand(INDEX_FIRST_PERSON);
-//
-//        String expectedMessage = String.format(DeleteEventCommand.MESSAGE_DELETE_EVENT_SUCCESS, eventToDelete);
-//
-//        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-//        expectedModel.deleteEvent(eventToDelete);
-//        //showNoPerson(expectedModel);
-//
-//        assertCommandSuccess(deleteEventCommand, model, expectedMessage, expectedModel);
-//    }
-//
-//    @Test
-//    public void execute_invalidIndexFilteredList_throwsCommandException() {
-//        //showFirstPersonOnly(model);
-//
-//        Index outOfBoundIndex = INDEX_SECOND_PERSON;
-//        // ensures that outOfBoundIndex is still in bounds of address book list
-//        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getEventList().size());
-//
-//        DeleteEventCommand deleteEventCommand = prepareCommand(outOfBoundIndex);
-//
-//        assertCommandFailure(deleteEventCommand, model, Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
-//    }
 
     @Test
     public void equals() {
