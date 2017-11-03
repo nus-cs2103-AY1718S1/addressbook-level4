@@ -66,6 +66,10 @@ public interface ReadOnlyPerson {
         return builder.toString();
     }
 
+    //@@author AngularJiaSheng
+    /**
+     * Formats the person as text, showing all contact details, without any additional text or descriptions.
+     */
     default String getAsOneString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
@@ -83,5 +87,7 @@ public interface ReadOnlyPerson {
         getWebLinks().forEach(builder::append);
         return builder.toString();
     }
+
+    //@@author
 
 }
