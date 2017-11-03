@@ -393,6 +393,16 @@ Format: `theme INDEX`
 * Input command `theme` will display a current list of available themes.
 ****
 
+*Available Themes:* +
+[INDEX]. [NAME] +
+1. DarkTheme +
+2. Bootstrap3 +
+3. Caspian +
+4. Modena +
+5. (Modena) BlackOnWhite +
+6. (Modena) WhiteOnBlack +
+7. (Modena) YellowOnBlack +
+
 Examples:
 
 `theme caspian` +
