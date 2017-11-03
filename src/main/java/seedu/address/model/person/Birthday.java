@@ -5,7 +5,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 /**
  * Represents a Person's birthday in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidBirthday(String)}
- *///@@author wei renkai
+ *///@@author renkai91
 public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS = "Person's birthday should be in format: DD/MM/YYYY";
@@ -54,3 +54,4 @@ public class Birthday {
     }
 
 }
+//@@author
