@@ -50,9 +50,11 @@ public class BrowserPanel extends UiPart<Region> {
                 + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
+    //@@author YuchenHe98
     private void loadLocationPage(ReadOnlyPerson person) {
         loadPage(GOOGLE_MAP_URL_PREFIX + person.getAddress().value.replaceAll(" ", "+"));
     }
+    //@@author
 
     private void loadMrtPage(ReadOnlyPerson person) {
         loadPage(GOOGLE_MAP_URL_PREFIX + person.getMrt().value.replaceAll("", "+")
@@ -84,11 +86,13 @@ public class BrowserPanel extends UiPart<Region> {
         loadPersonPage(event.getNewSelection().person);
     }
 
+    //@@author YuchenHe98
     @Subscribe
     private void handleLocateCommandEvent(LocateCommandEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadLocationPage(event.getPerson());
     }
+    //@@author
 
     @Subscribe
     private void handleLocateMrtCommandEvent(LocateMrtCommandEvent event) {

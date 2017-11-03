@@ -4,6 +4,7 @@ import java.util.TreeSet;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -32,11 +33,12 @@ public interface Model {
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
-
+    //@@author YuchenHe98
     void addScheduleToPerson(Integer index, TreeSet<Integer> schedule) throws PersonNotFoundException;
 
+    //@@author YuchenHe98
     void clearScheduleForPerson(Integer index, TreeSet<Integer> schedule) throws PersonNotFoundException;
-
+    //@@author
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -57,4 +59,6 @@ public interface Model {
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
     void sort();
+
+    TreeSet<Integer> generateMeetingTime(Index[] listOfIndex);
 }

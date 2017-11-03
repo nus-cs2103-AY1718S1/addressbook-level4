@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.xml.bind.annotation.XmlElement;
 
@@ -15,6 +16,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -32,6 +34,9 @@ public class XmlAdaptedPerson {
     private String address;
     @XmlElement(required = true)
     private String mrt;
+
+    @XmlElement(required = true)
+    private TreeSet<Integer> schedule = new TreeSet<>();
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -58,6 +63,7 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        schedule = source.getSchedule().getBusyTime();
     }
 
     /**
@@ -76,6 +82,7 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address);
         final Mrt mrt = new Mrt(this.mrt);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, mrt, tags);
+        Schedule schedule = new Schedule(this.schedule);
+        return new Person(name, phone, email, address, mrt, tags, schedule);
     }
 }
