@@ -12,7 +12,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.function.Supplier;
@@ -35,7 +34,6 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -45,9 +43,7 @@ import javafx.scene.input.DataFormat;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -98,7 +94,6 @@ public class CalendarView extends UiPart<Region> {
 
     private final List<TimeSlot> timeSlots = new ArrayList<>();
 
-//    private final GridPane calendarView;
     private final TreeMap<ReadOnlyEvent, Node> addedEvents = new TreeMap<>();
 
     private final Logger logger = LogsCenter.getLogger(CalendarView.class);
@@ -181,7 +176,7 @@ public class CalendarView extends UiPart<Region> {
     /**
      * Initialize the page-turn buttons
      *
-     * @param calendarView gridPane of the calendar
+     * @param headers gridPane of the calendar header
      */
 
     private void initPageTurnerButtons(GridPane headers) {
@@ -194,9 +189,9 @@ public class CalendarView extends UiPart<Region> {
         lastPage.setStyle("-fx-background-color: transparent");
         nextPage.setStyle("-fx-background-color: transparent");
         lastPage.setGraphic(new ImageView(new Image(getClass().getResource("/images/lastPage.png").toExternalForm
-                (), 25,25,true,true)));
+                (), 25, 25, true, true)));
         nextPage.setGraphic(new ImageView(new Image(getClass().getResource("/images/nextPage.png").toExternalForm
-                (), 25,25,true,true)));
+                (), 25, 25, true, true)));
 
         lastPage.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -228,7 +223,7 @@ public class CalendarView extends UiPart<Region> {
     /**
      * Initialize header dates (horizontal axis)
      *
-     * @param calendarView gridPane of the calendar
+     * @param headers gridPane of the calendar header
      */
     private void initDateHeader(GridPane headers) {
         DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("E\nMMM d");
@@ -242,12 +237,12 @@ public class CalendarView extends UiPart<Region> {
             label.setPadding(new Insets(1));
             label.setTextAlignment(TextAlignment.CENTER);
             StackPane pane = new StackPane();
-            pane.setPrefSize(135,50);
-            pane.setMinSize(100,50);
+            pane.setPrefSize(135, 50);
+            pane.setMinSize(100, 50);
             pane.setStyle("-fx-background-color:#FEDFE1");
             pane.getChildren().add(label);
             GridPane.setHalignment(label, HPos.CENTER);
-            if(headers.getChildren().remove(headerPanes[columnIndex])) {
+            if (headers.getChildren().remove(headerPanes[columnIndex])) {
                 logger.info("removed label " + headerPanes[columnIndex].toString());
             }
             headers.add(pane, columnIndex, 0);
@@ -270,7 +265,7 @@ public class CalendarView extends UiPart<Region> {
             Label label = new Label(startTime.format(timeFormatter));
             label.setPadding(new Insets(2));
             StackPane pane = new StackPane(label);
-            pane.setPrefSize(80,20);
+            pane.setPrefSize(80, 20);
             GridPane.setHalignment(label, HPos.RIGHT);
             calendarView.add(pane, 0, slotIndex);
             slotIndex++;
@@ -289,7 +284,6 @@ public class CalendarView extends UiPart<Region> {
         initStartEndOfWeek();
         ObservableList<ReadOnlyEvent> eventsThisWeek = extractEvents(eventList);
 
-//        removeDuplicatedPane(calendarView, lastChangedEvent);
         clearCurrentPanes(calendarView);
 
         //Iteratively add the events to the calendar view
@@ -353,8 +347,8 @@ public class CalendarView extends UiPart<Region> {
         String[] endofWeekTokens = endOfThisWeek.split("-");
 
         try {
-            startOfWeekTimeslot = new Timeslot(startofWeekTokens[2] + "/" + startofWeekTokens[1] + "/" +
-                    startofWeekTokens[0] + " " + "0700-0701");
+            startOfWeekTimeslot = new Timeslot(startofWeekTokens[2] + "/" + startofWeekTokens[1] + "/"
+                    + startofWeekTokens[0] + " " + "0700-0701");
             endOfWeekTimeslot = new Timeslot(endofWeekTokens[2] + "/" + endofWeekTokens[1] + "/"
                     + endofWeekTokens[0] + " " + "2358-2359");
         } catch (IllegalValueException ive) {
@@ -370,7 +364,8 @@ public class CalendarView extends UiPart<Region> {
      */
     private ObservableList<ReadOnlyEvent> extractEvents(ObservableList<ReadOnlyEvent> eventList) {
         return eventList.stream().filter(event -> event.happensBefore(endOfWeekTimeslot)).filter(event -> event
-                .happensAfter(startOfWeekTimeslot)).collect(Collectors.toCollection(FXCollections::observableArrayList));
+                .happensAfter(startOfWeekTimeslot)).collect(Collectors.toCollection
+                (FXCollections::observableArrayList));
     }
 
     /**
@@ -380,7 +375,6 @@ public class CalendarView extends UiPart<Region> {
      */
 
     private void removeDuplicatedPane(GridPane calendarView, ReadOnlyEvent lastChangedEvent) {
-//        logger.info("Want to remove --- " + lastChangedEvent + " with pane? " + addedEvents.containsKey(lastChangedEvent));
         if (calendarView.getChildren().remove(addedEvents.get(lastChangedEvent))) {
             logger.info("EventPane removed --- " + lastChangedEvent);
             addedEvents.remove(lastChangedEvent);
