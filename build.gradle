@@ -87,7 +87,7 @@ allprojects {
     }
 
     shadowJar {
-        archiveName = "YellowPages.jar"
+        archiveName = "TheYellowPage.jar"
 
         destinationDir = file("${buildDir}/jar/")
     }
