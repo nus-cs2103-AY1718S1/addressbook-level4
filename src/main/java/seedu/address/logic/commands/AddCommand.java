@@ -56,6 +56,7 @@ public class AddCommand extends UndoableCommand {
         toAdd = new Person(person);
     }
 
+    //@@author Adoby7
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
@@ -68,6 +69,7 @@ public class AddCommand extends UndoableCommand {
         }
 
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
@@ -76,6 +78,7 @@ public class AddCommand extends UndoableCommand {
                 && toAdd.equals(((AddCommand) other).toAdd));
     }
 
+    //@@author Adoby7
     @Override
     protected void undo() {
         requireNonNull(model);

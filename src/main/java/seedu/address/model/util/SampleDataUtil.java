@@ -60,11 +60,11 @@ public class SampleDataUtil {
                 new Event(new EventName("First meeting"), new EventDescription("Discuss coding"),
                     new EventTime("10/10/2017")),
                 new Event(new EventName("Second meeting"), new EventDescription("Discuss PPT"),
-                    new EventTime("13/10/2017")),
+                    new EventTime("20/12/2017")),
                 new Event(new EventName("Third meeting"), new EventDescription("Discuss presentation"),
-                    new EventTime("17/10/2017")),
+                    new EventTime("09/02/2018")),
                 new Event(new EventName("Forth meeting"), new EventDescription("Discuss demo"),
-                    new EventTime("03/11/2017")),
+                    new EventTime("03/11/2018")),
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);

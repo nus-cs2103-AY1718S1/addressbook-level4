@@ -65,6 +65,7 @@ public class DeleteCommand extends UndoableCommand {
                 && this.targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
     }
 
+    //@@author Adoby7
     @Override
     protected void undo() {
         requireAllNonNull(model, personToDelete);

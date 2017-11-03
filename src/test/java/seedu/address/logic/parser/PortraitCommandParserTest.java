@@ -15,6 +15,10 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.PortraitCommand;
 import seedu.address.model.person.PortraitPath;
 
+//@@author Adoby7
+/**
+ * Test portrait command parser
+ */
 public class PortraitCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
             PortraitCommand.MESSAGE_USAGE);
