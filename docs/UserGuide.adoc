@@ -435,6 +435,8 @@ There is no need to save manually.
 
 === Suggestions as you type
 
+[NOTE]
+TBI in v2.0
 Commands and parameters will be suggested as you type, where applicable.
 
 === Autocomplete commands
