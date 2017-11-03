@@ -1,7 +1,9 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.FacebookPostCommand.MESSAGE_FACEBOOK_POST_SUCCESS;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
@@ -23,9 +25,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.social.SocialInfo;
 import seedu.address.model.tag.Tag;
 import seedu.address.ui.BrowserPanel;
-
-import java.util.HashSet;
-import java.util.Set;
 
 //@@author alexfoodw
 /**
@@ -56,7 +55,9 @@ public class FacebookAddCommand extends UndoableCommand {
      * Creates an FacebookAddCommand to add the specified Facebook contact
      * @param trimmedArgs
      */
-    public FacebookAddCommand(String trimmedArgs) { userName = trimmedArgs; }
+    public FacebookAddCommand(String trimmedArgs) {
+        userName = trimmedArgs;
+    }
 
     /**
      * Completes the Facebook Add command
@@ -98,6 +99,10 @@ public class FacebookAddCommand extends UndoableCommand {
                 toAddName + MESSAGE_FACEBOOK_ADD_SUCCESS, false));
     }
 
+    /**
+     * Adds the contact to addressbook
+     * @throws CommandException
+     */
     private void addContactToAddressBook() throws CommandException {
         // add to model and return
         try {
@@ -120,9 +125,7 @@ public class FacebookAddCommand extends UndoableCommand {
             return new CommandResult(MESSAGE_FACEBOOK_ADD_INITIATED);
         } else {
             completeAdd();
-
-            return new CommandResult(MESSAGE_FACEBOOK_POST_SUCCESS + " (to "
-                    + FacebookConnectCommand.getAuthenticatedUsername() + "'s page.)");
+            return new CommandResult(toAddName + MESSAGE_FACEBOOK_ADD_SUCCESS);
         }
     }
 

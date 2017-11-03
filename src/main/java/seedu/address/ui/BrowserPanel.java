@@ -18,7 +18,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BrowserUrlChangeEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.Logic;
-import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.FacebookAddCommand;
 import seedu.address.logic.commands.FacebookConnectCommand;
 import seedu.address.logic.commands.FacebookLinkCommand;
@@ -127,7 +126,7 @@ public class BrowserPanel extends UiPart<Region> {
         location.textProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue.contains("access_token")) {
-                        switch (processType){
+                        switch (processType) {
 
                         case FacebookConnectCommand.COMMAND_WORD:
                         case FacebookConnectCommand.COMMAND_ALIAS:

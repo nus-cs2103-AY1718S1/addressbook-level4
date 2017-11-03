@@ -1,7 +1,6 @@
 package seedu.address.logic;
 
 import javafx.collections.ObservableList;
-import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.FacebookAddCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
