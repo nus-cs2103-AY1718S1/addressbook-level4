@@ -538,8 +538,13 @@ The `student/parent phone contact` mechanism is facilitated by making changes
 to the Phone class in the model component. It enables the input
 of the phone contact information of the student and his/her parent.
 
-To ensure consistency across the user inputs for add command, the user would have to input p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)
+To ensure consistency across the user inputs for add command, the user will have to input p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)
 instead of p/ Student: (STUDENT_NUMBER) Parent: (PARENT_NUMBER).
+
+The following sequence diagram shows how the `student/parent phone contact` operation works:
+
+image::MultipleNumberSequenceDiagram.png[width="800"]
+_Figure 4.4.1 : Sequence Diagram of Student/Parent Phone Contact Operation_
 
 The following method replaces `/` with `:`````, `s` with `S`, and `p` with `P` in the user input string
 for appropriate presentation of `displayed person card phone information`:
@@ -572,14 +577,14 @@ add the phone number of students.
 The phone numbers must be exactly `8 digits` long.
 
 image::PhoneDisplay.png[width="400"]
-_Figure 4.3.1 : Valid Displayed Person Card Phone Information_
+_Figure 4.4.2 : Valid Displayed Person Card Phone Information_
 
 If the string format for `displayed person card phone information` is valid, the
 phone contact information of the student and his/her parent will be displayed
 below the student's name in the person card as seen in the figure above.
 
 image::message_constraint.png[width="1100"]
-_Figure 4.3.2 : Message to prompt Users to Enter Correct Phone Format_
+_Figure 4.4.3 : Message to prompt Users to Enter Correct Phone Format_
 
 If the string format for `displayed person card phone information` is invalid, an `IllegalValueException`
 is thrown. The user will be prompted to follow the accepted format as seen in the figure above.
@@ -618,15 +623,20 @@ public Phone(String phone) throws IllegalValueException {
 // end::studentparentcontact[]
 
 // tag::uniquetagcolor[]
-=== Add Unique Color Tag mechanism
+=== Unique Color Tag mechanism
 
-The `unique tag` mechanism is facilitated by making changes to `PersonCard` class in the `UI` component. This feature enables
+The `unique color tag` mechanism is facilitated by making changes to `PersonCard` class in the `UI` component. This feature enables
 the assignment of unique colors to tags.
 
 The color generated to be assigned to tags is random and all tags with the same description will be assigned a same color.
 
 The following method receives `String tagName` (description of the tag) and returns the `String assignedColor`
 associated to the tagName.
+
+The following sequence diagram shows how the `unique color tag` operation works:
+
+image::UniqueTagColorSequenceDiagram.png[width="800"]
+_Figure 4.5.1 : Sequence Diagram of Unique Color Tag Operation_
 
 ----
 public static String obtainTagColors(String tagName) {
@@ -675,7 +685,7 @@ Random range of saturation and luminance are specified to ensure that the random
 the tag description. This can be seen in the picture below.
 
 image::tagColorPic.png[width="400"]
-_Figure 4.4.1 : Tag color meshes well with white font of tag description_
+_Figure 4.5.2 : Tag color meshes well with white font of tag description_
 
 Next, in the code segment below, the `red`, `green` and `blue` components are extracted from `color`. It is then formatted into a `hexadecimal
 representation` of the color, before being converted to a String data type and assigned to `assignedColor`.
@@ -709,8 +719,8 @@ private void initialiseTags(ReadOnlyPerson person) {
 
 ==== Design Considerations
 
-Aspect: Randomness of the assigned color. +
-Alternative 1 (current choice): +
+Aspect: How tag colors are assigned. +
+Alternative 1 (current choice): Tag colors are assigned randomly. +
 Pros: Easy for developers to understand the mechanism of this feature. +
 Cons: User has no control over the assigning of tag colors. +
 Alternative 2: Allow user to assign the colors to the tags themselves. +
