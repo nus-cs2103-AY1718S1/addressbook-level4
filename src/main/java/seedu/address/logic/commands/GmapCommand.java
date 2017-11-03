@@ -14,8 +14,9 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * Display google map of person identified using it's last displayed index from the address book.
+ * Display google map of person identified using it's last displayed index or name from the address book.
  */
+//@@author Choony93
 public class GmapCommand extends Command {
 
     public static final String COMMAND_WORD = "gmap";
@@ -47,7 +48,6 @@ public class GmapCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         if (!this.usingIndex) {
             lastShownList = model.getPersonListByPredicate(predicate);
@@ -65,7 +65,6 @@ public class GmapCommand extends Command {
         EventsCenter.getInstance().post(new DisplayGmapEvent(targetIndex));
         return new CommandResult(String.format(MESSAGE_GMAP_PERSON_SUCCESS,
                 lastShownList.get(targetIndex.getZeroBased()).getName()));
-
     }
 
     @Override

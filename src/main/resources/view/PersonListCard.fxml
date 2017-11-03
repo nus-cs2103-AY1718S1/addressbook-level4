@@ -28,6 +28,7 @@
                     </minWidth>
                 </Label>
                 <Label fx:id="name" text="\$first" styleClass="cell_big_label"/>
+                <!-- @@author Choony93 -->
                 <Pane HBox.hgrow="ALWAYS"/>
                 <MenuButton fx:id="options_button" text="" alignment="CENTER_RIGHT" styleClass="menu-personcard">
                     <items>
@@ -35,6 +36,7 @@
                         <MenuItem text="Google Map" onAction="#handleGoogleMap"/>
                     </items>
                 </MenuButton>
+                <!-- @@author -->
             </HBox>
             <FlowPane fx:id="tags"/>
             <Label fx:id="phone" styleClass="cell_small_label" text="\$phone"/>

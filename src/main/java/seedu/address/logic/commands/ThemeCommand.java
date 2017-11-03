@@ -7,8 +7,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.ui.UiPart;
 
 /**
- * Display google map of person identified using it's last displayed index from the address book.
+ * Set theme of current addressbook based on index listed or theme name.
  */
+//@@author Choony93
 public class ThemeCommand extends Command {
 
     public static final String COMMAND_WORD = "theme";

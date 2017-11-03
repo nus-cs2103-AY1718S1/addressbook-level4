@@ -1,3 +1,4 @@
+/* @@author Choony93 */
 .menu-personcard {
     -fx-border-color: transparent;
     -fx-border-width: 0;
@@ -11,6 +12,7 @@
 .menu-personcard:showing {
     -fx-mark-color: #00FFFF;
 }
+/* @@author */
 
 .error {
     -fx-text-fill: #d06651 !important; /* The error class should always override the default text-fill style */

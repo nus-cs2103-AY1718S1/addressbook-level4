@@ -531,7 +531,7 @@
  * Custom Styling                                                              *
  *                                                                             *
  ******************************************************************************/
-
+ /* @@author Choony93-reused */
 .list-cell:filled:even {
     -fx-background-color: #000000;
 }
@@ -543,3 +543,4 @@
 .list-cell:filled:selected {
     -fx-background-color: #939393;
 }
+ /* @@author */

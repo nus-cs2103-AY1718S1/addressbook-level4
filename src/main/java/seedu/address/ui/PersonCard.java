@@ -11,7 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.DisplayGmapEvent;
-import seedu.address.commons.events.ui.PersonPanelOptionsDelete;
+import seedu.address.commons.events.ui.PersonPanelDeleteEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -71,6 +71,7 @@ public class PersonCard extends UiPart<Region> {
      * RGB is above 700, indicating it is too white (unreadable).
      * This is done so that strings of same value will have persistent colour.
      */
+    //@@author Choony93
     private static String getColorForTag(String tagValue) {
 
         if (!tagColors.containsKey(tagValue)) {
@@ -100,8 +101,9 @@ public class PersonCard extends UiPart<Region> {
      */
     @FXML
     public void handleDelete() throws CommandException, ParseException {
-        raise(new PersonPanelOptionsDelete(Index.fromOneBased(this.displayedIndex)));
+        raise(new PersonPanelDeleteEvent(Index.fromOneBased(this.displayedIndex)));
     }
+    //@@author
 
     /**
      * Menu list option: GoogleMap

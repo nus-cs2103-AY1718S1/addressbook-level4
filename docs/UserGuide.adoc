@@ -391,6 +391,31 @@ All other details that are not provided will be filled in by default values as s
 image::Default_for_empty_fields.png[width="400"]
 _Figure 3.5.1.1 : Default values for empty fields_
 
+==== Import XML addressbook command
+
+External addressbook can now be imported using `import` command
+
+Appends current addreessbook persons with given URL. +
+Format: `import [ABSOULTE_PATH]` +
+Format: `import [RELATIVE_PATH]`
+
+****
+* Loads the XML addressbook file from given path.
+* If person name from new addressbook does not exist, add into local addressbook.
+* If person name from new addressbook already exist, update into local addressbook.
+* The XML file from given path *must exist*.
+* The XML file from given path must be *well-formed*.
+****
+
+Examples:
+
+`import C:\Users\Choony\newAddressbook.xml` +
+Add new persons from newAddressBook into local addressbook. +
+`import data\addressbok2.xml` +
+Add new persons from addressbook2 from local project +
+folder *data* into local addressbook.
+
+
 === Coming soon in `v2.0`
 
 ==== Import & export of addressbook

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.events.model.AddressBookImportEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -77,4 +78,10 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /**
+     * @param abce Updates addressbook with new imported addressbook in given {@code abce}.
+     */
+    //@@author Choony93
+    void handleAddressBookImportEvent(AddressBookImportEvent abce);
+    //@@author
 }
