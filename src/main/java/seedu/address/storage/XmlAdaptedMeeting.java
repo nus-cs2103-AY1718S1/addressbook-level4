@@ -10,7 +10,7 @@ import seedu.address.model.person.Name;
 /**
  * JAXB-friendly adapted version of the Tag.
  */
-public class XmlAdaptedMeeting {
+public class XmlAdaptedMeeting implements XmlAdaptedClass<Meeting> {
 
     @XmlElement
     private String meetingName;

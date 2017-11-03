@@ -7,7 +7,7 @@
         <address isPrivate="false">4th street</address>
         <note isPrivate="false"></note>
         <id isPrivate="false"></id>
-        <lastUpdated isPrivate="false"></lastUpdated>
+        <lastUpdated isPrivate="false">2015-12-02T18:46:23.121Z</lastUpdated>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
@@ -16,7 +16,7 @@
         <address isPrivate="false">81th street</address>
         <note isPrivate="false"></note>
         <id isPrivate="false"></id>
-        <lastUpdated isPrivate="false"></lastUpdated>
+        <lastUpdated isPrivate="false">2015-12-02T18:46:23.121Z</lastUpdated>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
@@ -25,7 +25,7 @@
         <address isPrivate="false">wall street</address>
         <note isPrivate="false"></note>
         <id isPrivate="false"></id>
-        <lastUpdated isPrivate="false"></lastUpdated>
+        <lastUpdated isPrivate="false">2015-12-02T18:46:23.121Z</lastUpdated>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
@@ -34,7 +34,7 @@
         <address isPrivate="false">10th street</address>
         <note isPrivate="false"></note>
         <id isPrivate="false"></id>
-        <lastUpdated isPrivate="false"></lastUpdated>
+        <lastUpdated isPrivate="false">2015-12-02T18:46:23.121Z</lastUpdated>
     </persons>
     <persons>
         <name>Werner Meyer</name>
@@ -43,7 +43,7 @@
         <address isPrivate="false">michegan ave</address>
         <note isPrivate="false"></note>
         <id isPrivate="false"></id>
-        <lastUpdated isPrivate="false"></lastUpdated>
+        <lastUpdated isPrivate="false">2015-12-02T18:46:23.121Z</lastUpdated>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
@@ -52,7 +52,7 @@
         <address isPrivate="false">little tokyo</address>
         <note isPrivate="false"></note>
         <id isPrivate="false"></id>
-        <lastUpdated isPrivate="false"></lastUpdated>
+        <lastUpdated isPrivate="false">2015-12-02T18:46:23.121Z</lastUpdated>
     </persons>
     <persons>
         <name>Anna Best</name>
@@ -61,7 +61,7 @@
         <address isPrivate="false">4th street</address>
         <note isPrivate="false"></note>
         <id isPrivate="false"></id>
-        <lastUpdated isPrivate="false"></lastUpdated>
+        <lastUpdated isPrivate="false">2015-12-02T18:46:23.121Z</lastUpdated>
     </persons>
     <persons>
         <name>Stefan Meier</name>
@@ -70,7 +70,7 @@
         <address isPrivate="false">little india</address>
         <note isPrivate="false"></note>
         <id isPrivate="false"></id>
-        <lastUpdated isPrivate="false"></lastUpdated>
+        <lastUpdated isPrivate="false">2015-12-02T18:46:23.121Z</lastUpdated>
     </persons>
     <persons>
         <name>Martin Mueller</name>
@@ -79,6 +79,6 @@
         <address isPrivate="false">chicago ave</address>
         <note isPrivate="false"></note>
         <id isPrivate="false"></id>
-        <lastUpdated isPrivate="false"></lastUpdated>
+        <lastUpdated isPrivate="false">2015-12-02T18:46:23.121Z</lastUpdated>
     </persons>
 </addressbook>
