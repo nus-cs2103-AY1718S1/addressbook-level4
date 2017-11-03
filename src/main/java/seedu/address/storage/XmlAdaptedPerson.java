@@ -72,7 +72,6 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedProperty property: properties) {
             personProperties.add(property.toModelType());
         }
-
         final List<Tag> personTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());

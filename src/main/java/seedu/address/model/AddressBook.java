@@ -51,7 +51,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
         events = new UniqueEventList();
-        reminders = new UniqueReminderList(new ArrayList<>());
+        reminders = new UniqueReminderList();
     }
 
     public AddressBook() {
@@ -102,6 +102,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setEvents(List<? extends ReadOnlyEvent> events) throws DuplicateEventException {
         this.events.setEvents(events);
     }
+
+    /**
+     * Replaces all events in this list with those in the argument event list.
+     */
+    public void setReminders(List<? extends ReadOnlyReminder> reminders) throws DuplicateReminderException {
+        this.reminders.setReminders(reminders);
+    }
     //@@author
 
     //@@author low5545
@@ -149,8 +156,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicateEventException de) {
             assert false : "AddressBooks should not have duplicate events";
         }
-
-
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
     }
@@ -350,10 +355,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<ReadOnlyEvent> getEventList() {
         return events.asObservableList();
-    }
-    @Override
-    public ObservableList<ReadOnlyReminder> getReminderList() {
-        return reminders.asObservableList();
     }
 
     @Override

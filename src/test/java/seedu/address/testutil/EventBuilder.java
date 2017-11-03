@@ -65,7 +65,7 @@ public class EventBuilder {
      * Adds a reminder into the event.
      */
     public EventBuilder withReminder() {
-        this.event.getReminders().add(new Reminder(event.getName().toString(), event.getTime().toString()));
+        this.event.getReminders().add(new Reminder(event, event.getTime().toString()));
         return this;
     }
 

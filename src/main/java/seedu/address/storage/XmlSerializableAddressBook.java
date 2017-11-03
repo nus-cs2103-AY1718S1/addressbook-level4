@@ -33,8 +33,6 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     private List<XmlAdaptedEvent> events;
     @XmlElement
     private List<XmlAdaptedTag> tags;
-    @XmlElement
-    private List<XmlAdaptedReminder> reminders;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -45,7 +43,6 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         tags = new ArrayList<>();
         events = new ArrayList<>();
         properties = new XmlAdaptedPropertyManager();
-        reminders = new ArrayList<>();
     }
 
     /**
@@ -56,7 +53,6 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
         events.addAll(src.getEventList().stream().map(XmlAdaptedEvent::new).collect(Collectors.toList()));
-        reminders.addAll(src.getReminderList().stream().map(XmlAdaptedReminder::new).collect(Collectors.toList()));
     }
 
     @Override
@@ -87,20 +83,6 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(events);
-    }
-    @Override
-    public ObservableList<ReadOnlyReminder> getReminderList() {
-        final ObservableList<ReadOnlyReminder> reminders = this.reminders.stream().map(p -> {
-            try {
-
-                return p.toModelType();
-            } catch (IllegalValueException | PropertyNotFoundException e) {
-                e.printStackTrace();
-                //TODO: better error handling
-                return null;
-            }
-        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
-        return FXCollections.unmodifiableObservableList(reminders);
     }
 
     //@@author

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.fxmisc.easybind.EasyBind;
 
@@ -33,9 +34,10 @@ public class UniqueReminderList implements Iterable<Reminder> {
     /**
      * Constructs empty UniqueReminderList
      */
-    public UniqueReminderList(ArrayList<Reminder> reminders) {
-        requireNonNull(reminders);
-        internalList.addAll(reminders);
+    public UniqueReminderList(List<? extends ReadOnlyReminder> reminders) throws DuplicateReminderException {
+        for (ReadOnlyReminder reminder: reminders) {
+            add(reminder);
+        }
     }
     public UniqueReminderList() {
     }
@@ -90,6 +92,18 @@ public class UniqueReminderList implements Iterable<Reminder> {
      */
     public ObservableList<ReadOnlyReminder> asObservableList() {
         return FXCollections.unmodifiableObservableList(mappedList);
+    }
+
+    public void setReminders(UniqueReminderList replacement) {
+        this.internalList.setAll(replacement.internalList);
+    }
+
+    public void setReminders(List<? extends ReadOnlyReminder> reminders) throws DuplicateReminderException {
+        final UniqueReminderList replacement = new UniqueReminderList();
+        for (final ReadOnlyReminder reminder : reminders) {
+            replacement.add(new Reminder(reminder));
+        }
+        setReminders(replacement);
     }
 
     @Override

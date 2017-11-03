@@ -95,15 +95,10 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered event list */
     ObservableList<ReadOnlyEvent> getFilteredEventList();
 
-    /** Returns an unmodifiable view of the filtered reminder list */
-    ObservableList<ReadOnlyReminder> getFilteredReminderList();
-
     /** Updates the filter of the filtered person list to filter by the given {@code predicate}. */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
     /** Updates the filter of the filtered event list to filter by the given {@code predicate}. */
     void updateFilteredEventsList(Predicate<ReadOnlyEvent> predicate);
 
-    /** Updates the filter of the filtered reminder list to filter by the given {@code predicate}. */
-    void updateFilteredReminderList(Predicate<ReadOnlyReminder> predicate);
 }
