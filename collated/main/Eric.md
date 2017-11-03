@@ -599,6 +599,7 @@ public class CalendarWindow extends UiPart<Region> {
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
 
+
     }
 
     /**
@@ -644,8 +645,25 @@ public class CalendarWindow extends UiPart<Region> {
             calendar.addEntry(entry);
         }
     }
-
 }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    private void setKeyBindings() {
+
+        calendarPlaceholder.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                    case C:
+                        event.consume();
+                        calendarWindow.showNextPage();
+                        break;
+                    default:
+                }
+            }
+        });
+    }
 ```
 ###### \java\seedu\address\ui\PersonCard.java
 ``` java

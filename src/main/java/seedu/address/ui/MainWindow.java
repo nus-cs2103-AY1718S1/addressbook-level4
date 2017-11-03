@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import com.calendarfx.view.CalendarView;
 import com.google.common.eventbus.Subscribe;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -84,18 +85,27 @@ public class MainWindow extends UiPart<Region> {
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
-
-        setKeyBindings(scene);
         setAccelerators();
         registerAsAnEventHandler(this);
+
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                calendarPlaceholder.requestFocus();
+                setKeyBindings();
+            }
+        });
     }
 
-    private void setKeyBindings(Scene scene) {
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+    //@@author Eric
+    private void setKeyBindings() {
+
+        calendarPlaceholder.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
-                    case TAB:
+                    case C:
                         event.consume();
                         calendarWindow.showNextPage();
                         break;
@@ -104,6 +114,7 @@ public class MainWindow extends UiPart<Region> {
             }
         });
     }
+    //@@author
 
     public Stage getPrimaryStage() {
         return primaryStage;

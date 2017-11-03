@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import com.calendarfx.view.CalendarView;
 
+import javafx.scene.input.KeyCode;
+
 import seedu.address.testutil.TypicalPersons;
 
 //@@author Eric
@@ -33,19 +35,19 @@ public class CalendarWindowTest extends GuiUnitTest {
         assertEquals(calendarView.getSelectedPage(), calendarView.getWeekPage());
 
         //Switch to month view
-        calendarWindow.showNextPage();
+        guiRobot.push(KeyCode.C);
         assertEquals(calendarView.getSelectedPage(), calendarView.getMonthPage());
 
         //Switch to year view
-        calendarWindow.showNextPage();
+        guiRobot.push(KeyCode.C);
         assertEquals(calendarView.getSelectedPage(), calendarView.getYearPage());
 
         //Switch to day view
-        calendarWindow.showNextPage();
+        guiRobot.push(KeyCode.C);
         assertEquals(calendarView.getSelectedPage(), calendarView.getDayPage());
 
         //Switch to week view
-        calendarWindow.showNextPage();
+        guiRobot.push(KeyCode.C);
         assertEquals(calendarView.getSelectedPage(), calendarView.getWeekPage());
 
 

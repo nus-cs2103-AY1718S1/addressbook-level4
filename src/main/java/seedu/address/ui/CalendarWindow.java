@@ -81,6 +81,7 @@ public class CalendarWindow extends UiPart<Region> {
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
 
+
     }
 
     /**
@@ -126,5 +127,4 @@ public class CalendarWindow extends UiPart<Region> {
             calendar.addEntry(entry);
         }
     }
-
 }
