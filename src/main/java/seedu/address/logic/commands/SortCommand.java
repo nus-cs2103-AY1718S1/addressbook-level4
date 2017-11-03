@@ -23,8 +23,8 @@ public class SortCommand extends Command {
 
     //@@author hansiang93
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {[name/email/phone/address/tag]}";
-    //@@author
 
+    //@@author bladerail
     public static final String MESSAGE_SUCCESS = "Sorted successfully by %1$s, Listed all persons.";
 
     private String filterType;
