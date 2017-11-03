@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane prefHeight="439.0" prefWidth="556.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ScrollPane fx:id="scrollPane">
+        <content>
+            <AnchorPane fx:id="insuranceProfilePanel">
+               <children>
+                  <Label fx:id="insuranceName" layoutX="14.0" layoutY="14.0" styleClass="profile-header" text="\$insuranceName" />
+                  <HBox layoutX="28.0" layoutY="63.0" prefHeight="342.0" prefWidth="500.0" spacing="3.0">
+                     <children>
+                        <VBox prefHeight="201.0" prefWidth="131.0">
+                           <children>
+                              <Label styleClass="static-labels" text="Owner" />
+                              <Label styleClass="static-labels" text="Insured" />
+                              <Label styleClass="static-labels" text="Beneficiary" />
+                              <Label styleClass="static-labels" text="Contract File" />
+                              <Label styleClass="static-labels" text="Premium" />
+                              <Label styleClass="static-labels" text="Signing Date" />
+                              <Label styleClass="static-labels" text="Expiry Date" />
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="201.0" prefWidth="178.0">
+                           <children>
+                              <Label fx:id="owner" text="\$owner" />
+                              <Label fx:id="insured" text="\$insured" />
+                              <Label fx:id="beneficiary" text="\$beneficiary" />
+                              <Label fx:id="contractPath" text="\$contractPath" />
+                              <Label fx:id="premium" text="\$premium" />
+                              <Label fx:id="signingDate" text="\$signingDate" />
+                              <Label fx:id="expiryDate" text="\$expiryDate" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+   </children>
+</StackPane>
