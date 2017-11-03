@@ -12,15 +12,14 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.person.Bloodtype.NON_COMPULSORY_BLOODTYPE;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
 import java.util.Set;
 import java.util.stream.Stream;
 
 import com.joestelmach.natty.DateGroup;
+
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
