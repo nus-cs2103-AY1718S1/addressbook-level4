@@ -145,7 +145,7 @@ public class ParserUtilTest {
         thrown.expect(NullPointerException.class);
         ParserUtil.parseEmail(null);
     }
-
+    //@@author zhoukai07
     @Test
     public void parseEmail_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
@@ -153,12 +153,12 @@ public class ParserUtilTest {
         expectedEmail.add(INVALID_EMAIL);
         ParserUtil.parseEmail(expectedEmail);
     }
-
+    //@@author
     @Test
     public void parseEmail_optionalEmpty_returnsOptionalEmpty() throws Exception {
         assertFalse(!ParserUtil.parseEmail(Collections.emptyList()).isEmpty());
     }
-
+    //@@author zhoukai07
     @Test
     public void parseEmail_validValue_returnsEmail() throws Exception {
         ArrayList<Email> expectedEmail = new ArrayList<>();
@@ -168,7 +168,7 @@ public class ParserUtilTest {
 
         assertEquals(expectedEmail, actualEmail);
     }
-
+    //@@author
     @Test
     public void parseTags_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
