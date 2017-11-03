@@ -14,6 +14,7 @@ import seedu.address.commons.events.ui.FilteredListChangedEvent;
 import seedu.address.logic.statistics.Statistics;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author lincredibleJC
 /**
  * Statistics Panel that displays the statistics of a filteredList
  */

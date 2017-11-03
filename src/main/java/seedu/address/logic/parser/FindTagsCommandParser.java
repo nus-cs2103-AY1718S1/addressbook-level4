@@ -8,6 +8,7 @@ import seedu.address.logic.commands.FindTagsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.TagsContainsKeywordsPredicate;
 
+//@@author lincredibleJC
 /**
  * Parses input arguments and creates a new FindTagsCommand object
  */
@@ -16,6 +17,7 @@ public class FindTagsCommandParser implements Parser<FindTagsCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the FindTagsCommand
      * and returns an FindTagsCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindTagsCommand parse(String args) throws ParseException {

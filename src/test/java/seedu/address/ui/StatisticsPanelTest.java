@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.FilteredListChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author lincredibleJC
 public class StatisticsPanelTest extends GuiUnitTest {
 
     private static final ObservableList<ReadOnlyPerson> TYPICAL_PERSONS =

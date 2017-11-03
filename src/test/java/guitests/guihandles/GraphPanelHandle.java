@@ -3,6 +3,7 @@ package guitests.guihandles;
 import javafx.scene.Node;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author nahtanojmil
 /**
  * Provides a handle to the graph of a person in the person list panel.
  */

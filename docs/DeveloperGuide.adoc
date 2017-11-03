@@ -16,16 +16,22 @@ By: `CS2103AUG2017 T16-B2`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
 
-Welcome to cherBook, the Command Line made for teachers to monitor students' academic performance easily.
-cherBook's statistical analysis tools breaks down the students' grades and enables teachers to identify students in need of help.
-cherBook also provide teachers an easy way to contact their students' parents when required.
+=== Software Overview
 
-This developer guide provides future contributors and maintainers of cherBook with the information necessary for understanding the source code and contributing to the repository.
-The relevant information include cherBook's software architecture, Component APIs, documentation and contributing guidelines.
+Welcome to cherBook, the Command Line application designed to help teachers monitor students' academic performance easily.
+With our tagging system and data analysis tools, teachers can view statistics of any specific groups of students.
+This helps teachers by breaking down students' grades and identifying students who need extra attention.
+Finally, if ever the need arises, student's parent contact details can be found in just one command, making cherBook the fastest way to contact students' parents.
+
+=== About this guide
+
+This developer guide  provides future contributors and maintainers of cherBook with the necessary information to understand
+the cherBook source code and guidelines for contributing to the repository.
+Such information include cherBook's software architecture, Components and their APIs, Documentation and contributing guidelines.
 
 == Setting up
 
-Follow the instructions below to set up and configure cherBook source code on your computer.
+Follow the instructions below to set up and configure cherBook project files on your computer.
 
 === Prerequisites
 
@@ -101,6 +107,10 @@ When you are ready to start coding,
 
 == Design
 
+This section illustrates and identifies the architecture used to design and implement cherBook.
+This section contains an overall view of the system architecture and details the reasons and mechanisms behind major system components,
+their attributes and interactions between these components.
+
 === Architecture
 
 image::Architecture.png[width="600"]
@@ -161,12 +171,12 @@ The sections below give more details of each component.
 
 === UI component
 
-image::UiClassDiagram.png[width="800"]
+image::UiComponentClassDiagram.png[width="800"]
 _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `ExtendedPersonCard`, `StatisticsPanel`, `GraphPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -371,7 +381,7 @@ _Figure 3.1.7 : Activity Diagram of UndoRedoStack_
 === Sort mechanism
 The sort mechanism is implemented using SortCommand. It supports sorting of contacts names in the AddressBook according to alphabetical order from A to Z.
 
-When user calls for sorting to be implemented in cherBook, an empty ArrayList would be created. Under the Model component, UniquePersonList would compare the names of all persons in lower case using a comparator and return an Observable List containing of ReadOnlyPerson.
+When user calls for sorting to be implemented, an empty ArrayList would be created. Under the Model component, UniquePersonList would compare the names of all persons in lower case using a comparator and return an Observable List containing of ReadOnlyPerson.
 
 `SortCommand` inherits from Command.
 
@@ -393,7 +403,7 @@ The following sequence diagram shows how the sort operation works:
 image::SortSequenceDiagram.png[width="800"]
 _Figure 3.2.1 : Sequence Diagram of Sort Operation_
 
-When the user calls ‘sort’ or ‘st’ to sort the contacts in cherBook, the Model will take in an ArrayList named contactList from the Parser.
+When the user calls ‘sort’ or ‘st’ to sort the contacts, the Model will take in an ArrayList named contactList from the Parser.
 
 Upon a successful sort, contacts are displayed in alphabetical order.
 If an empty list is given, the address book will return with message: “No contacts to be sorted”.
@@ -433,7 +443,7 @@ It is implemented this way to ensure that all person names in the UniquePersonLi
 **Cons:** Since method is inherited, it is difficult to debug and the only way is via the usage of vigorous user testing and logging. +
 **Alternative 2:** Writing a sort algorithm. +
 **Pros:** Case sensitivity can be accounted for and debugging is made simpler. +
-**Cons:** More error-proned as algorithm's logic must be checked constantly to ensure it accounts for all cases.
+**Cons:** More error-proned as algorithm's logic must be checked constantly to ensure that it accounts for all cases.
 
 ---
 
@@ -446,8 +456,83 @@ It is implemented this way to ensure that all person names in the UniquePersonLi
 **Cons:**  Inefficient as compared to using an algorithm. If the user made a mistake, the change cannot be reverted as the original list of contacts is not saved. +
 // end::sort[]
 
+
+// tag::schedule[]
+=== Schedule mechanism
+The schedule mechanism is implemented using ScheduleCommand. It supports scheduling of contacts in the AddressBook for better management of time.
+
+When user calls for scheduling to be implemented, two arguments would have to be passed into the constructor.
+The two arguments are name of the person being scheduled and the Calendar date with time.
+Under the Model component, UniqueScheduleList would add the created schedule into the set of schedules.
+
+`ScheduleCommand` inherits from Command.
+
+ScheduleCommand is implemented this way:
+[source,java]
+----
+public class ScheduleCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... schedule logic ...
+    }
+}
+----
+[NOTE]
+Adding of schedules into the AddressBook can be done in natural language.
+
+The following sequence diagram shows how the sort operation works:
+
+image::ScheduleSequenceDiagram.png[width="800"]
+_Figure 3.2.1 : Sequence Diagram of Schedule Operation_
+
+When the user calls ‘schedule’ or ‘sche’ to schedule the contacts in cherBook, the Model will receive a schedule from the Parser.
+
+Upon successful scheduling, contacts are added into the set of schedules.
+If one or more arguments required to schedule a person is missing, the AddressBook will return with error messages corresponding to the missing arguments.
+If one or more arguments required to schedule a person is invalid, the AddressBook will return with error messages corresponding to the invalid arguments.
+
+The following will show how the schedule is added into the AddressBook:
+[source,java]
+----
+    /**
+     * Adds a schedule for a student's consultation
+     */
+    @Override
+    public void addSchedule(Schedule schedule) {
+        addressBook.addSchedule(schedule);
+        indicateAddressBookChanged();
+    }
+----
+It is implemented this way to ensure that all schedules are added into the AddressBook with the lowest level of abstraction.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `ScheduleCommand` +
+**Alternative 1 (current choice):** `ScheduleCommand` inherits from Command +
+**Pros:** After scheduling the contacts, the schedules remain in their order they are entered into the AddressBook. +
+**Cons:** The user is unable to sort the list of schedules according to chronological order. +
+
+---
+
+**Aspect:** How schedule executes +
+**Alternative 1 (current choice):** Adds a schedule into the schedules list once the person name and calendar date is parsed. +
+**Pros:** Easy to implement. +
+**Cons:** Vigorous user testing and logging is required to debug corner test cases. +
+
+---
+
+**Aspect:** Data structure to support the schedule command +
+**Alternative 1 (current choice):** Creates an empty Set to obtain the schedules from the UniqueScheduleList. +
+**Pros:** The original set of schedules is not altered. +
+**Cons:** Additional space usage is needed so inefficiency and memory wastage may arise. +
+**Alternative 2:** Adding a new attribute in each individual person card to hold the schedules. +
+**Pros:** The teacher would be able to identify each student respectively. +
+**Cons:** Inefficiency and time consuming because to find a schedule, the algorithm would have to iterate through all person cards to get the schedules.
+// end::schedule[]
+
+
 // tag::studentparentcontact[]
-=== Add student/parent phone contact mechanism
+=== Add Student/Parent Phone Contact mechanism
 
 The student/parent phone contact mechanism is facilitated by making changes
 to the Phone class in the model component. It enables the input
@@ -478,21 +563,23 @@ where the `PHONE_VALIDATION_REGEX` refers to:
 [source,java]
 ----
 public static final String PHONE_VALIDATION_REGEX =
-"(Student: )(\\d\\d\\d\\d\\d\\d\\d\\d)( Parent: )(\\d\\d\\d\\d\\d\\d\\d\\d)";
+"((Student: )(\d\d\d\d\d\d\d\d)( Parent: )(\d\d\d\d\d\d\d\d))|((Parent: )(\d\d\d\d\d\d\d\d))";
 ----
 The regex ensures that the string for `displayed person card phone information` adheres to the
-correct format of `Student: (STUDENT_NUMBER) Parent: (PARENT_NUMBER)`, and that the
-phone numbers must be exactly 8 digits long.
+correct format of `Student: (STUDENT_NUMBER) Parent: (PARENT_NUMBER)` or `Parent: (PARENT_NUMBER)` as it is optional to
+add the phone number of students.
+
+The phone numbers must be exactly 8 digits long.
 
 image::PhoneDisplay.png[width="400"]
-_Figure 3.3.1 : Valid Displayed Person Card Phone Information_
+_Figure 4.3.1 : Valid Displayed Person Card Phone Information_
 
 If the string format for `displayed person card phone information` is valid, the
 phone contact information of the student and his/her parent will be displayed
 below the student's name in the person card as seen in the figure above.
 
 image::message_constraint.png[width="1100"]
-_Figure 3.3.2 : Message to prompt Users to Enter Correct Phone Format_
+_Figure 4.3.2 : Message to prompt Users to Enter Correct Phone Format_
 
 If the string format for `displayed person card phone information` is invalid, an IllegalValueException
 is thrown. The user will be prompted to follow the accepted format as seen in the figure above.
@@ -530,14 +617,117 @@ public Phone(String phone) throws IllegalValueException {
 **Cons:** Inconsistent phone lengths displayed, might look very messy. +
 // end::studentparentcontact[]
 
-// tag:: Remark[]
+// tag::uniquetagcolor[]
+=== Add Unique Color Tag mechanism
+
+The unique tag mechanism is facilitated by making changes to PersonCard class in the UI component. This feature enables
+the assignment of unique colors to tags.
+
+The color generated to be assigned to tags is random and all tags with the same description will be assigned a same color.
+
+The following method receives `String tagName` (description of the tag) and returns the `String assignedColor`
+associated to the tagName.
+
+----
+public static String obtainTagColors(String tagName) {
+        if (!currentTagColors.containsKey(tagName)) {
+            do {
+                Random random = new Random();
+                final float hue = random.nextFloat();
+                final float saturation = 0.65f + random.nextFloat()
+                        * (0.90f - 0.65f);
+                final float luminance = 0.60f + random.nextFloat()
+                        * (0.90f - 0.60f);
+
+                Color color = Color.getHSBColor(hue, saturation, luminance);
+
+                Formatter hexRepresentation = new Formatter(new StringBuffer("#"));
+                hexRepresentation.format("%02X", color.getRed());
+                hexRepresentation.format("%02X", color.getGreen());
+                hexRepresentation.format("%02X", color.getBlue());
+                assignedColor = hexRepresentation.toString();
+            } while (usedColors.contains(assignedColor));
+
+            usedColors.add(assignedColor);
+            currentTagColors.put(tagName, assignedColor);
+        }
+        return currentTagColors.get(tagName);
+    }
+----
+
+The section below explains how various parts of the above code segment works.
+
+A color is determined by three factors, `hue`, `saturation` and `luminance`. The code segment shown below randomises the value of each of the three factors,
+and a random `color` are obtained as a result.
+
+----
+Random random = new Random();
+
+final float hue = random.nextFloat();
+final float saturation = 0.65f + random.nextFloat() * (0.90f - 0.65f);
+final float luminance = 0.60f + random.nextFloat() * (0.90f - 0.60f);
+
+Color color = Color.getHSBColor(hue, saturation, luminance);
+----
+
+[NOTE]
+Random range of saturation and luminance are specified to ensure that the random color generated will always mesh well with the white font of
+the tag description. This can be seen in the picture below.
+
+image::tagColorPic.png[width="400"]
+_Figure 4.4.1 : Tag color meshes well with white font of tag description_
+
+Next, in the code segment below, the `red`, `green` and `blue` components are extracted from `color`. It is then formatted into a `hexadecimal
+representation` of the color, before being converted to a String data type and assigned to `assignedColor`.
+[NOTE]
+Hexadecimal representation of the color is compatible with JavaFx.
+
+----
+Formatter hexRepresentation = new Formatter(new StringBuffer("#"));
+hexRepresentation.format("%02X", color.getRed());
+hexRepresentation.format("%02X", color.getGreen());
+hexRepresentation.format("%02X", color.getBlue());
+assignedColor = hexRepresentation.toString();
+----
+
+The `assignedColor` is added into an `ArrayList<String> usedColors`. This ensures no same colors will be assigned
+to a tag with different description in subsequent iterations by randomising a different color again should a same color is
+generated. The method will then return `assignedColor`.
+
+Lastly, in the code below, `obtainTagColors(tag.tagName)`, the hexadecimal String representation of the color, will be appended
+to the tag background color. This sets the background color of the tag to be that of the assigned color.
+----
+private void initialiseTags(ReadOnlyPerson person) {
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+
+            tagLabel.setStyle("-fx-background-color: " + obtainTagColors(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
+    }
+----
+
+==== Design Considerations
+
+Aspect: Randomness of the assigned color. +
+Alternative 1 (current choice): +
+Pros: Easy for developers to understand the mechanism of this feature. +
+Cons: User has no control over the assigning of tag colors. +
+Alternative 2: Allow user to assign the colors to the tags themselves. +
+Pros: User will have more freedom in personalising the tags. +
+Cons: The range of colors will be more limited. +
+// end::uniquetagcolor[]
+
+// tag::remark[]
 === Add/Remove a remark mechanism
 The remark mechanism is facilitated by making changes to the Remark class in the model component. It enables the user to add or remove a single remark of the student.
 
-To avoid confusion and an overly complicated UI, only one remark per person is stored.
+To avoid confusion and an overly complicated UI, only one `remark` per person is stored.
 
-image::PersonCardDifference (Remark).PNG[width="350"]
-_Figure 3.4.1 : One Remark per Person Card_
+The following sequence diagram shows how the `remark` operation works:
+
+image::RemarkSequenceDiagramForLogic.PNG[width="350"]
+_Figure 3.4.1 : Sequence Diagram of Remark Operation_
 
 `Remark` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
@@ -574,28 +764,17 @@ public class DeleteCommand extends UndoableCommand {
     }
 }
 ----
-When the user adds a new person to the address book, the person's remark field will be denoted by "(add a remark)". Users are then able to add a single remark.
+When the user adds a new `person` to the address book, the person's `remark` field will be denoted by `(add a remark)`. Users are then able to add a single `remark`.
 
 [NOTE]
-If user tries to add remark together with adding a new 'Person', it will display as invalid as the 'addCommand' does not allow the addition of remarks other then through the use of using the 'Remark' command.
-
-Below are examples of trying to change remark through:
-
-image::AddPersonInvalid(Remark).PNG[width="600"]
-_Figure 3.4.3 : Invalid Remark Input in Add Command_
-
-When a user attempts to add a remark via the add command, he will be prompted by a message stating
-that adding of remarks in add command is not allowed.
-
-image::EditPersonInvalid (Remark).PNG[width="600"]
-_Figure 3.4.4 : Invalid Remark Input in Edit Command_
-
-When a user attempts to edit the remark via the edit command, he will be prompted by a message stating
-that changing of remarks in edit command is not allowed.
+If user tries to add `remark` together with adding a new `Person`, it will display as invalid as the `addCommand` does not allow the addition of remarks other then through the use of using the `Remark` command.
 
 [NOTE]
-Only one remark is saved at any one time, if user does 'Remark' on the same person, it will be overwritten.
-//add pic
+When a user attempts to `add`/`edit` a remark via the `add`/`edit` command, he will be prompted by a message stating
+that adding of remarks in `add`/`edit` command is not allowed.
+
+[NOTE]
+Only one `remark` is saved at any one time, if user does `Remark` on the same person, it will be overwritten.
 
 ==== Design Considerations
 **Aspect:** Implementation of `UndoableCommand` +
@@ -608,7 +787,7 @@ Only one remark is saved at any one time, if user does 'Remark' on the same pers
 
 ---
 
-**Aspect** Implementation of 'Remark' field. +
+**Aspect** Implementation of `Remark` field. +
 **Alternative 1 (current choice):** Add a field in person as well as making it a command. +
 **Pros:** Able to easily change context of the field without much hassle. +
 **Cons:** Harder to debug as it is both a field and a command. +
@@ -617,11 +796,43 @@ Only one remark is saved at any one time, if user does 'Remark' on the same pers
 **Cons:** Much harder and longer to implement a feature to solely change the remarks.
 
 ---
+// end::remark[]
 
-//end:: Remark[]
+//tag::linechart[]
+=== LineChart Mechanism
 
-// tag::findtagsmechanism[]
-=== FindTags Mechanism
+`LineChart` mechanism is implemented using `javaFX`. It takes in `FilteredPersonList` and plots a graph based on those who are in the same `formClass`. +
+Using `XYChart.series` to store the data of the persons name and grade, a `coordinate` is created and a `line` is drawn connecting all the `coordinates`. +
+These coordinates are sorted in ascending order so that the user is able to identify those in the lower quartile.
+
+The `LineChart` mechanism is implemented this way:
+
+----
+
+for (ReadOnlyPerson people : people) {
+            if (people.getFormClass().equals(person.getFormClass())) {
+                series.getData().add(new XYChart.Data<>(people.getName().toString(),
+                        Double.parseDouble(people.getGrades().toString())));
+            }
+        }
+            series.getData().sort(Comparator.comparingDouble(d -> d.getYValue()));
+       //...other logic...
+----
+
+==== Alternatives Considered
+**Aspect:** What graph to be displayed to show the most effective visual aid +
+**Alternative 1 (current choice):** Do a `lineChart` using XYChart.series. +
+**Pros:** Easier to implement. +
+**Cons:** May not be the most appropriate way to display grades of students.  +
+**Alternative 2:** Create a bell curve to display the grades of students. +
+**Pros:** A better representation of the student grades and it is easier to interpret. +
+**Cons:** Much harder to plot a graph based on statistics then raw data.
+
+---
+//end::linechart[]
+
+// tag::findtags[]
+=== FindTags mechanism
 
 The FindTags mechanism is implemented using FindTagsCommand.
 It supports searching for persons whose tags contains at least all the tags input by the user.
@@ -694,7 +905,7 @@ _Figure 3.5.1 : Sequence Diagram of FindTags Operation_
 **Alternative 2:** Create `TagsContainsKeywordsPredicate` as an inner class in `FindTagsCommand` class. +
 **Pros:** It makes the codebase less complex as there are less classes. +
 **Cons:** It adds complexity to the `FindTagsCommand` source file and reduces reusability of the predicate outside of the `FindTagsCommand` +
-// tag::findtagsmechanism[]
+// end::findtags[]
 
 === Logging
 
@@ -747,6 +958,11 @@ _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
+Having integrated unit tests that cover your API's behaviour is important.
+It helps you verify the correctness, functional behaviour and usability of cherBook the app before you release it publicly.
+This section details the different types of tests cherBook uses and how to run them.
+Additionally, the troubleshooting section details the errors you might face while testing cherBook and different ways to solve them.
+
 === Running Tests
 
 There are three ways to run tests.
@@ -796,6 +1012,8 @@ e.g. `seedu.address.logic.LogicManagerTest`
  inserting the line `gradlew processResources`.
 
 == Dev Ops
+
+This section teaches you about tools building and provides you with instructions on how to test and release apps faster and	more efficiently.
 
 === Build Automation
 
@@ -1095,13 +1313,23 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |teacher |have contact information of students and parents|contact either of them
 
-|`* * *` |busy teacher |auto tag students according to their grades|get a quick overview of their progress [Coming in v2.0]
-
-|`* * *` |concerned teacher |display statistics for the current group of students in the list|analyse the individual groups' academic progress
+|`* * *` |concerned teacher |display statistics for different group of students with the same tags|analyse and track their academic progress easily
 
 |`* * *` |precise teacher |find out the 25th, 50th and 75th percentile scores for each class|get a better idea of students' academic progress
 
 |`* * *` |precise teacher |compare the grades statistics between any two groups of students|make a quick comparison [Coming in v2.0]
+
+|`* *` |teacher |schedule my timetable according to my classes|plan my timetable to fit other activities
+
+|`* *` |caring teacher |schedule appointments with my students|conduct extra classes when they ask for it
+
+|`* *` |user |have different colours of the tags for different tag names |can differentiate different groups easily
+
+|`* *` |forgetful user |see a history of my last used commands|
+
+|`* *` |expert user |have shorthand commands |so that I can search for contacts faster
+
+|`* *` |user |redo an action |redo an undone action
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident [Coming in v2.0]
 
@@ -1119,11 +1347,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |lazy user |addressBook to auto delete contacts after a certain date | [Coming in v2.0]
 
-|`* *` |user |redo an action |redo an undone action
-
 |`* *` |expert user |have separate address books |can separate my work and personal contacts [Coming in v2.0]
-
-|`* *` |expert user |customise shorthand commands |so that I can search for contacts faster
 
 |`* *` |user |a calendar to sync my events |can plan them more efficiently [Coming in v2.0]
 
@@ -1133,23 +1357,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |password protect my addressBook |protect my contacts' information [Coming in v2.0]
 
-|`* *` |forgetful user |see a history of my last used commands|
-
 |`* *` |caring teacher| help students find suitable study buddies|motivate and aid them in their academic progress [Coming in v2.0]
 
 |`* *` |caring teacher |be able to see my students' home location in extended screen using google maps|conduct house visits easily if they fall sick [Coming in v2.0]
 
-|`* *` |caring teacher |schedule appointments with my students|conduct extra classes when they ask for it
+|`*` |busy teacher |auto tag students according to their grades|get a quick overview of their progress [Coming in v2.0]
 
 |`*` |user |add profile pictures to contacts |find my friends easily [Coming in v2.0]
-
-|`*` |user |have different colours of the tags for different tag names |can view the tags easily
 
 |`*` |user |use facial recognition |enhance security [Coming in v2.0]
 
 |`*` |user |call/message directly from my address book |reach them easily [Coming in v2.0]
-
-|`*` |teacher |schedule my timetable according to my classes|plan my timetable to fit other activities
 
 |`*` |thoughtful teacher |remind students about homework assignments| [Coming in v2.0]
 |=======================================================================
