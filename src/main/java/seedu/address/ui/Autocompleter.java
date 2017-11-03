@@ -71,6 +71,10 @@ public class Autocompleter {
             return textInCommandBox.substring(0, textInCommandBox.length() - 2)
                     + possibleAutocompleteResults.get(cycleIndex());
 
+        case COMMAND_COMPLETE_PREFIX:
+            clearResultsWindow();
+            return textInCommandBox + "/";
+
         case INDEX:
             clearResultsWindow();
             String[] temp = textInCommandBox.split(" ");
@@ -150,11 +154,19 @@ public class Autocompleter {
         }
 
         if (AutocompleteCommand.hasPrefixParameter(commandWord)) {
+
+            if (lastCharIsStartOfPrefix(commandBoxText)) {
+                System.out.println(lastCharIsStartOfPrefix(commandBoxText));
+                state = AutocompleteState.COMMAND_COMPLETE_PREFIX;
+                return;
+            }
+
             if (lastTwoCharactersArePrefix(commandBoxText)) {
                 resetIndexIfNeeded();
                 state = AutocompleteState.COMMAND_CYCLE_PREFIX;
                 return;
             }
+
             possibleAutocompleteResults = getMissingPrefixes(arguments);
             state = AutocompleteState.COMMAND_NEXT_PREFIX;
         }
@@ -234,6 +246,16 @@ public class Autocompleter {
             state = AutocompleteState.MULTIPLE_COMMAND;
             break;
         }
+    }
+
+    private boolean lastCharIsStartOfPrefix(String commandBoxText) {
+        if (commandBoxText.length() < 1) {
+            return false;
+        }
+        String lastCharacter = commandBoxText.substring(commandBoxText.length() - 1);
+        return Arrays.stream(AutocompleteCommand.ALL_PREFIXES)
+                .map(s -> s.toString().substring(0, 1))
+                .anyMatch(s -> s.equals(lastCharacter));
     }
 
     /**
