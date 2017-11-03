@@ -34,9 +34,9 @@ public class FindCommandTest {
     @Test
     public void equals() {
         PersonHasKeywordsPredicate firstPredicate =
-                new PersonHasKeywordsPredicate(Collections.singletonList("first"));
+                new PersonHasKeywordsPredicate(Collections.singletonList("first"), false);
         PersonHasKeywordsPredicate secondPredicate =
-                new PersonHasKeywordsPredicate(Collections.singletonList("second"));
+                new PersonHasKeywordsPredicate(Collections.singletonList("second"), false);
 
         FindCommand findFirstCommand = new FindCommand(firstPredicate);
         FindCommand findSecondCommand = new FindCommand(secondPredicate);
@@ -77,7 +77,7 @@ public class FindCommandTest {
      */
     private FindCommand prepareCommand(String userInput) {
         FindCommand command =
-                new FindCommand(new PersonHasKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+                new FindCommand(new PersonHasKeywordsPredicate(Arrays.asList(userInput.split("\\s+")), false));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

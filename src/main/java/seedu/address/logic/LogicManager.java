@@ -20,6 +20,7 @@ import seedu.address.logic.parser.person.AddCommandParser;
 import seedu.address.logic.parser.person.DeleteCommandParser;
 import seedu.address.logic.parser.person.EditCommandParser;
 import seedu.address.logic.parser.person.FindCommandParser;
+import seedu.address.logic.parser.person.FindPinnedCommandParser;
 import seedu.address.logic.parser.person.HideCommandParser;
 import seedu.address.logic.parser.person.PinCommandParser;
 import seedu.address.logic.parser.person.RemarkCommandParser;
@@ -92,6 +93,7 @@ public class LogicManager extends ComponentManager implements Logic {
         addressBookParser.registerCommandParser(new SelectCommandParser());
         addressBookParser.registerCommandParser(new PinCommandParser());
         addressBookParser.registerCommandParser(new UnpinCommandParser());
+        addressBookParser.registerCommandParser(new FindPinnedCommandParser());
         addressBookParser.registerCommandParser(new AddTaskCommandParser());
         addressBookParser.registerCommandParser(new DeleteTaskCommandParser());
         addressBookParser.registerCommandParser(new FindTaskCommandParser());
