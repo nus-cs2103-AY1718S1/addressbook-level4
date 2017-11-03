@@ -400,7 +400,7 @@ Changes the addressbook theme to *Caspian* theme. +
 `theme 1` +
 Changes the addressbook theme to theme `INDEX` of one, which is default *DarkTheme*.
 
-=== Remarking a person : `remark`
+==== Remarking a person with `remark` command
 
 Edits the remark for a person specified in the INDEX. +
 Format: `remark INDEX r/[REMARK]`
@@ -453,9 +453,9 @@ Add new persons from newAddressBook into local addressbook. +
 Add new persons from addressbook2 from local project +
 folder *data* into local addressbook.
 
-=== Remarking a person : `remark`
+==== Add a remark in `add` command
 
-Edits the remark for a person specified in the INDEX. +
+Add remark to a person in `add` command with `r/` prefix. +
 Format: `add n/NAME p/PHONE_NUMBER b/BIRTHDAY e/EMAIL a/ADDRESS r/[REMARK] [t/TAG]...`
 
 ****
