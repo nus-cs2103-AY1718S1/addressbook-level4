@@ -9,7 +9,6 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class QrEvent extends BaseEvent {
     private ReadOnlyPerson person;
-     
     public QrEvent(ReadOnlyPerson person) {
         this.person = person;
     }
@@ -18,7 +17,6 @@ public class QrEvent extends BaseEvent {
     public String toString() {
         return this.getClass().getSimpleName();
     }
-    
     public ReadOnlyPerson getPerson() {
         return person;
     }

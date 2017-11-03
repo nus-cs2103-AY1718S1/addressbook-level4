@@ -8,7 +8,6 @@ import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.QrEvent;
 import seedu.address.logic.commands.LoggingCommand;
@@ -49,7 +48,6 @@ public class QrButton extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.person = event.getNewSelection().person;
     }
-    
     @Subscribe
     private void clickButton(QrEvent event ) {
         bp.loadQrCode((ReadOnlyPerson) event.getPerson());
