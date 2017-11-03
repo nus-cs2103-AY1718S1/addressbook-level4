@@ -103,7 +103,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
      * browser url and selected card will be verified if the current selected card and the card at
      * {@code expectedSelectedCardIndex} are different.
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
+     * @see AddressBookSystemTest#assertSelectedCardChanged()
      */
     private void assertCommandSuccess(String command, Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
@@ -117,7 +117,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         if (preExecutionSelectedCardIndex == expectedSelectedCardIndex.getZeroBased()) {
             assertSelectedCardUnchanged();
         } else {
-            assertSelectedCardChanged(expectedSelectedCardIndex);
+            assertSelectedCardChanged();
         }
 
         assertCommandBoxShowsDefaultStyle();
