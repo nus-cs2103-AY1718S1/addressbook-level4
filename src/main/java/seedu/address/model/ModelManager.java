@@ -31,6 +31,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<Meeting> filteredMeeting;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -43,6 +44,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredMeeting = new FilteredList<>(this.addressBook.getMeetingList());
     }
 
     public ModelManager() {
@@ -75,6 +77,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
         indicateAddressBookChanged();
     }
 
@@ -118,7 +121,14 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public void sortMeeting() {
+        addressBook.sortMeeting();
+        updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
+    }
+
     //@@author
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -143,9 +153,27 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //=========== Filtered Meeting List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Meeting} backed by the internal list of
+     * {@code addressBook}
+     */
     @Override
     public ObservableList<Meeting> getFilteredMeetingList() {
-        return addressBook.getMeetingList();
+        sortMeeting();
+        return FXCollections.unmodifiableObservableList(filteredMeeting);
+    }
+
+    @Override
+    public Predicate<? super Meeting> getMeetingListPredicate() {
+        return filteredMeeting.getPredicate();
+    }
+
+    @Override
+    public void updateFilteredMeetingList(Predicate<Meeting> predicate) {
+        requireNonNull(predicate);
+        filteredMeeting.setPredicate(predicate);
     }
 
     @Override
