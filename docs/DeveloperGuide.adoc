@@ -18,19 +18,20 @@ By: `CS2103AUG2017 T16-B2`      Since: `Sep 2017`      Licence: `MIT`
 
 === Software Overview
 
-Welcome to cherBook, the Command Line made for teachers to monitor students' academic performance easily.
-cherBook's statistical analysis tools breaks down the students' grades and enables teachers to identify students in need of help.
-cherBook also provide teachers an easy way to contact their students' parents when required.
+Welcome to cherBook, the Command Line application designed to help teachers monitor students' academic performance easily.
+With our tagging system and data analysis tools, teachers can view statistics of any specific groups of students.
+This helps teachers by breaking down students' grades and identifying students who need extra attention.
+Finally, if ever the need arises, student's parent contact details can be found in just one command, making cherBook the fastest way to contact students' parents.
 
 === About this guide
 
-This developer guide provides future contributors and maintainers of cherBook with the necessary information for understanding
+This developer guide  provides future contributors and maintainers of cherBook with the necessary information to understand
 the cherBook source code and guidelines for contributing to the repository.
-Such information includes cherBook's software architecture, Components and their APIs, documentation and contributing guidelines.
+Such information include cherBook's software architecture, Components and their APIs, Documentation and contributing guidelines.
 
 == Setting up
 
-Follow the instructions below to set up and configure cherBook source code on your computer.
+Follow the instructions below to set up and configure cherBook project files on your computer.
 
 === Prerequisites
 
@@ -105,6 +106,10 @@ When you are ready to start coding,
 2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
 == Design
+
+This section illustrates and identifies the architecture used to design and implement cherBook.
+This section contains an overall view of the system architecture and details the reasons and mechanisms behind major system components,
+their attributes and interactions between these components.
 
 === Architecture
 
@@ -927,6 +932,11 @@ _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
+Having integrated unit tests that cover your API's behaviour is important.
+It helps you verify the correctness, functional behaviour and usability of cherBook the app before you release it publicly.
+This section details the different types of tests cherBook uses and how to run them.
+Additionally, the troubleshooting section details the errors you might face while testing cherBook and different ways to solve them.
+
 === Running Tests
 
 There are three ways to run tests.
@@ -976,6 +986,8 @@ e.g. `seedu.address.logic.LogicManagerTest`
  inserting the line `gradlew processResources`.
 
 == Dev Ops
+
+This section teaches you about tools building and provides you with instructions on how to test and release apps faster and	more efficiently.
 
 === Build Automation
 
