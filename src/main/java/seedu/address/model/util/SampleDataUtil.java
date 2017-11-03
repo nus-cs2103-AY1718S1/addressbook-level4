@@ -60,6 +60,7 @@ public class SampleDataUtil {
         }
     }
 
+    //@@author Xenonym
     /**
      * Returns a mapping of tags to colours.
      */
@@ -76,6 +77,7 @@ public class SampleDataUtil {
 
         return sampleTagColours;
     }
+    //@@author
 
     /**
      * Returns a tag set containing the list of strings given.

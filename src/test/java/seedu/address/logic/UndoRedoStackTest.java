@@ -140,6 +140,7 @@ public class UndoRedoStackTest {
                 Collections.emptyList());
     }
 
+    //@@author Xenonym
     @Test
     public void clear() {
         undoRedoStack = prepareStack(Collections.singletonList(dummyUndoableCommandOne),
@@ -148,6 +149,7 @@ public class UndoRedoStackTest {
         assertFalse(undoRedoStack.canUndo());
         assertFalse(undoRedoStack.canRedo());
     }
+    //@@author
 
     @Test
     public void equals() {
