@@ -403,7 +403,7 @@ The following sequence diagram shows how the sort operation works:
 image::SortSequenceDiagram.png[width="800"]
 _Figure 3.2.1 : Sequence Diagram of Sort Operation_
 
-When the user calls ‘sort’ or ‘st’ to sort the contacts in cherBook, the Model will take in an ArrayList named contactList from the Parser.
+When the user calls ‘sort’ or ‘st’ to sort the contacts, the Model will take in an ArrayList named contactList from the Parser.
 
 Upon a successful sort, contacts are displayed in alphabetical order.
 If an empty list is given, the address book will return with message: “No contacts to be sorted”.
@@ -443,7 +443,7 @@ It is implemented this way to ensure that all person names in the UniquePersonLi
 **Cons:** Since method is inherited, it is difficult to debug and the only way is via the usage of vigorous user testing and logging. +
 **Alternative 2:** Writing a sort algorithm. +
 **Pros:** Case sensitivity can be accounted for and debugging is made simpler. +
-**Cons:** More error-proned as algorithm's logic must be checked constantly to ensure it accounts for all cases.
+**Cons:** More error-proned as algorithm's logic must be checked constantly to ensure that it accounts for all cases.
 
 ---
 
@@ -525,11 +525,14 @@ It is implemented this way to ensure that all schedules are added into the Addre
 **Alternative 1 (current choice):** Creates an empty Set to obtain the schedules from the UniqueScheduleList. +
 **Pros:** The original set of schedules is not altered. +
 **Cons:** Additional space usage is needed so inefficiency and memory wastage may arise. +
+**Alternative 2:** Adding a new attribute in each individual person card to hold the schedules. +
+**Pros:** The teacher would be able to identify each student respectively. +
+**Cons:** Inefficiency and time consuming because to find a schedule, the algorithm would have to iterate through all person cards to get the schedules.
 // end::schedule[]
 
 
 // tag::studentparentcontact[]
-=== Add Student/Parent Phone Contact Mechanism
+=== Add Student/Parent Phone Contact mechanism
 
 The student/parent phone contact mechanism is facilitated by making changes
 to the Phone class in the model component. It enables the input
@@ -615,7 +618,7 @@ public Phone(String phone) throws IllegalValueException {
 // end::studentparentcontact[]
 
 // tag::uniquetagcolor[]
-=== Add Unique Color Tag Mechanism
+=== Add Unique Color Tag mechanism
 
 The unique tag mechanism is facilitated by making changes to PersonCard class in the UI component. This feature enables
 the assignment of unique colors to tags.
@@ -806,7 +809,7 @@ Only one remark is saved at any one time, if user does 'Remark' on the same pers
 
 
 // tag::findtags[]
-=== FindTags Mechanism
+=== FindTags mechanism
 
 The FindTags mechanism is implemented using FindTagsCommand.
 It supports searching for persons whose tags contains at least all the tags input by the user.
