@@ -2,7 +2,10 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
+import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 
 //@@author jelneo
@@ -10,15 +13,18 @@ import seedu.address.commons.core.LogsCenter;
  * The Start Up Panel will be loaded in place of the Browser Panel
  */
 public class StartUpPanel extends UiPart<Region> {
-
     private static final String FXML = "StartUpPanel.fxml";
+
+    @FXML
+    private ImageView welcome;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
 
-    public StartUpPanel() {
+    public StartUpPanel(Stage stage) {
         super(FXML);
-        logger.info("Loading start up panel...");
+        logger.info("Loading welcome page...");
+        welcome.fitWidthProperty().bind(stage.widthProperty());
     }
 
 }

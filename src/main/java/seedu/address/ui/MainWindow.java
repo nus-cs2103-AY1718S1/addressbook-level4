@@ -151,7 +151,7 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerPartsForStartUp() {
         Platform.runLater(() -> {
-            startUpPanel = new StartUpPanel();
+            startUpPanel = new StartUpPanel(primaryStage);
             infoPanelPlaceholder.getChildren().clear();
             infoPanelPlaceholder.getChildren().add(startUpPanel.getRoot());
 
