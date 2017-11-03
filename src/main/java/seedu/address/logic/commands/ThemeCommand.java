@@ -7,7 +7,6 @@ import static seedu.address.model.ThemeUnit.setCurrentThemeUnit;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.SwitchThemeRequestEvent;
-import seedu.address.logic.commands.exceptions.CommandException;
 
 //@@author cctdaniel
 /**
@@ -25,6 +24,11 @@ public class ThemeCommand extends Command {
 
     public static final String SWITCH_THEME_SUCCESS_MESSAGE = "Switched theme to ";
     public static final String SWITCH_THEME_FAILURE_MESSAGE = "Please choose a different theme from the current one. ";
+
+    public static final String LIGHT_THEME_CSS_FILE_NAME = "view/LightTheme.css";
+    public static final String LIGHT_THEME_EXTENSIONS_CSS_FILE_NAME = "view/LightExtensions.css";
+    public static final String DARK_THEME_CSS_FILE_NAME = "view/DarkTheme.css";
+    public static final String DARK_THEME_EXTENSIONS_CSS_FILE_NAME = "view/DarkExtensions.css";
 
 
     private boolean isLight = true;

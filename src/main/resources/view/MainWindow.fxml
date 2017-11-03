@@ -33,7 +33,7 @@
                   <opaqueInsets>
                      <Insets />
                   </opaqueInsets></StackPane>
-              <StackPane fx:id="resultDisplayPlaceholder" maxHeight="133.0" minHeight="133.0" prefHeight="133.0" styleClass="pane-with-border" stylesheets="@LightTheme.css" VBox.vgrow="NEVER">
+              <StackPane fx:id="resultDisplayPlaceholder" maxHeight="133.0" minHeight="133.0" prefHeight="133.0" styleClass="pane-with-border" VBox.vgrow="NEVER">
                   <VBox.margin>
                      <Insets />
                   </VBox.margin></StackPane>

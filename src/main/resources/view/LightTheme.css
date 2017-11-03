@@ -449,7 +449,7 @@
 
 #lessonNode {
     -fx-font-family: monospace;
-    -fx-font-size: large;
+    -fx-font-size: x-large;
     -fx-font-weight: bolder;
     -fx-control-inner-background: #6B4A40;
     -fx-text-fill: derive(#d4cbb3, 50%);
@@ -459,7 +459,7 @@
 #stickyNote {
     -fx-background-color: transparent;
     -fx-padding:5px 5px 5px;
-    -fx-font:20px 'Gloria Hallelujah', cursive;
+    -fx-font:20px monospace;
     -fx-line-height:1.5;
 }
 
@@ -474,5 +474,9 @@
 
 #stickyNote .scroll-pane .content{
     -fx-background-color: transparent;
+}
+
+#header {
+    -fx-font-size: 20px;
 }
 

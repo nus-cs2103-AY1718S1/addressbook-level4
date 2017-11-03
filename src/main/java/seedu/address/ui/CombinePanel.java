@@ -44,6 +44,7 @@ public class CombinePanel extends UiPart<Region> {
     private static final String FXML = "CombinePanel.fxml";
     private static final String LESSON_NODE_ID = "lessonNode";
     private static final String STICKY_NOTE = "stickyNote";
+    private static final String HEADER = "header";
     private static final int ROW = 6;
     private static final int COL = 13;
     private static final int START_TIME = 8;
@@ -136,6 +137,7 @@ public class CombinePanel extends UiPart<Region> {
             }
             text += "00";
             Label header = new Label(text);
+            header.setId(HEADER);
             timetableGrid.setHalignment(header, HPos.CENTER);
             timetableGrid.add(header, i, 0);
             k++;
@@ -150,6 +152,7 @@ public class CombinePanel extends UiPart<Region> {
         for (int i = 1; i < ROW; i++) {
             String dayOfWeek = DayOfWeek.of(i).toString();
             Label label = new Label(dayOfWeek);
+            label.setId(HEADER);
             timetableGrid.setValignment(label, VPos.CENTER);
             timetableGrid.setHalignment(label, HPos.CENTER);
             timetableGrid.add(label, 0, i);
@@ -194,7 +197,6 @@ public class CombinePanel extends UiPart<Region> {
         generateTimeTableData();
         generateTimeslotHeader();
         generateWeekDay();
-
 
         for (int i = 0; i < ROW; i++) {
             for (int j = 0; j < COL; j++) {
