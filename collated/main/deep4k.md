@@ -215,7 +215,7 @@ public class EnablePersonCommand extends Command {
     @Override
     public CommandResult execute() {
         EventsCenter.getInstance().post(new ModelToggleEvent(ModelToggleEvent.Toggle.personEnabled));
-        EventsCenter.getInstance().post(new ToggleToPersonViewEvent());
+        EventsCenter.getInstance().post(new ToggleToAllPersonViewEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
@@ -870,6 +870,7 @@ public class UnmarkTaskCommand extends UndoableCommand {
         addressBookParser.registerCommandParser(new SelectCommandParser());
         addressBookParser.registerCommandParser(new PinCommandParser());
         addressBookParser.registerCommandParser(new UnpinCommandParser());
+        addressBookParser.registerCommandParser(new FindPinnedCommandParser());
         addressBookParser.registerCommandParser(new AddTaskCommandParser());
         addressBookParser.registerCommandParser(new DeleteTaskCommandParser());
         addressBookParser.registerCommandParser(new FindTaskCommandParser());
@@ -990,6 +991,7 @@ public class UnmarkTaskCommand extends UndoableCommand {
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
+
 /**
  * Parses user input.
  */
@@ -1107,6 +1109,13 @@ public class AddressBookParser {
                 return new FindCommandParser().parse(checkedArguments);
             } else {
                 return new FindTaskCommandParser().parse(checkedArguments);
+            }
+
+        case FindPinnedCommand.COMMAND_WORD:
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new FindPinnedCommandParser().parse(checkedArguments);
+            } else {
+                throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
             }
 
         case RemarkCommand.COMMAND_WORD:

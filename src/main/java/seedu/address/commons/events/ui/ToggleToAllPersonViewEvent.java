@@ -7,7 +7,7 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * An event requesting to toggle the view to PersonPanel.
  */
-public class ToggleToPersonViewEvent extends BaseEvent {
+public class ToggleToAllPersonViewEvent extends BaseEvent {
 
     @Override
     public String toString() {

@@ -27,8 +27,9 @@ import seedu.address.commons.events.ui.SwitchToBrowserEvent;
 import seedu.address.commons.events.ui.ToggleListAllStyleEvent;
 import seedu.address.commons.events.ui.ToggleListPinStyleEvent;
 import seedu.address.commons.events.ui.ToggleSortByLabelEvent;
-import seedu.address.commons.events.ui.ToggleToPersonViewEvent;
+import seedu.address.commons.events.ui.ToggleToAllPersonViewEvent;
 import seedu.address.commons.events.ui.ToggleToTaskViewEvent;
+import seedu.address.commons.events.ui.UpdatePinnedPanelEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -43,6 +44,8 @@ public class MainWindow extends UiPart<Region> {
 
     private static final String ICON = "/images/blue_bird_logo.png";
     private static final String FXML = "MainWindow.fxml";
+    private static final String DIM_LABEL = "-fx-text-fill: #555555";
+    private static final String BRIGHT_LABEL = "-fx-text-fill: white";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
     private String lastSorted = "Name";
@@ -382,13 +385,27 @@ public class MainWindow extends UiPart<Region> {
 
     @Subscribe
     private void handleToggleToTaskViewEvent(ToggleToTaskViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchToTaskView();
     }
 
 
     @Subscribe
-    private void handleToggleToPersonViewEvent(ToggleToPersonViewEvent event) {
+    private void handleToggleToAllPersonViewEvent(ToggleToAllPersonViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchToPersonView();
+    }
+
+    @Subscribe
+    private void handleUpdatePinnedPanelEvent(UpdatePinnedPanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (pinLabel.getStyle().equals(BRIGHT_LABEL)) {
+            try {
+                logic.execute("listpin");
+            } catch (CommandException | ParseException e) {
+                logger.warning("Unable to list pin when unpinning");
+            }
+        }
     }
 
     /**
@@ -400,8 +417,8 @@ public class MainWindow extends UiPart<Region> {
         allLabel.setVisible(true);
         pinLabel.setVisible(true);
         organizerLabel.setText("Sorted By:");
-        personViewLabel.setStyle("-fx-text-fill: white");
-        taskViewLabel.setStyle("-fx-text-fill: #555555");
+        personViewLabel.setStyle(BRIGHT_LABEL);
+        taskViewLabel.setStyle(DIM_LABEL);
         sortedByLabel.setText(lastSorted);
     }
 
@@ -414,8 +431,8 @@ public class MainWindow extends UiPart<Region> {
         allLabel.setVisible(false);
         pinLabel.setVisible(false);
         organizerLabel.setText("Showing:");
-        personViewLabel.setStyle("-fx-text-fill: #555555");
-        taskViewLabel.setStyle("-fx-text-fill: white");
+        personViewLabel.setStyle(DIM_LABEL);
+        taskViewLabel.setStyle(BRIGHT_LABEL);
         lastSorted = sortedByLabel.getText();
         sortedByLabel.setText("All");
     }
@@ -455,12 +472,12 @@ public class MainWindow extends UiPart<Region> {
     }
 
     private void listAllToggleStyle() {
-        pinLabel.setStyle("-fx-text-fill: #555555");
-        allLabel.setStyle("-fx-text-fill: white");
+        pinLabel.setStyle(DIM_LABEL);
+        allLabel.setStyle(BRIGHT_LABEL);
     }
 
     private void listPinToggleStyle() {
-        pinLabel.setStyle("-fx-text-fill: white");
-        allLabel.setStyle("-fx-text-fill: #555555");
+        pinLabel.setStyle(BRIGHT_LABEL);
+        allLabel.setStyle(DIM_LABEL);
     }
 }

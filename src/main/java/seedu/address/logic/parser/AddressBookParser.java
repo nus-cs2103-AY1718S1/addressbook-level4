@@ -26,6 +26,7 @@ import seedu.address.logic.commands.person.AddCommand;
 import seedu.address.logic.commands.person.DeleteCommand;
 import seedu.address.logic.commands.person.EditCommand;
 import seedu.address.logic.commands.person.FindCommand;
+import seedu.address.logic.commands.person.FindPinnedCommand;
 import seedu.address.logic.commands.person.HideCommand;
 import seedu.address.logic.commands.person.ListCommand;
 import seedu.address.logic.commands.person.ListPinCommand;
@@ -46,6 +47,7 @@ import seedu.address.logic.parser.person.AddCommandParser;
 import seedu.address.logic.parser.person.DeleteCommandParser;
 import seedu.address.logic.parser.person.EditCommandParser;
 import seedu.address.logic.parser.person.FindCommandParser;
+import seedu.address.logic.parser.person.FindPinnedCommandParser;
 import seedu.address.logic.parser.person.HideCommandParser;
 import seedu.address.logic.parser.person.PinCommandParser;
 import seedu.address.logic.parser.person.RemarkCommandParser;
@@ -62,6 +64,7 @@ import seedu.address.logic.parser.task.UnmarkTaskCommandParser;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 
 //@@author deep4k
+
 /**
  * Parses user input.
  */
@@ -179,6 +182,13 @@ public class AddressBookParser {
                 return new FindCommandParser().parse(checkedArguments);
             } else {
                 return new FindTaskCommandParser().parse(checkedArguments);
+            }
+
+        case FindPinnedCommand.COMMAND_WORD:
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new FindPinnedCommandParser().parse(checkedArguments);
+            } else {
+                throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
             }
 
         case RemarkCommand.COMMAND_WORD:

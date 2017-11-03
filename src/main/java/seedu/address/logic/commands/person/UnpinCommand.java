@@ -2,12 +2,13 @@ package seedu.address.logic.commands.person;
 
 import java.util.List;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.UpdatePinnedPanelEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.PersonIsPinnedPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 //@@author Alim95
@@ -36,13 +37,13 @@ public class UnpinCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
-        List<ReadOnlyPerson> pinnedList = model.getFilteredPersonList();
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        if (targetIndex.getZeroBased() >= pinnedList.size()) {
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToUnpin = pinnedList.get(targetIndex.getZeroBased());
+        ReadOnlyPerson personToUnpin = lastShownList.get(targetIndex.getZeroBased());
 
         if (!personToUnpin.isPinned()) {
             throw new CommandException(Messages.MESSAGE_PERSON_ALREADY_UNPINNED);
@@ -50,17 +51,11 @@ public class UnpinCommand extends Command {
 
         try {
             model.unpinPerson(personToUnpin);
-            updatePinnedPanel();
+            EventsCenter.getInstance().post(new UpdatePinnedPanelEvent());
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
         return new CommandResult(String.format(MESSAGE_UNPIN_PERSON_SUCCESS, personToUnpin));
-    }
-
-    private void updatePinnedPanel() {
-        if (model.getFilteredPersonList().size() < model.getAddressBook().getPersonList().size()) {
-            model.updateFilteredPersonList(new PersonIsPinnedPredicate());
-        }
     }
 
     @Override

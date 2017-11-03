@@ -22,7 +22,7 @@ public class SortFindPanelTest extends GuiUnitTest {
     public void setUp() {
         Model model = new ModelManager();
         Logic logic = new LogicManager(model);
-        sortFindPanel = new SortFindPanel(logic);
+        sortFindPanel = new SortFindPanel(logic, );
         uiPartRule.setUiPart(sortFindPanel);
 
         sortMenuHandle = new SortMenuHandle(sortFindPanel.getSortMenu());
