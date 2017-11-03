@@ -174,6 +174,11 @@ public class AddCommandTest {
         public void sortPersonListLexicographically() {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+
+        }
     }
 
     /**
