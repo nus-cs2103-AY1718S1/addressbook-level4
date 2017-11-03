@@ -219,6 +219,7 @@ __Constraints__
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
+[coming in v2.0]
 ==== Tagging multiple contacts : `tag` +
 
 Tags are a useful way of grouping and labeling contacts. But editing them manually, one by one, can be a tedious process.
@@ -365,7 +366,7 @@ Use prefixes:
 ****
 
 . The command follows: +
-Format: `add DESCRIPTION from START DATE to DEADLINE t/[TAG]…`
+Format: `add DESCRIPTION from START DATE by/on DEADLINE t/[TAG]…`
 
 . As the task is added to a new Task Card, the Result Display shows:
 `Task has been added: DESCRIPTION From: START DATE To: DEADLINE Tags: [TAG]`
@@ -382,7 +383,7 @@ A person can opt to leave out a single or all dates.
 
 Examples:
 
-* `add recess week from tomorrow to 15 Sep`
+* `add recess week from tomorrow by 15 Sep`
 Sets the description to "recess week" start date to the next day and the deadline to the 15th of September in the current or upcoming year.
 
 * `add get groceries`
