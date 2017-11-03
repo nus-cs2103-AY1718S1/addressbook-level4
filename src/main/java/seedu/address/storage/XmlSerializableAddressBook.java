@@ -82,7 +82,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
             try {
                 modelTypeList.add((element.toModelType()));
             } catch (IllegalValueException e) {
-                logger.severe("Illegal data found in storage.");
+                logger.warning("Illegal data found in storage.");
             }
         }
         return FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(modelTypeList));
