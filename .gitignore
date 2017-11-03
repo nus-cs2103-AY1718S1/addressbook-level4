@@ -20,3 +20,4 @@ src/main/resources/docs/
 out/
 
 *.vcf
+ConnectUsLog.txt
