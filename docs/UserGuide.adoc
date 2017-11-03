@@ -274,10 +274,10 @@ Edits the birthday for the first person to `20-12-2012`. +
 * `birthday 1 b/` or `birthday 1` +
 Removes the birthday for the first person.
 
-=== Upcoming birthdays : `UpcomingBirthday` (Since v1.4)
+=== Upcoming birthdays : `upcomingbirthday` (Since v1.4)
 
 Updates the list to show the upcoming birthdays. +
-Format: `UpcomingBirthday`
+Format: `upcomingbirthday`
 
 === Sorting all entries : `sort` (Since v1.2)
 
@@ -365,4 +365,4 @@ e.g. `remark 1 r/is a student in NUS`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *Undo* : `undo`
-* *Upcoming Birthday* : `UpcomingBirthday`
+* *Upcoming Birthday* : `upcomingbirthday`
