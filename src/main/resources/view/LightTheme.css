@@ -150,7 +150,7 @@
 
 .result-pane {
      -fx-background-color: #ffffff;
-     -fx-background-radius: 15 15 15 15;
+     -fx-background-radius: 10 10 10 10;
      -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 2, 2);
 }
 
@@ -163,7 +163,7 @@
 
 .person-detail-panel {
     -fx-background-color: #ffffff;
-    -fx-background-radius: 15 15 15 15;
+    -fx-background-radius: 10 10 10 10;
     -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 2, 2);
 }
 
@@ -311,11 +311,11 @@
 }
 
 .scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
-    -fx-padding: 5 3 5 3;
+    -fx-padding: 8 3 8 3;
 }
 
 .scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
-    -fx-padding: 3 5 3 5;
+    -fx-padding: 3 8 3 8;
 }
 
 #cardPane {
@@ -324,12 +324,12 @@
 }
 
 #personListView {
-    -fx-background-radius: 15 15 15 15;
+    -fx-background-radius: 10 10 10 10;
 }
 
 #personListPanel {
     -fx-background-color: #ffffff;
-    -fx-background-radius: 15 15 15 15;
+    -fx-background-radius: 10 10 10 10;
     -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, -2, 2);
 }
 
