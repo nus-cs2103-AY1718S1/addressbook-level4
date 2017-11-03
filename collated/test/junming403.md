@@ -1,5 +1,5 @@
 # junming403
-###### /java/seedu/address/logic/commands/DeleteCommandTest.java
+###### \java\seedu\address\logic\commands\DeleteCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -206,7 +206,7 @@ public class DeleteCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/DeleteRemarkCommandTest.java
+###### \java\seedu\address\logic\commands\DeleteRemarkCommandTest.java
 ``` java
 public class DeleteRemarkCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -223,10 +223,10 @@ public class DeleteRemarkCommandTest {
     @Test
     public void execute_validIndex_success() throws Exception {
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        String expectedMessage = String.format(DeleteRemarkCommand.MESSAGE_DELETE_REMARK_MODULE_SUCCESS,
+        String expectedMessage = String.format(RemarkCommand.MESSAGE_DELETE_REMARK_SUCCESS,
                 "This is a sample remark");
 
-        DeleteRemarkCommand deleteRemarkCommand = prepareCommand(INDEX_FIRST_LESSON);
+        RemarkCommand deleteRemarkCommand = prepareCommand(INDEX_FIRST_LESSON);
 
         assertCommandSuccess(deleteRemarkCommand, model, expectedMessage, expectedModel);
     }
@@ -235,22 +235,22 @@ public class DeleteRemarkCommandTest {
     public void execute_invalidIndex_throwsCommandException() throws Exception {
         ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
         Index outOfBoundIndex = Index.fromZeroBased(model.getFilteredLessonList().size());
-        DeleteRemarkCommand deleteRemarkCommand = prepareCommand(outOfBoundIndex);
+        RemarkCommand deleteRemarkCommand = prepareCommand(outOfBoundIndex);
 
         assertCommandFailure(deleteRemarkCommand, model, Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
     }
 
     /**
-     * Returns a {@code DeleteCommand} with the parameter {@code index}.
+     * Returns a {@code RemarkCommand} with the parameter {@code index}.
      */
-    private DeleteRemarkCommand prepareCommand(Index index) {
-        DeleteRemarkCommand deleteRemarkCommand = new DeleteRemarkCommand(index);
+    private RemarkCommand prepareCommand(Index index) {
+        RemarkCommand deleteRemarkCommand = new RemarkCommand(index);
         deleteRemarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return deleteRemarkCommand;
     }
 }
 ```
-###### /java/seedu/address/logic/commands/EditCommandTest.java
+###### \java\seedu\address\logic\commands\EditCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
@@ -539,7 +539,7 @@ public class EditCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ListCommandTest.java
+###### \java\seedu\address\logic\commands\ListCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
@@ -591,7 +591,7 @@ public class ListCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/MarkCommandTest.java
+###### \java\seedu\address\logic\commands\MarkCommandTest.java
 ``` java
 public class MarkCommandTest {
 
@@ -672,21 +672,23 @@ public class MarkCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/RemarkCommandTest.java
+###### \java\seedu\address\logic\commands\RemarkCommandTest.java
 ``` java
 public class RemarkCommandTest {
 
     private static final String SAMPLE_REMARK = "This is a sample remark";
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private RemarkCommand remarkCommand;
+
 
     @Test
     public void execute_validIndex_success() throws Exception {
         ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        Code code = model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()).getCode();
+        Code code = model.getFilteredLessonList().get(INDEX_SECOND_LESSON.getZeroBased()).getCode();
         Remark remarkToAdd = new Remark(SAMPLE_REMARK, code);
-        RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_LESSON, SAMPLE_REMARK);
+        RemarkCommand remarkCommand = prepareCommand(INDEX_SECOND_LESSON, SAMPLE_REMARK);
         expectedModel.addRemark(remarkToAdd);
 
         String expectedMessage = String.format(RemarkCommand.MESSAGE_REMARK_MODULE_SUCCESS, code);
@@ -712,6 +714,44 @@ public class RemarkCommandTest {
         assertCommandFailure(remarkCommand, model, Remark.MESSAGE_REMARK_CONSTRAINTS);
     }
 
+    @Test
+    public void execute_validIndex_deleteSuccess() throws Exception {
+        remarkCommand = new RemarkCommand(INDEX_FIRST_LESSON, "This is a sample remark");
+        remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        remarkCommand.executeUndoableCommand();
+
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        String expectedMessage = String.format(RemarkCommand.MESSAGE_DELETE_REMARK_SUCCESS,
+                "This is a sample remark");
+
+        RemarkCommand deleteRemarkCommand = prepareCommand(INDEX_FIRST_LESSON);
+
+        assertCommandSuccess(deleteRemarkCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void executeDelete_invalidIndex_throwsCommandException() throws Exception {
+        remarkCommand = new RemarkCommand(INDEX_FIRST_LESSON, "This is a sample remark");
+        remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        remarkCommand.executeUndoableCommand();
+
+        ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
+        Index outOfBoundIndex = Index.fromZeroBased(model.getFilteredLessonList().size());
+        RemarkCommand deleteRemarkCommand = prepareCommand(outOfBoundIndex);
+
+        assertCommandFailure(deleteRemarkCommand, model, Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+    }
+
+    /**
+     * Returns a {@code RemarkCommand} with the parameter {@code index}.
+     */
+    private RemarkCommand prepareCommand(Index index) {
+        RemarkCommand deleteRemarkCommand = new RemarkCommand(index);
+        deleteRemarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return deleteRemarkCommand;
+    }
+
+
     /**
      * Returns a {@code RemarkCommand} with the parameter {@code index}.
      */
@@ -734,7 +774,7 @@ public class RemarkCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/UnmarkCommandTest.java
+###### \java\seedu\address\logic\commands\UnmarkCommandTest.java
 ``` java
 public class UnmarkCommandTest {
 
@@ -826,7 +866,7 @@ public class UnmarkCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ViewCommandTest.java
+###### \java\seedu\address\logic\commands\ViewCommandTest.java
 ``` java
 public class ViewCommandTest {
 
@@ -892,7 +932,7 @@ public class ViewCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/parser/EditCommandParserTest.java
+###### \java\seedu\address\logic\parser\EditCommandParserTest.java
 ``` java
 public class EditCommandParserTest {
 
@@ -1117,7 +1157,7 @@ public class EditCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ListCommandParserTest.java
+###### \java\seedu\address\logic\parser\ListCommandParserTest.java
 ``` java
 public class ListCommandParserTest {
 
@@ -1145,7 +1185,7 @@ public class ListCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/MarkCommandParserTest.java
+###### \java\seedu\address\logic\parser\MarkCommandParserTest.java
 ``` java
 public class MarkCommandParserTest {
     private MarkCommandParser parser = new MarkCommandParser();
@@ -1162,7 +1202,7 @@ public class MarkCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/RemarkCommandParserTest.java
+###### \java\seedu\address\logic\parser\RemarkCommandParserTest.java
 ``` java
 public class RemarkCommandParserTest {
     private RemarkCommandParser parser = new RemarkCommandParser();
@@ -1179,9 +1219,14 @@ public class RemarkCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE));
     }
 
+    @Test
+    public void parse_deleteRemark_returnsDeleteRemarkCommand() {
+        assertParseSuccess(parser, "-d 2", new RemarkCommand(INDEX_SECOND_LESSON));
+    }
+
 }
 ```
-###### /java/seedu/address/logic/parser/UnmarkCommandParserTest.java
+###### \java\seedu\address\logic\parser\UnmarkCommandParserTest.java
 ``` java
 public class UnmarkCommandParserTest {
     private UnmarkCommandParser parser = new UnmarkCommandParser();
@@ -1198,7 +1243,7 @@ public class UnmarkCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ViewCommandParserTest.java
+###### \java\seedu\address\logic\parser\ViewCommandParserTest.java
 ``` java
 public class ViewCommandParserTest {
 
@@ -1215,7 +1260,7 @@ public class ViewCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/model/lesson/predicate/FixedCodePredicateTest.java
+###### \java\seedu\address\model\lesson\predicate\FixedCodePredicateTest.java
 ``` java
 public class FixedCodePredicateTest {
     @Test
@@ -1280,7 +1325,7 @@ public class FixedCodePredicateTest {
     }
 }
 ```
-###### /java/seedu/address/model/lesson/predicate/FixedLocationPredicateTest.java
+###### \java\seedu\address\model\lesson\predicate\FixedLocationPredicateTest.java
 ``` java
 public class FixedLocationPredicateTest {
 
@@ -1346,75 +1391,75 @@ public class FixedLocationPredicateTest {
     }
 }
 ```
-###### /java/seedu/address/model/lesson/predicate/SelectedStickyNotePredicateTest.java
+###### \java\seedu\address\model\lesson\predicate\SelectedStickyNotePredicateTest.java
 ``` java
 public class SelectedStickyNotePredicateTest {
 
-        @Test
-        public void equals() {
+    @Test
+    public void equals() {
 
-            Code firstCode = null;
-            Code secondCode = null;
+        Code firstCode = null;
+        Code secondCode = null;
 
-            try {
-                firstCode = new Code(VALID_CODE_MA1101R);
-                secondCode = new Code(VALID_CODE_CS2101);
-            } catch (IllegalValueException e) {
-                assert false : "The code shouldn't invalid";
-            }
-
-            SelectedStickyNotePredicate firstPredicate = new SelectedStickyNotePredicate(firstCode);
-            SelectedStickyNotePredicate secondPredicate = new SelectedStickyNotePredicate(secondCode);
-
-            // same object -> returns true
-            assertTrue(firstPredicate.equals(firstPredicate));
-
-            // same values -> returns true
-            SelectedStickyNotePredicate firstPredicateCopy = new SelectedStickyNotePredicate(firstCode);
-            assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-            // different types -> returns false
-            assertFalse(firstPredicate.equals(1));
-
-            // null -> returns false
-            assertFalse(firstPredicate.equals(null));
-
-            // different address -> returns false
-            assertFalse(firstPredicate.equals(secondPredicate));
+        try {
+            firstCode = new Code(VALID_CODE_MA1101R);
+            secondCode = new Code(VALID_CODE_CS2101);
+        } catch (IllegalValueException e) {
+            assert false : "The code shouldn't invalid";
         }
 
-        @Test
-        public void test_isTheCodeGiven_returnsTrue() throws IllegalValueException {
+        SelectedStickyNotePredicate firstPredicate = new SelectedStickyNotePredicate(firstCode);
+        SelectedStickyNotePredicate secondPredicate = new SelectedStickyNotePredicate(secondCode);
 
-            Code code = null;
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
 
-            try {
-                code = new Code("MA1101R");
-            } catch (IllegalValueException e) {
-                assert false : "The address shouldn't invalid";
-            }
+        // same values -> returns true
+        SelectedStickyNotePredicate firstPredicateCopy = new SelectedStickyNotePredicate(firstCode);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
 
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different address -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_isTheCodeGiven_returnsTrue() throws IllegalValueException {
+
+        Code code = null;
+
+        try {
+            code = new Code("MA1101R");
+        } catch (IllegalValueException e) {
+            assert false : "The address shouldn't invalid";
+        }
+
+        SelectedStickyNotePredicate predicate = new SelectedStickyNotePredicate(code);
+        assertTrue(predicate.test(new Remark("Remark content", code)));
+
+    }
+
+    @Test
+    public void test_isTheCodeCGiven_returnsFalse() {
+
+        try {
+            Code code = new Code("GEQ1000");
+            Code secondCode = new Code("GEQ1001");
             SelectedStickyNotePredicate predicate = new SelectedStickyNotePredicate(code);
-            assertTrue(predicate.test(new Remark("Remark content", code)));
-
+            assertFalse(predicate.test(new Remark("Remark content", secondCode)));
+        } catch (IllegalValueException e) {
+            assert false : "The code shouldn't invalid";
         }
-
-        @Test
-        public void test_isTheCodeCGiven_returnsFalse() {
-
-            try {
-                Code code = new Code("GEQ1000");
-                Code secondCode = new Code("GEQ1001");
-                SelectedStickyNotePredicate predicate = new SelectedStickyNotePredicate(code);
-                assertFalse(predicate.test(new Remark("Remark content", secondCode)));
-            } catch (IllegalValueException e) {
-                assert false : "The code shouldn't invalid";
-            }
-        }
+    }
 
 }
 ```
-###### /java/seedu/address/model/lesson/predicate/ShowSpecifiedLessonPredicateTest.java
+###### \java\seedu\address\model\lesson\predicate\ShowSpecifiedLessonPredicateTest.java
 ``` java
 public class ShowSpecifiedLessonPredicateTest {
 
@@ -1458,7 +1503,7 @@ public class ShowSpecifiedLessonPredicateTest {
     }
 }
 ```
-###### /java/seedu/address/model/lesson/predicate/UniqueLocationPredicateTest.java
+###### \java\seedu\address\model\lesson\predicate\UniqueLocationPredicateTest.java
 ``` java
 public class UniqueLocationPredicateTest {
 
@@ -1498,7 +1543,7 @@ public class UniqueLocationPredicateTest {
     }
 }
 ```
-###### /java/seedu/address/model/lesson/predicate/UniqueModuleCodePredicateTest.java
+###### \java\seedu\address\model\lesson\predicate\UniqueModuleCodePredicateTest.java
 ``` java
 public class UniqueModuleCodePredicateTest {
 
@@ -1538,7 +1583,7 @@ public class UniqueModuleCodePredicateTest {
     }
 }
 ```
-###### /java/seedu/address/model/lesson/RemarkTest.java
+###### \java\seedu\address\model\lesson\RemarkTest.java
 ``` java
 public class RemarkTest {
 
@@ -1565,7 +1610,7 @@ public class RemarkTest {
 
 }
 ```
-###### /java/seedu/address/model/ListingUnitTest.java
+###### \java\seedu\address\model\ListingUnitTest.java
 ``` java
 public class ListingUnitTest {
 
@@ -1592,7 +1637,7 @@ public class ListingUnitTest {
     }
 }
 ```
-###### /java/seedu/address/model/UniqueRemarkListTest.java
+###### \java\seedu\address\model\UniqueRemarkListTest.java
 ``` java
 public class UniqueRemarkListTest {
     @Rule
