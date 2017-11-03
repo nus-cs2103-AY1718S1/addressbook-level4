@@ -2,6 +2,8 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -16,6 +18,8 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.ShowBrowserEvent;
+import seedu.address.commons.events.ui.ShowMeetingEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -53,6 +57,7 @@ public class CommandBox extends UiPart<Region> {
         this.commandBoxHelper = new CommandBoxHelper(logic);
         this.helperContainer = commandBoxHelp;
         this.settingsPane = settingsPane;
+        registerAsAnEventHandler(this);
         setAnimation();
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> {
@@ -271,6 +276,16 @@ public class CommandBox extends UiPart<Region> {
         KeyValue kvRight1 = new KeyValue(settingsPane.translateXProperty(), 300);
         KeyFrame kfRight = new KeyFrame(Duration.millis(200), kvRight1);
         timelineRight.getKeyFrames().add(kfRight);
+    }
+
+    @Subscribe
+    private void handleShowMeetingEvent(ShowMeetingEvent event) {
+        timelineRight.play();
+    }
+
+    @Subscribe
+    private void handleShowBrowserEvent(ShowBrowserEvent event) {
+        timelineRight.play();
     }
     //@@author
 }
