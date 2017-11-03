@@ -250,7 +250,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
-
+// tag::joshua[]
 === Email Function
 (added in v1.2)
 
@@ -276,6 +276,47 @@ The following sequence diagram describes how `OpenEmailClient` passes in the "em
 image::OpenEmailClientSequenceDiagram.png[width="800"]
 _Figure 4.1.1 : Sequence Diagram of the Email function_
 
+==== Design Considerations
+
+**Aspect:** Functionality of `Email` +
+**Alternative 1 (current choice):** Open up an email client in another window by calling `OpenEmailClient` with to field filled with receiver's email. +
+**Pros:** Easier to implement, user will be familiar with his/her prefered email client. +
+**Cons:** Only one field filled up, user still has to manually compose email. +
+**Alternative 2:** Build a form within current GUI and compose email there. +
+**Pros:** Better performance, does not rely on additional software. +
+**Cons:** Makes the current UI even more cluttered and confusing.
+
+---
+
+=== Displaying a contact's location on Google Maps
+(added in v1.2)
+
+In this section, we explain how a contact's location is displayed on Google Maps whenever a selection is made. +
+
+Whenever a `PersonPanelSelectionChangedEvent` is raised, the loadPersonPage method in `BrowserPanel` will update the address to the currently selected person.
+[source,java]
+----
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonPage(event.getNewSelection().person);
+    }
+----
+
+The browser will then render the new URL it has received. Below is the code snippet of `loadPersonPage`
+[source,java]
+----
+    public void loadPersonPage(ReadOnlyPerson person) {
+        browser.getEngine().setUserAgent("Mozilla/5.0 "
+                + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0");
+        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+"));
+    }
+----
+
+[NOTE]
+The browser's user agent had to be set to ** "Mozilla/5.0 "
+                                                          + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0" **because
+there were unicode issue's when load Google Maps on Mac computers.
 
 === Mapping a command to a JavaFX Button
 (added in v1.2)
@@ -327,14 +368,7 @@ When the DeleteButton is pressed, it will be handled by the handleDeleteButtonPr
         logger.info("Result: " + commandResult.feedbackToUser);
     }
 ----
-
-
-
-
-
-
-
-
+// end::joshua[]
 
 // tag::undoredo[]
 === Undo/Redo mechanism
