@@ -397,6 +397,11 @@ All other details that are not provided will be filled in by default values as s
 image::Default_for_empty_fields.png[width="400"]
 _Figure 3.5.1.1 : Default values for empty fields_
 
+==== `Add photo` option
+
+This feature is to add photo to individual. +
+Display the photo data into browser panel with a photo size of 100X100.
+
 ==== Import XML addressbook command
 
 External addressbook can now be imported using `import` command
