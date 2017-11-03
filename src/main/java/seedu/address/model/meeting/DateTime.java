@@ -21,7 +21,12 @@ public class DateTime {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String DATETIME_VALIDATION_REGEX = "\\d{2}-\\d{2}-\\d{4} \\d{2}:\\d{2}";
+    public static final String DATETIME_VALIDATION_REGEX = "^(((0[1-9]|[12]\\d|3[01])[\\/\\.-](0[13578]|1[02])"
+            + "[\\/\\.-]((19|[2-9]\\d)\\d{2})\\s(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]))|((0[1-9]|[12]\\d|30)"
+            + "[\\/\\.-](0[13456789]|1[012])[\\/\\.-]((19|[2-9]\\d)\\d{2})\\s(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]))"
+            + "|((0[1-9]|1\\d|2[0-8])[\\/\\.-](02)[\\/\\.-]((19|[2-9]\\d)\\d{2})\\s(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]))"
+            + "|((29)[\\/\\.-](02)[\\/\\.-]((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|"
+            + "((16|[2468][048]|[3579][26])00))\\s(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])))$";
 
     public final String value;
 
@@ -45,7 +50,7 @@ public class DateTime {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         try {
             LocalDateTime localDateTime = LocalDateTime.parse(test, formatter);
-            return true;
+            return test.matches(DATETIME_VALIDATION_REGEX);
         } catch (DateTimeException e) {
             return false;
         }
