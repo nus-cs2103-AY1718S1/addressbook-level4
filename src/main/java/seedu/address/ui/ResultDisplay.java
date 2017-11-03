@@ -36,6 +36,7 @@ public class ResultDisplay extends UiPart<Region> {
     @FXML
     private TextArea infoDisplay;
 
+    //@@author joanneong
     public ResultDisplay() {
         super(FXML);
         resultDisplay.textProperty().bind(displayed);
@@ -66,6 +67,7 @@ public class ResultDisplay extends UiPart<Region> {
         }
     }
 
+    //@@author
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

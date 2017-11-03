@@ -19,6 +19,8 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.BackupCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.ClearHistoryCommand;
+import seedu.address.logic.commands.ColourTagCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
@@ -40,6 +42,7 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PhoneContainsKeywordsPredicate;
 import seedu.address.model.person.Remark;
+import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagContainsKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -58,17 +61,36 @@ public class AddressBookParserTest {
         assertEquals(new AddCommand(person), command);
     }
 
+    //@@author Xenonym
     @Test
     public void parseCommand_backup() throws Exception {
         assertTrue(parser.parseCommand(BackupCommand.COMMAND_WORD) instanceof BackupCommand);
         assertTrue(parser.parseCommand(BackupCommand.COMMAND_WORD + " 3") instanceof BackupCommand);
     }
+    //@@author
 
     @Test
     public void parseCommand_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3") instanceof ClearCommand);
     }
+
+    //@@author Xenonym
+    @Test
+    public void parseCommand_clearhistory() throws Exception {
+        assertTrue(parser.parseCommand(ClearHistoryCommand.COMMAND_WORD) instanceof ClearHistoryCommand);
+        assertTrue(parser.parseCommand(ClearHistoryCommand.COMMAND_WORD + " 3") instanceof ClearHistoryCommand);
+    }
+
+    @Test
+    public void parseCommand_colourtag() throws Exception {
+        final Tag tag = new Tag("test");
+        final String colour = "red";
+        ColourTagCommand command = (ColourTagCommand) parser.parseCommand(ColourTagCommand.COMMAND_WORD
+                + " test red");
+        assertEquals(new ColourTagCommand(tag, colour), command);
+    }
+    //@@author
 
     @Test
     public void parseCommand_delete() throws Exception {
@@ -100,6 +122,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
     }
 
+    //@@author joanneong
     @Test
     public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
@@ -128,6 +151,7 @@ public class AddressBookParserTest {
         assertEquals(new FindCommand(new TagContainsKeywordsPredicate(keywords)), tagCommand);
     }
 
+    //@@author
     @Test
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);

@@ -19,6 +19,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.relationship.RelationshipDirection;
 
+//@@author wenmogu
 /**
  * This class is a wrapper class of SingleGraph class in GraphStream
  * It is used when creating a new SingleGraph when changes happen in the lastShownList
@@ -189,7 +190,11 @@ public class GraphWrapper {
         for (ReadOnlyPerson person: filteredPersons) {
             Set<Relationship> relationshipSet = person.getRelationships();
             for (Relationship relationship: relationshipSet) {
-                addEdge(relationship.getFromPerson(), relationship.getToPerson(), relationship.getDirection());
+                Edge edge = addEdge(relationship.getFromPerson(), relationship.getToPerson(),
+                        relationship.getDirection());
+                String edgeLabel = relationship.getName().toString() + " "
+                        + relationship.getConfidenceEstimate().toString();
+                edge.addAttribute(nodeAttributeNodeLabel, edgeLabel);
             }
         }
 

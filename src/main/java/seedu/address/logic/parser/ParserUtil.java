@@ -14,6 +14,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.relationship.ConfidenceEstimate;
 import seedu.address.model.relationship.RelationshipDirection;
 import seedu.address.model.tag.Tag;
 
@@ -52,6 +53,16 @@ public class ParserUtil {
     public static Optional<Name> parseName(Optional<String> name) throws IllegalValueException {
         requireNonNull(name);
         return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * If {@code name} is not present, {@code Optional<Name.UNSPECIFIED>} will be returned
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Name> parseRelationshipName(Optional<String> name) throws IllegalValueException {
+        requireNonNull(name);
+        return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.of(Name.UNSPECIFIED);
     }
 
     /**
@@ -135,5 +146,19 @@ public class ParserUtil {
         } else {
             throw new IllegalValueException(MESSAGE_INVALID_DIRECTION);
         }
+    }
+
+    /**
+     * Parses a {@code Optional<String> estimate} into an {@code Optional<ConfidenceEstimate>}
+     * if {@code estimate} is present.
+     * If {@code estimate} is not present, {@code Optional<ConfidenceEstimate.Unspecified>} is returned
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<ConfidenceEstimate> parseConfidenceEstimate(Optional<String> estimate)
+            throws IllegalValueException {
+        requireNonNull(estimate);
+        return estimate.isPresent() ? Optional.of(new ConfidenceEstimate(estimate.get()))
+                : Optional.of(ConfidenceEstimate.UNSPECIFIED);
+
     }
 }

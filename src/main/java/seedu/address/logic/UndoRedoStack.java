@@ -68,6 +68,7 @@ public class UndoRedoStack {
         return !redoStack.empty();
     }
 
+    //@@author Xenonym
     /**
      * Clears the stack of all commands.
      */
@@ -75,6 +76,7 @@ public class UndoRedoStack {
         undoStack.clear();
         redoStack.clear();
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
