@@ -5,10 +5,12 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
+import seedu.address.model.relationship.ConfidenceEstimate;
 import seedu.address.model.relationship.RelationshipDirection;
 import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
 
@@ -41,18 +43,23 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
-    void addRelationship(Index indexFromPerson, Index indexToPerson, RelationshipDirection direction)
+    //@@author wenmogu
+    void addRelationship(Index indexFromPerson, Index indexToPerson, RelationshipDirection direction,
+                         Name name, ConfidenceEstimate confidenceEstimate)
         throws IllegalValueException, DuplicateRelationshipException;
 
+    //@@author
     /** Sorts the persons object alphanumerically by name. */
     void sortPersons();
 
+    //@@author wenmogu
     /**
      * @throws TagNotFoundException if the tag is not found in tag list of address book
      * @throws IllegalValueException if the input value is not alphanumeric
      */
     void removeTag(String tagToBeRemoved) throws TagNotFoundException, IllegalValueException;
 
+    //@@author
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 

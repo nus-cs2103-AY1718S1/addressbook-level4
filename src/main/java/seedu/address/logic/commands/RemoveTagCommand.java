@@ -6,7 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
 
-
+//@@author wenmogu
 /**
  * Remove a tag from the tag lists of the address book and all persons in the address book
  */
