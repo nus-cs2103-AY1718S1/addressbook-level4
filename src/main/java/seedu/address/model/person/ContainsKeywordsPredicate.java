@@ -7,7 +7,8 @@ import seedu.address.commons.util.StringUtil;
 
 //@@author AngularJiaSheng
 /**
- * Tests that a {@code ReadOnlyPerson}'s {@code Name}, Phone, Address, Email, Tag, WebLink, matches any of the keywords given.
+ * Tests that a {@code ReadOnlyPerson}'s {@code Name}, Phone, Address, Email, Tag, WebLink,
+ * matches any of the keywords given.
  */
 public class ContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
