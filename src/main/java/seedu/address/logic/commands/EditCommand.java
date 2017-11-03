@@ -86,10 +86,7 @@ public class EditCommand extends UndoableCommand {
         Parcel editedParcel = createEditedParcel(parcelToEdit, editParcelDescriptor);
 
         try {
-            model.updateParcel(parcelToEdit, editedParcel);
-            model.maintainSorted();
-            model.forceSelectParcel(editedParcel);
-
+            model.editParcelCommand(parcelToEdit, editedParcel);
         } catch (DuplicateParcelException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PARCEL);
         } catch (ParcelNotFoundException pnfe) {

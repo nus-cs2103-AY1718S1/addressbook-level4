@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -103,6 +104,9 @@ public class CommandTestUtil {
     public static final String DELIVERY_DATE_DESC_TODAY = " " + PREFIX_DELIVERY_DATE + DATE_TODAY;
     public static final String DELIVERY_DATE_DESC_YESTERDAY = " " + PREFIX_DELIVERY_DATE + DATE_YESTERDAY;
     public static final String DELIVERY_DATE_DESC_TOMORROW = " " + PREFIX_DELIVERY_DATE + DATE_TOMORROW;
+
+    public static final Index TAB_COMPLETED_PARCELS = Index.fromZeroBased(1);
+    public static final Index TAB_ALL_PARCELS = Index.fromZeroBased(0);
 
     static {
         DESC_AMY = new EditParcelDescriptorBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY)

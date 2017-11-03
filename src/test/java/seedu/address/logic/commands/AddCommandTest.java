@@ -104,6 +104,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addParcelCommand(ReadOnlyParcel parcel) throws DuplicateParcelException {
+            addParcel(parcel);
+        }
+
+        @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
@@ -122,6 +127,10 @@ public class AddCommandTest {
             return false;
         }
         */
+        @Override
+        public void addParcelCommand(ReadOnlyParcel parcel) throws DuplicateParcelException {
+            addParcel(parcel);
+        }
 
         @Override
         public void maintainSorted() {

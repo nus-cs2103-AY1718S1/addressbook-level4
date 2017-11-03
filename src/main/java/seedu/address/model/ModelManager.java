@@ -264,24 +264,36 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void editParcelCommand(ReadOnlyParcel parcel) throws DuplicateParcelException, ParcelNotFoundException {
-
+    public void editParcelCommand(ReadOnlyParcel parcelToEdit, ReadOnlyParcel editedParcel)
+            throws DuplicateParcelException, ParcelNotFoundException {
+        this.updateParcel(parcelToEdit, editedParcel);
+        this.maintainSorted();
+        this.handleTabChange(editedParcel);
+        this.forceSelectParcel(editedParcel);
     }
 
     private void handleTabChange(ReadOnlyParcel targetParcel) {
         try {
             if (findStatus(targetParcel).equals(Status.getInstance("COMPLETED"))) {
+                System.out.println("I think it's completed.");
                 if (this.getTabIndex().equals(TAB_ALL_PARCELS)) {
+                    System.out.println("But i'm at all parcels tab");
+                    setActiveList(true);
                     EventsCenter.getInstance().post(new JumpToTabRequestEvent(TAB_COMPLETED_PARCELS));
                 }
             } else {
+                System.out.println("I guess it's not completed");
                 if (this.getTabIndex().equals(TAB_COMPLETED_PARCELS)) {
+                    System.out.println("But I'm at completed tab");
+                    setActiveList(false);
                     EventsCenter.getInstance().post(new JumpToTabRequestEvent(TAB_ALL_PARCELS));
                 }
             }
         } catch (IllegalValueException e) {
             e.printStackTrace();
         }
+
+        System.out.println("IT'S HERE: " + findIndex(targetParcel));
     }
 
     private Status findStatus(ReadOnlyParcel target) {

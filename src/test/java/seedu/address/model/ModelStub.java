@@ -106,6 +106,27 @@ public class ModelStub implements Model {
         fail("This method should not be called.");
     }
 
+    @Override
+    public void setTabIndex(Index index) {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public Index getTabIndex() {
+        fail("This method should not be called.");
+        return null;
+    }
+
+    @Override
+    public void addParcelCommand(ReadOnlyParcel parcel) throws DuplicateParcelException {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void editParcelCommand(ReadOnlyParcel parcelToEdit, ReadOnlyParcel editedParce) throws DuplicateParcelException, ParcelNotFoundException {
+        fail("This method should not be called.");
+    }
+
     /*
     @Override
     public boolean hasSelected() {

@@ -123,7 +123,8 @@ public interface Model {
 
     void addParcelCommand(ReadOnlyParcel parcel) throws DuplicateParcelException;
 
-    void editParcelCommand(ReadOnlyParcel parcel) throws DuplicateParcelException, ParcelNotFoundException;
+    void editParcelCommand(ReadOnlyParcel parcelToEdit, ReadOnlyParcel editedParce)
+            throws DuplicateParcelException, ParcelNotFoundException;
 
     /*
     void reselect(ReadOnlyParcel parcel);

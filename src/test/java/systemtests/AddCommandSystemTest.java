@@ -235,7 +235,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a parcel with tags, command with parameters in random order -> added */
         toAdd = BOB;
         command = AddCommand.COMMAND_WORD + TAG_DESC_FLAMMABLE + PHONE_DESC_BOB + ADDRESS_DESC_BOB
-                + STATUS_DESC_PENDING + NAME_DESC_BOB + TAG_DESC_FROZEN + EMAIL_DESC_BOB
+                + STATUS_DESC_COMPLETED + NAME_DESC_BOB + TAG_DESC_FROZEN + EMAIL_DESC_BOB
                 + TRACKING_NUMBER_DESC_BOB + DELIVERY_DATE_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
@@ -374,11 +374,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(String command, ReadOnlyParcel toAdd) {
         Model expectedModel = getModel();
-
         try {
-            expectedModel.addParcel(toAdd);
-            expectedModel.maintainSorted();
-            expectedModel.forceSelectParcel(toAdd);
+            expectedModel.addParcelCommand(toAdd);
         } catch (DuplicateParcelException dpe) {
             throw new IllegalArgumentException("toAdd already exists in the model.");
         }

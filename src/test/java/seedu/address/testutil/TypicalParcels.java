@@ -155,7 +155,7 @@ public class TypicalParcels {
     public static final ReadOnlyParcel HOON = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_HOON)
             .withName(VALID_NAME_HOON).withPhone(VALID_PHONE_HOON).withEmail(VALID_EMAIL_HOON)
             .withAddress(VALID_ADDRESS_HOON).withDeliveryDate(VALID_DELIVERY_DATE_HOON)
-            .withStatus(VALID_STATUS_OVERDUE).build();
+            .withStatus(VALID_STATUS_COMPLETED).build();
 
     // Manually added
     public static final ReadOnlyParcel IDA = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_IDA)
@@ -176,7 +176,7 @@ public class TypicalParcels {
     public static final ReadOnlyParcel BOB = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_BOB)
             .withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
             .withAddress(VALID_ADDRESS_BOB).withDeliveryDate(VALID_DELIVERY_DATE_BOB)
-            .withStatus(VALID_STATUS_PENDING).withTags(VALID_TAG_FROZEN, VALID_TAG_FLAMMABLE).build();
+            .withStatus(VALID_STATUS_COMPLETED).withTags(VALID_TAG_FROZEN, VALID_TAG_FLAMMABLE).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
