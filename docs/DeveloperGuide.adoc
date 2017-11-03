@@ -376,7 +376,7 @@ _Figure 3.1.7 : Activity Diagram of UndoRedoStack_
 === Sort mechanism
 The sort mechanism is implemented using SortCommand. It supports sorting of contacts names in the AddressBook according to alphabetical order from A to Z.
 
-When user calls for sorting to be implemented in cherBook, an empty ArrayList would be created. Under the Model component, UniquePersonList would compare the names of all persons in lower case using a comparator and return an Observable List containing of ReadOnlyPerson.
+When user calls for sorting to be implemented, an empty ArrayList would be created. Under the Model component, UniquePersonList would compare the names of all persons in lower case using a comparator and return an Observable List containing of ReadOnlyPerson.
 
 `SortCommand` inherits from Command.
 
@@ -450,6 +450,78 @@ It is implemented this way to ensure that all person names in the UniquePersonLi
 **Pros:** We do not need to maintain a separate list, and just reuse what is already in the codebase, and it saves space. +
 **Cons:**  Inefficient as compared to using an algorithm. If the user made a mistake, the change cannot be reverted as the original list of contacts is not saved. +
 // end::sort[]
+
+
+// tag::schedule[]
+=== Schedule mechanism
+The schedule mechanism is implemented using ScheduleCommand. It supports scheduling of contacts in the AddressBook for better management of time.
+
+When user calls for scheduling to be implemented, two arguments would have to be passed into the constructor.
+The two arguments are name of the person being scheduled and the Calendar date with time.
+Under the Model component, UniqueScheduleList would add the created schedule into the set of schedules.
+
+`ScheduleCommand` inherits from Command.
+
+ScheduleCommand is implemented this way:
+[source,java]
+----
+public class ScheduleCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... schedule logic ...
+    }
+}
+----
+[NOTE]
+Adding of schedules into the AddressBook can be done in natural language.
+
+The following sequence diagram shows how the sort operation works:
+
+image::ScheduleSequenceDiagram.png[width="800"]
+_Figure 3.2.1 : Sequence Diagram of Schedule Operation_
+
+When the user calls ‘schedule’ or ‘sche’ to schedule the contacts in cherBook, the Model will receive a schedule from the Parser.
+
+Upon successful scheduling, contacts are added into the set of schedules.
+If one or more arguments required to schedule a person is missing, the AddressBook will return with error messages corresponding to the missing arguments.
+If one or more arguments required to schedule a person is invalid, the AddressBook will return with error messages corresponding to the invalid arguments.
+
+The following will show how the schedule is added into the AddressBook:
+[source,java]
+----
+    /**
+     * Adds a schedule for a student's consultation
+     */
+    @Override
+    public void addSchedule(Schedule schedule) {
+        addressBook.addSchedule(schedule);
+        indicateAddressBookChanged();
+    }
+----
+It is implemented this way to ensure that all schedules are added into the AddressBook with the lowest level of abstraction.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `ScheduleCommand` +
+**Alternative 1 (current choice):** `ScheduleCommand` inherits from Command +
+**Pros:** After scheduling the contacts, the schedules remain in their order they are entered into the AddressBook. +
+**Cons:** The user is unable to sort the list of schedules according to chronological order. +
+
+---
+
+**Aspect:** How schedule executes +
+**Alternative 1 (current choice):** Adds a schedule into the schedules list once the person name and calendar date is parsed. +
+**Pros:** Easy to implement. +
+**Cons:** Vigorous user testing and logging is required to debug corner test cases. +
+
+---
+
+**Aspect:** Data structure to support the schedule command +
+**Alternative 1 (current choice):** Creates an empty Set to obtain the schedules from the UniqueScheduleList. +
+**Pros:** The original set of schedules is not altered. +
+**Cons:** Additional space usage is needed so inefficiency and memory wastage may arise. +
+// end::schedule[]
+
 
 // tag::studentparentcontact[]
 === Add Student/Parent Phone Contact Mechanism
