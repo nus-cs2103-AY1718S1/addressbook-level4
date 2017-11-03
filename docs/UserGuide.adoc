@@ -266,12 +266,14 @@ The index *must be a positive integer* like 1, 2, 3, ...
 
 Examples:
 
-* `editE 1 dt/18052013 03:30 +
+* `editE 1 dt/18052013 03:30` +
 Edits the date/time the 1st event to be `18052013 03:30`.
-* `editE 2 n/Lunch with Betsy  +
+* `editE 2 n/Lunch with Betsy`  +
 Edits the name of the 2nd event to be `Lunch with Betsy`.
 
 === Locating persons/events by any property : `(f)find`
+
+_(`AND` and `OR` search coming in v2.0)_
 
 Finds persons/events whose corresponding field(s) contain any of the given keywords. +
 Format: `(f)find KEYWORD [MORE_KEYWORDS] [p/KEYWORD [MORE_KEYWORDS]]...`

@@ -56,6 +56,6 @@ public class TagColorManager {
      */
     public static void setColor(Tag tag) {
         int randomColorCode = randomGenerator.nextInt(RGB_INTERVAL) + RGB_LOWER_BOUND;
-        setColor(tag, Integer.toHexString(randomColorCode));
+        setColor(tag, "#" + Integer.toHexString(randomColorCode));
     }
 }
