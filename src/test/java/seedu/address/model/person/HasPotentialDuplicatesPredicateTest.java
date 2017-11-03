@@ -1,12 +1,12 @@
 package seedu.address.model.person;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
+
+import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
