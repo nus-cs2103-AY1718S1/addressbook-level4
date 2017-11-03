@@ -72,7 +72,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             //@@author
 
             Appointment appointment;
-            if(arePrefixesPresent(argMultimap, PREFIX_DATE)) {
+            if (arePrefixesPresent(argMultimap, PREFIX_DATE)) {
                 appointment = getAppointment(argMultimap, name);
             } else {
                 appointment = new Appointment (name.toString());
@@ -86,7 +86,8 @@ public class AddCommandParser implements Parser<AddCommand> {
     }
 
     private Appointment getAppointment(ArgumentMultimap argMultimap, Name name) throws ParseException {
-        Appointment appointment;List<DateGroup> groups = AddAppointmentParser.getDatesFromString(
+        Appointment appointment;
+        List<DateGroup> groups = AddAppointmentParser.getDatesFromString(
                 argMultimap.getValue(PREFIX_DATE).toString());
         Calendar calendar = Calendar.getInstance();
         if (groups.size() == 0) {
