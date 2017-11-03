@@ -1,11 +1,6 @@
-package seedu.address.model.person;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-
-/**
- * Represents a Person's birthday in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidBirthday(String)}
- *///@@author wei renkai
+# wei
+###### /main/java/seedu/address/model/person/Birthday.java
+``` java
 public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS = "Person's birthday should be in format: DD/MM/YYYY";
@@ -54,3 +49,30 @@ public class Birthday {
     }
 
 }
+```
+###### /main/java/seedu/address/model/person/Picture.java
+``` java
+public class Picture {
+
+    public static final int PIC_WIDTH = 100;
+    public static final int PIC_HEIGHT = 100;
+
+    public static final String BASE_URL = System.getProperty("user.dir") + "/src/main/resources/contact_images/";
+
+    public static final String PLACEHOLDER_IMAG = "test1.png";
+
+    private String pictureUrl;
+
+    public Picture() {
+        this.pictureUrl = BASE_URL + PLACEHOLDER_IMAG;
+    }
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = BASE_URL + pictureUrl;
+    }
+}
+```

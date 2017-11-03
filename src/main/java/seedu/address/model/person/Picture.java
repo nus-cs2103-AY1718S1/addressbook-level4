@@ -1,7 +1,7 @@
 package seedu.address.model.person;
 /**
  *add the url of the picture of the person in the adress book
- **/
+ **///@@author wei renkai
 public class Picture {
 
     public static final int PIC_WIDTH = 100;
