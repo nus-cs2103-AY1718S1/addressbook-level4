@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author wenmogu
 /**
  * This class defines the relationship between two ReadOnlyPersons
  */

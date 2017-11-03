@@ -18,6 +18,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.relationship.RelationshipDirection;
 
+//@@author wenmogu
 /**
  * This class is a wrapper class of SingleGraph class in GraphStream
  * It is used when creating a new SingleGraph when changes happen in the lastShownList

@@ -141,6 +141,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author wenmogu
         /**
          * This method is called as the construction of a new graph needs the FilteredPersonList.
          * Therefore a dummy list is given.
@@ -151,6 +152,7 @@ public class AddCommandTest {
             return FXCollections.unmodifiableObservableList(dummyList.asObservableList());
         }
 
+        //@@author
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");

@@ -1,23 +1,19 @@
-package seedu.address.logic.commands;
+# wenmogu
+###### \java\seedu\address\logic\commands\AddCommandTest.java
+``` java
+        /**
+         * This method is called as the construction of a new graph needs the FilteredPersonList.
+         * Therefore a dummy list is given.
+         */
+        @Override
+        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+            UniquePersonList dummyList = new UniquePersonList();
+            return FXCollections.unmodifiableObservableList(dummyList.asObservableList());
+        }
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import org.junit.Test;
-
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.testutil.StorageStub;
-
-//@@author wenmogu
+```
+###### \java\seedu\address\logic\commands\RemoveTagCommandTest.java
+``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code RemoveTagCommand}.
  */
@@ -78,3 +74,18 @@ public class RemoveTagCommandTest {
         return removeTagCommand;
     }
 }
+```
+###### \java\seedu\address\model\UniqueRelationshipListTest.java
+``` java
+public class UniqueRelationshipListTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
+        UniqueRelationshipList uniqueRelationshipList = new UniqueRelationshipList();
+        thrown.expect(UnsupportedOperationException.class);
+        uniqueRelationshipList.asObservableList().remove(0);
+    }
+}
+```
