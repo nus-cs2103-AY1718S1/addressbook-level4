@@ -15,7 +15,9 @@ import com.calendarfx.view.CalendarView;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -81,14 +83,33 @@ public class CalendarWindow extends UiPart<Region> {
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
 
-
+        setKeyBindings();
     }
 
+
+    //@@author Eric
+    private void setKeyBindings() {
+
+        calendarView.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                    case C:
+                        event.consume();
+                        showNextPage();
+                        break;
+                    default:
+                }
+            }
+        });
+    }
+    //@@author
+
     /**
-     * When user press Tab, the calendar will shift to the next view
+     * When user press shift, the calendar will shift to the next view
      * Order of shifting: day -> week -> month -> year
      */
-    public void showNextPage() {
+    void showNextPage() {
         if (calendarView.getSelectedPage() == calendarView.getMonthPage()) {
             calendarView.showYearPage();
         } else if (calendarView.getSelectedPage() == calendarView.getDayPage()) {
@@ -104,7 +125,7 @@ public class CalendarWindow extends UiPart<Region> {
         return this.calendarView;
     }
 
-    public void setAppointments() {
+    private void setAppointments() {
         for (ReadOnlyPerson person : personList) {
             if (person.getAppointment().getDate() == null) {
                 List<Entry<?>> result = calendar.findEntries(person.getName().toString());
@@ -118,6 +139,7 @@ public class CalendarWindow extends UiPart<Region> {
                 ldt2 = LocalDateTime.ofInstant(person.getAppointment().getEndDate().toInstant(),
                         ZoneId.systemDefault());
             } else {
+                //default one hour appointment
                 ldt2 = ldt.plusHours(1);
             }
             Entry entry = new Entry(person.getName().toString());

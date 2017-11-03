@@ -88,33 +88,16 @@ public class MainWindow extends UiPart<Region> {
         setAccelerators();
         registerAsAnEventHandler(this);
 
-
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                calendarPlaceholder.requestFocus();
-                setKeyBindings();
+                calendarWindow.getRoot().requestFocus();
             }
         });
+
     }
 
-    //@@author Eric
-    private void setKeyBindings() {
 
-        calendarPlaceholder.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                switch (event.getCode()) {
-                    case C:
-                        event.consume();
-                        calendarWindow.showNextPage();
-                        break;
-                    default:
-                }
-            }
-        });
-    }
-    //@@author
 
     public Stage getPrimaryStage() {
         return primaryStage;
