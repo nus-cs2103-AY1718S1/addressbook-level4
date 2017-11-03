@@ -6,6 +6,7 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
@@ -22,10 +23,6 @@ import seedu.address.ui.util.Avatar;
  * The Person Detail Panel of the App.
  */
 public class PersonDetailPanel extends UiPart<Region> {
-
-    public static final String PERSON_PHONE_ICON = "☎  ";
-    public static final String PERSON_ADDRESS_ICON = "\uD83C\uDFE0  ";
-    public static final String PERSON_EMAIL_ICON = "\uD83D\uDCE7  ";
 
     private static final String FXML = "PersonDetailPanel.fxml";
 
@@ -47,6 +44,12 @@ public class PersonDetailPanel extends UiPart<Region> {
     private Label remark;
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView iconPhone;
+    @FXML
+    private ImageView iconEmail;
+    @FXML
+    private ImageView iconAddress;
 
     public PersonDetailPanel() {
         super(FXML);
@@ -66,6 +69,7 @@ public class PersonDetailPanel extends UiPart<Region> {
         initial.setText("");
         tags.getChildren().clear();
         avatar.setFill(Color.TRANSPARENT);
+        hideIcons();
     }
 
     /**
@@ -78,13 +82,26 @@ public class PersonDetailPanel extends UiPart<Region> {
 
         setTextFields(person);
         setTags(person);
+        showIcons();
+    }
+
+    private void hideIcons() {
+        iconPhone.setVisible(false);
+        iconEmail.setVisible(false);
+        iconAddress.setVisible(false);
+    }
+
+    private void showIcons() {
+        iconPhone.setVisible(true);
+        iconEmail.setVisible(true);
+        iconAddress.setVisible(true);
     }
 
     private void setTextFields(ReadOnlyPerson person) {
         name.setText(person.getName().toString());
-        phone.setText(PERSON_PHONE_ICON + person.getPhone().toString());
-        address.setText(PERSON_ADDRESS_ICON + person.getAddress().toString());
-        email.setText(PERSON_EMAIL_ICON + person.getEmail().toString());
+        phone.setText(person.getPhone().toString());
+        address.setText(person.getAddress().toString());
+        email.setText(person.getEmail().toString());
         setRemark(person);
     }
 

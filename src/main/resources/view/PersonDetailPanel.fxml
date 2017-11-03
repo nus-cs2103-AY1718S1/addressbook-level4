@@ -2,6 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -25,13 +27,13 @@
                <children>
                   <StackPane>
                      <children>
-                        <Circle fx:id="avatar" fill="DODGERBLUE" radius="70.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                        <Circle id="avatarBig" fx:id="avatar" fill="DODGERBLUE" radius="70.0" stroke="TRANSPARENT" strokeType="INSIDE" />
                         <Label id="initialBig" fx:id="initial" text="Label" textFill="WHITE" />
                      </children>
                   </StackPane>
                   <VBox alignment="CENTER_LEFT">
                      <children>
-                        <VBox>
+                        <VBox spacing="3.0">
                            <children>
                               <Label fx:id="name" alignment="TOP_LEFT" styleClass="person-big-label" text="\$first" wrapText="true" />
                               <FlowPane id="tagsBordered" fx:id="tags" />
@@ -42,20 +44,44 @@
                         </VBox>
                         <VBox>
                            <children>
-                              <Label fx:id="phone" styleClass="person-small-label" text="\$phone">
+                              <Label fx:id="phone" graphicTextGap="20.0" styleClass="person-small-label" text="\$phone">
                                  <padding>
-                                    <Insets bottom="2.0" right="2.0" top="2.0" />
+                                    <Insets bottom="4.0" right="4.0" top="4.0" />
                                  </padding>
+                                 <graphic>
+                                    <ImageView fx:id="iconPhone" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/phone.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
                               </Label>
-                              <Label fx:id="email" styleClass="person-small-label" text="\$email">
+                              <Label fx:id="email" graphicTextGap="20.0" styleClass="person-small-label" text="\$email">
                                  <padding>
-                                    <Insets bottom="2.0" right="2.0" top="2.0" />
+                                    <Insets bottom="4.0" right="4.0" top="4.0" />
                                  </padding>
+                                 <graphic>
+                                    <ImageView fx:id="iconEmail" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/mail.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
                               </Label>
-                              <Label fx:id="address" styleClass="person-small-label" text="\$address">
+                              <Label fx:id="address" graphicTextGap="20.0" styleClass="person-small-label" text="\$address">
                                  <padding>
-                                    <Insets bottom="2.0" right="2.0" top="2.0" />
+                                    <Insets bottom="4.0" right="4.0" top="4.0" />
                                  </padding>
+                                 <graphic>
+                                    <ImageView fx:id="iconAddress" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/address.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
                               </Label>
                            </children>
                            <padding>
@@ -65,7 +91,7 @@
                         <Label id="remarkLabel" fx:id="remark" text="\$remark" wrapText="true" />
                      </children>
                      <padding>
-                        <Insets left="20.0" />
+                        <Insets left="30.0" />
                      </padding>
                   </VBox>
                </children>
