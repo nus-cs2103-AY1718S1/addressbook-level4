@@ -464,15 +464,15 @@ Add remark to a person in `add` command with `r/` prefix. +
 Format: `add n/NAME p/PHONE_NUMBER b/BIRTHDAY e/EMAIL a/ADDRESS r/[REMARK] [t/TAG]...`
 
 ****
-* Add the remark the person together with AddCommand.
+* Adds a remark to a person together with `add` command.
 ****
 
 Examples:
 
 * `add John Doe p/98765432 e/johnd@gmail.com a/John street, block 123, #01-01 r/Likes to drink milk.` +
-Adds the remark together with name, phone, email and address for the new person in the list.
-* `add Betsy Crowe pp/1234567 e/betsycrowe@gmail.com r/Jogging t/criminal t/friend ` +
-Adds the remark together with name, phone, email, address and tag for the new person in the list.
+Adds a remark together with name, phone, email and address for the new person in the list.
+* `add Betsy Crowe pp/1234567 e/betsycrowe@gmail.com r/Jogging t/criminal t/friend.` +
+Adds a remark together with name, phone, email, address and tag for the new person in the list.
 
 === Coming soon in `v2.0`
 
