@@ -9,10 +9,10 @@ import seedu.address.commons.util.StringUtil;
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
  */
-public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+public class ContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
 
-    public NameContainsKeywordsPredicate(List<String> keywords) {
+    public ContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
@@ -38,7 +38,6 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
             -> StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword));
     }
 
-
     private boolean containsKeyWordInTag(ReadOnlyPerson person) {
         return person.getTags().stream().anyMatch(s -> keywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(s.toStringFilter(), keyword)));
@@ -57,8 +56,8 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof NameContainsKeywordsPredicate // instanceof handles nulls
-                && this.keywords.equals(((NameContainsKeywordsPredicate) other).keywords)); // state check
+                || (other instanceof ContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((ContainsKeywordsPredicate) other).keywords)); // state check
     }
 
 }
