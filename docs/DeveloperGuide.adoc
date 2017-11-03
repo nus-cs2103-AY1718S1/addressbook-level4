@@ -14,6 +14,26 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
+== Introduction
+
+Welcome to _ScheduBook_! The aim of __ScheduBook __is to allow users with busy and hectic schedules to better plan meetings and be reminded of high priority meetings, in addition to the conventional AddressBook functionalities.
+Upon starting the application, a Graphical User Interface that is completely functional using a command-line interface will be launched.
+
+This developer guide is intended get you up-and-running with our application. We will cover everything you need to know,
+from setting up, to the implementation of commands, to troubleshooting testing. This guide is written in a top-down approach which will help you to better understand the overall design
+before diving into the detailed explanation of each component.
+
+== Contribution
+There are plenty of ways for you to contribute to this project such as (list is not exhaustive):
+
+* Implementing new features
+* Enhancing overall code quality
+* Integrating external Application Programming Interfaces(API)
+* Testing of codes
+
+You do not have to worry about being an inexperienced programmer as this guide will not only will help you to get started as a __ScheduBook __contributor,
+but also allow you to learn and understand the basic concepts behind Object-oriented programming(OOP) in Java.
+
 == Setting up
 
 === Prerequisites
@@ -495,13 +515,13 @@ object.
 When given invalid inputs, the `editmeeting` command shares some of the  exceptions
 which are also thrown by the `addmeeting` command. They are:
 
-* `DuplicateMeetingException`: Compares the editted Meeting object with the other Meeting objects in the address book
+* `DuplicateMeetingException`: Compares the edited Meeting object with the other Meeting objects in the address book
 and this exception is thrown when there is a duplicate object with the same parameters.
 * `MeetingNotFoundException` : Exception is thrown when the index provided to the `editmeeting` command
 is referring to the invalid index of a `Meeting` object in the addressbook
-* `MeetingBeforeCurrDateException` : Exception is thrown when the date of the editted
+* `MeetingBeforeCurrDateException` : Exception is thrown when the date of the edited
 Meeting is earlier than that of the current system time, this exception is thrown.
-* `MeetingClashException` : Exception is thrown when the DateTime of the edittedmeeting is
+* `MeetingClashException` : Exception is thrown when the DateTime of the editedmeeting is
 the same as one of the preexisting Meetings in the addressbook.
 
 ==== Design Considerations
@@ -509,7 +529,7 @@ the same as one of the preexisting Meetings in the addressbook.
 **Aspect:** how `EditMeetingCommand` executes +
 **Alternative 1 :** Comparing the different parameters individually without the creation
  of a new instance of a `Meeting` +
-**Pros:** More direct and faster way of editting the different parameters of the `Meeting` object +
+**Pros:** More direct and faster way of editing the different parameters of the `Meeting` object +
 
 ---
 
