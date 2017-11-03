@@ -24,7 +24,7 @@ public class PartialSearchUtil {
             String baseString = baseListItr.next();
             ListIterator<String> targetListItr = targetList.listIterator();
             while (targetListItr.hasNext()) {
-                if (targetListItr.next().contains(baseString)) {
+                if (targetListItr.next().toLowerCase().contains(baseString.toLowerCase())) {
                     flag = true;
                     break;
                 }
