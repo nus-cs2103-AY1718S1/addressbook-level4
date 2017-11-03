@@ -83,8 +83,6 @@
 }
 
 .split-pane {
-    -fx-border-radius: 1;
-    -fx-border-width: 1;
     -fx-background-color: transparent;
 }
 
@@ -99,11 +97,7 @@
     -fx-padding: 0 0 0 0;
 }
 
-.list-cell:filled:even {
-    -fx-background-color: #ffffff;
-}
-
-.list-cell:filled:odd {
+.list-cell:filled {
     -fx-background-color: #ffffff;
 }
 
@@ -113,7 +107,6 @@
 
 .list-cell:filled:selected #cardPane {
     -fx-border-color: transparent;
-    -fx-border-width: 1;
 }
 
 .cell-name-label {
@@ -135,23 +128,10 @@
 }
 
 .person-small-label {
-    -fx-font-family: "Lucida Grande", "Segoe UI", Optima;
+    -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 15px;
     -fx-text-fill: #848484;
 }
-
-.person-remark-label {
-
-}
-
-.person-name-label {
-/*
-    -fx-border-color: black;
-    -fx-border-width: 1px;
-*/
-}
-
-
 
 .anchor-pane {
      -fx-background-color: transparent;
@@ -377,7 +357,7 @@
     -fx-background-radius: 0;
 }
 
-#filterField, #personListPanel {
+#filterField {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
 
