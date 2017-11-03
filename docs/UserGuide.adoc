@@ -39,6 +39,8 @@ This app will not work with earlier versions of Java 8.
 +
 image::AddresbookLabels.png[width="790"]
 +
+Figure 1: Application GUI
++
 &#160;a. Command Box  &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; b. Message Box +
 &#160;c. Contacts List &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
 d. Meetings List +
@@ -64,9 +66,10 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 
 image::Reminder.png[width="600"]
+Figure 2: Pop-up Notification
 
 . Upon opening up the application, if there is a meeting(s) on the same day, you will be reminded via a pop-up message
-. As Shown to you in the example above, the information regarding the next upcoming meeting is displayed in the message
+. As Shown to you in the figure 2, the information regarding the next upcoming meeting is displayed in the message
 
 === Meeting Card Colours
 
@@ -77,13 +80,21 @@ To show you the nearing of upcoming meetings, colours are assigned to the card b
 +
 image::MeetingCard1.png[align="center"][width="200"]
 +
+Figure 3A: Dark red Meeting Card
++
     * `red` : Meeting is in next 48 hours.
 +
 image::MeetingCard2.png[align="center"][width="200"]
 +
+Figure 3B: Red Meeting Card
++
     * `orangeRed` : Meeting is in next 72 hours.
 +
+
 image::MeetingCard3.png[align="center"][width="200"]
++
+Figure 3C: Orange Meeting Card
+
 
 === Auto Deletion of Meeting Cards
 
@@ -218,18 +229,19 @@ Input format for Date and Time is "DD-MM-YYYY HH:MM"
 ****
 * Adds meeting with person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer 1,2,3, ...
 * Creation of group meetings
-** You can create meetings with multiple people at the same timing for an event(NameMeeting). In this case, multiple `Meeting Cards` will be created. A group meeting consists of meetings that have the same `NameMeeting`,`DateTime` and `Place` but with different person.
+** You can create meetings with different people at the same timing for a particular event. In this case,
+ multiple `Meeting Cards` will be created. A group meeting consists of meetings that have the same event name, date and location but with different people
 +
 image::MeetingGroup.png[align="center"][width="200"]
 +
-** However, when opening Schedubook, if your next meeting is a group meeting, the reminder will show.
+Figure 4A: Meeting Cards for Group Meeting
 +
-image::Reminder(1).png[align="center"][width="600"]
-+
-* When adding a new meeting, you will be prompted to change the date and time of meeting if it will result in a clash with an existing meeting.
+* When you are attempting to add a meeting with the same date and time as a pre-existing one in ScheduBook, the following
+error will be shown, preventing you from having 2 different meetings with exactly the same date and time
 +
 image::MeetingClash.png[width="500"]
 +
+Figure 4B: Clash Meeting Error
 ****
 
 Examples:
@@ -297,6 +309,12 @@ Format: `(em)editmeeting INDEX [n/NAME] [d/DATETIME] [l/LOCATION]`
 * Edits the meeting at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
+* Once a meeting is successfully editted, a message showing the edited meeting will be displayed as shown below
++
+image::EditMeetingSuccess.png[width="500"]
++
+Figure 5: Successful Editted Meeting
+
 ****
 
 Examples:
