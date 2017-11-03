@@ -471,6 +471,21 @@ Add new persons from newAddressBook into local addressbook. +
 Add new persons from addressbook2 from local project +
 folder *data* into local addressbook.
 
+=== Remarking a person : `remark`
+
+Edits the remark for a person specified in the INDEX. +
+Format: `add n/NAME p/PHONE_NUMBER b/BIRTHDAY e/EMAIL a/ADDRESS r/[REMARK] [t/TAG]...`
+
+****
+* Add the remark the person together with AddCommand.
+****
+
+Examples:
+
+* `add John Doe p/98765432 e/johnd@gmail.com a/John street, block 123, #01-01 r/Likes to drink milk.` +
+Adds the remark together with name, phone, email and address for the new person in the list.
+* `add Betsy Crowe pp/1234567 e/betsycrowe@gmail.com r/Jogging t/criminal t/friend ` +
+Adds the remark together with name, phone, email, address and tag for the new person in the list.
 
 === Coming soon in `v2.0`
 
