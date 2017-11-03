@@ -227,12 +227,7 @@ public class ArkBot extends AbilityBot {
                 .privacy(Privacy.ADMIN)
                 .action(ctx -> {
                     Platform.runLater(() -> {
-                        try {
-                            sender.send(BOT_MESSAGE_HELP), ctx.chatId());
-                        } catch (CommandException | ParseException e) {
-                            sender.send(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE),
-                                    ctx.chatId());
-                        }
+                        sender.send(BOT_MESSAGE_HELP, ctx.chatId());
                     });
                     // sender.send("You typed: " + combineArguments(ctx.arguments()), ctx.chatId());
                 })
