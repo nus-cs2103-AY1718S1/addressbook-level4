@@ -50,6 +50,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
@@ -95,7 +96,7 @@ public class CalendarView extends UiPart<Region> {
 
     private final List<TimeSlot> timeSlots = new ArrayList<>();
 
-    private final GridPane calendarView;
+//    private final GridPane calendarView;
     private final TreeMap<ReadOnlyEvent, Node> addedEvents = new TreeMap<>();
 
     private final Logger logger = LogsCenter.getLogger(CalendarView.class);
@@ -108,28 +109,37 @@ public class CalendarView extends UiPart<Region> {
     private ReadOnlyEvent draggedEvent;
 
     @FXML
-    private StackPane calendarViewPlaceHolder;
+    private VBox calendarViewPlaceHolder;
+
+    @FXML
+    private GridPane calendarView;
+
+    @FXML
+    private GridPane headers;
 
     public CalendarView(ObservableList<ReadOnlyEvent> eventList, Logic logic) {
         super(FXML);
 
         this.logic = logic;
 
-        calendarView = new GridPane();
+//        calendarView = new GridPane();
 
         currentToday = today.get();
         currentStartOfWeek = startOfWeek.get();
         currentEndOfWeek = endOfWeek.get();
 
         initSlots(calendarView);
-        initTurnPageButton(calendarView);
-        initDateHeader(calendarView);
+        initTurnPageButton(headers);
+        initDateHeader(headers);
         initDateTimeHeader(calendarView);
         initEvents(calendarView, eventList, null);
 
         ScrollPane scrollableCalendar = new ScrollPane(calendarView);
+        ScrollPane scrollableHeader = new ScrollPane(headers);
+        scrollableHeader.setMinHeight(80);
 
-        calendarViewPlaceHolder.getChildren().add(scrollableCalendar);
+        calendarViewPlaceHolder.getChildren().addAll(scrollableHeader, scrollableCalendar);
+        scrollableCalendar.hvalueProperty().bindBidirectional(scrollableHeader.hvalueProperty());
 
         registerAsAnEventHandler(this);
     }
@@ -170,11 +180,13 @@ public class CalendarView extends UiPart<Region> {
      * @param calendarView gridPane of the calendar
      */
 
-    private void initTurnPageButton(GridPane calendarView) {
+    private void initTurnPageButton(GridPane headers) {
         Button lastPage = new Button();
         Button nextPage = new Button();
-        lastPage.setMaxSize(40, 30);
-        nextPage.setMaxSize(40, 30);
+        lastPage.setPrefSize(80, 30);
+        lastPage.setMinSize(80, 30);
+        nextPage.setPrefSize(80, 30);
+        nextPage.setMinSize(80, 30);
         lastPage.setStyle("-fx-background-color: transparent");
         nextPage.setStyle("-fx-background-color: transparent");
         lastPage.setGraphic(new ImageView(new Image(getClass().getResource("/images/lastPage.png").toExternalForm
@@ -188,7 +200,7 @@ public class CalendarView extends UiPart<Region> {
                 currentStartOfWeek = currentStartOfWeek.minusDays(7);
                 currentEndOfWeek = currentEndOfWeek.minusDays(7);
                 initSlots(calendarView);
-                initDateHeader(calendarView);
+                initDateHeader(headers);
                 initEvents(calendarView, eventList, null);
             }
         });
@@ -198,16 +210,13 @@ public class CalendarView extends UiPart<Region> {
                 currentStartOfWeek = currentStartOfWeek.plusDays(7);
                 currentEndOfWeek = currentEndOfWeek.plusDays(7);
                 initSlots(calendarView);
-                initDateHeader(calendarView);
+                initDateHeader(headers);
                 initEvents(calendarView, eventList, null);
             }
         });
 
-        HBox box = new HBox();
-//        box.setMaxSize(20,5);
-        box.getChildren().add(lastPage);
-        box.getChildren().add(nextPage);
-        calendarView.add(box, 0, 0);
+        headers.add(lastPage, 0, 0);
+        headers.add(nextPage, 8, 0);
     }
 
 
@@ -217,9 +226,9 @@ public class CalendarView extends UiPart<Region> {
      *
      * @param calendarView gridPane of the calendar
      */
-    private void initDateHeader(GridPane calendarView) {
+    private void initDateHeader(GridPane headers) {
         DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("E\nMMM d");
-        StackPane[] headers = new StackPane[8];
+        StackPane[] headerPanes = new StackPane[8];
 
         for (LocalDate date = currentStartOfWeek; !date.isAfter(currentEndOfWeek);
              date = date.plusDays(1)) {
@@ -229,15 +238,17 @@ public class CalendarView extends UiPart<Region> {
             label.setPadding(new Insets(1));
             label.setTextAlignment(TextAlignment.CENTER);
             StackPane pane = new StackPane();
+            pane.setPrefSize(120,50);
+            pane.setMinSize(120,50);
             pane.setStyle("-fx-background-color:#FEDFE1");
             pane.getChildren().add(label);
             GridPane.setHalignment(label, HPos.CENTER);
-            if(calendarView.getChildren().remove(headers[columnIndex])) {
-                logger.info("removed label " + headers[columnIndex].toString());
+            if(headers.getChildren().remove(headerPanes[columnIndex])) {
+                logger.info("removed label " + headerPanes[columnIndex].toString());
             }
-            calendarView.add(pane, columnIndex, 0);
-            headers[columnIndex] = pane;
-            logger.info("Added " + headers[columnIndex]);
+            headers.add(pane, columnIndex, 0);
+            headerPanes[columnIndex] = pane;
+            logger.info("Added " + headerPanes[columnIndex]);
         }
     }
 
@@ -254,8 +265,10 @@ public class CalendarView extends UiPart<Region> {
              startTime = startTime.plus(slotLength)) {
             Label label = new Label(startTime.format(timeFormatter));
             label.setPadding(new Insets(2));
+            StackPane pane = new StackPane(label);
+            pane.setPrefSize(80,30);
             GridPane.setHalignment(label, HPos.RIGHT);
-            calendarView.add(label, 0, slotIndex);
+            calendarView.add(pane, 0, slotIndex);
             slotIndex++;
         }
     }
@@ -296,9 +309,13 @@ public class CalendarView extends UiPart<Region> {
     private void updateEvents(GridPane calendarView, ObservableList<ReadOnlyEvent> eventList, ReadOnlyEvent
             lastChangedEvent, ReadOnlyEvent newlyAddedEvent) {
         this.eventList = eventList;
-        removeDuplicatedPane(calendarView, lastChangedEvent);
-        StackPane eventPane = createPane(newlyAddedEvent);
-        addEventPaneToCalendarView(calendarView, newlyAddedEvent, eventPane);
+        if (lastChangedEvent != null) {
+            removeDuplicatedPane(calendarView, lastChangedEvent);
+        }
+        if (newlyAddedEvent != null) {
+            StackPane eventPane = createPane(newlyAddedEvent);
+            addEventPaneToCalendarView(calendarView, newlyAddedEvent, eventPane);
+        }
     }
 
     /**
@@ -332,7 +349,7 @@ public class CalendarView extends UiPart<Region> {
      */
 
     private void removeDuplicatedPane(GridPane calendarView, ReadOnlyEvent lastChangedEvent) {
-        logger.info("Want to remove --- " + lastChangedEvent + " with pane? " + addedEvents.containsKey(lastChangedEvent));
+//        logger.info("Want to remove --- " + lastChangedEvent + " with pane? " + addedEvents.containsKey(lastChangedEvent));
         if (calendarView.getChildren().remove(addedEvents.get(lastChangedEvent))) {
             logger.info("EventPane removed --- " + lastChangedEvent);
             addedEvents.remove(lastChangedEvent);
@@ -366,7 +383,7 @@ public class CalendarView extends UiPart<Region> {
 
         //Create the pane
         StackPane eventPane = new StackPane();
-        eventPane.setMaxWidth(150.0);
+        eventPane.setMaxWidth(120.0);
         eventPane.setStyle("-fx-background-color: " + colors[randomColor] + "; -fx-alignment: CENTER; "
                 + "-fx-border-color: " + "white");
 
@@ -566,9 +583,8 @@ public class CalendarView extends UiPart<Region> {
             this.duration = duration;
 
             view = new StackPane();
-            view.setMinSize(80, 30);
             view.setPrefSize(120, 30);
-            view.setMaxSize(150, 40);
+            view.setMinSize(100, 30);
             view.getStyleClass().add("time-slot");
 
             selectedProperty().addListener((obs, wasSelected, isSelected) ->
