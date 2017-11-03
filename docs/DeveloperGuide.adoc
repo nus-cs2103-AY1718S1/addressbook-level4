@@ -16,15 +16,21 @@ By: `CS2103AUG2017-W15-B4`      Since: `Oct 2017`      Licence: `MIT`
 
 == Introduction
 
-3W stands for "Who, What & Where". It is an application for University students, business people and all those who have a busy daily schedule.
-3W stores information about your contact, your tasks, and build linkage between them for cross references.
+3W stands for "Who, What & Where". It is a desktop application for University students, business people and all those who have a busy daily schedule.
+3W stores information about your contact, your tasks, and easily links different contacts and tasks for cross references.
 3W supports map show for contact address and task venue with a Google map window.
-3W bases on command line to interact.
-Live neat with 3W.
+3W is based on command line to interact.
+Life can be easier with 3W.
+
+This document is the developer guide for this application. You will firstly learn how to set up the project and the developing environment.
+Following that, you can see the overall design of the application and the design and implementation of each component. The specific instructions and methods to do documentation and testing are also contained in this document.
+In addition, from the appendices, you will see the current user stories, use cases, requirements and some special glossaries defined for this document. We have a small product survey section for comparison between this application and other similar products.
+Please feel free to contribute to this open source project!
 
 == Setting up
 
 === Prerequisites
+As a developer, if you want to contribute to this open source project, you must do the following to set up the developing environment before getting started.
 
 . *JDK `1.8.0_60`* or later
 +
@@ -37,11 +43,12 @@ This app is not compatible with earlier versions of Java 8.
 +
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
-Please install them if they are disabled. +
-Checking plug-ins by going to `File` > `Settings` > `Plugins`.
+Please enable them if they are disabled. +
+Checking plug-ins states by going to `File` > `Settings` > `Plugins`.
 
 
 === Setting up the project in your computer
+After getting JDK and the IntelliJ IDE, you can set up the project by following the steps as follows:
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
@@ -59,13 +66,15 @@ Checking plug-ins by going to `File` > `Settings` > `Plugins`.
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
+After finishing the above steps, you can verify your project environment and setups by:
 
 . Run the `seedu.address.MainApp` and try a few commands
 .. Type the command in the command line in the root folder of this application.
 .. Alternatively, you can right click the MainApp in `src` folder and click `run MainApp`.
-. link:#testing[Run the tests] to ensure they all pass.
+. link:#testing[Run the tests] to ensure that they all pass.
 
 === Configuring the application
+If you wish, you can configure the application with style checker and continous integration using Travis and/or AppVeyor.
 
 ==== Configuring the coding style
 
@@ -82,13 +91,13 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103AUG2017-W15-B4/main` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
 Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
-Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
+Optionally, you can set up AppVeyor as a second CI, and the steps can be found at <<UsingAppVeyor#, UsingAppVeyor.adoc>>.
 
 [NOTE]
 Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
@@ -101,10 +110,11 @@ When you are ready to start coding,
 2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
 == Design
+If you want to have a better understanding of the overall design and the specifications of the implementation of this application, this section can help get your started.
 
 === Architecture
 
-This *_Architecture Diagram_* given below explains the high-level design of the App.
+This *_Architecture Diagram_* given below shows the high-level design of the App.
 
 image::Architecture.png[width="600"]
 _Figure 2.1.1 : Architecture Diagram_
@@ -114,8 +124,8 @@ The `.pptx` files used to create diagrams in this document can be found in the l
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* At app launch: Initializing the components in the correct sequence, and connects them up with each other.
+* At shut down: Shutting down the components and invokes cleanup method where necessary.
 
 link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
@@ -124,7 +134,7 @@ link:#common-classes[*`Commons`*] represents a collection of classes used by mul
 
 The rest of the App consists of four components.
 
-* link:#ui-component[*`UI`*] : The UI of the App.
+* link:#ui-component[*`UI`*] : The User Interface of the App.
 * link:#logic-component[*`Logic`*] : The command executor.
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
@@ -134,7 +144,7 @@ Commonalities of the four components:
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class. The class diagram of the logic component is shown here for your reference.
 
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.1.2 : Class Diagram of the Logic Component_
@@ -148,7 +158,7 @@ image::SDforDeletePerson.png[width="800"]
 _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+You can see from the diagram how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
@@ -161,6 +171,8 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 These are the details of each component.
 
 === UI component
+
+The user interface has a structure that can be demonstrated in the following figure.
 
 image::UiClassDiagram.png[width="800"]
 _Figure 2.2.1 : Structure of the UI Component_
@@ -178,6 +190,8 @@ The `UI` component,
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
 === Logic component
+
+The following figure shows how the logic component is structured.
 
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.3.1 : Structure of the Logic Component_
