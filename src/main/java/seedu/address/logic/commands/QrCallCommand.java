@@ -40,10 +40,7 @@ public class QrCallCommand extends Command {
         }
         int indexOfPersonInList = targetIndex.getOneBased() - 1;
         String phoneOfPerson = lastShownList.get(indexOfPersonInList).getPhone().toString();
-        // QrGenerateCommand qrGenerateCommand = new QrGenerateCommand();
-       // qrGenerateCommand.qrCall(phoneOfPerson);
         EventsCenter.getInstance().post(new QrEvent(lastShownList.get(indexOfPersonInList)));
-        //EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
 
     }
