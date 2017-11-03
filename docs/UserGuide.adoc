@@ -29,10 +29,12 @@ in typing out command line inputs to manipulate with information of their contac
 
 Feeling lost when using The Myth's Book? Don't worry. This user guide will provide information to help you
 understand the features and commands of the software.
-This user guide will teach you on how to use The Myth's Book effectively and allow
+This user guide will guide you on how to use The Myth's Book effectively and allow
 you to manipulate the necessary information of your contacts efficiently.
 
 == Quick Start
+
+This section shows the sequence of steps that helps you to setup `The Myth's Book`.
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -42,7 +44,7 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. You will see the GUI as seen from the diagram below.
 +
 image::Ui.png[width="790"]
 +
@@ -51,14 +53,16 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`add n/John Doe p/98765432 h/65812321 e/johnd@example.com se/john@u.nus.edu w/https://www.facebook.com/johnDoe a/John street, block 123, #01-01 b/12/11/1972`
+* **`add`**`add n/John Doe p/98765432 e/johnd@example.com `
  : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
-== Command Features
+== Basic Command Features
+
+This section teaches you the `basic` commands that are available in `The Myth's Book`.
 
 ====
 *Command Format*
@@ -77,6 +81,18 @@ Format: `help`
 
 Adds a person to The Myth's Book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [w/WEBSITE] [a/ADDRESS] [h/HOME_NUMBER] [se/SCHOOL_EMAIL] [b/BIRTHDAY] [t/TAG]...`
+
+[width="59%",cols="50%,<50%,options="header",]
+|=======================================================================
+|Prefix | Meaning
+|`n` |name
+
+|`p` |phone
+
+|`e` |email
+|=======================================================================
+
+
 
 [TIP]
 Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John t/friend` or as `n/John`. +
@@ -461,6 +477,10 @@ Format: `exit`
 
 The Myth's Book's data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+link:#the-myths-book---user-guide[Back To Top]
+
+== Advanced Command Features
 
 link:#the-myths-book---user-guide[Back To Top]
 
