@@ -38,7 +38,6 @@ public class XmlUtil {
 
         JAXBContext context = JAXBContext.newInstance(classToConvert);
         Unmarshaller um = context.createUnmarshaller();
-
         return ((T) um.unmarshal(file));
     }
 

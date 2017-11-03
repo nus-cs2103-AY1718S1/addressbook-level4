@@ -21,6 +21,7 @@ public class GmapCommandParserTest {
 
     private GmapCommandParser parser = new GmapCommandParser();
 
+    // @@author Choony93
     @Test
     public void parse_validArgs_returnsSelectCommand() {
         assertParseSuccess(parser, "1", new GmapCommand(INDEX_FIRST_PERSON));
@@ -34,4 +35,5 @@ public class GmapCommandParserTest {
     public void parse_invalidArgs_throwsParseException() {
         assertParseFailure(parser, "0", String.format(MESSAGE_INVALID_COMMAND_FORMAT, GmapCommand.MESSAGE_USAGE));
     }
+    // @@author
 }

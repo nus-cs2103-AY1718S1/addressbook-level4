@@ -15,7 +15,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
-import seedu.address.commons.events.ui.PersonPanelOptionsDelete;
+import seedu.address.commons.events.ui.PersonPanelDeleteEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -123,9 +123,11 @@ public class UiManager extends ComponentManager implements Ui {
                 event.exception);
     }
 
+    //@@author Choony93
     @Subscribe
-    private void handleOptionsDeleteEvent(PersonPanelOptionsDelete event) throws CommandException, ParseException {
+    private void handleOptionsDeleteEvent(PersonPanelDeleteEvent event) throws CommandException, ParseException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.logic.execute("delete " + event.targetIndex);
     }
+    //@@author
 }

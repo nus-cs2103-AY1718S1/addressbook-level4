@@ -4271,7 +4271,12 @@ to the top and bottom -fx-padding values of the parent toolbar. */
     -fx-graphic: url("dialog-warning.png");
 }
 
-
+/*******************************************************************************
+ *                                                                             *
+ * Custom Styling                                                              *
+ *                                                                             *
+ ******************************************************************************/
+ /* @@author Choony93-reused */
 .list-cell:filled:even {
     -fx-background-color: #bbffff;
 }
@@ -4279,3 +4284,4 @@ to the top and bottom -fx-padding values of the parent toolbar. */
 .list-cell:filled:odd {
     -fx-background-color: #e2ffff;
 }
+/* @@author */

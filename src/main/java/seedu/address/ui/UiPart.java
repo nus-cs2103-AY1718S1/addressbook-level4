@@ -32,6 +32,7 @@ public abstract class UiPart<T> {
     /**
      * Individual theme files url
      */
+    //@@author Choony93
     public static final String THEME_CSS_DARKTHEME = "/darktheme/DarkTheme.css";
     public static final String THEME_CSS_BOOTSTRAP3 = "/bootstrap3/bootstrap3.css";
     public static final String THEME_CSS_CASPIAN = "/caspian/caspian.css";
@@ -50,6 +51,7 @@ public abstract class UiPart<T> {
                 add(THEME_CSS_MODENA_WHITEONBLACK);
                 add(THEME_CSS_MODENA_YELLOWONBLACK);
             }});
+    //@@author
 
     private FXMLLoader fxmlLoader;
 
@@ -81,6 +83,7 @@ public abstract class UiPart<T> {
      *
      * @param index
      */
+    //@@author Choony93
     public static String getThemeNameByIndex(int index) {
         String themeName = THEME_LIST_DIR.get(index);
         themeName = themeName.replaceAll(".css", "");
@@ -92,6 +95,7 @@ public abstract class UiPart<T> {
         }
         return themeName;
     }
+    //@@author
 
     /**
      * Returns the root object of the scene graph of this UiPart.

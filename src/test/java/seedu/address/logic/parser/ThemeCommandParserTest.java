@@ -16,6 +16,7 @@ public class ThemeCommandParserTest {
 
     private ThemeCommandParser parser = new ThemeCommandParser();
 
+    // @@author Choony93
     @Test
     public void parse_validArgs_returnsSelectCommand() {
         assertParseSuccess(parser, "1", new ThemeCommand(Index.fromOneBased(1)));
@@ -27,4 +28,5 @@ public class ThemeCommandParserTest {
     public void parse_invalidArgs_throwsParseException() {
         assertParseFailure(parser, "0", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
     }
+    // @@author
 }

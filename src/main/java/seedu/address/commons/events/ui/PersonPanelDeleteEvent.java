@@ -4,13 +4,14 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * Indicates a request to display Google Map of targeted index
+ * Indicates a request to delete person of targeted index from UI menu
  */
-public class PersonPanelOptionsDelete extends BaseEvent {
+//@@author Choony93
+public class PersonPanelDeleteEvent extends BaseEvent {
 
     public final int targetIndex;
 
-    public PersonPanelOptionsDelete(Index targetIndex) {
+    public PersonPanelDeleteEvent(Index targetIndex) {
         this.targetIndex = targetIndex.getOneBased();
     }
 
