@@ -89,7 +89,6 @@ public class PersonCard extends UiPart<Region> {
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         });
     }
-  
     /**
      * Handles photo change
      */
@@ -97,13 +96,11 @@ public class PersonCard extends UiPart<Region> {
     private void handlePhotoChange(PhotoChangeEvent event) {
 
         File file = new File(filePath + person.getEmail().toString() + ".png");
-        //}
         Path path = Paths.get(filePath + person.getEmail().toString() + ".png");
 
         if (Files.exists(path)) {
             Image image = new Image(file.toURI().toString(), 150, 150, false, false);
             photo.setImage(image);
-            //   System.out.println("Photo changed " + person.getName().fullName);
         }
 
     }

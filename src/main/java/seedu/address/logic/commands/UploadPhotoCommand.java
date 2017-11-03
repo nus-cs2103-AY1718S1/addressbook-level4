@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,7 +42,6 @@ public class UploadPhotoCommand extends Command {
     private final FileChooser fileChooser = new FileChooser();
     private Stage stage;
     private ImageView imageView = new ImageView();
-    private HashMap<Email, String> photoList;
 
     public UploadPhotoCommand(Index targetIndex, String filePath) {
         this.targetIndex = targetIndex;
@@ -58,7 +56,6 @@ public class UploadPhotoCommand extends Command {
         }
         ReadOnlyPerson personToUploadImage = lastShownList.get(targetIndex.getZeroBased());
         File imageFile;
-        //  Photo targetPhoto = lastShownList.get(targetIndex.getZeroBased()).getPhoto();
 
         if (filePath.equals("")) {
             imageFile = handleFileChooser();
@@ -67,16 +64,11 @@ public class UploadPhotoCommand extends Command {
         }
 
         if (isValidImageFile(imageFile)) {
-            imageFile = saveFile(imageFile, personToUploadImage.getEmail());
+            saveFile(imageFile, personToUploadImage.getEmail());
             EventsCenter.getInstance().post(new PhotoChangeEvent());
         } else {
             throw new CommandException(String.format(MESSAGE_UPLOAD_IMAGE_FALURE));
         }
-
-        // ReadOnlyPerson editedPerson = lastShownList.get(targetIndex.getZeroBased());
-        // editedPerson.getPhoto().setPath(imageFile.getPath());
-        // photoList.put(personToUploadImage.getEmail(), imageFile.getPath());
-        // EventsCenter.getInstance().registerHandler(handler);
         return new CommandResult(String.format(MESSAGE_UPLOAD_IMAGE_SUCCESS, personToUploadImage));
     }
 
@@ -114,15 +106,13 @@ public class UploadPhotoCommand extends Command {
     /**
      * Reads and saves image file into project directory folder "photos".
      */
-    private File saveFile(File file, Email email) {
+    private void saveFile(File file, Email email) {
 
         File path = new File("photos/" + email.toString() + ".png");
 
         try {
             path.mkdirs();
             path.createNewFile();
-            //     System.out.println(path.getPath());
-            //  BufferedImage image = new BufferedImage(100, 100, 1);
             BufferedImage image;
             image = ImageIO.read(file);
             ImageIO.write(image, "png", path);
@@ -131,7 +121,6 @@ public class UploadPhotoCommand extends Command {
             e.printStackTrace();
             Logger.getLogger(UploadPhotoCommand.class.getName()).log(Level.SEVERE, null, e);
         }
-        return path;
     }
 
 }
