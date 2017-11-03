@@ -819,7 +819,7 @@ for (ReadOnlyPerson people : people) {
        //...other logic...
 ----
 
-==== Alternatives Considered
+==== Design Considerations
 **Aspect:** What graph to be displayed to show the most effective visual aid +
 **Alternative 1 (current choice):** Do a `lineChart` using XYChart.series. +
 **Pros:** Easier to implement. +
@@ -896,7 +896,7 @@ The following sequence diagram shows how the FindTags operation works:
 image::FindtagsSequenceDiagramForLogic.png[width="800"]
 _Figure 3.5.1 : Sequence Diagram of FindTags Operation_
 
-==== Alternatives considered.
+==== Design Considerations
 
 **Aspect:** Having a separate predicate class to support `findtags` +
 **Alternative 1 (current choice):** Have a `TagsContainsKeywordsPredicate` to facilitate search +
