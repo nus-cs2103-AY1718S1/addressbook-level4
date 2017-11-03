@@ -214,6 +214,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    public void sortMeeting() {
+        meetings.sortMeeting();
+    }
+
     //// util methods
 
     @Override
