@@ -292,6 +292,17 @@ removes remark from the 2nd person in the address book.
 
 // end::remark[]
 
+// tag::linechart[]
+=== Displaying results : `lineChart` `Since v1.3`
+
+Plots a graph of names against grades based on the selected student's class.
+
+[NOTE]
+====
+Selecting another student from a different class would plot a different graph.
+====
+// end::linechart[]
+
 === Listing entered commands : `history` `Since v1.0`
 
 Lists all the commands that you have entered in reverse chronological order. +

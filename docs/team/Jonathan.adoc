@@ -35,6 +35,33 @@ include::../DeveloperGuide.adoc[tag=remark]
 #End of Extract#
 
 ---
+=== Enhancement Added: lineChart
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=linechart]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To display the results of all students in the same class to see the difference in grades that can be seen at a glance.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=linechart]
+
+#End of Extract#
+
+---
 === Enhancement Proposed: Add 25 & 75 percentile lines
 adds a horizontal line across the graph to show the 75th and 25th percentile of the current list grades.
 
