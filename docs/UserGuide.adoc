@@ -415,7 +415,7 @@ The index *must be a positive integer* `1, 2, 3, ...`
 // end::remark[]
 
 // tag::batch[]
-=== Deleting all persons with a particular tag : [Since v1.2]
+=== Deleting all persons with a particular tag : `batch` [Since v1.2]
 
 You can delete multiple contacts by tags +
 *Format:* `batch TAG` +
@@ -426,7 +426,7 @@ Command can only delete one tag at a time
 // end::batch[]
 
 // tag::batch[]
-=== Copy a person's email address to your clipboard : [Since v1.4]
+=== Copy a person's email address to your clipboard : `copy` [Since v1.4]
 
 You can copy a person's email address to your clipboard +
 *Format:* `copy INDEX` +
