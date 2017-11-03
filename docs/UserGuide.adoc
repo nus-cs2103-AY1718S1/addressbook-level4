@@ -283,7 +283,7 @@ Alias: `ca`
 
 Examples:
 
-* `cadd p/2 i/b8dyuv028k71krma10abbc8f3s`
+* `cadd p/2 i/b8dkov028k71krma20qbbc8f3s`
 
 === Setting the photo of a person: `ppset` (Since V1.4)
 
