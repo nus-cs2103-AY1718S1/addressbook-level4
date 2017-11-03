@@ -11,14 +11,13 @@ import com.calendarfx.view.CalendarView;
 import seedu.address.testutil.TypicalPersons;
 
 //@@author Eric
-public class CalendarWindowTest {
+public class CalendarWindowTest extends GuiUnitTest {
 
     private CalendarWindow calendarWindow;
     @Before
     public void setUp() {
-        com.sun.javafx.application.PlatformImpl.startup(()-> {});
         calendarWindow = new CalendarWindow(TypicalPersons.getTypicalAddressBook().getPersonList());
-
+        uiPartRule.setUiPart(calendarWindow);
     }
 
     @Test
