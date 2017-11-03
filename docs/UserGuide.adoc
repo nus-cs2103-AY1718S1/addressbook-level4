@@ -108,7 +108,7 @@ Examples:
 
 Adds a picture of a person to the resident book +
 Format: `click on the placeholder image after adding the person into the addressbook`
-=======
+
 Adds a person to the resident book +
 Format: `click on '+' button after adding the person into the residentbook`
 
