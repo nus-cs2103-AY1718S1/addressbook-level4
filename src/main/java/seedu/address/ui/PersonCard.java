@@ -79,6 +79,7 @@ public class PersonCard extends UiPart<Region> {
             photo.setImage(image);
         } else {
             File fileDefault = new File(filePath + "default.jpeg");
+
             Image image = new Image(fileDefault.toURI().toString(), 150, 150, false, false);
             photo.setImage(image);
         }
@@ -88,15 +89,17 @@ public class PersonCard extends UiPart<Region> {
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         });
     }
-
+  
     /**
      * Handles photo change
      */
     @Subscribe
     private void handlePhotoChange(PhotoChangeEvent event) {
+
         File file = new File(filePath + person.getEmail().toString() + ".png");
         //}
         Path path = Paths.get(filePath + person.getEmail().toString() + ".png");
+
         if (Files.exists(path)) {
             Image image = new Image(file.toURI().toString(), 150, 150, false, false);
             photo.setImage(image);

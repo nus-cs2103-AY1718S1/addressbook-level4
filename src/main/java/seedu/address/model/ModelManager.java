@@ -52,6 +52,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyAddressBook newData, boolean isUndo) {
         addressBook.resetData(newData);
+
         if (!isUndo) {
             File dir = new File("photos/");
             for (File file : dir.listFiles()) {
