@@ -154,8 +154,8 @@ public class ProfilePanel extends UiPart<Region> {
      * Initialize panel's style such as color
      */
     private void initStyle() {
-        profilePane.setStyle(String.format("-fx-background-image: url(%s); " +
-                        "-fx-background-position: center center; -fx-background-size: cover;",
+        profilePane.setStyle(String.format("-fx-background-image: url(%s); "
+                        + "-fx-background-position: center center; -fx-background-size: cover;",
                 DEFAULT_PROFILE_BACKGROUND_PATH));
     }
 
