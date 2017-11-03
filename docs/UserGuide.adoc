@@ -67,7 +67,7 @@ A person can have any number of tags, email and weblinks (including 0)
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com e/betsy@workemail.com a/Newgate Prison p/1234567 t/criminal w/google.com`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com e/betsy@workemail.com a/Newgate Prison p/1234567 t/criminal w/facebook.com`
 // end::add[]
 
 === Listing all persons : `list` or `l`
