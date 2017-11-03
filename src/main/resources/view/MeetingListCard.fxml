@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -9,7 +10,9 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+
 <!-- @@author Melvin-leo -->
+
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane HBox.hgrow="ALWAYS">
         <columnConstraints>
@@ -33,6 +36,11 @@
          <Label fx:id="person" text="\$person" />
          <Label fx:id="phoneNum" styleClass="cell_small_label" text="\$phoneNum" />
             <Label fx:id="place" styleClass="cell_small_label" text="\$place" />
+         <ImageView fx:id="icon" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+            <VBox.margin>
+               <Insets left="80.0" />
+            </VBox.margin>
+         </ImageView>
         </VBox>
       <rowConstraints>
          <RowConstraints />

@@ -17,6 +17,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.meeting.DateTime;
 import seedu.address.model.meeting.Meeting;
+import seedu.address.model.meeting.MeetingTag;
 import seedu.address.model.meeting.NameMeeting;
 import seedu.address.model.meeting.PersonToMeet;
 import seedu.address.model.meeting.PhoneNum;
@@ -105,8 +106,9 @@ public class EditMeetingCommand extends UndoableCommand {
         NameMeeting updatedName = editMeetingDescriptor.getName().orElse(meetingToEdit.getName());
         DateTime updatedDate = editMeetingDescriptor.getDate().orElse(meetingToEdit.getDate());
         Place updatedPlace = editMeetingDescriptor.getPlace().orElse(meetingToEdit.getPlace());
+        MeetingTag updatedTag = editMeetingDescriptor.getMeetTag().orElse(meetingToEdit.getMeetTag());
 
-        return new Meeting(updatedName, updatedDate, updatedPlace, person, phone);
+        return new Meeting(updatedName, updatedDate, updatedPlace, person, phone, updatedTag);
     }
 
     @Override
@@ -137,6 +139,7 @@ public class EditMeetingCommand extends UndoableCommand {
         private Place place;
         private PersonToMeet personName;
         private PhoneNum phoneNum;
+        private MeetingTag meetTag;
 
         public EditMeetingDescriptor() {
         }
@@ -177,11 +180,18 @@ public class EditMeetingCommand extends UndoableCommand {
             return Optional.ofNullable(place);
         }
 
+        public Optional<MeetingTag> getMeetTag() {
+            return Optional.ofNullable(meetTag);
+        }
+
         public void setPersonToMeet(PersonToMeet name) {
             this.personName = name; }
 
         public void setPhoneNum (PhoneNum phoneNum) {
             this.phoneNum = phoneNum; }
+
+        public void setMeetTag (MeetingTag meetTag) {
+            this.meetTag = meetTag; }
 
         @Override
         public boolean equals(Object other) {

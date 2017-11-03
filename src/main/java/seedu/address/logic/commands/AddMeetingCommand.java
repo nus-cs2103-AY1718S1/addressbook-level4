@@ -13,6 +13,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 
 import seedu.address.model.meeting.DateTime;
 import seedu.address.model.meeting.Meeting;
+import seedu.address.model.meeting.MeetingTag;
 import seedu.address.model.meeting.NameMeeting;
 import seedu.address.model.meeting.PersonToMeet;
 import seedu.address.model.meeting.PhoneNum;
@@ -21,9 +22,6 @@ import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
 import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
 import seedu.address.model.meeting.exceptions.MeetingClashException;
 import seedu.address.model.person.ReadOnlyPerson;
-//import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
-//import seedu.address.model.person.exceptions.DuplicatePersonException;
-//haven implement yet
 
 //@@author nelsonqyj
 /**
@@ -54,16 +52,18 @@ public class AddMeetingCommand extends UndoableCommand {
     private final NameMeeting name;
     private final DateTime date;
     private final Place location;
+    private final MeetingTag meetTag;
 
     //@@author Melvin-leo
     /**
      * Creates an AddMeetingCommand to add the specified {@code ReadOnlyMeeting}
      */
-    public AddMeetingCommand (NameMeeting name, DateTime date, Place location, Index index) {
+    public AddMeetingCommand (NameMeeting name, DateTime date, Place location, Index index, MeetingTag meetTag) {
         this.index = index;
         this.name = name;
         this.date = date;
         this.location = location;
+        this.meetTag = meetTag;
     }
 
     @Override
@@ -79,7 +79,7 @@ public class AddMeetingCommand extends UndoableCommand {
         PersonToMeet personName = new PersonToMeet(personToAdd.getName().toString());
         PhoneNum phoneNum = new PhoneNum(personToAdd.getPhone().toString());
 
-        toAdd = new Meeting(name, date, location, personName, phoneNum);
+        toAdd = new Meeting(name, date, location, personName, phoneNum, meetTag);
         try {
             model.addMeeting(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
