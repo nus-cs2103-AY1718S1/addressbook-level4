@@ -9,7 +9,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SHORT_NAME;
 import static seedu.address.model.property.PropertyManager.DEFAULT_MESSAGE;
 import static seedu.address.model.property.PropertyManager.DEFAULT_REGEX;
 
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -137,8 +136,8 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
     }
 
     /**
-     * Checks whether the given string is a valid RGB value or a fully-alphabetical string (we do not check whether it is
-     * one of the 140 pre-defined CSS color names).
+     * Checks whether the given string is a valid RGB value or a fully-alphabetical string (we do not check whether it
+     * is one of the 140 pre-defined CSS color names).
      *
      * TODO: Search for any API to check whether it is one of 140 pre-defined names.
      *
