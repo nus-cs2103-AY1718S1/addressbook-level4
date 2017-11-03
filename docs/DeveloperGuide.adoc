@@ -171,12 +171,12 @@ The sections below give more details of each component.
 
 === UI component
 
-image::UiClassDiagram.png[width="800"]
+image::UiComponentClassDiagram.png[width="800"]
 _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `ExtendedPersonCard`, `StatisticsPanel`, `GraphPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -722,10 +722,12 @@ Cons: The range of colors will be more limited. +
 === Add/Remove a remark mechanism
 The remark mechanism is facilitated by making changes to the Remark class in the model component. It enables the user to add or remove a single remark of the student.
 
-To avoid confusion and an overly complicated UI, only one remark per person is stored.
+To avoid confusion and an overly complicated UI, only one `remark` per person is stored.
 
-image::PersonCardDifference (Remark).PNG[width="350"]
-_Figure 3.4.1 : One Remark per Person Card_
+The following sequence diagram shows how the `remark` operation works:
+
+image::RemarkSequenceDiagramForLogic.PNG[width="350"]
+_Figure 3.4.1 : Sequence Diagram of Remark Operation_
 
 `Remark` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
@@ -762,28 +764,17 @@ public class DeleteCommand extends UndoableCommand {
     }
 }
 ----
-When the user adds a new person to the address book, the person's remark field will be denoted by "(add a remark)". Users are then able to add a single remark.
+When the user adds a new `person` to the address book, the person's `remark` field will be denoted by `(add a remark)`. Users are then able to add a single `remark`.
 
 [NOTE]
-If user tries to add remark together with adding a new 'Person', it will display as invalid as the 'addCommand' does not allow the addition of remarks other then through the use of using the 'Remark' command.
-
-Below are examples of trying to change remark through:
-
-image::AddPersonInvalid(Remark).PNG[width="600"]
-_Figure 3.4.3 : Invalid Remark Input in Add Command_
-
-When a user attempts to add a remark via the add command, he will be prompted by a message stating
-that adding of remarks in add command is not allowed.
-
-image::EditPersonInvalid (Remark).PNG[width="600"]
-_Figure 3.4.4 : Invalid Remark Input in Edit Command_
-
-When a user attempts to edit the remark via the edit command, he will be prompted by a message stating
-that changing of remarks in edit command is not allowed.
+If user tries to add `remark` together with adding a new `Person`, it will display as invalid as the `addCommand` does not allow the addition of remarks other then through the use of using the `Remark` command.
 
 [NOTE]
-Only one remark is saved at any one time, if user does 'Remark' on the same person, it will be overwritten.
-//add pic
+When a user attempts to `add`/`edit` a remark via the `add`/`edit` command, he will be prompted by a message stating
+that adding of remarks in `add`/`edit` command is not allowed.
+
+[NOTE]
+Only one `remark` is saved at any one time, if user does `Remark` on the same person, it will be overwritten.
 
 ==== Design Considerations
 **Aspect:** Implementation of `UndoableCommand` +
@@ -796,7 +787,7 @@ Only one remark is saved at any one time, if user does 'Remark' on the same pers
 
 ---
 
-**Aspect** Implementation of 'Remark' field. +
+**Aspect** Implementation of `Remark` field. +
 **Alternative 1 (current choice):** Add a field in person as well as making it a command. +
 **Pros:** Able to easily change context of the field without much hassle. +
 **Cons:** Harder to debug as it is both a field and a command. +
@@ -807,6 +798,38 @@ Only one remark is saved at any one time, if user does 'Remark' on the same pers
 ---
 // end::remark[]
 
+//tag::linechart[]
+=== LineChart Mechanism
+
+`LineChart` mechanism is implemented using `javaFX`. It takes in `FilteredPersonList` and plots a graph based on those who are in the same `formClass`. +
+Using `XYChart.series` to store the data of the persons name and grade, a `coordinate` is created and a `line` is drawn connecting all the `coordinates`. +
+These coordinates are sorted in ascending order so that the user is able to identify those in the lower quartile.
+
+The `LineChart` mechanism is implemented this way:
+
+----
+
+for (ReadOnlyPerson people : people) {
+            if (people.getFormClass().equals(person.getFormClass())) {
+                series.getData().add(new XYChart.Data<>(people.getName().toString(),
+                        Double.parseDouble(people.getGrades().toString())));
+            }
+        }
+            series.getData().sort(Comparator.comparingDouble(d -> d.getYValue()));
+       //...other logic...
+----
+
+==== Alternatives Considered
+**Aspect:** What graph to be displayed to show the most effective visual aid +
+**Alternative 1 (current choice):** Do a `lineChart` using XYChart.series. +
+**Pros:** Easier to implement. +
+**Cons:** May not be the most appropriate way to display grades of students.  +
+**Alternative 2:** Create a bell curve to display the grades of students. +
+**Pros:** A better representation of the student grades and it is easier to interpret. +
+**Cons:** Much harder to plot a graph based on statistics then raw data.
+
+---
+//end::linechart[]
 
 // tag::findtags[]
 === FindTags mechanism
