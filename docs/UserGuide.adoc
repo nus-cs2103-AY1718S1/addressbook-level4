@@ -68,12 +68,23 @@ Format: `help`
 
 === Adding a event: `addEvent`
 
-Adds a person to the resident book +
+Adds a event to the event book +
 Format: `addEvent ti/TITLE des/DESCRIPTION l/LOCATION tme/DATETIME`
 
 Examples:
 
 * addevent ti/End of Sem Dinner des/Organised by USC l/Cinnamon College tme/25/11/17 2030
+
+=== Deleting a event: `deleteEvent`
+
+Deletes an event from the event book +
+Format: `deleteEvent <index>`
+
+Examples:
+
+* deleteEvent 5
+* de 10
+
 
 === Adding a person: `add`
 
