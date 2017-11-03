@@ -603,7 +603,19 @@ import seedu.address.commons.events.ui.NewResultCheckEvent;
 ```
 ###### \java\seedu\address\ui\PersonCard.java
 ``` java
+        addFavouriteStar(person);
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
             tagLabel.setStyle("-fx-background-color: " + tagColor);
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+    private void addFavouriteStar(ReadOnlyPerson person) {
+        if (person.getFavourite()) {
+            favourite.setId("favouriteStar");
+        }
+    }
 ```
 ###### \java\seedu\address\ui\ResultDisplay.java
 ``` java
@@ -709,10 +721,6 @@ import seedu.address.commons.events.ui.NewResultCheckEvent;
 ###### \resources\view\LightTheme.css
 ``` css
     -fx-background-color: derive(#f3e4c6, 20%);
-```
-###### \resources\view\LightTheme.css
-``` css
-    -fx-background-radius: 5;
 ```
 ###### \resources\view\LightTheme.css
 ``` css
@@ -876,6 +884,13 @@ import seedu.address.commons.events.ui.NewResultCheckEvent;
 ###### \resources\view\LightTheme.css
 ``` css
     -fx-background-color: transparent, #f3e4c6, transparent, #f3e4c6;
+    -fx-background-radius: 5;
+```
+###### \resources\view\LightTheme.css
+``` css
+#favouriteStar {
+    -fx-image: url("../images/favStar.png");
+}
 ```
 ###### \resources\view\MainWindow.fxml
 ``` fxml
