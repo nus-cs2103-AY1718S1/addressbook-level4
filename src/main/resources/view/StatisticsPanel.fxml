@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- @@author lincredibleJC -->
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -11,10 +14,17 @@
         <Insets bottom="5" left="5" right="15" top="5" />
     </padding>
     <children>
-        <Label layoutX="10.0" layoutY="172.0" text="Group Statistics">
+        <Label fx:id="groupStatistics" layoutX="10.0" layoutY="172.0" text="Group Statistics">
             <font>
                 <Font size="28.0" />
             </font>
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/statistics.png" />
+               </image>
+            </ImageView>
+         </graphic>
         </Label>
         <Label id="mean" fx:id="mean" text="\$mean">
             <graphic>
