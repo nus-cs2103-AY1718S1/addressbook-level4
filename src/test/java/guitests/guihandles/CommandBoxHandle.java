@@ -23,6 +23,7 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
         return getRootNode().getText();
     }
 
+    //@@author joanneong
     /**
      * Enters the given input in the Command Box without executing the input and
      * chooses the first option in the auto-complete list.
@@ -36,6 +37,7 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
         guiRobot.type(KeyCode.ENTER);
     }
 
+    //@@author
     /**
      * Enters the given command in the Command Box and presses enter.
      * @return true if the command succeeded, false otherwise.
