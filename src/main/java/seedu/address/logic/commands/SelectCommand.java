@@ -15,14 +15,11 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class SelectCommand extends Command {
 
     public static final String COMMAND_WORD = "select";
-    public static final String COMMAND_ALIAS = "s"; // shorthand equivalent alias
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the person identified by the index number used in the last person listing.\n"
-            + COMMAND_ALIAS + ": Shorthand equivalent for Select. \n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example 1: " + COMMAND_ALIAS + " 1 \n"
-            + "Example 2: " + COMMAND_WORD + " 1 ";
+            + "Example 1: " + COMMAND_WORD + " 1 ";
 
     public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Selected Person: %1$s";
 
