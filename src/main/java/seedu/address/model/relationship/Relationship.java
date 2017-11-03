@@ -34,6 +34,15 @@ public class Relationship {
         return direction;
     }
 
+    public Relationship replacePerson(ReadOnlyPerson previousPerson, ReadOnlyPerson currentPerson) {
+        if (this.fromPerson.equals(previousPerson)) {
+            this.fromPerson = currentPerson;
+        } else if (this.toPerson.equals(previousPerson)) {
+            this.toPerson = currentPerson;
+        }
+        return this;
+    }
+
     public boolean isUndirected() {
         return !direction.isDirected();
     }
