@@ -13,6 +13,6 @@
       <Insets />
    </opaqueInsets>
    <padding>
-      <Insets bottom="20.0" top="20.0" />
+      <Insets bottom="10.0" top="10.0" />
    </padding>
 </VBox>
