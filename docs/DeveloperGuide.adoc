@@ -95,12 +95,13 @@ After forking the repo, links in the documentation will still point to the `CS21
 
 ==== Setting up CI
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+[NOTE]
+Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+
+You can set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
 Optionally, you can set up AppVeyor as a second CI, and the steps can be found at <<UsingAppVeyor#, UsingAppVeyor.adoc>>.
 
-[NOTE]
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
 
 ==== Getting started with coding
 
@@ -214,6 +215,8 @@ _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Comma
 
 === Model component
 
+The model component has the following structure.
+
 image::ModelClassDiagram.png[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
 
@@ -228,6 +231,8 @@ The `Model`,
 
 === Storage component
 
+The storage component interacts with the main application and the hard disk storage file. Its structure is shown below.
+
 image::StorageClassDiagram.png[width="800"]
 _Figure 2.5.1 : Structure of the Storage Component_
 
@@ -240,7 +245,7 @@ The `Storage` component,
 
 === Common classes
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+Some classes are used by multiple components. They are in the `seedu.addressbook.commons` package.
 
 == Implementation
 
