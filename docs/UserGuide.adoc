@@ -107,6 +107,7 @@ Alias: `f`
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The search can be done with initials. e.g. `AY` will match `Alex Yeoh`
+* The search can be done with partial string. e.g. `Ber` will match `Bernice Yu`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Name, phone number and addresses are searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
@@ -121,6 +122,8 @@ Returns `john` and `John Doe`
 Returns any person having names `Betsy`, `Tim`, or `John`
 * `find AY` +
 Returns `Alex Yeoh` whose name initial is `AY`
+* `find Ber` +
+Returns `Bernice Yu` whose name contains the partial string `Ber`
 * `find p/83537423` +
 Returns any person with phone number `83537423`
 * `find a/earth` +
