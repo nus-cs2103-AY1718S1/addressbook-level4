@@ -153,6 +153,19 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return null;
         }
+        //@@author
+
+        //@@author LimYangSheng
+        @Override
+        public Predicate<? super Meeting> getMeetingListPredicate() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredMeetingList(Predicate<Meeting> predicate) {
+            fail("This method should not be called.");
+        }
 
         //@@author
         @Override
@@ -162,6 +175,11 @@ public class AddCommandTest {
 
         @Override
         public void sort(String field) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortMeeting() {
             fail("This method should not be called.");
         }
     }
