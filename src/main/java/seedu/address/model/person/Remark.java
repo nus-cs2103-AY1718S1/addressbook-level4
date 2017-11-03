@@ -4,6 +4,7 @@ package seedu.address.model.person;
 /**
  * Represents a Person's remark in the address book.
  */
+//@@author meiyi1234
 public class Remark {
 
     public static final String MESSAGE_REMARK_CONSTRAINTS =
