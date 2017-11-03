@@ -6,6 +6,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.ArrayList;
 import java.util.StringJoiner;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -26,7 +27,6 @@ public class AddMultipleByTsvCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "%d new person (people) added";
     public static final String MESSAGE_DUPLICATE_PERSON = "%d new person (people) duplicated";
     public static final String MESSAGE_NUMBER_OF_ENTRIES_FAILED = "%d entry (entries) failed: ";
-    public static final String MESSAGE_FILE_NOT_FOUND = "The system cannot find the file specified";
 
     private final ArrayList<Person> toAdd;
     private final ArrayList<Integer> failedEntries;
@@ -46,7 +46,7 @@ public class AddMultipleByTsvCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         if (!isFileFound) {
-            return new CommandResult(MESSAGE_FILE_NOT_FOUND);
+            return new CommandResult(Messages.MESSAGE_FILE_NOT_FOUND);
         }
         int numAdded = 0;
         int numDuplicated = 0;
