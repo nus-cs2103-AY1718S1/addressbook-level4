@@ -89,7 +89,6 @@ public class PersonCard extends UiPart<Region> {
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         });
     }
-
     /**
      * Handles photo change
      */
