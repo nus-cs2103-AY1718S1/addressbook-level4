@@ -14,7 +14,6 @@ import com.calendarfx.model.Interval;
 import com.calendarfx.view.CalendarView;
 
 import javafx.application.Platform;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
 import javafx.event.EventHandler;
@@ -146,7 +145,7 @@ public class CalendarWindow extends UiPart<Region> {
             deepCopy(personList);
             return;
         }
-        
+
         for (ReadOnlyPerson person : personList) {
             if (person.getAppointment().getDate() == null) {
                 removeEntry(person);
