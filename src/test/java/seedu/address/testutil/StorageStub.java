@@ -11,6 +11,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.storage.Storage;
 
+//@@author Xenonym
 /**
  * A default storage stub that has all of the methods failing.
  */

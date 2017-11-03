@@ -72,10 +72,12 @@ public class XmlAddressBookStorageTest {
         ReadOnlyAddressBook readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new AddressBook(readBack));
 
+        //@@author Xenonym
         //Backup address book and read back
         xmlAddressBookStorage.backupAddressBook(original);
         readBack = xmlAddressBookStorage.readBackupAddressBook().get();
         assertEquals(original, new AddressBook(readBack));
+        //@@author
 
         //Modify data, overwrite exiting file, and read back
         original.addPerson(new Person(HOON));
