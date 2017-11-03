@@ -53,6 +53,7 @@ public class CheckCommandsParser {
             "delevent", "deleteevent", "eventdelete", "de", "ed" };
         final String[] subEditEventsCommands = new String[] { "eventedit", "editevent", "ee" };
         final String[] subFindEventsCommands = new String[] { "eventfind", "findevent", "fe", "ef" };
+        final String[] subUpdatePhotoCommands = new String[] { "updatephoto", "up" };
 
 
         /**
@@ -77,6 +78,7 @@ public class CheckCommandsParser {
         final Set<String> commandsForDeleteEvent = new HashSet<>(Arrays.asList(subDeleteEventsCommands));
         final Set<String> commandsForEditEvent = new HashSet<>(Arrays.asList(subEditEventsCommands));
         final Set<String> commandsForFindEvent = new HashSet<>(Arrays.asList(subFindEventsCommands));
+        final Set<String> commandsForUpdatePhoto = new HashSet<>(Arrays.asList(subUpdatePhotoCommands));
 
         /**
          * Compares the userInputCommand with the different commands set
@@ -117,6 +119,8 @@ public class CheckCommandsParser {
             finalUserCommand = "eventedit";
         } else if (!Collections.disjoint(userInputCommand, commandsForFindEvent)) {
             finalUserCommand = "eventfind";
+        } else if (!Collections.disjoint(userInputCommand, commandsForUpdatePhoto)) {
+            finalUserCommand = "updatephoto";
         }
         return finalUserCommand;
     }
