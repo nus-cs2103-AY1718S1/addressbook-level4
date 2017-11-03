@@ -13,6 +13,7 @@ import seedu.address.logic.commands.AddScheduleCommand;
 import seedu.address.model.schedule.Day;
 import seedu.address.model.schedule.Time;
 
+//@@author YuchenHe98
 public class AddScheduleCommandParserTest {
     private AddScheduleCommandParser parser = new AddScheduleCommandParser();
 

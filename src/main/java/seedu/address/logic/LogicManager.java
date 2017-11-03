@@ -23,22 +23,27 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
+    //@@author derickjw
     private boolean isLoggedInUsername = false;
     private boolean isLoggedInPassword = false;
+    //@@author
 
     public LogicManager(Model model) {
         this.model = model;
         this.history = new CommandHistory();
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
+        //@@author derickjw
         isCorrectPassword("");
         isCorrectUsername("");
+        //@@author
     }
 
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         CommandResult result;
 
+        //@@author derickjw
         if (!isLoggedInUsername) {
             if (isCorrectUsername(commandText)) {
                 result = new CommandResult("Please enter your password");
@@ -51,12 +56,13 @@ public class LogicManager extends ComponentManager implements Logic {
 
         if (!isLoggedInPassword) {
             if (isCorrectPassword(commandText)) {
-                result = new CommandResult("Log in successful! Welcome to H.M.U v1.3!");
+                result = new CommandResult("Log in successful! Welcome to H.M.U v1.4!");
                 return result;
             } else {
                 result = new CommandResult("Invalid Credentials. Please try again!");
                 return result;
             }
+        //@@author
         }   else {
             logger.info("----------------[USER COMMAND][" + commandText + "]");
             try {
@@ -71,6 +77,7 @@ public class LogicManager extends ComponentManager implements Logic {
         }
     }
 
+    //@@author derickjw
     /**
      *
      * @param commandText
@@ -102,6 +109,22 @@ public class LogicManager extends ComponentManager implements Logic {
             return false;
         }
     }
+
+    /**
+     * Setter method for username
+     */
+    private void setDefaultUsername() {
+        model.getUserPrefs().setDefaultUsername("admin");
+    }
+
+    /**
+     * Setter method for password
+     */
+    private void setDefaultPassword() {
+        model.getUserPrefs().setDefaultPassword("8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918");
+    }
+
+    //@@author
 
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {

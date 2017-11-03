@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -26,7 +27,9 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
+    //@@author derickjw
     private final UserPrefs userPrefs;
+    //@@author
     private final FilteredList<ReadOnlyPerson> filteredPersons;
 
     /**
@@ -39,7 +42,9 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        //@@author derickjw
         this.userPrefs = userPrefs;
+        //@@author
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
@@ -85,21 +90,25 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author YuchenHe98
     @Override
     public void addScheduleToPerson(Integer index, TreeSet<Integer> schedule) throws PersonNotFoundException {
         addressBook.addScheduleToPerson(index, schedule);
+        indicateAddressBookChanged();
     }
 
+    //@@author YuchenHe98
     @Override
     public void clearScheduleForPerson(Integer index, TreeSet<Integer> schedule) throws PersonNotFoundException {
         addressBook.clearScheduleForPerson(index, schedule);
+        indicateAddressBookChanged();
     }
-
+    //@@author derickjw
     @Override
     public UserPrefs getUserPrefs() {
         return userPrefs;
     }
-
+    //@@author
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -142,9 +151,19 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Delete tag from contact
      */
+    //@@author hj2304
     public void deleteTag(String str) {
         if (addressBook.removeTag(str)) {
             indicateAddressBookChanged();
         }
+    }
+
+    //@@author YuchenHe98
+    /**
+     * Generate possible meeting time slots based on a list of indices.
+     */
+    @Override
+    public TreeSet<Integer> generateMeetingTime(Index[] listOfIndex) {
+        return addressBook.generateMeetingTime(listOfIndex);
     }
 }

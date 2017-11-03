@@ -17,6 +17,7 @@ import seedu.address.model.schedule.Day;
 import seedu.address.model.schedule.Slot;
 import seedu.address.model.schedule.Time;
 
+//@@author YuchenHe98
 /**
  * Add a busy time span for a person identified using it's last displayed index from the address book.
  */
@@ -26,7 +27,7 @@ public class AddScheduleCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "as";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Add a specific time slot when a person is busy.\n"
+            + ": Add a specific time slot when a person is free.\n"
             + "Parameters: INDEX (must be a positive integer); Day(From Monday to Saturday); start time "
             + "(Should be expressed in standard 24 hours time, no more accurate than 30 minutes and no earlier "
             + "than 0600 and no later than 2330\n"
@@ -36,7 +37,7 @@ public class AddScheduleCommand extends UndoableCommand {
             + PREFIX_START_TIME + "0700"
             + PREFIX_END_TIME + "1430";
 
-    public static final String MESSAGE_ADD_SCHEDULE_PERSON_SUCCESS = "Schedule successfully added";
+    public static final String MESSAGE_ADD_SCHEDULE_PERSON_SUCCESS = "Free time slot successfully added";
 
     private final Index targetIndex;
 
