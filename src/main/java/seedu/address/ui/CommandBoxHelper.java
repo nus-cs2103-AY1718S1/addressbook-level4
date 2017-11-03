@@ -48,8 +48,9 @@ public class CommandBoxHelper extends UiPart<Region> {
             commandString = commandText.getText();
             firstChar = commandText.getText().charAt(0);
         } catch (Exception e) {
-            logger.info("Invalid String or String is empty");
-            logger.info("Hiding command helper");
+            //logger.info("Invalid String or String is empty");
+            //logger.info("Hiding command helper");
+            //comment out if command box helper working as intended, fills log with unnecessary spam.
             return false;
         }
 
@@ -150,7 +151,8 @@ public class CommandBoxHelper extends UiPart<Region> {
                     commandBoxHelperList.getSelectionModel().getSelectedItems());
             commandBoxHelperList.getItems().removeAll(selectedItemsCopy);
         } catch (Exception e) {
-            logger.info(e.getMessage() + " no items in the list!");
+            //logger.info(e.getMessage() + " no items in the list!");
+            // comment out if command helper is working as intended, fills log with unnecessary spam.
         }
     }
 

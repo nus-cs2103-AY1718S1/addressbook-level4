@@ -120,7 +120,7 @@ public class CommandBox extends UiPart<Region> {
         case BACK_SPACE:
             if (commandTextField.getText().trim().length() <= 0 || !commandBoxHelper.listHelp(commandTextField)) {
                 hideHelper();
-                logger.info("Hiding command helper");
+                //logger.info("Hiding command helper");
             }
             break;
         default:
