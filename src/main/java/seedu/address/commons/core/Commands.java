@@ -27,7 +27,7 @@ import seedu.address.logic.commands.UndoCommand;
  * Container for all command words, command aliases, and shortened command usage in the application.
  */
 public class Commands {
-    private static String[] ALL_COMMAND_WORDS = {
+    private static final String[] ALL_COMMAND_WORDS = {
         AddCommand.COMMAND_WORD,
         AddRelationshipCommand.COMMAND_WORD,
         BackupCommand.COMMAND_WORD,
@@ -49,7 +49,7 @@ public class Commands {
         UndoCommand.COMMAND_WORD
     };
 
-    private static String[] ALL_COMMAND_ALIASES = {
+    private static final String[] ALL_COMMAND_ALIASES = {
         AddCommand.COMMAND_ALIAS,
         AddRelationshipCommand.COMMAND_ALIAS,
         BackupCommand.COMMAND_ALIAS,
@@ -70,7 +70,7 @@ public class Commands {
         UndoCommand.COMMAND_ALIAS
     };
 
-    private static String[] ALL_SHORT_MESSAGE_USAGES = {
+    private static final String[] ALL_SHORT_MESSAGE_USAGES = {
         AddCommand.SHORT_MESSAGE_USAGE,
         AddRelationshipCommand.SHORT_MESSAGE_USAGE,
         BackupCommand.SHORT_MESSAGE_USAGE,
@@ -92,7 +92,7 @@ public class Commands {
         UndoCommand.SHORT_MESSAGE_USAGE
     };
 
-    private static HashMap<String, String> ALL_COMMANDS_AND_SHORT_MESSAGES;
+    private static final HashMap<String, String> ALL_COMMANDS_AND_SHORT_MESSAGES;
     static {
         ALL_COMMANDS_AND_SHORT_MESSAGES = new HashMap<>();
 
