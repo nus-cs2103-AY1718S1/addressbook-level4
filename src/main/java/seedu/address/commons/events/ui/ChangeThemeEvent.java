@@ -6,6 +6,7 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * Indicates a request to change theme to targeted index
  */
+//@@author Choony93
 public class ChangeThemeEvent extends BaseEvent {
 
     public final int targetIndex;

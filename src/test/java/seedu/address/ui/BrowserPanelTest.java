@@ -63,11 +63,13 @@ public class BrowserPanelTest extends GuiUnitTest {
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
 
+        // @@author Choony93
         // associated google map page of a person
         postNow(gmapEventStub);
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertTrue(browserPanelHandle.getLoadedUrl().toString(), browserPanelHandle.getLoadedUrl()
                 .toString().contains("https://www.google.com/maps/search/"));
+        // @@author
     }
 }
