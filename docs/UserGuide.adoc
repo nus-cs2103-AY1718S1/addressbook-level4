@@ -99,7 +99,7 @@ Examples:
 
 Adds a picture of a person to the resident book +
 Format: `click on the placeholder image after adding the person into the addressbook`
-=======
+
 Adds a person to the resident book +
 Format: `click on '+' button after adding the person into the residentbook`
 
@@ -375,6 +375,10 @@ Remove all "pending" tags from list of residents.
 === Facebook Search (coming in V2.0)
 
 Query Facebook using list of emails from resident book.
+
+=== Person Panel (since v1.4)
+
+Clicking on a person now displays additional information in the side pane
 
 === Calendar Interface (Since v1.4)
 
