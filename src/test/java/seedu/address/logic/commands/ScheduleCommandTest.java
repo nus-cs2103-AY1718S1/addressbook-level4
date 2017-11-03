@@ -58,9 +58,10 @@ public class ScheduleCommandTest {
         expectedModel.addSchedule(schedulePerson);
 
         String expectedMessage = "Added " + schedulePerson.getPersonName() + " to consultations schedule "
-                + "on " + schedulePerson.getDate().toString();
+                + "on " + schedulePerson.getDate().toString() + ".\n"
+                + "Use 'viewsch' or 'viewschedule' command to view all your schedules.";
 
-        assertEquals(result.feedbackToUser, expectedMessage);
+        assertEquals(expectedMessage , result.feedbackToUser);
 
     }
 
