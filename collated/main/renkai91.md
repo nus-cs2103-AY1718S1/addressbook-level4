@@ -1,4 +1,4 @@
-# wei
+# renkai91
 ###### /java/seedu/address/model/person/Birthday.java
 ``` java
 public class Birthday {
@@ -16,7 +16,8 @@ public class Birthday {
  */
 
     public Birthday(String birthday) throws IllegalValueException {
-        String trimmedBirthday = birthday;
+        String trimmedBirthday = (birthday != null) ? birthday : "01/01/2001";
+
         if (birthday != null && !isValidBirthday(trimmedBirthday)) {
             throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
         }
