@@ -242,6 +242,7 @@ public class CommandBox extends UiPart<Region> {
             }
         } else {
             commandTextField.setStyle(userPrefFontSize);
+            checkBox.setVisible(false);
         }
 
     }
@@ -293,11 +294,11 @@ public class CommandBox extends UiPart<Region> {
             tester.parseCommand(allTextInput);
             commandTextField.setStyle(userPrefFontSize + "-fx-border-color: green; -fx-border-width: 2");
             checkBox.setGraphic(tick);
-            checkBox.toFront();
+            checkBox.setVisible(true);
         } catch (ParseException e) {
             commandTextField.setStyle(userPrefFontSize + "-fx-border-color: red; -fx-border-width: 2");
             checkBox.setGraphic(cross);
-            checkBox.toFront();
+            checkBox.setVisible(true);
         }
     }
     //@@author
