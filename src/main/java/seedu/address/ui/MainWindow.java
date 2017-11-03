@@ -7,6 +7,7 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
@@ -41,6 +42,7 @@ public class MainWindow extends UiPart<Region> {
 
     private Stage primaryStage;
     private Logic logic;
+    private CalendarWindow calendarWindow;
 
     // Independent Ui parts residing in this Ui container
     private CalendarView calendarView;
@@ -83,8 +85,22 @@ public class MainWindow extends UiPart<Region> {
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
 
+        setKeyBindings(scene);
         setAccelerators();
         registerAsAnEventHandler(this);
+    }
+
+    private void setKeyBindings(Scene scene) {
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                    case TAB:
+                        event.consume();
+                        calendarWindow.showNextPage();
+                }
+            }
+        });
     }
 
     public Stage getPrimaryStage() {
@@ -129,7 +145,7 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        CalendarWindow calendarWindow = new CalendarWindow(logic.getFilteredPersonList());
+        calendarWindow = new CalendarWindow(logic.getFilteredPersonList());
         calendarPlaceholder.getChildren().add(calendarWindow.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());

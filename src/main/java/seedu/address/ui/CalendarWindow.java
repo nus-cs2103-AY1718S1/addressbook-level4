@@ -52,12 +52,9 @@ public class CalendarWindow extends UiPart<Region> {
         calendarView.getCalendarSources().add(calendarSource);
         //Disabling views to make the calendar more simplistic
         calendarView.setShowAddCalendarButton(false);
-        calendarView.setShowPageToolBarControls(false);
         calendarView.setShowSearchField(false);
         calendarView.setShowSearchResultsTray(false);
-        calendarView.setShowPageSwitcher(false);
         calendarView.setShowPrintButton(false);
-        calendarView.setShowToolBar(false);
         calendarView.showWeekPage();
         Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
             @Override
@@ -83,6 +80,23 @@ public class CalendarWindow extends UiPart<Region> {
         updateTimeThread.setPriority(Thread.MIN_PRIORITY);
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
+
+    }
+    
+    /**
+     * When user press Tab, the calendar will shift to the next view
+     * Order of shifting: day -> week -> month -> year
+     */
+    public void showNextPage() {
+        if (calendarView.getSelectedPage() == calendarView.getMonthPage()) {
+            calendarView.showYearPage();
+        } else if (calendarView.getSelectedPage() == calendarView.getDayPage()) {
+            calendarView.showWeekPage();
+        } else if (calendarView.getSelectedPage() == calendarView.getYearPage()) {
+            calendarView.showDayPage();
+        } else {
+            calendarView.showMonthPage();
+        }
     }
 
     public CalendarView getRoot() {
