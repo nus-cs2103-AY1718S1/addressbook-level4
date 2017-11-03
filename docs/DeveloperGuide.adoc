@@ -687,10 +687,10 @@ that belongs to other colours. +
 
 The diagrams shows the UI of the additional colour themes:
 
-image::whiteThemeUI.png[width="800"]
+image::whiteThemeUI.jpeg[width="800"]
 _Figure 4.9.1 : White Theme_
 
-image::greenThemeUI.png[width="800"]
+image::greenThemeUI.jpeg[width="800"]
 _Figure 4.9.2 : Green Theme_
 
 === Upload photo mechanism
