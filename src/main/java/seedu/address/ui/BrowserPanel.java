@@ -33,7 +33,7 @@ public class BrowserPanel extends UiPart<Region> {
     //@@author
     private static final String FXML = "BrowserPanel.fxml";
 
-    private ReadOnlyPerson personSelected;
+    private static ReadOnlyPerson personSelected;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -56,8 +56,15 @@ public class BrowserPanel extends UiPart<Region> {
      */
     private void loadPersonPage(ReadOnlyPerson person) {
         personSelected = person;
-        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                + GOOGLE_SEARCH_URL_SUFFIX);
+
+        String[] name = personSelected.getName().fullName.split(" ");
+
+        loadPage(LINKEDIN_SEARCH_URL_PREFIX + LINKEDIN_SEARCH_PEOPLE + LINKEDIN_SEARCH_PARAM_LOCATION
+                + LINKEDIN_SEARCH_PARAM_FIRST_NAME + name[0] + LINKEDIN_SEARCH_PARAM_LAST_NAME + name[1]
+                + LINKEDIN_URL_SUFFIX);
+
+        /*loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
+                + GOOGLE_SEARCH_URL_SUFFIX);*/
     }
 
     public void loadPage(String url) {
