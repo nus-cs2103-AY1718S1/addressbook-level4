@@ -1,40 +1,22 @@
-package seedu.address.logic.commands;
+# joanneong
+###### /java/guitests/guihandles/CommandBoxHandle.java
+``` java
+    /**
+     * Enters the given input in the Command Box without executing the input and
+     * chooses the first option in the auto-complete list.
+     * Note that the input is not executed.
+     */
+    public void enterInput(String input) {
+        click();
+        guiRobot.interact(() -> getRootNode().setText(input));
+        guiRobot.pauseForAutoComplete(400);
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BENSON;
-import static seedu.address.testutil.TypicalPersons.CARL;
-import static seedu.address.testutil.TypicalPersons.DANIEL;
-import static seedu.address.testutil.TypicalPersons.ELLE;
-import static seedu.address.testutil.TypicalPersons.FIONA;
-import static seedu.address.testutil.TypicalPersons.GEORGE;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+        guiRobot.type(KeyCode.ENTER);
+    }
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import org.junit.Test;
-
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.person.AddressContainsKeywordsPredicate;
-import seedu.address.model.person.AnyContainsKeywordsPredicate;
-import seedu.address.model.person.EmailContainsKeywordsPredicate;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.PhoneContainsKeywordsPredicate;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.tag.TagContainsKeywordsPredicate;
-import seedu.address.testutil.StorageStub;
-
-//@@author joanneong
+```
+###### /java/seedu/address/logic/commands/FindCommandTest.java
+``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
@@ -301,3 +283,87 @@ public class FindCommandTest {
         assertEquals(expectedAddressBook, model.getAddressBook());
     }
 }
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_find() throws Exception {
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        FindCommand command = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(new AnyContainsKeywordsPredicate(keywords)), command);
+
+        FindCommand nameCommand = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " n/" + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), nameCommand);
+
+        FindCommand addressCommand = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " a/" + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(new AddressContainsKeywordsPredicate(keywords)), addressCommand);
+
+        FindCommand emailCommand = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " e/" + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(new EmailContainsKeywordsPredicate(keywords)), emailCommand);
+
+        FindCommand phoneCommand = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " p/" + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(new PhoneContainsKeywordsPredicate(keywords)), phoneCommand);
+
+        FindCommand tagCommand = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " t/" + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(new TagContainsKeywordsPredicate(keywords)), tagCommand);
+    }
+
+```
+###### /java/seedu/address/logic/parser/FindCommandParserTest.java
+``` java
+public class FindCommandParserTest {
+
+    private FindCommandParser parser = new FindCommandParser();
+
+    @Test
+    public void parse_emptyArg_throwsParseException() {
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_validArgs_returnsFindCommand() {
+        // no leading and trailing whitespaces
+        FindCommand expectedGlobalFindCommand =
+                new FindCommand(new AnyContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+        assertParseSuccess(parser, "Alice Bob", expectedGlobalFindCommand);
+
+        FindCommand expectedNameFindCommand =
+                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+        assertParseSuccess(parser, " n/Alice Bob", expectedNameFindCommand);
+
+        FindCommand expectedAddressFindCommand =
+                new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList("Serangoon", "Bishan")));
+        assertParseSuccess(parser, " a/Serangoon Bishan", expectedAddressFindCommand);
+
+        FindCommand expectedEmailFindCommand =
+                new FindCommand(new EmailContainsKeywordsPredicate(
+                        Arrays.asList("alice@example.com", "Bob@gmail.com")));
+        assertParseSuccess(parser, " e/alice@example.com Bob@gmail.com", expectedEmailFindCommand);
+
+        FindCommand expectedPhoneFindCommand =
+                new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList("12345678", "98454632")));
+        assertParseSuccess(parser, " p/12345678 98454632", expectedPhoneFindCommand);
+
+        FindCommand expectedTagFindCommand =
+                new FindCommand(new TagContainsKeywordsPredicate(Arrays.asList("friends", "enemy")));
+        assertParseSuccess(parser, " t/friends enemy", expectedTagFindCommand);
+
+        // multiple whitespaces between keywords
+        assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedGlobalFindCommand);
+        assertParseSuccess(parser, " n/\n Alice \n \t Bob  \t", expectedNameFindCommand);
+        assertParseSuccess(parser, " a/\n Serangoon \n \t Bishan  \t", expectedAddressFindCommand);
+        assertParseSuccess(parser, " e/\n alice@example.com \n \t Bob@gmail.com  \t", expectedEmailFindCommand);
+        assertParseSuccess(parser, " p/\n 12345678 \n \t 98454632  \t", expectedPhoneFindCommand);
+        assertParseSuccess(parser, " t/\n friends \n \t enemy  \t", expectedTagFindCommand);
+
+
+    }
+
+}
+```
