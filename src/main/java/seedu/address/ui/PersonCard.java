@@ -72,13 +72,13 @@ public class PersonCard extends UiPart<Region> {
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
 
-        Path path = Paths.get("src/main/photos/" + person.getEmail().toString() + ".png");
+        Path path = Paths.get("photos/" + person.getEmail().toString() + ".png");
         if (Files.exists(path)) {
-            File filePic = new File("src/main/photos/" + person.getEmail().toString() + ".png");
+            File filePic = new File("photos/" + person.getEmail().toString() + ".png");
             Image image = new Image(filePic.toURI().toString(), 150, 150, false, false);
             photo.setImage(image);
         } else {
-            File fileDefault = new File("src/main/photos/default.jpeg");
+            File fileDefault = new File("photos/default.jpeg");
             Image image = new Image(fileDefault.toURI().toString(), 150, 150, false, false);
             photo.setImage(image);
         }
@@ -94,9 +94,9 @@ public class PersonCard extends UiPart<Region> {
      */
     @Subscribe
     private void handlePhotoChange(PhotoChangeEvent event) {
-        File file = new File("src/main/photos/" + person.getEmail().toString() + ".png");
+        File file = new File("photos/" + person.getEmail().toString() + ".png");
         //}
-        Path path = Paths.get("src/main/photos/" + person.getEmail().toString() + ".png");
+        Path path = Paths.get("photos/" + person.getEmail().toString() + ".png");
         if (Files.exists(path)) {
             Image image = new Image(file.toURI().toString(), 150, 150, false, false);
             photo.setImage(image);
