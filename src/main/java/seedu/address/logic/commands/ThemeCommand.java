@@ -12,6 +12,8 @@ public class ThemeCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "t";
     public static final String LIGHT_THEME = "light";
     public static final String DARK_THEME = "dark";
+    public static final String LIGHT_THEME2 = "holy";
+    public static final String DARK_THEME2 = "evil";
 
     public static final String MESSAGE_SUCCESS = "Theme has been changed!";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Changes to selected theme. "
@@ -25,7 +27,7 @@ public class ThemeCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() {
-        if (theme.equalsIgnoreCase(ThemeCommand.LIGHT_THEME)) {
+        if (theme.equalsIgnoreCase(ThemeCommand.LIGHT_THEME) || theme.equalsIgnoreCase(ThemeCommand.LIGHT_THEME2)) {
             UiStyle.getInstance().setToLightTheme();
         } else {
             UiStyle.getInstance().setToDarkTheme();
