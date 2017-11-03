@@ -117,6 +117,14 @@ public interface Model {
      */
     void forceSelectParcel(ReadOnlyParcel target);
 
+    void setTabIndex(Index index);
+
+    Index getTabIndex();
+
+    void addParcelCommand(ReadOnlyParcel parcel) throws DuplicateParcelException;
+
+    void editParcelCommand(ReadOnlyParcel parcel) throws DuplicateParcelException, ParcelNotFoundException;
+
     /*
     void reselect(ReadOnlyParcel parcel);
 

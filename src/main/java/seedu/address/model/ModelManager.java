@@ -19,6 +19,8 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.JumpToTabRequestEvent;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.Status;
@@ -35,9 +37,12 @@ import seedu.address.model.tag.exceptions.TagNotFoundException;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
     private static final Predicate<ReadOnlyParcel> deliveredPredicate = p -> p.getStatus().equals(Status.COMPLETED);
+    private static final Index TAB_ALL_PARCELS = Index.fromZeroBased(0);
+    private static final Index TAB_COMPLETED_PARCELS = Index.fromZeroBased(1);
 
     // private static boolean selected = false;
     // private static ReadOnlyParcel prevSelectedParcel = null;
+    private static Index tabIndex = Index.fromOneBased(1);
     private final AddressBook addressBook;
 
     private final FilteredList<ReadOnlyParcel> filteredParcels;
@@ -57,7 +62,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredParcels = new FilteredList<>(this.addressBook.getParcelList());
         updatedDeliveredAndUndeliveredList();
         activeFilteredList = filteredUndeliveredParcels;
-        // SelectionListener sl = new SelectionListener(this);
+        ModelListener sl = new ModelListener(this);
     }
 
     public ModelManager() {
@@ -238,6 +243,49 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void forceSelectParcel(ReadOnlyParcel target) {
         forceSelect(Index.fromZeroBased(findIndex(target)));
+    }
+
+    @Override
+    public void setTabIndex(Index index) {
+        this.tabIndex = index;
+    }
+
+    @Override
+    public Index getTabIndex() {
+        return this.tabIndex;
+    }
+
+    @Override
+    public void addParcelCommand(ReadOnlyParcel toAdd) throws DuplicateParcelException {
+        this.addParcel(toAdd);
+        this.maintainSorted();
+        this.handleTabChange(toAdd);
+        this.forceSelectParcel(toAdd);
+    }
+
+    @Override
+    public void editParcelCommand(ReadOnlyParcel parcel) throws DuplicateParcelException, ParcelNotFoundException {
+
+    }
+
+    private void handleTabChange(ReadOnlyParcel targetParcel) {
+        try {
+            if (findStatus(targetParcel).equals(Status.getInstance("COMPLETED"))) {
+                if (this.getTabIndex().equals(TAB_ALL_PARCELS)) {
+                    EventsCenter.getInstance().post(new JumpToTabRequestEvent(TAB_COMPLETED_PARCELS));
+                }
+            } else {
+                if (this.getTabIndex().equals(TAB_COMPLETED_PARCELS)) {
+                    EventsCenter.getInstance().post(new JumpToTabRequestEvent(TAB_ALL_PARCELS));
+                }
+            }
+        } catch (IllegalValueException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Status findStatus(ReadOnlyParcel target) {
+        return target.getStatus();
     }
 
     /**
