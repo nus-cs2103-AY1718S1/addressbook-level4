@@ -102,6 +102,7 @@ You can add a person to the address book by following the format below. +
 
 [TIP]
 You can add any number of tags for a person or none at all. +
+You can use tags as labels for a patient's condition such "Sprain" or "Insomnia".
 You can add appointment or none at all.
 
 *Example:*
@@ -334,7 +335,7 @@ image::redoexample.png[width="700"]
 
 You can clear all entries in the address book. +
 *Format:* `clear` +
-*Shorthand Format:* `c`
+*Shorthand Format:* `cl`
 
 // tag::color[]
 === Set Tag Color Mode : `tagcolor`
@@ -492,7 +493,11 @@ You do not need to save data manually.
 
 |*Clear* |Clears all contacts |`clear` |`clear`
 
-|*Clear Shorthand* |Clears all contacts |`c` |`c`
+|*Clear Shorthand* |Clears all contacts |`cl` |`cl`
+
+|*Copy* |Copy a contact's email |`copy INDEX` |`copy 2`
+
+|*Copy Shorthand* |Copy a contact's email |`c INDEX` |`c 2`
 
 |*Delete* |Delete a contact |`delete INDEX` |`delete 3`
 
@@ -531,8 +536,6 @@ You do not need to save data manually.
 |*List Shorthand* |Lists contacts by name in descending order |`l dsc` |`l dsc`
 
 |*Help* |Shows you the user guide |`help` |`help`
-
-|*Help Shorthand* |Shows you the user guide |`h` |`h`
 
 |*Select* |Selects a contact at the specified `INDEX` |`select INDEX` |`select 2`
 
