@@ -184,6 +184,7 @@ public class CommandBox extends UiPart<Region> {
                 commandTextField.setText("");
                 logger.info("Result: " + commandResult.feedbackToUser);
                 raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+                timelineRight.play();
             }
 
         } catch (CommandException | ParseException e) {
@@ -256,29 +257,13 @@ public class CommandBox extends UiPart<Region> {
      * Sets the animation sequence for entering left and right on the settings panel
      */
     private void setAnimation() {
-        final Timeline timelineBounce = new Timeline();
-        timelineBounce.setCycleCount(1);
-        timelineBounce.setAutoReverse(true);
-        KeyValue kv1 = new KeyValue(settingsPane.translateXProperty(), 0);
-        KeyValue kv2 = new KeyValue(settingsPane.translateXProperty(), -10);
-        KeyValue kv3 = new KeyValue(settingsPane.translateXProperty(), 0);
-        KeyFrame kf1 = new KeyFrame(Duration.millis(200), kv1, kv2, kv3);
-        timelineBounce.getKeyFrames().add(kf1);
-
-        /* Event handler to call bouncing effect after the scroll to left is finished. */
-        javafx.event.EventHandler<ActionEvent> onFinished = new javafx.event.EventHandler<ActionEvent>() {
-            public void handle(ActionEvent t) {
-                timelineBounce.play();
-            }
-        };
-
         timelineLeft = new Timeline();
         timelineRight = new Timeline();
 
         timelineLeft.setCycleCount(1);
         timelineLeft.setAutoReverse(true);
         KeyValue kvLeft1 = new KeyValue(settingsPane.translateXProperty(), -10);
-        KeyFrame kfLeft = new KeyFrame(Duration.millis(200), onFinished, kvLeft1);
+        KeyFrame kfLeft = new KeyFrame(Duration.millis(200), kvLeft1);
         timelineLeft.getKeyFrames().add(kfLeft);
 
         timelineRight.setCycleCount(1);
