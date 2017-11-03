@@ -1,12 +1,11 @@
 # limcel
-###### \java\guitests\guihandles\ExtendedPersonCardHandle.java
+###### /java/guitests/guihandles/ExtendedPersonCardHandle.java
 ``` java
 /**
  * Provides a handle to a person card in the person list panel.
  */
 public class ExtendedPersonCardHandle extends NodeHandle<Node> {
     public static final String EXTENDED_PERSON_CARD_ID = "#extendedPersonCardPlaceholder";
-    private static final String ID_FIELD_ID = "#id";
     private static final String NAME_FIELD_ID = "#name";
     private static final String ADDRESS_FIELD_ID = "#address";
     private static final String PHONE_FIELD_ID = "#phone";
@@ -17,7 +16,6 @@ public class ExtendedPersonCardHandle extends NodeHandle<Node> {
     private static final String REMARK_FIELD_ID = "#remark";
 
 
-    private final Label idLabel;
     private final Label nameLabel;
     private final Label addressLabel;
     private final Label phoneLabel;
@@ -31,7 +29,6 @@ public class ExtendedPersonCardHandle extends NodeHandle<Node> {
     public ExtendedPersonCardHandle(Node cardNode) {
         super(cardNode);
 
-        this.idLabel = getChildNode(ID_FIELD_ID);
         this.nameLabel = getChildNode(NAME_FIELD_ID);
         this.phoneLabel = getChildNode(PHONE_FIELD_ID);
         this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
@@ -40,10 +37,6 @@ public class ExtendedPersonCardHandle extends NodeHandle<Node> {
         this.postalCodeLabel = getChildNode(POSTALCODE_FIELD_ID);
         this.emailLabel = getChildNode(EMAIL_FIELD_ID);
         this.remarkLabel = getChildNode(REMARK_FIELD_ID);
-    }
-
-    public String getId() {
-        return idLabel.getText();
     }
 
     public String getName() {
@@ -79,7 +72,7 @@ public class ExtendedPersonCardHandle extends NodeHandle<Node> {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\AddCommandTest.java
+###### /java/seedu/address/logic/commands/AddCommandTest.java
 ``` java
         @Override
         public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
@@ -108,7 +101,7 @@ public class ExtendedPersonCardHandle extends NodeHandle<Node> {
             return getScheduleList();
         }
 ```
-###### \java\seedu\address\logic\commands\ScheduleCommandTest.java
+###### /java/seedu/address/logic/commands/ScheduleCommandTest.java
 ``` java
 public class ScheduleCommandTest {
     @Rule
@@ -142,9 +135,10 @@ public class ScheduleCommandTest {
         expectedModel.addSchedule(schedulePerson);
 
         String expectedMessage = "Added " + schedulePerson.getPersonName() + " to consultations schedule "
-                + "on " + schedulePerson.getDate().toString();
+                + "on " + schedulePerson.getDate().toString() + ".\n"
+                + "Use 'viewsch' or 'viewschedule' command to view all your schedules.";
 
-        assertEquals(result.feedbackToUser, expectedMessage);
+        assertEquals(expectedMessage , result.feedbackToUser);
 
     }
 
@@ -178,7 +172,7 @@ public class ScheduleCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\SortCommandTest.java
+###### /java/seedu/address/logic/commands/SortCommandTest.java
 ``` java
 public class SortCommandTest {
 
@@ -213,7 +207,41 @@ public class SortCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/commands/ViewScheduleCommandTest.java
+``` java
+public class ViewScheduleCommandTest {
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private Model model;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    }
+
+    @Test
+    public void executeViewScheduleCommand_success() throws PersonNotFoundException {
+        Model model = new ModelManager();
+        Calendar date = Calendar.getInstance();
+        Schedule newSchedule = new Schedule(getTypicalAddressBook().getPersonList().get(0).getName().toString(), date);
+        ViewScheduleCommand newViewCommand = new ViewScheduleCommand();
+        model.addSchedule(newSchedule);
+        newViewCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        ObservableList<Schedule> newScheduleList = model.getAddressBook().getScheduleList();
+        String expectedMessage = "Listed your schedule. \n" + newScheduleList.toString();
+
+        CommandResult result = newViewCommand.execute();
+
+        assertEquals(expectedMessage, result.feedbackToUser);
+
+    }
+}
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_sort() throws Exception {
@@ -246,7 +274,7 @@ public class SortCommandTest {
         assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, calendar), command);
     }
 ```
-###### \java\seedu\address\logic\parser\ParserUtilTest.java
+###### /java/seedu/address/logic/parser/ParserUtilTest.java
 ``` java
     @Test
     public void parseSchedule_null_throwsNullPointerException() throws Exception {
@@ -259,7 +287,7 @@ public class SortCommandTest {
         assertFalse(ParserUtil.parseSchedule(Optional.empty()).isPresent());
     }
 ```
-###### \java\seedu\address\logic\parser\ScheduleCommandParserTest.java
+###### /java/seedu/address/logic/parser/ScheduleCommandParserTest.java
 ``` java
 public class ScheduleCommandParserTest {
 
@@ -298,7 +326,7 @@ public class ScheduleCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\model\AddressBookTest.java
+###### /java/seedu/address/model/AddressBookTest.java
 ``` java
     @Test
     public void getScheduleList_modifyList_throwsUnsupportedOperationException() {
@@ -306,14 +334,14 @@ public class ScheduleCommandParserTest {
         addressBook.getScheduleList().remove(0);
     }
 ```
-###### \java\seedu\address\model\AddressBookTest.java
+###### /java/seedu/address/model/AddressBookTest.java
 ``` java
         @Override
         public ObservableList<Schedule> getScheduleList() {
             return schedules;
         }
 ```
-###### \java\seedu\address\model\ModelManagerTest.java
+###### /java/seedu/address/model/ModelManagerTest.java
 ``` java
     @Test
     public void getScheduleList_modifyList_throwsUnsupportedOperationException() {
@@ -349,7 +377,7 @@ public class ScheduleCommandParserTest {
         assertFalse(addressBook.getPersonList().equals(oldAddressBook));
     }
 ```
-###### \java\seedu\address\model\UniqueScheduleListTest.java
+###### /java/seedu/address/model/UniqueScheduleListTest.java
 ``` java
 public class UniqueScheduleListTest {
     @Rule
@@ -395,7 +423,7 @@ public class UniqueScheduleListTest {
     }
 }
 ```
-###### \java\seedu\address\model\UniqueTagListTest.java
+###### /java/seedu/address/model/UniqueTagListTest.java
 ``` java
     @Test
     public void testForDuplicateTags() {
@@ -406,7 +434,7 @@ public class UniqueScheduleListTest {
         }
     }
 ```
-###### \java\seedu\address\storage\XmlAddressBookStorageTest.java
+###### /java/seedu/address/storage/XmlAddressBookStorageTest.java
 ``` java
     @Test
     public void getScheduleList_modifyList_throwsUnsupportedOperationException() {
@@ -415,7 +443,7 @@ public class UniqueScheduleListTest {
         addressBook.getScheduleList().remove(0);
     }
 ```
-###### \java\seedu\address\storage\XmlAddressBookStorageTest.java
+###### /java/seedu/address/storage/XmlAddressBookStorageTest.java
 ``` java
     @Test
     public void createNewXmlAdaptedScheduleTest() throws IllegalValueException {
@@ -444,7 +472,7 @@ public class UniqueScheduleListTest {
         return false;
     }
 ```
-###### \java\seedu\address\ui\ExtendedPersonCardTest.java
+###### /java/seedu/address/ui/ExtendedPersonCardTest.java
 ``` java
 public class ExtendedPersonCardTest extends GuiUnitTest {
     private ExtendedPersonCard extendedPersonCard;

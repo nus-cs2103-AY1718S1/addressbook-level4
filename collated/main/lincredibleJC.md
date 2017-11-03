@@ -1,5 +1,5 @@
 # lincredibleJC
-###### \java\seedu\address\commons\events\ui\FilteredListChangedEvent.java
+###### /java/seedu/address/commons/events/ui/FilteredListChangedEvent.java
 ``` java
 /**
  * Represents a Change in the current Filtered List
@@ -22,7 +22,7 @@ public class FilteredListChangedEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FindTagsCommand.java
+###### /java/seedu/address/logic/commands/FindTagsCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book whose tags contains any of the argument keywords.
@@ -60,7 +60,7 @@ public class FindTagsCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
     /**
      * Parses user input into command for execution.
@@ -137,6 +137,10 @@ public class FindTagsCommand extends Command {
         case SortCommand.COMMAND_ALIAS:
             return new SortCommand();
 
+        case ViewScheduleCommand.COMMAND_WORD:
+        case ViewScheduleCommand.COMMAND_ALIAS:
+            return new ViewScheduleCommand();
+
         case RemarkCommand.COMMAND_WORD:
         case RemarkCommand.COMMAND_ALIAS:
             return new RemarkCommandParser().parse(arguments);
@@ -146,7 +150,7 @@ public class FindTagsCommand extends Command {
         }
     }
 ```
-###### \java\seedu\address\logic\parser\FindTagsCommandParser.java
+###### /java/seedu/address/logic/parser/FindTagsCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new FindTagsCommand object
@@ -173,7 +177,7 @@ public class FindTagsCommandParser implements Parser<FindTagsCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> formClass} into an {@code Optional<FormClass>} if {@code formClass}
@@ -195,7 +199,7 @@ public class FindTagsCommandParser implements Parser<FindTagsCommand> {
         return grades.isPresent() ? Optional.of(new Grades(grades.get())) : Optional.empty();
     }
 ```
-###### \java\seedu\address\logic\statistics\Statistics.java
+###### /java/seedu/address/logic/statistics/Statistics.java
 ``` java
 /**
  * Calculates statistics of the persons inside an ObservableList
@@ -413,7 +417,7 @@ public class Statistics {
 
 }
 ```
-###### \java\seedu\address\model\person\FormClass.java
+###### /java/seedu/address/model/person/FormClass.java
 ``` java
 /**
  * Represents a Person's FormClass name in the address book.
@@ -469,7 +473,7 @@ public class FormClass {
 
 }
 ```
-###### \java\seedu\address\model\person\Grades.java
+###### /java/seedu/address/model/person/Grades.java
 ``` java
 /**
  * Represents a Person's Grades in the address book.
@@ -526,7 +530,7 @@ public class Grades {
 
 }
 ```
-###### \java\seedu\address\model\person\ReadOnlyPerson.java
+###### /java/seedu/address/model/person/ReadOnlyPerson.java
 ``` java
     default String getTagsAsString() {
         StringBuilder sb = new StringBuilder();
@@ -534,7 +538,7 @@ public class Grades {
         return sb.toString();
     }
 ```
-###### \java\seedu\address\model\person\TagsContainsKeywordsPredicate.java
+###### /java/seedu/address/model/person/TagsContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Tag} matches any of the keywords given.
@@ -562,7 +566,7 @@ public class TagsContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
 }
 
 ```
-###### \java\seedu\address\ui\StatisticsPanel.java
+###### /java/seedu/address/ui/StatisticsPanel.java
 ``` java
 /**
  * Statistics Panel that displays the statistics of a filteredList
@@ -624,10 +628,81 @@ public class StatisticsPanel extends UiPart<Region> {
 
 }
 ```
-###### \resources\view\StatisticsPanel.fxml
+###### /resources/view/MainWindow.fxml
 ``` fxml
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@DarkTheme.css"/>
+        <URL value="@Extensions.css"/>
+    </stylesheets>
+
+    <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
+        <Menu mnemonicParsing="false" text="File">
+            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit"/>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help"/>
+        </Menu>
+    </MenuBar>
+
+    <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
+        <padding>
+            <Insets bottom="5" left="10" right="10" top="5"/>
+        </padding>
+    </StackPane>
+
+    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="120" minHeight="120" prefHeight="120"
+               styleClass="pane-with-border" VBox.vgrow="NEVER">
+        <padding>
+            <Insets bottom="5" left="10" right="10" top="5"/>
+        </padding>
+    </StackPane>
+
+    <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" VBox.vgrow="ALWAYS">
+        <VBox fx:id="personList" minWidth="300.0" maxWidth="300.0" prefWidth="300.0"
+              SplitPane.resizableWithParent="false">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10"/>
+            </padding>
+            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+        </VBox>
+        <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+            <items>
+
+                <StackPane fx:id="extendedPersonCardPlaceholder">
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10"/>
+                    </padding>
+                </StackPane>
+                <StackPane fx:id="statisticsPanelPlaceholder"/>
+            </items>
+        </SplitPane>
+
+        <StackPane fx:id="graphPanelPlaceholder">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10"/>
+            </padding>
+        </StackPane>
+    </SplitPane>
+
+    <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER"/>
+</VBox>
+```
+###### /resources/view/StatisticsPanel.fxml
+``` fxml
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -636,10 +711,17 @@ public class StatisticsPanel extends UiPart<Region> {
         <Insets bottom="5" left="5" right="15" top="5" />
     </padding>
     <children>
-        <Label layoutX="10.0" layoutY="172.0" text="Group Statistics">
+        <Label fx:id="groupStatistics" layoutX="10.0" layoutY="172.0" text="Group Statistics">
             <font>
                 <Font size="28.0" />
             </font>
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/statistics.png" />
+               </image>
+            </ImageView>
+         </graphic>
         </Label>
         <Label id="mean" fx:id="mean" text="\$mean">
             <graphic>
