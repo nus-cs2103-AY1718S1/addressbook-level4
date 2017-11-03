@@ -150,6 +150,7 @@
 
 .result-pane {
      -fx-background-color: #ffffff;
+     -fx-background-radius: 15 15 15 15;
      -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 2, 2);
 }
 
@@ -162,11 +163,8 @@
 
 .person-detail-panel {
     -fx-background-color: #ffffff;
+    -fx-background-radius: 15 15 15 15;
     -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 2, 2);
-}
-
-.person-list-panel {
-    -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, -2, 2);
 }
 
 .status-bar {
@@ -323,6 +321,16 @@
 #cardPane {
     -fx-background-color: transparent;
     -fx-border-width: 0;
+}
+
+#personListView {
+    -fx-background-radius: 15 15 15 15;
+}
+
+#personListPanel {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 15 15 15 15;
+    -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, -2, 2);
 }
 
 #initialSmall {
