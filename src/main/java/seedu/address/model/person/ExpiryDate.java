@@ -6,6 +6,7 @@ import java.util.Date;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author lauy99
 /**
  * Represents a Person's expiry date in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidExpiryDate(String)}

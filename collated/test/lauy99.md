@@ -1,25 +1,6 @@
-package seedu.address.logic.commands;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EXPIRE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EXPIRE_BOB;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import org.junit.Test;
-
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.person.ExpiryDate;
-
-//@@author lauy99
+# lauy99
+###### \java\seedu\address\logic\commands\ExpireCommandTest.java
+``` java
 public class ExpireCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -58,3 +39,30 @@ public class ExpireCommandTest {
     }
 
 }
+```
+###### \java\seedu\address\logic\parser\ExpireCommandParserTest.java
+``` java
+public class ExpireCommandParserTest {
+
+    private ExpireCommandParser parser = new ExpireCommandParser();
+
+    @Test
+    public void parse_indexSpecified_failure() throws Exception {
+        final String dateString = "2011-01-01";
+
+        // have date
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_EXPIRE.toString() + " " + dateString;
+        ExpireCommand expectCommand = new ExpireCommand(INDEX_FIRST_PERSON, new ExpiryDate(dateString));
+
+        assertParseSuccess(parser, userInput, expectCommand);
+    }
+
+    @Test
+    public void parse_noFieldSpecified_failure() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExpireCommand.MESSAGE_USAGE);
+
+        assertParseFailure(parser, ExpireCommand.COMMAND_WORD, expectedMessage);
+    }
+}
+```
