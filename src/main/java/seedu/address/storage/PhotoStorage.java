@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
  */
 public class PhotoStorage {
     public static final String WRITE_FAILURE_MESSAGE = "Unable to write to local resource folder: displaypictures. "
-            + "Make sure that the image type is supported. Supported types: JPEG, PNG, GIF.";
+            + "Make sure that the image type is supported. Supported types: JPEG, PNG.";
     private File fileReader = null;
     private String filePath = "";
     private File fileWriter = null;

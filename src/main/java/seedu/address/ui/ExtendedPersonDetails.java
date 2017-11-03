@@ -22,7 +22,9 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
-/** javadoc comment*/
+/** 
+ *A UI component that displays the selected Person's details.
+ * */
 public class ExtendedPersonDetails extends UiPart<Region> {
 
     private static final String FXML = "ExtendDetailsPerson.fxml";

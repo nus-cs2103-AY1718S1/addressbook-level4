@@ -1,5 +1,8 @@
 package seedu.address;
 
+import static java.util.Objects.requireNonNull;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
@@ -71,7 +74,7 @@ public class MainApp extends Application {
         imageFolder = new InitImageFolder(userPrefs.getDisplayPicturesPath());
         //@@author
         initLogging(config);
-
+      
         model = initModelManager(storage, userPrefs);
 
         logic = new LogicManager(model);
@@ -182,7 +185,7 @@ public class MainApp extends Application {
 
         return initializedPrefs;
     }
-
+    
     private void initEventsCenter() {
         EventsCenter.getInstance().registerHandler(this);
     }
