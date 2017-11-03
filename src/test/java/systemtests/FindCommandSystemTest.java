@@ -38,6 +38,15 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        /* Case: find multiple persons in address book, command with leading spaces, trailing spaces and name domain
+         * -> 2 persons found
+         */
+        command = "   " + FindCommand.COMMAND_WORD + NAME_DOMAIN_TAG + KEYWORD_MATCHING_MEIER + "   ";
+        expectedModel = getModel();
+        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL); // first names of Benson and Daniel are "Meier"
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
         /* Case: repeat previous find command where person list is displaying the persons we are finding
          * -> 2 persons found
          */
