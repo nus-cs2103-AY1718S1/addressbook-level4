@@ -21,8 +21,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.FilterKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.TagContainsKeywordsPredicate;
 import seedu.address.model.person.UserPerson;
 
 //@@author hansiang93
@@ -34,10 +34,10 @@ public class FilterCommandTest {
 
     @Test
     public void equals() {
-        TagContainsKeywordsPredicate firstPredicate =
-                new TagContainsKeywordsPredicate(Collections.singletonList("first"));
-        TagContainsKeywordsPredicate secondPredicate =
-                new TagContainsKeywordsPredicate(Collections.singletonList("second"));
+        FilterKeywordsPredicate firstPredicate =
+                new FilterKeywordsPredicate(Collections.singletonList("first"));
+        FilterKeywordsPredicate secondPredicate =
+                new FilterKeywordsPredicate(Collections.singletonList("second"));
 
         FilterCommand filterFirstCommand = new FilterCommand(firstPredicate);
         FilterCommand filterSecondCommand = new FilterCommand(secondPredicate);
@@ -78,7 +78,7 @@ public class FilterCommandTest {
      */
     private FilterCommand prepareCommand(String userInput) {
         FilterCommand command =
-                new FilterCommand(new TagContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+                new FilterCommand(new FilterKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

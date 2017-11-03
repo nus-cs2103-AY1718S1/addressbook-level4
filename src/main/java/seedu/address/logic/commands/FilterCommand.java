@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-import seedu.address.model.person.TagContainsKeywordsPredicate;
+import seedu.address.model.person.FilterKeywordsPredicate;
 
 //@@author hansiang93
 /**
@@ -12,18 +12,19 @@ public class FilterCommand extends Command {
     public static final String COMMAND_WORD = "filter";
     public static final String COMMAND_ALIAS = "ft";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names, "
+            + "phone, address, email, tag or weblink contain all of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " alice bob charlie";
 
     //@@author hansiang93
-    public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {tag}";
+    public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {keyword}";
     //@@author
 
-    private final TagContainsKeywordsPredicate predicate;
+    private final FilterKeywordsPredicate predicate;
 
-    public FilterCommand(TagContainsKeywordsPredicate predicate) {
+    public FilterCommand(FilterKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 
