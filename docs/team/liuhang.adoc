@@ -8,6 +8,17 @@ OurAb is a CLI(Command Line Interface)-based desktop Address Book application wr
 
 *Code contributed*: [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/test[Test code]]
 
+=== Enhancement Added: Display Profile Photo from Gravatar
+
+==== External Behaviour
+
+image::liuhang-profile-photo.png[width="800]
+==== Justification
+
+To make the addressbook look more personal and customizable.
+
+---
+
 === Enhancement Added: Display Next Meeting
 
 ==== External Behaviour

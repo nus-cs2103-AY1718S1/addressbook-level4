@@ -26,10 +26,10 @@ public interface Model {
 
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
-
+    //@@author Sri-vatsa
     /** Deletes given tag from everyone in the addressbook */
     boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException;
-
+    //@@author
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
@@ -66,22 +66,26 @@ public interface Model {
      */
     UserPrefs getUserPrefs();
 
+    //@@author Sri-vatsa
     /**
-     * @author Sri-vatsa
      * Updates search count for each person who is searched using {@code FindCommand}
      * Assumes filtered List of persons contains search results
      */
     void recordSearchHistory() throws CommandException;
 
     /**
-     * @author Sri-vatsa
      * Sort everyone in addressbook by searchCount
      */
     void sortPersonListBySearchCount();
 
     /**
-     * @author Sri-vatsa
      * Sort everyone in addressbook lexicographically
      */
     void sortPersonListLexicographically();
+
+    //@@author martyn-wong
+    /**
+     * Shows the google map for the selected person in the browser panel
+     */
+    void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 }

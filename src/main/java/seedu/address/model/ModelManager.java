@@ -6,7 +6,6 @@ import static seedu.address.logic.commands.EditCommand.MESSAGE_DUPLICATE_PERSON;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -16,6 +15,8 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.PersonChangedEvent;
+import seedu.address.commons.events.ui.MapPersonEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -78,10 +79,29 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //@@author liuhang0213
+    /** Raises an event to indicate a person been added */
+    private void indicatePersonAdded(ReadOnlyPerson person) {
+        raise(new PersonChangedEvent(person, PersonChangedEvent.ChangeType.ADD, userPrefs));
+    }
+
+    //@@author liuhang0213
+    /** Raises an event to indicate a person been edited */
+    private void indicatePersonEdited(ReadOnlyPerson person) {
+        raise(new PersonChangedEvent(person, PersonChangedEvent.ChangeType.EDIT, userPrefs));
+    }
+
+    //@@author liuhang0213
+    /** Raises an event to indicate a person been deleted */
+    private void indicatePersonDeleted(ReadOnlyPerson person) {
+        raise(new PersonChangedEvent(person, PersonChangedEvent.ChangeType.DELETE, userPrefs));
+    }
+
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
+        indicatePersonDeleted(target);
     }
 
     @Override
@@ -111,8 +131,10 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
+
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
+        indicatePersonAdded(person);
     }
 
     @Override
@@ -122,6 +144,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+        indicatePersonEdited(editedPerson);
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -151,6 +174,11 @@ public class ModelManager extends ComponentManager implements Model {
         return this.userPrefs;
     }
 
+    //@@author Sri-vatsa
+    /***
+     * Records how many times each person in addressbook is searched for
+     * @throws CommandException
+     */
     @Override
     public void recordSearchHistory() throws CommandException {
 
@@ -174,10 +202,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //=========== Sort addressBook methods =============================================================
-
     /***
      * Sorts persons in address book by searchCount
-     * @author Sri-vatsa
      */
     @Override
     public void sortPersonListBySearchCount() {
@@ -195,7 +221,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
-
+    //@@author
 
     //=========== Util methods =============================================================
 
@@ -215,6 +241,14 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
+    }
+
+    //=========== Google Map Method =============================================================
+
+    //@@author martyn-wong
+    @Override
+    public void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        raise(new MapPersonEvent(target));
     }
 
 }

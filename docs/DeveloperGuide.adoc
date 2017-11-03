@@ -573,21 +573,49 @@ settings panel is then translated out of sight again.
 
 image::SettingsPaneInOut.png[width="700"]
 
+When the choose command is called, another event is called to hide the other views that are not "chosen" by the user. For example, if the user types in the command `choose meeting`, the root view of the current display page, e.g linkedin, will be removed
+from the placeholder in the MainWindow, then the root view of the meeting display is placed in its stead.
+
 ==== Design Considerations
 
-**Aspect:** Implementation of choose command
-**Alternative:** Combine it with the pref command to come under a "mega" "settings" command.
-**Pros:** Lesser commands for the user to remember, higher code modularity, easier for future command implementations on settings.
+**Aspect:** Implementation of choose command +
+**Alternative:** Combine it with the pref command to come under a "mega" "settings" command. +
+**Pros:** Lesser commands for the user to remember, higher code modularity, easier for future command implementations on settings. +
 **Cons:** Harder to code and debug due to requirement to parse more arguments
 
 ---
 
-**Aspect:** Animation of settings panel
-**Alternative:** Use transitions instead of timeline
-**Pros:** Transitions are easier to implement and understand
+**Aspect:** Animation of settings panel +
+**Alternative:** Use transitions instead of timeline +
+**Pros:** Transitions are easier to implement and understand +
 **Cons:** KeyValue objects are fit into a keyframe which is then fit into the timeline, which fits more into the concept of java's OOP and allows for more code reusability when we want to, for example, animate bouncing
 
 ---
+
+==== Display LinkedIn Search Results
+
+When the `choose` command is activated with the argument `linkedin`, the `BrowserPanel` handles by calling:
+[source, java]
+----
+private void loadOtherPages(String page);
+----
+
+image::LinkedInProfile.png[width="200"]
+
+LinkedIn results page with parameters, such as `Name`, passed in from the selected `Person` class.
+
+Note: Cookies are stored to maintain login session for the length of the addressbook session.
+
+==== Design considerations
+
+**Aspect:** Implementation of display linked in authorisation
+**Alternative 1 (current option):** Manual key in of user-id and password into browser
+**Pros:** More details of user profile is viewable
+**Pros:** More secure
+**Cons:** Tedious to type login credentials into browser
+**Alternative 2:** Use OAuth 2.0 with LinkedIn Api
+**Pros:** More convenient as login credentials are required only once
+**Cons:** LinkedIn API available does not allow for viewing of full profile
 
 === Command: `Delete Tag`
 
@@ -644,6 +672,74 @@ people is then continually updated, before it is finally returned to the user
 **Aspect:** implementation of `Search` command over `Find`  +
 **Pros:** More powerful search tool +
 **Cons:** Unnecessary results may be returned for larger address books
+
+---
+
+=== Command: `Map`
+
+Displays the google maps location of a person's address
+
+==== Implementation
+
+When 'map' command is executed, it retrieves the current list of people,
+and selects the person's address based on the index given.
+
+The address is then passed into a url template for a page loader to display
+the google maps on the browser panel
+
+==== Design Considerations
+
+**Aspect:** Passing URL directly +
+**Alternative 1:** Use google maps API +
+**Pros:** More powerful and secure search +
+**Cons:** Unnecessary imports of dpeendencies, slows the program +
+=======
+
+---
+
+=== Profile Photo
+
+A profile photo is displayed for each person in the addressbook.
+
+==== Implementation
+
+During startup, the application uses a person's email address to download his/her profile photo from link:https://en.gravatar.com/site/implement/[Gravatar] `cache/`. The photo will then be displayed on the person card.
+
+==== Design Considerations
+
+**Aspect:** source of the profile photos +
+**Alternative 1 (current choice):** Gravatar +
+**Pros:** easy to implement; does not require user to input extra information +
+**Cons:** less customizable +
+**Alternative 2:** from other social network websites (Instagram, Facebook, etc.) +
+**Pros:** OurAb's target demographics usually update their profile photos on SNS more frequently +
+**Cons:** Authentication might be required; User need to input contacts' user id for different websites +
+**Alternative 3:** user uploads profile photo for each person +
+**Pros:** User has most freedom to customize their addressbook +
+**Cons:** Upload photo would be too complicated for a CLI application +
+
+---
+
+=== Meeting Display
+
+Displays the list of upcoming meetings to the user on the main display window. Accessible through the `choose` command to select the display type.
+
+==== Implementation
+
+When the user executes the `choose` command under the `meeting` keyword, an event is raised to hide the current display, which is a WebView.
+Since the meeting display cannot be implemented using a WebView, the root view of the BrowserPanel.fxml is first removed from the placeholder, then the view of MeetingPanel.fxml is added into the placeholder instead.
+The meeting information is retrieved from a ReadOnlyMeetingList converted into an ObservableList<Meeting>, and stored into a list view with list cells containing 5x1 GridPanes, each populated with information on the meeting.
+
+==== Design Considerations
+
+**Aspect:** Constructor of the MeetingPanel class +
+**Alternative:** Instead of taking in logic, directly take in an ObservableList<Meeting> that is called from MainWindow.java. +
+**Pros:** Less coupling since there is no logic component in the MeetingPanel class. +
+**Cons:** Since the Meeting class does not have getter methods to obtain person strings and instead uses a mapped unique id system to obtain each person's name through the ReadOnlyAddressBook, a instance of the model object is required to obtain the strings of each person's name in the meeting object. +
+**Alternative 2:** Implement a direct getter method for the person's string in the meeting object. +
+**Pros:** Lesser code complexity; we no longer need a method in the LogicManager class to obtain person strings through the ReadOnlyAddressBook using the Meeting class' unique IDs. +
+**Pros:** Less coupling since there is no logic component in the MeetingPanel class. +
+**Cons:** Invalidates the unique id system currently in place for the meeting class.
 
 ---
 

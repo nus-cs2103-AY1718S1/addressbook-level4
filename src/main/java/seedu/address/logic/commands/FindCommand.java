@@ -28,9 +28,8 @@ public class FindCommand extends Command {
         this.predicate = predicate;
     }
 
-    /***
-     * @author Sri-vatsa
-     */
+
+    //@@author Sri-vatsa
     @Override
     public CommandResult execute() throws CommandException {
 
@@ -42,6 +41,7 @@ public class FindCommand extends Command {
         }
         return new CommandResult(getMessageForPersonListShownSummary(searchResultsCount));
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

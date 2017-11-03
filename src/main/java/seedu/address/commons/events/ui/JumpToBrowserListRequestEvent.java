@@ -2,6 +2,7 @@ package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
 
+//@@author fongwz
 /**
  * Indicates a request to jump to the list of browser panels
  */

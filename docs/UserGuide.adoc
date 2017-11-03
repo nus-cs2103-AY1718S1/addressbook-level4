@@ -79,16 +79,19 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Listing all persons : `list`
-`From V1.3`
+`From v1.3`
 
 Shows a list of all persons in the address book in alphabetical order. +
 Format: `list`
 
 
-=== Listing all persons, sorted by search frequency : `listByMostSearched`
+=== Listing all persons, sorted by search frequency : `listByMostSearched` `Since v1.2`
 
 Shows a list of all persons in the address book, sorted by descending order of search frequency +
 Format: `listByMostSearched`
+
+`From v1.3`
+This list view is now undoable.
 
 ****
 * Each time a person is searched for using `find`, the search frequency of the person is updated.
@@ -134,7 +137,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Search for persons by parameter: 'Search'
+=== Search for persons by parameter: 'Search' 'Since v1.3'
 
 Finds persons whose details match the given keywords. +
 Format: 'search KEYWORD [MORE KEYWORD]'
@@ -285,10 +288,10 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
-=== Editing user preference : `pref`
+=== Editing user preference : `pref` `Since v1.2`
 
 Edits the user preference. +
-Format: `pref KEY [NEW_VALUE]` +
+Format: `pref [KEY] [NEW_VALUE]` +
 If  `NEW_VALUE` is blank, the current preference will be displayed. +
 
 [NOTE]
@@ -310,7 +313,7 @@ Displays the current value for `AddressBookName`
 * `pref AddressBookName MyBook` +
 Changes `AddressBookName` to `MyBook`
 
-=== Editing display screen : `choose` `Since v1.3`
+=== Editing display screen : `choose` `Since v1.4`
 
 Chooses what to display on the main screen. +
 Format: `choose [NEW_VALUE]` +
@@ -324,7 +327,18 @@ Typing this command will bring up the settings panel at the side of the applicat
 Examples:
 
 * `choose linkedin` +
-Displays the linkedin page of the current selected user on the display screen.
+Displays the linkedin results page of profiles that match user selected.
+
+=== Searching for a person's address by google maps : 'map' 'Since v1.4'
+
+Displays a google map search based of the person's address of the given index in the browser panel. +
+Format: 'map [INDEX]'
+
+****
+* Selects the person and loads the Google maps page of the person's address at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
 
 === Exiting the program : `exit`
 
@@ -363,6 +377,9 @@ Can also use shortcut 'f'
 Can also use shortcut 'lms'
 * *List* : `list`
 Can also use shortcut 'l'
+* *Map* : `map INDEX' +
+e.g.'map 3'
+Can also use shortcut 'm'
 * *Help* : `help`
 * *Search* : `search KEYWORD [KEYWORD]`
 Can also use shortcut 'se'
@@ -380,13 +397,9 @@ Can also use shortcut 'r'
 * *Preference* : `pref KEY [NEW_VALUE]`
 Can also use shortcut 'p'
 * *Display Mode* : `choose [NEW_VALUE]`
+
 == Features coming in v2.0
 
-* *Enhanced tag* - see more in-depth details of a tag
-* *Address book letters* - user is able to view contacts by starting letter, similar to current address books
-* *Sort by tag*
-* *Finding Linkedin contacts*
-* *Sort contacts lexicographically*
 * *Find nearest meeting location* - finds a common meeting point based on users' addresses
 * *Add meeting time* - Adds a meeting time to the contacts that is removed automatically when the time is reached
 * *Retrieve meeting of the day* - Shows all current meetings for today that have been scheduled
@@ -396,5 +409,8 @@ Can also use shortcut 'p'
 [#pref-list]
 * `AddressBookName`
 * `AddressBookFilePath` : indicates where the address book is stored in local storage
-* `Display Modes: linkedin, facebook, meetings`
+* `Display Modes: linkedin, facebook, meetings, maps`
 * `Theme`: Customizes the appearance of the application. Possible values are `Light`, `Blue` and `Dark`
+* `DefaultProfilePhoto`: The default photo used if the person does not have a personal Gravatar. Possible values are
+`person`, `geometric`, `monster`, `face`, `retro`, `robot` and `blank`. +
+ See link:https://en.gravatar.com/site/implement/images/[here] for examples.

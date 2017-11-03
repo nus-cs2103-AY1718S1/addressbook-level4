@@ -23,6 +23,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListByMostSearchedCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.MapCommand;
 import seedu.address.logic.commands.NextMeetingCommand;
 import seedu.address.logic.commands.PrefCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -75,6 +76,7 @@ public class LogicManager extends ComponentManager implements Logic {
         return model.getFilteredPersonList();
     }
 
+    //@@author fongwz
     @Override
     public ObservableList<String> getCommandList() {
         List<String> commandList = Arrays.asList(
@@ -95,7 +97,8 @@ public class LogicManager extends ComponentManager implements Logic {
                 PrefCommand.COMMAND_WORD,
                 ChooseCommand.COMMAND_WORD,
                 NextMeetingCommand.COMMAND_WORD,
-                SearchCommand.COMMAND_WORD
+                SearchCommand.COMMAND_WORD,
+                MapCommand.COMMAND_WORD
         );
         return FXCollections.observableList(commandList);
     }
@@ -120,14 +123,10 @@ public class LogicManager extends ComponentManager implements Logic {
                 PrefCommand.MESSAGE_TEMPLATE,
                 ChooseCommand.MESSAGE_TEMPLATE,
                 NextMeetingCommand.MESSAGE_TEMPLATE,
-                SearchCommand.MESSAGE_TEMPLATE
+                SearchCommand.MESSAGE_TEMPLATE,
+                MapCommand.MESSAGE_TEMPLATE
         );
         return templateList;
-    }
-
-    @Override
-    public ListElementPointer getHistorySnapshot() {
-        return new ListElementPointer(history.getHistory());
     }
 
     @Override
@@ -147,5 +146,11 @@ public class LogicManager extends ComponentManager implements Logic {
             logger.info(e.getMessage());
             return nameList;
         }
+    }
+    //@@author
+
+    @Override
+    public ListElementPointer getHistorySnapshot() {
+        return new ListElementPointer(history.getHistory());
     }
 }

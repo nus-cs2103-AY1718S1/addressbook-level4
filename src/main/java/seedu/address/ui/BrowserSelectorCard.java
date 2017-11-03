@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 
+//@@author fongwz
 /**
  * A UI component that displays information on the browser display type
  */
@@ -38,6 +39,8 @@ public class BrowserSelectorCard extends UiPart<Region> {
             browserCardImage.setImage(new Image("/images/facebook.png"));
         } else if (imageName.equals("meeting")) {
             browserCardImage.setImage(new Image("/images/meeting.png"));
+        } else if (imageName.equals("maps")) {
+            browserCardImage.setImage(new Image("/images/maps.png"));
         }
     }
 

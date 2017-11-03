@@ -1,18 +1,26 @@
 package seedu.address.ui;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.storage.StorageManager;
 
 /**
  * An UI component that displays information of a {@code Person}.
  */
 public class PersonCard extends UiPart<Region> {
 
+    public static final String PROFILE_PHOTO_FILENAME_FORMAT = "img_%1$d.jpg";
+    public static final String DEFAULT_PROFILE_PHOTO_FILENAME = "default_profile_photo.jpg";
     private static final String FXML = "PersonListCard.fxml";
 
     /**
@@ -27,6 +35,8 @@ public class PersonCard extends UiPart<Region> {
 
     @FXML
     private HBox cardPane;
+    @FXML
+    private ImageView gravatar;
     @FXML
     private Label name;
     @FXML
@@ -44,6 +54,7 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
+        initPicture(person);
         initTags(person);
         bindListeners(person);
     }
@@ -83,6 +94,32 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    //@@author liuhang0213
+    /**
+     * Initializes the profile picture using Gravatar
+     */
+    private void initPicture(ReadOnlyPerson person) {
+
+        Image image;
+
+        try {
+            FileInputStream imageFile = StorageManager.loadCacheFile(String.format(PROFILE_PHOTO_FILENAME_FORMAT,
+                    person.getInternalId().value));
+            image = new Image(imageFile);
+            gravatar.setImage(image);
+        } catch (IOException e) {
+            try {
+                FileInputStream defImageFile = StorageManager.loadResourceImage(DEFAULT_PROFILE_PHOTO_FILENAME);
+                image =  new Image(defImageFile);
+                gravatar.setImage(image);
+            } catch (IOException e1) {
+                // Shouldn't happen unless the default profile photo is missing
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
