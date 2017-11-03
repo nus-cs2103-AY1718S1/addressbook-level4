@@ -1,9 +1,5 @@
 # nelsonqyj
-<<<<<<< HEAD
-###### /java/seedu/address/logic/commands/AddMeetingCommandIntegrationTest.java
-=======
 ###### \java\seedu\address\logic\commands\AddMeetingCommandIntegrationTest.java
->>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code AddMeetingCommand}.
@@ -55,11 +51,7 @@ public class AddMeetingCommandIntegrationTest {
 
 }
 ```
-<<<<<<< HEAD
-###### /java/seedu/address/logic/commands/AddMeetingCommandTest.java
-=======
 ###### \java\seedu\address\logic\commands\AddMeetingCommandTest.java
->>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
 public class AddMeetingCommandTest {
 
@@ -246,11 +238,7 @@ public class AddMeetingCommandTest {
 
 }
 ```
-<<<<<<< HEAD
-###### /java/seedu/address/testutil/MeetingBuilder.java
-=======
 ###### \java\seedu\address\testutil\MeetingBuilder.java
->>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
 /**
  * A utility class to help with building Meeting objects.
@@ -286,66 +274,4 @@ public class MeetingBuilder {
     public MeetingBuilder(ReadOnlyMeeting meetingToCopy) {
         this.meeting = new Meeting(meetingToCopy);
     }
-<<<<<<< HEAD
-
-    /**
-     * Sets the {@code NameMeeting} of the {@code Meeting} that we are building.
-     */
-    public MeetingBuilder withNameMeeting(String nameMeeting) {
-        try {
-            this.meeting.setName(new NameMeeting(nameMeeting));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("name of meeting is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Sets the {@code DateTime} of the {@code Meeting} that we are building.
-     */
-    public MeetingBuilder withDateTime(String dateTime) {
-        try {
-            this.meeting.setDateTime(new DateTime(dateTime));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("address is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Sets the {@code Place} of the {@code Meeting} that we are building.
-     */
-    public MeetingBuilder withPlace(String location) {
-        try {
-            this.meeting.setPlace(new Place(location));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("location is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Sets the {@code PersonName} of the {@code Meeting} that we are building.
-     */
-    public MeetingBuilder withPersonToMeet(String personToMeet) {
-        this.meeting.setPersonName(new PersonToMeet(personToMeet));
-        return this;
-    }
-
-    /**
-     * Sets the {@code PhoneNum} of the {@code Meeting} that we are building.
-     */
-    public MeetingBuilder withPhoneNum(String phoneNum) {
-        this.meeting.setPhoneNum(new PhoneNum(phoneNum));
-        return this;
-    }
-
-
-    public Meeting build() {
-        return this.meeting;
-    }
-
-}
-=======
->>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ```

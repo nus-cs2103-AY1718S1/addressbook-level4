@@ -1,5 +1,5 @@
 # Melvin-leo
-###### /java/seedu/address/logic/commands/AddMeetingCommand.java
+###### \java\seedu\address\logic\commands\AddMeetingCommand.java
 ``` java
     /**
      * Creates an AddMeetingCommand to add the specified {@code ReadOnlyMeeting}
@@ -11,8 +11,33 @@
         this.location = location;
     }
 
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToAdd = lastShownList.get(index.getZeroBased());
+        PersonToMeet personName = new PersonToMeet(personToAdd.getName().toString());
+        PhoneNum phoneNum = new PhoneNum(personToAdd.getPhone().toString());
+
+        toAdd = new Meeting(name, date, location, personName, phoneNum);
+        try {
+            model.addMeeting(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        } catch (DuplicateMeetingException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_MEETING);
+        } catch (MeetingBeforeCurrDateException mde) {
+            throw new CommandException(MESSAGE_OVERDUE_MEETING);
+        } catch (MeetingClashException mce) {
+            throw new CommandException(MESSAGE_MEETING_CLASH);
+        }
+    }
 ```
-###### /java/seedu/address/logic/commands/ListMeetingCommand.java
+###### \java\seedu\address\logic\commands\ListMeetingCommand.java
 ``` java
 /**
  * Lists all meetings in the address book to the user.
@@ -33,11 +58,7 @@ public class ListMeetingCommand extends Command {
     }
 }
 ```
-<<<<<<< HEAD
-###### /java/seedu/address/logic/parser/ParserUtil.java
-=======
 ###### \java\seedu\address\logic\parser\ParserUtil.java
->>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<PersonToMeet>} if {@code name} is present.
@@ -49,11 +70,7 @@ public class ListMeetingCommand extends Command {
     }
 
 ```
-<<<<<<< HEAD
-###### /java/seedu/address/logic/parser/ParserUtil.java
-=======
 ###### \java\seedu\address\logic\parser\ParserUtil.java
->>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<NameMeeting>} if {@code name} is present.
@@ -78,11 +95,7 @@ public class ListMeetingCommand extends Command {
 
 }
 ```
-<<<<<<< HEAD
-###### /java/seedu/address/model/AddressBook.java
-=======
 ###### \java\seedu\address\model\AddressBook.java
->>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ``` java
     /**
      * Adds a meeting to the address book.
@@ -104,7 +117,7 @@ public class ListMeetingCommand extends Command {
         }
     }
 ```
-###### /java/seedu/address/model/meeting/DateTime.java
+###### \java\seedu\address\model\meeting\DateTime.java
 ``` java
 /**
  * consist the date and time of an existing meeting in the address book.
@@ -167,7 +180,7 @@ public class DateTime {
     }
 }
 ```
-###### /java/seedu/address/model/meeting/exceptions/DuplicateMeetingException.java
+###### \java\seedu\address\model\meeting\exceptions\DuplicateMeetingException.java
 ``` java
 /**
  * Signals that the operation will result in duplicate Meeting objects.
@@ -179,7 +192,7 @@ public class DuplicateMeetingException extends DuplicateDataException {
     }
 }
 ```
-###### /java/seedu/address/model/meeting/exceptions/MeetingBeforeCurrDateException.java
+###### \java\seedu\address\model\meeting\exceptions\MeetingBeforeCurrDateException.java
 ``` java
 /**
  * Signals that the operation is unable to add meeting due to Date and time before log in time.
@@ -191,7 +204,7 @@ public class MeetingBeforeCurrDateException extends Exception {
     }
 }
 ```
-###### /java/seedu/address/model/meeting/Meeting.java
+###### \java\seedu\address\model\meeting\Meeting.java
 ``` java
 /**
  * Represents a Meeting in the address book.
@@ -323,7 +336,7 @@ public class Meeting implements ReadOnlyMeeting {
 
 }
 ```
-###### /java/seedu/address/model/meeting/NameMeeting.java
+###### \java\seedu\address\model\meeting\NameMeeting.java
 ``` java
 /**
  * Represents a Person's name in the address book.
@@ -383,7 +396,7 @@ public class NameMeeting {
 
 }
 ```
-###### /java/seedu/address/model/meeting/PersonToMeet.java
+###### \java\seedu\address\model\meeting\PersonToMeet.java
 ``` java
 /**
  * Store the person who user is meeting in Meeting class
@@ -413,7 +426,7 @@ public class PersonToMeet {
     }
 }
 ```
-###### /java/seedu/address/model/meeting/PhoneNum.java
+###### \java\seedu\address\model\meeting\PhoneNum.java
 ``` java
 /**
  * Store phonenumber of Person so that user can easily contact him/her for meeting
@@ -443,7 +456,7 @@ public class PhoneNum {
     }
 }
 ```
-###### /java/seedu/address/model/meeting/Place.java
+###### \java\seedu\address\model\meeting\Place.java
 ``` java
 /**
  * Represents a Meeting's place in the address book.
@@ -501,7 +514,7 @@ public class Place {
 
 }
 ```
-###### /java/seedu/address/model/meeting/ReadOnlyMeeting.java
+###### \java\seedu\address\model\meeting\ReadOnlyMeeting.java
 ``` java
 /**
  * A read-only immutable interface for a Meeting in the addressbook.
@@ -550,7 +563,7 @@ public interface ReadOnlyMeeting {
     }
 }
 ```
-###### /java/seedu/address/model/meeting/UniqueMeetingList.java
+###### \java\seedu\address\model\meeting\UniqueMeetingList.java
 ``` java
     /**
      * Adds a meeting to the list.
@@ -598,8 +611,6 @@ public interface ReadOnlyMeeting {
                 .compareTo(m2.getActualDate(m2.getDate().toString())));
     }
 
-<<<<<<< HEAD
-=======
 ```
 ###### \java\seedu\address\model\meeting\UniqueMeetingList.java
 ``` java
@@ -616,9 +627,8 @@ public interface ReadOnlyMeeting {
         }
         setMeetings(replacement);
     }
->>>>>>> 2786baed11f618016fdee5e3324facde2116dbeb
 ```
-###### /java/seedu/address/storage/XmlAdaptedMeeting.java
+###### \java\seedu\address\storage\XmlAdaptedMeeting.java
 ``` java
     /**
      * Converts a given Meeting into this class for JAXB use.
@@ -634,7 +644,7 @@ public interface ReadOnlyMeeting {
     }
 
 ```
-###### /java/seedu/address/ui/MeetingAlert.java
+###### \java\seedu\address\ui\MeetingAlert.java
 ``` java
 /**
  * To have a pop up window to remind user about the meetings they have today
@@ -716,9 +726,15 @@ public class MeetingAlert extends UiPart<Region> {
             long daysBet = ChronoUnit.DAYS.between(currDate, meetDate);
             if (daysBet == 0) {
                 int j = i + 1;
+                if (j >= list.size()) {
+                    break;
+                }
                 while (list.get(i).getDate().equals(list.get(j).getDate())) {
                     numMeet++;
                     j++;
+                    if (j >= list.size()) {
+                        break;
+                    }
                 }
 
             }
@@ -734,7 +750,7 @@ public class MeetingAlert extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/MeetingCard.java
+###### \java\seedu\address\ui\MeetingCard.java
 ``` java
 /**
  * An UI component that displays information of a {@code Meeting}.
@@ -820,7 +836,7 @@ public class MeetingCard extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/MeetingListPanel.java
+###### \java\seedu\address\ui\MeetingListPanel.java
 ``` java
 /**
  * Panel containing the list of meetings.
@@ -891,7 +907,7 @@ public class MeetingListPanel extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/UiManager.java
+###### \java\seedu\address\ui\UiManager.java
 ``` java
     /**
      * To check if there is a meeting on the day of logging in, only shows reminder if there is a meeting
@@ -911,7 +927,7 @@ public class MeetingListPanel extends UiPart<Region> {
         return false;
     }
 ```
-###### /resources/view/MeetingAlert.fxml
+###### \resources\view\MeetingAlert.fxml
 ``` fxml
 
 <StackPane fx:id="helpWindowRoot" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
@@ -942,7 +958,7 @@ public class MeetingListPanel extends UiPart<Region> {
    </children>
 </StackPane>
 ```
-###### /resources/view/MeetingListCard.fxml
+###### \resources\view\MeetingListCard.fxml
 ``` fxml
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane HBox.hgrow="ALWAYS">
@@ -974,7 +990,7 @@ public class MeetingListPanel extends UiPart<Region> {
     </GridPane>
 </HBox>
 ```
-###### /resources/view/MeetingListPanel.fxml
+###### \resources\view\MeetingListPanel.fxml
 ``` fxml
 <VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <Label stylesheets="@DarkTheme.css" text="                   MEETINGS" />
