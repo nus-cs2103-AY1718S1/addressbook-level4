@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.ClearLogCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -19,6 +20,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.QrCallCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -128,6 +130,14 @@ public class AddressBookParser {
         case UploadPhotoCommand.COMMAND_WORD:
         case UploadPhotoCommand.COMMAND_ALIAS:
             return new UploadPhotoCommandParser().parse(arguments);
+
+        case ClearLogCommand.COMMAND_WORD:
+        case ClearLogCommand.COMMAND_ALIAS:
+            return new ClearLogCommand();
+
+        case QrCallCommand.COMMAND_WORD:
+        case QrCallCommand.COMMAND_ALIAS:
+            return new QrCallCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

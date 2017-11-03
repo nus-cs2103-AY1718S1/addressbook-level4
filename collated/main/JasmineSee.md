@@ -1,15 +1,550 @@
 # JasmineSee
-###### /resources/view/MainWindow.fxml
-``` fxml
-  <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
-    <Menu mnemonicParsing="false" text="File">
-         <MenuItem mnemonicParsing="false" onAction="#handleBlackTheme" text="Black Theme" />
-         <MenuItem mnemonicParsing="false" onAction="#handleWhiteTheme" text="White Theme" />
-         <MenuItem mnemonicParsing="false" onAction="#handleGreenTheme" text="Green Theme" />
-      <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-    </Menu>
+###### \java\seedu\address\commons\events\ui\PhotoChangeEvent.java
+``` java
+/**
+ * Indicates that a photo change is occurring.
+ */
+public class PhotoChangeEvent extends BaseEvent {
+
+    public PhotoChangeEvent() {
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
 ```
-###### /resources/view/GreenTheme.css
+###### \java\seedu\address\logic\commands\EditCommand.java
+``` java
+        /**
+         * Returns true if email field is edited.
+         */
+        public boolean isEmailFieldEdited() {
+            return CollectionUtil.isAnyNonNull(this.email);
+        }
+```
+###### \java\seedu\address\logic\commands\EditCommand.java
+``` java
+    /**
+     * Renames image file of person to new email if image of person exists.
+     */
+    private void renamePhoto(String oldEmail, String newEmail) {
+        File oldFile = new File("src/main/photos/" + oldEmail + ".png");
+        File newFile = new File("src/main/photos/" + newEmail + ".png");
+        if (oldFile.exists()) {
+            oldFile.renameTo(newFile);
+        }
+    }
+```
+###### \java\seedu\address\logic\commands\RemoveTagCommand.java
+``` java
+/**
+ * Removes specified tag from all persons from the address book.
+ */
+public class RemoveTagCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "rtag";
+    public static final String COMMAND_ALIAS = "rt";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Removes specified tag from all persons.\n"
+            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
+            + "Example: " + COMMAND_WORD + " friends classmates colleagues";
+
+    public static final String MESSAGE_REMOVE_TAG_SUCCESS = "Removed tag(s)";
+    public static final String MESSAGE_TAG_NOT_REMOVED = "Tag(s) not removed";
+
+    private final ArrayList<Tag> tagsToRemove;
+
+    public RemoveTagCommand(ArrayList<Tag> tagsToRemove) {
+
+        this.tagsToRemove = tagsToRemove;
+
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        try {
+            for (Tag tag : tagsToRemove) {
+                model.removeTag(tag);
+                LoggingCommand loggingCommand = new LoggingCommand();
+                loggingCommand.keepLog(tag.toString(), "Remove Tag");
+            }
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "The target person cannot be missing";
+        }
+
+        if (!isTagsExist(tagsToRemove)) {
+            return new CommandResult(String.format(MESSAGE_TAG_NOT_REMOVED));
+        }
+        return new CommandResult(String.format(MESSAGE_REMOVE_TAG_SUCCESS));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof RemoveTagCommand // instanceof handles nulls
+                && tagsToRemove.equals(((RemoveTagCommand) other).tagsToRemove));
+    }
+
+    /**
+     * @param tagKeywords
+     * @return true if keywords exist in current tag list
+     */
+    public boolean isTagsExist(ArrayList<Tag> tagKeywords) {
+        List<Tag> tagList = model.getAddressBook().getTagList();
+        return tagKeywords.stream()
+                .anyMatch(keyword -> tagList.contains(keyword));
+    }
+}
+```
+###### \java\seedu\address\logic\commands\TagCommand.java
+``` java
+/**
+ * Lists all persons in the address book to the user.
+ */
+public class TagCommand extends Command {
+
+    public static final String COMMAND_WORD = "tag";
+    public static final String COMMAND_ALIAS = "t";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Filters and shows list of persons with the specified tag.\n"
+            + "Parameters: Existing tag\n"
+            + "Example: " + COMMAND_WORD + " friends ";
+
+
+    private final TagContainsKeywordsPredicate predicate;
+
+    public TagCommand(TagContainsKeywordsPredicate predicate) {
+        this.predicate = predicate;
+    }
+
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredPersonList(predicate);
+        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof TagCommand // instanceof handles nulls
+                && this.predicate.equals(((TagCommand) other).predicate)); // state check
+    }
+}
+```
+###### \java\seedu\address\logic\commands\UploadPhotoCommand.java
+``` java
+/**
+ * Uploads image file to specified person.
+ */
+public class UploadPhotoCommand extends UndoableCommand {
+    public static final String COMMAND_WORD = "photo";
+    public static final String COMMAND_ALIAS = "p";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Uploads image to the person identified by the index number used in the last person listing.\n"
+            + "Parameters: INDEX (must be a positive integer) or "
+            + "INDEX (must be a positive integer) and image file path\n"
+            + "Example: " + COMMAND_WORD + " 1\n"
+            + "OR: " + COMMAND_WORD + " 1 " + "C:\\Users\\Pictures\\photo.jpg";
+
+    public static final String MESSAGE_UPLOAD_IMAGE_SUCCESS = "Uploaded image to Person: %1$s";
+    public static final String MESSAGE_UPLOAD_IMAGE_FALURE = "Image file is not valid. Try again!";
+    private final Index targetIndex;
+    private final String filePath;
+    private final FileChooser fileChooser = new FileChooser();
+    private Stage stage;
+    private ImageView imageView = new ImageView();
+    private HashMap<Email, String> photoList;
+
+    public UploadPhotoCommand(Index targetIndex, String filePath) {
+        this.targetIndex = targetIndex;
+        this.filePath = filePath;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+        ReadOnlyPerson personToUploadImage = lastShownList.get(targetIndex.getZeroBased());
+        File imageFile;
+        //  Photo targetPhoto = lastShownList.get(targetIndex.getZeroBased()).getPhoto();
+
+        if (filePath.equals("")) {
+            imageFile = handleFileChooser();
+        } else {
+            imageFile = new File(filePath);
+        }
+
+        if (isValidImageFile(imageFile)) {
+            imageFile = saveFile(imageFile, personToUploadImage.getEmail());
+            EventsCenter.getInstance().post(new PhotoChangeEvent());
+        } else {
+            throw new CommandException(String.format(MESSAGE_UPLOAD_IMAGE_FALURE));
+        }
+
+        // ReadOnlyPerson editedPerson = lastShownList.get(targetIndex.getZeroBased());
+        // editedPerson.getPhoto().setPath(imageFile.getPath());
+        // photoList.put(personToUploadImage.getEmail(), imageFile.getPath());
+        // EventsCenter.getInstance().registerHandler(handler);
+        return new CommandResult(String.format(MESSAGE_UPLOAD_IMAGE_SUCCESS, personToUploadImage));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UploadPhotoCommand // instanceof handles nulls
+                && this.targetIndex.equals(((UploadPhotoCommand) other).targetIndex)); // state check
+    }
+
+    /**
+     * Opens fileChooser to select image file
+     */
+    public File handleFileChooser() {
+        File file = fileChooser.showOpenDialog(stage);
+        return file;
+    }
+
+    /**
+     * Checks if file given is an valid image file.
+     */
+    private boolean isValidImageFile(File file) {
+        boolean isValid = true;
+        try {
+            BufferedImage image = ImageIO.read(file);
+            if (image == null) {  //file is not an image file
+                isValid = false;
+            }
+        } catch (IOException ex) { //file could not be opened
+            isValid = false;
+        }
+        return isValid;
+    }
+
+    /**
+     * Reads and saves image file into project directory folder "photos".
+     */
+    private File saveFile(File file, Email email) {
+
+        File path = new File("src/main/photos/" + email.toString() + ".png");
+
+        try {
+            path.mkdirs();
+            path.createNewFile();
+            //     System.out.println(path.getPath());
+            //  BufferedImage image = new BufferedImage(100, 100, 1);
+            BufferedImage image;
+            image = ImageIO.read(file);
+            ImageIO.write(image, "png", path);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Logger.getLogger(UploadPhotoCommand.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return path;
+    }
+
+}
+```
+###### \java\seedu\address\logic\parser\RemoveTagCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new RemoveTagCommand object
+ */
+public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
+    private final ArrayList<Tag> tagToRemove = new ArrayList<>();
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the RemoveTagCommand
+     * and returns an RemoveTagCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public RemoveTagCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+        }
+
+        String[] tagKeywords = trimmedArgs.split("\\s+");
+
+        for (int i = 0; i < tagKeywords.length; i++) {
+            try {
+                tagToRemove.add(new Tag(tagKeywords[i]));
+            } catch (IllegalValueException ive) {
+                throw new ParseException(ive.getMessage(), ive);
+            }
+        }
+        return new RemoveTagCommand(tagToRemove);
+    }
+
+
+}
+```
+###### \java\seedu\address\logic\parser\TagCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new TagCommand object
+ */
+public class TagCommandParser implements Parser<TagCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the TagCommand
+     * and returns an TagCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public TagCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim().toLowerCase();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
+        }
+
+        String[] tagKeywords = trimmedArgs.split("\\s+");
+
+        return new TagCommand(new TagContainsKeywordsPredicate(Arrays.asList(tagKeywords)));
+    }
+
+}
+```
+###### \java\seedu\address\logic\parser\UploadPhotoCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new UploadImageCommand object
+ */
+public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the UploadImageCommand
+     * and returns an UploadImageCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public UploadPhotoCommand parse(String args) throws ParseException {
+        try {
+            String[] argsArr = args.trim().split(" ");
+
+            String indexString = argsArr[0];
+            String filePath = "";
+            if (argsArr.length > 1) {
+                filePath = argsArr[1];
+            }
+            Index index = ParserUtil.parseIndex(indexString);
+            return new UploadPhotoCommand(index, filePath);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadPhotoCommand.MESSAGE_USAGE));
+        }
+    }
+}
+
+```
+###### \java\seedu\address\model\Model.java
+``` java
+    void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException;
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public void resetData(ReadOnlyAddressBook newData) {
+        addressBook.resetData(newData);
+        File dir = new File("src/main/photos/");
+        for (File file : dir.listFiles()) {
+            if (file.getName().equals("default.jpeg")) {
+            } else {
+                file.delete();
+            }
+        }
+        indicateAddressBookChanged();
+    }
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        addressBook.removePerson(target);
+        File photoPath = new File("src/main/photos/" + target.getEmail().toString() + ".png");
+        photoPath.delete();
+        indicateAddressBookChanged();
+    }
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException {
+        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
+            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
+
+            Person newPerson = new Person(oldPerson);
+            Set<Tag> newTags = new HashSet<Tag>(newPerson.getTags());
+            newTags.remove(tag);
+            newPerson.setTags(newTags);
+            addressBook.updatePerson(oldPerson, newPerson);
+            indicateAddressBookChanged();
+        }
+    }
+```
+###### \java\seedu\address\model\person\UniquePersonList.java
+``` java
+    /**
+     * Returns true if the list contains a person with identical email in the given argument.
+     */
+    public boolean containsSameEmail(ReadOnlyPerson toCheck) {
+        requireNonNull(toCheck);
+        for (ReadOnlyPerson person : internalList) {
+            if (person.getEmail().toString().equals(toCheck.getEmail().toString())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Adds a person to the list.
+     *
+     * @throws DuplicatePersonException if the person to add is a duplicate of an existing person in the list.
+     */
+    public void add(ReadOnlyPerson toAdd) throws DuplicatePersonException {
+        requireNonNull(toAdd);
+        if (contains(toAdd) || containsSameEmail(toAdd)) {
+            throw new DuplicatePersonException();
+        }
+        internalList.add(new Person(toAdd));
+    }
+```
+###### \java\seedu\address\model\tag\TagContainsKeywordsPredicate.java
+``` java
+/**
+ * Tests that a {@code ReadOnlyPerson}'s {@code Tag} matches any of the keywords given.
+ */
+public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+    private final List<String> keywords;
+
+    public TagContainsKeywordsPredicate(List<String> keywords) {
+        this.keywords = keywords;
+    }
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return keywords.stream()
+                .anyMatch(keyword -> person.getTags().toString().toLowerCase().contains(keyword));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof TagContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check
+    }
+
+}
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    /**
+     * Changes to default dark theme.
+     */
+    @FXML
+    private void handleBlackTheme() {
+        if (vBox.getStylesheets().contains("view/DarkTheme.css")) {
+            vBox.getStylesheets().remove("view/DarkTheme.css");
+        }
+        vBox.getStylesheets().remove("view/WhiteTheme.css");
+        vBox.getStylesheets().remove("view/GreenTheme.css");
+        vBox.getStylesheets().add("view/DarkTheme.css");
+        // this.scene.setFill(Color.BLUE);
+    }
+
+    /**
+     * Changes to white theme.
+     */
+    @FXML
+    private void handleWhiteTheme() {
+        if (vBox.getStylesheets().contains("view/WhiteTheme.css")) {
+            vBox.getStylesheets().remove("view/WhiteTheme.css");
+        }
+        vBox.getStylesheets().remove("view/DarkTheme.css");
+        vBox.getStylesheets().remove("view/GreenTheme.css");
+        vBox.getStylesheets().add("view/WhiteTheme.css");
+    }
+
+
+    /**
+     * Changes to green theme.
+     */
+    @FXML
+    private void handleGreenTheme() {
+        if (vBox.getStylesheets().contains("view/GreenTheme.css")) {
+            vBox.getStylesheets().remove("view/GreenTheme.css");
+        }
+        vBox.getStylesheets().remove("view/WhiteTheme.css");
+        vBox.getStylesheets().remove("view/DarkTheme.css");
+        vBox.getStylesheets().add("view/GreenTheme.css");
+    }
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+    public PersonCard(ReadOnlyPerson person, int displayedIndex) {
+        super(FXML);
+        this.person = person;
+        id.setText(displayedIndex + ". ");
+        initTags(person);
+        bindListeners(person);
+        registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Binds the individual UI elements to observe their respective {@code Person} properties
+     * so that they will be notified of any changes.
+     */
+    private void bindListeners(ReadOnlyPerson person) {
+        name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        address.textProperty().bind(Bindings.convert(person.addressProperty()));
+        email.textProperty().bind(Bindings.convert(person.emailProperty()));
+
+        Path path = Paths.get("src/main/photos/" + person.getEmail().toString() + ".png");
+        if (Files.exists(path)) {
+            File filePic = new File("src/main/photos/" + person.getEmail().toString() + ".png");
+            Image image = new Image(filePic.toURI().toString(), 150, 150, false, false);
+            photo.setImage(image);
+        } else {
+            File fileDefault = new File("src/main/photos/default.jpeg");
+            Image image = new Image(fileDefault.toURI().toString(), 150, 150, false, false);
+            photo.setImage(image);
+        }
+
+        person.tagProperty().addListener((observable, oldValue, newValue) -> {
+            tags.getChildren().clear();
+            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        });
+    }
+
+    /**
+     * Handles photo change
+     */
+    @Subscribe
+    private void handlePhotoChange(PhotoChangeEvent event) {
+        File file = new File("src/main/photos/" + person.getEmail().toString() + ".png");
+        //}
+        Path path = Paths.get("src/main/photos/" + person.getEmail().toString() + ".png");
+        if (Files.exists(path)) {
+            Image image = new Image(file.toURI().toString(), 150, 150, false, false);
+            photo.setImage(image);
+            //   System.out.println("Photo changed " + person.getName().fullName);
+        }
+
+    }
+```
+###### \resources\view\GreenTheme.css
 ``` css
 .background {
     -fx-background-color: derive(#527623, 20%);
@@ -386,11 +921,21 @@ h2 {
     -fx-font-size: 11;
 }
 ```
-###### /resources/view/PersonListCard.fxml
+###### \resources\view\MainWindow.fxml
+``` fxml
+  <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
+    <Menu mnemonicParsing="false" text="File">
+         <MenuItem mnemonicParsing="false" onAction="#handleBlackTheme" text="Black Theme" />
+         <MenuItem mnemonicParsing="false" onAction="#handleWhiteTheme" text="White Theme" />
+         <MenuItem mnemonicParsing="false" onAction="#handleGreenTheme" text="Green Theme" />
+      <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+    </Menu>
+```
+###### \resources\view\PersonListCard.fxml
 ``` fxml
    <ImageView fx:id="photo" fitHeight="150.0" fitWidth="157.0" pickOnBounds="true" preserveRatio="true" />
 ```
-###### /resources/view/WhiteTheme.css
+###### \resources\view\WhiteTheme.css
 ``` css
 .background {
     -fx-background-color: derive(#e6e6e6, 20%);
@@ -767,465 +1312,4 @@ h2 {
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
-```
-###### /java/seedu/address/ui/MainWindow.java
-``` java
-    /**
-     * Changes to default dark theme.
-     */
-    @FXML
-    private void handleBlackTheme() {
-        if (vBox.getStylesheets().contains("view/DarkTheme.css")) {
-            vBox.getStylesheets().remove("view/DarkTheme.css");
-        }
-        vBox.getStylesheets().remove("view/WhiteTheme.css");
-        vBox.getStylesheets().remove("view/GreenTheme.css");
-        vBox.getStylesheets().add("view/DarkTheme.css");
-        // this.scene.setFill(Color.BLUE);
-    }
-
-    /**
-     * Changes to white theme.
-     */
-    @FXML
-    private void handleWhiteTheme() {
-        if (vBox.getStylesheets().contains("view/WhiteTheme.css")) {
-            vBox.getStylesheets().remove("view/WhiteTheme.css");
-        }
-        vBox.getStylesheets().remove("view/DarkTheme.css");
-        vBox.getStylesheets().remove("view/GreenTheme.css");
-        vBox.getStylesheets().add("view/WhiteTheme.css");
-    }
-
-
-    /**
-     * Changes to green theme.
-     */
-    @FXML
-    private void handleGreenTheme() {
-        if (vBox.getStylesheets().contains("view/GreenTheme.css")) {
-            vBox.getStylesheets().remove("view/GreenTheme.css");
-        }
-        vBox.getStylesheets().remove("view/WhiteTheme.css");
-        vBox.getStylesheets().remove("view/DarkTheme.css");
-        vBox.getStylesheets().add("view/GreenTheme.css");
-    }
-```
-###### /java/seedu/address/ui/PersonCard.java
-``` java
-    public PersonCard(ReadOnlyPerson person, int displayedIndex) {
-        super(FXML);
-        this.person = person;
-        id.setText(displayedIndex + ". ");
-        initTags(person);
-        bindListeners(person);
-        registerAsAnEventHandler(this);
-    }
-
-    /**
-     * Binds the individual UI elements to observe their respective {@code Person} properties
-     * so that they will be notified of any changes.
-     */
-    private void bindListeners(ReadOnlyPerson person) {
-        name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
-
-        Path path = Paths.get("src/main/photos/" + person.getEmail().toString() + ".png");
-        if (Files.exists(path)) {
-            File filePic = new File("src/main/photos/" + person.getEmail().toString() + ".png");
-            Image image = new Image(filePic.toURI().toString(), 150, 150, false, false);
-            photo.setImage(image);
-        } else {
-            File fileDefault = new File("src/main/photos/default.jpeg");
-            Image image = new Image(fileDefault.toURI().toString(), 150, 150, false, false);
-            photo.setImage(image);
-        }
-
-        person.tagProperty().addListener((observable, oldValue, newValue) -> {
-            tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-        });
-    }
-
-    /**
-     * Handles photo change
-     */
-    @Subscribe
-    private void handlePhotoChange(PhotoChangeEvent event) {
-        File file = new File("src/main/photos/" + person.getEmail().toString() + ".png");
-        //}
-        Path path = Paths.get("src/main/photos/" + person.getEmail().toString() + ".png");
-        if (Files.exists(path)) {
-            Image image = new Image(file.toURI().toString(), 150, 150, false, false);
-            photo.setImage(image);
-            //   System.out.println("Photo changed " + person.getName().fullName);
-        }
-
-    }
-```
-###### /java/seedu/address/ui/PersonCard.java
-``` java
-
-    /**
-     * Init person tags with colour
-     */
-```
-###### /java/seedu/address/logic/parser/TagCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new TagCommand object
- */
-public class TagCommandParser implements Parser<TagCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the TagCommand
-     * and returns an TagCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public TagCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim().toLowerCase();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
-        }
-
-        String[] tagKeywords = trimmedArgs.split("\\s+");
-
-        return new TagCommand(new TagContainsKeywordsPredicate(Arrays.asList(tagKeywords)));
-    }
-
-}
-```
-###### /java/seedu/address/logic/parser/UploadPhotoCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new UploadImageCommand object
- */
-public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the UploadImageCommand
-     * and returns an UploadImageCommand object for execution.
-     *
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public UploadPhotoCommand parse(String args) throws ParseException {
-        try {
-            String[] argsArr = args.trim().split(" ");
-
-            String indexString = argsArr[0];
-            String filePath = "";
-            if (argsArr.length > 1) {
-                filePath = argsArr[1];
-            }
-            Index index = ParserUtil.parseIndex(indexString);
-            return new UploadPhotoCommand(index, filePath);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadPhotoCommand.MESSAGE_USAGE));
-        }
-    }
-}
-
-```
-###### /java/seedu/address/logic/parser/RemoveTagCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new RemoveTagCommand object
- */
-public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
-    private final ArrayList<Tag> tagToRemove = new ArrayList<>();
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the RemoveTagCommand
-     * and returns an RemoveTagCommand object for execution.
-     *
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public RemoveTagCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
-        }
-
-        String[] tagKeywords = trimmedArgs.split("\\s+");
-
-        for (int i = 0; i < tagKeywords.length; i++) {
-            try {
-                tagToRemove.add(new Tag(tagKeywords[i]));
-            } catch (IllegalValueException ive) {
-                throw new ParseException(ive.getMessage(), ive);
-            }
-        }
-        return new RemoveTagCommand(tagToRemove);
-    }
-
-
-}
-```
-###### /java/seedu/address/logic/commands/UploadPhotoCommand.java
-``` java
-/**
- * Uploads image file to specified person.
- */
-public class UploadPhotoCommand extends UndoableCommand {
-    public static final String COMMAND_WORD = "photo";
-    public static final String COMMAND_ALIAS = "p";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Uploads image to the person identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer) or "
-            + "INDEX (must be a positive integer) and image file path\n"
-            + "Example: " + COMMAND_WORD + " 1\n"
-            + "OR: " + COMMAND_WORD + " 1 " + "C:\\Users\\Pictures\\photo.jpg";
-
-    public static final String MESSAGE_UPLOAD_IMAGE_SUCCESS = "Uploaded image to Person: %1$s";
-    public static final String MESSAGE_UPLOAD_IMAGE_FALURE = "Image file is not valid. Try again!";
-    private final Index targetIndex;
-    private final String filePath;
-    private final FileChooser fileChooser = new FileChooser();
-    private Stage stage;
-    private ImageView imageView = new ImageView();
-    private HashMap<Email, String> photoList;
-
-    public UploadPhotoCommand(Index targetIndex, String filePath) {
-        this.targetIndex = targetIndex;
-        this.filePath = filePath;
-    }
-
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-        ReadOnlyPerson personToUploadImage = lastShownList.get(targetIndex.getZeroBased());
-        File imageFile;
-        //  Photo targetPhoto = lastShownList.get(targetIndex.getZeroBased()).getPhoto();
-
-        if (filePath.equals("")) {
-            imageFile = handleFileChooser();
-        } else {
-            imageFile = new File(filePath);
-        }
-
-        if (isValidImageFile(imageFile)) {
-            imageFile = saveFile(imageFile, personToUploadImage.getEmail());
-            EventsCenter.getInstance().post(new PhotoChangeEvent());
-        } else {
-            throw new CommandException(String.format(MESSAGE_UPLOAD_IMAGE_FALURE));
-        }
-
-        // ReadOnlyPerson editedPerson = lastShownList.get(targetIndex.getZeroBased());
-        // editedPerson.getPhoto().setPath(imageFile.getPath());
-        // photoList.put(personToUploadImage.getEmail(), imageFile.getPath());
-        // EventsCenter.getInstance().registerHandler(handler);
-        return new CommandResult(String.format(MESSAGE_UPLOAD_IMAGE_SUCCESS, personToUploadImage));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof UploadPhotoCommand // instanceof handles nulls
-                && this.targetIndex.equals(((UploadPhotoCommand) other).targetIndex)); // state check
-    }
-
-    /**
-     * Opens fileChooser to select image file
-     */
-    public File handleFileChooser() {
-        File file = fileChooser.showOpenDialog(stage);
-        return file;
-    }
-
-    /**
-     * Checks if file given is an valid image file.
-     */
-    private boolean isValidImageFile(File file) {
-        boolean isValid = true;
-        try {
-            BufferedImage image = ImageIO.read(file);
-            if (image == null) {  //file is not an image file
-                isValid = false;
-            }
-        } catch (IOException ex) { //file could not be opened
-            isValid = false;
-        }
-        return isValid;
-    }
-
-    /**
-     * Reads and saves image file into project directory folder "photos".
-     */
-    private File saveFile(File file, Email email) {
-
-        File path = new File("src/main/photos/" + email.toString() + ".png");
-
-        try {
-            path.mkdirs();
-            path.createNewFile();
-            //     System.out.println(path.getPath());
-            //  BufferedImage image = new BufferedImage(100, 100, 1);
-            BufferedImage image;
-            image = ImageIO.read(file);
-            ImageIO.write(image, "png", path);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            Logger.getLogger(UploadPhotoCommand.class.getName()).log(Level.SEVERE, null, e);
-        }
-        return path;
-    }
-
-}
-```
-###### /java/seedu/address/logic/commands/TagCommand.java
-``` java
-/**
- * Lists all persons in the address book to the user.
- */
-public class TagCommand extends Command {
-
-    public static final String COMMAND_WORD = "tag";
-    public static final String COMMAND_ALIAS = "t";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Filters and shows list of persons with the specified tag.\n"
-            + "Parameters: Existing tag\n"
-            + "Example: " + COMMAND_WORD + " friends ";
-
-
-    private final TagContainsKeywordsPredicate predicate;
-
-    public TagCommand(TagContainsKeywordsPredicate predicate) {
-        this.predicate = predicate;
-    }
-
-    @Override
-    public CommandResult execute() {
-        model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof TagCommand // instanceof handles nulls
-                && this.predicate.equals(((TagCommand) other).predicate)); // state check
-    }
-}
-```
-###### /java/seedu/address/logic/commands/RemoveTagCommand.java
-``` java
-/**
- * Removes specified tag from all persons from the address book.
- */
-public class RemoveTagCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "rtag";
-    public static final String COMMAND_ALIAS = "rt";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Removes specified tag from all persons.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " friends classmates colleagues";
-
-    public static final String MESSAGE_REMOVE_TAG_SUCCESS = "Removed tag(s)";
-    public static final String MESSAGE_TAG_NOT_REMOVED = "Tag(s) not removed";
-
-    private final ArrayList<Tag> tagsToRemove;
-
-    public RemoveTagCommand(ArrayList<Tag> tagsToRemove) {
-
-        this.tagsToRemove = tagsToRemove;
-
-    }
-
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        try {
-            for (Tag tag : tagsToRemove) {
-                model.removeTag(tag);
-                LoggingCommand loggingCommand = new LoggingCommand();
-                loggingCommand.keepLog(tag.toString(), "Remove Tag");
-            }
-        } catch (DuplicatePersonException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
-            assert false : "The target person cannot be missing";
-        }
-
-        if (!isTagsExist(tagsToRemove)) {
-            return new CommandResult(String.format(MESSAGE_TAG_NOT_REMOVED));
-        }
-        return new CommandResult(String.format(MESSAGE_REMOVE_TAG_SUCCESS));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof RemoveTagCommand // instanceof handles nulls
-                && tagsToRemove.equals(((RemoveTagCommand) other).tagsToRemove));
-    }
-
-    /**
-     * @param tagKeywords
-     * @return true if keywords exist in current tag list
-     */
-    public boolean isTagsExist(ArrayList<Tag> tagKeywords) {
-        List<Tag> tagList = model.getAddressBook().getTagList();
-        return tagKeywords.stream()
-                .anyMatch(keyword -> tagList.contains(keyword));
-    }
-}
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    @Override
-    public void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException {
-        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
-            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
-
-            Person newPerson = new Person(oldPerson);
-            Set<Tag> newTags = new HashSet<Tag>(newPerson.getTags());
-            newTags.remove(tag);
-            newPerson.setTags(newTags);
-            addressBook.updatePerson(oldPerson, newPerson);
-            indicateAddressBookChanged();
-        }
-    }
-```
-###### /java/seedu/address/model/tag/TagContainsKeywordsPredicate.java
-``` java
-/**
- * Tests that a {@code ReadOnlyPerson}'s {@code Tag} matches any of the keywords given.
- */
-public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
-    private final List<String> keywords;
-
-    public TagContainsKeywordsPredicate(List<String> keywords) {
-        this.keywords = keywords;
-    }
-
-    @Override
-    public boolean test(ReadOnlyPerson person) {
-        return keywords.stream()
-                .anyMatch(keyword -> person.getTags().toString().toLowerCase().contains(keyword));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof TagContainsKeywordsPredicate // instanceof handles nulls
-                && this.keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check
-    }
-
-}
-```
-###### /java/seedu/address/model/Model.java
-``` java
-    void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException;
 ```
