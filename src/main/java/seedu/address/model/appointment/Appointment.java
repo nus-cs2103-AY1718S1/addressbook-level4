@@ -1,6 +1,7 @@
 //@@author namvd2709
 package seedu.address.model.appointment;
 
+import static java.time.temporal.ChronoUnit.MINUTES;
 import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDateTime;
@@ -96,6 +97,22 @@ public class Appointment {
      */
     private static LocalDateTime getEndDateTime(LocalDateTime startDateTime, String duration) {
         return startDateTime.plusMinutes(Integer.parseInt(duration));
+    }
+
+    /**
+     * Method to help get back original appointment, for passing back to constructor
+     */
+    public static String getOriginalAppointment(String formattedAppointment) {
+        if (!formattedAppointment.equals("")) {
+            int splitter = formattedAppointment.indexOf("to");
+            String start = formattedAppointment.substring(0, splitter - 1);
+            String end = formattedAppointment.substring(splitter + 3);
+            LocalDateTime startDateTime = Appointment.getDateTime(start);
+            LocalDateTime endDateTime = Appointment.getDateTime(end);
+            long duration = startDateTime.until(endDateTime, MINUTES);
+            return start + " " + String.valueOf(duration);
+        }
+        return formattedAppointment;
     }
 
     public LocalDateTime getStart() {

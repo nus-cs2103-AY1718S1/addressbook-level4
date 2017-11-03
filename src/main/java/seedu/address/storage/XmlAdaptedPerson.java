@@ -62,7 +62,7 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        appointment = getOriginalAppointment(source.getAppointment().value);
+        appointment = Appointment.getOriginalAppointment(source.getAppointment().value);
         profilePicturePath = source.getProfilePicture().value;
         grouped = new ArrayList<>();
         for (Group group : source.getGroups()) {
@@ -97,21 +97,5 @@ public class XmlAdaptedPerson {
         final Set<Tag> tags = new HashSet<>(personTags);
         final Set<Group> groups = new HashSet<>(personGroups);
         return new Person(name, phone, email, address, appointment, profilePicture, groups, tags);
-    }
-
-    /**
-     * Method to help get back original appointment, for passing back to constructor
-     */
-    private String getOriginalAppointment(String formattedAppointment) {
-        if (!formattedAppointment.equals("")) {
-            int splitter = formattedAppointment.indexOf("to");
-            String start = formattedAppointment.substring(0, splitter - 1);
-            String end = formattedAppointment.substring(splitter + 3);
-            LocalDateTime startDateTime = Appointment.getDateTime(start);
-            LocalDateTime endDateTime = Appointment.getDateTime(end);
-            long duration = startDateTime.until(endDateTime, MINUTES);
-            return start + " " + String.valueOf(duration);
-        }
-        return formattedAppointment;
     }
 }
