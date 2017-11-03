@@ -22,8 +22,8 @@ public class FacebookConnectCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Connected to your Facebook Account!";
     public static final String MESSAGE_STARTED_PROCESS = "Authentication has been initiated. "
             + "Please log into your Facebook account.";
+    public static final String FACEBOOK_DOMAIN = "https://www.facebook.com/";
 
-    private static final String FACEBOOK_DOMAIN = "https://www.facebook.com/";
     private static final String FACEBOOK_APP_ID = "131555220900267";
     private static final String FACEBOOK_PERMISSIONS = "user_about_me,email,publish_actions,user_birthday,"
             + "user_education_history,user_friends,user_games_activity,user_hometown,user_likes,"

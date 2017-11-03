@@ -18,6 +18,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BrowserUrlChangeEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.FacebookAddAllFriendsCommand;
 import seedu.address.logic.commands.FacebookAddCommand;
 import seedu.address.logic.commands.FacebookConnectCommand;
 import seedu.address.logic.commands.FacebookLinkCommand;
@@ -152,11 +153,19 @@ public class BrowserPanel extends UiPart<Region> {
                             raise(new BrowserUrlChangeEvent(FacebookAddCommand.COMMAND_ALIAS));
                             break;
 
+                        case FacebookAddAllFriendsCommand.COMMAND_WORD:
+                        case FacebookAddAllFriendsCommand.COMMAND_ALIAS:
+                            logger.fine("browser url changed to : '" + newValue + "'");
+                            raise(new BrowserUrlChangeEvent(FacebookAddAllFriendsCommand.COMMAND_ALIAS));
+                            break;
+
                         default:
                             break;
                         }
-                    } else if (newValue.contains("access_token")) {
-                        ;
+                    } else if (newValue.contains("photo.php?fbid")) {
+                        System.out.println("photo change");
+                        logger.fine("browser url changed to : '" + newValue + "'");
+                        raise(new BrowserUrlChangeEvent(FacebookAddAllFriendsCommand.COMMAND_ALIAS));
                     }
                 });
         // reset after execution
@@ -226,6 +235,22 @@ public class BrowserPanel extends UiPart<Region> {
             FacebookConnectCommand.completeAuth(browser.getEngine().getLocation());
             FacebookAddCommand facebookAddCommand = new FacebookAddCommand(trimmedArgs);
             logic.completeFacebookAddCommand(facebookAddCommand, processType);
+            break;
+
+        case FacebookAddAllFriendsCommand.COMMAND_WORD:
+        case FacebookAddAllFriendsCommand.COMMAND_ALIAS:
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+            if(!FacebookConnectCommand.isAuthenticated()) {
+                FacebookConnectCommand.completeAuth(browser.getEngine().getLocation());
+                FacebookAddAllFriendsCommand.addAllFriends();
+                System.out.println("end auth");
+            } else {
+                FacebookAddAllFriendsCommand.setUserID(browser.getEngine().getLocation());
+                FacebookAddCommand facebookAddCommandForAddAll = new FacebookAddCommand(true);
+                System.out.println("call complete");
+                logic.completeFacebookAddCommand(facebookAddCommandForAddAll, processType);
+            }
             break;
 
         default:

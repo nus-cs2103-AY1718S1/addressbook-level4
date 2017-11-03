@@ -13,6 +13,7 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.ExportCommand;
+import seedu.address.logic.commands.FacebookAddAllFriendsCommand;
 import seedu.address.logic.commands.FacebookAddCommand;
 import seedu.address.logic.commands.FacebookConnectCommand;
 import seedu.address.logic.commands.FacebookLinkCommand;
@@ -63,10 +64,16 @@ public class AddressBookParser {
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
 
+        //@@author alexfoodw
         case FacebookAddCommand.COMMAND_WORD:
         case FacebookAddCommand.COMMAND_ALIAS:
             BrowserPanel.setProcessType(commandWord);
             return new FacebookAddCommandParser().parse(arguments);
+
+        case FacebookAddAllFriendsCommand.COMMAND_WORD:
+        case FacebookAddAllFriendsCommand.COMMAND_ALIAS:
+            BrowserPanel.setProcessType(commandWord);
+            return new FacebookAddAllFriendsCommand();
 
         case FacebookConnectCommand.COMMAND_WORD:
         case FacebookConnectCommand.COMMAND_ALIAS:
@@ -82,6 +89,7 @@ public class AddressBookParser {
         case FacebookLinkCommand.COMMAND_ALIAS:
             BrowserPanel.setProcessType(commandWord);
             return new FacebookLinkCommandParser().parse(arguments);
+        //@@author
 
         case EditCommand.COMMAND_WORD:
         case EditCommand.COMMAND_ALIAS:

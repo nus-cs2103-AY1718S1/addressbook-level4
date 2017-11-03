@@ -47,7 +47,9 @@ public class FacebookAddCommand extends UndoableCommand {
 
     private static String userName;
     private String toAddName;
+    private String toAddID;
     private Person toAdd;
+    private boolean isAddAll;
 
     /**
      * Creates an FacebookAddCommand to add the specified Facebook contact
@@ -58,29 +60,45 @@ public class FacebookAddCommand extends UndoableCommand {
     }
 
     /**
+     * Creates an alternative FacebookAddCommand to add the specified Facebook contact initiated by facebook
+     * add all friends command.
+     */
+    public FacebookAddCommand(boolean isAddAll) {
+        System.out.println("fbadd constructed");
+        this.isAddAll = isAddAll;
+        toAddName = FacebookAddAllFriendsCommand.getCurrentUserName();
+        toAddID = FacebookAddAllFriendsCommand.getCurrentUserID();
+    }
+
+    /**
      * Completes the Facebook Add command
      * @throws CommandException
      */
     public void completeAdd() throws CommandException {
-        Facebook facebookInstance = FacebookConnectCommand.getFacebookInstance();
-        ResponseList<User> friendList = null;
+        if(!isAddAll) {
+            Facebook facebookInstance = FacebookConnectCommand.getFacebookInstance();
+            ResponseList<User> friendList = null;
 
-        // fetch data from Facebook
-        try {
-            friendList = facebookInstance.searchUsers(userName);
-        } catch (FacebookException e) {
-            throw new CommandException(MESSAGE_FACEBOOK_ADD_ERROR);
+            // fetch data from Facebook
+            try {
+                friendList = facebookInstance.searchUsers(userName);
+            } catch (FacebookException e) {
+                throw new CommandException(MESSAGE_FACEBOOK_ADD_ERROR);
+            }
+            User user = friendList.get(0);
+            toAddName = user.getName();
+            toAddID = user.getId();
         }
-        User user = friendList.get(0);
-        toAddName = user.getName();
 
+        while(toAddID == null){
+            ;
+        }
         // Assign data to Person object
         try {
             Set<SocialInfo> socialInfos = new HashSet<>();
             SocialInfo facebookInfo = null;
-            facebookInfo = SocialInfoMapping.parseSocialInfo("facebook " + user.getId());
+            facebookInfo = SocialInfoMapping.parseSocialInfo("facebook " + toAddID);
             socialInfos.add(facebookInfo);
-
 
             Set<Tag> tags = new HashSet<>();
             tags.add(new Tag("facebookFriend"));
@@ -91,10 +109,10 @@ public class FacebookAddCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_FACEBOOK_ADD_PERSON_ERROR);
         }
 
-
         addContactToAddressBook();
         EventsCenter.getInstance().post(new NewResultAvailableEvent(
                 toAddName + MESSAGE_FACEBOOK_ADD_SUCCESS, false));
+
     }
 
     /**
