@@ -98,6 +98,8 @@ public class MainWindow extends UiPart<Region> {
                     case TAB:
                         event.consume();
                         calendarWindow.showNextPage();
+                        break;
+                    default:
                 }
             }
         });

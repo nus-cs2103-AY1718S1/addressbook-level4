@@ -1,12 +1,14 @@
 package seedu.address.ui;
 
-import com.calendarfx.view.CalendarView;
-import org.junit.Before;
-import org.junit.Test;
-import seedu.address.testutil.TypicalPersons;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.calendarfx.view.CalendarView;
+
+import seedu.address.testutil.TypicalPersons;
 
 //@@author Eric
 public class CalendarWindowTest {
