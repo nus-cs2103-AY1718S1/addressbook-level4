@@ -10,7 +10,6 @@ import java.util.HashSet;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
-
 //@@author rushan-khor
 public class HasPotentialDuplicatesPredicateTest {
 
