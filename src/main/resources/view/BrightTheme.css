@@ -253,7 +253,6 @@
 }
 
 .button:focused {
-    -fx-border-color: white, white;
     -fx-border-width: 1, 1;
     -fx-border-style: solid, segments(1, 1);
     -fx-border-radius: 0, 0;

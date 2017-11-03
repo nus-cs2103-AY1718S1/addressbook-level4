@@ -88,6 +88,8 @@ public class CalendarView extends UiPart<Region> {
     private static LocalDate currentToday;
     private static LocalDate currentStartOfWeek;
     private static LocalDate currentEndOfWeek;
+    private static Timeslot startOfWeekTimeslot;
+    private static Timeslot endOfWeekTimeslot;
 
     private final LocalTime firstSlotStart = LocalTime.of(7, 0);
     private final Duration slotLength = Duration.ofMinutes(SLOT_LENGTH);
@@ -122,26 +124,28 @@ public class CalendarView extends UiPart<Region> {
 
         this.logic = logic;
 
-//        calendarView = new GridPane();
+        init(eventList);
 
+        registerAsAnEventHandler(this);
+    }
+
+
+    /**
+     * Initialize all values and views.
+     *
+     * @param eventList all existing events list
+     */
+    private void init(ObservableList<ReadOnlyEvent> eventList) {
         currentToday = today.get();
         currentStartOfWeek = startOfWeek.get();
         currentEndOfWeek = endOfWeek.get();
 
         initSlots(calendarView);
-        initTurnPageButton(headers);
+        initPageTurnerButtons(headers);
         initDateHeader(headers);
         initDateTimeHeader(calendarView);
         initEvents(calendarView, eventList, null);
-
-        ScrollPane scrollableCalendar = new ScrollPane(calendarView);
-        ScrollPane scrollableHeader = new ScrollPane(headers);
-        scrollableHeader.setMinHeight(80);
-
-        calendarViewPlaceHolder.getChildren().addAll(scrollableHeader, scrollableCalendar);
-        scrollableCalendar.hvalueProperty().bindBidirectional(scrollableHeader.hvalueProperty());
-
-        registerAsAnEventHandler(this);
+        initScrollPanes();
     }
 
 
@@ -180,19 +184,19 @@ public class CalendarView extends UiPart<Region> {
      * @param calendarView gridPane of the calendar
      */
 
-    private void initTurnPageButton(GridPane headers) {
+    private void initPageTurnerButtons(GridPane headers) {
         Button lastPage = new Button();
         Button nextPage = new Button();
         lastPage.setPrefSize(80, 30);
         lastPage.setMinSize(80, 30);
-        nextPage.setPrefSize(80, 30);
-        nextPage.setMinSize(80, 30);
+        nextPage.setPrefSize(60, 30);
+        nextPage.setMinSize(40, 30);
         lastPage.setStyle("-fx-background-color: transparent");
         nextPage.setStyle("-fx-background-color: transparent");
         lastPage.setGraphic(new ImageView(new Image(getClass().getResource("/images/lastPage.png").toExternalForm
-                (), 30,30,true,true)));
+                (), 25,25,true,true)));
         nextPage.setGraphic(new ImageView(new Image(getClass().getResource("/images/nextPage.png").toExternalForm
-                (), 30,30,true,true)));
+                (), 25,25,true,true)));
 
         lastPage.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -238,8 +242,8 @@ public class CalendarView extends UiPart<Region> {
             label.setPadding(new Insets(1));
             label.setTextAlignment(TextAlignment.CENTER);
             StackPane pane = new StackPane();
-            pane.setPrefSize(120,50);
-            pane.setMinSize(120,50);
+            pane.setPrefSize(135,50);
+            pane.setMinSize(100,50);
             pane.setStyle("-fx-background-color:#FEDFE1");
             pane.getChildren().add(label);
             GridPane.setHalignment(label, HPos.CENTER);
@@ -266,7 +270,7 @@ public class CalendarView extends UiPart<Region> {
             Label label = new Label(startTime.format(timeFormatter));
             label.setPadding(new Insets(2));
             StackPane pane = new StackPane(label);
-            pane.setPrefSize(80,30);
+            pane.setPrefSize(80,20);
             GridPane.setHalignment(label, HPos.RIGHT);
             calendarView.add(pane, 0, slotIndex);
             slotIndex++;
@@ -282,6 +286,7 @@ public class CalendarView extends UiPart<Region> {
     private void initEvents(GridPane calendarView, ObservableList<ReadOnlyEvent> eventList, ReadOnlyEvent
             lastChangedEvent) {
         this.eventList = eventList;
+        initStartEndOfWeek();
         ObservableList<ReadOnlyEvent> eventsThisWeek = extractEvents(eventList);
 
 //        removeDuplicatedPane(calendarView, lastChangedEvent);
@@ -298,6 +303,18 @@ public class CalendarView extends UiPart<Region> {
     }
 
     /**
+     * Initialize scroll panes to wrap around calendar and headers to enable scrolling.
+     */
+    private void initScrollPanes() {
+        ScrollPane scrollableCalendar = new ScrollPane(calendarView);
+        ScrollPane scrollableHeader = new ScrollPane(headers);
+        scrollableHeader.setMinHeight(80);
+
+        calendarViewPlaceHolder.getChildren().addAll(scrollableHeader, scrollableCalendar);
+        scrollableCalendar.hvalueProperty().bindBidirectional(scrollableHeader.hvalueProperty());
+    }
+
+    /**
      * Updates information of last changed event
      *
      * @param calendarView gridPane of the calendar
@@ -309,14 +326,42 @@ public class CalendarView extends UiPart<Region> {
     private void updateEvents(GridPane calendarView, ObservableList<ReadOnlyEvent> eventList, ReadOnlyEvent
             lastChangedEvent, ReadOnlyEvent newlyAddedEvent) {
         this.eventList = eventList;
-        if (lastChangedEvent != null) {
+
+        // Remove existing pane that corresponds to last changed event
+        if (lastChangedEvent != null
+                && lastChangedEvent.happensAfter(startOfWeekTimeslot)
+                && lastChangedEvent.happensBefore(endOfWeekTimeslot)) {
             removeDuplicatedPane(calendarView, lastChangedEvent);
         }
-        if (newlyAddedEvent != null) {
+
+        // Add pane for the newly added event
+        if (newlyAddedEvent != null
+                && newlyAddedEvent.happensAfter(startOfWeekTimeslot)
+                && newlyAddedEvent.happensBefore(endOfWeekTimeslot)) {
             StackPane eventPane = createPane(newlyAddedEvent);
             addEventPaneToCalendarView(calendarView, newlyAddedEvent, eventPane);
         }
     }
+
+    /**
+     * Initialize the current start and end of week
+     */
+    private void initStartEndOfWeek() {
+        String startOfThisWeek = CalendarView.currentStartOfWeek.toString();
+        String endOfThisWeek = CalendarView.currentEndOfWeek.toString();
+        String[] startofWeekTokens = startOfThisWeek.split("-");
+        String[] endofWeekTokens = endOfThisWeek.split("-");
+
+        try {
+            startOfWeekTimeslot = new Timeslot(startofWeekTokens[2] + "/" + startofWeekTokens[1] + "/" +
+                    startofWeekTokens[0] + " " + "0700-0701");
+            endOfWeekTimeslot = new Timeslot(endofWeekTokens[2] + "/" + endofWeekTokens[1] + "/"
+                    + endofWeekTokens[0] + " " + "2358-2359");
+        } catch (IllegalValueException ive) {
+            throw new RuntimeException("Start and end of current week are not correctly initialized.");
+        }
+    }
+
 
     /**
      * Extract events that are scheduled in the current week.
@@ -324,22 +369,8 @@ public class CalendarView extends UiPart<Region> {
      * @return an ObservableList of events scheduled in the current week
      */
     private ObservableList<ReadOnlyEvent> extractEvents(ObservableList<ReadOnlyEvent> eventList) {
-        String startOfThisWeek = CalendarView.currentStartOfWeek.toString();
-        String endOfThisWeek = CalendarView.currentEndOfWeek.toString();
-        String[] startofWeekTokens = startOfThisWeek.split("-");
-        String[] endofWeekTokens = endOfThisWeek.split("-");
-
-        try {
-            Timeslot startOfWeek = new Timeslot(startofWeekTokens[2] + "/" + startofWeekTokens[1] + "/" +
-                    startofWeekTokens[0] + " " + "0700-0701");
-            Timeslot endOfWeek = new Timeslot(endofWeekTokens[2] + "/" + endofWeekTokens[1] + "/"
-                    + endofWeekTokens[0] + " " + "2358-2359");
-            return eventList.stream().filter(event -> event.happensBefore
-                (endOfWeek)).filter(event -> event.happensAfter(startOfWeek)).collect(Collectors.toCollection
-                    (FXCollections::observableArrayList));
-        } catch (IllegalValueException ive) {
-            throw new RuntimeException("Calendar is not correctly initialized.");
-        }
+        return eventList.stream().filter(event -> event.happensBefore(endOfWeekTimeslot)).filter(event -> event
+                .happensAfter(startOfWeekTimeslot)).collect(Collectors.toCollection(FXCollections::observableArrayList));
     }
 
     /**
@@ -378,12 +409,12 @@ public class CalendarView extends UiPart<Region> {
         //Create the label
         Label eventTitle = new Label();
         eventTitle.setWrapText(true);
-        eventTitle.setStyle("-fx-alignment: CENTER; -fx-font-size: 12pt; -fx-text-style: bold;");
+        eventTitle.setStyle("-fx-alignment: CENTER; -fx-font-size: 10pt; -fx-text-style: bold;");
         eventTitle.setText(event.getTitle().toString() + "\n");
 
         //Create the pane
         StackPane eventPane = new StackPane();
-        eventPane.setMaxWidth(120.0);
+        eventPane.setMaxWidth(135.0);
         eventPane.setStyle("-fx-background-color: " + colors[randomColor] + "; -fx-alignment: CENTER; "
                 + "-fx-border-color: " + "white");
 
@@ -583,8 +614,8 @@ public class CalendarView extends UiPart<Region> {
             this.duration = duration;
 
             view = new StackPane();
-            view.setPrefSize(120, 30);
-            view.setMinSize(100, 30);
+            view.setPrefSize(135, 15);
+            view.setMinSize(100, 15);
             view.getStyleClass().add("time-slot");
 
             selectedProperty().addListener((obs, wasSelected, isSelected) ->
