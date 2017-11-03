@@ -7,11 +7,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.room.logic.commands.AddCommand;
+import seedu.room.logic.commands.AddEventCommand;
 import seedu.room.logic.commands.BackupCommand;
 import seedu.room.logic.commands.ClearCommand;
 import seedu.room.logic.commands.Command;
 import seedu.room.logic.commands.DeleteByTagCommand;
 import seedu.room.logic.commands.DeleteCommand;
+import seedu.room.logic.commands.DeleteEventCommand;
 import seedu.room.logic.commands.EditCommand;
 import seedu.room.logic.commands.ExitCommand;
 import seedu.room.logic.commands.FindCommand;
@@ -83,7 +85,6 @@ public class ResidentBookParser {
         case DeleteByTagCommand.COMMAND_ALIAS:
             return new DeleteByTagCommandParser().parse(arguments);
 
-
         case SortCommand.COMMAND_WORD:
         case SortCommand.COMMAND_ALIAS:
             return new SortCommandParser().parse(arguments);
@@ -91,6 +92,14 @@ public class ResidentBookParser {
         case SwaproomCommand.COMMAND_WORD:
         case SwaproomCommand.COMMAND_ALIAS:
             return new SwaproomCommandParser().parse(arguments);
+
+        case AddEventCommand.COMMAND_WORD:
+        case AddEventCommand.COMMAND_ALIAS:
+            return new AddEventCommandParser().parse(arguments);
+
+        case DeleteEventCommand.COMMAND_WORD:
+        case DeleteEventCommand.COMMAND_ALIAS:
+            return new DeleteEventCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
         case ClearCommand.COMMAND_ALIAS:

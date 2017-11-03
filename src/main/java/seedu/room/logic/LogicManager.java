@@ -11,6 +11,7 @@ import seedu.room.logic.commands.exceptions.CommandException;
 import seedu.room.logic.parser.ResidentBookParser;
 import seedu.room.logic.parser.exceptions.ParseException;
 import seedu.room.model.Model;
+import seedu.room.model.event.ReadOnlyEvent;
 import seedu.room.model.person.ReadOnlyPerson;
 
 /**
@@ -64,6 +65,11 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return model.getFilteredPersonList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyEvent> getFilteredEventList() {
+        return model.getFilteredEventList();
     }
 
     @Override

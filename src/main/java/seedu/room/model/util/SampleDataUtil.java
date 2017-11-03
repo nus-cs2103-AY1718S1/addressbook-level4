@@ -4,8 +4,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.room.commons.exceptions.IllegalValueException;
+import seedu.room.model.EventBook;
+import seedu.room.model.ReadOnlyEventBook;
 import seedu.room.model.ReadOnlyResidentBook;
 import seedu.room.model.ResidentBook;
+import seedu.room.model.event.Datetime;
+import seedu.room.model.event.Description;
+import seedu.room.model.event.Event;
+import seedu.room.model.event.Location;
+import seedu.room.model.event.Title;
+import seedu.room.model.event.exceptions.DuplicateEventException;
 import seedu.room.model.person.Email;
 import seedu.room.model.person.Name;
 import seedu.room.model.person.Person;
@@ -46,6 +54,21 @@ public class SampleDataUtil {
         }
     }
 
+    public static Event[] getSampleEvents() {
+        try {
+            return new Event[]{
+                new Event(new Title("End of Semester Dinner"), new Description("Organised by USC"),
+                        new Location("Cinnamon College"), new Datetime("25-11-17 2030")),
+                new Event(new Title("USPolymath Talk"), new Description("Talk by Students"),
+                        new Location("Chatterbox"), new Datetime("1-11-17 0800")),
+                new Event(new Title("USProductions"), new Description("Drama performance"),
+                            new Location("Blackbox"), new Datetime("17-10-17 1200"))
+            };
+        } catch (IllegalValueException e) {
+            throw new AssertionError("sample data cannot be invalid", e);
+        }
+    }
+
     public static ReadOnlyResidentBook getSampleResidentBook() {
         try {
             ResidentBook sampleAb = new ResidentBook();
@@ -58,6 +81,17 @@ public class SampleDataUtil {
         }
     }
 
+    public static ReadOnlyEventBook getSampleEventBook() {
+        try {
+            EventBook sampleEb = new EventBook();
+            for (Event sampleEvent : getSampleEvents()) {
+                sampleEb.addEvent(sampleEvent);
+            }
+            return sampleEb;
+        } catch (DuplicateEventException e) {
+            throw new AssertionError("sample data cannot contain duplicate events", e);
+        }
+    }
     /**
      * Returns a tag set containing the list of strings given.
      */

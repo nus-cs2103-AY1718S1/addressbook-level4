@@ -14,6 +14,7 @@ import org.junit.rules.TemporaryFolder;
 
 import seedu.room.commons.events.model.ResidentBookChangedEvent;
 import seedu.room.commons.events.storage.DataSavingExceptionEvent;
+import seedu.room.model.ReadOnlyEventBook;
 import seedu.room.model.ReadOnlyResidentBook;
 import seedu.room.model.ResidentBook;
 import seedu.room.model.UserPrefs;
@@ -31,8 +32,9 @@ public class StorageManagerTest {
     @Before
     public void setUp() {
         XmlResidentBookStorage residentBookStorage = new XmlResidentBookStorage(getTempFilePath("ab"));
+        XmlEventBookStorage eventBookStorage = new XmlEventBookStorage(getTempFilePath("bc"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(residentBookStorage, userPrefsStorage);
+        storageManager = new StorageManager(residentBookStorage, eventBookStorage, userPrefsStorage);
     }
 
     private String getTempFilePath(String fileName) {
@@ -76,6 +78,7 @@ public class StorageManagerTest {
     public void handleResidentBookChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlResidentBookStorageExceptionThrowingStub("dummy"),
+                new XmlEventBookStorageExceptionThrowingStub("dummy"),
                 new JsonUserPrefsStorage("dummy"));
         storage.handleResidentBookChangedEvent(new ResidentBookChangedEvent(new ResidentBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
@@ -105,6 +108,22 @@ public class StorageManagerTest {
 
         @Override
         public void saveResidentBook(ReadOnlyResidentBook residentBook, String filePath) throws IOException {
+            throw new IOException("dummy exception");
+        }
+    }
+
+    //@@author sushinoya
+    /**
+     * A Stub class to throw an exception when the save method is called
+     */
+    class XmlEventBookStorageExceptionThrowingStub extends XmlEventBookStorage {
+
+        public XmlEventBookStorageExceptionThrowingStub(String filePath) {
+            super(filePath);
+        }
+
+        @Override
+        public void saveEventBook(ReadOnlyEventBook residentBook, String filePath) throws IOException {
             throw new IOException("dummy exception");
         }
     }

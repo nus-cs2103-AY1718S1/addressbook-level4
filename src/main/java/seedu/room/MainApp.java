@@ -20,17 +20,21 @@ import seedu.room.commons.util.ConfigUtil;
 import seedu.room.commons.util.StringUtil;
 import seedu.room.logic.Logic;
 import seedu.room.logic.LogicManager;
+import seedu.room.model.EventBook;
 import seedu.room.model.Model;
 import seedu.room.model.ModelManager;
+import seedu.room.model.ReadOnlyEventBook;
 import seedu.room.model.ReadOnlyResidentBook;
 import seedu.room.model.ResidentBook;
 import seedu.room.model.UserPrefs;
 import seedu.room.model.util.SampleDataUtil;
+import seedu.room.storage.EventBookStorage;
 import seedu.room.storage.JsonUserPrefsStorage;
 import seedu.room.storage.ResidentBookStorage;
 import seedu.room.storage.Storage;
 import seedu.room.storage.StorageManager;
 import seedu.room.storage.UserPrefsStorage;
+import seedu.room.storage.XmlEventBookStorage;
 import seedu.room.storage.XmlResidentBookStorage;
 import seedu.room.ui.Ui;
 import seedu.room.ui.UiManager;
@@ -63,7 +67,8 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         ResidentBookStorage residentBookStorage = new XmlResidentBookStorage(userPrefs.getResidentBookFilePath());
-        storage = new StorageManager(residentBookStorage, userPrefsStorage);
+        EventBookStorage eventBookStorage = new XmlEventBookStorage(userPrefs.getEventBookFilePath());
+        storage = new StorageManager(residentBookStorage, eventBookStorage, userPrefsStorage);
         backup = storage;
 
         initLogging(config);
@@ -89,22 +94,34 @@ public class MainApp extends Application {
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyResidentBook> residentBookOptional;
+        Optional<ReadOnlyEventBook> eventBookOptional;
         ReadOnlyResidentBook initialData;
+        ReadOnlyEventBook initialEventsData;
         try {
             residentBookOptional = storage.readResidentBook();
+            eventBookOptional = storage.readEventBook();
             if (!residentBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample ResidentBook");
             }
+
+            if (!eventBookOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample EventBook");
+            }
+
+            initialEventsData = eventBookOptional.orElseGet(SampleDataUtil::getSampleEventBook);
             initialData = residentBookOptional.orElseGet(SampleDataUtil::getSampleResidentBook);
+
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty ResidentBook");
             initialData = new ResidentBook();
+            initialEventsData = new EventBook();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty ResidentBook");
             initialData = new ResidentBook();
+            initialEventsData = new EventBook();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        return new ModelManager(initialData, initialEventsData, userPrefs);
     }
 
     private void initLogging(Config config) {

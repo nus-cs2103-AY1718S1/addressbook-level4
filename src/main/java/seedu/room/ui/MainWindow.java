@@ -51,6 +51,7 @@ public class MainWindow extends UiPart<Region> {
     private BrowserPanel browserPanel;
     private CalendarBoxPanel calandarBoxPanel;
     private PersonListPanel personListPanel;
+    private EventListPanel eventListPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -68,6 +69,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane eventListPanelPlaceholder;
 
     @FXML
     private StackPane personPanelPlaceholder;
@@ -148,6 +152,9 @@ public class MainWindow extends UiPart<Region> {
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        eventListPanel = new EventListPanel(logic.getFilteredEventList());
+        eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());  //TO BE IMPLEMENTED
 
         //@@author shitian007
         PersonPanel personPanel = new PersonPanel();

@@ -38,7 +38,8 @@ public class SwaproomCommand extends UndoableCommand {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        if (targetIndex1.getZeroBased() >= lastShownList.size()
+        if (targetIndex1.getZeroBased() >= lastShownList.size()/*
+        ;lp.oik jhgv*/
                 || targetIndex2.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }

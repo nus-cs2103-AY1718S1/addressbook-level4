@@ -12,6 +12,7 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String residentBookFilePath = "data/residentbook.xml";
     private String residentBookName = "MyResidentBook";
+    private String eventBookFilePath = "data/eventbook.xml";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -43,6 +44,14 @@ public class UserPrefs {
 
     public void setResidentBookName(String residentBookName) {
         this.residentBookName = residentBookName;
+    }
+
+    public String getEventBookFilePath() {
+        return eventBookFilePath;
+    }
+
+    public void setEventBookFilePath(String eventBookFilePath) {
+        this.eventBookFilePath = eventBookFilePath;
     }
 
     @Override

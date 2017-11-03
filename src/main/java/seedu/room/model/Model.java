@@ -8,6 +8,9 @@ import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.commands.exceptions.AlreadySortedException;
 import seedu.room.logic.commands.exceptions.CommandException;
 import seedu.room.logic.commands.exceptions.TagNotFoundException;
+import seedu.room.model.event.ReadOnlyEvent;
+import seedu.room.model.event.exceptions.DuplicateEventException;
+import seedu.room.model.event.exceptions.EventNotFoundException;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
@@ -23,6 +26,10 @@ public interface Model {
      */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    /**
+     * {@code Predicate} that always evaluate to true
+     */
+    Predicate<ReadOnlyEvent> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
 
     /**
      * Clears existing backing model and replaces with the provided new data.
@@ -95,5 +102,47 @@ public interface Model {
      * Swaps two residents' rooms
      */
     void swapRooms(ReadOnlyPerson person1, ReadOnlyPerson person2) throws PersonNotFoundException;
+
+    /**
+     * Returns the ResidentBook
+     */
+    ReadOnlyEventBook getEventBook();
+
+    /**
+     * Deletes the given person.
+     */
+    void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
+
+    /**
+     * Adds the given person
+     */
+    void addEvent(ReadOnlyEvent person) throws DuplicateEventException;
+
+    /**
+     * Replaces the given person {@code target} with {@code editedEvent}.
+     *
+     * @throws DuplicateEventException if updating the person's details causes the person to be equivalent to
+     *                                  another existing person in the list.
+     * @throws EventNotFoundException  if {@code target} could not be found in the list.
+     */
+    void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
+            throws DuplicateEventException, EventNotFoundException;
+
+    /**
+     * Returns an unmodifiable view of the filtered person list
+     */
+    ObservableList<ReadOnlyEvent> getFilteredEventList();
+
+    /**
+     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     *
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate);
+
+    /**
+     * Sorts the Event Book by name, phone, room or phone depending on the sortCriteria
+     */
+    void sortEventsBy(String sortCriteria) throws AlreadySortedException;
 
 }

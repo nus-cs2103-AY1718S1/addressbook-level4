@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import seedu.room.logic.commands.CommandResult;
 import seedu.room.logic.commands.exceptions.CommandException;
 import seedu.room.logic.parser.exceptions.ParseException;
+import seedu.room.model.event.ReadOnlyEvent;
 import seedu.room.model.person.ReadOnlyPerson;
 
 /**
@@ -21,6 +22,9 @@ public interface Logic {
 
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
+
+    /** Returns an unmodifiable view of the filtered list of events */
+    ObservableList<ReadOnlyEvent> getFilteredEventList();
 
     //@@author shitian007
     /** Updates and gets list of Auto-complete Strings */

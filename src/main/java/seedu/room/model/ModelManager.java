@@ -2,6 +2,8 @@ package seedu.room.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.room.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.room.model.Model.PREDICATE_SHOW_ALL_EVENTS;
+import static seedu.room.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.time.LocalDateTime;
 import java.util.Iterator;
@@ -14,11 +16,15 @@ import javafx.collections.transformation.FilteredList;
 
 import seedu.room.commons.core.ComponentManager;
 import seedu.room.commons.core.LogsCenter;
+import seedu.room.commons.events.model.EventBookChangedEvent;
 import seedu.room.commons.events.model.ResidentBookChangedEvent;
 import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.commands.exceptions.AlreadySortedException;
 import seedu.room.logic.commands.exceptions.CommandException;
 import seedu.room.logic.commands.exceptions.TagNotFoundException;
+import seedu.room.model.event.ReadOnlyEvent;
+import seedu.room.model.event.exceptions.DuplicateEventException;
+import seedu.room.model.event.exceptions.EventNotFoundException;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.UniquePersonList;
@@ -37,17 +43,23 @@ public class ModelManager extends ComponentManager implements Model {
     private final ResidentBook residentBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
 
+    private final EventBook eventBook;
+    private final FilteredList<ReadOnlyEvent> filteredEvents;
+
     /**
      * Initializes a ModelManager with the given residentBook and userPrefs.
      */
-    public ModelManager(ReadOnlyResidentBook residentBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyResidentBook residentBook, ReadOnlyEventBook eventBook , UserPrefs userPrefs) {
         super();
         requireAllNonNull(residentBook, userPrefs);
 
-        logger.fine("Initializing with resident book: " + residentBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with resident book: " + residentBook + ", event book: " + eventBook
+                + " and user prefs " + userPrefs);
 
         this.residentBook = new ResidentBook(residentBook);
+        this.eventBook = new EventBook(eventBook);
         filteredPersons = new FilteredList<>(this.residentBook.getPersonList());
+        filteredEvents = new FilteredList<>(this.eventBook.getEventList());
         try {
             deleteTemporary(this.residentBook);
         } catch (PersonNotFoundException e) {
@@ -56,8 +68,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     public ModelManager() {
-        this(new ResidentBook(), new UserPrefs());
+        this(new ResidentBook(), new EventBook() , new UserPrefs());
     }
+
+    public ModelManager(ReadOnlyResidentBook residentBook, UserPrefs userPrefs) {
+        this(residentBook, new EventBook() , userPrefs);
+    }
+
 
     @Override
     public void resetData(ReadOnlyResidentBook newData) {
@@ -189,6 +206,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateResidentBookChanged();
     }
+
     //=========== Swapping Residents' Rooms =============================================================
 
     //@@author sushinoya
@@ -203,4 +221,59 @@ public class ModelManager extends ComponentManager implements Model {
         residentBook.swapRooms(person1, person2);
         indicateResidentBookChanged();
     }
+
+    //=========== Events Methods =============================================================
+
+    @Override
+    public ReadOnlyEventBook getEventBook() {
+        return null;
+    }
+
+    @Override
+    public synchronized void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException {
+        eventBook.removeEvent(target);
+        indicateEventBookChanged();
+    }
+
+    @Override
+    public synchronized void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
+        eventBook.addEvent(event);
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        indicateEventBookChanged();
+    }
+
+    @Override
+    public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
+            throws DuplicateEventException, EventNotFoundException {
+        requireAllNonNull(target, editedEvent);
+
+        eventBook.updateEvent(target, editedEvent);
+        indicateEventBookChanged();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyEvent> getFilteredEventList() {
+        return FXCollections.unmodifiableObservableList(filteredEvents);
+    }
+
+    @Override
+    public void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate) {
+        requireNonNull(predicate);
+        filteredEvents.setPredicate(predicate);
+    }
+
+    @Override
+    public void sortEventsBy(String sortCriteria) throws AlreadySortedException {
+        eventBook.sortBy(sortCriteria);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateResidentBookChanged();
+    }
+
+    /**
+     * Raises an event to indicate the model has changed
+     */
+    private void indicateEventBookChanged() {
+        raise(new EventBookChangedEvent(eventBook));
+    }
+
 }
