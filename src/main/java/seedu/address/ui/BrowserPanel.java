@@ -155,6 +155,8 @@ public class BrowserPanel extends UiPart<Region> {
                         default:
                             break;
                         }
+                    } else if (newValue.contains("access_token")) {
+                        ;
                     }
                 });
         // reset after execution

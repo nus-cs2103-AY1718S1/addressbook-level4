@@ -12,7 +12,6 @@ import facebook4j.User;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.SocialInfoMapping;
 import seedu.address.model.person.Address;
@@ -34,9 +33,9 @@ public class FacebookAddCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "facebookadd";
     public static final String COMMAND_ALIAS = "fbadd";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a facebook friend to the address book.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a facebook user to the address book.\n"
             + "Alias: " + COMMAND_ALIAS + "\n"
-            + "Parameters: FACEBOOK_CONTACT_NAME\n"
+            + "Parameters: FACEBOOK_USER_NAME\n"
             + "Example: " + COMMAND_WORD + "alice fong";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
@@ -49,7 +48,6 @@ public class FacebookAddCommand extends UndoableCommand {
     private static String userName;
     private String toAddName;
     private Person toAdd;
-    private LogicManager logic;
 
     /**
      * Creates an FacebookAddCommand to add the specified Facebook contact
@@ -116,7 +114,7 @@ public class FacebookAddCommand extends UndoableCommand {
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         if (!FacebookConnectCommand.isAuthenticated()) {
-            BrowserPanel.setProcessType(COMMAND_ALIAS);
+            BrowserPanel.setProcessType(COMMAND_WORD);
             BrowserPanel.setTrimmedArgs(userName);
 
             FacebookConnectCommand newFacebookConnect = new FacebookConnectCommand();

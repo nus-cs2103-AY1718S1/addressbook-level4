@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
 
+import javafx.scene.web.WebEngine;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -27,6 +28,7 @@ public class FacebookPostCommand extends Command {
     public static final String MESSAGE_FACEBOOK_POST_ERROR = "Error posting to Facebook";
 
     private static String toPost;
+    private static WebEngine webEngine;
 
     /**
      * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
@@ -51,12 +53,14 @@ public class FacebookPostCommand extends Command {
 
         EventsCenter.getInstance().post(new NewResultAvailableEvent(MESSAGE_FACEBOOK_POST_SUCCESS
                 + " (to " + FacebookConnectCommand.getAuthenticatedUsername() + "'s page.)", false));
+        webEngine = FacebookConnectCommand.getWebEngine();
+        webEngine.load(FacebookConnectCommand.getAuthenticatedUserPage());
     }
 
     @Override
     public CommandResult execute() throws CommandException {
         if (!FacebookConnectCommand.isAuthenticated()) {
-            BrowserPanel.setProcessType(COMMAND_ALIAS);
+            BrowserPanel.setProcessType(COMMAND_WORD);
             FacebookConnectCommand newFacebookConnect = new FacebookConnectCommand();
             newFacebookConnect.execute();
             return new CommandResult(MESSAGE_FACEBOOK_POST_INITIATED);

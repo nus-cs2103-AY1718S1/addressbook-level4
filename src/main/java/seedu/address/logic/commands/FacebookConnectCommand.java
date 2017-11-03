@@ -38,11 +38,15 @@ public class FacebookConnectCommand extends Command {
     private static final String FACEBOOK_AUTH_URL =
             "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + FACEBOOK_APP_ID
                     + "&redirect_uri=" + FACEBOOK_DOMAIN + "&scope=" + FACEBOOK_PERMISSIONS;
+
     private static boolean authenticated = false;
     private static String authenticatedUsername;
+    private static String authenticatedUserId;
+    private static String authenticatedUserPage;
     private static Facebook facebookInstance;
     private static WebEngine webEngine;
     private static String accessToken;
+
 
     /**
      * Returns the existing WebEngine
@@ -70,6 +74,12 @@ public class FacebookConnectCommand extends Command {
      */
     public static String getAuthenticatedUsername() { return authenticatedUsername; }
 
+    /**
+     * Returns page of the authenticated user
+     */
+    public static String getAuthenticatedUserPage() {
+        return authenticatedUserPage;
+    }
 
     /**
      * Checks if there is an authenticated Facebook instance
@@ -94,12 +104,23 @@ public class FacebookConnectCommand extends Command {
         facebookInstance.setOAuthAccessToken(new AccessToken(accessToken, null));
         try {
             authenticatedUsername = facebookInstance.getName();
+            authenticatedUserId = facebookInstance.getMe().getId();
+
+            /*
+            ResponseList<TaggableFriend> page1 = facebookInstance.getTaggableFriends();
+            Paging<TaggableFriend> paging1 = page1.getPaging();
+            System.out.println("Page 1: " + page1);
+            System.out.println("Next: " + page1.getPaging().getNext());
+            System.out.println("size: " + page1.size());
+            *///end
+            //start
         } catch (FacebookException e) {
             throw new CommandException("Error in Facebook Authorisation");
         }
 
         if (accessToken != null) {
             authenticated = true;
+            authenticatedUserPage = "https://www.facebook.com/" + authenticatedUserId;
             EventsCenter.getInstance().post(new NewResultAvailableEvent(
                     MESSAGE_SUCCESS + " User name: " + authenticatedUsername, false));
         } else {
