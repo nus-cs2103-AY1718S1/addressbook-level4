@@ -58,6 +58,38 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
+== Layout
+
+This is a quick introduction to cherBook's User Interface elements.
+//TODO: Add user interface screenshot with highlights and labels
+Insert screenshot here
+
+_Figure 4.1 : cherBook's User Interface layout_
+
+Here is a breakdown of the different elements of cherBook's user interface and how you can interact with them.
+
+. Menu Bar
+* Insert description
+
+. Command box
+* Insert description
+
+. Result Display
+* Insert description
+
+. Student Details
+* Insert description
+
+. Group Statistics
+* Insert description
+
+. Class Graph
+* Insert description
+
+. FooterBar
+* Insert description
+
+
 == Features
 
 ====
