@@ -230,17 +230,17 @@ public class Occupation {
 ###### \build\reports\jacoco\coverage\html\seedu.address.model.person\Person.java.html
 ``` html
     public void setOccupation(Occupation occupation) {
-<span class="fc" id="L101">        this.occupation.set(requireNonNull(occupation));</span>
-<span class="fc" id="L102">    }</span>
+<span class="fc" id="L105">        this.occupation.set(requireNonNull(occupation));</span>
+<span class="fc" id="L106">    }</span>
 
     @Override
     public ObjectProperty&lt;Occupation&gt; occupationProperty() {
-<span class="fc" id="L106">        return occupation;</span>
+<span class="fc" id="L110">        return occupation;</span>
     }
 
     @Override
     public Occupation getOccupation() {
-<span class="fc" id="L111">        return occupation.get();</span>
+<span class="fc" id="L115">        return occupation.get();</span>
     }
 ```
 ###### \build\reports\jacoco\coverage\html\seedu.address.model.person\Remark.java.html

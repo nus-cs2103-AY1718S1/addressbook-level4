@@ -339,7 +339,7 @@ public class AddMultipleByTsvCommandParser implements Parser<AddMultipleByTsvCom
         case AddMultipleByTsvCommand.COMMAND_WORD:
         case AddMultipleByTsvCommand.COMMAND_ALIAS:
             return new AddMultipleByTsvCommandParser().parse(arguments);
-=======
+```
 ###### \java\seedu\address\logic\parser\FindTagCommandParser.java
 ``` java
 package seedu.address.logic.parser;
@@ -376,6 +376,48 @@ public class FindTagCommandParser implements Parser<FindTagCommand> {
         return new FindTagCommand(new TagsContainKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
 }
+```
+###### \java\seedu\address\MainApp.java
+``` java
+    /**
+     * Initialize empty storage folder to store profile picture
+     */
+    private void initEmptyStorage() {
+        boolean success = (new File(StorageManager.EMPTY_STORAGE_DEFAULT_PATH)).mkdirs();
+        if (!success) {
+            logger.warning("Problem while initializing empty storage.");
+        }
+    }
+```
+###### \java\seedu\address\model\person\Person.java
+``` java
+    private static final String DEFAULT_NAME = "Full Name";
+    private static final String DEFAULT_OCCUPATION = "Google, Software engineer";
+    private static final String DEFAULT_PHONE = "123456";
+    private static final String DEFAULT_EMAIL = "fullname@gmail.com";
+    private static final String DEFAULT_ADDRESS = "Singapore";
+    private static final String DEFAULT_REMARK = "funny";
+    private static final String DEFAULT_WEBSITE = "https://www.google.com";
+    private static final String DEFAULT_TAG = "me";
+```
+###### \java\seedu\address\model\person\Person.java
+``` java
+    public Person() {
+        try {
+            this.name = new SimpleObjectProperty<>(new Name(DEFAULT_NAME));
+            this.occupation = new SimpleObjectProperty<>(new Occupation(DEFAULT_OCCUPATION));
+            this.phone = new SimpleObjectProperty<>(new Phone(DEFAULT_PHONE));
+            this.email = new SimpleObjectProperty<>(new Email(DEFAULT_EMAIL));
+            this.address = new SimpleObjectProperty<>(new Address(DEFAULT_ADDRESS));
+            this.remark = new SimpleObjectProperty<>(new Remark(DEFAULT_REMARK));
+            this.website = new SimpleObjectProperty<>(new Website(DEFAULT_WEBSITE));
+            List<Tag> tagList = new ArrayList<>();
+            tagList.add(new Tag(DEFAULT_TAG));
+            this.tags = new SimpleObjectProperty<>(new UniqueTagList(new HashSet<>(tagList)));
+        } catch (IllegalValueException ive) {
+            ive.printStackTrace();
+        }
+    }
 ```
 ###### \java\seedu\address\model\person\TagsContainKeywordsPredicate.java
 ``` java
@@ -433,7 +475,16 @@ public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 }
 ```
-
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    @FXML
+    private StackPane profilePlaceholder;
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+        profilePanel = new ProfilePanel(primaryStage);
+        profilePlaceholder.getChildren().add(profilePanel.getRoot());
+```
 ###### \java\seedu\address\ui\ProfilePanel.java
 ``` java
 package seedu.address.ui;
@@ -649,10 +700,26 @@ public class ProfilePanel extends UiPart<Region> {
     }
 }
 ```
+###### \resources\view\MainWindow.fxml
+``` fxml
+    <StackPane fx:id="profilePlaceholder" minWidth="320" >
+      <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+      </padding>
+    </StackPane>
+
+    <StackPane fx:id="browserPlaceholder" minWidth="750" prefWidth="750" >
+      <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+      </padding>
+    </StackPane>
+  </SplitPane>
+
+  <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+</VBox>
+```
 ###### \resources\view\ProfilePanel.fxml
 ``` fxml
-<?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
