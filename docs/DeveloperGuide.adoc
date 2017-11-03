@@ -541,7 +541,7 @@ To show the urgency of the meeting. Colours are assigned to the card by comparin
 
 * `darkRed` : Meeting is in next 24 hours.
 
-image::MeetingCard1.png[align="center'][width="250"]
+image::MeetingCard1.png[width="250"]
 _Figure 3.9.3 : Meeting card that due within 24 hours_
 
 * `red` : Meeting is in next 48 hours.
