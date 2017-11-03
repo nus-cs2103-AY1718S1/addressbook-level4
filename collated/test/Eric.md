@@ -21,14 +21,12 @@ public class AddAppointmentCommandTest {
     public void execute() throws ParseException, CommandException {
 
         Index index1 = Index.fromOneBased(1);
-        Index index100 = Index.fromOneBased(100);
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
         Calendar calendar = Calendar.getInstance();
         //Invalid date (i.e date before current instance)
         calendar.setTime(Appointment.DATE_FORMATTER.parse("2005/08/08 10:10"));
-        AddAppointmentCommand command = new AddAppointmentCommand(index1, calendar);
-        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        command.setData(model);
+        Command command = setCommand(index1, calendar);
         CommandResult result = command.execute();
 
         //Invalid date message returned
@@ -36,33 +34,41 @@ public class AddAppointmentCommandTest {
 
         //Set to valid date
         calendar.setTime(Appointment.DATE_FORMATTER.parse("2019/08/08 10:10"));
-
-        command = new AddAppointmentCommand(index1, calendar);
-        command.setData(model);
+        command = setCommand(index1, calendar);
         result = command.execute();
+
         Appointment appointment = new Appointment(model.getFilteredPersonList().get(index1.getZeroBased())
                 .getName().toString(),
                 calendar);
 
         //Command success
         assertEquals(result.feedbackToUser, AddAppointmentCommand.MESSAGE_SUCCESS + "Meet "
-                + appointment.getPersonName().toString() + " on "
+                + appointment.getPersonName() + " on "
                 + appointment.getDate().toString());
 
         //No appointment set
-        command = new AddAppointmentCommand();
-        command.setData(model);
+        command = setCommand(null, null);
         result = command.execute();
         assertEquals(result.feedbackToUser, "Rearranged contacts to show upcoming appointments.");
 
-        //Out of bounds index
-        command = new AddAppointmentCommand(index100, calendar);
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        command.setData(model);
 
-        //Out of bounds index
+    }
+
+    @Test
+    public void outOfBoundsIndex() throws CommandException {
         thrown.expect(CommandException.class);
-        command.execute();
+        setCommand(Index.fromOneBased(100), null).execute();
+    }
+
+    /**
+     * Util method to set appointment command
+     */
+    private Command setCommand(Index index, Calendar calendar) {
+
+        AddAppointmentCommand command = new AddAppointmentCommand(index, calendar);
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        command.setData(model);
+        return command;
     }
 
     @Test
@@ -461,14 +467,13 @@ public class AddAppointmentParserTest {
 ```
 ###### \java\seedu\address\ui\CalendarWindowTest.java
 ``` java
-public class CalendarWindowTest {
+public class CalendarWindowTest extends GuiUnitTest {
 
     private CalendarWindow calendarWindow;
     @Before
     public void setUp() {
-        com.sun.javafx.application.PlatformImpl.startup(()-> {});
         calendarWindow = new CalendarWindow(TypicalPersons.getTypicalAddressBook().getPersonList());
-
+        uiPartRule.setUiPart(calendarWindow);
     }
 
     @Test

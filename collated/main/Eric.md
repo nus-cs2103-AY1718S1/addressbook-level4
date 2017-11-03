@@ -600,7 +600,7 @@ public class CalendarWindow extends UiPart<Region> {
         updateTimeThread.start();
 
     }
-    
+
     /**
      * When user press Tab, the calendar will shift to the next view
      * Order of shifting: day -> week -> month -> year
