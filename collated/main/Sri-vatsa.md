@@ -1,73 +1,5 @@
 # Sri-vatsa
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-    public static final String DEFAULT_PAGE = "default.html";
-    public static final String LINKEDIN_SEARCH_URL_PREFIX = "https://www.linkedin.com/search/results/";
-    public static final String LINKEDIN_SEARCH_PEOPLE = "people/";
-    public static final String LINKEDIN_SEARCH_PARAM_LOCATION = "?facetGeoRegion=%5B%22sg%3A0%22%5D";
-    public static final String LINKEDIN_SEARCH_PARAM_FIRST_NAME = "&firstName=";
-    public static final String LINKEDIN_SEARCH_PARAM_LAST_NAME = "&lastName=";
-    public static final String LINKEDIN_URL_SUFFIX = "&origin=FACETED_SEARCH";
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
-    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
-    public static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
-```
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-
-    /***
-     * Loads pages based on choose command selection
-     * @param page
-     */
-    private void loadOtherPages(String page) {
-        if (page == "linkedin") {
-            String[] name = personSelected.getName().fullName.split(" ");
-
-            loadPage(LINKEDIN_SEARCH_URL_PREFIX + LINKEDIN_SEARCH_PEOPLE + LINKEDIN_SEARCH_PARAM_LOCATION
-                    + LINKEDIN_SEARCH_PARAM_FIRST_NAME + name[0] + LINKEDIN_SEARCH_PARAM_LAST_NAME + name[1]
-                    + LINKEDIN_URL_SUFFIX);
-        }
-    }
-```
-###### /java/seedu/address/logic/parser/DeleteTagCommandParser.java
-``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import seedu.address.logic.commands.DeleteTagCommand;
-
-import seedu.address.logic.parser.exceptions.ParseException;
-
-
-/***
- * Parses the given arguments in the context of the DeleteTagCommand to faciliate execution of method
- * @throws ParseException if the user input does not conform the expected format
- */
-
-public class DeleteTagCommandParser implements Parser<DeleteTagCommand>  {
-
-    /***
-     * Parses the given {@code String} of arguments in the context of the DeleteTagCommand
-     * and returns an DeleteCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public DeleteTagCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteTagCommand.MESSAGE_USAGE));
-        }
-
-        String[] deleteKeywords = trimmedArgs.split("\\s+");
-
-        return new DeleteTagCommand(deleteKeywords);
-    }
-}
-
-
-
-```
-###### /java/seedu/address/logic/commands/DeleteTagCommand.java
+###### \java\seedu\address\logic\commands\DeleteTagCommand.java
 ``` java
 /**
  *
@@ -147,15 +79,21 @@ public class DeleteTagCommand extends UndoableCommand {
 
 }
 ```
-###### /java/seedu/address/logic/commands/ListCommand.java
+###### \java\seedu\address\logic\commands\FindCommand.java
 ``` java
     @Override
-    public CommandResult executeUndoableCommand() {
-        model.sortPersonListLexicographically();
-        return new CommandResult(MESSAGE_SUCCESS);
+    public CommandResult execute() throws CommandException {
+
+        model.updateFilteredPersonList(predicate);
+        int searchResultsCount = model.getFilteredPersonList().size();
+
+        if (searchResultsCount != NO_RESULTS) {
+            model.recordSearchHistory();
+        }
+        return new CommandResult(getMessageForPersonListShownSummary(searchResultsCount));
     }
 ```
-###### /java/seedu/address/logic/commands/ListByMostSearchedCommand.java
+###### \java\seedu\address\logic\commands\ListByMostSearchedCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -182,28 +120,150 @@ public class ListByMostSearchedCommand extends UndoableCommand {
 }
 
 ```
-###### /java/seedu/address/logic/commands/FindCommand.java
+###### \java\seedu\address\logic\commands\ListCommand.java
 ``` java
     @Override
-    public CommandResult execute() throws CommandException {
-
-        model.updateFilteredPersonList(predicate);
-        int searchResultsCount = model.getFilteredPersonList().size();
-
-        if (searchResultsCount != NO_RESULTS) {
-            model.recordSearchHistory();
-        }
-        return new CommandResult(getMessageForPersonListShownSummary(searchResultsCount));
+    public CommandResult executeUndoableCommand() {
+        model.sortPersonListLexicographically();
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\logic\parser\DeleteTagCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.logic.commands.DeleteTagCommand;
+
+import seedu.address.logic.parser.exceptions.ParseException;
+
+
+/***
+ * Parses the given arguments in the context of the DeleteTagCommand to faciliate execution of method
+ * @throws ParseException if the user input does not conform the expected format
+ */
+
+public class DeleteTagCommandParser implements Parser<DeleteTagCommand>  {
+
+    /***
+     * Parses the given {@code String} of arguments in the context of the DeleteTagCommand
+     * and returns an DeleteCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public DeleteTagCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteTagCommand.MESSAGE_USAGE));
+        }
+
+        String[] deleteKeywords = trimmedArgs.split("\\s+");
+
+        return new DeleteTagCommand(deleteKeywords);
+    }
+}
+
+
+
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    /***
+     * sorts persons in the addressbook by number of times they were previously searched
+     */
+    public void sortBySearchCount() {
+        persons.sortBySearchCount();
+    }
+
+
+    /***
+     * sorts persons in the addressbook alphabetically
+     */
+    public void sortLexicographically() {
+        persons.sortLexicographically();
+    }
+```
+###### \java\seedu\address\model\Model.java
+``` java
+    /** Deletes given tag from everyone in the addressbook */
+    boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException;
+```
+###### \java\seedu\address\model\Model.java
+``` java
+    /**
+     * Updates search count for each person who is searched using {@code FindCommand}
+     * Assumes filtered List of persons contains search results
+     */
+    void recordSearchHistory() throws CommandException;
+
+    /**
+     * Sort everyone in addressbook by searchCount
+     */
+    void sortPersonListBySearchCount();
+
+    /**
+     * Sort everyone in addressbook lexicographically
+     */
+    void sortPersonListLexicographically();
+
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    /***
+     * Records how many times each person in addressbook is searched for
+     * @throws CommandException
+     */
+    @Override
+    public void recordSearchHistory() throws CommandException {
+
+        int searchResultsCount = filteredPersons.size();
+
+        for (int i = 0; i < searchResultsCount; i++) {
+            ReadOnlyPerson searchedPerson = filteredPersons.get(i);
+            SearchData updatedSearchData = searchedPerson.getSearchData();
+            updatedSearchData.incrementSearchCount();
+            Person modifiedPerson = new Person(searchedPerson.getInternalId(), searchedPerson.getName(),
+                    searchedPerson.getPhone(), searchedPerson.getEmail(), searchedPerson.getAddress(),
+                    searchedPerson.getTags(), updatedSearchData);
+            try {
+                updatePerson(searchedPerson, modifiedPerson);
+            } catch (DuplicatePersonException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError("The target person cannot be missing");
+            }
+        }
+    }
+
+    //=========== Sort addressBook methods =============================================================
+    /***
+     * Sorts persons in address book by searchCount
+     */
+    @Override
+    public void sortPersonListBySearchCount() {
+        addressBook.sortBySearchCount();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    /***
+     * Sorts persons in Address book alphabetically
+     */
+    @Override
+    public void sortPersonListLexicographically() {
+        addressBook.sortLexicographically();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+```
+###### \java\seedu\address\model\person\Person.java
 ``` java
     @Override
     public SearchData getSearchData() {
         return searchCount.get();
     }
 ```
-###### /java/seedu/address/model/person/SearchData.java
+###### \java\seedu\address\model\person\SearchData.java
 ``` java
 package seedu.address.model.person;
 
@@ -265,7 +325,7 @@ public class SearchData {
 
 }
 ```
-###### /java/seedu/address/model/person/UniquePersonList.java
+###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
     /***
      * sort addressbook persons by number of times they were searched for
@@ -332,93 +392,33 @@ public class SearchData {
 
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
+    public static final String DEFAULT_PAGE = "default.html";
+    public static final String LINKEDIN_SEARCH_URL_PREFIX = "https://www.linkedin.com/search/results/";
+    public static final String LINKEDIN_SEARCH_PEOPLE = "people/";
+    public static final String LINKEDIN_SEARCH_PARAM_LOCATION = "?facetGeoRegion=%5B%22sg%3A0%22%5D";
+    public static final String LINKEDIN_SEARCH_PARAM_FIRST_NAME = "&firstName=";
+    public static final String LINKEDIN_SEARCH_PARAM_LAST_NAME = "&lastName=";
+    public static final String LINKEDIN_URL_SUFFIX = "&origin=FACETED_SEARCH";
+    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
+    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
+    public static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
+```
+###### \java\seedu\address\ui\BrowserPanel.java
+``` java
+
     /***
-     * Records how many times each person in addressbook is searched for
-     * @throws CommandException
+     * Loads pages based on choose command selection
+     * @param page
      */
-    @Override
-    public void recordSearchHistory() throws CommandException {
+    private void loadOtherPages(String page) {
+        if (page == "linkedin") {
+            String[] name = personSelected.getName().fullName.split(" ");
 
-        int searchResultsCount = filteredPersons.size();
-
-        for (int i = 0; i < searchResultsCount; i++) {
-            ReadOnlyPerson searchedPerson = filteredPersons.get(i);
-            SearchData updatedSearchData = searchedPerson.getSearchData();
-            updatedSearchData.incrementSearchCount();
-            Person modifiedPerson = new Person(searchedPerson.getInternalId(), searchedPerson.getName(),
-                    searchedPerson.getPhone(), searchedPerson.getEmail(), searchedPerson.getAddress(),
-                    searchedPerson.getTags(), updatedSearchData);
-            try {
-                updatePerson(searchedPerson, modifiedPerson);
-            } catch (DuplicatePersonException dpe) {
-                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-            } catch (PersonNotFoundException pnfe) {
-                throw new AssertionError("The target person cannot be missing");
-            }
+            loadPage(LINKEDIN_SEARCH_URL_PREFIX + LINKEDIN_SEARCH_PEOPLE + LINKEDIN_SEARCH_PARAM_LOCATION
+                    + LINKEDIN_SEARCH_PARAM_FIRST_NAME + name[0] + LINKEDIN_SEARCH_PARAM_LAST_NAME + name[1]
+                    + LINKEDIN_URL_SUFFIX);
         }
-    }
-
-    //=========== Sort addressBook methods =============================================================
-    /***
-     * Sorts persons in address book by searchCount
-     */
-    @Override
-    public void sortPersonListBySearchCount() {
-        addressBook.sortBySearchCount();
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
-    }
-
-    /***
-     * Sorts persons in Address book alphabetically
-     */
-    @Override
-    public void sortPersonListLexicographically() {
-        addressBook.sortLexicographically();
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
-    }
-```
-###### /java/seedu/address/model/Model.java
-``` java
-    /** Deletes given tag from everyone in the addressbook */
-    boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException;
-```
-###### /java/seedu/address/model/Model.java
-``` java
-    /**
-     * Updates search count for each person who is searched using {@code FindCommand}
-     * Assumes filtered List of persons contains search results
-     */
-    void recordSearchHistory() throws CommandException;
-
-    /**
-     * Sort everyone in addressbook by searchCount
-     */
-    void sortPersonListBySearchCount();
-
-    /**
-     * Sort everyone in addressbook lexicographically
-     */
-    void sortPersonListLexicographically();
-
-```
-###### /java/seedu/address/model/AddressBook.java
-``` java
-    /***
-     * sorts persons in the addressbook by number of times they were previously searched
-     */
-    public void sortBySearchCount() {
-        persons.sortBySearchCount();
-    }
-
-
-    /***
-     * sorts persons in the addressbook alphabetically
-     */
-    public void sortLexicographically() {
-        persons.sortLexicographically();
     }
 ```

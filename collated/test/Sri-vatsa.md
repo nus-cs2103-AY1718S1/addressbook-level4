@@ -1,106 +1,5 @@
 # Sri-vatsa
-###### /java/seedu/address/ui/BrowserPanelTest.java
-``` java
-    @Test
-    public void display() throws Exception {
-        // default web page
-        URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
-
-        // associated linkedin page of a person
-        postNow(selectionChangedEventStub);
-
-        String [] name = ALICE.getName().fullName.split(" ");
-        URL expectedPersonUrl = new URL(GOOGLE_SEARCH_URL_PREFIX
-                + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
-
-        waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
-    }
-}
-```
-###### /java/seedu/address/logic/parser/DeleteTagCommandParserTest.java
-``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.DeleteTagCommand;
-
-/**
- * As we are only doing white-box testing, our test cases do not cover path variations
- * outside of the DeleteTagCommand code. For example, inputs "1" and "1 abc" take the
- * same path through the DeleteCommand, and therefore we test only one of them.
- * The path variation for those two cases occur inside the ParserUtil, and
- * therefore should be covered by the ParserUtilTest.
- */
-public class DeleteTagCommandParserTest {
-
-    private DeleteTagCommandParser parser = new DeleteTagCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsDeleteCommand() {
-        //single entry
-        String [] arg = new String[]{"friends"};
-        assertParseSuccess(parser, "friends", new DeleteTagCommand(arg));
-
-        //multiple entries
-        String [] args = new String[] {"friends", "colleagues"};
-        assertParseSuccess(parser, "friends colleagues", new DeleteTagCommand(args));
-
-        //entries with space
-        String [] argsWithSpace = new String[] {"friends", "colleagues"};
-        assertParseSuccess(parser, "\n friends \n \t colleagues  \t", new DeleteTagCommand(argsWithSpace));
-
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "    ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                DeleteTagCommand.MESSAGE_USAGE));
-    }
-}
-```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_listByMostSearched() throws Exception {
-        assertTrue(parser.parseCommand(ListByMostSearchedCommand.COMMAND_WORD) instanceof ListByMostSearchedCommand);
-        assertTrue(parser.parseCommand(ListByMostSearchedCommand.COMMAND_ALIAS) instanceof ListByMostSearchedCommand);
-        assertTrue(parser.parseCommand(ListByMostSearchedCommand.COMMAND_WORD + " 3")
-                instanceof ListByMostSearchedCommand);
-    }
-```
-###### /java/seedu/address/logic/commands/FindCommandTest.java
-``` java
-    /***
-     * Ensures that with each successful find, the search count of the contact is updated by 1
-     */
-    @Test
-    public  void execute_recordStorage() {
-
-        int carlIndex = model.getFilteredPersonList().indexOf(CARL);
-
-        int countBeforeFind = Integer.parseInt(
-                model.getFilteredPersonList().get(carlIndex).getSearchData().getSearchCount());
-
-        FindCommand findCommand = prepareCommand("Carl");
-
-        try {
-            findCommand.execute();
-        } catch (CommandException e) {
-            e.printStackTrace();
-        }
-
-        int countAfterFind = Integer.parseInt(model.getFilteredPersonList().get(0).getSearchData().getSearchCount());
-        assertEquals(countBeforeFind + 1, countAfterFind);
-    }
-```
-###### /java/seedu/address/logic/commands/DeleteTagCommandTest.java
+###### \java\seedu\address\logic\commands\DeleteTagCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -202,7 +101,32 @@ public class DeleteTagCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/ListByMostSearchedCommandTest.java
+###### \java\seedu\address\logic\commands\FindCommandTest.java
+``` java
+    /***
+     * Ensures that with each successful find, the search count of the contact is updated by 1
+     */
+    @Test
+    public  void execute_recordStorage() {
+
+        int carlIndex = model.getFilteredPersonList().indexOf(CARL);
+
+        int countBeforeFind = Integer.parseInt(
+                model.getFilteredPersonList().get(carlIndex).getSearchData().getSearchCount());
+
+        FindCommand findCommand = prepareCommand("Carl");
+
+        try {
+            findCommand.execute();
+        } catch (CommandException e) {
+            e.printStackTrace();
+        }
+
+        int countAfterFind = Integer.parseInt(model.getFilteredPersonList().get(0).getSearchData().getSearchCount());
+        assertEquals(countBeforeFind + 1, countAfterFind);
+    }
+```
+###### \java\seedu\address\logic\commands\ListByMostSearchedCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -256,7 +180,77 @@ public class ListByMostSearchedCommandTest {
     }
 }
 ```
-###### /java/seedu/address/testutil/TypicalPersons.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_listByMostSearched() throws Exception {
+        assertTrue(parser.parseCommand(ListByMostSearchedCommand.COMMAND_WORD) instanceof ListByMostSearchedCommand);
+        assertTrue(parser.parseCommand(ListByMostSearchedCommand.COMMAND_ALIAS) instanceof ListByMostSearchedCommand);
+        assertTrue(parser.parseCommand(ListByMostSearchedCommand.COMMAND_WORD + " 3")
+                instanceof ListByMostSearchedCommand);
+    }
+```
+###### \java\seedu\address\logic\parser\DeleteTagCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.DeleteTagCommand;
+
+/**
+ * As we are only doing white-box testing, our test cases do not cover path variations
+ * outside of the DeleteTagCommand code. For example, inputs "1" and "1 abc" take the
+ * same path through the DeleteCommand, and therefore we test only one of them.
+ * The path variation for those two cases occur inside the ParserUtil, and
+ * therefore should be covered by the ParserUtilTest.
+ */
+public class DeleteTagCommandParserTest {
+
+    private DeleteTagCommandParser parser = new DeleteTagCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsDeleteCommand() {
+        //single entry
+        String [] arg = new String[]{"friends"};
+        assertParseSuccess(parser, "friends", new DeleteTagCommand(arg));
+
+        //multiple entries
+        String [] args = new String[] {"friends", "colleagues"};
+        assertParseSuccess(parser, "friends colleagues", new DeleteTagCommand(args));
+
+        //entries with space
+        String [] argsWithSpace = new String[] {"friends", "colleagues"};
+        assertParseSuccess(parser, "\n friends \n \t colleagues  \t", new DeleteTagCommand(argsWithSpace));
+
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "    ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                DeleteTagCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\testutil\PersonBuilder.java
+``` java
+    /**
+     * Sets the {@code Name} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withSearchCount() {
+        try {
+            this.person.getSearchData().setSearchCount("0");
+        } catch (IllegalAccessError ive) {
+            throw new IllegalAccessError("Search count cannot be updated");
+        }
+        return this;
+    }
+```
+###### \java\seedu\address\testutil\TypicalPersons.java
 ``` java
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
@@ -320,21 +314,27 @@ public class TypicalPersons {
     }
 }
 ```
-###### /java/seedu/address/testutil/PersonBuilder.java
+###### \java\seedu\address\ui\BrowserPanelTest.java
 ``` java
-    /**
-     * Sets the {@code Name} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withSearchCount() {
-        try {
-            this.person.getSearchData().setSearchCount("0");
-        } catch (IllegalAccessError ive) {
-            throw new IllegalAccessError("Search count cannot be updated");
-        }
-        return this;
+    @Test
+    public void display() throws Exception {
+        // default web page
+        URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
+
+        // associated linkedin page of a person
+        postNow(selectionChangedEventStub);
+
+        String [] name = ALICE.getName().fullName.split(" ");
+        URL expectedPersonUrl = new URL(GOOGLE_SEARCH_URL_PREFIX
+                + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
+
+        waitUntilBrowserLoaded(browserPanelHandle);
+        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
     }
+}
 ```
-###### /java/systemtests/AddressBookSystemTest.java
+###### \java\systemtests\AddressBookSystemTest.java
 ``` java
     /**
      * Asserts that the browser's url is changed to display the details of the person in the person list panel at
