@@ -49,6 +49,7 @@ public class GuiSettings implements Serializable {
         return windowCoordinates;
     }
 
+    //@@author Xenonym
     public Map<Tag, String> getTagColours() {
         return Collections.unmodifiableMap(tagColours);
     }
@@ -56,6 +57,7 @@ public class GuiSettings implements Serializable {
     public void setTagColours(Map<Tag, String> newTagColours) {
         tagColours = newTagColours;
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

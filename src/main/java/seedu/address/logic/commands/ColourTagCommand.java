@@ -7,6 +7,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ModelManager;
 import seedu.address.model.tag.Tag;
 
+//@@author Xenonym
 /**
  * Changes the colour of a tag to a given colour.
  */
