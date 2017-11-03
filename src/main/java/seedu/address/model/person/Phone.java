@@ -10,19 +10,19 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Phone {
 
-    public static final Phone UNSPECIFED = new Phone();
+    public static final Phone UNSPECIFIED = new Phone();
     public static final String MESSAGE_PHONE_CONSTRAINTS =
             "Phone numbers can only contain numbers, and should be at least 3 digits long";
     public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
     public final String value;
-
+    //@@author TanYikai
     /**
      * The default Phone constructor when phone is not specified by the user
      */
     private Phone() {
-        value = "<Unspecified phone number>";
+        value = "Unspecified phone number";
     }
-
+    //@@author
     /**
      * Validates given phone number.
      * An exception to the ILLegalValueException is the String "Unspecified phone number"
@@ -31,7 +31,7 @@ public class Phone {
     public Phone(String phone) throws IllegalValueException {
         requireNonNull(phone);
         String trimmedPhone = phone.trim();
-        if (!isValidPhone(trimmedPhone)) {
+        if (!isValidPhone(trimmedPhone) && !"Unspecified phone number".equals(trimmedPhone)) {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
         }
         this.value = trimmedPhone;

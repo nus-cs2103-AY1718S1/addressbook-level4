@@ -110,7 +110,7 @@ public class PersonBuilder {
      * Sets the default phone when phone is not specified by the user
      */
     public PersonBuilder withUnspecifiedPhone() {
-        this.person.setPhone(Phone.UNSPECIFED);
+        this.person.setPhone(Phone.UNSPECIFIED);
 
         return this;
     }
@@ -139,6 +139,14 @@ public class PersonBuilder {
      */
     public PersonBuilder withRemark(String remark) {
         this.person.setRemark(new Remark(remark));
+        return this;
+    }
+
+    /**
+     * Sets the default remark when remark is not specified by the user
+     */
+    public PersonBuilder withUnspecifiedRemark() {
+        this.person.setRemark(Remark.UNSPECIFIED);
         return this;
     }
 

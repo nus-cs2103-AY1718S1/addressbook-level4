@@ -448,8 +448,8 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 // tag::EnhancedAddCommand[]
 === Enhanced add command mechanism
-A more flexible add command that only requires the name to be specified at the time of its execution. The other fields such as phone, email and address need not be specfied at the time of add command execution. +
-A separate parser for phone, email and address are used to accommodate this enhancement to isolate the interdependency between the modified enhanced add command with the other commands. +
+A more flexible add command that only requires the name to be specified at the time of its execution. The other fields such as phone, email, address and remark need not be specified at the time of add command execution. +
+A separate parser for phone, email, address and remark are used to accommodate this enhancement to isolate the interdependency between the modified enhanced add command with the other commands. +
 
 
 ==== Design Considerations
@@ -461,39 +461,17 @@ A separate parser for phone, email and address are used to accommodate this enha
 **Alternative 2:** Modify existing parser method `parsePhone`, `parseEmail` and `parseAddress` +
 **Pros:** Easier to implement as we can re-use existing tests and codes and just add minor modifications +
 **Cons:** The behaviour of edit command overlaps with the behaviour of the add command, causing unintended overwrite of other fields such as address when we don't want to. +
-// end::EnhancedAddCommand[]
-
-// tag::RemarkCommand[]
-=== Remark mechanism
-The remark command takes in the user input through command line in the format remark INDEX r/ REMARK, where INDEX is the index of the person in the addressbook and REMARK is the remark of the relationship of that person to another person. +
-Eg. remark 1 r/ is the husband of Chelsea +
-
-image::RemarkLogicDiagram.png[width="800"]
-
-image::RemarkModelDiagram.png[width="800"]
-
-==== Design Considerations
-
-**Aspect:** Implementation of remark command +
-**Alternative 1 (current choice):** Addition of a remarks command is a standalone +
-**Pros:** There is more flexibility and remarks do not have to be stated upon addition of Person to addressbook. +
-**Cons:** More difficult to implement as new remark command and tests need to be created +
-**Alternative 2:** Add in remarks together with other Person details such as address, phone, email, etc +
-**Pros:** Easy to implement (implement spacing to create a new command class, just modify existing add command) +
-**Cons:** The user will have to key in huge amount of information before adding into the addressbook. +
 
 ---
 
-**Aspect:** Implement remark as distinct from tag +
-**Alternative 1 (current choice):** Create a new seperate remark command +
+**Aspect:** Implement separate remark instead of modifying tag +
+**Alternative 1 (current choice):** Create a new separate remark command +
 **Pros:** Able to provide a cleaner user interface and experience. Also reduces complications in modifying existing working tag system. +
 **Cons:** More work has to be done in testing and creating a new command. +
 **Alternative 2:** update the tag to accept sentences for remarks +
 **Pros:** Easy to implement as we do not need to add a new command. +
 **Cons:** The Tag may be more difficult to find and more work is needed to change the find tag command. Additionally, the user interface of tag command also needs to be changed to accommodate long tags. +
-
-Credits: Mechanism adapted from Yamgent https://github.com/se-edu/addressbook-level4/pull/599
-// end::RemarkCommand[]
+// end::EnhancedAddCommand[]
 
 // tag::clearhistory[]
 === `clearhistory` command
