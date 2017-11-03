@@ -7,6 +7,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.ui.WebsiteSelectionRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+//@@author hansiang93
 /**
  * Lists all persons in the address book to the user.
  */
@@ -20,8 +21,10 @@ public class WebCommand extends Command {
             + "Parameters: 'facebook' OR 'insta' OR 'maps' OR 'search' OR 'linkedin' OR 'personal'\n"
             + "Example: " + COMMAND_WORD + " facebook";
 
+    //@@author hansiang93
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD
-            + " {[facebook|insta|linkedin|maps|search|perosnal]}";
+            + " {[facebook|insta|linkedin|maps|search|personal]}";
+    //@@author
 
     public static final String MESSAGE_SUCCESS = "Social Site Loaded";
 

@@ -44,11 +44,11 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
+    //@@author bladerail
     /**
      * Sorts the filteredPerson list by the filterType, one of [Name/Email/Address/Phone]
      * @param filterType
      */
-
     void sortFilteredPersonList(String filterType);
 
     /**

@@ -17,24 +17,53 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 include::../UserGuide.adoc[tag=remark]
 
-include::../UserGuide.adoc[tag=sort]
-
-include::../UserGuide.adoc[tag=updateUserPerson]
-
 #End of Extract#
-
 ---
 
 ==== Justification
 
-==== Sort Command
+The remark command allows additional information to be displayed on a person's card.
+
+=== Enhancement Added: Sort Command
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=SortCommand]
+
+#End of Extract#
+---
+
+==== Justification
 
 Sorting is important to the viewability of lists as it helps one to find the relevant information more easily as
 opposed to scanning through the entire list for their desired information. The current sort command implementation
 only supports sorting by name, but further enhancements will allow it to sort in ascending and descending orders
 by name, email, address, phone numbers, etc.
 
-==== UserPerson/UserProfile
+=== Enhancement Added: UserPerson/User Profile
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=updateUserPerson]
+
+include::../UserGuide.adoc[tag=userProfileUI]
+
+#End of Extract#
+---
+
 The UserProfile is an object that contains the UserPerson details. It can later be extended to include additional data.
 A GUI will allow the user to view their current User Person details, and allow editing of the User Person information.
 
@@ -44,24 +73,13 @@ A GUI will allow the user to view their current User Person details, and allow e
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=SortCommand]
-
 include::../DeveloperGuide.adoc[tag=UserProfile]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
-
-The remark command allows additional information to be displayed on a person's card.
-
-=== Enhancement Proposed: Add command `sort`
-
-The sort command would allow the user to display their list of contacts in an order that they prefer. Some users may want to
-view their contacts in order by First Name, Last Name, Email Address, Address or simply by the date they added the contact.
-
-=== Enhancement Proposed: User Profile/User Person
+=== Justification
 
 The User Profile will contain the user's contact card, which sets up for a later feature where contact cards can be shared.
 The user would then be able to share their contact instead of requiring others to key in the add command. This could also

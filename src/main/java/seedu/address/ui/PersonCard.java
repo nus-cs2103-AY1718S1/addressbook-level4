@@ -17,7 +17,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static String[] colors = {"red", "yellow", "blue", "orange", "brown", "green", "pink", "black"};
+    //@@author hansiang93
+    private static String[] colors = {"darkblue", "darkolivegreen", "slategray ", "teal", "maroon", "darkslateblue"};
     private static HashMap<String, String> tagColors = new HashMap<>();
     private static HashMap<String, String> webLinkColors = new HashMap<>();
 
@@ -28,6 +29,7 @@ public class PersonCard extends UiPart<Region> {
         webLinkColors.put("instagram", "#8a3ab9");
         webLinkColors.put("others", "grey");
     }
+    //@@author
 
     private static Random random = new Random();
 
@@ -60,6 +62,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
+    //@@author hansiang93
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
@@ -79,6 +82,7 @@ public class PersonCard extends UiPart<Region> {
     private static String getColorForWeblinks(String webLinkTag) {
         return webLinkColors.get(webLinkTag);
     }
+    //@@author
 
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
@@ -86,10 +90,6 @@ public class PersonCard extends UiPart<Region> {
      */
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);
@@ -121,9 +121,18 @@ public class PersonCard extends UiPart<Region> {
     private void initWebLinks(ReadOnlyPerson person) {
         person.getWebLinks().forEach(webLink -> {
             Label webLinkLabel = new Label(webLink.webLinkTag);
-            webLinkLabel.setStyle("-fx-background-color: " + getColorForWeblinks(webLink.toStringWebLinkTag()));
+            webLinkLabel.setStyle("-fx-background-color: transparent");
+            webLinkLabel.setStyle("-fx-border-color: " + getColorForWeblinks(webLink.toStringWebLinkTag()));
             webLinks.getChildren().add(webLinkLabel);
         });
+    }
+
+    public static HashMap<String, String> getTagColors() {
+        return tagColors;
+    }
+
+    public static HashMap<String, String> getWebLinkColors() {
+        return webLinkColors;
     }
 
     @Override

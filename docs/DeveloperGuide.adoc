@@ -163,6 +163,34 @@ The `UI` component,
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
+// tag::styling[]
+=== Styling and Themes
+
+image::StyleSheetColorNames.png[width="800"]
+_Figure 2.2.2 : Important variable names of the Stylesheet_
+
+The Stylesheets loaded are mainly controlled with the following global stylesheet variables
+
+```
+* {
+    -fx-base-background-color-0: #181b1d;
+    -fx-base-background-color-1: #2e3138;
+    -fx-base-text-fill-color: white;
+    -fx-base-text-fill-color-alt: black;
+    -fx-base-text-fill-color-labels: white;
+    -fx-label-text-fill-color: #010505;
+    -fx-list-cell-even: #3c3e3f;
+    -fx-list-cell-odd: #4a4f58;
+    -fx-list-cell-selected: #36435f;
+    -fx-list-cell-selected-border: #3e7b91;
+    -fx-list-cell-empty: #383838;
+}
+```
+
+Any new components added to the themes or stylesheets should utilise these base colors or variables to ensure the ease of creation and importation into other themes.
+
+// end::styling[]
+
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
@@ -463,12 +491,12 @@ listing, which is date added.
     }
 ----
 
-+ Sorting by name will display the list with names in ascending alphabetical order, regardless of capitalisation.
-+ Sorting by phone will display the list with phone numbers in ascending order.
-+ Sorting by email will display the list with emails in ascending alphabetical order, with priority given to the first
-email entered for a person. This means that the primary email for a person should be entered first.
-+ Sorting by address will display the list with addresses in ascending alphabetical order.
-+ Sorting by default will do the same as sorting by name currently.
+Sorting by name will display the list with names in ascending alphabetical order, regardless of capitalisation. +
+Sorting by phone will display the list with phone numbers in ascending order. +
+Sorting by email will display the list with emails in ascending alphabetical order, with priority given to the first
+email entered for a person. This means that the primary email for a person should be entered first. +
+Sorting by address will display the list with addresses in ascending alphabetical order. +
+Sorting by default will do the same as sorting by name currently. +
 
 ==== Design Considerations
 **Aspect:** Implementation of sorting. +
@@ -508,6 +536,13 @@ Similarly for UserProfile, the UserPerson is stored as an `XMLAdaptedPerson`, sa
 upon initialisation of the app. Whenever the UserPerson is edited using the `Update Command`, the userProfile is saved
 to the file.
 
+A UserProfile Window was added as a UI Component to display the User Profile information. Additionally, the User Profile
+can be modified from the textfields in the UI directly. The UserProfile is only saved when "OK" is clicked.
+The "Enter" button was added as an accelerator, which will click the "Cancel" button, so that unwanted changes will not be
+accidentally saved. Invalid values will be detected and changes will not be saved.
+
+image::UserProfileWindow.png[width="400" height="300"]
+
 ==== Design Considerations
 **Aspect:** Choice of location for storing UserProfile Data +
 **Alternative 1 (current choice)**: Separately from AddressBook. +
@@ -524,7 +559,6 @@ variables.
 
 ==== Further enhancements
 + Share UserProfile with others
-+ Display UserProfile graphically
 
 // end::UserProfile[]
 

@@ -149,7 +149,7 @@ public class ParserUtilTest {
     @Test
     public void parseEmail_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ArrayList<String> expectedEmail = new ArrayList();
+        ArrayList<String> expectedEmail = new ArrayList<>();
         expectedEmail.add(INVALID_EMAIL);
         ParserUtil.parseEmail(expectedEmail);
     }
@@ -161,7 +161,7 @@ public class ParserUtilTest {
 
     @Test
     public void parseEmail_validValue_returnsEmail() throws Exception {
-        ArrayList<Email> expectedEmail = new ArrayList();
+        ArrayList<Email> expectedEmail = new ArrayList<>();
         expectedEmail.add(new Email(VALID_EMAIL));
         expectedEmail.add(new Email(VALID_EMAIL_2));
         ArrayList<Email> actualEmail = ParserUtil.parseEmail(Arrays.asList(VALID_EMAIL, VALID_EMAIL_2));

@@ -60,6 +60,9 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem helpMenuItem;
 
     @FXML
+    private MenuItem userProfileMenuItem;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
 
     @FXML
@@ -85,11 +88,13 @@ public class MainWindow extends UiPart<Region> {
         setIcon(ICON);
         setWindowMinSize();
         setWindowDefaultSize(prefs);
+        //@@author zhoukai07
         Scene scene = new Scene(getRoot());
         String original = getClass().getResource("/view/DarkTheme.css").toExternalForm();
         scene.getStylesheets().add(original);
         this.scene2 = scene;
         primaryStage.setScene(scene);
+        //@@author
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -101,6 +106,7 @@ public class MainWindow extends UiPart<Region> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(userProfileMenuItem, KeyCombination.valueOf("F2"));
     }
 
     /**
@@ -150,7 +156,7 @@ public class MainWindow extends UiPart<Region> {
         WebsiteButtonBar websiteButtonBar = new WebsiteButtonBar();
         websiteButtonbarPlaceholder.getChildren().add(websiteButtonBar.getRoot());
 
-        DetailedPersonCard detailedPersonCard = new DetailedPersonCard();
+        DetailedPersonCard detailedPersonCard = new DetailedPersonCard(personListPanel.getTagColors());
         detailedPersonCardPlaceholder.getChildren().add(detailedPersonCard.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
@@ -215,6 +221,17 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.show();
     }
 
+    //@@author bladerail
+    /**
+     * Displays the user profile to the user
+     */
+    @FXML
+    private void handleUserProfile() {
+        UserProfileWindow userProfileWindow = new UserProfileWindow(logic.getUserPerson());
+        userProfileWindow.show();
+    }
+
+    //@@author
     /**
      * Closes the application.
      */
@@ -223,6 +240,7 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
+    //@@author zhoukai07
     /**
      * Allows for theme changes
      */
@@ -233,8 +251,20 @@ public class MainWindow extends UiPart<Region> {
         raise(new ChangeThemeRequestEvent());
     }
     @FXML
+    private void handleDarkTheme2() {
+        String themeUrl = getClass().getResource("/view/DarkTheme2.css").toExternalForm();
+        setTheme(themeUrl);
+        raise(new ChangeThemeRequestEvent());
+    }
+    @FXML
     private void handleLightTheme() {
         String themeUrl = getClass().getResource("/view/LightTheme.css").toExternalForm();
+        setTheme(themeUrl);
+        raise(new ChangeThemeRequestEvent());
+    }
+    @FXML
+    private void handleLightTheme2() {
+        String themeUrl = getClass().getResource("/view/LightTheme2.css").toExternalForm();
         setTheme(themeUrl);
         raise(new ChangeThemeRequestEvent());
     }
@@ -243,6 +273,7 @@ public class MainWindow extends UiPart<Region> {
         scene2.getStylesheets().add(themeUrl);
         primaryStage.setScene(scene2);
     }
+    //@@author
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;

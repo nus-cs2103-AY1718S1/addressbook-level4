@@ -20,6 +20,7 @@ import seedu.address.MainApp;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.WebsiteSelectionRequestEvent;
 
+//@@author hansiang93
 public class BrowserPanelTest extends GuiUnitTest {
     private PersonPanelSelectionChangedEvent selectionChangedEventStub;
     private WebsiteSelectionRequestEvent mapsSelectionEventStub;

@@ -106,8 +106,19 @@ Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
+* `edit 2 n/Betsy Crower clearTag/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+For more about editing tags, read `Edit Individual Tag` below.
+
+// tag::editIndividualTag[]
+=== Edit individual Tag
+
+Use `+t/` or `-t/` in edit command to add or remove tag to specific person with corresponding index.
+
+Examples:
+*`edit 1 +t/happy` adds a `happy` tag to the 1st person with his/her existing tags.
+*`edit 1 -/sad` removes the `sad` tag from the list of tags tagged to the 1st person.
+// end::editIndividualTag[]
 
 // tag::tagDelete[]
 === Delete tag form all persons: `tagDelete`
@@ -308,6 +319,9 @@ Examples:
 Updates the name and phone number of the User Person, saved to userProfile.xml. +
 
 Any new information added will overwrite previous data.
+
+The User Profile can also be edited via the User Interface by clicking on "File" -> "User Profile".
+More information
 // end::updateUserPerson[]
 
 === Clearing all entries : `clear`
@@ -351,6 +365,18 @@ Contact must be selected before selecting the buttons.
 
 Allows the user to switch between dark and light themes.
 // end::changeTheme[]
+
+// tag::userProfileUI[]
+=== User Profile in the UI
+
+The User Profile Window can be accessed by clicking on "File" -> "User Profile". Pressing "F2" will also bring up the User
+ Profile window.+
+
+You can edit the User Profile directly from here. Changes, if any, are only saved when the "OK" button is clicked. +
+Invalid values will not be accepted, and changes will not be saved. For multiple emails, add emails with a comma followed
+by a space, then the next email address.
+Pressing "Enter" has the same action as clicking the "Cancel" button, to avoid unwanted changes.
+// end::userProfileUI[]
 
 === Saving the data
 

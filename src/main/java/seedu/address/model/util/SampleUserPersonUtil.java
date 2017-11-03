@@ -14,6 +14,7 @@ import seedu.address.model.person.Remark;
 import seedu.address.model.person.weblink.WebLink;
 import seedu.address.model.tag.Tag;
 
+//@@author bladerail
 /**
  * Contains utility methods for creating sample UserPerson data.
  */
@@ -22,8 +23,10 @@ public class SampleUserPersonUtil {
         try {
             ArrayList<Email> emails = new ArrayList<Email>();
             emails.add(new Email("default@default.com"));
+            HashSet<WebLink> webLinks = new HashSet<>();
+            webLinks.add(new WebLink("default@facebook.com"));
             return new Person (new Name("Default"), new Phone("00000000"), emails,
-                            new Address("Default"), new Remark(""), new HashSet<Tag>(), new HashSet<WebLink>());
+                            new Address("Default"), new Remark(""), new HashSet<Tag>(), webLinks);
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
         }
@@ -33,8 +36,10 @@ public class SampleUserPersonUtil {
         try {
             ArrayList<Email> emails = new ArrayList<Email>();
             emails.add(new Email("dummy@dummy.com"));
+            HashSet<WebLink> webLinks = new HashSet<>();
+            webLinks.add(new WebLink("default@facebook.com"));
             return new Person (new Name("Dummy"), new Phone("11111111"), emails,
-                    new Address("Dummy"), new Remark(""), new HashSet<Tag>(), new HashSet<WebLink>());
+                    new Address("Dummy"), new Remark(""), new HashSet<Tag>(), webLinks);
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
         }

@@ -16,6 +16,7 @@ import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.WebsiteSelectionRequestEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author hansiang93
 /**
  * The Browser Panel of the App.
  */
@@ -44,6 +45,7 @@ public class BrowserPanel extends UiPart<Region> {
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
+
 
     private void loadPersonPage(ReadOnlyPerson person) {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")

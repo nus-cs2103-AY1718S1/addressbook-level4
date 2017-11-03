@@ -25,7 +25,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_REMARK = "";
-    public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_TAGS = "friend";
     public static final String DEFAULT_WEB_LINK = "https://www.facebook.com/Phua.Han.Siang";
 
     private Person person;
