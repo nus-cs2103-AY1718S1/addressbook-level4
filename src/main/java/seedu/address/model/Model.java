@@ -65,5 +65,6 @@ public interface Model {
      * @param editedPerson
      */
     void updateUserPerson(ReadOnlyPerson editedPerson);
+    //@@author
 
 }

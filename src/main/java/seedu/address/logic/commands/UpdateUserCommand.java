@@ -40,8 +40,8 @@ public class UpdateUserCommand extends Command {
             + PREFIX_EMAIL + "{EMAIL} "
             + PREFIX_ADDRESS + "{ADDRESS} "
             + PREFIX_WEB_LINK + "{WEBLINK} ";
-    //@@author
 
+    //@@author bladerail
     public static final String MESSAGE_UPDATE_USER_SUCCESS = "Successfully edited User Profile: %1s";
     public static final String MESSAGE_NOT_UPDATED = "At least one field to update must be provided.";
     public static final String MESSAGE_TAGS_NOT_ALLOWED = "Unable to edit your own tags";
