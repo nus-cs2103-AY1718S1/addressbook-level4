@@ -498,6 +498,7 @@ Format: `exit`
 
 Login into a Private Database +
 Format: `login u/private p/password`
+e.g. `login u/private p/password`
 
 === Logging out of private database : `logout`
 
