@@ -133,12 +133,12 @@ public class AddCommandTest {
         public void removeTag(String tagToBeRemoved) throws TagNotFoundException, IllegalValueException {
             fail("This method should not be called.");
         }
-
+        //@@author TanYikai
         @Override
         public void sortPersons() {
             fail("This method should not be called.");
         }
-
+        //@@author
         /**
          * This method is called as the construction of a new graph needs the FilteredPersonList.
          * Therefore a dummy list is given.
