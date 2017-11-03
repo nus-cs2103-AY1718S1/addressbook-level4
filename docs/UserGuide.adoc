@@ -97,6 +97,8 @@ longer be shown
 Upon selecting a meeting, the location of meeting will be automatically entered as the destination in Google Maps. The detailed navigational route and directions can be obtained thereafter.
 The screenshot below shows the loaded Google Maps upon entering the `selectmeeting` command.
 
+image::googlemaps.png[width="800"]
+
 == Commands
 
 ====
