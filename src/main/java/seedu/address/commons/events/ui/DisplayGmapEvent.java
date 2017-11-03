@@ -6,6 +6,7 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * Indicates a request to display Google Map of targeted index
  */
+//@@author Choony93
 public class DisplayGmapEvent extends BaseEvent {
 
     public final int targetIndex;

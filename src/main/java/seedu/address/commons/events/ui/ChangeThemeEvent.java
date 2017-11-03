@@ -4,14 +4,15 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * Indicates a request to display Google Map of targeted index
+ * Indicates a request to change theme to targeted index
  */
-public class PersonPanelOptionsDelete extends BaseEvent {
+//@@author Choony93
+public class ChangeThemeEvent extends BaseEvent {
 
     public final int targetIndex;
 
-    public PersonPanelOptionsDelete(Index targetIndex) {
-        this.targetIndex = targetIndex.getOneBased();
+    public ChangeThemeEvent(Index targetIndex) {
+        this.targetIndex = targetIndex.getZeroBased();
     }
 
     @Override

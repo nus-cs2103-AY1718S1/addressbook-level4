@@ -1,17 +1,25 @@
 package seedu.address.ui;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.HashMap;
+
+import javax.imageio.ImageIO;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.stage.FileChooser;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.DisplayGmapEvent;
-import seedu.address.commons.events.ui.PersonPanelOptionsDelete;
+import seedu.address.commons.events.ui.PersonPanelDeleteEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -45,6 +53,10 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label phone;
     @FXML
+    private Label birthday;
+    @FXML
+    private ImageView picture;
+    @FXML
     private Label address;
     @FXML
     private Label email;
@@ -62,6 +74,8 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
+        picture = new ImageView();
+        initImage();
     }
 
     /**
@@ -69,6 +83,7 @@ public class PersonCard extends UiPart<Region> {
      * RGB is above 700, indicating it is too white (unreadable).
      * This is done so that strings of same value will have persistent colour.
      */
+    //@@author Choony93
     private static String getColorForTag(String tagValue) {
 
         if (!tagColors.containsKey(tagValue)) {
@@ -98,8 +113,9 @@ public class PersonCard extends UiPart<Region> {
      */
     @FXML
     public void handleDelete() throws CommandException, ParseException {
-        raise(new PersonPanelOptionsDelete(Index.fromOneBased(this.displayedIndex)));
+        raise(new PersonPanelDeleteEvent(Index.fromOneBased(this.displayedIndex)));
     }
+    //@@author
 
     /**
      * Menu list option: GoogleMap
@@ -111,6 +127,29 @@ public class PersonCard extends UiPart<Region> {
         raise(new DisplayGmapEvent(Index.fromOneBased(this.displayedIndex)));
     }
 
+    /**
+     * Menu list option: add image
+     * Raises PersonPanelOptionsDelete, handled by UIManager
+     * Handle Delete user
+     */
+    @FXML
+    public void handleAddImage() {
+        FileChooser picChooser = new FileChooser();
+        File selectedPic = picChooser.showOpenDialog(null);
+        if (selectedPic != null) {
+            try {
+                person.getPicture().setPictureUrl(person.getName().toString() + person.getPhone().toString() + ".jpg");
+                ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
+                FileInputStream fileStream = new FileInputStream(person.getPicture().getPictureUrl());
+                Image newPicture = new Image(fileStream);
+                picture.setImage(newPicture);
+            } catch (Exception e) {
+                System.out.println(e + "Invalid File");
+            }
+        } else {
+            System.out.println("Invalid File");
+        }
+    }
 
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
@@ -119,6 +158,7 @@ public class PersonCard extends UiPart<Region> {
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
@@ -126,6 +166,23 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().clear();
             initTags(person);
         });
+    }
+
+    /**
+     * Initialize image for ever person
+     */
+    private void initImage() {
+        try {
+            File picFile = new File(person.getPicture().getPictureUrl());
+            FileInputStream fileStream = new FileInputStream(picFile);
+            Image personPicture = new Image(fileStream);
+            picture.setFitHeight(person.getPicture().PIC_HEIGHT);
+            picture.setFitWidth(person.getPicture().PIC_WIDTH);
+            picture.setImage(personPicture);
+            cardPane.getChildren().add(picture);
+        } catch (Exception e) {
+            System.out.println("Image not found");
+        }
     }
 
     /**

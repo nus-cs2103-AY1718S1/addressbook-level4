@@ -11,12 +11,15 @@ import java.util.function.Predicate;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.AddressBookImportEvent;
 import seedu.address.model.person.NameComparator;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -92,6 +95,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author aver0214
     @Override
     public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
         for (int i = 0; i < addressBook.getPersonList().size(); i++) {
@@ -106,7 +110,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void sortImportantTag () throws PersonNotFoundException, DuplicatePersonException {
+    public void sortImportantTag() throws PersonNotFoundException, DuplicatePersonException {
         ArrayList<ReadOnlyPerson> notImportantPersons = new ArrayList<ReadOnlyPerson>();
         ArrayList<ReadOnlyPerson> importantPersons = new ArrayList<ReadOnlyPerson>();
 
@@ -149,7 +153,7 @@ public class ModelManager extends ComponentManager implements Model {
         toBeSortedPersonList.addAll(addressBook.getPersonList());
         Collections.sort(toBeSortedPersonList, new NameComparator());
 
-        AddressBook newAb  = new AddressBook();
+        AddressBook newAb = new AddressBook();
 
         for (int j = 0; j < toBeSortedPersonList.size(); j++) {
             newAb.addPerson(toBeSortedPersonList.get(j));
@@ -160,6 +164,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -172,11 +177,53 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
+    /**
+     * @param predicate
+     * @return the filter of the filtered person list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    //@@author Choony93
+    @Override
+    public List<ReadOnlyPerson> getPersonListByPredicate(Predicate<ReadOnlyPerson> predicate) {
+        FilteredList<ReadOnlyPerson> filteredList = new FilteredList<ReadOnlyPerson>(filteredPersons);
+        filteredList.setPredicate(predicate);
+        return FXCollections.unmodifiableObservableList(filteredList);
+    }
+    //@@author
+
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
+
+    //@@author Choony93
+    @Override
+    @Subscribe
+    public void handleAddressBookImportEvent(AddressBookImportEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data added from file-> "
+                + event.filePath));
+        for (ReadOnlyPerson person : event.importedBook.getPersonList()) {
+            if (!addressBook.getPersonList().contains(person)) {
+                try {
+                    if (addressBook.getPersonList().stream().noneMatch(p -> p.getName().equals(person.getName()))) {
+                        addPerson(person);
+                    } else {
+                        updatePerson(addressBook.getPersonList().stream()
+                                .filter(p -> p.getName().equals(person.getName())).findFirst().get(), person);
+                    }
+                } catch (DuplicatePersonException dpe) {
+                    logger.info(LogsCenter.getEventHandlingLogMessage(event, "Person name [" + person.getName()
+                            + "] already, not added."));
+                } catch (PersonNotFoundException pnfe) {
+                    logger.info(LogsCenter.getEventHandlingLogMessage(event, "Person name [" + person.getName()
+                            + "] not found, not modified."));
+                }
+            }
+        }
+    }
+    //@@author
+
 
     @Override
     public boolean equals(Object obj) {

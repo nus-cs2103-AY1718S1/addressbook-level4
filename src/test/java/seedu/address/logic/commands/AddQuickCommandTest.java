@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -14,6 +15,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.events.model.AddressBookImportEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -27,7 +29,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
-public class AddCommandTest {
+public class AddQuickCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -35,7 +37,7 @@ public class AddCommandTest {
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddCommand(null);
+        new AddQuickCommand(null);
     }
 
     @Test
@@ -45,7 +47,7 @@ public class AddCommandTest {
 
         CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
+        assertEquals(String.format(AddQuickCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
         assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
     }
 
@@ -55,7 +57,7 @@ public class AddCommandTest {
         Person validPerson = new PersonBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AddQuickCommand.MESSAGE_DUPLICATE_PERSON);
 
         getAddCommandForPerson(validPerson, modelStub).execute();
     }
@@ -64,14 +66,14 @@ public class AddCommandTest {
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();
         Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
+        AddQuickCommand addAliceCommand = new AddQuickCommand(alice);
+        AddQuickCommand addBobCommand = new AddQuickCommand(bob);
 
         // same object -> returns true
         assertTrue(addAliceCommand.equals(addAliceCommand));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
+        AddQuickCommand addAliceCommandCopy = new AddQuickCommand(alice);
         assertTrue(addAliceCommand.equals(addAliceCommandCopy));
 
         // different types -> returns false
@@ -85,10 +87,10 @@ public class AddCommandTest {
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new AddQuickCommand with the details of the given person.
      */
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private AddQuickCommand getAddCommandForPerson(Person person, Model model) {
+        AddQuickCommand command = new AddQuickCommand(person);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -141,10 +143,23 @@ public class AddCommandTest {
         }
 
         @Override
-        public void sortImportantTag () throws PersonNotFoundException, DuplicatePersonException { }
+        public List<ReadOnlyPerson> getPersonListByPredicate(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+            return null;
+        }
 
         @Override
-        public void sortAllPersons () throws DuplicatePersonException { }
+        public void sortImportantTag() throws PersonNotFoundException, DuplicatePersonException {
+        }
+
+        @Override
+        public void sortAllPersons() throws DuplicatePersonException {
+        }
+
+        @Override
+        public void handleAddressBookImportEvent(AddressBookImportEvent abce) {
+            fail("This method should not be called.");
+        }
     }
 
     /**
@@ -162,7 +177,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void sortImportantTag () throws PersonNotFoundException, DuplicatePersonException {
+        public void sortImportantTag() throws PersonNotFoundException, DuplicatePersonException {
             throw new DuplicatePersonException();
         }
     }

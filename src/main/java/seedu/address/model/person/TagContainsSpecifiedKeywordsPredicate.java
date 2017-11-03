@@ -18,6 +18,7 @@ public class TagContainsSpecifiedKeywordsPredicate implements Predicate<ReadOnly
         this.keywords = keywords;
     }
 
+    //@@author aver0214
     @Override
     public boolean test(ReadOnlyPerson person) {
         Set<Tag> tags = person.getTags();
@@ -26,6 +27,7 @@ public class TagContainsSpecifiedKeywordsPredicate implements Predicate<ReadOnly
         return keywords.stream()
                 .anyMatch(keyword -> tagList.stream().anyMatch(tagname -> keyword.contains(tagname.toString())) & true);
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
