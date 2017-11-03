@@ -46,6 +46,7 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
             if ("d/off".equals(args[2])) {
                 return new AddAppointmentCommand(index);
             }
+
             List<DateGroup> groups = getDatesFromString(argumentMultimap.getValue(PREFIX_DATE).get());
             Calendar calendar = Calendar.getInstance();
             if (groups.size() == 0) {

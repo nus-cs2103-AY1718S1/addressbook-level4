@@ -71,30 +71,38 @@ public class AddCommandParser implements Parser<AddCommand> {
                     ? new Remark("") : ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
             //@@author
 
-            List<DateGroup> groups = AddAppointmentParser.getDatesFromString(
-                    argMultimap.getValue(PREFIX_DATE).toString());
-            Calendar calendar = Calendar.getInstance();
             Appointment appointment;
-            if (groups.size() == 0) {
-                throw new ParseException("Please be more specific with your appointment time");
-            }
-            //If there is a start and end time that is parsed
-            if (groups.get(0).getDates().size() == 2) {
-                calendar.setTime(groups.get(0).getDates().get(0));
-                Calendar calendarEnd = Calendar.getInstance();
-                calendarEnd.setTime(groups.get(0).getDates().get(1));
-                appointment = new Appointment(name.toString(), calendar, calendarEnd);
+            if(arePrefixesPresent(argMultimap, PREFIX_DATE)) {
+                appointment = getAppointment(argMultimap, name);
             } else {
-                calendar.setTime(groups.get(0).getDates().get(0));
-                appointment = new Appointment(name.toString(), calendar);
+                appointment = new Appointment (name.toString());
             }
-
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             ReadOnlyPerson person = new Person(name, phone, email, address, bloodType, tagList, remark, appointment);
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
+    }
+
+    private Appointment getAppointment(ArgumentMultimap argMultimap, Name name) throws ParseException {
+        Appointment appointment;List<DateGroup> groups = AddAppointmentParser.getDatesFromString(
+                argMultimap.getValue(PREFIX_DATE).toString());
+        Calendar calendar = Calendar.getInstance();
+        if (groups.size() == 0) {
+            throw new ParseException("Please be more specific with your appointment time");
+        }
+        //If there is a start and end time that is parsed
+        if (groups.get(0).getDates().size() == 2) {
+            calendar.setTime(groups.get(0).getDates().get(0));
+            Calendar calendarEnd = Calendar.getInstance();
+            calendarEnd.setTime(groups.get(0).getDates().get(1));
+            appointment = new Appointment(name.toString(), calendar, calendarEnd);
+        } else {
+            calendar.setTime(groups.get(0).getDates().get(0));
+            appointment = new Appointment(name.toString(), calendar);
+        }
+        return appointment;
     }
 
     /**
