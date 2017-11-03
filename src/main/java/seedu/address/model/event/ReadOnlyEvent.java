@@ -54,6 +54,12 @@ public interface ReadOnlyEvent {
                 && other.getDescription().equals(this.getDescription()));
     }
 
+    default boolean equals(ReadOnlyEvent other) {
+        return other == this // short circuit if same object
+                || (other instanceof ReadOnlyEvent // instanceof handles nulls
+                && this.isSameStateAs(other));
+    }
+
     /**
      * Formats the event as text, showing all its details.
      */

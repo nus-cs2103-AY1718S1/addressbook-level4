@@ -71,20 +71,20 @@ public class EventPanel extends UiPart<Region> {
         showEventDetails(index, onlyEvent);
     }
 
-    /**
-     * Calls showEventDetails when the address book is changed. This results in any edits to the currently displayed
-     * event being refreshed immediately, instead of the user having to click away and click back to see the changes.
-     * @param event
-     */
-    @Subscribe
-    private void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        for (ReadOnlyEvent dataEvent : event.data.getEventList()) {
-            if (storedEvent.getTitle().equals(dataEvent.getTitle())) {
-                showEventDetails(storedEventIndex, dataEvent);
-                storedEvent = dataEvent;
-                break;
-            }
-        }
-    }
+//    /**
+//     * Calls showEventDetails when the address book is changed. This results in any edits to the currently displayed
+//     * event being refreshed immediately, instead of the user having to click away and click back to see the changes.
+//     * @param event
+//     */
+//    @Subscribe
+//    private void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
+//        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+//        for (ReadOnlyEvent dataEvent : event.data.getEventList()) {
+//            if (storedEvent.getTitle().equals(dataEvent.getTitle())) {
+//                showEventDetails(storedEventIndex, dataEvent);
+//                storedEvent = dataEvent;
+//                break;
+//            }
+//        }
+//    }
 }
