@@ -384,6 +384,36 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+=== Clearing ConnectUs LogFile : `clearlog`
+
+Clears the ConnectUs Logfile. +
+Format: 'clearlog' or 'cl'
+
+All important actions made by the user such as add,clear,edit,delete,import,list,redo,undo and starting of application +
+are recorded in the ConnectUs.txt logfile. Users have the option of clearing the logfile in order to make the log more+
+organised.
+
+=== Generating QR Code For a Contact : `qrcall`
+
+Generate QR code for a contact to call by using index number in the last person listing +
+Format: 'qrcall INDEX' or 'qr INDEX'
+
+****
+* Selects the person and loads the QR code the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`qrcall 2` +
+Generate QR Code for the 2nd person in the address book.
+* `find Betsy` +
+`qr 1` +
+Generate QR Code for the 1st person in the results of the `find` command.
+
+
 == Upcoming Features
 (added in v1.2)
 
@@ -401,6 +431,9 @@ List all contacts by clicking on the `List` button instead of using command line
 
 === Sorts contact with a click of a button `Coming in v2.0`
 Sorts the contact in the address book based on the name of the contact by clicking on the `Sort` button instead of using command line.
+
+=== Reads out Command Executed with computer voicing `Coming in v2.0`
+Allows user to decide if they want to activate the function in order to listen to commands they executed and the response feedback from the application.
 
 == FAQ
 
