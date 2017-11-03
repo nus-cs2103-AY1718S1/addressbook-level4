@@ -360,6 +360,7 @@ Format: `(s)select INDEX`
 * Selects the person/event and loads the details of this data item.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* like `1, 2, 3, ...`
+* All properties of this person/event will be displayed at the right side of the interface (ordered by the name of the property).
 ****
 
 Examples:
