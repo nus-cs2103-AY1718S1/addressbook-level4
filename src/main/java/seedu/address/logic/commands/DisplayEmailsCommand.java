@@ -32,14 +32,14 @@ public class DisplayEmailsCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         List<ReadOnlyEvent> lastShownList = model.getFilteredEventList();
-        String temp = "";
+        String temp = "Details: ";
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
         }
 
         if (!lastShownList.get(targetIndex.getZeroBased()).getParticipants().isEmpty()) {
             for (Person person : lastShownList.get(targetIndex.getZeroBased()).getParticipants()) {
-                temp += person.getEmail().value + ", ";
+                temp += person.getEmail().value + "\n\t     ";
             }
         } else {
             temp = "No one has joined this event.";
