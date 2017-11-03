@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-import seedu.address.model.person.TagContainsKeywordsPredicate;
+import seedu.address.model.person.FilterKeywordsPredicate;
 
 //@@author hansiang93
 /**
@@ -21,9 +21,9 @@ public class FilterCommand extends Command {
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {tag}";
     //@@author
 
-    private final TagContainsKeywordsPredicate predicate;
+    private final FilterKeywordsPredicate predicate;
 
-    public FilterCommand(TagContainsKeywordsPredicate predicate) {
+    public FilterCommand(FilterKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 

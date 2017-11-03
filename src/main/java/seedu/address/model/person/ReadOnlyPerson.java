@@ -66,4 +66,22 @@ public interface ReadOnlyPerson {
         return builder.toString();
     }
 
+    default String getAsOneString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName())
+                .append(" ")
+                .append(getPhone())
+                .append(" ")
+                .append(getEmail())
+                .append(" ")
+                .append(getAddress())
+                .append(" ")
+                .append(getRemark())
+                .append(" ");
+        getTags().forEach(builder::append);
+        builder.append(" ");
+        getWebLinks().forEach(builder::append);
+        return builder.toString();
+    }
+
 }
