@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.AddFacebookContactCommand;
+import seedu.address.logic.commands.FacebookAddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -30,6 +30,7 @@ import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UnFavoriteCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.ui.BrowserPanel;
 
 /**
  * Parses user input.
@@ -62,20 +63,24 @@ public class AddressBookParser {
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
 
-        case AddFacebookContactCommand.COMMAND_WORD:
-        case AddFacebookContactCommand.COMMAND_ALIAS:
-            return new AddFacebookContactParser().parse(arguments);
+        case FacebookAddCommand.COMMAND_WORD:
+        case FacebookAddCommand.COMMAND_ALIAS:
+            BrowserPanel.setProcessType(commandWord);
+            return new FacebookAddCommandParser().parse(arguments);
 
         case FacebookConnectCommand.COMMAND_WORD:
         case FacebookConnectCommand.COMMAND_ALIAS:
+            BrowserPanel.setProcessType(commandWord);
             return new FacebookConnectCommand();
 
         case FacebookPostCommand.COMMAND_WORD:
         case FacebookPostCommand.COMMAND_ALIAS:
+            BrowserPanel.setProcessType(commandWord);
             return new FacebookPostCommandParser().parse(arguments);
 
         case FacebookLinkCommand.COMMAND_WORD:
         case FacebookLinkCommand.COMMAND_ALIAS:
+            BrowserPanel.setProcessType(commandWord);
             return new FacebookLinkCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:

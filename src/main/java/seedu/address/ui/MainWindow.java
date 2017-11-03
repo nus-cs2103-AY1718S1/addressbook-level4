@@ -25,6 +25,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.LogicManager;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -156,6 +157,9 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
         browserPanel = new BrowserPanel(scene);
+        //@@author alexfoodw
+        browserPanel.setLogic(logic);
+        //@@author
         UiTheme.getInstance().setBrowserPanel(browserPanel);
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
