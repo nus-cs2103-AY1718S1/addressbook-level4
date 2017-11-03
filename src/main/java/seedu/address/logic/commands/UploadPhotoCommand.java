@@ -25,7 +25,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * Uploads image file to specified person.
  */
-public class UploadPhotoCommand extends UndoableCommand {
+public class UploadPhotoCommand extends Command {
     public static final String COMMAND_WORD = "photo";
     public static final String COMMAND_ALIAS = "p";
 
@@ -51,7 +51,7 @@ public class UploadPhotoCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);

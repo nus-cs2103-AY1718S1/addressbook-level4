@@ -17,7 +17,7 @@ By: `W15-B3`      Since: `Jun 2016`      Licence: `MIT`
 == Introduction
 ConnectUs is an address book application that allows you to manage your contacts through the use of a command-line interface (CLI) or a graphical user interface (GUI). +
 
-This guide provides information that can help you improve the application in terms of coding and testing, and also allow you to better understand the features
+This guide provides information that can help you contribute to the application in terms of coding and testing, and also allow you to better understand the features
 through the use of diagrams and explanations. +
 
 ConnectUs consists of the following features: +
@@ -35,6 +35,10 @@ ConnectUs consists of the following features: +
 
 === Prerequisites
 
+In order to have a better experience in using the application, it would be good if you have the following
+java version installed:
+
+
 . *JDK `1.8.0_60`* or later
 +
 [NOTE]
@@ -50,6 +54,8 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 
 === Setting up the project in your computer
+
+The following describes the steps you would take to get started developing the application on your computer:
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
@@ -88,17 +94,19 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
-
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
-
-Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
+Travis CI is a hosted, distributed continuous integration service used to build and test software projects hosted at GitHub.
 
 [NOTE]
 Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
 
+
+To setup Travis, you can refer to <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+
+Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
+
 ==== Getting started with coding
 
-When you are ready to start coding,
+Here are some tips to get you started on coding:
 
 1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
 2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
@@ -106,6 +114,9 @@ When you are ready to start coding,
 == Design
 
 === Architecture
+
+To help you better understand the relationship between each component in our application, the following section describes how each component interact
+with each other.
 
 The *_link:#architecture-diagram[Architecture Diagram]_* given below explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -116,12 +127,12 @@ _Figure 3.1.1 : Architecture Diagram_
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-Based on _Figure 3.1.1_, the App is made up of the following segments:
+As seen in _Figure 3.1.1_, the App is made up of the following segments:
 
 The `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* Initializing the components at app launch in the correct sequence, and connects them up with each other.
+* terminating the components whilst shutting down and invokes cleanup method where necessary.
 
 The link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
@@ -146,7 +157,7 @@ The following figure below shows the class diagram of the logic component.
 image::LogicClassDiagram.png[width="800"]
 _Figure 3.1.2 : Class Diagram of the Logic Component_
 
-For example, in _Figure 3.1.2_ the `Logic` component defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+In the figure above, the `Logic` component defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 
 
@@ -172,6 +183,7 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 The sections below give more details of each component.
 
 === UI component
+This section describes how the UI component works.
 
 The figure below shows you on the structure of the UI component in our App.
 
@@ -191,6 +203,8 @@ The `UI` component,
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
 === Logic component
+
+This section describes how the Logic component works.
 
 The following diagrams _Figure 3.3.1_ and _Figure 3.3.2_ shows the structure of the logic component.
 
@@ -215,6 +229,8 @@ _Figure 3.3.1 : Interactions Inside the Logic Component for the `delete 1` Comma
 
 === Model component
 
+This section describes how the Model component works.
+
 _Figure 3.4.1_ shows the structure of the Model Component
 
 image::ModelClassDiagram.png[width="800"]
@@ -230,6 +246,8 @@ The `Model`,
 * does not depend on any of the other three components.
 
 === Storage component
+
+This section describes how the Storage component works.
 
 Lastly, _Figure 3.5.1_ shows the structure of the Storage component.
 
@@ -247,9 +265,13 @@ The `Storage` component,
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
+[NOTE]
+Some examples of common classes includes: `StringUtil` , `FileUtil`, `IllegalValueException` etc.
+
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+// tag::joshua[]
 
 === Email Function
 (added in v1.2)
@@ -276,6 +298,47 @@ The following sequence diagram describes how `OpenEmailClient` passes in the "em
 image::OpenEmailClientSequenceDiagram.png[width="800"]
 _Figure 4.1.1 : Sequence Diagram of the Email function_
 
+==== Design Considerations
+
+**Aspect:** Functionality of `Email` +
+**Alternative 1 (current choice):** Open up an email client in another window by calling `OpenEmailClient` with to field filled with receiver's email. +
+**Pros:** Easier to implement, user will be familiar with his/her prefered email client. +
+**Cons:** Only one field filled up, user still has to manually compose email. +
+**Alternative 2:** Build a form within current GUI and compose email there. +
+**Pros:** Better performance, does not rely on additional software. +
+**Cons:** Makes the current UI even more cluttered and confusing.
+
+---
+
+=== Displaying a contact's location on Google Maps
+(added in v1.2)
+
+In this section, we explain how a contact's location is displayed on Google Maps whenever a selection is made. +
+
+Whenever a `PersonPanelSelectionChangedEvent` is raised, the loadPersonPage method in `BrowserPanel` will update the address to the currently selected person.
+[source,java]
+----
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonPage(event.getNewSelection().person);
+    }
+----
+
+The browser will then render the new URL it has received. Below is the code snippet of `loadPersonPage`
+[source,java]
+----
+    public void loadPersonPage(ReadOnlyPerson person) {
+        browser.getEngine().setUserAgent("Mozilla/5.0 "
+                + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0");
+        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+"));
+    }
+----
+
+[NOTE]
+The browser's user agent had to be set to ** "Mozilla/5.0 "
+                                                          + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0" **because
+there were unicode issue's when load Google Maps on Mac computers.
 
 === Mapping a command to a JavaFX Button
 (added in v1.2)
@@ -327,14 +390,7 @@ When the DeleteButton is pressed, it will be handled by the handleDeleteButtonPr
         logger.info("Result: " + commandResult.feedbackToUser);
     }
 ----
-
-
-
-
-
-
-
-
+// end::joshua[]
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -346,9 +402,9 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 4.3.1 : Class Diagram for Logic Command_
+_Figure 4.4.1 : Class Diagram for Logic Command_
 
-As you can see from _Figure 4.3.1_, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see in _Figure 4.4.1_, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -383,25 +439,25 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-As shown in _Figure 4.3.2_ below, the user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+As shown in _Figure 4.4.2_ below, the user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
-_Figure 4.3.2: Undoable Command example_
+_Figure 4.4.2: Undoable Command example_
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example in _Figure 4.3.3_, the user may execute `add n/David ...` to add a new person.
+As the user continues to use the program, more commands are added into the `undoStack`. For example in _Figure 4.4.3_, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
-_Figure 4.3.3: Undoable Command example_
+_Figure 4.4.3: Undoable Command example_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack` as shown in _Figure 4.3.4_. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack` as shown in _Figure 4.4.4_. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
-_Figure 4.3.4: Undoable Command example_
+_Figure 4.4.4: Undoable Command example_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -410,7 +466,7 @@ The following link:#sequence-diagram[sequence diagram] shows how the undo operat
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-_Figure 4.3.5_ : Sequence Diagram of the Undo and Redo function._
+_Figure 4.4.5_ : Sequence Diagram of the Undo and Redo function._
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -420,17 +476,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
-_Figure 4.3.6: Undoable Command example_
+_Figure 4.4.6: Undoable Command example_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
-_Figure 4.3.7: Undoable Command example_
+_Figure 4.4.7: Undoable Command example_
 
 The following link:#activity-diagram[activity diagram]summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
-_Figure 4.3.8: Undoable Command Activity Diagram_
+_Figure 4.4.8: Undoable Command Activity Diagram_
 
 ==== Design Considerations
 
@@ -619,7 +675,9 @@ _Figure 4.8.1: Remove Tag Sequence Diagram_
 === Change colour theme mechanism
 (added in v1.2)
 
-The changing of colour theme feature is added for users to choose their preferred colour theme. The colour theme options are implemented by the `UI`
+You can customise the look of the application by changing the color theme.
+
+The colour theme options are implemented by the `UI`
 on the `MainWindow` MenuBar as MenuItems. +
 
 * When the option is clicked, it will trigger the specified action for the MenuItem. E.g. Clicking on "White Theme" MenuItem
@@ -1057,7 +1115,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* *` |user |filter the list through details such as names |search for those contacts that I only need.
+|`* *` |user |filter the list through details such as tags |search for those contacts that I only need.
 
 |`* *` |user |easily send email or messages to the contact through the application |immediately send  messages.
 
@@ -1070,6 +1128,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |have my information secured |be assured that my contact information are safe on cloud storage
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`* *` |user |personalize the application |feel more familiar with the application
 
 |=======================================================================
 

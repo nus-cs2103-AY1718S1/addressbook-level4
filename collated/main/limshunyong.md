@@ -1,5 +1,5 @@
 # limshunyong
-###### /java/seedu/address/logic/commands/ExportCommand.java
+###### \java\seedu\address\logic\commands\ExportCommand.java
 ``` java
 /**
  * export contacts to external source (in .vcf format)
@@ -71,7 +71,7 @@ public class ExportCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ImportCommand.java
+###### \java\seedu\address\logic\commands\ImportCommand.java
 ``` java
 /**
  * import contacts from external source (in .vcf format)
@@ -114,7 +114,7 @@ public class ImportCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/SortCommand.java
+###### \java\seedu\address\logic\commands\SortCommand.java
 ``` java
 /**
  * Sorts the contacts in the address book based on name.
@@ -132,7 +132,7 @@ public class SortCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ImportCommandParser.java
+###### \java\seedu\address\logic\parser\ImportCommandParser.java
 ``` java
 /**
  * Parses input arguments as file and adds the contact into the address book
@@ -213,7 +213,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
 }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
      *  Sorts the address book
@@ -223,23 +223,23 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     }
 
 ```
-###### /java/seedu/address/model/person/UniquePersonList.java
+###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
     /**
      * Sorts the list
      */
     public void sort() {
-        internalList.sort((person1, person2) ->(
+        internalList.sort((person1, person2) -> (
                 person1.getName().fullName
                         .compareToIgnoreCase(person2.getName().fullName)));
     }
 ```
-###### /java/seedu/address/storage/AddressBookStorage.java
+###### \java\seedu\address\storage\AddressBookStorage.java
 ``` java
     void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
 }
 ```
-###### /java/seedu/address/storage/StorageManager.java
+###### \java\seedu\address\storage\StorageManager.java
 ``` java
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-copy.xml");

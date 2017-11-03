@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.ClearLogCommand;
 import seedu.address.logic.commands.LoggingCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -43,7 +44,8 @@ public class ClearLogButton extends UiPart<Region> {
                 ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
         alert.showAndWait();
         if (alert.getResult() == ButtonType.YES) {
-            loggingCommand.clearLog();
+            ClearLogCommand clearLogCommand = new ClearLogCommand();
+            clearLogCommand.execute();
             logger.info("Log has been cleared.");
         }
     }
