@@ -504,13 +504,13 @@ object.
 When given invalid inputs, the `editmeeting` command shares some of the  exceptions
 which are also thrown by the `addmeeting` command. They are:
 
-* `DuplicateMeetingException`: Compares the editted Meeting object with the other Meeting objects in the address book
+* `DuplicateMeetingException`: Compares the edited Meeting object with the other Meeting objects in the address book
 and this exception is thrown when there is a duplicate object with the same parameters.
 * `MeetingNotFoundException` : Exception is thrown when the index provided to the `editmeeting` command
 is referring to the invalid index of a `Meeting` object in the addressbook
-* `MeetingBeforeCurrDateException` : Exception is thrown when the date of the editted
+* `MeetingBeforeCurrDateException` : Exception is thrown when the date of the edited
 Meeting is earlier than that of the current system time, this exception is thrown.
-* `MeetingClashException` : Exception is thrown when the DateTime of the edittedmeeting is
+* `MeetingClashException` : Exception is thrown when the DateTime of the editedmeeting is
 the same as one of the preexisting Meetings in the addressbook.
 
 ==== Design Considerations
