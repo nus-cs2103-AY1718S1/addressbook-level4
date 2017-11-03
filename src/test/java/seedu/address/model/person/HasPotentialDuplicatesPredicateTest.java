@@ -1,14 +1,15 @@
 package seedu.address.model.person;
 
 import org.junit.Test;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.testutil.PersonBuilder;
 
-import java.util.Collections;
-import java.util.Set;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.HashSet;
 
-import static org.junit.Assert.*;
+import seedu.address.commons.exceptions.IllegalValueException;
+
 
 //@@author rushan-khor
 public class HasPotentialDuplicatesPredicateTest {
