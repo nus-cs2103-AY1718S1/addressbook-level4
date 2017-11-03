@@ -168,7 +168,6 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
         if (persons.remove(key)) {
-            groups.removePerson(key);
             return true;
         } else {
             throw new PersonNotFoundException();
