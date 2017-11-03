@@ -51,9 +51,8 @@
                                  <graphic>
                                     <ImageView fx:id="iconPhone" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../images/phone.png" />
-                                       </image>
-                                    </ImageView>
+                                          <Image url="@../images/iconPhone.png" />
+                                       </image></ImageView>
                                  </graphic>
                                  <opaqueInsets>
                                     <Insets />
@@ -66,9 +65,8 @@
                                  <graphic>
                                     <ImageView fx:id="iconEmail" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../images/mail.png" />
-                                       </image>
-                                    </ImageView>
+                                          <Image url="@../images/iconEmail.png" />
+                                       </image></ImageView>
                                  </graphic>
                               </Label>
                               <Label fx:id="address" graphicTextGap="20.0" styleClass="person-small-label" text="\$address">
@@ -78,9 +76,8 @@
                                  <graphic>
                                     <ImageView fx:id="iconAddress" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../images/address.png" />
-                                       </image>
-                                    </ImageView>
+                                          <Image url="@../images/iconAddress.png" />
+                                       </image></ImageView>
                                  </graphic>
                               </Label>
                            </children>
