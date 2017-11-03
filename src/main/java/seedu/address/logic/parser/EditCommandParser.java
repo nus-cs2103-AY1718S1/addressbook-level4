@@ -107,6 +107,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         return Optional.of(ParserUtil.parseEmail(emailSetToParse));
     }
+    //@@author
     //@@author AngularJiaSheng
     /**
      * Parses {@code Collection<String> webLinks} into a {@code Set<weblink>} if {@code webLinks} is non-empty.
@@ -123,4 +124,5 @@ public class EditCommandParser implements Parser<EditCommand> {
                 && webLinks.contains("") ? Collections.emptySet() : webLinks;
         return Optional.of(ParserUtil.parseWebLink(webLinkSet));
     }
+    //@@author
 }

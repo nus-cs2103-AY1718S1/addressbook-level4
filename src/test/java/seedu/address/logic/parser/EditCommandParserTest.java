@@ -81,16 +81,17 @@ public class EditCommandParserTest {
         // invalid prefix being parsed as preamble
         assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
     }
-
+    //@@author zhoukai07
     @Test
     public void parse_invalidValue_failure() {
         assertParseFailure(parser, "1" + INVALID_NAME_DESC, Name.MESSAGE_NAME_CONSTRAINTS); // invalid name
         assertParseFailure(parser, "1" + INVALID_PHONE_DESC, Phone.MESSAGE_PHONE_CONSTRAINTS); // invalid phone
+        //@@author zhoukai07
         assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_EMAIL_CONSTRAINTS); // invalid email
         assertParseFailure(parser, "1" + INVALID_ADDRESS_DESC, Address.MESSAGE_ADDRESS_CONSTRAINTS); // invalid address
         assertParseFailure(parser, "1" + INVALID_ADD_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid add tag
         assertParseFailure(parser, "1" + INVALID_REM_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid remove tag
-
+        //@@author
         // invalid phone followed by valid email
         assertParseFailure(parser, "1" + INVALID_PHONE_DESC + EMAIL_DESC_AMY, Phone.MESSAGE_PHONE_CONSTRAINTS);
 
@@ -108,7 +109,7 @@ public class EditCommandParserTest {
         Index targetIndex = INDEX_SECOND_PERSON;
         String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + TAG_ADD_DESC_HUSBAND
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY + TAG_ADD_DESC_FRIEND;
-
+    //@@author
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withToAddTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
@@ -155,7 +156,7 @@ public class EditCommandParserTest {
         descriptor = new EditPersonDescriptorBuilder().withAddress(VALID_ADDRESS_AMY).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
-
+    //@@author zhoukai07
         // add tags
         userInput = targetIndex.getOneBased() + TAG_ADD_DESC_FRIEND;
         descriptor = new EditPersonDescriptorBuilder().withToAddTags(VALID_TAG_FRIEND).build();
@@ -174,7 +175,7 @@ public class EditCommandParserTest {
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
-
+    
     @Test
     public void parse_multipleRepeatedFields_acceptsLast() {
         Index targetIndex = INDEX_FIRST_PERSON;
@@ -190,7 +191,7 @@ public class EditCommandParserTest {
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }
-
+    //author 
     @Test
     public void parse_invalidValueFollowedByValidValue_success() {
         // no other valid values specified
