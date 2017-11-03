@@ -87,7 +87,7 @@ public class DebtRepaymentProgressBar extends UiPart<Region> {
             LocalDate today = LocalDate.now();
             return new SimpleObjectProperty<>(Long.toString(
                     ChronoUnit.DAYS.between(today, deadlineDate)) + " days left to repay debt");
-        } else if (percentage == 1.0){
+        } else if (percentage == 1.0) {
             return new SimpleObjectProperty<>(COMPLETED_REPAYMENT_MESSAGE);
         }
         return new SimpleObjectProperty<>(NO_DEADLINE_REPAYMENT_MESSAGE);
