@@ -21,7 +21,7 @@
                <Insets bottom="2.0" top="5.0" />
             </VBox.margin></Label>
          <Text fx:id="debtRepaymentField" fill="GREY" text="Debt repayment progress" />
-         <StackPane fx:id="progressBarPlaceholder" alignment="CENTER_LEFT" maxHeight="50.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="50.0" prefWidth="200.0">
+         <StackPane fx:id="progressBarPlaceholder" alignment="CENTER_LEFT">
             <VBox.margin>
                <Insets bottom="10.0" />
             </VBox.margin>
