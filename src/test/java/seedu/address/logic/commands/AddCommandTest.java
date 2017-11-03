@@ -103,7 +103,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void resetData(ReadOnlyAddressBook newData) {
+        public void resetData(ReadOnlyAddressBook newData, boolean isUndo) {
             fail("This method should not be called.");
         }
 
