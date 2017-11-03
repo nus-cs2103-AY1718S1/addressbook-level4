@@ -30,7 +30,7 @@ public class AddQuickCommand extends UndoableCommand {
             + PREFIX_BIRTHDAY + "BIRTHDAY "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
-            + PREFIX_REMARK + "REMARK"
+            + PREFIX_REMARK + "REMARK "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "

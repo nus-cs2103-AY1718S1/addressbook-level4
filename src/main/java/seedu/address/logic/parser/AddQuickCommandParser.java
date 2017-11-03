@@ -45,7 +45,6 @@ public class AddQuickCommandParser implements Parser<AddQuickCommand> {
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddQuickCommand.MESSAGE_USAGE));
         }
-        //@@author
 
         try {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
@@ -56,13 +55,14 @@ public class AddQuickCommandParser implements Parser<AddQuickCommand> {
                     getDetails(argMultimap.getValue(PREFIX_EMAIL), PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(
                     getDetails(argMultimap.getValue(PREFIX_ADDRESS), PREFIX_ADDRESS)).get();
-            Remark remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
+            Remark remark = ParserUtil.parseRemark(
+                    getDetails(argMultimap.getValue(PREFIX_REMARK), PREFIX_REMARK)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             ReadOnlyPerson person = new Person(name, phone, birthday, email, address, remark, tagList);
 
-
             return new AddQuickCommand(person);
+            //@@author
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
