@@ -28,7 +28,7 @@ public class StringUtil {
         defaultGravatar.put("geometric", "identicon");
         defaultGravatar.put("monster", "monsterid");
         defaultGravatar.put("face", "wavatar");
-        defaultGravatar.put("retro", "retro;");
+        defaultGravatar.put("retro", "retro");
         defaultGravatar.put("robot", "robohash");
         defaultGravatar.put("blank", "blank");
     }
