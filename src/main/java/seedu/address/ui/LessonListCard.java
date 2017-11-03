@@ -43,8 +43,6 @@ public class LessonListCard extends UiPart<Region> {
 
     private final ImageView star = new ImageView("/images/bookmark.png");
 
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
-
     @FXML
     private HBox cardPane;
     @FXML
