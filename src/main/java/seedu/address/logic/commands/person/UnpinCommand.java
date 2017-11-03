@@ -7,6 +7,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.PersonIsPinnedPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 //@@author Alim95
@@ -49,10 +50,17 @@ public class UnpinCommand extends Command {
 
         try {
             model.unpinPerson(personToUnpin);
+            updatePinnedPanel();
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
         return new CommandResult(String.format(MESSAGE_UNPIN_PERSON_SUCCESS, personToUnpin));
+    }
+
+    private void updatePinnedPanel() {
+        if (model.getFilteredPersonList().size() < model.getAddressBook().getPersonList().size()) {
+            model.updateFilteredPersonList(new PersonIsPinnedPredicate());
+        }
     }
 
     @Override
