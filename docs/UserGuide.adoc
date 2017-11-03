@@ -218,9 +218,9 @@ Deletes the 1st person from the results of the `find` command.
 
 *Suggestion for use:* If you do not want to keep a contact in the contact list.
 
-==== Sorting the person list : `sort`
+==== Sorting the contact list : `sort`
 
-*Description:* Sorts the person list according to the specified _data field_.
+*Description:* Sorts the contact list according to the specified _data field_.
 
 *Format:* `sort` `DATAFIELD`
 
@@ -579,6 +579,17 @@ Allows user to add tag to multiple persons in the address book by specifying the
 
 Format: `addtag friends 1-4`
 
+=== Favourite a person using `favourite` command
+
+Allows user to favourite a person by specifying the person's corresponding index
+
+Format: `favourite 2`
+
+=== Sort the contact list using `sort` command
+
+Allows user to sort the contact list by either name, phone, email or address
+
+Format: `sort address`
 
 
 == *Coming in v2.0*
