@@ -143,7 +143,6 @@ public class CalendarWindow extends UiPart<Region> {
         if (internalList.size() != personList.size()) {
             removeDeleted();
             deepCopy(personList);
-            return;
         }
 
         for (ReadOnlyPerson person : personList) {
