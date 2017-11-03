@@ -35,15 +35,6 @@ public class AddEventCommandTest {
         thrown.expect(NullPointerException.class);
         new AddEventCommand(null);
     }
-    @Test
-    public void execute_duplicateEvent_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicateEventException();
-        Event validEvent = new EventBuilder().build();
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(AddEventCommand.MESSAGE_DUPLICATE_EVENT);
-
-        getAddCommandForEvent(validEvent, modelStub).execute();
-    }
 
     @Test
     public void equals() {

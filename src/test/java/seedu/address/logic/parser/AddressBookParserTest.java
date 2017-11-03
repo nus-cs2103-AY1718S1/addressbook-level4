@@ -54,12 +54,6 @@ public class AddressBookParserTest {
         assertEquals(new AddCommand(person), command);
     }
     //@@author junyango
-    @Test
-    public void parseCommand_addEvent() throws Exception {
-        Event event = new EventBuilder().build();
-        AddEventCommand command = (AddEventCommand) parser.parseCommand(EventUtil.getAddEvent(event));
-        assertEquals(new AddEventCommand(event), command);
-    }
     //@@author
     @Test
     public void parseCommand_clear() throws Exception {
