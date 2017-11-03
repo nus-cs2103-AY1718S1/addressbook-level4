@@ -50,7 +50,9 @@ public class CommandBox extends UiPart<Region> {
     /**
      * Returns the {@code TextField} in the command box (i.e. the user input).
      */
-    protected TextField getCommandTextField() { return commandTextField; }
+    protected TextField getCommandTextField() {
+        return commandTextField;
+    }
 
     //@@author
     /**

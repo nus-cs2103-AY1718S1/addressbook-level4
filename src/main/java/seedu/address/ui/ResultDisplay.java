@@ -53,7 +53,6 @@ public class ResultDisplay extends UiPart<Region> {
 
     /**
      * Updates the information display according to the user input in the command box.
-     * Note that "clearhistory" has been hardcoded as a unique case.
      */
     private void updateInfoDisplay(String oldInput, String newInput) {
         if (lastFoundCommand.isEmpty()
