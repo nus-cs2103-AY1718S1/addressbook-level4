@@ -381,9 +381,9 @@
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
 
-#tags, #tagsBordered {
+#tags, #tagsWithBorder {
     -fx-hgap: 7;
-    -fx-vgap: 3;
+    -fx-vgap: 5;
 }
 
 #tags .label {
@@ -393,7 +393,7 @@
     -fx-font-size: 14px;
 }
 
-#tagsBordered .label {
+#tagsWithBorder .label {
     -fx-font-family: "Segoe UI", Optima;
     -fx-text-fill: derive(gray, 20%);
     -fx-padding: 1 5 1 5;

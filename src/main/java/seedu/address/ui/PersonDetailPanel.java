@@ -43,7 +43,7 @@ public class PersonDetailPanel extends UiPart<Region> {
     @FXML
     private Label remark;
     @FXML
-    private FlowPane tags;
+    private FlowPane tagsWithBorder;
     @FXML
     private ImageView iconPhone;
     @FXML
@@ -67,7 +67,7 @@ public class PersonDetailPanel extends UiPart<Region> {
         address.setText("");
         remark.setText("");
         initial.setText("");
-        tags.getChildren().clear();
+        tagsWithBorder.getChildren().clear();
         avatar.setFill(Color.TRANSPARENT);
         hideIcons();
     }
@@ -106,8 +106,8 @@ public class PersonDetailPanel extends UiPart<Region> {
     }
 
     private void setTags(ReadOnlyPerson person) {
-        tags.getChildren().clear();
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        tagsWithBorder.getChildren().clear();
+        person.getTags().forEach(tag -> tagsWithBorder.getChildren().add(new Label(tag.tagName)));
     }
 
     private void setRemark(ReadOnlyPerson person) {

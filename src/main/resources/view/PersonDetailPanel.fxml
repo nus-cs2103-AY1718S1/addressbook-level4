@@ -36,7 +36,7 @@
                         <VBox spacing="3.0">
                            <children>
                               <Label fx:id="name" alignment="TOP_LEFT" styleClass="person-big-label" text="\$first" wrapText="true" />
-                              <FlowPane id="tagsBordered" fx:id="tags" />
+                              <FlowPane fx:id="tagsWithBorder" />
                            </children>
                            <padding>
                               <Insets bottom="20.0" />
@@ -88,7 +88,7 @@
                               <Insets bottom="20.0" />
                            </padding>
                         </VBox>
-                        <Label id="remarkLabel" fx:id="remark" text="\$remark" wrapText="true" />
+                        <Label fx:id="remark" text="\$remark" wrapText="true" />
                      </children>
                      <padding>
                         <Insets left="30.0" />
