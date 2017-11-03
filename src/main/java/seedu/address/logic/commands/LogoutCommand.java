@@ -17,7 +17,7 @@ public class LogoutCommand extends Command {
     public CommandResult execute() {
         Ui ui = MainApp.getUi();
         try {
-            ui.restart("address");
+            ui.restart("addressbook");
             return new CommandResult(MESSAGE_LOGOUT_ACKNOWLEDGEMENT);
         } catch (Exception e) {
 
