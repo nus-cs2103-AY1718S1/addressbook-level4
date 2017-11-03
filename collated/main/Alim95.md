@@ -338,10 +338,17 @@ public class UnpinCommand extends Command {
 
         try {
             model.unpinPerson(personToUnpin);
+            updatePinnedPanel();
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
         return new CommandResult(String.format(MESSAGE_UNPIN_PERSON_SUCCESS, personToUnpin));
+    }
+
+    private void updatePinnedPanel() {
+        if (model.getFilteredPersonList().size() < model.getAddressBook().getPersonList().size()) {
+            model.updateFilteredPersonList(new PersonIsPinnedPredicate());
+        }
     }
 
     @Override
