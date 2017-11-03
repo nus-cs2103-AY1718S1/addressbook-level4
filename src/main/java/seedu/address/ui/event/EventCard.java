@@ -55,7 +55,6 @@ public class EventCard extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(event.nameProperty()));
         venue.textProperty().bind(Bindings.convert(event.addressProperty()));
         dateTime.textProperty().bind(Bindings.convert(event.timeProperty()));
-        System.out.println("hahaha " + event.getReminders());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
         for (Reminder r : event.getReminders()) {
             LocalDate dateToCompare = LocalDate.parse(r.getEvent().getTime().toString().substring(0, 8), formatter);

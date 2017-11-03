@@ -49,7 +49,6 @@ public class AddressBookTest {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
         assertEquals(Collections.emptyList(), addressBook.getTagList());
         assertEquals(Collections.emptyList(), addressBook.getEventList());
-        assertEquals(Collections.emptyList(), addressBook.getReminderList());
     }
 
     @Test
@@ -202,10 +201,7 @@ public class AddressBookTest {
         public ObservableList<ReadOnlyEvent> getEventList() {
             return events;
         }
-        @Override
-        public ObservableList<ReadOnlyReminder> getReminderList() {
-            return reminders;
-        }
+
         @Override
         public ObservableList<Tag> getTagList() {
             return tags;

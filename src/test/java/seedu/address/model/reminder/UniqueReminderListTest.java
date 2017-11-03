@@ -14,7 +14,7 @@ public class UniqueReminderListTest {
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
         ArrayList<Reminder> reminderList = new ArrayList<>();
-        UniqueReminderList uniqueReminderList = new UniqueReminderList(reminderList);
+        UniqueReminderList uniqueReminderList = new UniqueReminderList();
         thrown.expect(UnsupportedOperationException.class);
         uniqueReminderList.asObservableList().remove(0);
     }

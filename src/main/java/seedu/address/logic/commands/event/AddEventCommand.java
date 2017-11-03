@@ -5,7 +5,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import seedu.address.logic.commands.CommandResult;

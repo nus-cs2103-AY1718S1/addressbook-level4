@@ -7,7 +7,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_COLOR;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_REMINDERS;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -19,15 +18,12 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.property.NameContainsKeywordsPredicate;
-import seedu.address.model.reminder.Reminder;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagColorManager;
 import seedu.address.testutil.AddressBookBuilder;
-import seedu.address.testutil.EventBuilder;
 import seedu.address.testutil.TypicalEvents;
 import seedu.address.testutil.TypicalPersons;
 
@@ -67,12 +63,6 @@ public class ModelManagerTest {
     }
     //@@author
 
-    @Test
-    public void getFilteredReminderList_modifyList_throwsUnsupportedOperationException() {
-        ModelManager modelManager = new ModelManager();
-        thrown.expect(UnsupportedOperationException.class);
-        modelManager.getFilteredReminderList().remove(0);
-    }
     @Test
     public void removeTag_successfullyRemoveTag() throws Exception {
         AddressBook addressBook = getTypicalAddressBook();
@@ -148,39 +138,6 @@ public class ModelManagerTest {
         int newEventListSize = modelManager.getAddressBook().getEventList().size();
         assertEquals(1, newEventListSize - originalEventListSize);
     }
-
-    @Test
-    public void addReminder_successfullyAddReminder() throws Exception {
-        AddressBook addressBook = getTypicalAddressBook();
-        UserPrefs userPrefs = new UserPrefs();
-        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
-        int oldReminderListSize = modelManager.getAddressBook().getReminderList().size();
-        Event newEvent = new Event(new EventBuilder().withName("Sample").withAddress("sample")
-                .withDateTime("25012007 02:30").build());
-        Reminder reminder = new Reminder(newEvent, newEvent.getTime().toString());
-        modelManager.addReminder(reminder);
-        int newReminderListSize = modelManager.getAddressBook().getReminderList().size();
-        assertEquals(1, newReminderListSize - oldReminderListSize);
-    }
-
-    @Test
-    public void removeReminder_successfullyRemoveReminder() throws Exception {
-        AddressBook addressBook = getTypicalAddressBook();
-        UserPrefs userPrefs = new UserPrefs();
-        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
-        Event newEvent = new Event(new EventBuilder().withName("Sample").withAddress("sample")
-                .withDateTime("25012007 02:30").build());
-        Event newEvent1 = new Event(new EventBuilder().withName("Sample2").withAddress("sample2")
-                .withDateTime("25012007 02:30").build());
-        Reminder reminder = new Reminder(newEvent, newEvent.getTime().toString());
-        Reminder reminder1 = new Reminder(newEvent1, newEvent1.getTime().toString());
-        modelManager.addReminder(reminder);
-        modelManager.addReminder(reminder1);
-        int oldReminderListSize = modelManager.getAddressBook().getReminderList().size();
-        modelManager.deleteReminder(modelManager.getFilteredReminderList().get(1));
-        int newReminderListSize = modelManager.getAddressBook().getReminderList().size();
-        assertEquals(1, oldReminderListSize - newReminderListSize);
-    }
     //@@author
 
     @Test
@@ -214,7 +171,6 @@ public class ModelManagerTest {
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         modelManager.updateFilteredEventsList(PREDICATE_SHOW_ALL_EVENTS);
-        modelManager.updateFilteredReminderList(PREDICATE_SHOW_ALL_REMINDERS);
 
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();

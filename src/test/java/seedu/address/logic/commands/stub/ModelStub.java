@@ -107,16 +107,7 @@ public class ModelStub implements Model {
     public void updateFilteredEventsList(Predicate<ReadOnlyEvent> predicate) {
         fail("This method should not be called.");
     }
-    @Override
-    public ObservableList<ReadOnlyReminder> getFilteredReminderList() {
-        fail("This method should not be called.");
-        return null;
-    }
 
-    @Override
-    public void updateFilteredReminderList(Predicate<ReadOnlyReminder> predicate) {
-        fail("This method should not be called.");
-    }
     @Override
     public void removeTag(Tag tags) throws DuplicatePersonException, PersonNotFoundException {
         fail("This method should not be called.");

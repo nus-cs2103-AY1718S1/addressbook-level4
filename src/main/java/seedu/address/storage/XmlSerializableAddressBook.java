@@ -16,7 +16,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
-import seedu.address.model.reminder.ReadOnlyReminder;
 import seedu.address.model.tag.Tag;
 
 /**
