@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static javafx.scene.paint.Color.TRANSPARENT;
+
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -9,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import seedu.address.commons.core.LogsCenter;
@@ -68,7 +69,7 @@ public class PersonDetailPanel extends UiPart<Region> {
         remark.setText("");
         initial.setText("");
         tagsWithBorder.getChildren().clear();
-        avatar.setFill(Color.TRANSPARENT);
+        avatar.setFill(TRANSPARENT);
         hideIcons();
     }
 
