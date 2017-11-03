@@ -10,12 +10,14 @@ public class Id {
 
     public static final String MESSAGE_NAME_CONSTRAINTS =
             "Person id can take any values";
-
+    public static final String EMPTY_ID = "";
 
     private String value;
 
     public Id(String value) {
-        requireNonNull(value);
+        if (value == null) {
+            value = EMPTY_ID;
+        }
         this.value = value;
     }
 

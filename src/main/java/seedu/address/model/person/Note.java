@@ -10,11 +10,14 @@ public class Note {
 
     public static final String MESSAGE_NAME_CONSTRAINTS =
             "Person notes can take any values";
+    public static final String EMPTY_NOTE = "";
 
     private final String value;
 
     public Note(String value) {
-        requireNonNull(value);
+        if (value == null) {
+            value = EMPTY_NOTE;
+        }
         this.value = value;
     }
 

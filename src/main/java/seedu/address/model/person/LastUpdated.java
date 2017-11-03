@@ -19,7 +19,9 @@ public class LastUpdated {
     private String value;
 
     public LastUpdated(String value) throws IllegalValueException {
-        requireNonNull(value);
+        if (value == null) {
+            throw new IllegalValueException(MESSAGE_LASTUPDATED_CONSTRAINTS);
+        }
         if (!isValidLastUpdated(value)) {
             throw new IllegalValueException(MESSAGE_LASTUPDATED_CONSTRAINTS);
         }
