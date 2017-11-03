@@ -3433,7 +3433,7 @@ is being used to size a border should also be in pixels.
  * Custom Styling                                                              *
  *                                                                             *
  ******************************************************************************/
- /* @@author Choony93-reused */
+ /* @@author Choony93reused */
 .list-cell:filled:even {
     -fx-background-color: #bbffff;
 }
