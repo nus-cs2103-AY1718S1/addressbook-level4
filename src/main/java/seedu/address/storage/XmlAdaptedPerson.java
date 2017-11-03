@@ -23,7 +23,7 @@ import seedu.address.model.tag.Tag;
 /**
  * JAXB-friendly version of the Person.
  */
-public class XmlAdaptedPerson {
+public class XmlAdaptedPerson implements XmlAdaptedClass<ReadOnlyPerson> {
 
     @XmlElement(required = true)
     private String name;
