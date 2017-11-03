@@ -293,6 +293,12 @@ Format: `clear`
 Edits the user preference. +
 Format: `pref [KEY] [NEW_VALUE]` +
 If  `NEW_VALUE` is blank, the current preference will be displayed. +
+
+[NOTE]
+====
+Preference changes will take effect after restarting the address book.
+====
+
 [NOTE]
 ====
 See <<#pref-list, Appendix>> for the list of editable preferences.
