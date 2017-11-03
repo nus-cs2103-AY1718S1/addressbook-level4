@@ -1,9 +1,7 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
-import static seedu.address.testutil.EventsUtil.postNow;
 
 import org.graphstream.graph.implementations.SingleGraph;
 import org.junit.Before;
@@ -18,6 +16,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.graph.GraphWrapper;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author joanneong
 public class GraphDisplayTest extends GuiUnitTest {
 
     private static final SingleGraph NEW_GRAPH_STUB = new SingleGraph("");
@@ -41,12 +40,7 @@ public class GraphDisplayTest extends GuiUnitTest {
         guiRobot.pauseForHuman();
         assertEquals(null, graphDisplayHandle.getContent());
 
-        // if a graph is initialised, then the SwingNode should display the corresponding JComponent
-        // unfortunately, a more rigorous check for the graph in the node cannot be done because the viewer
-        // has been up-casted into a JComponent.
-        postNow(NEW_GRAPH_INITIALISED_STUB);
-        guiRobot.pauseForHuman();
-        assertNotNull(graphDisplayHandle.getContent());
+        // TODO: add tests to check SwingNode content
     }
 
     /**
