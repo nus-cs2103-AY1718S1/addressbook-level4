@@ -19,7 +19,7 @@ public class FilterCommand extends Command {
             + "Example: " + COMMAND_WORD + " alice bob charlie";
 
     //@@author hansiang93
-    public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {tag}";
+    public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {keyword}";
     //@@author
 
     private final FilterKeywordsPredicate predicate;
