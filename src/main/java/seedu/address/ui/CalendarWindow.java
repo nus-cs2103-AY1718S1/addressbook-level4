@@ -106,10 +106,10 @@ public class CalendarWindow extends UiPart<Region> {
     //@@author
 
     /**
-     * When user press shift, the calendar will shift to the next view
+     * When user press c, the calendar will shift to the next view
      * Order of shifting: day -> week -> month -> year
      */
-    void showNextPage() {
+    public void showNextPage() {
         if (calendarView.getSelectedPage() == calendarView.getMonthPage()) {
             calendarView.showYearPage();
         } else if (calendarView.getSelectedPage() == calendarView.getDayPage()) {
