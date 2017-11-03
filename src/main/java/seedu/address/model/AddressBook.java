@@ -208,7 +208,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //@@author limcel
     public ObservableList<Schedule> getScheduleList() {
-        System.out.println(schedules.asObservableList());
+        System.out.println(changeToAppropriateUiFormat(schedules.asObservableList().toString()));
         return schedules.asObservableList();
     }
     //@@author
@@ -232,4 +232,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asObservableListSortedByName();
     }
     //@@author
+
+    /**
+     * Converts the schedule list output by replacing all occurrence of "," with "\n" for better UI visualisation.
+     */
+    public static String changeToAppropriateUiFormat(String value) {
+
+        value = value.replace(",", "\n");
+        return value;
+    }
 }
