@@ -15,6 +15,7 @@
 
   <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
     <Menu mnemonicParsing="false" text="File">
+        <!-- @@author Choony93 -->
         <MenuItem mnemonicParsing="false" text="Import Addressbook (TDB)"/>
         <MenuItem mnemonicParsing="false" text="Export Addressbook (TDB)"/>
         <Menu text="Themes">
@@ -28,6 +29,7 @@
                 <MenuItem text="Yellow On Black" onAction="#handleThemeModenaYoB" userData="6"/>
             </Menu>
         </Menu>
+        <!-- @@author -->
       <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
     </Menu>
     <Menu mnemonicParsing="false" text="Help">

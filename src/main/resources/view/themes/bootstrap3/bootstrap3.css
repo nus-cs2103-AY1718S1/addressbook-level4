@@ -935,7 +935,7 @@ VBox > .split-menu-button.last > .arrow-button {
  * Custom Styling                                                              *
  *                                                                             *
  ******************************************************************************/
-
+ /* @@author Choony93reused */
 .list-cell:filled:even {
     -fx-background-color: #f6ffff;
 }
@@ -952,3 +952,4 @@ VBox > .split-menu-button.last > .arrow-button {
     -fx-background-color: #bbffff;
 	-fx-text-fill: black;
 }
+/* @@author */

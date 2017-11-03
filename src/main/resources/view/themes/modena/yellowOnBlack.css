@@ -645,7 +645,7 @@
  * Custom Styling                                                              *
  *                                                                             *
  ******************************************************************************/
-
+ /* @@author Choony93reused */
 .list-cell:filled:even {
     -fx-background-color: #333300;
 }
@@ -666,3 +666,4 @@
     /* Empty cells will not have alternating colours */
     -fx-background: black;
 }
+ /* @@author */

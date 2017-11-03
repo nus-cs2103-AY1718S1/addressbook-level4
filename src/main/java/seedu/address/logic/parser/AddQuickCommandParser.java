@@ -39,13 +39,12 @@ public class AddQuickCommandParser implements Parser<AddQuickCommand> {
     public AddQuickCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_BIRTHDAY,
-                        PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+                        PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_REMARK, PREFIX_TAG);
 
         //@@author aver0214
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddQuickCommand.MESSAGE_USAGE));
         }
-        //@@author
 
         try {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
@@ -56,14 +55,14 @@ public class AddQuickCommandParser implements Parser<AddQuickCommand> {
                     getDetails(argMultimap.getValue(PREFIX_EMAIL), PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(
                     getDetails(argMultimap.getValue(PREFIX_ADDRESS), PREFIX_ADDRESS)).get();
-            Remark remark = new Remark("No remark");
+            Remark remark = ParserUtil.parseRemark(
+                    getDetails(argMultimap.getValue(PREFIX_REMARK), PREFIX_REMARK)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-
 
             ReadOnlyPerson person = new Person(name, phone, birthday, email, address, remark, tagList);
 
-
             return new AddQuickCommand(person);
+            //@@author
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

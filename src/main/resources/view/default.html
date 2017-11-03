@@ -4,6 +4,8 @@
 	<link rel="stylesheet" href="themes\darktheme\DarkTheme.css">
 	<script language="javascript">
 
+    <!-- @@author Choony93 -->
+    <!-- On page load, extract selected theme from parameter in the URL and edit respective css file -->
 		window.onload = function(e){
 			var theme  = getParameterByName('theme');
 			if (theme) {
@@ -17,7 +19,7 @@
 				document.getElementsByTagName("head").item(0).replaceChild(newlink, oldlink);
 			}
 		}
-
+	<!-- @@author -->
 		<!-- Disclaimer: This function was sourced online. -->
 		function getParameterByName(name, url) {
 			if (!url) url = window.location.href;

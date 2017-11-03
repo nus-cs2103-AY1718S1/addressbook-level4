@@ -17,6 +17,7 @@ import seedu.address.logic.commands.FindSpecificCommand;
 import seedu.address.logic.commands.GmapCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
@@ -77,11 +78,16 @@ public class AddressBookParser {
             return new FindSpecificCommandParser().parse(arguments);
         //@@author
 
+        //@@author Choony93
         case GmapCommand.COMMAND_WORD:
             return new GmapCommandParser().parse(arguments);
 
         case ThemeCommand.COMMAND_WORD:
             return new ThemeCommandParser().parse(arguments);
+
+        case ImportCommand.COMMAND_WORD:
+            return new ImportCommandParser().parse(arguments);
+        //@@author
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
