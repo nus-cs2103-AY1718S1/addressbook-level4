@@ -19,7 +19,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 /**
  * Command to add appointment to a person in addressBook
  */
-public class AddAppointmentCommand extends Command {
+public class AddAppointmentCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "appointment";
     public static final String COMMAND_ALIAS = "appt";
@@ -42,24 +42,28 @@ public class AddAppointmentCommand extends Command {
     private final Calendar endDate;
 
 
+    //For sorting
     public AddAppointmentCommand() {
         date = null;
         index = null;
         endDate = null;
     }
 
+    //For offing appointment
     public AddAppointmentCommand(Index index) {
         this.index = index;
         this.date = null;
         endDate = null;
     }
 
+    //For setting 1 hour appointment
     public AddAppointmentCommand(Index index, Calendar date) {
         this.index = index;
         this.date = date;
         this.endDate = null;
     }
 
+    //For normal appointments
     public AddAppointmentCommand(Index index, Calendar date, Calendar endDate) {
         this.index = index;
         this.date = date;
@@ -67,9 +71,7 @@ public class AddAppointmentCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
-
-
+    protected CommandResult executeUndoableCommand() throws CommandException {
         if (date == null && index == null) {
             model.listAppointment();
             return new CommandResult("Rearranged contacts to show upcoming appointments.");
@@ -110,6 +112,7 @@ public class AddAppointmentCommand extends Command {
         return new CommandResult(MESSAGE_SUCCESS + "Meet " +  appointment.getPersonName()
                 + " on "
                 +  appointment.getDate().toString());
+
     }
 
     /**
