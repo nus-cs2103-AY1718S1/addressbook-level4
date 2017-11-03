@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.events.model.AddressBookImportEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -148,10 +149,17 @@ public class AddQuickCommandTest {
         }
 
         @Override
-        public void sortImportantTag () throws PersonNotFoundException, DuplicatePersonException { }
+        public void sortImportantTag() throws PersonNotFoundException, DuplicatePersonException {
+        }
 
         @Override
-        public void sortAllPersons () throws DuplicatePersonException { }
+        public void sortAllPersons() throws DuplicatePersonException {
+        }
+
+        @Override
+        public void handleAddressBookImportEvent(AddressBookImportEvent abce) {
+            fail("This method should not be called.");
+        }
     }
 
     /**
@@ -169,7 +177,7 @@ public class AddQuickCommandTest {
         }
 
         @Override
-        public void sortImportantTag () throws PersonNotFoundException, DuplicatePersonException {
+        public void sortImportantTag() throws PersonNotFoundException, DuplicatePersonException {
             throw new DuplicatePersonException();
         }
     }
