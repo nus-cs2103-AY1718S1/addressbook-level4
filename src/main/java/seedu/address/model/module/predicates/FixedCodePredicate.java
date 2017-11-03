@@ -18,11 +18,7 @@ public class FixedCodePredicate implements Predicate<ReadOnlyLesson> {
 
     @Override
     public boolean test(ReadOnlyLesson lesson) {
-        if (lesson.getCode().equals(codeTotest)) {
-            return true;
-        } else {
-            return false;
-        }
+        return lesson.getCode().equals(codeTotest);
     }
 
     @Override
