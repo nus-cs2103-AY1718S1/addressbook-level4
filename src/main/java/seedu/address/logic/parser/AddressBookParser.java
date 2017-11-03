@@ -78,7 +78,7 @@ public class AddressBookParser {
             return new FindSpecificCommandParser().parse(arguments);
         //@@author
 
-            //@@author Choony93
+        //@@author Choony93
         case GmapCommand.COMMAND_WORD:
             return new GmapCommandParser().parse(arguments);
 
@@ -87,7 +87,7 @@ public class AddressBookParser {
 
         case ImportCommand.COMMAND_WORD:
             return new ImportCommandParser().parse(arguments);
-            //@@author
+        //@@author
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
