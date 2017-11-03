@@ -13,11 +13,14 @@ import static seedu.address.model.person.Bloodtype.NON_COMPULSORY_BLOODTYPE;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import com.joestelmach.natty.DateGroup;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
@@ -69,19 +72,28 @@ public class AddCommandParser implements Parser<AddCommand> {
                     ? new Remark("") : ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
             //@@author
 
-            Optional<Date> date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE));
+            List<DateGroup> groups = AddAppointmentParser.getDatesFromString(
+                    argMultimap.getValue(PREFIX_DATE).toString());
+            Calendar calendar = Calendar.getInstance();
             Appointment appointment;
-            if (date.isPresent()) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(date.get());
-                appointment = new Appointment(name.toString(), calendar);
-            } else {
-                appointment = new Appointment(name.toString());
+            if (groups.size() == 0) {
+                throw new ParseException("Please be more specific with your appointment time");
             }
+            //If there is a start and end time that is parsed
+            if (groups.get(0).getDates().size() == 2) {
+                calendar.setTime(groups.get(0).getDates().get(0));
+                Calendar calendarEnd = Calendar.getInstance();
+                calendarEnd.setTime(groups.get(0).getDates().get(1));
+                appointment = new Appointment(name.toString(), calendar, calendarEnd);
+            } else {
+                calendar.setTime(groups.get(0).getDates().get(0));
+                appointment = new Appointment(name.toString(), calendar);
+            }
+
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             ReadOnlyPerson person = new Person(name, phone, email, address, bloodType, tagList, remark, appointment);
             return new AddCommand(person);
-        } catch (IllegalValueException | java.text.ParseException ive) {
+        } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
     }

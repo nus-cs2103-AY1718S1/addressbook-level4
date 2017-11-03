@@ -46,8 +46,7 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
             if ("d/off".equals(args[2])) {
                 return new AddAppointmentCommand(index);
             }
-            com.joestelmach.natty.Parser parser = new com.joestelmach.natty.Parser();
-            List<DateGroup> groups = parser.parse(argumentMultimap.getValue(PREFIX_DATE).get());
+            List<DateGroup> groups = getDatesFromString(argumentMultimap.getValue(PREFIX_DATE).get());
             Calendar calendar = Calendar.getInstance();
             if (groups.size() == 0) {
                 throw new ParseException("Please be more specific with your appointment time");
@@ -73,5 +72,13 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+    /**
+     * Natty parser that takes in a string and returns a list of Groupdates
+     */
+    public static List<DateGroup> getDatesFromString(String str) {
+        com.joestelmach.natty.Parser parser = new com.joestelmach.natty.Parser();
+        return parser.parse(str);
     }
 }
