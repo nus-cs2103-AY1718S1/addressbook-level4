@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
 //@@author derrickchua
 /**
  * Represents a Person's note in the address book.
