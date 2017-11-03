@@ -60,7 +60,7 @@ public class UniquePropertyMap implements Iterable<Property> {
      * Returns all properties (collection of values in all entries) in this map as a sorted list based on the full
      * name of each property. This list is mutable but change-insulated against the internal map.
      */
-    public List<Property> toList() {
+    public List<Property> toSortedList() {
         List<Property> list = new ArrayList<>(internalMap.values());
         list.sort(Comparator.comparing(Property::getFullName));
         return list;

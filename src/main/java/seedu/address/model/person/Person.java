@@ -179,7 +179,7 @@ public class Person implements ReadOnlyPerson {
 
     @Override
     public List<Property> getSortedProperties() {
-        return Collections.unmodifiableList(properties().get().toList());
+        return Collections.unmodifiableList(properties().get().toSortedList());
     }
 
 
