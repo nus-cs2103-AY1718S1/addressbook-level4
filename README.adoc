@@ -22,10 +22,12 @@ endif::[]
 ** Quicker adding as only name and phone number are compulsory fields.
 ** Able to find person(s) with other details (phone numbers, emails, tags).
 ** Additional options for delete and google map on each person.
-** Different themes for users to choose
+** Different themes for users to choose.
 ** Able to add additional details (birthday and remark) to a person.
-** Supports sorting of Persons.
+** Supports sorting of persons.
 ** Auto generated persistent coloured tags.
+** Able to import other XML addressbook.
+** Can attach a photo to each person in addressbook.
 
 == Site Map
 
