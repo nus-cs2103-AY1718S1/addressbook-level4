@@ -20,6 +20,7 @@ public class ExportCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports contacts into a .vcf file.";
     public static final String MESSAGE_WRONG_FILE_TYPE = "Export only exports .vcf and .xml file.";
     public static final String MESSAGE_FILE_NOT_FOUND = "File was not found in specified directory.";
+    public static final String MESSAGE_EMPTY_BOOK = "No contacts found in Rubrika to export.";
 
     public static final String MESSAGE_SUCCESS = "Successfully exported contacts.";
     public final String filePath;
@@ -32,20 +33,20 @@ public class ExportCommand extends Command {
     public CommandResult execute() throws CommandException {
         File export = new File(filePath);
         ReadOnlyAddressBook addressBook = model.getAddressBook();
-        if (export.getName().endsWith(".xml")) {
-            XmlSerializableAddressBook xmlAddressBook = new XmlSerializableAddressBook(addressBook);
-            try {
+
+        if (addressBook.getPersonList().isEmpty()) {
+            throw new CommandException(MESSAGE_EMPTY_BOOK);
+        }
+        try {
+            if (export.getName().endsWith(".xml")) {
+                XmlSerializableAddressBook xmlAddressBook = new XmlSerializableAddressBook(addressBook);
                 export.createNewFile();
                 XmlFileStorage.saveDataToFile(export, xmlAddressBook);
-            } catch (IOException ioe) {
-                throw new CommandException(MESSAGE_FILE_NOT_FOUND);
-            }
-        } else if (export.getName().endsWith(".vcf")) {
-            try {
+            } else if (export.getName().endsWith(".vcf")) {
                 VcfExport.saveDataToFile(export, addressBook.getPersonList());
-            } catch (IOException ioe) {
-                throw new CommandException(MESSAGE_FILE_NOT_FOUND);
             }
+        } catch (IOException ioe) {
+            throw new CommandException(MESSAGE_FILE_NOT_FOUND);
         }
         return new CommandResult(MESSAGE_SUCCESS);
     }
