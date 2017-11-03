@@ -360,6 +360,10 @@
     -fx-text-fill: #f70d1a;
 }
 
+#resultDisplay {
+    -fx-prompt-text-fill: gray;
+}
+
 #resultDisplay .content {
     -fx-background-color: transparent, #ffffff, transparent, #ffffff;
     -fx-background-radius: 0;
