@@ -26,8 +26,7 @@ public class StringUtil {
         String preppedWord = word.trim();
         checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
         checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
-
-        String preppedSentence = sentence;
+        String preppedSentence = sentence.trim();
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
         for (String wordInSentence : wordsInPreppedSentence) {
@@ -160,7 +159,6 @@ public class DeleteTagCommandParser implements Parser<DeleteTagCommand> {
                 && webLinks.contains("") ? Collections.emptySet() : webLinks;
         return Optional.of(ParserUtil.parseWebLink(webLinkSet));
     }
-}
 ```
 ###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
@@ -214,15 +212,16 @@ public class DeleteTagCommandParser implements Parser<DeleteTagCommand> {
 
 }
 ```
-###### \java\seedu\address\model\person\NameContainsKeywordsPredicate.java
+###### \java\seedu\address\model\person\ContainsKeywordsPredicate.java
 ``` java
 /**
- * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
+ * Tests that a {@code ReadOnlyPerson}'s {@code Name}, Phone, Address, Email, Tag, WebLink,
+ * matches any of the keywords given.
  */
-public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+public class ContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
 
-    public NameContainsKeywordsPredicate(List<String> keywords) {
+    public ContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
@@ -248,7 +247,6 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
             -> StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword));
     }
 
-
     private boolean containsKeyWordInTag(ReadOnlyPerson person) {
         return person.getTags().stream().anyMatch(s -> keywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(s.toStringFilter(), keyword)));
@@ -267,8 +265,39 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof NameContainsKeywordsPredicate // instanceof handles nulls
-                && this.keywords.equals(((NameContainsKeywordsPredicate) other).keywords)); // state check
+                || (other instanceof ContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((ContainsKeywordsPredicate) other).keywords)); // state check
+    }
+
+}
+```
+###### \java\seedu\address\model\person\FilterKeywordsPredicate.java
+``` java
+/**
+ * Tests that a {@code ReadOnlyPerson}'s {@code Name, Phone Address, email, tag or weblink}
+ * matches all of the keywords given.
+ */
+public class FilterKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+    private final List<String> keywords;
+
+    public FilterKeywordsPredicate(List<String> keywords) {
+        this.keywords = keywords;
+    }
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+
+        String combinedReferenceList = person.getAsOneString();
+
+        return !keywords.isEmpty() && keywords.stream().allMatch(keyword
+            -> StringUtil.containsWordIgnoreCase(combinedReferenceList, keyword));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FilterKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((FilterKeywordsPredicate) other).keywords)); // state check
     }
 
 }
@@ -299,6 +328,30 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
             }
         }
         return outputWebLinkList;
+    }
+
+```
+###### \java\seedu\address\model\person\ReadOnlyPerson.java
+``` java
+    /**
+     * Formats the person as text, showing all contact details, without any additional text or descriptions.
+     */
+    default String getAsOneString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName())
+                .append(" ")
+                .append(getPhone())
+                .append(" ")
+                .append(getEmail())
+                .append(" ")
+                .append(getAddress())
+                .append(" ")
+                .append(getRemark())
+                .append(" ");
+        getTags().forEach(builder::append);
+        builder.append(" ");
+        getWebLinks().forEach(builder::append);
+        return builder.toString();
     }
 
 ```

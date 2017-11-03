@@ -40,6 +40,82 @@ public class RemarkCommand extends UndoableCommand {
             + PREFIX_REMARK + "likes dogs.";
 
 ```
+###### \java\seedu\address\logic\commands\RemarkCommand.java
+``` java
+    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Remark: %2$s";
+    public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added remark to Person: %1$s";
+    public static final String MESSAGE_DELETE_REMARK_SUCCESS = "Removed remark to Person: %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+
+    private final Index index;
+    private final Remark remark;
+
+    /**
+     * @param index  of the person in the filtered person list to edit the remark
+     * @param remark of the person
+     */
+    public RemarkCommand(Index index, Remark remark) {
+        requireNonNull(index);
+        requireNonNull(remark);
+
+        this.index = index;
+        this.remark = remark;
+    }
+
+    @Override
+    public final CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+        Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                personToEdit.getAddress(), remark, personToEdit.getTags(), personToEdit.getWebLinks());
+
+        try {
+            model.updatePerson(personToEdit, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        return new CommandResult(generateSuccessMessage(editedPerson));
+    }
+
+    /**
+     * Returns command success message
+     */
+
+    private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
+        if (!remark.value.isEmpty()) {
+            return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
+        } else {
+            return String.format(MESSAGE_DELETE_REMARK_SUCCESS, personToEdit);
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceOf handles nulls
+        if (!(other instanceof RemarkCommand)) {
+            return false;
+        }
+
+        // state check
+        RemarkCommand e = (RemarkCommand) other;
+        return index.equals(e.index) && remark.equals(e.remark);
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\SortCommand.java
 ``` java
 /**
@@ -60,6 +136,42 @@ public class SortCommand extends Command {
             + " [name/email/phone/address/tag]\n"
             + "Example: " + COMMAND_WORD + " name";
 
+```
+###### \java\seedu\address\logic\commands\SortCommand.java
+``` java
+    public static final String MESSAGE_SUCCESS = "Sorted successfully by %1$s, Listed all persons.";
+
+    private String filterType;
+
+    public SortCommand (String filterType) {
+        // Filter type can be null to signify default listing
+        // Todo: Allow sort to accept different parameters for filter types (eg. First Name, Last Name)
+        this.filterType = filterType;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        model.sortFilteredPersonList(filterType);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, filterType));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceOf handles nulls
+        if (!(other instanceof SortCommand)) {
+            return false;
+        }
+
+        // state check
+        SortCommand e = (SortCommand) other;
+        return filterType.equals(e.filterType);
+    }
+}
 ```
 ###### \java\seedu\address\logic\commands\UpdateUserCommand.java
 ``` java
@@ -84,6 +196,53 @@ public class UpdateUserCommand extends Command {
             + PREFIX_EMAIL + "johndoe@example.com";
 
 ```
+###### \java\seedu\address\logic\commands\UpdateUserCommand.java
+``` java
+    public static final String MESSAGE_UPDATE_USER_SUCCESS = "Successfully edited User Profile: %1s";
+    public static final String MESSAGE_NOT_UPDATED = "At least one field to update must be provided.";
+    public static final String MESSAGE_TAGS_NOT_ALLOWED = "Unable to edit your own tags";
+
+
+    private final EditPersonDescriptor editPersonDescriptor;
+
+    public UpdateUserCommand (EditPersonDescriptor editPersonDescriptor) {
+        requireNonNull(editPersonDescriptor);
+        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+    }
+
+    public EditPersonDescriptor getEditPersonDescriptor() {
+        return editPersonDescriptor;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        ReadOnlyPerson personToEdit = model.getUserPerson();
+        Person editedPerson = EditCommand.createEditedPerson(personToEdit, editPersonDescriptor);
+
+        model.updateUserPerson(editedPerson);
+
+        return new CommandResult(String.format(MESSAGE_UPDATE_USER_SUCCESS, editedPerson));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof UpdateUserCommand)) {
+            return false;
+        }
+
+        // state check
+        UpdateUserCommand updateUserCommand = (UpdateUserCommand) other;
+        return editPersonDescriptor.equals(updateUserCommand.getEditPersonDescriptor());
+    }
+}
+```
 ###### \java\seedu\address\logic\Logic.java
 ``` java
     /** Returns the userPerson */
@@ -103,29 +262,6 @@ public class UpdateUserCommand extends Command {
         case SortCommand.COMMAND_ALIAS:
             return new SortCommandParser().parse(arguments);
 
-        case HistoryCommand.COMMAND_WORD:
-        case HistoryCommand.COMMAND_ALIAS:
-            return new HistoryCommand();
-
-        case ExitCommand.COMMAND_WORD:
-            return new ExitCommand();
-
-        case HelpCommand.COMMAND_WORD:
-        case HelpCommand.COMMAND_ALIAS:
-            return new HelpCommand();
-
-        case UndoCommand.COMMAND_WORD:
-        case UndoCommand.COMMAND_ALIAS:
-            return new UndoCommand();
-
-        case RedoCommand.COMMAND_WORD:
-        case RedoCommand.COMMAND_ALIAS:
-            return new RedoCommand();
-
-        case DeleteTagCommand.COMMAND_WORD:
-        case DeleteTagCommand.COMMAND_ALIAS:
-            return new DeleteTagCommandParser().parse(arguments);
-
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
@@ -133,9 +269,6 @@ public class UpdateUserCommand extends Command {
         case RemarkCommand.COMMAND_ALIAS:
             return new RemarkCommandParser().parse(arguments);
 
-```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
-``` java
         case UpdateUserCommand.COMMAND_WORD:
         case UpdateUserCommand.COMMAND_ALIAS:
             return new UpdateUserCommandParser().parse(arguments);
@@ -409,8 +542,6 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
      * @param editedPerson
      */
     void updateUserPerson(ReadOnlyPerson editedPerson);
-
-}
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java

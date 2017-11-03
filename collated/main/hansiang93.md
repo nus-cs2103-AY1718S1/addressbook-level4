@@ -60,7 +60,8 @@ public class FilterCommand extends Command {
     public static final String COMMAND_WORD = "filter";
     public static final String COMMAND_ALIAS = "ft";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names, "
+            + "phone, address, email, tag or weblink contain all of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " alice bob charlie";
@@ -68,7 +69,7 @@ public class FilterCommand extends Command {
 ```
 ###### \java\seedu\address\logic\commands\FilterCommand.java
 ``` java
-    public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {tag}";
+    public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {keyword}";
 ```
 ###### \java\seedu\address\logic\commands\FindCommand.java
 ``` java
@@ -79,6 +80,7 @@ public class FilterCommand extends Command {
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " "
             + "{Index} "
             + PREFIX_REMARK + "{Remark}";
+
 ```
 ###### \java\seedu\address\logic\commands\SelectCommand.java
 ``` java
@@ -87,6 +89,7 @@ public class FilterCommand extends Command {
 ###### \java\seedu\address\logic\commands\SortCommand.java
 ``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {[name/email/phone/address/tag]}";
+
 ```
 ###### \java\seedu\address\logic\commands\UpdateUserCommand.java
 ``` java
@@ -96,6 +99,7 @@ public class FilterCommand extends Command {
             + PREFIX_EMAIL + "{EMAIL} "
             + PREFIX_ADDRESS + "{ADDRESS} "
             + PREFIX_WEB_LINK + "{WEBLINK} ";
+
 ```
 ###### \java\seedu\address\logic\commands\WebCommand.java
 ``` java
@@ -157,7 +161,7 @@ public class FilterCommandParser implements Parser<FilterCommand> {
 
         String[] tagKeywords = trimmedArgs.split("\\s+");
 
-        return new FilterCommand(new TagContainsKeywordsPredicate(Arrays.asList(tagKeywords)));
+        return new FilterCommand(new FilterKeywordsPredicate(Arrays.asList(tagKeywords)));
     }
 
 }
