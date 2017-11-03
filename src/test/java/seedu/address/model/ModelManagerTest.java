@@ -23,7 +23,6 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.property.NameContainsKeywordsPredicate;
-import seedu.address.model.reminder.ReadOnlyReminder;
 import seedu.address.model.reminder.Reminder;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagColorManager;
@@ -124,19 +123,6 @@ public class ModelManagerTest {
         int newEventListSize = modelManager.getAddressBook().getEventList().size();
         assertEquals(1, newEventListSize - originalEventListSize);
     }
-    @Test
-    public void addEvent_successfullyAddReminder() throws Exception {
-        AddressBook addressBook = getTypicalAddressBook();
-        UserPrefs userPrefs = new UserPrefs();
-        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
-        ObservableList<ReadOnlyEvent> events = modelManager.getAddressBook().getEventList();
-        ObservableList<ReadOnlyReminder> reminders = modelManager.getAddressBook().getReminderList();
-        int originalReminderListSize = reminders.size();
-        modelManager.addEvent(TypicalEvents.EVENT1);
-        int newReminderListSize = modelManager.getAddressBook().getReminderList().size();
-        assertEquals(1, newReminderListSize);
-    }
-
     @Test
     public void removePerson_successfullyRemoveEvent() throws Exception {
         AddressBook addressBook = getTypicalAddressBook();
