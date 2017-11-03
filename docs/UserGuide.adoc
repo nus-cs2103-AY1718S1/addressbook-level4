@@ -66,6 +66,15 @@ image::Ui_short_error.PNG[width="790"]
 
 Format: `help`
 
+=== Adding a event: `addEvent`
+
+Adds a person to the resident book +
+Format: `addEvent ti/TITLE des/DESCRIPTION l/LOCATION tme/DATETIME`
+
+Examples:
+
+* addevent ti/End of Sem Dinner des/Organised by USC l/Cinnamon College tme/25/11/17 2030
+
 === Adding a person: `add`
 
 Adds a person to the resident book +
