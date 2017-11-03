@@ -154,9 +154,9 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `GraphDisplay` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The `UI` component uses JavaFx UI framework. Additionally, the graph display also involves the dynamic graph library GraphStream. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
 The `UI` component,
 
@@ -887,21 +887,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |add link:#confidence-estimate[confidence estimate] to a person's attributes |differentiate between verified and unverified pieces of information
 
-|`* *` |user |add remarks about a relationship between people |record detailed information about the relationship between two people
+|`*` |user |add remarks about a relationship between people |record detailed information about the relationship between two people
 
-|`* *` |user with many persons in the address book |add profile pictures to each person |distinguish between people with the same name
+|`*` |user with many persons in the address book |add profile pictures to each person |distinguish between people with the same name
 
 4+| Read operations
 
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |see the people a person is related to |find people related to a person
-
 |`* * *` |user |see the network of relationships between people |visualise connections and groups in the network
 
-|`* *` |user |display relationships only above a certain link:#confidence-estimate[confidence estimate] |find a more confident way to know a person
-
 |`* *` |user |see the history of commands I have typed |keep track of what I have done to my address book
+
+|`*` |user |see the people a person is related to |find people related to a person
+
+|`*` |user |display relationships only above a certain link:#confidence-estimate[confidence estimate] |find a more confident way to know a person
 
 4+| Find operations
 
@@ -913,7 +913,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |find a person by email |locate people who may share the same emails / domains (working for same company)
 
-|`* *` |user |find shortest relationship distance between two people |find the most efficient way to know a person
+|`*` |user |find shortest relationship distance between two people |find the most efficient way to know a person
 
 4+| Update operations
 
@@ -921,9 +921,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |update a person's details |update a person's details without having to create a new contact
 
-|`* *` |user |update the link:#confidence-estimate[confidence estimate] on a person's attributes |update confidence in pieces of information
+|`*` |user |update the link:#confidence-estimate[confidence estimate] on a person's attributes |update confidence in pieces of information
 
-|`* *` |user |change the colour of the network |personalise my address book
+|`*` |user |change the colour of the network |personalise my address book
 
 4+| Delete operations
 
@@ -933,9 +933,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete all persons |reset my address book easily
 
-|`* * *` |cautious user |clear my history |hide my previous commands from later users
+|`* *` |cautious user |clear my history |hide my previous commands from later users
 
-|`* *` |user |remove link:#confidence-estimate[confidence estimate] from a person's attributes |remove unneeded confidence estimates
+|`*` |user |remove link:#confidence-estimate[confidence estimate] from a person's attributes |remove unneeded confidence estimates
 
 4+| Other operations
 
@@ -943,20 +943,14 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |careless user | redo the last command that I made | undo my 'undo'
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
-
-|`* *` |user with many persons in the address book |hide details by default, and only show full details when I select a particular contact |have a less-cluttered address book
-
-|`* *` |user |set a password for my address book |keep my address book private
-
-|`* *` |user |share my address book with other people |
-
-|`* *` |user |have the program autocorrect my commands |input information correctly
-
 |`* *` |advanced user |type shorter link:#command-alias[command aliases] |do operations faster
-|=======================================================================
 
-{More to be added}
+|`*` |user |set a password for my address book |keep my address book private
+
+|`*` |user |share my address book with other people |
+
+|`*` |user |have the program autocorrect my commands |input information correctly
+|=======================================================================
 
 [appendix]
 == Use Cases
@@ -1232,13 +1226,6 @@ Named relationship
 
 ....
 A relationship between two people with a specific status (eg. lecturer-student)
-....
-
-[[private-contact-detail]]
-Private contact detail
-
-....
-A contact detail that is not meant to be shared with others
 ....
 
 [appendix]

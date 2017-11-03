@@ -22,6 +22,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 
+//@@author joanneong
 /**
  * Container for all command words, command aliases, and shortened command usage in the application.
  */
