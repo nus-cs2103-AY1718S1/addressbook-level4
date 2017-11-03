@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_THEME_DARK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_THEME_LIGHT;
 import static seedu.address.logic.commands.ThemeCommand.DARK_THEME;
