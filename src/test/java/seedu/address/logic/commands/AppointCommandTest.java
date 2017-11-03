@@ -35,7 +35,7 @@ public class AppointCommandTest {
     public void execute_addAppointment_success() throws Exception {
         Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
                 .withAppointment("15/12/2020 00:00 60").build();
-        AppointCommand appointCommand = prepareCommand(INDEX_FIRST_PERSON, 
+        AppointCommand appointCommand = prepareCommand(INDEX_FIRST_PERSON,
                 Appointment.getOriginalAppointment(editedPerson.getAppointment().value));
         String expectedMessage = String.format(AppointCommand.MESSAGE_APPOINT_SUCCESS, editedPerson);
 
@@ -65,7 +65,7 @@ public class AppointCommandTest {
 
         ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(personInFilteredList).withAppointment(VALID_APPOINTMENT).build();
-        AppointCommand appointCommand = prepareCommand(INDEX_FIRST_PERSON, 
+        AppointCommand appointCommand = prepareCommand(INDEX_FIRST_PERSON,
                 Appointment.getOriginalAppointment(editedPerson.getAppointment().value));
 
         String expectedMessage = String.format(AppointCommand.MESSAGE_APPOINT_SUCCESS, editedPerson);
