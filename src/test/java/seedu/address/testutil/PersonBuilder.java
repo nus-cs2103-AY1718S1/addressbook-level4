@@ -110,7 +110,7 @@ public class PersonBuilder {
      * Sets the default phone when phone is not specified by the user
      */
     public PersonBuilder withUnspecifiedPhone() {
-        this.person.setPhone(Phone.UNSPECIFED);
+        this.person.setPhone(Phone.UNSPECIFIED);
 
         return this;
     }
