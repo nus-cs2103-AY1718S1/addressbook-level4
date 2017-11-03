@@ -9,7 +9,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 public class ExitCommand extends Command {
 
     public static final String COMMAND_WORD = "exit";
-    public static final String SHORTHAND_COMMAND_WORD = "x";
+    public static final String SHORTHAND_COMMAND_WORD = "ex";
 
     public static final String MESSAGE_EXIT_ACKNOWLEDGEMENT = "Exiting Address Book as requested ...";
 
