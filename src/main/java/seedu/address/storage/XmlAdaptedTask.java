@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlID;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;

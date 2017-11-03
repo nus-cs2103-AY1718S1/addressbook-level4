@@ -64,6 +64,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void resetData(ReadOnlyTaskBook newData) {
+        taskBook.resetData(newData);
+        indicateTaskBookChanged();
+    }
+
+    @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
     }

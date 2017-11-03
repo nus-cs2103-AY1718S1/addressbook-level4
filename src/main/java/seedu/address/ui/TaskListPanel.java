@@ -25,6 +25,8 @@ public class TaskListPanel extends UiPart<Region> {
     private static final String FXML = "TaskListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
 
+    private boolean showAllTask = false;
+
     @FXML
     private ListView<TaskCard> taskListView;
 
@@ -71,9 +73,6 @@ public class TaskListPanel extends UiPart<Region> {
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code TaskCard}.
      */
-
-    private boolean showAllTask = false;
-
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         if (event.message == "Listed all tasks") {
