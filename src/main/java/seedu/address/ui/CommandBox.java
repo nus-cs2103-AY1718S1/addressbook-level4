@@ -240,6 +240,8 @@ public class CommandBox extends UiPart<Region> {
                     configActiveTag(index, prefixList.get(FONT_SIZE));
                 }
             }
+        } else {
+            commandTextField.setStyle(userPrefFontSize);
         }
 
     }
