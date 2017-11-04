@@ -328,7 +328,7 @@ Deletes all persons with the tags `school` or `work`
 Clears all entries from the address book. +
 Command format: `clear`
 
-image::clear-command-result.png[width="300"]
+image::clear-command.png[width="350"]
 
 === Navigating KayPoh!
 
