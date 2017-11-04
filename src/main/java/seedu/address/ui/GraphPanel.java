@@ -17,7 +17,6 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToTabRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -35,8 +34,6 @@ public class GraphPanel extends UiPart<Region> {
     private XYChart.Series<String, Double> lineSeries = new XYChart.Series<>();
     private XYChart.Series<String, Double> barSeries = new XYChart.Series<>();
 
-    private ListElementPointer historySnapshot;
-    private String tagString;
     private Logic logic;
 
     @FXML
@@ -58,34 +55,7 @@ public class GraphPanel extends UiPart<Region> {
         super(FXML);
         this.logic = logic;
         people = logic.getFilteredPersonList();
-        historySnapshot = logic.getHistorySnapshot();
         registerAsAnEventHandler(this);
-    }
-
-    /**
-     * Checks the history of input user made
-     */
-    private boolean ifEnteredFindTag() {
-        if (historySnapshot.hasCurrent()) {
-            String textInput = historySnapshot.current();
-            String[] splitString = textInput.split(" ");
-            if (splitString[0].equals("ft")) {
-                tagString = splitString[1];
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Initializes the history snapshot.
-     */
-    private void initHistory() {
-        historySnapshot = logic.getHistorySnapshot();
-        // add an empty string to represent the most-recent end of historySnapshot, to be shown to
-        // the user if she tries to navigate past the most-recent end of the historySnapshot.
-        historySnapshot.add("");
     }
 
     /**
@@ -98,30 +68,16 @@ public class GraphPanel extends UiPart<Region> {
         yLineGradeAxis.setLabel("Grades");
         xLineNameAxis.setLabel("Student Names");
 
-        if (ifEnteredFindTag()) {
-            lineChart.setTitle(tagString);
-        } else {
-            lineChart.setTitle(person.getFormClass().toString());
-        }
+        lineChart.setTitle(person.getFormClass().toString());
 
         for (ReadOnlyPerson people : people) {
-            if (ifEnteredFindTag()) {
+            if (people.getFormClass().equals(person.getFormClass())) {
                 lineSeries.getData().add(new XYChart.Data<>(people.getName().toString(),
                         Double.parseDouble(people.getGrades().toString())));
-            } else {
-                if (people.getFormClass().equals(person.getFormClass())) {
-                    lineSeries.getData().add(new XYChart.Data<>(people.getName().toString(),
-                            Double.parseDouble(people.getGrades().toString())));
-                }
             }
         }
 
-        try {
-            lineSeries.getData().sort(Comparator.comparingDouble(d -> d.getYValue()));
-        } catch (NullPointerException e) {
-            throw new NullPointerException();
-        }
-
+        lineSeries.getData().sort(Comparator.comparingDouble(d -> d.getYValue()));
         lineChart.getData().add(lineSeries);
         lineChart.setLegendVisible(false);
 
@@ -137,30 +93,16 @@ public class GraphPanel extends UiPart<Region> {
         barChart.setAnimated(false);
         barChart.layout();
 
-        if (ifEnteredFindTag()) {
-            lineChart.setTitle(tagString);
-        } else {
-            lineChart.setTitle(person.getFormClass().toString());
-        }
+        barChart.setTitle(person.getFormClass().toString());
 
         for (ReadOnlyPerson people : people) {
-            if (ifEnteredFindTag()) {
+            if (people.getFormClass().equals(person.getFormClass())) {
                 barSeries.getData().add(new XYChart.Data<>(people.getName().toString(),
                         Double.parseDouble(people.getGrades().toString())));
-            } else {
-                if (people.getFormClass().equals(person.getFormClass())) {
-                    barSeries.getData().add(new XYChart.Data<>(people.getName().toString(),
-                            Double.parseDouble(people.getGrades().toString())));
-                }
             }
         }
 
-        try {
-            barSeries.getData().sort(Comparator.comparingDouble(d -> d.getYValue()));
-        } catch (NullPointerException e) {
-            throw new NullPointerException();
-        }
-
+        barSeries.getData().sort(Comparator.comparingDouble(d -> d.getYValue()));
         barChart.getData().add(barSeries);
         barChart.setLegendVisible(false);
     }
@@ -182,7 +124,6 @@ public class GraphPanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        initHistory();
         resetGraphStats();
         displayLineGraphStats(event.getNewSelection().person);
         displayBarGraphStats(event.getNewSelection().person);
