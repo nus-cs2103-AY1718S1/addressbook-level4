@@ -29,13 +29,13 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonInformationPanel extends UiPart<Region> {
 
-    protected List<String> optionalPhoneDisplayList = new ArrayList<String>();
-    protected ListProperty<String> listProperty = new SimpleListProperty<>();
-
     private static final String FXML = "PersonInformationPanel.fxml";
     private static String[] colors = {"red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey"};
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
+
+    protected List<String> optionalPhoneDisplayList = new ArrayList<String>();
+    protected ListProperty<String> listProperty = new SimpleListProperty<>();
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
