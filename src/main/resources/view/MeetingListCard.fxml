@@ -18,6 +18,11 @@
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
         </columnConstraints>
+      <ImageView fx:id="icon" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+         <GridPane.margin>
+            <Insets left="180.0" top="65.0" />
+         </GridPane.margin>
+      </ImageView>
         <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
             <padding>
                 <Insets bottom="5" left="15" right="5" top="5" />
@@ -36,10 +41,6 @@
          <Label fx:id="person" text="\$person" />
          <Label fx:id="phoneNum" styleClass="cell_small_label" text="\$phoneNum" />
             <Label fx:id="place" styleClass="cell_small_label" text="\$place" />
-         <ImageView fx:id="icon" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-            <VBox.margin>
-               <Insets left="80.0" />
-            </VBox.margin></ImageView>
         </VBox>
       <rowConstraints>
          <RowConstraints />

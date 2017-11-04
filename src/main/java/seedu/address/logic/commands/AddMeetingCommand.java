@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.List;
 
@@ -36,11 +37,13 @@ public class AddMeetingCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_NAME + "NAME_OF_MEETING "
             + PREFIX_DATE + "DATE_TIME "
-            + PREFIX_LOCATION + "LOCATION \n"
+            + PREFIX_LOCATION + "LOCATION "
+            + PREFIX_TAG + "0-2 \n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_NAME + "Project Meeting "
             + PREFIX_DATE + "31-10-2017 21:30 "
-            + PREFIX_LOCATION + "School of Computing, NUS ";
+            + PREFIX_LOCATION + "School of Computing, NUS "
+            + PREFIX_TAG + "1";
 
     public static final String MESSAGE_SUCCESS = "New meeting added: %1$s";
     public static final String MESSAGE_DUPLICATE_MEETING = "This meeting already exists in the address book";

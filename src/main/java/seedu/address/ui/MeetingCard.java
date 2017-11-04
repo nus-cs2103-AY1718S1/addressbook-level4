@@ -25,8 +25,6 @@ public class MeetingCard extends UiPart<Region> {
     private static final String ICONHATE = "/images/dislike.png";
 
     public final ReadOnlyMeeting meeting;
-    private final Image imageImpt;
-    private final Image imageHate;
 
     @FXML
     private HBox cardPane;
@@ -51,8 +49,6 @@ public class MeetingCard extends UiPart<Region> {
         this.meeting = meeting;
         id.setText(displayedIndex + ". ");
         bindListeners(meeting);
-        this.imageImpt = new Image(ICONIMPT);
-        this.imageHate = new Image(ICONHATE);
     }
 
     /**
@@ -77,10 +73,10 @@ public class MeetingCard extends UiPart<Region> {
             initMeeting(meeting, colors[2]);
         }
         if ( meeting.getMeetTag().toString().equals("2")) {
-            icon.setImage(imageImpt);
+            icon.setImage(new Image(ICONIMPT));
         }
         if ( meeting.getMeetTag().toString().equals("0")) {
-            icon.setImage(imageHate);
+            icon.setImage(new Image(ICONHATE));
         }
 
     }
