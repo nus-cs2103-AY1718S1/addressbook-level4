@@ -1,6 +1,9 @@
 package seedu.address.ui;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 
@@ -70,14 +73,14 @@ public class PersonCardTest extends GuiUnitTest {
         Person lennyPersonWithTags = new PersonBuilder().withName("Lenny").withTags("Basketballer").build();
         PersonCard lennyPersonCard = new PersonCard(lennyPersonWithTags, 5);
 
-        assertEquals(marcusPersonCard.obtainTagColors(marcusPersonWithTags.getTags().toString())
-                , jamiePersonCard.obtainTagColors(jamiePersonWithTags.getTags().toString()));
+        assertEquals(marcusPersonCard.obtainTagColors(marcusPersonWithTags.getTags().toString()),
+                jamiePersonCard.obtainTagColors(jamiePersonWithTags.getTags().toString()));
 
-        assertEquals(marcusPersonCard.obtainTagColors(marcusPersonWithTags.getTags().toString())
-                , lennyPersonCard.obtainTagColors(lennyPersonWithTags.getTags().toString()));
+        assertEquals(marcusPersonCard.obtainTagColors(marcusPersonWithTags.getTags().toString()),
+                lennyPersonCard.obtainTagColors(lennyPersonWithTags.getTags().toString()));
 
-        assertEquals(lennyPersonCard.obtainTagColors(lennyPersonWithTags.getTags().toString())
-                , jamiePersonCard.obtainTagColors(jamiePersonWithTags.getTags().toString()));
+        assertEquals(lennyPersonCard.obtainTagColors(lennyPersonWithTags.getTags().toString()),
+                jamiePersonCard.obtainTagColors(jamiePersonWithTags.getTags().toString()));
 
 
         //Check if different tags are assigned different color.
@@ -90,14 +93,14 @@ public class PersonCardTest extends GuiUnitTest {
         Person ronPersonWithTags = new PersonBuilder().withName("Ron").withTags("Happy").build();
         PersonCard ronPersonCard = new PersonCard(ronPersonWithTags, 8);
 
-        assertNotEquals(lunaPersonCard.obtainTagColors(lunaPersonWithTags.getTags().toString())
-                , potterPersonCard.obtainTagColors(potterPersonWithTags.getTags().toString()));
+        assertNotEquals(lunaPersonCard.obtainTagColors(lunaPersonWithTags.getTags().toString()),
+                potterPersonCard.obtainTagColors(potterPersonWithTags.getTags().toString()));
 
-        assertNotEquals(ronPersonCard.obtainTagColors(ronPersonWithTags.getTags().toString())
-                , lunaPersonCard.obtainTagColors(lunaPersonWithTags.getTags().toString()));
+        assertNotEquals(ronPersonCard.obtainTagColors(ronPersonWithTags.getTags().toString()),
+                lunaPersonCard.obtainTagColors(lunaPersonWithTags.getTags().toString()));
 
-        assertNotEquals(ronPersonCard.obtainTagColors(ronPersonWithTags.getTags().toString())
-                , potterPersonCard.obtainTagColors(potterPersonWithTags.getTags().toString()));
+        assertNotEquals(ronPersonCard.obtainTagColors(ronPersonWithTags.getTags().toString()),
+                potterPersonCard.obtainTagColors(potterPersonWithTags.getTags().toString()));
 
         //Check if assigned tag color is added into the Arraylist of usedColors.
         Person personWithTags = new PersonBuilder().build();
