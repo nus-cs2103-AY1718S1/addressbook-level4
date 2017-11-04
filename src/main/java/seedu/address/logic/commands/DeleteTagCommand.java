@@ -27,7 +27,7 @@ public class DeleteTagCommand extends UndoableCommand {
     //@@author
 
     public static final String MESSAGE_DELETE_ALL_TAG_SUCCESS = "Deleted tag: %1$s";
-    private static final String MESSAGE_TAG_NOT_FOUND = "The tag is not found";
+    public static final String MESSAGE_TAG_NOT_FOUND = "The tag is not found";
 
     private final Tag targetTag;
 
