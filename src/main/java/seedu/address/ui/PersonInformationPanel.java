@@ -59,8 +59,8 @@ public class PersonInformationPanel extends UiPart<Region> {
     @FXML
     private ListView optionalPhoneList;
 
-    protected List<String> optionalPhoneDisplayList = new ArrayList<String>();
     protected ListProperty<String> listProperty = new SimpleListProperty<>();
+    protected List<String> optionalPhoneDisplayList = new ArrayList<String>();
 
     public PersonInformationPanel() {
         super(FXML);
