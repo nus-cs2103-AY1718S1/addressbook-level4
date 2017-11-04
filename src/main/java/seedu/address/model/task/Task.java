@@ -1,7 +1,6 @@
 package seedu.address.model.task;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.storage.XmlAdaptedTask.nextId;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +18,7 @@ import seedu.address.model.util.SampleDataUtil;
  */
 public class Task implements ReadOnlyTask {
 
+    private static Integer nextId = 0;
     private ObjectProperty<String> taskName;
     private ObjectProperty<String> taskDescription;
     private ObjectProperty<String> startDateTime;
@@ -155,6 +155,22 @@ public class Task implements ReadOnlyTask {
         this(task.getName(), task.getDescription(), task.getStartDateTime(),
                 task.getEndDateTime(), task.getTags(), task.getComplete(), task.getPriority(), task.getId(),
                 task.getPeopleIds());
+    }
+
+    /**
+     * get nextId
+     * @return nextId
+     */
+    public static Integer getNextId() {
+        return nextId;
+    }
+
+    /**
+     * set nextId
+     * @param nextOne
+     */
+    public static void setNextId(Integer nextOne) {
+        nextId = nextOne;
     }
 
     /**
