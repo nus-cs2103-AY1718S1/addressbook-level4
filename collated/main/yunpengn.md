@@ -1,4 +1,24 @@
 # yunpengn
+###### \java\seedu\address\commons\events\model\TagColorChangedEvent.java
+``` java
+/**
+ * Indicates the color of some tag(s) has been changed.
+ */
+public class TagColorChangedEvent extends BaseEvent {
+    private Tag tag;
+    private String color;
+
+    public TagColorChangedEvent(Tag tag, String color) {
+        this.tag = tag;
+        this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(ChangeTagColorCommand.MESSAGE_SUCCESS, tag, color);
+    }
+}
+```
 ###### \java\seedu\address\commons\util\JsonUtil.java
 ``` java
     /**
@@ -68,6 +88,7 @@ public class ChangeTagColorCommand extends ConfigCommand {
         super(TAG_COLOR, configValue);
 
         try {
+            /* Two tags are equal as long as their tagNames are the same. */
             tag = new Tag(tagName);
         } catch (IllegalValueException e) {
             throw new ParseException(MESSAGE_TAG_CONSTRAINTS);
@@ -478,24 +499,10 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
     /* Regular expressions for validation. ArgumentMultiMap not applicable here. */
     private static final Pattern CONFIG_COMMAND_FORMAT = Pattern.compile("--(?<configType>\\S+)(?<configValue>.+)");
     private static final Pattern TAG_COLOR_FORMAT = Pattern.compile("(?<tagName>\\p{Alnum}+)\\s+(?<tagNewColor>.+)");
-    private static final Pattern RGB_FORMAT = Pattern.compile("#(?<rgbValue>([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$)");
-
-    // Some pre-defined colors for convenience.
-    private static final HashMap<String, String> preDefinedColors = new HashMap<>();
-
-    /**
-     * Loads all pre-defined colors here. If you want to define more, you can get more color codes can be obtained from
-     * https://www.w3schools.com/colors/colors_names.asp Make sure you put them in alphabetical order.
-     */
-    static {
-        preDefinedColors.put("black", "#000000");
-        preDefinedColors.put("blue", "#0000FF");
-        preDefinedColors.put("brown", "#A52A2A");
-        preDefinedColors.put("green", "#008000");
-        preDefinedColors.put("red", "#FF0000");
-        preDefinedColors.put("white", "#FFFFFF");
-        preDefinedColors.put("yellow", "#FFFF00");
-    }
+    // A valid RGB value should be 3-bit or 6-bit hexadecimal number.
+    private static final Pattern RGB_FORMAT = Pattern.compile("#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})");
+    // Only contains alphabets (a-z or A-Z)
+    private static final Pattern ONLY_ALPHABET = Pattern.compile("[a-zA-Z]+");
 
     @Override
     public ConfigCommand parse(String args) throws ParseException {
@@ -551,21 +558,16 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
                     ChangeTagColorCommand.MESSAGE_USAGE));
         }
 
+        // Get the tag name and the customize new color for that tag.
         final String tagName = matcher.group("tagName").trim();
         String tagColor = matcher.group("tagNewColor").trim();
 
-        // Use the corresponding RGB value to replace pre-defined color names.
-        if (preDefinedColors.containsKey(tagColor)) {
-            tagColor = preDefinedColors.get(tagColor);
-        }
-
-        matcher = RGB_FORMAT.matcher(tagColor.trim());
-        if (!matcher.matches()) {
+        // Checks whether the given color is valid.
+        if (!isValidColorCode(tagColor)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, COLOR_CODE_WRONG));
         }
-        String colorRgbValue = matcher.group("rgbValue").trim();
 
-        return new ChangeTagColorCommand(value, tagName, colorRgbValue);
+        return new ChangeTagColorCommand(value, tagName, tagColor);
     }
 
     /**
@@ -596,6 +598,21 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
         String regex = argMultimap.getValue(PREFIX_REGEX).orElse(DEFAULT_REGEX);
 
         return new AddPropertyCommand(value, shortName, fullName, message, regex);
+    }
+
+    /**
+     * Checks whether the given string is a valid RGB value or a fully-alphabetical string (we do not check whether it
+     * is one of the 140 pre-defined CSS color names).
+     *
+     * TODO: Search for any API to check whether it is one of 140 pre-defined names.
+     *
+     * @see <a href=https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor>
+     *     JavaFX CSS Reference Guide</a>
+     */
+    private boolean isValidColorCode(String color) {
+        // Either all letters or a valid RGB value.
+        return ONLY_ALPHABET.matcher(color).matches() || RGB_FORMAT.matcher(color).matches();
+
     }
 
     /**
@@ -759,6 +776,17 @@ public class AddCommandParser implements Parser<AddCommand> {
     }
 }
 ```
+###### \java\seedu\address\model\Model.java
+``` java
+    /** Adds a new customize property */
+    void addProperty(String shortName, String fullName, String message, String regex)
+            throws DuplicatePropertyException, PatternSyntaxException;
+```
+###### \java\seedu\address\model\Model.java
+``` java
+    /** Changes the color of an existing tag (through TagColorManager) */
+    void setTagColor(Tag tag, String color);
+```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
     //=========== Model support for property component =============================================================
@@ -785,6 +813,47 @@ public class AddCommandParser implements Parser<AddCommand> {
         TagColorManager.setColor(tag, color);
         indicateAddressBookChanged();
         raise(new TagColorChangedEvent(tag, color));
+    }
+```
+###### \java\seedu\address\model\person\Person.java
+``` java
+    @Override
+    public ObjectProperty<UniquePropertyMap> properties() {
+        return properties;
+    }
+
+    /**
+     * Returns an immutable property set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    @Override
+    public Set<Property> getProperties() {
+        return Collections.unmodifiableSet(properties.get().toSet());
+    }
+
+    @Override
+    public List<Property> getSortedProperties() {
+        return Collections.unmodifiableList(properties().get().toSortedList());
+    }
+
+
+    /**
+     * Replaces this person's properties with the properties in the argument tag set.
+     */
+    public void setProperties(Set<Property> replacement) throws DuplicatePropertyException {
+        properties.set(new UniquePropertyMap(replacement));
+    }
+
+    private String getProperty(String shortName) throws PropertyNotFoundException {
+        return properties.get().getPropertyValue(shortName);
+    }
+
+    /**
+     * Updates the value of the property if there already exists a property with the same shortName, otherwise
+     * adds a new property.
+     */
+    public void setProperty(Property toSet) {
+        properties.get().addOrUpdate(toSet);
     }
 ```
 ###### \java\seedu\address\model\property\Address.java
@@ -1159,10 +1228,20 @@ public class UniquePropertyMap implements Iterable<Property> {
 
     /**
      * Returns all properties (collection of values in all entries) in this map as a Set. This set is mutable
-     * and change-insulated against the internal list.
+     * but change-insulated against the internal map.
      */
     public Set<Property> toSet() {
         return new HashSet<>(internalMap.values());
+    }
+
+    /**
+     * Returns all properties (collection of values in all entries) in this map as a sorted list based on the full
+     * name of each property. This list is mutable but change-insulated against the internal map.
+     */
+    public List<Property> toSortedList() {
+        List<Property> list = new ArrayList<>(internalMap.values());
+        list.sort(Comparator.comparing(Property::getFullName));
+        return list;
     }
 
     /**
@@ -1348,7 +1427,7 @@ public class TagColorManager {
      */
     public static void setColor(Tag tag) {
         int randomColorCode = randomGenerator.nextInt(RGB_INTERVAL) + RGB_LOWER_BOUND;
-        setColor(tag, Integer.toHexString(randomColorCode));
+        setColor(tag, "#" + Integer.toHexString(randomColorCode));
     }
 }
 ```
@@ -1576,6 +1655,53 @@ public class XmlAdaptedPropertyManager {
         dataDetailsPanelPlaceholder.getChildren().clear();
         dataDetailsPanelPlaceholder.getChildren().add(new PersonDetailsPanel(person).getRoot());
     }
+```
+###### \java\seedu\address\ui\person\PersonCard.java
+``` java
+    /**
+     * Initializes all the tags of a person displayed in different random colors.
+     */
+    private void initTags() {
+        person.getTags().forEach(tag -> {
+            String tagName = tag.tagName;
+            Label newTagLabel = new Label(tagName);
+            try {
+                newTagLabel.setStyle(String.format(TAG_COLOR_CSS, TagColorManager.getColor(tag)));
+            } catch (TagNotFoundException e) {
+                System.err.println("An existing must have a color.");
+            }
+            tags.getChildren().add(newTagLabel);
+        });
+    }
+
+    @Subscribe
+    public void handleTagColorChange(TagColorChangedEvent event) {
+        // TODO: improve efficiency here. Update rather than re-create all labels.
+        tags.getChildren().clear();
+        initTags();
+    }
+```
+###### \java\seedu\address\ui\person\PersonCard.java
+``` java
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof PersonCard)) {
+            return false;
+        }
+
+        // state check
+        PersonCard card = (PersonCard) other;
+        return id.getText().equals(card.id.getText())
+                && person.equals(card.person);
+    }
+}
 ```
 ###### \java\seedu\address\ui\PropertyLabel.java
 ``` java

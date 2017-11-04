@@ -38,9 +38,11 @@ public interface Model {
 
     //=========== Model support for property component =============================================================
 
+    //@@author yunpengn
     /** Adds a new customize property */
     void addProperty(String shortName, String fullName, String message, String regex)
             throws DuplicatePropertyException, PatternSyntaxException;
+    //@@author
 
     //=========== Model support for contact component =============================================================
 
@@ -62,8 +64,11 @@ public interface Model {
     /** Checks whether there exists a tag (with the same tagName) */
     boolean hasTag(Tag tag);
 
+    //@@author yunpengn
     /** Changes the color of an existing tag (through TagColorManager) */
     void setTagColor(Tag tag, String color);
+    //@@author
+
     //@@author junyango
     //=========== Model support for activity component =============================================================
 
@@ -84,9 +89,8 @@ public interface Model {
 
     /** Deletes the given event */
     void deleteReminder(ReadOnlyReminder target) throws ReminderNotFoundException;
-
-
     //@@author
+
     //=========== Filtered Person/Activity List support =============================================================
 
     /** Returns an unmodifiable view of the filtered person list */

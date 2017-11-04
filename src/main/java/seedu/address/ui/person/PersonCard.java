@@ -19,6 +19,7 @@ import seedu.address.ui.UiPart;
  */
 public class PersonCard extends UiPart<Region> {
     private static final String FXML = "person/PersonListCard.fxml";
+    private static final String TAG_COLOR_CSS = "-fx-background-color: %s";
 
     // Keep a record of the displayed persons.
     public final ReadOnlyPerson person;
@@ -69,6 +70,7 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    //@@author yunpengn
     /**
      * Initializes all the tags of a person displayed in different random colors.
      */
@@ -77,7 +79,7 @@ public class PersonCard extends UiPart<Region> {
             String tagName = tag.tagName;
             Label newTagLabel = new Label(tagName);
             try {
-                newTagLabel.setStyle(String.format("-fx-background-color: #%s", TagColorManager.getColor(tag)));
+                newTagLabel.setStyle(String.format(TAG_COLOR_CSS, TagColorManager.getColor(tag)));
             } catch (TagNotFoundException e) {
                 System.err.println("An existing must have a color.");
             }
@@ -91,6 +93,7 @@ public class PersonCard extends UiPart<Region> {
         tags.getChildren().clear();
         initTags();
     }
+    //@@author yunpengn
 
     @Override
     public boolean equals(Object other) {
