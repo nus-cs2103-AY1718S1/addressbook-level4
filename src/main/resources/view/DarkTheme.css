@@ -396,4 +396,8 @@
     -fx-font-size: 50;
     -fx-text-fill: white;
 }
+
+.opening-img {
+    height: 584px;
+}
 /* @@author */
