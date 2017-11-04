@@ -39,7 +39,6 @@ public class CopyCommandTest {
 
         try {
             result = command.getTargetEmail();
-            System.out.println(result);
         } catch (CommandException e) {
             fail();
         }
@@ -72,12 +71,11 @@ public class CopyCommandTest {
 
         try {
             result = command.execute();
-            System.out.println(command.getTargetEmail());
         } catch (CommandException e) {
             fail();
         }
 
-        assertEquals(result, new CommandResult("Jon Anderson has no email address."));
+        assertEquals(result.feedbackToUser, "Jon Anderson has no email address.");
     }
 
     /**
