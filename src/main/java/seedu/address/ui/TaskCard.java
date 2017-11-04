@@ -24,7 +24,7 @@ public class TaskCard extends UiPart<Region> {
     private static ArrayList<String> colors = new ArrayList<String>(
             Arrays.asList("Tomato", "Orange", "DodgerBlue", "MediumSeaGreen", "SlateBlue", "Violet", "Maroon"));
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
-
+    private static final String ICON = "/images/click.png";
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -53,8 +53,6 @@ public class TaskCard extends UiPart<Region> {
     private Label priority;
     @FXML
     private ImageView mark;
-
-    private static final String ICON = "/images/click.png";
 
     public TaskCard(ReadOnlyTask task, int displayedIndex) {
         super(FXML);
