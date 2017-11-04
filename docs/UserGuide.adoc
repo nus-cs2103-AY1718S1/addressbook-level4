@@ -621,7 +621,7 @@ v1.1
 v1.0
 
 * Modified find function that allows users to find parts of a contact's name. `Archana Pradeep`
-* Implemented `Alias Shortcuts` for Basic Commands. `Darren Chin`
+* Implemented `Alias Shortcuts` for each basic command. `Darren Chin`
 * Implementation of having different colours tags for each contact listed in Contact List. `Dickson Chan`
 
 == Coming in v2.0
