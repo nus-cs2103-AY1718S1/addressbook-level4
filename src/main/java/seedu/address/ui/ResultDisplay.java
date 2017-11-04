@@ -38,11 +38,4 @@ public class ResultDisplay extends UiPart<Region> {
         Platform.runLater(() -> displayed.setValue(event.message));
     }
 
-    /**
-     * Shows schedule details on the ResultDisplay panel
-     */
-    protected void showSchedulesDetails() {
-
-    }
-
 }
