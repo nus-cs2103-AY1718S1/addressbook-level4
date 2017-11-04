@@ -59,7 +59,10 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
 
         if (keywords.containsKey(PREFIX_APPOINT.toString()) && !keywords.get(PREFIX_APPOINT.toString()).isEmpty()) {
             result = result || keywords.get(PREFIX_APPOINT.toString()).stream()
-                    .anyMatch(keyword -> StringUtil.containsDateAndTime(person.getAppoint().value, keyword));
+                    .anyMatch(keyword -> StringUtil.containsDate(person.getAppoint().value, keyword));
+
+            result = result || keywords.get(PREFIX_APPOINT.toString()).stream()
+                    .anyMatch(keyword -> StringUtil.containsTime(person.getAppoint().value, keyword));
         }
 
         return result;

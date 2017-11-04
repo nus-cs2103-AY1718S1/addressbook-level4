@@ -64,12 +64,14 @@ public class StringUtil {
         requireNonNull(word);
 
         String preppedWord = word.trim();
+        preppedWord = preppedWord.replaceAll("[^a-zA-Z0-9\\s]", "");
+        preppedWord = preppedWord.trim();
 
         checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
         checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
 
         String preppedSentence = sentence;
-        preppedSentence = preppedSentence.replaceAll("\\W", " ");
+        preppedSentence = preppedSentence.replaceAll("[^a-zA-Z0-9\\s]", "");
         preppedSentence = preppedSentence.trim();
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
@@ -143,18 +145,17 @@ public class StringUtil {
      * Returns true if the {@code sentence} contains the {@code word}.
      * Ignores case, but a full word match is required.
      * Format of date: DD/MM/YYY
-     * Format of time: HH:mm
      * <br>examples:<pre>
-     *       containsDateAndTime("20/10/2017 15:30", "20/10/2017") == true
-     *       containsDateAndTime("20/10/2017 15:30", "15:30") == true
-     *       containsDateAndTime("20/10/2017 15:30", "20//10/2017 14:30") == true
-     *       containsDateAndTime("20/10/2017 14:30", "20/10") == false //not a full date or time match
+     *       containsDate("20/10/2017 15:30", "20/10/2017") == true
+     *       containsDate("20/10/2017 15:30", "15:30") == false
+     *       containsDate("20/10/2017 15:30", "20//10/2017 14:30") == true
+     *       containsDate("20/10/2017 14:30", "20/10") == false //not a full date or time match
      *       </pre>
      *
      * @param sentence cannot be null
      * @param word     cannot be null, cannot be empty, must be a single word
      */
-    public static boolean containsDateAndTime(String sentence, String word) {
+    public static boolean containsDate(String sentence, String word) {
         requireNonNull(sentence);
         requireNonNull(word);
 
@@ -166,13 +167,47 @@ public class StringUtil {
         preppedSentence = preppedSentence.trim();
 
         ArrayList<String> extractedDates = extractDates(preppedSentence);
-        ArrayList<String> extractedTimes = extractTimes(preppedSentence);
-        ArrayList<String> dateAndTimeInPreppedSentence = new ArrayList<>();
-        dateAndTimeInPreppedSentence.addAll(extractedDates);
-        dateAndTimeInPreppedSentence.addAll(extractedTimes);
+        ArrayList<String> dateInPreppedSentence = new ArrayList<>();
+        dateInPreppedSentence.addAll(extractedDates);
 
-        for (String dateOrTimeInSentence : dateAndTimeInPreppedSentence) {
-            if (dateOrTimeInSentence.equalsIgnoreCase(preppedWord)) {
+        for (String dateInSentence : dateInPreppedSentence) {
+            if (dateInSentence.equalsIgnoreCase(preppedWord)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if the {@code sentence} contains the {@code word}.
+     * Ignores case, but a full word match is required.
+     * Format of time: HH:mm
+     * <br>examples:<pre>
+     *       containsDateAndTime("20/10/2017 15:30", "15:30") == true
+     *       containsDateAndTime("20/10/2017 15:30", "20//10/2017 14:30") == true
+     *       containsDateAndTime("20/10/2017 14:30", "14:3") == false //not a full date or time match
+     *       </pre>
+     *
+     * @param sentence cannot be null
+     * @param word     cannot be null, cannot be empty, must be a single word
+     */
+    public static boolean containsTime(String sentence, String word) {
+        requireNonNull(sentence);
+        requireNonNull(word);
+
+        String preppedWord = word.trim();
+        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
+        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+
+        String preppedSentence = sentence;
+        preppedSentence = preppedSentence.trim();
+
+        ArrayList<String> extractedTimes = extractTimes(preppedSentence);
+        ArrayList<String> timeInPreppedSentence = new ArrayList<>();
+        timeInPreppedSentence.addAll(extractedTimes);
+
+        for (String timeInSentence : timeInPreppedSentence) {
+            if (timeInSentence.equalsIgnoreCase(preppedWord)) {
                 return true;
             }
         }
