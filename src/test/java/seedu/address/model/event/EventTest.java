@@ -6,6 +6,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_EVENT1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_EVENT1;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 import org.junit.BeforeClass;
@@ -45,8 +46,8 @@ public class EventTest {
 
     @Test
     public void equal_twoSameStateEvent_checkCorrectness() throws Exception {
-        Event event = new Event(name, dateTime, address, Collections.emptyList());
-        Event another = new Event(name, dateTime, address, Collections.emptyList());
+        Event event = new Event(name, dateTime, address, new ArrayList<>());
+        Event another = new Event(name, dateTime, address, new ArrayList<>());
         assertEquals(event, another);
 
         Event copied = new Event(event);

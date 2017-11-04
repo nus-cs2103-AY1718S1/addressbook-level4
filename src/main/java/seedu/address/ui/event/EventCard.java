@@ -1,11 +1,14 @@
 package seedu.address.ui.event;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -24,6 +27,11 @@ public class EventCard extends UiPart<Region> {
     // Keep a list of all persons.
     public final ReadOnlyEvent event;
 
+    private Image greenNotification = new Image("/images/notifications_green.png");
+    private Image redNotification = new Image("/images/notifications_red.png");
+    private Image orangeNotification = new Image("/images/notifications_orange.png");
+    private Image notification = new Image("/images/notification-512.png");
+
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -41,6 +49,9 @@ public class EventCard extends UiPart<Region> {
     private Label dateTime;
     @FXML
     private Label venue;
+    @FXML
+    private ImageView notifications;
+
 
 
     public EventCard(ReadOnlyEvent event, int displayedIndex) {
@@ -63,8 +74,14 @@ public class EventCard extends UiPart<Region> {
         for (Reminder r : event.getReminders()) {
             LocalDate dateToCompare = LocalDate.parse(r.getEvent().getTime().toString().substring(0, 8), formatter);
             LocalDate date = LocalDate.now();
+            LocalDate twoDaysBefore = dateToCompare.minus(Period.ofDays(2));
+            LocalDate oneDayBefore = dateToCompare.minus(Period.ofDays(1));
             if (date.isEqual(dateToCompare)) {
-                cardPane.setStyle("-fx-background-color: #990000;");
+                notifications.setImage(redNotification);
+            } else if (date.isEqual(twoDaysBefore)) {
+                notifications.setImage(greenNotification);
+            } else if (date.isEqual(oneDayBefore)) {
+                notifications.setImage(orangeNotification);
             }
         }
 
