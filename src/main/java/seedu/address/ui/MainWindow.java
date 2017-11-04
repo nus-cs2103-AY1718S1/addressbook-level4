@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -18,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
@@ -25,11 +27,15 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.HideCalendarEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowCalendarEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowPhotoSelectionEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -194,6 +200,8 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
+
+        //@@author shuangyang
         //When calendar button is clicked, the browserPlaceHolder will switch
         // to the calendar view
         calendarView = new CalendarView(logic.getFilteredEventList(), logic);
@@ -209,6 +217,7 @@ public class MainWindow extends UiPart<Region> {
                 }
             }
         });
+        //@@author
     }
 
     void hide() {
@@ -262,6 +271,8 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+
+    //@@author shuangyang
     /**
      * Opens the calendar view.
      */
@@ -345,6 +356,7 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author shuangyang
     @Subscribe
     private void handleShowCalendarEvent(ShowCalendarEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -357,6 +369,34 @@ public class MainWindow extends UiPart<Region> {
         handleHideCalendar();
     }
 
+    /**
+     * On receiving ShowPhotoSelectionEvent, display a file chooser window to choose photo from local file system and
+     * update the photo of specified person.
+     */
+    @Subscribe
+    private void handleShowPhotoSelectionEvent(ShowPhotoSelectionEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        FileChooser fileChooser = new FileChooser();
+
+        //Set extension filter
+        FileChooser.ExtensionFilter extFilterJpg = new FileChooser
+                .ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+        FileChooser.ExtensionFilter extFilterJpeg = new FileChooser
+                .ExtensionFilter("JPEG files (*.jpeg)", "*.JPEG");
+        FileChooser.ExtensionFilter extFilterPng = new FileChooser
+                .ExtensionFilter ("PNG files (*.png)", "*.PNG");
+        fileChooser.getExtensionFilters().addAll(extFilterJpg,
+                extFilterJpeg, extFilterPng);
+
+        //Show open file dialog
+        File file = fileChooser.showOpenDialog(primaryStage.getScene().getWindow());
+
+        try {
+            logic.execute("edit " + event.index + " ph/"
+                    + file.toURI().getPath());
+        } catch (CommandException | ParseException e) {
+            raise(new NewResultAvailableEvent(e.getMessage(), true));
+        }
     //@@author sebtsh
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
