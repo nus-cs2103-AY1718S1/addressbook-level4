@@ -10,8 +10,6 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 import static seedu.address.ui.testutil.GuiTestAssert.assertInfoDisplaysPerson;
 import static seedu.address.ui.testutil.GuiTestAssert.assertResultMessage;
 
-import java.util.List;
-
 import org.junit.Test;
 
 import guitests.guihandles.InfoPanelHandle;
