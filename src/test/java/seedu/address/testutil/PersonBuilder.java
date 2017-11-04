@@ -8,6 +8,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.FormClass;
 import seedu.address.model.person.Grades;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.ParentPhone;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.PostalCode;
@@ -23,6 +24,7 @@ public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "student: 97272031 parent: 97979797";
+    public static final String DEFAULT_PARENTPHONE = "97979797";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_FORMCLASS = "6E1";
@@ -37,6 +39,7 @@ public class PersonBuilder {
         try {
             Name defaultName = new Name(DEFAULT_NAME);
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
+            ParentPhone defaultParentPhone = new ParentPhone(DEFAULT_PARENTPHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             FormClass defaultFormClass = new FormClass(DEFAULT_FORMCLASS);
@@ -44,7 +47,7 @@ public class PersonBuilder {
             PostalCode defaultPostalCode = new PostalCode(DEFAULT_POSTALCODE);
             Remark defaultRemark = new Remark(DEFAULT_REMARK);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultFormClass,
+            this.person = new Person(defaultName, defaultPhone, defaultParentPhone, defaultEmail, defaultAddress, defaultFormClass,
                     defaultGrades, defaultPostalCode, defaultRemark, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
@@ -90,6 +93,18 @@ public class PersonBuilder {
             this.person.setAddress(new Address(address));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("address is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code ParentPhone} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withParentPhone(String parentPhone) {
+        try {
+            this.person.setParentPhone(new ParentPhone(parentPhone));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("parentPhone is expected to be unique.");
         }
         return this;
     }

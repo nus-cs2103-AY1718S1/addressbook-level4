@@ -12,7 +12,7 @@ public class ParentPhone {
 
     public static final String MESSAGE_PARENTPHONE_CONSTRAINTS = "Parent numbers should be exactly 8 digits long";
 
-    public static final String PARENTNUMBER_VALIDATION_REGEX = "(Parent: )(\\d\\d\\d\\d\\d\\d\\d\\d)";
+    public static final String PARENTPHONE_VALIDATION_REGEX = "\\d\\d\\d\\d\\d\\d\\d\\d";
 
     public final String value;
 
@@ -34,7 +34,7 @@ public class ParentPhone {
      * Returns true if a given string is a valid parentPhone name.
      */
     public static boolean isValidParentPhone(String test) {
-        return test.matches(PARENTNUMBER_VALIDATION_REGEX);
+        return test.matches(PARENTPHONE_VALIDATION_REGEX);
     }
 
     @Override

@@ -117,7 +117,7 @@ public class EditCommand extends UndoableCommand {
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Phone updatedParentPhone = editPersonDescriptor.getParentPhone().orElse(personToEdit.getParentPhone());
+        ParentPhone updatedParentPhone = editPersonDescriptor.getParentPhone().orElse(personToEdit.getParentPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         FormClass updatedFormClass = editPersonDescriptor.getFormClass().orElse(personToEdit.getFormClass());
@@ -205,7 +205,7 @@ public class EditCommand extends UndoableCommand {
             this.parentPhone = parentPhone;
         }
 
-        public Optional<Phone> getParentPhone() {
+        public Optional<ParentPhone> getParentPhone() {
             return Optional.ofNullable(parentPhone);
         }
 
