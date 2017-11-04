@@ -92,6 +92,7 @@ public class AddressBookParser {
         case SortCommand.COMMAND_ALIAS:
             return new SortCommandParser().parse(arguments);
 
+        //@@author
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();
@@ -120,7 +121,6 @@ public class AddressBookParser {
         case RemarkCommand.COMMAND_ALIAS:
             return new RemarkCommandParser().parse(arguments);
 
-        //@@author bladerail
         case UpdateUserCommand.COMMAND_WORD:
         case UpdateUserCommand.COMMAND_ALIAS:
             return new UpdateUserCommandParser().parse(arguments);

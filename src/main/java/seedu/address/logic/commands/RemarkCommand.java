@@ -37,8 +37,8 @@ public class RemarkCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " "
             + "{Index} "
             + PREFIX_REMARK + "{Remark}";
-    //@@author
 
+    //@@author bladerail
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Remark: %2$s";
     public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added remark to Person: %1$s";
     public static final String MESSAGE_DELETE_REMARK_SUCCESS = "Removed remark to Person: %1$s";
