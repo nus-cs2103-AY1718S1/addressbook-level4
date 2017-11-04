@@ -4,8 +4,11 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.PROPERTY_EXISTS;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javafx.collections.FXCollections;
@@ -47,10 +50,20 @@ public class UniquePropertyMap implements Iterable<Property> {
 
     /**
      * Returns all properties (collection of values in all entries) in this map as a Set. This set is mutable
-     * and change-insulated against the internal list.
+     * but change-insulated against the internal map.
      */
     public Set<Property> toSet() {
         return new HashSet<>(internalMap.values());
+    }
+
+    /**
+     * Returns all properties (collection of values in all entries) in this map as a sorted list based on the full
+     * name of each property. This list is mutable but change-insulated against the internal map.
+     */
+    public List<Property> toSortedList() {
+        List<Property> list = new ArrayList<>(internalMap.values());
+        list.sort(Comparator.comparing(Property::getFullName));
+        return list;
     }
 
     /**

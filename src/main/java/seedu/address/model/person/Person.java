@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -161,6 +162,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author yunpengn
     @Override
     public ObjectProperty<UniquePropertyMap> properties() {
         return properties;
@@ -174,6 +176,12 @@ public class Person implements ReadOnlyPerson {
     public Set<Property> getProperties() {
         return Collections.unmodifiableSet(properties.get().toSet());
     }
+
+    @Override
+    public List<Property> getSortedProperties() {
+        return Collections.unmodifiableList(properties().get().toSortedList());
+    }
+
 
     /**
      * Replaces this person's properties with the properties in the argument tag set.
@@ -193,6 +201,7 @@ public class Person implements ReadOnlyPerson {
     public void setProperty(Property toSet) {
         properties.get().addOrUpdate(toSet);
     }
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
@@ -217,6 +226,7 @@ public class Person implements ReadOnlyPerson {
         }
         return sb.toString();
     }
+    //@@author
 
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;
