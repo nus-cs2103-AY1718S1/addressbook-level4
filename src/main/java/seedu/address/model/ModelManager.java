@@ -205,6 +205,9 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author
+
+
     //=========== Model support for activity component =============================================================
     @Override
     public synchronized void addReminder(ReadOnlyReminder reminder) throws DuplicateReminderException {
@@ -219,7 +222,10 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
 
+
     //@@author
+
+
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -263,8 +269,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
 
+    //@@author
+
+
+
+
 
     //@@author
+
+
 
     @Override
     public boolean equals(Object obj) {

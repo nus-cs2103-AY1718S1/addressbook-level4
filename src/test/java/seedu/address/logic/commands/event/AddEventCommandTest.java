@@ -24,6 +24,10 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.testutil.EventBuilder;
 
+
+
+//@@author junyango
+
 public class AddEventCommandTest {
 
     @Rule

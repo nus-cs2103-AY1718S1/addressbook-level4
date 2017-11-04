@@ -12,6 +12,10 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.reminder.Reminder;
 import seedu.address.ui.UiPart;
 
+
+
+//@@author junyango
+
 /**
  * An UI component that displays information of a {@code Event}.
  */

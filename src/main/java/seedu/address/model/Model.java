@@ -67,7 +67,10 @@ public interface Model {
     //@@author yunpengn
     /** Changes the color of an existing tag (through TagColorManager) */
     void setTagColor(Tag tag, String color);
+
     //@@author
+
+
 
     //@@author junyango
     //=========== Model support for activity component =============================================================
@@ -80,6 +83,10 @@ public interface Model {
             throws DuplicateEventException, EventNotFoundException;
     /** Deletes the given event */
     void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
+
+
+
+    //@@author
 
 
     //=========== Model support for reminder component =============================================================

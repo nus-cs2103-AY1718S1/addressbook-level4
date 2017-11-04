@@ -16,6 +16,9 @@ import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 
+
+//@@author junyango
+
 /**
  * Adds an event to the address book.
  */

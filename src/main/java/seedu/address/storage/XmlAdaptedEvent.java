@@ -18,6 +18,7 @@ import seedu.address.model.reminder.Reminder;
 
 //@@author junyango
 
+
 /**
  * JAXB-friendly version of the Event.
  */
