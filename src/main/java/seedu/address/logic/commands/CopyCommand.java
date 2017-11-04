@@ -39,8 +39,8 @@ public class CopyCommand extends Command {
     public CommandResult execute() throws CommandException {
         String targetEmail = getTargetEmail();
         String commandResultMessage = "";
-        boolean emailIsValid = isEmailValid(targetEmail);
 
+        boolean emailIsValid = isEmailValid(targetEmail);
         if (emailIsValid) {
             putIntoClipboard(targetEmail);
             commandResultMessage = String.format(MESSAGE_COPY_PERSON_SUCCESS, targetPerson.getName());
@@ -78,8 +78,8 @@ public class CopyCommand extends Command {
     private void putIntoClipboard(String resultantEmailAddress) {
         Clipboard systemClipboard = Clipboard.getSystemClipboard();
         ClipboardContent systemClipboardContent = new ClipboardContent();
-        systemClipboardContent.putString(resultantEmailAddress);
 
+        systemClipboardContent.putString(resultantEmailAddress);
         systemClipboard.setContent(systemClipboardContent);
     }
     //@@author
