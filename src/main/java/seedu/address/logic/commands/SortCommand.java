@@ -23,7 +23,6 @@ public class SortCommand extends Command {
         personList = new ArrayList<>();
     }
 
-
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
