@@ -2,8 +2,6 @@ package seedu.address.model.person;
 
 //@@author marvinchin
 
-import java.util.Date;
-
 /**
  * Utility class with useful methods for writing person comparators
  */

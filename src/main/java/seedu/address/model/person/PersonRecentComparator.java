@@ -12,8 +12,9 @@ import java.util.Comparator;
 //@@author marvinchin
 
 /**
- * Default comparator for persons. Sorts first by last access date, then by favorite, then by name in alphabetical order,
- * then by phone in numeric order, then by address in alphabetical order, then by email in alphabetical order
+ * Compares persons by their last access date. Sorts first by last access date, then by favorite,
+ * then by name in lexicographic order, then by phone in numeric order, then by address in lexicographic order,
+ * then by email in lexicographic order
  */
 public class PersonRecentComparator implements Comparator<ReadOnlyPerson> {
     @Override
