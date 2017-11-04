@@ -17,6 +17,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class FindCommand extends Command {
 
+    //@@author newalter
     public static final String COMMAND_WORD = "find";
     public static final String COMMAND_ALIAS = "f";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose specified fields "
@@ -59,6 +60,7 @@ public class FindCommand extends Command {
 
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

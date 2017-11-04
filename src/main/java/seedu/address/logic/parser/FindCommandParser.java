@@ -38,8 +38,7 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     public FindCommand parse(String args) throws ParseException {
 
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, searchFields);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, searchFields);
         if (!isAnyPrefixPresent(argMultimap, searchFields)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
@@ -50,23 +49,23 @@ public class FindCommandParser implements Parser<FindCommand> {
             if (argMultimap.getValue(prefix).isPresent()) {
                 List<String> keywords = extractKeywords(argMultimap, prefix);
                 switch (prefix.getPrefix()) {
-                    case "n/":
-                        predicates.add(new NameContainsKeywordsPredicate(keywords));
-                        break;
-                    case "p/":
-                        predicates.add(new PhoneContainsKeywordsPredicate(keywords));
-                        break;
-                    case "e/":
-                        predicates.add(new EmailContainsKeywordsPredicate(keywords));
-                        break;
-                    case "a/":
-                        predicates.add(new AddressContainsKeywordsPredicate(keywords));
-                        break;
-                    case "t/":
-                        predicates.add(new ContainsTagsPredicate(keywords));
-                        break;
-                    default:
-                        assert false : "There should not be other prefixes";
+                case "n/":
+                    predicates.add(new NameContainsKeywordsPredicate(keywords));
+                    break;
+                case "p/":
+                    predicates.add(new PhoneContainsKeywordsPredicate(keywords));
+                    break;
+                case "e/":
+                    predicates.add(new EmailContainsKeywordsPredicate(keywords));
+                    break;
+                case "a/":
+                    predicates.add(new AddressContainsKeywordsPredicate(keywords));
+                    break;
+                case "t/":
+                    predicates.add(new ContainsTagsPredicate(keywords));
+                    break;
+                default:
+                    assert false : "There should not be other prefixes";
                 }
             } else {
                 predicates.add(FALSE);
@@ -74,9 +73,6 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         return new FindCommand(predicates);
-
-
-
     }
 
     /**
