@@ -1,0 +1,59 @@
+package seedu.address.model.person;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TypicalUserPerson.JAMES;
+import static seedu.address.testutil.TypicalUserPerson.WILLIAM;
+import static seedu.address.testutil.TypicalUserPerson.getTypicalUserPerson;
+
+import org.junit.Test;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.UpdateUserCommand;
+import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+
+//@@author bladerail
+public class UserPersonTest {
+
+    private Model model;
+    private UserPerson userPerson;
+
+    @Test
+    public void modifyUserPerson_returnsCorrectUserPerson() {
+        model = new ModelManager(new AddressBook(), new UserPrefs(), new UserPerson());
+        userPerson = model.getUserPerson();
+        model.updateUserPerson(JAMES);
+
+        Model expectedModel = new ModelManager(new AddressBook(), new UserPrefs(),
+                getTypicalUserPerson());
+        assertEquals(model, expectedModel);
+    }
+
+    @Test
+    public void equals() {
+        userPerson = new UserPerson();
+        UserPerson expectedUserPerson = getTypicalUserPerson();
+        assertFalse(userPerson.equals(expectedUserPerson));
+
+        userPerson = new UserPerson(JAMES);
+        assertTrue(userPerson.equals(expectedUserPerson));
+
+        userPerson = new UserPerson(WILLIAM);
+        assertFalse(userPerson.equals(expectedUserPerson));
+    }
+
+    /**
+     * Returns an {@code UserCommand} with parameters {@code descriptor}
+     */
+    private UpdateUserCommand prepareCommand(EditCommand.EditPersonDescriptor descriptor) {
+        UpdateUserCommand updateUserCommand = new UpdateUserCommand(descriptor);
+        updateUserCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return updateUserCommand;
+    }
+}

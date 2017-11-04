@@ -34,7 +34,7 @@ import seedu.address.model.person.weblink.WebLink;
  */
 public class UserProfileWindow extends UiPart<Region> {
 
-    private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
+    private static final Logger logger = LogsCenter.getLogger(UserProfileWindow.class);
     private static final String FXML = "UserProfileWindow.fxml";
     private static final String TITLE = "User Profile";
 

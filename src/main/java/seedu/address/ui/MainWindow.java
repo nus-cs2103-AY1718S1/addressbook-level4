@@ -116,7 +116,6 @@ public class MainWindow extends UiPart<Region> {
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
         menuItem.setAccelerator(keyCombination);
-
         /*
          * TODO: the code below can be removed once the bug reported here
          * https://bugs.openjdk.java.net/browse/JDK-8131666
@@ -134,8 +133,16 @@ public class MainWindow extends UiPart<Region> {
          */
         getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
+                logger.fine(String.format("Matching key combination: %1$s", keyCombination));
                 menuItem.getOnAction().handle(new ActionEvent());
                 event.consume();
+            } else if (keyCombination.getName().equals("F2") && keyCombination.match(event)) {
+                //Special case for "F2" key, which seems to be the only problem with this
+                if (event.getTarget() instanceof Region) {
+                    logger.fine("F2 pressed");
+                    menuItem.getOnAction().handle(new ActionEvent());
+                    event.consume();
+                }
             }
         });
     }
@@ -227,6 +234,7 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     private void handleUserProfile() {
+        logger.info("Opening User Profile Window");
         UserProfileWindow userProfileWindow = new UserProfileWindow(logic.getUserPerson());
         userProfileWindow.show();
     }

@@ -6,6 +6,7 @@ import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getSortedTypicalAddressBook;
 
@@ -68,16 +69,13 @@ public class UpdateUserCommandTest {
     }
 
     @Test
-    public void execute_noFieldSpecified_success() {
+    public void execute_noFieldSpecified_failure() {
         UpdateUserCommand updateUserCommand = prepareCommand(new EditPersonDescriptor());
-        ReadOnlyPerson editedPerson = model.getUserPerson();
+        ReadOnlyPerson originalUserPerson = model.getUserPerson();
 
-        String expectedMessage = String.format(UpdateUserCommand.MESSAGE_UPDATE_USER_SUCCESS, editedPerson);
+        String expectedMessage = String.format(UpdateUserCommand.MESSAGE_NOT_UPDATED);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs(),
-                new UserPerson(editedPerson));
-
-        assertCommandSuccess(updateUserCommand, model, expectedMessage, expectedModel);
+        assertCommandFailure(updateUserCommand, model, expectedMessage);
     }
 
     @Test

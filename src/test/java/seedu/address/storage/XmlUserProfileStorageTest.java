@@ -64,23 +64,23 @@ public class XmlUserProfileStorageTest {
     public void readAndSaveUserProfile_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempUserProfile.xml";
         UserPerson original = getTypicalUserPerson();
-        XmlUserProfileStorage XmlUserProfileStorage = new XmlUserProfileStorage(filePath);
+        XmlUserProfileStorage xmlUserProfileStorage = new XmlUserProfileStorage(filePath);
 
         //Save in new file and read back
-        XmlUserProfileStorage.saveUserPerson(original, filePath);
-        UserPerson readBack = XmlUserProfileStorage.readUserProfile(filePath).get();
+        xmlUserProfileStorage.saveUserPerson(original, filePath);
+        UserPerson readBack = xmlUserProfileStorage.readUserProfile(filePath).get();
         assertEquals(original, new UserPerson(readBack));
 
         //Modify data, overwrite exiting file, and read back
         original.update(new Person(HOON));
-        XmlUserProfileStorage.saveUserPerson(original, filePath);
-        readBack = XmlUserProfileStorage.readUserProfile(filePath).get();
+        xmlUserProfileStorage.saveUserPerson(original, filePath);
+        readBack = xmlUserProfileStorage.readUserProfile(filePath).get();
         assertEquals(original, new UserPerson(readBack));
 
         //Save and read without specifying file path
         original.update(new Person(IDA));
-        XmlUserProfileStorage.saveUserPerson(original); //file path not specified
-        readBack = XmlUserProfileStorage.readUserProfile().get(); //file path not specified
+        xmlUserProfileStorage.saveUserPerson(original); //file path not specified
+        readBack = xmlUserProfileStorage.readUserProfile().get(); //file path not specified
         assertEquals(original, new UserPerson(readBack));
 
     }
