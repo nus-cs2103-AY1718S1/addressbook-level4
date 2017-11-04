@@ -164,4 +164,9 @@ public class ParserUtil {
         return filePath;
     }
     //@@author
+
+    public static Optional<DateTime> parseNaturalLanguageTime(String name)
+            throws IllegalValueException, PropertyNotFoundException {
+        return Optional.empty();
+    }
 }
