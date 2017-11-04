@@ -50,6 +50,7 @@ import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.testutil.LessonBuilder;
 import seedu.address.testutil.LessonUtil;
 
+//@@author junming403
 public class AddCommandSystemTest extends AddressBookSystemTest {
 
     @Test

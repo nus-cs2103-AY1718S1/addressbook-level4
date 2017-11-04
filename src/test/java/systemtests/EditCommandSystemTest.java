@@ -32,21 +32,14 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_MA1101R;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_MA1102R;
 import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_CS2101;
 import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_MA1101R;
-import static seedu.address.model.ListingUnit.LESSON;
-import static seedu.address.model.ListingUnit.MODULE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
-import static seedu.address.testutil.TypicalLessons.CLASS_TYPE_LECTURE;
-import static seedu.address.testutil.TypicalLessons.KEYWORD_MATCHING_MA1101R;
 import static seedu.address.testutil.TypicalLessons.TYPICAL_CS2101;
 import static seedu.address.testutil.TypicalLessons.TYPICAL_MA1101R;
 
-import java.util.function.Predicate;
-
-import javafx.collections.ObservableList;
-import org.junit.After;
 import org.junit.Test;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -68,17 +61,22 @@ import seedu.address.model.module.TimeSlot;
 import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
-import seedu.address.model.module.predicates.FixedCodePredicate;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 import seedu.address.testutil.LessonBuilder;
 import seedu.address.testutil.LessonUtil;
 
+//@@author junming403
 public class EditCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void editLesson() throws Exception {
         /* ----------------- Performing edit operation while an lesson list is being shown ---------------------- */
+
+        /* list by module */
+        String listModuleCommand = ListCommand.COMMAND_WORD + " module";
+        executeCommand(listModuleCommand);
+
         /*
          * View all lessons of the module indexed with 1.
          */
@@ -118,7 +116,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
                 + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + LECTURER_DESC_MA1101R;
         // this can be misleading: card selection actually remains unchanged.
-        assertCommandSuccess(command, index, TYPICAL_MA1101R, index);
+        assertEditLessonSuccess(command, index, TYPICAL_MA1101R, index);
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
 
@@ -265,11 +263,11 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * Performs the same verification as {@code assertCommandSuccess(String, Index, ReadOnlyLesson, Index)} except that
      * the browser url and selected card remain unchanged.
      * @param toEdit the index of the current model's filtered list
-     * @see EditCommandSystemTest#assertCommandSuccess(String, Index, ReadOnlyLesson, Index)
+     * @see EditCommandSystemTest#assertEditLessonSuccess(String, Index, ReadOnlyLesson, Index)
      */
     private void assertCommandSuccess(String command, Index toEdit, ReadOnlyLesson editedLesson)
             throws DuplicateBookedSlotException {
-        assertCommandSuccess(command, toEdit, editedLesson, null);
+        assertEditLessonSuccess(command, toEdit, editedLesson, null);
     }
 
     /**
@@ -290,6 +288,29 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         default:
             break;
         }
+    }
+
+    /**
+     * Executes {@code command} and in addition,<br>
+     * 1. Asserts that the command box displays an empty string.<br>
+     * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
+     * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
+     * 4. Asserts that the browser url and selected card update accordingly depending on the card at
+     * {@code expectedSelectedCardIndex}.<br>
+     * 5. Asserts that the status bar's sync status changes.<br>
+     * 6. Asserts that the command box has the default style class.<br>
+     * Verifications 1 to 3 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
+     */
+    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
+                                      Index expectedSelectedCardIndex) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertCommandBoxShowsDefaultStyle();
+        assertSelectedCardUnchanged();
+        assertStatusBarUnchangedExceptSyncStatus();
     }
 
 
@@ -363,7 +384,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
             }
             expectedModel.updateFilteredLessonList(new UniqueLocationPredicate(expectedModel.getUniqueLocationSet()));
             assertCommandSuccess(command, expectedModel,
-                    String.format(EditCommand.MESSAGE_EDIT_LOCATION_SUCCESS, editedLocation), expectedSelectedCardIndex);
+                    String.format(EditCommand.MESSAGE_EDIT_LOCATION_SUCCESS, editedLocation),
+                    expectedSelectedCardIndex);
         } catch (DuplicateLessonException | LessonNotFoundException e) {
             throw new IllegalArgumentException(
                     "editedLesson is a duplicate in expectedModel, or it isn't found in the model.");
@@ -381,7 +403,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * @param toEdit the index of the current model's filtered list.
      * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
      */
-    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyLesson editedLesson,
+    private void assertEditLessonSuccess(String command, Index toEdit, ReadOnlyLesson editedLesson,
             Index expectedSelectedCardIndex) throws DuplicateBookedSlotException {
         Model expectedModel = getModel();
         ReadOnlyLesson lessonToEdit = expectedModel.getFilteredLessonList().get(toEdit.getZeroBased());
@@ -399,37 +421,6 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 String.format(EditCommand.MESSAGE_EDIT_LESSON_SUCCESS, editedLesson), expectedSelectedCardIndex);
     }
 
-    /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} except that the
-     * browser url and selected card remain unchanged.
-     * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
-     */
-    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
-        assertCommandSuccess(command, expectedModel, expectedResultMessage, null);
-    }
-
-    /**
-     * Executes {@code command} and in addition,<br>
-     * 1. Asserts that the command box displays an empty string.<br>
-     * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
-     * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
-     * 4. Asserts that the browser url and selected card update accordingly depending on the card at
-     * {@code expectedSelectedCardIndex}.<br>
-     * 5. Asserts that the status bar's sync status changes.<br>
-     * 6. Asserts that the command box has the default style class.<br>
-     * Verifications 1 to 3 are performed by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
-     */
-    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
-            Index expectedSelectedCardIndex) {
-        executeCommand(command);
-        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-        assertCommandBoxShowsDefaultStyle();
-        assertSelectedCardUnchanged();
-        assertStatusBarUnchangedExceptSyncStatus();
-    }
 
     /**
      * Executes {@code command} and in addition,<br>
