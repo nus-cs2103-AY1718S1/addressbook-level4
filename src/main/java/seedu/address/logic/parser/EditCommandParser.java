@@ -30,7 +30,7 @@ import seedu.address.model.lecturer.Lecturer;
  */
 public class EditCommandParser implements Parser<EditCommand> {
 
-    static final Pattern FIRST_INT_PATTERN = Pattern.compile("^(\\d+)");
+    private static final Pattern FIRST_INT_PATTERN = Pattern.compile("^(\\d+)");
 
     /**
      * Parses the given {@code String} of arguments in the context of the EditCommand
