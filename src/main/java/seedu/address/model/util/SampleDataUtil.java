@@ -67,7 +67,7 @@ public class SampleDataUtil {
     public static Account[] getSampleAccounts() {
         try {
             return new Account[] {
-                    new Account(new Username("private"), new Password("password")),
+                new Account(new Username("private"), new Password("password"))
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
