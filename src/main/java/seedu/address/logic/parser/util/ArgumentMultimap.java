@@ -1,6 +1,6 @@
-package seedu.address.logic.parser;
+package seedu.address.logic.parser.util;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.HashMap;

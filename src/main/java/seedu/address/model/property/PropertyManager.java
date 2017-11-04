@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import seedu.address.logic.parser.Prefix;
+import seedu.address.logic.parser.util.Prefix;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
 
 //@@author yunpengn

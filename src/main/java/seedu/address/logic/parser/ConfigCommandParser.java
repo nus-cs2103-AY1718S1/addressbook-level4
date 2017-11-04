@@ -2,10 +2,10 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_FULL_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MESSAGE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REGEX;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SHORT_NAME;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_FULL_NAME;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_MESSAGE;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_REGEX;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_SHORT_NAME;
 import static seedu.address.model.property.PropertyManager.DEFAULT_MESSAGE;
 import static seedu.address.model.property.PropertyManager.DEFAULT_REGEX;
 
@@ -17,6 +17,8 @@ import seedu.address.logic.commands.configs.ChangeTagColorCommand;
 import seedu.address.logic.commands.configs.ConfigCommand;
 import seedu.address.logic.commands.configs.ConfigCommand.ConfigType;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.util.ArgumentMultimap;
+import seedu.address.logic.parser.util.ArgumentTokenizer;
 import seedu.address.logic.parser.util.ParserUtil;
 
 //@@author yunpengn
