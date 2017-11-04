@@ -1,6 +1,14 @@
 package systemtests;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DISPLAYED_INDEX;
+import static seedu.address.logic.commands.RemarkCommand.MESSAGE_DELETE_REMARK_SUCCESS;
+import static seedu.address.logic.commands.RemarkCommand.MESSAGE_REMARK_MODULE_SUCCESS;
+import static seedu.address.logic.commands.RemarkCommand.MESSAGE_WRONG_LISTING_UNIT_FAILURE;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_LESSON;
+
 import org.junit.Test;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ListCommand;
@@ -12,13 +20,7 @@ import seedu.address.model.Model;
 import seedu.address.model.module.Code;
 import seedu.address.model.module.Remark;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DISPLAYED_INDEX;
-import static seedu.address.logic.commands.RemarkCommand.MESSAGE_DELETE_REMARK_SUCCESS;
-import static seedu.address.logic.commands.RemarkCommand.MESSAGE_REMARK_MODULE_SUCCESS;
-import static seedu.address.logic.commands.RemarkCommand.MESSAGE_WRONG_LISTING_UNIT_FAILURE;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_LESSON;
-
+//@@author junming403
 public class RemarkCommandSystemTest extends AddressBookSystemTest {
 
     private static final String SAMPLE_REMARK = "This is a sample remark";
