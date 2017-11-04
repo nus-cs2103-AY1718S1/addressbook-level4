@@ -7,7 +7,7 @@ import java.util.Date;
  * Represents the last time a person is accessed.
  * Guarantees immutability.
  */
-public class LastAccessDate {
+public class LastAccessDate implements Comparable<LastAccessDate> {
     private Date lastAccessDate;
 
     /**
@@ -50,5 +50,10 @@ public class LastAccessDate {
         // see https://stackoverflow.com/questions/7082553/java-util-date-clone-or-copy-to-not-expose-internal-reference
         Date copiedDate = new Date(originalDate.getTime());
         return copiedDate;
+    }
+
+    @Override
+    public int compareTo(LastAccessDate other) {
+        return this.lastAccessDate.compareTo(other.lastAccessDate);
     }
 }

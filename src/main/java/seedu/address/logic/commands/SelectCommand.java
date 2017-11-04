@@ -49,14 +49,14 @@ public class SelectCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex, socialType));
-
         ReadOnlyPerson selectedPerson = lastShownList.get(targetIndex.getZeroBased());
         try {
             model.selectPerson(selectedPerson);
         } catch (PersonNotFoundException e) {
-            assert false : "The selected person shuold be in the last shown list";
+            assert false : "The selected person should be in the last shown list";
         }
+
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex, socialType));
 
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
     }

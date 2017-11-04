@@ -10,14 +10,17 @@ import static seedu.address.model.person.PersonComparatorUtil.comparePhone;
 import java.util.Comparator;
 
 //@@author marvinchin
+
 /**
- * Default comparator for persons. Sorts first by favorites, then by name in alphabetical order,
+ * Default comparator for persons. Sorts first by last access date, then by favorite, then by name in alphabetical order,
  * then by phone in numeric order, then by address in alphabetical order, then by email in alphabetical order
  */
-public class PersonDefaultComparator implements Comparator<ReadOnlyPerson> {
+public class PersonRecentComparator implements Comparator<ReadOnlyPerson> {
     @Override
     public int compare(ReadOnlyPerson thisPerson, ReadOnlyPerson otherPerson) {
-        if (!thisPerson.getFavorite().equals(otherPerson.getFavorite())) {
+        if (!thisPerson.getLastAccessDate().equals(otherPerson.getLastAccessDate())) {
+            return compareLastAccessDate(thisPerson, otherPerson);
+        } else if (!thisPerson.getFavorite().equals(otherPerson.getFavorite())) {
             return compareFavorite(thisPerson, otherPerson);
         } else if (!thisPerson.getName().equals(otherPerson.getName())) {
             return compareName(thisPerson, otherPerson);
@@ -25,10 +28,8 @@ public class PersonDefaultComparator implements Comparator<ReadOnlyPerson> {
             return comparePhone(thisPerson, otherPerson);
         } else if (!thisPerson.getAddress().equals(otherPerson.getAddress())) {
             return compareAddress(thisPerson, otherPerson);
-        } else if (!thisPerson.getEmail().equals(otherPerson.getEmail())) {
-            return compareEmail(thisPerson, otherPerson);
         } else {
-            return compareLastAccessDate(thisPerson, otherPerson);
+            return compareEmail(thisPerson, otherPerson);
         }
     }
 }

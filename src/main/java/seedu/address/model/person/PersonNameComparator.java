@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static seedu.address.model.person.PersonComparatorUtil.compareAddress;
 import static seedu.address.model.person.PersonComparatorUtil.compareEmail;
 import static seedu.address.model.person.PersonComparatorUtil.compareFavorite;
+import static seedu.address.model.person.PersonComparatorUtil.compareLastAccessDate;
 import static seedu.address.model.person.PersonComparatorUtil.compareName;
 import static seedu.address.model.person.PersonComparatorUtil.comparePhone;
 
@@ -24,8 +25,10 @@ public class PersonNameComparator implements Comparator<ReadOnlyPerson> {
             return comparePhone(thisPerson, otherPerson);
         } else if (!thisPerson.getAddress().equals(otherPerson.getAddress())) {
             return compareAddress(thisPerson, otherPerson);
-        } else {
+        } else if (!thisPerson.getEmail().equals(otherPerson.getEmail())) {
             return compareEmail(thisPerson, otherPerson);
+        } else {
+            return compareLastAccessDate(thisPerson, otherPerson);
         }
     }
 }

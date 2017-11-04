@@ -63,7 +63,7 @@ public interface ReadOnlyPerson {
         getTags().forEach(builder::append);
         builder.append(" Social Infos: ");
         getSocialInfos().forEach(builder::append);
-        builder.append(" Last Accessed: ").append(getLastAccessDate());
+        // omit last access date as it doesn't provide much useful information to the user
         return builder.toString();
     }
 

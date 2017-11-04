@@ -6,6 +6,7 @@ import java.util.Set;
 
 import seedu.address.logic.commands.SortByDefaultCommand;
 import seedu.address.logic.commands.SortByNameCommand;
+import seedu.address.logic.commands.SortByRecentCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -29,6 +30,8 @@ public class SortCommandParser implements Parser<SortCommand> {
 
         if (options.contains(SortByNameCommand.COMMAND_OPTION)) {
             return new SortByNameCommand();
+        } else if (options.contains(SortByRecentCommand.COMMAND_OPTION)) {
+            return new SortByRecentCommand();
         } else {
             return new SortByDefaultCommand();
         }
