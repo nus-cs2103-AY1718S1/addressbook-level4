@@ -3,6 +3,8 @@ package seedu.address.model.meeting;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -91,6 +93,28 @@ public class UniqueMeetingList implements Iterable<Meeting> {
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }
+
+    //@@author LimYangSheng
+    /**
+     * Sorts the meeting list by date.
+     */
+    public void sortMeeting() {
+        Collections.sort(internalList, new Comparator<Meeting>() {
+            public int compare(Meeting one, Meeting other) {
+                for (int i = 0; i < one.value.length(); i++) {
+                    if (one.value.charAt(i) != (other.value.charAt(i))) {
+                        if (one.value.charAt(i) > other.value.charAt(i)) {
+                            return 1;
+                        } else {
+                            return -1;
+                        }
+                    }
+                }
+                return 0;
+            }
+        });
+    }
+    //@@author
 
     @Override
     public Iterator<Meeting> iterator() {
