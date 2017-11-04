@@ -22,7 +22,7 @@ import seedu.address.model.task.Task;
 /**
  * A parser class for addTask Command
  */
-public class AddTaskCommandParser {
+public class AddTaskCommandParser implements Parser<AddTaskCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddTask Command
