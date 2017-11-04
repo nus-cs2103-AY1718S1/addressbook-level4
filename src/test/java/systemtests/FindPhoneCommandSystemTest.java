@@ -23,7 +23,7 @@ public class FindPhoneCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void findPhone() {
-       
+        
         Model expectedModel = getModel();
 
         /* Case: find phone where phone list is not displaying the phone we are finding -> 1 phone found */
@@ -59,7 +59,7 @@ public class FindPhoneCommandSystemTest extends AddressBookSystemTest {
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
-        
+
         /* Case: redo previous find command -> rejected */
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
