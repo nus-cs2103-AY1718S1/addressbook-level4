@@ -1,7 +1,27 @@
 .background {
     -fx-background-color: derive(#1d1d1d, 20%);
     background-color: #383838; /* Used in the default.html file */
+    background-image: url(../images/Yellow_background.jpg);
+    background-size: 1000px;
 }
+
+.container {
+    padding-top: 30px;
+    padding-right: 100px;
+    padding-bottom: 60px;
+    padding-left: 100px;
+}
+
+.header {
+  font-family: "fantasy";
+  font-size: 45px;
+  color: dark blue;
+}
+
+.text {
+    font-family: "Verdana";
+    color: black;
+  }
 
 .label {
     -fx-font-size: 11pt;

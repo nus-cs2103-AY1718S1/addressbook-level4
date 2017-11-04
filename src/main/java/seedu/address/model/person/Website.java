@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author JavynThun
 /**
  * Represents a Person's website in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidWebsite(String)}
@@ -27,7 +28,7 @@ public class Website {
             this.value = "";
         } else {
             String trimmedWebsite = website.trim();
-            if (!isValidWebsite(trimmedWebsite)) {
+            if (trimmedWebsite.length() > 0 && !isValidWebsite(trimmedWebsite)) {
                 throw new IllegalValueException(MESSAGE_WEBSITE_CONSTRAINTS);
             }
             this.value = trimmedWebsite;
