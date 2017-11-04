@@ -18,9 +18,9 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.commandidentifier.CommandIdentifier;
-import seedu.address.model.person.address.Address;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.address.Address;
 import seedu.address.model.person.email.Email;
 import seedu.address.model.schedule.Activity;
 import seedu.address.model.schedule.ScheduleDate;
