@@ -580,7 +580,6 @@ public class CommandBox extends UiPart<Region> {
             break;
         }
     }
-
     //@@author
     /**
      * Initializes the history snapshot.
