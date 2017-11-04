@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.StringWriter;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.logging.Logger;
@@ -7,12 +8,14 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.concurrent.Worker;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
+import org.w3c.dom.Document;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BrowserUrlChangeEvent;
@@ -27,6 +30,12 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.social.SocialInfo;
+
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 /**
  * The Browser Panel of the App.
@@ -69,6 +78,7 @@ public class BrowserPanel extends UiPart<Region> {
         location = new Label();
         location.textProperty().bind(browser.getEngine().locationProperty());
         setEventHandlerForBrowserUrlChangeEvent();
+        setEventHandlerForBrowserUrlLoadEvent();
         registerAsAnEventHandler(this);
     }
 
@@ -123,6 +133,34 @@ public class BrowserPanel extends UiPart<Region> {
     //@@author
 
     //@@author alexfoodw
+    //method to convert Document to String
+    public String getStringFromDocument(Document doc) {
+        try {
+            DOMSource domSource = new DOMSource(doc);
+            StringWriter writer = new StringWriter();
+            StreamResult result = new StreamResult(writer);
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer transformer = tf.newTransformer();
+            transformer.transform(domSource, result);
+            return writer.toString();
+        } catch(TransformerException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    private void setEventHandlerForBrowserUrlLoadEvent() {
+        browser.getEngine().getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
+            if (Worker.State.SUCCEEDED.equals(newValue)) {
+                //TODO: alex see if want to make it only fb commands
+                String currentContent = getStringFromDocument(browser.getEngine().getDocument());
+                if (currentContent.contains("Sorry, this content isn't available right now") ||
+                        currentContent.contains("This page isn't available")){
+                    FacebookAddAllFriendsCommand.setupNextFriend();
+                }
+            }
+        });
+    }
+
     private void setEventHandlerForBrowserUrlChangeEvent() {
         location.textProperty()
                 .addListener((observable, oldValue, newValue) -> {
@@ -163,7 +201,6 @@ public class BrowserPanel extends UiPart<Region> {
                             break;
                         }
                     } else if (newValue.contains("photo.php?fbid")) {
-                        System.out.println("photo change");
                         logger.fine("browser url changed to : '" + newValue + "'");
                         raise(new BrowserUrlChangeEvent(FacebookAddAllFriendsCommand.COMMAND_ALIAS));
                     }
@@ -244,12 +281,13 @@ public class BrowserPanel extends UiPart<Region> {
             if(!FacebookConnectCommand.isAuthenticated()) {
                 FacebookConnectCommand.completeAuth(browser.getEngine().getLocation());
                 FacebookAddAllFriendsCommand.addAllFriends();
-                System.out.println("end auth");
             } else {
                 FacebookAddAllFriendsCommand.setUserID(browser.getEngine().getLocation());
                 FacebookAddCommand facebookAddCommandForAddAll = new FacebookAddCommand(true);
-                System.out.println("call complete");
                 logic.completeFacebookAddCommand(facebookAddCommandForAddAll, processType);
+
+                // go on to add next friend
+                FacebookAddAllFriendsCommand.setupNextFriend();
             }
             break;
 

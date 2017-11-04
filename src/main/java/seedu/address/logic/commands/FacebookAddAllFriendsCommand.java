@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,25 +9,19 @@ import facebook4j.Paging;
 import facebook4j.ResponseList;
 import facebook4j.TaggableFriend;
 import javafx.scene.web.WebEngine;
-import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.SocialInfoMapping;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Favorite;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.social.SocialInfo;
-import seedu.address.model.tag.Tag;
 import seedu.address.ui.BrowserPanel;
 
-import static java.lang.Thread.sleep;
 
 //@@author alexfoodw
 /**
  * Adds all available friends from a personal Facebook account.
  */
+//TODO: Alex - kaypoh page add all friends bug
+//TODO: Alex - add all method descriptions
+
 public class FacebookAddAllFriendsCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "facebookaddallfriends";
     public static final String COMMAND_ALIAS = "fbaddall";
@@ -38,7 +30,7 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
             + ": adds all available friends from a Facebook account\n"
             + "Alias: " + COMMAND_ALIAS + "\n";
     public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_ERROR = "Error with Facebook Tagable Friends API call.";
-    public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_URL_ERROR = "Error with User Photo URL";
+    public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_PAGING_ERROR = "Error with getting next page";
     public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_SUCCESS = "All Valid Friends added to Facebook!";
     public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATED = "User not authenticated, "
             + "log in to proceed.";
@@ -46,6 +38,22 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
     private static Facebook facebookInstance;
     private static String currentUserID;
     private static String currentUserName;
+    private static ResponseList<TaggableFriend> currentList;
+    private static Paging<TaggableFriend> currentPaging;
+    private static String currentPhotoID;
+    private static int friendIndex = 0;
+
+    public static String getCurrentPhotoID() {
+        return currentPhotoID;
+    }
+
+    public static int getFriendIndex() {
+        return friendIndex;
+    }
+
+    public static void setFriendIndex(int friendIndex) {
+        FacebookAddAllFriendsCommand.friendIndex = friendIndex;
+    }
 
     //TODO: add description
     public static String getCurrentUserID() {
@@ -58,55 +66,55 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
 
     public static void addAllFriends() throws CommandException {
         facebookInstance = FacebookConnectCommand.getFacebookInstance();
-        Paging<TaggableFriend> startingPaging;
         try {
-            ResponseList<TaggableFriend> startingList = facebookInstance.getTaggableFriends();
-            startingPaging = startingList.getPaging();
-            addAllFriendsLoop(startingList, startingPaging);
+            currentList = facebookInstance.getTaggableFriends();
+            currentPaging = currentList.getPaging();
+            addNextFriend();
         } catch (FacebookException e) {
             throw new CommandException(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_ERROR);
         }
 
     }
 
-    private static void addAllFriendsLoop(ResponseList<TaggableFriend> startingList,
-                                          Paging<TaggableFriend> startingPaging) {
-        ResponseList<TaggableFriend> currentList = startingList;
-        Paging<TaggableFriend> currentPaging = startingPaging;
-
-        TaggableFriend friend;
-        for(int i = 0; i < currentList.size(); i++){
-            friend = currentList.get(i);
-            currentUserName = friend.getName();
-            getUserID(friend);
-        }
-
-        //loop until all friends have been added
-        /*while(currentList != null){
-            // add all friends in current list
-            TaggableFriend friend;
-            String userId;
-            for(int i = 0; i < currentList.size(); i++){
-                friend = currentList.get(i);
-                userId = getUserID(friend);
+    public static void addNextFriend() throws CommandException {
+        if (friendIndex >= currentList.size()) {
+            // go to next list
+            try {
+                currentList = facebookInstance.fetchNext(currentPaging);
+            } catch (FacebookException e) {
+                throw new CommandException(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_PAGING_ERROR);
             }
-        }*/
-
-    }
-
-    private static void getUserID(TaggableFriend friend) {
+            if(currentList == null){
+                EventsCenter.getInstance().post(new NewResultAvailableEvent(
+                        MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_SUCCESS + " (From "
+                                + FacebookConnectCommand.getAuthenticatedUsername() + "'s account)", false));
+            }
+            friendIndex = 0;
+            currentPaging = currentList.getPaging();
+        }
+        TaggableFriend friend = currentList.get(friendIndex);
+        currentUserName = friend.getName();
         // extract photo ID
         String photoURL = friend.getPicture().getURL().toString();
         Pattern p = Pattern.compile("_(.*?)\\_");
         Matcher m = p.matcher(photoURL);
         m.matches();
         m.find();
-        String photoID = m.group(1);
+        currentPhotoID = m.group(1);
 
         // initialise getting user ID
         WebEngine webEngine = FacebookConnectCommand.getWebEngine();
-        webEngine.load(FacebookConnectCommand.FACEBOOK_DOMAIN + photoID);
-        System.out.println("userid setup");
+        webEngine.load(FacebookConnectCommand.FACEBOOK_DOMAIN + currentPhotoID);
+
+    }
+
+    public static void setupNextFriend() {
+        friendIndex++;
+        try {
+            addNextFriend();
+        } catch (CommandException e) {
+            new CommandException(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_ERROR);
+        }
     }
 
     public static void setUserID(String url){

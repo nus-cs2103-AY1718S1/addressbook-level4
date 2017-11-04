@@ -64,7 +64,6 @@ public class FacebookAddCommand extends UndoableCommand {
      * add all friends command.
      */
     public FacebookAddCommand(boolean isAddAll) {
-        System.out.println("fbadd constructed");
         this.isAddAll = isAddAll;
         toAddName = FacebookAddAllFriendsCommand.getCurrentUserName();
         toAddID = FacebookAddAllFriendsCommand.getCurrentUserID();
@@ -103,6 +102,7 @@ public class FacebookAddCommand extends UndoableCommand {
             Set<Tag> tags = new HashSet<>();
             tags.add(new Tag("facebookFriend"));
 
+            Name.FacebookContact = true;
             toAdd = new Person(new Name(toAddName), new Phone(), new Email(), new Address(),
                     new Favorite(false), tags, socialInfos);
         } catch (IllegalValueException e) {
@@ -112,7 +112,7 @@ public class FacebookAddCommand extends UndoableCommand {
         addContactToAddressBook();
         EventsCenter.getInstance().post(new NewResultAvailableEvent(
                 toAddName + MESSAGE_FACEBOOK_ADD_SUCCESS, false));
-
+        Name.FacebookContact = false;
     }
 
     /**
@@ -125,7 +125,7 @@ public class FacebookAddCommand extends UndoableCommand {
             requireNonNull(model);
             model.addPerson(toAdd);
         } catch (DuplicatePersonException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
     }
 
