@@ -23,7 +23,7 @@ public class TagFindCommandParser implements Parser<TagFindCommand> {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagFindCommand.MESSAGE_USAGE));
         }
-        TagMatchingKeywordPredicate predicate = new TagMatchingKeywordPredicate(trimmedArgs, true);
+        TagMatchingKeywordPredicate predicate = new TagMatchingKeywordPredicate(trimmedArgs, looseFind);
         return new TagFindCommand(predicate);
     }
 }

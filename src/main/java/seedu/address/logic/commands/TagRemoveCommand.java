@@ -78,17 +78,18 @@ public class TagRemoveCommand extends UndoableCommand {
         TagMatchingKeywordPredicate tagPredicate = new TagMatchingKeywordPredicate(tagInString1, looseFind);
 
         StringBuilder editedPersonDisplay = new StringBuilder();
+        ArrayList<Index> indexList = index;
         checkIndexInRange(lastShownList);
         if (index.size() == 0) {
             removeAll = true;
-            index = makeFullIndexList(lastShownList.size());
+            indexList = makeFullIndexList(lastShownList.size());
         }
-        ObservableList<ReadOnlyPerson> selectedPersonList = createSelectedPersonList(lastShownList);
+        ObservableList<ReadOnlyPerson> selectedPersonList = createSelectedPersonList(indexList, lastShownList);
         FilteredList<ReadOnlyPerson> tagFilteredPersonList = new FilteredList<>(selectedPersonList);
         tagFilteredPersonList.setPredicate(tagPredicate);
         if (tagFilteredPersonList.size() == 0) {
             throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND, tagInString));
-        } else if (!removeAll && tagFilteredPersonList.size() < index.size()) {
+        } else if (!removeAll && tagFilteredPersonList.size() < indexList.size()) {
             throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND_FOR_SOME, tagInString));
         }
         for (int i = 0; i < tagFilteredPersonList.size(); i++) {
@@ -106,7 +107,7 @@ public class TagRemoveCommand extends UndoableCommand {
             }
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             editedPersonDisplay.append(String.format(MESSAGE_REMOVE_TAG_SUCCESS, editedPerson));
-            if (i != index.size() - 1) {
+            if (i != indexList.size() - 1) {
                 editedPersonDisplay.append("\n");
             }
         }
@@ -122,10 +123,8 @@ public class TagRemoveCommand extends UndoableCommand {
         String tagName = tagToRemove.tagName;
         boolean removeFavourite = tagName.toLowerCase().contains(FAVOURITE_KEYWORD);
         for (Tag t : unmodifiable) {
-            if (!tagToRemove.equals(t)) {
-                if (!removeFavourite || !t.tagName.toLowerCase().contains(FAVOURITE_KEYWORD)) {
-                    modifiable.add(t);
-                }
+            if (!tagToRemove.equals(t) && !(removeFavourite && t.tagName.toLowerCase().contains(FAVOURITE_KEYWORD))) {
+                modifiable.add(t);
             }
         }
         return modifiable;
@@ -134,9 +133,10 @@ public class TagRemoveCommand extends UndoableCommand {
     /**
      * @param fullPersonList person list
      */
-    public ObservableList<ReadOnlyPerson> createSelectedPersonList(ObservableList<ReadOnlyPerson> fullPersonList) {
+    public ObservableList<ReadOnlyPerson> createSelectedPersonList(ArrayList<Index> indexList,
+                                                                   ObservableList<ReadOnlyPerson> fullPersonList) {
         ArrayList<ReadOnlyPerson> selectedPersonList = new ArrayList<>();
-        for (Index i : index) {
+        for (Index i : indexList) {
             ReadOnlyPerson personToEdit = fullPersonList.get(i.getZeroBased());
             selectedPersonList.add(personToEdit);
         }
