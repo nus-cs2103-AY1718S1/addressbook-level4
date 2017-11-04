@@ -1,7 +1,6 @@
 package guitests.guihandles;
 
 import javafx.scene.Node;
-import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author nahtanojmil
 /**
@@ -9,8 +8,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class GraphPanelHandle extends NodeHandle<Node> {
 
-    public static final String GRAPH_DISPLAY_ID = "#lineChart";
-    private ReadOnlyPerson person;
+    public static final String GRAPH_DISPLAY_ID = "#graphPanelPlaceholder";
 
     public GraphPanelHandle(Node graphPanelNode) {
         super(graphPanelNode);
@@ -20,6 +18,5 @@ public class GraphPanelHandle extends NodeHandle<Node> {
      * Returns the graph in the graph panel display.
      */
     public void getGraph() {
-    // TODO: get the graph of the person
     }
 }
