@@ -29,9 +29,11 @@ public class TaskListPanel extends UiPart<Region> {
 
     @FXML
     private ListView<TaskCard> taskListView;
+    private ObservableList<ReadOnlyTask> uiList;
 
     public TaskListPanel(ObservableList<ReadOnlyTask> taskList) {
         super(FXML);
+        uiList = taskList;
         setConnections(taskList);
         registerAsAnEventHandler(this);
     }
@@ -77,11 +79,10 @@ public class TaskListPanel extends UiPart<Region> {
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         if (event.message == "Listed all tasks") {
             this.showAllTask = true;
-            System.out.print("??");
         } else {
             this.showAllTask = false;
-            System.out.print("test");
         }
+        setConnections(uiList);
     }
 
     /**
@@ -94,7 +95,6 @@ public class TaskListPanel extends UiPart<Region> {
             super.updateItem(task, empty);
 
             if (showAllTask) {
-                //if (empty || task == null || task.getTask().getComplete()) {
                 if (empty || task == null) {
                     setGraphic(null);
                     setText(null);

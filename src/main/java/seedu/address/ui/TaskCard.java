@@ -21,7 +21,6 @@ import seedu.address.model.task.ReadOnlyTask;
 public class TaskCard extends UiPart<Region> {
 
     private static final String FXML = "TaskListCard.fxml";
-    private static final String ICON = "/images/click.png";
     private static ArrayList<String> colors = new ArrayList<String>(
             Arrays.asList("Tomato", "Orange", "DodgerBlue", "MediumSeaGreen", "SlateBlue", "Violet", "Maroon"));
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
@@ -58,10 +57,8 @@ public class TaskCard extends UiPart<Region> {
     public TaskCard(ReadOnlyTask task, int displayedIndex) {
         super(FXML);
         this.task = task;
-        //if (!task.getComplete()) {
         id.setText(displayedIndex + ". ");
         initTags(task);
-        //}
         initMark(task);
         bindListeners(task);
 
