@@ -692,6 +692,10 @@ public class QrButton extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.person = event.getNewSelection().person;
     }
+    @Subscribe
+    private void clickButton(QrEvent event ) {
+        bp.loadQrCode((ReadOnlyPerson) event.getPerson());
+    }
 }
 ```
 ###### \java\seedu\address\ui\TagTextField.java

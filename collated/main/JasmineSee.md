@@ -142,7 +142,7 @@ public class TagCommand extends Command {
 /**
  * Uploads image file to specified person.
  */
-public class UploadPhotoCommand extends UndoableCommand {
+public class UploadPhotoCommand extends Command {
     public static final String COMMAND_WORD = "photo";
     public static final String COMMAND_ALIAS = "p";
 
@@ -168,7 +168,7 @@ public class UploadPhotoCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -233,7 +233,7 @@ public class UploadPhotoCommand extends UndoableCommand {
      */
     private File saveFile(File file, Email email) {
 
-        File path = new File("src/main/photos/" + email.toString() + ".png");
+        File path = new File("photos/" + email.toString() + ".png");
 
         try {
             path.mkdirs();
@@ -354,13 +354,15 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
-    public void resetData(ReadOnlyAddressBook newData) {
+    public void resetData(ReadOnlyAddressBook newData, boolean isUndo) {
         addressBook.resetData(newData);
-        File dir = new File("src/main/photos/");
-        for (File file : dir.listFiles()) {
-            if (file.getName().equals("default.jpeg")) {
-            } else {
-                file.delete();
+
+        if (!isUndo) {
+            File dir = new File("photos/");
+            for (File file : dir.listFiles()) {
+                if (!(file.getName().equals("default.jpeg"))) {
+                    file.delete();
+                }
             }
         }
         indicateAddressBookChanged();
@@ -371,7 +373,7 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
-        File photoPath = new File("src/main/photos/" + target.getEmail().toString() + ".png");
+        File photoPath = new File("photos/" + target.getEmail().toString() + ".png");
         photoPath.delete();
         indicateAddressBookChanged();
     }
@@ -511,13 +513,14 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
 
-        Path path = Paths.get("src/main/photos/" + person.getEmail().toString() + ".png");
+        Path path = Paths.get(filePath + person.getEmail().toString() + ".png");
         if (Files.exists(path)) {
-            File filePic = new File("src/main/photos/" + person.getEmail().toString() + ".png");
+            File filePic = new File(filePath + person.getEmail().toString() + ".png");
             Image image = new Image(filePic.toURI().toString(), 150, 150, false, false);
             photo.setImage(image);
         } else {
-            File fileDefault = new File("src/main/photos/default.jpeg");
+            File fileDefault = new File(filePath + "default.jpeg");
+
             Image image = new Image(fileDefault.toURI().toString(), 150, 150, false, false);
             photo.setImage(image);
         }
@@ -527,15 +530,16 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         });
     }
-
     /**
      * Handles photo change
      */
     @Subscribe
     private void handlePhotoChange(PhotoChangeEvent event) {
-        File file = new File("src/main/photos/" + person.getEmail().toString() + ".png");
+
+        File file = new File(filePath + person.getEmail().toString() + ".png");
         //}
-        Path path = Paths.get("src/main/photos/" + person.getEmail().toString() + ".png");
+        Path path = Paths.get(filePath + person.getEmail().toString() + ".png");
+
         if (Files.exists(path)) {
             Image image = new Image(file.toURI().toString(), 150, 150, false, false);
             photo.setImage(image);

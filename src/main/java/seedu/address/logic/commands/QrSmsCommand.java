@@ -4,11 +4,11 @@ package seedu.address.logic.commands;
  * Method for application to call out for different QR Functions
  */
 //@@author danielweide
-public class QrGenerateCommand {
+public class QrSmsCommand {
     /**
-     * Method to Generate PhoneCall QRCode
+     * Method to Generate SMS to Contact QRCode
      */
-    public String qrCall(String phoneNum) {
+    public String qrSms(String phoneNum, String contactName) {
         String qrCodeA = "http://";
         String qrCodeB = "api.qrserver.com/";
         String qrCodeC = "v1/";
@@ -16,7 +16,7 @@ public class QrGenerateCommand {
         String qrCodeE = "?color=000000";
         String qrCodeF = "&bgcolor=FFFFFF";
         String qrCodeG = "&data";
-        String qrCodeH = "=tel";
+        String qrCodeH = "=SMSTO";
         String qrCodeI = "%3A";
         String qrCodeJ = "&qzone";
         String qrCodeK = "=1";
@@ -28,9 +28,10 @@ public class QrGenerateCommand {
         String qrCodeQ = "=L";
         String qrLineA = qrCodeA + qrCodeB + qrCodeC + qrCodeD + qrCodeE + qrCodeF
                 + qrCodeG + qrCodeH + qrCodeI;
-        String qrLineB = qrCodeJ + qrCodeK + qrCodeL + qrCodeM + qrCodeN + qrCodeO
+        String qrLineB = "Dear+" + contactName + "%2C";
+        String qrLineC = qrCodeJ + qrCodeK + qrCodeL + qrCodeM + qrCodeN + qrCodeO
                 + qrCodeP + qrCodeQ;
-        String fullQr = qrLineA + phoneNum + qrLineB;
+        String fullQr = qrLineA + phoneNum + qrLineB + qrLineC;
         return fullQr;
     }
 }
