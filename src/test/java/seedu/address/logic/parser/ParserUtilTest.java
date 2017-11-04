@@ -28,13 +28,6 @@ import seedu.address.model.property.PropertyManager;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
-    private static final String INVALID_NAME = "R@chel";
-    private static final String INVALID_PHONE = "+651234";
-    private static final String INVALID_TIME = "251019 9:30";
-    private static final String INVALID_ADDRESS = " ";
-    private static final String INVALID_EMAIL = "example.com";
-    private static final String INVALID_TAG = "#friend";
-
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_TIME = "25062006 09:39";
     private static final String VALID_PHONE = "123456";
@@ -42,6 +35,13 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+
+    private static final String INVALID_NAME = "R@chel";
+    private static final String INVALID_PHONE = "+651234";
+    private static final String INVALID_TIME = "something invalid here";
+    private static final String INVALID_ADDRESS = " ";
+    private static final String INVALID_EMAIL = "example.com";
+    private static final String INVALID_TAG = "#friend";
 
     static {
         PropertyManager.initializePropertyManager();
@@ -146,6 +146,7 @@ public class ParserUtilTest {
 
         assertEquals(expectedPhone, actualPhone.get());
     }
+
     @Test
     public void parseTime_validValue_returnsTime() throws Exception {
         DateTime expectedTime = new DateTime(VALID_TIME);
