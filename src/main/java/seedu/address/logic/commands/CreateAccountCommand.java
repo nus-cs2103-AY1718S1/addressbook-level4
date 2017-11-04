@@ -1,15 +1,17 @@
 package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.credentials.Account;
-import seedu.address.model.credentials.ReadOnlyAccount;
-import seedu.address.model.credentials.exceptions.DuplicateAccountException;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.credentials.Account;
+import seedu.address.model.credentials.ReadOnlyAccount;
+import seedu.address.model.credentials.exceptions.DuplicateAccountException;
+
+/**
+ *
+ */
 public class CreateAccountCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "Create";

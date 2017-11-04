@@ -1,12 +1,15 @@
 package seedu.address.model.credentials;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-public class Account implements ReadOnlyAccount{
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+
+/**
+ *
+ */
+public class Account implements ReadOnlyAccount {
     private ObjectProperty<Username> username;
     private ObjectProperty<Password> password;
 
@@ -24,8 +27,7 @@ public class Account implements ReadOnlyAccount{
     }
 
 
-    public void setUsername(Username username)
-    {
+    public void setUsername(Username username) {
         this.username.set(requireNonNull(username));
     }
 

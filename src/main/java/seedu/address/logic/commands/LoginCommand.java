@@ -1,18 +1,14 @@
 //@@author cqhchan
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
+
 import java.util.logging.Logger;
 
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.credentials.Account;
 import seedu.address.model.credentials.ReadOnlyAccount;
-import seedu.address.model.credentials.UsernamePasswordCheck;
-import seedu.address.ui.Ui;
-
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
-
 //@@author cqhchan
 /**
  *
@@ -21,10 +17,10 @@ public class LoginCommand extends Command {
 
 
     public static final String COMMAND_WORD = "login";
+    public static final String MESSAGE_FAILURE = "Username or Password Incorrect";
+    public static final String MESSAGE_SUCCESS = "Login Successful";
     private static String MESSAGE_LOGIN_ACKNOWLEDGEMENT;
-    public static String MESSAGE_SUCCESS = "Login Successful";
-    public static String MESSAGE_FAILURE = "Username or Password Incorrect";
-    public static String MESSAGE_USAGE = COMMAND_WORD + ": Login to private Database. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Login to private Database. "
             + "Parameters: "
             + PREFIX_USERNAME + "USERNAME "
             + PREFIX_PASSWORD + "PASSWORD";
@@ -38,9 +34,9 @@ public class LoginCommand extends Command {
     @Override
     public CommandResult execute() {
 
-        for(ReadOnlyAccount tempaccount : model.getFilteredAccountList()){
-            if (account.getUsername().fullName.equals(tempaccount.getUsername().fullName)&&
-            account.getPassword().value.equals(tempaccount.getPassword().value)) {
+        for (ReadOnlyAccount tempaccount : model.getFilteredAccountList()) {
+            if (account.getUsername().fullName.equals(tempaccount.getUsername().fullName)
+                    && account.getPassword().value.equals(tempaccount.getPassword().value)) {
                 logger.info("Credentials Accepted");
                 MainApp.getUi().restart(account.getUsername().fullName);
                 return new CommandResult(MESSAGE_SUCCESS);

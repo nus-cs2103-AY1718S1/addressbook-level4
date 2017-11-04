@@ -1,17 +1,22 @@
 package seedu.address.model.credentials;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import org.fxmisc.easybind.EasyBind;
-import seedu.address.model.credentials.exceptions.DuplicateAccountException;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import static java.util.Objects.requireNonNull;
 
 import java.util.Iterator;
 import java.util.List;
 
-import static java.util.Objects.requireNonNull;
+import org.fxmisc.easybind.EasyBind;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import seedu.address.model.credentials.exceptions.DuplicateAccountException;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+
+/**
+ *
+ */
 public class UniqueAccountList implements Iterable<Account> {
 
     private final ObservableList<Account> internalList = FXCollections.observableArrayList();

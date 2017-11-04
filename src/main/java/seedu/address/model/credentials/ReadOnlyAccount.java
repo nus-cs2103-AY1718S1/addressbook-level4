@@ -2,6 +2,9 @@ package seedu.address.model.credentials;
 
 import javafx.beans.property.ObjectProperty;
 
+/**
+ *
+ */
 public interface ReadOnlyAccount {
 
     ObjectProperty<Username> usernameProperty();
