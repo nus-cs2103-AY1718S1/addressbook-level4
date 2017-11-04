@@ -66,7 +66,7 @@ public class Name {
      */
     public static String toCapitalized(String s) {
 
-        final String DELIMITERS = " ";
+        final String delimiters = " ";
         StringBuilder newString = new StringBuilder();
         boolean isCapital = true;
 
@@ -74,7 +74,7 @@ public class Name {
             c = (isCapital) ? Character.toUpperCase(c) : Character.toLowerCase(c);
             newString.append(c);
 
-            isCapital = (DELIMITERS.indexOf((int) c) >= 0);
+            isCapital = (delimiters.indexOf((int) c) >= 0);
         }
         return newString.toString();
     }
