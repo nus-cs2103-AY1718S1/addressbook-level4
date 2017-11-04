@@ -15,6 +15,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.JumpToTabRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
@@ -164,6 +165,10 @@ public class GraphPanel extends UiPart<Region> {
         barChart.setLegendVisible(false);
     }
 
+    private void selectTab(int index) {
+        tabPaneGraphs.getSelectionModel().select(index);
+    }
+
     /**
      * Resets both graphs and series when a new person is selected.
      */
@@ -181,5 +186,11 @@ public class GraphPanel extends UiPart<Region> {
         resetGraphStats();
         displayLineGraphStats(event.getNewSelection().person);
         displayBarGraphStats(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handleTabPanelSelectionChangedEvent (JumpToTabRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        selectTab(event.targetIndex);
     }
 }

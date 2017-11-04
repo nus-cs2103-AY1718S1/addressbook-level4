@@ -12,11 +12,10 @@ public class TabCommand extends Command {
     public static final String COMMAND_WORD = "tab";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Graph displayed changed. "
-            + "Parameters: INDEX (must be a positive integer) "
+            + " : Parameters: INDEX (must be a positive integer) "
             + "Example: " + COMMAND_WORD + " 1 ";
 
-    public static final String MESSAGE_SELECT_TAB_SUCCESS = "Selected Tab: %1$s";
+    public static final String MESSAGE_SELECT_TAB_SUCCESS = "Selected Tab: a?[1-2]";
     public static final String MESSAGE_INVALID_TAB_INDEX = "Invalid Tab Value";
 
     // there are only 2 types of graphs available for display (Graph / Bar)

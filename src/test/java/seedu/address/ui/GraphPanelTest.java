@@ -2,7 +2,9 @@ package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.EventsUtil.postNow;
+import static seedu.address.testutil.TypicalIndexes.INDEX_ONE;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
@@ -16,6 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import javafx.scene.chart.XYChart;
+import seedu.address.commons.events.ui.JumpToTabRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
@@ -62,5 +65,11 @@ public class GraphPanelTest extends GuiUnitTest {
         //select BOB
         postNow(new PersonPanelSelectionChangedEvent(new PersonCard(BOB, 1)));
         assertFalse(BOB.getFormClass().equals(TYPICAL_PERSONS.get(0).getFormClass()));
+    }
+
+    @Test
+    public void changeTab() throws Exception {
+        postNow(new JumpToTabRequestEvent(INDEX_ONE));
+        assertTrue(graphPanelHandle.getTabPanel().getSelectionModel().isSelected(0));
     }
 }

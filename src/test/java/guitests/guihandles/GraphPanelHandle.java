@@ -1,6 +1,7 @@
 package guitests.guihandles;
 
 import javafx.scene.Node;
+import javafx.scene.control.TabPane;
 
 //@@author nahtanojmil
 /**
@@ -9,14 +10,19 @@ import javafx.scene.Node;
 public class GraphPanelHandle extends NodeHandle<Node> {
 
     public static final String GRAPH_DISPLAY_ID = "#graphPanelPlaceholder";
+    private static final String TAB_PANEL_ID = "#tabPaneGraphs";
+
+    private final TabPane tabPane;
 
     public GraphPanelHandle(Node graphPanelNode) {
         super(graphPanelNode);
+        this.tabPane = getChildNode(TAB_PANEL_ID);
     }
 
-    /**
-     * Returns the graph in the graph panel display.
-     */
-    public void getGraph() {
+    public TabPane getTabPanel() {
+        return tabPane;
     }
+
+
+
 }
