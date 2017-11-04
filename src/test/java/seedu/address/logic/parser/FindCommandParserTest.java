@@ -45,8 +45,8 @@ public class FindCommandParserTest {
                 " n/Alice Bob e/alice@example.com a/Clementi t/family friends p/88887777", expectedFindCommand);
 
         // multiple whitespaces between keywords
-        assertParseSuccess(parser,"  n/Alice Bob \t e/alice@example.com " +
-                "a/Clementi t/family \n friends \t p/88887777 \t ", expectedFindCommand);
+        assertParseSuccess(parser, "  n/Alice Bob \t e/alice@example.com "
+                + "a/Clementi t/family \n friends \t p/88887777 \t ", expectedFindCommand);
     }
 
 }
