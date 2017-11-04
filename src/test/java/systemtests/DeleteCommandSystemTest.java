@@ -13,7 +13,6 @@ import static seedu.address.testutil.TypicalLessonComponents.GEQ1000;
 import static seedu.address.testutil.TypicalLessonComponents.MA1101R;
 import static seedu.address.testutil.TypicalLessons.CLASS_TYPE_LECTURE;
 import static seedu.address.testutil.TypicalLessons.KEYWORD_MATCHING_LT27;
-import static seedu.address.testutil.TypicalLessons.KEYWORD_MATCHING_MA1101R;
 
 import java.util.ArrayList;
 
@@ -36,6 +35,7 @@ import seedu.address.model.module.Location;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 
+//@@author junming403
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
     private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =
@@ -109,7 +109,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
         assertCommandFailure(command, MESSAGE_INVALID_DISPLAYED_INDEX);
 
-         /* ----------------- Performing delete operation while a location list is being shown -------------------- */
+        /* ----------------- Performing delete operation while a location list is being shown -------------------- */
 
         String listLocationCommand = ListCommand.COMMAND_WORD + " location";
         executeCommand(listLocationCommand);

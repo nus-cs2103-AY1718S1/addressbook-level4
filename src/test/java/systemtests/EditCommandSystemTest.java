@@ -21,7 +21,6 @@ import static seedu.address.logic.commands.CommandTestUtil.MA1101R_CODE_PREDICAT
 import static seedu.address.logic.commands.CommandTestUtil.TIMESLOT_DESC_CS2101;
 import static seedu.address.logic.commands.CommandTestUtil.TIMESLOT_DESC_MA1101R;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CLASSTYPE_MA1101R;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CODE_CS2101;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CODE_MA1101R;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CODE_MA1102R;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUP_MA1101R;
@@ -197,9 +196,6 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
         command = " " + EditCommand.COMMAND_WORD + "    1     " + VALID_CODE_MA1101R;
         assertCommandSuccess(command, index, VALID_CODE_MA1101R);
-
-        command = " " + EditCommand.COMMAND_WORD + "    1     " + VALID_CODE_CS2101;
-        assertCommandSuccess(command, index, VALID_CODE_CS2101);
 
         /* Case: invalid index (0) -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + VALID_CODE_MA1101R,
