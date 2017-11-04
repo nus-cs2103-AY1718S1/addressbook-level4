@@ -1,3 +1,4 @@
+//@@author nguyenvanhoang7398
 package seedu.address.ui;
 
 import java.awt.image.BufferedImage;
@@ -38,6 +39,7 @@ public class ProfilePanel extends UiPart<Region> {
     private static final String DEFAULT_IMAGE_STORAGE_PREFIX = "data/";
     private static final String DEFAULT_IMAGE_STORAGE_SUFFIX = ".png";
     private static final String DEFAULT_PROFILE_PICTURE_PATH = "/images/default_profile_picture.png";
+    private static final String DEFAULT_PROFILE_BACKGROUND_PATH = "/images/profile_background.jpg";
     private static String[] colors = { "red", "yellow", "blue", "orange", "indigo", "green", "violet", "black" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
@@ -152,7 +154,9 @@ public class ProfilePanel extends UiPart<Region> {
      * Initialize panel's style such as color
      */
     private void initStyle() {
-        profilePane.setStyle("-fx-background-color: #FFFFFF;");
+        profilePane.setStyle(String.format("-fx-background-image: url(%s); "
+                        + "-fx-background-position: center center; -fx-background-size: cover;",
+                DEFAULT_PROFILE_BACKGROUND_PATH));
     }
 
     /**

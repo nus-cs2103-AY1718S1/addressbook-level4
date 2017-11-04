@@ -45,6 +45,7 @@
       <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
     </VBox>
 
+    <!-- @@author nguyenvanhoang7398 -->
     <StackPane fx:id="profilePlaceholder" minWidth="320" >
       <padding>
         <Insets top="10" right="10" bottom="10" left="10" />

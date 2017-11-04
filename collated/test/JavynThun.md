@@ -1,11 +1,11 @@
 # JavynThun
-###### /java/guitests/guihandles/PersonCardHandle.java
+###### \java\guitests\guihandles\PersonCardHandle.java
 ``` java
     public String getOccupation() {
         return occupationLabel.getText();
     }
 ```
-###### /java/guitests/guihandles/PersonCardHandle.java
+###### \java\guitests\guihandles\PersonCardHandle.java
 ``` java
     public String getRemark() {
         return remarkLabel.getText();
@@ -15,7 +15,7 @@
         return websiteLabel.getText();
     }
 ```
-###### /java/seedu/address/logic/commands/RemarkCommandTest.java
+###### \java\seedu\address\logic\commands\RemarkCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for RemarkCommand.
@@ -112,7 +112,7 @@ public class RemarkCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_remark() throws Exception {
@@ -122,7 +122,7 @@ public class RemarkCommandTest {
         assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remark), command);
     }
 ```
-###### /java/seedu/address/logic/parser/ParserUtilTest.java
+###### \java\seedu\address\logic\parser\ParserUtilTest.java
 ``` java
     @Test
     public void parseOccupation_null_throwsNullPointerException() throws Exception {
@@ -148,7 +148,7 @@ public class RemarkCommandTest {
         assertEquals(expectedOccupation, actualOccupation.get());
     }
 ```
-###### /java/seedu/address/logic/parser/ParserUtilTest.java
+###### \java\seedu\address\logic\parser\ParserUtilTest.java
 ``` java
     @Test
     public void parseWebsite_null_throwsNullPointerException() throws Exception {
@@ -175,7 +175,7 @@ public class RemarkCommandTest {
         assertEquals(expectedWebsite, actualWebsite.get());
     }
 ```
-###### /java/seedu/address/logic/parser/RemarkCommandParserTest.java
+###### \java\seedu\address\logic\parser\RemarkCommandParserTest.java
 ``` java
 public class RemarkCommandParserTest {
     private RemarkCommandParser parser = new RemarkCommandParser();
@@ -205,7 +205,7 @@ public class RemarkCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/model/person/OccupationTest.java
+###### \java\seedu\address\model\person\OccupationTest.java
 ``` java
 public class OccupationTest {
 
@@ -233,7 +233,7 @@ public class OccupationTest {
 
 }
 ```
-###### /java/seedu/address/model/person/RemarkTest.java
+###### \java\seedu\address\model\person\RemarkTest.java
 ``` java
 public class RemarkTest {
 
@@ -260,7 +260,7 @@ public class RemarkTest {
     }
 }
 ```
-###### /java/seedu/address/model/person/WebsiteTest.java
+###### \java\seedu\address\model\person\WebsiteTest.java
 ``` java
 public class WebsiteTest {
 
@@ -291,7 +291,7 @@ public class WebsiteTest {
 
 }
 ```
-###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
+###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
 ``` java
     /**
      * Sets the {@code Website} of the {@code EditPersonDescriptor} that we are building.
@@ -305,7 +305,7 @@ public class WebsiteTest {
         return this;
     }
 ```
-###### /java/seedu/address/testutil/PersonBuilder.java
+###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
     /**
      * Sets the {@code Occupation} of the {@code Person} that we are building.
@@ -319,7 +319,7 @@ public class WebsiteTest {
         return this;
     }
 ```
-###### /java/seedu/address/testutil/PersonBuilder.java
+###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
     /**
      *  Sets the {@code Remark} of the {@code Person} that we are building.

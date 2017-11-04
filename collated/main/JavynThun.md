@@ -1,5 +1,5 @@
 # JavynThun
-###### /java/seedu/address/logic/commands/RemarkCommand.java
+###### \java\seedu\address\logic\commands\RemarkCommand.java
 ``` java
 /**
  *  Changes the remark of an existing person in the address book
@@ -95,16 +95,16 @@ public class RemarkCommand extends UndoableCommand {
 
 }
 ```
-###### /java/seedu/address/logic/parser/CliSyntax.java
+###### \java\seedu\address\logic\parser\CliSyntax.java
 ``` java
     public static final Prefix PREFIX_OCCUPATION = new Prefix("o/");
 ```
-###### /java/seedu/address/logic/parser/CliSyntax.java
+###### \java\seedu\address\logic\parser\CliSyntax.java
 ``` java
     public static final Prefix PREFIX_REMARK = new Prefix("r/");
     public static final Prefix PREFIX_WEBSITE = new Prefix("w/");
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> occupation} into an {@code Optional<Occupation>} if {@code occupation} is
@@ -116,7 +116,7 @@ public class RemarkCommand extends UndoableCommand {
         return occupation.isPresent() ? Optional.of(new Occupation(occupation.get())) : Optional.empty();
     }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
@@ -136,7 +136,7 @@ public class RemarkCommand extends UndoableCommand {
         return website.isPresent() ? Optional.of(new Website(website.get())) : Optional.empty();
     }
 ```
-###### /java/seedu/address/logic/parser/RemarkCommandParser.java
+###### \java\seedu\address\logic\parser\RemarkCommandParser.java
 ``` java
 /**
  * Parser for RemarkCommand
@@ -165,7 +165,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/person/Occupation.java
+###### \java\seedu\address\model\person\Occupation.java
 ``` java
 /**
  * Represents a Person's occupation in the address book.
@@ -224,7 +224,7 @@ public class Occupation {
 
 }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     public void setOccupation(Occupation occupation) {
         this.occupation.set(requireNonNull(occupation));
@@ -240,7 +240,7 @@ public class Occupation {
         return occupation.get();
     }
 ```
-###### /java/seedu/address/model/person/Remark.java
+###### \java\seedu\address\model\person\Remark.java
 ``` java
 /**
  *  Represents a Person's remark in the address book.
@@ -275,7 +275,7 @@ public class Remark {
     }
 }
 ```
-###### /java/seedu/address/model/person/Website.java
+###### \java\seedu\address\model\person\Website.java
 ``` java
 /**
  * Represents a Person's website in the address book.

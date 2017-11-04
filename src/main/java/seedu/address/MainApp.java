@@ -111,6 +111,7 @@ public class MainApp extends Application {
         LogsCenter.init(config);
     }
 
+    //@@author nguyenvanhoang7398
     /**
      * Initialize empty storage folder to store profile picture
      */
@@ -120,6 +121,7 @@ public class MainApp extends Application {
             logger.warning("Problem while initializing empty storage.");
         }
     }
+    //@@author
 
     /**
      * Returns a {@code Config} using the file at {@code configFilePath}. <br>
