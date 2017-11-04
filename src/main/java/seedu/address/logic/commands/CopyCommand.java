@@ -57,7 +57,7 @@ public class CopyCommand extends Command {
      * @exception  CommandException if the {@code targetIndex}
      *             argument is greater than or equal to the {@code lastShownList} size.
      */
-    private String getTargetEmail() throws CommandException {
+    public String getTargetEmail() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         boolean indexIsOutOfBounds = targetIndex.getZeroBased() >= lastShownList.size();
         if (indexIsOutOfBounds) {
