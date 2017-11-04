@@ -4,7 +4,6 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.relationship.Relationship;
-import seedu.address.model.relationship.UniqueRelList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -27,7 +26,7 @@ public interface ReadOnlyPerson {
     Email getEmail();
 
     ObjectProperty<Address> addressProperty();
-
+    //@@author sebtsh
     Address getAddress();
 
     ObjectProperty<Company> companyProperty();
@@ -49,7 +48,7 @@ public interface ReadOnlyPerson {
     ObjectProperty<Note> noteProperty();
 
     Note getNote();
-
+    //@@author
     ObjectProperty<Photo> photoProperty();
 
     Photo getPhoto();
@@ -57,10 +56,10 @@ public interface ReadOnlyPerson {
     ObjectProperty<UniqueTagList> tagProperty();
 
     Set<Tag> getTags();
-
+    //@@author huiyiiih
     Set<Relationship> getRelation();
-    ObjectProperty<UniqueRelList> relProperty();
-
+    //@@author
+    //@@author sebtsh
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */
@@ -109,5 +108,5 @@ public interface ReadOnlyPerson {
         getTags().forEach(builder::append);
         return builder.toString();
     }
-
+    //@@author
 }

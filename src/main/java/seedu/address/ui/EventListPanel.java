@@ -13,13 +13,17 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowCalendarEvent;
 import seedu.address.model.event.ReadOnlyEvent;
 
+//@@author a0107442n
 /**
  * Panel containing the list of events.
- * //@@author yangshuang
+ *
  */
 public class EventListPanel extends UiPart<Region> {
     private static final String FXML = "EventListPanel.fxml";
@@ -39,7 +43,19 @@ public class EventListPanel extends UiPart<Region> {
                 eventList, (event) -> new EventCard(event, eventList.indexOf(event) + 1));
         eventListView.setItems(mappedList);
         eventListView.setCellFactory(listView -> new EventListViewCell());
+        logger.info("UI ------ Got eventList with " + eventList.size() + " events.");
         setEventHandlerForSelectionChangeEvent();
+    }
+
+    /**
+     * Upon receiving an AddressBookChangedEvent, update the event list accordingly.
+     */
+    @Subscribe
+    public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
+        ObservableList<ReadOnlyEvent> eventList = abce.data.getEventList();
+        ObservableList<EventCard> mappedList = EasyBind.map(
+                eventList, (event) -> new EventCard(event, eventList.indexOf(event) + 1));
+        eventListView.setItems(mappedList);
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
@@ -62,11 +78,30 @@ public class EventListPanel extends UiPart<Region> {
         });
     }
 
+
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }
+
+    //@@author sebtsh
+    @Subscribe
+    /**
+     *Clears the event card selection when a person is selected.
+     */
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        eventListView.getSelectionModel().clearSelection();
+    }
+
+    @Subscribe
+    /**
+     *Clears the event card selection when the calendar is opened.
+     */
+    private void handleShowCalendarEvent(ShowCalendarEvent event) {
+        eventListView.getSelectionModel().clearSelection();
+    }
+    //@@author
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code EventCard}.

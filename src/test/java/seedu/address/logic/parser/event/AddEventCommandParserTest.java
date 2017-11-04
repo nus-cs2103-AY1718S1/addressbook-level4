@@ -1,4 +1,3 @@
-//@@author A0162268B
 package seedu.address.logic.parser.event;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -25,6 +24,7 @@ import seedu.address.model.event.Title;
 import seedu.address.model.event.timeslot.Timeslot;
 import seedu.address.testutil.EventBuilder;
 
+//@@author reginleiff
 public class AddEventCommandParserTest {
     private AddEventCommandParser parser = new AddEventCommandParser();
 

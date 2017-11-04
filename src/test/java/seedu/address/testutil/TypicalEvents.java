@@ -1,4 +1,4 @@
-//@@author A0162268B
+//@@author reginleiff
 package seedu.address.testutil;
 
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import java.util.List;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.EventTimeClashException;
 
 /**
  * A utility class containing a list of {@code Event} objects to be used in tests.
@@ -21,6 +22,8 @@ public class TypicalEvents {
             .withTimeslot("09/12/2017 1300-1500").withDescription("We are screwed").build();
     public static final ReadOnlyEvent MOURN = new EventBuilder().withTitle("Bai Ah Gong")
             .withTimeslot("10/12/2017 1900-2300").withDescription("@ CCK Cemetery").build();
+    public static final ReadOnlyEvent DEADLINE = new EventBuilder().withTitle("Paper Submission")
+            .withTimeslot("10/12/2017 2359-2359").withDescription("Submit on IVLE").build();
 
     private TypicalEvents() {
     } // prevents instantiation
@@ -31,7 +34,11 @@ public class TypicalEvents {
     public static AddressBook getTypicalEventAddressBook() {
         AddressBook ab = new AddressBook();
         for (ReadOnlyEvent event : getTypicalEvents()) {
-            ab.addEvent(event);
+            try {
+                ab.addEvent(event);
+            } catch (EventTimeClashException e) {
+                assert false : "not possible";
+            }
         }
         return ab;
     }

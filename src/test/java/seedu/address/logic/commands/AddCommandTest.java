@@ -125,7 +125,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void sortPerson(int type) {
+        public void sortPerson(String type) {
             fail("This method should not be called.");
         }
 
@@ -164,6 +164,12 @@ public class AddCommandTest {
         @Override
         public void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate) {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyEvent> getSchedule() {
+            fail("This method should not be called.");
+            return null;
         }
     }
 

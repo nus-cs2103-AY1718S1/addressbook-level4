@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -36,9 +37,12 @@ public class ParserUtilTest {
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
-    private static final String VALID_PHOTO = "src/main/resources/images/default.jpg";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+
+    private static final String s = File.separator;
+    private static final String VALID_PHOTO = "src" + s + "main" + s
+            + "resources" + s + "images" + s + "default.jpg";
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();

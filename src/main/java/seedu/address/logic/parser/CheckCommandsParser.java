@@ -1,3 +1,4 @@
+//@@author huiyiiih
 package seedu.address.logic.parser;
 
 import java.util.Arrays;
@@ -33,19 +34,19 @@ public class CheckCommandsParser {
         /**
          * All the synonyms/aliases of the different commands
          */
-        final String[] subAddCommands = new String[] {"add", "a", "input", "create", "insert"};
-        final String[] subClearCommands = new String[] {"clear", "c", "empty", "clean"};
-        final String[] subDeleteCommands = new String[] {"delete", "d", "remove", "throw", "erase"};
-        final String[] subEditCommands = new String[] {"edit", "e", "change", "revise", "modify"};
-        final String[] subExitCommands = new String[] {"exit", "quit"};
-        final String[] subFindCommands = new String[] {"find", "f", "look", "search", "check"};
-        final String[] subHelpCommands = new String[] {"help", "info"};
-        final String[] subHistoryCommands = new String[] {"history", "h", "past"};
-        final String[] subListCommands = new String[] {"list", "l", "show", "display"};
-        final String[] subRedoCommands = new String[] {"redo", "r"};
-        final String[] subSelectCommands = new String[] {"select", "s", "choose", "pick"};
-        final String[] subSortCommands = new String[] {"sort", "arrange", "organise"};
-        final String[] subUndoCommands = new String[] {"undo", "u"};
+        final String[] subAddCommands = new String[] { "add", "a", "input", "create", "insert" };
+        final String[] subClearCommands = new String[] { "clear", "c", "empty", "clean" };
+        final String[] subDeleteCommands = new String[] { "delete", "d", "remove", "throw", "erase" };
+        final String[] subEditCommands = new String[] { "edit", "e", "change", "revise", "modify" };
+        final String[] subExitCommands = new String[] { "exit", "quit" };
+        final String[] subFindCommands = new String[] { "find", "f", "look", "search", "check" };
+        final String[] subHelpCommands = new String[] { "help", "info" };
+        final String[] subHistoryCommands = new String[] { "history", "h", "past" };
+        final String[] subListCommands = new String[] { "list", "l", "show", "display" };
+        final String[] subRedoCommands = new String[] { "redo", "r" };
+        final String[] subSelectCommands = new String[] { "select", "s", "choose", "pick" };
+        final String[] subSortCommands = new String[] { "sort", "arrange", "organise" };
+        final String[] subUndoCommands = new String[] { "undo", "u" };
         final String[] subCheckScheduleCommands = new String[] {"thisweek",
             "schedule", "checkschedule", "tw", "cs"};
         final String[] subAddEventsCommands = new String[] { "eventadd", "addevent", "ae", "ea" };
@@ -54,6 +55,7 @@ public class CheckCommandsParser {
         final String[] subEditEventsCommands = new String[] { "eventedit", "editevent", "ee" };
         final String[] subFindEventsCommands = new String[] { "eventfind", "findevent", "fe", "ef" };
         final String[] subUpdatePhotoCommands = new String[] { "updatephoto", "up" };
+        final String[] subSetRelCommands = new String[] { "set", "rel", "setrel" };
 
 
         /**
@@ -72,13 +74,14 @@ public class CheckCommandsParser {
         final Set<String> commandsForSelect = new HashSet<>(Arrays.asList(subSelectCommands));
         final Set<String> commandsForSort = new HashSet<>(Arrays.asList(subSortCommands));
         final Set<String> commandsForUndo = new HashSet<>(Arrays.asList(subUndoCommands));
-        final Set<String> commandsForCheckCalendar = new HashSet<>(Arrays.asList
+        final Set<String> commandsForCheckSchedule = new HashSet<>(Arrays.asList
                 (subCheckScheduleCommands));
         final Set<String> commandsForAddEvent = new HashSet<>(Arrays.asList(subAddEventsCommands));
         final Set<String> commandsForDeleteEvent = new HashSet<>(Arrays.asList(subDeleteEventsCommands));
         final Set<String> commandsForEditEvent = new HashSet<>(Arrays.asList(subEditEventsCommands));
         final Set<String> commandsForFindEvent = new HashSet<>(Arrays.asList(subFindEventsCommands));
         final Set<String> commandsForUpdatePhoto = new HashSet<>(Arrays.asList(subUpdatePhotoCommands));
+        final Set<String> commandsForSetRel = new HashSet<>(Arrays.asList(subSetRelCommands));
 
         /**
          * Compares the userInputCommand with the different commands set
@@ -109,8 +112,8 @@ public class CheckCommandsParser {
             finalUserCommand = "sort";
         } else if (!Collections.disjoint(userInputCommand, commandsForUndo)) {
             finalUserCommand = "undo";
-        } else if (!Collections.disjoint(userInputCommand, commandsForCheckCalendar)) {
-            finalUserCommand = "checkschedule";
+        } else if (!Collections.disjoint(userInputCommand, commandsForCheckSchedule)) {
+            finalUserCommand = "thisweek";
         } else if (!Collections.disjoint(userInputCommand, commandsForAddEvent)) {
             finalUserCommand = "eventadd";
         } else if (!Collections.disjoint(userInputCommand, commandsForDeleteEvent)) {
@@ -121,7 +124,10 @@ public class CheckCommandsParser {
             finalUserCommand = "eventfind";
         } else if (!Collections.disjoint(userInputCommand, commandsForUpdatePhoto)) {
             finalUserCommand = "updatephoto";
+        } else if (!Collections.disjoint(userInputCommand, commandsForSetRel)) {
+            finalUserCommand = "set";
         }
         return finalUserCommand;
     }
 }
+//@@author

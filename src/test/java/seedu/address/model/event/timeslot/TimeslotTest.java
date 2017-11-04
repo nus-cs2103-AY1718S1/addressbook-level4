@@ -1,4 +1,4 @@
-//@@author A0162268B
+//@@author reginleiff
 package seedu.address.model.event.timeslot;
 
 import static org.junit.Assert.assertFalse;
@@ -42,6 +42,8 @@ public class TimeslotTest {
     public void isValidTiming() throws Exception {
         // Valid timing
         assertTrue(Timeslot.isValidTiming("22/10/2017 1053-1055"));
+        assertTrue(Timeslot.isValidTiming("22/10/2017 0000-0000"));
+        assertTrue(Timeslot.isValidTiming("22/10/2017 2359-2359"));
 
         // Invalid day format
         assertFalse(Timeslot.isValidTiming(invalidDay));

@@ -26,7 +26,6 @@ import static seedu.address.logic.commands.CommandTestUtil.PHOTO_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.POSITION_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PRIORITY_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.REL_DESC_COLLEAGUE;
-import static seedu.address.logic.commands.CommandTestUtil.REL_DESC_SIBLINGS;
 import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
@@ -43,11 +42,9 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHOTO_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_REL_COLLEAGUE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_REL_SIBLINGS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_RELATIONSHIP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -70,14 +67,12 @@ import seedu.address.model.person.Photo;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Priority;
 import seedu.address.model.person.Status;
-import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 public class EditCommandParserTest {
 
     private static final String TAG_EMPTY = " " + PREFIX_TAG;
-    private static final String REL_EMPTY = " " + PREFIX_RELATIONSHIP;
 
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
@@ -111,6 +106,7 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
     }
 
+    //@@author sebtsh
     @Test
     public void parse_invalidValue_failure() {
         assertParseFailure(parser, "1" + INVALID_NAME_DESC, Name.MESSAGE_NAME_CONSTRAINTS); // invalid name
@@ -146,14 +142,6 @@ public class EditCommandParserTest {
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser, "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_ADDRESS_AMY + VALID_PHONE_AMY,
                 Name.MESSAGE_NAME_CONSTRAINTS);
-        // while parsing {@code PREFIX_RELATIONSHIP} alone will reset the relationships of the {@code Person} being
-        // edited, parsing it together with a valid tag results in error
-        assertParseFailure(parser, "1" + REL_DESC_SIBLINGS + REL_DESC_COLLEAGUE + REL_EMPTY,
-            Relationship.MESSAGE_REL_CONSTRAINTS);
-        assertParseFailure(parser, "1" + REL_DESC_SIBLINGS + REL_EMPTY + REL_DESC_COLLEAGUE,
-            Relationship.MESSAGE_REL_CONSTRAINTS);
-        assertParseFailure(parser, "1" + REL_EMPTY + REL_DESC_SIBLINGS + REL_DESC_COLLEAGUE,
-            Relationship.MESSAGE_REL_CONSTRAINTS);
     }
 
     @Test
@@ -161,18 +149,18 @@ public class EditCommandParserTest {
         Index targetIndex = INDEX_SECOND_PERSON;
         String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + TAG_DESC_HUSBAND
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY + TAG_DESC_FRIEND + COMPANY_DESC_BOB
-                + POSITION_DESC_BOB + STATUS_DESC_AMY + PRIORITY_DESC_AMY + NOTE_DESC_BOB + REL_DESC_SIBLINGS;
+                + POSITION_DESC_BOB + STATUS_DESC_AMY + PRIORITY_DESC_AMY + NOTE_DESC_BOB;
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withCompany(VALID_COMPANY_BOB).withPosition(VALID_POSITION_BOB)
                 .withStatus(VALID_STATUS_AMY).withPriority(VALID_PRIORITY_AMY)
-                .withNote(VALID_NOTE_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-                .withRelation(VALID_REL_SIBLINGS).build();
+                .withNote(VALID_NOTE_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }
+    //@@author
 
     @Test
     public void parse_someFieldsSpecified_success() {
@@ -226,6 +214,7 @@ public class EditCommandParserTest {
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
+    //@@author sebtsh
     @Test
     public void parse_multipleRepeatedFields_acceptsLast() {
         Index targetIndex = INDEX_FIRST_PERSON;
@@ -246,6 +235,7 @@ public class EditCommandParserTest {
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }
+    //@@author
 
     @Test
     public void parse_invalidValueFollowedByValidValue_success() {

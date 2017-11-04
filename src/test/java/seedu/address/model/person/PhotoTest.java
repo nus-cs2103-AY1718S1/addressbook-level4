@@ -3,6 +3,8 @@ package seedu.address.model.person;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+
 import org.junit.Test;
 
 public class PhotoTest {
@@ -20,18 +22,15 @@ public class PhotoTest {
         // (upper case)
 
         // valid photoUrl
-        assertTrue(Photo.isValidPhotoUrl("src/main/resources/images/John"
-                + ".jpg")); // valid relative file path (Linux)
-        assertTrue(Photo.isValidPhotoUrl("src/main/resources/images/John"
-                + ".jpeg")); // valid relative file path (Linux)
-        assertTrue(Photo.isValidPhotoUrl("src/main/resources/images/John"
-                + ".png")); // valid relative file path (Linux)
-        assertTrue(Photo.isValidPhotoUrl("/~/src/main/resources/images/John"
-                + ".jpg")); // valid absolute file path (Linux)
-        assertTrue(Photo.isValidPhotoUrl("src\\main\\image.jpg")); // valid
-        // relative file path (Windows)
-        assertTrue(Photo.isValidPhotoUrl("C:\\src\\main\\image.jpg")); //
-        // valid absolute file path (Windows)
+        String s = File.separator;
+        assertTrue(Photo.isValidPhotoUrl("src" + s + "main" + s + "resources" + s + "images" + s + "John"
+                + ".jpg")); // valid relative file path
+        assertTrue(Photo.isValidPhotoUrl("src" + s + "main" + s + "resources" + s + "images" + s + "John"
+                + ".jpeg")); // valid relative file path
+        assertTrue(Photo.isValidPhotoUrl("src" + s + "main" + s + "resources" + s + "images" + s + "John"
+                + ".png")); // valid relative file path
+        assertTrue(Photo.isValidPhotoUrl(s + "Users" + s + "shuangyang" + s + "src" + s + "main" + s
+                + "resources" + s + "images" + s + "John.jpg")); // valid absolute file path
         assertTrue(Photo.isValidPhotoUrl("John.jpg")); // valid short file path
     }
 }

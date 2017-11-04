@@ -10,7 +10,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHOTO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_RELATIONSHIP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -46,7 +45,7 @@ import seedu.address.model.tag.Tag;
 public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
-
+    //@@author sebtsh
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
             + "Existing values will be overwritten by the input values.\n"
@@ -61,12 +60,11 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PRIORITY + "PRIORITY] "
             + "[" + PREFIX_NOTE + "NOTE] "
             + "[" + PREFIX_PHOTO + "PHOTO] "
-            + "[" + PREFIX_TAG + "TAG]"
-            + "[" + PREFIX_RELATIONSHIP + "RELATIONSHIP]...\n"
+            + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
-
+    //@@author
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
@@ -86,6 +84,7 @@ public class EditCommand extends UndoableCommand {
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
+    //@@author sebtsh
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
@@ -112,6 +111,7 @@ public class EditCommand extends UndoableCommand {
                 updatedPosition, updatedStatus, updatedPriority, updatedNote,
                updatedPhoto, updatedTags, updatedRel);
     }
+    //@@author
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
@@ -153,6 +153,7 @@ public class EditCommand extends UndoableCommand {
                 && editPersonDescriptor.equals(e.editPersonDescriptor);
     }
 
+    //@@author sebtsh
     /**
      * Stores the details to edit the person with. Each non-empty field value will replace the
      * corresponding field value of the person.
@@ -197,6 +198,7 @@ public class EditCommand extends UndoableCommand {
                     this.position, this.status, this.priority, this.note,
                     this.photo, this.tags, this.relation);
         }
+        //@@author
 
         public Optional<Name> getName() {
             return Optional.ofNullable(name);
@@ -230,6 +232,7 @@ public class EditCommand extends UndoableCommand {
             this.address = address;
         }
 
+        //@@author sebtsh
         public Optional<Company> getCompany() {
             return Optional.ofNullable(company);
         }
@@ -269,6 +272,7 @@ public class EditCommand extends UndoableCommand {
         public void setNote(Note note) {
             this.note = note;
         }
+        //@@author
 
         public Optional<Set<Tag>> getTags() {
             return Optional.ofNullable(tags);
@@ -294,6 +298,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(relation);
         }
 
+        //@@author sebtsh
         @Override
         public boolean equals(Object other) {
             // short circuit if same object
@@ -319,8 +324,7 @@ public class EditCommand extends UndoableCommand {
                     && getPriority().equals(e.getPriority())
                     && getNote().equals(e.getNote())
                     && getPhoto().equals(e.getPhoto())
-                    && getTags().equals(e.getTags())
-                    && getRelation().equals(e.getRelation());
+                    && getTags().equals(e.getTags());
         }
     }
 }

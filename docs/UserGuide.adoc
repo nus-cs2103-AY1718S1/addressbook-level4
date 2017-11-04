@@ -58,7 +58,8 @@ window every time one forgets it.
 
 === Viewing help : `help`
 
-Format: `help`
+Synonyms/Aliases for the command: `help`
+Displays the help window on command.
 
 === Adding a person: `add`
 
@@ -105,39 +106,6 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 * `edit 3 no/Hates western food. Can only take him out to Chinese and Japanese restaurants.` +
 Edits the note of the 3rd person to be the string displayed above. This is the only way to add a note to a person
 as notes cannot be initialized when adding the person.
-
-=== Exporting of person's data command: `export`
-
-`Coming in v2.0` +
-Synonyms/Aliases: `ex` +
-Exports the data into an excel file. +
-Format: `export` / `ex`
-
-****
-* Export persons data
-* Client(s) data will be stored in an excel format
-****
-
-Examples:
-
-* `export` +
-Exports the data of everyone in the list in an excel file.
-
-
-=== Mass import of person's data command: `import`
-
-`Coming in v2.0` +
-Imports the data into a ... +
-Format: `import`
-
-****
-* Import persons data
-****
-
-Examples:
-
-* `import` [filename] +
-Imports the file and store it in [app].
 
 === Locating persons by name: `find`
 
@@ -212,18 +180,74 @@ Examples:
 * `note John Doe Remember to call him once every day otherwise he will question your commitment.`
 
 
-=== Attaching photos to persons : `photo`
+=== Attaching photos to persons :
 
-`Implemented in v1.3` +
-Adds a photo to a person by specifying the path of the image file. Only .jpg
-file is allowed. Photo can be added either at the creation of a contact (with
- `add` command) or when updating a contact's information (with `edit` command)
+`Since v1.3` +
+Adds a photo to a person by importing an image file, with
+allowed file format jpg, jpeg and png.
+
+Photo can be added or edited in two ways:
+
+* Through Command Line Interface:
+
+Photos can be imported either at the creation
+of a client contact (with `add` command) or when updating a client's
+information (with `edit` command), by specifying the file path of image file
+to be imported
 
 Examples:
 
-* `add Jon... ph/~/Images/Photo.jpg`
+** `add n/Jon ... ph/Users/username/Images/Photo.jpg`
 
-* `edit 1 ph/~/Images/Photo.jpg`
+** `edit 1 ph/Users/username/Images/Photo.jpg`
+
+****
+Restrictions on input:
+
+* Must be a valid local file path for the respective operating system
+* File must of of jpg, jpeg or png format
+* Can be either relative or absolute file path
+* File path is case-insensitive, but file extension should be lower case
+* Support all UTF-8 characters
+
+****
+
+* Through Graphic User Interface
+
+In the `clients's detail` panel, user can use the `import photo` button to
+add/edit photo of the client. Upon clicking the button, a file-chooser window
+ will pop up, enabling the easy choosing of image files with GUI.
+
+=== Setting relationship between 2 persons: `set`
+
+Synonyms/Aliases for the command: `rel`, `setrel` +
+Sets the relationship between 2 person. +
+User is advised to add only one relationship between the two indexes.
+
+Format: `set [INDEX] [INDEX] [PREFIX]RELATIONSHIP` +
+
+****
+* This command has three prefixes that performs different functions.
+** *ar/RELATIONSHIP* -> sets *ONLY ONE* relationship between 2 persons
+** *dr/RELATIONSHIP* -> deletes the relationship between 2 persons
+** *cr/* -> clears all the relationship of the two persons
+* This command is executed by specifying the two `INDEX` of the person the user wants to add the relationship.
+* The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2,
+3, ...
+* The command will not be executed if the relationship already exist or if the relationship is not found.
+* You can remove all the person's relationships by typing `er/` without specifying any relationship after it.
+****
+
+Examples:
+
+* `set 1 2 ar/siblings` +
+sets the relationship between the two indexes of the last shown list if it does not exist
+
+* `set 1 2 dr/siblings` +
+deletes the relationship between the two indexes of the last shown list if it exists
+
+* `set 1 2 cr/` +
+clears the all the relationships of the two indexes.
 
 === View all persons with a specific tag : `tag`
 
@@ -242,24 +266,6 @@ Format: `company [COMPANY]`
 
 Examples:
 * `company ABC Foods`
-
-=== View a person's address on Google Maps within the app : `address`
-
-`Coming in v2.0` +
-Searches for the person's address on Google Maps and displays the result within the app. +
-Format: `address [PERSON]`
-
-Examples:
-* `address John Doe`
-
-=== Send an email to a person : `email`
-
-`Coming in v2.0` +
-Opens the user's default email client loaded with the person's email in the To: field. +
-Format: `email [PERSON]`
-
-Examples:
-* `email John Doe`
 
 === Adding an event: `eventadd`
 
@@ -340,18 +346,35 @@ Returns any event having titles that contain `Birthday`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-=== Displaying user's schedule command: `checkschedule`
+=== Displaying user's schedule: `checkschedule`
 
-`Coming in v1.4` +
-Displays user's schedule for the current week upon executing the command.
-After execution, a calendar GUI will appear in the main window, with events
-displayed in the corresponding time slots.
-Format: `checkschedule` / `thisweek`/`cs`/`tw`
+`Since v1.4` +
+Synonyms/Aliases for the command: `checkschedule` / `thisweek`/`cs`/`tw` +
+Displays user's schedule for the current week upon executing the command. +
+After execution of the command, a calendar GUI will appear in the main +
+window, with events displayed in the corresponding time slots. Each time slot
+ is 30 minutes, starting from 7:00 am and ending with 11:59 pm +
 
-Example:
+With the calendar GUI, the user can:
 
-* `checkschedule` +
-Displays user's schedule for the week.
+* Have an overview of all scheduled events in the current week
+** All changes to events will be reflected on the calendar UI in real time
+* Check the detail of a specific event by clicking on the event block in the
+calendar UI
+** This will direct user to the event's detail page
+* Reschedule events through drag-and-drop
+** Dragging and dropping an event, if successful, will change the event's
+starting time to the dropped timeslot in the calendar, while maintaining the
+duration of the event
+****
+Conditions for successful drag-and-drop:
+
+* There should not be any time clash with existing events (eg. if a timeslot
+is already occupied by an event, cannot drop at this time slot) +
+* The dropped event block should be entirely contained within the calendar
+(eg. cannot drop at the last time slot, if event's duration is longer than 30
+minutes) +
+****
 
 === Listing entered commands : `history`
 
@@ -363,16 +386,22 @@ Format: `history` / `h` / `past
 === Sorting all entries : `sort`
 
 Synonyms/Aliases for the command: `arrange`, `organise` +
-Sorts list by name, tag or address. +
-That are represented by 1, 2 and 3 respectively +
-Format: `sort [NUMBER]`
+Sorts list by different types +
+such as `name`, `tag`, `company`, `priority` or `status`. +
+
+Format: `sort [TYPE]`
 
 Examples:
-* `sort 1`
 
-* `sort 2`
+* `sort name`
 
-* `sort 3`
+* `sort tag`
+
+* `sort company`
+
+* `sort priority`
+
+* `sort status`
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -447,6 +476,58 @@ Example:
 Checks if ANSWER is yes/no and perform the relevant answer choice. +
 * `startup` yes +
 Sets opening app at startup of user's OS yes.
+
+=== Exporting of person's data command: `export`
+
+`Coming in v2.0` +
+Synonyms/Aliases: `ex` +
+Exports the data into an excel file. +
+Format: `export` / `ex`
+
+****
+* Export persons data
+* Client(s) data will be stored in an excel format
+****
+
+Examples:
+
+* `export` +
+Exports the data of everyone in the list in an excel file.
+
+
+=== Mass import of person's data command: `import`
+
+`Coming in v2.0` +
+Imports the data into a ... +
+Format: `import`
+
+****
+* Import persons data
+****
+
+Examples:
+
+* `import` [filename] +
+Imports the file and store it in [app].
+
+
+=== View a person's address on Google Maps within the app : `address`
+
+`Coming in v2.0` +
+Searches for the person's address on Google Maps and displays the result within the app. +
+Format: `address [PERSON]`
+
+Examples:
+* `address John Doe`
+
+=== Send an email to a person : `email`
+
+`Coming in v2.0` +
+Opens the user's default email client loaded with the person's email in the To: field. +
+Format: `email [PERSON]`
+
+Examples:
+* `email John Doe`
 
 === Saving the data
 

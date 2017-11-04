@@ -24,9 +24,11 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.HideCalendarEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowCalendarEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowPhotoSelectionEvent;
@@ -53,10 +55,17 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
+    //@@author sebtsh
     private PersonPanel personPanel;
+    private EventPanel eventPanel;
+    //@@author
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
     private EventListPanel eventListPanel;
+    //@@author reginleiff
+    private EventPanel schedulePanel;
+    private ScheduleListPanel scheduleListPanel;
+    //@@author
     private CalendarView calendarView;
     private Config config;
     private UserPrefs prefs;
@@ -75,6 +84,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane eventListPanelPlaceholder;
+
+    @FXML
+    private StackPane scheduleListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -161,8 +173,13 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+        //@@author sebtsh
+        eventPanel = new EventPanel(logic);
+
         personPanel = new PersonPanel(logic);
-        browserPlaceholder.getChildren().add(personPanel.getRoot());
+        //@@author
+
+        schedulePanel = new EventPanel(logic);
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -170,11 +187,14 @@ public class MainWindow extends UiPart<Region> {
         eventListPanel = new EventListPanel(logic.getFilteredEventList());
         eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
+        scheduleListPanel = new ScheduleListPanel(logic.getSchedule());
+        scheduleListPanelPlaceholder.getChildren().add(scheduleListPanel.getRoot());
+
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs
-                .getAddressBookFilePath(), logic.getFilteredPersonList().size());
+                .getAddressBookFilePath(), logic.getFilteredPersonList().size(), logic.getFilteredEventList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -184,13 +204,14 @@ public class MainWindow extends UiPart<Region> {
         //@@author shuangyang
         //When calendar button is clicked, the browserPlaceHolder will switch
         // to the calendar view
-        calendarView = new CalendarView();
+        calendarView = new CalendarView(logic.getFilteredEventList(), logic);
         calendarButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if (!browserPlaceholder.getChildren().contains(calendarView
                         .getRoot())) {
                     browserPlaceholder.getChildren().add(calendarView.getRoot());
+                    raise(new ShowCalendarEvent());
                 } else {
                     browserPlaceholder.getChildren().remove(calendarView.getRoot());
                 }
@@ -275,6 +296,34 @@ public class MainWindow extends UiPart<Region> {
         }
     }
 
+    //@@author sebtsh
+    /**
+     * Called when a person panel is selected. Hides other panels and displays the person panel.
+     */
+    @FXML
+    public void handlePersonPanelSelected() {
+        if (browserPlaceholder.getChildren().contains(eventPanel.getRoot())) {
+            browserPlaceholder.getChildren().remove(eventPanel.getRoot());
+        }
+        if (browserPlaceholder.getChildren().contains(calendarView.getRoot())) {
+            browserPlaceholder.getChildren().remove(calendarView.getRoot());
+        }
+        browserPlaceholder.getChildren().add((personPanel.getRoot()));
+    }
+
+    /**
+     * Called when an event panel is selected. Hides other panels and displays the event panel.
+     */
+    @FXML
+    public void handleEventPanelSelected() {
+        if (browserPlaceholder.getChildren().contains(personPanel.getRoot())) {
+            browserPlaceholder.getChildren().remove(personPanel.getRoot());
+        }
+        if (browserPlaceholder.getChildren().contains(calendarView.getRoot())) {
+            browserPlaceholder.getChildren().remove(calendarView.getRoot());
+        }
+        browserPlaceholder.getChildren().add((eventPanel.getRoot()));
+    }
     //@@author
 
     void show() {
@@ -348,5 +397,16 @@ public class MainWindow extends UiPart<Region> {
         } catch (CommandException | ParseException e) {
             raise(new NewResultAvailableEvent(e.getMessage(), true));
         }
+    //@@author sebtsh
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handlePersonPanelSelected();
+    }
+
+    @Subscribe
+    private void handleEventPanelSelectionChangedEvent(EventPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleEventPanelSelected();
     }
 }

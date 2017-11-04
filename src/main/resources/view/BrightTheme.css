@@ -1,4 +1,4 @@
-/* @@author yangshuang */
+/* @@author a0107442n */
 
 .background {
     -fx-background-color: derive(white, 100%);
@@ -104,6 +104,7 @@
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap: 0;
     -fx-padding: 0 0 0 0;
+    -fx-background-color: derive(white, 100%);
 }
 
 .list-cell:filled:even {
@@ -408,4 +409,20 @@
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
+}
+/* @@author sebtsh*/
+
+#eventName .label {
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 40pt;
+}
+
+#eventTime .label {
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 30pt;
+}
+
+#eventDescription .label {
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 16pt;
 }

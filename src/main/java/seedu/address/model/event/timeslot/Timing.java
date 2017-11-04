@@ -1,10 +1,11 @@
-//@@author A0162268B
+
 package seedu.address.model.event.timeslot;
 
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author reginleiff
 /**
  * Represents an Timeslot's timing in sales navigator.
  * Is valid as declared in {@link #isValidTiming(String)}
@@ -15,7 +16,7 @@ public class Timing implements Comparable<Timing> {
                     + "and it should not be blank";
 
     public static final String TIMING_VALIDATION_REGEX =
-            "(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]-(0[1-9]|1[0-9]|2[0-3])[0-5][0-9]";
+            "(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]-(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]";
 
     private String timing;
     private int start;
@@ -74,6 +75,10 @@ public class Timing implements Comparable<Timing> {
     public void setStart(int start) {
         this.start = start;
         setTiming(this.start + "-" + this.end);
+    }
+
+    public int getEnd() {
+        return end;
     }
 
     @Override

@@ -1,3 +1,4 @@
+//@@author huiyiiih
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -13,13 +14,14 @@ public class SortCommandParserTest {
 
     @Test
     public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "name", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+        assertParseFailure(parser, " ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 SortCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_validArg_returnsSortCommand() {
         //SortCommand exp
-        assertParseSuccess(parser, "1", new SortCommand(1));
+        assertParseSuccess(parser, "name", new SortCommand("name"));
     }
 }
+//@@author

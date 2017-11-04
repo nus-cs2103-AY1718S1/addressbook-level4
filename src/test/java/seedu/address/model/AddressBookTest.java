@@ -17,6 +17,7 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.timeslot.Date;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.relationship.Relationship;
@@ -109,6 +110,21 @@ public class AddressBookTest {
         @Override
         public ObservableList<ReadOnlyEvent> getEventList() {
             return events;
+        }
+
+        @Override
+        public ReadOnlyEvent getLastChangedEvent() {
+            return null;
+        }
+
+        @Override
+        public ObservableList<ReadOnlyEvent> getSchedule(Date date) {
+            return null;
+        }
+
+        @Override
+        public Date getCurrentDate() {
+            return null;
         }
     }
 

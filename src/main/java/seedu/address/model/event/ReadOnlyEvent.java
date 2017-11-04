@@ -1,11 +1,15 @@
-//@@author A0162268B
+//@@author reginleiff
 package seedu.address.model.event;
+
+import java.time.Duration;
+import java.time.LocalTime;
 
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.event.timeslot.Date;
 import seedu.address.model.event.timeslot.Timeslot;
 import seedu.address.model.event.timeslot.Timing;
 
+//@@author reginleiff
 /**
  * A read-only immutable interface for an Event in the addressbook.
  * Implementations should guarantee: details are present and not null, field values are validated.
@@ -30,6 +34,14 @@ public interface ReadOnlyEvent {
     ObjectProperty<Description> descriptionProperty();
 
     Description getDescription();
+
+    boolean happensBefore(Timeslot slot);
+
+    boolean happensAfter(Timeslot slot);
+
+    Duration getDuration();
+
+    LocalTime getStartTime();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

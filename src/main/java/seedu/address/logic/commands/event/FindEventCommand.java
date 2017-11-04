@@ -1,4 +1,4 @@
-//@@author A0162268B
+//@@author reginleiff
 package seedu.address.logic.commands.event;
 
 import seedu.address.logic.commands.Command;

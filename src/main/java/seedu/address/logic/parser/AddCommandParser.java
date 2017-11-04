@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_RELATIONSHIP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMPANY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -10,10 +11,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHOTO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_RELATIONSHIP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.io.File;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -47,7 +48,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
-
+    //@@author sebtsh
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
      * and returns an AddCommand object for execution.
@@ -59,7 +60,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                         PREFIX_COMPANY, PREFIX_POSITION, PREFIX_STATUS,
                         PREFIX_PRIORITY, PREFIX_NOTE, PREFIX_PHOTO,
-                        PREFIX_TAG, PREFIX_RELATIONSHIP);
+                        PREFIX_TAG, PREFIX_ADD_RELATIONSHIP);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
@@ -77,10 +78,12 @@ public class AddCommandParser implements Parser<AddCommand> {
             Priority priority = new Priority("L");
             Note note = new Note("NIL");
             //Initialize photo to the default icon
-            Photo photo = new Photo("src/main/resources/images/default.jpg");
+            String s = File.separator;
+            Photo photo = new Photo("src" + s + "main" + s + "resources" + s
+                    + "images" + s + "default.jpg");
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            Set<Relationship> relationList = ParserUtil.parseRel(argMultimap.getAllValues(PREFIX_RELATIONSHIP));
+            Set<Relationship> relationList = ParserUtil.parseRel(argMultimap.getAllValues(PREFIX_ADD_RELATIONSHIP));
 
             //Since Company, Position, Status, Priority and Phot are optional
             // parameters, set them if they are present
@@ -118,5 +121,4 @@ public class AddCommandParser implements Parser<AddCommand> {
             throw new ParseException(ive.getMessage(), ive);
         }
     }
-
 }

@@ -1,10 +1,10 @@
-//@@author A0162268B
 package seedu.address.model.event.timeslot;
 
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author reginleiff
 /**
  * Timeslot contains date and time and is comparable based on year, month, day and starting time, in this order.
  */
@@ -15,8 +15,9 @@ public class Timeslot implements Comparable<Timeslot> {
                     + "1. A 6-digit date specifying day, month and year (in the format of dd/mm/yyyy) followed by\n "
                     + "2. A 4-digit 24-hour format start timing and end timing separated by a \"-\"";
     public static final String TIMESLOT_VALIDATION_REGEX =
-            "[0-2][0-9]/(0[1-9]|1[0-2])/[0-9][0-9][0-9][0-9] "
-                    + "(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]-(0[1-9]|1[0-9]|2[0-3])[0-5][0-9]";
+            "(0[1-9]|1[0-9]|2[0-9]|3[0-1])/(0[1-9]|1[0-2])/[0-9][0-9][0-9][0-9] "
+
+                    + "(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]-(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]";
 
     private Date date;
     private Timing timing;
