@@ -82,7 +82,7 @@ public class BanCommandTest {
 
         assertCommandFailure(banCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
-    
+
     //@@author khooroko
     @Test
     public void execute_noIndexPersonSelected_success() throws Exception {
@@ -137,7 +137,7 @@ public class BanCommandTest {
         banCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return banCommand;
     }
-    
+
     /**
      * Returns a {@code BanCommand} with no parameters.
      */

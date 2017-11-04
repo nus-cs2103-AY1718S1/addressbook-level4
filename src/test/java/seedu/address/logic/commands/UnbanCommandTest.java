@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
@@ -9,6 +10,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.ListObserver;
@@ -53,6 +55,30 @@ public class UnbanCommandTest {
         assertCommandSuccess(unbanCommand, model, expectedMessage, expectedModel);
     }
 
+    //@@author khooroko
+    @Test
+    public void execute_noIndexPersonSelected_success() throws Exception {
+        model.updateSelectedPerson(model.getFilteredBlacklistedPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
+        ReadOnlyPerson personToUnban = model.getSelectedPerson();
+        UnbanCommand unbanCommand = prepareCommand();
+
+        String expectedMessage = ListObserver.BLACKLIST_NAME_DISPLAY_FORMAT
+                + String.format(UnbanCommand.MESSAGE_UNBAN_PERSON_SUCCESS, personToUnban.getName());
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.removeBlacklistedPerson(personToUnban);
+
+        assertCommandSuccess(unbanCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_noIndexNoSelection_failure() throws Exception {
+        UnbanCommand unbanCommand = prepareCommand();
+
+        assertCommandFailure(unbanCommand, model, Messages.MESSAGE_NO_PERSON_SELECTED);
+    }
+
+    //@@author jaivigneshvenugopal
     @Test
     public void equals() {
         UnbanCommand unbanFirstCommand = new UnbanCommand(INDEX_FIRST_PERSON);
@@ -80,6 +106,15 @@ public class UnbanCommandTest {
      */
     private UnbanCommand prepareCommand(Index index) {
         UnbanCommand unbanCommand = new UnbanCommand(index);
+        unbanCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return unbanCommand;
+    }
+
+    /**
+     * Returns a {@code UnbanCommand} with no parameters.
+     */
+    private UnbanCommand prepareCommand() {
+        UnbanCommand unbanCommand = new UnbanCommand();
         unbanCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return unbanCommand;
     }
