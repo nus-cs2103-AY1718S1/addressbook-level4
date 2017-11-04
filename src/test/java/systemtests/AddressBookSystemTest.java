@@ -38,6 +38,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
+import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.ui.CommandBox;
 
 /**

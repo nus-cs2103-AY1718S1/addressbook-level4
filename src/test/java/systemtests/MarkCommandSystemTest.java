@@ -11,6 +11,8 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.MarkCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnmarkCommand;
 import seedu.address.logic.commands.ViewCommand;
 import seedu.address.model.Model;
@@ -36,7 +38,7 @@ public class MarkCommandSystemTest extends AddressBookSystemTest {
         String listLessonCommand = ViewCommand.COMMAND_WORD + " 1";
         executeCommand(listLessonCommand);
 
-        /* Case: Unmark the first lesson in the list, command with leading spaces and trailing spaces -> deleted */
+        /* Case: Unmark the first lesson in the list, command with leading spaces and trailing spaces -> unmarked */
         Model expectedModel = getModel();
         String command = "     " + UnmarkCommand.COMMAND_WORD + "      " + INDEX_FIRST_LESSON.getOneBased() + "       ";
         ReadOnlyLesson lessonToUnmark = expectedModel.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
@@ -44,7 +46,7 @@ public class MarkCommandSystemTest extends AddressBookSystemTest {
         String expectedResultMessage = String.format(MESSAGE_UNBOOKMARK_LESSON_SUCCESS, lessonToUnmark);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
-        /* Case: Mark the first lesson in the list, command with leading spaces and trailing spaces -> deleted */
+        /* Case: Mark the first lesson in the list, command with leading spaces and trailing spaces -> marked */
         expectedModel = getModel();
         command = "     " + MarkCommand.COMMAND_WORD + "      " + INDEX_FIRST_LESSON.getOneBased() + "       ";
         ReadOnlyLesson lessonToMark = expectedModel.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
@@ -53,7 +55,7 @@ public class MarkCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
         /* Case: Unmark the first lesson in the marked list,
-         * command with leading spaces and trailing spaces -> deleted
+         * command with leading spaces and trailing spaces -> unmarked
          */
         /* list marked lessons */
         String listMarkedCommand = ListCommand.COMMAND_WORD + " marked";
@@ -65,8 +67,6 @@ public class MarkCommandSystemTest extends AddressBookSystemTest {
         expectedModel.unBookmarkLesson(lessonToUnmark);
         expectedResultMessage = String.format(MESSAGE_UNBOOKMARK_LESSON_SUCCESS, lessonToUnmark);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
-        executeCommand("undo");
-        executeCommand("redo");
 
         /* --------------------------------- Performing invalid delete operation ------------------------------------ */
 
