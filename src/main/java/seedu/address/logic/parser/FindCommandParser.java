@@ -1,8 +1,12 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Arrays;
@@ -33,14 +37,25 @@ public class FindCommandParser implements Parser<FindCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TAG, PREFIX_EMAIL);
+        ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TAG, PREFIX_EMAIL,
+                PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_COMMENT, PREFIX_APPOINT);
 
         String trimmedArgsName;
         String trimmedArgsTag;
         String trimmedArgsEmail;
+        String trimmedArgsPhone;
+        String trimmedArgsAddress;
+        String trimmedArgsComment;
+        String trimmedArgsAppoint;
+
         String[] keywordNameList;
         String[] keywordTagList;
         String[] keywordEmailList;
+        String[] keywordPhoneList;
+        String[] keywordAddressList;
+        String[] keywordCommentList;
+        String[] keywordAppointList;
+
         HashMap<String, List<String>> mapKeywords = new HashMap<>();
 
         try {
@@ -69,6 +84,42 @@ public class FindCommandParser implements Parser<FindCommand> {
                 }
                 keywordEmailList = trimmedArgsEmail.split("\\s+");
                 mapKeywords.put(PREFIX_EMAIL.toString(), Arrays.asList(keywordEmailList));
+            }
+
+            if (argumentMultimap.getValue(PREFIX_PHONE).isPresent()) {
+                trimmedArgsPhone = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_PHONE)).get().trim();
+                if (trimmedArgsPhone.isEmpty()) {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                }
+                keywordPhoneList = trimmedArgsPhone.split("\\s+");
+                mapKeywords.put(PREFIX_PHONE.toString(), Arrays.asList(keywordPhoneList));
+            }
+
+            if (argumentMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
+                trimmedArgsAddress = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_ADDRESS)).get().trim();
+                if (trimmedArgsAddress.isEmpty()) {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                }
+                keywordAddressList = trimmedArgsAddress.split("\\s+");
+                mapKeywords.put(PREFIX_ADDRESS.toString(), Arrays.asList(keywordAddressList));
+            }
+
+            if (argumentMultimap.getValue(PREFIX_COMMENT).isPresent()) {
+                trimmedArgsComment = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_COMMENT)).get().trim();
+                if (trimmedArgsComment.isEmpty()) {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                }
+                keywordCommentList = trimmedArgsComment.split("\\s+");
+                mapKeywords.put(PREFIX_COMMENT.toString(), Arrays.asList(keywordCommentList));
+            }
+
+            if (argumentMultimap.getValue(PREFIX_APPOINT).isPresent()) {
+                trimmedArgsAppoint = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_APPOINT)).get().trim();
+                if (trimmedArgsAppoint.isEmpty()) {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                }
+                keywordAppointList = trimmedArgsAppoint.split("\\s+");
+                mapKeywords.put(PREFIX_APPOINT.toString(), Arrays.asList(keywordAppointList));
             }
 
         } catch (IllegalValueException ive) {
