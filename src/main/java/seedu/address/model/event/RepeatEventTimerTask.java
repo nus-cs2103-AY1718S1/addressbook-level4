@@ -40,8 +40,9 @@ public class RepeatEventTimerTask extends TimerTask {
         Title updatedTitle = editEventDescriptor.getTitle().orElse(eventToEdit.getTitle());
         Timeslot updatedTimeslot = editEventDescriptor.getTimeslot().orElse(eventToEdit.getTimeslot());
         Description updatedDescription = editEventDescriptor.getDescription().orElse(eventToEdit.getDescription());
+        Period updatedPeriod = editEventDescriptor.getPeriod().orElse(eventToEdit.getPeriod());
 
-        return new Event(updatedTitle, updatedTimeslot, updatedDescription);
+        return new Event(updatedTitle, updatedTimeslot, updatedDescription, updatedPeriod);
     }
 
     @Override

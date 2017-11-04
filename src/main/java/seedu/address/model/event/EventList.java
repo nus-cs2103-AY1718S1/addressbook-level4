@@ -133,7 +133,7 @@ public class EventList implements Iterable<Event> {
             Event e = iterator.next();
             if (e.clashesWith(event)
                     && (!e.getTitle().equals(event.getTitle())
-                    || !e.getDescription().equals(event.getDescription()))) {
+                    && !e.getDescription().equals(event.getDescription()))) {
                 return true;
             }
         }
