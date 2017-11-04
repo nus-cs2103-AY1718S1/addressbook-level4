@@ -17,11 +17,7 @@ public class ShowSpecifiedLessonPredicate implements Predicate<ReadOnlyLesson> {
 
     @Override
     public boolean test(ReadOnlyLesson lesson) {
-        if (lesson.hashCode() == hashcode) {
-            return true;
-        } else {
-            return false;
-        }
+        return lesson.hashCode() == hashcode;
     }
 
     @Override

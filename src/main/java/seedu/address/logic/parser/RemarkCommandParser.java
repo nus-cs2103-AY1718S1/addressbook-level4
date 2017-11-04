@@ -17,8 +17,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class RemarkCommandParser implements Parser<RemarkCommand> {
 
-    static final Pattern DELETE_INDEX_PATTERN = Pattern.compile("-d\\s*(\\d+)");
-    static final Pattern FIRST_INT_PATTERN = Pattern.compile("^(\\d+)");
+    private static final Pattern DELETE_INDEX_PATTERN = Pattern.compile("-d\\s*(\\d+)");
+    private static final Pattern FIRST_INT_PATTERN = Pattern.compile("^(\\d+)");
 
     /**
      * Parses the given {@code String} of arguments in the context of the RemarkCommand
