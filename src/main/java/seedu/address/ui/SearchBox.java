@@ -34,6 +34,10 @@ public class SearchBox extends UiPart<Region> {
         searchBuffer = "";
     }
 
+    public TextField getTextField() {
+        return searchTextField;
+    }
+
     /**
      * Handles the Key typed event
      */

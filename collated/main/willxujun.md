@@ -114,6 +114,33 @@ public class NamePhoneTagContainsKeywordsPredicate implements Predicate<ReadOnly
         return new HashSet<>(internalList);
     }
 ```
+###### \java\seedu\address\ui\CommandBox.java
+``` java
+    public TextField getCommandTextField() {
+        return commandTextField;
+    }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+        SearchBox searchBox = new SearchBox(logic);
+        searchBoxPlaceholder.getChildren().add(searchBox.getRoot());
+
+        CommandBox commandBox = new CommandBox(logic);
+        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+        commandBox.getCommandTextField().requestFocus();
+
+        commandBox.getCommandTextField().focusedProperty().addListener(
+                new ChangeListener<Boolean>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
+                                        Boolean newValue) {
+                        if (oldValue == true) {
+                            searchBox.getTextField().requestFocus();
+                        }
+                    }
+                }
+        );
+```
 ###### \java\seedu\address\ui\SearchBox.java
 ``` java
 /**
@@ -135,6 +162,10 @@ public class SearchBox extends UiPart<Region> {
         super(FXML);
         this.logic = logic;
         searchBuffer = "";
+    }
+
+    public TextField getTextField() {
+        return searchTextField;
     }
 
     /**

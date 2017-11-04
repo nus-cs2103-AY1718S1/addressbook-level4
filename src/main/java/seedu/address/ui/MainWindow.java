@@ -4,6 +4,8 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -147,12 +149,26 @@ public class MainWindow extends UiPart<Region> {
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic);
-        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
-
+        //@@author willxujun
         SearchBox searchBox = new SearchBox(logic);
         searchBoxPlaceholder.getChildren().add(searchBox.getRoot());
 
+        CommandBox commandBox = new CommandBox(logic);
+        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+        commandBox.getCommandTextField().requestFocus();
+
+        commandBox.getCommandTextField().focusedProperty().addListener(
+                new ChangeListener<Boolean>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
+                                        Boolean newValue) {
+                        if (oldValue == true) {
+                            searchBox.getTextField().requestFocus();
+                        }
+                    }
+                }
+        );
+        //@@author
     }
 
     void hide() {
