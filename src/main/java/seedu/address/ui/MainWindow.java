@@ -48,7 +48,7 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
     private Storage storage;
     private Scene scene;
-    private String cssPath;
+    private String cssPath, style;
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
@@ -108,7 +108,7 @@ public class MainWindow extends UiPart<Region> {
         scene = new Scene(getRoot());
         primaryStage.setScene(scene);
 
-        String style = prefs.getTheme();
+        style = prefs.getTheme();
         cssPath = "view/";
 
         switch (style) {
@@ -177,7 +177,9 @@ public class MainWindow extends UiPart<Region> {
 
         //@@author fongwz
         SettingsSelector settingsSelector = new SettingsSelector();
+        settingsSelector.selectTheme(style);
         settingsSelectorPlaceholder.getChildren().add(settingsSelector.getRoot());
+
         //@@author
 
         ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
@@ -306,15 +308,15 @@ public class MainWindow extends UiPart<Region> {
         cssPath = "view/";
 
         switch (event.theme) {
-            case "Light":
-                cssPath += "LightTheme.css";
-                break;
-            case "Blue":
-                cssPath += "BlueTheme.css";
-                break;
-            default:
-                cssPath += "DarkTheme.css";
-                break;
+        case "Light":
+            cssPath += "LightTheme.css";
+            break;
+        case "Blue":
+            cssPath += "BlueTheme.css";
+            break;
+        default:
+            cssPath += "DarkTheme.css";
+            break;
         }
         scene.getStylesheets().add(cssPath);
     }

@@ -15,6 +15,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BrowserPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ChangeThemeEvent;
 import seedu.address.commons.events.ui.JumpToBrowserListRequestEvent;
 import seedu.address.commons.events.ui.ShowBrowserEvent;
 import seedu.address.commons.events.ui.ShowMeetingEvent;
@@ -100,9 +101,22 @@ public class SettingsSelector extends UiPart<Region> {
         }
     }
 
+    public void selectTheme(String theme) {
+        for (int i = 0; i < themeSelectorList.getItems().size(); i++) {
+            if (themeSelectorList.getItems().get(i).getThemeName().equals(theme)) {
+                themeSelectorList.getSelectionModel().clearAndSelect(i);
+            }
+        }
+    }
+
     @Subscribe
     private void handleJumpToBrowserListRequestEvent(JumpToBrowserListRequestEvent event) {
         selectBrowser(event.browserItem);
+    }
+
+    @Subscribe
+    private void handleChangeThemeEvent(ChangeThemeEvent event) {
+        selectTheme(event.theme);
     }
 
     /**

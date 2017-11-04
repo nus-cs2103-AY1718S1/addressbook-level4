@@ -33,4 +33,8 @@ public class ThemeSelectorCard extends UiPart<Region> {
             themeCircle.setFill(Paint.valueOf("#dddff0"));
         }
     }
+
+    public String getThemeName() {
+        return themeLabel.textProperty().getValue();
+    }
 }
