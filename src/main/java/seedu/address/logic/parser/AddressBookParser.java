@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,10 +37,36 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class AddressBookParser {
 
+    private static ArrayList<String> COMMAND_NAMES = new ArrayList<>();
     /**
      * Used for initial separation of command word and args.
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+
+    public AddressBookParser() {
+        COMMAND_NAMES.add(AddCommand.COMMAND_WORD);
+        COMMAND_NAMES.add(SortCommand.COMMAND_WORD);
+        COMMAND_NAMES.add(EditCommand.COMMAND_WORD);
+        COMMAND_NAMES.add(TagAddCommand.COMMAND_WORD);
+        COMMAND_NAMES.add(TagFindCommand.COMMAND_WORD);
+        COMMAND_NAMES.add(TagRemoveCommand.COMMAND_WORD);
+        COMMAND_NAMES.add(BirthdayAddCommand.COMMAND_WORD);
+        COMMAND_NAMES.add(SelectCommand.COMMAND_WORD);
+        COMMAND_NAMES.add(MapShowCommand.COMMAND_WORD);
+        COMMAND_NAMES.add(MapRouteCommand.COMMAND_WORD);
+        COMMAND_NAMES.add(DeleteCommand.COMMAND_WORD);
+        COMMAND_NAMES.add(ClearCommand.COMMAND_WORD);
+        COMMAND_NAMES.add(FindCommand.COMMAND_WORD);
+        COMMAND_NAMES.add(ListCommand.COMMAND_WORD);
+        COMMAND_NAMES.add(HistoryCommand.COMMAND_WORD);
+        COMMAND_NAMES.add(ExitCommand.COMMAND_WORD);
+        COMMAND_NAMES.add(HelpCommand.COMMAND_WORD);
+        COMMAND_NAMES.add(ScheduleAddCommand.COMMAND_WORD);
+        COMMAND_NAMES.add(ScheduleRemoveCommand.COMMAND_WORD);
+        COMMAND_NAMES.add(UndoCommand.COMMAND_WORD);
+        COMMAND_NAMES.add(RedoCommand.COMMAND_WORD);
+        COMMAND_NAMES.add(ExportCommand.COMMAND_WORD);
+    }
 
     /**
      * Parses user input into command for execution.
@@ -140,6 +167,10 @@ public class AddressBookParser {
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
+    }
+
+    public static ArrayList<String> getCommandNames() {
+        return COMMAND_NAMES;
     }
 
 }
