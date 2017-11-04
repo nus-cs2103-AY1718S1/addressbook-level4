@@ -308,7 +308,7 @@ Deletes the 2nd and 3rd persons in the address book.
 Deletes the 1st person in the results of the `find` command.
 
 .Deleted person at first index i.e. Alex Yeoh
-image::delete-by-index-command-result.png[width="1000"]
+image::delete-by-index-command-result.png[width="800"]
 
 ===== Deleting persons by tag [Since v1.4]:
 
@@ -332,7 +332,7 @@ Clears all entries from the address book. +
 Command format: `clear`
 
 .Cleared all entries
-image::clear-command.png[width="350"]
+image::clear-command-result.png[width="350"]
 
 === Navigating KayPoh!
 
