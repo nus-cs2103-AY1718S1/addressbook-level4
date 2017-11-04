@@ -677,8 +677,6 @@ public class UniqueEventList implements Iterable<Event> {
 
     /** Deletes the given event */
     void deleteReminder(ReadOnlyReminder target) throws ReminderNotFoundException;
-
-
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
