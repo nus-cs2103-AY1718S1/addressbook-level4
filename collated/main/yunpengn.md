@@ -726,25 +726,6 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
-``` java
-    /**
-     * Parses all properties in the given {@code HashMap}.
-     *
-     * @return a set containing all properties parsed.
-     */
-    public static Set<Property> parseProperties(HashMap<Prefix, String> values)
-            throws IllegalValueException, PropertyNotFoundException {
-        requireNonNull(values);
-        Set<Property> properties = new HashSet<>();
-
-        for (Map.Entry<Prefix, String> entry: values.entrySet()) {
-            properties.add(new Property(entry.getKey().getPrefixValue(), entry.getValue()));
-        }
-
-        return properties;
-    }
-```
 ###### \java\seedu\address\logic\parser\person\AddCommandParser.java
 ``` java
 /**
@@ -775,6 +756,48 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
     }
 }
+```
+###### \java\seedu\address\logic\parser\util\NaturalLanguageUtil.java
+``` java
+/**
+ * Utilizes the Natty library to parse datetime representation in human natural language.
+ */
+public class NaturalLanguageUtil {
+    private static Parser nattyParser = new Parser();
+
+    /**
+     * Parses a given string representation in human natural language of datetime.
+     */
+    public static Optional<Date> parseSingleDateTime(String value)
+            throws IllegalValueException, PropertyNotFoundException {
+        List<DateGroup> groups = nattyParser.parse(value);
+
+        if (groups.isEmpty() || groups.get(0).getDates().isEmpty()) {
+            return Optional.empty();
+        } else {
+            return Optional.of(groups.get(0).getDates().get(0));
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\parser\util\ParserUtil.java
+``` java
+    /**
+     * Parses all properties in the given {@code HashMap}.
+     *
+     * @return a set containing all properties parsed.
+     */
+    public static Set<Property> parseProperties(HashMap<Prefix, String> values)
+            throws IllegalValueException, PropertyNotFoundException {
+        requireNonNull(values);
+        Set<Property> properties = new HashSet<>();
+
+        for (Map.Entry<Prefix, String> entry: values.entrySet()) {
+            properties.add(new Property(entry.getKey().getPrefixValue(), entry.getValue()));
+        }
+
+        return properties;
+    }
 ```
 ###### \java\seedu\address\model\Model.java
 ``` java
@@ -874,6 +897,53 @@ public class Address extends Property {
      */
     public static boolean isValidAddress(String test) {
         return test.matches(PropertyManager.getPropertyValidationRegex(PROPERTY_SHORT_NAME));
+    }
+}
+```
+###### \java\seedu\address\model\property\DateTime.java
+``` java
+    /**
+     * Returns true if a given string is a valid phone number.
+     */
+    public static boolean isValidTime(String test) {
+        try {
+            prepareDateTimeValue(test);
+            return true;
+        } catch (IllegalValueException | PropertyNotFoundException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Prepares the value by checking whether the input can be interpreted by the natural language parser.
+     */
+    public static String prepareDateTimeValue(String value) throws IllegalValueException, PropertyNotFoundException {
+        // Returns the original value directly if it is already in standard format.
+        if (isInStandardFormat(value)) {
+            return value;
+        }
+
+        Optional<Date> dateObject = NaturalLanguageUtil.parseSingleDateTime(value);
+        if (dateObject.isPresent()) {
+            return formatDateTime(dateObject.get());
+        } else {
+            throw new IllegalValueException(PropertyManager.getPropertyConstraintMessage(PROPERTY_SHORT_NAME));
+        }
+    }
+
+    /**
+     * Checks whether a string representation of datetime is in standard format.
+     */
+    public static boolean isInStandardFormat(String value) {
+        return value.matches(STANDARD_FORMAT);
+    }
+
+    public static Date parseDateTime(String value) throws ParseException {
+        return dateFormatter.parse(value);
+    }
+
+    public static String formatDateTime(Date date) {
+        return dateFormatter.format(date);
     }
 }
 ```
@@ -1006,6 +1076,8 @@ public class Property {
 
     /**
      * Returns if a given string is a valid value for this property.
+     *
+     * Notice: Do NOT call this method for {@link DateTime} property. Use {@code DateTime.isValidTime()} instead.
      */
     public boolean isValid(String test) {
         return test.matches(PropertyManager.getPropertyValidationRegex(shortName));
@@ -1115,13 +1187,11 @@ public class PropertyManager {
                 addNewProperty("a", "Address",
                         String.format(DEFAULT_MESSAGE, "Address"), DEFAULT_REGEX);
 
-                // Adds time/date as a pre-loaded property.
-                addNewProperty("dt", "DateTime", "Event date & time must be numbers "
-                        + "followed by ddmmyyyy hh:mm",
-                        "^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{4}"
-                                + "(\\s((0[1-9]|1[0-9]|2[0-3]):([0-5][0-9]))?$)");
+                // Adds date/time as a pre-loaded property.
+                addNewProperty("dt", "DateTime", "Event date & time should be "
+                                + "simple and clear enough for the application to understand", DEFAULT_REGEX);
             } catch (DuplicatePropertyException dpe) {
-                throw new AssertionError("Preloaded properties cannot be invalid", dpe);
+                throw new AssertionError("Pre-loaded properties cannot be invalid", dpe);
             }
 
             initialized = true;
@@ -1392,6 +1462,8 @@ public class TagColorManager {
     // Random number generator (non-secure purpose)
     private static final Random randomGenerator = new Random();
 
+    private static final String TAG_NOT_FOUND = "The provided tag does not exist.";
+
     /**
      * The upper (exclusive) bound should be equal to {@code Math.pow(16, 6)}. The lower (inclusive) bound should be
      * equal to {@code Math.pow(16, 5)}. Thus, the interval is {@code Math.pow(16, 6) - Math.pow(16, 5)}.
@@ -1401,7 +1473,7 @@ public class TagColorManager {
 
     public static String getColor(Tag tag) throws TagNotFoundException {
         if (!internalMap.containsKey(tag)) {
-            throw new TagNotFoundException();
+            throw new TagNotFoundException(TAG_NOT_FOUND);
         }
 
         return internalMap.get(tag);

@@ -1,9 +1,9 @@
 package seedu.address.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_TIME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_DATE_TIME;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_NAME;
 
 import java.time.format.DateTimeFormatter;
 
@@ -32,7 +32,7 @@ public class AddEventCommand extends UndoableCommand {
             + PREFIX_NAME + "NAME "
             + PREFIX_DATE_TIME + "DATE & TIME "
             + PREFIX_ADDRESS + "VENUE "
-            + "Example: " + COMMAND_WORD + " "
+            + "\nExample: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe birthday "
             + PREFIX_DATE_TIME + "25122017 08:30 "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 ";
