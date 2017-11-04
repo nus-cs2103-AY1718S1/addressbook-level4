@@ -64,34 +64,12 @@ public class UniqueReminderList implements Iterable<Reminder> {
     }
 
     /**
-     * Removes the equivalent reminder from the list.
-     *
-     * @throws ReminderNotFoundException if no such reminder could be found in the list.
-     */
-    public boolean remove(ReadOnlyReminder toRemove) throws ReminderNotFoundException {
-        requireNonNull(toRemove);
-        final boolean reminderFoundAndDeleted = internalList.remove(toRemove);
-        if (!reminderFoundAndDeleted) {
-            throw new ReminderNotFoundException("Reminder not found");
-        }
-        return reminderFoundAndDeleted;
-    }
-
-    /**
      * Returns all properties (collection of values in all entries) in this map as a Set. This set is mutable
      * and change-insulated against the internal list.
      */
     public ArrayList<Reminder> toList() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return new ArrayList<>(internalList);
-    }
-
-
-    /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
-     */
-    public ObservableList<ReadOnlyReminder> asObservableList() {
-        return FXCollections.unmodifiableObservableList(mappedList);
     }
 
     public void setReminders(UniqueReminderList replacement) {

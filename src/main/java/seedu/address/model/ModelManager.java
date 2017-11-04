@@ -215,14 +215,6 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addReminder(reminder);
         indicateAddressBookChanged();
     }
-    @Override
-    public synchronized void deleteReminder(ReadOnlyReminder reminder) throws ReminderNotFoundException {
-        addressBook.removeReminder(reminder);
-        indicateAddressBookChanged();
-    }
-
-
-
     //@@author
 
 

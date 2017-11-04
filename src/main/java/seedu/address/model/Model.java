@@ -94,8 +94,6 @@ public interface Model {
     /** Adds a reminder */
     void addReminder(ReadOnlyReminder reminder) throws DuplicateReminderException;
 
-    /** Deletes the given event */
-    void deleteReminder(ReadOnlyReminder target) throws ReminderNotFoundException;
     //@@author
 
     //=========== Filtered Person/Activity List support =============================================================

@@ -324,17 +324,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         Reminder newReminder = new Reminder(r);
         reminders.add(newReminder);
     }
-    /**
-     * Removes {@code key} from this {@code AddressBook}.
-     * @throws ReminderNotFoundException if the {@code key} is not in this {@code AddressBook}.
-     */
-    public boolean removeReminder(ReadOnlyReminder key) throws ReminderNotFoundException {
-        if (reminders.remove(key)) {
-            return true;
-        } else {
-            throw new ReminderNotFoundException("Reminder not found");
-        }
-    }
 
     /*****************************************************
      * Util methods
