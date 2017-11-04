@@ -29,14 +29,46 @@
     -fx-font-family: "Segoe UI Semibold";
 }
 
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
+}
+
 .tab-pane {
+    -fx-tab-min-width:90px;
     -fx-padding: 0 0 0 1;
+}
+
+.tab{
+    -fx-background-insets: 0 1 0 1,0,0
 }
 
 .tab-pane .tab-header-area {
     -fx-padding: 0 0 0 0;
     -fx-min-height: 0;
     -fx-max-height: 0;
+    -fx-background-color: #3c3c3c;
+}
+
+.tab-pane .tab:selected
+{
+    -fx-background-color: #3c3c3c;
+}
+
+.tab-pane .tab
+{
+    -fx-background-color: derive(#1d1d1d, 90%);
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: silver;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.tab:selected .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: white;
 }
 
 .table-view {
@@ -96,6 +128,7 @@
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap : 0;
     -fx-padding: 0 0 0 0;
+    -fx-background-color: derive(#1d1d1d, 20%);
 }
 
 .list-cell:filled:even {

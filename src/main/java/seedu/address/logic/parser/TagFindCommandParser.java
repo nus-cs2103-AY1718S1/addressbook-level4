@@ -17,12 +17,13 @@ public class TagFindCommandParser implements Parser<TagFindCommand> {
      */
     public TagFindCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
+        boolean looseFind = true;
         //Throw an error if there is no argument followed by the command word
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagFindCommand.MESSAGE_USAGE));
         }
-        TagMatchingKeywordPredicate predicate = new TagMatchingKeywordPredicate(trimmedArgs);
+        TagMatchingKeywordPredicate predicate = new TagMatchingKeywordPredicate(trimmedArgs, looseFind);
         return new TagFindCommand(predicate);
     }
 }

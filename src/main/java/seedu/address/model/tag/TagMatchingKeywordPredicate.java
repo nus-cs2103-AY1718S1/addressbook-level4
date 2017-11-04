@@ -10,26 +10,30 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class TagMatchingKeywordPredicate implements Predicate<ReadOnlyPerson> {
     private final String keyword;
+    private final boolean looseFind;
 
-    public TagMatchingKeywordPredicate(String keyword) {
+    public TagMatchingKeywordPredicate(String keyword, boolean looseFind) {
         this.keyword = keyword;
+        this.looseFind = looseFind;
     }
 
     @Override
     public boolean test(ReadOnlyPerson person) {
         Set<Tag> tagList = person.getTags();
-        for (Tag tag : tagList) {
-            String current = tag.tagName;
-            if (current.equalsIgnoreCase(keyword)) {
-                return true;
-            } else if (keyword.trim().isEmpty()) {
-                return false;
-            } else if (current.toLowerCase().contains(keyword.toLowerCase())
-                || keyword.toLowerCase().contains(current.toLowerCase())) {
-                return true;
+        if (keyword.trim().isEmpty()) {
+            return false;
+        } else {
+            for (Tag tag : tagList) {
+                String current = tag.tagName;
+                if (current.equals(keyword)) {
+                    return true;
+                } else if (looseFind && (current.toLowerCase().contains(keyword.toLowerCase())
+                        || keyword.toLowerCase().contains(current.toLowerCase()))) {
+                    return true;
+                }
             }
+            return false;
         }
-        return false;
     }
 
     @Override

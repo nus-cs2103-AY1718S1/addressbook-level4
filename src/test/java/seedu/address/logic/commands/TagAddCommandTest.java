@@ -44,7 +44,7 @@ public class TagAddCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void executeTagAddSinglePersonSuccess() throws Exception {
+    public void executeTagAddSinglePerson() throws Exception {
         showFirstPersonOnly(model);
 
         Set<Tag> singleTagSet = new HashSet<Tag>();
@@ -66,6 +66,11 @@ public class TagAddCommandTest {
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(tagAddCommand, model, expectedMessage, expectedModel);
+
+        tagAddCommand = prepareCommand(singlePersonIndexList,
+                new TagAddDescriptor(new PersonBuilder().withATags(VALID_TAG_HUSBAND).build()));
+        assertCommandFailure(tagAddCommand, model, String.format(tagAddCommand.MESSAGE_TAG_ALREADY_EXISTS,
+                "[" + VALID_TAG_HUSBAND + "]"));
     }
 
 
@@ -139,7 +144,6 @@ public class TagAddCommandTest {
         assertFalse(copyDescriptor.equals(copyDescriptor1));
 
     }
-
 
     @Test
     public void tagAddDescriptorTest()throws Exception {

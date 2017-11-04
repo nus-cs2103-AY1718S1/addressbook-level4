@@ -21,14 +21,15 @@ public class TagFindCommandParserTest {
 
     @Test
     public void parseValidArgsReturnsTagFindCommand() {
+        boolean looseFind = true;
         TagFindCommand expectedTagFindCommandOne =
-                new TagFindCommand(new TagMatchingKeywordPredicate("friends"));
+                new TagFindCommand(new TagMatchingKeywordPredicate("friends", true));
         assertParseSuccess(parser, "friends", expectedTagFindCommandOne);
         TagFindCommand expectedTagFindCommandTwo =
-                new TagFindCommand(new TagMatchingKeywordPredicate("friend 2 be"));
+                new TagFindCommand(new TagMatchingKeywordPredicate("friend 2 be", true));
         assertParseSuccess(parser, "friend 2 be", expectedTagFindCommandTwo);
         TagFindCommand expectedTagFindCommandThree =
-                new TagFindCommand(new TagMatchingKeywordPredicate("1 2 3"));
+                new TagFindCommand(new TagMatchingKeywordPredicate("1 2 3", true));
         assertParseSuccess(parser, "1 2 3", expectedTagFindCommandThree);
     }
 

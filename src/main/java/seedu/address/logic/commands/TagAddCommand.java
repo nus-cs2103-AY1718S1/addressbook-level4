@@ -5,10 +5,12 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -25,6 +27,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagMatchingKeywordPredicate;
 //@@author ZhangH795
 /**
  * Edits the details of an existing person in the address book.
@@ -37,14 +40,15 @@ public class TagAddCommand extends UndoableCommand {
             + "by the index number used in the last person listing. "
             + "Input tag will append to the existing tags.\n"
             + "Parameters: INDEX1 INDEX2... (must be a positive integer) "
-            + "[TAG] (TAG Should not start with a number).\n"
+            + "TAG (TAG Should not start with a number).\n"
             + "Example: " + COMMAND_WORD + " 1 2 3 "
-            + "[friends]";
+            + "friends";
 
     public static final String MESSAGE_ADD_TAG_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-
+    public static final String MESSAGE_TAG_ALREADY_EXISTS = "The %1$s tag entered already exists "
+            + "in some person selected.";
     private final ArrayList<Index> index;
     private final TagAddDescriptor tagAddDescriptor;
 
@@ -62,19 +66,28 @@ public class TagAddCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        ObservableList<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        boolean looseFind = false;
+        Tag tagToAdd = (Tag) tagAddDescriptor.getTags().toArray()[0];
+        String tagInString = tagToAdd.toString();
+        String tagInString1 = tagInString.substring(1, tagInString.lastIndexOf("]"));
         StringBuilder editedPersonDisplay = new StringBuilder();
-
+        checkIndexInRange(lastShownList);
+        TagMatchingKeywordPredicate tagPredicate = new TagMatchingKeywordPredicate(tagInString1, looseFind);
+        ObservableList<ReadOnlyPerson> selectedPersonList = createSelectedPersonList(lastShownList);
+        FilteredList<ReadOnlyPerson> tagFilteredPersonList = new FilteredList<>(selectedPersonList);
+        tagFilteredPersonList.setPredicate(tagPredicate);
+        if (tagFilteredPersonList.size() > 0) {
+            throw new CommandException(String.format(MESSAGE_TAG_ALREADY_EXISTS, tagInString));
+        }
         for (int i = 0; i < index.size(); i++) {
-            if (index.get(i).getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
             ReadOnlyPerson personToEdit = lastShownList.get(index.get(i).getZeroBased());
             Set<Tag> originalTagList = personToEdit.getTags();
-            Set<Tag> modifiableTagList = createModifiableTagSet(originalTagList);
-            modifiableTagList.addAll(tagAddDescriptor.getTags());
-            tagAddDescriptor.setTags(modifiableTagList);
-            Person editedPerson = createEditedPerson(personToEdit, tagAddDescriptor);
+            Set<Tag> modifiableTagList = createModifiableTagSet(originalTagList, tagToAdd);
+            TagAddDescriptor tempTagAddDescriptor = new TagAddDescriptor();
+            tempTagAddDescriptor.setTags(modifiableTagList);
+
+            Person editedPerson = createEditedPerson(personToEdit, tempTagAddDescriptor);
             try {
                 model.updatePerson(personToEdit, editedPerson);
             } catch (DuplicatePersonException dpe) {
@@ -92,14 +105,39 @@ public class TagAddCommand extends UndoableCommand {
     }
 
     /**
-     * @param unmodifiable tag List
+     * @param lastShownList current tag List
      */
-    public Set<Tag> createModifiableTagSet(Set<Tag> unmodifiable) {
+    public void checkIndexInRange(ObservableList<ReadOnlyPerson> lastShownList) throws CommandException {
+        for (int i = 0; i < index.size(); i++) {
+            if (index.get(i).getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+        }
+    }
+
+    /**
+     * @param unmodifiable tag List
+     * @param tagToAdd tag to be added
+     */
+    public Set<Tag> createModifiableTagSet(Set<Tag> unmodifiable, Tag tagToAdd) {
         Set<Tag> modifiable = new HashSet<>();
         for (Tag t : unmodifiable) {
             modifiable.add(t);
         }
+        modifiable.add(tagToAdd);
         return modifiable;
+    }
+
+    /**
+     * @param fullPersonList person list
+     */
+    public ObservableList<ReadOnlyPerson> createSelectedPersonList(ObservableList<ReadOnlyPerson> fullPersonList) {
+        ArrayList<ReadOnlyPerson> selectedPersonList = new ArrayList<>();
+        for (Index i : index) {
+            ReadOnlyPerson personToEdit = fullPersonList.get(i.getZeroBased());
+            selectedPersonList.add(personToEdit);
+        }
+        return FXCollections.observableArrayList(selectedPersonList);
     }
 
     /**

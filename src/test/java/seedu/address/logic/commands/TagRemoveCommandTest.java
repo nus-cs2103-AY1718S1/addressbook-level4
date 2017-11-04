@@ -220,7 +220,7 @@ public class TagRemoveCommandTest {
         TagRemoveDescriptor tagRemoveDescriptor = new TagRemoveDescriptor();
         tagRemoveDescriptor.setTags(tagSet);
         TagRemoveCommand tagRemoveCommand = new TagRemoveCommand(singlePersonIndexList, tagRemoveDescriptor);
-        ArrayList<Index> indexList = tagRemoveCommand.makeFullIndexList(personList);
+        ArrayList<Index> indexList = tagRemoveCommand.makeFullIndexList(personList.size());
         assertTrue(indexList.size() == personList.size());
     }
 
@@ -239,7 +239,7 @@ public class TagRemoveCommandTest {
         TagRemoveDescriptor tagRemoveDescriptor = new TagRemoveDescriptor();
         tagRemoveDescriptor.setTags(tagSet);
         TagRemoveCommand tagRemoveCommand = new TagRemoveCommand(singlePersonIndexList, tagRemoveDescriptor);
-        Set<Tag> tagSetCopy = tagRemoveCommand.createModifiableTagSet(originalTagSet);
+        Set<Tag> tagSetCopy = tagRemoveCommand.createModifiableTagSet(originalTagSet, new Tag("tag"));
         assertTrue(tagSetCopy.equals(originalTagSet));
     }
 
