@@ -419,7 +419,7 @@ Decreases the font size by 3 pts.
 * `size` +
 Resets the font size back to the default.
 
-=== Toggling the display of the access counts : `accessdisplay` (Since v1.4)
+==== Toggling the display of the access counts : `accessdisplay` (Since v1.4)
 Toggles the display option for the access count numbers. +
 Format: `accessdisplay TYPE` +
 Alias: `ad`
@@ -580,7 +580,7 @@ There is no need to save manually.
 
 * *Help* : `help`
 * *Quick Help* : `quickhelp`
-* *Add* `add n/NAME [p/PHONE_NUMBER]... [e/EMAIL]... [a/ADDRESS]... [fb/FACEBOOK] [tw/TWITTER] [ig/INSTAGRAM] [t/TAG]...` +
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [fb/FACEBOOK] [tw/TWITTER] [ig/INSTAGRAM] [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *List* : `list`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +

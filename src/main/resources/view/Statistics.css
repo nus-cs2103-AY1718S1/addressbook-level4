@@ -1,16 +1,4 @@
-#fbChart .chart-title {
-    -fx-font-family: "Arial Black";
-    -fx-text-fill: #F8F8F8 ;
-}
-#twChart .chart-title {
-    -fx-font-family: "Arial Black";
-    -fx-text-fill: #F8F8F8 ;
-}
-#igChart .chart-title {
-    -fx-font-family: "Arial Black";
-    -fx-text-fill: #F8F8F8 ;
-}
-#personAddedChart .chart-title {
-    -fx-font-family: "Arial Black";
-    -fx-text-fill: #F8F8F8 ;
+.chart-title {
+    -fx-text-fill: black;
+    -fx-font-size: 120%;
 }
