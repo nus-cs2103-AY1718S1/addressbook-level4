@@ -44,7 +44,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
         List<Label> keys = new ArrayList<>();
         List<Label> values = new ArrayList<>();
 
-        person.getProperties().forEach(property -> {
+        person.getSortedProperties().forEach(property -> {
             Label newPropertyKey = new PropertyLabel(property.getFullName() + ":", "details-property-key");
             Label newPropertyValue = new PropertyLabel(property.getValue(), "details-property-value");
 

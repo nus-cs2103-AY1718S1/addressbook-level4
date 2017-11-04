@@ -4,6 +4,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.logic.commands.configs.ChangeTagColorCommand;
 import seedu.address.model.tag.Tag;
 
+//@@author yunpengn
 /**
  * Indicates the color of some tag(s) has been changed.
  */

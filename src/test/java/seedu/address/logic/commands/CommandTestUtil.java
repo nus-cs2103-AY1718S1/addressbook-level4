@@ -89,7 +89,7 @@ public class CommandTestUtil {
 
     public static final String INVALID_CONFIG_TYPE = " --some-config-type-unknown ";
     public static final String INVALID_CONFIG_VALUE = " unknown value(s)";
-    public static final String INVALID_TAG_COLOR = " bee";
+    public static final String INVALID_TAG_COLOR = " bee1";
     public static final String INVALID_NEW_PROPERTY = " s/b r/[^\\s].*";
 
     public static final String INVALID_IMPORT_TYPE = " --some-import-type-unknown ";
