@@ -61,11 +61,6 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, modelNotDeleteYet, expectedResultMessage);
 
-        //        /* Case: redo deleting the last lesson in the list -> last lesson deleted again */
-        //        command = RedoCommand.COMMAND_WORD;
-        //        lessonList = removeModule(modelNotDeleteYet, CS2101);
-        //        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        //        assertCommandSuccess(command, modelNotDeleteYet, expectedResultMessage);
 
         /* Case: delete the middle lesson in the list -> deleted */
         addressBook = getModel().getAddressBook();

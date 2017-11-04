@@ -199,7 +199,6 @@ public class EditCommandTest {
 
     @Test
     public void execute_editLessonInMarkedList_success() throws Exception {
-        model.bookmarkLesson(model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()));
         model.updateFilteredLessonList(new MarkedListPredicate());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
@@ -212,6 +211,7 @@ public class EditCommandTest {
         ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
 
+        editedLesson.setAsMarked();
         expectedModel.updateLesson(
                 model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()), editedLesson);
 
