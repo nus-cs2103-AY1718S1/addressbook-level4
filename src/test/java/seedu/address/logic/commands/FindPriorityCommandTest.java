@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_PRIORITY_LISTED_OVERVIEW;
+import static seedu.address.testutil.TypicalAccounts.getTypicalDatabase;
 import static seedu.address.testutil.TypicalReminders.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -26,7 +27,7 @@ import seedu.address.model.reminder.ReadOnlyReminder;
  * Contains integration tests (interaction with the Model) for {@code FindPriorityCommand}.
  */
 public class FindPriorityCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalDatabase(), new UserPrefs());
 
     @Test
     public void equals() {
