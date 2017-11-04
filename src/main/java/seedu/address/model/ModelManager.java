@@ -15,12 +15,14 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.MeetingListChangedEvent;
 import seedu.address.commons.events.model.PersonChangedEvent;
 import seedu.address.commons.events.ui.MapPersonEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.SearchData;
+import seedu.address.model.person.exceptions.DuplicateMeetingException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -79,6 +81,12 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //@@author Sri-vatsa
+    /** Raises an event to indicate the model has chnaged */
+    private void indicateMeetingListChanged() {
+        raise(new MeetingListChangedEvent(meetingList));
+    }
+
     //@@author liuhang0213
     /** Raises an event to indicate a person been added */
     private void indicatePersonAdded(ReadOnlyPerson person) {
@@ -103,7 +111,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
         indicatePersonDeleted(target);
     }
-
+    //@@author Sri-vatsa
     @Override
     public boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException {
         boolean isTagRemoved;
@@ -127,7 +135,13 @@ public class ModelManager extends ComponentManager implements Model {
         }
         return hasOneOrMoreDeletion;
     }
+    //@@author Sri-vatsa
+    public synchronized void addMeeting(ReadOnlyMeeting meeting) throws UniqueMeetingList.DuplicateMeetingException {
+        meetingList.add(meeting);
+        indicateMeetingListChanged();
+    }
 
+    //@@author
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);

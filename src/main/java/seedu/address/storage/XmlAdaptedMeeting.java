@@ -8,7 +8,6 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Meeting;
-import seedu.address.model.person.Address;
 import seedu.address.model.person.InternalId;
 //@@author liuhang0213
 /**
@@ -19,7 +18,7 @@ public class XmlAdaptedMeeting {
     @XmlElement(required = true)
     private String dateTime;
     @XmlElement(required = true)
-    private Address location;
+    private String location;
     @XmlElement(required = true)
     private String notes;
 
@@ -39,7 +38,7 @@ public class XmlAdaptedMeeting {
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
     public XmlAdaptedMeeting(Meeting source) {
-        dateTime = source.getDateTime();
+        dateTime = source.getDateTimeStr();
         location = source.getLocation();
         notes = source.getNotes();
         listOfPersonsId = new ArrayList<Integer>();
