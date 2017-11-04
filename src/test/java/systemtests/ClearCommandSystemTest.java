@@ -74,7 +74,7 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
                 TypicalTasks::getTypicalTaskbook,
                 TestApp.SAVE_LOCATION_FOR_TESTING, TestApp.SAVE_LOCATION_FOR_TASK_BOOK_TESTING);
         assertCommandSuccess(command, ClearCommand.MESSAGE_SUCCESS,
-                        new ModelManager(new AddressBook(), testApp.getModel().getTaskBook(), new UserPrefs()));
+                        new ModelManager(new AddressBook(), TypicalTasks.getTypicalTaskbook(), new UserPrefs()));
     }
 
     /**
