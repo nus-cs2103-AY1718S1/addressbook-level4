@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -33,7 +32,6 @@ public class EventPanel extends UiPart<Region> {
 
     @FXML
     private Label descriptionLabel;
-
 
     public EventPanel(Logic logic) {
         super(FXML);
@@ -75,7 +73,7 @@ public class EventPanel extends UiPart<Region> {
      * Calls showEventDetails when the address book is changed. This results in any edits to the currently displayed
      * event being refreshed immediately, instead of the user having to click away and click back to see the changes.
      * @param event
-     */
+
     @Subscribe
     private void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -87,4 +85,5 @@ public class EventPanel extends UiPart<Region> {
             }
         }
     }
+    */
 }

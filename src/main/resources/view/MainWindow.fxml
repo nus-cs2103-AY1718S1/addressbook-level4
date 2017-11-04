@@ -20,15 +20,15 @@
 
 <VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
-        <URL value="@../../../../../../2103_project/src/main/resources/view/BrightTheme.css" />
-        <URL value="@../../../../../../2103_project/src/main/resources/view/Extensions.css" />
-        <URL value="@../../../../../../2103_project/src/main/resources/view/CalendarView.css" />
+        <URL value="@BrightTheme.css" />
+        <URL value="@Extensions.css" />
+        <URL value="@CalendarView.css" />
     </stylesheets>
 
 <VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
-        <URL value="@../../../../../../2103_project/src/main/resources/view/BrightTheme.css" />
-        <URL value="@../../../../../../2103_project/src/main/resources/view/Extensions.css" />
+        <URL value="@BrightTheme.css" />
+        <URL value="@Extensions.css" />
     </stylesheets>
 
     <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">

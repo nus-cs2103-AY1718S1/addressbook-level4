@@ -50,6 +50,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueRelList relation;
 
     private ReadOnlyEvent lastChangedEvent;
+    private ReadOnlyEvent newlyAddedEvent;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -267,6 +268,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addEvent(ReadOnlyEvent e) throws EventTimeClashException {
         Event newEvent = new Event(e);
         events.add(newEvent);
+        lastChangedEvent = null;
+        newlyAddedEvent = newEvent;
     }
 
     /**
@@ -276,6 +279,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean removeEvent(ReadOnlyEvent key) throws EventNotFoundException {
         lastChangedEvent = key;
+        newlyAddedEvent = null;
         if (events.remove(key)) {
             return true;
         } else {
@@ -296,11 +300,18 @@ public class AddressBook implements ReadOnlyAddressBook {
         Event editedEvent = new Event(editedReadOnlyEvent);
         events.setEvent(target, editedEvent);
         lastChangedEvent = target;
+        newlyAddedEvent = editedEvent;
     }
 
     @Override
     public ReadOnlyEvent getLastChangedEvent() {
         return this.lastChangedEvent;
+    }
+
+
+    @Override
+    public ReadOnlyEvent getNewlyAddedEvent() {
+        return this.newlyAddedEvent;
     }
     //@@author
 
