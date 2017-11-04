@@ -270,7 +270,7 @@ public class ModuleInfoTest {
     public void createModuleInfo_fromJsonUrl_checkCorrectness() throws Exception {
         assertEquals("CS1101S", info.getModuleCode());
 
-        Date expectedDate = DateTime.formatDateTime("29112017 17:00");
+        Date expectedDate = DateTime.parseDateTime("29112017 17:00");
         assertEquals(expectedDate, info.getExamDate());
     }
 
@@ -483,6 +483,25 @@ public class PersonTest {
 
         Person copied = new Person(person);
         assertEquals(person, copied);
+    }
+}
+```
+###### \java\seedu\address\model\property\DateTimeTest.java
+``` java
+    @Test
+    public void create_viaDateObject_checkCorrectness() throws Exception {
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("ddMMyyyy HH:mm");
+        Date date = dateFormatter.parse(VALID_DATE_EVENT1);
+
+        // Create a Datetime property via alternative constructor.
+        DateTime dateTime = new DateTime(date);
+        assertEquals(VALID_DATE_EVENT1, dateTime.getValue());
+    }
+
+    @Test
+    public void create_viaNaturalLanguage_checkCorrectness() throws Exception {
+        assertEquals(new DateTime(VALID_DATE_EVENT1), new DateTime(VALID_NATURAL_DATE_EVENT1));
+        assertEquals(new DateTime(VALID_DATE_EVENT2), new DateTime(VALID_NATURAL_DATE_EVENT2));
     }
 }
 ```

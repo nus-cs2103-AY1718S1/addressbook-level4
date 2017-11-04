@@ -207,6 +207,16 @@ Examples:
 * `addE n/Does Birthday dt/25122015 20:30 a/12 Kent Ridge Drive`
 * `addE n/Betsy Birthday dt/25122016 21:30 a/23 Marina Road`
 
+[NOTE]
+====
+* The standard format for time should be `DDMMYYYY HH:MM` in 24-hour format.
+* However, the application may sometimes be _smart_ to interpret what you say. For example, you may type `this afternoon`
+or `tomorrow evening`. Then, it will be automatically converted to the standard format.
+* Do NOT try to _challenge_ the application, it is not promised to produce an expected result if you use non-standard format
+and the expression is not simple or clear enough.
+* Avoid putting the year in the first place when using the non-standard format.
+====
+
 === Listing all persons/events : `(l)list`
 
 Shows a list of all persons in the application. +
