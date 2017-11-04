@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 
 import seedu.address.model.meeting.DateTime;
 import seedu.address.model.meeting.Meeting;
+import seedu.address.model.meeting.MeetingTag;
 import seedu.address.model.meeting.NameMeeting;
 import seedu.address.model.meeting.PersonToMeet;
 import seedu.address.model.meeting.PhoneNum;
@@ -21,9 +23,6 @@ import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
 import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
 import seedu.address.model.meeting.exceptions.MeetingClashException;
 import seedu.address.model.person.ReadOnlyPerson;
-//import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
-//import seedu.address.model.person.exceptions.DuplicatePersonException;
-//haven implement yet
 
 //@@author nelsonqyj
 /**
@@ -38,11 +37,13 @@ public class AddMeetingCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_NAME + "NAME_OF_MEETING "
             + PREFIX_DATE + "DATE_TIME "
-            + PREFIX_LOCATION + "LOCATION \n"
+            + PREFIX_LOCATION + "LOCATION "
+            + PREFIX_TAG + "0-2 \n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_NAME + "Project Meeting "
             + PREFIX_DATE + "31-10-2017 21:30 "
-            + PREFIX_LOCATION + "School of Computing, NUS ";
+            + PREFIX_LOCATION + "School of Computing, NUS "
+            + PREFIX_TAG + "1";
 
     public static final String MESSAGE_SUCCESS = "New meeting added: %1$s";
     public static final String MESSAGE_DUPLICATE_MEETING = "This meeting already exists in the address book";
@@ -54,16 +55,18 @@ public class AddMeetingCommand extends UndoableCommand {
     private final NameMeeting name;
     private final DateTime date;
     private final Place location;
+    private final MeetingTag meetTag;
 
     //@@author Melvin-leo
     /**
      * Creates an AddMeetingCommand to add the specified {@code ReadOnlyMeeting}
      */
-    public AddMeetingCommand (NameMeeting name, DateTime date, Place location, Index index) {
+    public AddMeetingCommand (NameMeeting name, DateTime date, Place location, Index index, MeetingTag meetTag) {
         this.index = index;
         this.name = name;
         this.date = date;
         this.location = location;
+        this.meetTag = meetTag;
     }
 
     @Override
@@ -79,13 +82,13 @@ public class AddMeetingCommand extends UndoableCommand {
         PersonToMeet personName = new PersonToMeet(personToAdd.getName().toString());
         PhoneNum phoneNum = new PhoneNum(personToAdd.getPhone().toString());
 
-        toAdd = new Meeting(name, date, location, personName, phoneNum);
+        toAdd = new Meeting(name, date, location, personName, phoneNum, meetTag);
         try {
             model.addMeeting(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateMeetingException e) {
             throw new CommandException(MESSAGE_DUPLICATE_MEETING);
-        } catch (MeetingBeforeCurrDateException mde) {
+        } catch (MeetingBeforeCurrDateException mde) { //This exception throw handles auto deletion of Meeting cards
             throw new CommandException(MESSAGE_OVERDUE_MEETING);
         } catch (MeetingClashException mce) {
             throw new CommandException(MESSAGE_MEETING_CLASH);

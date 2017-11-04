@@ -7,6 +7,8 @@ import java.time.temporal.ChronoUnit;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.meeting.ReadOnlyMeeting;
@@ -19,6 +21,8 @@ public class MeetingCard extends UiPart<Region> {
 
     private static final String FXML = "MeetingListCard.fxml";
     private static String[] colors = { "darkRed", "red", "orangeRed", "grey" };
+    private static final String ICONIMPT = "/images/important.png";
+    private static final String ICONHATE = "/images/dislike.png";
 
     public final ReadOnlyMeeting meeting;
 
@@ -36,6 +40,8 @@ public class MeetingCard extends UiPart<Region> {
     private Label person;
     @FXML
     private Label phoneNum;
+    @FXML
+    private ImageView icon;
 
 
     public MeetingCard(ReadOnlyMeeting meeting, int displayedIndex) {
@@ -65,6 +71,12 @@ public class MeetingCard extends UiPart<Region> {
             initMeeting(meeting, colors[1]);
         } else if (daysBet == 2) {
             initMeeting(meeting, colors[2]);
+        }
+        if (meeting.getMeetTag().toString().equals("2")) {
+            icon.setImage(new Image(ICONIMPT));
+        }
+        if (meeting.getMeetTag().toString().equals("0")) {
+            icon.setImage(new Image(ICONHATE));
         }
 
     }

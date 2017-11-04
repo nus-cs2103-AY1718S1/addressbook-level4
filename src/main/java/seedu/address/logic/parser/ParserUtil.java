@@ -13,6 +13,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 
 import seedu.address.model.meeting.DateTime;
+import seedu.address.model.meeting.MeetingTag;
 import seedu.address.model.meeting.NameMeeting;
 import seedu.address.model.meeting.PersonToMeet;
 import seedu.address.model.meeting.PhoneNum;
@@ -128,12 +129,20 @@ public class ParserUtil {
 
     //@@author Melvin-leo
     /**
-     * Parses a {@code Optional<String> name} into an {@code Optional<NameMeeting>} if {@code name} is present.
+     * Parses a {@code Optional<String> phonenum} into an {@code Optional<PhoneNum>} if {@code phonenum} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<PhoneNum> parsePhoneNum(Optional<String> phoneNum) throws IllegalValueException {
         requireNonNull(phoneNum);
         return phoneNum.isPresent() ? Optional.of(new PhoneNum(phoneNum.get())) : Optional.empty();
+    }
+    /**
+     * Parses a {@code Optional<String> tagname} into an {@code Optional<MeetingTag>} if {@code ntagame} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<MeetingTag> parseMeetTag(Optional<String> meetingTag) throws IllegalValueException {
+        requireNonNull(meetingTag);
+        return meetingTag.isPresent() ? Optional.of(new MeetingTag(meetingTag.get())) : Optional.empty();
     }
 
     /**

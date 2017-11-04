@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.meeting.DateTime;
 import seedu.address.model.meeting.Meeting;
+import seedu.address.model.meeting.MeetingTag;
 import seedu.address.model.meeting.NameMeeting;
 import seedu.address.model.meeting.PersonToMeet;
 import seedu.address.model.meeting.PhoneNum;
@@ -21,6 +22,7 @@ public class MeetingBuilder {
     public static final String DEFAULT_PLACE = "School of Computing";
     public static final String DEFAULT_PERSONTOMEET = "Alice Pauline";
     public static final String DEFAULT_PHONENUM = "85355255";
+    public static final String DEFAULT_TAG = "1";
 
     private Meeting meeting;
 
@@ -31,9 +33,10 @@ public class MeetingBuilder {
             Place defaultPlace = new Place(DEFAULT_PLACE);
             PersonToMeet defaultPersonToMeet = new PersonToMeet(DEFAULT_PERSONTOMEET);
             PhoneNum defaultPhoneNum = new PhoneNum(DEFAULT_PHONENUM);
+            MeetingTag defaultMeetingTag = new MeetingTag(DEFAULT_TAG);
 
             this.meeting = new Meeting(defaultNameMeeting, defaultDateTime, defaultPlace, defaultPersonToMeet,
-                    defaultPhoneNum);
+                    defaultPhoneNum, defaultMeetingTag);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default meeting's values are invalid.");
         }

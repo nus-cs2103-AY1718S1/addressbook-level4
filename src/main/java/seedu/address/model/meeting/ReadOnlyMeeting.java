@@ -18,6 +18,8 @@ public interface ReadOnlyMeeting {
     PersonToMeet getPersonName();
     ObjectProperty<PhoneNum> phoneMeetProperty();
     PhoneNum getPersonPhone();
+    ObjectProperty<MeetingTag> meetTagProperty();
+    MeetingTag getMeetTag();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

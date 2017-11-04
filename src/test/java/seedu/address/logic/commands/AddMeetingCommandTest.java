@@ -77,9 +77,9 @@ public class AddMeetingCommandTest {
         Meeting project = new MeetingBuilder().withNameMeeting("Project").build();
         Meeting meeting = new MeetingBuilder().withNameMeeting("Meeting").build();
         AddMeetingCommand addProjectCommand = new AddMeetingCommand(project.getName(), project.getDate(),
-                project.getPlace(), index);
+                project.getPlace(), index, project.getMeetTag());
         AddMeetingCommand addMeetingCommand = new AddMeetingCommand(meeting.getName(), meeting.getDate(),
-                meeting.getPlace(), index);
+                meeting.getPlace(), index, meeting.getMeetTag());
 
         // same object -> returns true
         assertTrue(addProjectCommand.equals(addProjectCommand));
@@ -107,7 +107,7 @@ public class AddMeetingCommandTest {
     private AddMeetingCommand getAddMeetingCommandForMeeting(Meeting meeting, Model model) {
         this.index = Index.fromOneBased(1);
         AddMeetingCommand command = new AddMeetingCommand(meeting.getName(), meeting.getDate(),
-                meeting.getPlace(), index);
+                meeting.getPlace(), index, meeting.getMeetTag());
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
