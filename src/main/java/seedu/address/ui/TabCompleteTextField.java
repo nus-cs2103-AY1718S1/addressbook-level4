@@ -94,8 +94,10 @@ public class TabCompleteTextField extends TextField {
     private void splitCommandWords() {
         String text = getText();
         int lastSpace = text.lastIndexOf(" ");
-        prefixWords = text.substring(0, lastSpace + 1);
-        lastWord = text.substring(lastSpace + 1).toLowerCase();
+        int lastSlash = text.lastIndexOf("/");
+        int splitingPosition = Integer.max(lastSlash, lastSpace);
+        prefixWords = text.substring(0, splitingPosition + 1);
+        lastWord = text.substring(splitingPosition + 1).toLowerCase();
     }
 
     /**

@@ -19,7 +19,8 @@ public class TabCompleteSystemTest extends AddressBookSystemTest {
         /* Case: partial name in find command, TAB Pressed
          * -> 2 persons found
          */
-        String command = FindCommand.COMMAND_WORD + " Mei";
+        showAllPersons();
+        String command = FindCommand.COMMAND_WORD + " n/Mei";
         Model expectedModel = getModel();
         ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL); // first names of Benson and Daniel are "Meier"
         assertCommandSuccess(command, expectedModel, KeyCode.TAB);
@@ -28,7 +29,8 @@ public class TabCompleteSystemTest extends AddressBookSystemTest {
         /* Case: partial name in find command, DOWN, ENTER Pressed
          * -> 1 person found
          */
-        command = FindCommand.COMMAND_WORD + " Be";
+        showAllPersons();
+        command = FindCommand.COMMAND_WORD + " n/Be";
         ModelHelper.setFilteredList(expectedModel, BENSON);
         assertCommandSuccess(command, expectedModel, KeyCode.DOWN, KeyCode.ENTER);
         assertSelectedCardUnchanged();
@@ -36,7 +38,8 @@ public class TabCompleteSystemTest extends AddressBookSystemTest {
         /* Case: partial name in find command, DOWN, DOWN, ENTER Pressed
          * -> 1 person found
          */
-        command = FindCommand.COMMAND_WORD + " Be";
+        showAllPersons();
+        command = FindCommand.COMMAND_WORD + " n/Be";
         ModelHelper.setFilteredList(expectedModel, GEORGE);
         assertCommandSuccess(command, expectedModel, KeyCode.DOWN, KeyCode.DOWN, KeyCode.ENTER);
         assertSelectedCardUnchanged();
@@ -44,7 +47,8 @@ public class TabCompleteSystemTest extends AddressBookSystemTest {
         /* Case: Non-matching keywords in find command, no suggestions
          * -> 0 persons found
          */
-        command = FindCommand.COMMAND_WORD + " Bee";
+        showAllPersons();
+        command = FindCommand.COMMAND_WORD + " n/Bee";
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel, KeyCode.TAB);
         assertSelectedCardUnchanged();
@@ -52,7 +56,8 @@ public class TabCompleteSystemTest extends AddressBookSystemTest {
         /* Case: partial name in second argument, TAB Pressed
          * -> 2 persons found
          */
-        command = FindCommand.COMMAND_WORD + " Benson Da";
+        showAllPersons();
+        command = FindCommand.COMMAND_WORD + " n/Benson Da";
         expectedModel = getModel();
         ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL); // first names of Benson and Daniel are "Meier"
         assertCommandSuccess(command, expectedModel, KeyCode.TAB);
