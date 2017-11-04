@@ -8,16 +8,17 @@ import java.util.Set;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.graph.implementations.SingleNode;
+import org.graphstream.ui.view.View;
 import org.graphstream.ui.view.Viewer;
 
 import javafx.collections.ObservableList;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.relationship.RelationshipDirection;
 
+//@@author wenmogu
 /**
  * This class is a wrapper class of SingleGraph class in GraphStream
  * It is used when creating a new SingleGraph when changes happen in the lastShownList
@@ -28,6 +29,8 @@ public class GraphWrapper {
     private static final String graphId = "ImARandomGraphID";
 
     private SingleGraph graph;
+    private Viewer viewer;
+    private View view;
     private Model model;
     private ObservableList<ReadOnlyPerson> filteredPersons;
 
@@ -36,6 +39,10 @@ public class GraphWrapper {
 
     public GraphWrapper() {
         this.graph = new SingleGraph(graphId);
+        this.viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+        viewer.enableAutoLayout();
+        viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.EXIT);
+        this.view = viewer.addDefaultView(false);
     }
 
     private void setData(Model model) {
@@ -182,7 +189,11 @@ public class GraphWrapper {
         for (ReadOnlyPerson person: filteredPersons) {
             Set<Relationship> relationshipSet = person.getRelationships();
             for (Relationship relationship: relationshipSet) {
-                addEdge(relationship.getFromPerson(), relationship.getToPerson(), relationship.getDirection());
+                Edge edge = addEdge(relationship.getFromPerson(), relationship.getToPerson(),
+                        relationship.getDirection());
+                String edgeLabel = relationship.getName().toString() + " "
+                        + relationship.getConfidenceEstimate().toString();
+                edge.addAttribute(nodeAttributeNodeLabel, edgeLabel);
             }
         }
 
@@ -202,7 +213,10 @@ public class GraphWrapper {
         return graph;
     }
 
-    public Viewer display() {
-        return this.graph.display();
+    /**
+     * Returns the view attached to the viewer for the graph.
+     */
+    public View getView() {
+        return this.view;
     }
 }

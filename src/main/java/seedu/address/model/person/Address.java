@@ -21,14 +21,14 @@ public class Address {
     public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
 
     public final String value;
-
+    //@@author TanYikai
     /**
      * The default Address constructor when address is not specified by the user
      */
     private Address() {
-        value = "<Unspecified address>";
+        value = "Unspecified address";
     }
-
+    //@@author
     /**
      * Validates given address.
      *

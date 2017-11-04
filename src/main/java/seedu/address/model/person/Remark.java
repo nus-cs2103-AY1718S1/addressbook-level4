@@ -1,17 +1,22 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
-
+//@@author TanYikai
 /**
  * Represents a Person's remark in the address book.
  * Guarantees: immutable; is always valid
  */
 public class Remark {
 
+    public static final Remark UNSPECIFIED = new Remark();
     public static final String MESSAGE_REMARK_CONSTRAINTS =
             "Person remarks can take any values, can even be blank";
 
     public final String value;
+
+    private Remark() {
+        value = "Unspecified remark";
+    }
 
     public Remark(String remark) {
         requireNonNull(remark);

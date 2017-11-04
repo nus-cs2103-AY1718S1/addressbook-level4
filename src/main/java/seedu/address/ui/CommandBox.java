@@ -35,6 +35,7 @@ public class CommandBox extends UiPart<Region> {
     private TextField commandTextField;
     private AutoCompletionBinding<String> autoCompletionBinding;
 
+    //@@author joanneong
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
@@ -49,8 +50,11 @@ public class CommandBox extends UiPart<Region> {
     /**
      * Returns the {@code TextField} in the command box (i.e. the user input).
      */
-    protected TextField getCommandTextField() { return commandTextField; }
+    protected TextField getCommandTextField() {
+        return commandTextField;
+    }
 
+    //@@author
     /**
      * Handles the key press event, {@code keyEvent}.
      */
