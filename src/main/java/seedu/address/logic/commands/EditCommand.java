@@ -201,7 +201,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(phone);
         }
 
-        public void setParentPhonePhone(ParentPhone parentPhone) {
+        public void setParentPhone(ParentPhone parentPhone) {
             this.parentPhone = parentPhone;
         }
 
