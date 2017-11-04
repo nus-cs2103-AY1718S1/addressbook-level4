@@ -1,5 +1,5 @@
 # nahtanojmil
-###### \java\guitests\guihandles\GraphPanelHandle.java
+###### /java/guitests/guihandles/GraphPanelHandle.java
 ``` java
 /**
  * Provides a handle to the graph of a person in the person list panel.
@@ -21,7 +21,7 @@ public class GraphPanelHandle extends NodeHandle<Node> {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\RemarkCommandTest.java
+###### /java/seedu/address/logic/commands/RemarkCommandTest.java
 ``` java
 public class RemarkCommandTest {
 
@@ -128,7 +128,7 @@ public class RemarkCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_remarkCommandWord_returnsRemarkCommand() throws Exception {
@@ -139,7 +139,7 @@ public class RemarkCommandTest {
     }
 
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_remarkCommandAlias_returnsRemarkCommand() throws Exception {
@@ -164,7 +164,7 @@ public class RemarkCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtilTest.java
+###### /java/seedu/address/logic/parser/ParserUtilTest.java
 ``` java
     @Test
     public void parseRemark_invalidValue_throwsIllegalValueException() throws Exception {
@@ -185,7 +185,7 @@ public class RemarkCommandTest {
         assertEquals(expectedRemark, actualRemark.get());
     }
 ```
-###### \java\seedu\address\logic\parser\RemarkCommandParserTest.java
+###### /java/seedu/address/logic/parser/RemarkCommandParserTest.java
 ``` java
 public class RemarkCommandParserTest {
     private RemarkCommandParser parser = new RemarkCommandParser();
@@ -215,7 +215,7 @@ public class RemarkCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\testutil\PersonBuilder.java
+###### /java/seedu/address/testutil/PersonBuilder.java
 ``` java
     /**
      * Sets the {@code Remark} of the {@code Person} that we are building.
@@ -226,7 +226,7 @@ public class RemarkCommandParserTest {
         return this;
     }
 ```
-###### \java\seedu\address\ui\GraphPanelTest.java
+###### /java/seedu/address/ui/GraphPanelTest.java
 ``` java
 public class GraphPanelTest extends GuiUnitTest {
 

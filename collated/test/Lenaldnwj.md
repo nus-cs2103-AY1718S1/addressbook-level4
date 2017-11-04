@@ -1,5 +1,5 @@
 # Lenaldnwj
-###### \java\seedu\address\logic\parser\AddCommandParserTest.java
+###### /java/seedu/address/logic/parser/AddCommandParserTest.java
 ``` java
     @Test
     public void parse_optionalFieldsMissing_success() {
@@ -75,7 +75,7 @@
                 new AddCommand(expectedPersonWithNoOptionalInputs));
     }
 ```
-###### \java\seedu\address\logic\parser\AddCommandParserTest.java
+###### /java/seedu/address/logic/parser/AddCommandParserTest.java
 ``` java
     @Test
     public void optionalInput() {
@@ -119,7 +119,7 @@
                 + "c/673349 t/friends t/owesMoney");
     }
 ```
-###### \java\seedu\address\model\person\PhoneTest.java
+###### /java/seedu/address/model/person/PhoneTest.java
 ``` java
 package seedu.address.model.person;
 
@@ -191,7 +191,7 @@ public class PhoneTest {
     }
 }
 ```
-###### \java\seedu\address\ui\PersonCardTest.java
+###### /java/seedu/address/ui/PersonCardTest.java
 ``` java
     @Test
     public void obtainTagColors() {
