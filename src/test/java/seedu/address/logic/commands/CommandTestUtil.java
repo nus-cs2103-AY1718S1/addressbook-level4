@@ -84,13 +84,13 @@ public class CommandTestUtil {
     public static final String VALID_START_DEMO = "11/11/2017 9:00pm";
     public static final String VALID_END_HOTPOT = "6/12/2017 12:00pm";
     public static final String VALID_END_DEMO = "11/11/2017 11:00pm";
-    public static final String VALID_TAG_HOTPOT = "social";
-    public static final String VALID_TAG_DEMO = "important";
+    public static final String VALID_TAG_HOTPOT = " social";
+    public static final String VALID_TAG_DEMO = " important";
 
     public static final String NAME_DESC_HOTPOT = " " + PREFIX_NAME + VALID_NAME_HOTPOT;
     public static final String NAME_DESC_DEMO = " " + PREFIX_NAME + VALID_NAME_DEMO;
-    //public static final String DESC_HOTPOT = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_HOTPOT;
-    //public static final String DESC_DEMO = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_DEMO;
+    public static final String DESC_DESC_HOTPOT = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_HOTPOT;
+    public static final String DESC_DESC_DEMO = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_DEMO;
     public static final String START_DESC_HOTPOT = " " + PREFIX_START_DATE_TIME + VALID_START_HOTPOT;
     public static final String START_DESC_DEMO = " " + PREFIX_START_DATE_TIME + VALID_START_DEMO;
     public static final String END_DESC_HOTPOT = " " + PREFIX_END_DATE_TIME + VALID_END_HOTPOT;
