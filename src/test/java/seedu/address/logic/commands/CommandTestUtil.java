@@ -75,7 +75,7 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG = "hubby*"; // '*' not allowed in tags
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + INVALID_TAG; // '*' not allowed in tags
-    public static final String INVALID_DATE_DESC = " " + PREFIX_DATE_TIME + "20102004 03:30pm"; // "pm/am not allowed"
+    public static final String INVALID_DATE_DESC = " " + PREFIX_DATE_TIME + "some random string"; // "pm/am not allowed"
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
