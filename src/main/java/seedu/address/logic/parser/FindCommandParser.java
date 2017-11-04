@@ -87,6 +87,12 @@ public class FindCommandParser implements Parser<FindCommand> {
         return Stream.of(prefixes).anyMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
+    /**
+     * extracts keywords separated by space under the specified{@code prefix}
+     * @param argumentMultimap the argumentMultimap that maps prefix to keywords
+     * @param prefix the specified prefix
+     * @return the list of keywords
+     */
     private static List<String> extractKeywords(ArgumentMultimap argumentMultimap, Prefix prefix) {
         List<String> keywords = new ArrayList<>();
         for (String argument : argumentMultimap.getAllValues(prefix)) {
