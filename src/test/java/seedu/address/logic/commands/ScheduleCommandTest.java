@@ -46,21 +46,20 @@ public class ScheduleCommandTest {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(ScheduleCommandParser.DATE_FORMAT.parse("2018-12-25 10:00:00"));
 
-        int listSize = model.getFilteredPersonList().size();
         Schedule schedulePerson = new Schedule(model.getFilteredPersonList().get(0).getName().toString(), calendar);
         ScheduleCommand scheduleCommand = new ScheduleCommand(firstPersonIndex, calendar);
-        Model model1 = new ModelManager();
+        Model model1 = createAndSetModel(scheduleCommand);
         model1.addPerson(TypicalPersons.ALICE);
-        scheduleCommand.setData(model1, new CommandHistory(), new UndoRedoStack());
         CommandResult result = scheduleCommand.execute();
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         //Add the schedule to the expected model to compare with the model created
         expectedModel.addSchedule(schedulePerson);
 
         String expectedMessage = "Added " + schedulePerson.getPersonName() + " to consultations schedule "
-                + "on " + schedulePerson.getDate().toString();
+                + "on " + schedulePerson.getDate().toString() + ".\n"
+                + "Use 'viewsch' or 'viewschedule' command to view all your schedules.";
 
-        assertEquals(result.feedbackToUser, expectedMessage);
+        assertEquals(expectedMessage , result.feedbackToUser);
 
     }
 
@@ -69,9 +68,8 @@ public class ScheduleCommandTest {
         Index targetIndex = Index.fromOneBased(1000);
         Calendar date = Calendar.getInstance();
         ScheduleCommand scheduleCommand = new ScheduleCommand(targetIndex, date);
-        Model model = new ModelManager();
+        Model model = createAndSetModel(scheduleCommand);
         model.addPerson(TypicalPersons.ALICE);
-        scheduleCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         thrown.expect(CommandException.class);
         scheduleCommand.execute();
     }
@@ -92,4 +90,16 @@ public class ScheduleCommandTest {
         assertEquals(expectedDate, dateInSchedule);
 
     }
+
+    //================================= HELPER METHODS =====================================
+
+    /**
+     * Returns a model that is set
+     */
+    public Model createAndSetModel(ScheduleCommand scheduleCommand) {
+        Model model = new ModelManager();
+        scheduleCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return model;
+    }
+    //@@author
 }

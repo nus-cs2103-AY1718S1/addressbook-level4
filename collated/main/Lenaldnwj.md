@@ -1,5 +1,5 @@
 # Lenaldnwj
-###### \java\seedu\address\logic\parser\AddCommandParser.java
+###### /java/seedu/address/logic/parser/AddCommandParser.java
 ``` java
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
@@ -64,7 +64,7 @@
     }
 }
 ```
-###### \java\seedu\address\model\person\Email.java
+###### /java/seedu/address/model/person/Email.java
 ``` java
 
     public static final String MESSAGE_EMAIL_CONSTRAINTS =
@@ -93,7 +93,7 @@
         return test.matches(EMAIL_VALIDATION_REGEX);
     }
 ```
-###### \java\seedu\address\model\person\Phone.java
+###### /java/seedu/address/model/person/Phone.java
 ``` java
 package seedu.address.model.person;
 
@@ -168,7 +168,7 @@ public class Phone {
 
 }
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
     private static final String FXML = "PersonListCard.fxml";
 
