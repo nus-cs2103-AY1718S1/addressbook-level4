@@ -34,7 +34,7 @@ import seedu.address.model.tag.Tag;
  * {@code Optional} return value inside {@code ParserUtil} methods.
  */
 public class ParserUtil {
-
+    /* Messages ready for use. */
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
@@ -164,9 +164,4 @@ public class ParserUtil {
         return filePath;
     }
     //@@author
-
-    public static Optional<DateTime> parseNaturalLanguageTime(String name)
-            throws IllegalValueException, PropertyNotFoundException {
-        return Optional.empty();
-    }
 }

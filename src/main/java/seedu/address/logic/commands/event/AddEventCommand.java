@@ -30,7 +30,7 @@ public class AddEventCommand extends UndoableCommand {
             + PREFIX_NAME + "NAME "
             + PREFIX_DATE_TIME + "DATE & TIME "
             + PREFIX_ADDRESS + "VENUE "
-            + "Example: " + COMMAND_WORD + " "
+            + "\nExample: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe birthday "
             + PREFIX_DATE_TIME + "25122017 08:30 "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 ";
