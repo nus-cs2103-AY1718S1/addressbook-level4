@@ -20,8 +20,12 @@ public class BanCommandParser implements Parser<BanCommand> {
      */
     public BanCommand parse(String args) throws ParseException {
         try {
-            Index index = ParserUtil.parseIndex(args);
-            return new BanCommand(index);
+            if (args.trim().equals("")) {
+                return new BanCommand();
+            } else {
+                Index index = ParserUtil.parseIndex(args);
+                return new BanCommand(index);
+            }
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, BanCommand.MESSAGE_USAGE));
