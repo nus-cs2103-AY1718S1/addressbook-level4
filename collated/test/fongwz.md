@@ -1,5 +1,5 @@
 # fongwz
-###### /java/seedu/address/ui/CommandBoxTest.java
+###### \java\seedu\address\ui\CommandBoxTest.java
 ``` java
     /**
      * Testing the command box helper
