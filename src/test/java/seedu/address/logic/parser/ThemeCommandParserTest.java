@@ -13,7 +13,7 @@ import seedu.address.logic.commands.ThemeCommand;
 
 //@@author cctdaniel
 public class ThemeCommandParserTest {
-    private CustomiseCommandParser parser = new CustomiseCommandParser();
+    private ThemeCommandParser parser = new ThemeCommandParser();
 
     @Test
     public void parse_validArgs_returnsThemeCommand() {

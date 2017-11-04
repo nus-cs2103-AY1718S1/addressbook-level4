@@ -65,4 +65,15 @@ public class ThemeCommand extends Command {
         }
         return new CommandResult("");
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ThemeCommand // instanceof handles nulls
+                && this.isLight == (((ThemeCommand) other).isLight)); // state check
+    }
+
+    public boolean getIsLight() {
+        return isLight;
+    }
 }
