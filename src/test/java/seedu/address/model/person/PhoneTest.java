@@ -11,33 +11,33 @@ import org.junit.Test;
 public class PhoneTest {
 
     @Test
-    public void isValidPhone() {
+    public void isValidPhoneUi() {
         // invalid phone numbers
-        assertFalse(Phone.isValidPhone("")); // empty string
-        assertFalse(Phone.isValidPhone(" ")); // spaces only
-        assertFalse(Phone.isValidPhone("Student: 97272031 Parent: 9797979")); // parent do not have exactly 8 digit
-        assertFalse(Phone.isValidPhone("Student: 9727 Parent: 979")); // both do not have exactly 8 digit
-        assertFalse(Phone.isValidPhone("Student: 9727 Parent: 97979797")); // student do not have exactly 8 digit
-        assertFalse(Phone.isValidPhone("Student/ 97272031 Parent/ 97979797")); // / instead of :
-        assertFalse(Phone.isValidPhone("studen: 97272031 paret: 97979797")); // wrong labelling
-        assertFalse(Phone.isValidPhone("Student: 97272031   Parent: 97979797")); // consecutive whitespaces
-        assertFalse(Phone.isValidPhone("!@@#$#@$#@{}")); // random symbol
-        assertFalse(Phone.isValidPhone("Student: 972jb72031 Parent: 97jhb979797")); // alphanumeric numbers
-        assertFalse(Phone.isValidPhone("Student: gfxgfx Parent: gfxgfxgfx")); // purely alphabets
-        assertFalse(Phone.isValidPhone("Student: 97272031")); // must have at least parent number
-        assertFalse(Phone.isValidPhone("Parent: 97979797 "
-                + "Student: 97272031")); // parent number should be entered after student number
+        assertFalse(Phone.isValidPhoneUi("")); // empty string
+        assertFalse(Phone.isValidPhoneUi(" ")); // spaces only
+        assertFalse(Phone.isValidPhoneUi("Student: 97272031 Parent: 9797979")); // parent do not have exactly 8 digit
+        assertFalse(Phone.isValidPhoneUi("Student: 9727 Parent: 979")); // both do not have exactly 8 digit
+        assertFalse(Phone.isValidPhoneUi("Student: 9727 Parent: 97979797")); // student do not have exactly 8 digit
+        assertFalse(Phone.isValidPhoneUi("Student/ 97272031 Parent/ 97979797")); // / instead of :
+        assertFalse(Phone.isValidPhoneUi("studen: 97272031 paret: 97979797")); // wrong labelling
+        assertFalse(Phone.isValidPhoneUi("Student: 97272031   Parent: 97979797")); // consecutive whitespaces
+        assertFalse(Phone.isValidPhoneUi("!@@#$#@$#@{}")); // random symbol
+        assertFalse(Phone.isValidPhoneUi("Student: 972jb72031 Parent: 97jhb979797")); // alphanumeric numbers
+        assertFalse(Phone.isValidPhoneUi("Student: gfxgfx Parent: gfxgfxgfx")); // purely alphabets
+        assertFalse(Phone.isValidPhoneUi("Student: 97272031")); // must have at least parent number
+        assertFalse(Phone.isValidPhoneUi("Parent: 97979797 "
+                + "Student: 97272031")); // parent number must be entered after student number
         // if both parent and student number are entered.
-        assertFalse(Phone.isValidPhone("Parent: 972701")); // have at least parent number, but not exactly 8 digits.
-        assertFalse(Phone.isValidPhone("StudenT: 97272031 "
+        assertFalse(Phone.isValidPhoneUi("Parent: 972701")); // have at least parent number, but not exactly 8 digits.
+        assertFalse(Phone.isValidPhoneUi("StudenT: 97272031 "
                 + "ParenT: 97979797")); // only first letter of student and parent can be in upper case
 
         // valid phone numbers
-        assertTrue(Phone.isValidPhone("Student: 97272031 "
+        assertTrue(Phone.isValidPhoneUi("Student: 97272031 "
                 + "Parent: 97979797")); // both parent and student phone number of exactly 8 numbers
-        assertTrue(Phone.isValidPhone("Student: 87272111 "
+        assertTrue(Phone.isValidPhoneUi("Student: 87272111 "
                 + "Parent: 87767988")); // another set of parent and student phone number of exactly 8 digit numbers
-        assertTrue(Phone.isValidPhone("Parent: 87767988")); // parent number only of exactly 8 digit numbers
+        assertTrue(Phone.isValidPhoneUi("Parent: 87767988")); // parent number only of exactly 8 digit numbers
     }
 
     @Test
