@@ -136,6 +136,7 @@ public class SyncCommand extends UndoableCommand {
      */
     private void updateContact(Person person) throws Exception {
         List<seedu.address.model.person.ReadOnlyPerson> personList = model.getFilteredPersonList();
+        boolean updated = false;
 
         for (seedu.address.model.person.ReadOnlyPerson aPerson : personList) {
             if (person.getResourceName().equals(aPerson.getId().getValue())) {
@@ -159,17 +160,27 @@ public class SyncCommand extends UndoableCommand {
                     seedu.address.model.person.Person updatedAPerson = new seedu.address.model.person.Person(aPerson);
                     updatedAPerson.setLastUpdated(new LastUpdated(newUpdated));
                     model.updatePerson(aPerson, updatedAPerson);
+                    updated = true;
+                    break;
 
                 } else if (compare > 0) {
 
                     // The local contact is updated
                     seedu.address.model.person.Person updatedPerson = convertGooglePerson(person);
                     model.updatePerson(aPerson, updatedPerson);
+                    updated = true;
                     break;
                 } else {
                     break;
                 }
             }
+        }
+
+        if (!updated) {
+            // We delete the Google Contact, as our local entry has been removed.
+            String id = person.getResourceName();
+            client.people().deleteContact(id).execute();
+            syncedIDs.remove(id);
         }
 
     }
@@ -212,6 +223,7 @@ public class SyncCommand extends UndoableCommand {
             Email aEmail = (email == null)
                     ? new Email(null)
                     : new Email(email.getValue());
+            HashSet<Meeting> aMeetings = new HashSet<Meeting>();
             aPerson = new seedu.address.model.person.Person(aName, aPhone, aEmail, aAddress,
                     new Note(""), new Id(id), new LastUpdated(lastUpdated),
                     new HashSet<Tag>(), new HashSet<Meeting>());
