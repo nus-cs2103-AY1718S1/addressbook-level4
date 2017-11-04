@@ -9,9 +9,11 @@ import com.google.common.eventbus.Subscribe;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.DatabaseChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyDatabase;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -21,12 +23,14 @@ public class StorageManager extends ComponentManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private static AddressBookStorage addressBookStorage;
+    private static DataBaseStorage dataBaseStorage;
     private UserPrefsStorage userPrefsStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage, DataBaseStorage dataBaseStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
+        this.dataBaseStorage = dataBaseStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -88,6 +92,54 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
             saveAddressBook(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+
+    // database methods
+
+    @Override
+    public String getDatabaseFilePath() {
+        return dataBaseStorage.getDatabaseFilePath();
+    }
+
+
+
+    @Override
+    public Optional<ReadOnlyDatabase> readDatabase() throws DataConversionException, IOException {
+        return readDatabase(dataBaseStorage.getDatabaseFilePath());
+    }
+
+    @Override
+    public Optional<ReadOnlyDatabase> readDatabase(String filePath) throws DataConversionException, IOException {
+        logger.fine("Attempting to read data from file: " + filePath);
+        return dataBaseStorage.readDatabase(filePath);
+    }
+
+    @Override
+    public void saveDatabase(ReadOnlyDatabase database) throws IOException {
+        saveDatabase(database, dataBaseStorage.getDatabaseFilePath());
+    }
+
+    @Override
+    public void saveDatabase(ReadOnlyDatabase database, String filePath) throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        dataBaseStorage.saveDatabase(database, filePath);
+    }
+
+    @Override
+    public void backupDatabase(ReadOnlyDatabase database) throws IOException {
+        String databaseBackupFilePath = "backup/addressbook-backup.xml";
+        saveDatabase(database, databaseBackupFilePath);
+    }
+
+    @Override
+    @Subscribe
+    public void handleDatabaseChangedEvent(DatabaseChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
+        try {
+            saveDatabase(event.data);
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }

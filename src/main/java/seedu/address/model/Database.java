@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.credentials.Account;
 import seedu.address.model.credentials.ReadOnlyAccount;
 import seedu.address.model.credentials.UniqueAccountList;
+import seedu.address.model.credentials.exceptions.DuplicateAccountException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -34,7 +35,7 @@ public class Database implements ReadOnlyDatabase {
         resetData(toBeCopied);
     }
 
-    public void setAccounts(List<? extends ReadOnlyAccount> accounts) throws DuplicatePersonException {
+    public void setAccounts(List<? extends ReadOnlyAccount> accounts) throws DuplicateAccountException {
         this.accounts.setAccounts(accounts);
     }
 
@@ -43,13 +44,13 @@ public class Database implements ReadOnlyDatabase {
         try {
             setAccounts(newData.getAccountList());
 
-        } catch (DuplicatePersonException dpe) {
+        } catch (DuplicateAccountException dpe) {
             assert false : "Database should not have duplicate persons";
         }
 
     }
 
-    public void addAccount(ReadOnlyAccount p) throws DuplicatePersonException {
+    public void addAccount(ReadOnlyAccount p) throws DuplicateAccountException {
         Account newAccount = new Account(p);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person

@@ -3,6 +3,7 @@ package seedu.address.model.credentials;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.fxmisc.easybind.EasyBind;
+import seedu.address.model.credentials.exceptions.DuplicateAccountException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -22,18 +23,25 @@ public class UniqueAccountList implements Iterable<Account> {
      */
     public boolean contains(ReadOnlyAccount toCheck) {
         requireNonNull(toCheck);
-        return internalList.contains(toCheck);
-    }
 
+        for (Account account : internalList) {
+
+            if (account.getUsername().fullName.equals(toCheck.getUsername().fullName)) {
+                return true;
+            }
+
+        }
+        return false;
+    }
     /**
      * Adds a account to the list.
      *
      * @throws DuplicatePersonException if the account to add is a duplicate of an existing account in the list.
      */
-    public void add(ReadOnlyAccount toAdd) throws DuplicatePersonException {
+    public void add(ReadOnlyAccount toAdd) throws DuplicateAccountException {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
-            throw new DuplicatePersonException();
+            throw new DuplicateAccountException();
         }
         internalList.add(new Account(toAdd));
     }
@@ -78,7 +86,7 @@ public class UniqueAccountList implements Iterable<Account> {
         this.internalList.setAll(replacement.internalList);
     }
 
-    public void setAccounts(List<? extends ReadOnlyAccount> accounts) throws DuplicatePersonException {
+    public void setAccounts(List<? extends ReadOnlyAccount> accounts) throws DuplicateAccountException {
         final UniqueAccountList replacement = new UniqueAccountList();
         for (final ReadOnlyAccount account : accounts) {
             replacement.add(new Account(account));

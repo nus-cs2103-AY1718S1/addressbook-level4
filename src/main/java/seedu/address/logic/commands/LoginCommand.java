@@ -5,6 +5,9 @@ import java.util.logging.Logger;
 
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.credentials.Account;
+import seedu.address.model.credentials.ReadOnlyAccount;
+import seedu.address.model.credentials.UsernamePasswordCheck;
 import seedu.address.ui.Ui;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
@@ -26,21 +29,27 @@ public class LoginCommand extends Command {
             + PREFIX_USERNAME + "USERNAME "
             + PREFIX_PASSWORD + "PASSWORD";
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
+    private ReadOnlyAccount account;
 
-
-    public LoginCommand(String userName, String userPassword) {
-        if (userName.equals("private") && userPassword.equals("password")) {
-            MESSAGE_LOGIN_ACKNOWLEDGEMENT = MESSAGE_SUCCESS;
-            Ui ui = MainApp.getUi();
-            ui.restart(userName);
-        } else {
-            MESSAGE_LOGIN_ACKNOWLEDGEMENT = MESSAGE_FAILURE;
-        }
+    public LoginCommand(ReadOnlyAccount account) {
+        this.account = account;
     }
 
     @Override
     public CommandResult execute() {
 
-        return new CommandResult(MESSAGE_LOGIN_ACKNOWLEDGEMENT);
+        for(ReadOnlyAccount tempaccount : model.getFilteredAccountList()){
+            if (account.getUsername().fullName.equals(tempaccount.getUsername().fullName)&&
+            account.getPassword().value.equals(tempaccount.getPassword().value)) {
+                logger.info("Credentials Accepted");
+                MainApp.getUi().restart(account.getUsername().fullName);
+                return new CommandResult(MESSAGE_SUCCESS);
+            } else {
+                return new CommandResult(MESSAGE_FAILURE);
+            }
+
+        }
+        return new CommandResult(MESSAGE_FAILURE);
+
     }
 }
