@@ -30,10 +30,12 @@ public class UndoCommand extends Command {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
+    //@@author vmlimshimin
     @Override
     public void setData(Model model, CommandHistory commandHistory,
                         UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue) {
         this.model = model;
         this.undoRedoStack = undoRedoStack;
+        this.queue = queue;
     }
 }

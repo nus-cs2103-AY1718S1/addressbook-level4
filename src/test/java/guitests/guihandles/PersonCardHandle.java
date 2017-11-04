@@ -13,6 +13,7 @@ import javafx.scene.layout.Region;
 public class PersonCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
     private static final String NAME_FIELD_ID = "#name";
+    private static final String OCCUPATION_FIELD_ID = "#occupation";
     private static final String ADDRESS_FIELD_ID = "#address";
     private static final String PHONE_FIELD_ID = "#phone";
     private static final String EMAIL_FIELD_ID = "#email";
@@ -22,6 +23,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
 
     private final Label idLabel;
     private final Label nameLabel;
+    private final Label occupationLabel;
     private final Label addressLabel;
     private final Label phoneLabel;
     private final Label emailLabel;
@@ -34,6 +36,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
 
         this.idLabel = getChildNode(ID_FIELD_ID);
         this.nameLabel = getChildNode(NAME_FIELD_ID);
+        this.occupationLabel = getChildNode(OCCUPATION_FIELD_ID);
         this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
         this.phoneLabel = getChildNode(PHONE_FIELD_ID);
         this.emailLabel = getChildNode(EMAIL_FIELD_ID);
@@ -56,6 +59,12 @@ public class PersonCardHandle extends NodeHandle<Node> {
         return nameLabel.getText();
     }
 
+    //@@author JavynThun
+    public String getOccupation() {
+        return occupationLabel.getText();
+    }
+    //@@author
+
     public String getAddress() {
         return addressLabel.getText();
     }
@@ -68,6 +77,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
         return emailLabel.getText();
     }
 
+    //@@author JavynThun
     public String getRemark() {
         return remarkLabel.getText();
     }
@@ -75,6 +85,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     public String getWebsite() {
         return websiteLabel.getText();
     }
+    //@@author
 
     public List<String> getTags() {
         return tagLabels

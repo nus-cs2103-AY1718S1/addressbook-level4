@@ -29,6 +29,7 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder(ReadOnlyPerson person) {
         descriptor = new EditPersonDescriptor();
         descriptor.setName(person.getName());
+        descriptor.setOccupation(person.getOccupation());
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
@@ -44,6 +45,18 @@ public class EditPersonDescriptorBuilder {
             ParserUtil.parseName(Optional.of(name)).ifPresent(descriptor::setName);
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("name is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Occupation} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withOccupation(String occupation) {
+        try {
+            ParserUtil.parseOccupation(Optional.of(occupation)).ifPresent(descriptor::setOccupation);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("occupation is expected to be unique.");
         }
         return this;
     }
@@ -84,6 +97,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author JavynThun
     /**
      * Sets the {@code Website} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -95,6 +109,7 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
+    //@@author
 
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
