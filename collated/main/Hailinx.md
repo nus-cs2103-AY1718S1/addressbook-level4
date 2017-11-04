@@ -420,11 +420,21 @@ public class SwitchCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         EventsCenter.getInstance().post(new SwitchDisplayEvent(mode));
-        if (mode == SWITCH_TO_TODOLIST) {
+        switch (mode) {
+        case SWITCH_TO_TODOLIST:
             return new CommandResult(String.format(MESSAGE_SUCCESS, "Todo list"));
-        } else {
+        case SWITCH_TO_BROWSER:
             return new CommandResult(String.format(MESSAGE_SUCCESS, "browser"));
+        default:
+            throw new CommandException(PARSE_EXCEPTION_MESSAGE);
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SwitchCommand // instanceof handles nulls
+                && this.mode == ((SwitchCommand) other).mode); // state check
     }
 }
 ```
@@ -614,7 +624,11 @@ public class TodoCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof TodoCommand // instanceof handles nulls
-                && todoItem.equals(((TodoCommand) other).todoItem));
+                && optionPrefix.equals(((TodoCommand) other).optionPrefix)
+                && (personIndex == null || personIndex.equals(((TodoCommand) other).personIndex))
+                && (todoItem == null || todoItem.equals(((TodoCommand) other).todoItem))
+                && (itemIndex == null || itemIndex.equals(((TodoCommand) other).itemIndex))
+            );
     }
 }
 ```
@@ -819,7 +833,7 @@ public abstract class CommandOption<T extends Command> {
     protected String optionArgs;
 
     CommandOption(String optionArgs) {
-        this.optionArgs = optionArgs;
+        this.optionArgs = optionArgs.trim();
     }
 
     /**
@@ -864,10 +878,10 @@ public class CommandOptionUtil {
             if (matcher.find()) {
                 return matcher.group(DEFAULT_PATTERN_GROUP);
             }
-            return DEFAULT_OPTION_PREFIX;
         } catch (Exception e) {
             return DEFAULT_OPTION_PREFIX;
         }
+        return DEFAULT_OPTION_PREFIX;
     }
 
     public static String getOptionArgs(String optionPrefix, String args) {
@@ -1692,7 +1706,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class TodoItem implements Comparable<TodoItem> {
 
     public static final String MESSAGE_TODOITEM_CONSTRAINTS =
-            "The end time should be late than start time.";
+            "The end time should be late than start time. Task cannot be empty.";
 
     public final LocalDateTime start;
     public final LocalDateTime end;
@@ -1707,7 +1721,7 @@ public class TodoItem implements Comparable<TodoItem> {
     public TodoItem(LocalDateTime start, LocalDateTime end, String task)
             throws IllegalValueException {
         requireNonNull(start, task);
-        if (!isValidTodoItem(start, end)) {
+        if (!isValidTodoItem(start, end, task)) {
             throw new IllegalValueException(MESSAGE_TODOITEM_CONSTRAINTS);
         }
         this.start = start;
@@ -1718,7 +1732,10 @@ public class TodoItem implements Comparable<TodoItem> {
     /**
      * Checks whether the inputs are valid.
      */
-    public boolean isValidTodoItem(LocalDateTime start, LocalDateTime end) {
+    private boolean isValidTodoItem(LocalDateTime start, LocalDateTime end, String task) {
+        if (task.isEmpty()) {
+            return false;
+        }
         if (end != null && end.compareTo(start) < 0) {
             return false;
         }
@@ -1786,7 +1803,7 @@ public class TimeConvertUtil {
      * @throws DateTimeParseException when timeStr does not match {@code DATE_TIME_FORMATTER}
      */
     public static LocalDateTime convertStringToTime(String timeStr) throws DateTimeParseException {
-        if (timeStr == null) {
+        if (timeStr == null || timeStr.isEmpty()) {
             return null;
         }
         return LocalDateTime.parse(timeStr, DATE_TIME_FORMATTER);
@@ -2524,7 +2541,7 @@ public class TodoPanel extends UiPart<Region> {
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-    <ListView fx:id="todoCardList" VBox.vgrow="ALWAYS" />
+<VBox xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
+    <ListView fx:id="todoCardList" style="-fx-background-color: #f3e4c6;" VBox.vgrow="ALWAYS" />
 </VBox>
 ```

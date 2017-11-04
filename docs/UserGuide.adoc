@@ -195,7 +195,18 @@ Deletes the 1st person in the results of the `find` command.
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Format: `select OPTION INDEX`
+
+Options:
+
+****
+* `-n`		search name on browser
+* `-p`		search phone on browser
+* `-e`		search email on browser
+* `-a`		show address on google map
+****
+
+Tips
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -206,11 +217,11 @@ Format: `select INDEX`
 Examples:
 
 * `list` +
-`select 2` +
+`select -n 2` +
 Selects the 2nd person in the address book.
 * `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+`select -a 1` +
+Selects the address of 1st person in the results of the `find` command.
 
 === Listing entered commands : `history`
 
@@ -375,23 +386,58 @@ Examples:
 * `export C:\exported\AcquaiNote.xml` +
 Exports the address book into exported folder in C drive in xml file format.
 
+=== To-do list: `todo`
+
+Attach a To-do list to a specified person to manage schedule with that person. +
+
+==== Option1
+
+Add a new todo item to the given person with INDEX +
+Format: `todo INDEX -a f/dd-MM-yyyy HH:mm [t/dd-MM-yyyy HH:mm] d/TASK_TO_DO`
+
+Example:
+
+* `todo 1 -a f/01-11-2017 20:40 d/Meeting`
+
+==== Option2
+
+Delete a todo item with INDEX2 from the given person with INDEX1 +
+Format: `todo INDEX1 -d  INDEX2`
+
+Example:
+
+* `todo 1 -d 1`
+
+==== Option3
+
+Delete all todo items from the given person with INDEX +
+Format: `todo INDEX -c`
+
+Example:
+
+* `todo INDEX -l`
+
+==== Option4
+
+List all todo items from the given person with INDEX +
+Format: `todo INDEX -l`
+
+==== Option5
+
+List all todo items from all person +
+Format: `todo`
+
+=== Switch between Browser and Todo list: `switch`
+
+Switch between Todo list and browser. +
+Format: `switch NUMBER`  (1 for Todo list, 2 for browser)
+
+
 == Coming in v2.0
 
 === Popup dialog window during editing
 
 A dialog window pops up during contact editing.
-
-=== To-do list: `sch`
-
-Attach a To-do list to a specified person to manage schedule with that person. +
-Format: `sch INDEX`
-
-Examples:
-
-* `sch 1 s/dinner at 7` +
-Adds schedule with the 1st person: `dinner at 7`.
-* `sch 2 s/` +
-Clears all existing schedules with the 2nd person.
 
 === Real time highlight
 
@@ -427,6 +473,12 @@ e.g. `sort -n`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *Lock* : `lock PASSWORD`
+* *Todo* : `todo INDEX -a f/dd-MM-yyyy HH:mm [t/dd-MM-yyyy HH:mm] d/TASK_TO_DO` or +
+`todo INDEX1 -d  INDEX2` or +
+`todo INDEX -c` or +
+`todo INDEX -l` or +
+`todo`
+* *Switch* : `switch NUMBER`
 * *Unlock* : `unlock PASSWORD`
 * *export* : `export FILEPATH` +
 e.g. `export C:\exported\MyAddressBook.xml`

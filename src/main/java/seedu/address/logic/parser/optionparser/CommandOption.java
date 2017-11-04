@@ -12,7 +12,7 @@ public abstract class CommandOption<T extends Command> {
     protected String optionArgs;
 
     CommandOption(String optionArgs) {
-        this.optionArgs = optionArgs;
+        this.optionArgs = optionArgs.trim();
     }
 
     /**
