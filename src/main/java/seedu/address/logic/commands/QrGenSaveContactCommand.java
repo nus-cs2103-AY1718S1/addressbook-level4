@@ -4,7 +4,7 @@ package seedu.address.logic.commands;
  * Method for application to call out for different QR Functions
  */
 //@@author danielweide
-public class QrSaveContactCommand {
+public class QrGenSaveContactCommand {
     /**
      * Method to Generate SaveContact for Phone QRCode
      */

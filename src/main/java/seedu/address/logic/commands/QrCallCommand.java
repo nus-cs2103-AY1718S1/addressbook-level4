@@ -16,7 +16,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class QrCallCommand extends Command {
 
     public static final String COMMAND_WORD = "qrcall";
-    public static final String COMMAND_ALIAS = "qr";
+    public static final String COMMAND_ALIAS = "qc";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Select Person based on Index to generate QR Code for calling\n"
@@ -39,7 +39,6 @@ public class QrCallCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
         int indexOfPersonInList = targetIndex.getOneBased() - 1;
-        String phoneOfPerson = lastShownList.get(indexOfPersonInList).getPhone().toString();
         EventsCenter.getInstance().post(new QrEvent(lastShownList.get(indexOfPersonInList)));
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
 

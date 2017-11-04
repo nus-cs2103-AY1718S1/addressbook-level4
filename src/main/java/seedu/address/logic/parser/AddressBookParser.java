@@ -21,6 +21,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.QrCallCommand;
+import seedu.address.logic.commands.QrSmsCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -137,6 +138,10 @@ public class AddressBookParser {
 
         case QrCallCommand.COMMAND_WORD:
         case QrCallCommand.COMMAND_ALIAS:
+            return new QrCallCommandParser().parse(arguments);
+
+        case QrSmsCommand.COMMAND_WORD:
+        case QrSmsCommand.COMMAND_ALIAS:
             return new QrCallCommandParser().parse(arguments);
 
         default:
