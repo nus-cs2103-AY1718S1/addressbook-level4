@@ -23,7 +23,9 @@ public class ThemeCommandParser implements Parser<ThemeCommand> {
             String trimmedArgs = args.trim();
             if (trimmedArgs.isEmpty()
                     || (!trimmedArgs.equalsIgnoreCase(ThemeCommand.LIGHT_THEME)
-                    && !trimmedArgs.equalsIgnoreCase(ThemeCommand.DARK_THEME))) {
+                    && !trimmedArgs.equalsIgnoreCase(ThemeCommand.LIGHT_THEME2)
+                    && !trimmedArgs.equalsIgnoreCase(ThemeCommand.DARK_THEME)
+                    && !trimmedArgs.equalsIgnoreCase(ThemeCommand.DARK_THEME2))) {
                 throw new IllegalValueException("");
             } else {
                 return new ThemeCommand(trimmedArgs);
