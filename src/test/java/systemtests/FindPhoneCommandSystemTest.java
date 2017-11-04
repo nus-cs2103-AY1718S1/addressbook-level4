@@ -23,7 +23,6 @@ public class FindPhoneCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void findPhone() {
-        
         Model expectedModel = getModel();
 
         /* Case: find phone where phone list is not displaying the phone we are finding -> 1 phone found */
