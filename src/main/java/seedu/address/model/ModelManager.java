@@ -14,7 +14,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.TagColorChangedEvent;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -28,7 +27,6 @@ import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.reminder.ReadOnlyReminder;
 import seedu.address.model.reminder.exceptions.DuplicateReminderException;
-import seedu.address.model.reminder.exceptions.ReminderNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagColorManager;
 
