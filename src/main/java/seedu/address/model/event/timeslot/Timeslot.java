@@ -2,6 +2,8 @@ package seedu.address.model.event.timeslot;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDate;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author reginleiff
@@ -48,6 +50,14 @@ public class Timeslot implements Comparable<Timeslot> {
     }
 
     /**
+     * Constructs a new Timeslot object with given date and time.
+     */
+    public Timeslot(Date date, Timing timing) {
+        this.date = date;
+        this.timing = timing;
+    }
+
+    /**
      * Returns true if a given string is a valid event's Timing.
      */
     public static boolean isValidTiming(String test) {
@@ -56,6 +66,10 @@ public class Timeslot implements Comparable<Timeslot> {
 
     public Date getDate() {
         return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Timing getTiming() {
@@ -82,6 +96,17 @@ public class Timeslot implements Comparable<Timeslot> {
             return this.getTiming().compareTo(other.getTiming());
         }
     }
+
+    //@@author shuang-yang
+    /**
+     * Increase the date by specified number of days.
+     */
+    public Timeslot plusDays(int days) {
+        Date date = this.getDate().addDays(days);
+        Timing timing = this.getTiming();
+        return new Timeslot(date, timing);
+    }
+    //@@author
 
     //================================= Setter methods for testing ==========================================
     public void withDay(int day) {

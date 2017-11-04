@@ -7,13 +7,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.SortedMap;
+import java.util.Timer;
 import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.CreateEventInstanceEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.event.exceptions.EventTimeClashException;
@@ -52,6 +58,7 @@ public class EventList implements Iterable<Event> {
                 }
             }
         });
+        EventsCenter.getInstance().registerHandler(this);
     }
     /**
      * Adds a event to the tree map.
@@ -61,7 +68,20 @@ public class EventList implements Iterable<Event> {
         if (hasClashWith(new Event(toAdd))) {
             throw new EventTimeClashException();
         }
-        internalMap.put(toAdd.getTimeslot(), new Event(toAdd));
+        Event addedEvent = new Event(toAdd);
+        internalMap.put(toAdd.getTimeslot(), addedEvent);
+        scheduleRepeatedEvent(addedEvent);
+    }
+
+    /**
+     * Schedule repeated event if period is not 0.
+     */
+    private void scheduleRepeatedEvent(ReadOnlyEvent addedEvent) {
+        int repeatPeriod = Integer.parseInt(addedEvent.getPeriod().toString());
+        if (repeatPeriod != 0) {
+            Timer timer = new Timer();
+            timer.schedule(new RepeatEventTimerTask(addedEvent, repeatPeriod), addedEvent.getEndDateTime());
+        }
     }
 
     /**
@@ -69,22 +89,26 @@ public class EventList implements Iterable<Event> {
      *
      * @throws EventNotFoundException if {@code target} could not be found in the tree map.
      */
-    public void setEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
+    public void setEvent(ReadOnlyEvent target, ReadOnlyEvent edited)
             throws EventNotFoundException, EventTimeClashException {
-        requireNonNull(editedEvent);
+        requireNonNull(edited);
 
-        //@@author a0107442n
+        //@@author shuang-yang
         Event targetEvent = new Event(target);
         if (!internalMap.containsValue(targetEvent)) {
             throw new EventNotFoundException();
         }
 
+        Event editedEvent = new Event(edited);
+        editedEvent.setTemplateEvent(Optional.of(target));
 
-        if (hasClashWith(new Event(editedEvent))) {
+        if (hasClashWith(editedEvent)) {
             throw new EventTimeClashException();
         }
         internalMap.remove(targetEvent.getTimeslot());
-        internalMap.put(editedEvent.getTimeslot(), new Event(editedEvent));
+        internalMap.put(editedEvent.getTimeslot(), editedEvent);
+
+        scheduleRepeatedEvent(editedEvent);
         //@@author
     }
 
@@ -95,12 +119,13 @@ public class EventList implements Iterable<Event> {
      */
     public boolean remove(ReadOnlyEvent toRemove) throws EventNotFoundException {
         requireNonNull(toRemove);
-        //@@author a0107442
+        //@@author shuang-yang
         final boolean eventFound = internalMap.containsValue(toRemove);
         if (!eventFound) {
             throw new EventNotFoundException();
         }
         internalMap.remove(toRemove.getTimeslot());
+
         return eventFound;
         //@@author
     }
@@ -121,7 +146,7 @@ public class EventList implements Iterable<Event> {
         setEvents(replacement);
     }
 
-    //@@author a0107442n
+    //@@author shuang-yang
     /**
      * Check if a given event has any time clash with any event in the EventList.
      * @param event for checking
@@ -129,11 +154,11 @@ public class EventList implements Iterable<Event> {
      */
     private boolean hasClashWith(Event event) {
         Iterator<Event> iterator = this.iterator();
+        Optional<ReadOnlyEvent> templateEvent = event.getTemplateEvent();
         while (iterator.hasNext()) {
             Event e = iterator.next();
-            if (e.clashesWith(event)
-                    && (!e.getTitle().equals(event.getTitle())
-                    && !e.getDescription().equals(event.getDescription()))) {
+            boolean isSameEvent = templateEvent.isPresent() && templateEvent.get().equals(e);
+            if (e.clashesWith(event) && !isSameEvent) {
                 return true;
             }
         }
@@ -186,5 +211,17 @@ public class EventList implements Iterable<Event> {
     @Override
     public int hashCode() {
         return internalMap.hashCode();
+    }
+
+    //========== Event Handling =================================================================================
+
+    @Subscribe
+    private void handleCreateEventInstanceEvent(CreateEventInstanceEvent e) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(e));
+        try {
+            add(e.eventToAdd);
+        } catch (EventTimeClashException etce) {
+            scheduleRepeatedEvent(e.eventToAdd);
+        }
     }
 }

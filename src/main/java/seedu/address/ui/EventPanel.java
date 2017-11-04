@@ -33,6 +33,9 @@ public class EventPanel extends UiPart<Region> {
     @FXML
     private Label descriptionLabel;
 
+    @FXML
+    private Label periodLabel;
+
     public EventPanel(Logic logic) {
         super(FXML);
         this.logic = logic;
@@ -48,6 +51,11 @@ public class EventPanel extends UiPart<Region> {
         nameLabel.setText(event.getTitle().toString());
         timeslotLabel.setText(event.getTimeslot().toString());
         descriptionLabel.setText(event.getDescription().toString());
+
+        int period = Integer.parseInt(event.getPeriod().toString());
+        if (period != 0) {
+            periodLabel.setText("Repeat: Every " + event.getPeriod().toString() + " days.");
+        }
     }
 
     /**
