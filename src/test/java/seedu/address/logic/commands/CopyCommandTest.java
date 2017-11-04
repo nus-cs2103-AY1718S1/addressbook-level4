@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -15,12 +16,17 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.testutil.PersonBuilder;
 
 //@@author rushan-khor
 public class CopyCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
+    private ReadOnlyPerson NO_EMAIL_PERSON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
+            .withEmail("null@null.com").withAddress("little india")
+            .withBloodType("AB-").withAppointment("Hoon Meier").build();
     @Test
     public void testGetTargetEmail() {
         CopyCommand command = prepareCommand(INDEX_FIRST_PERSON);
@@ -29,11 +35,21 @@ public class CopyCommandTest {
 
         try {
             result = command.getTargetEmail();
+            System.out.println(result);
         } catch (CommandException e) {
             fail();
         }
 
-        assertTrue(result.equals("alice@example.com"));
+        assertTrue("alice@example.com".equals(result));
+    }
+
+    @Test
+    public void testIsEmailValid() {
+        CopyCommand command = prepareCommand(INDEX_FIRST_PERSON);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        boolean result = command.isEmailValid(NO_EMAIL_PERSON.getEmail().toString());
+
+        assertFalse(result);
     }
 
     /**

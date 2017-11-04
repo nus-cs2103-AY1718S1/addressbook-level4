@@ -68,7 +68,7 @@ public class CopyCommand extends Command {
         return targetPerson.getEmail().toString();
     }
 
-    private boolean isEmailValid(String email) {
+    public boolean isEmailValid(String email) {
         return !"null@null.com".equalsIgnoreCase(email) && !"".equals(email);
     }
 
