@@ -18,14 +18,16 @@ public class FindEmailCommandParserTest {
 
     @Test
     public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEmailCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                FindEmailCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_validArgs_returnsFindEmailCommand() {
         // no leading and trailing whitespaces
         FindEmailCommand expectedFindEmailCommand =
-                new FindEmailCommand(new EmailContainsKeywordsPredicate(Arrays.asList("Alice@example.com", "Bob@example.com")));
+                new FindEmailCommand
+                        (new EmailContainsKeywordsPredicate(Arrays.asList("Alice@example.com", "Bob@example.com")));
         assertParseSuccess(parser, "Alice@example.com Bob@example.com", expectedFindEmailCommand);
 
         // multiple whitespaces between keywords

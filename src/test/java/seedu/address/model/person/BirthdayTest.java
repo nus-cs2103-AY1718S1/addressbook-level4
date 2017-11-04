@@ -1,10 +1,10 @@
 //@@author inGall
 package seedu.address.model.person;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 import org.junit.Test;
 
