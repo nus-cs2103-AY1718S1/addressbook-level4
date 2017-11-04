@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -32,6 +33,9 @@ public interface Model {
 
     /** Adds the given event */
     void addEvent(ReadOnlyEvent event) throws DuplicateEventException;
+
+    /** Deletes the given event */
+    void deleteEvent(ReadOnlyEvent event) throws EventNotFoundException;
 
     /** Favourites the given person */
     void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException;
