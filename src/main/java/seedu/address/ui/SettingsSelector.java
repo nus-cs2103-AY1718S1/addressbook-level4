@@ -101,6 +101,10 @@ public class SettingsSelector extends UiPart<Region> {
         }
     }
 
+    /**
+     * Selects the theme on the theme ListView
+     * @param theme
+     */
     public void selectTheme(String theme) {
         for (int i = 0; i < themeSelectorList.getItems().size(); i++) {
             if (themeSelectorList.getItems().get(i).getThemeName().equals(theme)) {

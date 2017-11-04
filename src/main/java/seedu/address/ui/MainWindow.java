@@ -48,7 +48,8 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
     private Storage storage;
     private Scene scene;
-    private String cssPath, style;
+    private String cssPath;
+    private String style;
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
@@ -179,7 +180,6 @@ public class MainWindow extends UiPart<Region> {
         SettingsSelector settingsSelector = new SettingsSelector();
         settingsSelector.selectTheme(style);
         settingsSelectorPlaceholder.getChildren().add(settingsSelector.getRoot());
-
         //@@author
 
         ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
