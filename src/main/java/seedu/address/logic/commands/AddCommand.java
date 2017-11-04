@@ -38,7 +38,7 @@ public class AddCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "student/97272031 parent/97979797 "
-            + PREFIX_PARENTPHONE + "pp/97303132"
+            + PREFIX_PARENTPHONE + "97303132 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_FORMCLASS + "12S23 "
