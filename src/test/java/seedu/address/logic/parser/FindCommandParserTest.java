@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.function.Predicate;
 
 import org.junit.Test;
@@ -32,7 +31,7 @@ public class FindCommandParserTest {
     @Test
     public void parse_validArgs_returnsFindCommand() {
         // no leading and trailing whitespaces
-        Predicate<ReadOnlyPerson> component1 = new NameContainsKeywordsPredicate(Arrays.asList("alice","bob"));
+        Predicate<ReadOnlyPerson> component1 = new NameContainsKeywordsPredicate(Arrays.asList("alice", "bob"));
         Predicate<ReadOnlyPerson> component2 = new PhoneContainsKeywordsPredicate(Arrays.asList("88887777"));
         Predicate<ReadOnlyPerson> component3 = new EmailContainsKeywordsPredicate(Arrays.asList("alice@example.com"));
         Predicate<ReadOnlyPerson> component4 = new ContainsTagsPredicate(Arrays.asList("family", "friends"));
