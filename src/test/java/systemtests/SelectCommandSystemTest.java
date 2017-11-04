@@ -5,6 +5,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAY
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 
@@ -21,11 +22,19 @@ import seedu.address.model.Model;
 public class SelectCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void select() {
+        /* Case: select without index when no card is selected -> first person selected */
+        String command = SelectCommand.COMMAND_WORD;
+        assertCommandSuccess(command, INDEX_FIRST_PERSON);
+
         /* Case: select the first card in the person list, command with leading spaces and trailing spaces
          * -> selected
          */
-        String command = "   " + SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + "   ";
+        command = "   " + SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + "   ";
         assertCommandSuccess(command, INDEX_FIRST_PERSON);
+
+        /* Case: select without index when a card is selected -> next card selected */
+        command = SelectCommand.COMMAND_WORD;
+        assertCommandSuccess(command, INDEX_SECOND_PERSON);
 
         /* Case: select the last card in the person list -> selected */
         Index personCount = Index.fromOneBased(getTypicalPersons().size());
@@ -41,6 +50,10 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: select without index when last card is selected -> first card selected */
+        command = SelectCommand.COMMAND_WORD;
+        assertCommandSuccess(command, INDEX_FIRST_PERSON);
 
         /* Case: select the middle card in the person list -> selected */
         Index middleIndex = Index.fromOneBased(personCount.getOneBased() / 2);
