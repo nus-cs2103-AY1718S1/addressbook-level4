@@ -24,7 +24,7 @@ public class CopyCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-    private ReadOnlyPerson NO_EMAIL_PERSON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
+    private ReadOnlyPerson noEmailPerson = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
             .withEmail("null@null.com").withAddress("little india")
             .withBloodType("AB-").withAppointment("Hoon Meier").build();
     @Test
@@ -47,11 +47,11 @@ public class CopyCommandTest {
     public void testIsEmailValid() {
         CopyCommand command = prepareCommand(INDEX_FIRST_PERSON);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
-        boolean result = command.isEmailValid(NO_EMAIL_PERSON.getEmail().toString());
+        boolean result = command.isEmailValid(noEmailPerson.getEmail().toString());
 
         assertFalse(result);
     }
-
+    
     /**
      * Returns a {@code CopyCommand} with the parameter {@code index}.
      */
