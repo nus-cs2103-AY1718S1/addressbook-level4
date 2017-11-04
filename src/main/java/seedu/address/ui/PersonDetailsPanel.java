@@ -73,34 +73,69 @@ public class PersonDetailsPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Open another tab to show twitter webview
+     */
     @FXML void openTwitterWebView() {
-        raise(new NewResultAvailableEvent("URL is not provided", true));
+        Tab tab = new Tab();
+        tab.setText("twitter");
+        tab.setClosable(true);
+        WebView webView = new WebView();
+        webView.getEngine().load("https://twitter.com/search?q=news&src=typd");
+        tab.setContent(webView);
+        tabPane.getTabs().add(tab);
     }
 
     /**
      * Open another tab to show nusmods webview
      */
     @FXML void openNusModsWebView() {
-        //raise(new NewResultAvailableEvent("URL is not provided", true));
         Tab tab = new Tab();
         tab.setText("nusmods");
         tab.setClosable(true);
         WebView webView = new WebView();
-        webView.getEngine().load("https://nusmods.com/timetable/2017-2018/sem1?CS1101S[LEC]=1&CS1101S[REC]=4&CS1101S[TUT]=11");
+        webView.getEngine().load("https://nusmods.com/timetable/2017-2018/sem1");
         tab.setContent(webView);
         tabPane.getTabs().add(tab);
     }
 
+    /**
+     * Open another tab to show facebook webview
+     */
     @FXML void openFaceBookWebView() {
-        raise(new NewResultAvailableEvent("URL is not provided", true));
+        Tab tab = new Tab();
+        tab.setText("facebook");
+        tab.setClosable(true);
+        WebView webView = new WebView();
+        webView.getEngine().load("https://www.facebook.com/people-search.php");
+        tab.setContent(webView);
+        tabPane.getTabs().add(tab);
     }
 
+    /**
+     * Open another tab to show instagram webview
+     */
     @FXML void openInstagramWebView() {
-        raise(new NewResultAvailableEvent("URL is not provided", true));
+        Tab tab = new Tab();
+        tab.setText("instagram");
+        tab.setClosable(true);
+        WebView webView = new WebView();
+        webView.getEngine().load("https://www.instagram.com/instagram/");
+        tab.setContent(webView);
+        tabPane.getTabs().add(tab);
     }
 
+    /**
+     * Open another tab to show github webview
+     */
     @FXML void openGitHubWebView() {
-        raise(new NewResultAvailableEvent("URL is not provided", true));
+        Tab tab = new Tab();
+        tab.setText("github");
+        tab.setClosable(true);
+        WebView webView = new WebView();
+        webView.getEngine().load("https://github.com/github");
+        tab.setContent(webView);
+        tabPane.getTabs().add(tab);
     }
 
     @Subscribe
