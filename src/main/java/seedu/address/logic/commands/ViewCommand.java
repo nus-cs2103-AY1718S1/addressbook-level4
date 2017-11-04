@@ -72,7 +72,7 @@ public class ViewCommand extends Command {
         Predicate predicate;
         String result;
 
-        switch (ListingUnit.getCurrentListingUnit()) {
+        switch (getCurrentListingUnit()) {
 
         case LOCATION:
             predicate = new FixedLocationPredicate(toView.getLocation());

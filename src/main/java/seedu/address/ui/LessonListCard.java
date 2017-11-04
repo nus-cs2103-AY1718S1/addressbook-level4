@@ -151,7 +151,7 @@ public class LessonListCard extends UiPart<Region> {
 
         default:
             switchToLessonCard();
-
+            break;
         }
     }
     //@@author
