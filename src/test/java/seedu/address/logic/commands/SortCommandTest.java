@@ -24,7 +24,6 @@ import seedu.address.model.module.ReadOnlyLesson;
 public class SortCommandTest {
 
     private Model model;
-    private Model expectedModel;
     private List<ReadOnlyLesson> expectedList;
     private String expectedMessage;
     private final ListingUnit beginningListingUnit = ListingUnit.getCurrentListingUnit();
@@ -33,9 +32,7 @@ public class SortCommandTest {
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedList = new ArrayList<>();
-        expectedMessage = new String();
     }
 
     @Test

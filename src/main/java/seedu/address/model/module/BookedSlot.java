@@ -28,8 +28,8 @@ public class BookedSlot {
      * Returns true if both booked slot have the same location and time slot(case insensitive)
      */
     public boolean isSameStateAs(BookedSlot other) {
-        return this.location.value.toUpperCase().equals(other.getLocation().value.toUpperCase())
-                && this.timeSlot.value.toUpperCase().equals(other.getTimeSlot().value.toUpperCase());
+        return this.location.value.equalsIgnoreCase(other.getLocation().value)
+                && this.timeSlot.value.equalsIgnoreCase(other.getTimeSlot().value);
     }
 
     @Override
