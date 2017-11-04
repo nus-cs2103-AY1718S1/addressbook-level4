@@ -23,7 +23,7 @@ import seedu.address.model.tag.Tag;
 public class XmlAdaptedPerson {
 
     @XmlElement
-    public static Integer nextId = 0;
+    private static Integer nextId;
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
@@ -55,6 +55,7 @@ public class XmlAdaptedPerson {
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
     public XmlAdaptedPerson(ReadOnlyPerson source) {
+        nextId = Person.getNextId();
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
@@ -73,6 +74,7 @@ public class XmlAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Person toModelType() throws IllegalValueException {
+        Person.setNextId(nextId);
         final List<Tag> personTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());

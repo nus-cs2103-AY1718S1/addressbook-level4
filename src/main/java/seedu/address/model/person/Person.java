@@ -2,7 +2,6 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.storage.XmlAdaptedPerson.nextId;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -19,6 +18,7 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class Person implements ReadOnlyPerson {
 
+    private static Integer nextId = 0;
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
@@ -54,6 +54,22 @@ public class Person implements ReadOnlyPerson {
         this.id = new SimpleObjectProperty<>(id);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+    }
+
+    /**
+     * get nextId
+     * @return nextId
+     */
+    public static Integer getNextId() {
+        return nextId;
+    }
+
+    /**
+     * set nextId
+     * @param nextOne
+     */
+    public static void setNextId(Integer nextOne) {
+        nextId = nextOne;
     }
 
     /**
