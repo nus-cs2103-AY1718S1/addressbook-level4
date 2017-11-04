@@ -25,7 +25,7 @@ public class FindReminderCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredReminderList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredReminderList().size()));
+        return new CommandResult(getMessageForReminderListShownSummary(model.getFilteredReminderList().size()));
     }
 
     @Override

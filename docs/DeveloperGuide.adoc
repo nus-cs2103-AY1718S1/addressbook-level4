@@ -370,7 +370,7 @@ As it can be seen, when the `logincommand` is called, if the credentials are cor
 
 The User can choose to Create an account if he does not already have one, but he will not be able to access the other users database.
 
-Similiarly, the user can choose to implement the `logoutcommand` which would call on the `restart()` method with the parememter addressbook. The application would then restart and load the public addressbook. 
+Similiarly, the user can choose to implement the `logoutcommand` which would call on the `restart()` method with the parememter addressbook. The application would then restart and load the public addressbook.
 
 ==== Design Considerations
 
@@ -499,6 +499,9 @@ e.g. `sortPriority`
 
 `findReminder` : Finds the reminder that contains the keyword. +
 e.g. `findReminder Project`
+
+`findPriority` : Finds the reminders that contains the keyword. +
+e.g. `findPriority High`
 
 `listReminder` : Lists all the reminders in the reminder list. +
 e.g. `listReminder`
@@ -894,11 +897,29 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |basic user |add a new person |store the person's information into address book
 
+|`* * *` |basic user |add a new reminder |store the reminder's information into address book
+
+|`* * *` |basic user |edit a person's information |update changes to their particulars
+
+|`* * *` |basic user |edit a reminder's information |update changes to reminder's information
+
 |`* * *` |basic user |delete a person |remove entries that I no longer need
+
+|`* * *` |basic user |delete a reminder |remove entries that I no longer need
 
 |`* * *` |basic user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |basic user |find persons by emails |locate details of persons without having to go through the entire list
+
+|`* * *` |basic user |find persons by phones |locate details of persons without having to go through the entire list
+
+|`* * *` |basic user |find a reminder by task name |locate details of reminders without having to go through the entire list
+
+|`* * *` |basic user |find reminders by priority |locate details of reminders without having to go through the entire list
+
 |`* * *` |basic user |list all people in address book |see whose contacts the address book already has
+
+|`* * *` |basic user |list all reminders in address book |see all the reminders in the address book
 
 |`* * *` |basic user |clear all people in the address book |remove all contacts conveniently
 
@@ -907,8 +928,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |basic user |undo previous command |amend any mistakes
 
 |`* * *` |basic user |redo the previously undone command |amend any mistakes
-
-|`* * *` |basic user |edit a person's information |update changes to their particulars
 
 |`* * *` |basic user |add birthday details to a contact| store and access their birthday easily
 
@@ -1101,12 +1120,12 @@ Use case resumes at step 2.
 
 
 [discrete]
-=== Use case: List all the persons
+=== Use case: List all the persons / reminders
 
 *MSS*
 
-1.  User requests to list all the persons
-2.  AddressBook shows a list of persons
+1.  User requests to list all the persons / reminders
+2.  AddressBook shows a list of persons / reminders
 +
 Use case ends.
 
@@ -1118,12 +1137,12 @@ Use case ends.
 Use case ends.
 
 [discrete]
-=== Use case: Sort person by name
+=== Use case: Sort persons / reminders by name
 
 *MSS*
 
-1.  User requests to sort person by name
-2.  AddressBook sorts all the contacts
+1.  User requests to sort persons / reminders by name
+2.  AddressBook sorts all the contacts / reminders
 +
 Use case ends.
 
@@ -1186,7 +1205,26 @@ Use case ends.
 Use case ends.
 
 [discrete]
-=== Use case: Find contacts by tags
+=== Use case: Find person by name / phone / email
+*MSS*
+
+1.  User requests to find person by name / phone / email.
+2.  AddressBook shows person with the name / phone / email.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+Use case ends.
+* 1b. Person with name / phone / email is not found.
++
+Use case ends.
+
+[discrete]
+=== Use case: Find persons by tags
 
 *MSS*
 
@@ -1210,6 +1248,25 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
+
+[discrete]
+=== Use case: Find reminders by name / priority
+*MSS*
+
+1.  User requests to find reminders by name / priority.
+2.  AddressBook shows reminders with name / priority.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+Use case ends.
+* 1b. Reminder with name / priority is not found.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements

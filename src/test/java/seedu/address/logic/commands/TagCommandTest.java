@@ -59,7 +59,7 @@ public class TagCommandTest {
     }
 
     @Test
-    public void execute_unfilteredListContainsPersonsAlreadyTagged_success() throws Exception {
+    public void execute_unfilteredListContainsPersonsWithTag_success() throws Exception {
         PersonBuilder firstPersonInList = new PersonBuilder(ALICE);
         Person firstTaggedPerson = firstPersonInList.withTags("friends", "retrieveTester", "owesMoney").build();
         PersonBuilder secondPersonInList = new PersonBuilder(BENSON);
@@ -104,7 +104,7 @@ public class TagCommandTest {
     }
 
     @Test
-    public void execute_filteredListContainsPersonsAlreadyTagged_success() throws Exception {
+    public void execute_filteredListContainsPersonsWithTag_success() throws Exception {
         showFirstAndSecondPersonsOnly(model);
 
         ReadOnlyPerson firstPersonInList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -112,7 +112,7 @@ public class TagCommandTest {
                 "retrieveTester", "owesMoney").build();
         ReadOnlyPerson secondPersonInList = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
         Person secondTaggedPerson = new PersonBuilder(secondPersonInList).withTags("owesMoney", "friends",
-                "retrieveTester", "friends").build();
+                "retrieveTester").build();
         Tag tag = new Tag("owesMoney");
         TagCommand command = prepareCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON), tag);
 

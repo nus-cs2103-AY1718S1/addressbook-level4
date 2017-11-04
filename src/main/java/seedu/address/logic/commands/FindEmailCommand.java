@@ -25,7 +25,7 @@ public class FindEmailCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        return new CommandResult(getMessageForEmailListShownSummary(model.getFilteredPersonList().size()));
     }
 
     @Override

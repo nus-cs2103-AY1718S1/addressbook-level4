@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 
 import org.junit.Rule;
 import org.junit.Test;
+
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 public class LogoutCommandTest {

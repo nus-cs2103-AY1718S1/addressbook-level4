@@ -211,7 +211,7 @@ Examples:
 
 * `findPhone 86564385` +
 Returns person with the phone number `96564385`
-* `find 87655678 98435670` +
+* `findPhone 87655678 98435670` +
 Returns person with numbers `87655678` , `98435670`
 
 === Locating reminders by task names: `findReminder`
@@ -231,8 +231,28 @@ Examples:
 
 * `findReminder Proposal` +
 Returns `Proposal` and `Proposal Submission`
-* `find Meeting and Project Work` +
+* `findReminder Meeting Project Work` +
 Returns any reminder having task names `Meeting`, `Proposal Submission`
+
+
+=== Locating reminders by priority: `findPriority`
+
+Finds reminders whose priority is same as the keyword. +
+Format: `findPriority KEYWORD [MORE_KEYWORDS]`
+
+****
+* Only Low / Medium / High is searched.
+* The search is case sensitive. e.g `low` will not match `Low`
+* Only full words will be matched e.g. `Hig` will not match `High`
+* Multiple priorities can be searched at one time.
+****
+
+Examples:
+
+* `findPriority High` +
+Returns reminder with the priority `High`
+* `findPriority Medium Low` +
+Returns reminders with priority `Medium` , `Low`
 
 === Deleting a person : `delete`
 
@@ -478,6 +498,7 @@ Format: `exit`
 
 Login into a Private Database +
 Format: `login u/private p/password`
+e.g. `login u/private p/password`
 
 === Logging out of private database : `logout`
 
@@ -519,6 +540,9 @@ e.g. `findEmail james@example.com`
 e.g. `findPhone 87654321`
 * *Find Reminder* : `findReminder KEYWORD [MORE_KEYWORDS]` +
 e.g. `findReminder Project`
+* *Find Priority* : `findPriority KEYWORD [MORE_KEYWORDS]` +
+e.g. `findPriority High`
+e.g. `findPriority Medium`
 * *List Persons* : `list`
 * *List Reminders* : `listReminder`
 * *Help* : `help`

@@ -1,14 +1,19 @@
 //@@author cqhchan
 package seedu.address.logic.parser;
 
-import org.junit.Test;
-import seedu.address.logic.commands.LoginCommand;
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import static seedu.address.logic.commands.CommandTestUtil.*;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_PASSWORD_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_USERNAME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.PASSWORD_DESC_PASSWORD;
+import static seedu.address.logic.commands.CommandTestUtil.USERNAME_DESC_USERNAME;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PASSWORD_PASSWORD;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_USERNAME_PRIVATE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParse;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.LoginCommand;
 
 public class LoginCommandParserTest {
     private LoginCommandParser parser = new LoginCommandParser();

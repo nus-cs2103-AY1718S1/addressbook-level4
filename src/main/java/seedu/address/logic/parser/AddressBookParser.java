@@ -6,7 +6,40 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.address.logic.commands.*;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddReminderCommand;
+import seedu.address.logic.commands.BirthdayCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CreateAccountCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteReminderCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditReminderCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindEmailCommand;
+import seedu.address.logic.commands.FindPhoneCommand;
+import seedu.address.logic.commands.FindPriorityCommand;
+import seedu.address.logic.commands.FindReminderCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListReminderCommand;
+import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.LogoutCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RetagCommand;
+import seedu.address.logic.commands.RetrieveCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SortAgeCommand;
+import seedu.address.logic.commands.SortBirthdayCommand;
+import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.SortPriorityCommand;
+import seedu.address.logic.commands.TagCommand;
+import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UntagCommand;
+
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -84,6 +117,9 @@ public class AddressBookParser {
         case UntagCommand.COMMAND_WORD:
             return new UntagCommandParser().parse(arguments);
 
+        case RetagCommand.COMMAND_WORD:
+            return new RetagCommandParser().parse(arguments);
+
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
 
@@ -119,6 +155,9 @@ public class AddressBookParser {
 
         case EditReminderCommand.COMMAND_WORD:
             return new EditReminderCommandParser().parse(arguments);
+
+        case FindPriorityCommand.COMMAND_WORD:
+            return new FindPriorityCommandParser().parse(arguments);
 
         case FindReminderCommand.COMMAND_WORD:
             return new FindReminderCommandParser().parse(arguments);

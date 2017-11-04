@@ -36,17 +36,17 @@ public class TypicalPersons {
             .withEmail("heinz@example.com").withAddress("wall street").build();
     public static final ReadOnlyPerson DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street").build();
-    public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
+    public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("94822324")
             .withEmail("werner@example.com").withAddress("michegan ave").build();
-    public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
+    public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("94828427")
             .withEmail("lydia@example.com").withAddress("little tokyo").build();
-    public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
+    public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("94802442")
             .withEmail("anna@example.com").withAddress("4th street").withBirthday("01/01/1991").build();
 
     // Manually added
-    public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
+    public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("84827424")
             .withEmail("stefan@example.com").withAddress("little india").build();
-    public static final ReadOnlyPerson IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
+    public static final ReadOnlyPerson IDA = new PersonBuilder().withName("Ida Mueller").withPhone("84828131")
             .withEmail("hans@example.com").withAddress("chicago ave").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}

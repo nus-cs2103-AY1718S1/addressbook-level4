@@ -2,7 +2,13 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 
 
 import java.util.ArrayList;
@@ -16,6 +22,7 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.EditReminderDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -61,6 +68,38 @@ public class CommandTestUtil {
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
 
+    public static final String VALID_TASK_PROJECT = "Project Submission";
+    public static final String VALID_TASK_ASSIGNMENT = "Task assignment";
+    public static final String VALID_PRIORITY_PROJECT = "High";
+    public static final String VALID_PRIORITY_ASSIGNMENT = "Medium";
+    public static final String VALID_DATE_PROJECT = "09/09/2017 0900";
+    public static final String VALID_DATE_ASSIGNMENT = "10/10/2017 1000";
+    public static final String VALID_MESSAGE_PROJECT = "Submit to Manager";
+    public static final String VALID_MESSAGE_ASSIGNMENT = "Submit by soft copy";
+    public static final String VALID_TAG_OFFICE = "office";
+    public static final String VALID_TAG_SOFTCOPY = "softcopy";
+
+    /*
+    public static final String NAME_DESC_PROJECT = " " + PREFIX_TASK + VALID_TASK_PROJECT;
+    public static final String NAME_DESC_ASSIGNMENT = " " + PREFIX_TASK + VALID_TASK_ASSIGNMENT;
+    public static final String PHONE_DESC_PROJECT = " " + PREFIX_PRIORITY + VALID_PRIORITY_PROJECT;
+    public static final String PHONE_DESC_ASSIGNMENT = " " + PREFIX_PRIORITY + VALID_PRIORITY_ASSIGNMENT;
+    public static final String EMAIL_DESC_PROJECT = " " + PREFIX_DATE + VALID_DATE_PROJECT;
+    public static final String EMAIL_DESC_ASSIGNMENT = " " + PREFIX_DATE + VALID_DATE_ASSIGNMENT;
+    public static final String ADDRESS_DESC_PROJECT = " " + PREFIX_MESSAGE + VALID_MESSAGE_PROJECT;
+    public static final String ADDRESS_DESC_ASSIGNMENT = " " + PREFIX_MESSAGE + VALID_MESSAGE_ASSIGNMENT;
+    public static final String TAG_DESC_OFFICE = " " + PREFIX_TAG + VALID_TAG_OFFICE;
+    public static final String TAG_DESC_SOFTCOPY = " " + PREFIX_TAG + VALID_TAG_SOFTCOPY;
+
+    public static final String INVALID_TASK_DESC = " " + PREFIX_TASK + "Submission&"; // '&' not allowed in tasks
+    public static final String INVALID_PRIORITY_DESC = " " + PREFIX_PRIORITY + "low1"; // '1' not allowed in phones
+    public static final String INVALID_DATE_DESC = " " + PREFIX_DATE + "0!"; // '!' not allowed in dates
+    public static final String INVALID_MESSAGE_DESC = " " + PREFIX_MESSAGE; // empty string not allowed for addresses
+    */
+
+    public static final EditReminderCommand.EditReminderDescriptor DESC_PROJECT;
+    public static final EditReminderCommand.EditReminderDescriptor DESC_ASSIGNMENT;
+
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
@@ -68,6 +107,15 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+    }
+
+    static {
+        DESC_PROJECT = new EditReminderDescriptorBuilder().withTask(VALID_TASK_PROJECT)
+                .withPriority(VALID_PRIORITY_PROJECT).withDate(VALID_DATE_PROJECT).withMessage(VALID_MESSAGE_PROJECT)
+                .withTags(VALID_TAG_OFFICE).build();
+        DESC_ASSIGNMENT = new EditReminderDescriptorBuilder().withTask(VALID_TASK_ASSIGNMENT)
+                .withPriority(VALID_PRIORITY_ASSIGNMENT).withDate(VALID_DATE_ASSIGNMENT)
+                .withMessage(VALID_MESSAGE_ASSIGNMENT).withTags(VALID_TAG_OFFICE, VALID_TAG_SOFTCOPY).build();
     }
 
     /**

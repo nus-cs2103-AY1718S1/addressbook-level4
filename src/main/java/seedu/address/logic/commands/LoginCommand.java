@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+
 import seedu.address.model.credentials.ReadOnlyAccount;
 //@@author cqhchan
 /**
@@ -24,6 +25,7 @@ public class LoginCommand extends Command {
             + "Parameters: "
             + PREFIX_USERNAME + "USERNAME "
             + PREFIX_PASSWORD + "PASSWORD";
+
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
     private ReadOnlyAccount account;
 

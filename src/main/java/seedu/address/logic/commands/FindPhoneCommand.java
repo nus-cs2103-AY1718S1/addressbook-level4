@@ -25,7 +25,7 @@ public class FindPhoneCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        return new CommandResult(getMessageForPhoneListShownSummary(model.getFilteredPersonList().size()));
     }
 
     @Override
