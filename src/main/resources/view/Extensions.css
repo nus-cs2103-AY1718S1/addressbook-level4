@@ -18,3 +18,8 @@
 .tooltip-text {
     -fx-text-fill: white;
 }
+
+#tags {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
