@@ -28,7 +28,7 @@ public class AddCommand extends UndoableCommand {
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "student/(STUDENT_NUMBER) parent/(PARENT_NUMBER) "
-            + PREFIX_PARENTPHONE + "PARENTPHONE"
+            + PREFIX_PARENTPHONE + "PARENTPHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
             + PREFIX_FORMCLASS + "FORMCLASS "
