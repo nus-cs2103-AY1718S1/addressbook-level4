@@ -886,9 +886,7 @@ public class DateTimeTest {
     public void isValidTime() {
         // invalid time
         assertFalse(DateTime.isValidTime("")); // empty string
-        assertFalse(DateTime.isValidTime("251215 08:30")); // wrong year format
-        assertFalse(DateTime.isValidTime("25122015 08:30am")); // included am
-        assertFalse(DateTime.isValidTime("25122015 08:30pm")); // included pm
+        assertFalse(DateTime.isValidTime("some random staff")); // unrelated string
 
         // valid time
         assertTrue(DateTime.isValidTime("25122015 08:30"));
@@ -902,16 +900,6 @@ public class DateTimeTest {
         assertEquals(VALID_DATE_EVENT1, dateTime.getValue());
     }
 
-    @Test
-    public void create_viaDateObject_checkCorrectness() throws Exception {
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("ddMMyyyy HH:mm");
-        Date date = dateFormatter.parse(VALID_DATE_EVENT1);
-
-        // Create a Datetime property via alternative constructor.
-        DateTime dateTime = new DateTime(date);
-        assertEquals(VALID_DATE_EVENT1, dateTime.getValue());
-    }
-}
 ```
 ###### \java\seedu\address\model\property\EventNameContainsKeywordsPredicateTest.java
 ``` java
@@ -983,7 +971,7 @@ import java.util.Optional;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.event.EditEventCommand.EditEventDescriptor;
-import seedu.address.logic.parser.ParserUtil;
+import seedu.address.logic.parser.util.ParserUtil;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 

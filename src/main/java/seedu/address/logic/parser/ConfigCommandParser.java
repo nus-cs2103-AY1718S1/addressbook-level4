@@ -17,6 +17,7 @@ import seedu.address.logic.commands.configs.ChangeTagColorCommand;
 import seedu.address.logic.commands.configs.ConfigCommand;
 import seedu.address.logic.commands.configs.ConfigCommand.ConfigType;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.util.ParserUtil;
 
 //@@author yunpengn
 /**
