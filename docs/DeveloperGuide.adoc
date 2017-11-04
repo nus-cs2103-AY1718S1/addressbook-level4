@@ -1224,6 +1224,12 @@ Use case ends.
 
 *Extensions*
 
+* 1a. Person name is invalid
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
 === Use case: Add person
 
 *MSS*
@@ -1292,6 +1298,22 @@ Use case ends.
 +
 Use case ends.
 
+=== Use case: Birthdays Command
+
+*MSS*
+
+1.  User wants to know if any person has a birthday today.
+2.  User requests birthdays command.
+3.  AddressBook lists all persons with birthday today.
++
+Use case ends.
+
+*Extensions*
+
+* 2a. No birthdays today.
+[none]
++
+Use case ends.
 === Use case: Add event
 
 *MSS*
