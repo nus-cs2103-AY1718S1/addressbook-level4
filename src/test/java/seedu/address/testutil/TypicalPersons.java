@@ -62,7 +62,7 @@ public class TypicalPersons {
             .withHomePhone("65055005").withAddress("michegan ave").withInterest(Interest.NO_INTEREST_SET)
             .withOfficePhone("60050505").withTags("violent").withDeadline(Deadline.NO_DEADLINE_SET).build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz").withHomePhone("66066606")
-            .withOfficePhone(OfficePhone.NO_OFFICE_PHONE_SET).withPostalCode("616111").withHandphone("94824227")
+            .withOfficePhone(OfficePhone.NO_OFFICE_PHONE_SET).withPostalCode("676111").withHandphone("94824227")
             .withDebt("12").withTotalDebt("12").withDeadline(Deadline.NO_DEADLINE_SET).withEmail("lydia@example.com")
             .withInterest(Interest.NO_INTEREST_SET).withAddress("little tokyo")
             .withTags("tricky", "friendly").build();
@@ -77,7 +77,7 @@ public class TypicalPersons {
             .withAddress("123, Jurong West Ave 6, #08-111").withDebt("1234567").withTotalDebt("1234567")
             .withEmail("alice@example.com").withDeadline(Deadline.NO_DEADLINE_SET).withHandphone("85355255")
             .withInterest(Interest.NO_INTEREST_SET).withHomePhone("61234123")
-            .withOfficePhone(OfficePhone.NO_OFFICE_PHONE_SET).withTags("friends").withPostalCode("623123").build();
+            .withOfficePhone(OfficePhone.NO_OFFICE_PHONE_SET).withTags("friends").withPostalCode("683123").build();
     public static final ReadOnlyPerson WEIPING = new PersonBuilder().withName("Khoo Wei Ping")
             .withAddress("311, Clementi Ave 2, #02-25").withPostalCode("111111").withDebt("1234567")
             .withTotalDebt("1234567").withEmail("johnd@example.com").withInterest(Interest.NO_INTEREST_SET)
