@@ -136,13 +136,12 @@ public class MainWindow extends UiPart<Region> {
                 logger.fine(String.format("Matching key combination: %1$s", keyCombination));
                 menuItem.getOnAction().handle(new ActionEvent());
                 event.consume();
-            } else if (keyCombination.getName().equals("F2") && keyCombination.match(event)) {
+            } else if (keyCombination.getName().equals("F2") && keyCombination.match(event)
+                    && event.getTarget() instanceof Region) {
                 //Special case for "F2" key, which seems to be the only problem with this
-                if (event.getTarget() instanceof Region) {
-                    logger.fine("F2 pressed");
-                    menuItem.getOnAction().handle(new ActionEvent());
-                    event.consume();
-                }
+                logger.fine("F2 pressed");
+                menuItem.getOnAction().handle(new ActionEvent());
+                event.consume();
             }
         });
     }

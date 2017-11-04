@@ -71,7 +71,6 @@ public class UpdateUserCommandTest {
     @Test
     public void execute_noFieldSpecified_failure() {
         UpdateUserCommand updateUserCommand = prepareCommand(new EditPersonDescriptor());
-        ReadOnlyPerson originalUserPerson = model.getUserPerson();
 
         String expectedMessage = String.format(UpdateUserCommand.MESSAGE_NOT_UPDATED);
 
