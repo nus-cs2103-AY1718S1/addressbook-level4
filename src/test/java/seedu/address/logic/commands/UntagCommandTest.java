@@ -55,7 +55,8 @@ public class UntagCommandTest {
                 firstTag.toString() + ", " + secondTag.toString()) + " "
                 + firstUntaggedPerson.getName().toString() + ", " + secondUntaggedPerson.getName().toString();
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getDatabase(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstUntaggedPerson);
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondUntaggedPerson);
         expectedModel.deleteUnusedTag(firstTag);
@@ -80,7 +81,8 @@ public class UntagCommandTest {
                 + String.format(UntagCommand.MESSAGE_PERSONS_DO_NOT_HAVE_TAGS, 1) + " "
                 + firstUntaggedPerson.getName().toString();
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getDatabase(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstUntaggedPerson);
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondUntaggedPerson);
         expectedModel.deleteUnusedTag(firstTag);
@@ -105,7 +107,8 @@ public class UntagCommandTest {
                 firstTag.toString() + ", " + secondTag.toString()) + " "
                 + firstUntaggedPerson.getName().toString() + ", " + secondUntaggedPerson.getName().toString();
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getDatabase(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
         showFirstAndSecondPersonsOnly(expectedModel);
 
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstUntaggedPerson);
@@ -135,7 +138,8 @@ public class UntagCommandTest {
                 + String.format(UntagCommand.MESSAGE_PERSONS_DO_NOT_HAVE_TAGS, 1) + " "
                 + firstUntaggedPerson.getName().toString();
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getDatabase(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
         showFirstAndSecondPersonsOnly(expectedModel);
 
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstUntaggedPerson);
@@ -147,7 +151,8 @@ public class UntagCommandTest {
 
     @Test
     public void execute_allTagsInUnfilteredList_success() throws Exception {
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getDatabase(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
 
         for (ReadOnlyPerson person : model.getFilteredPersonList()) {
             Person untaggedPerson = new PersonBuilder(person).withTags().build();
@@ -166,7 +171,8 @@ public class UntagCommandTest {
 
     @Test
     public void execute_severalTagsInUnfilteredList_success() throws Exception {
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getDatabase(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
 
         Tag firstTag = new Tag("friends");
         Tag secondTag = new Tag("retrieveTester");
@@ -203,7 +209,8 @@ public class UntagCommandTest {
 
         String expectedMessage = MESSAGE_SUCCESS_ALL_TAGS_IN_LIST;
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getDatabase(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
         showFirstAndSecondPersonsOnly(expectedModel);
 
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstUntaggedPerson);
@@ -231,7 +238,8 @@ public class UntagCommandTest {
         String expectedMessage = String.format(MESSAGE_SUCCESS_MULTIPLE_TAGS_IN_LIST,
                 firstTag.toString() + ", " + secondTag.toString());
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getDatabase(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
         showFirstAndSecondPersonsOnly(expectedModel);
 
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstUntaggedPerson);
@@ -254,7 +262,8 @@ public class UntagCommandTest {
         String expectedMessage = String.format(MESSAGE_SUCCESS_ALL_TAGS, 2) + " "
                 + firstUntaggedPerson.getName().toString() + ", " + secondUntaggedPerson.getName().toString();
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getDatabase(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
 
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstUntaggedPerson);
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondUntaggedPerson);

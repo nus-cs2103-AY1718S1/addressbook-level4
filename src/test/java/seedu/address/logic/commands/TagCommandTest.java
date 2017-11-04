@@ -51,7 +51,8 @@ public class TagCommandTest {
                 + firstTaggedPerson.getName().toString() + ", "
                 + secondTaggedPerson.getName().toString();
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getDatabase(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstTaggedPerson);
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondTaggedPerson);
 
@@ -72,7 +73,8 @@ public class TagCommandTest {
                 + String.format(TagCommand.MESSAGE_PERSONS_ALREADY_HAVE_TAG, 1) + " "
                 + secondTaggedPerson.getName().toString();
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getDatabase(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstTaggedPerson);
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondTaggedPerson);
 
@@ -96,7 +98,8 @@ public class TagCommandTest {
                 + firstTaggedPerson.getName().toString() + ", "
                 + secondTaggedPerson.getName().toString();
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getDatabase(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstTaggedPerson);
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondTaggedPerson);
 
@@ -121,7 +124,8 @@ public class TagCommandTest {
                 + String.format(TagCommand.MESSAGE_PERSONS_ALREADY_HAVE_TAG, 1) + " "
                 + secondTaggedPerson.getName().toString();
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getDatabase(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstTaggedPerson);
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondTaggedPerson);
 
