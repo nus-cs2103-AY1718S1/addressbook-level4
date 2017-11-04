@@ -112,7 +112,7 @@ link:#tracking-number[here].
 * Items in square brackets are optional e.g `#/TRACKING_NUMBER [t/TAG]` can be used as `#/RR000000000SG t/fragile` or as
  `#/RR000000000SG`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}`
- (i.e. 0 times), `t/fragile`, `t/keepDry t/frozen` etc.
+ (i.e. 0 times), `t/fragile`, `t/flammable t/frozen` etc.
 * Parameters can be in any order e.g. if the command specifies `#/TRACKING_NUMBER p/PHONE_NUMBER`,
  `p/PHONE_NUMBER #/TRACKING_NUMBER` is also acceptable.
 ====
@@ -124,7 +124,7 @@ Format: `help`
 === Adding a parcel: `add`
 
 Adds a parcel to Ark +
-Format: `add #/TRACKING_ID n/NAME [p/PHONE_NUMBER] [e/EMAIL] a/ADDRESS d/DELIVERYDATE [s/STATUS] [t/TAG]...`
+Format: `add #/TRACKING_NUMBER n/NAME [p/PHONE_NUMBER] [e/EMAIL] a/ADDRESS d/DELIVERYDATE [s/STATUS] [t/TAG]...`
 
 [TIP]
 A parcel can have any number of tags (including 0)
@@ -135,7 +135,7 @@ Examples:
 
 * `add #/RR000000000SG n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121 d/01-01-2001
  s/DELIVERING`
-* `add #/RR000000000SG n/Betsy Crowe t/friend d/02-02-2002 e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567
+* `add #/RR000000000SG n/Betsy Crowe t/frozen d/02-02-2002 e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567
  t/fragile`
 
 [NOTE]
@@ -535,7 +535,7 @@ of the list so that the user does not have to manually do so.
 == Command Summary
 
 * *Add* `add #/TRACKING_NUMBER n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DELIVERY_DATE s/[STATUS] [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 d/12-12-2012 s/pending t/friend t/colleague`
+e.g. `add #/RR906906906SG n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, S123465 d/12-12-2012 s/pending t/frozen t/flammable`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
