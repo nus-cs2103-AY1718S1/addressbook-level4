@@ -71,7 +71,7 @@ public class LoggingCommand {
 public class QrCallCommand extends Command {
 
     public static final String COMMAND_WORD = "qrcall";
-    public static final String COMMAND_ALIAS = "qr";
+    public static final String COMMAND_ALIAS = "qc";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Select Person based on Index to generate QR Code for calling\n"
@@ -94,7 +94,6 @@ public class QrCallCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
         int indexOfPersonInList = targetIndex.getOneBased() - 1;
-        String phoneOfPerson = lastShownList.get(indexOfPersonInList).getPhone().toString();
         EventsCenter.getInstance().post(new QrEvent(lastShownList.get(indexOfPersonInList)));
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
 
@@ -109,9 +108,9 @@ public class QrCallCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\commands\QrGenerateCommand.java
+###### \java\seedu\address\logic\commands\QrGenCallCommand.java
 ``` java
-public class QrGenerateCommand {
+public class QrGenCallCommand {
     /**
      * Method to Generate PhoneCall QRCode
      */
@@ -142,9 +141,9 @@ public class QrGenerateCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\QrSaveContactCommand.java
+###### \java\seedu\address\logic\commands\QrGenSaveContactCommand.java
 ``` java
-public class QrSaveContactCommand {
+public class QrGenSaveContactCommand {
     /**
      * Method to Generate SaveContact for Phone QRCode
      */
@@ -216,9 +215,9 @@ public class QrSaveContactCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\QrSmsCommand.java
+###### \java\seedu\address\logic\commands\QrGenSmsCommand.java
 ``` java
-public class QrSmsCommand {
+public class QrGenSmsCommand {
     /**
      * Method to Generate SMS to Contact QRCode
      */
@@ -250,9 +249,131 @@ public class QrSmsCommand {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\QrSaveContactCommand.java
+``` java
+public class QrSaveContactCommand extends Command {
+
+    public static final String COMMAND_WORD = "qrsave";
+    public static final String COMMAND_ALIAS = "qrs";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Select Person based on Index to generate QR Code for Contact Saving\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
+    public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Generated Contact Saving Qr for Selected Person: %1$s";
+
+    private final Index targetIndex;
+
+    public QrSaveContactCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+        int indexOfPersonInList = 0;
+        indexOfPersonInList = targetIndex.getOneBased() - 1;
+        EventsCenter.getInstance().post(new QrEvent(lastShownList.get(indexOfPersonInList)));
+        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof QrSaveContactCommand // instanceof handles nulls
+                && this.targetIndex.equals(((QrSaveContactCommand) other).targetIndex)); // state check
+    }
+
+}
+```
+###### \java\seedu\address\logic\commands\QrSmsCommand.java
+``` java
+public class QrSmsCommand extends Command {
+
+    public static final String COMMAND_WORD = "qrsms";
+    public static final String COMMAND_ALIAS = "qs";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Select Person based on Index to generate QR Code for SMS\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
+    public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Generated SMS Qr for Selected Person: %1$s";
+
+    private final Index targetIndex;
+
+    public QrSmsCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+        int indexOfPersonInList;
+        indexOfPersonInList = targetIndex.getOneBased() - 1;
+        EventsCenter.getInstance().post(new QrEvent(lastShownList.get(indexOfPersonInList)));
+        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof QrSmsCommand // instanceof handles nulls
+                && this.targetIndex.equals(((QrSmsCommand) other).targetIndex)); // state check
+    }
+
+}
+```
 ###### \java\seedu\address\logic\parser\QrCallCommandParser.java
 ``` java
 public class QrCallCommandParser implements Parser<QrCallCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the QrCallCommand
+     * and returns an QrCallCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public QrCallCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new QrCallCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, QrCallCommand.MESSAGE_USAGE));
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\parser\QrSaveContactCommandParser.java
+``` java
+public class QrSaveContactCommandParser implements Parser<QrSaveContactCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the QrCallCommand
+     * and returns an QrCallCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public QrSaveContactCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new QrSaveContactCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, QrSaveContactCommand.MESSAGE_USAGE));
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\parser\QrSmsCommandParser.java
+``` java
+public class QrSmsCommandParser implements Parser<QrCallCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the QrCallCommand
      * and returns an QrCallCommand object for execution.
