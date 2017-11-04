@@ -37,7 +37,7 @@ public class Name {
     public Name(String name) throws IllegalValueException {
         requireNonNull(name);
         String trimmedName = name.trim();
-        if (!isValidName(trimmedName)) {
+        if (!isValidName(trimmedName) && !trimmedName.isEmpty()) {
             throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
         }
         this.fullName = trimmedName;
