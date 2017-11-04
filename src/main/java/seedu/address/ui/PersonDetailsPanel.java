@@ -14,6 +14,12 @@ import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ClearPersonListEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.OpenFaceBookWebViewEvent;
+import seedu.address.commons.events.ui.OpenGithubWebViewEvent;
+import seedu.address.commons.events.ui.OpenInstagramWebViewEvent;
+import seedu.address.commons.events.ui.OpenNusModsWebViewEvent;
+import seedu.address.commons.events.ui.OpenTwitterWebViewEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -60,6 +66,26 @@ public class PersonDetailsPanel extends UiPart<Region> {
         super(FXML);
         this.personList = personList;
         registerAsAnEventHandler(this);
+    }
+
+    @FXML void openTwitterWebView() {
+        raise(new NewResultAvailableEvent("URL is not provided", true));
+    }
+
+    @FXML void openNusModsWebView() {
+        raise(new NewResultAvailableEvent("URL is not provided", true));
+    }
+
+    @FXML void openFaceBookWebView() {
+        raise(new NewResultAvailableEvent("URL is not provided", true));
+    }
+
+    @FXML void openInstagramWebView() {
+        raise(new NewResultAvailableEvent("URL is not provided", true));
+    }
+
+    @FXML void openGitHubWebView() {
+        raise(new NewResultAvailableEvent("URL is not provided", true));
     }
 
     @Subscribe
@@ -161,5 +187,35 @@ public class PersonDetailsPanel extends UiPart<Region> {
             counter++;
         }
         eventsArea.setText(stringBuffer.toString());
+    }
+
+    @Subscribe
+    private void handleOpenTwitterWebViewEvent(OpenTwitterWebViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        openTwitterWebView();
+    }
+
+    @Subscribe
+    private void handleOpenNusModsWebViewEvent(OpenNusModsWebViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        openTwitterWebView();
+    }
+
+    @Subscribe
+    private void handleOpenFaceBookWebViewEvent(OpenFaceBookWebViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        openTwitterWebView();
+    }
+
+    @Subscribe
+    private void handleOpenInstagramWebViewEvent(OpenInstagramWebViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        openTwitterWebView();
+    }
+
+    @Subscribe
+    private void handleOpenGithubWebViewEvent(OpenGithubWebViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        openTwitterWebView();
     }
 }
