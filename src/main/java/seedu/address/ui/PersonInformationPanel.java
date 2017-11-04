@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,8 +17,8 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -59,8 +61,6 @@ public class PersonInformationPanel extends UiPart<Region> {
     private Label customFields;
     @FXML
     private ImageView photoContainer;
-    @FXML
-    private AnchorPane photoPane;
     @FXML
     private ListView optionalPhoneList;
 
@@ -110,7 +110,28 @@ public class PersonInformationPanel extends UiPart<Region> {
         id.setText(Integer.toString(personId));
         optionalPhoneDisplayList.clear();
         initOptionalPhones(person);
+        initPhoto(person);
     }
+
+    //@@author LuLechuan
+    /**
+     *  Initialises icon photo
+     */
+    private void initPhoto(ReadOnlyPerson person) {
+        String pathName = person.getPhoto().pathName;
+
+        File photoImage = new File(pathName);
+        Image photo = null;
+        try {
+            photo = new Image(photoImage.toURI().toURL().toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        photoContainer.setImage(photo);
+    }
+    //@@author
+
     /**
      * Sets a background color for each tag.
      * @param
@@ -123,6 +144,7 @@ public class PersonInformationPanel extends UiPart<Region> {
         });
     }
 
+    //@@author LuLechuan
     /**
      *  Initialise optional phone display list
      */
@@ -137,6 +159,7 @@ public class PersonInformationPanel extends UiPart<Region> {
 
         listProperty.set(FXCollections.observableArrayList(optionalPhoneDisplayList));
     }
+    //@@author
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
