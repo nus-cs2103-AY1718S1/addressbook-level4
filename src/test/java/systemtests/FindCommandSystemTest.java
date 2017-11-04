@@ -177,7 +177,6 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command, Model expectedModel) {
-        String expectedResultMessage = FindCommand.MESSAGE_SUCCESS;
 
         executeCommand(command);
         assertCommandBoxShowsDefaultStyle();

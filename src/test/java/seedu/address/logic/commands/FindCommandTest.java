@@ -32,7 +32,6 @@ import seedu.address.model.module.predicates.ModuleContainsKeywordsPredicate;
  */
 public class FindCommandTest {
     private Model model;
-    private Model expectedModel;
     private List<String> keywords;
     private List<ReadOnlyLesson> expectedList;
     private String expectedMessage;
@@ -42,10 +41,8 @@ public class FindCommandTest {
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         keywords = new ArrayList<>();
         expectedList = new ArrayList<>();
-        expectedMessage = new String();
     }
 
 
