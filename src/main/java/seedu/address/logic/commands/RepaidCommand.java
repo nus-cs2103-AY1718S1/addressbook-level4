@@ -17,7 +17,8 @@ public class RepaidCommand extends UndoableCommand {
     public static final String COMMAND_WORD_ALIAS = "rp";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Adds person identified by the index number into the whitelist and concurrently clear his debt.\n"
+            + ": Adds the currently selected person or the person identified by the index number into the whitelist"
+            + " and concurrently clear his/her debt.\n"
             + "Parameters: INDEX (optional, must be a positive integer if present)\n"
             + "Example: " + COMMAND_WORD + " 1";
     public static final String MESSAGE_REPAID_PERSON_SUCCESS = "%1$s has now repaid his/her debt";

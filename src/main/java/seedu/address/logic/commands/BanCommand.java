@@ -15,7 +15,8 @@ public class BanCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "ban";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Ban a person identified by the index number used in the last person listing.\n"
+            + ": Bans the currently selected person or the person identified by the index number used in the last"
+            + " person listing.\n"
             + "Parameters: INDEX (optional, must be a positive integer if present)\n"
             + "Example: " + COMMAND_WORD + " 1";
     public static final String MESSAGE_BAN_PERSON_SUCCESS = "%1$s has been added to BLACKLIST";

@@ -16,7 +16,8 @@ public class UnbanCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "unban";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Unban a person identified by the index number used in the last person listing from blacklist.\n"
+            + ": Unbans the currently selected person or the person identified by the index number used in the last "
+            + "person listing from blacklist.\n"
             + "Parameters: INDEX (optional, must be a positive integer if present)\n"
             + "Example: " + COMMAND_WORD + " 1";
     public static final String MESSAGE_UNBAN_PERSON_SUCCESS = "Removed %1$s from BLACKLIST";
@@ -35,7 +36,7 @@ public class UnbanCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
-        String messagetoDisplay = MESSAGE_UNBAN_PERSON_SUCCESS;
+        String messageToDisplay = MESSAGE_UNBAN_PERSON_SUCCESS;
 
         ReadOnlyPerson personToUnban = selectPerson(targetIndex);
 
@@ -43,7 +44,7 @@ public class UnbanCommand extends UndoableCommand {
             if (personToUnban.isBlacklisted()) {
                 model.removeBlacklistedPerson(personToUnban);
             } else {
-                messagetoDisplay = MESSAGE_UNBAN_PERSON_FAILURE;
+                messageToDisplay = MESSAGE_UNBAN_PERSON_FAILURE;
             }
         } catch (PersonNotFoundException e) {
             assert false : "The target person is not in blacklist";
@@ -53,7 +54,7 @@ public class UnbanCommand extends UndoableCommand {
 
         String currentList = listObserver.getCurrentListName();
 
-        return new CommandResult(currentList + String.format(messagetoDisplay, personToUnban.getName()));
+        return new CommandResult(currentList + String.format(messageToDisplay, personToUnban.getName()));
     }
 
     @Override

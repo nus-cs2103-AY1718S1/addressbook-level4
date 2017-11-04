@@ -158,13 +158,4 @@ public class SelectCommandTest {
         selectCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return selectCommand;
     }
-
-    /**
-     * Returns a {@code SelectCommand} with no parameters.
-     */
-    private SelectCommand prepareCommand() {
-        SelectCommand selectCommand = new SelectCommand();
-        selectCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return selectCommand;
-    }
 }
