@@ -35,7 +35,6 @@ import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 import seedu.address.model.reminder.exceptions.ReminderNotFoundException;
 import seedu.address.model.tag.Tag;
 
-import javax.security.auth.login.AccountNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.

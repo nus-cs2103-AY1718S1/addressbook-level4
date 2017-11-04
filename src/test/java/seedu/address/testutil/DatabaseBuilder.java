@@ -1,11 +1,12 @@
 package seedu.address.testutil;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Database;
 import seedu.address.model.credentials.ReadOnlyAccount;
 import seedu.address.model.credentials.exceptions.DuplicateAccountException;
-import seedu.address.model.tag.Tag;
 
+/**
+ *
+ */
 public class DatabaseBuilder {
     private Database database;
 

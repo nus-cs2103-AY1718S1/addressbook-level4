@@ -5,7 +5,9 @@ import seedu.address.model.credentials.Account;
 import seedu.address.model.credentials.Password;
 import seedu.address.model.credentials.ReadOnlyAccount;
 import seedu.address.model.credentials.Username;
-
+/**
+ *
+ */
 public class AccountBuilder {
 
     public static final String DEFAULT_NAME = "private";
@@ -17,7 +19,7 @@ public class AccountBuilder {
         try {
             Username defaultName = new Username(DEFAULT_NAME);
             Password defaultPassword = new Password(DEFAULT_PASSWORD);
-           this.account = new Account(defaultName, defaultPassword);
+            this.account = new Account(defaultName, defaultPassword);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }

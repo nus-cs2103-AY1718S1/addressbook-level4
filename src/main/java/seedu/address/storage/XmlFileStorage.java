@@ -24,6 +24,12 @@ public class XmlFileStorage {
         }
     }
 
+    /**
+     *
+     * @param file
+     * @param database
+     * @throws FileNotFoundException
+     */
     public static void saveDataBaseToFile(File file, XmlSerializableDatabase database)
             throws FileNotFoundException {
         try {
@@ -45,6 +51,13 @@ public class XmlFileStorage {
         }
     }
 
+    /**
+     *
+     * @param file
+     * @return
+     * @throws DataConversionException
+     * @throws FileNotFoundException
+     */
     public static XmlSerializableDatabase loadDataBaseFromSaveFile(File file) throws DataConversionException,
             FileNotFoundException {
         try {

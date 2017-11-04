@@ -1,5 +1,10 @@
 package seedu.address.model;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+import java.util.Objects;
+
 import javafx.collections.ObservableList;
 import seedu.address.model.credentials.Account;
 import seedu.address.model.credentials.ReadOnlyAccount;
@@ -8,11 +13,9 @@ import seedu.address.model.credentials.exceptions.DuplicateAccountException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
-import java.util.List;
-import java.util.Objects;
-
-import static java.util.Objects.requireNonNull;
-
+/**
+ *
+ */
 public class Database implements ReadOnlyDatabase {
 
     private final UniqueAccountList accounts;
@@ -39,6 +42,10 @@ public class Database implements ReadOnlyDatabase {
         this.accounts.setAccounts(accounts);
     }
 
+    /**
+     *
+     * @param newData
+     */
     public void resetData(ReadOnlyDatabase newData) {
         requireNonNull(newData);
         try {
@@ -50,6 +57,11 @@ public class Database implements ReadOnlyDatabase {
 
     }
 
+    /**
+     *
+     * @param p
+     * @throws DuplicateAccountException
+     */
     public void addAccount(ReadOnlyAccount p) throws DuplicateAccountException {
         Account newAccount = new Account(p);
         // TODO: the tags master list will be updated even though the below line fails.
@@ -58,6 +70,13 @@ public class Database implements ReadOnlyDatabase {
         accounts.add(newAccount);
     }
 
+    /**
+     *
+     * @param target
+     * @param editedReadOnlyAccount
+     * @throws DuplicatePersonException
+     * @throws PersonNotFoundException
+     */
     public void updateAccount(ReadOnlyAccount target, ReadOnlyAccount editedReadOnlyAccount)
             throws DuplicatePersonException, PersonNotFoundException {
         requireNonNull(editedReadOnlyAccount);
@@ -69,6 +88,12 @@ public class Database implements ReadOnlyDatabase {
         accounts.setAccount(target, editedAccount);
     }
 
+    /**
+     *
+     * @param key
+     * @return
+     * @throws PersonNotFoundException
+     */
     public boolean removeAccount(ReadOnlyAccount key) throws PersonNotFoundException {
         if (accounts.remove(key)) {
             return true;

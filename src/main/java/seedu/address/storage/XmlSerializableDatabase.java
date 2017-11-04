@@ -12,9 +12,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyDatabase;
 import seedu.address.model.credentials.ReadOnlyAccount;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.reminder.ReadOnlyReminder;
-import seedu.address.model.tag.Tag;
+
 
 /**
  * An Immutable Database that is serializable to XML format

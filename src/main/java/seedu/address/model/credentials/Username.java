@@ -1,10 +1,13 @@
 package seedu.address.model.credentials;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Name;
 
-import static java.util.Objects.requireNonNull;
-
+/**
+ *
+ */
 public class Username {
 
     public static final String MESSAGE_NAME_CONSTRAINTS =
