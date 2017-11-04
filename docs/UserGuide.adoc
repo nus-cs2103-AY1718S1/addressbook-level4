@@ -628,9 +628,8 @@ v1.0
 
 . Display pictures for each contact so that you can remember your friends faster.
 
-. Fuzzy find using Apache Lucene. If you ever misspell a word, `The Myth's Book` can +
-   suggest similar words.
-   
+. Fuzzy find using Apache Lucene. If you ever misspell a word, `The Myth's Book` can suggest similar words.
+
 . Compose and send emails to your classmates and professors using Outlook API.
 
 . To-do list for you to keep track of your own tasks.
