@@ -626,13 +626,13 @@ v1.0
 
 == Coming in v2.0
 
-. Fuzzy find using apache lucene. The user misspells the name, but the myth's book can
+. Display pictures for each contact so that you can remember your friends faster.
+
+. Fuzzy find using Apache Lucene. If you ever misspell a word, `The Myth's Book` can +
    suggest similar words.
+   
+. Compose and send emails to your classmates and professors using Outlook API.
 
-. To-do list for our university going users to keep track their tasks.
-
-. Calendar command, that shows all events and appointments on a calendar.
-
-. Enable pictures for each contact so that users can remember the person faster.
+. To-do list for you to keep track of your own tasks.
 
 link:#the-myths-book---user-guide[Back To Top]
