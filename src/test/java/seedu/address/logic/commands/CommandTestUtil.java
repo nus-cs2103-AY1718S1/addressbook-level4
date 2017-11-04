@@ -31,9 +31,11 @@ public class CommandTestUtil {
 
     public static final String VALID_CODE_MA1101R = "MA1101R";
     public static final String VALID_CODE_CS2101 = "CS2101";
+    public static final String VALID_CODE_MA1102R = "MA1102R";
     public static final String VALID_CLASSTYPE_MA1101R = "Lec";
     public static final String VALID_CLASSTYPE_CS2101 = "Tut";
     public static final String VALID_VENUE_MA1101R = "LT30";
+    public static final String VALID_VENUE_MA1102R = "LT29";
     public static final String VALID_VENUE_CS2101 = "COM02-04";
     public static final String VALID_GROUP_MA1101R = "3";
     public static final String VALID_GROUP_CS2101 = "2";

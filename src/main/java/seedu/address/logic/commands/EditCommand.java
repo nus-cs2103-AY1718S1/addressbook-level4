@@ -134,6 +134,9 @@ public class EditCommand extends UndoableCommand {
 
         try {
             model.updateBookedSlot(bookedSlotToEdit, editedBookedSlot);
+            if (lessonToEdit.isMarked()) {
+                editedLesson.setAsMarked();
+            }
             model.updateLesson(lessonToEdit, editedLesson);
         } catch (DuplicateLessonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_LESSON);
