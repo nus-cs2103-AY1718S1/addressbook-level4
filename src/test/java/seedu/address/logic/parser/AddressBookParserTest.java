@@ -152,8 +152,9 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommandTagFind() throws Exception {
-        TagMatchingKeywordPredicate predicate = new TagMatchingKeywordPredicate("friend");
+    public void parseCommandLooseTagFind() throws Exception {
+        boolean looseFind = true;
+        TagMatchingKeywordPredicate predicate = new TagMatchingKeywordPredicate("friend", looseFind);
         TagFindCommand command = (TagFindCommand) parser.parseCommand(TagFindCommand.COMMAND_WORD
                 + " friend");
         assertEquals(new TagFindCommand(predicate), command);

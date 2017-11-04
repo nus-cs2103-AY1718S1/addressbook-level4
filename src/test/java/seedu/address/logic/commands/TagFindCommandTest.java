@@ -36,10 +36,11 @@ public class TagFindCommandTest {
 
     @Test
     public void equals() {
+        boolean looseFind = true;
         TagMatchingKeywordPredicate firstPredicate =
-                new TagMatchingKeywordPredicate("first");
+                new TagMatchingKeywordPredicate("first", looseFind);
         TagMatchingKeywordPredicate secondPredicate =
-                new TagMatchingKeywordPredicate("second");
+                new TagMatchingKeywordPredicate("second", looseFind);
 
         TagFindCommand findFirstCommand = new TagFindCommand(firstPredicate);
         TagFindCommand findSecondCommand = new TagFindCommand(secondPredicate);
@@ -63,31 +64,34 @@ public class TagFindCommandTest {
 
     @Test
     public void executeZeroKeywordNoPersonFound() {
+        boolean looseFind = true;
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        TagFindCommand command = prepareCommand(" ");
+        TagFindCommand command = prepareCommand(" ", looseFind);
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
     public void executeSinglePersonFound() {
+        boolean looseFind = true;
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
-        TagFindCommand command = prepareCommand("owesMoney");
+        TagFindCommand command = prepareCommand("owesMoney", looseFind);
         assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
     }
 
     @Test
     public void executeMultiplePersonsFound() {
+        boolean looseFind = true;
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 7);
-        TagFindCommand command = prepareCommand("Friends");
+        TagFindCommand command = prepareCommand("Friends", looseFind);
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 
     /**
      * Parses {@code userInput} into a {@code TagFindCommand}.
      */
-    private TagFindCommand prepareCommand(String userInput) {
+    private TagFindCommand prepareCommand(String userInput, boolean looseFind) {
         TagFindCommand command =
-                new TagFindCommand(new TagMatchingKeywordPredicate(userInput));
+                new TagFindCommand(new TagMatchingKeywordPredicate(userInput, looseFind));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
