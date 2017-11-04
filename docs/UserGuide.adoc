@@ -473,6 +473,12 @@ List all contacts by clicking on the `List` button instead of using command line
 === Sorts contact with a click of a button `Coming in v2.0`
 Sorts the contact in the address book based on the name of the contact by clicking on the `Sort` button instead of using command line.
 
+=== Filters contact by tags with a click of a button `Coming in v2.0`
+Filters the contact in the address book based on your inputted tag name on a text-field and clicking on the `Filter` button instead of using command line.
+
+=== Removing tags by clicking on a tag `Coming in v2.0`
+Allows you to choose to remove the tag that you clicked instead of using command line.
+
 === Reads out Command Executed with computer voicing `Coming in v2.0`
 Allows user to decide if they want to activate the function in order to listen to commands they executed and the response feedback from the application.
 
