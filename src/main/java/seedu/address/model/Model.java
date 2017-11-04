@@ -37,19 +37,23 @@ public interface Model {
     /** Adds all persons in the given collection */
     void addPersons(Collection<ReadOnlyPerson> persons);
 
-
     //@@author marvinchin
     /** Sorts the persons in the address book based on the input {@code comparator} */
     void sortPersons(Comparator<ReadOnlyPerson> comparator);
 
     //@@author keithsoc
-    /** Favorites or unfavorites the given person */
+    /** Favorites or unfavorites the given person. Should update the last accessed time of the person. */
     void toggleFavoritePerson(ReadOnlyPerson target, String type)
             throws DuplicatePersonException, PersonNotFoundException;
-    //@@author
 
+    //@@author marvinchin
+    /** Selects the given person. Should update the last accessed time of the person. */
+    void selectPerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
+    //@@author
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
+     * Should update the last accessed time of the person.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
      *      another existing person in the list.

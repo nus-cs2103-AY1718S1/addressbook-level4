@@ -99,7 +99,6 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
-    //@@author
 
     //@@author sarahnzx
     @Override
@@ -119,7 +118,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
-
+        indicatePersonAccessed(target);
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
@@ -131,6 +130,19 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, type);
         addressBook.toggleFavoritePerson(target, type);
         indicateAddressBookChanged();
+    }
+
+    //@@author marvinchin
+    @Override
+    public void selectPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        indicatePersonAccessed(target);
+        //TODO(Marvin): Since IO operations are expensive, consider if we can defer this operation instead of saving
+        // on every access (which includes select)
+        indicateAddressBookChanged();
+    }
+
+    private void indicatePersonAccessed(ReadOnlyPerson target) throws PersonNotFoundException {
+        addressBook.indicatePersonAccessed(target);
     }
     //@@author
 
