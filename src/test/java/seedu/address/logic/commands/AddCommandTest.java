@@ -20,6 +20,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyDatabase;
+import seedu.address.model.credentials.ReadOnlyAccount;
+import seedu.address.model.credentials.exceptions.DuplicateAccountException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -106,6 +109,10 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addAccount(ReadOnlyAccount account) throws DuplicateAccountException {
+            fail("This method should not be called");
+        }
+        @Override
         public void addReminder(ReadOnlyReminder newData) {
             fail("This method should not be called.");
         }
@@ -116,7 +123,18 @@ public class AddCommandTest {
         }
 
         @Override
+        public void resetDatabase(ReadOnlyDatabase newData) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ReadOnlyAddressBook getAddressBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public ReadOnlyDatabase getDatabase() {
             fail("This method should not be called.");
             return null;
         }
@@ -127,14 +145,27 @@ public class AddCommandTest {
         }
 
         @Override
+        public void deleteAccount(ReadOnlyAccount account) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void deleteReminder(ReadOnlyReminder target) throws ReminderNotFoundException {
             fail("This method should not be called.");
         }
+
         @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
         }
+
+      //  @Override
+        public void updateAccount(ReadOnlyAccount account, ReadOnlyAccount editedAccount)
+                throws DuplicateAccountException {
+            fail("This method should not be called.");
+        }
+
 
         @Override
         public void updateReminder(ReadOnlyReminder target, ReadOnlyReminder editedReminder)
@@ -149,6 +180,13 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<ReadOnlyAccount> getFilteredAccountList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+
+        @Override
         public ObservableList<ReadOnlyReminder> getFilteredReminderList() {
             fail("This method should not be called.");
             return null;
@@ -156,6 +194,11 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredAccountList(Predicate<ReadOnlyAccount> predicate) {
             fail("This method should not be called.");
         }
 
