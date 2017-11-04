@@ -2,8 +2,6 @@ package seedu.address.logic.commands;
 
 import jdk.nashorn.internal.runtime.ParserException;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.Parser;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
