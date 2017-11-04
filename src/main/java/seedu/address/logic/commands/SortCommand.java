@@ -1,10 +1,10 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
 import java.util.ArrayList;
 
 import seedu.address.model.person.ReadOnlyPerson;
-
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 //@@author JavynThun
 /**
