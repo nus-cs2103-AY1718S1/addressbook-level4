@@ -384,7 +384,7 @@ public class MainWindow extends UiPart<Region> {
         FileChooser.ExtensionFilter extFilterJpeg = new FileChooser
                 .ExtensionFilter("JPEG files (*.jpeg)", "*.JPEG");
         FileChooser.ExtensionFilter extFilterPng = new FileChooser
-                .ExtensionFilter ("PNG files (*.png)", "*.PNG");
+                .ExtensionFilter("PNG files (*.png)", "*.PNG");
         fileChooser.getExtensionFilters().addAll(extFilterJpg,
                 extFilterJpeg, extFilterPng);
 
@@ -397,6 +397,7 @@ public class MainWindow extends UiPart<Region> {
         } catch (CommandException | ParseException e) {
             raise(new NewResultAvailableEvent(e.getMessage(), true));
         }
+    }
     //@@author sebtsh
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
