@@ -51,6 +51,12 @@ public class CopyCommand extends Command {
         return new CommandResult(commandResultMessage);
     }
 
+    /**
+     * Gets the target person's email address.
+     * @return     the email address of the person at the list {@code targetIndex}
+     * @exception  CommandException if the {@code targetIndex}
+     *             argument is greater than or equal to the {@code lastShownList} size.
+     */
     private String getTargetEmail() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         boolean indexIsOutOfBounds = targetIndex.getZeroBased() >= lastShownList.size();
@@ -66,6 +72,9 @@ public class CopyCommand extends Command {
         return !email.equalsIgnoreCase("null@null.com") && !email.equals("");
     }
 
+    /**
+     * Puts target person's email address into the system clipboard.
+     */
     private void putIntoClipboard(String resultantEmailAddress) {
         Clipboard systemClipboard = Clipboard.getSystemClipboard();
         ClipboardContent systemClipboardContent = new ClipboardContent();
