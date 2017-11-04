@@ -276,23 +276,6 @@ You can check the index using the `list` command
 
 <<<
 
-=== Selecting a person : `select`
-
-You can select a person based on their `INDEX` number. +
-Format: `select INDEX` +
-Shorthand Format: `s INDEX`
-
-*Example:*
-
-image::selectexample.png[width="700"]
-    Figure 9: Select Command Usage Diagram
-
-[WARNING]
-The index *must be a positive integer* `1, 2, 3, ...`
-
-[NOTE]
-The index refers to the index number shown in the most recent listing
-
 === Listing entered commands : `history`
 
 You can list all the commands that you have entered in reverse chronological order. +
@@ -316,7 +299,7 @@ Undoable commands: those commands that modify the address book's content (`add`,
 *Example:*
 
 image::undoexample.png[width="700"]
-    Figure 10: Undo Command Usage Diagram
+    Figure 9: Undo Command Usage Diagram
 
 === Redoing the previously undone command : `redo`
 
@@ -327,7 +310,7 @@ You can reverse the most recent `undo` command. +
 *Example:*
 
 image::redoexample.png[width="700"]
-    Figure 11: Redo Command Usage Diagram
+    Figure 10: Redo Command Usage Diagram
 
 // end::undoredo[]
 
@@ -374,7 +357,7 @@ However, please include at least the hour and a day that can be specified.
 *Example:* appt 1 d/5pm to 7pm tomorrow
 
 image::aptexample.png[width="500"]
-    Figure 12: Appointment Command Usage Diagram
+    Figure 11: Appointment Command Usage Diagram
 
 You can sort list by appointment dates. +
 *Format:* `appointment` +
@@ -404,7 +387,7 @@ Removing a Remark: You can remove a remark by typing 'r/' without specifying any
 *Examples:*
 
 image::remarkexample.png[width="700"]
-    Figure 13: Remark Command Usage Diagram
+    Figure 12: Remark Command Usage Diagram
 
 [WARNING]
 Existing remarks of the person will be removed
@@ -446,7 +429,7 @@ You can also exit MedNus by clicking on `File` in the top left corner +
 and clicking on `Exit`.
 
 image::exitUI.png[width="500"]
-    Figure 14: Methods to access `exit` command
+    Figure 13: Methods to access `exit` command
 
 === Adding/Deleting a Tag to a Person : [Coming in v2.0]
 ****
@@ -536,10 +519,6 @@ You do not need to save data manually.
 |*List Shorthand* |Lists contacts by name in descending order |`l dsc` |`l dsc`
 
 |*Help* |Shows you the user guide |`help` |`help`
-
-|*Select* |Selects a contact at the specified `INDEX` |`select INDEX` |`select 2`
-
-|*Select Shorthand* |Selects a contact at the specified `INDEX` |`s INDEX` |`s 2`
 
 |*History* |Shows you a history of all used commands |`history` |`history`
 
