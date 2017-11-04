@@ -72,10 +72,10 @@ public class MeetingCard extends UiPart<Region> {
         } else if (daysBet == 2) {
             initMeeting(meeting, colors[2]);
         }
-        if ( meeting.getMeetTag().toString().equals("2")) {
+        if (meeting.getMeetTag().toString().equals("2")) {
             icon.setImage(new Image(ICONIMPT));
         }
-        if ( meeting.getMeetTag().toString().equals("0")) {
+        if (meeting.getMeetTag().toString().equals("0")) {
             icon.setImage(new Image(ICONHATE));
         }
 

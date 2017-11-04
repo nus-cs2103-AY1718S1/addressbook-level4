@@ -13,8 +13,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 
 import seedu.address.model.meeting.DateTime;
-import seedu.address.model.meeting.NameMeeting;
 import seedu.address.model.meeting.MeetingTag;
+import seedu.address.model.meeting.NameMeeting;
 import seedu.address.model.meeting.PersonToMeet;
 import seedu.address.model.meeting.PhoneNum;
 import seedu.address.model.meeting.Place;

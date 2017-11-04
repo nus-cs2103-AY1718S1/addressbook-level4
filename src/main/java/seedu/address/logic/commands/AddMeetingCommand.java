@@ -88,7 +88,7 @@ public class AddMeetingCommand extends UndoableCommand {
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateMeetingException e) {
             throw new CommandException(MESSAGE_DUPLICATE_MEETING);
-        } catch (MeetingBeforeCurrDateException mde) {
+        } catch (MeetingBeforeCurrDateException mde) { //This exception throw handles auto deletion of Meeting cards
             throw new CommandException(MESSAGE_OVERDUE_MEETING);
         } catch (MeetingClashException mce) {
             throw new CommandException(MESSAGE_MEETING_CLASH);
