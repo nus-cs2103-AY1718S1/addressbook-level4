@@ -108,6 +108,14 @@ public class AddMultipleByTsvCommandTest {
             return null;
         }
 
+        //@@author JavynThun
+        @Override
+        public Boolean sortPersonList(ArrayList<ReadOnlyPerson> personList) {
+            fail("This method should not be called.");
+            return null;
+        }
+        //@@author
+
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
