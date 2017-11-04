@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -84,6 +85,9 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private SplitPane schedulePanel;
 
+    @FXML
+    private TabPane infoDisplayPlaceholder;
+
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
         // Set dependencies
@@ -148,7 +152,7 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
 
-        personDetailsPanel = new PersonDetailsPanel(logic.getFilteredPersonList());
+        personDetailsPanel = new PersonDetailsPanel(logic.getFilteredPersonList(), infoDisplayPlaceholder);
         contactDetailsPlaceholder.getChildren().add(personDetailsPanel.getRoot());
 
         browserPanel = new BrowserPanel();

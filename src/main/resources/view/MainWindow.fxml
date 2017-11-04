@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@Extensions.css" />
     </stylesheets>
@@ -54,9 +53,9 @@
                             <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
                         </VBox>
 
-                        <TabPane fx:id="infoDisplayPlaceholder" prefHeight="200.0" prefWidth="340.0" tabClosingPolicy="UNAVAILABLE">
+                        <TabPane fx:id="infoDisplayPlaceholder" prefHeight="200.0" prefWidth="340.0">
                             <tabs>
-                                <Tab text="Contact Details">
+                                <Tab closable="false" text="Contact Details">
                                     <content>
                                         <StackPane fx:id="contactDetailsPlaceholder" prefWidth="340">
                                             <padding>
@@ -65,7 +64,7 @@
                                         </StackPane>
                                     </content>
                                 </Tab>
-                                <Tab text="Browser">
+                                <Tab closable="false" text="Browser">
                                     <content>
                                         <StackPane fx:id="browserPlaceholder" prefWidth="340">
                                             <padding>

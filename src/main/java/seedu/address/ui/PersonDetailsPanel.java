@@ -7,10 +7,13 @@ import com.google.common.eventbus.Subscribe;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebView;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ClearPersonListEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
@@ -32,6 +35,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
     private static final String FXML = "PersonDetailsPanel.fxml";
 
     private ObservableList<ReadOnlyPerson> personList;
+    private TabPane tabPane;
 
     private final Logger logger = LogsCenter.getLogger(PersonDetailsPanel.class);
 
@@ -62,9 +66,10 @@ public class PersonDetailsPanel extends UiPart<Region> {
     @FXML
     private TextArea eventsArea;
 
-    public PersonDetailsPanel(ObservableList<ReadOnlyPerson> personList) {
+    public PersonDetailsPanel(ObservableList<ReadOnlyPerson> personList, TabPane tabPane) {
         super(FXML);
         this.personList = personList;
+        this.tabPane = tabPane;
         registerAsAnEventHandler(this);
     }
 
@@ -72,8 +77,18 @@ public class PersonDetailsPanel extends UiPart<Region> {
         raise(new NewResultAvailableEvent("URL is not provided", true));
     }
 
+    /**
+     * Open another tab to show nusmods webview
+     */
     @FXML void openNusModsWebView() {
-        raise(new NewResultAvailableEvent("URL is not provided", true));
+        //raise(new NewResultAvailableEvent("URL is not provided", true));
+        Tab tab = new Tab();
+        tab.setText("nusmods");
+        tab.setClosable(true);
+        WebView webView = new WebView();
+        webView.getEngine().load("https://nusmods.com/timetable/2017-2018/sem1?CS1101S[LEC]=1&CS1101S[REC]=4&CS1101S[TUT]=11");
+        tab.setContent(webView);
+        tabPane.getTabs().add(tab);
     }
 
     @FXML void openFaceBookWebView() {
