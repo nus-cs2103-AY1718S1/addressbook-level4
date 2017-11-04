@@ -114,6 +114,12 @@ public class TabCommandParser implements Parser<TabCommand> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         splitPanePlaceholder.setDividerPositions(0.6);
     }
+
+    @FXML @Subscribe
+    private void handleParcelPanelSelectionChangedEvent(ParcelPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        splitPanePlaceholder.setDividerPositions(0.6);
+    }
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
