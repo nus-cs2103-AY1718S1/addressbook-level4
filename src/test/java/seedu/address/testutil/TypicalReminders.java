@@ -29,16 +29,16 @@ public class TypicalReminders {
             .withPriority("Low").withDate("02/02/2017 1600").withMessage("Buy present with others.")
             .withTags("Watch", "friends", "retrieveTester").build();
     public static final ReadOnlyReminder DATING = new ReminderBuilder().withTask("Dating with Joanne")
-            .withPriority("High").withDate("01/01/2017 1500").withMessage("Meet at Clementi")
+            .withPriority("Low").withDate("01/01/2017 1500").withMessage("Meet at Clementi")
             .withTags("Present", "retrieveTester").build();
     public static final ReadOnlyReminder GATHERING = new ReminderBuilder().withTask("Gathering with friends")
             .withMessage("Gather at John's house").withDate("05/05/2017 1200").withPriority("Medium").build();
     public static final ReadOnlyReminder LUNCH = new ReminderBuilder().withTask("Lunch with Joseph")
-            .withMessage("Venue at JE").withDate("06/06/2017 1200").withPriority("Low").build();
-    public static final ReadOnlyReminder MEETING = new ReminderBuilder().withTask("Meeting in the office")
+            .withMessage("Venue at JE").withDate("06/06/2017 1200").withPriority("Medium").build();
+    public static final ReadOnlyReminder MEETING = new ReminderBuilder().withTask("Group Meeting")
             .withMessage("Have all reports ready").withDate("04/04/2017 0900").withPriority("High").build();
-    public static final ReadOnlyReminder PARTY = new ReminderBuilder().withTask("Cocktail Party")
-            .withMessage("DressCode is black and white").withDate("03/03/2017 2000").withPriority("Low").build();
+    public static final ReadOnlyReminder PARTY = new ReminderBuilder().withTask("Group Party")
+            .withMessage("DressCode is black and white").withDate("03/03/2017 2000").withPriority("High").build();
 
     // Manually added
     public static final ReadOnlyReminder DINNER = new ReminderBuilder().withTask("Dinner at home")
@@ -54,7 +54,7 @@ public class TypicalReminders {
             .withMessage(VALID_MESSAGE_ASSIGNMENT).withDate(VALID_DATE_ASSIGNMENT)
             .withPriority(VALID_PRIORITY_ASSIGNMENT).withTags(VALID_TAG_SOFTCOPY, VALID_TAG_OFFICE).build();
 
-    public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
+    public static final String KEYWORD_MATCHING_GROUP = "Group"; // A keyword that matches GROUP
 
     // A keyword that matches RETRIEVETESTER
     public static final String KEYWORD_MATCHING_RETRIEVETESTER = "retrieveTester";
