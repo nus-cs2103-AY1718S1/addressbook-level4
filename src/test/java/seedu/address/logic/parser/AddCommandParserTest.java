@@ -162,12 +162,12 @@ public class AddCommandParserTest {
         // invalid month
         assertParseFailure(parser, AddCommand.COMMAND_WORDVAR_2 + NAME_DESC_BOB + PHONE_DESC_BOB
                 + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + INVALID_MONTH_DESC
-                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Birthday.MESSAGE_INVALID_MONTH_ENTERED);
+                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
 
         // invalid day
         assertParseFailure(parser, AddCommand.COMMAND_WORDVAR_2 + NAME_DESC_BOB + PHONE_DESC_BOB
                 + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + INVALID_DAY_DESC
-                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Birthday.MESSAGE_INVALID_DAY_ENTERED);
+                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
 
         // invalid tag
         assertParseFailure(parser, AddCommand.COMMAND_WORDVAR_1 + NAME_DESC_BOB + PHONE_DESC_BOB
