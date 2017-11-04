@@ -20,15 +20,19 @@ public class TagMatchingKeywordPredicateTest {
         String secondPredicateKeyword = "second";
         String thirdPredicateKeyword = "First";
 
-        TagMatchingKeywordPredicate firstPredicate = new TagMatchingKeywordPredicate(firstPredicateKeyword, looseFind);
-        TagMatchingKeywordPredicate secondPredicate = new TagMatchingKeywordPredicate(secondPredicateKeyword, looseFind);
-        TagMatchingKeywordPredicate thirdPredicate = new TagMatchingKeywordPredicate(thirdPredicateKeyword, looseFind);
+        TagMatchingKeywordPredicate firstPredicate =
+                new TagMatchingKeywordPredicate(firstPredicateKeyword, looseFind);
+        TagMatchingKeywordPredicate secondPredicate =
+                new TagMatchingKeywordPredicate(secondPredicateKeyword, looseFind);
+        TagMatchingKeywordPredicate thirdPredicate =
+                new TagMatchingKeywordPredicate(thirdPredicateKeyword, looseFind);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        TagMatchingKeywordPredicate firstPredicateCopy = new TagMatchingKeywordPredicate(firstPredicateKeyword, looseFind);
+        TagMatchingKeywordPredicate firstPredicateCopy =
+                new TagMatchingKeywordPredicate(firstPredicateKeyword, looseFind);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // same value ignoring case -> returns true
