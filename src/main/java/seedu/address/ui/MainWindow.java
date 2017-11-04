@@ -284,7 +284,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Ensures that the {@code InfoPanel} is cleared when the current list is empty (via {@code DeleteCommand} and
-     * {@code ClearCommand}.
+     * {@code ClearCommand}).
      * @param event
      */
     @Subscribe
