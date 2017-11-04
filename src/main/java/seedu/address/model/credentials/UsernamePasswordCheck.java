@@ -1,11 +1,13 @@
 package seedu.address.model.credentials;
 
-import seedu.address.commons.util.StringUtil;
-import seedu.address.model.ReadOnlyDatabase;
-
 import java.util.List;
 import java.util.function.Predicate;
 
+import seedu.address.commons.util.StringUtil;
+
+/**
+ *
+ */
 public class UsernamePasswordCheck  implements Predicate<ReadOnlyAccount> {
 
     private final List<String> keywords;
