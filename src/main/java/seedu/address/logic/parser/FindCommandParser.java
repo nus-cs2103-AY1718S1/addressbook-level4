@@ -64,6 +64,8 @@ public class FindCommandParser implements Parser<FindCommand> {
                 case "t/":
                     predicates.add(new ContainsTagsPredicate(keywords));
                     break;
+                default:
+                    assert false : "There should not be other prefixes.";
                 }
             } else {
                 predicates.add(FALSE);
