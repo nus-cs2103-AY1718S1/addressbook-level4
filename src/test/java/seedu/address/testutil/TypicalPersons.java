@@ -50,6 +50,10 @@ public class TypicalPersons {
             .withEmail("anna@example.com").withAddress("4th street")
             .withBloodType("AB-")
             .withAppointment("George Best", "2018/01/02 00:00", "2018/01/02 00:00").build();
+    public static final ReadOnlyPerson JON = new PersonBuilder().withName("Jon Anderson").withPhone("9482442")
+            .withEmail("null@null.com").withAddress("4th street")
+            .withBloodType("AB-")
+            .withAppointment("Jon Anderson", "2018/01/02 00:00", "2018/01/02 00:00").build();
 
     // Manually added
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
@@ -87,6 +91,6 @@ public class TypicalPersons {
     }
 
     public static List<ReadOnlyPerson> getTypicalPersons() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE, JON));
     }
 }
