@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Address;
 import seedu.address.model.person.InternalId;
 //@@author liuhang0213
 /**
@@ -20,7 +21,7 @@ public class Meeting implements Comparable<Meeting> {
     public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
     public static final String MESSAGE_INVALID_DATE = "The meeting must be in the future.";
     private LocalDateTime dateTime;
-    private String location;
+    private Address location;
     private String notes;
     private ArrayList<InternalId> listOfPersonsId;
     private Boolean isMeetingInFuture;
@@ -30,7 +31,7 @@ public class Meeting implements Comparable<Meeting> {
      *
      * @throws IllegalValueException if the given meeting time is not in the future
      */
-    public Meeting(LocalDateTime dateTime, String location, String notes, ArrayList<InternalId> listOfPersonsId) {
+    public Meeting(LocalDateTime dateTime, Address location, String notes, ArrayList<InternalId> listOfPersonsId) {
         requireNonNull(dateTime);
         requireNonNull(location);
         requireNonNull(listOfPersonsId);
@@ -41,7 +42,7 @@ public class Meeting implements Comparable<Meeting> {
         }
 
         this.dateTime = dateTime;
-        this.location = location.trim();
+        this.location = location;
         this.notes = notes.trim();
         this.listOfPersonsId = listOfPersonsId;
     }
@@ -66,7 +67,7 @@ public class Meeting implements Comparable<Meeting> {
         return dateTime.toString();
     }
 
-    public String getLocation() {
+    public Address getLocation() {
         return location;
     }
 
@@ -102,6 +103,7 @@ public class Meeting implements Comparable<Meeting> {
                 + "Notes: " + notes;
     }
 
+    //TODO
     @Override
     public int compareTo(Meeting other) {
         return dateTime.compareTo(other.dateTime);

@@ -34,7 +34,7 @@ public class MeetingPanelCard extends UiPart<Region> {
         super(FXML);
         meetingDateLabel.textProperty().setValue(meeting.getDate());
         meetingPersonLabel.textProperty().setValue(names.toString());
-        meetingLocationLabel.textProperty().setValue(meeting.getLocation());
+        meetingLocationLabel.textProperty().setValue(meeting.getLocation().toString());
         meetingTimeLabel.textProperty().setValue(meeting.getTime());
         meetingNotesLabel.textProperty().setValue(meeting.getNotes());
     }
