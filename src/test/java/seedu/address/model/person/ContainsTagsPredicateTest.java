@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import seedu.address.model.person.predicate.ContainsTagsPredicate;
 import seedu.address.testutil.PersonBuilder;
 
 //@@author newalter
