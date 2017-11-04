@@ -169,6 +169,7 @@ public class CommandBox extends UiPart<Region> {
         switch (keyEvent.getCode()) {
         default:
             listenCommandInputChanged();
+            break;
         }
     }
 
@@ -266,10 +267,7 @@ public class CommandBox extends UiPart<Region> {
      * @return
      */
     private boolean validCommandKeyword(String keyWord) {
-        if (keywordColorMap.containsKey(keyWord)) {
-            return true;
-        }
-        return false;
+        return keywordColorMap.containsKey(keyWord);
     }
 
 
@@ -337,6 +335,7 @@ public class CommandBox extends UiPart<Region> {
             break;
         default:
             keywordLabel.getStyleClass().add("keyword-label-default");
+            break;
         }
 
         stackPane.setAlignment(keywordLabel, Pos.CENTER_LEFT);
@@ -470,6 +469,7 @@ public class CommandBox extends UiPart<Region> {
             break;
         default:
             text.setFont(commandTextDefault.getFont());
+            break;
 
         }
 
