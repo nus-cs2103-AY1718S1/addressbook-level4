@@ -17,7 +17,6 @@ import javafx.scene.web.WebView;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ClearPersonListEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.OpenFaceBookWebViewEvent;
 import seedu.address.commons.events.ui.OpenGithubWebViewEvent;
 import seedu.address.commons.events.ui.OpenInstagramWebViewEvent;
