@@ -4,6 +4,7 @@ package seedu.address.logic.commands.event;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERIOD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMESLOT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
@@ -18,6 +19,7 @@ import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Description;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.Period;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.Title;
 import seedu.address.model.event.exceptions.EventNotFoundException;
@@ -37,9 +39,11 @@ public class EditEventCommand extends UndoableCommand {
             + "[" + PREFIX_NAME + "TITLE] "
             + "[" + PREFIX_TIMESLOT + "TIMING] "
             + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] "
+            + "[" + PREFIX_PERIOD + "PERIOD] "
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_TIMESLOT + "1300-1500 "
-            + PREFIX_DESCRIPTION + "New description for event x";
+            + PREFIX_DESCRIPTION + "New description for event x"
+            + PREFIX_PERIOD + " 14 ";
 
     public static final String MESSAGE_EDIT_EVENT_SUCCESS = "Edited Event: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -71,8 +75,9 @@ public class EditEventCommand extends UndoableCommand {
         Title updatedTitle = editEventDescriptor.getTitle().orElse(eventToEdit.getTitle());
         Timeslot updatedTimeslot = editEventDescriptor.getTimeslot().orElse(eventToEdit.getTimeslot());
         Description updatedDescription = editEventDescriptor.getDescription().orElse(eventToEdit.getDescription());
+        Period updatedPeriod = editEventDescriptor.getPeriod().orElse(eventToEdit.getPeriod());
 
-        return new Event(updatedTitle, updatedTimeslot, updatedDescription);
+        return new Event(updatedTitle, updatedTimeslot, updatedDescription, updatedPeriod);
     }
 
     @Override
@@ -123,6 +128,7 @@ public class EditEventCommand extends UndoableCommand {
         private Title title;
         private Timeslot timeslot;
         private Description description;
+        private Period period;
 
         public EditEventDescriptor() {
         }
@@ -131,13 +137,14 @@ public class EditEventCommand extends UndoableCommand {
             this.title = toCopy.title;
             this.timeslot = toCopy.timeslot;
             this.description = toCopy.description;
+            this.period = toCopy.period;
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.title, this.timeslot, this.description);
+            return CollectionUtil.isAnyNonNull(this.title, this.timeslot, this.description, this.period);
         }
 
         public Optional<Title> getTitle() {
@@ -164,6 +171,14 @@ public class EditEventCommand extends UndoableCommand {
             this.description = description;
         }
 
+        public Optional<Period> getPeriod() {
+            return Optional.ofNullable(period);
+        }
+
+        public void setPeriod(Period period) {
+            this.period = period;
+        }
+
         @Override
         public boolean equals(Object other) {
             // short circuit if same object
@@ -181,7 +196,8 @@ public class EditEventCommand extends UndoableCommand {
 
             return getTitle().equals(e.getTitle())
                     && getTimeslot().equals(e.getTimeslot())
-                    && getDescription().equals(e.getDescription());
+                    && getDescription().equals(e.getDescription())
+                    && getPeriod().equals(e.getPeriod());
         }
     }
 }

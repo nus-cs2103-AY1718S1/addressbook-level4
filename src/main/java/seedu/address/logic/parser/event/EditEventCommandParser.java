@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERIOD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMESLOT;
 
 import java.util.Collection;
@@ -51,6 +52,8 @@ public class EditEventCommandParser implements Parser<EditEventCommand> {
             ParserUtil.parseTimeslot(argMultimap.getValue(PREFIX_TIMESLOT)).ifPresent(editEventDescriptor::setTimeslot);
             ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION))
                     .ifPresent(editEventDescriptor::setDescription);
+            ParserUtil.parsePeriod(argMultimap.getValue(PREFIX_PERIOD))
+                    .ifPresent(editEventDescriptor::setPeriod);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

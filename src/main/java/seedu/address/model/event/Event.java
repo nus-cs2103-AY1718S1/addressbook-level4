@@ -25,25 +25,27 @@ public class Event implements ReadOnlyEvent, Comparable<Event> {
     private ObjectProperty<Timing> timing;
     private ObjectProperty<Timeslot> timeslot;
     private ObjectProperty<Description> description;
+    private ObjectProperty<Period> period;
 
 
     /**
      * Every field must be present and not null.
      */
-    public Event(Title title, Timeslot timeslot, Description description) {
-        requireAllNonNull(title, timeslot, description);
+    public Event(Title title, Timeslot timeslot, Description description, Period period) {
+        requireAllNonNull(title, timeslot, description, period);
         this.title = new SimpleObjectProperty<>(title);
         this.date = new SimpleObjectProperty<>(timeslot.getDate());
         this.timing = new SimpleObjectProperty<>(timeslot.getTiming());
         this.timeslot = new SimpleObjectProperty<>(timeslot);
         this.description = new SimpleObjectProperty<>(description);
+        this.period = new SimpleObjectProperty<>(period);
     }
 
     /**
      * Creates a copy of the given ReadOnlyEvent.
      */
     public Event(ReadOnlyEvent source) {
-        this(source.getTitle(), source.getTimeslot(), source.getDescription());
+        this(source.getTitle(), source.getTimeslot(), source.getDescription(), source.getPeriod());
     }
 
     @Override
@@ -116,6 +118,21 @@ public class Event implements ReadOnlyEvent, Comparable<Event> {
         this.description.set(requireNonNull(description));
     }
 
+    //@@author shuangyang
+    @Override
+    public ObjectProperty<Period> periodProperty() {
+        return period;
+    }
+
+    @Override
+    public Period getPeriod() {
+        return period.get();
+    }
+
+    public void setPeriod(Period period) {
+        this.period.set(requireNonNull(period));
+    }
+
     /**
      * Check if this event happens at an earlier time than the given timeslot.
      * @return true if indeed earlier.
@@ -181,7 +198,7 @@ public class Event implements ReadOnlyEvent, Comparable<Event> {
     public int compareTo(Event other) {
         return this.getTimeslot().compareTo(other.getTimeslot());
     }
-
+    //@@author
 
     @Override
     public boolean equals(Object other) {

@@ -35,6 +35,10 @@ public interface ReadOnlyEvent {
 
     Description getDescription();
 
+    ObjectProperty<Period> periodProperty();
+
+    Period getPeriod();
+
     boolean happensBefore(Timeslot slot);
 
     boolean happensAfter(Timeslot slot);

@@ -14,6 +14,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.event.Description;
+import seedu.address.model.event.Period;
 import seedu.address.model.event.Title;
 import seedu.address.model.event.timeslot.Timeslot;
 import seedu.address.model.person.Address;
@@ -62,12 +63,9 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
-    public static int parsePeriod(String period) throws IllegalValueException {
-        String trimmedPeriod = period.trim();
-        if (!StringUtil.isNonZeroUnsignedInteger(trimmedPeriod)) {
-            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
-        }
-        return Integer.parseInt(trimmedPeriod);
+    public static Optional<Period> parsePeriod(Optional<String> period) throws IllegalValueException {
+        requireNonNull(period);
+        return period.isPresent() ? Optional.of(new Period(period.get())) : Optional.empty();
     }
 
     /**
