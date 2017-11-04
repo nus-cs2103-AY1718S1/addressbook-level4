@@ -160,7 +160,6 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
-      //  @Override
         public void updateAccount(ReadOnlyAccount account, ReadOnlyAccount editedAccount)
                 throws DuplicateAccountException {
             fail("This method should not be called.");
