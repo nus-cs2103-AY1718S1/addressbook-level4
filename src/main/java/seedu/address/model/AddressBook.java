@@ -235,14 +235,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     //@@author
 
     // ================ Tag-level operations ==============================
-
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
 
     //@@author deep4k
     // ================ Alias-level operations ==============================
-    
     /**
      * Adds an alias token
      *
