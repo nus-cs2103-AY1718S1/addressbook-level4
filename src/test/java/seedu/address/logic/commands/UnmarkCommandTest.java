@@ -107,7 +107,9 @@ public class UnmarkCommandTest {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
         for (ReadOnlyLesson lesson : lessonList) {
-            model.bookmarkLesson(lesson);
+            if (!lesson.isMarked()) {
+                model.bookmarkLesson(lesson);
+            }
         }
         return model;
     }
