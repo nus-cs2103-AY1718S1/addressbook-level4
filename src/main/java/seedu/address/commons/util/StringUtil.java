@@ -5,6 +5,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -81,8 +82,68 @@ public class StringUtil {
     }
 
     /**
+     * Returns a ArrayList<String> of dates that contains in {@code sentence} in the format [DD/MM/YYYY]
+     *
+     * <br>examples:<pre>
+     *              extractDates("20/10/2017") -> returns an ArrayList<String> that contains ["20/10/2017"]
+     *              extractDates("20/10/2017 20/10/2017") -> returns an ArrayList<String> that contains ["20/10/2017", "20/10/2017"]
+     *              extractDates("20/10/2017, 20/10/2018") -> returns an ArrayList<String> that contains ["20/10/2017", "20/10/2018"]
+     *              extractDates("20/10/201720/10/2018") -> returns an ArrayList<String> that contains ["20/10/2017", "20/10/2018"]
+     *              extractDates("20/10/2017 10:15") -> returns an ArrayList<String> that contains ["20/10/2017"]
+     *              extractDates("20/10/17") -> returns an ArrayList<String> that contains []
+     *              </pre>
+     *
+     * @param sentence cannot be null
+     */
+    public static ArrayList<String> extractDates(String sentence) {
+        requireNonNull(sentence);
+
+        ArrayList<String> extractedDates = new ArrayList<>();
+        String preppedSentence = sentence.trim();
+        if (!preppedSentence.isEmpty()) {
+            Pattern pattern = Pattern.compile("(\\d{2}\\/\\d{2}\\/\\d{4})");
+            Matcher matcher = pattern.matcher(preppedSentence);
+            while (matcher.find()) {
+                extractedDates.add(matcher.group(1));
+            }
+        }
+
+        return extractedDates;
+    }
+
+    /**
+     * Returns a ArrayList<String> of times that contains in {@code sentence} in the format [HH:mm]
+     * <br>examples:<pre>
+     *              extractDates("05:50") -> returns an ArrayList<String> that contains ["05:50"]
+     *              extractDates("21:01 21:03") -> returns an ArrayList<String> that contains ["21:01", "21:03"]
+     *              extractDates("21:01, 21:03") -> returns an ArrayList<String> that contains ["21:01", "21:03"]
+     *              extractDates("10:5010:10") -> returns an ArrayList<String> that contains ["10:50", "10:10"]
+     *              extractDates("20/10/2017 10:15") -> returns an ArrayList<String> that contains ["10:15"]
+     *              extractDates("5:15") -> returns an ArrayList<String> that contains []
+     *              </pre>
+     * @param sentence cannot be null
+     */
+    public static ArrayList<String> extractTimes(String sentence) {
+        requireNonNull(sentence);
+
+        ArrayList<String> extractedTimes = new ArrayList<>();
+        String preppedSentence = sentence.trim();
+        if (!preppedSentence.isEmpty()) {
+            Pattern pattern = Pattern.compile("(\\d{2}\\:\\d{2})");
+            Matcher matcher = pattern.matcher(preppedSentence);
+            while (matcher.find()) {
+                extractedTimes.add(matcher.group(1));
+            }
+        }
+
+        return extractedTimes;
+    }
+
+    /**
      * Returns true if the {@code sentence} contains the {@code word}.
      * Ignores case, but a full word match is required.
+     * Format of date: DD/MM/YYY
+     * Format of time: HH:mm
      * <br>examples:<pre>
      *       containsDateAndTime("20/10/2017 15:30", "20/10/2017") == true
      *       containsDateAndTime("20/10/2017 15:30", "15:30") == true
@@ -104,27 +165,12 @@ public class StringUtil {
         String preppedSentence = sentence;
         preppedSentence = preppedSentence.trim();
 
-        String preppedDate = "DD/MM/YYYY";
-        String preppedTime = "TT:TT";
-        if (!preppedSentence.isEmpty()) {
-            Pattern pattern = Pattern.compile("(\\d{2}\\/\\d{2}\\/\\d{4})");
-            Matcher matcher = pattern.matcher(preppedSentence);
-            if (matcher.find()) {
-                preppedDate = matcher.group(1);
-            }
-        }
+        ArrayList<String> extractedDates = extractDates(preppedSentence);
+        ArrayList<String> extractedTimes = extractTimes(preppedSentence);
+        ArrayList<String> dateAndTimeInPreppedSentence = new ArrayList<>();
+        dateAndTimeInPreppedSentence.addAll(extractedDates);
+        dateAndTimeInPreppedSentence.addAll(extractedTimes);
 
-        if (!preppedSentence.isEmpty()) {
-            Pattern pattern = Pattern.compile("(\\d{2}\\:\\d{2})");
-            Matcher matcher = pattern.matcher(preppedSentence);
-            if (matcher.find()) {
-                preppedTime = matcher.group(1);
-            }
-        }
-
-        String[] dateAndTimeInPreppedSentence = new String[2];
-        dateAndTimeInPreppedSentence[0] = preppedDate;
-        dateAndTimeInPreppedSentence[1] = preppedTime;
         for (String dateOrTimeInSentence : dateAndTimeInPreppedSentence) {
             if (dateOrTimeInSentence.equalsIgnoreCase(preppedWord)) {
                 return true;
