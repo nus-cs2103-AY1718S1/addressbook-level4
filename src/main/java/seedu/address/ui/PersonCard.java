@@ -1,8 +1,6 @@
 package seedu.address.ui;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -111,10 +109,12 @@ public class PersonCard extends UiPart<Region> {
      */
     private void initBirthdayLabel(ReadOnlyPerson person) {
         String initialBirthday = person.getBirthday().getBirthdayNumber();
-        String birthdayToDisplay = Birthday.DEFAULT_BIRTHDAY;
+        String birthdayToDisplay = "";
 
-        if (initialBirthday.length() >= 4 && !initialBirthday.equals(Birthday.DEFAULT_BIRTHDAY)) {
+        if (!initialBirthday.equals(Birthday.DEFAULT_BIRTHDAY)) {
             birthdayToDisplay = generateBirthdayMsg(initialBirthday);
+        } else {
+            birthdayToDisplay = Birthday.DEFAULT_BIRTHDAY;
         }
 
         Label birthdayLabel = new Label(birthdayToDisplay);
@@ -127,15 +127,10 @@ public class PersonCard extends UiPart<Region> {
      */
     private String generateBirthdayMsg (String initialBirthday) {
         HashMap<String, String> findSelectedMonth = initializeMonthHashMap();
-        List<String> splitDates = new ArrayList<>();
+        String [] splitDates = initialBirthday.split("/", 5);
         String birthdayToDisplay;
 
-        for (int start = 0; start < 4; start += 2) {
-            splitDates.add(initialBirthday.substring(start, start + 2));
-        }
-
-        birthdayToDisplay = splitDates.get(0) + " " + findSelectedMonth.get(splitDates.get(1))
-                + " " + initialBirthday.substring(4, initialBirthday.length());
+        birthdayToDisplay = splitDates[0] + " " + findSelectedMonth.get(splitDates[1]) + " " + splitDates[2];
 
         return birthdayToDisplay;
     }
