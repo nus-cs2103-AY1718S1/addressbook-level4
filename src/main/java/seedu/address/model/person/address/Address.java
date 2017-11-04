@@ -1,14 +1,10 @@
-package seedu.address.model.person;
+package seedu.address.model.person.address;
 
 import static java.util.Objects.requireNonNull;
 
 import java.util.StringTokenizer;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.address.Block;
-import seedu.address.model.person.address.PostalCode;
-import seedu.address.model.person.address.Street;
-import seedu.address.model.person.address.Unit;
 
 /**
  * Represents a Person's address in the address book.
