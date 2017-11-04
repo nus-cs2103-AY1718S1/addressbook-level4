@@ -261,7 +261,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         if (events.remove(key)) {
             return true;
         } else {
-            throw new EventNotFoundException();
+            throw new EventNotFoundException("Event not found");
         }
     }
 
@@ -332,7 +332,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         if (reminders.remove(key)) {
             return true;
         } else {
-            throw new ReminderNotFoundException();
+            throw new ReminderNotFoundException("Reminder not found");
         }
     }
 

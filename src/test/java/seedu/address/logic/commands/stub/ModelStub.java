@@ -40,7 +40,6 @@ public class ModelStub implements Model {
     }
     @Override
     public void addReminder(ReadOnlyReminder reminder) throws DuplicateReminderException {
-        fail("This method should not be called.");
     }
 
     @Override

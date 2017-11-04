@@ -29,8 +29,6 @@ import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.reminder.ReadOnlyReminder;
-import seedu.address.model.reminder.Reminder;
 import seedu.address.model.tag.Tag;
 
 public class AddressBookTest {
@@ -77,14 +75,7 @@ public class AddressBookTest {
         List<Person> newPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
         List<Event> newEvents = Arrays.asList(new Event(EVENT1), new Event(EVENT2));
-        Reminder r1 = new Reminder(EVENT1.getName().toString(), EVENT1.getTime().toString());
-        EVENT1.getReminders().add(r1);
-        Reminder r2 = new Reminder(EVENT2.getName().toString(), EVENT2.getTime().toString());
-        EVENT2.getReminders().add(r2);
-        ArrayList<Reminder> newReminders = new ArrayList<>();
-        newReminders.add(r1);
-        newReminders.add(r2);
-        AddressBookStub newData = new AddressBookStub(newPersons, newEvents, newTags, newReminders);
+        AddressBookStub newData = new AddressBookStub(newPersons, newEvents, newTags);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -97,8 +88,7 @@ public class AddressBookTest {
         newTags.addAll(BENSON.getTags());
         // Repeat EVENT1 twice
         List<Event> newEvents = Arrays.asList(new Event(EVENT1), new Event(EVENT1));
-        List<Reminder> newReminders = new ArrayList<>(EVENT1.getReminders());
-        AddressBookStub newData = new AddressBookStub(newPersons, newEvents, newTags, newReminders);
+        AddressBookStub newData = new AddressBookStub(newPersons, newEvents, newTags);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -182,14 +172,12 @@ public class AddressBookTest {
         private final ObservableList<ReadOnlyPerson> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<ReadOnlyEvent> events = FXCollections.observableArrayList();
-        private final ObservableList<ReadOnlyReminder> reminders = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends ReadOnlyEvent> events,
-                        Collection<? extends Tag> tags, Collection<? extends Reminder> reminders) {
+                        Collection<? extends Tag> tags) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
             this.events.setAll(events);
-            this.reminders.setAll(reminders);
         }
 
         @Override

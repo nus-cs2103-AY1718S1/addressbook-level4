@@ -72,7 +72,7 @@ public class UniqueReminderList implements Iterable<Reminder> {
         requireNonNull(toRemove);
         final boolean reminderFoundAndDeleted = internalList.remove(toRemove);
         if (!reminderFoundAndDeleted) {
-            throw new ReminderNotFoundException();
+            throw new ReminderNotFoundException("Reminder not found");
         }
         return reminderFoundAndDeleted;
     }
