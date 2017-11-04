@@ -11,7 +11,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.model.person.ContainsTagsPredicate;
 
-//@@author newalter
+//@@author newalter-unused
 public class FilterCommandParserTest {
 
     private FilterCommandParser parser = new FilterCommandParser();

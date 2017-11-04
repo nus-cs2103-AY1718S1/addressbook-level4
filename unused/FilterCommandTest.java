@@ -28,7 +28,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ContainsTagsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
-//@@author newalter
+//@@author newalter-unused
 /**
  * Contains integration tests (interaction with the Model) for {@code FilterCommand}.
  */

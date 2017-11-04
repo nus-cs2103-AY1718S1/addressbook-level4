@@ -103,16 +103,6 @@ public class AddressBookParserTest {
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
-    //@@author newalter
-    @Test
-    public void parseCommand_filter() throws Exception {
-        List<String> keywords = Arrays.asList("tag1", "tag2", "tag3");
-        FilterCommand command = (FilterCommand) parser.parseCommand(
-                FilterCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FilterCommand(new ContainsTagsPredicate(keywords)), command);
-    }
-    //@@author
-
     @Test
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
