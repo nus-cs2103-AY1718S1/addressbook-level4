@@ -15,7 +15,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BrowserPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ChangeThemeEvent;
 import seedu.address.commons.events.ui.JumpToBrowserListRequestEvent;
+import seedu.address.commons.events.ui.ShowBrowserEvent;
+import seedu.address.commons.events.ui.ShowMeetingEvent;
 
 //@@author fongwz
 /**
@@ -66,6 +69,23 @@ public class SettingsSelector extends UiPart<Region> {
                 themeItems, (item) -> new ThemeSelectorCard(item));
         themeSelectorList.setItems(mappedThemeList);
         themeSelectorList.setCellFactory(listView -> new SettingsSelector.ThemeListViewCell());
+
+        setEventHandlerSelectionChange();
+    }
+
+    private void setEventHandlerSelectionChange() {
+        browserSelectorList.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in browser list panel changed to : '" + newValue + "'");
+                        if (newValue.getImageString().equals("meeting")) {
+                            raise(new ShowMeetingEvent());
+                        } else {
+                            raise(new ShowBrowserEvent());
+                            raise(new BrowserPanelSelectionChangedEvent(newValue.getImageString()));
+                        }
+                    }
+                });
     }
 
     /**
@@ -81,9 +101,26 @@ public class SettingsSelector extends UiPart<Region> {
         }
     }
 
+    /**
+     * Selects the theme on the theme ListView
+     * @param theme
+     */
+    public void selectTheme(String theme) {
+        for (int i = 0; i < themeSelectorList.getItems().size(); i++) {
+            if (themeSelectorList.getItems().get(i).getThemeName().equals(theme)) {
+                themeSelectorList.getSelectionModel().clearAndSelect(i);
+            }
+        }
+    }
+
     @Subscribe
     private void handleJumpToBrowserListRequestEvent(JumpToBrowserListRequestEvent event) {
         selectBrowser(event.browserItem);
+    }
+
+    @Subscribe
+    private void handleChangeThemeEvent(ChangeThemeEvent event) {
+        selectTheme(event.theme);
     }
 
     /**

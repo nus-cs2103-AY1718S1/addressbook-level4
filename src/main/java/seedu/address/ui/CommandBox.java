@@ -2,11 +2,12 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
@@ -16,6 +17,8 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.ShowBrowserEvent;
+import seedu.address.commons.events.ui.ShowMeetingEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -53,6 +56,7 @@ public class CommandBox extends UiPart<Region> {
         this.commandBoxHelper = new CommandBoxHelper(logic);
         this.helperContainer = commandBoxHelp;
         this.settingsPane = settingsPane;
+        registerAsAnEventHandler(this);
         setAnimation();
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> {
@@ -120,7 +124,7 @@ public class CommandBox extends UiPart<Region> {
         case BACK_SPACE:
             if (commandTextField.getText().trim().length() <= 0 || !commandBoxHelper.listHelp(commandTextField)) {
                 hideHelper();
-                logger.info("Hiding command helper");
+                //logger.info("Hiding command helper");
             }
             break;
         default:
@@ -184,6 +188,7 @@ public class CommandBox extends UiPart<Region> {
                 commandTextField.setText("");
                 logger.info("Result: " + commandResult.feedbackToUser);
                 raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+                timelineRight.play();
             }
 
         } catch (CommandException | ParseException e) {
@@ -256,29 +261,13 @@ public class CommandBox extends UiPart<Region> {
      * Sets the animation sequence for entering left and right on the settings panel
      */
     private void setAnimation() {
-        final Timeline timelineBounce = new Timeline();
-        timelineBounce.setCycleCount(1);
-        timelineBounce.setAutoReverse(true);
-        KeyValue kv1 = new KeyValue(settingsPane.translateXProperty(), 0);
-        KeyValue kv2 = new KeyValue(settingsPane.translateXProperty(), -10);
-        KeyValue kv3 = new KeyValue(settingsPane.translateXProperty(), 0);
-        KeyFrame kf1 = new KeyFrame(Duration.millis(200), kv1, kv2, kv3);
-        timelineBounce.getKeyFrames().add(kf1);
-
-        /* Event handler to call bouncing effect after the scroll to left is finished. */
-        javafx.event.EventHandler<ActionEvent> onFinished = new javafx.event.EventHandler<ActionEvent>() {
-            public void handle(ActionEvent t) {
-                timelineBounce.play();
-            }
-        };
-
         timelineLeft = new Timeline();
         timelineRight = new Timeline();
 
         timelineLeft.setCycleCount(1);
         timelineLeft.setAutoReverse(true);
         KeyValue kvLeft1 = new KeyValue(settingsPane.translateXProperty(), -10);
-        KeyFrame kfLeft = new KeyFrame(Duration.millis(200), onFinished, kvLeft1);
+        KeyFrame kfLeft = new KeyFrame(Duration.millis(200), kvLeft1);
         timelineLeft.getKeyFrames().add(kfLeft);
 
         timelineRight.setCycleCount(1);
@@ -286,6 +275,16 @@ public class CommandBox extends UiPart<Region> {
         KeyValue kvRight1 = new KeyValue(settingsPane.translateXProperty(), 300);
         KeyFrame kfRight = new KeyFrame(Duration.millis(200), kvRight1);
         timelineRight.getKeyFrames().add(kfRight);
+    }
+
+    @Subscribe
+    private void handleShowMeetingEvent(ShowMeetingEvent event) {
+        timelineRight.play();
+    }
+
+    @Subscribe
+    private void handleShowBrowserEvent(ShowBrowserEvent event) {
+        timelineRight.play();
     }
     //@@author
 }

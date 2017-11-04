@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeThemeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowBrowserEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
@@ -46,6 +47,9 @@ public class MainWindow extends UiPart<Region> {
     private Stage primaryStage;
     private Logic logic;
     private Storage storage;
+    private Scene scene;
+    private String cssPath;
+    private String style;
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
@@ -102,11 +106,11 @@ public class MainWindow extends UiPart<Region> {
         setIcon(ICON);
         setWindowMinSize();
         setWindowDefaultSize(prefs);
-        Scene scene = new Scene(getRoot());
+        scene = new Scene(getRoot());
         primaryStage.setScene(scene);
 
-        String style = prefs.getTheme();
-        String cssPath = "view/";
+        style = prefs.getTheme();
+        cssPath = "view/";
 
         switch (style) {
         case "Light":
@@ -174,6 +178,7 @@ public class MainWindow extends UiPart<Region> {
 
         //@@author fongwz
         SettingsSelector settingsSelector = new SettingsSelector();
+        settingsSelector.selectTheme(style);
         settingsSelectorPlaceholder.getChildren().add(settingsSelector.getRoot());
         //@@author
 
@@ -294,6 +299,26 @@ public class MainWindow extends UiPart<Region> {
         } catch (IllegalArgumentException e) {
             logger.info("Meeting panel is already displayed!");
         }
+    }
+
+    @Subscribe
+    private void handleChangeThemeEvent(ChangeThemeEvent event) {
+        scene.getStylesheets().remove(cssPath);
+        cssPath = "";
+        cssPath = "view/";
+
+        switch (event.theme) {
+        case "Light":
+            cssPath += "LightTheme.css";
+            break;
+        case "Blue":
+            cssPath += "BlueTheme.css";
+            break;
+        default:
+            cssPath += "DarkTheme.css";
+            break;
+        }
+        scene.getStylesheets().add(cssPath);
     }
     //@@author
 }
