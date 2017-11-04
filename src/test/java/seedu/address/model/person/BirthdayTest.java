@@ -1,6 +1,8 @@
 //@@author inGall
 package seedu.address.model.person;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -9,7 +11,7 @@ import org.junit.Test;
 public class BirthdayTest {
 
     @Test
-    public void equals() {
+    public void equals() throws IllegalValueException {
         Birthday birthday = new Birthday("01/01/1991");
 
         // same object -> returns true

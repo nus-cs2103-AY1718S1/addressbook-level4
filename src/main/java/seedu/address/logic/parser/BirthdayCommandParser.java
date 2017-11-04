@@ -34,6 +34,11 @@ public class BirthdayCommandParser implements Parser<BirthdayCommand> {
 
         String birthday = argMultimap.getValue(PREFIX_BIRTHDAY).orElse("");
 
-        return new BirthdayCommand(index, new Birthday(birthday));
+        try {
+            Birthday bday = new Birthday(birthday);
+            return new BirthdayCommand(index, bday);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
     }
 }
