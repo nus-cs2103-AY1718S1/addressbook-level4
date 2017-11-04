@@ -137,6 +137,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     // ================ Alias-related methods ==============================
 
+    //@@author deep4k
     @Override
     public synchronized void addAliasToken(ReadOnlyAliasToken target) throws DuplicateTokenKeywordException {
         addressBook.addAliasToken(target);
@@ -235,6 +236,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredTasks.setPredicate(predicate);
     }
+    //@@author deep4k
 
     // ================ Utility methods ==============================
 

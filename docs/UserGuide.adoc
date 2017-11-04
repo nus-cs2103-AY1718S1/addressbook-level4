@@ -232,7 +232,9 @@ Format: `find` `KEYWORD` `[MORE_KEYWORDS]` `...`
 * The search is case insensitive. e.g `hans` will match `Hans`.
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * The person's name, phone, email, address and tags will be searched.
-* Partial words will be matched e.g. `Ha` will match `Hans`.
+* Partial starting words for name, phone, email and tags will be matched e.g. `Ha` will match `Hans` `an` will NOT
+  match `Hans`
+* Address will be searched if the address contains any of the keywords. `eyla` will match `Geylang`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`,
 `Bo Yang`.
 ****
@@ -245,6 +247,8 @@ Returns `john` and `John Doe`.
 Returns any person having names `Betsy`, `Tim`, or `John`.
 * `find` `friend` +
 Returns any person having the tag `friend`.
+* `find` `98291` +
+Returns any person whose phone starts with `98291`
 // end::find[]
 
 // tag::hide[]
@@ -344,6 +348,13 @@ Format: `unpin` `INDEX`
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
+
+=== Lists all pinned person: `listpin`
+
+Shows a list of all person who are pinned in Bluebird +
+Format: `listpin`
+
+
 // end::pinunpin[]
 
 === Deleting person(s) : `delete`

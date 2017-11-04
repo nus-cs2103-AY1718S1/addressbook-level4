@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author wynkheng
 /**
  * Represents a Person's birthday in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidBirthday(String)}
@@ -26,7 +27,6 @@ public class Birthday {
             + "|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
 
 
-
     public final String value;
 
     /**
@@ -47,7 +47,7 @@ public class Birthday {
     /**
      * Provides a default birthday (" ") when field is empty.
      *
-     * @throws IllegalValueException if given phone string is invalid.
+     * @throws IllegalValueException if given birthday string is invalid.
      */
     public Birthday(int checkValue) throws IllegalValueException {
         if (checkValue != 0) {
