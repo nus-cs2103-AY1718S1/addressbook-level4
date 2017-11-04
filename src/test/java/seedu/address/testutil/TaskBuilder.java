@@ -52,11 +52,7 @@ public class TaskBuilder {
      * Sets the {@code Name} of the {@code Task} that we are building.
      */
     public TaskBuilder withName(String name) {
-        //try {
-            this.task.setName(new String(name));
-        //}
-        //catch (IllegalValueException ive) { throw new IllegalArgumentException("name is expected to be unique.");
-        //}
+        this.task.setName(name);
         return this;
     }
 
@@ -76,11 +72,7 @@ public class TaskBuilder {
      * Sets the {@code Description} of the {@code Task} that we are building.
      */
     public TaskBuilder withDescription(String description) {
-        //try {
-            this.task.setDescription(new String(description));
-        /*} catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("address is expected to be unique.");
-        }*/
+        this.task.setDescription(description);
         return this;
     }
 
@@ -88,11 +80,7 @@ public class TaskBuilder {
      * Sets the {@code Start} of the {@code Task} that we are building.
      */
     public TaskBuilder withStart(String start) {
-        //try {
-            this.task.setStartDateTime(new String(start));
-        //} catch (IllegalValueException ive) {
-        //    throw new IllegalArgumentException("phone is expected to be unique.");
-        //}
+        this.task.setStartDateTime(start);
         return this;
     }
 
@@ -100,21 +88,13 @@ public class TaskBuilder {
      * Sets the {@code End} of the {@code Task} that we are building.
      */
     public TaskBuilder withEnd(String end) {
-        //try {
-            this.task.setEndDateTime(new String(end));
-        /*} catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("email is expected to be unique.");
-        }*/
+        this.task.setEndDateTime(end);
         return this;
     }
 
     /**
      * Sets the {@code Remark} of the {@code Person} that we are building.
      */
-    /*public PersonBuilder withRemark(String remark) {
-        this.person.setRemark(new Remark(remark));
-        return this;
-    }*/
 
     public Task build() {
         return this.task;

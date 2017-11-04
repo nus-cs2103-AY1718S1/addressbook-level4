@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -10,7 +11,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.image.ImageView?>
 
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
@@ -29,11 +29,12 @@
           </minWidth>
         </Label>
         <Label fx:id="name" styleClass="cell_big_label" text="\$name" />
-            <Label fx:id="priority" alignment="CENTER_RIGHT" textAlignment="RIGHT" textFill="#ff7803">
+            <Label fx:id="priority" alignment="CENTER_RIGHT" style="-fx-border-color: red; -fx-border-style: dotted; -fx-background-color: lightblue; -fx-text-fill: rgb(193, 66, 66);" textAlignment="RIGHT" textFill="#ff7803">
                <font>
                   <Font name="Courier Bold" size="18.0" />
-               </font></Label>
-        <ImageView fx:id="mark"/>
+               </font>
+            </Label>
+        <ImageView fx:id="mark" />
       </HBox>
       <FlowPane fx:id="tags" />
       <Label fx:id="description" styleClass="cell_small_label" text="\$description" />
