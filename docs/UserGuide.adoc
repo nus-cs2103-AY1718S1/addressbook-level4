@@ -486,7 +486,7 @@ e.g.: `ungroup 2 gn/Family` +
 * *History* : `history` (`h`) +
 * *Undo* : `undo` +
 * *Redo* : `redo` +
-* *Appoint* : `appoint INDEX ap/DATE TIME DURATION` + 
+* *Appoint* : `appoint INDEX ap/DATE TIME DURATION` +
 e.g. `appoint 1 ap/12/12/2017 12:00 60`
 * *Change Pic* : `changepic INDEX p/PATH (pic INDEX p/PATH)` +
 e.g.: `changepic 2 p/C:\Users\User\Documents\mypic.jpg` +
