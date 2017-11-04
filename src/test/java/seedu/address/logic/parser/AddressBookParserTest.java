@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import seedu.address.logic.commands.ViewScheduleCommand;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -237,6 +238,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(SortCommand.COMMAND_ALIAS) instanceof SortCommand);
         assertTrue(parser.parseCommand(SortCommand.COMMAND_ALIAS + " 3") instanceof SortCommand);
     }
+
     @Test
     public void parseCommand_schedule() throws Exception {
         Calendar calendar = Calendar.getInstance();
@@ -255,6 +257,18 @@ public class AddressBookParserTest {
                 ScheduleCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_SCHEDULE
                         + "25 December 2018 at 10am");
         assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, calendar), command);
+    }
+
+    @Test
+    public void parseCommand_viewSchedule() throws Exception {
+        assertTrue(parser.parseCommand(ViewScheduleCommand.COMMAND_WORD) instanceof ViewScheduleCommand);
+        assertTrue(parser.parseCommand(ViewScheduleCommand.COMMAND_WORD + " 3") instanceof ViewScheduleCommand);
+    }
+
+    @Test
+    public void parseCommand_alias_viewSchedule() throws Exception {
+        assertTrue(parser.parseCommand(ViewScheduleCommand.COMMAND_ALIAS) instanceof ViewScheduleCommand);
+        assertTrue(parser.parseCommand(ViewScheduleCommand.COMMAND_ALIAS + " 3") instanceof ViewScheduleCommand);
     }
     //@@author
 
