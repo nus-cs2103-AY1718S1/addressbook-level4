@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.model.ModelToggleEvent;
-import seedu.address.commons.events.ui.ToggleToPersonViewEvent;
+import seedu.address.commons.events.ui.ToggleToAllPersonViewEvent;
 
 //@@author deep4k
 /**
@@ -17,7 +17,7 @@ public class EnablePersonCommand extends Command {
     @Override
     public CommandResult execute() {
         EventsCenter.getInstance().post(new ModelToggleEvent(ModelToggleEvent.Toggle.personEnabled));
-        EventsCenter.getInstance().post(new ToggleToPersonViewEvent());
+        EventsCenter.getInstance().post(new ToggleToAllPersonViewEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

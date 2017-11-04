@@ -1,5 +1,5 @@
 # deep4k
-###### /java/seedu/address/commons/events/model/AliasTokenChangedEvent.java
+###### \java\seedu\address\commons\events\model\AliasTokenChangedEvent.java
 ``` java
 /**
  * Represents an event where the user has changed an AliasToken
@@ -39,7 +39,7 @@ public class AliasTokenChangedEvent extends BaseEvent {
 
 }
 ```
-###### /java/seedu/address/commons/events/model/ModelToggleEvent.java
+###### \java\seedu\address\commons\events\model\ModelToggleEvent.java
 ``` java
 /**
  * Represents an event where the user has changed between person mode and task mode
@@ -72,7 +72,7 @@ public class ModelToggleEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/alias/AliasCommand.java
+###### \java\seedu\address\logic\commands\alias\AliasCommand.java
 ``` java
 /**
  * Command to create aliases
@@ -139,7 +139,7 @@ public class AliasCommand extends UndoableCommand {
 
 }
 ```
-###### /java/seedu/address/logic/commands/alias/UnaliasCommand.java
+###### \java\seedu\address\logic\commands\alias\UnaliasCommand.java
 ``` java
 /**
  * Command to remove aliases
@@ -201,7 +201,7 @@ public class UnaliasCommand extends UndoableCommand {
 
 
 ```
-###### /java/seedu/address/logic/commands/EnablePersonCommand.java
+###### \java\seedu\address\logic\commands\EnablePersonCommand.java
 ``` java
 /**
  * Enables person commands for the user
@@ -215,12 +215,12 @@ public class EnablePersonCommand extends Command {
     @Override
     public CommandResult execute() {
         EventsCenter.getInstance().post(new ModelToggleEvent(ModelToggleEvent.Toggle.personEnabled));
-        EventsCenter.getInstance().post(new ToggleToPersonViewEvent());
+        EventsCenter.getInstance().post(new ToggleToAllPersonViewEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
 ```
-###### /java/seedu/address/logic/commands/EnableTaskCommand.java
+###### \java\seedu\address\logic\commands\EnableTaskCommand.java
 ``` java
 /**
  * Enables task commands for the user
@@ -239,7 +239,7 @@ public class EnableTaskCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/person/RemarkCommand.java
+###### \java\seedu\address\logic\commands\person\RemarkCommand.java
 ``` java
 /**
  * Changes the remark of an existing person in the address book.
@@ -331,7 +331,7 @@ public class RemarkCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/task/AddTaskCommand.java
+###### \java\seedu\address\logic\commands\task\AddTaskCommand.java
 ``` java
 /**
  * Adds the given user input as a task in the application
@@ -423,7 +423,7 @@ public class AddTaskCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/task/DeleteTaskCommand.java
+###### \java\seedu\address\logic\commands\task\DeleteTaskCommand.java
 ``` java
 /**
  * Deletes a task identified using it's last displayed index from the task listing.
@@ -487,7 +487,7 @@ public class DeleteTaskCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/task/FindTaskCommand.java
+###### \java\seedu\address\logic\commands\task\FindTaskCommand.java
 ``` java
 /**
  * Finds and lists all tasks in address book whose name contains any of the argument keywords.
@@ -522,7 +522,7 @@ public class FindTaskCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/task/ListTaskCommand.java
+###### \java\seedu\address\logic\commands\task\ListTaskCommand.java
 ``` java
 /**
  * Lists all persons in the address book to the user.
@@ -542,7 +542,7 @@ public class ListTaskCommand extends Command {
 }
 
 ```
-###### /java/seedu/address/logic/commands/task/MarkTaskCommand.java
+###### \java\seedu\address\logic\commands\task\MarkTaskCommand.java
 ``` java
 /**
  * Marks task(s) identified using it's last displayed index in the task listing.
@@ -616,7 +616,7 @@ public class MarkTaskCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/task/RenameTaskCommand.java
+###### \java\seedu\address\logic\commands\task\RenameTaskCommand.java
 ``` java
 /**
  * Renames the header target task in the task listing.
@@ -688,7 +688,7 @@ public class RenameTaskCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/task/RescheduleTaskCommand.java
+###### \java\seedu\address\logic\commands\task\RescheduleTaskCommand.java
 ``` java
 /**
  * Reschedules a task in the task list
@@ -778,7 +778,7 @@ public class RescheduleTaskCommand extends UndoableCommand {
 
 }
 ```
-###### /java/seedu/address/logic/commands/task/UnmarkTaskCommand.java
+###### \java\seedu\address\logic\commands\task\UnmarkTaskCommand.java
 ``` java
 /**
  * Unmarks task(s) identified using it's last displayed indices in the task listing.
@@ -852,7 +852,7 @@ public class UnmarkTaskCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/LogicManager.java
+###### \java\seedu\address\logic\LogicManager.java
 ``` java
     /**
      * Registers all commands with parsers into addressBookParser
@@ -870,6 +870,7 @@ public class UnmarkTaskCommand extends UndoableCommand {
         addressBookParser.registerCommandParser(new SelectCommandParser());
         addressBookParser.registerCommandParser(new PinCommandParser());
         addressBookParser.registerCommandParser(new UnpinCommandParser());
+        addressBookParser.registerCommandParser(new FindPinnedCommandParser());
         addressBookParser.registerCommandParser(new AddTaskCommandParser());
         addressBookParser.registerCommandParser(new DeleteTaskCommandParser());
         addressBookParser.registerCommandParser(new FindTaskCommandParser());
@@ -988,8 +989,9 @@ public class UnmarkTaskCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
+###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
+
 /**
  * Parses user input.
  */
@@ -1107,6 +1109,13 @@ public class AddressBookParser {
                 return new FindCommandParser().parse(checkedArguments);
             } else {
                 return new FindTaskCommandParser().parse(checkedArguments);
+            }
+
+        case FindPinnedCommand.COMMAND_WORD:
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new FindPinnedCommandParser().parse(checkedArguments);
+            } else {
+                throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
             }
 
         case RemarkCommand.COMMAND_WORD:
@@ -1349,7 +1358,7 @@ public class AddressBookParser {
 
 }
 ```
-###### /java/seedu/address/logic/parser/alias/AliasCommandParser.java
+###### \java\seedu\address\logic\parser\alias\AliasCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AliasCommand object
@@ -1396,7 +1405,7 @@ public class AliasCommandParser implements Parser<AliasCommand> {
 
 
 ```
-###### /java/seedu/address/logic/parser/alias/UnaliasCommandParser.java
+###### \java\seedu\address\logic\parser\alias\UnaliasCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new UnaliasCommand object
@@ -1439,7 +1448,7 @@ public class UnaliasCommandParser implements Parser<UnaliasCommand> {
 }
 
 ```
-###### /java/seedu/address/logic/parser/DateTimeParserUtil.java
+###### \java\seedu\address\logic\parser\DateTimeParserUtil.java
 ``` java
 /**
  * Contains utility methods used for parsing DateTime in the various *Parser classes.
@@ -1495,7 +1504,7 @@ public class DateTimeParserUtil {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/person/RemarkCommandParser.java
+###### \java\seedu\address\logic\parser\person\RemarkCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates new RemarkCommand object
@@ -1531,7 +1540,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
 }
 
 ```
-###### /java/seedu/address/logic/parser/task/AddTaskCommandParser.java
+###### \java\seedu\address\logic\parser\task\AddTaskCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AddTaskCommand object
@@ -1652,7 +1661,7 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/task/DeleteTaskCommandParser.java
+###### \java\seedu\address\logic\parser\task\DeleteTaskCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new DeleteTaskCommand object
@@ -1708,7 +1717,7 @@ public class DeleteTaskCommandParser implements Parser<DeleteTaskCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/task/FindTaskCommandParser.java
+###### \java\seedu\address\logic\parser\task\FindTaskCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new FindTaskCommand object
@@ -1740,7 +1749,7 @@ public class FindTaskCommandParser implements Parser<FindTaskCommand> {
 }
 
 ```
-###### /java/seedu/address/logic/parser/task/MarkTaskCommandParser.java
+###### \java\seedu\address\logic\parser\task\MarkTaskCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new MarkTaskCommand object
@@ -1795,7 +1804,7 @@ public class MarkTaskCommandParser implements Parser<MarkTaskCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/task/RenameTaskCommandParser.java
+###### \java\seedu\address\logic\parser\task\RenameTaskCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new RenameTaskCommand object
@@ -1841,7 +1850,7 @@ public class RenameTaskCommandParser implements Parser<RenameTaskCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/task/RescheduleTaskCommandParser.java
+###### \java\seedu\address\logic\parser\task\RescheduleTaskCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new RescheduleTaskCommand object
@@ -1934,7 +1943,7 @@ public class RescheduleTaskCommandParser implements Parser<RescheduleTaskCommand
     }
 }
 ```
-###### /java/seedu/address/logic/parser/task/UnmarkTaskCommandParser.java
+###### \java\seedu\address\logic\parser\task\UnmarkTaskCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new UnmarkTaskCommand object
@@ -1990,10 +1999,9 @@ public class UnmarkTaskCommandParser implements Parser<UnmarkTaskCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     // ================ Alias-level operations ==============================
-    
     /**
      * Adds an alias token
      *
@@ -2079,7 +2087,7 @@ public class UnmarkTaskCommandParser implements Parser<UnmarkTaskCommand> {
         tasks.setIncompletion(toUnmark);
     }
 ```
-###### /java/seedu/address/model/alias/AliasToken.java
+###### \java\seedu\address\model\alias\AliasToken.java
 ``` java
 /**
  * Represents all aliases used in address book. Each alias is a token that contains a keyword and representation.
@@ -2152,7 +2160,7 @@ public class AliasToken implements ReadOnlyAliasToken {
 
 }
 ```
-###### /java/seedu/address/model/alias/exceptions/DuplicateTokenKeywordException.java
+###### \java\seedu\address\model\alias\exceptions\DuplicateTokenKeywordException.java
 ``` java
 /**
  * Signals that the operation will result in duplicate AliasToken objects.
@@ -2163,7 +2171,7 @@ public class DuplicateTokenKeywordException extends DuplicateDataException {
     }
 }
 ```
-###### /java/seedu/address/model/alias/exceptions/TokenKeywordNotFoundException.java
+###### \java\seedu\address\model\alias\exceptions\TokenKeywordNotFoundException.java
 ``` java
 /**
  * Signals that the operation is unable to find the specified AliasToken.
@@ -2171,7 +2179,7 @@ public class DuplicateTokenKeywordException extends DuplicateDataException {
 public class TokenKeywordNotFoundException extends Exception {
 }
 ```
-###### /java/seedu/address/model/alias/Keyword.java
+###### \java\seedu\address\model\alias\Keyword.java
 ``` java
 /**
  * Represents the alias keyword in the address book.
@@ -2224,7 +2232,7 @@ public class Keyword {
     }
 }
 ```
-###### /java/seedu/address/model/alias/ReadOnlyAliasToken.java
+###### \java\seedu\address\model\alias\ReadOnlyAliasToken.java
 ``` java
 /**
  * A read-only immutable interface for a AliasToken in the addressbook.
@@ -2262,7 +2270,7 @@ public interface ReadOnlyAliasToken {
     }
 }
 ```
-###### /java/seedu/address/model/alias/Representation.java
+###### \java\seedu\address\model\alias\Representation.java
 ``` java
 /**
  * For the alias representation in the address book.
@@ -2313,7 +2321,7 @@ public class Representation {
 }
 
 ```
-###### /java/seedu/address/model/alias/UniqueAliasTokenList.java
+###### \java\seedu\address\model\alias\UniqueAliasTokenList.java
 ``` java
 /**
  * A list of alias that enforces no nulls and uniqueness between its elements.
@@ -2464,7 +2472,7 @@ public class UniqueAliasTokenList implements Iterable<AliasToken> {
 
 }
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     // ================ Related to AliasTokens ==============================
 
@@ -2530,7 +2538,7 @@ public class UniqueAliasTokenList implements Iterable<AliasToken> {
      */
     void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public synchronized void addAliasToken(ReadOnlyAliasToken target) throws DuplicateTokenKeywordException {
@@ -2631,7 +2639,7 @@ public class UniqueAliasTokenList implements Iterable<AliasToken> {
         filteredTasks.setPredicate(predicate);
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
 
     // ================ Utility methods ==============================
@@ -2658,7 +2666,7 @@ public class UniqueAliasTokenList implements Iterable<AliasToken> {
 
 }
 ```
-###### /java/seedu/address/model/person/Remark.java
+###### \java\seedu\address\model\person\Remark.java
 ``` java
 /**
  * Represents a Person's remark in the address book.
@@ -2694,7 +2702,7 @@ public class Remark {
     }
 }
 ```
-###### /java/seedu/address/model/task/exceptions/DuplicateTaskException.java
+###### \java\seedu\address\model\task\exceptions\DuplicateTaskException.java
 ``` java
 /**
  * Signals that the operation will result in duplicate Tasks objects.
@@ -2705,7 +2713,7 @@ public class DuplicateTaskException extends DuplicateDataException {
     }
 }
 ```
-###### /java/seedu/address/model/task/exceptions/TaskNotFoundException.java
+###### \java\seedu\address\model\task\exceptions\TaskNotFoundException.java
 ``` java
 /**
  * Signals that the operation is unable to find the specified task.
@@ -2713,7 +2721,7 @@ public class DuplicateTaskException extends DuplicateDataException {
 public class TaskNotFoundException extends Exception {
 }
 ```
-###### /java/seedu/address/model/task/Header.java
+###### \java\seedu\address\model\task\Header.java
 ``` java
 /**
  * Represents a Task's heading/title in addressbook
@@ -2766,7 +2774,7 @@ public class Header {
     }
 }
 ```
-###### /java/seedu/address/model/task/ReadOnlyTask.java
+###### \java\seedu\address\model\task\ReadOnlyTask.java
 ``` java
 /**
  * A read-only immutable interface for a Task in the addressbook.
@@ -2841,7 +2849,7 @@ public interface ReadOnlyTask {
     }
 }
 ```
-###### /java/seedu/address/model/task/Task.java
+###### \java\seedu\address\model\task\Task.java
 ``` java
 /**
  * Represents a Task in the addressbook
@@ -3128,7 +3136,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
 
 }
 ```
-###### /java/seedu/address/model/task/TaskHasKeywordsPredicate.java
+###### \java\seedu\address\model\task\TaskHasKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyTask}'s details matches any of the keywords given.
@@ -3157,7 +3165,7 @@ public class TaskHasKeywordsPredicate implements Predicate<ReadOnlyTask> {
 }
 
 ```
-###### /java/seedu/address/model/task/UniqueTaskList.java
+###### \java\seedu\address\model\task\UniqueTaskList.java
 ``` java
 /**
  * A list of tasks that enforces uniqueness between its elements and does not allow nulls.
@@ -3299,7 +3307,7 @@ public class UniqueTaskList implements Iterable<Task> {
 }
 
 ```
-###### /java/seedu/address/storage/XmlAdaptedAliasToken.java
+###### \java\seedu\address\storage\XmlAdaptedAliasToken.java
 ``` java
 /**
  * JAXB-friendly version of the AliasToken.
@@ -3339,7 +3347,7 @@ public class XmlAdaptedAliasToken {
 
 }
 ```
-###### /java/seedu/address/storage/XmlAdaptedTask.java
+###### \java\seedu\address\storage\XmlAdaptedTask.java
 ``` java
 /**
  * JAXB-friendly version of the Task.
@@ -3416,7 +3424,7 @@ public class XmlAdaptedTask {
     }
 }
 ```
-###### /java/seedu/address/storage/XmlSerializableAddressBook.java
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
 ``` java
     @Override
     public ObservableList<ReadOnlyAliasToken> getAliasTokenList() {
@@ -3448,7 +3456,7 @@ public class XmlAdaptedTask {
         return FXCollections.unmodifiableObservableList(tasks);
     }
 ```
-###### /java/seedu/address/ui/TaskCard.java
+###### \java\seedu\address\ui\TaskCard.java
 ``` java
 /**
  * UI component that displays information of a {@code Task}.
@@ -3623,7 +3631,7 @@ public class TaskCard extends UiPart<Region> {
 }
 
 ```
-###### /java/seedu/address/ui/TaskListPanel.java
+###### \java\seedu\address\ui\TaskListPanel.java
 ``` java
 /**
  * Panel containing the list of tasks.

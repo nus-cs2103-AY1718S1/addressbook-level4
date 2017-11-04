@@ -119,6 +119,30 @@ public class ToggleListPinStyleEvent extends BaseEvent {
 
 }
 ```
+###### \java\seedu\address\commons\events\ui\ToggleSearchBoxStyle.java
+``` java
+
+/**
+ * An event requesting to toggle the view to PersonPanel.
+ */
+public class ToggleSearchBoxStyle extends BaseEvent {
+
+    private final boolean isPinnedStyle;
+
+    public ToggleSearchBoxStyle(boolean isPinnedStyle) {
+        this.isPinnedStyle = isPinnedStyle;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public boolean isPinnedStyle() {
+        return isPinnedStyle;
+    }
+}
+```
 ###### \java\seedu\address\commons\events\ui\ToggleSortByLabelEvent.java
 ``` java
 
@@ -139,13 +163,13 @@ public class ToggleSortByLabelEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\ToggleToPersonViewEvent.java
+###### \java\seedu\address\commons\events\ui\ToggleToAllPersonViewEvent.java
 ``` java
 
 /**
  * An event requesting to toggle the view to PersonPanel.
  */
-public class ToggleToPersonViewEvent extends BaseEvent {
+public class ToggleToAllPersonViewEvent extends BaseEvent {
 
     @Override
     public String toString() {
@@ -169,6 +193,21 @@ public class ToggleToTaskViewEvent extends BaseEvent {
 
 }
 ```
+###### \java\seedu\address\commons\events\ui\UpdatePinnedPanelEvent.java
+``` java
+
+/**
+ * An event requesting to update the pinned panel.
+ */
+public class UpdatePinnedPanelEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+}
+```
 ###### \java\seedu\address\commons\events\ui\ValidResultDisplayEvent.java
 ``` java
 
@@ -182,6 +221,42 @@ public class ValidResultDisplayEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 
+}
+```
+###### \java\seedu\address\logic\commands\person\FindPinnedCommand.java
+``` java
+/**
+ * Finds and lists all pinned persons in address book whose name contains any of the argument keywords.
+ * Keyword matching is case insensitive.
+ */
+public class FindPinnedCommand extends Command {
+
+    public static final String COMMAND_WORD = "findpinned";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all pinned persons whose names contain any of "
+            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
+            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
+            + "Example: " + COMMAND_WORD + " alice bob charlie";
+
+    private final PersonHasKeywordsPredicate predicate;
+
+    public FindPinnedCommand(PersonHasKeywordsPredicate predicate) {
+        this.predicate = predicate;
+    }
+
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredPersonList(predicate);
+        EventsCenter.getInstance().post(new ToggleListPinStyleEvent());
+        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FindPinnedCommand // instanceof handles nulls
+                && this.predicate.equals(((FindPinnedCommand) other).predicate)); // state check
+    }
 }
 ```
 ###### \java\seedu\address\logic\commands\person\ListPinCommand.java
@@ -200,6 +275,7 @@ public class ListPinCommand extends Command {
     public CommandResult execute() {
         model.updateFilteredPersonList(new PersonIsPinnedPredicate());
         EventsCenter.getInstance().post(new ToggleListPinStyleEvent());
+        EventsCenter.getInstance().post(new ToggleSearchBoxStyle(true));
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
@@ -324,13 +400,13 @@ public class UnpinCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
-        List<ReadOnlyPerson> pinnedList = model.getFilteredPersonList();
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        if (targetIndex.getZeroBased() >= pinnedList.size()) {
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToUnpin = pinnedList.get(targetIndex.getZeroBased());
+        ReadOnlyPerson personToUnpin = lastShownList.get(targetIndex.getZeroBased());
 
         if (!personToUnpin.isPinned()) {
             throw new CommandException(Messages.MESSAGE_PERSON_ALREADY_UNPINNED);
@@ -338,6 +414,7 @@ public class UnpinCommand extends Command {
 
         try {
             model.unpinPerson(personToUnpin);
+            EventsCenter.getInstance().post(new UpdatePinnedPanelEvent());
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
@@ -349,6 +426,37 @@ public class UnpinCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof UnpinCommand // instanceof handles nulls
                 && this.targetIndex.equals(((UnpinCommand) other).targetIndex)); // state check
+    }
+}
+```
+###### \java\seedu\address\logic\parser\person\FindPinnedCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new FindPinnedCommand object
+ */
+public class FindPinnedCommandParser implements Parser<FindPinnedCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the FindPinnedCommand
+     * and returns an FindPinnedCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public FindPinnedCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindPinnedCommand.MESSAGE_USAGE));
+        }
+
+        String[] nameKeywords = trimmedArgs.split("\\s+");
+
+        return new FindPinnedCommand(new PersonHasKeywordsPredicate(Arrays.asList(nameKeywords), true));
+    }
+
+    @Override
+    public String getCommandWord() {
+        return FindPinnedCommand.COMMAND_WORD;
     }
 }
 ```
@@ -546,15 +654,18 @@ public class UnpinCommandParser implements Parser<UnpinCommand> {
 ```
 ###### \java\seedu\address\model\person\PersonHasKeywordsPredicate.java
 ``` java
+
 /**
  * Tests that a {@code ReadOnlyPerson}'s details matches any of the keywords given.
  */
 public class PersonHasKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
     private final String fullWord;
+    private final boolean isFindPinned;
 
-    public PersonHasKeywordsPredicate(List<String> keywords) {
+    public PersonHasKeywordsPredicate(List<String> keywords, boolean isFindPinned) {
         this.keywords = keywords;
+        this.isFindPinned = isFindPinned;
         StringJoiner joiner = new StringJoiner(" ");
         for (String key : keywords) {
             joiner.add(key);
@@ -575,22 +686,23 @@ public class PersonHasKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private boolean isPersonMatch(ReadOnlyPerson person, String[] nameParts, ArrayList<String> tagParts) {
         for (String tag : tagParts) {
             if (keywords.stream().anyMatch(keyword -> tag.startsWith(keyword.toLowerCase()))) {
-                return true;
+                return !isFindPinned || person.isPinned();
             }
         }
         for (String name : nameParts) {
             if (keywords.stream().anyMatch(keyword -> name.toLowerCase().startsWith(keyword.toLowerCase()))) {
-                return true;
+                return !isFindPinned || person.isPinned();
             }
         }
         if (keywords.size() != 0 && person.getAddress().toString().toLowerCase().contains(fullWord)) {
-            return true;
+            return !isFindPinned || person.isPinned();
         }
         if (keywords.stream().anyMatch(keyword -> person.getEmail().toString().toLowerCase()
                 .startsWith(keyword.toLowerCase()))) {
-            return true;
+            return !isFindPinned || person.isPinned();
         }
-        return keywords.stream().anyMatch(keyword -> person.getPhone().toString().startsWith(keyword.toLowerCase()));
+        return keywords.stream().anyMatch(keyword -> person.getPhone()
+                .toString().startsWith(keyword.toLowerCase())) && (!isFindPinned || person.isPinned());
     }
 
     private ArrayList<String> getTags(ReadOnlyPerson person) {
@@ -800,13 +912,27 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
 
     @Subscribe
     private void handleToggleToTaskViewEvent(ToggleToTaskViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchToTaskView();
     }
 
 
     @Subscribe
-    private void handleToggleToPersonViewEvent(ToggleToPersonViewEvent event) {
+    private void handleToggleToAllPersonViewEvent(ToggleToAllPersonViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchToPersonView();
+    }
+
+    @Subscribe
+    private void handleUpdatePinnedPanelEvent(UpdatePinnedPanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (pinLabel.getStyle().equals(BRIGHT_LABEL)) {
+            try {
+                logic.execute("listpin");
+            } catch (CommandException | ParseException e) {
+                logger.warning("Unable to list pin when unpinning");
+            }
+        }
     }
 
     /**
@@ -818,8 +944,8 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
         allLabel.setVisible(true);
         pinLabel.setVisible(true);
         organizerLabel.setText("Sorted By:");
-        personViewLabel.setStyle("-fx-text-fill: white");
-        taskViewLabel.setStyle("-fx-text-fill: #555555");
+        personViewLabel.setStyle(BRIGHT_LABEL);
+        taskViewLabel.setStyle(DIM_LABEL);
         sortedByLabel.setText(lastSorted);
     }
 
@@ -832,8 +958,8 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
         allLabel.setVisible(false);
         pinLabel.setVisible(false);
         organizerLabel.setText("Showing:");
-        personViewLabel.setStyle("-fx-text-fill: #555555");
-        taskViewLabel.setStyle("-fx-text-fill: white");
+        personViewLabel.setStyle(DIM_LABEL);
+        taskViewLabel.setStyle(BRIGHT_LABEL);
         lastSorted = sortedByLabel.getText();
         sortedByLabel.setText("All");
     }
@@ -873,13 +999,13 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     private void listAllToggleStyle() {
-        pinLabel.setStyle("-fx-text-fill: #555555");
-        allLabel.setStyle("-fx-text-fill: white");
+        pinLabel.setStyle(DIM_LABEL);
+        allLabel.setStyle(BRIGHT_LABEL);
     }
 
     private void listPinToggleStyle() {
-        pinLabel.setStyle("-fx-text-fill: white");
-        allLabel.setStyle("-fx-text-fill: #555555");
+        pinLabel.setStyle(BRIGHT_LABEL);
+        allLabel.setStyle(DIM_LABEL);
     }
 }
 ```
@@ -943,7 +1069,9 @@ public class SortFindPanel extends UiPart<Region> {
     private static final String FXML = "SortFindPanel.fxml";
     private static final String SORT_COMMAND_WORD = "sort";
     private static final String FIND_COMMAND_WORD = "find";
+    private static final String FIND_PINNED_COMMAND_WORD = "findpinned";
     private static final String LIST_COMMAND_WORD = "list";
+    private static final String LIST_PINNED_COMMAND_WORD = "listpin";
 
     private final Logger logger = LogsCenter.getLogger(SortFindPanel.class);
     private final Logic logic;
@@ -978,10 +1106,18 @@ public class SortFindPanel extends UiPart<Region> {
     @FXML
     private void handleSearchFieldChanged() {
         try {
-            if (searchBox.getText().trim().isEmpty()) {
-                logic.execute(LIST_COMMAND_WORD);
-            } else {
-                logic.execute(FIND_COMMAND_WORD + " " + searchBox.getText());
+            if (searchBox.getPromptText().contains("Person")) {
+                if (searchBox.getText().trim().isEmpty()) {
+                    logic.execute(LIST_COMMAND_WORD);
+                } else {
+                    logic.execute(FIND_COMMAND_WORD + " " + searchBox.getText());
+                }
+            } else if (searchBox.getPromptText().contains("Pinned")) {
+                if (searchBox.getText().trim().isEmpty()) {
+                    logic.execute(LIST_PINNED_COMMAND_WORD);
+                } else {
+                    logic.execute(FIND_PINNED_COMMAND_WORD + " " + searchBox.getText());
+                }
             }
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to find person in search box");
@@ -1045,12 +1181,30 @@ public class SortFindPanel extends UiPart<Region> {
      */
     @Subscribe
     private void handleToggleToTaskViewEvent(ToggleToTaskViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchToTaskView();
     }
 
+    /**
+     * Handles switch to all person view event
+     */
     @Subscribe
-    private void handleToggleToPersonViewEvent(ToggleToPersonViewEvent event) {
+    private void handleToggleToAllPersonViewEvent(ToggleToAllPersonViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchToPersonView();
+    }
+
+    /**
+     * Handles switch to pinned person view event
+     */
+    @Subscribe
+    private void handleToggleSearchBoxStyleEvent(ToggleSearchBoxStyle event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (event.isPinnedStyle()) {
+            switchToPinnedPersonSearchStyle();
+        } else {
+            switchToAllPersonSearchStyle();
+        }
     }
 
     /**
@@ -1059,6 +1213,20 @@ public class SortFindPanel extends UiPart<Region> {
     private void switchToPersonView() {
         searchBox.setPromptText("Search Person...");
         sortMenu.setVisible(true);
+    }
+
+    /**
+     * Switches style to pinned person search.
+     */
+    private void switchToPinnedPersonSearchStyle() {
+        searchBox.setPromptText("Search Pinned...");
+    }
+
+    /**
+     * Switches style to all person search.
+     */
+    private void switchToAllPersonSearchStyle() {
+        searchBox.setPromptText("Search Person...");
     }
 
     /**
