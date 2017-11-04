@@ -5,11 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
-
-
-
 import javafx.collections.ObservableList;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -22,15 +18,7 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.AddressBook;
-
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.logic.commands.Command;
-import seedu.address.logic.Logic;
-import seedu.address.model.Model;
-
-import static java.util.Objects.requireNonNull;
-
 
 /**
  * Controller for Birthday Alarm
@@ -89,6 +77,6 @@ public class BirthdayAlarmWindow extends UiPart<Region> implements Initializable
         //set up columns
         NameColumn.setCellValueFactory(new PropertyValueFactory<ReadOnlyPerson, String>("Name"));
         BirthdayColumn.setCellValueFactory(new PropertyValueFactory<ReadOnlyPerson, String>("Birthday"));
-        }
     }
+}
 
