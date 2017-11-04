@@ -62,7 +62,8 @@ public class AddMeetingCommandIntegrationTest {
     private AddMeetingCommand prepareCommand(Meeting meeting, Model model) {
         this.index = Index.fromOneBased(1);
         AddMeetingCommand command =
-                new AddMeetingCommand(meeting.getName(), meeting.getDate(), meeting.getPlace(), index);
+                new AddMeetingCommand(meeting.getName(), meeting.getDate(), meeting.getPlace(), index,
+                        meeting.getMeetTag());
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
