@@ -2,9 +2,6 @@ package seedu.address.testutil;
 
 import java.util.ArrayList;
 
-
-//@@author junyango
-
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -14,6 +11,8 @@ import seedu.address.model.property.Name;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 import seedu.address.model.reminder.Reminder;
+
+//@@author junyango
 
 
 /**

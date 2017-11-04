@@ -1,4 +1,4 @@
-package seedu.address.logic.parser;
+package seedu.address.logic.parser.util;
 
 import static java.util.Objects.requireNonNull;
 
@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.parser.Parser;
 import seedu.address.model.property.Address;
 import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Email;
@@ -34,7 +35,7 @@ import seedu.address.model.tag.Tag;
  * {@code Optional} return value inside {@code ParserUtil} methods.
  */
 public class ParserUtil {
-
+    /* Messages ready for use. */
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 

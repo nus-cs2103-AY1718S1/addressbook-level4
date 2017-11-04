@@ -41,7 +41,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
     // TODO: Update the version information whenever going to make a release.
-    public static final Version VERSION = new Version(1, 4, 1, true);
+    public static final Version VERSION = new Version(1, 5, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 

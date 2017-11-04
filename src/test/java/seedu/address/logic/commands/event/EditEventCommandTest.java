@@ -28,6 +28,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.testutil.EditEventDescriptorBuilder;
 import seedu.address.testutil.EventBuilder;
+
 //@@author junyango
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditEventCommand.
