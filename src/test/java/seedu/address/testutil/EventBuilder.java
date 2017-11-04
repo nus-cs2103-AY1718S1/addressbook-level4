@@ -14,7 +14,7 @@ import seedu.address.model.reminder.Reminder;
 
 //@@author junyango
 
-    
+
 
 /**
  * A utility class to help with building Event objects.
