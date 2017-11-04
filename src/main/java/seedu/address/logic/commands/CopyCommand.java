@@ -25,7 +25,7 @@ public class CopyCommand extends Command {
             + "Example 2: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_COPY_PERSON_SUCCESS = "%1$s's email address has been copied to your clipboard.";
-    public static final String MESSAGE_COPY_PERSON_EMPTY = "%1$s's has no email address.";
+    public static final String MESSAGE_COPY_PERSON_EMPTY = "%1$s has no email address.";
 
     private final Index targetIndex;
     private ReadOnlyPerson targetPerson;
@@ -45,7 +45,7 @@ public class CopyCommand extends Command {
             putIntoClipboard(targetEmail);
             commandResultMessage = String.format(MESSAGE_COPY_PERSON_SUCCESS, targetPerson.getName());
         } else {
-            commandResultMessage = MESSAGE_COPY_PERSON_EMPTY;
+            commandResultMessage = String.format(MESSAGE_COPY_PERSON_EMPTY, targetPerson.getName());
         }
 
         return new CommandResult(commandResultMessage);
