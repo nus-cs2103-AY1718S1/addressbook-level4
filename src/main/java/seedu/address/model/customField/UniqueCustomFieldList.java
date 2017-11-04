@@ -155,6 +155,7 @@ public class UniqueCustomFieldList implements Iterable<CustomField> {
         return internalList.hashCode();
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (CustomField customField : internalList) {
