@@ -38,6 +38,9 @@ public class PersonInformationPanel extends UiPart<Region> {
 
     private ReadOnlyPerson person;
 
+    protected List<String> optionalPhoneDisplayList = new ArrayList<String>();
+    protected ListProperty<String> listProperty = new SimpleListProperty<>();
+
     @FXML
     private VBox informationPane;
     @FXML
@@ -53,14 +56,13 @@ public class PersonInformationPanel extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label customFields;
+    @FXML
     private ImageView photoContainer;
     @FXML
     private AnchorPane photoPane;
     @FXML
     private ListView optionalPhoneList;
-
-    protected ListProperty<String> listProperty = new SimpleListProperty<>();
-    protected List<String> optionalPhoneDisplayList = new ArrayList<String>();
 
     public PersonInformationPanel() {
         super(FXML);
@@ -104,6 +106,7 @@ public class PersonInformationPanel extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        customFields.textProperty().bind(Bindings.convert(person.customFieldProperty()));
         id.setText(Integer.toString(personId));
         optionalPhoneDisplayList.clear();
         initOptionalPhones(person);
