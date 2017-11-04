@@ -22,6 +22,7 @@ public class BanCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsBanCommand() {
+        assertParseSuccess(parser, "", new BanCommand());
         assertParseSuccess(parser, "1", new BanCommand(INDEX_FIRST_PERSON));
     }
 
