@@ -35,6 +35,10 @@ public class ConfidenceEstimate {
         this.value = Double.parseDouble(trimmedEstimate);
     }
 
+    public ConfidenceEstimate(double estimate) {
+        value = estimate;
+    }
+
     /**
      * Returns true if a given string is a valid confidence estimate.
      */
