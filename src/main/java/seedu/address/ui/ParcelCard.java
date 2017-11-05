@@ -6,6 +6,7 @@ import java.util.Random;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -35,22 +36,49 @@ public class ParcelCard extends UiPart<Region> {
 
     @FXML
     private HBox cardPane;
+
+    //@@author kennard123661
     @FXML
     private Label trackingNumber;
     @FXML
+    private Tooltip trackingNumberTooltip;
+
+    @FXML
     private Label name;
+    @FXML
+    private Tooltip nameTooltip;
+
     @FXML
     private Label id;
     @FXML
+    private Tooltip idTooltip;
+
+    @FXML
     private Label phone;
+    @FXML
+    private Tooltip phoneTooltip;
+
     @FXML
     private Label address;
     @FXML
+    private Tooltip addressTooltip;
+
+    @FXML
     private Label email;
+    @FXML
+    private Tooltip emailTooltip;
+
     @FXML
     private Label deliveryDate;
     @FXML
+    private Tooltip deliveryDateTooltip;
+
+    @FXML
     private Label status;
+    @FXML
+    private Tooltip statusTooltip;
+    //@@author
+
     @FXML
     private FlowPane tags;
 
@@ -58,6 +86,7 @@ public class ParcelCard extends UiPart<Region> {
         super(FXML);
         this.parcel = parcel;
         id.setText(displayedIndex + ". ");
+        idTooltip.setText(displayedIndex + ". ");
         initTags(parcel);
         bindListeners(parcel);
     }
@@ -66,22 +95,37 @@ public class ParcelCard extends UiPart<Region> {
      * Binds the individual UI elements to observe their respective {@code Parcel} properties
      * so that they will be notified of any changes.
      */
+    //@@author kennard123661
     private void bindListeners(ReadOnlyParcel parcel) {
         trackingNumber.textProperty().bind(Bindings.convert(parcel.trackingNumberProperty()));
+        trackingNumberTooltip.textProperty().bind(Bindings.convert(parcel.trackingNumberProperty()));
+
         name.textProperty().bind(Bindings.convert(parcel.nameProperty()));
+        nameTooltip.textProperty().bind(Bindings.convert(parcel.nameProperty()));
+
         phone.textProperty().bind(Bindings.convert(parcel.phoneProperty()));
+        phoneTooltip.textProperty().bind(Bindings.convert(parcel.phoneProperty()));
+
         address.textProperty().bind(Bindings.convert(parcel.addressProperty()));
+        addressTooltip.textProperty().bind(Bindings.convert(parcel.addressProperty()));
+
         email.textProperty().bind(Bindings.convert(parcel.emailProperty()));
+        emailTooltip.textProperty().bind(Bindings.convert(parcel.emailProperty()));
+
         deliveryDate.textProperty().bind(Bindings.convert(parcel.deliveryDateProperty()));
+        deliveryDateTooltip.textProperty().bind(Bindings.convert(parcel.deliveryDateProperty()));
+
         status.textProperty().bind(Bindings.convert(parcel.statusProperty()));
+        statusTooltip.textProperty().bind(Bindings.convert(parcel.statusProperty()));
         setColorForStatus();
+
         parcel.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(parcel);
         });
     }
-
     //@@author kennard123661
+
     /**
      * Sets color for the status labels based on the current status.
      */
