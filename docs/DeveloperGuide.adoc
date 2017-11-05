@@ -493,7 +493,7 @@ _Figure 3.3.1 : Sequence Diagram for AddTag_
 // end::addremovetag[]
 
 // tag::filter[]
-=== Filter mechanism
+=== Filtering mechanism in find
 
 ==== Mechanism
 The list of persons displayed is filtered by a [https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html[Predicate]]
@@ -538,7 +538,7 @@ The actual implementation of filtering on the existing list involves three steps
 
 For more detail, refer to the sequence diagram(Figure 3.4.2) below.
 
-image::FilterCommandSequenceDiagram.png[]
+image::FindCommandSequenceDiagram.png[]
 _Figure 3.4.2 : Sequence Diagram for Filter_
 
 ===== Design consideration

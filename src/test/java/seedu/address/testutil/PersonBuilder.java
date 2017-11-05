@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -29,7 +30,6 @@ public class PersonBuilder {
     public static final String DEFAULT_ID = "";
     public static final String DEFAULT_LASTUPDATED = "2017-10-18T15:16:28.018Z";
     public static final String DEFAULT_TAGS = "friends";
-    public static final String DEFAULT_MEETINGS = "2017-12-12 10:00";
 
     private Person person;
 
@@ -44,7 +44,7 @@ public class PersonBuilder {
             LastUpdated defaultLastUpdated = new LastUpdated(DEFAULT_LASTUPDATED);
 
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            Set<Meeting> defaultMeetings = SampleDataUtil.getMeetingSet(defaultName, DEFAULT_MEETINGS);
+            Set<Meeting> defaultMeetings = new HashSet<>();
 
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
                     defaultNote, defaultId, defaultLastUpdated, defaultTags, defaultMeetings);
@@ -80,31 +80,6 @@ public class PersonBuilder {
             this.person.setTags(SampleDataUtil.getTagSet(tags));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tags are expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Parses the {@code meetings} into a {@code Set<Meeting>} and set it to the {@code Person} that we are building.
-     */
-    public PersonBuilder withMeetings(String ... meetings) {
-        try {
-            this.person.setMeetings(SampleDataUtil.getMeetingSet(person.getName(), meetings));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("meetings are expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Parses the {@code meetings} into a {@code Set<Meeting>} and set it to the {@code Person} that we are building.
-     * Only for edit command.
-     */
-    public PersonBuilder withMeetingsForEdit(String ... meetings) {
-        try {
-            this.person.setMeetings(SampleDataUtil.getMeetingSetForEdit(meetings));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("meetings are expected to be unique.");
         }
         return this;
     }

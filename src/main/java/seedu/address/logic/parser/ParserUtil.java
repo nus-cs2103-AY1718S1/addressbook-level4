@@ -10,7 +10,6 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.meeting.Meeting;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -89,27 +88,4 @@ public class ParserUtil {
         return tagSet;
     }
 
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
-     */
-    public static Set<Meeting> parseMeetings(Collection<String> meetings, Name name) throws IllegalValueException {
-        requireNonNull(meetings);
-        final Set<Meeting> meetingSet = new HashSet<>();
-        for (String meetingName : meetings) {
-            meetingSet.add(new Meeting(meetingName, name));
-        }
-        return meetingSet;
-    }
-
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} for the edit command parser.
-     */
-    public static Set<Meeting> parseMeetingsForEdit(Collection<String> meetings) throws IllegalValueException {
-        requireNonNull(meetings);
-        final Set<Meeting> meetingSet = new HashSet<>();
-        for (String meetingName : meetings) {
-            meetingSet.add(new Meeting(meetingName));
-        }
-        return meetingSet;
-    }
 }

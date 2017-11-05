@@ -65,7 +65,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* Wildcard symbol `\*` and `?` are allowed in parameters for `find` and `filter` where `\*` matches any non-space string and `?` matches any non-space unit-length symbol.
+* Wildcard symbol `\*` and `?` are allowed in parameters for `find` where `\*` matches any non-space string and `?` matches any non-space unit-length symbol.
 * Suggestions would pop up for partial words keyed in. Press kbd:[TAB] to auto-complete using the first suggestion.
 ====
 
@@ -92,7 +92,7 @@ _Figure 4.1.1_
 Command Name: `add` +
 Shorthand Alias: `a` +
 Function: adds a person to *ABC* +
-Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]... [m/MEETING]...` +
+Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 [TIP]
 A person can have any number of tags (including 0)
 [TIP]
@@ -136,7 +136,7 @@ You can view all your contacts by following the steps below:
 .   Type in (Figure 4.3.1) +
 `>> list` +
 image:list1.png[list1, 600] +
-_Figure 4.3.1(`filter` was run)_
+_Figure 4.3.1(`find` was run)_
 .   Press kbd:[Enter]. You should now see a list of all your contacts (Figure 4.3.2) +
 image:list2.png[list2, 600] +
 _Figure 4.3.2_
@@ -170,9 +170,9 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
-* `filter friends` +
+* `find t/friends` +
 `d 4` +
-Deletes the 4th person in the results of the `filter` command.
+Deletes the 4th person in the results of the `find` command.
 
 === Editing a person : `edit`
 
@@ -209,9 +209,9 @@ Existing values will be updated to the input values.
 
 You can also edit contacts in a filtered list:
 
-* `>> filter friends` +
+* `>> find t/friends` +
 `>> edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person in the results of the `filter` command to be `Betsy Crower`
+Edits the name of the 2nd person in the results of the `find` command to be `Betsy Crower`
 and clears all existing tags.
 
 [NOTE]
@@ -257,9 +257,9 @@ The tag added must not already exist on the desired contact.
 
 You can also add tags to contacts in a filtered list:
 
-* `>> filter friends` +
+* `>> find t/friends` +
 `>> addtag 2 friends` +
-Adds the `friends` tag to the 2nd person in the results of the `filter` command.
+Adds the `friends` tag to the 2nd person in the results of the `find` command.
 
 * `>> find John` +
 `>> at 1 9pmclass` +
@@ -289,11 +289,11 @@ _Figure 4.7.2_
 
 You can also delete tags from contacts in a filtered list:
 
-* `>> filter friends` +
+* `>> find t/friends` +
 `>> deletetag 2 friends` +
-Deletes the `friends` tag from the 2nd person in the results of the `filter` command.
+Deletes the `friends` tag from the 2nd person in the results of the `find` command.
 
-* `>> find John` +
+* `>> find n/John` +
 `>> dt 1 9pmclass` +
 Deletes the `9pmclass` tag from the 1st person in the results of the `find` command.
 
@@ -308,31 +308,32 @@ _Figure 4.7.3_
 image:deletetag_4.png[600] +
 _Figure 4.7.4_
 
-=== Locating persons by name: `find`
+=== Locating persons by keywords: `find`
 
 ====
 Command Name: `find` +
 Shorthand Alias: `f` +
-Function : Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Function : Finds persons whose specified fields contain any of the given keywords. +
+Format: `find [n/KEYWORD...] [p/KEYWORD...] [e/KEYWORD...] [a/KEYWORD...] [t/KEYWORD...]` +
+[NOTE] There must be at least one argument.
 ====
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Persons matching at least one keyword in one field will be returned (i.e. `OR` search). e.g. `find n/Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search is done on the existing list. Successive `find` makes the list smaller and smaller
 ****
 
 If you want to find a person named `John Watson`:
 
 .  Type in (Figure 4.8.1) +
-`>> find john` +
-image:find_1.png[] +
+`>> find n/john` +
+image:to be updated[] +
 _Figure 4.8.1_
 .  Press kbd:[Enter] and you should see a list of persons having the name `john`: (Figure 4.8.2) +
-image:find_2.png[] +
+image:to be updated[] +
 _Figure 4.8.2_
 
 Here are some other commands you can do with `find`:
@@ -344,50 +345,6 @@ Lists any person having the name `Watson`
 * `find j*` +
 Lists any person whose name starts with `j`
 
-
-=== Locating persons by tags: `filter`
-
-====
-Command Name: `filter` +
-Shorthand Alias: `ft` +
-Function: Finds persons who are tagged with any of the given tags from the existing list of persons. +
-Format: `filter TAG [MORE_TAGS]`
-====
-
-****
-* The search is case insensitive. e.g `FRIENDS` will match `friends`
-* The order of the keywords does not matter. e.g. `friends family` will match `family friends`
-* Only the tags are searched.
-* Only full words will be matched e.g. `friend` will not match `friends`
-* Persons matching at least one tag will be returned (i.e. `OR` search). e.g. `family friends` will return persons who are tagged with family or friends
-* The filter is done on the existing list. Successive `filter` makes the list smaller and smaller
-****
-
-If you want to find your friends among all your colleagues: +
-
-.  Type in (Figure 4.9.1) +
-`>> filter colleagues`  +
-image:filter_1.png[] +
-_Figure 4.9.1_
-.  Press kbd:[Enter] and you will see a list of persons who are tagged with `colleagues` (Figure 4.9.2) +
-image:filter_2.png[] +
-_Figure 4.9.2_
-.  Type in (Figure 4.9.3) +
-`>> filter friends` +
-image:filter_3.png[] +
-_Figure 4.9.3_
-.  Press kbd:[Enter] and you will see a list of persons who are tagged with both `friends` and `colleagues` (Figure 4.9.4) +
-image:filter_4.png[] +
-_Figure 4.9.4_
-
-Here are some other commands you can do with `filter`:
-
-* `filter family` +
-Lists any person having the `family` tag
-* `filter family friends` +
-Lists any person tagged with `family` or `friends`
-* `ft fa*` +
-Lists any person tagged with any tags matching `fa*` such as `family` but not `friends`
 
 === Sorting contact list: `sort`
 

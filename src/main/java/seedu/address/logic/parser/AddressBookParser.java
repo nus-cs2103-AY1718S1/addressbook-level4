@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddMeetingCommand;
 import seedu.address.logic.commands.AddTagCommand;
 import seedu.address.logic.commands.BackupCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -15,7 +16,6 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteTagCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
@@ -61,6 +61,9 @@ public class AddressBookParser {
         case AddCommand.COMMAND_WORD: case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
 
+        case AddMeetingCommand.COMMAND_WORD: case AddMeetingCommand.COMMAND_ALIAS:
+            return new AddMeetingCommandParser().parse(arguments);
+
         case AddTagCommand.COMMAND_WORD: case AddTagCommand.COMMAND_ALIAS:
             return new AddTagCommandParser().parse(arguments);
 
@@ -84,9 +87,6 @@ public class AddressBookParser {
 
         case FindCommand.COMMAND_WORD: case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
-
-        case FilterCommand.COMMAND_WORD: case FilterCommand.COMMAND_ALIAS:
-            return new FilterCommandParser().parse(arguments);
 
         case HelpCommand.COMMAND_WORD: case HelpCommand.COMMAND_ALIAS:
             return new HelpCommand();

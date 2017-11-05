@@ -3,10 +3,14 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,7 +18,9 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.meeting.Meeting;
+import seedu.address.model.meeting.MeetingContainPersonPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -42,8 +48,16 @@ public class ModelManager extends ComponentManager implements Model {
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
+        Set<Meeting> meetingSet = new HashSet<Meeting>();
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        for (ReadOnlyPerson person : this.addressBook.getPersonList()) {
+            for (Meeting meeting : person.getMeetings()) {
+                meeting.setPerson(person);
+                meetingSet.add(meeting);
+            }
+        }
+        this.addressBook.setMeetings(meetingSet);
         filteredMeeting = new FilteredList<>(this.addressBook.getMeetingList());
     }
 
@@ -193,5 +207,15 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
     }
+
+    //@@author LimYangSheng
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        List<ReadOnlyPerson> personSelected = new ArrayList<>();
+        personSelected.add(event.getNewSelection().person);
+        updateFilteredMeetingList(new MeetingContainPersonPredicate(personSelected));
+    }
+    //@@author
 
 }

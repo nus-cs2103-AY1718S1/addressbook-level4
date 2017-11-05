@@ -5,10 +5,13 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.FindCommand.FALSE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.junit.Rule;
@@ -23,7 +26,6 @@ import seedu.address.logic.commands.DeleteTagCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
@@ -35,11 +37,10 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SyncCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.ContainsTagsPredicate;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.predicate.NameContainsKeywordsPredicate;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -82,7 +83,6 @@ public class AddressBookParserTest {
     public void parseCommand_edit() throws Exception {
         Person person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
-        descriptor.setMeetings(SampleDataUtil.getMeetingSetForEdit(PersonBuilder.DEFAULT_MEETINGS));
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person));
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
@@ -96,21 +96,14 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_find() throws Exception {
+        List<String> argument = Arrays.asList("n/foo", "bar", "baz");
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        ArrayList<Predicate<ReadOnlyPerson>> predicates = new ArrayList<>();
+        predicates.addAll(Arrays.asList(new NameContainsKeywordsPredicate(keywords), FALSE, FALSE, FALSE, FALSE));
         FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+                FindCommand.COMMAND_WORD + " " + argument.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(predicates), command);
     }
-
-    //@@author newalter
-    @Test
-    public void parseCommand_filter() throws Exception {
-        List<String> keywords = Arrays.asList("tag1", "tag2", "tag3");
-        FilterCommand command = (FilterCommand) parser.parseCommand(
-                FilterCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FilterCommand(new ContainsTagsPredicate(keywords)), command);
-    }
-    //@@author
 
     @Test
     public void parseCommand_help() throws Exception {

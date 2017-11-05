@@ -2,10 +2,11 @@ package seedu.address.logic.commands;
 
 import java.util.function.Predicate;
 
+import seedu.address.model.meeting.MeetingContainPersonPredicate;
 import seedu.address.model.person.ContainsTagsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
-//@@author newalter
+//@@author newalter-unused
 /**
  * Filters the current list with persons who are tagged with any of the specified tags.
  * Tag matching is case insensitive.
@@ -33,6 +34,7 @@ public class FilterCommand extends Command {
         } else {
             model.updateFilteredPersonList(predicate.and(currentPredicate));
         }
+        model.updateFilteredMeetingList(new MeetingContainPersonPredicate(model.getFilteredPersonList()));
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
 
     }
