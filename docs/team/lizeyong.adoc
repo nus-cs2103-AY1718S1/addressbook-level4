@@ -4,8 +4,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: ABC Business Contact
-*ABC Business Contact* is a free desktop contact management application that helps users to manage their large collection of contacts conveniently and keep track of their appointments. Users can store contacts as well as other information and retrieve them efficiently with the help of *ABC*. +
- Users interact with it using a Command Line Interface(CLI), and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+*ABC Business Contact* is a free desktop contact management application that helps the user to manage a large collection of contacts conveniently and keep track of appointments. The user can store contacts as well as other information and retrieve them efficiently with the help of *ABC*. +
+ The user interact with it using a Command Line Interface(CLI), and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/main/newalter.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/test/newalter.md[Test code]]
 
