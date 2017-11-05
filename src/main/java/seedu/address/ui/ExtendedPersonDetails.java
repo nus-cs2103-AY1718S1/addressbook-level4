@@ -1,4 +1,3 @@
-//@@wishingmaid
 package seedu.address.ui;
 
 import java.util.HashMap;
@@ -26,10 +25,11 @@ import seedu.address.model.person.ReadOnlyPerson;
  *A UI component that displays the selected Person's details.
  * */
 public class ExtendedPersonDetails extends UiPart<Region> {
-     
+    //@@author wishingmaid 
     private static final String FXML = "ExtendDetailsPerson.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private final String defaultPicture = "/images/PEERSONAL_icon.png";
+    //@@author
     @FXML
     private Label name;
     @FXML
@@ -50,14 +50,17 @@ public class ExtendedPersonDetails extends UiPart<Region> {
     private ImageView imageView;
     @FXML
     private Circle circle;
-    /** */
+    //@@author wishingmaid
+    /** 
+     * This class loads the persons details in the UI for the extended person's panel.
+     * */
     public ExtendedPersonDetails() {
         super(FXML);
         registerAsAnEventHandler(this);
         Image image = new Image(getClass().getResource(defaultPicture).toExternalForm());
         setCircle(image);
-    }
-
+    }//@@author
+    
     /** */
     private void loadPersonDetails(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
@@ -86,12 +89,12 @@ public class ExtendedPersonDetails extends UiPart<Region> {
         circle.setFill(pattern);
         circle.setEffect(new DropShadow(10, Color.STEELBLUE));
     }
-    /** */
+    //@@author wishingmaid
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonDetails(event.getNewSelection().person);
-    }
-
+    }//@@author
+   
 
 }
