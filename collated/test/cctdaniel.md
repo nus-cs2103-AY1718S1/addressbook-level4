@@ -1,4 +1,22 @@
 # cctdaniel
+###### /java/seedu/address/logic/commands/CommandTestUtil.java
+``` java
+    public static final String VALID_FONT_SIZE_XSMALL = "xsmall";
+    public static final String VALID_FONT_SIZE_SMALL = "small";
+    public static final String VALID_THEME_LIGHT = "light";
+    public static final String VALID_THEME_DARK = "dark";
+```
+###### /java/seedu/address/logic/commands/CommandTestUtil.java
+``` java
+    public static final String FONT_SIZE_DESC_XSMALL = " " + PREFIX_FONT_SIZE + VALID_FONT_SIZE_XSMALL;
+    public static final String FONT_SIZE_DESC_SMALL = " " + PREFIX_FONT_SIZE + VALID_FONT_SIZE_SMALL;
+```
+###### /java/seedu/address/logic/commands/CommandTestUtil.java
+``` java
+    public static final String INVALID_FONT_SIZE_DESC = " " + PREFIX_FONT_SIZE
+            + "small!"; // '!' not allowed in font size
+    public static final String INVALID_THEME_DESC = "blue";
+```
 ###### /java/seedu/address/logic/commands/CustomiseCommandTest.java
 ``` java
 public class CustomiseCommandTest {
@@ -90,6 +108,33 @@ public class CustomiseCommandTest {
 
 }
 ```
+###### /java/seedu/address/logic/commands/ThemeCommandTest.java
+``` java
+public class ThemeCommandTest {
+
+    @Test
+    public void execute_lightThemeCommand_success() {
+        ThemeCommand light = new ThemeCommand(VALID_THEME_LIGHT);
+        CommandResult result = light.execute();
+        if (getCurrentThemeUnit() == THEME_LIGHT_UNIT && light.getIsLight()) {
+            assertEquals(SWITCH_THEME_FAILURE_MESSAGE, result.feedbackToUser);
+        } else {
+            assertEquals(SWITCH_THEME_SUCCESS_MESSAGE + LIGHT_THEME + ".", result.feedbackToUser);
+        }
+    }
+
+    @Test
+    public void execute_darkThemeCommand_success() {
+        ThemeCommand dark = new ThemeCommand(VALID_THEME_DARK);
+        CommandResult result = dark.execute();
+        if (getCurrentThemeUnit() == THEME_LIGHT_UNIT && !dark.getIsLight()) {
+            assertEquals(SWITCH_THEME_FAILURE_MESSAGE, result.feedbackToUser);
+        } else {
+            assertEquals(SWITCH_THEME_SUCCESS_MESSAGE + DARK_THEME + ".", result.feedbackToUser);
+        }
+    }
+}
+```
 ###### /java/seedu/address/logic/parser/CustomiseCommandParserTest.java
 ``` java
 public class CustomiseCommandParserTest {
@@ -123,6 +168,26 @@ public class CustomiseCommandParserTest {
         // invalid font size
         assertParseFailure(parser, CustomiseCommand.COMMAND_WORD
                 + INVALID_FONT_SIZE_DESC, FontSize.MESSAGE_FONT_SIZE_CONSTRAINTS);
+    }
+
+}
+```
+###### /java/seedu/address/logic/parser/ThemeCommandParserTest.java
+``` java
+public class ThemeCommandParserTest {
+    private ThemeCommandParser parser = new ThemeCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsThemeCommand() {
+        assertParseSuccess(parser, VALID_THEME_LIGHT, new ThemeCommand("light"));
+        assertParseSuccess(parser, VALID_THEME_DARK, new ThemeCommand("dark"));
+    }
+
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, INVALID_THEME_DESC,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
     }
 
 }
