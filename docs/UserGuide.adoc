@@ -341,7 +341,8 @@ Format: `import FILENAME.vcf` or `im FILENAME.vcf` where `FILENAME` is the name 
 === Exporting Contacts to external source : `export`
 (added in v1.3)
 
-Export contacts to external source from the addressbook. The exported file will be in `.vcf` format. +
+If you want to backup your contact list information, you may do so with our export command which export the content of the contact list in forms of '.vcf' format. +
+[TIP]
 File will be exported onto the main folder as `output.vcf`
 
 Format: `export` or `ex`
@@ -349,8 +350,7 @@ Format: `export` or `ex`
 === Upload photo image for a contact : `photo`
 (added in v1.3)
 
-Uploads the photo to the specified person from the address book. You can either upload an image from a file explorer or specify the file path. +
-
+You can also customise your contact's photo in order to make your contact list looks more user friendly. It also helps you to get familiar with how your client or contact looks like. You can do so with the following command. +
 Format: `photo INDEX` or `p INDEX` or `photo INDEX [FILEPATH]` or `p INDEX [FILEPATH]`
 
 If you want to choose the image from a file explorer:
@@ -381,33 +381,39 @@ Uploads photo of specified image file path to the 2nd person in the address book
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+In case, you want to clear all the contact on your list. You may do so with the clear function. +
+[TIP]
+It is advised that you should do a backup copy of your contact list before using this command. As it would wipe out all the contact information in the application.
+
 Format: `clear` or `c`
 
 === Exiting the program : `exit`
 
-Exits the program. +
+When you are done with the application, you may close it with the exit command. +
 Format: `exit`
-
+[NOTE]
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 === Clearing ConnectUs LogFile : `clearlog`
 
-Clears the ConnectUs Logfile. +
+If you happen to realise that you committed a mistake after closing the application. Where the function of undo or redo is not valid to use, you can take advantage of our backend logging function that keeps track of all actions done by you in forms of '.txt' file. It includes information of important actions as well as timestamp for each actions done. This command allows you to clear the logfile which you might want to do so to keep the logfile neat and organised. +
 Format: 'clearlog' or 'cl'
-
+[NOTE]
 All important actions made by the user such as add,clear,edit,delete,import,list,redo,undo and starting of application +
 are recorded in the ConnectUs.txt logfile. Users have the option of clearing the logfile in order to make the log more+
-organised.
+organised. +
+All information will be wipe out. So use the function with care.
 
-=== Generating QR Code For a Contact : `qrcall`
+=== Generating QR(Quick Response) Code to call a person : `qrcall`
+[NOTE]
+Requires a smartphone with camera and QR Scanner application
 
-Generate QR code for a contact to call by using index number in the last person listing +
-Format: 'qrcall INDEX' or 'qr INDEX'
+If you want to call a specific contact in the contact list, we made the operation simple with QR(Quick Response) code. Simply scan the QR code with your smartphone devices equipped with camera and QR scanner, you will be able to make a call without any hassle. +
+Format: 'qrcall INDEX' or 'qc INDEX'
 
 ****
-* Selects the person and loads the QR code the person at the specified `INDEX`.
+* Selects the person and loads the QR Call code the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -416,11 +422,58 @@ Examples:
 
 * `list` +
 `qrcall 2` +
-Generate QR Code for the 2nd person in the address book.
+Generate QR Call Code for the 2nd person in the address book.
 * `find Betsy` +
-`qr 1` +
-Generate QR Code for the 1st person in the results of the `find` command.
+`qc 1` +
+Generate QR Call Code for the 1st person in the results of the `find` command.
 
+=== Generating QR Code to sms a Contact : `qrsms`
+[NOTE]
+Requires a smartphone with camera and QR Scanner application
+
+If you are in a rush and need to message someone from the contact list fast, you can do so with QR sms function which comes with a template that starts with "Dear [Name]," which saves you time from typing out those messages. +
+Format: 'qrsms INDEX' or 'qs INDEX'
+
+****
+* Selects the person and loads the QR SMS code the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`qrsms 2` +
+Generate QR SMS Code for the 2nd person in the address book.
+* `find Betsy` +
+`qs 1` +
+Generate QR SMS Code for the 1st person in the results of the `find` command.
+
+=== Generating QR Code to save a Contact : `qrsave`
+[NOTE]
+****
+*Requires a smartphone with camera and QR Scanner application
+*Only information like Contact Name , Email , Address and Phone Number is saved from the process
+****
+
+
+If you need to save the contact information without having the hassle of exporting or importing '.vcf' file into your phone. You can do so with the QR Save Contact Command which allows you to save the contact you wanted with just a scan from your phone.
+Format: 'qrsave INDEX' or 'qrs INDEX'
+
+****
+* Selects the person and loads the QR Save Contact code the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`qrsave 2` +
+Generate QR Save Contact Code for the 2nd person in the address book.
+* `find Betsy` +
+`qrs 1` +
+Generate QR Save Contact Code for the 1st person in the results of the `find` command.
 
 == Upcoming Features
 (added in v1.2)
