@@ -1,13 +1,10 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
-import seedu.address.commons.exceptions.IllegalValueException;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.ArrayList;
+
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 

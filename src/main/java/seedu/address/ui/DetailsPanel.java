@@ -114,8 +114,8 @@ public class DetailsPanel extends UiPart<Region> {
         birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         website.textProperty().bind(Bindings.convert(person.websiteProperty()));
         homePhone.textProperty().bind(Bindings.convert(person.homeNumberProperty()));
-            tags.getChildren().clear();
-            initTags(person);
+        tags.getChildren().clear();
+        initTags(person);
     }
 
     /**
