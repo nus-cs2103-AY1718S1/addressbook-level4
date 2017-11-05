@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -9,7 +10,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
+import seedu.address.model.meeting.MeetingContainPersonPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
+
 
 /**
  * Finds and lists all persons in address book whose specified fields contains any of the argument keywords.
@@ -58,6 +61,7 @@ public class FindCommand extends Command {
             model.updateFilteredPersonList(finalPredicate.and(currentPredicate));
         }
 
+        model.updateFilteredMeetingList(new MeetingContainPersonPredicate(model.getFilteredPersonList()));
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
     //@@author

@@ -99,6 +99,10 @@ public class XmlAdaptedPerson implements XmlAdaptedClass<ReadOnlyPerson> {
         final LastUpdated lastUpdated = new LastUpdated(this.lastUpdated);
         final Set<Tag> tags = new HashSet<>(personTags);
         final Set<Meeting> meetings = new HashSet<> (personMeetings);
-        return new Person(name, phone, email, address, note, id, lastUpdated, tags, meetings);
+        Person person = new Person(name, phone, email, address, note, id, lastUpdated, tags, meetings);
+        for (Meeting meeting : person.getMeetings()) {
+            meeting.setPerson(person);
+        }
+        return person;
     }
 }

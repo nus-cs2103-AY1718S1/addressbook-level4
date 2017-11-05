@@ -4,7 +4,6 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.meeting.Meeting;
-import seedu.address.model.person.Name;
 
 //@@author alexanderleegs
 /**
@@ -15,7 +14,7 @@ public class XmlAdaptedMeeting implements XmlAdaptedClass<Meeting> {
     @XmlElement
     private String meetingName;
     @XmlElement
-    private String userName;
+    private String meetingTime;
 
     /**
      * Constructs an XmlAdaptedMeeting.
@@ -29,8 +28,8 @@ public class XmlAdaptedMeeting implements XmlAdaptedClass<Meeting> {
      * @param source future changes to this will not affect the created
      */
     public XmlAdaptedMeeting(Meeting source) {
-        meetingName = source.value;
-        userName = source.getName().toString();
+        meetingTime = source.value;
+        meetingName = source.meetingName;
     }
 
     /**
@@ -39,7 +38,7 @@ public class XmlAdaptedMeeting implements XmlAdaptedClass<Meeting> {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Meeting toModelType() throws IllegalValueException {
-        return new Meeting(meetingName, new Name(userName));
+        return new Meeting(meetingName, meetingTime);
     }
 
 }
