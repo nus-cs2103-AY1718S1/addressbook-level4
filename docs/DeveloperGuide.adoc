@@ -1,3 +1,4 @@
+
 = ModU - Developer Guide
 :toc:
 :toc-title:
@@ -467,7 +468,7 @@ Each lesson is only allowed to be added into the `marked list` once, thus any fu
 **Pros:** We do not need to filter out the marked lessons each time. +
 **Cons:** Inefficient storage, many lessons might be stored multiple times.
 
-// end::mark/remark[]
+// end::mark/unmark[]
 
 // tag::find[]
 === Find mechanism
