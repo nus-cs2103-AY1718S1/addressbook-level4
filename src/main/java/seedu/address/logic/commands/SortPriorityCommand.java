@@ -14,6 +14,7 @@ import seedu.address.model.reminder.ReadOnlyReminder;
  */
 public class SortPriorityCommand extends Command {
     public static final String COMMAND_WORD = "sortPriority";
+    public static final String COMMAND_ALIAS = "sp";
 
     public static final String MESSAGE_SUCCESS = "All contacts are sorted by priority. (High -> Medium -> Low)";
     public static final String MESSAGE_EMPTY_LIST = "Contact list is empty.";

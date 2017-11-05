@@ -177,9 +177,6 @@ import seedu.address.model.credentials.Password;
 import seedu.address.model.credentials.ReadOnlyAccount;
 import seedu.address.model.credentials.Username;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
-
 /**
  *
  */

@@ -25,6 +25,7 @@ import seedu.address.model.tag.UniqueTagList;
 public class UntagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "untag";
+    public static final String COMMAND_ALIAS = "ut";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Untags one or more persons in the last person listing.\n"
