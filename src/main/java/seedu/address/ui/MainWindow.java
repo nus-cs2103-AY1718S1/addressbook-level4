@@ -439,6 +439,7 @@ public class MainWindow extends UiPart<Region> {
 
     private void switchToBrowser() {
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        browserPlaceholder.setVisible(false);
     }
 
     /**
