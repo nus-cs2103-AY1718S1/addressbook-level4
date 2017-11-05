@@ -50,6 +50,20 @@ public class HelpCommand extends Command {
             return new CommandResult(TagAddCommand.MESSAGE_USAGE);
         } else if ("tagremove".equals(commandword)) {
             return new CommandResult(TagRemoveCommand.MESSAGE_USAGE);
+        } else if ("tagfind".equals(commandword)) {
+            return new CommandResult(TagFindCommand.MESSAGE_USAGE);
+        } else if ("birthdayadd".equals(commandword)) {
+            return new CommandResult(BirthdayAddCommand.MESSAGE_USAGE);
+        } else if ("mapshow".equals(commandword)) {
+            return new CommandResult(MapShowCommand.MESSAGE_USAGE);
+        } else if ("maproute".equals(commandword)) {
+            return new CommandResult(MapRouteCommand.MESSAGE_USAGE);
+        } else if ("scheduleadd".equals(commandword)) {
+            return new CommandResult(ScheduleAddCommand.MESSAGE_USAGE);
+        } else if ("scheduleremove".equals(commandword)) {
+            return new CommandResult(ScheduleRemoveCommand.MESSAGE_USAGE);
+        } else if ("export".equals(commandword)) {
+            return new CommandResult(ExportCommand.MESSAGE_USAGE);
         } else if ("undo".equals(commandword)) {
             return new CommandResult(UndoCommand.MESSAGE_USAGE);
         } else {
