@@ -13,9 +13,9 @@ import seedu.address.model.person.Person;
  * Selects an event identified using it's last displayed index from the address book
  * and displays the emails of every person that has joined.
  */
-public class DisplayEmailsCommand extends Command {
+public class DisplayCommand extends Command {
 
-    public static final String COMMAND_WORD = "displayEmails";
+    public static final String COMMAND_WORD = "display";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the event identified by the index number used in the last event listing "
@@ -25,33 +25,33 @@ public class DisplayEmailsCommand extends Command {
 
     private final Index targetIndex;
 
-    public DisplayEmailsCommand(Index targetIndex) {
+    public DisplayCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
         List<ReadOnlyEvent> lastShownList = model.getFilteredEventList();
-        String temp = "Details: ";
+        String result = "Details: ";
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
         }
 
         if (!lastShownList.get(targetIndex.getZeroBased()).getParticipants().isEmpty()) {
             for (Person person : lastShownList.get(targetIndex.getZeroBased()).getParticipants()) {
-                temp += person.getEmail().value + "\n\t     ";
+                result += person.getEmail().value + "\n\t     ";
             }
         } else {
-            temp = "No one has joined this event.";
+            result = "No one has joined this event.";
         }
 
-        return new CommandResult(temp.trim());
+        return new CommandResult(result.trim());
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof DisplayEmailsCommand // instanceof handles nulls
-                && this.targetIndex.equals(((DisplayEmailsCommand) other).targetIndex)); // state check
+                || (other instanceof DisplayCommand // instanceof handles nulls
+                && this.targetIndex.equals(((DisplayCommand) other).targetIndex)); // state check
     }
 }
