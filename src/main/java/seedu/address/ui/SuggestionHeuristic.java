@@ -8,7 +8,6 @@ import java.util.TreeSet;
 import com.google.common.eventbus.Subscribe;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.NewPersonInfoEvent;
 import seedu.address.commons.events.ui.ResizeMainWindowEvent;
 import seedu.address.logic.commands.AddCommand;
@@ -37,10 +36,12 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author newalter
+/**
+ * This class provides the relevant suggestions for Auto-Completion in TabCompleTextField
+ */
 public class SuggestionHeuristic {
 
     private final String[] sortFieldsList = {"name", "phone", "email", "address", "tag", "meeting"};
-    private String commandWord;
 
     private SortedSet<String> empty = new TreeSet<>();
     private SortedSet<String> commands = new TreeSet<>();
@@ -54,14 +55,23 @@ public class SuggestionHeuristic {
 
     public SuggestionHeuristic() {
         EventsCenter.getInstance().registerHandler(this);
-    }
-
-    public void initialise(List<ReadOnlyPerson> persons) {
         commands.addAll(CommandWordList.COMMAND_WORD_LIST);
         sortFields.addAll(Arrays.asList(sortFieldsList));
-        persons.forEach(p -> extractInfoFromPerson(p));
     }
 
+    /**
+     * Generates heuristics using information of a list of person
+     * @param persons the list of person to extract information from
+     */
+    public void initialise(List<ReadOnlyPerson> persons) {
+        persons.forEach(this::extractInfoFromPerson);
+    }
+
+    /**
+     * Extracts the relevant information from a person
+     * and put them into respective heuristics
+     * @param person
+     */
     private void extractInfoFromPerson(ReadOnlyPerson person) {
         names.addAll(Arrays.asList(person.getName().fullName.toLowerCase().split("\\s+")));
         phones.add(person.getPhone().value);
@@ -70,6 +80,12 @@ public class SuggestionHeuristic {
         addresses.addAll(Arrays.asList(person.getAddress().value.toLowerCase().split("\\s+")));
     }
 
+    /**
+     * Generates a SortedSet containing suggestions from the inputted text
+     * @param prefixWords the prefix words in the inputted text
+     * @param lastWord the last (partial) word the the inputted text
+     * @return a SortedSet that contains suggestions for Auto-Completion
+     */
     public SortedSet<String> getSuggestions(String prefixWords, String lastWord) {
         if (lastWord.equals("")) {
             return empty;
@@ -79,12 +95,13 @@ public class SuggestionHeuristic {
     }
 
     /**
-     * Splits the command in the command box into
+     * According to the command word
      * two parts by the last occurrence of space.
      * Store them into prefixWords and lastWord respectively.
      */
     private SortedSet<String> parseCommandWord(String prefixWords) {
-        commandWord = prefixWords.trim().split("\\s+")[0];
+        String commandWord = prefixWords.trim().split("\\s+")[0];
+
         switch (commandWord) {
 
         // commands that uses prefixes for arguments
@@ -154,13 +171,18 @@ public class SuggestionHeuristic {
     }
 
 
-
+    /**
+     * Updates heuristic for resize command from ResizeMainWindowEvent
+     */
     @Subscribe
     private void handleResizeMainWindowEvent(ResizeMainWindowEvent event) {
         windowSizes.add(Integer.toString(event.getHeight()));
         windowSizes.add(Integer.toString(event.getWidth()));
     }
 
+    /**
+     * Updates heuristic using information from a person
+     */
     @Subscribe
     private void handleNewPersonInfoEvent(NewPersonInfoEvent event) {
         extractInfoFromPerson(event.getPerson());

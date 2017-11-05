@@ -4,6 +4,9 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author newalter
+/**
+ * An event indicating new information of a person to be learnt by SuggestionHeuristic
+ */
 public class NewPersonInfoEvent extends BaseEvent {
     private final ReadOnlyPerson person;
 

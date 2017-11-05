@@ -97,6 +97,10 @@ public class ModelManager extends ComponentManager implements Model {
         indicateNewPersonInfoAvailable(person);
     }
 
+    /**
+     * raise a new NewPersonInfoEvent whenever a person is added or edited
+     * @param person the person added or edited
+     */
     private void indicateNewPersonInfoAvailable(ReadOnlyPerson person) {
         raise(new NewPersonInfoEvent(person));
     }
