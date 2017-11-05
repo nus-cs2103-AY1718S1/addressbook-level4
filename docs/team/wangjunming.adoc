@@ -124,8 +124,8 @@ In v2.0, ModU should be an online platform for professors to plan the courses th
 
 === Other contributions
 
-* Change the whole model from `Person(address, email, phone....)` to `Lesson(module code, location, time slot, class type, group number, lecturer)` and update test case accordingly (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/52/files, https://github.com/CS2103AUG2017-W13-B4/main/pull/55/files, https://github.com/CS2103AUG2017-W13-B4/main/pull/56/files, https://github.com/CS2103AUG2017-W13-B4/main/pull/98/files)
-* Add in the border color together with tick or cross to indicate if the command format is valid before execution (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/72/files)
+* Change the whole model from `Person(address, email, phone....)` to `Lesson(module code, location, time slot, class type, group number, lecturer)` and update test case accordingly (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/52/files[#52], https://github.com/CS2103AUG2017-W13-B4/main/pull/55/files[#55], https://github.com/CS2103AUG2017-W13-B4/main/pull/56/files[#56], https://github.com/CS2103AUG2017-W13-B4/main/pull/98/files[#98])
+* Add in the border color together with tick or cross to indicate if the command format is valid before execution (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/72/files[#72])
 * Enhance undo/redo mechanism. Undo redo crossing listing different type is not allowed because it causes confusion. (No specific pull request about this, can check developer guide for more info, see `DeveloperGuide` undoredo mechanism)
 
 == Project: PowerPointLabs
