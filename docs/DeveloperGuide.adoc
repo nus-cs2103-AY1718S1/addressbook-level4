@@ -218,6 +218,82 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::dateParser
+=== Date Parser
+
+The date parser was created as an easy alternative to parsing user input to create a `LocalDate`
+class. A string is obtained from the user containing details of the date and is to follow a
+Day-Month-Year format, separated by any of the common dividers (i.e. `\\s,/-.`). The rearrangement
+of the 3 details is not allowed due to the multitude of confusions it may come with.
+
+Pros of using this parser:
+****
+- Date and month can be typed as a single digit
+- Month can be expressed as a number or string, in both long and 3 letter forms (e.g Oct and October)
+- Case-insensitive
+- `dateString(LocalDate date)` gives a very nice all-friendly string for display purposes
+- Year can be expressed as 4-digits or 2-digits
+- 2 digit years are smartly corrected to a year before the current year, a commented line shows you where to change if you wish to change the correction bracket
+- Ignores extra stuff after accepting a 4-digit year
+****
+
+Cons of using this parser:
+****
+- Only accepts Day-Month-Year format
+- Have to conform to using a `LocalDate` class to store your dates
+****
+
+*How the string is parsed*
+
+Below is the main parse function of the parser
+----
+public LocalDate parse(String dob) throws IllegalValueException {
+     List<String> arguments = Arrays.asList(dob.split("[\\s-/.,]"));
+     if (arguments.size() < 2) {
+         throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
+     }
+     String day = arguments.get(0);
+     String month = arguments.get(1);
+     String year = arguments.size() > 2 ? arguments.get(2)
+            : String.valueOf(LocalDate.now().getYear());
+     return LocalDate.parse(getValidDay(day) + " " + getValidMonth(month)
+            + " " + getValidYear(year), DATE_FORMAT);
+ }
+----
+
+The string is first split using the delimiters as stated above using the `String::split` function. +
+If the number of arguments is less than 2, there is insufficient information to
+create a date and an exception os thrown. If more than 3 arguments are input,
+only th first 3 are taken, in the Day-Month_Year format. The year is optional
+which defaults to the current year if not input. The 3 details are then each
+passed into their own correcting function in order to fit the correct format
+for the actual `LocalDate::parse` method to create a `LocalDate` object according
+to a standard format.
+
+The `getValidDay` function simply checks if the date given is less than 32 as
+it only corrects dates up to the 31st (e.g. if you tried to input 31 Feb,
+`LocalDate::parse` will be able to help you correct to 28 or 29 Feb but it throws
+an exception if you tried to input 32 or higher). This function also checks if
+the date is a single digit, in which it will then add a zero in front to fit the
+standard format.
+
+The `getValidMonth` function does the same checks as the `getValidDay` function
+(i.e. input is 12 and below and add a zero if it is a single digit). In addition,
+it checks if the month was given as a name, if so, it then searches the constant
+string arrays in the parser to check the month. It allows a case-insensitive search
+(use of `String::toLowerCase` method) and 3 letter representations of months
+(`MONTH_NAME_LONG` and `MONTH_NAME_SHORT` const string arrays).
+
+The `getValidYear` function only takes in the first 4 characters if more than 4
+are provided and can only do this since it is the last argument in the string.
+It then checks if a 2-digit year was given, if so, it auto corrects to a bracket,
+currently defined as the last century. Else 4 digit form will be taken as
+the whole year. This implementation assumes the user does not intend a 2 or 3
+digit year. Otherwise, users will have to append zeros at the start of the year
+input to indicate.
+
+// end::dateParser
+// tag::autofill
 === Autofill Feature
 
 The `edit` command now allows empty fields to be entered to trigger an autofill response.
@@ -256,7 +332,7 @@ solving the problem of inconvenience where multiple enter key presses is require
 contacts with empty fields no longer prevent the autofilling of other empty prefixes. This also means that
 the `EmptyFieldException` is no longer unique to the empty prefix and thus, there is no need for the prefix parameter,
 which is removed from the constructor of the exception.
-
+// end::autofill
 // tag::add
 === Making Name as the only compulsory field in Add Command
 
@@ -458,7 +534,7 @@ public Gender() {
 ----
 
 // end::gender[]
-
+// tag::tagManagement
 === Improved Tag Management
 
 The original tag system management with the edit function have several difficulties which cause the user to too much trouble,
@@ -522,7 +598,7 @@ the added tags will be deleted afterwards.
 * With respect to the previous reason, users are also given the freedom to type the prefix
 in any part of the command and the program will be able to execute the user's intention.
 ****
-
+// end::tagManagement[]
 // tag::searchbox
 === Searchbox
 

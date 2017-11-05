@@ -37,7 +37,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
     @FXML
     private ScrollPane scrollPane;
     @FXML
-    private AnchorPane insuranceprofilePanel;
+    private AnchorPane insuranceProfilePanel;
     @FXML
     private Label insuranceName;
     @FXML
@@ -58,6 +58,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
     public InsuranceProfilePanel() {
         super(FXML);
         scrollPane.setFitToWidth(true);
+        insuranceProfilePanel.prefWidthProperty().bind(scrollPane.widthProperty());
         enableNameToProfileLink(insurance);
         registerAsAnEventHandler(this);
     }
