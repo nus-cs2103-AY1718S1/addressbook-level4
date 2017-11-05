@@ -63,10 +63,13 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `gp/GROUP ts/TIME_SLOT ct/CLASS_TYPE`, `v/VENUE m/CODE` is also acceptable.
 ====
 
+// tag::help[]
 === Viewing help : `help`
 
 Format: `help`
+// end::help[]
 
+// tag::add[]
 === Adding a lesson: `add`
 
 Adds a lesson to the ModU list +
@@ -81,7 +84,9 @@ Examples:
 * `add m/CS2100 ct/LEC v/LT19 gp/1 ts/MON[1400-1600] l/Wong WEng Fa l/Suppiah `
 
 image::video/add.gif[width="790"]
+// end::add[]
 
+// tag::mark[]
 === Marking a lesson: `mark`
 
 Marks a lesson to the marked list +
@@ -97,7 +102,9 @@ Examples:
 * `view 1` +
 `mark 1` +
 Mark the person into the marked list.
+// end::mark[]
 
+// tag::unmark[]
 === Unmarking a lesson: `unmark`
 
 remove a lesson from the marked list +
@@ -113,7 +120,9 @@ Examples:
 * `view 1` +
 `unmark 1` +
 Remove the lesson from the marked list.
+// end::unmark[]
 
+// tag::remark[]
 === Remarking a module: `remark`
 
 `remark a module with given content.` +
@@ -140,7 +149,9 @@ Examples:
 
 * `remark -d 1` +
 Delete the remark in current remark panel with index 1.
+// end::remark[]
 
+// tag::list[]
 === Listing all lesson : `list`
 
 Shows a list of all modules in the ModU. +
@@ -153,7 +164,9 @@ Shows a list of all marked lessons in the ModU. +
 Format: `List marked`
 
 image::video/list.gif[width="790"]
+// end::list[]
 
+// tag::view[]
 === Viewing specific lesson from the list: `view`
 
 Views the detail information about a lesson. +
@@ -173,7 +186,9 @@ View the detail information with the second index shown in the module list.
 View the detail information with the second index shown in the location list.
 
 image::video/view.gif[width="790"]
+// end::view[]
 
+// tag::edit[]
 === Editing a lesson : `edit`
 
 Edits an existing lesson in the ModU list. +
@@ -212,7 +227,9 @@ image::video/editModule.gif[width="790"]
 Edits all the lessons with the third location shown in the location list to be `LT27`.
 
 image::video/editLocation.gif[width="790"]
+// end::edit[]
 
+// tag::find[]
 === Locating lessons by module code: `find`
 
 Finds lessons whose code match the given keywords. +
@@ -243,7 +260,9 @@ Returns location with name `LT25`
 Return lesson with any details that contains `TUE` case insensitive
 
 image::video/find.gif[width="790"]
+// end::find[]
 
+// tag::sort[]
 === Sorting lesson by module code: `sort`
 
 Sort the existing list. +
@@ -269,7 +288,9 @@ Returns whole module +
 Return a list sorted by code lexicographically
 
 image::video/sortModule.gif[width="790"]
+// end::sort[]
 
+// tag::delete[]
 === Deleting a lesson : `delete`
 
 Deletes all the lessons with specified attribute value in the attribute list from the ModU list. +
@@ -294,7 +315,9 @@ Deletes the 1st lesson in the results of the `find` command.
 Deletes the 2nd lesson in the ModU location list.
 
 image::video/delete.gif[width="790"]
+// end::delete[]
 
+// tag::select[]
 === Selecting a lesson : `select`
 
 Selects the lesson/module/location identified by the index number used in the last listing. +
@@ -317,7 +340,9 @@ Selects the 2nd module in the module list and show all remarks of this module.
 Selects the 1st location in the location list and loas the NUS campus map page showing the location.
 
 image::video/select.gif[width="790"]
+// end::select[]
 
+// tag::history[]
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -329,6 +354,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 image::video/history.gif[width="790"]
+// end::history[]
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -390,24 +416,30 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `undo` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
-// end::undoredo[]
+
 
 image::video/redo.gif[width="790"]
+// end::undoredo[]
 
+// tag::clear[]
 === Clearing all entries : `clear`
 
 Clears all entries from the ModU list. +
 Format: `clear`
 
 image::video/clear.gif[width="790"]
+// end::clear[]
 
+// tag::exit[]
 === Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit`
 
 image::video/edit.gif[width="790"]
+// end::exit[]
 
+// tag::customise[]
 === Customising the font size : `customise fs/FONT-SIZE`
 
 Customise the font size of ModU list +
@@ -421,7 +453,9 @@ Examples:
 * `customise fs\xsmall`
 * `customise fs\small`
 * `customise fs\xlarge`
+// end::customise[]
 
+// tag::switch[]
 === Switch theme : `swt`
 
 Switch between light (default) and dark theme +
@@ -433,7 +467,9 @@ Toggle between light and dark theme. If the current theme is light, executing `s
 Example:
 
 * `swt`
+// end::switch[]
 
+// tag::highlight[]
 === Highlighting keywords : `color`
 
 Highlight the command keywords. +
@@ -445,6 +481,7 @@ Examples:
 * `color disable`
 
 image::video/color.gif[width="790"]
+// end::highlight[]
 
 === Saving the data
 
