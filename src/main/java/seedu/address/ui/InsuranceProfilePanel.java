@@ -2,7 +2,7 @@ package seedu.address.ui;
 
 import static seedu.address.commons.util.FileUtil.isFileExists;
 
-import java.awt.*;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,6 +26,10 @@ import seedu.address.commons.events.ui.SwitchToInsurancePanelRequestEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 
 //@@author Juxarius
+
+/**
+ * Profile panel for insurance when the respective insurance is selected
+ */
 public class InsuranceProfilePanel extends UiPart<Region> {
     private static final String FXML = "InsuranceProfilePanel.fxml";
     private static final String PDFFOLDERPATH = "data/";

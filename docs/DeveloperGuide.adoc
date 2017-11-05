@@ -218,7 +218,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-// tag::dateParser
+// tag::dateParser[]
 === Date Parser
 
 The date parser was created as an easy alternative to parsing user input to create a `LocalDate`
@@ -292,8 +292,8 @@ the whole year. This implementation assumes the user does not intend a 2 or 3
 digit year. Otherwise, users will have to append zeros at the start of the year
 input to indicate.
 
-// end::dateParser
-// tag::autofill
+// end::dateParser[]
+// tag::autofill[]
 === Autofill Feature
 
 The `edit` command now allows empty fields to be entered to trigger an autofill response.
@@ -332,8 +332,8 @@ solving the problem of inconvenience where multiple enter key presses is require
 contacts with empty fields no longer prevent the autofilling of other empty prefixes. This also means that
 the `EmptyFieldException` is no longer unique to the empty prefix and thus, there is no need for the prefix parameter,
 which is removed from the constructor of the exception.
-// end::autofill
-// tag::add
+// end::autofill[]
+// tag::add[]
 === Making Name as the only compulsory field in Add Command
 
 The `add` command follows the format below:
@@ -534,7 +534,7 @@ public Gender() {
 ----
 
 // end::gender[]
-// tag::tagManagement
+// tag::tagManagement[]
 === Improved Tag Management
 
 The original tag system management with the edit function have several difficulties which cause the user to too much trouble,
