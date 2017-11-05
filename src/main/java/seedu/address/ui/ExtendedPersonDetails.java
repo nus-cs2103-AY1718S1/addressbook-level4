@@ -26,9 +26,10 @@ import seedu.address.model.person.ReadOnlyPerson;
  *A UI component that displays the selected Person's details.
  * */
 public class ExtendedPersonDetails extends UiPart<Region> {
-
+     
     private static final String FXML = "ExtendDetailsPerson.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private final String defaultPicture = "/images/PEERSONAL_icon.png";
     @FXML
     private Label name;
     @FXML
@@ -53,6 +54,8 @@ public class ExtendedPersonDetails extends UiPart<Region> {
     public ExtendedPersonDetails() {
         super(FXML);
         registerAsAnEventHandler(this);
+        Image image = new Image(getClass().getResource(defaultPicture).toExternalForm());
+        setCircle(image);
     }
 
     /** */

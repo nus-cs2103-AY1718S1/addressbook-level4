@@ -1,6 +1,8 @@
 .background {
     -fx-background-color: derive(#1d1d1d, 80%);
     background-color: #1d1d1d /* Used in the default.html file */
+    background-image: url(src/main/resources/images/night.jpg);
+    background-size: 1000px
 }
 
 .label {
