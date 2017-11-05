@@ -389,8 +389,8 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+// tag::commandshortcuts[]
 == Command Shortcuts
-
 Here is a list of shortcuts you can use in cherBook together with some examples.
 
 [width="100%",cols="10%,<10%,<80%",options="header",]
@@ -412,6 +412,7 @@ Here is a list of shortcuts you can use in cherBook together with some examples.
 | Redo | `r` + | `r` +
 | Remark | `rm` + | `rm Index [rm/REMARK]` +
 |=======================================================================
+// end::commandshortcuts[]
 
 == FAQ
 

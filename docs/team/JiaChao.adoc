@@ -10,14 +10,36 @@ It is written in Java, and has about 8 kLoC.
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== Enhancement Added: FindTags
+== Roles and Responsibilities
+* Role: Team Lead
+* Responsibilities:
+** In charge of Logic Component
+** Git Expert: Advises the group for git matters.
+** Integration: Versioning of the code, maintaining the code repository, integrating various parts of the software to create a whole.
+** Scheduling: and tracking: Defining, assigning, and tracking project tasks.
+
+== List of Enhancements Implemented
+. Add Command aliases for all commands
+. Add Grades and FormClass attributes to the Student
+. Add FindTags Feature to find students by Tags
+. Add Statistics Panel
+
+== List of Enhancement Proposed
+. Add Compare command to compare statistics of different student groups
+. Add SendEmail command to allow sending emails from the command box
+
+---
+
+=== Enhancement Added: Add Command aliases for all commands
 
 ==== External behavior
+
+Following the list table of shortcuts below, all commands under the `Shorthand` column will behave exactly like the full full command in the `Command` column.
 
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag= findtags]
+include::../UserGuide.adoc[tag= commandshortcuts]
 
 #End of Extract#
 
@@ -25,12 +47,72 @@ include::../UserGuide.adoc[tag= findtags]
 
 ==== Justification
 
-As an addressbook application, there is a need for users to be able to quickly and efficiently find their contacts.
+Being a command line application, there is a need to be able to enter commands quickly and without error.
+Hence, the usage of shorthand commands for the more verbose full commands are needed.
+By adding shorthand commands, it reduces the number of key presses needed for the user to execute commands.
+This also helps reduce the probability of misspelling commands by users who are not touch typists.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+//TODO: write up for developer guide
+//include::../DeveloperGuide.adoc[tag= commandshortcuts]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Add Grades and FormClass attributes to the Student
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+//include::../UserGuide.adoc[tag= ]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+One of the main features cherBook has is calculating statistics for a list of students, and the Grades attribute is needed for it.
+Similarly, with comparing the statistics of different classes as a upcoming feature, the FormClass attribute is also needed.
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+//TODO: write up for developer guide
+//include::../DeveloperGuide.adoc[tag= ]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: FindTags
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+include::../UserGuide.adoc[tag= findtags]
+#End of Extract#
+
+---
+
+==== Justification
+
+As an address book application, there is a need for users to be able to find their contacts quickly and efficiently .
 Since contacts are also categorised by tags, and there was no way to search by tags, I decided to solve this problem by implementing FindTags.
 
 I decided to use AND search and not OR search for FindTags as it narrows down the contact list by their of tags, making it much more efficient to find people with a specific combination of tags.
 In this scenario, using OR search for FindTags would not make sense as OR search increases the number of search results as more search terms are used.
-This makes it more difficult and less efficient for the user to find the wanted person.
+Thus making it more difficult and less efficient for the user to find the wanted person.
 
 ==== Implementation
 
@@ -50,7 +132,7 @@ include::../DeveloperGuide.adoc[tag= findtags]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag= undoredo ]
+//include::../UserGuide.adoc[tag= statisticspanel ]
 
 #End of Extract#
 
@@ -58,27 +140,34 @@ include::../UserGuide.adoc[tag= undoredo ]
 
 ==== Justification
 
-As an application for teachers to easily monitor students' academic performance, the ability to extract and draw insights from the data is very important.
-Hence, I decided to added the statistics panel to show teachers the necessary information needed so that they knows who best to focus their efforts on.
-
-In the implementation, I chose for the Statistics Panel to always show the grades, of the list of students currently in the left side.
-This because teachers not only want to know how each student is doing but also how whole classes or groups of students are doing.
-Hence, by always providing statistics for the students in the list currently, the teacher is able to have the big picture view of how the whole school is doing
-and still be able to narrow down the demographic to individual CCA clubs or select groups based on their tags.
+This panel is needed to display the statistics of the students currently in the Students Panel.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag= undoredo ]
+//include::../DeveloperGuide.adoc[tag= statisticspanel ]
 
 #End of Extract#
 
 ---
+
 === Enhancement Proposed: Add command `compare`
 
-{Explain similar to the feature above.}
+==== External behavior
+
+==== Justification
+
+==== Implementation
+
+=== Enhancement Proposed: Add command `SendEmail`
+
+==== External behavior
+
+==== Justification
+
+==== Implementation
 
 === Other contributions
 
