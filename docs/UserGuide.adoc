@@ -43,7 +43,7 @@ The statistical concepts  --- link:#percentile[`_percentile_`], link:#average[`a
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `cherBook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
@@ -56,7 +56,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to cherBook.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -110,7 +110,7 @@ Format: `help`
 
 === Adding a person: `add` `Since v1.0`
 
-Adds a person to the address book +
+Adds a person to cherBook +
 Format: `add n/NAME p/[student/(STUDENT_NUMBER)] parent/(PARENT_NUMBER) [e/EMAIL] [a/ADDRESS] f/FORMCLASS g/GRADES [c/POSTALCODE] [t/TAG]...` +
 Shorthand: `a n/NAME p/[student/(STUDENT_NUMBER)] parent/(PARENT_NUMBER) [e/EMAIL] [a/ADDRESS] f/FORMCLASS g/GRADES [c/POSTALCODE] [t/TAG]...`
 
@@ -127,13 +127,13 @@ Examples:
 
 === Listing all persons : `list` `Since v1.0`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in cherBook. +
 Format: `list` +
 Shorthand: `l`
 
 === Editing a person : `edit` `Since v1.0`
 
-Edits an existing person in the address book. +
+Edits an existing person in cherBook. +
 Format: `edit INDEX [n/NAME] [p/student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)] [e/EMAIL] [a/ADDRESS] [f/FORMCLASS] [g/GRADES] [c/POSTALCODE] [t/TAG]...` +
 Shorthand: `e INDEX [n/NAME] [p/student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)] [e/EMAIL] [a/ADDRESS] [f/FORMCLASS] [g/GRADES] [c/POSTALCODE] [t/TAG]...`
 
@@ -210,7 +210,7 @@ Returns any person having both `friends` and `owesMoney` tags
 
 === Deleting a person : `delete` `Since v1.0`
 
-Deletes the specified person from the address book. +
+Deletes the specified person from cherBook. +
 Format: `delete INDEX` +
 Shorthand: `d INDEX`
 
@@ -224,13 +224,13 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in cherBook.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 * `list` (`list` command) +
 `d 3` (`delete 3` command) +
-Deletes the 3rd person in the address book.
+Deletes the 3rd person in cherBook.
 
 === Scheduling a person : `schedule` `Since v1.4`
 
@@ -239,7 +239,7 @@ Format: `schedule INDEX s/[DATE]` +
 Shorthand: `sche INDEX s/[DATE]`
 
 ****
-* Schedules the person at the specified `INDEX` and adds them to the schedule list in the address book.
+* Schedules the person at the specified `INDEX` and adds them to the schedule list in cherBook.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -248,10 +248,10 @@ Examples:
 
 * `list` +
 `schedule 2 s/tomorrow 7pm` +
-Schedules the 2nd person in the address book for tomorrow at 7pm and adds the schedule to the schedule list.
+Schedules the 2nd person in cherBook for tomorrow at 7pm and adds the schedule to the schedule list.
 * `find Betsy` +
 `sche 1 s/25 december 2017 3pm` +
-Schedules the 1st person in the address book on 25 December at 3pm and adds the schedule to the schedule list in the results of the `find` command.
+Schedules the 1st person in cherBook on 25 December at 3pm and adds the schedule to the schedule list in the results of the `find` command.
 
 === Selecting a person : `select` `Since v1.0`
 
@@ -269,24 +269,24 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in cherBook.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 * `l` (`list` command) +
 `s 3` (`select 3` command) +
-Selects the 3rd person in the address book.
+Selects the 3rd person in cherBook.
 
 === Sorting all persons : `sort` `Since v1.2`
 
-Shows a list of all persons in the address book sorted in alphabetical order. +
+Shows a list of all persons in cherBook sorted in alphabetical order. +
 Format: `sort` +
 Shorthand: `st`
 
 ****
-* Sorts the addressbook in alphabetical order.
+* Sorts all cherBook contacts in alphabetical order.
 * The sort is case insensitive. e.g `hans` will match `Hans`
-* If addressbook is empty, sort does nothing.
+* If cherBook is empty, sort does nothing.
 ****
 
 Examples:
@@ -301,7 +301,7 @@ Sorts the list in alphabetical order.
 // tag::remark[]
 === Adding/Deleting a remark to a person : `remark` `Since v1.2`
 
-Adds or removes a remark from the specified person in the address book +
+Adds or removes a remark from the specified person in cherBook +
 Format: `remark Index [rm/REMARK]` +
 Shorthand: `rm Index [rm/REMARK]`
 
@@ -323,7 +323,7 @@ Overwrites/adds the 1st person remark.
 Overwrites/adds the 1st person in the results of `find` command.
 * `list` +
 `remark 2 rm/` +
-removes remark from the 2nd person in the address book.
+removes remark from the 2nd person in cherBook.
 
 // end::remark[]
 
@@ -352,13 +352,13 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo` `Since v1.0`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores cherBook to the state before the previous _undoable_ command was executed. +
 Format: `undo` +
 Shorthand: `u`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify cherBook's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -411,7 +411,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear` `Since v1.0`
 
-Clears all entries from the address book. +
+Clears all entries from cherBook. +
 Format: `clear`
 
 === Exiting the program : `exit` `Since v1.0`
