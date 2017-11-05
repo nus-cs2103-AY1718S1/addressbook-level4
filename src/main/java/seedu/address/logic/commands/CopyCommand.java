@@ -9,7 +9,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
-//@@author rushan-khor
 /**
  * Deletes a person identified using it's last displayed index from the address book.
  */
@@ -26,34 +25,64 @@ public class CopyCommand extends Command {
             + "Example 2: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_COPY_PERSON_SUCCESS = "%1$s's email address has been copied to your clipboard.";
+    public static final String MESSAGE_COPY_PERSON_EMPTY = "%1$s has no email address.";
 
     private final Index targetIndex;
+    private ReadOnlyPerson targetPerson;
 
     public CopyCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
-
+    //@@author rushan-khor
     @Override
     public CommandResult execute() throws CommandException {
+        String targetEmail = getTargetEmail();
+        String commandResultMessage = "";
 
+        boolean emailIsValid = isEmailValid(targetEmail);
+        if (emailIsValid) {
+            putIntoClipboard(targetEmail);
+            commandResultMessage = String.format(MESSAGE_COPY_PERSON_SUCCESS, targetPerson.getName());
+        } else {
+            commandResultMessage = String.format(MESSAGE_COPY_PERSON_EMPTY, targetPerson.getName());
+        }
+
+        return new CommandResult(commandResultMessage);
+    }
+
+    /**
+     * Gets the target person's email address.
+     * @return     the email address of the person at the list {@code targetIndex}
+     * @exception  CommandException if the {@code targetIndex}
+     *             argument is greater than or equal to the {@code lastShownList} size.
+     */
+    public String getTargetEmail() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        boolean indexIsOutOfBounds = targetIndex.getZeroBased() >= lastShownList.size();
+        if (indexIsOutOfBounds) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson targetPerson = lastShownList.get(targetIndex.getZeroBased());
-        String resultantEmailAddress = targetPerson.getEmail().toString();
+        targetPerson = lastShownList.get(targetIndex.getZeroBased());
+        return targetPerson.getEmail().toString();
+    }
 
+    public boolean isEmailValid(String email) {
+        return !"null@null.com".equalsIgnoreCase(email) && !"".equals(email);
+    }
+
+    /**
+     * Puts target person's email address into the system clipboard.
+     */
+    private void putIntoClipboard(String resultantEmailAddress) {
         Clipboard systemClipboard = Clipboard.getSystemClipboard();
         ClipboardContent systemClipboardContent = new ClipboardContent();
+
         systemClipboardContent.putString(resultantEmailAddress);
-
         systemClipboard.setContent(systemClipboardContent);
-
-        return new CommandResult(String.format(MESSAGE_COPY_PERSON_SUCCESS, targetPerson.getName()));
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

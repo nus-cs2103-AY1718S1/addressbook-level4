@@ -1,5 +1,5 @@
 # Eric
-###### /java/seedu/address/logic/commands/AddAppointmentCommandTest.java
+###### \java\seedu\address\logic\commands\AddAppointmentCommandTest.java
 ``` java
 public class AddAppointmentCommandTest {
 
@@ -21,14 +21,12 @@ public class AddAppointmentCommandTest {
     public void execute() throws ParseException, CommandException {
 
         Index index1 = Index.fromOneBased(1);
-        Index index100 = Index.fromOneBased(100);
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
         Calendar calendar = Calendar.getInstance();
         //Invalid date (i.e date before current instance)
         calendar.setTime(Appointment.DATE_FORMATTER.parse("2005/08/08 10:10"));
-        AddAppointmentCommand command = new AddAppointmentCommand(index1, calendar);
-        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        command.setData(model);
+        Command command = setCommand(index1, calendar);
         CommandResult result = command.execute();
 
         //Invalid date message returned
@@ -36,33 +34,41 @@ public class AddAppointmentCommandTest {
 
         //Set to valid date
         calendar.setTime(Appointment.DATE_FORMATTER.parse("2019/08/08 10:10"));
-
-        command = new AddAppointmentCommand(index1, calendar);
-        command.setData(model);
+        command = setCommand(index1, calendar);
         result = command.execute();
+
         Appointment appointment = new Appointment(model.getFilteredPersonList().get(index1.getZeroBased())
                 .getName().toString(),
                 calendar);
 
         //Command success
         assertEquals(result.feedbackToUser, AddAppointmentCommand.MESSAGE_SUCCESS + "Meet "
-                + appointment.getPersonName().toString() + " on "
+                + appointment.getPersonName() + " on "
                 + appointment.getDate().toString());
 
         //No appointment set
-        command = new AddAppointmentCommand();
-        command.setData(model);
+        command = setCommand(null, null);
         result = command.execute();
         assertEquals(result.feedbackToUser, "Rearranged contacts to show upcoming appointments.");
 
-        //Out of bounds index
-        command = new AddAppointmentCommand(index100, calendar);
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        command.setData(model);
 
-        //Out of bounds index
+    }
+
+    @Test
+    public void outOfBoundsIndex() throws CommandException {
         thrown.expect(CommandException.class);
-        command.execute();
+        setCommand(Index.fromOneBased(100), null).execute();
+    }
+
+    /**
+     * Util method to set appointment command
+     */
+    private Command setCommand(Index index, Calendar calendar) {
+
+        AddAppointmentCommand command = new AddAppointmentCommand(index, calendar);
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        command.setData(model);
+        return command;
     }
 
     @Test
@@ -88,7 +94,7 @@ public class AddAppointmentCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/ToggleTagCommandTest.java
+###### \java\seedu\address\logic\commands\ToggleTagCommandTest.java
 ``` java
 public class ToggleTagCommandTest {
 
@@ -195,7 +201,7 @@ public class ToggleTagCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/parser/AddAppointmentParserTest.java
+###### \java\seedu\address\logic\parser\AddAppointmentParserTest.java
 ``` java
 public class AddAppointmentParserTest {
 
@@ -276,7 +282,7 @@ public class AddAppointmentParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ToggleTagColorParserTest.java
+###### \java\seedu\address\logic\parser\ToggleTagColorParserTest.java
 ``` java
     @Test
     public void parseMoreThanTwoWords() throws Exception {
@@ -285,7 +291,7 @@ public class AddAppointmentParserTest {
         parser.parse("This is longer than what is accepted");
     }
 ```
-###### /java/seedu/address/model/UniquePersonListTest.java
+###### \java\seedu\address\model\UniquePersonListTest.java
 ``` java
     @Test
     public void addAppointmentReturnsCorrectPerson() throws DuplicatePersonException, PersonNotFoundException {
@@ -339,7 +345,7 @@ public class AddAppointmentParserTest {
 
     }
 ```
-###### /java/seedu/address/model/UniqueTagListTest.java
+###### \java\seedu\address\model\UniqueTagListTest.java
 ``` java
     @Test
     public void tagsTests() throws IllegalValueException {
@@ -419,7 +425,7 @@ public class AddAppointmentParserTest {
 
     }
 ```
-###### /java/seedu/address/testutil/PersonBuilder.java
+###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
     /**
      * Sets appointment with Date of the person that we are building
@@ -458,4 +464,49 @@ public class AddAppointmentParserTest {
         this.person.setAppointment(new Appointment(person.getName().toString()));
         return this;
     }
+```
+###### \java\seedu\address\ui\CalendarWindowTest.java
+``` java
+public class CalendarWindowTest extends GuiUnitTest {
+
+    private CalendarWindow calendarWindow;
+    @Before
+    public void setUp() {
+        calendarWindow = new CalendarWindow(TypicalPersons.getTypicalAddressBook().getPersonList());
+        uiPartRule.setUiPart(calendarWindow);
+    }
+
+    @Test
+    public void display() {
+        assertNotNull(calendarWindow.getRoot());
+    }
+
+    @Test
+    public void setNextViewTest() {
+
+        //Default view should be week view
+        CalendarView calendarView = calendarWindow.getRoot();
+        assertEquals(calendarView.getSelectedPage(), calendarView.getWeekPage());
+
+        //Switch to month view
+        guiRobot.push(KeyCode.C);
+        assertEquals(calendarView.getSelectedPage(), calendarView.getMonthPage());
+
+        //Switch to year view
+        guiRobot.push(KeyCode.C);
+        assertEquals(calendarView.getSelectedPage(), calendarView.getYearPage());
+
+        //Switch to day view
+        guiRobot.push(KeyCode.C);
+        assertEquals(calendarView.getSelectedPage(), calendarView.getDayPage());
+
+        //Switch to week view
+        guiRobot.push(KeyCode.C);
+        assertEquals(calendarView.getSelectedPage(), calendarView.getWeekPage());
+
+
+    }
+
+
+}
 ```

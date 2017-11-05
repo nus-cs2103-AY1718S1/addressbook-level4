@@ -3,7 +3,6 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -13,8 +12,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.NewAppointmentEvent;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.HasPotentialDuplicatesPredicate;
 import seedu.address.model.person.Name;
@@ -132,8 +133,9 @@ public class ModelManager extends ComponentManager implements Model {
      * Adds appointment for a contact in address book
      */
     @Override
-    public void addAppointment(Appointment appointment) throws PersonNotFoundException {
-        addressBook.addAppointment(appointment);
+    public void addAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
+        addressBook.addAppointment(target, appointment);
+        EventsCenter.getInstance().post(new NewAppointmentEvent(addressBook));
         indicateAddressBookChanged();
     }
 
@@ -143,10 +145,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<ReadOnlyPerson> listAppointment() {
-
         ObservableList<ReadOnlyPerson> list = addressBook.getPersonListSortByAppointment();
-
-
         return FXCollections.unmodifiableObservableList(list);
     }
 
@@ -184,9 +183,9 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Gets a list of duplicate names
      */
-    private ArrayList<Name> getDuplicateNames() {
-        ArrayList<Name> examinedNames = new ArrayList<>();
-        ArrayList<Name> duplicateNames = new ArrayList<>();
+    private HashSet<Name> getDuplicateNames() {
+        HashSet<Name> examinedNames = new HashSet<>();
+        HashSet<Name> duplicateNames = new HashSet<>();
         ObservableList<ReadOnlyPerson> allPersonsInAddressBook = getFilteredPersonList();
 
         for (ReadOnlyPerson person : allPersonsInAddressBook) {
@@ -219,7 +218,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void updateDuplicatePersonList() {
-        ArrayList<Name> duplicateNames = getDuplicateNames();
+        HashSet<Name> duplicateNames = getDuplicateNames();
         HasPotentialDuplicatesPredicate predicate = new HasPotentialDuplicatesPredicate(duplicateNames);
         updateFilteredPersonList(predicate);
     }

@@ -2,9 +2,7 @@ package seedu.address.model;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertTrue;
-
-import java.text.ParseException;
-import java.util.Calendar;
+import static org.junit.Assert.fail;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -12,14 +10,12 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
 
-import seedu.address.model.person.Appointment;
+import seedu.address.logic.parser.AddAppointmentParser;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.TypicalPersons;
-
-
 
 public class UniquePersonListTest {
     @Rule
@@ -48,44 +44,24 @@ public class UniquePersonListTest {
 
     //@@author Eric
     @Test
-    public void addAppointmentReturnsCorrectPerson() throws DuplicatePersonException, PersonNotFoundException {
-
-        Calendar calendar = Calendar.getInstance();
-        try {
-            calendar.setTime(Appointment.DATE_FORMATTER.parse("2018/10/10 10:10"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Appointment appointment = new Appointment (TypicalPersons.ALICE.getName().toString(), calendar);
-
-        UniquePersonList uniquePersonList = new UniquePersonList();
-        uniquePersonList.add(TypicalPersons.ALICE);
-
-        uniquePersonList.addAppointment(appointment);
-
-        assertTrue(uniquePersonList.contains(TypicalPersons.ALICE));
-
-        for (ReadOnlyPerson person : uniquePersonList.asObservableList()) {
-            if (person.getName().toString().equals(TypicalPersons.ALICE.getName().fullName)) {
-                assertTrue(person.getAppointment().equals(appointment));
-            }
-        }
-    }
-
-    @Test
     public void addAppointmentThrowsNoPersonFoundException() throws PersonNotFoundException {
         UniquePersonList uniquePersonList = new UniquePersonList();
         thrown.expect(PersonNotFoundException.class);
-        uniquePersonList.addAppointment(new Appointment(TypicalPersons.ALICE.getName().toString()));
+
+        try {
+            uniquePersonList.addAppointment(TypicalPersons.ALICE,
+                    AddAppointmentParser.getAppointmentFromString("lunch, tomorrow 5pm"));
+        } catch (seedu.address.logic.parser.exceptions.ParseException e) {
+            fail();
+        }
     }
 
     @Test
     public void testSortedAppointment() throws DuplicatePersonException {
 
-        //ALICE appointment = 2018/01/02 00:00 BENSON appointment = 2018/01/01 00:00,
-        //BENSON appointment should be before ALICE
-        assertTrue(TypicalPersons.BENSON.getAppointment().getDate()
-                .before(TypicalPersons.ALICE.getAppointment().getDate()));
+
+        assertTrue(TypicalPersons.BENSON.getAppointments().get(0).getDate()
+                .before(TypicalPersons.ALICE.getAppointments().get(0).getDate()));
 
         UniquePersonList list = new UniquePersonList();
         list.add(TypicalPersons.ALICE);

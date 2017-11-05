@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -24,7 +25,11 @@ public class BatchCommandParser implements Parser<BatchCommand> {
     public BatchCommand parse(String args) throws ParseException {
         try {
             final Set<String> stringSet = new HashSet<>();
-            stringSet.add(args);
+            Scanner sc = new Scanner(args);
+
+            while (sc.hasNext()) {
+                stringSet.add(sc.next());
+            }
 
             Set<Tag> tags = ParserUtil.parseTags(stringSet);
             return new BatchCommand(tags);

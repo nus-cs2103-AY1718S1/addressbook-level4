@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
-import java.util.List;
+import java.util.ArrayList;
 
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
@@ -12,11 +12,15 @@ import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
 import com.calendarfx.view.CalendarView;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
+import seedu.address.commons.events.ui.NewAppointmentEvent;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author Eric
@@ -31,34 +35,25 @@ public class CalendarWindow extends UiPart<Region> {
     private CalendarView calendarView;
 
     private ObservableList<ReadOnlyPerson> personList;
-    private Calendar calendar;
+
     public CalendarWindow(ObservableList<ReadOnlyPerson> personList) {
         super(FXML);
 
         this.personList = personList;
+
         calendarView = new CalendarView();
-
-        CalendarSource myCalendarSource = new CalendarSource("My Calendars");
-
-        calendarView.getCalendarSources().addAll(myCalendarSource);
-
         calendarView.setRequestedTime(LocalTime.now());
+        updateCalendar();
+        startUpdateTimeThread();
+        setKeyBindings();
+        disableViews();
+        registerAsAnEventHandler(this);
+    }
 
-        calendar = new Calendar("Appointment");
-
-        CalendarSource calendarSource = new CalendarSource("Appointments");
-
-        calendarSource.getCalendars().add(calendar);
-        calendarView.getCalendarSources().add(calendarSource);
-        //Disabling views to make the calendar more simplistic
-        calendarView.setShowAddCalendarButton(false);
-        calendarView.setShowPageToolBarControls(false);
-        calendarView.setShowSearchField(false);
-        calendarView.setShowSearchResultsTray(false);
-        calendarView.setShowPageSwitcher(false);
-        calendarView.setShowPrintButton(false);
-        calendarView.setShowToolBar(false);
-        calendarView.showWeekPage();
+    /**
+     * Runs in the background to keep the calendar updated to current time
+     */
+    private void startUpdateTimeThread() {
         Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
             @Override
             public void run() {
@@ -66,12 +61,11 @@ public class CalendarWindow extends UiPart<Region> {
                     Platform.runLater(() -> {
                         calendarView.setToday(LocalDate.now());
                         calendarView.setTime(LocalTime.now());
-                        setAppointments();
                     });
 
                     try {
-                        // update every 1 second
-                        sleep(1000);
+                        // update every 1 minute
+                        sleep(60000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -85,32 +79,91 @@ public class CalendarWindow extends UiPart<Region> {
         updateTimeThread.start();
     }
 
+    /**
+     * Remove clutter from interface
+     */
+    private void disableViews() {
+        calendarView.setShowAddCalendarButton(false);
+        calendarView.setShowSearchField(false);
+        calendarView.setShowSearchResultsTray(false);
+        calendarView.setShowPrintButton(false);
+        calendarView.showWeekPage();
+    }
+
+    private void setKeyBindings() {
+
+        calendarView.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+            case C:
+                event.consume();
+                showNextPage();
+                break;
+            default:
+            }
+        });
+    }
+
+    /**
+     * When user press c, the calendar will shift to the next view
+     * Order of shifting: day -> week -> month -> year
+     */
+    public void showNextPage() {
+        if (calendarView.getSelectedPage() == calendarView.getMonthPage()) {
+            calendarView.showYearPage();
+        } else if (calendarView.getSelectedPage() == calendarView.getDayPage()) {
+            calendarView.showWeekPage();
+        } else if (calendarView.getSelectedPage() == calendarView.getYearPage()) {
+            calendarView.showDayPage();
+        } else {
+            calendarView.showMonthPage();
+        }
+    }
+
     public CalendarView getRoot() {
         return this.calendarView;
     }
 
-    public void setAppointments() {
+    @Subscribe
+    private void handleNewAppointmentEvent(NewAppointmentEvent event) {
+        personList = event.data.getPersonList();
+        updateCalendar();
+    }
+
+    /**
+     * Creates a new a calendar with the update information
+     */
+    private void updateCalendar() {
+
+        calendarView.getCalendarSources().clear();
+        CalendarSource calendarSource = new CalendarSource("Appointments");
+        int styleNum = 0;
         for (ReadOnlyPerson person : personList) {
-            if (person.getAppointment().getDate() == null) {
-                List<Entry<?>> result = calendar.findEntries(person.getName().toString());
-                calendar.removeEntries(result);
-                continue;
+            Calendar calendar = new Calendar(person.getName().toString());
+            calendar.setStyle(Calendar.Style.getStyle(styleNum));
+            styleNum++;
+            styleNum = styleNum % 5;
+            calendarSource.getCalendars().add(calendar);
+            ArrayList<Entry> entries = getEntries(person);
+
+            for (Entry entry : entries) {
+                calendar.addEntry(entry);
             }
-            LocalDateTime ldt = LocalDateTime.ofInstant(person.getAppointment().getDate().toInstant(),
-                    ZoneId.systemDefault());
-            LocalDateTime ldt2;
-            if (person.getAppointment().getEndDate() != null) {
-                ldt2 = LocalDateTime.ofInstant(person.getAppointment().getEndDate().toInstant(),
-                        ZoneId.systemDefault());
-            } else {
-                ldt2 = ldt.plusHours(1);
-            }
-            Entry entry = new Entry(person.getName().toString());
-            entry.setInterval(new Interval(ldt, ldt2));
-            List<Entry<?>> result = calendar.findEntries(person.getName().toString());
-            calendar.removeEntries(result);
-            calendar.addEntry(entry);
         }
+        calendarView.getCalendarSources().add(calendarSource);
+    }
+
+    private ArrayList<Entry> getEntries(ReadOnlyPerson person) {
+        ArrayList<Entry> entries = new ArrayList<>();
+        for (Appointment appointment : person.getAppointments()) {
+            LocalDateTime ldtstart = LocalDateTime.ofInstant(appointment.getDate().toInstant(),
+                    ZoneId.systemDefault());
+            LocalDateTime ldtend = LocalDateTime.ofInstant(appointment.getEndDate().toInstant(),
+                    ZoneId.systemDefault());
+
+            entries.add(new Entry(appointment.getDescription() + " with " + person.getName(),
+                    new Interval(ldtstart, ldtend)));
+        }
+        return entries;
     }
 
 }

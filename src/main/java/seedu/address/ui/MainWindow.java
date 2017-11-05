@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import com.calendarfx.view.CalendarView;
 import com.google.common.eventbus.Subscribe;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,6 +42,7 @@ public class MainWindow extends UiPart<Region> {
 
     private Stage primaryStage;
     private Logic logic;
+    private CalendarWindow calendarWindow;
 
     // Independent Ui parts residing in this Ui container
     private CalendarView calendarView;
@@ -82,9 +84,16 @@ public class MainWindow extends UiPart<Region> {
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
-
         setAccelerators();
         registerAsAnEventHandler(this);
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                calendarWindow.getRoot().requestFocus();
+            }
+        });
+
     }
 
     public Stage getPrimaryStage() {
@@ -129,7 +138,7 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        CalendarWindow calendarWindow = new CalendarWindow(logic.getFilteredPersonList());
+        calendarWindow = new CalendarWindow(logic.getFilteredPersonList());
         calendarPlaceholder.getChildren().add(calendarWindow.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());

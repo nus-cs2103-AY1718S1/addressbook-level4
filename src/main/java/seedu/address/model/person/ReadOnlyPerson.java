@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.List;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
@@ -26,8 +27,8 @@ public interface ReadOnlyPerson {
     Set<Tag> getTags();
     ObjectProperty<Remark> remarkProperty();
     Remark getRemark();
-    ObjectProperty<Appointment> appointmentProperty();
-    Appointment getAppointment();
+    ObjectProperty<AppointmentList> appointmentProperty();
+    List<Appointment> getAppointments();
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */

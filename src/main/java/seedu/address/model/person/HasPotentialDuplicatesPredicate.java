@@ -1,6 +1,6 @@
 package seedu.address.model.person;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.function.Predicate;
 
 //@@author rushan-khor
@@ -8,9 +8,9 @@ import java.util.function.Predicate;
  * Tests that a {@code ReadOnlyPerson}'s {@code Bloodtype} matches any of the keywords given.
  */
 public class HasPotentialDuplicatesPredicate implements Predicate<ReadOnlyPerson> {
-    private final ArrayList<Name> duplicateNames;
+    private final HashSet<Name> duplicateNames;
 
-    public HasPotentialDuplicatesPredicate(ArrayList<Name> duplicateNames) {
+    public HasPotentialDuplicatesPredicate(HashSet<Name> duplicateNames) {
         this.duplicateNames = duplicateNames;
     }
 

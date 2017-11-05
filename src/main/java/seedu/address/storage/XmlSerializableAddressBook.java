@@ -48,7 +48,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         final ObservableList<ReadOnlyPerson> persons = this.persons.stream().map(p -> {
             try {
                 return p.toModelType();
-            } catch (IllegalValueException e) {
+            } catch (IllegalValueException | java.text.ParseException e) {
                 e.printStackTrace();
                 //TODO: better error handling
                 return null;

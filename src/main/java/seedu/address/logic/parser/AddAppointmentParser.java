@@ -12,6 +12,7 @@ import com.joestelmach.natty.DateGroup;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Appointment;
 
 //@@author Eric
 /**
@@ -28,7 +29,9 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
     @Override
     public AddAppointmentCommand parse(String userInput) throws ParseException {
 
-        if (userInput.split(" ").length == 1) {
+        String[] args = userInput.split(" ");
+
+        if (args.length == 1) {
             return new AddAppointmentCommand();
         }
 
@@ -40,28 +43,10 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
                     AddAppointmentCommand.MESSAGE_USAGE));
         }
 
-        String[] args = userInput.split(" ");
         try {
             Index index = Index.fromOneBased(Integer.parseInt(args[1]));
-            if ("d/off".equals(args[2])) {
-                return new AddAppointmentCommand(index);
-            }
-            com.joestelmach.natty.Parser parser = new com.joestelmach.natty.Parser();
-            List<DateGroup> groups = parser.parse(argumentMultimap.getValue(PREFIX_DATE).get());
-            Calendar calendar = Calendar.getInstance();
-            if (groups.size() == 0) {
-                throw new ParseException("Please be more specific with your appointment time");
-            }
-
-            //If there is a start and end time that is parsed
-            if (groups.get(0).getDates().size() == 2) {
-                calendar.setTime(groups.get(0).getDates().get(0));
-                Calendar calendarEnd = Calendar.getInstance();
-                calendarEnd.setTime(groups.get(0).getDates().get(1));
-                return new AddAppointmentCommand(index, calendar, calendarEnd);
-            }
-            calendar.setTime(groups.get(0).getDates().get(0));
-            return new AddAppointmentCommand(index, calendar);
+            Appointment appointment = getAppointmentFromString(argumentMultimap.getValue(PREFIX_DATE).get());
+            return new AddAppointmentCommand(index, appointment);
         } catch (NumberFormatException e) {
             throw new ParseException(e.getMessage(), e);
         }
@@ -74,4 +59,38 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
+
+    /**
+     * Natty parser that takes in a string and returns an appointment
+     */
+    public static Appointment getAppointmentFromString(String str) throws ParseException {
+        String[] args = str.split(",");
+
+        if (args.length != 2) {
+            throw new ParseException("Please follow format for adding appointment.\n"
+                    + AddAppointmentCommand.MESSAGE_USAGE);
+        }
+
+        String description = args[0];
+
+        com.joestelmach.natty.Parser parser = new com.joestelmach.natty.Parser();
+        List<DateGroup> groups = parser.parse(args[1]);
+        Calendar calendar = Calendar.getInstance();
+        if (groups.size() == 0) {
+            throw new ParseException("Please be more specific with your appointment time");
+        }
+
+        //If there is a start and end time that is parsed
+        if (groups.get(0).getDates().size() == 2) {
+            calendar.setTime(groups.get(0).getDates().get(0));
+            Calendar calendarEnd = Calendar.getInstance();
+            calendarEnd.setTime(groups.get(0).getDates().get(1));
+            return new Appointment(description, calendar, calendarEnd);
+        }
+
+        //Only one date parsed
+        calendar.setTime(groups.get(0).getDates().get(0));
+        return new Appointment(description, calendar, null);
+    }
+
 }

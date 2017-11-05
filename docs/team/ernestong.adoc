@@ -2,6 +2,7 @@
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
+:collatedDir: ../../collated
 
 == Project: MedNus
 MedNus is a desktop address book application used by Medical Professionals. +
@@ -9,8 +10,8 @@ The user interacts with it using a CLI, and it has a GUI created with JavaFX. +
 It is written in Java, and has about 6 kLoC.
 
 *Code contributed*: +
-[https://github.com[Functional code]] +
-[https://github.com[Test code]] {give links to collated code files}
+link:{collatedDir}/main/Ernest.md[Functional code] +
+link:{collatedDir}/test/Ernest.md[Test code] +
 
 === Enhancement Added: Shorthand Command Alias
 

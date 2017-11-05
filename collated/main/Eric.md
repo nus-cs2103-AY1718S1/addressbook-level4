@@ -1,5 +1,5 @@
 # Eric
-###### /java/seedu/address/logic/commands/AddAppointmentCommand.java
+###### \java\seedu\address\logic\commands\AddAppointmentCommand.java
 ``` java
 /**
  * Command to add appointment to a person in addressBook
@@ -128,7 +128,7 @@ public class AddAppointmentCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/commands/ToggleTagColorCommand.java
+###### \java\seedu\address\logic\commands\ToggleTagColorCommand.java
 ``` java
 /**
  *  Changes tag color in address book
@@ -200,7 +200,7 @@ public class ToggleTagColorCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddAppointmentParser.java
+###### \java\seedu\address\logic\parser\AddAppointmentParser.java
 ``` java
 /**
  * Parse input arguments and creates a new AddAppointmentCommand Object
@@ -264,7 +264,7 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ToggleTagColorParser.java
+###### \java\seedu\address\logic\parser\ToggleTagColorParser.java
 ``` java
 /**
  * Parse input for tagcolor command
@@ -319,20 +319,20 @@ public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     public void setTags(Set<Tag> tags, String tagString, String color) {
         this.tags.setTags(tags, tagString, color);
     }
 
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     public void addAppointment(Appointment appointment) throws PersonNotFoundException {
         persons.addAppointment(appointment);
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     /**
      * Sets tag color for a particular tag
@@ -344,8 +344,9 @@ public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
         addressBook.setTags(tag, tagString, color);
         indicateAddressBookChanged();
     }
+
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     /**
      * Adds appointment for a contact in address book
@@ -370,7 +371,7 @@ public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
     }
 
 ```
-###### /java/seedu/address/model/person/Appointment.java
+###### \java\seedu\address\model\person\Appointment.java
 ``` java
 /**
  *  Appointment class to hold all the appointment information of an appointment
@@ -434,7 +435,7 @@ public class Appointment {
     }
 }
 ```
-###### /java/seedu/address/model/tag/Tag.java
+###### \java\seedu\address\model\tag\Tag.java
 ``` java
     /**
      * Validates given tag name.
@@ -475,7 +476,7 @@ public class Appointment {
         tagColor = "grey";
     }
 ```
-###### /java/seedu/address/model/tag/Tag.java
+###### \java\seedu\address\model\tag\Tag.java
 ``` java
     /**
      * Converts a color to hexadecimal string
@@ -486,7 +487,7 @@ public class Appointment {
     }
 }
 ```
-###### /java/seedu/address/model/tag/UniqueTagList.java
+###### \java\seedu\address\model\tag\UniqueTagList.java
 ``` java
     /**
      * Replaces the Tags in this list with those in the argument tag list.
@@ -512,7 +513,7 @@ public class Appointment {
         internalList.setAll(tags);
     }
 ```
-###### /java/seedu/address/model/tag/UniqueTagList.java
+###### \java\seedu\address\model\tag\UniqueTagList.java
 ``` java
     private void setOffColor(Set<Tag> tags) {
         for (Tag tag : tags) {
@@ -535,7 +536,7 @@ public class Appointment {
         }
     }
 ```
-###### /java/seedu/address/ui/CalendarWindow.java
+###### \java\seedu\address\ui\CalendarWindow.java
 ``` java
 /**
  * The Browser Panel of the App.
@@ -569,12 +570,9 @@ public class CalendarWindow extends UiPart<Region> {
         calendarView.getCalendarSources().add(calendarSource);
         //Disabling views to make the calendar more simplistic
         calendarView.setShowAddCalendarButton(false);
-        calendarView.setShowPageToolBarControls(false);
         calendarView.setShowSearchField(false);
         calendarView.setShowSearchResultsTray(false);
-        calendarView.setShowPageSwitcher(false);
         calendarView.setShowPrintButton(false);
-        calendarView.setShowToolBar(false);
         calendarView.showWeekPage();
         Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
             @Override
@@ -600,6 +598,24 @@ public class CalendarWindow extends UiPart<Region> {
         updateTimeThread.setPriority(Thread.MIN_PRIORITY);
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
+
+
+    }
+
+    /**
+     * When user press Tab, the calendar will shift to the next view
+     * Order of shifting: day -> week -> month -> year
+     */
+    public void showNextPage() {
+        if (calendarView.getSelectedPage() == calendarView.getMonthPage()) {
+            calendarView.showYearPage();
+        } else if (calendarView.getSelectedPage() == calendarView.getDayPage()) {
+            calendarView.showWeekPage();
+        } else if (calendarView.getSelectedPage() == calendarView.getYearPage()) {
+            calendarView.showDayPage();
+        } else {
+            calendarView.showMonthPage();
+        }
     }
 
     public CalendarView getRoot() {
@@ -629,10 +645,27 @@ public class CalendarWindow extends UiPart<Region> {
             calendar.addEntry(entry);
         }
     }
-
 }
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    private void setKeyBindings() {
+
+        calendarPlaceholder.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                    case C:
+                        event.consume();
+                        calendarWindow.showNextPage();
+                        break;
+                    default:
+                }
+            }
+        });
+    }
+```
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
     private void setStyle(int displayedIndex) {
         appointment.setStyle("-fx-font-weight: bold");
