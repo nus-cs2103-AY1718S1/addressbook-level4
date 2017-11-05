@@ -451,10 +451,8 @@ Generate QR SMS Code for the 1st person in the results of the `find` command.
 
 === Generating QR Code to save a Contact : `qrsave`
 [NOTE]
-****
-* Requires a smartphone with camera and QR Scanner application.
-* Only information like Contact Name , Email , Address and Phone Number is saved from the process.
-****
+Requires a smartphone with camera and QR Scanner application. +
+Only information like Contact Name , Email , Address and Phone Number is saved from the process.
 
 
 If you need to save the contact information without having the hassle of exporting or importing '.vcf' file into your phone. You can do so with the QR Save Contact Command which allows you to save the contact you wanted with just a scan from your phone.
