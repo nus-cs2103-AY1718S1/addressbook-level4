@@ -306,8 +306,9 @@ _Figure 4.7.3_
 
 .  Press kbd:[Enter] and you should see that this tag has been deleted from all contacts. (Figure 4.7.4) +
 image:deletetag_4.png[600] +
-_Figure 4.7.4_
+_Figure 4.7.4_ +
 
+// tag::find[]
 === Locating persons by keywords: `find`
 
 ====
@@ -330,10 +331,10 @@ If you want to find a person named `John Watson`:
 
 .  Type in (Figure 4.8.1) +
 `>> find n/john` +
-image:to be updated[] +
+image:to be updated[a] +
 _Figure 4.8.1_
 .  Press kbd:[Enter] and you should see a list of persons having the name `john`: (Figure 4.8.2) +
-image:to be updated[] +
+image:to be updated[a] +
 _Figure 4.8.2_
 
 Here are some other commands you can do with `find`:
@@ -343,8 +344,8 @@ Lists any person having names `Betsy`, `Tim`, or `John`
 * `f Watson` +
 Lists any person having the name `Watson`
 * `find j*` +
-Lists any person whose name starts with `j`
-
+Lists any person whose name starts with `j` +
+// end::find[]
 
 === Sorting contact list: `sort`
 

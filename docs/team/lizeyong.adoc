@@ -1,0 +1,51 @@
+= Li Zeyong - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ABC Business Contact
+*ABC Business Contact* is a free desktop contact management application that helps users to manage their large collection of contacts conveniently and keep track of their appointments. Users can store contacts as well as other information and retrieve them efficiently with the help of *ABC*. +
+ Users interact with it using a Command Line Interface(CLI), and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/main/newalter.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/test/newalter.md[Test code]]
+
+=== Enhancement Added: A Universal Find Command that filters the existing list
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=filter]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `remark`
+
+{Explain similar to the Undo/Redo feature above.}
+
+=== Other contributions
+
+* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}
