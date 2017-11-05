@@ -756,7 +756,7 @@ _Figure 4.19.1_
 image:clear2.png[clear2, 600] +
 _Figure 4.19.2_
 
-
+// tag::resize[]
 === Resizing the main window : `resize`
 
 ====
@@ -777,6 +777,7 @@ If you want to resize your main window to 1280 * 720: +
 image:resize.png[] +
 _Figure 4.20.1_
 .  Press kbd:[Enter] and the main window would be resized to 1280 * 720.
+// end::resize[]
 
 === Exiting the program : `exit`
 

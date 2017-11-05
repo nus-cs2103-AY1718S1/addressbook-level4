@@ -37,15 +37,39 @@ include::../DeveloperGuide.adoc[tag=filter]
 
 ---
 
+=== Enhancement Added: Resize Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=resize]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=filter]
+
+#End of Extract#
+
+---
 === Enhancement Proposed: Add command `remark`
 
 {Explain similar to the Undo/Redo feature above.}
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Discovered a bug that causes the app to crush and provided a solution. (https://github.com/nus-cs2103-AY1718S1/forum/issues/137[Issue #137])
+* Discovered bugs during acceptance testing. (Issues https://github.com/CS2103AUG2017-W14-B4/main/issues/116[#116], https://github.com/CS2103AUG2017-W14-B4/main/issues/117[#117], https://github.com/CS2103AUG2017-W14-B4/main/issues/118[#118])
 
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}
