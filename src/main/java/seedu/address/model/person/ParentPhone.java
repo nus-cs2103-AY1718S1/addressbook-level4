@@ -41,7 +41,7 @@ public class ParentPhone {
     /**
      * Returns formatted phone by appending Parent:  before the parent phone number.
      */
-    public static String formatPhone(String parentPhoneToFormat){
+    public static String formatPhone(String parentPhoneToFormat) {
         return "Parent: " + parentPhoneToFormat; }
 
     @Override

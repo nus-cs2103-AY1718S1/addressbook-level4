@@ -22,7 +22,7 @@ public class PersonCardTest extends GuiUnitTest {
     @Test
     public void display() {
         Person personWithRightAttributes = new PersonBuilder().withFormClass("6E1").withName("Alice Pauline")
-                .withPhone("student: 97272031 parent: 97979797").withTags().build();
+                .withPhone("97979797").withTags().build();
         PersonCard personCard = new PersonCard(personWithRightAttributes, 1);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithRightAttributes, 1);
