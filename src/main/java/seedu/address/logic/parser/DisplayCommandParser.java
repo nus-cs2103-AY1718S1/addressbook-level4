@@ -20,8 +20,10 @@ public class DisplayCommandParser implements Parser<DisplayCommand> {
      */
     public DisplayCommand parse(String args) throws ParseException {
         try {
-            Index index = ParserUtil.parseIndex(args);
-            return new DisplayCommand(index);
+            String[] splitArgs = args.trim().split(" ");
+            Index index = ParserUtil.parseIndex(splitArgs[0]);
+            String particular = splitArgs[1];
+            return new DisplayCommand(index, particular);
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, DisplayCommand.MESSAGE_USAGE));
