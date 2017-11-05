@@ -32,14 +32,11 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class CalendarWindow extends UiPart<Region> {
 
     private static final String FXML = "CalendarPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(CalendarWindow.class);
-
 
     @FXML
     private CalendarView calendarView;
 
     private ObservableList<ReadOnlyPerson> personList;
-    private CalendarSource calendarSource;
 
     public CalendarWindow(ObservableList<ReadOnlyPerson> personList) {
         super(FXML);
@@ -140,7 +137,7 @@ public class CalendarWindow extends UiPart<Region> {
     private void updateCalendar() {
 
         calendarView.getCalendarSources().clear();
-        calendarSource = new CalendarSource("Appointments");
+        CalendarSource calendarSource = new CalendarSource("Appointments");
         int styleNum = 0;
         for (ReadOnlyPerson person : personList) {
             Calendar calendar = new Calendar(person.getName().toString());
