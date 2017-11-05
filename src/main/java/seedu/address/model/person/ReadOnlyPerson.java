@@ -27,7 +27,6 @@ public interface ReadOnlyPerson {
     boolean isPinned();
     void setPin();
     void setUnpin();
-    ObjectProperty<Boolean> pinnedProperty();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

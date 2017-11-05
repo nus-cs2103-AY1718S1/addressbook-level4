@@ -1,17 +1,24 @@
 package seedu.address.model.util;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.group.Group;
+import seedu.address.model.group.GroupName;
+import seedu.address.model.group.ReadOnlyGroup;
+import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 
@@ -46,15 +53,31 @@ public class SampleDataUtil {
         }
     }
 
+    public static ReadOnlyGroup getSampleGroup(List<ReadOnlyPerson> personList) {
+        try {
+            GroupName sampleName = new GroupName("Sample Group");
+            ArrayList<ReadOnlyPerson> groupList = new ArrayList<>();
+            groupList.add(personList.get(0));
+            groupList.add(personList.get(1));
+            ReadOnlyGroup sampleGroup = new Group(sampleName, groupList);
+            return sampleGroup;
+        } catch (IllegalValueException e) {
+            throw new AssertionError("sample group cannot be invalid.");
+        }
+    }
+
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {
             AddressBook sampleAb = new AddressBook();
             for (Person samplePerson : getSamplePersons()) {
                 sampleAb.addPerson(samplePerson);
             }
+            sampleAb.addGroup(getSampleGroup(sampleAb.getPersonList()));
             return sampleAb;
         } catch (DuplicatePersonException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
+        } catch (DuplicateGroupException e) {
+            throw new AssertionError("sample data cannot have duplicate groups", e);
         }
     }
 

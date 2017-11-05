@@ -34,8 +34,8 @@ public interface Model {
      * {@code Predicate} that always evaluate to true
      */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
-    Predicate<ReadOnlyPerson> PREDICATE_SHOW_PINNED_PERSONS = p -> UniqueTagList.containsPinTag(p);
-    Predicate<ReadOnlyPerson> PREDICATE_SHOW_UNPINNED_PERSONS = p -> !UniqueTagList.containsPinTag(p);
+    Predicate<ReadOnlyPerson> PREDICATE_SHOW_PINNED_PERSONS = p -> p.isPinned();
+    Predicate<ReadOnlyPerson> PREDICATE_SHOW_UNPINNED_PERSONS = p -> !p.isPinned();
     Predicate<ReadOnlyGroup> PREDICATE_SHOW_ALL_GROUPS = unused -> true;
 
 

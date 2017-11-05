@@ -191,41 +191,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author eldonng
-    /**
-     * @param personToPin
-     * @return updated Person with added pin to be added to the address book
-     * @throws CommandException
-     */
-    private Person addPinTag(ReadOnlyPerson personToPin) throws CommandException {
-        /**
-         * Create a new UniqueTagList to add pin tag into the list.
-         */
-        UniqueTagList updatedTags = new UniqueTagList(personToPin.getTags());
-        updatedTags.addPinTag();
-
-        return new Person(personToPin.getName(), personToPin.getPhone(), personToPin.getBirthday(),
-                personToPin.getEmail(), personToPin.getAddress(), personToPin.isPinned(), updatedTags.toSet());
-    }
-
-    //@@author eldonng
-    /**
-     * @param personToUnpin
-     * @return updated Person with removed pin to be added to the address book
-     * @throws CommandException
-     */
-    private Person removePinTag(ReadOnlyPerson personToUnpin) throws CommandException {
-        try {
-            UniqueTagList updatedTags = new UniqueTagList(personToUnpin.getTags());
-            updatedTags.removePinTag();
-            return new Person(personToUnpin.getName(), personToUnpin.getPhone(),
-                    personToUnpin.getBirthday(), personToUnpin.getEmail(), personToUnpin.getAddress(),
-                    personToUnpin.isPinned(), updatedTags.toSet());
-        } catch (IllegalValueException ive) {
-            throw new CommandException(Tag.MESSAGE_TAG_CONSTRAINTS);
-        }
-    }
-
-    //@@author eldonng
     public Predicate<ReadOnlyPerson> getPredicateForTags(String arg) throws IllegalValueException {
         try {
             Tag targetTag = new Tag(arg);

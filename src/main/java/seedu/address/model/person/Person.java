@@ -149,12 +149,6 @@ public class Person implements ReadOnlyPerson {
         pinned.set(false);
     }
 
-    @Override
-    public ObjectProperty<Boolean> pinnedProperty() {
-        return pinned;
-    }
-
-
     /**
      * Replaces this person's tags with the tags in the argument tag set.
      */
