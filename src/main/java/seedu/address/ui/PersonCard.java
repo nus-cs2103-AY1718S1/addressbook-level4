@@ -20,8 +20,8 @@ import seedu.address.model.tag.Tag;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static String[] colors = { "Brown", "CadetBlue", "DarkOrange", "DarkRed",
-        "Gold", "Olive", "PaleVioletRed", "Crimson", "Indigo", "OrangeRed", "YellowGreen",
+    private static String[] colors = { "Brown", "CadetBlue", "DarkOrange",
+        "Gold", "Olive", "PaleVioletRed", "Crimson", "LightSeaGreen", "OrangeRed", "YellowGreen",
         "Chocolate", "Plum"};
     private static HashMap<String, String> tagColorMap = new HashMap<>();
     private static Random random = new Random();
