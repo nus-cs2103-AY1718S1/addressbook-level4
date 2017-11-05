@@ -5,10 +5,10 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import guitests.guihandles.PersonCardHandle;
-import guitests.guihandles.PersonListPanelHandle;
+import guitests.guihandles.LessonCardHandle;
+import guitests.guihandles.LessonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.module.ReadOnlyLesson;
 
 /**
  * A set of assertion methods useful for writing GUI tests.
@@ -17,51 +17,53 @@ public class GuiTestAssert {
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
      */
-    public static void assertCardEquals(PersonCardHandle expectedCard, PersonCardHandle actualCard) {
+    public static void assertCardEquals(LessonCardHandle expectedCard, LessonCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
-        assertEquals(expectedCard.getAddress(), actualCard.getAddress());
-        assertEquals(expectedCard.getEmail(), actualCard.getEmail());
-        assertEquals(expectedCard.getName(), actualCard.getName());
-        assertEquals(expectedCard.getPhone(), actualCard.getPhone());
-        assertEquals(expectedCard.getTags(), actualCard.getTags());
+        assertEquals(expectedCard.getCode(), actualCard.getCode());
+        assertEquals(expectedCard.getClassType(), actualCard.getClassType());
+        assertEquals(expectedCard.getGroup(), actualCard.getGroup());
+        assertEquals(expectedCard.getLocation(), actualCard.getLocation());
+        assertEquals(expectedCard.getTimeSlot(), actualCard.getTimeSlot());
+        assertEquals(expectedCard.getLecturers(), actualCard.getLecturers());
     }
 
     /**
-     * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
+     * Asserts that {@code actualCard} displays the details of {@code expectedLesson}.
      */
-    public static void assertCardDisplaysPerson(ReadOnlyPerson expectedPerson, PersonCardHandle actualCard) {
-        assertEquals(expectedPerson.getName().fullName, actualCard.getName());
-        assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
-        assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
-        assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
-        assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
-                actualCard.getTags());
+    public static void assertCardDisplaysLesson(ReadOnlyLesson expectedLesson, LessonCardHandle actualCard) {
+        assertEquals(expectedLesson.getCode().fullCodeName, actualCard.getCode());
+        assertEquals(expectedLesson.getClassType().value, actualCard.getClassType());
+        assertEquals(expectedLesson.getLocation().value, actualCard.getLocation());
+        assertEquals(expectedLesson.getGroup().value, actualCard.getGroup());
+        assertEquals(expectedLesson.getTimeSlot().value, actualCard.getTimeSlot());
+        assertEquals(expectedLesson.getLecturers().stream().map(lecturer -> lecturer.lecturerName)
+                        .collect(Collectors.toList()), actualCard.getLecturers());
     }
 
     /**
-     * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
+     * Asserts that the list in {@code lessonListPanelHandle} displays the details of {@code lessons} correctly and
      * in the correct order.
      */
-    public static void assertListMatching(PersonListPanelHandle personListPanelHandle, ReadOnlyPerson... persons) {
-        for (int i = 0; i < persons.length; i++) {
-            assertCardDisplaysPerson(persons[i], personListPanelHandle.getPersonCardHandle(i));
+    public static void assertListMatching(LessonListPanelHandle lessonListPanelHandle, ReadOnlyLesson... lessons) {
+        for (int i = 0; i < lessons.length; i++) {
+            assertCardDisplaysLesson(lessons[i], lessonListPanelHandle.getLessonListCardHandle(i));
         }
     }
 
     /**
-     * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
+     * Asserts that the list in {@code lessonListPanelHandle} displays the details of {@code lessons} correctly and
      * in the correct order.
      */
-    public static void assertListMatching(PersonListPanelHandle personListPanelHandle, List<ReadOnlyPerson> persons) {
-        assertListMatching(personListPanelHandle, persons.toArray(new ReadOnlyPerson[0]));
+    public static void assertListMatching(LessonListPanelHandle lessonListPanelHandle, List<ReadOnlyLesson> lessons) {
+        assertListMatching(lessonListPanelHandle, lessons.toArray(new ReadOnlyLesson[0]));
     }
 
     /**
-     * Asserts the size of the list in {@code personListPanelHandle} equals to {@code size}.
+     * Asserts the size of the list in {@code lessonListPanelHandle} equals to {@code size}.
      */
-    public static void assertListSize(PersonListPanelHandle personListPanelHandle, int size) {
-        int numberOfPeople = personListPanelHandle.getListSize();
-        assertEquals(size, numberOfPeople);
+    public static void assertListSize(LessonListPanelHandle lessonListPanelHandle, int size) {
+        int numberOfLessons = lessonListPanelHandle.getListSize();
+        assertEquals(size, numberOfLessons);
     }
 
     /**

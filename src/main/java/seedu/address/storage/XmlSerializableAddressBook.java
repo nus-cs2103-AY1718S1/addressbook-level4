@@ -11,8 +11,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.lecturer.Lecturer;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.Remark;
+
 
 /**
  * An Immutable AddressBook that is serializable to XML format
@@ -20,18 +22,23 @@ import seedu.address.model.tag.Tag;
 @XmlRootElement(name = "addressbook")
 public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
 
+
     @XmlElement
-    private List<XmlAdaptedPerson> persons;
+    private List<XmlAdaptedLesson> lessons;
     @XmlElement
-    private List<XmlAdaptedTag> tags;
+    private List<XmlAdaptedLecturer> lecturers;
+    @XmlElement
+    private List<XmlAdaptedRemark> remarks;
+
 
     /**
      * Creates an empty XmlSerializableAddressBook.
      * This empty constructor is required for marshalling.
      */
     public XmlSerializableAddressBook() {
-        persons = new ArrayList<>();
-        tags = new ArrayList<>();
+        lessons = new ArrayList<>();
+        lecturers = new ArrayList<>();
+        remarks = new ArrayList<>();
     }
 
     /**
@@ -39,13 +46,15 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
      */
     public XmlSerializableAddressBook(ReadOnlyAddressBook src) {
         this();
-        persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
-        tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+
+        lessons.addAll(src.getLessonList().stream().map(XmlAdaptedLesson::new).collect(Collectors.toList()));
+        lecturers.addAll(src.getLecturerList().stream().map(XmlAdaptedLecturer::new).collect(Collectors.toList()));
+        remarks.addAll(src.getRemarkList().stream().map(XmlAdaptedRemark::new).collect(Collectors.toList()));
     }
 
     @Override
-    public ObservableList<ReadOnlyPerson> getPersonList() {
-        final ObservableList<ReadOnlyPerson> persons = this.persons.stream().map(p -> {
+    public ObservableList<ReadOnlyLesson> getLessonList() {
+        final ObservableList<ReadOnlyLesson> lessons = this.lessons.stream().map(p -> {
             try {
                 return p.toModelType();
             } catch (IllegalValueException e) {
@@ -54,21 +63,35 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
                 return null;
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
-        return FXCollections.unmodifiableObservableList(persons);
+        return FXCollections.unmodifiableObservableList(lessons);
     }
 
     @Override
-    public ObservableList<Tag> getTagList() {
-        final ObservableList<Tag> tags = this.tags.stream().map(t -> {
+    public ObservableList<Lecturer> getLecturerList() {
+        final ObservableList<Lecturer> lecturers = this.lecturers.stream().map(p -> {
             try {
-                return t.toModelType();
+                return p.toModelType();
             } catch (IllegalValueException e) {
                 e.printStackTrace();
                 //TODO: better error handling
                 return null;
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
-        return FXCollections.unmodifiableObservableList(tags);
+        return FXCollections.unmodifiableObservableList(lecturers);
+    }
+
+    @Override
+    public ObservableList<Remark> getRemarkList() {
+        final ObservableList<Remark> remarks = this.remarks.stream().map(p -> {
+            try {
+                return p.toModelType();
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+                //TODO: better error handling
+                return null;
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(remarks);
     }
 
 }

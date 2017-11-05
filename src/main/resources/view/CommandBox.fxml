@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Text?>
 
-<StackPane styleClass="anchor-pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <TextField fx:id="commandTextField" onAction="#handleCommandInputChanged" onKeyPressed="#handleKeyPress" promptText="Enter command here..."/>
+<StackPane fx:id="stackPane" maxHeight="37.0" minHeight="-Infinity" prefHeight="37.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <Label fx:id="keywordLabel" maxHeight="-Infinity" maxWidth="-Infinity" text="Label" />
+   <Text fx:id="commandTextDefault" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" StackPane.alignment="CENTER_LEFT">
+      <StackPane.margin>
+         <Insets left="13.0" />
+      </StackPane.margin>
+   </Text>
+   <Text fx:id="commandTextXsmall" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" />
+   <Text fx:id="commandTextSmall" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" />
+   <Text fx:id="commandTextLarge" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" />
+   <Text fx:id="commandTextXLarge" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" />
+  <TextField fx:id="commandTextField" onAction="#handleCommandInputChanged" onKeyPressed="#handleKeyPress" onKeyReleased="#handleKeyReleased" promptText="Enter command here..." styleClass="text-field" StackPane.alignment="CENTER_LEFT" />
+   <Label fx:id="checkBox" StackPane.alignment="CENTER_RIGHT">
+      <padding>
+         <Insets right="2.0" />
+      </padding></Label>
 </StackPane>
-

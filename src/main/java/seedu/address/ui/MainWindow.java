@@ -1,5 +1,10 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.commands.ThemeCommand.DARK_THEME_CSS_FILE_NAME;
+import static seedu.address.logic.commands.ThemeCommand.DARK_THEME_EXTENSIONS_CSS_FILE_NAME;
+import static seedu.address.logic.commands.ThemeCommand.LIGHT_THEME_CSS_FILE_NAME;
+import static seedu.address.logic.commands.ThemeCommand.LIGHT_THEME_EXTENSIONS_CSS_FILE_NAME;
+
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -13,12 +18,16 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SwitchThemeRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -29,10 +38,10 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/logo2.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
-    private static final int MIN_WIDTH = 450;
+    private static final int MIN_WIDTH = 1300;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -40,10 +49,15 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
+    // private Timetable timetable;
+    // private BrowserPanel browserPanel;
+    private CombinePanel combinePanel;
+    private LessonListPanel lessonListPanel;
     private Config config;
     private UserPrefs prefs;
+
+    @FXML
+    private VBox sceneBox;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -55,13 +69,16 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane lessonListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private Text logo;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -126,11 +143,18 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        // browserPanel = new BrowserPanel();
+        // browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        //
+        // timetable = new Timetable(logic);
+        // browserPlaceholder.getChildren().add(timetable.getRoot());
+
+        combinePanel = new CombinePanel(logic);
+        browserPlaceholder.getChildren().add(combinePanel.getRoot());
+
+        lessonListPanel = new LessonListPanel(logic.getFilteredLessonList());
+        lessonListPanelPlaceholder.getChildren().add(lessonListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -204,12 +228,12 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
+    public LessonListPanel getLessonListPanel() {
+        return this.lessonListPanel;
     }
 
     void releaseResources() {
-        browserPanel.freeResources();
+        combinePanel.freeResources();
     }
 
     @Subscribe
@@ -217,4 +241,29 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author cctdaniel
+    @Subscribe
+    private void handleSwitchThemeRequestEvent(SwitchThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleSwitchTheme(event);
+    }
+
+    /**
+     * Handles SwitchThemeEvent.
+     */
+    @FXML
+    public void handleSwitchTheme(SwitchThemeRequestEvent event) {
+        if (!event.isLight) {
+            sceneBox.getStylesheets().clear();
+            sceneBox.getStylesheets().add(DARK_THEME_CSS_FILE_NAME);
+            sceneBox.getStylesheets().add(DARK_THEME_EXTENSIONS_CSS_FILE_NAME);
+        } else {
+            sceneBox.getStylesheets().clear();
+            sceneBox.getStylesheets().add(LIGHT_THEME_CSS_FILE_NAME);
+            sceneBox.getStylesheets().add(LIGHT_THEME_EXTENSIONS_CSS_FILE_NAME);
+        }
+    }
+
+
 }
