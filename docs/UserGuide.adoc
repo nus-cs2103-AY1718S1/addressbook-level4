@@ -155,6 +155,8 @@ can be used as `add n/John Doe`.
 (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be typed in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME`
 is also acceptable.
+* If parameters with the same prefix are typed multiple times, only the last one will be taken. For example,
+`n/John Doe n/Martin Henz`, then only `Martin Henz` will be taken into actual consideration.
 ====
 
 ====
