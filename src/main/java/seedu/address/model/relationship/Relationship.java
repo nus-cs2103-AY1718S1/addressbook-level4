@@ -56,7 +56,8 @@ public class Relationship {
             this.toPerson = currentPerson;
         }
         return this;
-
+    }
+    
     public Name getName() {
         return name;
     }
