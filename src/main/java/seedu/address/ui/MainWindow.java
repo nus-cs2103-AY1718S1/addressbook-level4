@@ -132,9 +132,6 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        ScheduleListPanel scheduleListPanel = new ScheduleListPanel(logic.getFilteredScheduleList());
-        browserPanel.getSchedulePlaceholder().getChildren().add(scheduleListPanel.getRoot());
-
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 

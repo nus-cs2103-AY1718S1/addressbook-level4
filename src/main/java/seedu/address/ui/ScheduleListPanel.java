@@ -4,7 +4,7 @@ import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
 
-import com.google.common.eventbus.Subscribe;
+//import com.google.common.eventbus.Subscribe;
 
 //import javafx.application.Platform;
 
@@ -14,8 +14,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-//import seedu.address.commons.events.ui.JumpToScheduleListRequestEvent;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.SchedulePanelSelectionChangedEvent;
 import seedu.address.model.schedule.ReadOnlySchedule;
 
@@ -30,6 +28,10 @@ public class ScheduleListPanel extends UiPart<Region> {
 
     @FXML
     private ListView<ScheduleCard> scheduleListView;
+
+    public ScheduleListPanel() {
+        super(FXML);
+    }
 
     public ScheduleListPanel(ObservableList<ReadOnlySchedule> scheduleList) {
         super(FXML);
@@ -55,34 +57,6 @@ public class ScheduleListPanel extends UiPart<Region> {
                 });
     }
 
-    /** Implement it at browser panel side */
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        ObservableList<ReadOnlySchedule> scheduleList = event.getNewSelection()
-                .person.scheduleProperty().get().asObservableList();
-        ObservableList<ScheduleCard> mappedList = EasyBind.map(
-                scheduleList, (schedule) -> new ScheduleCard(schedule, scheduleList.indexOf(schedule) + 1));
-        scheduleListView.setItems(mappedList);
-    }
-
-
-    /**
-     * Scrolls to the {@code ScheduleCard} at the {@code index} and selects it.
-     */
-    /* Both methods should be disabled until tests for this schedule list panel is done.
-    private void scrollTo(int index) {
-        Platform.runLater(() -> {
-            scheduleListView.scrollTo(index);
-            scheduleListView.getSelectionModel().clearAndSelect(index);
-        });
-    }
-
-    @Subscribe
-    private void handleJumpToScheduleListRequestEvent(JumpToScheduleListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        scrollTo(event.targetIndex);
-    }
-    */
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code ScheduleCard}.
