@@ -20,13 +20,12 @@ import seedu.address.testutil.PersonBuilder;
 
 public class SortBirthdayCommandTest {
 
+    public static final int FIRST_PERSON = 0;
+    public static final int SECOND_PERSON = 1;
 
     private Model model;
     private Model expectedModel;
     private SortBirthdayCommand sortBirthdayCommand;
-
-    public static final int FIRST_PERSON = 0;
-    public static final int SECOND_PERSON = 1;
 
     @Before
     public void setUp() {

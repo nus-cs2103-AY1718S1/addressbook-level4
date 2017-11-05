@@ -21,12 +21,11 @@ import seedu.address.testutil.PersonBuilder;
 
 public class SortCommandTest {
 
+    public static final int FIRST_PERSON = 0;
 
     private Model model;
     private Model expectedModel;
     private SortCommand sortCommand;
-
-    public static final int FIRST_PERSON = 0;
 
     @Before
     public void setUp() {
