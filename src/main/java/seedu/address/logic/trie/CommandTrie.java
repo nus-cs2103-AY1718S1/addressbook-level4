@@ -1,5 +1,8 @@
 package seedu.address.logic.trie;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,11 +21,10 @@ public class CommandTrie implements Trie {
     private CommandCollection commandCollection;
 
     //@@author grantcm
-    public CommandTrie () {
-        commandCollection = new CommandCollection ();
+    public CommandTrie() {
+        commandCollection = new CommandCollection();
         commandSet = commandCollection.getCommandSet();
         commandMap = commandCollection.getCommandMap();
-
         for (String command : commandSet) {
             this.insert(command);
         }
@@ -39,12 +41,12 @@ public class CommandTrie implements Trie {
      * @param input key to autocomplete
      * @return input if the command is not found, otherwise String representation of command word
      */
-    public String attemptAutoComplete (String input) throws NullPointerException {
+    public String attemptAutoComplete(String input) throws NullPointerException {
         StringBuilder output = new StringBuilder();
 
         if (commandSet.contains(input)) {
             //Don't need to traverse trie
-            if (commandMap.containsKey (input)) {
+            if (commandMap.containsKey(input)) {
                 output.append(" ");
                 output.append(commandMap.get(input));
             }
@@ -72,19 +74,19 @@ public class CommandTrie implements Trie {
             }
             output.append(temp.getKey());
         }
-
         return output.toString();
     }
 
     /**
      * Insert function for trie
+     *
      * @param input key
      */
-    public void insert (String input) {
+    public void insert(String input) {
         char[] inputArray = input.toCharArray();
 
         if (root == null) {
-            root = new Node (inputArray[0], null, null);
+            root = new Node(inputArray[0], null, null);
             Node temp = root;
             for (int i = 1; i < inputArray.length; i++) {
                 temp.setChild(new Node(inputArray[i], null, null));
@@ -120,6 +122,53 @@ public class CommandTrie implements Trie {
                 }
             }
         }
+    }
+
+    /**
+     * @return a list of all possible strings for the given input
+     */
+    public List<String> getOptions(String input) {
+        List<String> options = new ArrayList<String>();
+        char[] inputArray = input.toLowerCase().toCharArray();
+        Node temp = root;
+        int i = 0;
+
+        while (!isLeaf(temp) && i < inputArray.length) {
+            if (temp.getKey() == inputArray[i]) {
+                i++;
+                temp = temp.getChild();
+            } else {
+                temp = temp.getNext();
+            }
+        }
+
+        return recursiveGetOptions(temp, input);
+    }
+
+    /**
+     * Recursive helper function for traversing the trie and getting possible options
+     */
+    private List<String> recursiveGetOptions(Node start, String stub) {
+        List<String> options = new ArrayList<>();
+        StringBuilder output = new StringBuilder();
+        output.append(stub);
+
+        while (!isLeaf(start)) {
+            if (start.hasNext()) {
+                options.addAll(recursiveGetOptions(start.getNext(), output.toString()));
+                if (start.hasChild()) {
+                    output.append(start.getKey());
+                    options.addAll(recursiveGetOptions(start.getChild(), output.toString()));
+                }
+                return options;
+            } else {
+                output.append(start.getKey());
+                start = start.getChild();
+            }
+        }
+        output.append(start.getKey());
+        options.add(output.toString());
+        return options;
     }
 
     public Set<String> getCommandSet() {

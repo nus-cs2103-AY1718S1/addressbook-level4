@@ -1,5 +1,6 @@
 package seedu.address.logic.trie;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -10,5 +11,6 @@ import java.util.Set;
 public interface Trie {
     String attemptAutoComplete (String input);
     void insert (String input);
+    List<String> getOptions (String input);
     Set<String> getCommandSet();
 }
