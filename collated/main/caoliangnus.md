@@ -33,7 +33,7 @@ public class ColorKeywordCommand extends Command {
     public static final String COMMAND_WORD = "color";
     public static final String MESSAGE_SUCCESS = " highlighting of keyword.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Highlighting the command keywords "
-            + "Parameters: enable / disable\n"
+            + "Parameters: enable/disable\n"
             + "Example: " + COMMAND_WORD + " enable";
 
     public static final String DISABLE_COLOR = "Disable";
@@ -1112,6 +1112,7 @@ public class CombinePanel extends UiPart<Region> {
     private static final String FXML = "CombinePanel.fxml";
     private static final String LESSON_NODE_ID = "lessonNode";
     private static final String STICKY_NOTE = "stickyNote";
+    private static final String HEADER = "header";
     private static final int ROW = 6;
     private static final int COL = 13;
     private static final int START_TIME = 8;
@@ -1204,6 +1205,7 @@ public class CombinePanel extends UiPart<Region> {
             }
             text += "00";
             Label header = new Label(text);
+            header.setId(HEADER);
             timetableGrid.setHalignment(header, HPos.CENTER);
             timetableGrid.add(header, i, 0);
             k++;
@@ -1218,6 +1220,7 @@ public class CombinePanel extends UiPart<Region> {
         for (int i = 1; i < ROW; i++) {
             String dayOfWeek = DayOfWeek.of(i).toString();
             Label label = new Label(dayOfWeek);
+            label.setId(HEADER);
             timetableGrid.setValignment(label, VPos.CENTER);
             timetableGrid.setHalignment(label, HPos.CENTER);
             timetableGrid.add(label, 0, i);
@@ -1262,7 +1265,6 @@ public class CombinePanel extends UiPart<Region> {
         generateTimeTableData();
         generateTimeslotHeader();
         generateWeekDay();
-
 
         for (int i = 0; i < ROW; i++) {
             for (int j = 0; j < COL; j++) {
@@ -1576,6 +1578,9 @@ class GridData {
                     configActiveTag(index, prefixList.get(FONT_SIZE));
                 }
             }
+        } else {
+            commandTextField.setStyle(userPrefFontSize);
+            checkBox.setVisible(false);
         }
 
     }
@@ -1804,6 +1809,7 @@ class GridData {
 ```
 ###### /resources/view/CombinePanel.fxml
 ``` fxml
+
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -1812,7 +1818,7 @@ class GridData {
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 
-<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="stackPane" stylesheets="@LightTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox fx:id="timeBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="1000.0">
          <children>

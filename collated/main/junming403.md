@@ -358,6 +358,9 @@ public class EditCommand extends UndoableCommand {
 
         try {
             model.updateBookedSlot(bookedSlotToEdit, editedBookedSlot);
+            if (lessonToEdit.isMarked()) {
+                editedLesson.setAsMarked();
+            }
             model.updateLesson(lessonToEdit, editedLesson);
         } catch (DuplicateLessonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_LESSON);
@@ -2143,7 +2146,8 @@ public class Remark {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Remark // instanceof handles nulls
-                && this.value.equals(((Remark) other).value)); // state check
+                && this.value.equals(((Remark) other).value)
+                && this.moduleCode.equals(((Remark) other).moduleCode)); // state check
     }
 
     @Override
@@ -2388,15 +2392,18 @@ public class XmlAdaptedRemark {
      * Configure border colour to indicate validity of user input.
      */
     private void configBorderColor(String allTextInput) {
+        checkBox.setVisible(true);
         try {
             tester.parseCommand(allTextInput);
             commandTextField.setStyle(userPrefFontSize + "-fx-border-color: green; -fx-border-width: 2");
             checkBox.setGraphic(tick);
             checkBox.toFront();
+            checkBox.setVisible(true);
         } catch (ParseException e) {
             commandTextField.setStyle(userPrefFontSize + "-fx-border-color: red; -fx-border-width: 2");
             checkBox.setGraphic(cross);
             checkBox.toFront();
+            checkBox.setVisible(true);
         }
     }
 ```

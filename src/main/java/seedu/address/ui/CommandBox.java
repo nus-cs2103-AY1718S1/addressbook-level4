@@ -115,8 +115,8 @@ public class CommandBox extends UiPart<Region> {
         TextFields.bindAutoCompletion(commandTextField, commands);
         tick.setFitHeight(30);
         tick.setFitWidth(30);
-        cross.setFitHeight(30);
-        cross.setFitWidth(30);
+        cross.setFitHeight(25);
+        cross.setFitWidth(25);
         historySnapshot = logic.getHistorySnapshot();
         tester = new AddressBookParser();
         registerAsAnEventHandler(this);
