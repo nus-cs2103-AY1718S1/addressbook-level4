@@ -1,5 +1,7 @@
 package seedu.address.commons.util;
 
+import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
@@ -13,6 +15,16 @@ public class FxViewUtil {
      */
     public static void setStageIcon(Stage stage, String iconSource) {
         stage.getIcons().setAll(AppUtil.getImage(iconSource));
+    }
+
+    /**
+     * Utility method for setting the Anchors
+     */
+    public static void applyAnchorBoundaryParameters(Node node, double left, double right, double top, double bottom) {
+        AnchorPane.setBottomAnchor(node, bottom);
+        AnchorPane.setLeftAnchor(node, left);
+        AnchorPane.setRightAnchor(node, right);
+        AnchorPane.setTopAnchor(node, top);
     }
 
 }
