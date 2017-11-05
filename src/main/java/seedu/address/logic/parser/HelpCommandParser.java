@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.BirthdayAddCommand;
+import seedu.address.logic.commands.BirthdayRemoveCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -73,6 +74,8 @@ public class HelpCommandParser implements Parser<HelpCommand> {
             return new HelpCommand("tagfind");
         } else if (input.equals(BirthdayAddCommand.COMMAND_WORD)) {
             return new HelpCommand("birthdayadd");
+        } else if (input.equals(BirthdayRemoveCommand.COMMAND_WORD)) {
+            return new HelpCommand("birthdayremove");
         } else if (input.equals(MapShowCommand.COMMAND_WORD)) {
             return new HelpCommand("mapshow");
         } else if (input.equals(MapRouteCommand.COMMAND_WORD)) {

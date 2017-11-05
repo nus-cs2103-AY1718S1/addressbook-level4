@@ -54,6 +54,8 @@ public class HelpCommand extends Command {
             return new CommandResult(TagFindCommand.MESSAGE_USAGE);
         } else if ("birthdayadd".equals(commandword)) {
             return new CommandResult(BirthdayAddCommand.MESSAGE_USAGE);
+        } else if ("birthdayremove".equals(commandword)) {
+            return new CommandResult(BirthdayRemoveCommand.MESSAGE_USAGE);
         } else if ("mapshow".equals(commandword)) {
             return new CommandResult(MapShowCommand.MESSAGE_USAGE);
         } else if ("maproute".equals(commandword)) {
