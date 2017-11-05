@@ -17,11 +17,13 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeWindowSizeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowFacebookRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.ChangeWindowSizeCommand;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -177,6 +179,16 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.setMinWidth(MIN_WIDTH);
     }
 
+    //@@author vivekscl
+    /*
+     * Sets the window size to the user defined size.
+     */
+    private void setWindowUserDefinedSize(double newWidth, double newHeight) {
+        primaryStage.setWidth(newWidth);
+        primaryStage.setHeight(newHeight);
+    }
+
+    //@@author
     /**
      * Returns the current size and the position of the main Window.
      */
@@ -216,6 +228,44 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
+    //@@author vivekscl
+    /**
+     * Changes window size to small.
+     */
+    @FXML
+    private void handleSmallWindowSize() {
+        raise(new ChangeWindowSizeRequestEvent(ChangeWindowSizeCommand.SMALL_WIDTH,
+                ChangeWindowSizeCommand.SMALL_HEIGHT));
+    }
+
+    /**
+     * Changes window size to medium.
+     */
+    @FXML
+    private void handleMediumWindowSize() {
+        raise(new ChangeWindowSizeRequestEvent(ChangeWindowSizeCommand.MEDIUM_WIDTH,
+                ChangeWindowSizeCommand.MEDIUM_HEIGHT));
+    }
+
+    /**
+     * Changes window size to big.
+     */
+    @FXML
+    private void handleBigWindowSize() {
+        raise(new ChangeWindowSizeRequestEvent(ChangeWindowSizeCommand.BIG_WIDTH,
+                ChangeWindowSizeCommand.BIG_HEIGHT));
+    }
+
+    /**
+     * Handles a change to the size of the window.
+     */
+    @Subscribe
+    private void handleChangeWindowSizeEvent(ChangeWindowSizeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setWindowUserDefinedSize(event.getWindowWidth(), event.getWindowHeight());
+    }
+
+    //@@author
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
     }
