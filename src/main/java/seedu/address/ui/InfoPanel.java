@@ -17,6 +17,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeInternalListEvent;
+import seedu.address.commons.events.ui.EmptyListEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -299,6 +300,11 @@ public class InfoPanel extends UiPart<Region> {
 
     @Subscribe
     private void handleChangeInternalListEvent(ChangeInternalListEvent event) {
+        unregisterAsAnEventHandler(this);
+    }
+
+    @Subscribe
+    private void handleEmptyListEvent(EmptyListEvent event) {
         unregisterAsAnEventHandler(this);
     }
 
