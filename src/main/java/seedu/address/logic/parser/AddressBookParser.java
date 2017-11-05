@@ -37,35 +37,35 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class AddressBookParser {
 
-    private static ArrayList<String> COMMAND_NAMES = new ArrayList<>();
+    private static ArrayList<String> commandNames = new ArrayList<>();
     /**
      * Used for initial separation of command word and args.
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
     public AddressBookParser() {
-        COMMAND_NAMES.add(AddCommand.COMMAND_WORD);
-        COMMAND_NAMES.add(SortCommand.COMMAND_WORD);
-        COMMAND_NAMES.add(EditCommand.COMMAND_WORD);
-        COMMAND_NAMES.add(TagAddCommand.COMMAND_WORD);
-        COMMAND_NAMES.add(TagFindCommand.COMMAND_WORD);
-        COMMAND_NAMES.add(TagRemoveCommand.COMMAND_WORD);
-        COMMAND_NAMES.add(BirthdayAddCommand.COMMAND_WORD);
-        COMMAND_NAMES.add(SelectCommand.COMMAND_WORD);
-        COMMAND_NAMES.add(MapShowCommand.COMMAND_WORD);
-        COMMAND_NAMES.add(MapRouteCommand.COMMAND_WORD);
-        COMMAND_NAMES.add(DeleteCommand.COMMAND_WORD);
-        COMMAND_NAMES.add(ClearCommand.COMMAND_WORD);
-        COMMAND_NAMES.add(FindCommand.COMMAND_WORD);
-        COMMAND_NAMES.add(ListCommand.COMMAND_WORD);
-        COMMAND_NAMES.add(HistoryCommand.COMMAND_WORD);
-        COMMAND_NAMES.add(ExitCommand.COMMAND_WORD);
-        COMMAND_NAMES.add(HelpCommand.COMMAND_WORD);
-        COMMAND_NAMES.add(ScheduleAddCommand.COMMAND_WORD);
-        COMMAND_NAMES.add(ScheduleRemoveCommand.COMMAND_WORD);
-        COMMAND_NAMES.add(UndoCommand.COMMAND_WORD);
-        COMMAND_NAMES.add(RedoCommand.COMMAND_WORD);
-        COMMAND_NAMES.add(ExportCommand.COMMAND_WORD);
+        commandNames.add(AddCommand.COMMAND_WORD);
+        commandNames.add(SortCommand.COMMAND_WORD);
+        commandNames.add(EditCommand.COMMAND_WORD);
+        commandNames.add(TagAddCommand.COMMAND_WORD);
+        commandNames.add(TagFindCommand.COMMAND_WORD);
+        commandNames.add(TagRemoveCommand.COMMAND_WORD);
+        commandNames.add(BirthdayAddCommand.COMMAND_WORD);
+        commandNames.add(SelectCommand.COMMAND_WORD);
+        commandNames.add(MapShowCommand.COMMAND_WORD);
+        commandNames.add(MapRouteCommand.COMMAND_WORD);
+        commandNames.add(DeleteCommand.COMMAND_WORD);
+        commandNames.add(ClearCommand.COMMAND_WORD);
+        commandNames.add(FindCommand.COMMAND_WORD);
+        commandNames.add(ListCommand.COMMAND_WORD);
+        commandNames.add(HistoryCommand.COMMAND_WORD);
+        commandNames.add(ExitCommand.COMMAND_WORD);
+        commandNames.add(HelpCommand.COMMAND_WORD);
+        commandNames.add(ScheduleAddCommand.COMMAND_WORD);
+        commandNames.add(ScheduleRemoveCommand.COMMAND_WORD);
+        commandNames.add(UndoCommand.COMMAND_WORD);
+        commandNames.add(RedoCommand.COMMAND_WORD);
+        commandNames.add(ExportCommand.COMMAND_WORD);
     }
 
     /**
@@ -170,7 +170,7 @@ public class AddressBookParser {
     }
 
     public static ArrayList<String> getCommandNames() {
-        return COMMAND_NAMES;
+        return commandNames;
     }
 
 }
