@@ -13,11 +13,13 @@ public class AddMeetingCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_NAME + "NAME_OF_MEETING "
             + PREFIX_DATE + "DATE_TIME "
-            + PREFIX_LOCATION + "LOCATION \n"
+            + PREFIX_LOCATION + "LOCATION "
+            + PREFIX_TAG + "0-2 \n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_NAME + "Project Meeting "
             + PREFIX_DATE + "31-10-2017 21:30 "
-            + PREFIX_LOCATION + "School of Computing, NUS ";
+            + PREFIX_LOCATION + "School of Computing, NUS "
+            + PREFIX_TAG + "1";
 
     public static final String MESSAGE_SUCCESS = "New meeting added: %1$s";
     public static final String MESSAGE_DUPLICATE_MEETING = "This meeting already exists in the address book";
@@ -29,6 +31,7 @@ public class AddMeetingCommand extends UndoableCommand {
     private final NameMeeting name;
     private final DateTime date;
     private final Place location;
+    private final MeetingTag meetTag;
 
 ```
 ###### \java\seedu\address\logic\commands\AddMeetingCommand.java
@@ -184,7 +187,7 @@ public class AddMeetingCommandParser implements Parser<AddMeetingCommand> {
      */
     public AddMeetingCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DATE, PREFIX_LOCATION);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DATE, PREFIX_LOCATION, PREFIX_TAG);
 
         Index index;
 
@@ -194,7 +197,7 @@ public class AddMeetingCommandParser implements Parser<AddMeetingCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMeetingCommand.MESSAGE_USAGE));
         }
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_DATE, PREFIX_LOCATION)) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_DATE, PREFIX_LOCATION, PREFIX_TAG)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMeetingCommand.MESSAGE_USAGE));
         }
 
@@ -202,8 +205,9 @@ public class AddMeetingCommandParser implements Parser<AddMeetingCommand> {
             NameMeeting name = ParserUtil.parseNameMeeting(argMultimap.getValue(PREFIX_NAME)).get();
             DateTime date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
             Place place = ParserUtil.parsePlace(argMultimap.getValue(PREFIX_LOCATION)).get();
+            MeetingTag meetingTag = ParserUtil.parseMeetTag(argMultimap.getValue(PREFIX_TAG)).get();
 
-            return new AddMeetingCommand(name, date, place, index);
+            return new AddMeetingCommand(name, date, place, index, meetingTag);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -460,6 +464,8 @@ public class XmlAdaptedMeeting {
     private String personToMeet;
     @XmlElement(required = true)
     private String phoneNum;
+    @XmlElement(required = true)
+    private String meetTag;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -486,8 +492,9 @@ public class XmlAdaptedMeeting {
         final Place place = new Place(this.place);
         final PersonToMeet personToMeet = new PersonToMeet(this.personToMeet);
         final PhoneNum phoneNum = new PhoneNum(this.phoneNum);
+        final MeetingTag meetTag = new MeetingTag(this.meetTag);
 
-        return new Meeting(name, dateTime, place, personToMeet, phoneNum);
+        return new Meeting(name, dateTime, place, personToMeet, phoneNum, meetTag);
     }
 
 }
