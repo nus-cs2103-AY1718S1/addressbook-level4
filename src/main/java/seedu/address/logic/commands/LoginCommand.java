@@ -41,7 +41,7 @@ public class LoginCommand extends Command {
                 logger.info("Credentials Accepted");
                 try {
                     MainApp.getUi().restart(account.getUsername().fullName);
-                } catch (NullPointerException e) {
+                } catch (Exception e) {
 
                     logger.info("Exception caught" + e.toString());
                 }

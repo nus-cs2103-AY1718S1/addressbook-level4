@@ -7,7 +7,6 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
-import seedu.address.model.Database;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyDatabase;
 
@@ -26,7 +25,6 @@ public abstract class UndoableCommand extends Command {
     private void saveAddressBookSnapshot() {
         requireNonNull(model);
         this.previousAddressBook = new AddressBook(model.getAddressBook());
-      //  this.previousDatabase = new Database(model.getDatabase());
     }
 
     /**
@@ -37,7 +35,6 @@ public abstract class UndoableCommand extends Command {
     protected final void undo() {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook);
-     //   model.resetDatabase(previousDatabase);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.updateFilteredAccountList(PREDICATE_SHOW_ALL_ACCOUNTS);
     }
