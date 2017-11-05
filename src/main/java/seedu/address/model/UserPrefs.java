@@ -14,7 +14,7 @@ public class UserPrefs {
     private String addressBookName = "Bluebird";
 
     public UserPrefs() {
-        this.setGuiSettings(1217, 786, 0, 0);
+        this.setGuiSettings(952.0, 898, 0, 0);
     }
 
     public GuiSettings getGuiSettings() {

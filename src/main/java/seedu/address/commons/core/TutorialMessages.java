@@ -16,11 +16,11 @@ public class TutorialMessages {
     public static final String INTRO_TWO = "This is the command box, where you will enter your commands.";
     public static final String INTRO_THREE = "This is the result display, where "
             + "I will display the outcome of your commands.";
-    public static final String INTRO_FOUR = "This is the sort menu, where you can select how to sort the list.";
-    public static final String INTRO_FIVE = "This is the search box, where "
-            + "you are able to search for the person you want.";
-    public static final String INTRO_SIX = "This is the person and task list panel, "
+    public static final String INTRO_FOUR = "This is the person and task list panel, "
             + "where you will see your list of contacts and tasks";
+    public static final String INTRO_FIVE = "This is the sort menu, where you can select how to sort the list.";
+    public static final String INTRO_SIX = "This is the search box, where "
+            + "you are able to search for the person you want.";
     public static final String INTRO_END = "Features of Bluebird:\n"
             + "1. Add a contact and task\n"
             + "2. Delete a contact and task\n"
