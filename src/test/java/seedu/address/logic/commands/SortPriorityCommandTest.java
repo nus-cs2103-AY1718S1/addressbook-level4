@@ -1,13 +1,9 @@
 //@@author inGall
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.assertSortSuccess;
-import static seedu.address.testutil.TypicalAccounts.getTypicalDatabase;
-import static seedu.address.testutil.TypicalReminders.getTypicalAddressBook;
 
 import org.junit.Before;
 import org.junit.Test;
