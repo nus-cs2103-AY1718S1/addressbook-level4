@@ -230,5 +230,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ObservableList<ReadOnlyPerson> listOfPersonNameSorted() {
         return persons.asObservableListSortedByName();
     }
+
+    public ObservableList<Schedule> sortSchedules() {
+        return schedules.asObservableListSortedChronologically();
+    }
     //@@author
 }
