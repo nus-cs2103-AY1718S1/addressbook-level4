@@ -51,6 +51,7 @@ public class XmlFileStorage {
         }
     }
 
+    //@@author cqhchan
     /**
      *
      * @param file

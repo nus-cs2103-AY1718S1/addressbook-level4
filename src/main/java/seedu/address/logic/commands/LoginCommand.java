@@ -10,7 +10,6 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 
 import seedu.address.model.credentials.ReadOnlyAccount;
-//@@author cqhchan
 /**
  *
  */

@@ -1,3 +1,4 @@
+//@@author cqhchan
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -32,7 +33,6 @@ public class CreateAccountCommandParser implements Parser<CreateAccountCommand> 
         }
 
         try {
-
             Password userPassword = ParserUtil.parsePassword(argMultimap.getValue(PREFIX_PASSWORD)).get();
             Username userName = ParserUtil.parseUsername(argMultimap.getValue(PREFIX_USERNAME)).get();
             ReadOnlyAccount account = new Account(userName, userPassword);

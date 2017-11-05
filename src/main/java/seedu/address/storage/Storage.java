@@ -39,7 +39,7 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, DataBaseS
     @Override
     void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
 
-
+    //@@author cqhchan
     @Override
     void saveDatabase(ReadOnlyDatabase database) throws IOException;
 

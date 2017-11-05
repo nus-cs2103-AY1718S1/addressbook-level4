@@ -1,3 +1,4 @@
+//@@author cqhchan
 package seedu.address.model.credentials;
 
 import static java.util.Objects.requireNonNull;
