@@ -257,6 +257,20 @@ Example: `appoint 1 ap/12/12/2020 15:12 60` +
 * If ap/ is left blank, the old appointment will be deleted.
 ****
 
+=======
+=== Removing tag : `removetag`
+
+Since v1.5
+
+Used to remove a tag with TAG name +
+If such a tag does not exit, nothing happens. +
+Format: `removetag t/TAG` +
+
+Examples:
+
+* `removetag t/friend` +
+Removes the tag `friend` from the address book.
+
 // tag::groupungroup[]
 === Grouping persons : `group`
 
@@ -484,6 +498,8 @@ TBI in v2.0: 'select me', 'select all' +
 * *Select* : `select INDEX` (also `select me`) +
 e.g.: `select 2`, `select all` +
 `select me` +
+* *Remove Tag* : `removetag t/TAG` +
+e.g.: `removetag t/friend` +
 * *Group* : `group INDEX gn/GROUP_NAME` +
 e.g.: `group 2 gn/Family` +
 * *Ungroup* : `ungroup INDEX gn/NAME` +

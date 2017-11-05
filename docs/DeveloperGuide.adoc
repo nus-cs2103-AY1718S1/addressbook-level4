@@ -359,10 +359,19 @@ Listing, subgroups and group attributes TBI in v2.0
 
 // end::groupjustification[]
 
-Big picture. Note that AddressBook further updates the Person's references to the groups.
-`filtered` denotes the Person extracted by applying the index filtering.
+==== Big picture
+Group class diagram (note that attributes, classes and methods not relevant for the groups are omitted):
+
+image::GroupClassDiagram.png[width="800"]
+
+How grouping is executed, sequence diagram:
 
 image::GroupSequenceDiagram.png[width="800"]
+
+Note that AddressBook further updates the Person's references to the groups.
+`filtered` denotes the Person extracted by applying the index filtering. +
+
+See also the object diagrams showing the process of ungrouping: link:#Ungroup[Ungroup diagram] in appendix
 
 ==== Design Considerations
 **Aspect:** Storing information about group members +
@@ -905,6 +914,18 @@ Use case resumes at step 2.
 .  It's outlook should be customizable.
 .  Should be safe on any input. (not crash on invalid input)
 .  Should be easily extensible.
+
+[appendix]
+== Ungroup
+Object diagram before performing `ungroup 1 gn/CS2103` (assuming Alice is the person with index 1).
+
+image::UngroupObjectDiagramBefore.png[width="800"]
+
+And after ungrouping. Note that the group `CS2103` is not kept by the AddressBook's UniqueGroupList either, as there are no other
+persons linked to that group, so it is assumed to be obsolete.
+
+image::UngroupObjectDiagramAfter.png[width="800"]
+
 
 [appendix]
 == Glossary

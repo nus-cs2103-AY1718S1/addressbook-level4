@@ -10,6 +10,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PICTURE_PATH;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PATH;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -34,6 +35,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UngroupCommand;
@@ -42,6 +44,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -98,6 +101,14 @@ public class AddressBookParserTest {
     //@@author
 
     //@@author arturs68
+    @Test
+    public void parseCommand_removeTag() throws Exception {
+        final String tag = "SomeTag";
+        RemoveTagCommand command = (RemoveTagCommand) parser.parseCommand(RemoveTagCommand.COMMAND_WORD
+                + " " + PREFIX_TAG + tag);
+        assertEquals(new RemoveTagCommand(new Tag(tag)), command);
+    }
+
     @Test
     public void parseCommand_group() throws Exception {
         final String groupName = "Some group name";
