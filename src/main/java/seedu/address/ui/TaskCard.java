@@ -17,6 +17,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import seedu.address.model.task.ReadOnlyTask;
 
+//@@author deep4k
 /**
  * UI component that displays information of a {@code Task}.
  */

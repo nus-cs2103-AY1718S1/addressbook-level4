@@ -34,10 +34,11 @@ public class Address {
         this.value = address;
     }
 
+    //@@author aziziazfar
     /**
      * Provides a default address (" ") when field is empty.
      *
-     * @throws IllegalValueException if given phone string is invalid.
+     * @throws IllegalValueException if given address string is invalid.
      */
     public Address(int checkValue) throws IllegalValueException {
         if (checkValue != 0) {
@@ -45,6 +46,7 @@ public class Address {
         }
         this.value = " ";
     }
+    //@author aziziazfar
 
     /**
      * Returns true if a given string is a valid person email.

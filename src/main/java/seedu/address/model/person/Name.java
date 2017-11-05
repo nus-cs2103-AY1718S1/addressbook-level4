@@ -35,6 +35,7 @@ public class Name {
         this.fullName = trimmedName;
     }
 
+    //@@author aziziazfar
     /**
      * Provides a default name (" ") when field is empty.
      *
@@ -46,6 +47,7 @@ public class Name {
         }
         this.fullName = " ";
     }
+    //@@author
     /**
      * Returns true if a given string is a valid person name.
      */

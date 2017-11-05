@@ -11,7 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
-import seedu.address.commons.events.ui.ToggleToPersonViewEvent;
+import seedu.address.commons.events.ui.ToggleSearchBoxStyle;
+import seedu.address.commons.events.ui.ToggleToAllPersonViewEvent;
 import seedu.address.commons.events.ui.ToggleToTaskViewEvent;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -27,7 +28,9 @@ public class SortFindPanel extends UiPart<Region> {
     private static final String FXML = "SortFindPanel.fxml";
     private static final String SORT_COMMAND_WORD = "sort";
     private static final String FIND_COMMAND_WORD = "find";
+    private static final String FIND_PINNED_COMMAND_WORD = "findpinned";
     private static final String LIST_COMMAND_WORD = "list";
+    private static final String LIST_PINNED_COMMAND_WORD = "listpin";
 
     private final Logger logger = LogsCenter.getLogger(SortFindPanel.class);
     private final Logic logic;
@@ -62,10 +65,18 @@ public class SortFindPanel extends UiPart<Region> {
     @FXML
     private void handleSearchFieldChanged() {
         try {
-            if (searchBox.getText().trim().isEmpty()) {
-                logic.execute(LIST_COMMAND_WORD);
-            } else {
-                logic.execute(FIND_COMMAND_WORD + " " + searchBox.getText());
+            if (searchBox.getPromptText().contains("Person")) {
+                if (searchBox.getText().trim().isEmpty()) {
+                    logic.execute(LIST_COMMAND_WORD);
+                } else {
+                    logic.execute(FIND_COMMAND_WORD + " " + searchBox.getText());
+                }
+            } else if (searchBox.getPromptText().contains("Pinned")) {
+                if (searchBox.getText().trim().isEmpty()) {
+                    logic.execute(LIST_PINNED_COMMAND_WORD);
+                } else {
+                    logic.execute(FIND_PINNED_COMMAND_WORD + " " + searchBox.getText());
+                }
             }
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to find person in search box");
@@ -129,12 +140,30 @@ public class SortFindPanel extends UiPart<Region> {
      */
     @Subscribe
     private void handleToggleToTaskViewEvent(ToggleToTaskViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchToTaskView();
     }
 
+    /**
+     * Handles switch to all person view event
+     */
     @Subscribe
-    private void handleToggleToPersonViewEvent(ToggleToPersonViewEvent event) {
+    private void handleToggleToAllPersonViewEvent(ToggleToAllPersonViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchToPersonView();
+    }
+
+    /**
+     * Handles switch to pinned person view event
+     */
+    @Subscribe
+    private void handleToggleSearchBoxStyleEvent(ToggleSearchBoxStyle event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (event.isPinnedStyle()) {
+            switchToPinnedPersonSearchStyle();
+        } else {
+            switchToAllPersonSearchStyle();
+        }
     }
 
     /**
@@ -143,6 +172,20 @@ public class SortFindPanel extends UiPart<Region> {
     private void switchToPersonView() {
         searchBox.setPromptText("Search Person...");
         sortMenu.setVisible(true);
+    }
+
+    /**
+     * Switches style to pinned person search.
+     */
+    private void switchToPinnedPersonSearchStyle() {
+        searchBox.setPromptText("Search Pinned...");
+    }
+
+    /**
+     * Switches style to all person search.
+     */
+    private void switchToAllPersonSearchStyle() {
+        searchBox.setPromptText("Search Person...");
     }
 
     /**

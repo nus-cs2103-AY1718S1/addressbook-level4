@@ -9,15 +9,18 @@ import java.util.function.Predicate;
 import seedu.address.model.tag.Tag;
 
 //@@author Alim95
+
 /**
  * Tests that a {@code ReadOnlyPerson}'s details matches any of the keywords given.
  */
 public class PersonHasKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
     private final String fullWord;
+    private final boolean isFindPinned;
 
-    public PersonHasKeywordsPredicate(List<String> keywords) {
+    public PersonHasKeywordsPredicate(List<String> keywords, boolean isFindPinned) {
         this.keywords = keywords;
+        this.isFindPinned = isFindPinned;
         StringJoiner joiner = new StringJoiner(" ");
         for (String key : keywords) {
             joiner.add(key);
@@ -38,22 +41,23 @@ public class PersonHasKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private boolean isPersonMatch(ReadOnlyPerson person, String[] nameParts, ArrayList<String> tagParts) {
         for (String tag : tagParts) {
             if (keywords.stream().anyMatch(keyword -> tag.startsWith(keyword.toLowerCase()))) {
-                return true;
+                return !isFindPinned || person.isPinned();
             }
         }
         for (String name : nameParts) {
             if (keywords.stream().anyMatch(keyword -> name.toLowerCase().startsWith(keyword.toLowerCase()))) {
-                return true;
+                return !isFindPinned || person.isPinned();
             }
         }
         if (keywords.size() != 0 && person.getAddress().toString().toLowerCase().contains(fullWord)) {
-            return true;
+            return !isFindPinned || person.isPinned();
         }
         if (keywords.stream().anyMatch(keyword -> person.getEmail().toString().toLowerCase()
                 .startsWith(keyword.toLowerCase()))) {
-            return true;
+            return !isFindPinned || person.isPinned();
         }
-        return keywords.stream().anyMatch(keyword -> person.getPhone().toString().startsWith(keyword.toLowerCase()));
+        return keywords.stream().anyMatch(keyword -> person.getPhone()
+                .toString().startsWith(keyword.toLowerCase())) && (!isFindPinned || person.isPinned());
     }
 
     private ArrayList<String> getTags(ReadOnlyPerson person) {

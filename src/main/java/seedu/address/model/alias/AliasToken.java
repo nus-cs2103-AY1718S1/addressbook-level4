@@ -8,6 +8,7 @@ import java.util.Objects;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+//@@author deep4k
 /**
  * Represents all aliases used in address book. Each alias is a token that contains a keyword and representation.
  * Instances of AliasToken are immutable.

@@ -6,6 +6,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.model.alias.UniqueAliasTokenList;
 
+//@@author deep4k
 public class UniqueAliasTokenListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

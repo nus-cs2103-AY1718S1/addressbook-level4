@@ -47,6 +47,7 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    //@@author aziziazfar
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -87,6 +88,7 @@ public class ParserUtil {
         }
     }
 
+    //@@author wynkheng
     /**
      * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -100,6 +102,7 @@ public class ParserUtil {
             return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
         }
     }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
@@ -113,6 +116,7 @@ public class ParserUtil {
             return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
         }
     }
+    //@@author
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.

@@ -906,6 +906,7 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
 ```
 ###### \java\systemtests\SortCommandSystemTest.java
 ``` java
+
 public class SortCommandSystemTest extends AddressBookSystemTest {
 
     private static final String MESSAGE_INVALID_SORT_COMMAND_FORMAT =

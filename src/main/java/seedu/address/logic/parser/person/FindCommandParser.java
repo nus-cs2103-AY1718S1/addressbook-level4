@@ -29,7 +29,7 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
-        return new FindCommand(new PersonHasKeywordsPredicate(Arrays.asList(nameKeywords)));
+        return new FindCommand(new PersonHasKeywordsPredicate(Arrays.asList(nameKeywords), false));
     }
 
     @Override

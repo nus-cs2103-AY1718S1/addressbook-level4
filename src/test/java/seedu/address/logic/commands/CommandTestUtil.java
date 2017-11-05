@@ -130,7 +130,7 @@ public class CommandTestUtil {
     public static void showFirstPersonOnly(Model model) {
         ReadOnlyPerson person = model.getAddressBook().getPersonList().get(0);
         final String[] splitName = person.getName().fullName.split("\\s+");
-        model.updateFilteredPersonList(new PersonHasKeywordsPredicate(Arrays.asList(splitName[0])));
+        model.updateFilteredPersonList(new PersonHasKeywordsPredicate(Arrays.asList(splitName[0]), false));
 
         assert model.getFilteredPersonList().size() == 1;
     }

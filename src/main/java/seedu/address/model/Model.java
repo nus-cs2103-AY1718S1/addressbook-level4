@@ -98,6 +98,7 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    //@@author deep4k
     // ================ Related to AliasTokens ==============================
 
     /**
@@ -161,4 +162,5 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
+    //@@author
 }
