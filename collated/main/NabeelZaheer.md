@@ -12,7 +12,7 @@ public class AddTagCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Add the tag to a person by the index number used "
             + "in the last person listing.\n"
-            + "Parameters: [TAG]... [INDEX]...(INDEX must be positive integer)\n"
+            + "Parameters: TAG... INDEX...(INDEX must be positive integer)\n"
             + "[INDEX] can be set as a range."
             + "Example: " + COMMAND_WORD + " friends 1"
             + "Example: " + COMMAND_WORD + " friends 1-4";
@@ -120,7 +120,7 @@ public class RemoveTagCommand extends UndoableCommand {
             + ": Remove the tag from a person by the index number used "
             + "in the last person listing.\n"
             + "Remove the specified tag in the whole address book by excluding the [INDEX] parameter.\n"
-            + "Parameters: [TAG]... [INDEX]...(INDEX must be positive integer)\n"
+            + "Parameters: TAG... INDEX...(INDEX must be positive integer)\n"
             + "[INDEX] can be set as a range."
             + "Example: " + COMMAND_WORD + " friends 1"
             + "Example: " + COMMAND_WORD + " friends 1-4";

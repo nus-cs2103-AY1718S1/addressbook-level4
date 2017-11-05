@@ -1,4 +1,4 @@
-= The Classroom v1.4 - User Guide
+= The Classroom - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -15,7 +15,7 @@ endif::[]
 By: `T09-B4`      Since: `Oct 2017`      Licence: `MIT`
 
 == *Introduction*
-The `The Classroom v1.4` is a program to maintain your contact list. You can use the _**The Classroom**_
+`The Classroom v1.4` is a program to maintain your contact list. You can use _**The Classroom**_
  to add, delete, find, sort,  group contacts and even maintain a to-do list with your contacts.
 
 == *About*
@@ -218,9 +218,9 @@ Deletes the 1st person from the results of the `find` command.
 
 *Suggestion for use:* If you do not want to keep a contact in the contact list.
 
-==== Sorting the person list : `sort`
+==== Sorting the contact list : `sort`
 
-*Description:* Sorts the person list according to the specified _data field_.
+*Description:* Sorts the contact list according to the specified _data field_.
 
 *Format:* `sort` `DATAFIELD`
 
@@ -422,6 +422,46 @@ Removes the `friends` tag from the second to fifth person in the contact list.
 
 // end::removetag[]
 
+==== Add/remove a remark note to contact: `addremark`, `removeremark`
+
+*Description:* Adds/Removes the specified remarks(s).
+
+Format to add remark: `addremark INDEX r/REMARK` +
+Format to remove remark: `removeremark INDEX REMARKINDEX`
+
+****
+* Add/Remove multiple remarks from multiple indexes as specified.
+* `INDEX` refers to the index number shown in the last person listing.
+* The `INDEX` must be a *positive integer* ( `1, 2, 3, ...`).
+* Range of index can be used.
+** Lower limit of range must be *lower than* or *equal to* the upper limit  (`1-4`, `3-3`).
+****
+[TIP]
+A person can have any number of remarks (including 0) +
+Remarks can be anything (including a blank) +
+GUI will display a list of person with pending remarks.
+
+Examples:
+
+* `addremark 1 r/Have a beer with him on Sunday`
+* `addremark 3 r/Finish project with him by tomorrow r/Eat supper with him at 10`
+* `removeremark 1 1 3`
+* `removeremark 2 1`
+
+==== Link twitter page to contact: `link`
+
+Adds a twitter link to a person existing in the address book based on their index +
+
+Format: `link PERSONINDEX l/WEBSITEURL` +
+
+[TIP]
+A person can have only one link, any changes will update the existing link to be the new link +
+Only twitter links are accepted
+
+Examples:
+
+* `link 1 l/https://www.twitter.com/john.doe`
+
 ==== Clearing all entries : `clear`
 
 *Description:* Clears all entries in _**The Classroom**_.
@@ -463,6 +503,9 @@ You are *not* required to save data manually.
 | *Redo* | *r* | `redo` +
 | *Removetag* | *rt* | `removetag TAG... INDEX...` +
 | *Addtag* | *at* | `addtag TAG... INDEX...` +
+| *RemoveRemark* | *rr* | `removeremark INDEX... REMARK...` +
+| *AddRemark* | *ar* | `removetag INDEX... REMARKINDEX...` +
+| *link* | *-* | `link TWITTERLINK` +
 | *Clear* | *c* | `clear` +
 | *exit* | *x* | `exit` +
 |=======================================================================
@@ -524,40 +567,6 @@ Remove specified tags from multiple persons in the address book by specifying th
 
 Format: `remove friends family 1 3`
 
-=== Add/remove a remark note to contact: `addremark`, `removeremark`
-
-Adds remarks to a person existing in the address book based on their index +
-Or to remove remarks based on person's index and remark index +
-
-Format to add remark: `remark PERSONINDEX r/REMARK` +
-Format to remove remark: `remark PERSONINDEX REMARKINDEX`
-
-[TIP]
-A person can have any number of remarks (including 0) +
-Remarks can be anything (including a blank) +
-GUI will display a list of person with pending remarks.
-
-Examples:
-
-* `remark 1 r/Have a beer with him on Sunday`
-* `remark 3 r/Finish project with him by tomorrow r/Eat supper with him at 10`
-* `remark 1 1 3`
-* `remark 2 1`
-
-=== Link twitter page to contact: `link`
-
-Adds a twitter link to a person existing in the address book based on their index +
-
-Format: `link PERSONINDEX l/WEBSITEURL` +
-
-[TIP]
-A person can have only one link, any changes will update the existing link to be the new link +
-Only twitter links are accepted
-
-Examples:
-
-* `link 1 l/https://www.twitter.com/john.doe`
-
 === Enhanced `removetag` command to remove tag from range of index
 
 Allows user to remove tag from multiple persons in the address book by specifying the corresponding range of index. +
@@ -569,6 +578,7 @@ Format: `removetag friends 1-4`
 Allows user to add tag to multiple persons in the address book by specifying the corresponding range of index. +
 
 Format: `addtag friends 1-4`
+
 
 === Standardised `removetag` command
 
@@ -582,6 +592,17 @@ Input of format has been changed to be consistent with the rest of commands. +
 
 Format: `addtag 1-4 friends`
 
+=== Favourite a person using `favourite` command
+
+Allows user to favourite a person by specifying the person's corresponding index
+
+Format: `favourite 2`
+
+=== Sort the contact list using `sort` command
+
+Allows user to sort the contact list by either name, phone, email or address
+
+Format: `sort address`
 
 
 == *Coming in v2.0*
