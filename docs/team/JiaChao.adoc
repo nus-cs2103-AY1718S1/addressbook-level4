@@ -174,6 +174,14 @@ This panel is needed to display the statistics of the students currently in the 
 * Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
 
+
+=== Helping out other groups
+
+* Found Bugs and gave Suggestions to other groups as acceptance testing.
+** CS2103AUG2017-T09-B3 (Issues https://github.com/CS2103AUG2017-T09-B3/main/issues/150[#150], https://github.com/CS2103AUG2017-T09-B3/main/issues/151[#151], https://github.com/CS2103AUG2017-T09-B3/main/issues/152[#152], https://github.com/CS2103AUG2017-T09-B3/main/issues/153[#153])
+** CS2103AUG2017-T11-B1 (Issues https://github.com/CS2103AUG2017-T11-B1/main/issues/136[#136], https://github.com/CS2103AUG2017-T11-B1/main/issues/137[#137] )
+
+
 == Project: NUShortcuts
 
 https://nushortcuts.herokuapp.com/[NUShortcuts] is a web application to provide step by step picture guides to for shortcuts around NUS.
