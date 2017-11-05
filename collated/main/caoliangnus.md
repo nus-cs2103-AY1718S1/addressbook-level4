@@ -68,32 +68,6 @@ public class ColorKeywordCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/LogicManager.java
-``` java
-    @Override
-    public HashMap<String, String> getCommandKeywordColorMap() {
-        HashMap<String, String> keywordColorMap = new HashMap<>();
-        keywordColorMap.put(AddCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(DeleteCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(EditCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(ExitCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(FindCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(HelpCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(ListCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(SelectCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(SortCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(ClearCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(UndoCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(RedoCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(CustomiseCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(HistoryCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(ViewCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(ColorKeywordCommand.COMMAND_WORD, "red");
-        return keywordColorMap;
-    }
-
-}
-```
 ###### /java/seedu/address/logic/parser/ColorKeywordCommandParser.java
 ``` java
 package seedu.address.logic.parser;
@@ -1069,6 +1043,12 @@ public class XmlAdaptedLesson {
 ``` java
 package seedu.address.ui;
 
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_LARGE;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
+
 import java.net.URL;
 import java.time.DayOfWeek;
 import java.util.Objects;
@@ -1092,10 +1072,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.commons.events.ui.LessonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.RemarkChangedEvent;
 import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.logic.Logic;
+import seedu.address.model.FontSizeUnit;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.Remark;
@@ -1253,7 +1235,6 @@ public class CombinePanel extends UiPart<Region> {
                 int count = gridData[weekDayRow][startHourCol].getCount();
                 gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol, endHourSpan, ++count);
             }
-
         }
     }
 
@@ -1385,98 +1366,22 @@ public class CombinePanel extends UiPart<Region> {
                 int z = 120 + (int) (Math.random() * 255);
 
                 TextArea ta = new TextArea(text);
+
                 ta.setWrapText(true);
                 ta.setEditable(false);
 
-
-                StackPane stackPane = new StackPane();
-                stackPane.setStyle("-fx-background-color: rgba(" + x + "," + y + ", " + z + ", 0.5);"
+                StackPane noteStackPane = new StackPane();
+                noteStackPane.setStyle("-fx-background-color: rgba(" + x + "," + y + ", " + z + ", 0.5);"
                         + "-fx-effect: dropshadow(gaussian, red, " + 20 + ", 0, 0, 0);"
                         + "-fx-background-insets: " + 10 + ";");
                 ta.setId(STICKY_NOTE);
-                stackPane.getChildren().add(ta);
-                noteGrid.add(stackPane, j, i);
+                noteStackPane.getChildren().add(ta);
+                noteGrid.add(noteStackPane, j, i);
+                FontSizeUnit currFontSize = FontSizeUnit.getCurrentFontSizeUnit();
+                setFontSizeUnit(currFontSize);
             }
         }
     }
-}
-
-/**
- * Contains data related to grid object in JavaFX.
- */
-class GridData {
-    private String text;
-    private Integer weekDayRow;
-    private Integer startHourCol;
-    private Integer endHourSpan;
-    private Integer count;
-
-    public GridData() {
-        this("", -1, -1, -1, 0);
-    }
-
-    public GridData(String text, int weekDayRow, int startHourCol, int endHourSpan, int count) {
-        this.text = text;
-        this.weekDayRow = weekDayRow;
-        this.startHourCol = startHourCol;
-        this.endHourSpan = endHourSpan;
-        this.count = count;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public Integer getEndHourSpan() {
-        return endHourSpan;
-    }
-
-    public Integer getStartHourCol() {
-        return startHourCol;
-    }
-
-    public Integer getWeekDayRow() {
-        return weekDayRow;
-    }
-
-    public Integer getCount() {
-        return count;
-    }
-
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(text, weekDayRow, startHourCol, endHourSpan);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        GridData other = (GridData) obj;
-        if (!text.equals(other.text)) {
-            return false;
-        }
-        if (!weekDayRow.equals(other.weekDayRow)) {
-            return false;
-        }
-        if (!startHourCol.equals(other.startHourCol)) {
-            return false;
-        }
-        if (!endHourSpan.equals(other.endHourSpan)) {
-            return false;
-        }
-        return true;
-    }
-}
 
 ```
 ###### /java/seedu/address/ui/CommandBox.java
@@ -1803,6 +1708,30 @@ class GridData {
      */
     public void setEnableHighlight(boolean enableHighlight) {
         this.enableHighlight = enableHighlight;
+    }
+
+```
+###### /java/seedu/address/ui/CommandBox.java
+``` java
+    public HashMap<String, String> getCommandKeywordColorMap() {
+        HashMap<String, String> keywordColorMap = new HashMap<>();
+        keywordColorMap.put(AddCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(DeleteCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(EditCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(ExitCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(FindCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(HelpCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(ListCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(SelectCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(SortCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(ClearCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(UndoCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(RedoCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(CustomiseCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(HistoryCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(ViewCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(ColorKeywordCommand.COMMAND_WORD, "red");
+        return keywordColorMap;
     }
 
 }

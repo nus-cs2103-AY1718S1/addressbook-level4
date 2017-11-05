@@ -1,6 +1,5 @@
 package seedu.address.logic;
 
-import java.util.HashMap;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -29,12 +28,6 @@ public interface Logic {
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
-
-    /**
-     * Returns the list of CommandKeyword and its corresponding color
-     * @return
-     */
-    HashMap<String, String> getCommandKeywordColorMap();
 
     /** Returns an unmodifiable view of the list of remarks */
     ObservableList<Remark> getFilteredRemarkList();
