@@ -578,8 +578,8 @@ public class CommandBox extends UiPart<Region> {
             break;
 
         case FONT_SIZE_NORMAL:
-            commandTextField.setStyle("-fx-font-size: medium;");
-            userPrefFontSize = "-fx-font-size: medium;";
+            commandTextField.setStyle("-fx-font-size: normal;");
+            userPrefFontSize = "-fx-font-size: normal;";
             fontIndex = 3;
             break;
 
