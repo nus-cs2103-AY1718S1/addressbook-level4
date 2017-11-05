@@ -44,12 +44,15 @@ Make the addressbook more useful to a tourguide
 
 === Autocomplete
 Pressing kbd:[&tab;] will attempt to autocomplete current command. Turns text red if not suitable command exists. Since v1.2
+To see parameters for a command, press tab on a complete command. Pressing tab again will remove the parameters. If the command has no parameters then the text will turn red. Since v1.3
 
-=== Groups: `group`
+If there are multiple possible commands for a given input, i.e. 'e' could be 'edit', 'exit', or 'export', then a dropdown box will appear with the possible commands. These can be navigated using mouse or arrow keys and enter to select the desired command. Since v1.5
+
+=== Person: `group`
 Each person can now be assigned a group. The group is used to sort people into specific tours for the tourguide. Since v1.2
 
-=== Addressbook Groups:
-The address book stores all user created groups and allows the user to add people into existing groups. Since v1.3
+=== Addressbook Groups: `group`
+The address book stores all user created groups and allows the user to add people into existing groups. Names must be one word and be unique. Since v1.3
 
 Format:
 
@@ -58,11 +61,11 @@ Format:
 
 Example:
 
-* `group trip Alice Bernice Grant`
-* `group trip`
+* `group trip Alice Bernice Grant` -> creates a group called trip with Alice, Bernice, and Grant
+* `group trip` -> deletes the previously created 'trip' group
 
 === Group Filter: `filter`
-Ability to filter the UI display to only display selected groups. Bar across the top of the UI displays the current groups. Since v1.3
+Ability to filter the UI display to only display selected groups. Bar across the top of the UI displays the current groups. The default filter is none and is applied to everyone in the addressbook. Since v1.3
 
 Format: `filter [groupname]`
 
