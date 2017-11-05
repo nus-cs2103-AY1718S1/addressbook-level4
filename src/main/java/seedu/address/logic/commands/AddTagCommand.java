@@ -26,10 +26,10 @@ public class AddTagCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Add the tag to a person by the index number used "
             + "in the last person listing.\n"
-            + "Parameters: TAG... INDEX...(INDEX must be positive integer)\n"
+            + "Parameters: INDEX... TAG...(INDEX must be positive integer)\n"
             + "[INDEX] can be set as a range."
-            + "Example: " + COMMAND_WORD + " friends 1"
-            + "Example: " + COMMAND_WORD + " friends 1-4";
+            + "Example: " + COMMAND_WORD + " 1 friends"
+            + "Example: " + COMMAND_WORD + " 1-4 friends";
 
     public static final String MESSAGE_ADDED_SUCCESS = "Added Tag: %1$s";
     public static final String MESSAGE_DUPLICATE_TAG = "Tag: %1$s already exist in";

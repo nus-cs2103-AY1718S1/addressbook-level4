@@ -31,7 +31,7 @@ public class RemoveCommandParserTest {
         List<String> indexDisplay = new ArrayList<>();
         indexDisplay.add("2");
         RemoveTagCommand removeCommand = new RemoveTagCommand(tagSet, indexSet, indexDisplay);
-        assertParseSuccess(parser, "friends 2", removeCommand);
+        assertParseSuccess(parser, "2 friends", removeCommand);
     }
 
     @Test
