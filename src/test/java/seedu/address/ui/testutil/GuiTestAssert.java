@@ -37,6 +37,7 @@ public class GuiTestAssert {
                 actualCard.getTags());
     }
 
+    //@@author archthegit
     /**
      * Asserts that {@code actualInfo} displays the details of {@code expectedPerson}.
      */

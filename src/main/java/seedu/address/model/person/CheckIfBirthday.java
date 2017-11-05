@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.function.Predicate;
 
+//@@author archthegit
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Birthday month and day} matches today.
  */
