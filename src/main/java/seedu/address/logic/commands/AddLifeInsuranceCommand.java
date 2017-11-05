@@ -9,7 +9,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PREMIUM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SIGNING_DATE;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -19,14 +18,14 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author OscarWang114
 /**
- * Creates an insurance relationship in the address book.
+ * Creates an insurance in Lisa
  */
 public class AddLifeInsuranceCommand extends UndoableCommand {
     public static final String[] COMMAND_WORDS = {"addli", "ali", "+"};
     public static final String COMMAND_WORD = "addli";
 
     public static final String MESSAGE_USAGE = concatenateCommandWords(COMMAND_WORDS)
-            + ": Creates an insurance relationship. "
+            + ": Adds an insurance to Lisa. "
             + "Parameters: "
             + PREFIX_OWNER + "OWNER "
             + PREFIX_INSURED + "INSURED "
@@ -36,39 +35,33 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
             + PREFIX_SIGNING_DATE + "SIGNING_DATE "
             + PREFIX_EXPIRY_DATE + "EXPIRY_DATE\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_OWNER + "OWNER "
-            + PREFIX_INSURED + "INSURED "
-            + PREFIX_BENEFICIARY + "BENEFICIARY "
-            + PREFIX_CONTRACT + "CONTRACT"
-            + PREFIX_PREMIUM + "PREMIUM "
-            + PREFIX_SIGNING_DATE + "SIGNING_DATE "
-            + PREFIX_EXPIRY_DATE + "EXPIRY_DATE";
+            + PREFIX_OWNER + "Alex Yeoh"
+            + PREFIX_INSURED + "John Doe "
+            + PREFIX_BENEFICIARY + "Mary Jane "
+            + PREFIX_CONTRACT + "normal_plan.pdf"
+            + PREFIX_PREMIUM + "500 "
+            + PREFIX_SIGNING_DATE + "01 11 2017 "
+            + PREFIX_EXPIRY_DATE + "01 11 2018 ";
 
     public static final String MESSAGE_SUCCESS = "New insurance added: %1$s";
-    public static final String MESSAGE_DUPLICATE_INSURANCE = "This insurance already exists in the address book";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
-    private final LifeInsurance lifeInsuranceToAdd;
+    private final LifeInsurance lifeInsurance;
 
     /**
-     * Creates an AddLifeInsuranceCommand to add the specified {@code ReadOnlyInsurance}
+     * Creates an AddLifeInsuranceCommand to add the specified Insurance
      */
-    public AddLifeInsuranceCommand(String insuranceName, String ownerName, String insuredName, String beneficiaryName,
-                                   Double premium, String contractPath, LocalDate signingDate,
-                                   LocalDate expiryDate) {
-        this.lifeInsuranceToAdd = new LifeInsurance(insuranceName, ownerName, insuredName, beneficiaryName,
-                premium, contractPath, signingDate, expiryDate);
+    public AddLifeInsuranceCommand(ReadOnlyInsurance toAdd) {
+        lifeInsurance = new LifeInsurance(toAdd);
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         List<ReadOnlyPerson> personList = model.getFilteredPersonList();
-        List<ReadOnlyInsurance> insuranceList = model.getInsuranceList();
-        isAnyPersonInList(personList, lifeInsuranceToAdd);
-        model.addInsurance(lifeInsuranceToAdd);
+        isAnyPersonInList(personList, lifeInsurance);
+        model.addInsurance(lifeInsurance);
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, lifeInsuranceToAdd));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, lifeInsurance));
     }
 
     @Override

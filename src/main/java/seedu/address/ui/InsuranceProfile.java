@@ -15,12 +15,13 @@ import seedu.address.commons.events.ui.PersonNameClickedEvent;
 import seedu.address.commons.events.ui.SwitchToInsurancePanelRequestEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 
-//@@author OscarWang114
+
 /**
  * The Profile Panel of the App.
  */
 public class InsuranceProfile extends UiPart<Region> {
 
+    //@@author OscarWang114
     private static final String FXML = "InsuranceProfile.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -46,6 +47,7 @@ public class InsuranceProfile extends UiPart<Region> {
         registerAsAnEventHandler(this);
 
     }
+    //@@author
 
     //@@author RSJunior37
 

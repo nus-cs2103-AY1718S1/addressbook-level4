@@ -129,6 +129,8 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
+    //@@author OscarWang114
     /**
      * Parses a {@code Optional<String> owner} into an {@code Optional<String>} if {@code owner} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -153,12 +155,5 @@ public class ParserUtil {
         requireNonNull(contract);
         return contract.isPresent() ? Optional.of(contract.get()) : Optional.empty();
     }
-    /**
-     * Parses a {@code Optional<String> date} into an {@code Optional<String>} if {@code date} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<String> parseDate(Optional<String> date) throws IllegalValueException {
-        requireNonNull(date);
-        return date.isPresent() ? Optional.of(date.get()) : Optional.empty();
-    }
+    //@@author
 }

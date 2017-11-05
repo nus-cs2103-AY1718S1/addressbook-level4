@@ -32,7 +32,7 @@ public class ProfilePanel extends UiPart<Region> {
     public static final String DEFAULT_MESSAGE = "Welcome to LISA!";
     public static final String INSURANCE_LIST_HEADER = "List of Insurance Contracts Involved: ";
     public static final String NO_INSURANCE_MESSAGE = "This person is not related to any Insurance Contracts";
-    public static final String PERSON_DOES_NOT_EXIST_MESSAGE = "This person does not exist in Lisa.";
+    public static final String PERSON_DOES_NOT_EXIST_IN_LISA_MESSAGE = "This person does not exist in Lisa.";
 
     private static final String FXML = "ProfilePanel.fxml";
 
@@ -93,12 +93,12 @@ public class ProfilePanel extends UiPart<Region> {
 
     //@@author OscarWang114
     /**
-     * Load person page with empty fields and default message
+     * Load person page with only his/her name with person does not exist in Lisa message
      */
     private void loadPersonPage(StringProperty name) {
         unbindListenersAndClearText();
         this.name.textProperty().bind(Bindings.convert(name));
-        this.address.setText(PERSON_DOES_NOT_EXIST_MESSAGE);
+        this.address.setText(PERSON_DOES_NOT_EXIST_IN_LISA_MESSAGE);
     }
     //@@author
 
@@ -116,7 +116,7 @@ public class ProfilePanel extends UiPart<Region> {
     }
 
     /**
-     * To be called everytime a new person is selected and bind all information for real-time update
+     * To be called every time a new person is selected and bind all information for real-time update
      * @param person
      */
     private void bindListeners(ReadOnlyPerson person) {
@@ -130,18 +130,20 @@ public class ProfilePanel extends UiPart<Region> {
 
     //@@author OscarWang114
     /**
-     * unbind all listeners
+     * Unbind all listeners and reset the text values to {@code null}
      */
     private void unbindListenersAndClearText() {
         name.textProperty().unbind();
         phone.textProperty().unbind();
         address.textProperty().unbind();
         dob.textProperty().unbind();
+        gender.textProperty().unbind();
         email.textProperty().unbind();
         name.setText(null);
         phone.setText(null);
         address.setText(null);
         dob.setText(null);
+        gender.setText(null);
         email.setText(null);
         insuranceHeader.setText(null);
     }

@@ -29,7 +29,7 @@ public class AddCommand extends UndoableCommand {
 
     //@@author OscarWang114
     public static final String MESSAGE_USAGE = concatenateCommandWords(COMMAND_WORDS)
-            + ": Adds a person to the address book. "
+            + ": Adds a person to Lisa. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + "[" + PREFIX_PHONE + "PHONE] "
