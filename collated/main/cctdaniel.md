@@ -67,50 +67,84 @@ public class CustomiseCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/commands/SwitchThemeCommand.java
+###### /java/seedu/address/logic/commands/ThemeCommand.java
 ``` java
 /**
- * Toggle between light and dark theme.
+ * Switch between light and dark theme
  */
-public class SwitchThemeCommand extends Command {
+public class ThemeCommand extends Command {
 
-    public static final String COMMAND_WORD = "swt";
+    public static final String COMMAND_WORD = "theme";
+    public static final String LIGHT_THEME = "light";
+    public static final String DARK_THEME = "dark";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Toggle between light and dark theme.\n"
-            + "Example: " + COMMAND_WORD;
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Switch to light/dark theme. "
+            + "Parameters: light/dark\n"
+            + "Example: " + COMMAND_WORD + " " + LIGHT_THEME;
 
-    public static final String SHOWING_SWITCH_THEME_MESSAGE = "Switched theme.";
+    public static final String SWITCH_THEME_SUCCESS_MESSAGE = "Switched theme to ";
+    public static final String SWITCH_THEME_FAILURE_MESSAGE = "Please choose a different theme from the current one. ";
+
+    public static final String LIGHT_THEME_CSS_FILE_NAME = "view/LightTheme.css";
+    public static final String LIGHT_THEME_EXTENSIONS_CSS_FILE_NAME = "view/LightExtensions.css";
+    public static final String DARK_THEME_CSS_FILE_NAME = "view/DarkTheme.css";
+    public static final String DARK_THEME_EXTENSIONS_CSS_FILE_NAME = "view/DarkExtensions.css";
+
 
     private boolean isLight = true;
 
-    @Override
-    public CommandResult execute() {
-        toggle();
-        EventsCenter.getInstance().post(new SwitchThemeRequestEvent(isLight));
-        return new CommandResult(SHOWING_SWITCH_THEME_MESSAGE);
+    public ThemeCommand(String theme) {
+        if (theme.equalsIgnoreCase(LIGHT_THEME)) {
+            isLight = true;
+        } else {
+            isLight = false;
+        }
     }
 
-    /**
-     * Toggle between light and dark theme
-     */
-    private void toggle() {
+    @Override
+    public CommandResult execute() {
         switch (getCurrentThemeUnit()) {
         case THEME_LIGHT_UNIT:
-            isLight = false;
-            setCurrentThemeUnit(THEME_DARK_UNIT);
-            break;
-
+            if (isLight) {
+                return new CommandResult(SWITCH_THEME_FAILURE_MESSAGE);
+            } else {
+                setCurrentThemeUnit(THEME_DARK_UNIT);
+                EventsCenter.getInstance().post(new SwitchThemeRequestEvent(isLight));
+                return new CommandResult(SWITCH_THEME_SUCCESS_MESSAGE + DARK_THEME + ".");
+            }
         case THEME_DARK_UNIT:
-            isLight = true;
-            setCurrentThemeUnit(THEME_LIGHT_UNIT);
-            break;
-
+            if (!isLight) {
+                return new CommandResult(SWITCH_THEME_FAILURE_MESSAGE);
+            } else {
+                setCurrentThemeUnit(THEME_LIGHT_UNIT);
+                EventsCenter.getInstance().post(new SwitchThemeRequestEvent(isLight));
+                return new CommandResult(SWITCH_THEME_SUCCESS_MESSAGE + LIGHT_THEME + ".");
+            }
         default:
             break;
         }
+        return new CommandResult("");
+    }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ThemeCommand // instanceof handles nulls
+                && this.isLight == (((ThemeCommand) other).isLight)); // state check
+    }
+
+    public boolean getIsLight() {
+        return isLight;
     }
 }
+```
+###### /java/seedu/address/logic/parser/AddressBookParser.java
+``` java
+        case CustomiseCommand.COMMAND_WORD:
+            return new CustomiseCommandParser().parse(arguments);
+
+        case ThemeCommand.COMMAND_WORD:
+            return new ThemeCommandParser().parse(arguments);
 ```
 ###### /java/seedu/address/logic/parser/CustomiseCommandParser.java
 ``` java
@@ -149,6 +183,36 @@ public class CustomiseCommandParser implements Parser<CustomiseCommand> {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
+}
+```
+###### /java/seedu/address/logic/parser/ThemeCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new ThemeCommand object
+ */
+public class ThemeCommandParser implements Parser<ThemeCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the ThemeCommand
+     * and returns an ThemeCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ThemeCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+
+        if (isValidAttribute(trimmedArgs)) {
+            return new ThemeCommand(trimmedArgs);
+        } else {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
+        }
+
+    }
+
+    private boolean isValidAttribute(String args) {
+        return args.equalsIgnoreCase(ThemeCommand.LIGHT_THEME)
+                || args.equalsIgnoreCase(ThemeCommand.DARK_THEME);
+    }
 }
 ```
 ###### /java/seedu/address/model/font/FontSize.java
@@ -295,75 +359,78 @@ public enum ThemeUnit {
             break;
         }
     }
-
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### /java/seedu/address/ui/LessonListCard.java
 ``` java
-    /**
-     * Handles SwitchThemeEvent.
-     */
-    @FXML
-    public void handleSwitchTheme(SwitchThemeRequestEvent event) {
-        if (!event.isLight) {
-            sceneBox.getStylesheets().clear();
-            sceneBox.getStylesheets().add("/view/DarkTheme.css");
-            sceneBox.getStylesheets().add("/view/DarkExtensions.css");
-            resultDisplayPlaceholder.getStylesheets().clear();
-            resultDisplayPlaceholder.getStylesheets().add("/view/DarkTheme.css");
-            resultDisplayPlaceholder.getStylesheets().add("/view/DarkExtensions.css");
-            browserPlaceholder.getStylesheets().clear();
-            browserPlaceholder.getStylesheets().add("/view/DarkTheme.css");
-            browserPlaceholder.getStylesheets().add("/view/DarkExtensions.css");
+    @Subscribe
+    private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
+        setFontSize(event.message);
+    }
 
+    private void setFontSize(String userPref) {
+        switch (userPref) {
+        case FONT_SIZE_XSMALL:
+            setFontSizeHelper("x-small");
+            break;
 
-        } else {
-            sceneBox.getStylesheets().clear();
-            sceneBox.getStylesheets().add("/view/LightTheme.css");
-            sceneBox.getStylesheets().add("/view/LightExtensions.css");
-            resultDisplayPlaceholder.getStylesheets().clear();
-            resultDisplayPlaceholder.getStylesheets().add("/view/LightTheme.css");
-            resultDisplayPlaceholder.getStylesheets().add("/view/LightExtensions.css");
-            browserPlaceholder.getStylesheets().clear();
-            browserPlaceholder.getStylesheets().add("/view/LightTheme.css");
-            browserPlaceholder.getStylesheets().add("/view/LightExtensions.css");
+        case FONT_SIZE_SMALL:
+            setFontSizeHelper("small");
+            break;
+
+        case FONT_SIZE_NORMAL:
+            setFontSizeHelper("normal");
+            break;
+
+        case FONT_SIZE_LARGE:
+            setFontSizeHelper("x-large");
+            break;
+
+        case FONT_SIZE_XLARGE:
+            setFontSizeHelper("xx-large");
+            break;
+
+        default:
+            break;
         }
     }
 
-    /**
-     * Opens the help window.
-     */
-    @FXML
-    public void handleHelp() {
-        HelpWindow helpWindow = new HelpWindow();
-        helpWindow.show();
+    private void setFontSizeHelper(String fontSize) {
+        code.setStyle("-fx-font-size: " + fontSize + ";");
+        id.setStyle("-fx-font-size: " + fontSize + ";");
+        venue.setStyle("-fx-font-size: " + fontSize + ";");
+        classType.setStyle("-fx-font-size: " + fontSize + ";");
+        timeSlot.setStyle("-fx-font-size: " + fontSize + ";");
+        group.setStyle("-fx-font-size: " + fontSize + ";");
+        lecturers.setStyle("-fx-font-size: " + fontSize + ";");
     }
 
-    void show() {
-        primaryStage.show();
-    }
+    private void setFontSizeUnit(FontSizeUnit currFontSizeUnit) {
+        switch (currFontSizeUnit) {
+        case FONT_SIZE_XSMALL_UNIT:
+            setFontSize(FONT_SIZE_XSMALL);
+            break;
 
-    /**
-     * Closes the application.
-     */
-    @FXML
-    private void handleExit() {
-        raise(new ExitAppRequestEvent());
-    }
+        case FONT_SIZE_SMALL_UNIT:
+            setFontSize(FONT_SIZE_SMALL);
+            break;
 
-    public LessonListPanel getLessonListPanel() {
-        return this.lessonListPanel;
-    }
+        case FONT_SIZE_NORMAL_UNIT:
+            setFontSize(FONT_SIZE_NORMAL);
+            break;
 
-    void releaseResources() {
-        combinePanel.freeResources();
-    }
+        case FONT_SIZE_LARGE_UNIT:
+            setFontSize(FONT_SIZE_LARGE);
+            break;
 
-    @Subscribe
-    private void handleShowHelpEvent(ShowHelpRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        handleHelp();
-    }
+        case FONT_SIZE_XLARGE_UNIT:
+            setFontSize(FONT_SIZE_XLARGE);
+            break;
 
+        default:
+            break;
+        }
+    }
+}
 ```
 ###### /java/seedu/address/ui/MainWindow.java
 ``` java
@@ -371,6 +438,22 @@ public enum ThemeUnit {
     private void handleSwitchThemeRequestEvent(SwitchThemeRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleSwitchTheme(event);
+    }
+
+    /**
+     * Handles SwitchThemeEvent.
+     */
+    @FXML
+    public void handleSwitchTheme(SwitchThemeRequestEvent event) {
+        if (!event.isLight) {
+            sceneBox.getStylesheets().clear();
+            sceneBox.getStylesheets().add(DARK_THEME_CSS_FILE_NAME);
+            sceneBox.getStylesheets().add(DARK_THEME_EXTENSIONS_CSS_FILE_NAME);
+        } else {
+            sceneBox.getStylesheets().clear();
+            sceneBox.getStylesheets().add(LIGHT_THEME_CSS_FILE_NAME);
+            sceneBox.getStylesheets().add(LIGHT_THEME_EXTENSIONS_CSS_FILE_NAME);
+        }
     }
 
 

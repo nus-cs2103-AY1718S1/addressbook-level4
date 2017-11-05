@@ -10,6 +10,7 @@ import guitests.guihandles.LessonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import seedu.address.model.module.ReadOnlyLesson;
 
+//@@author cctdaniel
 /**
  * A set of assertion methods useful for writing GUI tests.
  */

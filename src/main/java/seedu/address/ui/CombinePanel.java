@@ -1,6 +1,12 @@
 //@@author caoliangnus
 package seedu.address.ui;
 
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_LARGE;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
+
 import java.net.URL;
 import java.time.DayOfWeek;
 import java.util.Objects;
@@ -24,10 +30,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.commons.events.ui.LessonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.RemarkChangedEvent;
 import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.logic.Logic;
+import seedu.address.model.FontSizeUnit;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.Remark;
@@ -347,20 +355,105 @@ public class CombinePanel extends UiPart<Region> {
                 int z = 120 + (int) (Math.random() * 255);
 
                 TextArea ta = new TextArea(text);
+
                 ta.setWrapText(true);
                 ta.setEditable(false);
 
-
-                StackPane stackPane = new StackPane();
-                stackPane.setStyle("-fx-background-color: rgba(" + x + "," + y + ", " + z + ", 0.5);"
+                StackPane noteStackPane = new StackPane();
+                noteStackPane.setStyle("-fx-background-color: rgba(" + x + "," + y + ", " + z + ", 0.5);"
                         + "-fx-effect: dropshadow(gaussian, red, " + 20 + ", 0, 0, 0);"
                         + "-fx-background-insets: " + 10 + ";");
                 ta.setId(STICKY_NOTE);
-                stackPane.getChildren().add(ta);
-                noteGrid.add(stackPane, j, i);
+                noteStackPane.getChildren().add(ta);
+                noteGrid.add(noteStackPane, j, i);
+                FontSizeUnit currFontSize = FontSizeUnit.getCurrentFontSizeUnit();
+                setFontSizeUnit(currFontSize);
             }
         }
     }
+
+    //@@author cctdaniel
+    /**
+     * Sets the remark style to user preferred font size.
+     */
+    private void setFontSize(String userPref) {
+        switch (userPref) {
+        case FONT_SIZE_XSMALL:
+            setFontSizeHelper("10");
+            break;
+
+        case FONT_SIZE_SMALL:
+            setFontSizeHelper("12");
+            break;
+
+        case FONT_SIZE_NORMAL:
+            setFontSizeHelper("25");
+            break;
+
+        case FONT_SIZE_LARGE:
+            setFontSizeHelper("32");
+            break;
+
+        case FONT_SIZE_XLARGE:
+            setFontSizeHelper("40");
+            break;
+
+        default:
+            break;
+        }
+    }
+
+    /**
+     * Helper method to set font size.
+     */
+    private void setFontSizeHelper(String fontSize) {
+        noteGrid.getChildren().forEach((node) -> {
+            if (node instanceof StackPane) {
+                for (Node n : ((StackPane) node).getChildren()) {
+                    if (n instanceof TextArea) {
+                        n.setStyle("-fx-font-size: " + fontSize + ";");
+                    }
+                }
+            }
+        });
+    }
+
+    @Subscribe
+    private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
+        setFontSize(event.message);
+    }
+
+
+    /**
+     * Helper method to set font size based on FontSizeUnit.
+     */
+    private void setFontSizeUnit(FontSizeUnit currFontSizeUnit) {
+        switch (currFontSizeUnit) {
+        case FONT_SIZE_XSMALL_UNIT:
+            setFontSize(FONT_SIZE_XSMALL);
+            break;
+
+        case FONT_SIZE_SMALL_UNIT:
+            setFontSize(FONT_SIZE_SMALL);
+            break;
+
+        case FONT_SIZE_NORMAL_UNIT:
+            setFontSize(FONT_SIZE_NORMAL);
+            break;
+
+        case FONT_SIZE_LARGE_UNIT:
+            setFontSize(FONT_SIZE_LARGE);
+            break;
+
+        case FONT_SIZE_XLARGE_UNIT:
+            setFontSize(FONT_SIZE_XLARGE);
+            break;
+
+        default:
+            break;
+        }
+    }
+    //@@author
 }
 
 /**
