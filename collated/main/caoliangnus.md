@@ -33,7 +33,7 @@ public class ColorKeywordCommand extends Command {
     public static final String COMMAND_WORD = "color";
     public static final String MESSAGE_SUCCESS = " highlighting of keyword.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Highlighting the command keywords "
-            + "Parameters: enable / disable\n"
+            + "Parameters: enable/disable\n"
             + "Example: " + COMMAND_WORD + " enable";
 
     public static final String DISABLE_COLOR = "Disable";
@@ -66,32 +66,6 @@ public class ColorKeywordCommand extends Command {
                 || (other instanceof ColorKeywordCommand // instanceof handles nulls
                 && this.isEnableColor == (((ColorKeywordCommand) other).isEnableColor)); // state check
     }
-}
-```
-###### /java/seedu/address/logic/LogicManager.java
-``` java
-    @Override
-    public HashMap<String, String> getCommandKeywordColorMap() {
-        HashMap<String, String> keywordColorMap = new HashMap<>();
-        keywordColorMap.put(AddCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(DeleteCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(EditCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(ExitCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(FindCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(HelpCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(ListCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(SelectCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(SortCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(ClearCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(UndoCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(RedoCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(CustomiseCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(HistoryCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(ViewCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(ColorKeywordCommand.COMMAND_WORD, "red");
-        return keywordColorMap;
-    }
-
 }
 ```
 ###### /java/seedu/address/logic/parser/ColorKeywordCommandParser.java
@@ -1069,6 +1043,12 @@ public class XmlAdaptedLesson {
 ``` java
 package seedu.address.ui;
 
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_LARGE;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
+
 import java.net.URL;
 import java.time.DayOfWeek;
 import java.util.Objects;
@@ -1092,10 +1072,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.commons.events.ui.LessonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.RemarkChangedEvent;
 import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.logic.Logic;
+import seedu.address.model.FontSizeUnit;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.Remark;
@@ -1112,6 +1094,7 @@ public class CombinePanel extends UiPart<Region> {
     private static final String FXML = "CombinePanel.fxml";
     private static final String LESSON_NODE_ID = "lessonNode";
     private static final String STICKY_NOTE = "stickyNote";
+    private static final String HEADER = "header";
     private static final int ROW = 6;
     private static final int COL = 13;
     private static final int START_TIME = 8;
@@ -1204,6 +1187,7 @@ public class CombinePanel extends UiPart<Region> {
             }
             text += "00";
             Label header = new Label(text);
+            header.setId(HEADER);
             timetableGrid.setHalignment(header, HPos.CENTER);
             timetableGrid.add(header, i, 0);
             k++;
@@ -1218,6 +1202,7 @@ public class CombinePanel extends UiPart<Region> {
         for (int i = 1; i < ROW; i++) {
             String dayOfWeek = DayOfWeek.of(i).toString();
             Label label = new Label(dayOfWeek);
+            label.setId(HEADER);
             timetableGrid.setValignment(label, VPos.CENTER);
             timetableGrid.setHalignment(label, HPos.CENTER);
             timetableGrid.add(label, 0, i);
@@ -1250,7 +1235,6 @@ public class CombinePanel extends UiPart<Region> {
                 int count = gridData[weekDayRow][startHourCol].getCount();
                 gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol, endHourSpan, ++count);
             }
-
         }
     }
 
@@ -1262,7 +1246,6 @@ public class CombinePanel extends UiPart<Region> {
         generateTimeTableData();
         generateTimeslotHeader();
         generateWeekDay();
-
 
         for (int i = 0; i < ROW; i++) {
             for (int j = 0; j < COL; j++) {
@@ -1383,98 +1366,22 @@ public class CombinePanel extends UiPart<Region> {
                 int z = 120 + (int) (Math.random() * 255);
 
                 TextArea ta = new TextArea(text);
+
                 ta.setWrapText(true);
                 ta.setEditable(false);
 
-
-                StackPane stackPane = new StackPane();
-                stackPane.setStyle("-fx-background-color: rgba(" + x + "," + y + ", " + z + ", 0.5);"
+                StackPane noteStackPane = new StackPane();
+                noteStackPane.setStyle("-fx-background-color: rgba(" + x + "," + y + ", " + z + ", 0.5);"
                         + "-fx-effect: dropshadow(gaussian, red, " + 20 + ", 0, 0, 0);"
                         + "-fx-background-insets: " + 10 + ";");
                 ta.setId(STICKY_NOTE);
-                stackPane.getChildren().add(ta);
-                noteGrid.add(stackPane, j, i);
+                noteStackPane.getChildren().add(ta);
+                noteGrid.add(noteStackPane, j, i);
+                FontSizeUnit currFontSize = FontSizeUnit.getCurrentFontSizeUnit();
+                setFontSizeUnit(currFontSize);
             }
         }
     }
-}
-
-/**
- * Contains data related to grid object in JavaFX.
- */
-class GridData {
-    private String text;
-    private Integer weekDayRow;
-    private Integer startHourCol;
-    private Integer endHourSpan;
-    private Integer count;
-
-    public GridData() {
-        this("", -1, -1, -1, 0);
-    }
-
-    public GridData(String text, int weekDayRow, int startHourCol, int endHourSpan, int count) {
-        this.text = text;
-        this.weekDayRow = weekDayRow;
-        this.startHourCol = startHourCol;
-        this.endHourSpan = endHourSpan;
-        this.count = count;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public Integer getEndHourSpan() {
-        return endHourSpan;
-    }
-
-    public Integer getStartHourCol() {
-        return startHourCol;
-    }
-
-    public Integer getWeekDayRow() {
-        return weekDayRow;
-    }
-
-    public Integer getCount() {
-        return count;
-    }
-
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(text, weekDayRow, startHourCol, endHourSpan);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        GridData other = (GridData) obj;
-        if (!text.equals(other.text)) {
-            return false;
-        }
-        if (!weekDayRow.equals(other.weekDayRow)) {
-            return false;
-        }
-        if (!startHourCol.equals(other.startHourCol)) {
-            return false;
-        }
-        if (!endHourSpan.equals(other.endHourSpan)) {
-            return false;
-        }
-        return true;
-    }
-}
 
 ```
 ###### /java/seedu/address/ui/CommandBox.java
@@ -1576,6 +1483,9 @@ class GridData {
                     configActiveTag(index, prefixList.get(FONT_SIZE));
                 }
             }
+        } else {
+            commandTextField.setStyle(userPrefFontSize);
+            checkBox.setVisible(false);
         }
 
     }
@@ -1800,10 +1710,35 @@ class GridData {
         this.enableHighlight = enableHighlight;
     }
 
+```
+###### /java/seedu/address/ui/CommandBox.java
+``` java
+    public HashMap<String, String> getCommandKeywordColorMap() {
+        HashMap<String, String> keywordColorMap = new HashMap<>();
+        keywordColorMap.put(AddCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(DeleteCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(EditCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(ExitCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(FindCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(HelpCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(ListCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(SelectCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(SortCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(ClearCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(UndoCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(RedoCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(CustomiseCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(HistoryCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(ViewCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(ColorKeywordCommand.COMMAND_WORD, "red");
+        return keywordColorMap;
+    }
+
 }
 ```
 ###### /resources/view/CombinePanel.fxml
 ``` fxml
+
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -1812,7 +1747,7 @@ class GridData {
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 
-<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="stackPane" stylesheets="@LightTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox fx:id="timeBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="1000.0">
          <children>

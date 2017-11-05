@@ -1,4 +1,296 @@
 # junming403
+###### /java/seedu/address/logic/commands/AddCommandTest.java
+``` java
+public class AddCommandTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void constructor_nullLesson_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new AddCommand(null);
+    }
+
+    @Test
+    public void execute_lessonAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingLessonAdded modelStub = new ModelStubAcceptingLessonAdded();
+        Lesson validLesson = new LessonBuilder().build();
+
+        CommandResult commandResult = getAddCommandForLesson(validLesson, modelStub).execute();
+
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validLesson), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validLesson), modelStub.lessonsAdded);
+    }
+
+    @Test
+    public void execute_duplicateTimeSlot_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateTimeSlotException();
+        Lesson validLesson = new LessonBuilder().build();
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
+
+        getAddCommandForLesson(validLesson, modelStub).execute();
+
+    }
+
+    @Test
+    public void execute_duplicateLesson_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateLessonException();
+        Lesson validLesson = new LessonBuilder().build();
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_LESSON);
+
+        getAddCommandForLesson(validLesson, modelStub).execute();
+    }
+
+    @Test
+    public void equals() {
+        Lesson algebra = new LessonBuilder().withCode("MA1101R").build();
+        Lesson software = new LessonBuilder().withCode("CS2103T").build();
+        AddCommand addAlgebraCommand = new AddCommand(algebra);
+        AddCommand addSoftwareCommand = new AddCommand(software);
+
+        // same object -> returns true
+        assertTrue(addAlgebraCommand.equals(addAlgebraCommand));
+
+        // same values -> returns true
+        AddCommand addAlgebraCommandCopy = new AddCommand(algebra);
+        assertTrue(addAlgebraCommand.equals(addAlgebraCommandCopy));
+
+        // different types -> returns false
+        assertFalse(addAlgebraCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(addAlgebraCommand.equals(null));
+
+        // different lessons-> returns false
+        assertFalse(addAlgebraCommand.equals(addSoftwareCommand));
+    }
+
+    /**
+     * Generates a new AddCommand with the details of the given lesson.
+     */
+    private AddCommand getAddCommandForLesson(Lesson lesson, Model model) {
+        AddCommand command = new AddCommand(lesson);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+    /**
+     * A default model stub that have all of the methods failing.
+     */
+    private class ModelStub implements Model {
+
+        @Override
+        public HashSet<Location> getUniqueLocationSet() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public HashSet<Code> getUniqueCodeSet() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void resetData(ReadOnlyAddressBook newData) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateBookedSlotSet() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteLesson(ReadOnlyLesson target) throws LessonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteLessonSet(List<ReadOnlyLesson> lessonList) throws LessonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addLesson(ReadOnlyLesson lesson) throws DuplicateLessonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void bookmarkLesson(ReadOnlyLesson lesson) throws DuplicateLessonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void unBookmarkLesson(ReadOnlyLesson lesson) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void bookingSlot(BookedSlot booking) throws DuplicateBookedSlotException {
+        }
+
+        @Override
+        public void unbookBookedSlot(BookedSlot booking) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateBookedSlot(BookedSlot target, BookedSlot newBookingSlot) throws DuplicateBookedSlotException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void unbookAllSlot() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateLesson(ReadOnlyLesson target, ReadOnlyLesson editedLesson)
+                throws DuplicateLessonException, LessonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyLesson> getFilteredLessonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredLessonList(Predicate<ReadOnlyLesson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredRemarkList(Predicate<Remark> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addRemark(Remark r) throws DuplicateRemarkException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteRemark(Remark target) throws RemarkNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateRemark(Remark target, Remark editedRemark)
+                throws DuplicateRemarkException, RemarkNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void handleListingUnit() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortLessons() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void setCurrentViewingLesson(ReadOnlyLesson lesson) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyLesson getCurrentViewingLesson() {
+            return null;
+        }
+
+        @Override
+        public void setViewingPanelAttribute(String attribute) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public String getCurrentViewingAttribute() {
+            return null;
+        }
+
+        @Override
+        public ObservableList<Remark> getFilteredRemarkList() {
+            return null;
+        }
+    }
+
+    /**
+     * A Model stub that always throw a DuplicateLessonException when trying to add a lesson.
+     */
+    private class ModelStubThrowingDuplicateLessonException extends ModelStub {
+        @Override
+        public void addLesson(ReadOnlyLesson lesson) throws DuplicateLessonException {
+            throw new DuplicateLessonException();
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+    }
+
+    /**
+     * A Model stub that always accept the lesson being added.
+     */
+    private class ModelStubAcceptingLessonAdded extends ModelStub {
+        final ArrayList<Lesson> lessonsAdded = new ArrayList<>();
+
+        @Override
+        public void addLesson(ReadOnlyLesson lesson) throws DuplicateLessonException {
+            lessonsAdded.add(new Lesson(lesson));
+        }
+
+        @Override
+        public void handleListingUnit() {
+
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+    }
+
+    /**
+     * A Model stub that always thrown duplicate time slot exception.
+     */
+    private class ModelStubThrowingDuplicateTimeSlotException extends ModelStub {
+        final ArrayList<Lesson> lessonsAdded = new ArrayList<>();
+
+        @Override
+        public void bookingSlot(BookedSlot booking) throws DuplicateBookedSlotException {
+            throw new DuplicateBookedSlotException();
+        }
+
+        @Override
+        public void handleListingUnit() {
+
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+    }
+
+}
+```
 ###### /java/seedu/address/logic/commands/DeleteCommandTest.java
 ``` java
 /**
@@ -26,7 +318,6 @@ public class DeleteCommandTest {
     public void execute_validIndexMarkedList_success() throws Exception {
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         ReadOnlyLesson lessonToDelete = model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
-        model.bookmarkLesson(lessonToDelete);
         model.updateFilteredLessonList(new MarkedListPredicate());
 
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_LESSON);
@@ -413,7 +704,6 @@ public class EditCommandTest {
 
     @Test
     public void execute_editLessonInMarkedList_success() throws Exception {
-        model.bookmarkLesson(model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()));
         model.updateFilteredLessonList(new MarkedListPredicate());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
@@ -426,6 +716,7 @@ public class EditCommandTest {
         ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
 
+        editedLesson.setAsMarked();
         expectedModel.updateLesson(
                 model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()), editedLesson);
 
@@ -606,12 +897,12 @@ public class MarkCommandTest {
     public void execute_validIndexUnfilteredList_success() throws DuplicateLessonException {
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         ReadOnlyLesson lessonToMark = model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
+        lessonToMark.setAsUnmarked();
         MarkCommand markCommand = prepareCommand(INDEX_FIRST_LESSON);
 
         String expectedMessage = String.format(MarkCommand.MESSAGE_BOOKMARK_LESSON_SUCCESS, lessonToMark);
 
         ModelManager expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel.bookmarkLesson(expectedModel.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()));
 
         assertCommandSuccess(markCommand, model, expectedMessage, expectedModel);
     }
@@ -622,6 +913,7 @@ public class MarkCommandTest {
         model.updateFilteredLessonList(new FixedCodePredicate(
                 model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()).getCode()));
         ReadOnlyLesson lessonToMark = model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
+        lessonToMark.setAsUnmarked();
         MarkCommand markCommand = prepareCommand(INDEX_FIRST_LESSON);
 
         String expectedMessage = String.format(MarkCommand.MESSAGE_BOOKMARK_LESSON_SUCCESS, lessonToMark);
@@ -629,7 +921,6 @@ public class MarkCommandTest {
         ModelManager expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         expectedModel.updateFilteredLessonList(new FixedCodePredicate(
                 expectedModel.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()).getCode()));
-        expectedModel.bookmarkLesson(expectedModel.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()));
 
         assertCommandSuccess(markCommand, model, expectedMessage, expectedModel);
     }
@@ -860,7 +1151,9 @@ public class UnmarkCommandTest {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
         for (ReadOnlyLesson lesson : lessonList) {
-            model.bookmarkLesson(lesson);
+            if (!lesson.isMarked()) {
+                model.bookmarkLesson(lesson);
+            }
         }
         return model;
     }
@@ -1649,5 +1942,1148 @@ public class UniqueRemarkListTest {
         thrown.expect(UnsupportedOperationException.class);
         uniqueLessonList.asObservableList().remove(0);
     }
+}
+```
+###### /java/systemtests/AddCommandSystemTest.java
+``` java
+public class AddCommandSystemTest extends AddressBookSystemTest {
+
+    @Test
+    public void add() throws Exception {
+        Model model = getModel();
+        /* Case: add a lesson without tags to a non-empty address book, command with leading spaces and trailing spaces
+         * -> added
+         */
+        ReadOnlyLesson toAdd = TYPICAL_MA1101R;
+        String command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R  + CLASSTYPE_DESC_MA1101R
+                + VENUE_DESC_MA1101R  + GROUP_DESC_MA1101R  + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
+        assertCommandSuccess(command, toAdd);
+
+        /* Case: undo adding Amy to the list -> Amy deleted */
+        command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        assertCommandSuccess(command, model, expectedResultMessage);
+
+        /* Case: redo adding Amy to the list -> Amy added again */
+        command = RedoCommand.COMMAND_WORD;
+        model.addLesson(toAdd);
+        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
+        assertCommandSuccess(command, model, expectedResultMessage);
+
+        /* Case: add a duplicate lesson -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R  + CLASSTYPE_DESC_MA1101R
+                + VENUE_DESC_MA1101R  + GROUP_DESC_MA1101R  + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
+
+        /* Case: add a duplicate lesson except with different tags -> rejected */
+        // "friends" is an existing tag used in the default model, see TypicalLessons#ALICE
+        // This test will fail is a new tag that is not in the model is used, see the bug documented in
+        // AddressBook#addLesson(ReadOnlyLesson)
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
+                + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + LECTURER_DESC_MA1101R + TIMESLOT_DESC_MA1101R
+                + " " + PREFIX_LECTURER.getPrefix() + "Dr Wong";
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
+
+        /* Case: add a lesson with all fields same as another lesson in the address book except Code -> added */
+        toAdd = new LessonBuilder().withCode(VALID_CODE_CS2101).withClassType(VALID_CLASSTYPE_MA1101R)
+                .withLocation(VALID_VENUE_MA1101R).withGroup(VALID_GROUP_MA1101R).withTimeSlot(VALID_TIMESLOT_MA1101R)
+                .withLecturers(VALID_LECTURER_MA1101R).build();
+        command = AddCommand.COMMAND_WORD + CODE_DESC_CS2101 + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
+
+        /* Case: add a lesson with all fields same as another lesson in the address book except ClassType -> added */
+        toAdd = new LessonBuilder().withCode(VALID_CODE_MA1101R).withClassType(VALID_CLASSTYPE_CS2101)
+                .withLocation(VALID_VENUE_MA1101R).withGroup(VALID_GROUP_MA1101R).withTimeSlot(VALID_TIMESLOT_MA1101R)
+                .withLecturers(VALID_LECTURER_MA1101R).build();
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_CS2101 + VENUE_DESC_MA1101R
+                + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
+
+        /* Case: add a lesson with all fields same as another lesson in the address book except Locaiton -> added */
+        toAdd = new LessonBuilder().withCode(VALID_CODE_MA1101R).withClassType(VALID_CLASSTYPE_MA1101R)
+                .withLocation(VALID_VENUE_CS2101).withGroup(VALID_GROUP_MA1101R).withTimeSlot(VALID_TIMESLOT_MA1101R)
+                .withLecturers(VALID_LECTURER_MA1101R).build();
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_CS2101
+                + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
+        assertCommandSuccess(command, toAdd);
+
+        /* Case: add a lesson with all fields same as another lesson in the address book except Group -> added */
+        toAdd = new LessonBuilder().withCode(VALID_CODE_MA1101R).withClassType(VALID_CLASSTYPE_MA1101R)
+                .withLocation(VALID_VENUE_MA1101R).withGroup(VALID_GROUP_CS2101).withTimeSlot(VALID_TIMESLOT_MA1101R)
+                .withLecturers(VALID_LECTURER_MA1101R).build();
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + GROUP_DESC_CS2101 + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
+
+        /* Case: add a lesson with all fields same as another lesson in the address book except Time slot -> added */
+        toAdd = new LessonBuilder().withCode(VALID_CODE_MA1101R).withClassType(VALID_CLASSTYPE_MA1101R)
+                .withLocation(VALID_VENUE_MA1101R).withGroup(VALID_GROUP_MA1101R).withTimeSlot(VALID_TIMESLOT_CS2101)
+                .withLecturers(VALID_LECTURER_MA1101R).build();
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + GROUP_DESC_MA1101R + TIMESLOT_DESC_CS2101 + LECTURER_DESC_MA1101R;
+        assertCommandSuccess(command, toAdd);
+
+        /* Case: missing code -> rejected */
+        command = AddCommand.COMMAND_WORD + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R
+                + TIMESLOT_DESC_MA1101R;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+        /* Case: missing class type -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R
+                + TIMESLOT_DESC_MA1101R;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+        /* Case: missing venue -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + GROUP_DESC_MA1101R
+                + TIMESLOT_DESC_MA1101R;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+        /* Case: missing group -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + TIMESLOT_DESC_MA1101R;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+        /* Case: missing time slot -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
+                + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+        /* Case: invalid keyword -> rejected */
+        command = "adds " + LessonUtil.getLessonDetails(toAdd);
+        assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
+
+        /* Case: invalid code -> rejected */
+        command = AddCommand.COMMAND_WORD + INVALID_CODE_DESC + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
+        assertCommandFailure(command, Code.MESSAGE_CODE_CONSTRAINTS);
+
+        /* Case: invalid class type -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + INVALID_CLASSTYPE_DESC + VENUE_DESC_MA1101R
+                + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
+        assertCommandFailure(command, ClassType.MESSAGE_CLASSTYPE_CONSTRAINTS);
+
+        /* Case: invalid venue -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + INVALID_VENUE_DESC
+                + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
+        assertCommandFailure(command, Location.MESSAGE_LOCATION_CONSTRAINTS);
+
+        /* Case: invalid group -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + INVALID_GROUP_DESC + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
+        assertCommandFailure(command, Group.MESSAGE_GROUP_CONSTRAINTS);
+
+        /* Case: invalid time slot -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + GROUP_DESC_MA1101R + INVALID_TIMESLOT_DESC + LECTURER_DESC_MA1101R;
+        assertCommandFailure(command, TimeSlot.MESSAGE_TIMESLOT_CONSTRAINTS);
+
+        /* Case: invalid lecturers -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + INVALID_LECTURER_DESC;
+        assertCommandFailure(command, Lecturer.MESSAGE_LECTURER_CONSTRAINTS);
+    }
+
+    /**
+     * Executes the {@code AddCommand} that adds {@code toAdd} to the model and verifies that the command box displays
+     * an empty string, the result display box displays the success message of executing {@code AddCommand} with the
+     * details of {@code toAdd}, and the model related components equal to the current model added with {@code toAdd}.
+     * These verifications are done by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * Also verifies that the command box has the default style class, the status bar's sync status changes,
+     * the browser url and selected card remains unchanged.
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandSuccess(ReadOnlyLesson toAdd) {
+        assertCommandSuccess(LessonUtil.getAddCommand(toAdd), toAdd);
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(ReadOnlyLesson)}. Executes {@code command}
+     * instead.
+     * @see AddCommandSystemTest#assertCommandSuccess(ReadOnlyLesson)
+     */
+    private void assertCommandSuccess(String command, ReadOnlyLesson toAdd) {
+        Model expectedModel = getModel();
+        try {
+            expectedModel.addLesson(toAdd);
+        } catch (DuplicateLessonException dpe) {
+            throw new IllegalArgumentException("toAdd already exists in the model.");
+        }
+        String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
+
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyLesson)} except that the result
+     * display box displays {@code expectedResultMessage} and the model related components equal to
+     * {@code expectedModel}.
+     * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyLesson)
+     */
+    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    /**
+     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
+     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
+     * These verifications are done by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
+     * error style.
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+}
+```
+###### /java/systemtests/DeleteCommandSystemTest.java
+``` java
+public class DeleteCommandSystemTest extends AddressBookSystemTest {
+
+    private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =
+            String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
+
+    @Test
+    public void delete() throws IllegalValueException {
+        /* ----------------- Performing delete operation while an module list is being shown -------------------- */
+
+        /* list by module */
+        String listModuleCommand = ListCommand.COMMAND_WORD + " module";
+        executeCommand(listModuleCommand);
+
+        /* Case: delete the first module in the list, command with leading spaces and trailing spaces -> deleted */
+        Model expectedModel = getModel();
+
+        String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_LESSON.getOneBased() + "       ";
+        ArrayList<ReadOnlyLesson> lessonList = removeModule(expectedModel, MA1101R);
+        String expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_WITH_MODULE_SUCCESS, MA1101R.fullCodeName);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+
+
+        /* Case: delete the last module in the list -> deleted */
+        Model modelBeforeDeletingLast = getModel();
+        Model modelNotDeleteYet = getModel(); //noDelete is for Undo
+        ReadOnlyAddressBook addressBook = getModel().getAddressBook();
+        command = DeleteCommand.COMMAND_WORD + " " + getLastModuleIndex(modelBeforeDeletingLast).getOneBased();
+        lessonList = removeModule(modelBeforeDeletingLast, CS2101);
+        expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_WITH_MODULE_SUCCESS, CS2101.fullCodeName);
+        assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
+
+
+        /* Case: undo deleting the last module in the list -> last lesson restored */
+        command = UndoCommand.COMMAND_WORD;
+        expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        assertCommandSuccess(command, modelNotDeleteYet, expectedResultMessage);
+
+
+        /* Case: delete the middle module in the list -> deleted */
+        addressBook = getModel().getAddressBook();
+        command = DeleteCommand.COMMAND_WORD + " " + getLastModuleIndex(modelBeforeDeletingLast).getOneBased();
+        lessonList = removeModule(modelNotDeleteYet, GEQ1000);
+        expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_WITH_MODULE_SUCCESS, GEQ1000.fullCodeName);
+        assertCommandSuccess(command, modelNotDeleteYet, expectedResultMessage);
+
+
+        /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
+
+        executeCommand("undo");
+        executeCommand("undo");
+
+        /* list by module */
+        executeCommand(listModuleCommand);
+
+        /*
+         * View all lessons of the module indexed with 1.
+         */
+        String listLessonCommand = ViewCommand.COMMAND_WORD + " 1";
+        executeCommand(listLessonCommand);
+
+        /* Case: lesson list, delete index within bounds of address book and lesson list -> deleted */
+        Index index = INDEX_FIRST_LESSON;
+        assertTrue(index.getZeroBased() < getModel().getFilteredLessonList().size());
+        assertDeleteLessonSuccess(index);
+
+        /* Case: filtered lesson list, delete index within bounds of address book but out of bounds of lesson list
+         * -> rejected
+         */
+        showLessonsWithName(CLASS_TYPE_LECTURE);
+        int invalidIndex = getModel().getAddressBook().getLessonList().size();
+        command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
+        assertCommandFailure(command, MESSAGE_INVALID_DISPLAYED_INDEX);
+
+        /* ----------------- Performing delete operation while a location list is being shown -------------------- */
+
+        String listLocationCommand = ListCommand.COMMAND_WORD + " location";
+        executeCommand(listLocationCommand);
+
+        /* Case: delete the first location in the list, command with leading spaces and trailing spaces -> deleted */
+        expectedModel = getModel();
+
+        command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_LESSON.getOneBased() + "       ";
+        lessonList = removeLocation(expectedModel, new Location(KEYWORD_MATCHING_LT27));
+        expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_WITH_LOCATION_SUCCESS, KEYWORD_MATCHING_LT27);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+
+
+        /* Case: delete the last module in the list -> deleted */
+        modelBeforeDeletingLast = getModel();
+        modelNotDeleteYet = getModel(); //noDelete is for Undo
+        addressBook = getModel().getAddressBook();
+        command = DeleteCommand.COMMAND_WORD + " " + getLastModuleIndex(modelBeforeDeletingLast).getOneBased();
+        lessonList = removeLocation(modelBeforeDeletingLast, new Location("COM02-03"));
+        expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_WITH_LOCATION_SUCCESS, "COM02-03");
+        assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
+
+
+        /* Case: undo deleting the last module in the list -> last lesson restored */
+        command = UndoCommand.COMMAND_WORD;
+        expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        assertCommandSuccess(command, modelNotDeleteYet, expectedResultMessage);
+
+
+        /* --------------------- Performing delete operation while a lesson card is selected ------------------------ */
+
+        /* Case: delete the selected module -> module list panel selects the lesson before the deleted lesson */
+        executeCommand(listModuleCommand);
+        expectedModel = getModel();
+        Index selectedIndex = getLastModuleIndex(expectedModel);
+        Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
+        command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
+        lessonList = removeModule(expectedModel, CS2101);
+        expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_WITH_MODULE_SUCCESS, CS2101.fullCodeName);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+
+
+
+        /* --------------------------------- Performing invalid delete operation ------------------------------------ */
+
+        /* Case: invalid index (0) -> rejected */
+        command = DeleteCommand.COMMAND_WORD + " 0";
+        assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+
+        /* Case: invalid index (-1) -> rejected */
+        command = DeleteCommand.COMMAND_WORD + " -1";
+        assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+
+        /* Case: invalid index (size + 1) -> rejected */
+        Index outOfBoundsIndex = Index.fromOneBased(
+                getModel().getAddressBook().getLessonList().size() + 1);
+        command = DeleteCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased();
+        assertCommandFailure(command, MESSAGE_INVALID_DISPLAYED_INDEX);
+
+        /* Case: invalid arguments (alphabets) -> rejected */
+        assertCommandFailure(DeleteCommand.COMMAND_WORD + " abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+
+        /* Case: invalid arguments (extra argument) -> rejected */
+        assertCommandFailure(DeleteCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+
+        /* Case: mixed case command word -> rejected */
+        assertCommandFailure("DelETE 1", MESSAGE_UNKNOWN_COMMAND);
+    }
+
+
+    /**
+     * Removes the {@code ReadOnlyLesson} at the specified {@code index} in {@code model}'s address book.
+     * @return the removed lesson
+     */
+    private ArrayList<ReadOnlyLesson> removeModule(Model model, Code code) {
+        ArrayList<ReadOnlyLesson> targetLessons = new ArrayList<ReadOnlyLesson>();
+        ObservableList<ReadOnlyLesson> lessonList = model.getAddressBook().getLessonList();
+        for (int i = 0; i < lessonList.size(); i++) {
+            ReadOnlyLesson lesson = lessonList.get(i);
+            if (lesson.getCode().equals(code)) {
+                try {
+                    targetLessons.add(lesson);
+                    model.deleteLesson(lesson);
+                } catch (LessonNotFoundException e) {
+                    throw new AssertionError("targetModule is retrieved from model.");
+                }
+                i--;
+            }
+        }
+        return targetLessons;
+    }
+
+    /**
+     * Removes the {@code ReadOnlyLesson} at the specified {@code index} in {@code model}'s address book.
+     * @return the removed lesson
+     */
+    private ArrayList<ReadOnlyLesson> removeLocation(Model model, Location location) {
+        ArrayList<ReadOnlyLesson> targetLessons = new ArrayList<ReadOnlyLesson>();
+        ObservableList<ReadOnlyLesson> lessonList = model.getAddressBook().getLessonList();
+        for (int i = 0; i < lessonList.size(); i++) {
+            ReadOnlyLesson lesson = lessonList.get(i);
+            if (lesson.getLocation().equals(location)) {
+                try {
+                    targetLessons.add(lesson);
+                    model.deleteLesson(lesson);
+                } catch (LessonNotFoundException e) {
+                    throw new AssertionError("targetModule is retrieved from model.");
+                }
+                i--;
+            }
+        }
+        return targetLessons;
+    }
+
+
+    /**
+     * Removes the {@code ReadOnlyLesson} at the specified {@code index} in {@code model}'s address book.
+     * @return the removed lesson
+     */
+    private ReadOnlyLesson removeLesson(Model model, Index index) {
+        ObservableList<ReadOnlyLesson> lessonList = model.getAddressBook().getLessonList();
+        ReadOnlyLesson targetLesson = lessonList.get(index.getZeroBased());
+
+        try {
+            model.deleteLesson(targetLesson);
+        } catch (LessonNotFoundException e) {
+            e.printStackTrace();
+            throw new AssertionError("targetLesson is retrieved from model.");
+        }
+        return targetLesson;
+    }
+
+    /**
+     * Deletes the lesson at {@code toDelete} by creating a default {@code DeleteCommand} using {@code toDelete} and
+     * performs the same verification as {@code assertCommandSuccess(String, Model, String)}.
+     * @see DeleteCommandSystemTest#assertCommandSuccess(String, Model, String)
+     */
+    private void assertDeleteLessonSuccess(Index toDelete) {
+        Model expectedModel = getModel();
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
+        ReadOnlyLesson deletedLesson = removeLesson(expectedModel, toDelete);
+        String expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_SUCCESS, deletedLesson);
+
+        assertCommandSuccess(
+                DeleteCommand.COMMAND_WORD + " " + toDelete.getOneBased(), expectedModel, expectedResultMessage);
+    }
+
+    /**
+     * Executes {@code command} and in addition,<br>
+     * 1. Asserts that the command box displays an empty string.<br>
+     * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
+     * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
+     * 4. Asserts that the browser url and selected card remains unchanged.<br>
+     * 5. Asserts that the status bar's sync status changes.<br>
+     * 6. Asserts that the command box has the default style class.<br>
+     * Verifications 1 to 3 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+        assertCommandSuccess(command, expectedModel, expectedResultMessage, null);
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, Model, String)} except that the browser url
+     * and selected card are expected to update accordingly depending on the card at {@code expectedSelectedCardIndex}.
+     * @see DeleteCommandSystemTest#assertCommandSuccess(String, Model, String)
+     * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
+     */
+    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
+            Index expectedSelectedCardIndex) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+
+        if (expectedSelectedCardIndex != null) {
+            assertSelectedCardChanged(expectedSelectedCardIndex);
+        } else {
+            assertSelectedCardUnchanged();
+        }
+
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    /**
+     * Executes {@code command} and in addition,<br>
+     * 1. Asserts that the command box displays {@code command}.<br>
+     * 2. Asserts that result display box displays {@code expectedResultMessage}.<br>
+     * 3. Asserts that the model related components equal to the current model.<br>
+     * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
+     * 5. Asserts that the command box has the error style.<br>
+     * Verifications 1 to 3 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+}
+```
+###### /java/systemtests/EditCommandSystemTest.java
+``` java
+public class EditCommandSystemTest extends AddressBookSystemTest {
+
+    @Test
+    public void editLesson() throws Exception {
+        /* ----------------- Performing edit operation while an lesson list is being shown ---------------------- */
+
+        /* list by module */
+        String listModuleCommand = ListCommand.COMMAND_WORD + " module";
+        executeCommand(listModuleCommand);
+
+        /*
+         * View all lessons of the module indexed with 1.
+         */
+        String listLessonCommand = ViewCommand.COMMAND_WORD + " 1";
+        executeCommand(listLessonCommand);
+        /* Case: edit all fields, command with leading spaces, trailing spaces and multiple spaces between each field
+         * -> edited
+         */
+        Index index = INDEX_FIRST_LESSON;
+        String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + CODE_DESC_MA1101R + "  "
+                + CLASSTYPE_DESC_MA1101R + " " + VENUE_DESC_MA1101R + "  " + GROUP_DESC_MA1101R + " "
+                + TIMESLOT_DESC_MA1101R + " " + LECTURER_DESC_MA1101R + " ";
+        Lesson editedLesson = new LessonBuilder().withCode(VALID_CODE_MA1101R).withClassType(VALID_CLASSTYPE_MA1101R)
+                .withLocation(VALID_VENUE_MA1101R).withGroup(VALID_GROUP_MA1101R).withTimeSlot(VALID_TIMESLOT_MA1101R)
+                .withLecturers(VALID_LECTURER_MA1101R).build();
+        assertCommandSuccess(command, index, editedLesson);
+
+        /* Case: edit a lesson with new values same as existing values -> edited */
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
+                + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + LECTURER_DESC_MA1101R;
+        assertCommandSuccess(command, index, TYPICAL_MA1101R);
+
+        /* Case: edit some fields -> edited */
+        index = INDEX_FIRST_LESSON;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + LECTURER_DESC_MA1101R;
+        ReadOnlyLesson lessonToEdit = getModel().getFilteredLessonList().get(index.getZeroBased());
+        editedLesson = new LessonBuilder(lessonToEdit).withLecturers(VALID_LECTURER_MA1101R).build();
+        assertCommandSuccess(command, index, editedLesson);
+
+        /* --------------------- Performing edit operation while a lesson card is selected -------------------------- */
+
+        /* Case: selects first card in the lesson list, edit a lesson -> edited, card selection remains unchanged but
+         * browser url changes
+         */
+        index = INDEX_FIRST_LESSON;
+        selectLesson(index);
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
+                + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + LECTURER_DESC_MA1101R;
+        // this can be misleading: card selection actually remains unchanged.
+        assertEditLessonSuccess(command, index, TYPICAL_MA1101R, index);
+
+        /* --------------------------------- Performing invalid edit operation -------------------------------------- */
+
+        /* Case: invalid index (0) -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + CODE_DESC_MA1101R,
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+
+        /* Case: invalid index (-1) -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " -1" + CODE_DESC_MA1101R,
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+
+        /* Case: invalid index (size + 1) -> rejected */
+        int invalidIndex = getModel().getFilteredLessonList().size() + 1;
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + CODE_DESC_MA1101R,
+                Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+
+        /* Case: missing index -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + CODE_DESC_MA1101R,
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+
+        /* Case: missing all fields -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased(),
+                EditCommand.MESSAGE_NOT_EDITED);
+
+        /* Case: invalid module code -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + INVALID_CODE_DESC,
+                Code.MESSAGE_CODE_CONSTRAINTS);
+
+        /* Case: invalid class type -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + INVALID_CLASSTYPE_DESC,
+                ClassType.MESSAGE_CLASSTYPE_CONSTRAINTS);
+
+        /* Case: invalid location -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + INVALID_VENUE_DESC,
+                Location.MESSAGE_LOCATION_CONSTRAINTS);
+
+        /* Case: invalid group number -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + INVALID_GROUP_DESC,
+                Group.MESSAGE_GROUP_CONSTRAINTS);
+
+        /* Case: invalid time slot -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + INVALID_TIMESLOT_DESC,
+                TimeSlot.MESSAGE_TIMESLOT_CONSTRAINTS);
+
+        /* Case: invalid lecturer -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + INVALID_LECTURER_DESC,
+                Lecturer.MESSAGE_LECTURER_CONSTRAINTS);
+
+        /* Case: edit a lesson with new values same as another lesson's values -> rejected */
+        executeCommand(LessonUtil.getAddCommand(TYPICAL_CS2101));
+        assertTrue(getModel().getAddressBook().getLessonList().contains(TYPICAL_CS2101));
+        index = INDEX_FIRST_LESSON;
+        assertFalse(getModel().getFilteredLessonList().get(index.getZeroBased()).equals(TYPICAL_CS2101));
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + CODE_DESC_CS2101 + CLASSTYPE_DESC_CS2101
+                + VENUE_DESC_CS2101 +  TIMESLOT_DESC_CS2101 +  GROUP_DESC_CS2101 + LECTURER_DESC_CS2101;
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
+
+        /* Case: edit a lesson with new values same as another lesson's values but with different tags -> rejected */
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased()  + CODE_DESC_CS2101 + CLASSTYPE_DESC_CS2101
+                + VENUE_DESC_CS2101 + TIMESLOT_DESC_CS2101 + GROUP_DESC_CS2101 + LECTURER_DESC_CS2101;
+        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
+    }
+
+    /* ----------------- Performing edit operation while a module list is being shown ---------------------- */
+    @Test
+    public void editModule() throws Exception {
+        /* ----------------- Performing edit operation while an module list is being shown ---------------------- */
+        /* list by module */
+        String listModuleCommand = ListCommand.COMMAND_WORD + " module";
+        executeCommand(listModuleCommand);
+
+        /* Case: edit module code, command with leading spaces, trailing spaces and multiple spaces between each field
+         * -> edited
+         */
+        Index index = INDEX_FIRST_LESSON;
+        String command = " " + EditCommand.COMMAND_WORD + " 1 " + VALID_CODE_MA1102R;
+        assertCommandSuccess(command, index, VALID_CODE_MA1102R);
+
+        command = " " + EditCommand.COMMAND_WORD + "    1     " + VALID_CODE_MA1101R;
+        assertCommandSuccess(command, index, VALID_CODE_MA1101R);
+
+        /* Case: invalid index (0) -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + VALID_CODE_MA1101R,
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+
+        /* Case: invalid index (-1) -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " -1 " + VALID_CODE_MA1101R,
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+
+        /* Case: invalid index (size + 1) -> rejected */
+        int invalidIndex = getModel().getFilteredLessonList().size() + 1;
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + " " + VALID_CODE_MA1101R,
+                Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+
+        /* Case: invalid module code -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + " MA*",
+                Code.MESSAGE_CODE_CONSTRAINTS);
+    }
+
+    /* ----------------- Performing edit operation while a module list is being shown ---------------------- */
+    @Test
+    public void editLocation() throws Exception {
+        /* ----------------- Performing edit operation while an location list is being shown ---------------------- */
+        /* list by location */
+        String listLocationCommand = ListCommand.COMMAND_WORD + " location";
+        executeCommand(listLocationCommand);
+
+        /* Case: edit location, command with leading spaces, trailing spaces and multiple spaces between each field
+         * -> edited
+         */
+        Index index = INDEX_FIRST_LESSON;
+        String command = " " + EditCommand.COMMAND_WORD + " 1 " + VALID_VENUE_MA1102R;
+        assertCommandSuccess(command, index, VALID_VENUE_MA1102R);
+
+        command = " " + EditCommand.COMMAND_WORD + "    1     " + VALID_VENUE_MA1101R;
+        assertCommandSuccess(command, index, VALID_VENUE_MA1101R);
+
+        command = " " + EditCommand.COMMAND_WORD + "    1     " + VALID_VENUE_CS2101;
+        assertCommandSuccess(command, index, VALID_VENUE_CS2101);
+
+        /* Case: invalid index (0) -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + VALID_VENUE_MA1101R,
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+
+        /* Case: invalid index (-1) -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " -1 " + VALID_VENUE_MA1101R,
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+
+        /* Case: invalid index (size + 1) -> rejected */
+        int invalidIndex = getModel().getFilteredLessonList().size() + 1;
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + " " + VALID_VENUE_MA1101R,
+                Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+
+        /* Case: invalid location. -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + " ",
+                Location.MESSAGE_LOCATION_CONSTRAINTS);
+    }
+
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, Index, ReadOnlyLesson, Index)} except that
+     * the browser url and selected card remain unchanged.
+     * @param toEdit the index of the current model's filtered list
+     * @see EditCommandSystemTest#assertEditLessonSuccess(String, Index, ReadOnlyLesson, Index)
+     */
+    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyLesson editedLesson)
+            throws DuplicateBookedSlotException {
+        assertEditLessonSuccess(command, toEdit, editedLesson, null);
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, Index, String, Index)} except that
+     * the browser url and selected card remain unchanged.
+     * @param toEdit the index of the current model's filtered list
+     * @see EditCommandSystemTest#assertEditModuleSuccess(String, Index, String, Index)
+     */
+    private void assertCommandSuccess(String command, Index toEdit, String attributeValue)
+            throws DuplicateBookedSlotException {
+        switch (ListingUnit.getCurrentListingUnit()) {
+        case MODULE:
+            assertEditModuleSuccess(command, toEdit, attributeValue, null);
+            break;
+        case LOCATION:
+            assertEditLocationSuccess(command, toEdit, attributeValue, null);
+            break;
+        default:
+            break;
+        }
+    }
+
+    /**
+     * Executes {@code command} and in addition,<br>
+     * 1. Asserts that the command box displays an empty string.<br>
+     * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
+     * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
+     * 4. Asserts that the browser url and selected card update accordingly depending on the card at
+     * {@code expectedSelectedCardIndex}.<br>
+     * 5. Asserts that the status bar's sync status changes.<br>
+     * 6. Asserts that the command box has the default style class.<br>
+     * Verifications 1 to 3 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
+     */
+    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
+                                      Index expectedSelectedCardIndex) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertCommandBoxShowsDefaultStyle();
+        assertSelectedCardUnchanged();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} and in addition,<br>
+     * 1. Asserts that result display box displays the success message of executing {@code EditCommand}.<br>
+     * 2. Asserts that the model related components are updated to reflect the lesson at index {@code toEdit} being
+     * updated to values specified {@code editedLesson}.<br>
+     * @param toEdit the index of the current model's filtered list.
+     * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
+     */
+    private void assertEditModuleSuccess(String command, Index toEdit, String attributeValue,
+                                      Index expectedSelectedCardIndex) throws DuplicateBookedSlotException {
+        Model expectedModel = getModel();
+        Code codeToEdit = expectedModel.getFilteredLessonList().get(toEdit.getZeroBased()).getCode();
+
+        try {
+            Code editedCode = new Code(attributeValue);
+            expectedModel.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+            ObservableList<ReadOnlyLesson> lessonList = expectedModel.getFilteredLessonList();
+            for (ReadOnlyLesson p : lessonList) {
+
+                ReadOnlyLesson curEditedLesson;
+                if (p.getCode().equals(codeToEdit)) {
+                    curEditedLesson = new Lesson(p.getClassType(), p.getLocation(), p.getGroup(),
+                            p.getTimeSlot(), editedCode, p.getLecturers());
+                    expectedModel.updateLesson(p, curEditedLesson);
+                }
+            }
+            expectedModel.updateFilteredLessonList(new UniqueModuleCodePredicate(expectedModel.getUniqueCodeSet()));
+            assertCommandSuccess(command, expectedModel,
+                    String.format(EditCommand.MESSAGE_EDIT_MODULE_SUCCESS, editedCode), expectedSelectedCardIndex);
+        } catch (DuplicateLessonException | LessonNotFoundException e) {
+            throw new IllegalArgumentException(
+                    "editedLesson is a duplicate in expectedModel, or it isn't found in the model.");
+        } catch (IllegalValueException e) {
+            throw new IllegalArgumentException(
+                    "edited module code is not valid");
+        }
+    }
+
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} and in addition,<br>
+     * 1. Asserts that result display box displays the success message of executing {@code EditCommand}.<br>
+     * 2. Asserts that the model related components are updated to reflect the lesson at index {@code toEdit} being
+     * updated to values specified {@code editedLesson}.<br>
+     * @param toEdit the index of the current model's filtered list.
+     * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
+     */
+    private void assertEditLocationSuccess(String command, Index toEdit, String attributeValue,
+                                         Index expectedSelectedCardIndex) throws DuplicateBookedSlotException {
+        Model expectedModel = getModel();
+        Location locationToEdit = expectedModel.getFilteredLessonList().get(toEdit.getZeroBased()).getLocation();
+
+        try {
+            Location editedLocation = new Location(attributeValue);
+            expectedModel.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+            ObservableList<ReadOnlyLesson> lessonList = expectedModel.getFilteredLessonList();
+            for (ReadOnlyLesson p : lessonList) {
+
+                ReadOnlyLesson curEditedLesson;
+                if (p.getLocation().equals(locationToEdit)) {
+                    curEditedLesson = new Lesson(p.getClassType(), editedLocation, p.getGroup(),
+                            p.getTimeSlot(), p.getCode(), p.getLecturers());
+                    BookedSlot bookedSlotToEdit = new BookedSlot(p.getLocation(), p.getTimeSlot());
+                    BookedSlot editedBookedSlot = new BookedSlot(editedLocation, p.getTimeSlot());
+                    expectedModel.updateBookedSlot(bookedSlotToEdit, editedBookedSlot);
+                    expectedModel.updateLesson(p, curEditedLesson);
+                }
+            }
+            expectedModel.updateFilteredLessonList(new UniqueLocationPredicate(expectedModel.getUniqueLocationSet()));
+            assertCommandSuccess(command, expectedModel,
+                    String.format(EditCommand.MESSAGE_EDIT_LOCATION_SUCCESS, editedLocation),
+                    expectedSelectedCardIndex);
+        } catch (DuplicateLessonException | LessonNotFoundException e) {
+            throw new IllegalArgumentException(
+                    "editedLesson is a duplicate in expectedModel, or it isn't found in the model.");
+        } catch (IllegalValueException e) {
+            throw new IllegalArgumentException(
+                    "edited module code is not valid");
+        }
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} and in addition,<br>
+     * 1. Asserts that result display box displays the success message of executing {@code EditCommand}.<br>
+     * 2. Asserts that the model related components are updated to reflect the lesson at index {@code toEdit} being
+     * updated to values specified {@code editedLesson}.<br>
+     * @param toEdit the index of the current model's filtered list.
+     * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
+     */
+    private void assertEditLessonSuccess(String command, Index toEdit, ReadOnlyLesson editedLesson,
+            Index expectedSelectedCardIndex) throws DuplicateBookedSlotException {
+        Model expectedModel = getModel();
+        ReadOnlyLesson lessonToEdit = expectedModel.getFilteredLessonList().get(toEdit.getZeroBased());
+        BookedSlot bookedSlotToEdit = new BookedSlot(lessonToEdit.getLocation(), lessonToEdit.getTimeSlot());
+        BookedSlot editedBookedSlot = new BookedSlot(editedLesson.getLocation(), editedLesson.getTimeSlot());
+        try {
+            expectedModel.updateLesson(lessonToEdit, editedLesson);
+            expectedModel.updateBookedSlot(bookedSlotToEdit, editedBookedSlot);
+            expectedModel.updateFilteredLessonList(MA1101R_CODE_PREDICATE);
+        } catch (DuplicateLessonException | LessonNotFoundException e) {
+            throw new IllegalArgumentException(
+                    "editedLesson is a duplicate in expectedModel, or it isn't found in the model.");
+        }
+        assertCommandSuccess(command, expectedModel,
+                String.format(EditCommand.MESSAGE_EDIT_LESSON_SUCCESS, editedLesson), expectedSelectedCardIndex);
+    }
+
+
+    /**
+     * Executes {@code command} and in addition,<br>
+     * 1. Asserts that the command box displays {@code command}.<br>
+     * 2. Asserts that result display box displays {@code expectedResultMessage}.<br>
+     * 3. Asserts that the model related components equal to the current model.<br>
+     * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
+     * 5. Asserts that the command box has the error style.<br>
+     * Verifications 1 to 3 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+}
+```
+###### /java/systemtests/MarkCommandSystemTest.java
+``` java
+public class MarkCommandSystemTest extends AddressBookSystemTest {
+
+    private static final String MESSAGE_DUPLICATE_LESSON_FAILURE = "Operation would result in duplicate lesson";
+    private static final String MESSAGE_INVALID_MARK_COMMAND_FORMAT =
+            String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE);
+
+    @Test
+    public void mark() throws Exception {
+
+        /* list by module */
+        String listModuleCommand = ListCommand.COMMAND_WORD + " module";
+        executeCommand(listModuleCommand);
+
+        /*
+         * View all lessons of the module indexed with 1.
+         */
+        String listLessonCommand = ViewCommand.COMMAND_WORD + " 1";
+        executeCommand(listLessonCommand);
+
+        /* Case: Unmark the first lesson in the list, command with leading spaces and trailing spaces -> unmarked */
+        Model expectedModel = getModel();
+        String command = "     " + UnmarkCommand.COMMAND_WORD + "      " + INDEX_FIRST_LESSON.getOneBased() + "       ";
+        ReadOnlyLesson lessonToUnmark = expectedModel.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
+        expectedModel.unBookmarkLesson(lessonToUnmark);
+        String expectedResultMessage = String.format(MESSAGE_UNBOOKMARK_LESSON_SUCCESS, lessonToUnmark);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+
+        /* Case: Mark the first lesson in the list, command with leading spaces and trailing spaces -> marked */
+        expectedModel = getModel();
+        command = "     " + MarkCommand.COMMAND_WORD + "      " + INDEX_FIRST_LESSON.getOneBased() + "       ";
+        ReadOnlyLesson lessonToMark = expectedModel.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
+        expectedModel.bookmarkLesson(lessonToMark);
+        expectedResultMessage = String.format(MESSAGE_BOOKMARK_LESSON_SUCCESS, lessonToMark);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+
+        /* Case: Unmark the first lesson in the marked list,
+         * command with leading spaces and trailing spaces -> unmarked
+         */
+        /* list marked lessons */
+        String listMarkedCommand = ListCommand.COMMAND_WORD + " marked";
+        executeCommand(listMarkedCommand);
+
+        expectedModel = getModel();
+        command = "     " + UnmarkCommand.COMMAND_WORD + "      " + INDEX_FIRST_LESSON.getOneBased() + "       ";
+        lessonToUnmark = expectedModel.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
+        expectedModel.unBookmarkLesson(lessonToUnmark);
+        expectedResultMessage = String.format(MESSAGE_UNBOOKMARK_LESSON_SUCCESS, lessonToUnmark);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+
+        /* --------------------------------- Performing invalid delete operation ------------------------------------ */
+
+
+        executeCommand(listModuleCommand);
+        executeCommand(listLessonCommand);
+
+        command = MarkCommand.COMMAND_WORD + " 1";
+        executeCommand(command);
+
+        /* Case: Mark the first lesson in the list again, duplicate mark -> rejected */
+        command = "     " + MarkCommand.COMMAND_WORD + "      " + INDEX_FIRST_LESSON.getOneBased() + "       ";
+        assertCommandFailure(command, MESSAGE_DUPLICATE_LESSON_FAILURE);
+
+        /* Case: invalid index (0) -> rejected */
+        command = MarkCommand.COMMAND_WORD + " 0";
+        assertCommandFailure(command, MESSAGE_INVALID_MARK_COMMAND_FORMAT);
+
+        /* Case: invalid index (-1) -> rejected */
+        command = MarkCommand.COMMAND_WORD + " -1";
+        assertCommandFailure(command, MESSAGE_INVALID_MARK_COMMAND_FORMAT);
+
+        /* Case: invalid index (size + 1) -> rejected */
+        Index outOfBoundsIndex = Index.fromOneBased(
+                getModel().getAddressBook().getLessonList().size() + 1);
+        command = MarkCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased();
+        assertCommandFailure(command, MESSAGE_INVALID_DISPLAYED_INDEX);
+
+        command = UnmarkCommand.COMMAND_WORD + " 1";
+        executeCommand(command);
+
+        /* Case: wrong listing type, list by module -> rejected */
+        executeCommand(listModuleCommand);
+        command = MarkCommand.COMMAND_WORD + " 1";
+        assertCommandFailure(command, MarkCommand.MESSAGE_WRONG_LISTING_UNIT_FAILURE);
+
+        /* Case: wrong listing type, list by location -> rejected */
+        String listLocationCommand = ListCommand.COMMAND_WORD + " location";
+        executeCommand(listLocationCommand);
+        command = MarkCommand.COMMAND_WORD + " 1";
+        assertCommandFailure(command, MarkCommand.MESSAGE_WRONG_LISTING_UNIT_FAILURE);
+
+    }
+
+
+    /**
+     * Executes {@code command} and in addition,<br>
+     * 1. Asserts that the command box displays an empty string.<br>
+     * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
+     * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
+     * 4. Asserts that the status bar's sync status changes.<br>
+     * 5. Asserts that the command box has the default style class.<br>
+     * Verifications 1 to 3 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+
+    /**
+     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
+     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
+     * These verifications are done by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
+     * error style.
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+
+}
+```
+###### /java/systemtests/RemarkCommandSystemTest.java
+``` java
+public class RemarkCommandSystemTest extends AddressBookSystemTest {
+
+    private static final String SAMPLE_REMARK = "This is a sample remark";
+    private static final String MESSSAGE_DUPLICATE_REMARK = "Operation would result in duplicate remark";
+    private static final String MESSAGE_INVALID_REMARK_COMMAND_FORMAT =
+            String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE);
+
+    @Test
+    public void remark() throws Exception {
+        /* list by module */
+        String listModuleCommand = ListCommand.COMMAND_WORD + " module";
+        executeCommand(listModuleCommand);
+
+        /* Case:remark the first module in the list, command with leading spaces and trailing spaces -> remarked*/
+        Model expectedModel = getModel();
+        String command = "     " + RemarkCommand.COMMAND_WORD + "      " + INDEX_FIRST_LESSON.getOneBased() + "       "
+                + SAMPLE_REMARK;
+        Code moduleToRemark = expectedModel.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()).getCode();
+        expectedModel.addRemark(new Remark(SAMPLE_REMARK, moduleToRemark));
+        String expectedResultMessage = String.format(MESSAGE_REMARK_MODULE_SUCCESS, moduleToRemark);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+
+        /* Case:remark the second module in the list -> remarked*/
+        expectedModel = getModel();
+        command = RemarkCommand.COMMAND_WORD + " " + INDEX_SECOND_LESSON.getOneBased() + "  " + SAMPLE_REMARK;
+        moduleToRemark = expectedModel.getFilteredLessonList().get(INDEX_SECOND_LESSON.getZeroBased()).getCode();
+        expectedModel.addRemark(new Remark(SAMPLE_REMARK, moduleToRemark));
+        expectedResultMessage = String.format(MESSAGE_REMARK_MODULE_SUCCESS, moduleToRemark);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+
+        /* Case:delete the second remark in the list -> deleted*/
+        expectedModel = getModel();
+        command = RemarkCommand.COMMAND_WORD + " -d " + INDEX_SECOND_LESSON.getOneBased();
+        Remark remarkToDelete = expectedModel.getFilteredRemarkList().get(INDEX_SECOND_LESSON.getZeroBased());
+        expectedModel.deleteRemark(remarkToDelete);
+        expectedResultMessage = String.format(MESSAGE_DELETE_REMARK_SUCCESS, remarkToDelete);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+
+        /* Case: Undo the previous step -> Undoed */
+        expectedModel = getModel();
+        command = UndoCommand.COMMAND_WORD;
+        expectedModel.addRemark(new Remark(SAMPLE_REMARK, moduleToRemark));
+        expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+
+        /* Case: redo the last command -> redoed */
+        expectedModel = getModel();
+        command = RedoCommand.COMMAND_WORD;
+        expectedModel.deleteRemark(remarkToDelete);
+        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+
+        /* Case: add in the same remark again to the first module, duplicate remark -> rejected */
+        command = RemarkCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + " " + SAMPLE_REMARK;
+        assertCommandFailure(command, MESSSAGE_DUPLICATE_REMARK);
+
+        /* Case: invalid module index (0) -> rejected */
+        command = RemarkCommand.COMMAND_WORD + " 0 " + SAMPLE_REMARK;
+        assertCommandFailure(command, MESSAGE_INVALID_REMARK_COMMAND_FORMAT);
+
+        /* Case: invalid module index (-1) -> rejected */
+        command = RemarkCommand.COMMAND_WORD + " -1 " + SAMPLE_REMARK;
+        assertCommandFailure(command, MESSAGE_INVALID_REMARK_COMMAND_FORMAT);
+
+        /* Case: invalid module index (size + 1) -> rejected */
+        Index outOfBoundsIndex = Index.fromOneBased(
+                getModel().getAddressBook().getLessonList().size() + 1);
+        command = RemarkCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased() + " " + SAMPLE_REMARK;
+        assertCommandFailure(command, MESSAGE_INVALID_DISPLAYED_INDEX);
+
+        /* Case: invalid remark index (0) -> rejected */
+        command = RemarkCommand.COMMAND_WORD + " -d 0";
+        assertCommandFailure(command, MESSAGE_INVALID_REMARK_COMMAND_FORMAT);
+
+        /* Case: invalid remark index (-1) -> rejected */
+        command = RemarkCommand.COMMAND_WORD + " -d -1 " + SAMPLE_REMARK;
+        assertCommandFailure(command, MESSAGE_INVALID_REMARK_COMMAND_FORMAT);
+
+        /* Case: invalid remark index (size + 1) -> rejected */
+        outOfBoundsIndex = Index.fromOneBased(
+                getModel().getAddressBook().getRemarkList().size() + 1);
+        command = RemarkCommand.COMMAND_WORD + " -d " + outOfBoundsIndex.getOneBased();
+        assertCommandFailure(command, MESSAGE_INVALID_DISPLAYED_INDEX);
+
+        /* Case: add remark when list by lessons, wrong listing type -> rejected */
+        command = ViewCommand.COMMAND_WORD + " 1";
+        executeCommand(command);
+        command = RemarkCommand.COMMAND_WORD + " 1  another remark";
+        assertCommandFailure(command, MESSAGE_WRONG_LISTING_UNIT_FAILURE);
+
+        /* Case: delete remark when list by lessons, wrong listing type -> rejected */
+        command = RemarkCommand.COMMAND_WORD + " -d 1";
+        assertCommandFailure(command, MESSAGE_WRONG_LISTING_UNIT_FAILURE);
+
+        /* Case: add remark when list by location, wrong listing type -> rejected */
+        command = ListCommand.COMMAND_WORD + " location";
+        executeCommand(command);
+        command = RemarkCommand.COMMAND_WORD + " 1  another remark";
+        assertCommandFailure(command, MESSAGE_WRONG_LISTING_UNIT_FAILURE);
+
+        /* Case: delete remark when list by location, wrong listing type -> rejected */
+        command = RemarkCommand.COMMAND_WORD + " -d 1";
+        assertCommandFailure(command, MESSAGE_WRONG_LISTING_UNIT_FAILURE);
+    }
+
+    /**
+     * Executes {@code command} and in addition,<br>
+     * 1. Asserts that the command box displays an empty string.<br>
+     * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
+     * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
+     * 4. Asserts that the status bar's sync status changes.<br>
+     * 5. Asserts that the command box has the default style class.<br>
+     * Verifications 1 to 3 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    /**
+     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
+     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
+     * These verifications are done by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
+     * error style.
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+
 }
 ```
