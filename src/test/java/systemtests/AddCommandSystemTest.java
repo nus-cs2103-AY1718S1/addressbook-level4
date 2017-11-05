@@ -1,7 +1,49 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.*;
+import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.FORMCLASS_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.FORMCLASS_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.GRADES_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.GRADES_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_FORMCLASS_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_GRADES_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_PARENTPHONE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_POSTALCODE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.PARENTPHONE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.PARENTPHONE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.POSTALCODE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.POSTALCODE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_FORMCLASS_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_FORMCLASS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_GRADES_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_GRADES_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PARENTPHONE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_POSTALCODE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_POSTALCODE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.AMY;
@@ -21,7 +63,15 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.FormClass;
+import seedu.address.model.person.Grades;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.ParentPhone;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.PostalCode;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
@@ -144,7 +194,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + PARENTPHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + FORMCLASS_DESC_AMY + GRADES_DESC_AMY + POSTALCODE_DESC_BOB + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
-//@@author Lenaldnwj
+        //@@author Lenaldnwj
         /* Case: missing email -> added */
         toAdd = new PersonBuilder().withName("Amy Beenn").withPhone(VALID_PHONE_BOB)
                 .withParentPhone(VALID_PARENTPHONE_AMY).withEmail("(Email not recorded)")
@@ -215,7 +265,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + " n/ Ray" + PHONE_DESC_AMY + PARENTPHONE_DESC_AMY + ADDRESS_DESC_AMY
                 + FORMCLASS_DESC_AMY + GRADES_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
-//@@author Lenaldnwj
+        //@@author Lenaldnwj
 
         /* Case: filters the person list before adding -> added */
         executeCommand(FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER);

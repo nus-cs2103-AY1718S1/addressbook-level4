@@ -47,15 +47,18 @@ public class TypicalPersons {
             .withFormClass("12S23").withGrades("165.0").withPostalCode("279392")
             .build();
     public static final ReadOnlyPerson DANIEL = new PersonBuilder().withName("Daniel Meier")
-            .withPhone("97979797").withParentPhone("96753511").withEmail("cornelia@example.com").withAddress("10th street")
+            .withPhone("97979797").withParentPhone("96753511").withEmail("cornelia@example.com")
+            .withAddress("10th street")
             .withFormClass("12S23").withGrades("100.0").withPostalCode("279392")
             .build();
     public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer")
-            .withPhone("97979797").withParentPhone("96753511").withEmail("werner@example.com").withAddress("michegan ave")
+            .withPhone("97979797").withParentPhone("96753511").withEmail("werner@example.com")
+            .withAddress("michegan ave")
             .withFormClass("12S23").withGrades("150.0").withPostalCode("279392")
             .build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz")
-            .withPhone("97979797").withParentPhone("96753511").withEmail("lydia@example.com").withAddress("little tokyo")
+            .withPhone("97979797").withParentPhone("96753511").withEmail("lydia@example.com")
+            .withAddress("little tokyo")
             .withFormClass("12S23").withGrades("75.0").withPostalCode("279392")
             .build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best")
@@ -66,7 +69,8 @@ public class TypicalPersons {
 
     // Manually added
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier")
-            .withPhone("97979797").withParentPhone("96753511").withEmail("stefan@example.com").withAddress("little india")
+            .withPhone("97979797").withParentPhone("96753511").withEmail("stefan@example.com")
+            .withAddress("little india")
             .withFormClass("12S23").withGrades("125.0").withPostalCode("987527")
             .build();
     public static final ReadOnlyPerson IDA = new PersonBuilder().withName("Ida Mueller")

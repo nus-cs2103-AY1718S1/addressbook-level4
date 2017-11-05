@@ -41,6 +41,21 @@
             <Font size="14.0" />
          </font>
         </Label>
+        <Label fx:id="parentPhone" lineSpacing="10.0" styleClass="cell_small_label" text="\$parentPhone">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@../images/phone.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+            <padding>
+                <Insets bottom="5.0" />
+            </padding>
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
         <Label fx:id="address" lineSpacing="10.0" styleClass="cell_small_label" text="\$address">
             <graphic>
                 <ImageView>

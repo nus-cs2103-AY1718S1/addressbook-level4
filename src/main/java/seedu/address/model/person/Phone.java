@@ -12,9 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Phone {
 
     public static final String MESSAGE_PHONE_CONSTRAINTS =
-            "Users are to enter their numbers in this format, p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)\n"
-                    + "For example, p/ student/97271111 parent/97979797\n"
-                    + "Phone numbers can only contain numbers, and should be exactly 8 digits";
+            "Phone numbers can only contain numbers, and should be exactly 8 digits";
     public static final String PHONE_VALIDATION_REGEX = "(\\d\\d\\d\\d\\d\\d\\d\\d)";
 
     public final String value;
@@ -27,7 +25,6 @@ public class Phone {
     public Phone(String phone) throws IllegalValueException {
         requireNonNull(phone);
         String trimmedPhone = phone.trim();
-        //String phoneFormat = formatPhone(trimmedPhone);
         if (!isValidPhone(trimmedPhone)) {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
         }
@@ -40,12 +37,6 @@ public class Phone {
     public static boolean isValidPhone(String test) {
         return test.matches(PHONE_VALIDATION_REGEX);
     }
-
-//    /**
-//     * Returns formatted phone by appending Student:  before the student phone number.
-//     */
-//    public static String formatPhone(String phoneToFormat) {
-//        return "Student: " + phoneToFormat; }
 
     @Override
     public String toString() {
