@@ -4,18 +4,18 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: ModU
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+ModU is a software design to help teachers and lecturers to plan their weekly teaching schedule. +
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/main/angtianlannus.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/test/angtianlannus.md[Test code]]
 
-=== Enhancement Added: Undo/Redo
+=== New Command Added: `Sort` command
 
 ==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=sort]
 
 #End of Extract#
 
@@ -23,28 +23,65 @@ include::../UserGuide.adoc[tag=undoredo]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+After user have used ModU for a period of time, he or she will accumulate many lessons, module and location. This new sort command can sort the list of modules, lessons and locations in a meaningful manner and make it easier for user to find the information he or she needs.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=sort]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Made: `Find`
 
-{Explain similar to the Undo/Redo feature above.}
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The original find command from AddressBook level 4 was to find list by person name. As we have changed the whole context of the original application to ModU, we would need to change the find command to match the ModU's context. ModU's list command shown list to user in three attributes: location, module and lesson(via view command). Thus it would make sense that find command can search for lesson, location and module in their respective list attributes.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== Enhancements Proposed : `Registration` and `Login` features
+
+In ModU version 2.0, we hope that we can incorporate functions that allow user to register an account with ModU. +
+This function allow ModU to distinguish the type of user who is using ModU for example some of the user type could be ModU administrator and lecturer. By distinguishing user type, ModU could give different access right to different user type, for example only administrator can set a list of valid module for other users to add lessons into.
+
+=== Enhancements Proposed : `Export` timetable feature
+
+In ModU version 2.0, we hope that ModU would have a feature that allow users to export their weekly timetable on ModU as image files out of ModU so they can view their timetable without having to open ModU.
+
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Add timeSlot constraint that prevent user from adding two lessons with the same time slot and location  (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/126[#126], https://github.com/CS2103AUG2017-W13-B4/main/pull/143[#143])
+* Wrote additional tests to increase coverage (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/216[#216])
+* Keeping User Guide and Developer Guide up to date (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/67[#67],
+https://github.com/CS2103AUG2017-W13-B4/main/pull/70[#70],
+https://github.com/CS2103AUG2017-W13-B4/main/pull/115[#115],
+https://github.com/CS2103AUG2017-W13-B4/main/pull/219[#219],
+https://github.com/CS2103AUG2017-W13-B4/main/pull/244[#244],
+https://github.com/CS2103AUG2017-W13-B4/main/pull/262[#262])
 
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}
