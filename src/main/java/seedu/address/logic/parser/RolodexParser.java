@@ -22,6 +22,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.StarWarsCommand;
+import seedu.address.logic.commands.SuggestedCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -35,6 +36,8 @@ public class RolodexParser {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
+    private SuggestedCommand suggestedCommand;
+
     /**
      * Parses user input into command for execution.
      *
@@ -43,12 +46,18 @@ public class RolodexParser {
      * @throws ParseException if the user input does not conform the expected format
      */
     public Command parseCommand(String userInput) throws ParseException {
-        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+        Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        final String commandWord = matcher.group("commandWord").toLowerCase();
+        String commandWord = matcher.group("commandWord").toLowerCase();
+        if (suggestedCommand != null && SuggestedCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+            matcher = BASIC_COMMAND_FORMAT.matcher(suggestedCommand.getCommandString().trim());
+        }
+        suggestedCommand = null;
+
+        commandWord = matcher.group("commandWord").toLowerCase();
         final String arguments = matcher.group("arguments");
         if (AddCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
             return new AddCommandParser().parse(arguments);
@@ -83,7 +92,12 @@ public class RolodexParser {
         }  else if (StarWarsCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
             return new StarWarsCommand();
         } else {
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            suggestedCommand = new SuggestedCommand(commandWord, arguments);
+            if (suggestedCommand.isSuggestible()) {
+                throw new ParseException(suggestedCommand.getPromptMessage());
+            }
+            suggestedCommand = null;
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND); // throw new ParseException : Add message prompt to Parse Exception, set up suggested command
         }
     }
 
