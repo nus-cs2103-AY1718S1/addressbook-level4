@@ -168,6 +168,11 @@ public class SortCommandTest {
             return null;
         }
 
+        public ReadOnlyAddressBook getRecycleBin() {
+            fail("This method should not be called.");
+            return null;
+        }
+
         @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
@@ -175,6 +180,10 @@ public class SortCommandTest {
 
         @Override
         public void deletePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        public void deleteBinPerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
 
@@ -190,6 +199,12 @@ public class SortCommandTest {
             return null;
         }
 
+        public ObservableList<ReadOnlyPerson> getRecycleBinPersonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+
         @Override
         public ObservableList<Event> getEventList() {
             fail("This method should not be called.");
@@ -200,6 +215,11 @@ public class SortCommandTest {
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
+
+        public void updateFilteredBinList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
 
         @Override
         public void updateListOfPerson(ArrayList<ReadOnlyPerson> targets, ArrayList<ReadOnlyPerson> editedPersons)

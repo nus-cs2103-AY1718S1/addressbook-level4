@@ -9,7 +9,9 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+
 
 //@@author Pengyuz
 /**
@@ -27,6 +29,7 @@ public class DeleteCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the recycle bin";
     private boolean allvalid = true;
     private boolean exist = false;
     private boolean duplicate = false;
@@ -79,9 +82,17 @@ public class DeleteCommand extends UndoableCommand {
 
         if (allvalid && exist) {
             try {
+                for (ReadOnlyPerson o: personstodelete) {
+                    if (model.getRecycleBin().getPersonList().contains(o)) {
+                       model.deletePerson(o);
+                       personstodelete.remove(o);
+                    }
+                }
                 model.deletePerson(personstodelete);
             } catch (PersonNotFoundException pnfe) {
                 assert false : "The target person cannot be missing";
+            } catch (DuplicatePersonException d) {
+                assert false: "The duplicate person cannot exist";
             }
             return new CommandResult(MESSAGE_DELETE_PERSON_SUCCESS);
         } else {

@@ -27,7 +27,7 @@ import seedu.address.model.person.Person;
  */
 public class BirthdayAddCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), new AddressBook(), new UserPrefs());
 
     @Test
     public void execute_allFieldsSpecifiedCorrectlyUnfilteredList_success() throws Exception {
@@ -39,7 +39,8 @@ public class BirthdayAddCommandTest {
         BirthdayAddCommand birthdayAddCommand = prepareCommand(INDEX_FIRST_PERSON, birthday);
         String expectedMessage = String.format(BirthdayAddCommand.MESSAGE_ADD_BIRTHDAY_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),new AddressBook(),
+                new UserPrefs());
         expectedModel.updatePerson(originalPerson, editedPerson);
 
         assertCommandSuccess(birthdayAddCommand, model, expectedMessage, expectedModel);
@@ -55,7 +56,8 @@ public class BirthdayAddCommandTest {
         BirthdayAddCommand birthdayAddCommand = prepareCommand(INDEX_FIRST_PERSON, birthday);
         String expectedMessage = String.format(BirthdayAddCommand.MESSAGE_ADD_BIRTHDAY_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new AddressBook(),
+                new UserPrefs());
         expectedModel.updatePerson(originalPerson, editedPerson);
 
         assertCommandSuccess(birthdayAddCommand, model, expectedMessage, expectedModel);

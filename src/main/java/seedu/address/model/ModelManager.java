@@ -20,6 +20,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 
+import seedu.address.commons.events.model.RecyclebinChangeEvent;
 import seedu.address.commons.events.ui.CalendarSelectionChangedEvent;
 import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ScheduleUpdateEvent;
@@ -42,25 +43,29 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
+    private final AddressBook recycleBin;
+    private final FilteredList<ReadOnlyPerson> filteredRecycle;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<Event> filteredEvents;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyAddressBook recycleBin, UserPrefs userPrefs) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(addressBook, recycleBin, userPrefs);
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        this.recycleBin = new AddressBook(recycleBin);
+        filteredRecycle = new FilteredList<ReadOnlyPerson>(this.recycleBin.getPersonList());
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredEvents = new FilteredList<>(this.addressBook.getEventList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new AddressBook(), new UserPrefs());
     }
 
 
@@ -76,6 +81,10 @@ public class ModelManager extends ComponentManager implements Model {
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
     }
+    @Override
+    public ReadOnlyAddressBook getRecycleBin() {
+        return recycleBin;
+    }
 
     /**
      * Raises an event to indicate the model has changed
@@ -84,18 +93,32 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    private void indicateRecycleBinChnaged() {
+        raise(new RecyclebinChangeEvent(recycleBin));
+    }
+
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
+
     }
 
     @Override
-    public synchronized void deletePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException {
+    public synchronized void deletePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException,
+            DuplicatePersonException {
         for (ReadOnlyPerson s : targets) {
             addressBook.removePerson(s);
+            recycleBin.addPerson(s);
         }
         indicateAddressBookChanged();
+        indicateRecycleBinChnaged();
+    }
+
+    @Override
+    public synchronized void deleteBinPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        recycleBin.removePerson(target);
+        indicateRecycleBinChnaged();
     }
 
     @Override
@@ -177,11 +200,20 @@ public class ModelManager extends ComponentManager implements Model {
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
+    @Override
+    public ObservableList<ReadOnlyPerson> getRecycleBinPersonList() {
+        return FXCollections.unmodifiableObservableList(filteredRecycle);
+    }
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+    @Override
+    public void updateFilteredBinList(Predicate<ReadOnlyPerson> predicate) {
+        requireNonNull(predicate);
+        filteredRecycle.setPredicate(predicate);
     }
 
     @Override

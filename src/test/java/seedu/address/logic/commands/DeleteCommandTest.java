@@ -19,6 +19,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -36,7 +37,7 @@ public class DeleteCommandTest {
             .withAddress("124, Jurong West Ave 7, #08-112").withEmail("alicee@example.com")
             .withPhone("85333333")
             .withTags("workmate").build();
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(),new AddressBook(), new UserPrefs());
     private ArrayList<Index> personsToDelete1 = new ArrayList<>();
 
     @Test
@@ -52,7 +53,7 @@ public class DeleteCommandTest {
 
         String expectedMessage = "Duplicate persons exist, please choose one to delete.";
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new AddressBook(), new UserPrefs());
 
         expectedModel.updateFilteredPersonList(updatedpredicate);
 
@@ -73,7 +74,7 @@ public class DeleteCommandTest {
 
         String expectedMessage1 = DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
 
-        ModelManager expectedModel1 = new ModelManager(model.getAddressBook(), new UserPrefs());
+        ModelManager expectedModel1 = new ModelManager(model.getAddressBook(),new AddressBook(), new UserPrefs());
 
         expectedModel1.deletePerson(personToDelete);
 
@@ -93,10 +94,13 @@ public class DeleteCommandTest {
 
         String expectedMessage1 = DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
 
-        ModelManager expectedModel1 = new ModelManager(model.getAddressBook(), new UserPrefs());
+        ModelManager expectedModel1 = new ModelManager(model.getAddressBook(), model.getRecycleBin(), new UserPrefs());
 
-        expectedModel1.deletePerson(personToDelete);
-        expectedModel1.deletePerson(secondToDelete);
+        ArrayList<ReadOnlyPerson> personlist = new ArrayList<>();
+        personlist.add(personToDelete);
+        personlist.add(secondToDelete);
+
+        expectedModel1.deletePerson(personlist);
 
         assertCommandSuccess(deleteCommand1, model, expectedMessage1, expectedModel1);
     }
@@ -112,7 +116,7 @@ public class DeleteCommandTest {
 
         String expectedMessage1 = DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
 
-        ModelManager expectedModel1 = new ModelManager(model.getAddressBook(), new UserPrefs());
+        ModelManager expectedModel1 = new ModelManager(model.getAddressBook(), new AddressBook(), new UserPrefs());
 
         expectedModel1.deletePerson(personToDelete);
 
@@ -141,7 +145,7 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), new AddressBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
         showNoPerson(expectedModel);
 
@@ -160,7 +164,7 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), new AddressBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
         showNoPerson(expectedModel);
 
@@ -184,7 +188,7 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_invalidNameFilteredList_throwsCommandException() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), new AddressBook(), new UserPrefs());
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
         personsToDelete1.clear();
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());

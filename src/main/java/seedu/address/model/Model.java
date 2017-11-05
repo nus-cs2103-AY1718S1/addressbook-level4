@@ -27,10 +27,12 @@ public interface Model {
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
+    ReadOnlyAddressBook getRecycleBin();
 
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
-    void deletePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException;
+    void deletePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException, DuplicatePersonException;
+    void deleteBinPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
@@ -50,6 +52,7 @@ public interface Model {
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
+    ObservableList<ReadOnlyPerson> getRecycleBinPersonList();
 
     /** Returns an unmodifiable view of the upcoming event list */
     ObservableList<Event> getEventList();
@@ -59,6 +62,7 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+    void updateFilteredBinList (Predicate<ReadOnlyPerson> predicate);
 
     /**
      * Replaces the given list of persons {@code target} with the list of edited persons{@code editedPerson}.

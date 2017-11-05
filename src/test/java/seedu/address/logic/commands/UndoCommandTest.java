@@ -18,6 +18,7 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -26,7 +27,7 @@ public class UndoCommandTest {
     private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
     private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
 
-    private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private final Model model = new ModelManager(getTypicalAddressBook(),new AddressBook(), new UserPrefs());
     private ArrayList<Index> first = new ArrayList<>();
     private ArrayList<Index> second = new ArrayList<>();
     private  DeleteCommand deleteCommandOne;
@@ -52,12 +53,12 @@ public class UndoCommandTest {
         deleteCommandTwo.execute();
 
         // multiple commands in undoStack
-        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(getTypicalAddressBook(),new AddressBook(), new UserPrefs());
         deleteFirstPerson(expectedModel);
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // single command in undoStack
-        expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        expectedModel = new ModelManager(getTypicalAddressBook(),new AddressBook(), new UserPrefs());
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // no command in undoStack

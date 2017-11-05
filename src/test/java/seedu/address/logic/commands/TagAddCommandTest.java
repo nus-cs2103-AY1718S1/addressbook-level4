@@ -41,7 +41,7 @@ import seedu.address.testutil.PersonBuilder;
  */
 public class TagAddCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), new AddressBook(), new UserPrefs());
 
     @Test
     public void executeTagAddSinglePerson() throws Exception {
@@ -62,7 +62,8 @@ public class TagAddCommandTest {
 
         String expectedMessage = String.format(TagAddCommand.MESSAGE_ADD_TAG_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new AddressBook(),
+                new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(tagAddCommand, model, expectedMessage, expectedModel);
