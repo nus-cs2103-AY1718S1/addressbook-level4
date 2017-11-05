@@ -4,7 +4,13 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: ModU
-ModU 4 is a desktop time-slot booking application used for lecturers to plan and manage their timetable. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 9 kLoC.
+Many universities have timetable committee to deal with all matters concerning timetabling scheduling. One prevalent concern of such matters would be timetable clashes while scheduling.
+
+Welcome to ModU, a timetable scheduling software for professors and administrators in tertiary institutions.
+
+With ModU, you are able to easily identify timetable slots that are available for the module you are scheduling. Made a mistake while scheduling the timetable? Fret not, you can easily make any changes to the timetable.
+
+ModU uses the command line interface (CLI) as the main input. The natural language input field will allow you to quickly search, add, delete and edit your timetable. Just type what you want and ModU will do the rest for you!
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/main/caoliangnus.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/test/caoliangnus.md[Test code]]
 
@@ -32,15 +38,28 @@ include::../UserGuide.adoc[tag=colorKeyword]
 
 include::../DeveloperGuide.adoc[tag=colorKeyword]
 
+include::../DeveloperGuide.adoc[tag=timetable]
+
 #End of Extract#
+
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed: Add command `import / export`
 
-{Explain similar to the Undo/Redo feature above.}
+* This allows students and professors to transfer data from one computer to another easily.
+
+=== Enhancement Proposed: Add  `login` feature
+
+* This feature will improve on the user security.
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Change the base from the Addressbook level 4 to ModU (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/50[#50], +
+https://github.com/CS2103AUG2017-W13-B4/main/pull/47[#47], https://github.com/CS2103AUG2017-W13-B4/main/pull/51[#51], +
+https://github.com/CS2103AUG2017-W13-B4/main/pull/53/[#53], https://github.com/CS2103AUG2017-W13-B4/main/pull/57/[#57], +
+https://github.com/CS2103AUG2017-W13-B4/main/pull/58/[#58], https://github.com/CS2103AUG2017-W13-B4/main/pull/63/[#63],)
+
+* Wrote tutorial for User Guide (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/99[#99], +
+https://github.com/CS2103AUG2017-W13-B4/main/pull/139[#139], https://github.com/CS2103AUG2017-W13-B4/main/pull/144[#144], +
+* Designed a logo for ModU (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/118/[#118])

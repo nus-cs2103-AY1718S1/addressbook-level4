@@ -659,6 +659,66 @@ image::SwitchThemeCommandActivityDiagram.png[width="900"]
 **Cons:** In order to get it in other components, the variable must be declared static. But we cannot define static abstract method in interface. It also does not follow Java's standard coding style.
 // end::swt[]
 
+
+// tag::timetable[]
+=== Timetable mechanism
+
+`Timetable` is an enhance of the UI. The role of the timetable view is to display a timetable of all the lessons listed in the display panel. +
+
+`Timetable` mechanism is facilitated by the `GridPane` properties in javafx. +
+The first row of timetable view is the header for time slot. The range is from 0800 to 2000. +
+The generation of timetable column header is implemented this way:
+[source,java]
+----
+ public void generateTimeslotHeader() {
+        // ... generate column header for time slots ...//
+    }
+----
+
+The first col of timetable view is the header for weekday. The range is from Monday to Friday.
+The generation of timetable row header is implemented this way:
+[source,java]
+----
+    public void generateWeekDay() {
+       // ... generate row header for weekday ...//
+    }
+----
++
+
+When the `view` command is used, a number of lessons will be displayed on the display panel. The `handleViewedLessonEvent()` will then generate the timetable view and set it as visible. +
+
+The generation of timetable data is implemented this way:
+[source,java]
+----
+public void generateTimeTableData() {
+        // ... initGridData() ...//
+        // ... generate grid data for grid view ...//
+    }
+----
+
+The generation of timetable view is implemented this way:
+[source,java]
+----
+public void generateTimeTableGrid() {
+
+        // ... generateTimeTableData(); ...//
+        // ... generateTimeslotHeader(); ...//
+       // ... generateWeekDay();  ...//
+       // ... generate timetable view  ...//
+    }
+----
+==== Design considerations
+
+**Aspect:** Implementation of Timetable. +
+**Alternative1 (current choice): ** Using code to create timetable view. +
+**Pros:** It is more flexible to change the style or the text of the label. +
+**Cons:** Since everything is written in code, you can not visualise the layout until you run the code. +
+**Alternative2:** Using Scene Builder to create timetable view +
+**Pros:** It is easier to visualise the layout +
+**Cons:** There are many limitations such as unable to add time slot to span 2 columns. +
+
+// end::timetable[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
