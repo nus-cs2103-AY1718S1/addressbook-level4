@@ -32,6 +32,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    private ObjectProperty<Avatar> avatar;
     private ObjectProperty<UniquePropertyMap> properties;
     private ObjectProperty<UniqueTagList> tags;
 
@@ -162,7 +163,17 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    @Override
+    public ObjectProperty<Avatar> avatarProperty() {
+        return avatar;
+    }
+
     //@@author yunpengn
+    @Override
+    public Avatar getAvatar() {
+        return avatar.get();
+    }
+
     @Override
     public ObjectProperty<UniquePropertyMap> properties() {
         return properties;

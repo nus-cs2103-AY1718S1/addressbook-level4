@@ -37,6 +37,8 @@ public class PersonDetailsPanel extends UiPart<Region> {
         super(FXML);
         this.person = person;
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        person.avatarProperty().addListener((observable, oldValue, newValue) -> setAvatar());
+        setAvatar();
         person.properties().addListener((observable, oldValue, newValue) -> bindProperties());
         bindProperties();
     }
@@ -58,5 +60,11 @@ public class PersonDetailsPanel extends UiPart<Region> {
 
         propertyListKeys.setItems(FXCollections.observableList(keys));
         propertyListValues.setItems(FXCollections.observableList(values));
+    }
+
+    private void setAvatar() {
+        if (person.getAvatar() != null) {
+            avatar.setImage(new Image(person.getAvatar().getUrl()));
+        }
     }
 }

@@ -7,7 +7,8 @@ import seedu.address.ui.person.PersonDetailsPanel;
 
 //@@author yunpengn
 /**
- * Represents the {@link Avatar} image of each {@link Person}.
+ * Represents the {@link Avatar} image of each {@link Person}. This is a one-to-one relationship, meaning that each
+ * {@link Person} should have at most one {@link Avatar}.<br>
  *
  * Notice {@link Avatar} is not a {@link Property}. This is because it is indeed different from other fields of
  * {@link Person}. It is not shown as a row in the {@link PersonDetailsPanel}. Meanwhile, the input validation is
@@ -15,7 +16,8 @@ import seedu.address.ui.person.PersonDetailsPanel;
  */
 public class Avatar {
     private static final String INVALID_URL_MESSAGE = "The provided URL is invalid.";
-    private static final String IMG_URL_PATTERN = "(http(s?):)|([/|.|\\w|\\s])*\\.(?:jpg|gif|png)";
+    private static final String IMG_URL_PATTERN =
+            "^(https?://)?(?:[a-z0-9\\-]+\\.)+[a-z]{2,6}(?:/[^/#?]+)+\\.(?:jpe?g|gif|png)$";
 
     private String url;
 
@@ -23,6 +25,7 @@ public class Avatar {
         if (!isValidImageUrl(url)) {
             throw new IllegalValueException(INVALID_URL_MESSAGE);
         }
+        this.url = url;
     }
 
     /**
@@ -40,5 +43,9 @@ public class Avatar {
      */
     private boolean isValidImageUrl(String url) {
         return url.matches(IMG_URL_PATTERN);
+    }
+
+    public String getUrl() {
+        return url;
     }
 }

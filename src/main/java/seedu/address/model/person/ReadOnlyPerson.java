@@ -27,6 +27,8 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<Avatar> avatarProperty();
+    Avatar getAvatar();
     ObjectProperty<UniquePropertyMap> properties();
     Set<Property> getProperties();
     List<Property> getSortedProperties();
