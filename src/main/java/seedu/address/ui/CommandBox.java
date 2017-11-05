@@ -34,9 +34,7 @@ public class CommandBox extends UiPart<Region> {
         this.logic = logic;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
-        //@@author newalter
-        commandTextField.generateArgumentOptions(logic.getFilteredPersonList());
-        //@@author
+        commandTextField.initialiseHeuristic(logic.getFilteredPersonList());
         historySnapshot = logic.getHistorySnapshot();
     }
 
@@ -77,9 +75,7 @@ public class CommandBox extends UiPart<Region> {
         if (!historySnapshot.hasPrevious()) {
             return;
         }
-        //@@author newalter
         commandTextField.replaceText(historySnapshot.previous());
-        //@@author
     }
 
     /**
@@ -91,9 +87,7 @@ public class CommandBox extends UiPart<Region> {
         if (!historySnapshot.hasNext()) {
             return;
         }
-        //@@author newalter
         commandTextField.replaceText(historySnapshot.next());
-        //@@author
     }
 
     /**
@@ -102,11 +96,9 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleCommandInputChanged() {
         try {
-            //@@author newalter
             String command = commandTextField.getText();
             CommandResult commandResult = logic.execute(command);
-            commandTextField.updateOptions(command);
-            //@@author
+            commandTextField.updateHeuristic(command);
             initHistory();
             historySnapshot.next();
             // process result of the command
