@@ -19,7 +19,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.EmptyListEvent;
+import seedu.address.commons.events.ui.DeselectionEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.NearbyPersonNotInCurrentListEvent;
@@ -291,7 +291,7 @@ public class MainWindow extends UiPart<Region> {
      * {@code ClearCommand}).
      */
     @Subscribe
-    private void handleEmptyListEvent(EmptyListEvent event) {
+    private void handleDeselectionEvent(DeselectionEvent event) {
         infoPanel = new InfoPanel(logic);
         infoPanelPlaceholder.getChildren().clear();
         infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
