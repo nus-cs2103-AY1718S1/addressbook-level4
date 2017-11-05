@@ -30,16 +30,4 @@ public class LoginCommandParserTest {
 
     }
 
-//    @Test
-//    public void parse_invalidValue_failure() {
-//        // invalid username
-//        assertParse(parser, LoginCommand.COMMAND_WORD + INVALID_USERNAME_DESC
-//                + PASSWORD_DESC_PASSWORD , LoginCommand.MESSAGE_FAILURE);
-//
-//        // invalid password
-//        assertParse(parser, LoginCommand.COMMAND_WORD + USERNAME_DESC_USERNAME
-//                + INVALID_PASSWORD_DESC , LoginCommand.MESSAGE_FAILURE);
-//
-//
-//    }
 }
