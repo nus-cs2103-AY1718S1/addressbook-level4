@@ -41,6 +41,7 @@ public class MainMenuHandle extends NodeHandle<Node> {
             break;
         default:
             assert false : "Invalid window size provided";
+            break;
         }
 
     }

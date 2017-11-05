@@ -72,6 +72,7 @@ public class ChangeWindowSizeCommand extends Command {
             break;
         default:
             assert false : "Window size must be specified";
+            break;
         }
 
         return width;

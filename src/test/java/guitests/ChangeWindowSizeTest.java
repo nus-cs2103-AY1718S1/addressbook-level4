@@ -56,6 +56,7 @@ public class ChangeWindowSizeTest extends  AddressBookGuiTest {
             break;
         default:
             assert false : "Invalid window size provided";
+            break;
         }
 
         guiRobot.pauseForHuman();
