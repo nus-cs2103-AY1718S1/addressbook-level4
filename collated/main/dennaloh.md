@@ -76,36 +76,6 @@ public class FindTagCommandParser implements Parser<FindTagCommand> {
         }
         return sb.toString();
     }
-
-    public ObjectProperty<UniqueTagList> tagProperty() {
-        return tags;
-    }
-
-    /**
-     * Replaces this person's tags with the tags in the argument tag set.
-     */
-    public void setTags(Set<Tag> replacement) {
-        tags.set(new UniqueTagList(replacement));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof ReadOnlyPerson // instanceof handles nulls
-                && this.isSameStateAs((ReadOnlyPerson) other));
-    }
-
-    @Override
-    public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
-    }
-
-    @Override
-    public String toString() {
-        return getAsText();
-    }
-}
 ```
 ###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
@@ -114,8 +84,7 @@ public class FindTagCommandParser implements Parser<FindTagCommand> {
      *
      */
     public void sortPersons() {
-        internalList.sort((e1, e2) -> (e1.getName().toString()
-                .compareToIgnoreCase(e2.getName().toString())));
+        internalList.sort((e1, e2) -> e1.getName().toString().compareToIgnoreCase(e2.getName().toString()));
     }
 
     /**

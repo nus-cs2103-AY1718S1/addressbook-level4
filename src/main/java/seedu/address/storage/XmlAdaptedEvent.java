@@ -18,6 +18,7 @@ import seedu.address.model.reminder.Reminder;
 
 //@@author junyango
 
+
 /**
  * JAXB-friendly version of the Event.
  */
@@ -70,11 +71,12 @@ public class XmlAdaptedEvent {
         for (XmlAdaptedProperty property: properties) {
             eventProperties.add(property.toModelType());
         }
-        final ArrayList<Reminder> eventReminders = new ArrayList<>();
-        for (XmlAdaptedReminder reminder : reminders) {
-            eventReminders.add(reminder.toModelType());
-        }
         final Set<Property> properties = new HashSet<>(eventProperties);
-        return new Event(properties, eventReminders);
+        final ArrayList<Reminder> eventReminders = new ArrayList<>();
+        Event event = new Event(properties, eventReminders);
+        for (XmlAdaptedReminder reminder : reminders) {
+            event.addReminder(new Reminder(event, reminder.getReminderMessage()));
+        }
+        return event;
     }
 }

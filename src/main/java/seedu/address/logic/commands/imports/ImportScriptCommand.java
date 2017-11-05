@@ -14,6 +14,6 @@ public class ImportScriptCommand extends ImportCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        return null;
+        return new CommandResult("The script has been imported.");
     }
 }

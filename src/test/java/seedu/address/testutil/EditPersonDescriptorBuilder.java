@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.person.EditCommand.EditPersonDescriptor;
-import seedu.address.logic.parser.ParserUtil;
+import seedu.address.logic.parser.util.ParserUtil;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 

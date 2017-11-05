@@ -207,6 +207,16 @@ Examples:
 * `addE n/Does Birthday dt/25122015 20:30 a/12 Kent Ridge Drive`
 * `addE n/Betsy Birthday dt/25122016 21:30 a/23 Marina Road`
 
+[NOTE]
+====
+* The standard format for time should be `DDMMYYYY HH:MM` in 24-hour format.
+* However, the application may sometimes be _smart_ to interpret what you say. For example, you may type `this afternoon`
+or `tomorrow evening`. Then, it will be automatically converted to the standard format.
+* Do NOT try to _challenge_ the application, it is not promised to produce an expected result if you use non-standard format
+and the expression is not simple or clear enough.
+* Avoid putting the year in the first place when using the non-standard format.
+====
+
 === Listing all persons/events : `(l)list`
 
 Shows a list of all persons in the application. +
@@ -266,12 +276,14 @@ The index *must be a positive integer* like 1, 2, 3, ...
 
 Examples:
 
-* `editE 1 dt/18052013 03:30 +
+* `editE 1 dt/18052013 03:30` +
 Edits the date/time the 1st event to be `18052013 03:30`.
-* `editE 2 n/Lunch with Betsy  +
+* `editE 2 n/Lunch with Betsy`  +
 Edits the name of the 2nd event to be `Lunch with Betsy`.
 
 === Locating persons/events by any property : `(f)find`
+
+_(`AND` and `OR` search coming in v2.0)_
 
 Finds persons/events whose corresponding field(s) contain any of the given keywords. +
 Format: `(f)find KEYWORD [MORE_KEYWORDS] [p/KEYWORD [MORE_KEYWORDS]]...`
@@ -358,6 +370,7 @@ Format: `(s)select INDEX`
 * Selects the person/event and loads the details of this data item.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* like `1, 2, 3, ...`
+* All properties of this person/event will be displayed at the right side of the interface (ordered by the name of the property).
 ****
 
 Examples:
@@ -605,9 +618,9 @@ For `macOS` and `Linux` users, use `/` instead.
 Changes the configuration of the application or applies some advance settings to the data. Make sure you know what you
 are doing before using any of the following commands. These commands are intended for advance users.
 
-==== Add new property : `(cfg)config --add-property`
+==== Adding a customize property : `(cfg)config --add-property`
 
-Adds a new property field available to all persons or events. +
+Adds a new customize property field available to all persons or events. +
 Format: `(cfg)config --add-property s/SHORT_NAME f/FULL_NAME [m/MESSAGE r/REGULAR_EXPRESSION]`
 
 ****
@@ -636,7 +649,9 @@ Example:
 * Regular expression is used to check whether the input value for this property is valid.
 ====
 
-==== Set tag color : `(cfg)config --set-tag-color`
+==== Setting the tag color : `(cfg)config --set-tag-color`
+
+_(Tag feature for events coming in v2.0)_
 
 Sets the displayed color of a certain tag (for persons/events). +
 Format: `(cfg)config --set-tag-color TAG_NAME COLOR`
@@ -644,14 +659,21 @@ Format: `(cfg)config --set-tag-color TAG_NAME COLOR`
 ****
 * By default, the application will use a random color to display each tag. The same tags are displayed using the same
 color, different tags are _usually_ displayed using different colors.
-* The value of the parameter `COLOR` should be either one of the pre-defined color names or a valid RGB value (in hexadecimal,
-starting with a `#`). You can pick the RGB value of your favorite color from https://www.w3schools.com/colors/colors_rgb.asp[here].
-* Pre-defined color names include _black_, _blue_, _brown_, _green_, _red_, _white_, _yellow_.
+* The value of the parameter `COLOR` should be either one of the 140 pre-defined color names or a valid RGB value (a 3-bit
+or 6-bit hexadecimal number starting with a `#`).
+* You can pick the RGB value of your favorite color from https://www.w3schools.com/colors/colors_rgb.asp[here].
+* All legal pre-defined color names can be found from https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor[here].
 ****
 
 Example:
 
 * `config --set-tag-color friends red`
+
+[NOTE]
+====
+If you enter an invalid color name, the background for that tag will be set to transparent temporarily. You can use this
+again to set it to a legal color.
+====
 
 === Exiting the program : `(x)exit`
 

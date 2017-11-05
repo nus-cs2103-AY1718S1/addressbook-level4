@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.List;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
@@ -28,6 +29,7 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<UniquePropertyMap> properties();
     Set<Property> getProperties();
+    List<Property> getSortedProperties();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 

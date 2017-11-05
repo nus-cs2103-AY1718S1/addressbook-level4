@@ -677,8 +677,6 @@ public class UniqueEventList implements Iterable<Event> {
 
     /** Deletes the given event */
     void deleteReminder(ReadOnlyReminder target) throws ReminderNotFoundException;
-
-
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -775,28 +773,20 @@ public class UniqueEventList implements Iterable<Event> {
  */
 public class DateTime extends Property {
     private static final String PROPERTY_SHORT_NAME = "dt";
-    // Change the regular expression in PropertyManager whenever you change this.
+
+    // The standard format for storing a date time in string format.
     private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("ddMMyyyy HH:mm");
+    private static final String STANDARD_FORMAT = "^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{4}"
+            + "(\\s((0[1-9]|1[0-9]|2[0-3]):([0-5][0-9]))?$)";
 
     public DateTime(String value) throws IllegalValueException, PropertyNotFoundException {
-        super(PROPERTY_SHORT_NAME, value);
+        super(PROPERTY_SHORT_NAME, prepareDateTimeValue(value));
     }
 
     public DateTime(Date value) throws IllegalValueException, PropertyNotFoundException {
-        super(PROPERTY_SHORT_NAME, dateFormatter.format(value));
+        super(PROPERTY_SHORT_NAME, formatDateTime(value));
     }
 
-    /**
-     * Returns true if a given string is a valid phone number.
-     */
-    public static boolean isValidTime(String test) {
-        return test.matches(PropertyManager.getPropertyValidationRegex(PROPERTY_SHORT_NAME));
-    }
-
-    public static Date formatDateTime(String value) throws ParseException {
-        return dateFormatter.parse(value);
-    }
-}
 ```
 ###### \java\seedu\address\model\property\EventNameContainsKeywordsPredicate.java
 ``` java

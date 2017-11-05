@@ -270,7 +270,7 @@ public class ModuleInfoTest {
     public void createModuleInfo_fromJsonUrl_checkCorrectness() throws Exception {
         assertEquals("CS1101S", info.getModuleCode());
 
-        Date expectedDate = DateTime.formatDateTime("29112017 17:00");
+        Date expectedDate = DateTime.parseDateTime("29112017 17:00");
         assertEquals(expectedDate, info.getExamDate());
     }
 
@@ -378,7 +378,7 @@ public class ConfigCommandParserTest {
 
     @Test
     public void parse_usePreDefinedColor_success() throws Exception {
-        ConfigCommand expected = new ChangeTagColorCommand("husband red", "husband", "FF0000");
+        ConfigCommand expected = new ChangeTagColorCommand("husband red", "husband", VALID_PREDEFINED_COLOR.trim());
         assertParseSuccess(parser, VALID_CONFIG_TAG_COLOR + VALID_TAG_HUSBAND + VALID_PREDEFINED_COLOR, expected);
     }
 
@@ -442,6 +442,68 @@ public class ImportCommandParserTest {
         modelManager.setTagColor(myTag, VALID_TAG_COLOR);
         assertEquals(VALID_TAG_COLOR, TagColorManager.getColor(myTag));
     }
+```
+###### \java\seedu\address\model\person\PersonTest.java
+``` java
+public class PersonTest {
+    private static Name name;
+    private static Phone phone;
+    private static Email email;
+    private static Address address;
+
+    @BeforeClass
+    public static void setUp() throws Exception {
+        PropertyManager.initializePropertyManager();
+
+        name = new Name(VALID_NAME_AMY);
+        phone = new Phone(VALID_PHONE_AMY);
+        email = new Email(VALID_EMAIL_AMY);
+        address = new Address(VALID_ADDRESS_AMY);
+    }
+
+    @Test
+    public void createPerson_preDefinedFieldsPresent_checkCorrectness() throws Exception {
+        Person person = new Person(name, phone, email, address, Collections.emptySet());
+        assertNotNull(person);
+
+        assertEquals(name, person.getName());
+        assertEquals(phone, person.getPhone());
+        assertEquals(email, person.getEmail());
+        assertEquals(address, person.getAddress());
+        assertEquals(0, person.getTags().size());
+        assertEquals(4, person.getProperties().size());
+        assertEquals(4, person.getSortedProperties().size());
+    }
+
+    @Test
+    public void equal_twoSameStatePerson_checkCorrectness() throws Exception {
+        Person person = new Person(name, phone, email, address, Collections.emptySet());
+        Person another = new Person(name, phone, email, address, Collections.emptySet());
+        assertEquals(person, another);
+
+        Person copied = new Person(person);
+        assertEquals(person, copied);
+    }
+}
+```
+###### \java\seedu\address\model\property\DateTimeTest.java
+``` java
+    @Test
+    public void create_viaDateObject_checkCorrectness() throws Exception {
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("ddMMyyyy HH:mm");
+        Date date = dateFormatter.parse(VALID_DATE_EVENT1);
+
+        // Create a Datetime property via alternative constructor.
+        DateTime dateTime = new DateTime(date);
+        assertEquals(VALID_DATE_EVENT1, dateTime.getValue());
+    }
+
+    @Test
+    public void create_viaNaturalLanguage_checkCorrectness() throws Exception {
+        assertEquals(new DateTime(VALID_DATE_EVENT1), new DateTime(VALID_NATURAL_DATE_EVENT1));
+        assertEquals(new DateTime(VALID_DATE_EVENT2), new DateTime(VALID_NATURAL_DATE_EVENT2));
+    }
+}
 ```
 ###### \java\seedu\address\model\property\PropertyManagerTest.java
 ``` java
@@ -722,6 +784,14 @@ public class UniquePropertyMapTest {
     }
 
     @Test
+    public void toSortedList_checkCorrectness() throws Exception {
+        UniquePropertyMap propertyMap = createSampleMap();
+        List list = propertyMap.toSortedList();
+        assertEquals(new Property("a", "some address"), list.get(0));
+        assertEquals(new Property("p", "12345678"), list.get(1));
+    }
+
+    @Test
     public void setProperties_validButEmptyInput_successfullySet() throws Exception {
         Set<Property> myNewSet = new HashSet<>();
         UniquePropertyMap propertyMap = createSampleMap();
@@ -783,7 +853,7 @@ public class TagColorManagerTest {
     public void setTagColor_randomColor_checkCorrectness() throws Exception {
         Tag tag = new Tag(VALID_TAG_FRIEND);
         TagColorManager.setColor(tag);
-        assertEquals(6, TagColorManager.getColor(tag).length());
+        assertTrue(TagColorManager.getColor(tag).matches("#[A-Fa-f0-9]{6}"));
     }
 }
 ```

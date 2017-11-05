@@ -1,8 +1,8 @@
 package seedu.address.testutil;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_TIME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_DATE_TIME;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_NAME;
 
 import seedu.address.logic.commands.event.AddEventCommand;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -27,6 +27,7 @@ public class EventUtil {
         sb.append(PREFIX_NAME + event.getName().toString() + " ");
         sb.append(PREFIX_DATE_TIME + event.getTime().toString() + " ");
         sb.append(PREFIX_ADDRESS + event.getAddress().toString());
+        sb.append(event.getReminders());
         return sb.toString();
     }
 }

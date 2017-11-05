@@ -1,6 +1,6 @@
 package seedu.address.model.event;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
@@ -31,7 +31,7 @@ public interface ReadOnlyEvent {
     ObjectProperty<UniquePropertyMap> properties();
     Set<Property> getProperties();
     ObjectProperty<UniqueReminderList> reminderProperty();
-    ArrayList<Reminder> getReminders();
+    List<Reminder> getReminders();
     void addReminder(ReadOnlyReminder r) throws DuplicateReminderException;
 
     /**

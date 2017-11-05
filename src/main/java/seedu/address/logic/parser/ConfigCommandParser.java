@@ -2,14 +2,13 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_FULL_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MESSAGE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REGEX;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SHORT_NAME;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_FULL_NAME;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_MESSAGE;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_REGEX;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_SHORT_NAME;
 import static seedu.address.model.property.PropertyManager.DEFAULT_MESSAGE;
 import static seedu.address.model.property.PropertyManager.DEFAULT_REGEX;
 
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,6 +17,9 @@ import seedu.address.logic.commands.configs.ChangeTagColorCommand;
 import seedu.address.logic.commands.configs.ConfigCommand;
 import seedu.address.logic.commands.configs.ConfigCommand.ConfigType;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.util.ArgumentMultimap;
+import seedu.address.logic.parser.util.ArgumentTokenizer;
+import seedu.address.logic.parser.util.ParserUtil;
 
 //@@author yunpengn
 /**
@@ -35,24 +37,10 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
     /* Regular expressions for validation. ArgumentMultiMap not applicable here. */
     private static final Pattern CONFIG_COMMAND_FORMAT = Pattern.compile("--(?<configType>\\S+)(?<configValue>.+)");
     private static final Pattern TAG_COLOR_FORMAT = Pattern.compile("(?<tagName>\\p{Alnum}+)\\s+(?<tagNewColor>.+)");
-    private static final Pattern RGB_FORMAT = Pattern.compile("#(?<rgbValue>([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$)");
-
-    // Some pre-defined colors for convenience.
-    private static final HashMap<String, String> preDefinedColors = new HashMap<>();
-
-    /**
-     * Loads all pre-defined colors here. If you want to define more, you can get more color codes can be obtained from
-     * https://www.w3schools.com/colors/colors_names.asp Make sure you put them in alphabetical order.
-     */
-    static {
-        preDefinedColors.put("black", "#000000");
-        preDefinedColors.put("blue", "#0000FF");
-        preDefinedColors.put("brown", "#A52A2A");
-        preDefinedColors.put("green", "#008000");
-        preDefinedColors.put("red", "#FF0000");
-        preDefinedColors.put("white", "#FFFFFF");
-        preDefinedColors.put("yellow", "#FFFF00");
-    }
+    // A valid RGB value should be 3-bit or 6-bit hexadecimal number.
+    private static final Pattern RGB_FORMAT = Pattern.compile("#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})");
+    // Only contains alphabets (a-z or A-Z)
+    private static final Pattern ONLY_ALPHABET = Pattern.compile("[a-zA-Z]+");
 
     @Override
     public ConfigCommand parse(String args) throws ParseException {
@@ -108,21 +96,16 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
                     ChangeTagColorCommand.MESSAGE_USAGE));
         }
 
+        // Get the tag name and the customize new color for that tag.
         final String tagName = matcher.group("tagName").trim();
         String tagColor = matcher.group("tagNewColor").trim();
 
-        // Use the corresponding RGB value to replace pre-defined color names.
-        if (preDefinedColors.containsKey(tagColor)) {
-            tagColor = preDefinedColors.get(tagColor);
-        }
-
-        matcher = RGB_FORMAT.matcher(tagColor.trim());
-        if (!matcher.matches()) {
+        // Checks whether the given color is valid.
+        if (!isValidColorCode(tagColor)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, COLOR_CODE_WRONG));
         }
-        String colorRgbValue = matcher.group("rgbValue").trim();
 
-        return new ChangeTagColorCommand(value, tagName, colorRgbValue);
+        return new ChangeTagColorCommand(value, tagName, tagColor);
     }
 
     /**
@@ -153,6 +136,21 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
         String regex = argMultimap.getValue(PREFIX_REGEX).orElse(DEFAULT_REGEX);
 
         return new AddPropertyCommand(value, shortName, fullName, message, regex);
+    }
+
+    /**
+     * Checks whether the given string is a valid RGB value or a fully-alphabetical string (we do not check whether it
+     * is one of the 140 pre-defined CSS color names).
+     *
+     * TODO: Search for any API to check whether it is one of 140 pre-defined names.
+     *
+     * @see <a href=https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor>
+     *     JavaFX CSS Reference Guide</a>
+     */
+    private boolean isValidColorCode(String color) {
+        // Either all letters or a valid RGB value.
+        return ONLY_ALPHABET.matcher(color).matches() || RGB_FORMAT.matcher(color).matches();
+
     }
 
     /**

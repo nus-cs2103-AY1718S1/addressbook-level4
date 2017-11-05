@@ -26,6 +26,7 @@ public class ChangeTagColorCommand extends ConfigCommand {
         super(TAG_COLOR, configValue);
 
         try {
+            /* Two tags are equal as long as their tagNames are the same. */
             tag = new Tag(tagName);
         } catch (IllegalValueException e) {
             throw new ParseException(MESSAGE_TAG_CONSTRAINTS);

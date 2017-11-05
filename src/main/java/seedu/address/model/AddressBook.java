@@ -2,7 +2,6 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -25,7 +24,6 @@ import seedu.address.model.reminder.ReadOnlyReminder;
 import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.UniqueReminderList;
 import seedu.address.model.reminder.exceptions.DuplicateReminderException;
-import seedu.address.model.reminder.exceptions.ReminderNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -51,7 +49,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
         events = new UniqueEventList();
-        reminders = new UniqueReminderList(new ArrayList<>());
+        reminders = new UniqueReminderList();
     }
 
     public AddressBook() {
@@ -102,6 +100,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setEvents(List<? extends ReadOnlyEvent> events) throws DuplicateEventException {
         this.events.setEvents(events);
     }
+
+    /**
+     * Replaces all events in this list with those in the argument event list.
+     */
+    public void setReminders(List<? extends ReadOnlyReminder> reminders) throws DuplicateReminderException {
+        this.reminders.setReminders(reminders);
+    }
     //@@author
 
     //@@author low5545
@@ -149,8 +154,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicateEventException de) {
             assert false : "AddressBooks should not have duplicate events";
         }
-
-
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
     }
@@ -257,7 +260,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         if (events.remove(key)) {
             return true;
         } else {
-            throw new EventNotFoundException();
+            throw new EventNotFoundException("Event not found");
         }
     }
 
@@ -320,17 +323,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         Reminder newReminder = new Reminder(r);
         reminders.add(newReminder);
     }
-    /**
-     * Removes {@code key} from this {@code AddressBook}.
-     * @throws ReminderNotFoundException if the {@code key} is not in this {@code AddressBook}.
-     */
-    public boolean removeReminder(ReadOnlyReminder key) throws ReminderNotFoundException {
-        if (reminders.remove(key)) {
-            return true;
-        } else {
-            throw new ReminderNotFoundException();
-        }
-    }
 
     /*****************************************************
      * Util methods
@@ -350,10 +342,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<ReadOnlyEvent> getEventList() {
         return events.asObservableList();
-    }
-    @Override
-    public ObservableList<ReadOnlyReminder> getReminderList() {
-        return reminders.asObservableList();
     }
 
     @Override

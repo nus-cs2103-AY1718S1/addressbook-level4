@@ -2,10 +2,13 @@
 - the original Address Book (Level 4) sample application
 
 Copyright by Marco Jakob - http://code.makery.ch/library/javafx-8-tutorial/
-- Some code adapted from
+- Some code adapted from his tutorial
 
-Copyright by NUSMods = https://nusmods.com/
+Copyright by NUSMods - https://nusmods.com/
 - API for retrieving information about NUS modules
+
+Copyright by Joe Stelmach - http://www.joestelmach.com/
+- API for natural language datetime parsing support
 
 Copyright by Susumu Yoshida - http://www.mcdodesign.com/
 - address_book_32.png

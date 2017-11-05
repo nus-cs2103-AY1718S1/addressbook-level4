@@ -21,7 +21,6 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
-import seedu.address.logic.commands.event.AddEventCommand;
 import seedu.address.logic.commands.event.DeleteEventCommand;
 import seedu.address.logic.commands.event.ListEventCommand;
 import seedu.address.logic.commands.person.AddCommand;
@@ -32,12 +31,9 @@ import seedu.address.logic.commands.person.FindCommand;
 import seedu.address.logic.commands.person.ListCommand;
 import seedu.address.logic.commands.person.SelectCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
 import seedu.address.model.property.NameContainsKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
-import seedu.address.testutil.EventBuilder;
-import seedu.address.testutil.EventUtil;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
@@ -54,12 +50,6 @@ public class AddressBookParserTest {
         assertEquals(new AddCommand(person), command);
     }
     //@@author junyango
-    @Test
-    public void parseCommand_addEvent() throws Exception {
-        Event event = new EventBuilder().build();
-        AddEventCommand command = (AddEventCommand) parser.parseCommand(EventUtil.getAddEvent(event));
-        assertEquals(new AddEventCommand(event), command);
-    }
     //@@author
     @Test
     public void parseCommand_clear() throws Exception {

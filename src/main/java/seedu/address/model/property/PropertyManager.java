@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import seedu.address.logic.parser.Prefix;
+import seedu.address.logic.parser.util.Prefix;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
 
 //@@author yunpengn
@@ -70,13 +70,11 @@ public class PropertyManager {
                 addNewProperty("a", "Address",
                         String.format(DEFAULT_MESSAGE, "Address"), DEFAULT_REGEX);
 
-                // Adds time/date as a pre-loaded property.
-                addNewProperty("dt", "DateTime", "Event date & time must be numbers "
-                        + "followed by ddmmyyyy hh:mm",
-                        "^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{4}"
-                                + "(\\s((0[1-9]|1[0-9]|2[0-3]):([0-5][0-9]))?$)");
+                // Adds date/time as a pre-loaded property.
+                addNewProperty("dt", "DateTime", "Event date & time should be "
+                                + "simple and clear enough for the application to understand", DEFAULT_REGEX);
             } catch (DuplicatePropertyException dpe) {
-                throw new AssertionError("Preloaded properties cannot be invalid", dpe);
+                throw new AssertionError("Pre-loaded properties cannot be invalid", dpe);
             }
 
             initialized = true;

@@ -12,6 +12,7 @@ import seedu.address.model.event.exceptions.EventNotFoundException;
 
 //@@author junyango
 
+
 /**
  * Deletes an event identified using it's last displayed index from the address book.
  */

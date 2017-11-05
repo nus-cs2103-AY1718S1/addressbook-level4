@@ -21,6 +21,10 @@ import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.property.PropertyManager;
 
+
+
+//@@author junyango
+
 /**
  * A utility class containing a list of {@code Event} objects to be used in tests.
  */

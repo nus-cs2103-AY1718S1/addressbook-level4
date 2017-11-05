@@ -30,7 +30,7 @@ public class ModuleInfoTest {
     public void createModuleInfo_fromJsonUrl_checkCorrectness() throws Exception {
         assertEquals("CS1101S", info.getModuleCode());
 
-        Date expectedDate = DateTime.formatDateTime("29112017 17:00");
+        Date expectedDate = DateTime.parseDateTime("29112017 17:00");
         assertEquals(expectedDate, info.getExamDate());
     }
 

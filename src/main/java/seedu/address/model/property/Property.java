@@ -44,6 +44,8 @@ public class Property {
 
     /**
      * Returns if a given string is a valid value for this property.
+     *
+     * Notice: Do NOT call this method for {@link DateTime} property. Use {@code DateTime.isValidTime()} instead.
      */
     public boolean isValid(String test) {
         return test.matches(PropertyManager.getPropertyValidationRegex(shortName));

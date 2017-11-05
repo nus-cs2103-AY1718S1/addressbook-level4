@@ -1,9 +1,9 @@
 package seedu.address.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_TIME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_DATE_TIME;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_NAME;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
 import java.util.ArrayList;
@@ -23,9 +23,8 @@ import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.property.Address;
 import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Name;
-
 import seedu.address.model.reminder.Reminder;
-
+import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 
 //@@author junyango
 
@@ -79,11 +78,16 @@ public class EditEventCommand extends UndoableCommand {
         Event editedEvent = createEditedEvent(eventToEdit, editEventDescriptor);
 
         try {
+            Reminder r = new Reminder(editedEvent, "Reminder: You have an event!");
+            editedEvent.addReminder(r);
+            model.addReminder(r);
             model.updateEvent(eventToEdit, editedEvent);
         } catch (DuplicateEventException dee) {
             throw new CommandException(MESSAGE_DUPLICATE_EVENT);
         } catch (EventNotFoundException enfe) {
             throw new AssertionError("The target event cannot be missing");
+        } catch (DuplicateReminderException dre) {
+            throw new AssertionError("Duplicate reminders found");
         }
         model.updateFilteredEventsList(PREDICATE_SHOW_ALL_EVENTS);
         return new CommandResult(String.format(MESSAGE_EDIT_EVENT_SUCCESS, editedEvent));

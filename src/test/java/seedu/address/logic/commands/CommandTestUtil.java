@@ -2,12 +2,12 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_TIME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_DATE_TIME;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,6 +47,8 @@ public class CommandTestUtil {
     public static final String VALID_NAME_EVENT2 = "Bobs Birthday";
     public static final String VALID_DATE_EVENT1 = "25122017 08:30";
     public static final String VALID_DATE_EVENT2 = "25022018 08:45";
+    public static final String VALID_NATURAL_DATE_EVENT1 = "25 Dec 2017 08:30";
+    public static final String VALID_NATURAL_DATE_EVENT2 = "Feb 25th 2018 08:45am";
     public static final String VALID_VENUE_EVENT1 = "Mels crib";
     public static final String VALID_VENUE_EVENT2 = "Bobs crib";
 
@@ -73,7 +75,7 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG = "hubby*"; // '*' not allowed in tags
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + INVALID_TAG; // '*' not allowed in tags
-    public static final String INVALID_DATE_DESC = " " + PREFIX_DATE_TIME + "20102004 03:30pm"; // "pm/am not allowed"
+    public static final String INVALID_DATE_DESC = " " + PREFIX_DATE_TIME + "some random string"; // "pm/am not allowed"
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
@@ -89,7 +91,7 @@ public class CommandTestUtil {
 
     public static final String INVALID_CONFIG_TYPE = " --some-config-type-unknown ";
     public static final String INVALID_CONFIG_VALUE = " unknown value(s)";
-    public static final String INVALID_TAG_COLOR = " bee";
+    public static final String INVALID_TAG_COLOR = " bee1";
     public static final String INVALID_NEW_PROPERTY = " s/b r/[^\\s].*";
 
     public static final String INVALID_IMPORT_TYPE = " --some-import-type-unknown ";

@@ -1,6 +1,6 @@
-package seedu.address.logic.parser;
+package seedu.address.logic.parser.util;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +28,7 @@ public class ArgumentMultimap {
      * @param prefix   Prefix key with which the specified argument value is to be associated
      * @param argValue Argument value to be associated with the specified prefix key
      */
-    void put(Prefix prefix, String argValue) {
+    public void put(Prefix prefix, String argValue) {
         List<String> argValues = getAllValues(prefix);
         argValues.add(argValue);
         internalMap.put(prefix, argValues);

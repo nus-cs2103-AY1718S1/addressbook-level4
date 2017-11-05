@@ -4,12 +4,16 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_EVENT1;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_EVENT2;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NATURAL_DATE_EVENT1;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NATURAL_DATE_EVENT2;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 //@@author junyango
 public class DateTimeTest {
     @BeforeClass
@@ -21,9 +25,7 @@ public class DateTimeTest {
     public void isValidTime() {
         // invalid time
         assertFalse(DateTime.isValidTime("")); // empty string
-        assertFalse(DateTime.isValidTime("251215 08:30")); // wrong year format
-        assertFalse(DateTime.isValidTime("25122015 08:30am")); // included am
-        assertFalse(DateTime.isValidTime("25122015 08:30pm")); // included pm
+        assertFalse(DateTime.isValidTime("some random staff")); // unrelated string
 
         // valid time
         assertTrue(DateTime.isValidTime("25122015 08:30"));
@@ -37,6 +39,7 @@ public class DateTimeTest {
         assertEquals(VALID_DATE_EVENT1, dateTime.getValue());
     }
 
+    //@@author yunpengn
     @Test
     public void create_viaDateObject_checkCorrectness() throws Exception {
         SimpleDateFormat dateFormatter = new SimpleDateFormat("ddMMyyyy HH:mm");
@@ -45,5 +48,11 @@ public class DateTimeTest {
         // Create a Datetime property via alternative constructor.
         DateTime dateTime = new DateTime(date);
         assertEquals(VALID_DATE_EVENT1, dateTime.getValue());
+    }
+
+    @Test
+    public void create_viaNaturalLanguage_checkCorrectness() throws Exception {
+        assertEquals(new DateTime(VALID_DATE_EVENT1), new DateTime(VALID_NATURAL_DATE_EVENT1));
+        assertEquals(new DateTime(VALID_DATE_EVENT2), new DateTime(VALID_NATURAL_DATE_EVENT2));
     }
 }

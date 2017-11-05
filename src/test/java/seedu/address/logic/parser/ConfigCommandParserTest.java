@@ -48,7 +48,7 @@ public class ConfigCommandParserTest {
 
     @Test
     public void parse_usePreDefinedColor_success() throws Exception {
-        ConfigCommand expected = new ChangeTagColorCommand("husband red", "husband", "FF0000");
+        ConfigCommand expected = new ChangeTagColorCommand("husband red", "husband", VALID_PREDEFINED_COLOR.trim());
         assertParseSuccess(parser, VALID_CONFIG_TAG_COLOR + VALID_TAG_HUSBAND + VALID_PREDEFINED_COLOR, expected);
     }
 
