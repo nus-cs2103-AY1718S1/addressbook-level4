@@ -663,7 +663,7 @@ image::SwitchThemeCommandActivityDiagram.png[width="900"]
 // tag::timetable[]
 === Timetable mechanism
 
-`Timetable` is an enhance of the UI. The role of the timetable view is to display a timetable of all the lessons listed in the display panel. +
+`Timetable` is an enhancement of UI. The role of the timetable view is to display a timetable of all the lessons listed in the display panel. +
 
 `Timetable` mechanism is facilitated by the `GridPane` properties in javafx. +
 The first row of timetable view is the header for time slot. The range is from 0800 to 2000. +
@@ -716,6 +716,48 @@ public void generateTimeTableGrid() {
 **Alternative2:** Using Scene Builder to create timetable view +
 **Pros:** It is easier to visualise the layout +
 **Cons:** There are many limitations such as unable to add time slot to span 2 columns. +
+
+// end::timetable[]
+
+// tag::stickyNote[]
+=== StickyNotes mechanism
+
+`StickyNotes` is an enhancement of UI. The role of the stickynotes view is to display information about a module when. +
+
+[NOTE]
+The maximum number of notes for a module is 9.
+
+`StickyNotes` mechanism is facilitated by the `GridPane` properties in javafx. +
+
+When the `remark` command is used, a new note will be created and linked to a module. +
+The `handleRemarkChangedEvent()` will then generate the stickynotes view and set it as visible. +
+
+The generation of stickynotes data is implemented this way:
+[source,java]
+----
+public void noteDataInit() {
+        // ... generate note data for stickynotes view ...//
+    }
+----
+
+The generation of stickynotes view is implemented this way:
+[source,java]
+----
+public void stickyNotesInit() {
+
+        // ... noteDataInit(); ...//
+       // ... generate stickynotes view  ...//
+    }
+----
+==== Design considerations
+
+**Aspect:** Implementation of StickyNotes. +
+**Alternative1 (current choice): ** Using code to create stickynotes view. +
+**Pros:** The color of stickynotes can be changed easily. +
+**Cons:** THe developer needs to understand how to code for UI. +
+**Alternative2:** Using Scene Builder to create stickynotes view +
+**Pros:** It is easier to visualise the layout and set the properties+
+**Cons:** There are many limitations such as unable to show only a few TextArea objects. +
 
 // end::timetable[]
 
