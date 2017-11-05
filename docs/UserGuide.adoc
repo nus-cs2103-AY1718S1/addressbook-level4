@@ -383,7 +383,7 @@ Deletes 2nd to 5th person (*both inclusive*) in Bluebird's address book.
 // end::delete[]
 
 // tag::select[]
-=== Selecting a person : `select`
+=== Select a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select` `INDEX`
@@ -406,9 +406,9 @@ Selects the 1st person in the results of the `find` command.
 // end::select[]
 
 // tag::history[]
-=== Listing entered commands : `history`
+=== View previously entered commands : `history`
 
-Lists all the commands that the user has entered in reverse chronological order. +
+Lists all the commands that the user has entered in reverse chronological order, helping you view your past command log. +
 Format: `history`
 
 [NOTE]
@@ -446,9 +446,9 @@ The `undo` command here fails as there are no undoable commands executed previou
 `undo` (reverts the `clear` command) +
 `undo` (reverts the `delete` `1` command) +
 
-=== Redoing the previously undone command : `redo`
+=== Redo the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
+Reverses the most recent `undo` command, in case you realise it was done well the first time round! +
 Format: `redo`
 
 Examples:
@@ -469,20 +469,20 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clear all entries : `clear`
 
 Clears all entries from Bluebird's address book. +
 Format: `clear`
 
-=== Exiting the program : `exit`
+=== Exit the Bluebird program : `exit`
 
 Exits the Bluebird application, we'll see you soon! +
 Format: `exit`
 
-=== Saving the data
+=== Save data
 
 All data in Bluebird's address book is automatically saved in the hard disk, after any data modifying command. +
-There is no need to save manually. Yay!
+There is no need for you to manually save anything. Yay!
 
 == Command Summary
 
