@@ -26,7 +26,7 @@ public class WebCommand extends Command {
             + " {[facebook|insta|linkedin|maps|search|personal]}";
     //@@author
 
-    public static final String MESSAGE_SUCCESS = "Social Site Loaded";
+    public static final String MESSAGE_SUCCESS = "WebLink loading...";
 
     private final String targetWebsite;
 

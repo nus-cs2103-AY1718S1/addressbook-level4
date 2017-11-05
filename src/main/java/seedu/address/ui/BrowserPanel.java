@@ -50,6 +50,7 @@ public class BrowserPanel extends UiPart<Region> {
     private void loadPersonPage(ReadOnlyPerson person) {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
+        logger.info("Loading Google search of " + person.getName());
     }
 
     private void loadPersonAddress(ReadOnlyPerson person) {
@@ -66,6 +67,7 @@ public class BrowserPanel extends UiPart<Region> {
                 return;
             }
         });
+        logger.info("Loading Personal Page of " + selectedPerson.getName());
     }
 
     /**
@@ -78,6 +80,7 @@ public class BrowserPanel extends UiPart<Region> {
                 return;
             }
         });
+        logger.info("Loading " + websiteRequested + "Page of " + selectedPerson.getName());
     }
 
     public void loadPage(String url) {
@@ -111,6 +114,7 @@ public class BrowserPanel extends UiPart<Region> {
      */
     @Subscribe
     private void handleWebsiteSelectionEvent(WebsiteSelectionRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switch (event.getWebsiteRequested()) {
         case "mapsView":
             loadPersonAddress(selectedPerson);
