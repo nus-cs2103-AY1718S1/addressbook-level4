@@ -440,7 +440,7 @@ image::video/edit.gif[width="790"]
 // end::exit[]
 
 // tag::customise[]
-=== Customising the font size : `customise fs/FONT-SIZE`
+=== Customising the font size : `customise`
 
 Customise the font size of ModU list +
 Format: `customise`
@@ -455,19 +455,19 @@ Examples:
 * `customise fs\xlarge`
 // end::customise[]
 
-// tag::switch[]
-=== Switch theme : `swt`
+// tag::theme[]
+=== Change theme : `theme`
 
-Switch between light (default) and dark theme +
-Format: `swt`
+Change between light (default) and dark theme +
+Format: `theme`
 
 [TIP]
-Toggle between light and dark theme. If the current theme is light, executing `swt` will change the theme to be dark theme.
+Toggle between light and dark theme. If the current theme is light, executing `theme` will change the theme to be dark theme.
 
-Example:
-
-* `swt`
-// end::switch[]
+Examples:
+* `theme dark`
+* `theme light`
+// end::theme[]
 
 // tag::highlight[]
 === Highlighting keywords : `color`

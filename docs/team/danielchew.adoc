@@ -1,0 +1,86 @@
+= Daniel Chew - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ModU
+include::../DeveloperGuide.adoc[tag=intro]
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/main/cctdaniel.md] [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/test/cctdaniel.md]
+
+=== Enhancement Added: Customise Command
+
+Customise the font size of the application.
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=customise]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Global variable that records current fontSizeUnit so that every time a new result is displayed, it is able to obtain the current font size from the variable and set accordingly.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=customise]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Theme Command
+
+Change the theme of the application.
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=theme]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Global variable that records current themeUnit so that every time a new result is displayed, it is able to obtain the current theme from the variable and set accordingly.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=theme]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Implement a login page
+
+Implement a login page to improve security of the application.
+
+=== Enhancement Proposed: Import/Export external timetable
+
+Feature to import/export external timetable and integrate with ModU.
+
+=== Other contributions
+
+* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}
