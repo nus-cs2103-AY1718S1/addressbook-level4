@@ -47,7 +47,7 @@
                         <Label style="-fx-font-size: 22;" text="Birthday:" />
                         <Label fx:id="birthdayLabel" style="-fx-font-size: 22;">
                            <HBox.margin>
-                              <Insets left="5.0" />
+                              <Insets left="10.0" />
                            </HBox.margin>
                         </Label>
                      </children>
@@ -60,7 +60,7 @@
                         <Label style="-fx-font-size: 22;" text="Phone:" />
                         <Label fx:id="phoneLabel" style="-fx-font-size: 22;">
                            <HBox.margin>
-                              <Insets left="5.0" />
+                              <Insets left="10.0" />
                            </HBox.margin>
                         </Label>
                      </children>
@@ -73,7 +73,7 @@
                         <Label style="-fx-font-size: 22;" text="Email:" />
                         <Label fx:id="emailLabel" style="-fx-font-size: 22;">
                            <HBox.margin>
-                              <Insets left="5.0" />
+                              <Insets left="10.0" />
                            </HBox.margin>
                         </Label>
                      </children>
@@ -86,7 +86,7 @@
                         <Label style="-fx-font-size: 22;" text="Address:" />
                         <Label fx:id="addressLabel" style="-fx-font-size: 22;">
                            <HBox.margin>
-                              <Insets left="5.0" />
+                              <Insets left="10.0" />
                            </HBox.margin>
                         </Label>
                      </children>
@@ -99,7 +99,7 @@
                         <Label style="-fx-font-size: 22;" text="Address:" visible="false" />
                         <Label fx:id="addressLabelContinue" style="-fx-font-size: 22;">
                            <HBox.margin>
-                              <Insets left="5.0" />
+                              <Insets left="10.0" />
                            </HBox.margin>
                         </Label>
                      </children>
