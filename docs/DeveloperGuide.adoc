@@ -1,4 +1,4 @@
-= Contact List Pro v1.3 - Developer Guide
+= The Classroom - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -16,8 +16,9 @@ By: `T09-B4`      Since: `Oct 2017`      Licence: `MIT`
 
 [big]#*Introduction*#
 
-Contact List Pro is a software address book that allows users to store contacts and manage them using a variety of features.
-This guide provides information for you to set up and get started as a Contact List Pro developer, and is detailed enough to be useful to experienced developers as well.
+The Classroom is a software address book that allows users to store contacts and manage them using a variety of features.
+This guide provides information for you to set up and get started as a The Classroom developer, and is detailed enough to be useful to experienced developers as well.
+Developers are recommended to be proficient in java before they make changes and update the existing code as there is heavy emphasis on specific java syntax and features.
 
 == Setting up
 
@@ -392,6 +393,10 @@ Current `DATAFIELD` entries that are allowed are: `Name`, `Phone`, `Email` and `
 
 The sort feature uses *JavaFX 8's* `SortedList` to wrap around the `FilteredList` in `ModelManager` to enable sorting. This is because `FilteredList` is *unmodifiable* as of *JavaFX 8* and thus cannot be sorted. +
 
+The sequence diagram below shows how the sort command works in the `Logic` component:
+
+image::FavouritePersonSequenceDiagram.png[width="800"]
+
 Firstly, `SortCommandParser` parses the user input and creates a `SortCommand` with the user-specified `DATAFIELD`. `SortCommand` then calls the `sortByDataFieldFirst` method in `ModelManager` which sets the appropriate order of `Comparators` for `SortedList`. +
 
 `Comparators` are gotten from the `ComparatorUtil` class.
@@ -405,7 +410,25 @@ Firstly, `SortCommandParser` parses the user input and creates a `SortCommand` w
 **Pros:** Less planning required for implementation +
 **Cons:** Results in messy code +
 
-//end::end::sort[]
+// end::sort[]
+
+// tag::tags[]
+=== Tags listing mechanism
+
+The tags listing feature allows users to view a list of the existing tags instead of the contact list by making use of `Events`. The `tags` command raises a `ShowTagListViewEvent` when executed while other commands that modify the contact list like `find` raise `ShowPersonListViewEvent` when executed. +
+
+The `MainWindow` subscribes to these 2 events to determine when it should set `personListPanel` or `tagListPanel` visible.
+
+==== Design Considerations
+**Aspect:** Clearing out `Tags` from `MasterTagList` that are not being used by any person +
+**Alternative 1 (current choice):** When updating or deleting a person, get the old person's `Tags` and iterate through the whole contact list to find out if the `Tag` is still being used +
+**Pros:** Easier to implement +
+**Cons:** Slow run speed +
+**Alternative 2:** Include a person list in `Tag` to hold information of the people who have that `Tag` and remove the `Tag` when there is no one left in the list. +
+**Pros:** Fast run speed +
+**Cons:** More storage space needed and harder to implement +
+
+// end::tags[]
 
 // tag::addtag[]
 === Tag addition mechanism
