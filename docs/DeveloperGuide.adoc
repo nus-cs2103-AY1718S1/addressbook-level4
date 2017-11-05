@@ -15,12 +15,14 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 By: `CS2103AUG2017-W13-B4`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
+// tag::intro[]
 ModU is a software design to help teachers and lecturers to plan their weekly teaching schedule. +
 
 There are many ways to improve and extend the functionality of this software and this guide provides essential information to help you get started.
 This developer guide contains information of the architecture design of this software, implementation of the existing commands that is accessible for the
 users and other useful information such as guide to teach you how to test this software. For more information please refer
 to the table of content.
+// end::intro[]
 
 == Setting up
 
@@ -632,10 +634,10 @@ image::CustomiseCommandActivityDiagram.png[width="900"]
 **Cons:** In order to get it in other components, the variable must be declared static. But we cannot define static abstract method in interface. It also does not follow Java's standard coding style.
 // end::customise[]
 
-// tag::swt[]
-=== Switch Theme mechanism
+// tag::theme[]
+=== Switch theme mechanism
 
-The switch theme mechanism is facilitated by both the link:#event-bus[`Event Bus`] and an enumeration class `ThemeUnit`. Currently, `SwitchThemeCommand` only supports toggling between light (default) and dark theme. Each time `SwitchThemeCommand` is executed, it will raise a `SwitchThemeRequestEvent` via `EventCenter`and update the `currentThemeUnit`.
+The switch theme mechanism is facilitated by both the link:#event-bus[`Event Bus`] and an enumeration class `ThemeUnit`. Currently, `ThemeCommand` only supports changing between light (default) and dark theme. Each time `ThemeCommand` is executed, it will raise a `SwitchThemeRequestEvent` via `EventCenter` and update the `currentThemeUnit`.
 
 [NOTE]
 The `ThemeUnit` enumeration is to set a global static variable `currentThemeUnit` so that `MainWindow` is able to obtain the current theme whenever it is called.
@@ -650,14 +652,14 @@ image::SwitchThemeCommandActivityDiagram.png[width="900"]
 
 ==== Design Considerations
 
-**Aspect:** Implementation of `SwitchThemeCommand` +
+**Aspect:** Implementation of `ThemeCommand` +
 **Alternative 1 (current choice):** Update static variable `currentThemeUnit` to the corresponding `ThemeUnit` and use `EventBus` to inform `UI` the change of `ThemeUnit`.
 **Pros:** One global variable that records current `ThemeUnit`. +
 **Cons:** Hard for new developers to understand the event center mechanism. +
 **Alternative 2 (previous choice):** Use a variable in model manager to keep record of `currentThemeUnit` +
 **Pros:** No need for extra enumeration class and easier for new developers to design. +
 **Cons:** In order to get it in other components, the variable must be declared static. But we cannot define static abstract method in interface. It also does not follow Java's standard coding style.
-// end::swt[]
+// end::theme[]
 
 === Logging
 

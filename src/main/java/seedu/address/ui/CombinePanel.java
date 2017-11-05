@@ -373,8 +373,9 @@ public class CombinePanel extends UiPart<Region> {
         }
     }
 
+    //@@author cctdaniel
     /**
-     * Sets the command box style to user preferred font size.
+     * Sets the remark style to user preferred font size.
      */
     private void setFontSize(String userPref) {
         switch (userPref) {
@@ -403,6 +404,9 @@ public class CombinePanel extends UiPart<Region> {
         }
     }
 
+    /**
+     * Helper method to set font size.
+     */
     private void setFontSizeHelper(String fontSize) {
         noteGrid.getChildren().forEach((node) -> {
             if (node instanceof StackPane) {
@@ -420,6 +424,10 @@ public class CombinePanel extends UiPart<Region> {
         setFontSize(event.message);
     }
 
+
+    /**
+     * Helper method to set font size based on FontSizeUnit.
+     */
     private void setFontSizeUnit(FontSizeUnit currFontSizeUnit) {
         switch (currFontSizeUnit) {
         case FONT_SIZE_XSMALL_UNIT:

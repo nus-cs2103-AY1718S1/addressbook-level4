@@ -1,0 +1,71 @@
+= Daniel Chew - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ModU
+include::../DeveloperGuide.adoc[tag=intro]
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/main/cctdaniel.md] [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/test/cctdaniel.md]
+
+=== Enhancement Added: Customise Command
+
+Customise the font size of the application.
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=customise]
+
+---
+
+==== Justification
+
+Global variable that records current fontSizeUnit so that every time a new result is displayed, it is able to obtain the current font size from the variable and set accordingly.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=customise]
+
+---
+
+=== Enhancement Added: Theme Command
+
+Change the theme of the application.
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=theme]
+
+---
+
+==== Justification
+
+Global variable that records current themeUnit so that every time a new result is displayed, it is able to obtain the current theme from the variable and set accordingly.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=theme]
+
+---
+
+=== Enhancement Proposed: Implement a login page
+
+Implement a login page to improve security of the application.
+
+=== Enhancement Proposed: Import/Export external timetable
+
+Feature to import/export external timetable and integrate with ModU.
+
+=== Other contributions
+
+* Updated the GUI theme (Pull request https://github.com/CS2103AUG2017-W13-B4/main/pull/129)
+* Change Model Module UI test cases (Pull request https://github.com/CS2103AUG2017-W13-B4/main/pull/105)
+* Did acceptance testing for group W09-B4 (Pull request https://github.com/CS2103AUG2017-W09-B4/main/issues/78)

@@ -1,3 +1,4 @@
+/*@@author cctdaniel*/
 .background {
     -fx-background-color: derive(#d4cbb3, 50%);
     background-color: derive(#d4cbb3, 50%); /* Used in the default.html file */
