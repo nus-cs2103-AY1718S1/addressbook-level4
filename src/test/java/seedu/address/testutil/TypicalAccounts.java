@@ -1,3 +1,4 @@
+//@@author cqhchan
 package seedu.address.testutil;
 
 import java.util.ArrayList;
@@ -5,15 +6,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.Database;
-import seedu.address.model.credentials.ReadOnlyAccount;
-import seedu.address.model.credentials.exceptions.DuplicateAccountException;
+import seedu.address.model.account.ReadOnlyAccount;
+import seedu.address.model.account.exceptions.DuplicateAccountException;
 
 /**
  *
  */
 public class TypicalAccounts {
 
-    public static final ReadOnlyAccount CHAN = new AccountBuilder().withUsername("Chan")
+    public static final ReadOnlyAccount PRIVATE = new AccountBuilder().withUsername("private")
             .withPassword("password").build();
     public static final ReadOnlyAccount BROTHER = new AccountBuilder().withUsername("BROTHER")
             .withPassword("password").build();
@@ -32,7 +33,7 @@ public class TypicalAccounts {
     }
 
     public static List<ReadOnlyAccount> getTypicalAccounts() {
-        return new ArrayList<>(Arrays.asList(BROTHER, CHAN));
+        return new ArrayList<>(Arrays.asList(BROTHER, PRIVATE));
     }
 
 }

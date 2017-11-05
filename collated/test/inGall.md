@@ -568,6 +568,7 @@ public class FindReminderCommandTest {
     }
 }
 ```
+
 ###### \java\seedu\address\logic\commands\SortAgeCommandTest.java
 ``` java
 package seedu.address.logic.commands;
@@ -646,6 +647,7 @@ public class SortAgeCommandTest {
 
 }
 ```
+
 ###### \java\seedu\address\logic\commands\SortBirthdayCommandTest.java
 ``` java
 package seedu.address.logic.commands;
@@ -784,6 +786,7 @@ public class SortCommandTest {
 
 }
 ```
+
 ###### \java\seedu\address\logic\commands\SortPriorityCommandTest.java
 ``` java
 package seedu.address.logic.commands;
@@ -857,6 +860,7 @@ public class SortPriorityCommandTest {
 
 }
 ```
+
 ###### \java\seedu\address\logic\parser\BirthdayCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;

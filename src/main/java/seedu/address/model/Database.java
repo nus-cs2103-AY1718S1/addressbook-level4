@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Objects;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.credentials.Account;
-import seedu.address.model.credentials.ReadOnlyAccount;
-import seedu.address.model.credentials.UniqueAccountList;
-import seedu.address.model.credentials.exceptions.DuplicateAccountException;
+import seedu.address.model.account.Account;
+import seedu.address.model.account.ReadOnlyAccount;
+import seedu.address.model.account.UniqueAccountList;
+import seedu.address.model.account.exceptions.DuplicateAccountException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 

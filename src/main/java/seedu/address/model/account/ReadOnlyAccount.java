@@ -1,5 +1,5 @@
 //@@author cqhchan
-package seedu.address.model.credentials;
+package seedu.address.model.account;
 
 import javafx.beans.property.ObjectProperty;
 

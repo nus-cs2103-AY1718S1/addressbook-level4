@@ -12,7 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyDatabase;
-import seedu.address.model.credentials.ReadOnlyAccount;
+import seedu.address.model.account.ReadOnlyAccount;
 
 
 /**
