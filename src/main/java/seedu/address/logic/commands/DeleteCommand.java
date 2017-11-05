@@ -58,7 +58,7 @@ public class DeleteCommand extends UndoableCommand {
 
         if (listObserver.getCurrentFilteredList().size() == 0) {
             model.deselectPerson();
-        } else if (listObserver.getCurrentFilteredList().size() < deleteIndex.getOneBased()) {
+        } else if (targetIndex == null && listObserver.getCurrentFilteredList().size() < deleteIndex.getOneBased()) {
             EventsCenter.getInstance().post(
                     new JumpToListRequestEvent(Index.fromOneBased(deleteIndex.getOneBased() - 1)));
         }
