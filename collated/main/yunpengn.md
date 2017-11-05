@@ -178,6 +178,7 @@ public abstract class ImportCommand extends UndoableCommand {
             + "file.\nYou need to specify with explicit parameter if you want to use other formats.";
     public static final String MESSAGE_NOT_BO_FILE = "According to the extension, the file is not a valid BoNUS"
             + "script file (should end with .bo).";
+
 ```
 ###### \java\seedu\address\logic\commands\imports\ImportCommand.java
 ``` java
@@ -451,36 +452,6 @@ public class ModuleInfo {
         return sb.toString();
     }
 }
-```
-###### \java\seedu\address\logic\parser\ArgumentMultimap.java
-``` java
-    /**
-     * Returns the mapping of {@code Prefix} and their corresponding last values for all {@code prefix}es (only if
-     * there is a value present). <b>Notice</b>: the return {@code HashMap} does not include preamble and tags.
-     */
-    public HashMap<Prefix, String> getAllValues() {
-        HashMap<Prefix, String> values = new HashMap<>();
-
-        // Need to manually remove preamble from here. We are creating a new copy of all prefixes, so the actual
-        // instance variable will not be affected.
-        Set<Prefix> prefixes = new HashSet<>(internalMap.keySet());
-        prefixes.remove(new Prefix(""));
-        prefixes.remove(PREFIX_TAG);
-
-        for (Prefix prefix: prefixes) {
-            getValue(prefix).ifPresent(s -> values.put(prefix, s));
-        }
-
-        return values;
-    }
-```
-###### \java\seedu\address\logic\parser\CliSyntax.java
-``` java
-    /* Prefix definitions for adding a new customize property. */
-    public static final Prefix PREFIX_SHORT_NAME = new Prefix("s/");
-    public static final Prefix PREFIX_FULL_NAME = new Prefix("f/");
-    public static final Prefix PREFIX_MESSAGE = new Prefix("m/");
-    public static final Prefix PREFIX_REGEX = new Prefix("r/");
 ```
 ###### \java\seedu\address\logic\parser\ConfigCommandParser.java
 ``` java
@@ -757,6 +728,36 @@ public class AddCommandParser implements Parser<AddCommand> {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\util\ArgumentMultimap.java
+``` java
+    /**
+     * Returns the mapping of {@code Prefix} and their corresponding last values for all {@code prefix}es (only if
+     * there is a value present). <b>Notice</b>: the return {@code HashMap} does not include preamble and tags.
+     */
+    public HashMap<Prefix, String> getAllValues() {
+        HashMap<Prefix, String> values = new HashMap<>();
+
+        // Need to manually remove preamble from here. We are creating a new copy of all prefixes, so the actual
+        // instance variable will not be affected.
+        Set<Prefix> prefixes = new HashSet<>(internalMap.keySet());
+        prefixes.remove(new Prefix(""));
+        prefixes.remove(PREFIX_TAG);
+
+        for (Prefix prefix: prefixes) {
+            getValue(prefix).ifPresent(s -> values.put(prefix, s));
+        }
+
+        return values;
+    }
+```
+###### \java\seedu\address\logic\parser\util\CliSyntax.java
+``` java
+    /* Prefix definitions for adding a new customize property. */
+    public static final Prefix PREFIX_SHORT_NAME = new Prefix("s/");
+    public static final Prefix PREFIX_FULL_NAME = new Prefix("f/");
+    public static final Prefix PREFIX_MESSAGE = new Prefix("m/");
+    public static final Prefix PREFIX_REGEX = new Prefix("r/");
+```
 ###### \java\seedu\address\logic\parser\util\NaturalLanguageUtil.java
 ``` java
 /**
@@ -809,6 +810,7 @@ public class NaturalLanguageUtil {
 ``` java
     /** Changes the color of an existing tag (through TagColorManager) */
     void setTagColor(Tag tag, String color);
+
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -837,6 +839,45 @@ public class NaturalLanguageUtil {
         indicateAddressBookChanged();
         raise(new TagColorChangedEvent(tag, color));
     }
+```
+###### \java\seedu\address\model\person\Avatar.java
+``` java
+/**
+ * Represents the {@link Avatar} image of each {@link Person}.
+ *
+ * Notice {@link Avatar} is not a {@link Property}. This is because it is indeed different from other fields of
+ * {@link Person}. It is not shown as a row in the {@link PersonDetailsPanel}. Meanwhile, the input validation is
+ * done by separate methods rather than a single regular expression (the complexity is not at the same level).
+ */
+public class Avatar {
+    private static final String INVALID_URL_MESSAGE = "The provided URL is invalid.";
+    private static final String IMG_URL_PATTERN = "(http(s?):)|([/|.|\\w|\\s])*\\.(?:jpg|gif|png)";
+
+    private String url;
+
+    public Avatar(String url) throws IllegalValueException {
+        if (!isValidImageUrl(url)) {
+            throw new IllegalValueException(INVALID_URL_MESSAGE);
+        }
+    }
+
+    /**
+     * An all-in-one checking for the path of the provided image.
+     */
+    private boolean isValidAvatarPath(String path) {
+        return !FileUtil.hasConsecutiveExtensionSeparators(path)
+                && !FileUtil.hasConsecutiveNameSeparators(path)
+                && !FileUtil.hasInvalidNames(path)
+                && !FileUtil.hasInvalidNameSeparators(path);
+    }
+
+    /**
+     * Checks whether a given string is a valid URL and it points to an image.
+     */
+    private boolean isValidImageUrl(String url) {
+        return url.matches(IMG_URL_PATTERN);
+    }
+}
 ```
 ###### \java\seedu\address\model\person\Person.java
 ``` java
@@ -1553,7 +1594,6 @@ public class TagColorManager {
         for (XmlAdaptedProperty property: properties) {
             personProperties.add(property.toModelType());
         }
-
         final List<Tag> personTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
@@ -1829,6 +1869,7 @@ public class PropertyLabel extends Label {
 ```
 ###### \resources\view\person\PersonDetailsPanel.fxml
 ``` fxml
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -1838,12 +1879,11 @@ public class PropertyLabel extends Label {
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox prefHeight="600.0" prefWidth="580.0" stylesheets="@../../css/Extensions.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox prefHeight="200.0">
          <children>
-            <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="avatar" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/default_person_photo.png" />
                </image>

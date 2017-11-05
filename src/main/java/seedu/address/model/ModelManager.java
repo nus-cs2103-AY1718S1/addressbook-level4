@@ -215,8 +215,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
-
-
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -257,17 +255,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
     }
-
-
     //@@author
-
-
-
-
-
-    //@@author
-
-
 
     @Override
     public boolean equals(Object obj) {

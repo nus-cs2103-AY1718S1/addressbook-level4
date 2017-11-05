@@ -36,8 +36,65 @@ public class SwitchToEventsListEvent extends BaseEvent {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\event\AddEventCommand.java
+``` java
+
+/**
+ * Adds an event to the address book.
+ */
+public class AddEventCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "addE";
+    public static final String COMMAND_ALIAS = "aE";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to the address book. "
+            + "Parameters: "
+            + PREFIX_NAME + "NAME "
+            + PREFIX_DATE_TIME + "DATE & TIME "
+            + PREFIX_ADDRESS + "VENUE "
+            + "\nExample: " + COMMAND_WORD + " "
+            + PREFIX_NAME + "John Doe birthday "
+            + PREFIX_DATE_TIME + "25122017 08:30 "
+            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 ";
+
+    public static final String MESSAGE_SUCCESS = "New event added: %1$s";
+    public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the address book";
+
+    private final Event toAdd;
+
+    /**
+     * Creates an AddEventCommand to add the specified {@code ReadOnlyEvent}
+     */
+    public AddEventCommand(ReadOnlyEvent event) {
+        toAdd = new Event(event);
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+        try {
+            Reminder r = new Reminder(toAdd, "Reminder : You have an event!");
+            toAdd.addReminder(r);
+            model.addReminder(r);
+            model.addEvent(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        } catch (DuplicateEventException | DuplicateReminderException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddEventCommand // instanceof handles nulls
+                && toAdd.equals(((AddEventCommand) other).toAdd));
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\event\DeleteEventCommand.java
 ``` java
+
 
 /**
  * Deletes an event identified using it's last displayed index from the address book.
@@ -143,11 +200,16 @@ public class EditEventCommand extends UndoableCommand {
         Event editedEvent = createEditedEvent(eventToEdit, editEventDescriptor);
 
         try {
+            Reminder r = new Reminder(editedEvent, "Reminder: You have an event!");
+            editedEvent.addReminder(r);
+            model.addReminder(r);
             model.updateEvent(eventToEdit, editedEvent);
         } catch (DuplicateEventException dee) {
             throw new CommandException(MESSAGE_DUPLICATE_EVENT);
         } catch (EventNotFoundException enfe) {
             throw new AssertionError("The target event cannot be missing");
+        } catch (DuplicateReminderException dre) {
+            throw new AssertionError("Duplicate reminders found");
         }
         model.updateFilteredEventsList(PREDICATE_SHOW_ALL_EVENTS);
         return new CommandResult(String.format(MESSAGE_EDIT_EVENT_SUCCESS, editedEvent));
@@ -405,6 +467,13 @@ public class EditEventParser implements Parser<EditEventCommand> {
     public void setEvents(List<? extends ReadOnlyEvent> events) throws DuplicateEventException {
         this.events.setEvents(events);
     }
+
+    /**
+     * Replaces all events in this list with those in the argument event list.
+     */
+    public void setReminders(List<? extends ReadOnlyReminder> reminders) throws DuplicateReminderException {
+        this.reminders.setReminders(reminders);
+    }
 ```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
@@ -448,7 +517,7 @@ public class EditEventParser implements Parser<EditEventCommand> {
         if (events.remove(key)) {
             return true;
         } else {
-            throw new EventNotFoundException();
+            throw new EventNotFoundException("Event not found");
         }
     }
 
@@ -474,9 +543,19 @@ public class DuplicateEventException extends DuplicateDataException {
 ``` java
 
 /**
- * Signals that the operation is unable to find the specified person.
+ * Signals that the operation is unable to find the specified event.
  */
-public class EventNotFoundException extends Exception {}
+public class EventNotFoundException extends Exception {
+    public EventNotFoundException(String message) {
+        super(message);
+    }
+
+    @Override
+    public String toString() {
+        return getMessage();
+    }
+}
+
 ```
 ###### \java\seedu\address\model\event\ReadOnlyEvent.java
 ``` java
@@ -496,7 +575,7 @@ public interface ReadOnlyEvent {
     ObjectProperty<UniquePropertyMap> properties();
     Set<Property> getProperties();
     ObjectProperty<UniqueReminderList> reminderProperty();
-    ArrayList<Reminder> getReminders();
+    List<Reminder> getReminders();
     void addReminder(ReadOnlyReminder r) throws DuplicateReminderException;
 
     /**
@@ -546,7 +625,7 @@ public class UniqueEventList implements Iterable<Event> {
     private final ObservableList<ReadOnlyEvent> mappedList = EasyBind.map(internalList, (event) -> event);
 
     /**
-     * Returns true if the list contains an equivalent person as the given argument.
+     * Returns true if the list contains an equivalent event as the given argument.
      */
     public boolean contains(ReadOnlyEvent toCheck) {
         requireNonNull(toCheck);
@@ -556,7 +635,7 @@ public class UniqueEventList implements Iterable<Event> {
     /**
      * Adds an event to the list.
      *
-     * @throws DuplicateEventException if the person to add is a duplicate of an existing event in the list.
+     * @throws DuplicateEventException if the event to add is a duplicate of an existing event in the list.
      */
     public void add(ReadOnlyEvent toAdd) throws DuplicateEventException {
         requireNonNull(toAdd);
@@ -577,10 +656,10 @@ public class UniqueEventList implements Iterable<Event> {
     }
 
     /**
-     * Replaces the person {@code target} in the list with {@code editedEvent}.
+     * Replaces the event {@code target} in the list with {@code editedEvent}.
      *
-     * @throws DuplicateEventException if the replacement is equivalent to another existing person in the list.
-     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
+     * @throws DuplicateEventException if the replacement is equivalent to another existing event in the list.
+     * @throws EventNotFoundException  if {@code target} could not be found in the list.
      */
     public void setEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws DuplicateEventException,
             EventNotFoundException {
@@ -589,7 +668,7 @@ public class UniqueEventList implements Iterable<Event> {
 
         int index = internalList.indexOf(target);
         if (index == -1) {
-            throw new EventNotFoundException();
+            throw new EventNotFoundException("Event not found");
         }
 
         if (!target.equals(editedEvent) && internalList.contains(editedEvent)) {
@@ -601,15 +680,15 @@ public class UniqueEventList implements Iterable<Event> {
 
 
     /**
-     * Removes the equivalent person from the list.
+     * Removes the equivalent event from the list.
      *
-     * @throws PersonNotFoundException if no such person could be found in the list.
+     * @throws EventNotFoundException if no such event could be found in the list.
      */
     public boolean remove(ReadOnlyEvent toRemove) throws EventNotFoundException {
         requireNonNull(toRemove);
         final boolean eventFoundAndDeleted = internalList.remove(toRemove);
         if (!eventFoundAndDeleted) {
-            throw new EventNotFoundException();
+            throw new EventNotFoundException("Event not found");
         }
         return eventFoundAndDeleted;
     }
@@ -670,13 +749,7 @@ public class UniqueEventList implements Iterable<Event> {
     void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
 
 
-    //=========== Model support for reminder component =============================================================
 
-    /** Adds a reminder */
-    void addReminder(ReadOnlyReminder reminder) throws DuplicateReminderException;
-
-    /** Deletes the given event */
-    void deleteReminder(ReadOnlyReminder target) throws ReminderNotFoundException;
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -706,21 +779,6 @@ public class UniqueEventList implements Iterable<Event> {
         indicateAddressBookChanged();
     }
 
-    //=========== Model support for activity component =============================================================
-    @Override
-    public synchronized void addReminder(ReadOnlyReminder reminder) throws DuplicateReminderException {
-        requireNonNull(reminder);
-        addressBook.addReminder(reminder);
-        updateFilteredReminderList(PREDICATE_SHOW_ALL_REMINDERS);
-        indicateAddressBookChanged();
-    }
-    @Override
-    public synchronized void deleteReminder(ReadOnlyReminder reminder) throws ReminderNotFoundException {
-        addressBook.removeReminder(reminder);
-        indicateAddressBookChanged();
-    }
-
-
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -740,29 +798,6 @@ public class UniqueEventList implements Iterable<Event> {
     public void updateFilteredEventsList(Predicate<ReadOnlyEvent> predicate) {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
-    }
-
-
-    //=========== Filtered Reminder List Accessors =============================================================
-
-    /**
-     * Returns an unmodifiable view of the list of {@code ReadOnlyReminder} backed by the internal list of
-     * {@code addressBook}
-     */
-    @Override
-    public ObservableList<ReadOnlyReminder> getFilteredReminderList() {
-        return FXCollections.unmodifiableObservableList(filteredReminders);
-    }
-
-    /**
-     * Updates the filter of the filtered reminders list to filter by the given {@code predicate}.
-     *
-     * @throws NullPointerException if {@code predicate} is null.
-     */
-    @Override
-    public void updateFilteredReminderList(Predicate<ReadOnlyReminder> predicate) {
-        requireNonNull(predicate);
-        filteredReminders.setPredicate(predicate);
     }
 ```
 ###### \java\seedu\address\model\property\DateTime.java
@@ -818,6 +853,7 @@ public class EventNameContainsKeywordsPredicate implements Predicate<ReadOnlyEve
 ###### \java\seedu\address\storage\XmlAdaptedEvent.java
 ``` java
 
+
 /**
  * JAXB-friendly version of the Event.
  */
@@ -870,18 +906,18 @@ public class XmlAdaptedEvent {
         for (XmlAdaptedProperty property: properties) {
             eventProperties.add(property.toModelType());
         }
-        final ArrayList<Reminder> eventReminders = new ArrayList<>();
-        for (XmlAdaptedReminder reminder : reminders) {
-            eventReminders.add(reminder.toModelType());
-        }
         final Set<Property> properties = new HashSet<>(eventProperties);
-        return new Event(properties, eventReminders);
+        final ArrayList<Reminder> eventReminders = new ArrayList<>();
+        Event event = new Event(properties, eventReminders);
+        for (XmlAdaptedReminder reminder : reminders) {
+            event.addReminder(new Reminder(event, reminder.getReminderMessage()));
+        }
+        return event;
     }
 }
 ```
 ###### \java\seedu\address\storage\XmlSerializableAddressBook.java
 ``` java
-
     @Override
     public ObservableList<ReadOnlyEvent> getEventList() {
         final ObservableList<ReadOnlyEvent> events = this.events.stream().map(p -> {
@@ -895,21 +931,108 @@ public class XmlAdaptedEvent {
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(events);
     }
-    @Override
-    public ObservableList<ReadOnlyReminder> getReminderList() {
-        final ObservableList<ReadOnlyReminder> reminders = this.reminders.stream().map(p -> {
-            try {
 
-                return p.toModelType();
-            } catch (IllegalValueException | PropertyNotFoundException e) {
+    @Override
+    public ObservableList<Tag> getTagList() {
+        final ObservableList<Tag> tags = this.tags.stream().map(t -> {
+            try {
+                return t.toModelType();
+            } catch (IllegalValueException e) {
                 e.printStackTrace();
                 //TODO: better error handling
                 return null;
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
-        return FXCollections.unmodifiableObservableList(reminders);
+        return FXCollections.unmodifiableObservableList(tags);
     }
 
+```
+###### \java\seedu\address\ui\event\EventCard.java
+``` java
+/**
+ * An UI component that displays information of a {@code Event}.
+ */
+public class EventCard extends UiPart<Region> {
+    private static final String FXML = "event/EventListCard.fxml";
+    // Keep a list of all persons.
+    public final ReadOnlyEvent event;
+
+    private Image greenNotification = new Image("/images/notifications_green.png");
+    private Image redNotification = new Image("/images/notifications_red.png");
+    private Image orangeNotification = new Image("/images/notifications_orange.png");
+    private Image notification = new Image("/images/notification-512.png");
+
+    /**
+     * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
+     * As a consequence, UI elements' variable names cannot be set to such keywords
+     * or an exception will be thrown by JavaFX during runtime.
+     *
+     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
+     */
+    @FXML
+    private HBox cardPane;
+    @FXML
+    private Label idEvent;
+    @FXML
+    private Label name;
+    @FXML
+    private Label dateTime;
+    @FXML
+    private Label venue;
+    @FXML
+    private ImageView notifications;
+
+    public EventCard(ReadOnlyEvent event, int displayedIndex) {
+        super(FXML);
+        this.event = event;
+        idEvent.setText(displayedIndex + ". ");
+        bindListeners(event);
+        registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Binds the individual UI elements to observe their respective {@code Person} properties
+     * so that they will be notified of any changes.
+     */
+    private void bindListeners(ReadOnlyEvent event) {
+        name.textProperty().bind(Bindings.convert(event.nameProperty()));
+        venue.textProperty().bind(Bindings.convert(event.addressProperty()));
+        dateTime.textProperty().bind(Bindings.convert(event.timeProperty()));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+        for (Reminder r : event.getReminders()) {
+            LocalDate dateToCompare = LocalDate.parse(r.getEvent().getTime().toString().substring(0, 8), formatter);
+            LocalDate date = LocalDate.now();
+            LocalDate twoDaysBefore = dateToCompare.minus(Period.ofDays(2));
+            LocalDate oneDayBefore = dateToCompare.minus(Period.ofDays(1));
+            if (date.isEqual(dateToCompare)) {
+                notifications.setImage(redNotification);
+            } else if (date.isEqual(twoDaysBefore)) {
+                notifications.setImage(greenNotification);
+            } else if (date.isEqual(oneDayBefore)) {
+                notifications.setImage(orangeNotification);
+            }
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof EventCard)) {
+            return false;
+        }
+
+        // state check
+        EventCard card = (EventCard) other;
+        return idEvent.getText().equals(card.idEvent.getText())
+                && event.equals(card.event);
+    }
+
+}
 ```
 ###### \java\seedu\address\ui\event\EventListPanel.java
 ``` java
@@ -985,35 +1108,46 @@ public class EventListPanel extends UiPart<Region> {
 ```
 ###### \resources\view\event\EventListCard.fxml
 ``` fxml
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane HBox.hgrow="ALWAYS">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
         </columnConstraints>
         <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
             <padding>
-                <Insets top="5" right="5" bottom="5" left="15" />
+                <Insets bottom="5" left="15" right="5" top="5" />
             </padding>
-            <HBox spacing="5" alignment="CENTER_LEFT">
+            <HBox alignment="CENTER_LEFT" spacing="5">
                 <Label fx:id="idEvent" styleClass="cell_big_label">
                     <minWidth>
                         <!-- Ensures that the label text is never truncated -->
                         <Region fx:constant="USE_PREF_SIZE" />
                     </minWidth>
                 </Label>
-                <Label fx:id="name" text="\$event name" styleClass="cell_big_label" />
+                <Label fx:id="name" styleClass="cell_big_label" text="\$event name" />
             </HBox>
             <Label fx:id="dateTime" styleClass="cell_small_label" text="\$date and time" />
             <Label fx:id="venue" styleClass="cell_small_label" text="\$venue" />
+         <HBox alignment="BOTTOM_RIGHT" prefHeight="25.0" prefWidth="25.0">
+            <children>
+               <ImageView fx:id="notifications" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+            </children>
+         </HBox>
         </VBox>
+      <rowConstraints>
+         <RowConstraints />
+      </rowConstraints>
     </GridPane>
 </HBox>
 ```
