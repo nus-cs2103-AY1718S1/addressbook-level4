@@ -30,8 +30,8 @@ public class BirthdayTest {
         assertFalse(birthdayValue.equals(true));
 
         // null -> returns false
-        assertFalse(birthday.equals(null));
-        assertFalse(birthdayValue.equals(null));
+        assertFalse(birthday == null);
+        assertFalse(birthdayValue == null);
 
         // different values -> returns false
         Birthday differentBirthday = new Birthday("04/04/99");
