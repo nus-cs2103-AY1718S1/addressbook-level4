@@ -17,19 +17,18 @@ import java.util.Iterator;
 public class EmailCommand extends Command {
     public static final String COMMAND_WORD = "email";
     public static final String COMMAND_ALIAS = "em";
-    private String EMAIL_ADDRESS ="default@example.com";//JC added this
-    private String name = "Bernice Yu";//JC added this
+    private String EMAIL_ADDRESS ="default@example.com";
+    private String name = "defaultname";
     private ObservableList<ReadOnlyPerson> persons;
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons who has tags which contains any of "
-            + "the specified keywords (not case-sensitive) and displays them as a list with index numbers.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Emails person whose name contains any of "
+            + "the specified keywords (not case-sensitive).\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " friends neighbours ";
+            + "Example: " + COMMAND_WORD + " alex yeoh ";
 
     public EmailCommand(String name){
-    this.name = name;
-    }// JC added this too
-
+        this.name = name;
+    }
 
     @Override
     public CommandResult execute() throws CommandException {
