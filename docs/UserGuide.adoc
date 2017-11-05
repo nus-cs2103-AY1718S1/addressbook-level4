@@ -454,18 +454,12 @@ You can view what command you have redone from the user feedback message.
 
 === Clearing all entries : `(c)clear`
 
-Clears all entries from the current component (either contacts or events). +
+Clears all entries from all components (both contacts and events). +
 Format: `(c)clear`
 
-Examples:
+Example:
 
 * `clear`
-* `clear --all`
-
-[NOTE]
-====
-Use `clear --all` if you want to clear data in all components (both contacts and events).
-====
 
 === Importing data : `(i)import`
 
