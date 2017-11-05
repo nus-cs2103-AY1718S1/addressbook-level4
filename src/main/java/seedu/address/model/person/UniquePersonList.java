@@ -192,7 +192,13 @@ public class UniquePersonList implements Iterable<Person> {
                             return oneTagsString.get(i).compareTo(otherTagsString.get(i));
                         }
                     }
-                    return 0;
+                    if (oneTagsString.size() < otherTagsString.size()) {
+                        return 1;
+                    } else if (oneTagsString.size() > otherTagsString.size()) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
                 }
             });
             break;
@@ -217,7 +223,13 @@ public class UniquePersonList implements Iterable<Person> {
                             return oneMeetingsString.get(i).compareTo(otherMeetingsString.get(i));
                         }
                     }
-                    return 0;
+                    if (oneMeetingsString.size() < otherMeetingsString.size()) {
+                        return 1;
+                    } else if (oneMeetingsString.size() > otherMeetingsString.size()) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
                 }
             });
         }
