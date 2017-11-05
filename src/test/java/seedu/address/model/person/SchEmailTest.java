@@ -43,6 +43,7 @@ public class SchEmailTest {
         assertTrue(SchEmail.isValidSchEmail(SchEmail.SCH_EMAIL_TEMPORARY));
     }
 
+    //@@author DarrenCzen
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
         // equals and hashCode check school email field value

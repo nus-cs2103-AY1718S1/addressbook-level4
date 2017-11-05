@@ -221,6 +221,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(schEmail);
         }
 
+        //@@author DarrenCzen
         public void setWebsite(Website website) {
             this.website = website;
         }
@@ -229,6 +230,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(website);
         }
 
+        //@@author
         public void setAddress(Address address) {
             this.address = address;
         }

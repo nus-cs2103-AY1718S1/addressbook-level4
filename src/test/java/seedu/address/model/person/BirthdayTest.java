@@ -28,6 +28,7 @@ public class BirthdayTest {
         assertTrue(Birthday.isValidBirthday(Birthday.BIRTHDAY_TEMPORARY));
     }
 
+    //@@author DarrenCzen
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
         // equals and hashCode check birthday field value

@@ -48,6 +48,7 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.add(new Person(toAdd));
     }
 
+    //@@author DarrenCzen
     /**
      * Sorts every person in the list alphabetically.
      */
@@ -56,6 +57,7 @@ public class UniquePersonList implements Iterable<Person> {
                 r1.getName().toString().compareTo(r2.getName().toString())));
     }
 
+    //@@author
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *

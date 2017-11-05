@@ -15,6 +15,7 @@ public class SchEmail {
 
     public final String value;
 
+    //@@author DarrenCzen
     /**
      * Validates given email.
      *
@@ -40,6 +41,7 @@ public class SchEmail {
                 || test.matches(SCH_EMAIL_TEMPORARY);
     }
 
+    //@@author
     @Override
     public String toString() {
         return value;

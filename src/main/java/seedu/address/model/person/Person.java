@@ -132,6 +132,8 @@ public class Person implements ReadOnlyPerson {
     public SchEmail getSchEmail() {
         return schEmail.get();
     }
+
+    //@@author DarrenCzen
     public void setWebsite(Website website) {
         this.website.set(requireNonNull(website));
     }
@@ -146,6 +148,7 @@ public class Person implements ReadOnlyPerson {
         return website.get();
     }
 
+    //@@author
     public void setAddress(Address address) {
         this.address.set(requireNonNull(address));
     }
