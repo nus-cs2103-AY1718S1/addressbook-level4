@@ -39,7 +39,8 @@ import seedu.address.model.account.exceptions.DuplicateAccountException;
  */
 public class CreateAccountCommand extends Command {
 
-    public static final String COMMAND_WORD = "Create";
+    public static final String COMMAND_WORD = "create";
+    public static final String COMMAND_ALIAS = "ca";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a Account to the database. "
             + "Parameters: "
@@ -122,7 +123,7 @@ public class LoginCommand extends Command {
                 logger.info("Credentials Accepted");
                 try {
                     MainApp.getUi().restart(account.getUsername().fullName);
-                } catch (NullPointerException e) {
+                } catch (Exception e) {
 
                     logger.info("Exception caught" + e.toString());
                 }
@@ -165,6 +166,64 @@ public class LogoutCommand extends Command {
 
 }
 ```
+###### \java\seedu\address\logic\commands\SelectReminderCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import java.util.List;
+
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToReminderRequestEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.reminder.ReadOnlyReminder;
+
+
+/**
+ * Selects a reminder identified using it's last displayed index from the address book.
+ */
+public class SelectReminderCommand extends Command {
+
+    public static final String COMMAND_WORD = "selectReminder";
+    public static final String COMMAND_ALIAS = "sr";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Selects the Reminder identified by the index number used in the last reminder listing.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
+
+    public static final String MESSAGE_SELECT_REMINDER_SUCCESS = "Selected Reminder: %1$s";
+
+    private final Index targetIndex;
+
+    public SelectReminderCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        List<ReadOnlyReminder> lastShownList = model.getFilteredReminderList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        EventsCenter.getInstance().post(new JumpToReminderRequestEvent(targetIndex));
+        return new CommandResult(String.format(MESSAGE_SELECT_REMINDER_SUCCESS, targetIndex.getOneBased()));
+
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SelectReminderCommand // instanceof handles nulls
+                && this.targetIndex.equals(((SelectReminderCommand) other).targetIndex)); // state check
+    }
+}
+
+```
 ###### \java\seedu\address\logic\parser\CreateAccountCommandParser.java
 ``` java
 package seedu.address.logic.parser;
@@ -177,10 +236,10 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.CreateAccountCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.credentials.Account;
-import seedu.address.model.credentials.Password;
-import seedu.address.model.credentials.ReadOnlyAccount;
-import seedu.address.model.credentials.Username;
+import seedu.address.model.account.Account;
+import seedu.address.model.account.Password;
+import seedu.address.model.account.ReadOnlyAccount;
+import seedu.address.model.account.Username;
 
 /**
  *
@@ -275,6 +334,38 @@ public class LoginCommandParser implements Parser<LoginCommand> {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
+}
+```
+###### \java\seedu\address\logic\parser\SelectReminderCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.SelectReminderCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new SelectCommand object
+ */
+public class SelectReminderCommandParser implements Parser<SelectReminderCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the SelectCommand
+     * and returns an SelectCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public SelectReminderCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new SelectReminderCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectReminderCommand.MESSAGE_USAGE));
+        }
+    }
 }
 ```
 ###### \java\seedu\address\model\account\Account.java
@@ -1461,7 +1552,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.JumpToReminderRequestEvent;
 import seedu.address.commons.events.ui.ReminderPanelSelectionChangedEvent;
 import seedu.address.model.reminder.ReadOnlyReminder;
 
@@ -1510,7 +1601,7 @@ public class ReminderListPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+    private void handleJumpToListRequestEvent(JumpToReminderRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }

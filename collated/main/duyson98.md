@@ -85,6 +85,7 @@ public class TagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "tag";
     public static final String COMMAND_ALIAS = "t";
+
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Tags one or more persons identified by the index numbers used in the last person listing.\n"
             + "Parameters: INDEX,[MORE_INDEXES]... (must be positive integers) + TAGNAME\n"
@@ -1010,7 +1011,7 @@ public class Priority {
 
     public static final String MESSAGE_PRIORITY_CONSTRAINTS =
             "Priority can only be Low / Medium / High";
-    public static final String PRIORITY_VALIDATION_REGEX = ".*\\b(Low|Medium|High)\\b.*";
+    public static final String PRIORITY_VALIDATION_REGEX = "(?:Low|Medium|High)";
     public final String value;
 
     /**
