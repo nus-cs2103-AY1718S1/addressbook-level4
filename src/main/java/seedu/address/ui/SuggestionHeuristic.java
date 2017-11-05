@@ -92,7 +92,10 @@ public class SuggestionHeuristic {
         case EditCommand.COMMAND_WORD: case EditCommand.COMMAND_ALIAS:
         case FindCommand.COMMAND_WORD: case FindCommand.COMMAND_ALIAS:
             int lastSlash = prefixWords.lastIndexOf("/");
-            switch (prefixWords.substring(lastSlash - 1, lastSlash - 1)) {
+            if (lastSlash - 1 <= 0) {
+                return empty;
+            }
+            switch (prefixWords.substring(lastSlash - 1, lastSlash)) {
             case "n":
                 return names;
             case "p":
