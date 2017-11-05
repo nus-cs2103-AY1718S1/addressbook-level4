@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.FilteredListChangedEvent;
+import seedu.address.commons.events.model.FilteredListChangedEvent;
 import seedu.address.model.AddressBook;
 
 /**

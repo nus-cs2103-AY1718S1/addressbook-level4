@@ -3,6 +3,7 @@ package seedu.address.model.schedule;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -117,5 +118,21 @@ public class UniqueScheduleList implements Iterable<Schedule> {
         assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.hashCode();
     }
+
+    //@@author limcel
+    /**
+     * Returns an observable list as as an unmodifiable {@code ObservableList}
+     */
+    public ObservableList<Schedule> asObservableListSortedChronologically() {
+        internalList.sort(new Comparator<Schedule>() {
+
+            @Override
+            public int compare(Schedule date1, Schedule date2) {
+                return (date1.getDate().compareTo(date2.getDate()));
+            }
+        });
+        return FXCollections.unmodifiableObservableList(internalList);
+    }
+    //@@author
 
 }

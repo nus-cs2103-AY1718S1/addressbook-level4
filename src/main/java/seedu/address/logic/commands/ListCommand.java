@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.FilteredListChangedEvent;
+import seedu.address.commons.events.model.FilteredListChangedEvent;
 
 /**
  * Lists all persons in the address book to the user.

@@ -60,7 +60,7 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE));
         }
-        throw new ParseException("Please enter the correct prefix");
+        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE));
     }
 
     /**

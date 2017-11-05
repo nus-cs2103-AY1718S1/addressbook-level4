@@ -10,7 +10,7 @@ import org.junit.Test;
 import guitests.guihandles.StatisticsPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.events.ui.FilteredListChangedEvent;
+import seedu.address.commons.events.model.FilteredListChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author lincredibleJC

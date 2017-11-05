@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.FilteredListChangedEvent;
+import seedu.address.commons.events.model.FilteredListChangedEvent;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 /**

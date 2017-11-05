@@ -485,7 +485,7 @@ The following sequence diagram shows how the `schedule` operation works:
 image::ScheduleSequenceDiagram.png[width="800"]
 _Figure 3.2.1 : Sequence Diagram of Schedule Operation_
 
-When the user calls ``‘schedule’ or ‘sche’` to schedule the contacts, the `Model` will receive a `schedule` from the `Parser`.
+When the user calls ‘schedule’ or ‘sch’ to schedule the contacts in cherBook, the Model will receive a schedule from the Parser.
 
 Upon successful scheduling, contacts are added into the `set of schedules`.
 If one or more arguments required to schedule a person is missing, the AddressBook will return with error messages corresponding to the missing arguments.

@@ -236,7 +236,7 @@ Deletes the 3rd person in cherBook.
 
 Schedules the person identified by the index number used in the last person listing. +
 Format: `schedule INDEX s/[DATE]` +
-Shorthand: `sche INDEX s/[DATE]`
+Shorthand: `sch INDEX s/[DATE]`
 
 ****
 * Schedules the person at the specified `INDEX` and adds them to the schedule list in cherBook.
@@ -252,6 +252,26 @@ Schedules the 2nd person in cherBook for tomorrow at 7pm and adds the schedule t
 * `find Betsy` +
 `sche 1 s/25 december 2017 3pm` +
 Schedules the 1st person in cherBook on 25 December at 3pm and adds the schedule to the schedule list in the results of the `find` command.
+
+=== Viewing my schedule : `viewschedule` `Since v1.5`
+
+Views your full schedule list. +
+Format: `viewschedules` +
+Shorthand: `viewsch`
+
+****
+* Displays all your schedules in the command box.
+****
+
+Examples:
+
+* `list` +
+`viewschedules` +
+Displays all your schedules in the command box.
+* `find Betsy` +
+`viewsch` +
+Displays all your schedules in the command box.
+
 
 === Selecting a person : `select` `Since v1.0`
 

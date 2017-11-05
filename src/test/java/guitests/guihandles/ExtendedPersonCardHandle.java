@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
  */
 public class ExtendedPersonCardHandle extends NodeHandle<Node> {
     public static final String EXTENDED_PERSON_CARD_ID = "#extendedPersonCardPlaceholder";
-    private static final String ID_FIELD_ID = "#id";
     private static final String NAME_FIELD_ID = "#name";
     private static final String ADDRESS_FIELD_ID = "#address";
     private static final String PHONE_FIELD_ID = "#phone";
@@ -20,7 +19,6 @@ public class ExtendedPersonCardHandle extends NodeHandle<Node> {
     private static final String REMARK_FIELD_ID = "#remark";
 
 
-    private final Label idLabel;
     private final Label nameLabel;
     private final Label addressLabel;
     private final Label phoneLabel;
@@ -34,7 +32,6 @@ public class ExtendedPersonCardHandle extends NodeHandle<Node> {
     public ExtendedPersonCardHandle(Node cardNode) {
         super(cardNode);
 
-        this.idLabel = getChildNode(ID_FIELD_ID);
         this.nameLabel = getChildNode(NAME_FIELD_ID);
         this.phoneLabel = getChildNode(PHONE_FIELD_ID);
         this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
@@ -43,10 +40,6 @@ public class ExtendedPersonCardHandle extends NodeHandle<Node> {
         this.postalCodeLabel = getChildNode(POSTALCODE_FIELD_ID);
         this.emailLabel = getChildNode(EMAIL_FIELD_ID);
         this.remarkLabel = getChildNode(REMARK_FIELD_ID);
-    }
-
-    public String getId() {
-        return idLabel.getText();
     }
 
     public String getName() {
