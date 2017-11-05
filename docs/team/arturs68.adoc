@@ -76,6 +76,24 @@ include::../DeveloperGuide.adoc[tag=profile]
 
 ---
 
+=== Enhancement Added: Remove tag
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=removetag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+A tag might have temporal meaning and after its time elapses it might become obsolete at all places of occurrence
+
+
 === Enhancement Added: Always sorted
 
 ==== Justification
