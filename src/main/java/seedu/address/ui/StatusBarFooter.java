@@ -32,8 +32,7 @@ public class StatusBarFooter extends UiPart<Region> {
 
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
-    public static final String SYNC_NUMBER_PERSON = "%d person(s) total";
-    public static final String SYNC_NUMBER_TASK = "%d task(s) total";
+    public static final String SYNC_NUMBER_STATUS = "%d person(s) total and %d task(s) total";
     /**
      * Used to generate time stamps.
      * <p>
@@ -53,9 +52,7 @@ public class StatusBarFooter extends UiPart<Region> {
     @FXML
     private StatusBar saveLocationStatus;
     @FXML
-    private StatusBar numberPersonStatus;
-    @FXML
-    private StatusBar taskPersonStatus;
+    private StatusBar numberStatus;
     @FXML
     private StatusBar timeStatus;
 
@@ -64,8 +61,7 @@ public class StatusBarFooter extends UiPart<Region> {
         setSyncStatus(SYNC_STATUS_INITIAL);
         setSaveLocation("./" + saveLocation);
         registerAsAnEventHandler(this);
-        numberPersonStatus.setText(String.format(SYNC_NUMBER_PERSON, totalPerson));
-        taskPersonStatus.setText(String.format(SYNC_NUMBER_TASK, totalTask));
+        numberStatus.setText(String.format(SYNC_NUMBER_STATUS, totalPerson, totalTask));
         setTimeStatus();
     }
 
@@ -97,8 +93,8 @@ public class StatusBarFooter extends UiPart<Region> {
         String lastUpdated = new Date(now).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
-        numberPersonStatus.setText(String.format(SYNC_NUMBER_PERSON, abce.data.getPersonList().size()));
-        taskPersonStatus.setText(String.format(SYNC_NUMBER_TASK, abce.data.getTaskList().size()));
+        numberStatus.setText(String.format(SYNC_NUMBER_STATUS, abce.data.getPersonList().size(),
+                abce.data.getTaskList().size()));
     }
 
     private void setTimeStatus() {
