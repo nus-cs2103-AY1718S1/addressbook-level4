@@ -9,6 +9,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.RetrieveCommand.MESSAGE_NOT_FOUND;
+import static seedu.address.testutil.TypicalAccounts.getTypicalDatabase;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -35,7 +36,7 @@ import seedu.address.model.tag.TagContainsKeywordPredicate;
  */
 public class RetrieveCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalDatabase(), new UserPrefs());
 
     @Test
     public void equals() throws Exception {
@@ -119,6 +120,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstAndSecondPersonsOnly;
 import static seedu.address.logic.commands.TagCommand.MESSAGE_INVALID_INDEXES;
+import static seedu.address.testutil.TypicalAccounts.getTypicalDatabase;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
@@ -145,7 +147,7 @@ import seedu.address.testutil.PersonBuilder;
 
 public class TagCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalDatabase(), new UserPrefs());
 
     @Test
     public void execute_unfilteredList_success() throws Exception {
@@ -161,7 +163,8 @@ public class TagCommandTest {
                 + firstTaggedPerson.getName().toString() + ", "
                 + secondTaggedPerson.getName().toString();
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstTaggedPerson);
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondTaggedPerson);
 
@@ -169,7 +172,7 @@ public class TagCommandTest {
     }
 
     @Test
-    public void execute_unfilteredListContainsPersonsAlreadyTagged_success() throws Exception {
+    public void execute_unfilteredListContainsPersonsWithTag_success() throws Exception {
         PersonBuilder firstPersonInList = new PersonBuilder(ALICE);
         Person firstTaggedPerson = firstPersonInList.withTags("friends", "retrieveTester", "owesMoney").build();
         PersonBuilder secondPersonInList = new PersonBuilder(BENSON);
@@ -182,7 +185,8 @@ public class TagCommandTest {
                 + String.format(TagCommand.MESSAGE_PERSONS_ALREADY_HAVE_TAG, 1) + " "
                 + secondTaggedPerson.getName().toString();
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstTaggedPerson);
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondTaggedPerson);
 
@@ -206,7 +210,8 @@ public class TagCommandTest {
                 + firstTaggedPerson.getName().toString() + ", "
                 + secondTaggedPerson.getName().toString();
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstTaggedPerson);
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondTaggedPerson);
 
@@ -214,7 +219,7 @@ public class TagCommandTest {
     }
 
     @Test
-    public void execute_filteredListContainsPersonsAlreadyTagged_success() throws Exception {
+    public void execute_filteredListContainsPersonsWithTag_success() throws Exception {
         showFirstAndSecondPersonsOnly(model);
 
         ReadOnlyPerson firstPersonInList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -222,7 +227,7 @@ public class TagCommandTest {
                 "retrieveTester", "owesMoney").build();
         ReadOnlyPerson secondPersonInList = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
         Person secondTaggedPerson = new PersonBuilder(secondPersonInList).withTags("owesMoney", "friends",
-                "retrieveTester", "friends").build();
+                "retrieveTester").build();
         Tag tag = new Tag("owesMoney");
         TagCommand command = prepareCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON), tag);
 
@@ -231,7 +236,8 @@ public class TagCommandTest {
                 + String.format(TagCommand.MESSAGE_PERSONS_ALREADY_HAVE_TAG, 1) + " "
                 + secondTaggedPerson.getName().toString();
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstTaggedPerson);
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondTaggedPerson);
 
@@ -444,8 +450,6 @@ public class TagCommandParserTest {
                 + VALID_TAG_NAME + "\t \n", expectedCommand);
 
         // multiple duplicated indexes
-        expectedCommand = new TagCommand(Arrays.asList(INDEX_FIRST_PERSON,
-                INDEX_SECOND_PERSON, INDEX_THIRD_PERSON), new Tag(VALID_TAG_NAME));
         assertParseSuccess(parser, "1,1,1,2,2,3" + " " + VALID_TAG_NAME, expectedCommand);
     }
 

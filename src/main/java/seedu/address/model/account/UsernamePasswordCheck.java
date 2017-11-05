@@ -1,5 +1,5 @@
 //@@author cqhchan
-package seedu.address.model.credentials;
+package seedu.address.model.account;
 
 import java.util.List;
 import java.util.function.Predicate;

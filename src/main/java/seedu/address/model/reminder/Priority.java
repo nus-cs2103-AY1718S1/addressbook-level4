@@ -14,7 +14,7 @@ public class Priority {
 
     public static final String MESSAGE_PRIORITY_CONSTRAINTS =
             "Priority can only be Low / Medium / High";
-    public static final String PRIORITY_VALIDATION_REGEX = ".*\\b(Low|Medium|High)\\b.*";
+    public static final String PRIORITY_VALIDATION_REGEX = "(?:Low|Medium|High)";
     public final String value;
 
     /**

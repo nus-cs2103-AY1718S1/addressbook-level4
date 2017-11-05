@@ -1,8 +1,9 @@
+//@@author cqhchan
 package seedu.address.testutil;
 
 import seedu.address.model.Database;
-import seedu.address.model.credentials.ReadOnlyAccount;
-import seedu.address.model.credentials.exceptions.DuplicateAccountException;
+import seedu.address.model.account.ReadOnlyAccount;
+import seedu.address.model.account.exceptions.DuplicateAccountException;
 
 /**
  *

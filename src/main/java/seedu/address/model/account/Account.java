@@ -1,5 +1,5 @@
 //@@author cqhchan
-package seedu.address.model.credentials;
+package seedu.address.model.account;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;

@@ -1,4 +1,4 @@
-package seedu.address.model.credentials.exceptions;
+package seedu.address.model.account.exceptions;
 
 import seedu.address.commons.exceptions.DuplicateDataException;
 

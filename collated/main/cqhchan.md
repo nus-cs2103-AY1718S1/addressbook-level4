@@ -30,14 +30,14 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.credentials.Account;
-import seedu.address.model.credentials.ReadOnlyAccount;
-import seedu.address.model.credentials.exceptions.DuplicateAccountException;
+import seedu.address.model.account.Account;
+import seedu.address.model.account.ReadOnlyAccount;
+import seedu.address.model.account.exceptions.DuplicateAccountException;
 
 /**
  *
  */
-public class CreateAccountCommand extends UndoableCommand {
+public class CreateAccountCommand extends Command {
 
     public static final String COMMAND_WORD = "Create";
 
@@ -47,7 +47,7 @@ public class CreateAccountCommand extends UndoableCommand {
             + PREFIX_PASSWORD + "PASSWORD ";
 
     public static final String MESSAGE_SUCCESS = "New account added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This account already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_ACCOUNT = "This account already exists in the address book";
 
     private final Account toAdd;
 
@@ -59,13 +59,13 @@ public class CreateAccountCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
         try {
             model.addAccount(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateAccountException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_ACCOUNT);
         }
 
     }
@@ -90,7 +90,7 @@ import java.util.logging.Logger;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 
-import seedu.address.model.credentials.ReadOnlyAccount;
+import seedu.address.model.account.ReadOnlyAccount;
 /**
  *
  */
@@ -120,7 +120,12 @@ public class LoginCommand extends Command {
             if (account.getUsername().fullName.equals(tempaccount.getUsername().fullName)
                     && account.getPassword().value.equals(tempaccount.getPassword().value)) {
                 logger.info("Credentials Accepted");
-                MainApp.getUi().restart(account.getUsername().fullName);
+                try {
+                    MainApp.getUi().restart(account.getUsername().fullName);
+                } catch (NullPointerException e) {
+
+                    logger.info("Exception caught" + e.toString());
+                }
                 return new CommandResult(MESSAGE_SUCCESS);
             }
         }
@@ -177,9 +182,6 @@ import seedu.address.model.credentials.Password;
 import seedu.address.model.credentials.ReadOnlyAccount;
 import seedu.address.model.credentials.Username;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
-
 /**
  *
  */
@@ -230,10 +232,10 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.credentials.Account;
-import seedu.address.model.credentials.Password;
-import seedu.address.model.credentials.ReadOnlyAccount;
-import seedu.address.model.credentials.Username;
+import seedu.address.model.account.Account;
+import seedu.address.model.account.Password;
+import seedu.address.model.account.ReadOnlyAccount;
+import seedu.address.model.account.Username;
 
 
 /**
@@ -275,9 +277,9 @@ public class LoginCommandParser implements Parser<LoginCommand> {
 
 }
 ```
-###### \java\seedu\address\model\credentials\Account.java
+###### \java\seedu\address\model\account\Account.java
 ``` java
-package seedu.address.model.credentials;
+package seedu.address.model.account;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
@@ -347,14 +349,13 @@ public class Account implements ReadOnlyAccount {
     }
 }
 ```
-###### \java\seedu\address\model\credentials\Password.java
+###### \java\seedu\address\model\account\Password.java
 ``` java
-package seedu.address.model.credentials;
+package seedu.address.model.account;
 
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
 
 /**
  *
@@ -365,7 +366,7 @@ public class Password {
         "Password can take any values, and it should not be blank";
 
     /*
-     * The first character of the address must not be a whitespace,
+     * The first character of the password must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String ADDRESS_PASSWORD_REGEX = "[^\\s].*";
@@ -373,22 +374,22 @@ public class Password {
     public final String value;
 
     /**
-     * Validates given address.
+     * Validates given password.
      *
-     * @throws IllegalValueException if given address string is invalid.
+     * @throws IllegalValueException if given password string is invalid.
      */
-    public Password(String address) throws IllegalValueException {
-        requireNonNull(address);
-        if (!isValidAddress(address)) {
+    public Password(String password) throws IllegalValueException {
+        requireNonNull(password);
+        if (!isValidPassword(password)) {
             throw new IllegalValueException(MESSAGE_PASSWORD_CONSTRAINTS);
         }
-        this.value = address;
+        this.value = password;
     }
 
     /**
      * Returns true if a given string is a valid person email.
      */
-    public static boolean isValidAddress(String test) {
+    public static boolean isValidPassword(String test) {
         return test.matches(ADDRESS_PASSWORD_REGEX);
     }
 
@@ -400,8 +401,8 @@ public class Password {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Address // instanceof handles nulls
-                && this.value.equals(((Address) other).value)); // state check
+                || (other instanceof Password // instanceof handles nulls
+                && this.value.equals(((Password) other).value)); // state check
     }
 
     @Override
@@ -411,9 +412,9 @@ public class Password {
 
 }
 ```
-###### \java\seedu\address\model\credentials\ReadOnlyAccount.java
+###### \java\seedu\address\model\account\ReadOnlyAccount.java
 ``` java
-package seedu.address.model.credentials;
+package seedu.address.model.account;
 
 import javafx.beans.property.ObjectProperty;
 
@@ -453,9 +454,9 @@ public interface ReadOnlyAccount {
 }
 
 ```
-###### \java\seedu\address\model\credentials\UniqueAccountList.java
+###### \java\seedu\address\model\account\UniqueAccountList.java
 ``` java
-package seedu.address.model.credentials;
+package seedu.address.model.account;
 
 import static java.util.Objects.requireNonNull;
 
@@ -467,7 +468,7 @@ import org.fxmisc.easybind.EasyBind;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import seedu.address.model.credentials.exceptions.DuplicateAccountException;
+import seedu.address.model.account.exceptions.DuplicateAccountException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -581,9 +582,9 @@ public class UniqueAccountList implements Iterable<Account> {
     }
 }
 ```
-###### \java\seedu\address\model\credentials\Username.java
+###### \java\seedu\address\model\account\Username.java
 ``` java
-package seedu.address.model.credentials;
+package seedu.address.model.account;
 
 import static java.util.Objects.requireNonNull;
 
@@ -646,9 +647,9 @@ public class Username {
     }
 }
 ```
-###### \java\seedu\address\model\credentials\UsernamePasswordCheck.java
+###### \java\seedu\address\model\account\UsernamePasswordCheck.java
 ``` java
-package seedu.address.model.credentials;
+package seedu.address.model.account;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -692,10 +693,10 @@ import java.util.List;
 import java.util.Objects;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.credentials.Account;
-import seedu.address.model.credentials.ReadOnlyAccount;
-import seedu.address.model.credentials.UniqueAccountList;
-import seedu.address.model.credentials.exceptions.DuplicateAccountException;
+import seedu.address.model.account.Account;
+import seedu.address.model.account.ReadOnlyAccount;
+import seedu.address.model.account.UniqueAccountList;
+import seedu.address.model.account.exceptions.DuplicateAccountException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -819,7 +820,7 @@ public class Database implements ReadOnlyDatabase {
 package seedu.address.model;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.credentials.ReadOnlyAccount;
+import seedu.address.model.account.ReadOnlyAccount;
 
 /**
  *
@@ -906,10 +907,10 @@ package seedu.address.storage;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.credentials.Account;
-import seedu.address.model.credentials.Password;
-import seedu.address.model.credentials.ReadOnlyAccount;
-import seedu.address.model.credentials.Username;
+import seedu.address.model.account.Account;
+import seedu.address.model.account.Password;
+import seedu.address.model.account.ReadOnlyAccount;
+import seedu.address.model.account.Username;
 
 /**
  * JAXB-friendly version of the Account.
@@ -1072,7 +1073,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyDatabase;
-import seedu.address.model.credentials.ReadOnlyAccount;
+import seedu.address.model.account.ReadOnlyAccount;
 
 
 /**

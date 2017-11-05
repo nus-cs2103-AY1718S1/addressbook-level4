@@ -9,10 +9,10 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.CreateAccountCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.credentials.Account;
-import seedu.address.model.credentials.Password;
-import seedu.address.model.credentials.ReadOnlyAccount;
-import seedu.address.model.credentials.Username;
+import seedu.address.model.account.Account;
+import seedu.address.model.account.Password;
+import seedu.address.model.account.ReadOnlyAccount;
+import seedu.address.model.account.Username;
 
 /**
  *

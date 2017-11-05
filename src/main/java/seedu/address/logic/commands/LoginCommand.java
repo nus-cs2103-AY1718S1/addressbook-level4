@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 
-import seedu.address.model.credentials.ReadOnlyAccount;
+import seedu.address.model.account.ReadOnlyAccount;
 /**
  *
  */
@@ -39,7 +39,12 @@ public class LoginCommand extends Command {
             if (account.getUsername().fullName.equals(tempaccount.getUsername().fullName)
                     && account.getPassword().value.equals(tempaccount.getPassword().value)) {
                 logger.info("Credentials Accepted");
-                MainApp.getUi().restart(account.getUsername().fullName);
+                try {
+                    MainApp.getUi().restart(account.getUsername().fullName);
+                } catch (Exception e) {
+
+                    logger.info("Exception caught" + e.toString());
+                }
                 return new CommandResult(MESSAGE_SUCCESS);
             }
         }

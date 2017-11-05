@@ -18,6 +18,7 @@ import seedu.address.model.tag.UniqueTagList;
 public class RetagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "retag";
+    public static final String COMMAND_ALIAS = "rt";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
         + ": Retags all person having the old tag name to the new tag name.\n"
