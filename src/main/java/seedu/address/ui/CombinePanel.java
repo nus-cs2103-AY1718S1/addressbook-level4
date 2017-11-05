@@ -35,6 +35,7 @@ import seedu.address.commons.events.ui.LessonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.RemarkChangedEvent;
 import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.logic.Logic;
+import seedu.address.model.FontSizeUnit;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.Remark;
@@ -62,7 +63,6 @@ public class CombinePanel extends UiPart<Region> {
     private String[][]noteData;
     private ReadOnlyLesson selectedModule;
 
-    private StackPane noteStackPane;
     @FXML
     private StackPane stackPane;
     @FXML
@@ -360,14 +360,15 @@ public class CombinePanel extends UiPart<Region> {
                 ta.setWrapText(true);
                 ta.setEditable(false);
 
-
-                noteStackPane = new StackPane();
+                StackPane noteStackPane = new StackPane();
                 noteStackPane.setStyle("-fx-background-color: rgba(" + x + "," + y + ", " + z + ", 0.5);"
                         + "-fx-effect: dropshadow(gaussian, red, " + 20 + ", 0, 0, 0);"
                         + "-fx-background-insets: " + 10 + ";");
                 ta.setId(STICKY_NOTE);
                 noteStackPane.getChildren().add(ta);
                 noteGrid.add(noteStackPane, j, i);
+                FontSizeUnit currFontSize = FontSizeUnit.getCurrentFontSizeUnit();
+                setFontSizeUnit(currFontSize);
             }
         }
     }
@@ -378,23 +379,23 @@ public class CombinePanel extends UiPart<Region> {
     private void setFontSize(String userPref) {
         switch (userPref) {
         case FONT_SIZE_XSMALL:
-            noteStackPane.getChildren().forEach(node -> node.setStyle("-fx-font-size: 10;"));
+            setFontSizeHelper("10");
             break;
 
         case FONT_SIZE_SMALL:
-            noteStackPane.getChildren().forEach(node -> node.setStyle("-fx-font-size: 12;"));
+            setFontSizeHelper("12");
             break;
 
         case FONT_SIZE_NORMAL:
-            noteStackPane.getChildren().forEach(node -> node.setStyle("-fx-font-size: 16;"));
+            setFontSizeHelper("25");
             break;
 
         case FONT_SIZE_LARGE:
-            noteStackPane.getChildren().forEach(node -> node.setStyle("-fx-font-size: 30;"));
+            setFontSizeHelper("32");
             break;
 
         case FONT_SIZE_XLARGE:
-            noteStackPane.getChildren().forEach(node -> node.setStyle("-fx-font-size: 40;"));
+            setFontSizeHelper("40");
             break;
 
         default:
@@ -402,9 +403,48 @@ public class CombinePanel extends UiPart<Region> {
         }
     }
 
+    private void setFontSizeHelper(String fontSize) {
+        noteGrid.getChildren().forEach((node) -> {
+            if (node instanceof StackPane) {
+                for (Node n : ((StackPane) node).getChildren()) {
+                    if (n instanceof TextArea) {
+                        n.setStyle("-fx-font-size: " + fontSize + ";");
+                    }
+                }
+            }
+        });
+    }
+
     @Subscribe
     private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
         setFontSize(event.message);
+    }
+
+    private void setFontSizeUnit(FontSizeUnit currFontSizeUnit) {
+        switch (currFontSizeUnit) {
+        case FONT_SIZE_XSMALL_UNIT:
+            setFontSize(FONT_SIZE_XSMALL);
+            break;
+
+        case FONT_SIZE_SMALL_UNIT:
+            setFontSize(FONT_SIZE_SMALL);
+            break;
+
+        case FONT_SIZE_NORMAL_UNIT:
+            setFontSize(FONT_SIZE_NORMAL);
+            break;
+
+        case FONT_SIZE_LARGE_UNIT:
+            setFontSize(FONT_SIZE_LARGE);
+            break;
+
+        case FONT_SIZE_XLARGE_UNIT:
+            setFontSize(FONT_SIZE_XLARGE);
+            break;
+
+        default:
+            break;
+        }
     }
     //@@author
 }
