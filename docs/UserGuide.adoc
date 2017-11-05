@@ -86,6 +86,7 @@ image:help.png[] +
 _Figure 4.1.1_
 .  Press kbd:[Enter] and a *User Guide* document would show up.
 
+// tag::add[]
 === Adding a person: `add`
 
 ====
@@ -121,6 +122,7 @@ Here are some other ways you can add contacts:
 * `a n/Dave`
 
 If you type in all commands shown above, you should see:
+// end::add[]
 
 === Listing all persons : `list`
 

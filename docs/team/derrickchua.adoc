@@ -58,11 +58,32 @@ include::../UserGuide.adoc[tag=note]
 Adding a `note` command enables the user to add notes for his contacts quickly should he need
 to jot something down.
 
+=== Enhancement Added: Optional fields for `add`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Not all details are always known about a contact, but it should not prevent
+a user from adding him/her.
+
+=== Enhancement Proposed: Add different views for Meetings
+
+{To Update}
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Implement tag colours (Pull request https://github.com/CS2103AUG2017-W13-B3/main/pull/1[#1])
+* Fix white PersonListPanel CSS (Pull request https://github.com/CS2103AUG2017-W13-B3/main/pull/75[#75])
 
 == Project: PowerPointLabs
 
