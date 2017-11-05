@@ -42,7 +42,7 @@ background {
 }
 
 .table-view {
-    -fx-base: blue;
+    -fx-base: black;
     -fx-control-inner-background: red;
     -fx-background-color: red;
     -fx-table-cell-border-color: transparent;
@@ -94,11 +94,11 @@ background {
     -fx-padding: 0 0 0 0;
 }
 
-.list-cell:filled:even { /* Used for cell background */
+.list-cell:filled(even) { /* Used for cell background */
     -fx-background-color: #F2F2F2;
 }
 
-.list-cell:filled:odd { /* Used for cell background */
+.list-cell:filled(odd) { /* Used for cell background */
     -fx-background-color: #F2F2F2;
 }
 
@@ -239,7 +239,7 @@ background {
 
 .button:default {
     -fx-background-color: -fx-focus-color;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: black;
 }
 
 .button:default:hover {
@@ -247,7 +247,7 @@ background {
 }
 
 .dialog-pane {
-    -fx-background-color: blue;
+    -fx-background-color: black;
 }
 
 .dialog-pane > *.button-bar > *.container {
@@ -261,7 +261,7 @@ background {
 }
 
 .dialog-pane:header *.header-panel {
-    -fx-background-color: blue;
+    -fx-background-color: black;
 }
 
 .dialog-pane:header *.header-panel *.label {
@@ -304,7 +304,7 @@ background {
 
 #commandTypeLabel {
     -fx-font-size: 11px;
-    -fx-text-fill: #F70D1A;
+    -fx-text-fill: black;
 }
 
 #commandTextField { /* Command box */
