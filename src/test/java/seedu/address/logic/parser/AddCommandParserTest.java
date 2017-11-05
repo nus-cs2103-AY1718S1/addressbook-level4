@@ -79,7 +79,7 @@ public class AddCommandParserTest {
                 new AddCommand(expectedPersonMultipleTags));
         //@@author zhoukai07
         //missing phone -> accepted
-        Person expectedPersonMissingPhone = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(PHONE_DESC_EMPTY)
+        Person expectedPersonMissingPhone = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(null)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_EMPTY
                         + EMAIL_DESC_BOB + ADDRESS_DESC_BOB,
@@ -87,8 +87,8 @@ public class AddCommandParserTest {
 
         //missing phone -> accepted
         Person expectedPersonMissingAddress = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withEmail(VALID_EMAIL_BOB).withAddress(ADDRESS_DESC_EMPTY).build();
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_EMPTY
+                .withEmail(VALID_EMAIL_BOB).withAddress(null).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
                         + EMAIL_DESC_BOB + ADDRESS_DESC_EMPTY,
                 new AddCommand(expectedPersonMissingAddress));
         //@@author
