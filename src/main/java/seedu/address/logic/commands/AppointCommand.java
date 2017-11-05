@@ -9,6 +9,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
@@ -25,7 +26,7 @@ public class AppointCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "appoint";
     public static final String MESSAGE_APPOINT_SUCCESS = "New appointment added: %1$s";
     public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "Appointment removed for person: %1$s";
-    public static final String MESSAGE_APPOINTMENT_CLASH = "Appointment clash";
+    public static final String MESSAGE_APPOINTMENT_CLASH = "Appointment clash with another in address book";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add an appointment to a person to the address book "
             + "by the index number in the last person listing.\n"
@@ -68,7 +69,7 @@ public class AppointCommand extends UndoableCommand {
         uniqueAppointmentList.setAppointments(appointments);
 
         if (uniqueAppointmentList.hasClash(appointment)) {
-            throw new CommandException("Appointment clash with another in address book");
+            throw new CommandException(MESSAGE_APPOINTMENT_CLASH);
         }
 
         try {
@@ -77,6 +78,8 @@ public class AppointCommand extends UndoableCommand {
             throw new CommandException("Person cannot be duplicated.");
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
+        } catch (IllegalValueException e) {
+            throw new CommandException("Invalid appointment");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(generateSuccessMessage(editedPerson));

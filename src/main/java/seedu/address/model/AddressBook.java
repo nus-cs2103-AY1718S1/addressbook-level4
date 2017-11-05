@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.group.Group;
@@ -108,6 +109,22 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Adds an appointment to address book.
+     */
+    public void addAppointment(Appointment a) throws IllegalValueException,
+            UniqueAppointmentList.ClashAppointmentException {
+        Appointment newAppointment = new Appointment(Appointment.getOriginalAppointment(a.toString()));
+        appointments.add(newAppointment);
+    }
+
+    /**
+     * Removes an appointment
+     */
+    public void removeAppointment(Appointment a) {
+        appointments.remove(a);
+    }
+
+    /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
      *
@@ -122,12 +139,22 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedReadOnlyPerson);
 
         Person editedPerson = new Person(editedReadOnlyPerson);
+        Appointment oldAppointment = target.getAppointment();
+        Appointment newAppointment = editedPerson.getAppointment();
         syncMasterTagListWith(editedPerson);
         syncMasterGroupListWith(editedPerson);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, editedPerson);
+        appointments.remove(oldAppointment);
+        try {
+            appointments.add(newAppointment);
+        } catch (UniqueAppointmentList.DuplicateAppointmentException e) {
+            e.printStackTrace();
+        } catch (UniqueAppointmentList.ClashAppointmentException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
