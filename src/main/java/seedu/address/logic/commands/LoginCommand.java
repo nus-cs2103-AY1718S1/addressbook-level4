@@ -42,10 +42,7 @@ public class LoginCommand extends Command {
                 logger.info("Credentials Accepted");
                 MainApp.getUi().restart(account.getUsername().fullName);
                 return new CommandResult(MESSAGE_SUCCESS);
-            } else {
-                return new CommandResult(MESSAGE_FAILURE);
             }
-
         }
         return new CommandResult(MESSAGE_FAILURE);
 
