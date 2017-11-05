@@ -8,14 +8,14 @@ import org.junit.Test;
 public class TaskTest {
 
     @Test
-    public void isValidName() {
-        // invalid name
+    public void isValidTaskName() {
+        // invalid task name
         assertFalse(Task.isValidTaskName("")); // empty string
         assertFalse(Task.isValidTaskName(" ")); // spaces only
         assertFalse(Task.isValidTaskName("^")); // only non-alphanumeric characters
         assertFalse(Task.isValidTaskName("birthday*")); // contains non-alphanumeric characters
 
-        // valid name
+        // valid task name
         assertTrue(Task.isValidTaskName("birthday")); // alphabets only
         assertTrue(Task.isValidTaskName("12345")); // numbers only
         assertTrue(Task.isValidTaskName("birthday 2morrow")); // alphanumeric characters

@@ -38,7 +38,7 @@ public class AddressBookBuilder {
     }
 
     /**
-     * Adds a new {@code Person} to the {@code AddressBook} that we are building.
+     * Adds a new {@code Reminder} to the {@code AddressBook} that we are building.
      */
     public AddressBookBuilder withReminder(ReadOnlyReminder reminder) {
         try {
