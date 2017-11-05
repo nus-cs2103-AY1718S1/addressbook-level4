@@ -6,6 +6,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -46,7 +47,7 @@ public class Event implements ReadOnlyEvent {
     /**
      * Every field must be present and not null.
      */
-    public Event(Name name, DateTime time, Address address, ArrayList<Reminder> reminders) {
+    public Event(Name name, DateTime time, Address address, List<Reminder> reminders) {
         requireAllNonNull(name, time, address);
         this.name = new SimpleObjectProperty<>(name);
         this.time = new SimpleObjectProperty<>(time);
@@ -63,7 +64,12 @@ public class Event implements ReadOnlyEvent {
             e.printStackTrace();
             System.err.println("This should never happen");
         }
-        this.reminders = new SimpleObjectProperty<>(new UniqueReminderList(reminders));
+        try {
+            this.reminders = new SimpleObjectProperty<>(new UniqueReminderList(reminders));
+        } catch (DuplicateReminderException e) {
+            e.printStackTrace();
+            System.err.println("This should never happen");
+        }
     }
 
     public Event(Set<Property> properties, ArrayList<Reminder> reminders) throws DuplicateReminderException,
@@ -91,7 +97,8 @@ public class Event implements ReadOnlyEvent {
         this(source.getName(), source.getTime(), source.getAddress(), source.getReminders());
         try {
             setProperties(source.getProperties());
-        } catch (DuplicatePropertyException e) {
+            setReminders(source.getReminders());
+        } catch (DuplicatePropertyException | DuplicateReminderException e) {
             // TODO: Better error handling
             e.printStackTrace();
             System.err.println("This should never happen.");
@@ -160,6 +167,13 @@ public class Event implements ReadOnlyEvent {
     @Override
     public ArrayList<Reminder> getReminders() {
         return reminders.get().toList();
+    }
+
+    /**
+     * Replaces this event's reminders with the reminders in the argument tag set.
+     */
+    public void setReminders(List<? extends ReadOnlyReminder> replacement) throws DuplicateReminderException {
+        reminders.set(new UniqueReminderList(replacement));
     }
 
     @Override

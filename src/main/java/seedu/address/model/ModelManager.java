@@ -14,7 +14,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.TagColorChangedEvent;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -28,7 +27,6 @@ import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.reminder.ReadOnlyReminder;
 import seedu.address.model.reminder.exceptions.DuplicateReminderException;
-import seedu.address.model.reminder.exceptions.ReminderNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagColorManager;
 
@@ -42,7 +40,6 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyEvent> filteredEvents;
-    private final FilteredList<ReadOnlyReminder> filteredReminders;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -56,7 +53,6 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredEvents = new FilteredList<>(this.addressBook.getEventList());
-        filteredReminders = new FilteredList<>(this.addressBook.getReminderList());
     }
 
     public ModelManager() {
@@ -207,22 +203,19 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author
+
+
     //=========== Model support for activity component =============================================================
     @Override
     public synchronized void addReminder(ReadOnlyReminder reminder) throws DuplicateReminderException {
         requireNonNull(reminder);
         addressBook.addReminder(reminder);
-        updateFilteredReminderList(PREDICATE_SHOW_ALL_REMINDERS);
         indicateAddressBookChanged();
     }
-    @Override
-    public synchronized void deleteReminder(ReadOnlyReminder reminder) throws ReminderNotFoundException {
-        addressBook.removeReminder(reminder);
-        indicateAddressBookChanged();
-    }
-
-
     //@@author
+
+
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -266,28 +259,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
 
-    //=========== Filtered Reminder List Accessors =============================================================
-
-    /**
-     * Returns an unmodifiable view of the list of {@code ReadOnlyReminder} backed by the internal list of
-     * {@code addressBook}
-     */
-    @Override
-    public ObservableList<ReadOnlyReminder> getFilteredReminderList() {
-        return FXCollections.unmodifiableObservableList(filteredReminders);
-    }
-
-    /**
-     * Updates the filter of the filtered reminders list to filter by the given {@code predicate}.
-     *
-     * @throws NullPointerException if {@code predicate} is null.
-     */
-    @Override
-    public void updateFilteredReminderList(Predicate<ReadOnlyReminder> predicate) {
-        requireNonNull(predicate);
-        filteredReminders.setPredicate(predicate);
-    }
     //@@author
+
+
+
+
+
+    //@@author
+
+
 
     @Override
     public boolean equals(Object obj) {

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.fxmisc.easybind.EasyBind;
 
@@ -11,7 +12,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.reminder.exceptions.DuplicateReminderException;
-import seedu.address.model.reminder.exceptions.ReminderNotFoundException;
 
 
 
@@ -33,9 +33,10 @@ public class UniqueReminderList implements Iterable<Reminder> {
     /**
      * Constructs empty UniqueReminderList
      */
-    public UniqueReminderList(ArrayList<Reminder> reminders) {
-        requireNonNull(reminders);
-        internalList.addAll(reminders);
+    public UniqueReminderList(List<? extends ReadOnlyReminder> reminders) throws DuplicateReminderException {
+        for (ReadOnlyReminder reminder: reminders) {
+            add(reminder);
+        }
     }
     public UniqueReminderList() {
     }
@@ -62,48 +63,6 @@ public class UniqueReminderList implements Iterable<Reminder> {
     }
 
     /**
-     * Replaces the reminder {@code target} in the list with {@code editedReminder}.
-     *
-     * @throws DuplicateReminderException if the replacement is equivalent to another existing reminder in the list.
-     * @throws ReminderNotFoundException  if {@code target} could not be found in the list.
-     */
-    public void setReminder(ReadOnlyReminder target, ReadOnlyReminder editedReminder) throws DuplicateReminderException,
-            ReminderNotFoundException {
-
-        requireNonNull(editedReminder);
-
-        int index = internalList.indexOf(target);
-        if (index == -1) {
-            throw new ReminderNotFoundException();
-        }
-
-        if (!target.equals(editedReminder) && internalList.contains(editedReminder)) {
-            throw new DuplicateReminderException();
-        }
-
-        internalList.set(index, new Reminder(editedReminder));
-    }
-
-
-    /**
-     * Removes the equivalent reminder from the list.
-     *
-     * @throws ReminderNotFoundException if no such reminder could be found in the list.
-     */
-    public boolean remove(ReadOnlyReminder toRemove) throws ReminderNotFoundException {
-        requireNonNull(toRemove);
-        final boolean reminderFoundAndDeleted = internalList.remove(toRemove);
-        if (!reminderFoundAndDeleted) {
-            throw new ReminderNotFoundException();
-        }
-        return reminderFoundAndDeleted;
-    }
-
-    public void setReminders(UniqueReminderList replacement) {
-        this.internalList.setAll(replacement.internalList);
-    }
-
-    /**
      * Returns all properties (collection of values in all entries) in this map as a Set. This set is mutable
      * and change-insulated against the internal list.
      */
@@ -112,12 +71,16 @@ public class UniqueReminderList implements Iterable<Reminder> {
         return new ArrayList<>(internalList);
     }
 
+    public void setReminders(UniqueReminderList replacement) {
+        this.internalList.setAll(replacement.internalList);
+    }
 
-    /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
-     */
-    public ObservableList<ReadOnlyReminder> asObservableList() {
-        return FXCollections.unmodifiableObservableList(mappedList);
+    public void setReminders(List<? extends ReadOnlyReminder> reminders) throws DuplicateReminderException {
+        final UniqueReminderList replacement = new UniqueReminderList();
+        for (final ReadOnlyReminder reminder : reminders) {
+            replacement.add(new Reminder(reminder));
+        }
+        setReminders(replacement);
     }
 
     @Override

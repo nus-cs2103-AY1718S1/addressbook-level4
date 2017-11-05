@@ -25,7 +25,6 @@ import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Name;
 import seedu.address.model.reminder.Reminder;
 
-
 //@@author junyango
 
 /**
