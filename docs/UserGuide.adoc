@@ -64,20 +64,24 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 == Features
 
+Now you are ready to start using some of the more advanced features that we have in the our applications.The following section contains all of the commands that you can use in this application.
+
 === Viewing help : `help`
 
+If you encounter any difficulties during the use of the application you may key in help in the command line to gain access to our user guide.
 Format: `help`
 
 === Adding a person: `add`
 
-Adds a person to the address book +
+You can also add the contact information of the person into the address book that you just made connections using the following command. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 OR +
+You may also use shorter command which does the same function of adding contact +
 `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
-
+It is advisable for you to include tag as it allows you to search for certain group of people with ease such as using link:#filtertag[filter by tags] features.
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
@@ -85,12 +89,12 @@ Examples:
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+If you are uncomfortable with filtered contact being displayed you can use this function to display all the contacts in the person list panel. +
 Format: `list` or `l`
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
+These are the command you can use to edit or update contact if you happen to key in wrong information or to update changed information of your contact.
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 or +
 `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
@@ -121,7 +125,7 @@ Alternatively, you can use the form implementation to edit contacts:
 
 === Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
+If you need to find a certain person you may key in one name of the person that you want the application to display. You can also search with more than one keyword to make the results you want more efficiently. +
 Format: `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`
 
 ****
@@ -141,7 +145,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
+In case where you accidentally key in contact that you do not need, you may use the delete function to remove the contact from your application. +
 Format: `delete INDEX` or `d INDEX`
 
 ****
@@ -169,9 +173,8 @@ Another way to delete a contact in the list:
 === Displaying a contact's location
 (added in v1.2)
 
-Shows the contact's location on Google Maps
-
-Select a contact either using:
+As a business user, you might want to identify the address of your clients in order to provide services such as delivery and technical support. The application is equipped with the ability to display your client's location using google map. So you can plan your trip and schedule while using the application. +
+You can select a contact either using:
 
 * `select INDEX`
 * Click on a contact on the list
@@ -182,7 +185,7 @@ Their location will be displayed on the browser panel on the right.
 === Email a person : `email`
 (added in v1.3)
 
-Opens an email client with the recipient's email address.
+To make your work more efficient, we have implemented an email feature that allows the application to open up email application such as outlook on your desktop with the contact's email ready for you to compose your email to your client. +
 
 Format: `email INDEX`
 
@@ -199,7 +202,8 @@ Opens an email client with the email of the first person in the address book.
 
 === Selecting a person : `select`
 
-Selects the person identified by the index number used in the last person listing. +
+There are cases where you want to have more detailed information of the contact you want to view. You may use the select command which will display important information such as contact number , email and address which is needed for your task. +
+Simply key in the number position of the contact you want to view. +
 Format: `select INDEX` or  `s INDEX`
 
 ****
@@ -219,7 +223,7 @@ Selects the 1st person in the results of the `find` command.
 
 === Listing entered commands : `history`
 
-Lists all the commands that you have entered in reverse chronological order. +
+In order to avoid unnecessary mistakes committed through human error, we implemented the history features which allows you to view all the important actions done by you through the application. This will ensure that you are able to identify the mistakes input during the entry. This will help you save a lot of time and trouble from searching the contacts to identify a single mistake committed. +
 Format: `history` or `h`
 
 [NOTE]
@@ -230,7 +234,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+During the usage of the application, if you realised that you committed a mistake during one of the entry. You do not need to worry about editing the information all over again as you can easily undo the actions with the undo function. +
 Format: `undo` or `u`
 
 [NOTE]
@@ -256,7 +260,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 === Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
+During the process of using undo function to undo mistakes committed, you realised that one of the command was accurate and you want to keep that information. You can do so with the redo command to return back to the previous information that you accidentally undo. +
 Format: `redo` or `r`
 
 Examples:
@@ -280,13 +284,14 @@ The `redo` command fails as there are no `undo` commands executed previously.
 === Sorting contacts in the Address Book : `sort`
 (added in v1.2)
 
-Sorts the contacts in the address book based on the name. +
+If you want your contact names to be displayed in neat and tidy order, you may do so with the sort command. Which sorts the contact list by name. +
 Format: `sort` or `ss`
 
+[[filtertag]]
 === Filtering list by tags : `tag`
 (added in v1.2)
 
-Finds and filter list of persons with tags that is specified by the keywords. +
+To make your work more efficient, we have implemented search by tag functions that allow you to search for contact with keywords for tag.
 Format: `tag KEYWORD [MORE_KEYWORDS]` or `t KEYWORD [MORE_KEYWORDS]`
 
 ****
@@ -306,7 +311,7 @@ Returns any person having tags `friends`, `classmates`, or `colleagues`
 === Removing tags : `rtag`
 (added in v1.2)
 
-Removes tag from all persons with tags that is specified by the keywords. +
+There are cases where you realised that you do not need a specific tag, you may remove them with the remove tag command. +
 Format: `rtag KEYWORD [MORE_KEYWORDS]` or `rt KEYWORD [MORE_KEYWORDS]`
 
 ****
@@ -325,7 +330,8 @@ Removes "friends", "classmates", "colleagues" tag from all persons
 === Importing Contacts from external source : `import`
 (added in v1.2)
 
-Imports contact from external source into the addressbook. Source must be in `.vcf` format. +
+If you have an existing contact list information which is in forms of '.vcf' format. You can do so with your application by important those files into the application. +
+[TIP]
 File must also be placed in the main folder.
 
 Format: `import FILENAME.vcf` or `im FILENAME.vcf` where `FILENAME` is the name of the file that you wish to import.
