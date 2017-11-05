@@ -37,7 +37,7 @@ public class SortPriorityCommandTest {
         sortPriorityCommand = new SortPriorityCommand();
         sortPriorityCommand.setData(model, new CommandHistory(), new UndoRedoStack());
     }
-    
+
     @Test
     public void execute_firstReminderAdded_unsorted() throws Exception {
         Reminder Breakfast = new ReminderBuilder().withTask("Breakfast").withPriority("Low").build();
