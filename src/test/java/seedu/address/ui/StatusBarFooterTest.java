@@ -2,7 +2,7 @@ package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
-import static seedu.address.ui.StatusBarFooter.SYNC_NUMBER_PERSON;
+import static seedu.address.ui.StatusBarFooter.SYNC_NUMBER_STATUS;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 
@@ -47,7 +47,8 @@ public class StatusBarFooterTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        StatusBarFooter statusBarFooter = new StatusBarFooter(STUB_SAVE_LOCATION, addressBook.getPersonList().size());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(STUB_SAVE_LOCATION, addressBook.getPersonList().size(),
+                addressBook.getTaskList().size());
         uiPartRule.setUiPart(statusBarFooter);
 
         statusBarFooterHandle = new StatusBarFooterHandle(statusBarFooter.getRoot());
@@ -56,14 +57,15 @@ public class StatusBarFooterTest extends GuiUnitTest {
     @Test
     public void display() {
         // initial state
-        String initialNumberPerson = String.format(SYNC_NUMBER_PERSON, addressBook.getPersonList().size());
+        String initialNumberPerson = String.format(SYNC_NUMBER_STATUS, addressBook.getPersonList().size(),
+                addressBook.getTaskList().size());
         assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION, SYNC_STATUS_INITIAL, initialNumberPerson);
 
         // after address book is updated
         postNow(EVENT_STUB);
         assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION,
                 String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()),
-                String.format(SYNC_NUMBER_PERSON, 0));
+                String.format(SYNC_NUMBER_STATUS, 0, 0));
     }
 
     /**

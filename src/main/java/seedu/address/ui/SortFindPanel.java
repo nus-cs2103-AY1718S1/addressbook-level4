@@ -65,7 +65,7 @@ public class SortFindPanel extends UiPart<Region> {
     @FXML
     private void handleSearchFieldChanged() {
         try {
-            if (searchBox.getPromptText().contains("Person")) {
+            if (searchBox.getPromptText().contains("Person") ||  searchBox.getPromptText().contains("Task")) {
                 if (searchBox.getText().trim().isEmpty()) {
                     logic.execute(LIST_COMMAND_WORD);
                 } else {

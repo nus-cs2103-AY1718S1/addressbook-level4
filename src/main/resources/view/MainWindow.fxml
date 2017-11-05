@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="400.0" prefWidth="1249.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane minWidth="-Infinity" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox>
          <stylesheets>
@@ -41,86 +41,98 @@
                   </Menu>
                </menus>
             </MenuBar>
+            <HBox fx:id="sortFindPanelPlaceholder" prefHeight="44.0" prefWidth="690.0" styleClass="pane-with-border" />
+            <SplitPane id="splitPane" fx:id="splitPane" VBox.vgrow="ALWAYS">
+               <items>
+                  <StackPane minWidth="-Infinity" prefWidth="550.0">
+                     <children>
+                        <VBox fx:id="personList" minWidth="-Infinity" prefWidth="550.0">
+                           <padding>
+                              <Insets bottom="10" left="10" right="10" top="10" />
+                           </padding>
+                           <children>
+                              <!-- @@author Alim95 -->
+                              <GridPane cacheShape="false" centerShape="false" minHeight="-Infinity" prefWidth="601.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="310.0" minWidth="0.0" prefWidth="84.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="614.0" minWidth="0.0" prefWidth="256.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="339.0" minWidth="0.0" prefWidth="36.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="583.0" minWidth="10.0" prefWidth="234.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="149.0" minWidth="0.0" prefWidth="86.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="49.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label fx:id="personViewLabel" onMouseReleased="#handlePersonViewClicked" style="-fx-text-fill: white;" text="Person">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" left="5.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label fx:id="taskViewLabel" onMouseReleased="#handleTaskViewClicked" text="Task" GridPane.columnIndex="1">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" left="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label fx:id="allLabel" onMouseReleased="#handleListAllClicked" style="-fx-text-fill: white;" text="All" GridPane.columnIndex="2">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" left="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label fx:id="pinLabel" onMouseReleased="#handleListPinnedClicked" text="Pinned" GridPane.columnIndex="3">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" left="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label fx:id="organizerLabel" prefHeight="21.0" prefWidth="76.0" style="-fx-text-fill: white;" text="Sorted By:" GridPane.columnIndex="4">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label fx:id="sortedByLabel" prefHeight="21.0" prefWidth="149.0" style="-fx-text-fill: white;" text="Name" GridPane.columnIndex="5">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" left="2.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                 </children>
+                              </GridPane>
+                              <!-- @@author -->
+                              <StackPane fx:id="personListPanelPlaceholder" minWidth="300.0" VBox.vgrow="ALWAYS" />
+                           </children>
+                        </VBox>
+                        <StackPane fx:id="browserPlaceholder" maxWidth="-Infinity" minWidth="517.0" prefHeight="98.0" prefWidth="517.0" StackPane.alignment="CENTER_RIGHT">
+                           <StackPane.margin>
+                              <Insets bottom="20.0" right="100.0" top="50.0" />
+                           </StackPane.margin>
+                        </StackPane>
+                     </children>
+                  </StackPane>
+               </items>
+            </SplitPane>
+            <StackPane fx:id="resultDisplayPlaceholder" prefHeight="140.0" prefWidth="1249.0" styleClass="pane-with-border" VBox.vgrow="NEVER">
+               <padding>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </StackPane>
             <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
                <padding>
                   <Insets bottom="5" left="10" right="10" top="5" />
                </padding>
             </StackPane>
-            <StackPane fx:id="resultDisplayPlaceholder" maxHeight="155.0" minHeight="78.0" prefHeight="78.0" prefWidth="690.0" styleClass="pane-with-border" VBox.vgrow="NEVER">
-               <padding>
-                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-               </padding>
-            </StackPane>
-            <HBox fx:id="sortFindPanelPlaceholder" prefHeight="44.0" prefWidth="690.0" styleClass="pane-with-border" />
-            <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4860335195530726" VBox.vgrow="ALWAYS">
-               <items>
-                  <VBox fx:id="personList" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="550.0" style="-fx-border-color: white; -fx-border-width: 1.70;" SplitPane.resizableWithParent="false">
-                     <padding>
-                        <Insets bottom="10" left="10" right="10" top="10" />
-                     </padding>
-                     <children>
-                        <!-- @@author Alim95 -->
-                        <GridPane minWidth="-Infinity" prefWidth="340.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="0.0" prefWidth="61.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="368.0" minWidth="0.0" prefWidth="141.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="312.0" minWidth="10.0" prefWidth="30.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="353.0" minWidth="10.0" prefWidth="157.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="353.0" minWidth="10.0" prefWidth="69.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="353.0" minWidth="10.0" prefWidth="71.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Label fx:id="personViewLabel" onMouseReleased="#handlePersonViewClicked" style="-fx-text-fill: white;" text="Person">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label fx:id="taskViewLabel" onMouseReleased="#handleTaskViewClicked" text="Task" GridPane.columnIndex="1">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="10.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label fx:id="allLabel" onMouseReleased="#handleListAllClicked" style="-fx-text-fill: white;" text="All" GridPane.columnIndex="2">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="10.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label fx:id="pinLabel" onMouseReleased="#handleListPinnedClicked" text="Pinned" GridPane.columnIndex="3">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="10.0" />
-                                 </GridPane.margin></Label>
-                              <Label fx:id="organizerLabel" prefHeight="21.0" prefWidth="76.0" style="-fx-text-fill: white;" text="Sorted By:" GridPane.columnIndex="4">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label fx:id="sortedByLabel" prefHeight="21.0" prefWidth="74.0" style="-fx-text-fill: white;" text="Name" GridPane.columnIndex="5">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="2.0" />
-                                 </GridPane.margin>
-                              </Label>
-                           </children>
-                        </GridPane>
-                        <!-- @@author -->
-                        <StackPane fx:id="personListPanelPlaceholder" minWidth="300.0" VBox.vgrow="ALWAYS" />
-                     </children>
-                  </VBox>
-                  <StackPane fx:id="browserPlaceholder" minWidth="600.0" style="-fx-border-color: white; -fx-border-width: 1.70;" />
-               </items>
-            </SplitPane>
             <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
          </children>
       </VBox>
       <!-- @@author Alim95 -->
-      <ScrollPane fx:id="helpOverlay" fitToHeight="true" fitToWidth="true" opacity="0.9" prefHeight="200.0" prefWidth="200.0" visible="false" StackPane.alignment="TOP_CENTER">
+      <ScrollPane fx:id="helpOverlay" fitToHeight="true" fitToWidth="true" opacity="0.9" pannable="true" visible="false" StackPane.alignment="TOP_CENTER">
          <content>
-            <GridPane alignment="TOP_CENTER" blendMode="SRC_ATOP" gridLinesVisible="true" minWidth="-Infinity" prefHeight="855.0" prefWidth="1249.0" style="-fx-background-color: white;">
+            <GridPane alignment="TOP_CENTER" blendMode="SRC_ATOP" gridLinesVisible="true" minWidth="1144.0" style="-fx-background-color: white;">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.0" minWidth="0.0" prefWidth="178.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1064.0" minWidth="10.0" prefWidth="1051.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="0.0" prefWidth="173.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1064.0" minWidth="10.0" prefWidth="546.0" />
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints maxHeight="40.0" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
@@ -347,7 +359,7 @@
             </GridPane>
          </content>
          <StackPane.margin>
-            <Insets bottom="8.0" left="10.0" right="10.0" top="165.0" />
+            <Insets bottom="310.0" left="8.0" right="8.0" top="40.0" />
          </StackPane.margin>
       </ScrollPane>
       <!-- @@author -->

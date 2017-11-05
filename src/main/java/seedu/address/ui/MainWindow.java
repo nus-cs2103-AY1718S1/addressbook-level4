@@ -196,7 +196,7 @@ public class MainWindow extends UiPart<Region> {
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
-                logic.getFilteredPersonList().size());
+                logic.getFilteredPersonList().size(), logic.getFilteredTaskList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         commandBox = new CommandBox(logic);
@@ -439,6 +439,7 @@ public class MainWindow extends UiPart<Region> {
 
     private void switchToBrowser() {
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        browserPlaceholder.setVisible(false);
     }
 
     /**

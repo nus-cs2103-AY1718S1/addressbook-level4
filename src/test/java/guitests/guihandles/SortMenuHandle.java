@@ -20,19 +20,19 @@ public class SortMenuHandle extends NodeHandle<MenuButton> {
     public void run(String toClick) {
         switch (toClick) {
         case "name":
-            guiRobot.clickOn(50, 220);
+            guiRobot.clickOn(50, 90);
             guiRobot.pauseForHuman();
             break;
         case "phone":
-            guiRobot.clickOn(50, 235);
+            guiRobot.clickOn(50, 120);
             guiRobot.pauseForHuman();
             break;
         case "email":
-            guiRobot.clickOn(50, 265);
+            guiRobot.clickOn(50, 150);
             guiRobot.pauseForHuman();
             break;
         case "address":
-            guiRobot.clickOn(50, 295);
+            guiRobot.clickOn(50, 180);
             guiRobot.pauseForHuman();
             break;
         default:
