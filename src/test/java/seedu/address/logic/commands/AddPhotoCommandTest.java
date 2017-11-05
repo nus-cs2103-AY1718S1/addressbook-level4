@@ -34,12 +34,10 @@ public class AddPhotoCommandTest {
     private static final String INVALID_FILETYPE = "docs/AboutUs.adoc";
     private static final String VALID_FILEPATH = "src/main/resources/images/noPhoto.png";
     private static final String VALID_ALT_FILEPATH = "src/main/resources/images/fail.png";
-    
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-    
     @Test
     public void equals() {
         AddPhotoCommand standardCommand = new AddPhotoCommand(INDEX_FIRST_PERSON, new Photo(""));
