@@ -11,12 +11,13 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Birthday {
 
-    public static final String MESSAGE_BIRTHDAY_CONSTRAINTS = "Birthdays should be numeric with 4 or 6 or 8 numbers "
-            + "long in the format DDMM or DDMMYY or DDMMYYYY.";
-    public static final String MESSAGE_INVALID_DAY_ENTERED = "The day should be within the range 1 to 31";
-    public static final String MESSAGE_INVALID_MONTH_ENTERED = "The month should be within the range 1 to 12";
+    public static final String MESSAGE_BIRTHDAY_CONSTRAINTS = "Birthdays should be numeric in the format "
+            + "DD/MM/YY or DD/MM/YYYY.";
 
-    public static final String BIRTHDAY_VALIDATION_REGEX = "^(\\d{4}|\\d{6}|\\d{8})";
+    public static final String BIRTHDAY_VALIDATION_REGEX = "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)"
+            + "(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3"
+            + "(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$"
+            + "|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
 
     public static final String DEFAULT_BIRTHDAY = "No Birthday Added";
 
@@ -36,10 +37,6 @@ public class Birthday {
         String trimmedBirthday = birthday.trim();
         if (!isValidBirthdayFormat(trimmedBirthday)) {
             throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
-        } else if (!isValidDayEntered(trimmedBirthday)) {
-            throw new IllegalValueException(MESSAGE_INVALID_DAY_ENTERED);
-        } else if (!isValidMonthEntered(trimmedBirthday)) {
-            throw new IllegalValueException(MESSAGE_INVALID_MONTH_ENTERED);
         }
         this.birthdayNumber = trimmedBirthday;
     }
@@ -49,24 +46,6 @@ public class Birthday {
      */
     public String getBirthdayNumber() {
         return birthdayNumber;
-    }
-
-    /**
-     * Returns true if a given string has a valid birthday day number.
-     */
-    public static boolean isValidDayEntered(String test) {
-
-        return test.substring(0, 2).compareTo("32") < 0 && test.substring(0, 2).compareTo("00") > 0
-                || test.equalsIgnoreCase(DEFAULT_BIRTHDAY);
-    }
-
-    /**
-     * Returns true if a given string has a valid birthday month number.
-     */
-    public static boolean isValidMonthEntered(String test) {
-
-        return test.substring(2, 4).compareTo("13") < 0 && test.substring(2, 4).compareTo("00") > 0
-                || test.equalsIgnoreCase(DEFAULT_BIRTHDAY);
     }
 
     /**

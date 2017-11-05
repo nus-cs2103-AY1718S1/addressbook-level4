@@ -13,7 +13,7 @@ public class BirthdayTest {
     @Test
     public void equals() throws IllegalValueException {
         Birthday birthday = new Birthday();
-        Birthday birthdayValue = new Birthday("120497");
+        Birthday birthdayValue = new Birthday("12/04/97");
 
         // same object -> returns true
         assertTrue(birthday.equals(birthday));
@@ -21,7 +21,7 @@ public class BirthdayTest {
 
         // same values -> returns true
         Birthday birthdayCopy = new Birthday();
-        Birthday birthdayValueCopy = new Birthday("120497");
+        Birthday birthdayValueCopy = new Birthday("12/04/97");
         assertTrue(birthday.equals(birthdayCopy));
         assertTrue(birthdayValue.equals(birthdayValueCopy));
 
@@ -30,11 +30,11 @@ public class BirthdayTest {
         assertFalse(birthdayValue.equals(true));
 
         // null -> returns false
-        assertFalse(birthday.equals(null));
-        assertFalse(birthdayValue.equals(null));
+        assertFalse(birthday == null);
+        assertFalse(birthdayValue == null);
 
         // different values -> returns false
-        Birthday differentBirthday = new Birthday("040499");
+        Birthday differentBirthday = new Birthday("04/04/99");
         assertFalse(birthday.equals(differentBirthday));
         assertFalse(birthdayValue.equals(differentBirthday));
     }
@@ -44,25 +44,26 @@ public class BirthdayTest {
 
         assertFalse(Birthday.isValidBirthdayFormat("234521893032")); // exceeding number limit
         assertFalse(Birthday.isValidBirthdayFormat("234")); // less than number required
+        assertFalse(Birthday.isValidBirthdayFormat("231294")); // incorrect format
 
         // non integer used
         assertFalse(Birthday.isValidBirthdayFormat("example.com")); // invalid alphabet used
         assertFalse(Birthday.isValidBirthdayFormat(">.<??!")); // invalid random syntax used
 
         // incorrect day entered
-        assertFalse(Birthday.isValidDayEntered("320594")); // day entered more than range
-        assertFalse(Birthday.isValidDayEntered("000594")); // day entered less than range
+        assertFalse(Birthday.isValidBirthdayFormat("32/05/94")); // day entered more than range
+        assertFalse(Birthday.isValidBirthdayFormat("00/05/94")); // day entered less than range
 
         // incorrect month entered
-        assertFalse(Birthday.isValidMonthEntered("231394")); // month entered more than range
-        assertFalse(Birthday.isValidMonthEntered("020094")); // month entered less than range
+        assertFalse(Birthday.isValidBirthdayFormat("23/13/94")); // month entered more than range
+        assertFalse(Birthday.isValidBirthdayFormat("02/00/94")); // month entered less than range
+
+        // incorrect year entered
+        assertFalse(Birthday.isValidBirthdayFormat("23/13/0000")); // month entered more than range
 
         // valid birthday
-        assertTrue(Birthday.isValidBirthdayFormat("0405")); // 4 digits DDMM
-        assertTrue(Birthday.isValidBirthdayFormat("040598")); // 6 digits DDMMYY
-        assertTrue(Birthday.isValidBirthdayFormat("04051998")); // 8 digits DDMMYYYY
-        assertTrue(Birthday.isValidDayEntered("040598"));
-        assertTrue(Birthday.isValidMonthEntered("040598"));
+        assertTrue(Birthday.isValidBirthdayFormat("04/05/98")); // 6 digits DD/MM/YY
+        assertTrue(Birthday.isValidBirthdayFormat("04/05/1998")); // 8 digits DD/MM/YYYY
         assertTrue(Birthday.isValidBirthdayFormat(Birthday.DEFAULT_BIRTHDAY));  // non used
 
     }

@@ -30,8 +30,8 @@ public class TypicalPersons {
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("85355255").withTags("friends").build();
     public static final ReadOnlyPerson BENSON = new PersonBuilder().withName("Benson Meier")
-            .withAddress("311, Clementi Ave 2, #02-25")
-            .withEmail("johnd@example.com").withPhone("98765432").withTags("owesMoney", "friends").build();
+            .withPhone("98765432").withEmail("johnd@example.com").withAddress("311, Clementi Ave 2, #02-25")
+            .withBirthday("05/02/1994").withTags("owesMoney", "friends").build();
     public static final ReadOnlyPerson CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street").withTags("neighbour").build();
     public static final ReadOnlyPerson DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
@@ -40,9 +40,9 @@ public class TypicalPersons {
             .withEmail("werner@example.com").withAddress("michegan ave").withTags("friend", "classmate").build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo").withFavourite("True")
-            .withBirthday("201196").withTags("colleague", "friend").build();
+            .withBirthday("20/11/96").withTags("colleague", "friend").build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
-            .withEmail("anna@example.com").withAddress("4th street").withBirthday("060606").build();
+            .withEmail("anna@example.com").withAddress("4th street").withBirthday("06/06/06").build();
 
     // Manually added
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
