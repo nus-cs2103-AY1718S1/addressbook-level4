@@ -193,7 +193,6 @@ public class CombinePanel extends UiPart<Region> {
                 int count = gridData[weekDayRow][startHourCol].getCount();
                 gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol, endHourSpan, ++count);
             }
-
         }
     }
 
