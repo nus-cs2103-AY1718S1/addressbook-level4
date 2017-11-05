@@ -347,11 +347,17 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 // tag::group[]
 === Grouping mechanism
+
+// tag::groupjustification[]
+
 ==== Groups vs Tags
 * Conceptually different. Groups are long-term, standalone constructs, while Tags are individual Person's attributes
 * Groups have attributes (number of members)
 * Groups can be listed together with their members +
-Listing and group attributes TBI in v2.0
+* Subgroups can be created +
+Listing, subgroups and group attributes TBI in v2.0
+
+// end::groupjustification[]
 
 Big picture. Note that AddressBook further updates the Person's references to the groups.
 `filtered` denotes the Person extracted by applying the index filtering.
@@ -379,7 +385,33 @@ image::GroupSequenceDiagram.png[width="800"]
 **Cons:** Adds another attribute to a Person increasing its complexity.
 Not intuitive to manage group by managing Person.
 
-// end::undoredo[]
+// end::group[]
+
+// tag::profile[]
+
+=== Profile Pictures
+Profile pictures are meant to be stored by app (in v.1.5 by the user at his own discretion) and they are added to the app
+by specifying the correct path to the file. In case the picture cannot be accessed later, it is not displayed.
+
+==== Design Considerations
+**Aspect:** Place of picture storage +
+**Alternative 1 (current choice):** Pictures are stored by the app after a successful load +
+**Pros:** In case the user moves the pictures or the app to another device, pictures are not lost +
+**Cons:** Data may be duplicated on the user's computer (stored both by the app and the user). Implementation harder.  +
+**Alternative 2:** Pictures stored by the user +
+**Pros:** Easier to implement. Easier to understand +
+**Cons:** May cause unwanted behavior if user is unaware and moves the pictures from the original location
+
+---
+**Aspect:** Format of stored pictures +
+**Alternative 1 (current choice):** Pictures are stored in their original format +
+**Pros:** Easier to understand. User can access and modify the stored data easily +
+**Cons:** Differs from storage of the rest of the data +
+**Alternative 2:** Pictures are stored in the xml files, just like all the other data +
+**Pros:** Follows convention +
+**Cons:** Not possible for the user to access the stored data directly not using the app. Encoding and decoding needed
+
+// end::profile[]
 
 // tag::searching[]
 === Searching mechanism
