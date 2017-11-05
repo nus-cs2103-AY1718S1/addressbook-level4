@@ -1,4 +1,5 @@
-.background {
+/* @@author limyongsong */
+  .background {
       -fx-background-color: derive(#E6ECF0, 0%);
       background-color: #ffffff; /* Used in the default.html file */
   }
