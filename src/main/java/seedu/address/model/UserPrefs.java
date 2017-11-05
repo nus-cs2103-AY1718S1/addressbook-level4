@@ -1,5 +1,9 @@
 package seedu.address.model;
 
+import static seedu.address.commons.core.GuiSettings.DEFAULT_HEIGHT;
+import static seedu.address.commons.core.GuiSettings.DEFAULT_WIDTH;
+
+import java.io.File;
 import java.util.Objects;
 
 import seedu.address.commons.core.GuiSettings;
@@ -10,11 +14,11 @@ import seedu.address.commons.core.GuiSettings;
 public class UserPrefs {
 
     private GuiSettings guiSettings;
-    private String addressBookFilePath = "data/addressbook.xml";
+    private String addressBookFilePath = "data" + File.separator + "addressbook.xml";
     private String addressBookName = "MyAddressBook";
 
     public UserPrefs() {
-        this.setGuiSettings(500, 500, 0, 0);
+        this.setGuiSettings(DEFAULT_WIDTH, DEFAULT_HEIGHT, 0, 0);
     }
 
     public GuiSettings getGuiSettings() {
@@ -69,10 +73,9 @@ public class UserPrefs {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Gui Settings : " + guiSettings.toString());
-        sb.append("\nLocal data file location : " + addressBookFilePath);
-        sb.append("\nAddressBook name : " + addressBookName);
+        sb.append("Gui Settings : ").append(guiSettings.toString());
+        sb.append("\nLocal data file location : ").append(addressBookFilePath);
+        sb.append("\nAddressBook name : ").append(addressBookName);
         return sb.toString();
     }
-
 }

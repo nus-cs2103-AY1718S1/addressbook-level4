@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
@@ -23,14 +24,16 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
  * A utility class containing a list of {@code Person} objects to be used in tests.
  */
 public class TypicalPersons {
+    /*****************************************************
+     * Sample cases for persons.
+     *****************************************************/
 
+    // These persons will be pre-loaded to typicalAddressBook.
     public static final ReadOnlyPerson ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
-            .withPhone("85355255")
-            .withTags("friends").build();
+            .withPhone("85355255").withTags("friends").build();
     public static final ReadOnlyPerson BENSON = new PersonBuilder().withName("Benson Meier")
-            .withAddress("311, Clementi Ave 2, #02-25")
-            .withEmail("johnd@example.com").withPhone("98765432")
+            .withAddress("311, Clementi Ave 2, #02-25").withEmail("johnd@example.com").withPhone("98765432")
             .withTags("owesMoney", "friends").build();
     public static final ReadOnlyPerson CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street").build();
@@ -56,9 +59,31 @@ public class TypicalPersons {
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
 
-    public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
+    // Manually updated - Person's name changed.
+    public static final ReadOnlyPerson ALICE_UPDATED = new PersonBuilder().withName("Zuckerberg Alice Pauline")
+            .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
+            .withPhone("85355255").withTags("friends").build();
 
-    private TypicalPersons() {} // prevents instantiation
+    // A keyword that matches MEIER
+    public static final String KEYWORD_MATCHING_MEIER = "Meier";
+
+    /*****************************************************
+     * Sample cases for events.
+     *****************************************************/
+    public static final ReadOnlyEvent BASKETBALL = new EventBuilder().withName("Basketball practice")
+            .withAddress("OCBC Basketball Court").withDateTime("15102017 11:00").build();
+    public static final ReadOnlyEvent MOVIE = new EventBuilder().withName("Movie with friends")
+            .withAddress("Vivo city Golden Village").withDateTime("20112017 15:00").build();
+    public static final ReadOnlyEvent TUTORIAL = new EventBuilder().withName("CS2103T Tutorial")
+            .withAddress("Basement COM1 NUS").withDateTime("01122017 09:00").build();
+
+
+    /**
+     * This is a singleton class, the only constructor was set to private to prevent instantiation.
+     */
+    private TypicalPersons() {
+
+    }
 
     /**
      * Returns an {@code AddressBook} with all the typical persons.
@@ -77,5 +102,9 @@ public class TypicalPersons {
 
     public static List<ReadOnlyPerson> getTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+    }
+
+    public static List<ReadOnlyEvent> getTypicalEvents() {
+        return new ArrayList<>(Arrays.asList(BASKETBALL, MOVIE, TUTORIAL));
     }
 }

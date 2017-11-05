@@ -5,9 +5,11 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import guitests.guihandles.PersonCardHandle;
-import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.event.EventCardHandle;
+import guitests.guihandles.person.PersonCardHandle;
+import guitests.guihandles.person.PersonListPanelHandle;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -30,12 +32,21 @@ public class GuiTestAssert {
      * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
      */
     public static void assertCardDisplaysPerson(ReadOnlyPerson expectedPerson, PersonCardHandle actualCard) {
-        assertEquals(expectedPerson.getName().fullName, actualCard.getName());
-        assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
-        assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
-        assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
+        assertEquals(expectedPerson.getName().getValue(), actualCard.getName());
+        assertEquals(expectedPerson.getPhone().getValue(), actualCard.getPhone());
+        assertEquals(expectedPerson.getEmail().getValue(), actualCard.getEmail());
+        assertEquals(expectedPerson.getAddress().getValue(), actualCard.getAddress());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
+     */
+    public static void assertCardDisplaysEvent(ReadOnlyEvent expectedEvent, EventCardHandle actualCard) {
+        assertEquals(expectedEvent.getName().getValue(), actualCard.getEventName());
+        assertEquals(expectedEvent.getTime().getValue(), actualCard.getTime());
+        assertEquals(expectedEvent.getAddress().getValue(), actualCard.getVenue());
     }
 
     /**

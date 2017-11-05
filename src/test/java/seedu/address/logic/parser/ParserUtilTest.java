@@ -3,8 +3,9 @@ package seedu.address.logic.parser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.util.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -18,28 +19,51 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.logic.parser.util.ArgumentMultimap;
+import seedu.address.logic.parser.util.ParserUtil;
+import seedu.address.model.property.Address;
+import seedu.address.model.property.DateTime;
+import seedu.address.model.property.Email;
+import seedu.address.model.property.Name;
+import seedu.address.model.property.Phone;
+import seedu.address.model.property.PropertyManager;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
-    private static final String INVALID_NAME = "R@chel";
-    private static final String INVALID_PHONE = "+651234";
-    private static final String INVALID_ADDRESS = " ";
-    private static final String INVALID_EMAIL = "example.com";
-    private static final String INVALID_TAG = "#friend";
-
     private static final String VALID_NAME = "Rachel Walker";
+    private static final String VALID_TIME = "25062006 09:39";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
+    private static final String INVALID_NAME = "R@chel";
+    private static final String INVALID_PHONE = "+651234";
+    private static final String INVALID_TIME = "something invalid here";
+    private static final String INVALID_ADDRESS = " ";
+    private static final String INVALID_EMAIL = "example.com";
+    private static final String INVALID_TAG = "#friend";
+
+    static {
+        PropertyManager.initializePropertyManager();
+    }
+
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void arePrefixesPresentAbsent_allPresent_success() {
+        ArgumentMultimap map = new ArgumentMultimap();
+
+        map.put(PREFIX_NAME, VALID_NAME);
+        assertTrue(ParserUtil.arePrefixesPresent(map, PREFIX_NAME));
+        assertTrue(ParserUtil.arePrefixesAbsent(map, PREFIX_PHONE));
+
+        map.put(PREFIX_PHONE, VALID_PHONE);
+        assertTrue(ParserUtil.arePrefixesPresent(map, PREFIX_NAME, PREFIX_PHONE));
+        assertFalse(ParserUtil.arePrefixesAbsent(map, PREFIX_PHONE));
+    }
 
     @Test
     public void parseIndex_invalidInput_throwsIllegalValueException() throws Exception {
@@ -68,7 +92,6 @@ public class ParserUtilTest {
         thrown.expect(NullPointerException.class);
         ParserUtil.parseName(null);
     }
-
     @Test
     public void parseName_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
@@ -87,11 +110,15 @@ public class ParserUtilTest {
 
         assertEquals(expectedName, actualName.get());
     }
-
     @Test
     public void parsePhone_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         ParserUtil.parsePhone(null);
+    }
+    @Test
+    public void parseTime_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseTime(null);
     }
 
     @Test
@@ -99,10 +126,19 @@ public class ParserUtilTest {
         thrown.expect(IllegalValueException.class);
         ParserUtil.parsePhone(Optional.of(INVALID_PHONE));
     }
+    @Test
+    public void parseTime_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTime(Optional.of(INVALID_TIME));
+    }
 
     @Test
     public void parsePhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
         assertFalse(ParserUtil.parsePhone(Optional.empty()).isPresent());
+    }
+    @Test
+    public void parseTime_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseTime(Optional.empty()).isPresent());
     }
 
     @Test
@@ -111,6 +147,14 @@ public class ParserUtilTest {
         Optional<Phone> actualPhone = ParserUtil.parsePhone(Optional.of(VALID_PHONE));
 
         assertEquals(expectedPhone, actualPhone.get());
+    }
+
+    @Test
+    public void parseTime_validValue_returnsTime() throws Exception {
+        DateTime expectedTime = new DateTime(VALID_TIME);
+        Optional<DateTime> actualTime = ParserUtil.parseTime(Optional.of(VALID_TIME));
+
+        assertEquals(expectedTime, actualTime.get());
     }
 
     @Test
@@ -129,7 +173,6 @@ public class ParserUtilTest {
     public void parseAddress_optionalEmpty_returnsOptionalEmpty() throws Exception {
         assertFalse(ParserUtil.parseAddress(Optional.empty()).isPresent());
     }
-
     @Test
     public void parseAddress_validValue_returnsAddress() throws Exception {
         Address expectedAddress = new Address(VALID_ADDRESS);

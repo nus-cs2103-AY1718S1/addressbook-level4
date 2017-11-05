@@ -11,7 +11,7 @@ public class Config {
     public static final String DEFAULT_CONFIG_FILE = "config.json";
 
     // Config values customizable through config file
-    private String appTitle = "Address App";
+    private String appTitle = "BoNUS";
     private Level logLevel = Level.INFO;
     private String userPrefsFilePath = "preferences.json";
 
@@ -44,7 +44,8 @@ public class Config {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof Config)) { //this handles null as well.
+        if (!(other instanceof Config)) {
+            // This handles null as well.
             return false;
         }
 
