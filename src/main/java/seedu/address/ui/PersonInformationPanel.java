@@ -32,7 +32,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonInformationPanel extends UiPart<Region> {
 
     private static final String FXML = "PersonInformationPanel.fxml";
-    private static String[] colors = {"red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey"};
+    private static String[] colors = {"red", "blue", "orange", "brown", "green", "black", "grey"};
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
 
@@ -45,6 +45,8 @@ public class PersonInformationPanel extends UiPart<Region> {
 
     @FXML
     private VBox informationPane;
+    @FXML
+    private VBox optionalPhoneList;
     @FXML
     private FlowPane tags;
     @FXML
@@ -61,8 +63,6 @@ public class PersonInformationPanel extends UiPart<Region> {
     private Label customFields;
     @FXML
     private ImageView photoContainer;
-    @FXML
-    private ListView optionalPhoneList;
 
     public PersonInformationPanel() {
         super(FXML);
@@ -108,7 +108,7 @@ public class PersonInformationPanel extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         customFields.textProperty().bind(Bindings.convert(person.customFieldProperty()));
         id.setText(Integer.toString(personId));
-        optionalPhoneDisplayList.clear();
+        optionalPhoneList.getChildren().clear();
         initOptionalPhones(person);
         initPhoto(person);
     }
@@ -144,18 +144,28 @@ public class PersonInformationPanel extends UiPart<Region> {
         });
     }
 
+    /**
+     * Initialise optional phone display flowpane
+     */
+    public void initOptionalPhones(ReadOnlyPerson person) {
+        person.getPhoneList().forEach(optionalPhone -> {
+            Label otherPhone = new Label(optionalPhone.value);
+            optionalPhoneList.getChildren().add(otherPhone);
+        });
+    }
+
     //@@author LuLechuan
     /**
      *  Initialise optional phone display list
      */
-    public void initOptionalPhones(ReadOnlyPerson person) {
+    public void initOptionalPhone(ReadOnlyPerson person) {
         final int[] index = {1};
         person.getPhoneList().forEach(optionalPhone -> {
             optionalPhoneDisplayList.add("Other phone " + index[0] + " : " + optionalPhone.value);
             index[0]++;
         });
 
-        optionalPhoneList.itemsProperty().bind(listProperty);
+        //optionalPhoneList.itemsProperty().bind(listProperty);
 
         listProperty.set(FXCollections.observableArrayList(optionalPhoneDisplayList));
     }
