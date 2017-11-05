@@ -208,7 +208,6 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //@@author limcel
     public ObservableList<Schedule> getScheduleList() {
-        System.out.println(schedules.asObservableList());
         return schedules.asObservableList();
     }
     //@@author
@@ -230,6 +229,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     //@@author limcel
     public ObservableList<ReadOnlyPerson> listOfPersonNameSorted() {
         return persons.asObservableListSortedByName();
+    }
+
+    public ObservableList<Schedule> sortSchedules() {
+        return schedules.asObservableListSortedChronologically();
     }
     //@@author
 }

@@ -7,7 +7,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's phone number in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidPhoneUi(String)}
  */
 public class Phone {
 
@@ -15,7 +15,7 @@ public class Phone {
             "Users are to enter their numbers in this format, p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)\n"
                     + "For example, p/ student/97271111 parent/97979797\n"
                     + "Phone numbers can only contain numbers, and should be exactly 8 digits";
-    public static final String PHONE_VALIDATION_REGEX = "((Student: )(\\d\\d\\d\\d\\d\\d\\d\\d)"
+    public static final String PHONE_UI_VALIDATION_REGEX = "((Student: )(\\d\\d\\d\\d\\d\\d\\d\\d)"
             + "( Parent: )(\\d\\d\\d\\d\\d\\d\\d\\d))|((Parent: )(\\d\\d\\d\\d\\d\\d\\d\\d))";
     public final String value;
 
@@ -28,7 +28,7 @@ public class Phone {
         requireNonNull(phone);
         String trimmedPhone = phone.trim();
         trimmedPhone = changeToAppropriateUiFormat(trimmedPhone);
-        if (!isValidPhone(trimmedPhone)) {
+        if (!isValidPhoneUi(trimmedPhone)) {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
         }
         this.value = trimmedPhone;
@@ -37,8 +37,8 @@ public class Phone {
     /**
      * Returns true if a given string is a valid person phone number for display in UI.
      */
-    public static boolean isValidPhone(String test) {
-        return test.matches(PHONE_VALIDATION_REGEX);
+    public static boolean isValidPhoneUi(String test) {
+        return test.matches(PHONE_UI_VALIDATION_REGEX);
     }
 
     /**

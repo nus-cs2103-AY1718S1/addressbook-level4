@@ -34,7 +34,9 @@ import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.TabCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.ViewScheduleCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
@@ -237,6 +239,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(SortCommand.COMMAND_ALIAS) instanceof SortCommand);
         assertTrue(parser.parseCommand(SortCommand.COMMAND_ALIAS + " 3") instanceof SortCommand);
     }
+
     @Test
     public void parseCommand_schedule() throws Exception {
         Calendar calendar = Calendar.getInstance();
@@ -255,6 +258,18 @@ public class AddressBookParserTest {
                 ScheduleCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_SCHEDULE
                         + "25 December 2018 at 10am");
         assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, calendar), command);
+    }
+
+    @Test
+    public void parseCommand_viewSchedule() throws Exception {
+        assertTrue(parser.parseCommand(ViewScheduleCommand.COMMAND_WORD) instanceof ViewScheduleCommand);
+        assertTrue(parser.parseCommand(ViewScheduleCommand.COMMAND_WORD + " 3") instanceof ViewScheduleCommand);
+    }
+
+    @Test
+    public void parseCommand_alias_viewSchedule() throws Exception {
+        assertTrue(parser.parseCommand(ViewScheduleCommand.COMMAND_ALIAS) instanceof ViewScheduleCommand);
+        assertTrue(parser.parseCommand(ViewScheduleCommand.COMMAND_ALIAS + " 3") instanceof ViewScheduleCommand);
     }
     //@@author
 
@@ -295,7 +310,7 @@ public class AddressBookParserTest {
         assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remarks), testCommand);
     }
 
-    //@@author nahtanojmil
+
     @Test
     public void parseCommand_remarkCommandAlias_returnsRemarkCommand() throws Exception {
         final Remark remarks = new Remark("I'm so done.");
@@ -303,6 +318,12 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + " " + remarks.value);
         assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remarks), testCommand);
     }
+
+    @Test
+    public void parseCommand_tabCommandWord_returnsTabCommand() throws Exception {
+        assertTrue(parser.parseCommand(TabCommand.COMMAND_WORD + " 1") instanceof TabCommand);
+    }
+    //@@author
 
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {

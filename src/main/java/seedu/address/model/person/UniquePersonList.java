@@ -121,6 +121,7 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.hashCode();
     }
 
+    //@@author limcel
     /**
      * Returns an observable list as as an unmodifiable {@code ObservableList}
      */
@@ -133,4 +134,5 @@ public class UniquePersonList implements Iterable<Person> {
         });
         return FXCollections.unmodifiableObservableList(mappedList);
     }
+    //@@author
 }

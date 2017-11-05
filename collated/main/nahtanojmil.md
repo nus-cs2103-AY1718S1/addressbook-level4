@@ -1,5 +1,5 @@
 # nahtanojmil
-###### \java\seedu\address\logic\commands\RemarkCommand.java
+###### /java/seedu/address/logic/commands/RemarkCommand.java
 ``` java
 /**
  * Changes the remark of an existing person in the address book.
@@ -79,7 +79,7 @@ public class RemarkCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark}
@@ -115,7 +115,7 @@ public class RemarkCommand extends UndoableCommand {
 
 }
 ```
-###### \java\seedu\address\logic\parser\RemarkCommandParser.java
+###### /java/seedu/address/logic/parser/RemarkCommandParser.java
 ``` java
 /**
  * Remark command parser
@@ -146,7 +146,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
     }
 }
 ```
-###### \java\seedu\address\model\person\Remark.java
+###### /java/seedu/address/model/person/Remark.java
 ``` java
 /**
  * Represents a Person's remark in the address book.
@@ -191,7 +191,7 @@ public class Remark {
 }
 
 ```
-###### \java\seedu\address\ui\GraphPanel.java
+###### /java/seedu/address/ui/GraphPanel.java
 ``` java
 /**
  * Displays the specified graphs that the user wants
@@ -257,7 +257,7 @@ public class GraphPanel extends UiPart<Region> {
     }
 }
 ```
-###### \resources\view\GraphPanel.fxml
+###### /resources/view/GraphPanel.fxml
 ``` fxml
 
 <?import javafx.scene.chart.CategoryAxis?>
@@ -268,7 +268,7 @@ public class GraphPanel extends UiPart<Region> {
             xmlns:fx="http://javafx.com/fxml/1">
 
     <children>
-        <LineChart fx:id="lineChart" layoutY="10.0" maxHeight="1.5" maxWidth="1.5" minHeight="300" minWidth="300"
+        <LineChart fx:id="lineChart" layoutY="10.0" maxHeight="1.5" maxWidth="1.5" minHeight="600" minWidth="500"
                    prefHeight="600" prefWidth="800.0">
             <xAxis>
                 <CategoryAxis minHeight="400.0" minWidth="400.0" side="BOTTOM" fx:id="xNameAxis"/>
