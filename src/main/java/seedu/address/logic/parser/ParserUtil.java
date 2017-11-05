@@ -85,9 +85,9 @@ public class ParserUtil {
      * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Birthday> parseBirthday(Optional<String> birtday) throws IllegalValueException {
-        requireNonNull(birtday);
-        return birtday.isPresent() ? Optional.of(new Birthday(birtday.get())) : Optional.empty();
+    public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
+        requireNonNull(birthday);
+        return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
     }
 
     /**
