@@ -7,17 +7,19 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 
+<!-- @@author wishingmaid -->
+
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Circle fx:id="circle" fill="#bfcbd7" radius="46.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="60.0" translateY="20.0" />
-      <Line endX="100.0" startX="-100.0" stroke="#176fb2" strokeWidth="2.0" translateY="35.0" />
-      <Label fx:id="name" text="-" translateX="20.0" translateY="40.0" wrapText="true">
+      <Line endX="100.0" startX="-100.0" stroke="#176fb2" strokeWidth="2.0" translateY="32.0" />
+      <Label fx:id="name" text="-" translateX="25.0" translateY="35.0" wrapText="true">
          <graphic>
             <ImageView fx:id="nameIcon" fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true" />
          </graphic></Label>
       <Label fx:id="phone" text="-" translateX="20.0" translateY="35.0">
          <graphic>
-            <ImageView fx:id="phoneIcon" fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="phoneIcon" fitHeight="16.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/Mobile-Phone-icon.png" />
                </image>
@@ -25,7 +27,7 @@
          </graphic></Label>
       <Label fx:id="address" prefWidth="240.0" text="-" translateX="20.0" translateY="35.0" wrapText="true">
          <graphic>
-            <ImageView fx:id="addressIcon" fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="addressIcon" fitHeight="17.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/address.png" />
                </image>
@@ -33,7 +35,7 @@
          </graphic></Label>
       <Label fx:id="email" prefWidth="240.0" text="-" translateX="20.0" translateY="35.0" wrapText="true">
          <graphic>
-            <ImageView fx:id="emailIcon" fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="emailIcon" fitHeight="16.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/email-icon.png" />
                </image>
@@ -41,7 +43,7 @@
          </graphic></Label>
       <Label fx:id="remark" prefWidth="240.0" text="-" translateX="20.0" translateY="35.0" wrapText="true">
          <graphic>
-            <ImageView fx:id="remarkIcon" fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="remarkIcon" fitHeight="15.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/RemarkIcon.png" />
                </image>
@@ -49,7 +51,7 @@
          </graphic></Label>
       <Label fx:id="birthday" prefWidth="240.0" text="-" translateX="20.0" translateY="35.0" wrapText="true">
          <graphic>
-            <ImageView fx:id="birthdayIcon" fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="birthdayIcon" fitHeight="16.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/BirthdayIcon.png" />
                </image>
@@ -57,7 +59,7 @@
          </graphic></Label>
       <Label fx:id="age" prefWidth="240.0" text="-" translateX="20.0" translateY="40.0">
          <graphic>
-            <ImageView fx:id="ageIcon" fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ageIcon" fitHeight="17.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/AgeIcon.png" />
                </image>
@@ -65,4 +67,3 @@
          </graphic></Label>
    </children>
 </VBox>
-        <!-- @@author wishingmaid -->
