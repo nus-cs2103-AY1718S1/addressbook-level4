@@ -63,6 +63,7 @@ public class ParserUtil {
         return location.isPresent() ? Optional.of(new Location(location.get())) : Optional.empty();
     }
 
+    //@@author cctdaniel
     /**
      * Parses a {@code Optional<String> fontSize} into an {@code Optional<FontSize>} if {@code fontSize} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -71,6 +72,7 @@ public class ParserUtil {
         requireNonNull(fontSize);
         return fontSize.isPresent() ? Optional.of(new FontSize(fontSize.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> group} into an {@code Optional<Group>} if {@code group} is present.

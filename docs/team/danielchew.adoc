@@ -68,3 +68,4 @@ Feature to import/export external timetable and integrate with ModU.
 
 * Updated the GUI theme (Pull request https://github.com/CS2103AUG2017-W13-B4/main/pull/129)
 * Change Model Module UI test cases (Pull request https://github.com/CS2103AUG2017-W13-B4/main/pull/105)
+* Did acceptance testing for group W09-B4 (Pull request https://github.com/CS2103AUG2017-W09-B4/main/issues/78)
