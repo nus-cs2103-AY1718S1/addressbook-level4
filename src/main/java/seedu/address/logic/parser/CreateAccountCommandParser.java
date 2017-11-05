@@ -7,38 +7,36 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 
 import java.util.stream.Stream;
 
-import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.CreateAccountCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.credentials.Account;
 import seedu.address.model.credentials.Password;
 import seedu.address.model.credentials.ReadOnlyAccount;
 import seedu.address.model.credentials.Username;
 
-
 /**
  *
  */
-public class LoginCommandParser implements Parser<LoginCommand> {
+public class CreateAccountCommandParser implements Parser<CreateAccountCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
      * and returns an AddCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public LoginCommand parse(String args) throws ParseException {
+    public CreateAccountCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_USERNAME, PREFIX_PASSWORD);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_USERNAME, PREFIX_PASSWORD)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CreateAccountCommand.MESSAGE_USAGE));
         }
 
         try {
-
             Password userPassword = ParserUtil.parsePassword(argMultimap.getValue(PREFIX_PASSWORD)).get();
             Username userName = ParserUtil.parseUsername(argMultimap.getValue(PREFIX_USERNAME)).get();
             ReadOnlyAccount account = new Account(userName, userPassword);
-            return new LoginCommand(account);
+            return new CreateAccountCommand(account);
         } catch (Exception e) {
             throw new ParseException(e.getMessage(), e);
         }

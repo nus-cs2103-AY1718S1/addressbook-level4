@@ -5,7 +5,13 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.Database;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyDatabase;
+import seedu.address.model.credentials.Account;
+import seedu.address.model.credentials.Password;
+import seedu.address.model.credentials.Username;
+import seedu.address.model.credentials.exceptions.DuplicateAccountException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
@@ -55,6 +61,28 @@ public class SampleDataUtil {
             return sampleAb;
         } catch (DuplicatePersonException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
+        }
+    }
+
+    public static Account[] getSampleAccounts() {
+        try {
+            return new Account[] {
+                new Account(new Username("private"), new Password("password"))
+            };
+        } catch (IllegalValueException e) {
+            throw new AssertionError("sample data cannot be invalid", e);
+        }
+    }
+
+    public static ReadOnlyDatabase getSampleDatabase() {
+        try {
+            Database sampleAb = new Database();
+            for (Account sampleAccount : getSampleAccounts()) {
+                sampleAb.addAccount(sampleAccount);
+            }
+            return sampleAb;
+        } catch (DuplicateAccountException e) {
+            throw new AssertionError("sample data cannot contain duplicate account", e);
         }
     }
 
