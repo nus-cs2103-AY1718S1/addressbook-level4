@@ -29,7 +29,7 @@ include::../UserGuide.adoc[tag=colorKeyword]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Professors may find it hard to distinguish command keyword and other lesson information. So the highlighting feature helps to improve on the readability of the CommandBox.
 
 ==== Implementation
 
