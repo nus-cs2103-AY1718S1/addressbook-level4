@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,10 +37,36 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class AddressBookParser {
 
+    private static ArrayList<String> commandNames = new ArrayList<>();
     /**
      * Used for initial separation of command word and args.
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+
+    public AddressBookParser() {
+        commandNames.add(AddCommand.COMMAND_WORD);
+        commandNames.add(SortCommand.COMMAND_WORD);
+        commandNames.add(EditCommand.COMMAND_WORD);
+        commandNames.add(TagAddCommand.COMMAND_WORD);
+        commandNames.add(TagFindCommand.COMMAND_WORD);
+        commandNames.add(TagRemoveCommand.COMMAND_WORD);
+        commandNames.add(BirthdayAddCommand.COMMAND_WORD);
+        commandNames.add(SelectCommand.COMMAND_WORD);
+        commandNames.add(MapShowCommand.COMMAND_WORD);
+        commandNames.add(MapRouteCommand.COMMAND_WORD);
+        commandNames.add(DeleteCommand.COMMAND_WORD);
+        commandNames.add(ClearCommand.COMMAND_WORD);
+        commandNames.add(FindCommand.COMMAND_WORD);
+        commandNames.add(ListCommand.COMMAND_WORD);
+        commandNames.add(HistoryCommand.COMMAND_WORD);
+        commandNames.add(ExitCommand.COMMAND_WORD);
+        commandNames.add(HelpCommand.COMMAND_WORD);
+        commandNames.add(ScheduleAddCommand.COMMAND_WORD);
+        commandNames.add(ScheduleRemoveCommand.COMMAND_WORD);
+        commandNames.add(UndoCommand.COMMAND_WORD);
+        commandNames.add(RedoCommand.COMMAND_WORD);
+        commandNames.add(ExportCommand.COMMAND_WORD);
+    }
 
     /**
      * Parses user input into command for execution.
@@ -140,6 +167,10 @@ public class AddressBookParser {
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
+    }
+
+    public static ArrayList<String> getCommandNames() {
+        return commandNames;
     }
 
 }

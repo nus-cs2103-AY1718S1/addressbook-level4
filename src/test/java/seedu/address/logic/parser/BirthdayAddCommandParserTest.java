@@ -47,7 +47,5 @@ public class BirthdayAddCommandParserTest {
                 BirthdayAddCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "1 01/13/2000", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 BirthdayAddCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "1 01/01/3000", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                BirthdayAddCommand.MESSAGE_USAGE));
     }
 }

@@ -2,7 +2,9 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Calendar;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
@@ -40,31 +42,15 @@ public class Birthday {
      */
     public static boolean isValidBirthday(String test) {
 
-        Calendar now = Calendar.getInstance();   // Gets the current date and time
-        int currentYear = now.get(Calendar.YEAR);       // The current year
-
-        String[] date = test.split("/");
-        if (date.length != 3) {
+        String dateFormat = "dd/MM/yyyy";
+        try {
+            DateFormat df = new SimpleDateFormat(dateFormat);
+            df.setLenient(false);
+            df.parse(test);
+            return true;
+        } catch (ParseException e) {
             return false;
         }
-
-        for (int i = 0; i < date.length; i++) {
-            for (int j = 0; j < date[i].length(); j++) {
-                if (date[i].charAt(j) > 57 || date[i].charAt(j) < 48) {
-                    return false;
-                }
-            }
-        }
-
-        int day = Integer.parseInt(date[0]);
-        int month = Integer.parseInt(date[1]);
-        int year = Integer.parseInt(date[2]);
-
-        if (day > 0 && day < 32 && month > 0 && month < 13 && year >= 1900 && year <= currentYear) {
-            return true;
-        }
-
-        return false;
     }
 
     @Override

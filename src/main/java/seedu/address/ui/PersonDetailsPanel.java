@@ -7,13 +7,21 @@ import com.google.common.eventbus.Subscribe;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebView;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ClearPersonListEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.OpenFaceBookWebViewEvent;
+import seedu.address.commons.events.ui.OpenGithubWebViewEvent;
+import seedu.address.commons.events.ui.OpenInstagramWebViewEvent;
+import seedu.address.commons.events.ui.OpenNusModsWebViewEvent;
+import seedu.address.commons.events.ui.OpenTwitterWebViewEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -26,6 +34,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
     private static final String FXML = "PersonDetailsPanel.fxml";
 
     private ObservableList<ReadOnlyPerson> personList;
+    private TabPane tabPane;
 
     private final Logger logger = LogsCenter.getLogger(PersonDetailsPanel.class);
 
@@ -56,10 +65,76 @@ public class PersonDetailsPanel extends UiPart<Region> {
     @FXML
     private TextArea eventsArea;
 
-    public PersonDetailsPanel(ObservableList<ReadOnlyPerson> personList) {
+    public PersonDetailsPanel(ObservableList<ReadOnlyPerson> personList, TabPane tabPane) {
         super(FXML);
         this.personList = personList;
+        this.tabPane = tabPane;
         registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Open another tab to show twitter webview
+     */
+    @FXML void openTwitterWebView() {
+        Tab tab = new Tab();
+        tab.setText("twitter");
+        tab.setClosable(true);
+        WebView webView = new WebView();
+        webView.getEngine().load("https://twitter.com/search?q=news&src=typd");
+        tab.setContent(webView);
+        tabPane.getTabs().add(tab);
+    }
+
+    /**
+     * Open another tab to show nusmods webview
+     */
+    @FXML void openNusModsWebView() {
+        Tab tab = new Tab();
+        tab.setText("nusmods");
+        tab.setClosable(true);
+        WebView webView = new WebView();
+        webView.getEngine().load("https://nusmods.com/timetable/2017-2018/sem1");
+        tab.setContent(webView);
+        tabPane.getTabs().add(tab);
+    }
+
+    /**
+     * Open another tab to show facebook webview
+     */
+    @FXML void openFaceBookWebView() {
+        Tab tab = new Tab();
+        tab.setText("facebook");
+        tab.setClosable(true);
+        WebView webView = new WebView();
+        webView.getEngine().load("https://www.facebook.com/people-search.php");
+        tab.setContent(webView);
+        tabPane.getTabs().add(tab);
+    }
+
+    /**
+     * Open another tab to show instagram webview
+     */
+    @FXML void openInstagramWebView() {
+        Tab tab = new Tab();
+        tab.setText("instagram");
+        tab.setClosable(true);
+        WebView webView = new WebView();
+        webView.getEngine().load("https://www.instagram.com/instagram/");
+        tab.setContent(webView);
+        tabPane.getTabs().add(tab);
+    }
+
+    /**
+     * Open another tab to show github webview
+     */
+    @FXML void openGitHubWebView() {
+        Tab tab = new Tab();
+        tab.setText("github");
+        tab.setClosable(true);
+        WebView webView = new WebView();
+        webView.getEngine().load("https://github.com/github");
+        tab.setContent(webView);
+        tabPane.getTabs().add(tab);
     }
 
     @Subscribe
@@ -161,5 +236,35 @@ public class PersonDetailsPanel extends UiPart<Region> {
             counter++;
         }
         eventsArea.setText(stringBuffer.toString());
+    }
+
+    @Subscribe
+    private void handleOpenTwitterWebViewEvent(OpenTwitterWebViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        openTwitterWebView();
+    }
+
+    @Subscribe
+    private void handleOpenNusModsWebViewEvent(OpenNusModsWebViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        openTwitterWebView();
+    }
+
+    @Subscribe
+    private void handleOpenFaceBookWebViewEvent(OpenFaceBookWebViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        openTwitterWebView();
+    }
+
+    @Subscribe
+    private void handleOpenInstagramWebViewEvent(OpenInstagramWebViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        openTwitterWebView();
+    }
+
+    @Subscribe
+    private void handleOpenGithubWebViewEvent(OpenGithubWebViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        openTwitterWebView();
     }
 }
