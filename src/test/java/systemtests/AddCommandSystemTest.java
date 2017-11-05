@@ -46,7 +46,6 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
-import javafx.scene.chart.BubbleChart;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -59,7 +58,6 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Photo;
 import seedu.address.model.person.ReadOnlyPerson;
