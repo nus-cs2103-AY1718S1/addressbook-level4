@@ -1,3 +1,4 @@
+//@@author cqhchan
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
@@ -17,13 +18,13 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
+import seedu.address.model.Database;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyDatabase;
+import seedu.address.model.account.Account;
 import seedu.address.model.account.ReadOnlyAccount;
 import seedu.address.model.account.exceptions.DuplicateAccountException;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -31,9 +32,9 @@ import seedu.address.model.reminder.ReadOnlyReminder;
 import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 import seedu.address.model.reminder.exceptions.ReminderNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.AccountBuilder;
 
-public class AddCommandTest {
+public class CreateAccountCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -41,43 +42,43 @@ public class AddCommandTest {
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddCommand(null);
+        new CreateAccountCommand(null);
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_accountAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingAccountAdded modelStub = new ModelStubAcceptingAccountAdded();
+        Account validAccount = new AccountBuilder().build();
 
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
+        CommandResult commandResult = getCreateAccountCommandForAccount(validAccount, modelStub).execute();
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(String.format(CreateAccountCommand.MESSAGE_SUCCESS, validAccount), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validAccount), modelStub.accountsAdded);
     }
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
+        ModelStub modelStub = new ModelStubThrowingDuplicateAccountException();
+        Account validAccount = new AccountBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(CreateAccountCommand.MESSAGE_DUPLICATE_ACCOUNT);
 
-        getAddCommandForPerson(validPerson, modelStub).execute();
+        getCreateAccountCommandForAccount(validAccount, modelStub).execute();
     }
 
     @Test
     public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
+        Account alice = new AccountBuilder().withUsername("Alice").build();
+        Account bob = new AccountBuilder().withUsername("Bob").build();
+        CreateAccountCommand addAliceCommand = new CreateAccountCommand(alice);
+        CreateAccountCommand addBobCommand = new CreateAccountCommand(bob);
 
         // same object -> returns true
         assertTrue(addAliceCommand.equals(addAliceCommand));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
+        CreateAccountCommand addAliceCommandCopy = new CreateAccountCommand(alice);
         assertTrue(addAliceCommand.equals(addAliceCommandCopy));
 
         // different types -> returns false
@@ -91,17 +92,14 @@ public class AddCommandTest {
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new CreateAccountCommand with the details of the given person.
      */
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private CreateAccountCommand getCreateAccountCommandForAccount(Account account, Model model) {
+        CreateAccountCommand command = new CreateAccountCommand(account);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 
-    /**
-     * A default model stub that have all of the methods failing.
-     */
     private class ModelStub implements Model {
         @Override
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
@@ -255,33 +253,34 @@ public class AddCommandTest {
     /**
      * A Model stub that always throw a DuplicatePersonException when trying to add a person.
      */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
+    private class ModelStubThrowingDuplicateAccountException extends ModelStub {
+
         @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
+        public void addAccount(ReadOnlyAccount account) throws DuplicateAccountException {
+            throw new DuplicateAccountException();
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
+        public ReadOnlyDatabase getDatabase() {
+            return new Database();
         }
     }
+
 
     /**
      * A Model stub that always accept the person being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingAccountAdded extends ModelStub {
+        final ArrayList<Account> accountsAdded = new ArrayList<>();
 
         @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            personsAdded.add(new Person(person));
+        public void addAccount(ReadOnlyAccount account) throws DuplicateAccountException {
+            accountsAdded.add(new Account(account));
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
+        public ReadOnlyDatabase getDatabase() {
+            return new Database();
         }
     }
-
 }

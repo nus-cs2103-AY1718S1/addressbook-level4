@@ -1,5 +1,5 @@
 //@@author cqhchan
-package seedu.address.model.credentials;
+package seedu.address.model.account;
 
 import static java.util.Objects.requireNonNull;
 
@@ -11,7 +11,7 @@ import org.fxmisc.easybind.EasyBind;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import seedu.address.model.credentials.exceptions.DuplicateAccountException;
+import seedu.address.model.account.exceptions.DuplicateAccountException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 

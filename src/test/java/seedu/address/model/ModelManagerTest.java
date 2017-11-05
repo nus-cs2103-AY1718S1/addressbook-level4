@@ -4,7 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalAccounts.BROTHER;
-import static seedu.address.testutil.TypicalAccounts.CHAN;
+import static seedu.address.testutil.TypicalAccounts.PRIVATE;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
@@ -32,7 +32,7 @@ public class ModelManagerTest {
     @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
-        Database database = new DatabaseBuilder().withAccount(BROTHER).withAccount(CHAN).build();
+        Database database = new DatabaseBuilder().withAccount(BROTHER).withAccount(PRIVATE).build();
         AddressBook differentAddressBook = new AddressBook();
         Database differentDatabase = new Database();
         UserPrefs userPrefs = new UserPrefs();

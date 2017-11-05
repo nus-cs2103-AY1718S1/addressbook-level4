@@ -2,7 +2,7 @@
 package seedu.address.model;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.credentials.ReadOnlyAccount;
+import seedu.address.model.account.ReadOnlyAccount;
 
 /**
  *

@@ -1,10 +1,11 @@
+//@@author cqhchan
 package seedu.address.testutil;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.credentials.Account;
-import seedu.address.model.credentials.Password;
-import seedu.address.model.credentials.ReadOnlyAccount;
-import seedu.address.model.credentials.Username;
+import seedu.address.model.account.Account;
+import seedu.address.model.account.Password;
+import seedu.address.model.account.ReadOnlyAccount;
+import seedu.address.model.account.Username;
 /**
  *
  */

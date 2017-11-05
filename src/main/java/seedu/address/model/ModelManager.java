@@ -20,8 +20,8 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 
 import seedu.address.commons.events.model.DatabaseChangedEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.credentials.ReadOnlyAccount;
-import seedu.address.model.credentials.exceptions.DuplicateAccountException;
+import seedu.address.model.account.ReadOnlyAccount;
+import seedu.address.model.account.exceptions.DuplicateAccountException;
 import seedu.address.model.person.AgeComparator;
 import seedu.address.model.person.BirthdayComparator;
 import seedu.address.model.person.Person;
