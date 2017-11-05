@@ -454,9 +454,11 @@ There is no need to save manually.
 // tag::statisticspanel[]
 === Statistics Panel
 
-
+cherBook uses a `Statistics Panel` to display the relevant statistics for the current list of students in the `Students Panel`.
+The statistics automatically changes whenever there is a change to the list of students in the `Students Panel`.
+E.g. When you enter the command `findtags studentCouncil`, the `Students Panel` will only show students with the `studentcouncil` tag and `Statistics Panel` will then show statistics for students with the `studentcouncil` tag.
+You can use these statistics to pick out trends in your student's grades and also monitor how well they are coping with their studies.
 // end::statisticspanel[]
-
 
 // tag::graphpanel[]
 === Graph Panel
