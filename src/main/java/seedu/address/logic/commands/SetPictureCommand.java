@@ -79,11 +79,11 @@ public class SetPictureCommand extends UndoableCommand {
 
 
         // copy picture to resource/image folder and name copied file as PERSON_NAME.png
-        Path dest = new File("resources/images" + personToEdit.getName().toString() + ".png").toPath();
+        Path dest = new File("images/" + personToEdit.getName().toString() + ".png").toPath();
 
 
         try {
-            Files.createDirectories(Paths.get("resources/images")); // Creates missing directories if any
+            Files.createDirectories(Paths.get("images")); // Creates missing directories if any
             Files.copy(file.toPath(), dest, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ioException) {
             // ???

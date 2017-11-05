@@ -1,10 +1,12 @@
 package seedu.address.ui;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import java.io.File;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
@@ -88,7 +90,16 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     private void setContactImage(ReadOnlyPerson person) {
-        Image img = new Image("images/" + person.getProfPic().getPath());
+        Image img = null;
+        if("maleIcon.png".equals(person.getProfPic().getPath())){
+            img = new Image("images/maleIcon.png");
+        } else {
+            try {
+                img = new Image(new File("images/" + person.getProfPic().getPath()).toURI().toURL().toString());
+            } catch (MalformedURLException e) {
+
+            }
+        }
         contactImageCircle.setVisible(true);
         contactImageCircle.setFill(new ImagePattern(img));
         easeIn(contactImageCircle);
