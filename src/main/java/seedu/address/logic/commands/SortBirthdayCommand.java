@@ -14,7 +14,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class SortBirthdayCommand extends Command {
     public static final String COMMAND_WORD = "sortBirthday";
-
+    public static final String COMMAND_ALIAS = "sb";
     public static final String MESSAGE_SUCCESS = "All contacts are sorted by birthday.";
     public static final String MESSAGE_EMPTY_LIST = "Contact list is empty.";
 

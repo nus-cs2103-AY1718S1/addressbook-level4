@@ -14,7 +14,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class SortAgeCommand extends Command {
     public static final String COMMAND_WORD = "sortAge";
-
+    public static final String COMMAND_ALIAS = "sa";
     public static final String MESSAGE_SUCCESS = "All contacts are sorted by age. (Oldest To Youngest)";
     public static final String MESSAGE_EMPTY_LIST = "Contact list is empty.";
 

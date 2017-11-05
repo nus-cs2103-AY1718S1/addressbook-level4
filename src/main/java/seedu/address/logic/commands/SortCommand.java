@@ -14,7 +14,7 @@ import seedu.address.model.person.ReadOnlyPerson;
   */
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
-
+    public static final String COMMAND_ALIAS = "s";
     public static final String MESSAGE_SUCCESS = "All contacts are sorted.";
     public static final String MESSAGE_EMPTY_LIST = "Contact list is empty.";
 

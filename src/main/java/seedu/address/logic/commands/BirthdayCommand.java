@@ -22,6 +22,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class BirthdayCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "birthday";
+    public static final String COMMAND_ALIAS = "b";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the birthday of the person identified "
             + "by the index number used in the last person listing. "

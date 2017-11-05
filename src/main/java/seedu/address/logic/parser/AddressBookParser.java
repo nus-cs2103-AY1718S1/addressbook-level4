@@ -73,12 +73,15 @@ public class AddressBookParser {
             return new CreateAccountCommandParser().parse(arguments);
 
         case AddCommand.COMMAND_WORD:
+        case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
 
         case BirthdayCommand.COMMAND_WORD:
+        case BirthdayCommand.COMMAND_ALIAS:
             return new BirthdayCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
+        case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
 
         case LoginCommand.COMMAND_WORD:
@@ -91,81 +94,102 @@ public class AddressBookParser {
             return new SelectCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
+        case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
-            return new ClearCommand();
-
-        case ClearCommand.SECONDARY_COMMAND_WORD:
+        case ClearCommand.COMMAND_ALIAS:
             return new ClearCommand();
 
         case FindCommand.COMMAND_WORD:
+        case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
 
         case FindEmailCommand.COMMAND_WORD:
+        case FindEmailCommand.COMMAND_ALIAS:
             return new FindEmailCommandParser().parse(arguments);
 
         case FindPhoneCommand.COMMAND_WORD:
+        case FindPhoneCommand.COMMAND_ALIAS:
             return new FindPhoneCommandParser().parse(arguments);
 
         case RetrieveCommand.COMMAND_WORD:
+        case RetrieveCommand.COMMAND_ALIAS:
             return new RetrieveCommandParser().parse(arguments);
 
         case TagCommand.COMMAND_WORD:
+        case TagCommand.COMMAND_ALIAS:
             return new TagCommandParser().parse(arguments);
 
         case UntagCommand.COMMAND_WORD:
+        case UntagCommand.COMMAND_ALIAS:
             return new UntagCommandParser().parse(arguments);
 
         case RetagCommand.COMMAND_WORD:
+        case RetagCommand.COMMAND_ALIAS:
             return new RetagCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
+        case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
 
         case HistoryCommand.COMMAND_WORD:
+        case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
 
         case HelpCommand.COMMAND_WORD:
+        case HelpCommand.COMMAND_ALIAS:
             return new HelpCommand();
 
         case UndoCommand.COMMAND_WORD:
+        case UndoCommand.COMMAND_ALIAS:
             return new UndoCommand();
 
         case RedoCommand.COMMAND_WORD:
+        case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
 
         case SortCommand.COMMAND_WORD:
+        case SortCommand.COMMAND_ALIAS:
             return new SortCommand();
 
         case SortAgeCommand.COMMAND_WORD:
+        case SortAgeCommand.COMMAND_ALIAS:
             return new SortAgeCommand();
 
         case SortBirthdayCommand.COMMAND_WORD:
+        case SortBirthdayCommand.COMMAND_ALIAS:
             return new SortBirthdayCommand();
 
         case AddReminderCommand.COMMAND_WORD:
+        case AddReminderCommand.COMMAND_ALIAS:
             return new AddReminderCommandParser().parse(arguments);
 
         case DeleteReminderCommand.COMMAND_WORD:
+        case DeleteReminderCommand.COMMAND_ALIAS:
             return new DeleteReminderCommandParser().parse(arguments);
 
         case EditReminderCommand.COMMAND_WORD:
+        case EditReminderCommand.COMMAND_ALIAS:
             return new EditReminderCommandParser().parse(arguments);
 
         case FindPriorityCommand.COMMAND_WORD:
+        case FindPriorityCommand.COMMAND_ALIAS:
             return new FindPriorityCommandParser().parse(arguments);
 
         case FindReminderCommand.COMMAND_WORD:
+        case FindReminderCommand.COMMAND_ALIAS:
             return new FindReminderCommandParser().parse(arguments);
 
         case ListReminderCommand.COMMAND_WORD:
+        case ListReminderCommand.COMMAND_ALIAS:
             return new ListReminderCommand();
 
         case SortPriorityCommand.COMMAND_WORD:
+        case SortPriorityCommand.COMMAND_ALIAS:
             return new SortPriorityCommand();
 
         default:
