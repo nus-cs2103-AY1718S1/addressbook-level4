@@ -146,8 +146,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
         try {
-            Person addPin = addPinTag(person);
-            updatePerson(person, addPin);
+            person.setPin();
             sort(SortCommand.ARGUMENT_NAME);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(AddCommand.MESSAGE_DUPLICATE_PERSON);
@@ -158,8 +157,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
         try {
-            Person removePin = removePinTag(person);
-            updatePerson(person, removePin);
+            person.setUnpin();
             sort(SortCommand.ARGUMENT_NAME);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(AddCommand.MESSAGE_DUPLICATE_PERSON);
@@ -206,7 +204,7 @@ public class ModelManager extends ComponentManager implements Model {
         updatedTags.addPinTag();
 
         return new Person(personToPin.getName(), personToPin.getPhone(), personToPin.getBirthday(),
-                personToPin.getEmail(), personToPin.getAddress(), updatedTags.toSet());
+                personToPin.getEmail(), personToPin.getAddress(), personToPin.isPinned(), updatedTags.toSet());
     }
 
     //@@author eldonng
@@ -221,7 +219,7 @@ public class ModelManager extends ComponentManager implements Model {
             updatedTags.removePinTag();
             return new Person(personToUnpin.getName(), personToUnpin.getPhone(),
                     personToUnpin.getBirthday(), personToUnpin.getEmail(), personToUnpin.getAddress(),
-                    updatedTags.toSet());
+                    personToUnpin.isPinned(), updatedTags.toSet());
         } catch (IllegalValueException ive) {
             throw new CommandException(Tag.MESSAGE_TAG_CONSTRAINTS);
         }

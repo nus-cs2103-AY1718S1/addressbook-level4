@@ -25,6 +25,8 @@ public interface ReadOnlyPerson {
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
     boolean isPinned();
+    void setPin();
+    void setUnpin();
     ObjectProperty<Boolean> pinnedProperty();
 
     /**
