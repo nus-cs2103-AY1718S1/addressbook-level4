@@ -210,7 +210,7 @@ background {
     -fx-background-color: blue;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
-    -fx-text-fill: #d8d8d8;
+    -fx-text-fill: black;
     -fx-border-radius: 20;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
@@ -221,7 +221,7 @@ background {
 
 .button:pressed, .button:default:hover:pressed {
   -fx-background-color: white;
-  -fx-text-fill: blue;
+  -fx-text-fill: red;
 }
 
 .button:focused {
