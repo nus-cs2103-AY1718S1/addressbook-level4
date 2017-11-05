@@ -249,7 +249,7 @@ Examples:
 `schedule 2 s/tomorrow 7pm` +
 Schedules the 2nd person in cherBook for tomorrow at 7pm and adds the schedule to the schedule list.
 * `find Betsy` +
-`sche 1 s/25 december 2017 3pm` +
+`sch 1 s/25 december 2017 3pm` +
 Schedules the 1st person in cherBook on 25 December at 3pm and adds the schedule to the schedule list in the results of the `find` command.
 
 === Viewing my schedule : `viewschedule` `Since v1.5`
@@ -462,13 +462,13 @@ Here is a list of shortcuts you can use in cherBook together with some examples.
 | Findtags | `ft` + | `ft KEYWORD [MORE_KEYWORDS]` +
 | List | `l` + | `l` +
 | Help | NA | `help` +
-| Schedule | `sche` + | `sche 1 s/[DATE]` +
 | Select | `s` + | `s INDEX` +
 | Sort | `st` | `st` +
 | History | `h` + | `h` +
 | Undo | `u` + | `u` +
 | Redo | `r` + | `r` +
 | Remark | `rm` + | `rm Index [rm/REMARK]` +
+| schedule | `sch` + | `sch 1 s/[DATE]` +
 |=======================================================================
 
 == FAQ
