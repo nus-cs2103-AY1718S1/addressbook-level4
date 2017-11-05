@@ -17,6 +17,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
@@ -109,7 +110,7 @@ public class BirthdayCommandTest {
     }
 
     @Test
-    public void equals() {
+    public void equals() throws Exception {
         final BirthdayCommand standardCommand = new BirthdayCommand(INDEX_FIRST_PERSON,
                 new Birthday(VALID_BIRTHDAY_AMY));
 
@@ -137,7 +138,7 @@ public class BirthdayCommandTest {
     /**
      * Returns an {@code BirthdayCommand} with parameters {@code index} and {@code birthday}
      */
-    private BirthdayCommand prepareCommand(Index index, String birthday) {
+    private BirthdayCommand prepareCommand(Index index, String birthday) throws IllegalValueException {
         BirthdayCommand birthdayCommand = new BirthdayCommand(index, new Birthday(birthday));
         birthdayCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return birthdayCommand;

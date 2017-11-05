@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -154,6 +155,25 @@ public class CommandTestUtil {
             assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
         }
     }
+
+    //@@author inGall
+    /**
+     * @param command
+     * @param actualModel
+     * @param expectedMessage
+     * @param expectedModel
+     */
+    public static void assertSortSuccess(Command command, Model actualModel, String expectedMessage,
+                                         Model expectedModel) {
+        try {
+            CommandResult result = command.execute();
+            assertEquals(expectedMessage, result.feedbackToUser);
+            assertNotEquals(expectedModel, actualModel);
+        } catch (CommandException ce) {
+            throw new AssertionError("Execution of command should not fail.", ce);
+        }
+    }
+    //@@author
 
     /**
      * Updates {@code model}'s filtered list to show only the first person in the {@code model}'s address book.

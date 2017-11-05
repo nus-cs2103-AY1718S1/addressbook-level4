@@ -69,7 +69,7 @@ public class FindReminderCommandTest {
     @Test
     public void execute_multipleKeywords_multipleRemindersFound() {
         String expectedMessage = String.format(MESSAGE_REMINDERS_LISTED_OVERVIEW, 3);
-        FindReminderCommand command = prepareCommand("birthday Gathering office");
+        FindReminderCommand command = prepareCommand("birthday Gathering Meeting");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(BIRTHDAY, GATHERING, MEETING));
     }
 

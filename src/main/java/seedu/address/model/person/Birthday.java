@@ -3,6 +3,8 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+
 /**
  * Represents a Person's birthday in the address book.
  * Guarantees: immutable; is always valid
@@ -10,13 +12,30 @@ import static java.util.Objects.requireNonNull;
 public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Person birthdays can take any values, can even be blank";
+            "Person birthdays must be of format DD/MM/YYYY or can be blank";
+    public static final String BIRTHDAY_VALIDATION_REGEX = "[0-9]{2}/[0-9]{2}/[0-9]{4}";
 
     public final String value;
 
-    public Birthday(String birthday) {
+    /**
+     * Validates given birthday.
+     *
+     * @throws IllegalValueException if given birthday string is invalid.
+     */
+    public Birthday(String birthday) throws IllegalValueException {
         requireNonNull(birthday);
-        this.value = birthday;
+        String trimmedBirthday = birthday.trim();
+        if (!isValidBirthday(trimmedBirthday)) {
+            throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
+        }
+        this.value = trimmedBirthday;
+    }
+
+    /**
+     * Returns if a given string is a valid person birthday.
+     */
+    public static boolean isValidBirthday(String test) {
+        return test.matches(BIRTHDAY_VALIDATION_REGEX) || test.matches("");
     }
 
     @Override
