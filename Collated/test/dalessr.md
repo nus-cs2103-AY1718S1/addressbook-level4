@@ -1,4 +1,49 @@
 # dalessr
+###### \java\guitests\guihandles\PersonDetailsPanelHandle.java
+``` java
+/**
+ * A handler for the {@code PersonDetailsPanel} of the UI.
+ */
+public class PersonDetailsPanelHandle extends NodeHandle<Node> {
+
+    public static final String GRIDPANE_ID = "#personDetailsGrid";
+    public static final String NAME_ID = "#nameLabel";
+    public static final String PHONE_ID = "#phoneLabel";
+    public static final String EMAIL_ID = "#emailLabel";
+    public static final String ADDRESS_ID = "#addressLabel";
+
+    public final GridPane gridPane;
+    public final Label nameLb;
+    public final Label phoneLb;
+    public final Label emailLb;
+    public final Label addressLb;
+
+    public PersonDetailsPanelHandle(Node cardNode) {
+        super(cardNode);
+        this.gridPane = getChildNode(GRIDPANE_ID);
+        this.nameLb = getChildNode(NAME_ID);
+        this.phoneLb = getChildNode(PHONE_ID);
+        this.emailLb = getChildNode(EMAIL_ID);
+        this.addressLb = getChildNode(ADDRESS_ID);
+    }
+
+    public String getNameId() {
+        return nameLb.getText();
+    }
+
+    public String getPhoneId() {
+        return phoneLb.getText();
+    }
+
+    public String getEmailId() {
+        return emailLb.getText();
+    }
+
+    public String getAddressId() {
+        return addressLb.getText();
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\BirthdayAddCommandTest.java
 ``` java
 /**
@@ -95,6 +140,111 @@ public class BirthdayAddCommandTest {
         BirthdayAddCommand birthdayAddCommand = new BirthdayAddCommand(index, birthday);
         birthdayAddCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return birthdayAddCommand;
+    }
+}
+```
+###### \java\seedu\address\logic\commands\BirthdayRemoveCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for BirthdayRemoveCommand.
+ */
+public class BirthdayRemoveCommandTest {
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+
+    /**
+     * Edit person list where index is smaller than (or equal to) the size of the address book person list
+     */
+    @Test
+    public void execute_allFieldsSpecifiedCorrectlyUnfilteredList_success() throws Exception {
+        Person originalPerson = (Person) model.getAddressBook().getPersonList().get(0);
+        Person editedPerson = (Person) model.getAddressBook().getPersonList().get(0);
+        Birthday birthday = new Birthday();
+        editedPerson.setBirthday(birthday);
+
+        BirthdayRemoveCommand birthdayRemoveCommand = prepareCommand(INDEX_FIRST_PERSON);
+        String expectedMessage = String.format(BirthdayRemoveCommand.MESSAGE_REMOVE_BIRTHDAY_SUCCESS, editedPerson);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(originalPerson, editedPerson);
+
+        assertCommandSuccess(birthdayRemoveCommand, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * Edit filtered list where index is smaller than (or equal to) the size of filtered list
+     */
+    @Test
+    public void execute_allFieldsSpecifiedCorrectlyFilteredList_success() throws Exception {
+        Person originalPerson = (Person) model.getFilteredPersonList().get(0);
+        Person editedPerson = (Person) model.getFilteredPersonList().get(0);
+        Birthday birthday = new Birthday();
+        editedPerson.setBirthday(birthday);
+
+        BirthdayRemoveCommand birthdayRemoveCommand = prepareCommand(INDEX_FIRST_PERSON);
+        String expectedMessage = String.format(BirthdayRemoveCommand.MESSAGE_REMOVE_BIRTHDAY_SUCCESS, editedPerson);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(originalPerson, editedPerson);
+
+        assertCommandSuccess(birthdayRemoveCommand, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * Edit person list where index is larger than size of the address book person list
+     */
+    @Test
+    public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
+        Index outOfBoundIndex = Index.fromOneBased(model.getAddressBook().getPersonList().size() + 1);
+        Birthday birthday = new Birthday();
+        BirthdayRemoveCommand birthdayRemoveCommand = prepareCommand(outOfBoundIndex);
+
+        assertCommandFailure(birthdayRemoveCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    /**
+     * Edit filtered list where index is larger than size of filtered list,
+     * but smaller than size of address book
+     */
+    @Test
+    public void execute_invalidPersonIndexFilteredList_failure() throws Exception {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        Birthday birthday = new Birthday();
+        BirthdayRemoveCommand birthdayRemoveCommand = prepareCommand(outOfBoundIndex);
+
+        assertCommandFailure(birthdayRemoveCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() throws Exception {
+        Birthday birthday = new Birthday();
+        final BirthdayRemoveCommand standardCommand = new BirthdayRemoveCommand(INDEX_FIRST_PERSON);
+
+        // same values -> returns true
+        BirthdayRemoveCommand commandWithSameValues = new BirthdayRemoveCommand(INDEX_FIRST_PERSON);
+        assertTrue(standardCommand.equals(commandWithSameValues));
+
+        // same object -> returns true
+        assertTrue(standardCommand.equals(standardCommand));
+
+        // null -> returns false
+        assertFalse(standardCommand.equals(null));
+
+        // different types -> returns false
+        assertFalse(standardCommand.equals(new ClearCommand()));
+
+        // different index -> returns false
+        assertFalse(standardCommand.equals(new BirthdayRemoveCommand(INDEX_SECOND_PERSON)));
+    }
+
+    /**
+     * Returns an {@code EditCommand} with parameters {@code index} and {@code birthday}
+     */
+    private BirthdayRemoveCommand prepareCommand(Index index) {
+        BirthdayRemoveCommand birthdayRemoveCommand = new BirthdayRemoveCommand(index);
+        birthdayRemoveCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return birthdayRemoveCommand;
     }
 }
 ```
@@ -452,8 +602,40 @@ public class BirthdayAddCommandParserTest {
                 BirthdayAddCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "1 01/13/2000", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 BirthdayAddCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "1 01/01/3000", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                BirthdayAddCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\BirthdayRemoveCommandParserTest.java
+``` java
+/**
+ * Test scope: similar to {@code SelectCommandParserTest}.
+ * @see SelectCommandParserTest
+ */
+public class BirthdayRemoveCommandParserTest {
+
+    private BirthdayRemoveCommandParser parser = new BirthdayRemoveCommandParser();
+
+    public BirthdayRemoveCommandParserTest() {}
+
+    @Test
+    public void parse_validArgs_returnsBirthdayRemoveCommand() {
+        assertParseSuccess(parser, "1", new BirthdayRemoveCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "-1", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                BirthdayRemoveCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "2.2", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                BirthdayRemoveCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "aaa", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                BirthdayRemoveCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "1abc", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                BirthdayRemoveCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "1 aaa", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                BirthdayRemoveCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "1 01/13/2000", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                BirthdayRemoveCommand.MESSAGE_USAGE));
     }
 }
 ```
@@ -759,46 +941,4 @@ public class MapShowCommandParserTest {
         assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
 
-```
-###### \java\systemtests\FindCommandSystemTest.java
-``` java
-    /**
-     * Executes {@code command} and verifies that the command box displays an empty string, the result display
-     * box displays {@code Messages#MESSAGE_PERSONS_LISTED_OVERVIEW} with the number of people in the filtered list,
-     * and the model related components equal to {@code expectedModel}.
-     * These verifications are done by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the status bar remains unchanged, and the command box has the default style class, and the
-     * selected card updated accordingly, depending on {@code cardStatus}.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandSuccess(String command, Model expectedModel) {
-        String expectedResultMessage = String.format(
-                MESSAGE_PERSONS_LISTED_OVERVIEW, expectedModel.getFilteredPersonList().size());
-
-        executeCommand(command);
-        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-        assertCommandBoxShowsDefaultStyle();
-        assertStatusBarUnchanged();
-    }
-
-    /**
-     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
-     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
-     * These verifications are done by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
-     * error style.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandFailure(String command, String expectedResultMessage) {
-        Model expectedModel = getModel();
-
-        executeCommand(command);
-        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
-        assertCommandBoxShowsErrorStyle();
-        assertStatusBarUnchanged();
-    }
-}
 ```

@@ -1,5 +1,5 @@
 # Pengyuz
-###### /java/seedu/address/logic/commands/DeleteCommandTest.java
+###### \java\seedu\address\logic\commands\DeleteCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -230,7 +230,7 @@ public class DeleteCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/HelpCommandTest.java
+###### \java\seedu\address\logic\commands\HelpCommandTest.java
 ``` java
 
 public class HelpCommandTest {
@@ -291,7 +291,7 @@ public class HelpCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
 public class AddressBookParserTest {
     @Rule
@@ -396,8 +396,9 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommandTagFind() throws Exception {
-        TagMatchingKeywordPredicate predicate = new TagMatchingKeywordPredicate("friend");
+    public void parseCommandLooseTagFind() throws Exception {
+        boolean looseFind = true;
+        TagMatchingKeywordPredicate predicate = new TagMatchingKeywordPredicate("friend", looseFind);
         TagFindCommand command = (TagFindCommand) parser.parseCommand(TagFindCommand.COMMAND_WORD
                 + " friend");
         assertEquals(new TagFindCommand(predicate), command);
@@ -561,7 +562,7 @@ public class AddressBookParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/DeleteCommandParserTest.java
+###### \java\seedu\address\logic\parser\DeleteCommandParserTest.java
 ``` java
 
 /**
@@ -624,7 +625,7 @@ public class DeleteCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/HelpCommandParserTest.java
+###### \java\seedu\address\logic\parser\HelpCommandParserTest.java
 ``` java
 
 public class HelpCommandParserTest {
