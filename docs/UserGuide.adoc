@@ -82,7 +82,7 @@ You may also use shorter command which does the same function of adding contact 
 [TIP]
 A person can have any number of tags (including 0)
 It is advisable for you to include tag as it allows you to search for certain group of people with ease such as using link:#filtertag[filter by tags] features.
-Examples:
+Examples: + 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
