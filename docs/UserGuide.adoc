@@ -454,22 +454,23 @@ Here is a list of shortcuts you can use in cherBook together with some examples.
 [width="100%",cols="10%,<10%,<80%",options="header",]
 |=======================================================================
 |Command |ShortHand | Example
-| Add | `a` +| `a n/NAME student/STUDENT_NUMBER parent/PARENT_NUMBER e/EMAIL a/ADDRESS c/POSTALCODE [t/TAG]...` +
-| Clear | `c` + | `c` +
-| Delete | `d`  | `d 3` +
-| Edit | `e` + | `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [c/POSTALCODE] [t/TAG]...` +
-| Find | `f` + | `f KEYWORD [MORE_KEYWORDS]` +
-| Findtags | `ft` + | `ft KEYWORD [MORE_KEYWORDS]` +
-| List | `l` + | `l` +
-| Help | NA | `help` +
-| Select | `s` + | `s INDEX` +
-| Sort | `st` | `st` +
-| History | `h` + | `h` +
-| Undo | `u` + | `u` +
-| Redo | `r` + | `r` +
-| Remark | `rm` + | `rm Index [rm/REMARK]` +
+| add | `a` +| `a n/NAME student/STUDENT_NUMBER parent/PARENT_NUMBER e/EMAIL a/ADDRESS c/POSTALCODE [t/TAG]...` +
+| clear | `c` + | `c` +
+| delete | `d`  | `d 3` +
+| edit | `e` + | `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [c/POSTALCODE] [t/TAG]...` +
+| find | `f` + | `f KEYWORD [MORE_KEYWORDS]` +
+| findtags | `ft` + | `ft KEYWORD [MORE_KEYWORDS]` +
+| list | `l` + | `l` +
+| help | NA | `help` +
 | schedule | `sch` + | `sch 1 s/[DATE]` +
+| select | `s` + | `s INDEX` +
+| sort | `st` | `st` +
+| history | `h` + | `h` +
+| undo | `u` + | `u` +
+| redo | `r` + | `r` +
+| remark | `rm` + | `rm Index [rm/REMARK]` +
 |=======================================================================
+// end::commandshortcuts[]
 
 == FAQ
 
