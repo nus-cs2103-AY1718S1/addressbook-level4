@@ -12,7 +12,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Eric Loh
 image::EricLoh.jpg[width="150", align="left"]
-{empty}[https://github.com/Ericloh[Github]] [<<ericloh#, portfolio>>]
+{empty}[https://github.com/Ericloh[Github]] [<<ericloh#, Portfolio>>]
 
 Role: Developer +
 Responsibilities: UI + Integration + Deliverables and Deadlines
@@ -85,6 +85,7 @@ Responsibilities: Model component + Documentation
 * Features Implemented : +
 ** https://github.com/CS2103AUG2017-T17-B2/main/pull/83[Batch deletion of contacts by tag]
 ** https://github.com/CS2103AUG2017-T17-B2/main/pull/117[Display potential duplicate contacts]
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/157[Copy contact's email address to clipboard]
 
 * Other Contributions : +
 ** https://github.com/CS2103AUG2017-T17-B2/main/pull/49[Drafted the light UI theme]

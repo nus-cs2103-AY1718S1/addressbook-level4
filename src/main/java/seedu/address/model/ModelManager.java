@@ -3,7 +3,6 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -184,9 +183,9 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Gets a list of duplicate names
      */
-    private ArrayList<Name> getDuplicateNames() {
-        ArrayList<Name> examinedNames = new ArrayList<>();
-        ArrayList<Name> duplicateNames = new ArrayList<>();
+    private HashSet<Name> getDuplicateNames() {
+        HashSet<Name> examinedNames = new HashSet<>();
+        HashSet<Name> duplicateNames = new HashSet<>();
         ObservableList<ReadOnlyPerson> allPersonsInAddressBook = getFilteredPersonList();
 
         for (ReadOnlyPerson person : allPersonsInAddressBook) {
@@ -219,7 +218,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void updateDuplicatePersonList() {
-        ArrayList<Name> duplicateNames = getDuplicateNames();
+        HashSet<Name> duplicateNames = getDuplicateNames();
         HasPotentialDuplicatesPredicate predicate = new HasPotentialDuplicatesPredicate(duplicateNames);
         updateFilteredPersonList(predicate);
     }
