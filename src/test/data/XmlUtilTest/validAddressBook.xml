@@ -3,6 +3,7 @@
     <persons>
         <name>Hans Muster</name>
         <phone isPrivate="false">9482424</phone>
+        <parentPhone isPrivate="false">9482111</parentPhone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
         <formClass isPrivate="false">12S23</formClass>
@@ -13,6 +14,7 @@
     <persons>
         <name>Ruth Mueller</name>
         <phone isPrivate="false">87249245</phone>
+        <parentPhone isPrivate="false">9482111</parentPhone>
         <email isPrivate="false">ruth@example.com</email>
         <address isPrivate="false">81th street</address>
         <formClass isPrivate="false">12S23</formClass>
@@ -23,6 +25,7 @@
     <persons>
         <name>Heinz Kurz</name>
         <phone isPrivate="false">95352563</phone>
+        <parentPhone isPrivate="false">9482111</parentPhone>
         <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street</address>
         <formClass isPrivate="false">12S23</formClass>
@@ -33,6 +36,7 @@
     <persons>
         <name>Cornelia Meier</name>
         <phone isPrivate="false">87652533</phone>
+        <parentPhone isPrivate="false">9482111</parentPhone>
         <email isPrivate="false">cornelia@example.com</email>
         <address isPrivate="false">10th street</address>
         <formClass isPrivate="false">4P2</formClass>
@@ -43,6 +47,7 @@
     <persons>
         <name>Werner Meyer</name>
         <phone isPrivate="false">9482224</phone>
+        <parentPhone isPrivate="false">9482111</parentPhone>
         <email isPrivate="false">werner@example.com</email>
         <address isPrivate="false">michegan ave</address>
         <formClass isPrivate="false">4P2</formClass>
@@ -53,6 +58,7 @@
     <persons>
         <name>Lydia Kunz</name>
         <phone isPrivate="false">9482427</phone>
+        <parentPhone isPrivate="false">9482111</parentPhone>
         <email isPrivate="false">lydia@example.com</email>
         <address isPrivate="false">little tokyo</address>
         <formClass isPrivate="false">4P2</formClass>
@@ -63,6 +69,7 @@
     <persons>
         <name>Anna Best</name>
         <phone isPrivate="false">9482442</phone>
+        <parentPhone isPrivate="false">9482111</parentPhone>
         <email isPrivate="false">anna@example.com</email>
         <address isPrivate="false">4th street</address>
         <formClass isPrivate="false">6.2</formClass>
@@ -73,6 +80,7 @@
     <persons>
         <name>Stefan Meier</name>
         <phone isPrivate="false">8482424</phone>
+        <parentPhone isPrivate="false">9482111</parentPhone>
         <email isPrivate="false">stefan@example.com</email>
         <address isPrivate="false">little india</address>
         <formClass isPrivate="false">6.2</formClass>
@@ -83,6 +91,7 @@
     <persons>
         <name>Martin Mueller</name>
         <phone isPrivate="false">8482131</phone>
+        <parentPhone isPrivate="false">9482111</parentPhone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">chicago ave</address>
         <formClass isPrivate="false">6.2</formClass>
