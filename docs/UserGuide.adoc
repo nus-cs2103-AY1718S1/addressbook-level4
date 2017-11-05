@@ -64,34 +64,33 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 == Layout
 
-This is a quick introduction to cherBook's User Interface elements.
-//TODO: Add user interface screenshot with highlights and labels
-Insert screenshot here
+The following image highlights cherBook's User Interface and its 6 components.
 
+image::UiLayout.png[width="790"]
 _Figure 4.1 : cherBook's User Interface layout_
 
-Here is a breakdown of the different elements of cherBook's user interface and how you can interact with them.
+Here’s how you can use them:
 
-. Menu Bar
-* Insert description
+. Command Box
+* Type your desired command into the `Command box` and press kbd:[Enter] to execute them.
+  e.g. typing `help` and pressing kbd:[Enter] will open the help window.
 
-. Command box
-* Insert description
+. Status Panel
+* The `Status Panel` displays the results of your latest command.
 
-. Result Display
-* Insert description
+. Students Panel
+* The `Students Panel` contains a list of all the students in cherBook.
+  You can enter commands like `find`, `findtags` and `sort` to narrow down the list of students in this panel.
 
-. Student Details
-* Insert description
+. Student Details Panel
+* The `Student Details Panel` displays the contact information of the currently selected student.
+  You can select the student using the `select` command.
 
-. Group Statistics
-* Insert description
+. Statistics Panel
+* The `Statistics` Panel displays the relevant statistics for the current list of students in the Students Panel.
 
-. Class Graph
-* Insert description
-
-. FooterBar
-* Insert description
+. Graphs Panel
+* The `Graph Panel` displays either a line or bar chart containing grades of students in the currently selected student's class.
 
 
 == Features
