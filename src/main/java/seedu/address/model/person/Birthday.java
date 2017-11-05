@@ -12,7 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Person birthdays can take any values, can even be blank";
+            "Person birthdays must be of format DD/MM/YYYY or can be blank";
     public static final String BIRTHDAY_VALIDATION_REGEX = "[0-9]{2}/[0-9]{2}/[0-9]{4}";
 
     public final String value;
