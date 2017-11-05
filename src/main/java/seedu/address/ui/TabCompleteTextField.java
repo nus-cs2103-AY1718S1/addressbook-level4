@@ -12,6 +12,7 @@ import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import seedu.address.logic.commands.CommandWordList;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author newalter
@@ -22,7 +23,8 @@ public class TabCompleteTextField extends TextField {
 
     private static final int MAX_ENTRIES = 5;
 
-    private final SortedSet<String> options = new TreeSet<>();
+    private final SortedSet<String> argumentOptions = new TreeSet<>();
+    private final SortedSet<String> commandOptions = new TreeSet<>();
     private final ContextMenu dropDownMenu = new ContextMenu();
 
     private String prefixWords;
@@ -31,49 +33,73 @@ public class TabCompleteTextField extends TextField {
 
     public TabCompleteTextField() {
         super();
-        // calls generateSuggestions() whenever there is a change to the text of the command box.
-        textProperty().addListener((unused1, unused2, unused3) -> generateSuggestions());
+        generateCommandOptions();
+        // calls updateSuggestions() whenever there is a change to the text of the command box.
+        textProperty().addListener((unused1, unused2, unused3) -> updateSuggestions());
         // hides the drop down menu whenever the focus in not on the command box
         focusedProperty().addListener((unused1, unused2, unused3) -> dropDownMenu.hide());
     }
 
     /**
-     * Generates a list of suggestions according to the prefix of the lastWord.
-     * Shows the drop down menu if the menu is not empty.
-     * Hides the menu otherwise.
+     * Updates the list of suggestions according to the prefix of the lastWord.
+     * Generates a list of command suggestions if this is the first word.
+     * Generates a list of argument suggestions otherwise
+     * Hides the menu if the lastWord is empty.
      */
-    private void generateSuggestions() {
+    private void updateSuggestions() {
         splitCommandWords();
-        if (lastWord.length() == 0 || prefixWords.equals("")) {
+        if (lastWord.length() == 0) {
             dropDownMenu.hide();
         } else {
-            SortedSet<String> matchedWords =
-                    options.subSet(lastWord + Character.MIN_VALUE, lastWord + Character.MAX_VALUE);
-            if (matchedWords.size() > 0) {
-                fillDropDown(matchedWords);
-                if (!dropDownMenu.isShowing()) {
-                    dropDownMenu.show(TabCompleteTextField.this, Side.BOTTOM, 0, 0);
-                }
+            SortedSet<String> matchedWords;
+            if (prefixWords.equals("")) {
+                matchedWords = commandOptions.subSet(lastWord + Character.MIN_VALUE, lastWord + Character.MAX_VALUE);
             } else {
-                dropDownMenu.hide();
+                matchedWords = argumentOptions.subSet(lastWord + Character.MIN_VALUE, lastWord + Character.MAX_VALUE);
             }
+            generateNewSuggestions(matchedWords);
         }
     }
 
     /**
-     * Generates options for Auto-Completion from
+     * Updates the drop down menu with the new set of matchedWords
+     * Shows the menu if the set is non empty.
+     * Hides the menu otherwise.
+     * @param matchedWords the set of matchedWords to be updated
+     */
+    private void generateNewSuggestions(SortedSet<String> matchedWords) {
+        if (matchedWords.size() > 0) {
+            fillDropDown(matchedWords);
+            if (!dropDownMenu.isShowing()) {
+                dropDownMenu.show(TabCompleteTextField.this, Side.BOTTOM, 0, 0);
+            }
+        } else {
+            dropDownMenu.hide();
+        }
+    }
+
+    /**
+     * Generates argumentOptions for Auto-Completion from
      * the names and tags of persons from a list.
      * @param persons a list of person
      */
-    public void generateOptions(List<ReadOnlyPerson> persons) {
+    public void generateArgumentOptions(List<ReadOnlyPerson> persons) {
         for (ReadOnlyPerson person : persons) {
-            options.addAll(Arrays.asList(person.getName().fullName.toLowerCase().split("\\s+")));
-            person.getTags().stream().map(tag -> tag.tagName.toLowerCase()).forEachOrdered(options::add);
+            argumentOptions.addAll(Arrays.asList(person.getName().fullName.toLowerCase().split("\\s+")));
+            person.getTags().stream().map(tag -> tag.tagName.toLowerCase()).forEachOrdered(argumentOptions::add);
         }
     }
 
     /**
-     * Updates options for Auto-Completion from
+     * Generates commandOptions for Auto-Completion
+     * from the list of command words.
+     */
+    private void generateCommandOptions() {
+        commandOptions.addAll(CommandWordList.COMMAND_WORD_LIST);
+    }
+
+    /**
+     * Updates argumentOptions for Auto-Completion from
      * the arguments of an inputted command.
      * @param command an inputted command
      */
@@ -81,7 +107,7 @@ public class TabCompleteTextField extends TextField {
         String[] args = command.toLowerCase().split("(\\s+|[a-z]/)");
         for (int i = 1; i < args.length; i++) {
             if (args[i].matches("[a-z]+")) {
-                options.add(args[i]);
+                argumentOptions.add(args[i]);
             }
         }
     }
