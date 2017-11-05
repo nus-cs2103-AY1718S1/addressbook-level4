@@ -38,7 +38,6 @@ public class Photo {
             }
             this.photoDir = trimmedPhoto;
         } else {
-
             this.photoDir = defaultPhoto;
         }
     }
