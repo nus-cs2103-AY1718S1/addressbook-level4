@@ -46,7 +46,8 @@ public class BrowserPanel extends UiPart<Region> {
      * @param person
      */
     private void loadPersonPage(ReadOnlyPerson person) {
-        if (person.getLink().value.contains(PossibleLinks.POSSIBLE_LINK_2)) {
+        if (person.getLink().value.contains(PossibleLinks.POSSIBLE_LINK_2)
+                || person.getLink().value.contains(PossibleLinks.POSSIBLE_LINK_3)) {
             loadPage(person.getLink().value);
         } else if (person.getLink().value.contains(PossibleLinks.POSSIBLE_LINK_1)) {
             loadPage("https://www." + person.getLink().value);
