@@ -137,13 +137,15 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
 
+        //@@author dennaloh
         case FindTagCommand.COMMAND_WORD:
         case FindTagCommand.COMMAND_ALIAS:
             return new FindTagCommandParser().parse(arguments);
 
-            case EmailCommand.COMMAND_WORD:
-            case EmailCommand.COMMAND_ALIAS:
-                return new EmailCommandParser().parse(arguments);
+        case EmailCommand.COMMAND_WORD:
+        case EmailCommand.COMMAND_ALIAS:
+            return new EmailCommandParser().parse(arguments);
+        //@@author
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
