@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
 
+import seedu.address.commons.events.ui.JumpToTabRequestEvent;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
@@ -126,19 +128,11 @@ public interface Model {
     void editParcelCommand(ReadOnlyParcel parcelToEdit, ReadOnlyParcel editedParce)
             throws DuplicateParcelException, ParcelNotFoundException;
 
-    /*
-    void reselect(ReadOnlyParcel parcel);
+    boolean getActiveIsAllBool();
 
-    void setPrevSelectedParcel(ReadOnlyParcel parcel);
+    void uiJumpToTabAll();
 
-    boolean hasSelected();
-
-    void select();
-
-    void unselect();
-
-    ReadOnlyParcel getPrevSelectedParcel();
-    */
+    void uiJumpToTabCompleted();
     //@@author
 }
 

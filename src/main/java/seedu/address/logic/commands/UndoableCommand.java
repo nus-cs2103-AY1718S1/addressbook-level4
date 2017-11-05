@@ -13,6 +13,7 @@ import seedu.address.model.ReadOnlyAddressBook;
  */
 public abstract class UndoableCommand extends Command {
     private ReadOnlyAddressBook previousAddressBook;
+    private boolean previousActiveListIsAll;
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
@@ -22,6 +23,8 @@ public abstract class UndoableCommand extends Command {
     private void saveAddressBookSnapshot() {
         requireNonNull(model);
         this.previousAddressBook = new AddressBook(model.getAddressBook());
+        System.out.println(model.getActiveIsAllBool());
+        this.previousActiveListIsAll = model.getActiveIsAllBool();
     }
 
     /**
@@ -33,6 +36,12 @@ public abstract class UndoableCommand extends Command {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook);
         model.updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
+        model.setActiveList(!previousActiveListIsAll);
+        if (previousActiveListIsAll) {
+            model.uiJumpToTabAll();
+        } else {
+            model.uiJumpToTabCompleted();
+        }
     }
 
     /**

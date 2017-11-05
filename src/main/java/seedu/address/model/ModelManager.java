@@ -40,8 +40,6 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Index TAB_ALL_PARCELS = Index.fromZeroBased(0);
     private static final Index TAB_COMPLETED_PARCELS = Index.fromZeroBased(1);
 
-    // private static boolean selected = false;
-    // private static ReadOnlyParcel prevSelectedParcel = null;
     private static Index tabIndex = Index.fromOneBased(1);
     private final AddressBook addressBook;
 
@@ -272,6 +270,16 @@ public class ModelManager extends ComponentManager implements Model {
         this.forceSelectParcel(editedParcel);
     }
 
+    @Override
+    public boolean getActiveIsAllBool() {
+        return tabIndex.equals(TAB_ALL_PARCELS);
+    }
+
+    /**
+     * Method to internally change the active list to the correct tab according to the changed parcel.
+     * @param targetParcel
+     */
+
     private void handleTabChange(ReadOnlyParcel targetParcel) {
         try {
             if (findStatus(targetParcel).equals(Status.getInstance("COMPLETED"))) {
@@ -279,14 +287,14 @@ public class ModelManager extends ComponentManager implements Model {
                 if (this.getTabIndex().equals(TAB_ALL_PARCELS)) {
                     System.out.println("But i'm at all parcels tab");
                     setActiveList(true);
-                    EventsCenter.getInstance().post(new JumpToTabRequestEvent(TAB_COMPLETED_PARCELS));
+                    uiJumpToTabCompleted();
                 }
             } else {
                 System.out.println("I guess it's not completed");
                 if (this.getTabIndex().equals(TAB_COMPLETED_PARCELS)) {
                     System.out.println("But I'm at completed tab");
                     setActiveList(false);
-                    EventsCenter.getInstance().post(new JumpToTabRequestEvent(TAB_ALL_PARCELS));
+                    uiJumpToTabAll();
                 }
             }
         } catch (IllegalValueException e) {
@@ -294,6 +302,16 @@ public class ModelManager extends ComponentManager implements Model {
         }
 
         System.out.println("IT'S HERE: " + findIndex(targetParcel));
+    }
+
+    @Override
+    public void uiJumpToTabAll() {
+        EventsCenter.getInstance().post(new JumpToTabRequestEvent(TAB_ALL_PARCELS));
+    }
+
+    @Override
+    public void uiJumpToTabCompleted() {
+        EventsCenter.getInstance().post(new JumpToTabRequestEvent(TAB_COMPLETED_PARCELS));
     }
 
     private Status findStatus(ReadOnlyParcel target) {
@@ -307,46 +325,8 @@ public class ModelManager extends ComponentManager implements Model {
         return getActiveList().indexOf(target);
     }
 
-    /*
-    @Override
-    public void reselect(ReadOnlyParcel parcel) {
-        // With sorting, we lose our selected card. As such we have to reselect the
-        // parcel that was previously selected. This leads to the need to have some way of
-        // keeping track of which card had been previously selected. Hence the prevIndex
-        // attribute in the ModelManager class and also it's corresponding to get and set it.
-        // We first get the identity of the previously selected parcel.
-        ReadOnlyParcel previous = getPrevSelectedParcel();
-        // if the previous parcel belongs after the editedParcel, we just reselect the parcel
-        // at the previous index because all the parcels get pushed down.
-        forceSelect(Index.fromZeroBased(findIndex(previous)));
-    }
 
-    @Override
-    public ReadOnlyParcel getPrevSelectedParcel() {
-        return prevSelectedParcel;
-    }
-
-    @Override
-    public void setPrevSelectedParcel(ReadOnlyParcel selectedParcel) {
-        select();
-        prevSelectedParcel = selectedParcel;
-    }
-
-    @Override
-    public boolean hasSelected() {
-        return selected;
-    }
-
-    @Override
-    public void select() {
-        selected = true;
-    }
-
-    @Override
-    public void unselect() {
-        selected = false;
-    }
-    */
+    //@@author
 
     @Override
     public boolean equals(Object obj) {
@@ -365,10 +345,9 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredParcels.equals(other.filteredParcels)
                 && filteredDeliveredParcels.equals(other.filteredDeliveredParcels)
-                && filteredUndeliveredParcels.equals(other.filteredUndeliveredParcels)
-                && activeFilteredList.equals(other.activeFilteredList);
+                && filteredUndeliveredParcels.equals(other.filteredUndeliveredParcels);
+        // && activeFilteredList.equals(other.activeFilteredList);
     }
-    //@@author
 
     public static Predicate<ReadOnlyParcel> getDeliveredPredicate() {
         return deliveredPredicate;

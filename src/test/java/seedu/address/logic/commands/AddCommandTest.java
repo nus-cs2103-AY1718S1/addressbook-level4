@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.TAB_ALL_PARCELS;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -109,6 +110,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public boolean getActiveIsAllBool() {
+            return true;
+        }
+
+        @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
@@ -145,6 +151,11 @@ public class AddCommandTest {
         @Override
         public void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {
             parcelsAdded.add(new Parcel(parcel));
+        }
+
+        @Override
+        public boolean getActiveIsAllBool() {
+            return true;
         }
 
         @Override

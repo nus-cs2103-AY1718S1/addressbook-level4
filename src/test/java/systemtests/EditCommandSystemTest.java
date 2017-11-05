@@ -44,6 +44,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PARCEL;
 import static seedu.address.testutil.TypicalParcels.ADDRESS_DESC_BENSON;
 import static seedu.address.testutil.TypicalParcels.AMY;
+import static seedu.address.testutil.TypicalParcels.BENSON;
 import static seedu.address.testutil.TypicalParcels.DELIVERY_DATE_DESC_BENSON;
 import static seedu.address.testutil.TypicalParcels.EMAIL_DESC_BENSON;
 import static seedu.address.testutil.TypicalParcels.KEYWORD_MATCHING_MEIER;
@@ -103,11 +104,13 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: redo editing the last parcel in the list -> last parcel edited again */
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        model.updateParcel(
-                getModel().getActiveList().get(index.getZeroBased()), editedParcel);
-        model.maintainSorted();
-        model.forceSelectParcel(editedParcel);
         assertCommandSuccess(command, model, expectedResultMessage);
+
+        /* Case: edit a parcel with new values same as existing values -> edited */
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TRACKING_NUMBER_DESC_BENSON + NAME_DESC_BENSON
+                + PHONE_DESC_BENSON + EMAIL_DESC_BENSON + ADDRESS_DESC_BENSON + DELIVERY_DATE_DESC_BENSON
+                + STATUS_DESC_PENDING + TAG_DESC_FROZEN + TAG_DESC_FLAMMABLE;
+        assertCommandSuccess(command, index, BENSON);
 
         /* Case: edit some fields -> edited */
         index = INDEX_FIRST_PARCEL;
@@ -140,6 +143,15 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         int invalidIndex = getModel().getActiveList().size() + 1;
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);
+
+        /* Case: filtered parcel list, edit index within bounds of address book and parcel list -> edited */
+        showParcelsWithName(KEYWORD_MATCHING_MEIER);
+        index = INDEX_FIRST_PARCEL;
+        assertTrue(index.getZeroBased() < getModel().getActiveList().size());
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + STATUS_DESC_COMPLETED;
+        parcelToEdit = getModel().getActiveList().get(index.getZeroBased());
+        editedParcel = new ParcelBuilder(parcelToEdit).withStatus(VALID_STATUS_COMPLETED).build();
+        assertCommandSuccess(command, index, editedParcel);
 
         /* --------------------- Performing edit operation while a parcel card is selected -------------------------- */
 
@@ -258,11 +270,6 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         Model expectedModel = getModel();
         try {
             expectedModel.editParcelCommand(expectedModel.getActiveList().get(toEdit.getZeroBased()), editedParcel);
-//            expectedModel.updateParcel(
-//                    expectedModel.getActiveList().get(toEdit.getZeroBased()), editedParcel);
-//            expectedModel.maintainSorted();
-//            expectedModel.updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
-//            expectedModel.forceSelectParcel(editedParcel);
         } catch (DuplicateParcelException dpe) {
             throw new IllegalArgumentException(
                     "editedParcel is a duplicate in expectedModel.");
@@ -303,11 +310,6 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
-        if (expectedSelectedCardIndex != null) {
-            assertSelectedCardChanged(expectedSelectedCardIndex);
-        } else {
-            // assertSelectedCardUnchanged();
-        }
         assertStatusBarUnchangedExceptSyncStatus();
     }
 

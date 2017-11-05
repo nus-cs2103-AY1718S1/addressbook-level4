@@ -92,7 +92,9 @@ public class EditCommand extends UndoableCommand {
         } catch (ParcelNotFoundException pnfe) {
             throw new AssertionError("The target parcel cannot be missing");
         }
+
         model.updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
+
         return new CommandResult(String.format(MESSAGE_EDIT_PARCEL_SUCCESS, editedParcel));
     }
 
