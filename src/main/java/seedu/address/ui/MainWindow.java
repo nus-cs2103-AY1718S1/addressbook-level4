@@ -1,5 +1,10 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.commands.ThemeCommand.DARK_THEME_CSS_FILE_NAME;
+import static seedu.address.logic.commands.ThemeCommand.DARK_THEME_EXTENSIONS_CSS_FILE_NAME;
+import static seedu.address.logic.commands.ThemeCommand.LIGHT_THEME_CSS_FILE_NAME;
+import static seedu.address.logic.commands.ThemeCommand.LIGHT_THEME_EXTENSIONS_CSS_FILE_NAME;
+
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -202,37 +207,6 @@ public class MainWindow extends UiPart<Region> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
-    //@@author cctdaniel
-    /**
-     * Handles SwitchThemeEvent.
-     */
-    @FXML
-    public void handleSwitchTheme(SwitchThemeRequestEvent event) {
-        if (!event.isLight) {
-            sceneBox.getStylesheets().clear();
-            sceneBox.getStylesheets().add("/view/DarkTheme.css");
-            sceneBox.getStylesheets().add("/view/DarkExtensions.css");
-            resultDisplayPlaceholder.getStylesheets().clear();
-            resultDisplayPlaceholder.getStylesheets().add("/view/DarkTheme.css");
-            resultDisplayPlaceholder.getStylesheets().add("/view/DarkExtensions.css");
-            browserPlaceholder.getStylesheets().clear();
-            browserPlaceholder.getStylesheets().add("/view/DarkTheme.css");
-            browserPlaceholder.getStylesheets().add("/view/DarkExtensions.css");
-
-
-        } else {
-            sceneBox.getStylesheets().clear();
-            sceneBox.getStylesheets().add("/view/LightTheme.css");
-            sceneBox.getStylesheets().add("/view/LightExtensions.css");
-            resultDisplayPlaceholder.getStylesheets().clear();
-            resultDisplayPlaceholder.getStylesheets().add("/view/LightTheme.css");
-            resultDisplayPlaceholder.getStylesheets().add("/view/LightExtensions.css");
-            browserPlaceholder.getStylesheets().clear();
-            browserPlaceholder.getStylesheets().add("/view/LightTheme.css");
-            browserPlaceholder.getStylesheets().add("/view/LightExtensions.css");
-        }
-    }
-
     /**
      * Opens the help window.
      */
@@ -273,6 +247,22 @@ public class MainWindow extends UiPart<Region> {
     private void handleSwitchThemeRequestEvent(SwitchThemeRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleSwitchTheme(event);
+    }
+
+    /**
+     * Handles SwitchThemeEvent.
+     */
+    @FXML
+    public void handleSwitchTheme(SwitchThemeRequestEvent event) {
+        if (!event.isLight) {
+            sceneBox.getStylesheets().clear();
+            sceneBox.getStylesheets().add(DARK_THEME_CSS_FILE_NAME);
+            sceneBox.getStylesheets().add(DARK_THEME_EXTENSIONS_CSS_FILE_NAME);
+        } else {
+            sceneBox.getStylesheets().clear();
+            sceneBox.getStylesheets().add(LIGHT_THEME_CSS_FILE_NAME);
+            sceneBox.getStylesheets().add(LIGHT_THEME_EXTENSIONS_CSS_FILE_NAME);
+        }
     }
 
 

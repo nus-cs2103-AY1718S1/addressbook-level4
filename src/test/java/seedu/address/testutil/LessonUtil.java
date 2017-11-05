@@ -22,6 +22,7 @@ public class LessonUtil {
         return AddCommand.COMMAND_WORD + " " + getLessonDetails(lesson);
     }
 
+
     /**
      * Returns the part of command string for the given {@code lesson}'s details.
      */

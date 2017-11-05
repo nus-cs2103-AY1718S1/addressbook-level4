@@ -50,6 +50,7 @@ import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.testutil.LessonBuilder;
 import seedu.address.testutil.LessonUtil;
 
+//@@author junming403
 public class AddCommandSystemTest extends AddressBookSystemTest {
 
     @Test
@@ -244,7 +245,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();
-
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();

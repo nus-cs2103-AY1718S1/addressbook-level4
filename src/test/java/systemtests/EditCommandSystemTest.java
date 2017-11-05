@@ -22,27 +22,30 @@ import static seedu.address.logic.commands.CommandTestUtil.TIMESLOT_DESC_CS2101;
 import static seedu.address.logic.commands.CommandTestUtil.TIMESLOT_DESC_MA1101R;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CLASSTYPE_MA1101R;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CODE_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CODE_MA1102R;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUP_MA1101R;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_LECTURER_MA1101R;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_CS2101;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_MA1102R;
 import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_CS2101;
 import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_MA1101R;
-import static seedu.address.model.ListingUnit.LESSON;
-import static seedu.address.model.ListingUnit.MODULE;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
 import static seedu.address.testutil.TypicalLessons.TYPICAL_CS2101;
 import static seedu.address.testutil.TypicalLessons.TYPICAL_MA1101R;
 
-import java.util.function.Predicate;
-
-import org.junit.After;
 import org.junit.Test;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ViewCommand;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.Model;
 import seedu.address.model.lecturer.Lecturer;
@@ -57,23 +60,27 @@ import seedu.address.model.module.TimeSlot;
 import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
-import seedu.address.model.module.predicates.FixedCodePredicate;
+import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 import seedu.address.testutil.LessonBuilder;
 import seedu.address.testutil.LessonUtil;
 
+//@@author junming403
 public class EditCommandSystemTest extends AddressBookSystemTest {
 
     @Test
-    public void edit() throws Exception {
-        Predicate predicate = new FixedCodePredicate(new Code(VALID_CODE_MA1101R));
-        updateFilterdList(predicate);
-        ListingUnit.setCurrentListingUnit(LESSON);
-        ListingUnit.setCurrentPredicate(predicate);
-        Model model = getModel();
+    public void editLesson() throws Exception {
+        /* ----------------- Performing edit operation while an lesson list is being shown ---------------------- */
 
-        /* ----------------- Performing edit operation while an unfiltered list is being shown ---------------------- */
+        /* list by module */
+        String listModuleCommand = ListCommand.COMMAND_WORD + " module";
+        executeCommand(listModuleCommand);
 
+        /*
+         * View all lessons of the module indexed with 1.
+         */
+        String listLessonCommand = ViewCommand.COMMAND_WORD + " 1";
+        executeCommand(listLessonCommand);
         /* Case: edit all fields, command with leading spaces, trailing spaces and multiple spaces between each field
          * -> edited
          */
@@ -98,26 +105,6 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         editedLesson = new LessonBuilder(lessonToEdit).withLecturers(VALID_LECTURER_MA1101R).build();
         assertCommandSuccess(command, index, editedLesson);
 
-        /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
-
-        /* Case: filtered lesson list, edit index within bounds of address book and lesson list -> edited */
-        //        showLessonsWithName(KEYWORD_MATCHING_MA1101R);
-        //
-        //        index = INDEX_FIRST_LESSON;
-        //        assertTrue(index.getZeroBased() < getModel().getFilteredLessonList().size());
-        //        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + CODE_DESC_MA1101R;
-        //        lessonToEdit = getModel().getFilteredLessonList().get(index.getZeroBased());
-        //        editedLesson = new LessonBuilder(lessonToEdit).withCode(VALID_CODE_MA1101R).build();
-        //        assertCommandSuccess(command, index, editedLesson);
-
-        /* Case: filtered lesson list, edit index within bounds of address book but out of bounds of lesson list
-         * -> rejected
-         */
-        //        showLessonsWithName(KEYWORD_MATCHING_MA1101R);
-        int invalidIndex = getModel().getAddressBook().getLessonList().size();
-        //        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + CODE_DESC_MA1101R,
-        //                Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
-
         /* --------------------- Performing edit operation while a lesson card is selected -------------------------- */
 
         /* Case: selects first card in the lesson list, edit a lesson -> edited, card selection remains unchanged but
@@ -128,7 +115,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
                 + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + LECTURER_DESC_MA1101R;
         // this can be misleading: card selection actually remains unchanged.
-        assertCommandSuccess(command, index, TYPICAL_MA1101R, index);
+        assertEditLessonSuccess(command, index, TYPICAL_MA1101R, index);
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
 
@@ -141,7 +128,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (size + 1) -> rejected */
-        invalidIndex = getModel().getFilteredLessonList().size() + 1;
+        int invalidIndex = getModel().getFilteredLessonList().size() + 1;
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + CODE_DESC_MA1101R,
                 Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
 
@@ -153,27 +140,27 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased(),
                 EditCommand.MESSAGE_NOT_EDITED);
 
-        /* Case: invalid name -> rejected */
+        /* Case: invalid module code -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + INVALID_CODE_DESC,
                 Code.MESSAGE_CODE_CONSTRAINTS);
 
-        /* Case: invalid phone -> rejected */
+        /* Case: invalid class type -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + INVALID_CLASSTYPE_DESC,
                 ClassType.MESSAGE_CLASSTYPE_CONSTRAINTS);
 
-        /* Case: invalid email -> rejected */
+        /* Case: invalid location -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + INVALID_VENUE_DESC,
                 Location.MESSAGE_LOCATION_CONSTRAINTS);
 
-        /* Case: invalid address -> rejected */
+        /* Case: invalid group number -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + INVALID_GROUP_DESC,
                 Group.MESSAGE_GROUP_CONSTRAINTS);
 
-        /* Case: invalid address -> rejected */
+        /* Case: invalid time slot -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + INVALID_TIMESLOT_DESC,
                 TimeSlot.MESSAGE_TIMESLOT_CONSTRAINTS);
 
-        /* Case: invalid tag -> rejected */
+        /* Case: invalid lecturer -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + INVALID_LECTURER_DESC,
                 Lecturer.MESSAGE_LECTURER_CONSTRAINTS);
 
@@ -192,52 +179,111 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
     }
 
+    /* ----------------- Performing edit operation while a module list is being shown ---------------------- */
+    @Test
+    public void editModule() throws Exception {
+        /* ----------------- Performing edit operation while an module list is being shown ---------------------- */
+        /* list by module */
+        String listModuleCommand = ListCommand.COMMAND_WORD + " module";
+        executeCommand(listModuleCommand);
+
+        /* Case: edit module code, command with leading spaces, trailing spaces and multiple spaces between each field
+         * -> edited
+         */
+        Index index = INDEX_FIRST_LESSON;
+        String command = " " + EditCommand.COMMAND_WORD + " 1 " + VALID_CODE_MA1102R;
+        assertCommandSuccess(command, index, VALID_CODE_MA1102R);
+
+        command = " " + EditCommand.COMMAND_WORD + "    1     " + VALID_CODE_MA1101R;
+        assertCommandSuccess(command, index, VALID_CODE_MA1101R);
+
+        /* Case: invalid index (0) -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + VALID_CODE_MA1101R,
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+
+        /* Case: invalid index (-1) -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " -1 " + VALID_CODE_MA1101R,
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+
+        /* Case: invalid index (size + 1) -> rejected */
+        int invalidIndex = getModel().getFilteredLessonList().size() + 1;
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + " " + VALID_CODE_MA1101R,
+                Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+
+        /* Case: invalid module code -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + " MA*",
+                Code.MESSAGE_CODE_CONSTRAINTS);
+    }
+
+    /* ----------------- Performing edit operation while a module list is being shown ---------------------- */
+    @Test
+    public void editLocation() throws Exception {
+        /* ----------------- Performing edit operation while an location list is being shown ---------------------- */
+        /* list by location */
+        String listLocationCommand = ListCommand.COMMAND_WORD + " location";
+        executeCommand(listLocationCommand);
+
+        /* Case: edit location, command with leading spaces, trailing spaces and multiple spaces between each field
+         * -> edited
+         */
+        Index index = INDEX_FIRST_LESSON;
+        String command = " " + EditCommand.COMMAND_WORD + " 1 " + VALID_VENUE_MA1102R;
+        assertCommandSuccess(command, index, VALID_VENUE_MA1102R);
+
+        command = " " + EditCommand.COMMAND_WORD + "    1     " + VALID_VENUE_MA1101R;
+        assertCommandSuccess(command, index, VALID_VENUE_MA1101R);
+
+        command = " " + EditCommand.COMMAND_WORD + "    1     " + VALID_VENUE_CS2101;
+        assertCommandSuccess(command, index, VALID_VENUE_CS2101);
+
+        /* Case: invalid index (0) -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + VALID_VENUE_MA1101R,
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+
+        /* Case: invalid index (-1) -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " -1 " + VALID_VENUE_MA1101R,
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+
+        /* Case: invalid index (size + 1) -> rejected */
+        int invalidIndex = getModel().getFilteredLessonList().size() + 1;
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + " " + VALID_VENUE_MA1101R,
+                Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+
+        /* Case: invalid location. -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + " ",
+                Location.MESSAGE_LOCATION_CONSTRAINTS);
+    }
+
+
     /**
      * Performs the same verification as {@code assertCommandSuccess(String, Index, ReadOnlyLesson, Index)} except that
      * the browser url and selected card remain unchanged.
      * @param toEdit the index of the current model's filtered list
-     * @see EditCommandSystemTest#assertCommandSuccess(String, Index, ReadOnlyLesson, Index)
+     * @see EditCommandSystemTest#assertEditLessonSuccess(String, Index, ReadOnlyLesson, Index)
      */
     private void assertCommandSuccess(String command, Index toEdit, ReadOnlyLesson editedLesson)
             throws DuplicateBookedSlotException {
-        assertCommandSuccess(command, toEdit, editedLesson, null);
+        assertEditLessonSuccess(command, toEdit, editedLesson, null);
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} and in addition,<br>
-     * 1. Asserts that result display box displays the success message of executing {@code EditCommand}.<br>
-     * 2. Asserts that the model related components are updated to reflect the lesson at index {@code toEdit} being
-     * updated to values specified {@code editedLesson}.<br>
-     * @param toEdit the index of the current model's filtered list.
-     * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
+     * Performs the same verification as {@code assertCommandSuccess(String, Index, String, Index)} except that
+     * the browser url and selected card remain unchanged.
+     * @param toEdit the index of the current model's filtered list
+     * @see EditCommandSystemTest#assertEditModuleSuccess(String, Index, String, Index)
      */
-    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyLesson editedLesson,
-            Index expectedSelectedCardIndex) throws DuplicateBookedSlotException {
-        Model expectedModel = getModel();
-        ReadOnlyLesson lessonToEdit = expectedModel.getFilteredLessonList().get(toEdit.getZeroBased());
-        BookedSlot bookedSlotToEdit = new BookedSlot(lessonToEdit.getLocation(), lessonToEdit.getTimeSlot());
-        BookedSlot editedBookedSlot = new BookedSlot(editedLesson.getLocation(), editedLesson.getTimeSlot());
-        try {
-            expectedModel.updateLesson(
-                    expectedModel.getFilteredLessonList().get(toEdit.getZeroBased()), editedLesson);
-            expectedModel.updateBookedSlot(bookedSlotToEdit, editedBookedSlot);
-            expectedModel.updateFilteredLessonList(MA1101R_CODE_PREDICATE);
-        } catch (DuplicateLessonException | LessonNotFoundException e) {
-            throw new IllegalArgumentException(
-                    "editedLesson is a duplicate in expectedModel, or it isn't found in the model.");
+    private void assertCommandSuccess(String command, Index toEdit, String attributeValue)
+            throws DuplicateBookedSlotException {
+        switch (ListingUnit.getCurrentListingUnit()) {
+        case MODULE:
+            assertEditModuleSuccess(command, toEdit, attributeValue, null);
+            break;
+        case LOCATION:
+            assertEditLocationSuccess(command, toEdit, attributeValue, null);
+            break;
+        default:
+            break;
         }
-        System.out.println("edit to " + editedLesson);
-        assertCommandSuccess(command, expectedModel,
-                String.format(EditCommand.MESSAGE_EDIT_LESSON_SUCCESS, editedLesson), expectedSelectedCardIndex);
-    }
-
-    /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} except that the
-     * browser url and selected card remain unchanged.
-     * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
-     */
-    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
-        assertCommandSuccess(command, expectedModel, expectedResultMessage, null);
     }
 
     /**
@@ -255,7 +301,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
-            Index expectedSelectedCardIndex) {
+                                      Index expectedSelectedCardIndex) {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
@@ -263,13 +309,114 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertStatusBarUnchangedExceptSyncStatus();
     }
 
-    @After
-    public void cleanUp() {
-        ListingUnit.setCurrentListingUnit(MODULE);
-        Predicate predicate = new UniqueModuleCodePredicate(getModel().getUniqueCodeSet());
-        ListingUnit.setCurrentPredicate(predicate);
-        updateFilterdList(predicate);
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} and in addition,<br>
+     * 1. Asserts that result display box displays the success message of executing {@code EditCommand}.<br>
+     * 2. Asserts that the model related components are updated to reflect the lesson at index {@code toEdit} being
+     * updated to values specified {@code editedLesson}.<br>
+     * @param toEdit the index of the current model's filtered list.
+     * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
+     */
+    private void assertEditModuleSuccess(String command, Index toEdit, String attributeValue,
+                                      Index expectedSelectedCardIndex) throws DuplicateBookedSlotException {
+        Model expectedModel = getModel();
+        Code codeToEdit = expectedModel.getFilteredLessonList().get(toEdit.getZeroBased()).getCode();
+
+        try {
+            Code editedCode = new Code(attributeValue);
+            expectedModel.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+            ObservableList<ReadOnlyLesson> lessonList = expectedModel.getFilteredLessonList();
+            for (ReadOnlyLesson p : lessonList) {
+
+                ReadOnlyLesson curEditedLesson;
+                if (p.getCode().equals(codeToEdit)) {
+                    curEditedLesson = new Lesson(p.getClassType(), p.getLocation(), p.getGroup(),
+                            p.getTimeSlot(), editedCode, p.getLecturers());
+                    expectedModel.updateLesson(p, curEditedLesson);
+                }
+            }
+            expectedModel.updateFilteredLessonList(new UniqueModuleCodePredicate(expectedModel.getUniqueCodeSet()));
+            assertCommandSuccess(command, expectedModel,
+                    String.format(EditCommand.MESSAGE_EDIT_MODULE_SUCCESS, editedCode), expectedSelectedCardIndex);
+        } catch (DuplicateLessonException | LessonNotFoundException e) {
+            throw new IllegalArgumentException(
+                    "editedLesson is a duplicate in expectedModel, or it isn't found in the model.");
+        } catch (IllegalValueException e) {
+            throw new IllegalArgumentException(
+                    "edited module code is not valid");
+        }
     }
+
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} and in addition,<br>
+     * 1. Asserts that result display box displays the success message of executing {@code EditCommand}.<br>
+     * 2. Asserts that the model related components are updated to reflect the lesson at index {@code toEdit} being
+     * updated to values specified {@code editedLesson}.<br>
+     * @param toEdit the index of the current model's filtered list.
+     * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
+     */
+    private void assertEditLocationSuccess(String command, Index toEdit, String attributeValue,
+                                         Index expectedSelectedCardIndex) throws DuplicateBookedSlotException {
+        Model expectedModel = getModel();
+        Location locationToEdit = expectedModel.getFilteredLessonList().get(toEdit.getZeroBased()).getLocation();
+
+        try {
+            Location editedLocation = new Location(attributeValue);
+            expectedModel.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+            ObservableList<ReadOnlyLesson> lessonList = expectedModel.getFilteredLessonList();
+            for (ReadOnlyLesson p : lessonList) {
+
+                ReadOnlyLesson curEditedLesson;
+                if (p.getLocation().equals(locationToEdit)) {
+                    curEditedLesson = new Lesson(p.getClassType(), editedLocation, p.getGroup(),
+                            p.getTimeSlot(), p.getCode(), p.getLecturers());
+                    BookedSlot bookedSlotToEdit = new BookedSlot(p.getLocation(), p.getTimeSlot());
+                    BookedSlot editedBookedSlot = new BookedSlot(editedLocation, p.getTimeSlot());
+                    expectedModel.updateBookedSlot(bookedSlotToEdit, editedBookedSlot);
+                    expectedModel.updateLesson(p, curEditedLesson);
+                }
+            }
+            expectedModel.updateFilteredLessonList(new UniqueLocationPredicate(expectedModel.getUniqueLocationSet()));
+            assertCommandSuccess(command, expectedModel,
+                    String.format(EditCommand.MESSAGE_EDIT_LOCATION_SUCCESS, editedLocation),
+                    expectedSelectedCardIndex);
+        } catch (DuplicateLessonException | LessonNotFoundException e) {
+            throw new IllegalArgumentException(
+                    "editedLesson is a duplicate in expectedModel, or it isn't found in the model.");
+        } catch (IllegalValueException e) {
+            throw new IllegalArgumentException(
+                    "edited module code is not valid");
+        }
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} and in addition,<br>
+     * 1. Asserts that result display box displays the success message of executing {@code EditCommand}.<br>
+     * 2. Asserts that the model related components are updated to reflect the lesson at index {@code toEdit} being
+     * updated to values specified {@code editedLesson}.<br>
+     * @param toEdit the index of the current model's filtered list.
+     * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
+     */
+    private void assertEditLessonSuccess(String command, Index toEdit, ReadOnlyLesson editedLesson,
+            Index expectedSelectedCardIndex) throws DuplicateBookedSlotException {
+        Model expectedModel = getModel();
+        ReadOnlyLesson lessonToEdit = expectedModel.getFilteredLessonList().get(toEdit.getZeroBased());
+        BookedSlot bookedSlotToEdit = new BookedSlot(lessonToEdit.getLocation(), lessonToEdit.getTimeSlot());
+        BookedSlot editedBookedSlot = new BookedSlot(editedLesson.getLocation(), editedLesson.getTimeSlot());
+        try {
+            expectedModel.updateLesson(lessonToEdit, editedLesson);
+            expectedModel.updateBookedSlot(bookedSlotToEdit, editedBookedSlot);
+            expectedModel.updateFilteredLessonList(MA1101R_CODE_PREDICATE);
+        } catch (DuplicateLessonException | LessonNotFoundException e) {
+            throw new IllegalArgumentException(
+                    "editedLesson is a duplicate in expectedModel, or it isn't found in the model.");
+        }
+        assertCommandSuccess(command, expectedModel,
+                String.format(EditCommand.MESSAGE_EDIT_LESSON_SUCCESS, editedLesson), expectedSelectedCardIndex);
+    }
+
 
     /**
      * Executes {@code command} and in addition,<br>

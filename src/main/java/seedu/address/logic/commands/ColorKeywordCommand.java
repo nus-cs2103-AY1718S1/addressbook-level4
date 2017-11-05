@@ -12,7 +12,7 @@ public class ColorKeywordCommand extends Command {
     public static final String COMMAND_WORD = "color";
     public static final String MESSAGE_SUCCESS = " highlighting of keyword.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Highlighting the command keywords "
-            + "Parameters: enable / disable\n"
+            + "Parameters: enable/disable\n"
             + "Example: " + COMMAND_WORD + " enable";
 
     public static final String DISABLE_COLOR = "Disable";

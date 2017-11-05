@@ -36,6 +36,7 @@ import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.exceptions.RemarkNotFoundException;
 import seedu.address.testutil.LessonBuilder;
 
+//@@author junming403
 public class AddCommandTest {
 
     @Rule
