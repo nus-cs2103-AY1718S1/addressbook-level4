@@ -3,6 +3,7 @@ package seedu.address.model.schedule;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
+import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -16,23 +17,23 @@ import seedu.address.model.person.Name;
 public class Schedule {
     private ObjectProperty<ScheduleDate> scheduleDate;
     private ObjectProperty<Activity> activity;
-    private ObjectProperty<Name> personInvolvedName;
+    private ObjectProperty<Set<Name>> personInvolvedNames;
 
     /**
      * Every field must be present and not null.
      */
-    public Schedule(ScheduleDate scheduleDate, Activity activity, Name personInvolvedName) {
-        requireAllNonNull(scheduleDate, activity, personInvolvedName);
+    public Schedule(ScheduleDate scheduleDate, Activity activity, Set<Name> personInvolvedNames) {
+        requireAllNonNull(scheduleDate, activity, personInvolvedNames);
         this.scheduleDate = new SimpleObjectProperty<>(scheduleDate);
         this.activity = new SimpleObjectProperty<>(activity);
-        this.personInvolvedName = new SimpleObjectProperty<>(personInvolvedName);
+        this.personInvolvedNames = new SimpleObjectProperty<>(personInvolvedNames);
     }
 
     /**
      * Creates a copy of the given Schedule.
      */
     public Schedule(Schedule source) {
-        this(source.getScheduleDate(), source.getActivity(), source.getPersonInvolvedName());
+        this(source.getScheduleDate(), source.getActivity(), source.getPersonInvolvedNames());
     }
 
     public ScheduleDate getScheduleDate() {
@@ -60,16 +61,16 @@ public class Schedule {
         this.activity.set(activity);
     }
 
-    public Name getPersonInvolvedName() {
-        return personInvolvedName.get();
+    public Set<Name> getPersonInvolvedNames() {
+        return personInvolvedNames.get();
     }
 
-    public ObjectProperty<Name> getPersonInvolvedNameProperty() {
-        return personInvolvedName;
+    public ObjectProperty<Set<Name>> getPersonInvolvedNamesProperty() {
+        return personInvolvedNames;
     }
 
-    public void setPersonInvolvedName(Name personInvolvedName) {
-        this.personInvolvedName.set(personInvolvedName);
+    public void setPersonInvolvedNames(Set<Name> personInvolvedNames) {
+        this.personInvolvedNames.set(personInvolvedNames);
     }
 
     //@@author
@@ -88,7 +89,7 @@ public class Schedule {
                 || (other != null // this is first to avoid NPE below
                 && other.getScheduleDate().equals(this.getScheduleDate()) // state checks here onwards
                 && other.getActivity().equals(this.getActivity())
-                && other.getPersonInvolvedName().equals(this.getPersonInvolvedName()));
+                && other.getPersonInvolvedNames().equals(this.getPersonInvolvedNames()));
     }
 
     @Override
@@ -105,7 +106,7 @@ public class Schedule {
                 .append(" Activity: ")
                 .append(getActivity())
                 .append(" Person: ")
-                .append(getPersonInvolvedName());
+                .append(getPersonInvolvedNames());
         return builder.toString();
     }
 }

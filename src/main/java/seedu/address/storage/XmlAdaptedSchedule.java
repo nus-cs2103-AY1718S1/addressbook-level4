@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.xml.bind.annotation.XmlValue;
@@ -21,6 +22,7 @@ public class XmlAdaptedSchedule {
     private String schedule;
 
     private Logger logger = LogsCenter.getLogger(XmlAdaptedSchedule.class);
+
     /**
      * Constructs an XmlAdaptedSchedule.
      * This is the no-arg constructor that is required by JAXB.
@@ -36,25 +38,28 @@ public class XmlAdaptedSchedule {
     public XmlAdaptedSchedule(Schedule source) {
         ScheduleDate scheduleDate = source.getScheduleDate();
         Activity activity = source.getActivity();
-        Name personInvolvedName = source.getPersonInvolvedName();
+        Set<Name> personInvolvedNames = source.getPersonInvolvedNames();
 
         schedule = "Date: " + scheduleDate.toString() + " Activity: " + activity.toString()
-                + " Person: " + personInvolvedName.toString();
+                + " Person(s): " + personInvolvedName.toString();
     }
 
-    //@@author
     /**
      * Converts this jaxb-friendly adapted tag object into the model's Schedule object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Schedule toModelType() throws IllegalValueException {
-        // extract out schedule date and activity from schedule string
-        int personHeaderIndex = schedule.indexOf("Person: ");
+        // extract out schedule date, activity and person involved from schedule string
+        int startingIndexOfDate = 6;
+        int endingIndexOfDate = 16;
+        int startingIndexOfActivity = schedule.indexOf("Activity: ") + 10;
+        int personHeaderIndex = schedule.indexOf("Person(s): ");
+        int startingIndexOfPerson = personHeaderIndex + 8;
 
-        String scheduleDate = schedule.substring(6, 16);
-        String activity = schedule.substring(schedule.indexOf("Activity: ") + 10, personHeaderIndex - 1);
-        String personInvolvedName = schedule.substring(personHeaderIndex + 8);
+        String scheduleDate = schedule.substring(startingIndexOfDate, endingIndexOfDate);
+        String activity = schedule.substring(startingIndexOfActivity, personHeaderIndex - 1);
+        String personInvolvedNames = schedule.substring(startingIndexOfPerson);
 
         logger.info("Date: " + scheduleDate + " Activity: " + activity + " Person: " + personInvolvedName);
         return new Schedule(new ScheduleDate(scheduleDate), new Activity(activity), new Name(personInvolvedName));

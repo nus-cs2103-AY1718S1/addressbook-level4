@@ -5,8 +5,8 @@ import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import seedu.address.model.schedule.Schedule;
 
 /**
@@ -34,7 +34,7 @@ public class ScheduleCard extends UiPart<Region> {
     @FXML
     private Label date;
     @FXML
-    private Label personName;
+    private VBox personNames;
 
     public ScheduleCard(Schedule schedule, int displayedIndex) {
         super(FXML);
@@ -50,7 +50,20 @@ public class ScheduleCard extends UiPart<Region> {
     private void bindListeners(Schedule schedule) {
         activity.textProperty().bind(Bindings.convert(schedule.getActivityProperty()));
         date.textProperty().bind(Bindings.convert(schedule.getScheduleDateProperty()));
-        personName.textProperty().bind(Bindings.convert(schedule.getPersonInvolvedNameProperty()));
+        schedule.getPersonInvolvedNamesProperty().addListener((observable, oldValue, newValue) -> {
+            personNames.getChildren().clear();
+            initPersonNames(schedule);
+        });
+    }
+
+    /**
+     * Sets person names involved in the scheduling to the respective UI labels upon startup.
+     */
+    private void initPersonNames(Schedule schedule) {
+        schedule.getPersonInvolvedNames().forEach(personName -> {
+            Label emailLabel = new Label(personName.fullName);
+            personNames.getChildren().add(emailLabel);
+        });
     }
 
     @Override

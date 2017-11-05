@@ -27,7 +27,7 @@ public class ScheduleCardTest extends GuiUnitTest {
         ScheduleCard scheduleCard2 = new ScheduleCard(testSchedule, 1);
         // changes made to Schedule reflects on card
         guiRobot.interact(() -> {
-            testSchedule2.setPersonInvolvedName(testSchedule2.getPersonInvolvedName());
+            testSchedule2.setPersonInvolvedNames(testSchedule2.getPersonInvolvedName());
             testSchedule2.setScheduleDate(testSchedule2.getScheduleDate());
             testSchedule2.setActivity(testSchedule2.getActivity());
         });

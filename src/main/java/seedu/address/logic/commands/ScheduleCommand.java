@@ -13,6 +13,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -59,16 +60,35 @@ public class ScheduleCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
+        Set<Name> schedulePersonNames = fillSchedulePersonNamesSet(model, indices);
+
+        updateModelWithUpdatedSchedules(model, indices, schedulePersonNames, date, activity);
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+
+        return new CommandResult(String.format(MESSAGE_SCHEDULE_SUCCESS, indices.size()));
+    }
+
+    //@@author 17navasaw
+    /**
+     * Updates address book model with new schedule set for each person.
+     * @param model Model of address book.
+     * @param indices Set of indices indicating the people from last shown list.
+     * @param schedulePersonNames Set of names associated with the schedule.
+     * @param date Date of activity.
+     * @param activity Activity to be scheduled.
+     * @throws CommandException
+     */
+    private void updateModelWithUpdatedSchedules(Model model, Set<Index> indices, Set<Name> schedulePersonNames,
+                                                 ScheduleDate date, Activity activity) throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         for (Index index: indices) {
-
             if (index.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
 
             ReadOnlyPerson schedulePerson = lastShownList.get(index.getZeroBased());
-            Schedule schedule = new Schedule(date, activity, schedulePerson.getName());
+            Schedule schedule = new Schedule(date, activity, schedulePersonNames);
 
             Set<Schedule> schedules = new HashSet<>(schedulePerson.getSchedules());
 
@@ -87,11 +107,32 @@ public class ScheduleCommand extends UndoableCommand {
                 throw new AssertionError("The target person cannot be missing");
             }
         }
-        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
-
-        return new CommandResult(String.format(MESSAGE_SCHEDULE_SUCCESS, indices.size()));
     }
 
+    /**
+     * Returns a set of person names involved in the scheduling of the activity.
+     * @param model Model of address book.
+     * @param indices Set of indices indicating the people from last shown list.
+     * @return {@code schedulePersonNames} which contains the set of person names involved in the scheduling.
+     * @throws CommandException
+     */
+    private Set<Name> fillSchedulePersonNamesSet(Model model, Set<Index> indices) throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        Set<Name> schedulePersonNames = new HashSet<>();
+
+        for (Index index: indices) {
+            if (index.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+
+            ReadOnlyPerson schedulePerson = lastShownList.get(index.getZeroBased());
+            schedulePersonNames.add(schedulePerson.getName());
+        }
+
+        return schedulePersonNames;
+    }
+
+    //@@ CT15
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
