@@ -32,11 +32,11 @@
             </HBox>
             <Label fx:id="dateTime" styleClass="cell_small_label" text="\$date and time" />
             <Label fx:id="venue" styleClass="cell_small_label" text="\$venue" />
-         <ImageView fx:id="notifications" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-            <VBox.margin>
-               <Insets left="275.0" />
-            </VBox.margin>
-         </ImageView>
+         <HBox alignment="BOTTOM_RIGHT" prefHeight="25.0" prefWidth="25.0">
+            <children>
+               <ImageView fx:id="notifications" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+            </children>
+         </HBox>
         </VBox>
       <rowConstraints>
          <RowConstraints />

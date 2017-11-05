@@ -54,7 +54,7 @@ public class AddEventCommand extends UndoableCommand {
         requireNonNull(model);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
         try {
-            Reminder r = new Reminder(toAdd, "You have an event today!");
+            Reminder r = new Reminder(toAdd, "Reminder : You have an event!");
             toAdd.addReminder(r);
             model.addReminder(r);
             model.addEvent(toAdd);
