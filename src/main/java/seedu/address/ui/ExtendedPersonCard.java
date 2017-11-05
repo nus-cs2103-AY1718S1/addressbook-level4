@@ -31,6 +31,8 @@ public class ExtendedPersonCard extends UiPart<Region> {
     @FXML
     private Label phone;
     @FXML
+    private Label parentPhone;
+    @FXML
     private Label address;
     @FXML
     private Label formClass;
@@ -54,6 +56,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
     protected void loadPersonDetails(ReadOnlyPerson person) {
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().toString());
+        parentPhone.setText(person.getParentPhone().toString());
         address.setText(person.getAddress().toString());
         formClass.setText(person.getFormClass().toString());
         grades.setText(person.getGrades().toString());
