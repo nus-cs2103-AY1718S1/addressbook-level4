@@ -56,6 +56,21 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         }
         return false;
     }
+    /**
+     * Returns true if the list contains a clashing meeting that has a different name of meeting as the given argument.
+     */
+    public boolean diffNameOfMeeting(ReadOnlyMeeting toCheck,ReadOnlyMeeting target) {
+        for (Meeting meeting : internalMeetingList) {
+            if (meeting != target) {
+                if (toCheck.getDate().equals(meeting.getDate())) {
+                    if (!toCheck.getName().equals(meeting.getName())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
     /**
      * Returns true if the list contains a clashing meeting that has a different meeting location as the given argument.
@@ -65,6 +80,21 @@ public class UniqueMeetingList implements Iterable<Meeting> {
             if (toCheck.getDate().equals(meeting.getDate())) {
                 if (!toCheck.getPlace().equals(meeting.getPlace())) {
                     return true;
+                }
+            }
+        }
+        return false;
+    }
+    /**
+     * Returns true if the list contains a clashing meeting that has a different meeting location as the given argument.
+     */
+    public boolean diffLocationOfMeeting(ReadOnlyMeeting toCheck,ReadOnlyMeeting target) {
+        for (Meeting meeting : internalMeetingList) {
+            if (target != meeting) {
+                if (toCheck.getDate().equals(meeting.getDate())) {
+                    if (!toCheck.getPlace().equals(meeting.getPlace())) {
+                        return true;
+                    }
                 }
             }
         }
@@ -107,9 +137,7 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         }
         if (!target.equals(editedMeeting) && internalMeetingList.contains(editedMeeting)) {
             throw new DuplicateMeetingException();
-        } else if (diffNameOfMeeting(editedMeeting)) {
-            throw new MeetingClashException();
-        } else if (diffLocationOfMeeting(editedMeeting)) {
+        } else if (diffNameOfMeeting(editedMeeting,target)||diffLocationOfMeeting(editedMeeting,target)) {
             throw new MeetingClashException();
         }
 
