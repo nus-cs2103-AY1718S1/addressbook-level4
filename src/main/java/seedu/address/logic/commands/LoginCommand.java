@@ -8,9 +8,8 @@ import java.util.logging.Logger;
 
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.ui.Ui;
 
-//@@author cqhchan
+import seedu.address.model.credentials.ReadOnlyAccount;
 /**
  *
  */
@@ -18,33 +17,33 @@ public class LoginCommand extends Command {
 
 
     public static final String COMMAND_WORD = "login";
-
-    public static final String MESSAGE_SUCCESS = "Login Successful";
-
     public static final String MESSAGE_FAILURE = "Username or Password Incorrect";
-
+    public static final String MESSAGE_SUCCESS = "Login Successful";
+    private static String MESSAGE_LOGIN_ACKNOWLEDGEMENT;
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Login to private Database. "
             + "Parameters: "
             + PREFIX_USERNAME + "USERNAME "
             + PREFIX_PASSWORD + "PASSWORD";
 
-    private static String MESSAGE_LOGIN_ACKNOWLEDGEMENT;
-
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
+    private ReadOnlyAccount account;
 
-    public LoginCommand(String userName, String userPassword) {
-        if (userName.equals("private") && userPassword.equals("password")) {
-            MESSAGE_LOGIN_ACKNOWLEDGEMENT = MESSAGE_SUCCESS;
-            Ui ui = MainApp.getUi();
-            ui.restart(userName);
-        } else {
-            MESSAGE_LOGIN_ACKNOWLEDGEMENT = MESSAGE_FAILURE;
-        }
+    public LoginCommand(ReadOnlyAccount account) {
+        this.account = account;
     }
 
     @Override
     public CommandResult execute() {
 
-        return new CommandResult(MESSAGE_LOGIN_ACKNOWLEDGEMENT);
+        for (ReadOnlyAccount tempaccount : model.getFilteredAccountList()) {
+            if (account.getUsername().fullName.equals(tempaccount.getUsername().fullName)
+                    && account.getPassword().value.equals(tempaccount.getPassword().value)) {
+                logger.info("Credentials Accepted");
+                MainApp.getUi().restart(account.getUsername().fullName);
+                return new CommandResult(MESSAGE_SUCCESS);
+            }
+        }
+        return new CommandResult(MESSAGE_FAILURE);
+
     }
 }

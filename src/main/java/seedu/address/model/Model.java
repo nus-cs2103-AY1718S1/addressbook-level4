@@ -7,6 +7,8 @@ import javafx.collections.ObservableList;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 
+import seedu.address.model.credentials.ReadOnlyAccount;
+import seedu.address.model.credentials.exceptions.DuplicateAccountException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -22,12 +24,16 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
     Predicate<ReadOnlyReminder> PREDICATE_SHOW_ALL_REMINDERS = unused -> true;
-
+    Predicate<ReadOnlyAccount> PREDICATE_SHOW_ALL_ACCOUNTS = unused -> true;
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
+    void resetDatabase(ReadOnlyDatabase newData);
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
+
+    /** Returns the DatabaseBook */
+    ReadOnlyDatabase getDatabase();
 
     //// person-level operations
 
@@ -36,6 +42,12 @@ public interface Model {
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+
+    /** Deletes the given person. */
+    void deleteAccount(ReadOnlyAccount target) throws PersonNotFoundException;
+
+    /** Adds the given person */
+    void addAccount(ReadOnlyAccount account) throws DuplicateAccountException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -52,11 +64,14 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
+    ObservableList<ReadOnlyAccount> getFilteredAccountList();
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    void updateFilteredAccountList(Predicate<ReadOnlyAccount> predicate);
 
     /**
      * Checks if list is empty

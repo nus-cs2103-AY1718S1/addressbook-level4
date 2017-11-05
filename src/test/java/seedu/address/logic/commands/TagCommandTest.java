@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstAndSecondPersonsOnly;
 import static seedu.address.logic.commands.TagCommand.MESSAGE_INVALID_INDEXES;
+import static seedu.address.testutil.TypicalAccounts.getTypicalDatabase;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
@@ -34,7 +35,7 @@ import seedu.address.testutil.PersonBuilder;
 
 public class TagCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalDatabase(), new UserPrefs());
 
     @Test
     public void execute_unfilteredList_success() throws Exception {
@@ -50,7 +51,8 @@ public class TagCommandTest {
                 + firstTaggedPerson.getName().toString() + ", "
                 + secondTaggedPerson.getName().toString();
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstTaggedPerson);
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondTaggedPerson);
 
@@ -71,7 +73,8 @@ public class TagCommandTest {
                 + String.format(TagCommand.MESSAGE_PERSONS_ALREADY_HAVE_TAG, 1) + " "
                 + secondTaggedPerson.getName().toString();
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstTaggedPerson);
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondTaggedPerson);
 
@@ -95,7 +98,8 @@ public class TagCommandTest {
                 + firstTaggedPerson.getName().toString() + ", "
                 + secondTaggedPerson.getName().toString();
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstTaggedPerson);
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondTaggedPerson);
 
@@ -120,7 +124,8 @@ public class TagCommandTest {
                 + String.format(TagCommand.MESSAGE_PERSONS_ALREADY_HAVE_TAG, 1) + " "
                 + secondTaggedPerson.getName().toString();
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstTaggedPerson);
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondTaggedPerson);
 
