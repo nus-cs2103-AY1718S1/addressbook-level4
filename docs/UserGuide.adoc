@@ -16,14 +16,13 @@ By: `CS2103AUG2017 T16-B2`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
 
-`cherBook` is an application for teachers to monitor their students' academic progress and easily contact their parents. +
+`cherBook` is an application specifically designed to help teachers keep up with their hectic schedule adn monitor students' academic progress.
+Need to do reports on students' academic progress and help students lagging behind?
+No worries, `cherBook`'s data analysis helps you find trends in student's academic development and identify students that need extra help.
+//TODO: celine please add in your scheduling part:
+Too many consultations to take care of??? Insert problem here.
 
-Using `cherBook` 's statistical analysis, you can easily monitor your student's academic development and identify students that need more extra help.
-You will be able to view the 25th, 50th and 75th percentile scores of each class, giving you a quick overview of your the students' academic development.
-
-With the upcoming update in `v1.4`, `cherBook` will soon be able to compare statistics between different groups of students.
-
-`cherBook v1.4` is available for the Linux, Unix and Windows and Mac OS X operating systems
+`cherBook v1.5` is available for the Linux, Unix and Windows and Mac OS X operating systems
 
 == About
 
