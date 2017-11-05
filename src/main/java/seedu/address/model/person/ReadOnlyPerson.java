@@ -58,8 +58,6 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" Photo Path: ")
-                .append(getPhoto())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         getCustomFields().forEach(builder::append);

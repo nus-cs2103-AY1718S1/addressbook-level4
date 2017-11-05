@@ -1,51 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox>
          <children>
 
             <Label fx:id="id" styleClass="label-header" />
             <Label fx:id="name" styleClass="name" />
-             <VBox minHeight="10"></VBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="photoContainer" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+             <VBox minHeight="10" />
 
             <HBox>
                <children>
                   <FlowPane fx:id="tags" />
-                   <VBox minHeight="10"></VBox>
+                   <VBox minHeight="10" />
                </children>
             </HBox>
             <HBox>
                <children>
-                   <VBox minHeight="30"></VBox>
+                   <VBox minHeight="30" />
                   <Label styleClass="label-bright" text="Phone: " />
                   <Label fx:id="phone" styleClass="label-bright" />
                </children>
             </HBox>
             <HBox>
                <children>
-                   <VBox minHeight="30"></VBox>
+                  <ListView fx:id="optionalPhoneList" layoutX="14.0" layoutY="21.0" prefHeight="40.0" prefWidth="300.0" />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                   <VBox minHeight="30" />
                   <Label styleClass="label-bright" text="Address: " />
                   <Label fx:id="address" styleClass="label-bright" />
                </children>
             </HBox>
             <HBox>
                <children>
-                   <VBox minHeight="30"></VBox>
+                   <VBox minHeight="30" />
                   <Label styleClass="label-bright" text="Email: " />
                   <Label fx:id="email" styleClass="label-bright" />
                </children>
             </HBox>
             <HBox>
                <children>
-                  <Label styleClass="label-bright" text="Photo path: " />
-                  <Label fx:id="photoPath" styleClass="label-bright" />
+                  <VBox minHeight="30" />
+                  <Label fx:id="customFields" styleClass="label-bright" />
                </children>
             </HBox>
          </children>

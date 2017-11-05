@@ -1,16 +1,24 @@
 package seedu.address.ui;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -27,6 +35,9 @@ public class PersonInformationPanel extends UiPart<Region> {
     private static String[] colors = {"red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey"};
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
+
+    protected List<String> optionalPhoneDisplayList = new ArrayList<String>();
+    protected ListProperty<String> listProperty = new SimpleListProperty<>();
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -47,9 +58,11 @@ public class PersonInformationPanel extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label customFields;
+    @FXML
     private ImageView photoContainer;
     @FXML
-    private AnchorPane photoPane;
+    private ListView optionalPhoneList;
 
     public PersonInformationPanel() {
         super(FXML);
@@ -78,15 +91,14 @@ public class PersonInformationPanel extends UiPart<Region> {
             tags.getChildren().clear();
             initTags();
         });
-
     }
 
     /**
      * loads the selected person's information to be displayed.
      * @param person
-     * @param personid
+     * @param personId
      */
-    private void loadPersonInformation(ReadOnlyPerson person, int personid) {
+    private void loadPersonInformation(ReadOnlyPerson person, int personId) {
         this.person = person;
         tags.getChildren().clear();
         initTags();
@@ -94,8 +106,32 @@ public class PersonInformationPanel extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        id.setText(Integer.toString(personid));
+        customFields.textProperty().bind(Bindings.convert(person.customFieldProperty()));
+        id.setText(Integer.toString(personId));
+        optionalPhoneDisplayList.clear();
+        initOptionalPhones(person);
+        initPhoto(person);
     }
+
+    //@@author LuLechuan
+    /**
+     *  Initialises icon photo
+     */
+    private void initPhoto(ReadOnlyPerson person) {
+        String pathName = person.getPhoto().pathName;
+
+        File photoImage = new File(pathName);
+        Image photo = null;
+        try {
+            photo = new Image(photoImage.toURI().toURL().toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        photoContainer.setImage(photo);
+    }
+    //@@author
+
     /**
      * Sets a background color for each tag.
      * @param
@@ -107,6 +143,23 @@ public class PersonInformationPanel extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
+
+    //@@author LuLechuan
+    /**
+     *  Initialise optional phone display list
+     */
+    public void initOptionalPhones(ReadOnlyPerson person) {
+        final int[] index = {1};
+        person.getPhoneList().forEach(optionalPhone -> {
+            optionalPhoneDisplayList.add("Other phone " + index[0] + " : " + optionalPhone.value);
+            index[0]++;
+        });
+
+        optionalPhoneList.itemsProperty().bind(listProperty);
+
+        listProperty.set(FXCollections.observableArrayList(optionalPhoneDisplayList));
+    }
+    //@@author
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
