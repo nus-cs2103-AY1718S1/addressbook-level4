@@ -32,7 +32,10 @@
               <StackPane fx:id="commandBoxPlaceholder" maxHeight="37.0" minHeight="-Infinity" prefHeight="37.0" prefWidth="310.0" VBox.vgrow="NEVER">
                   <opaqueInsets>
                      <Insets />
-                  </opaqueInsets></StackPane>
+                  </opaqueInsets>
+                  <VBox.margin>
+                     <Insets bottom="5.0" />
+                  </VBox.margin></StackPane>
               <StackPane fx:id="resultDisplayPlaceholder" maxHeight="133.0" minHeight="133.0" prefHeight="133.0" styleClass="pane-with-border" VBox.vgrow="NEVER">
                   <VBox.margin>
                      <Insets />
