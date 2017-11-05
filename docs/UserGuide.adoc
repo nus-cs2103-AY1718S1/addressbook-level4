@@ -535,3 +535,19 @@ It is also known as the arithmetic mean.
 A low average implies that the class/cohort has underperformed.
 A high average implies that the class/cohort has performed above expectations.
 ....
+
+== Patch Notes
+//TODO: Fill in all major updates and feature implementations here
+=== Features added in v1.0
+
+=== Features added in v1.1
+
+=== Features added in v1.2
+
+=== Features added in v1.3
+
+=== Features added in v1.4
+
+=== Features added in v1.5
+
+=== Features Coming in v2.0
