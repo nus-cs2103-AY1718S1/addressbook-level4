@@ -11,7 +11,6 @@ import seedu.address.model.Model;
 public class ColorEnableSystemTest extends AddressBookSystemTest {
     @Test
     public void colorEnable() {
-        final Model defaultModel = getModel();
 
         /* Case: enable highlighting feature with leading spaces and trailing space
          */
