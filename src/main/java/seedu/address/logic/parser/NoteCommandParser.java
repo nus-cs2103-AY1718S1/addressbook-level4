@@ -23,18 +23,17 @@ public class NoteCommandParser implements Parser<NoteCommand> {
      */
     public NoteCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NOTE);
-
+        String trimmedArgs = args.trim();
+        String[] parts = trimmedArgs.split("\\s+", 2);
         Index index;
 
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            index = ParserUtil.parseIndex(parts[0]);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, NoteCommand.MESSAGE_USAGE));
         }
 
-        String note = argMultimap.getValue(PREFIX_NOTE).orElse("");
+        String note = (parts.length == 2) ? parts[1] : "";
 
         return new NoteCommand(index, new Note(note));
     }

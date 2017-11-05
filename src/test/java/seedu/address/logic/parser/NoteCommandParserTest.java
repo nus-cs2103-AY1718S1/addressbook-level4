@@ -1,7 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NOTE_AMY;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -21,20 +21,33 @@ import seedu.address.model.person.Note;
 public class NoteCommandParserTest {
 
     private NoteCommandParser parser = new NoteCommandParser();
+    private final String MESSAGE_INVALID_FORMAT = String.format(MESSAGE_INVALID_COMMAND_FORMAT, NoteCommand.MESSAGE_USAGE);
 
     @Test
     public void parse_validArgs_returnsNoteCommand() {
 
-        String userInputNotes = INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_NOTE + "remark";
-        String userInputNoNotes = INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_NOTE + "";
+        String userInputNotes = INDEX_FIRST_PERSON.getOneBased() + " " + "remark";
+        String userInputNoNotes = INDEX_FIRST_PERSON.getOneBased() + " ";
+        String userInputNotesAmy = INDEX_FIRST_PERSON.getOneBased() + " " + VALID_NOTE_AMY;
 
-        assertParseSuccess(parser, userInputNotes, new NoteCommand(INDEX_FIRST_PERSON, new Note("emark")));
+        assertParseSuccess(parser, userInputNotes, new NoteCommand(INDEX_FIRST_PERSON, new Note("remark")));
         assertParseSuccess(parser, userInputNoNotes, new NoteCommand(INDEX_FIRST_PERSON, new Note("")));
+        assertParseSuccess(parser, userInputNotesAmy, new NoteCommand(INDEX_FIRST_PERSON, new Note(VALID_NOTE_AMY)));
     }
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, NoteCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "1 t/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, NoteCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "a", MESSAGE_INVALID_FORMAT);
+        // no index and no tag specified
+        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_invalidPreamble_failure() {
+        // negative index
+        assertParseFailure(parser, "-5" + VALID_NOTE_AMY, MESSAGE_INVALID_FORMAT);
+
+        // zero index
+        assertParseFailure(parser, "0" + VALID_NOTE_AMY, MESSAGE_INVALID_FORMAT);
     }
 }

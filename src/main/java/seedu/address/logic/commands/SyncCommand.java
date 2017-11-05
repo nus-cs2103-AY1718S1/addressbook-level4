@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Logger;
@@ -31,6 +32,7 @@ import seedu.address.model.person.LastUpdated;
 import seedu.address.model.person.Note;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 
 //@@author derrickchua
@@ -44,15 +46,20 @@ public class SyncCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Syncs the current addressbook with Google Contacts ";
 
-    public static final String MESSAGE_SUCCESS = "Synchronising";
+    public static final String MESSAGE_SUCCESS = "Synchronised";
     public static final String MESSAGE_FAILURE = "Please login first";
 
     private static PeopleService client;
 
     private static HashSet<String> syncedIDs;
 
-    private static final Logger logger = LogsCenter.getLogger(SyncCommand.class);
+    private HashMap<String, ReadOnlyPerson> hashId;
 
+    private List<Person> connections;
+
+    private HashMap<String, Person> hashGoogleId;
+
+    private static final Logger logger = LogsCenter.getLogger(SyncCommand.class);
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
@@ -60,18 +67,56 @@ public class SyncCommand extends UndoableCommand {
         if (clientFuture == null || !clientFuture.isDone()) {
             throw new CommandException(MESSAGE_FAILURE);
         } else {
+
             syncedIDs =  (loadStatus() == null) ? new HashSet<String>() : (HashSet) loadStatus();
+
             try {
                 client = clientFuture.get();
+                ListConnectionsResponse response = client.people().connections().list("people/me")
+                        .setPersonFields("metadata,names,emailAddresses,addresses,phoneNumbers")
+                        .execute();
+                connections = response.getConnections();
                 List<ReadOnlyPerson> personList = model.getFilteredPersonList();
+                hashId = constructHashId(personList);
+
+                if (connections != null) {
+                    hashGoogleId = constructGoogleHashId();
+                    importContacts();
+                } else {
+                    hashGoogleId = new HashMap<String, Person>();
+                }
+
+                checkContacts();
+                updateContacts();
                 exportContacts(personList);
-                importContacts();
+
                 saveStatus(syncedIDs);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return new CommandResult(String.format(MESSAGE_SUCCESS));
+    }
+
+    /** Ensures that all Google Contacts have not been removed, and unlinks them if they are
+     *
+     * @throws Exception
+     */
+    private void checkContacts() throws Exception {
+        List<ReadOnlyPerson> personList = model.getFilteredPersonList();
+        for (ReadOnlyPerson person : personList) {
+            String id = person.getId().getValue();
+
+            if (!hashGoogleId.containsKey(id)) {
+                logger.info("Unlinking contact");
+                seedu.address.model.person.Person updatedPerson = new seedu.address.model.person.Person(person);
+                updatedPerson.setId(new Id(""));
+                model.updatePerson(person, updatedPerson);
+                syncedIDs.remove(id);
+                continue;
+            }
+
+        }
     }
 
     /** Exports local contacts to Google Contacts
@@ -82,19 +127,19 @@ public class SyncCommand extends UndoableCommand {
 
     public void exportContacts (List<ReadOnlyPerson> personList) throws Exception {
         for (ReadOnlyPerson person : personList) {
-            if (person.getId().getValue().equals("")) {
-                Person contactToCreate = convertAPerson(person);
-                Person createdContact = client.people().createContact(contactToCreate).execute();
+                if (person.getId().getValue().equals("")) {
+                    Person contactToCreate = convertAPerson(person);
+                    Person createdContact = client.people().createContact(contactToCreate).execute();
 
-                String id = createdContact.getResourceName();
+                    String id = createdContact.getResourceName();
 
-                seedu.address.model.person.Person updatedPerson = insertId(person, id);
-                updatedPerson.setLastUpdated(new LastUpdated(getLastUpdated(createdContact)));
+                    seedu.address.model.person.Person updatedPerson = setId(person, id);
+                    updatedPerson.setLastUpdated(new LastUpdated(getLastUpdated(createdContact)));
 
-                updatePerson(person, updatedPerson);
-                syncedIDs.add(id);
+                    updatePerson(person, updatedPerson);
+                    syncedIDs.add(id);
+                }
             }
-        }
     }
 
     /**Pulls Google contacts and import new contacts, while checking for updates
@@ -102,87 +147,98 @@ public class SyncCommand extends UndoableCommand {
 
     private void importContacts () throws IOException {
 
-        ListConnectionsResponse response = client.people().connections().list("people/me")
-                .setPersonFields("metadata,names,emailAddresses,addresses,phoneNumbers")
-                .execute();
-        List<Person> connections = response.getConnections();
+            for (Person person : connections) {
+                try {
+                    seedu.address.model.person.Person aPerson = convertGooglePerson(person);
+                    String id = person.getResourceName();
+                    if (!syncedIDs.contains(id)) {
+                        model.addPerson(aPerson);
+                        syncedIDs.add(id);
+                    }
+                } catch (DuplicatePersonException e) {
+                    logger.info("Not importing duplicate");
 
-        for (Person person : connections) {
-            try {
-                seedu.address.model.person.Person aPerson = convertGooglePerson(person);
-                String id = person.getResourceName();
-                if (id == "") {
-                    logger.warning("Google Contact has no retrievable ResourceName");
-                } else if (syncedIDs.contains(id)) {
-                    //checks for updating
-                    updateContact(person);
-                }  else {
-
-                    model.addPerson(aPerson);
-                    syncedIDs.add(id);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                logger.severe(e.getMessage());
-                e.printStackTrace();
+            }
+    }
+
+    /** Update all contacts
+     *
+     * @throws Exception
+     */
+    private void updateContacts() throws Exception {
+        List<String> toRemove = new ArrayList<String>();
+        for (String id : syncedIDs) {
+            seedu.address.model.person.ReadOnlyPerson aPerson;
+            Person person;
+            if (!hashId.containsKey(id)) {
+                // Contact has been deleted locally. We update this remotely
+                if (hashGoogleId.containsKey(id)) {
+                    client.people().deleteContact(id).execute();
+                }
+                toRemove.add(id);
+                continue;
+            }
+
+            aPerson = hashId.get(id);
+
+            if (hashGoogleId.containsKey(id)){
+                person = hashGoogleId.get(id);
+            } else {
+                // Contact is no longer existent on Google servers
+                aPerson = hashId.get(id);
+                seedu.address.model.person.Person updatedPerson = setId(aPerson, "");
+                updatePerson(aPerson, updatedPerson);
+                syncedIDs.remove(id);
+                continue;
+            }
+
+            String lastUpdated = person.getMetadata().getSources().get(0).getUpdateTime();
+            Instant gTime = Instant.parse(lastUpdated);
+            Instant aTime = Instant.parse(aPerson.getLastUpdated().getValue());
+            Integer compare = gTime.compareTo(aTime);
+
+            if (compare < 0) {
+                Person updatedPerson = convertAPerson(aPerson);
+                updatedPerson.setMetadata(person.getMetadata());
+                checkNullFields(person, updatedPerson);
+
+                // The Google Contact is updated
+                Person updatedContact = client.people()
+                        .updateContact(person.getResourceName(), updatedPerson)
+                        .setUpdatePersonFields("names,emailAddresses,addresses,phoneNumbers")
+                        .execute();
+
+                // Synchronize update time of both database entries to prevent looping
+                String newUpdated = updatedContact.getMetadata().getSources().get(0).getUpdateTime();
+                seedu.address.model.person.Person updatedAPerson = new seedu.address.model.person.Person(aPerson);
+                updatedAPerson.setLastUpdated(new LastUpdated(newUpdated));
+                model.updatePerson(aPerson, updatedAPerson);
+
+            } else if (compare > 0) {
+
+                // The local contact is updated
+                seedu.address.model.person.Person updatedPerson = convertGooglePerson(person);
+                model.updatePerson(aPerson, updatedPerson);
             }
         }
+        syncedIDs.removeAll(toRemove);
 
     }
 
-    /** Checks existing contacts, and picks the updated one to be synchronized
-     *
-     * @param person
-     * @throws Exception
-     */
-    private void updateContact(Person person) throws Exception {
-        List<seedu.address.model.person.ReadOnlyPerson> personList = model.getFilteredPersonList();
-        boolean updated = false;
-
-        for (seedu.address.model.person.ReadOnlyPerson aPerson : personList) {
-            if (person.getResourceName().equals(aPerson.getId().getValue())) {
-                String lastUpdated = person.getMetadata().getSources().get(0).getUpdateTime();
-                Instant gTime = Instant.parse(lastUpdated);
-                Instant aTime = Instant.parse(aPerson.getLastUpdated().getValue());
-                Integer compare = gTime.compareTo(aTime);
-
-                if (compare < 0) {
-                    Person updatedPerson = convertAPerson(aPerson);
-                    updatedPerson.setMetadata(person.getMetadata());
-
-                    // The Google Contact is updated
-                    Person updatedContact = client.people()
-                            .updateContact(person.getResourceName(), updatedPerson)
-                            .setUpdatePersonFields("names,emailAddresses,addresses,phoneNumbers")
-                            .execute();
-
-                    // Synchronize update time of both database entries to prevent looping
-                    String newUpdated = updatedContact.getMetadata().getSources().get(0).getUpdateTime();
-                    seedu.address.model.person.Person updatedAPerson = new seedu.address.model.person.Person(aPerson);
-                    updatedAPerson.setLastUpdated(new LastUpdated(newUpdated));
-                    model.updatePerson(aPerson, updatedAPerson);
-                    updated = true;
-                    break;
-
-                } else if (compare > 0) {
-
-                    // The local contact is updated
-                    seedu.address.model.person.Person updatedPerson = convertGooglePerson(person);
-                    model.updatePerson(aPerson, updatedPerson);
-                    updated = true;
-                    break;
-                } else {
-                    break;
-                }
-            }
-        }
-
-        if (!updated) {
-            // We delete the Google Contact, as our local entry has been removed.
-            String id = person.getResourceName();
-            client.people().deleteContact(id).execute();
-            syncedIDs.remove(id);
-        }
-
+    private void checkNullFields(Person person, Person updatedPerson) {
+       if (updatedPerson.getPhoneNumbers() == null && person.getPhoneNumbers() != null){
+           updatedPerson.setPhoneNumbers(person.getPhoneNumbers());
+       }
+       if (updatedPerson.getAddresses() == null && person.getAddresses() != null){
+           updatedPerson.setAddresses(person.getAddresses());
+       }
+       if (updatedPerson.getEmailAddresses() == null && person.getEmailAddresses() != null){
+           updatedPerson.setEmailAddresses(person.getEmailAddresses());
+       }
+        
     }
 
     /** Converts a Google Person to a local Person
@@ -213,17 +269,19 @@ public class SyncCommand extends UndoableCommand {
         if (name == null) {
             logger.warning("Google Contact has no retrievable name");
         } else {
-            seedu.address.model.person.Name aName = new seedu.address.model.person.Name(name.getGivenName());
+            seedu.address.model.person.Name aName = (name.getFamilyName() == null)
+            ? new seedu.address.model.person.Name(name.getGivenName())
+            : new seedu.address.model.person.Name(name.getGivenName()+ " " + name.getFamilyName());
             Phone aPhone = (phone == null || !Phone.isValidPhone(phone.getValue()))
                     ? new Phone(null)
                     : new seedu.address.model.person.Phone(phone.getValue());
-            seedu.address.model.person.Address aAddress = (address == null)
+            seedu.address.model.person.Address aAddress =
+                    (address == null || !seedu.address.model.person.Address.isValidAddress(address.getStreetAddress()))
                     ? new seedu.address.model.person.Address(null)
                     : new seedu.address.model.person.Address(address.getStreetAddress());
-            Email aEmail = (email == null)
+            Email aEmail = (email == null || !Email.isValidEmail(email.getValue()))
                     ? new Email(null)
                     : new Email(email.getValue());
-            HashSet<Meeting> aMeetings = new HashSet<Meeting>();
             aPerson = new seedu.address.model.person.Person(aName, aPhone, aEmail, aAddress,
                     new Note(""), new Id(id), new LastUpdated(lastUpdated),
                     new HashSet<Tag>(), new HashSet<Meeting>());
@@ -265,6 +323,7 @@ public class SyncCommand extends UndoableCommand {
         return result;
     }
 
+
     /**Updates the local model with the provided Google Person
      *
      * @param person
@@ -274,7 +333,7 @@ public class SyncCommand extends UndoableCommand {
         try {
             model.updatePerson(person, updatedPerson);
         } catch (Exception e) {
-            logger.warning(e.getMessage());
+            e.printStackTrace();
         }
 
     }
@@ -286,7 +345,7 @@ public class SyncCommand extends UndoableCommand {
      *
      */
 
-    private seedu.address.model.person.Person insertId(ReadOnlyPerson person, String id) {
+    private seedu.address.model.person.Person setId(ReadOnlyPerson person, String id) {
         seedu.address.model.person.Person updated = new seedu.address.model.person.Person(person);
         updated.setId(new Id(id));
         return updated;
@@ -301,6 +360,28 @@ public class SyncCommand extends UndoableCommand {
         Source meta = person.getMetadata().getSources().get(0);
         return meta.getUpdateTime();
     }
+
+    private HashMap<String, ReadOnlyPerson> constructHashId (List<ReadOnlyPerson> personList) {
+        HashMap<String, ReadOnlyPerson> result = new HashMap<>();
+
+        personList.forEach(e -> {
+            result.put(e.getId().getValue(), e);
+        });
+
+        return result;
+    }
+
+    private HashMap<String, Person> constructGoogleHashId () {
+        HashMap<String, Person> result = new HashMap<>();
+
+        connections.forEach(e -> {
+            result.put(e.getResourceName(), e);
+        });
+
+        return result;
+    }
+
+
 
     /** Saves the HashSet tracking synchronised entries
      *

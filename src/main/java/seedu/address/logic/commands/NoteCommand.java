@@ -36,8 +36,8 @@ public class NoteCommand extends UndoableCommand {
             + ": Modifies a note for the person identified by "
             + "the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_NOTE + "NOTE]\n"
-            + "Example: " + COMMAND_WORD + " 1 " + PREFIX_NOTE + " Has 3 children.";
+            + "[" + "NOTE]\n"
+            + "Example: " + COMMAND_WORD + " 1 " + " Has 3 children.";
 
     public static final String MESSAGE_NOTE_SUCCESS = "Note Added: %1$s";
 
