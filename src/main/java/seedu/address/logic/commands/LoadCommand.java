@@ -15,8 +15,8 @@ public class LoadCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "load";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Loads contacts from a pre-existing address "
-        + "book to the current one. The pre-existing address book' name is given as a parameter.\n"
-        + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
+        + "book to the current one. The pre-existing address book's name is given as a parameter.\n"
+        + "Parameters: FILENAME\n"
         + "Example: " + COMMAND_WORD + " myaddressbook.xml";
 
     public static final String MESSAGE_LOAD_ADDRESSBOOK_SUCCESS = "Successfully loaded the address book.";
