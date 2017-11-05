@@ -212,7 +212,8 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
                                     index.add(indexFromRangeToAdd);
                                 } catch (IllegalValueException ive) {
                                     throw new ParseException(
-                                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+                                            String.format(
+                                                    MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
                                 }
                             }
                         }

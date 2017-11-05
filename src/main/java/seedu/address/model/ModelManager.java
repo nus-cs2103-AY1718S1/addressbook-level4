@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_EMAIL;
 import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_NAME;
 import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_PHONE;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
