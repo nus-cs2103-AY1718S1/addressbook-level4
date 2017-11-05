@@ -70,6 +70,7 @@ public class AddressBookParser {
         switch (commandWord) {
 
         case CreateAccountCommand.COMMAND_WORD:
+        case CreateAccountCommand.COMMAND_ALIAS:
             return new CreateAccountCommandParser().parse(arguments);
 
         case AddCommand.COMMAND_WORD:
