@@ -452,8 +452,8 @@ Generate QR SMS Code for the 1st person in the results of the `find` command.
 === Generating QR Code to save a Contact : `qrsave`
 [NOTE]
 ****
-* Requires a smartphone with camera and QR Scanner application
-* Only information like Contact Name , Email , Address and Phone Number is saved from the process
+* Requires a smartphone with camera and QR Scanner application.
+* Only information like Contact Name , Email , Address and Phone Number is saved from the process.
 ****
 
 
