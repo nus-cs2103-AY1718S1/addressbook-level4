@@ -191,7 +191,7 @@ public class LessonListCard extends UiPart<Region> {
             break;
 
         case FONT_SIZE_NORMAL:
-            setFontSizeHelper("medium");
+            setFontSizeHelper("normal");
             break;
 
         case FONT_SIZE_LARGE:
