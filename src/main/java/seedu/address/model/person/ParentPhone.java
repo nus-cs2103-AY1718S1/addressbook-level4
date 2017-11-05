@@ -12,7 +12,8 @@ public class ParentPhone {
 
     public static final String MESSAGE_PARENTPHONE_CONSTRAINTS = "Parent numbers should be exactly 8 digits long";
 
-    public static final String PARENTPHONE_VALIDATION_REGEX = "(Parent: )(\\d\\d\\d\\d\\d\\d\\d\\d)";
+    //public static final String PARENTPHONE_VALIDATION_REGEX = "(Parent: )(\\d\\d\\d\\d\\d\\d\\d\\d)";
+    public static final String PARENTPHONE_VALIDATION_REGEX = "(\\d\\d\\d\\d\\d\\d\\d\\d)";
 
     public final String value;
 
@@ -24,11 +25,11 @@ public class ParentPhone {
     public ParentPhone(String parentPhone) throws IllegalValueException {
         requireNonNull(parentPhone);
         String trimmedParentPhone = parentPhone.trim();
-        String parentPhoneFormat = formatPhone(trimmedParentPhone);
-        if (!isValidParentPhone(parentPhoneFormat)) {
+        //String parentPhoneFormat = formatPhone(trimmedParentPhone);
+        if (!isValidParentPhone(trimmedParentPhone)) {
             throw new IllegalValueException(MESSAGE_PARENTPHONE_CONSTRAINTS);
         }
-        this.value = parentPhoneFormat;
+        this.value = trimmedParentPhone;
     }
 
     /**
@@ -38,11 +39,11 @@ public class ParentPhone {
         return test.matches(PARENTPHONE_VALIDATION_REGEX);
     }
 
-    /**
-     * Returns formatted phone by appending Parent:  before the parent phone number.
-     */
-    public static String formatPhone(String parentPhoneToFormat) {
-        return "Parent: " + parentPhoneToFormat; }
+//    /**
+//     * Returns formatted phone by appending Parent:  before the parent phone number.
+//     */
+//    public static String formatPhone(String parentPhoneToFormat) {
+//        return "Parent: " + parentPhoneToFormat; }
 
     @Override
     public String toString() {
