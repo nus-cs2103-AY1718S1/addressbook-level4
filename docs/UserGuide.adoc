@@ -482,7 +482,7 @@ Format: `exit`
 === Save data
 
 All data in Bluebird's address book is automatically saved in the hard disk, after any data modifying command. +
-There is no need for you to manually save anything. Yay!
+There is no need for you to save manually. Yay!
 
 == Command Summary
 
