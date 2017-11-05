@@ -1,8 +1,8 @@
 package seedu.address.logic;
 
-import java.util.List;
 import java.util.function.Predicate;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.BlacklistCommand;
 import seedu.address.logic.commands.OverdueListCommand;
@@ -32,7 +32,7 @@ public class ListObserver {
      * Monitors current displayed list on person list panel.
      * @return updated version of the current displayed list.
      */
-    public List<ReadOnlyPerson> getCurrentFilteredList() {
+    public ObservableList<ReadOnlyPerson> getCurrentFilteredList() {
         String currentList = model.getCurrentListName();
 
         switch (currentList) {
