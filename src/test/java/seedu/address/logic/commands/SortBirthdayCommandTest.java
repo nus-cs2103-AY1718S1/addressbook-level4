@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.assertSortSuccess;
+import static seedu.address.testutil.TypicalAccounts.getTypicalDatabase;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Before;
@@ -29,8 +30,8 @@ public class SortBirthdayCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), getTypicalDatabase(), new UserPrefs());
+        expectedModel = new ModelManager(model.getAddressBook(), model.getDatabase(), new UserPrefs());
 
         sortBirthdayCommand = new SortBirthdayCommand();
         sortBirthdayCommand.setData(model, new CommandHistory(), new UndoRedoStack());
