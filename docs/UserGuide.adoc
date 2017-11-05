@@ -443,10 +443,31 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-=== Statistcs Panel
+// tag::studentdetailspanel[]
+=== Student Details Panel
 
-=== Student Details
+//TODO: Celine can add explanations for this
 
+// end::studentdetailspanel[]
+
+
+// tag::statisticspanel[]
+=== Statistics Panel
+
+
+// end::statisticspanel[]
+
+
+// tag::graphpanel[]
+=== Graph Panel
+
+//TODO: Jonathan can add explanations for this
+
+
+// end::graphpanel[]
+
+
+// tag::commandshortcuts[]
 == Command Shortcuts
 
 Here is a list of shortcuts you can use in cherBook together with some examples.
