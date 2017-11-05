@@ -62,7 +62,7 @@ public class ResultDisplay extends UiPart<Region> {
             break;
 
         case FONT_SIZE_NORMAL:
-            resultDisplay.setStyle("-fx-font-size: medium;");
+            resultDisplay.setStyle("-fx-font-size: normal;");
             break;
 
         case FONT_SIZE_LARGE:

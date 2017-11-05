@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: ModU
 include::../DeveloperGuide.adoc[tag=intro]
 
-*Code contributed*: [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/main/cctdaniel.md] [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/test/cctdaniel.md]
+*Code contributed*: [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/main/cctdaniel.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/test/cctdaniel.md[Test code]]
 
 === Enhancement Added: Customise Command
 
