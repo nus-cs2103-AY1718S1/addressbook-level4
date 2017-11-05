@@ -255,9 +255,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
         //TODO: Increase the validity of equals
         return other == this // short circuit if same object
                 || (other instanceof LifeInsurance // instanceof handles nulls
-                && ((LifeInsurance) other).premiumString.equals(this.premiumString)
-                && ((LifeInsurance) other).signingDate.isEqual(this.signingDate)
-                && ((LifeInsurance) other).expiryDate.isEqual(this.expiryDate)); // state check
+                && ((LifeInsurance) other).getInsuranceName().equals(this.insuranceName)); // state check
     }
 }
 
