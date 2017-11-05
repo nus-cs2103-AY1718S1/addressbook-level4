@@ -9,7 +9,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 /**
  * Sorts the masterlist by the input argument (i.e. "name" or "debt").
  */
-public class SortCommand extends UndoableCommand {
+public class SortCommand extends Command {
 
     public static final String COMMAND_WORD = "sort";
     public static final String MESSAGE_SUCCESS = "List has been sorted by %1$s!";
@@ -30,8 +30,9 @@ public class SortCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
+        model.deselectPerson();
         try {
             model.sortBy(order);
         } catch (IllegalArgumentException ive) {
