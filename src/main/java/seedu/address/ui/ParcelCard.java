@@ -39,9 +39,9 @@ public class ParcelCard extends UiPart<Region> {
 
     //@@author kennard123661
     @FXML
-    private Label trackingNumber; // tracking number does not have tooltip since it has limited length
+    private Label trackingNumber;
     @FXML
-    private Tooltip trackingNumberTooltip; // tracking number does not have tooltip since it has limited length
+    private Tooltip trackingNumberTooltip;
 
     @FXML
     private Label name;
@@ -69,14 +69,14 @@ public class ParcelCard extends UiPart<Region> {
     private Tooltip emailTooltip;
 
     @FXML
-    private Label deliveryDate; // delivery date has fixed length
+    private Label deliveryDate;
     @FXML
-    private Tooltip deliveryDateTooltip; // delivery date has fixed length
+    private Tooltip deliveryDateTooltip;
 
     @FXML
-    private Label status; // status does not have tooltip since it has a fixed length
+    private Label status;
     @FXML
-    private Tooltip statusTooltip; // status does not have tooltip since it has a fixed length
+    private Tooltip statusTooltip;
     //@@author
 
     @FXML
@@ -124,8 +124,8 @@ public class ParcelCard extends UiPart<Region> {
             initTags(parcel);
         });
     }
-
     //@@author kennard123661
+
     /**
      * Sets color for the status labels based on the current status.
      */
