@@ -19,9 +19,9 @@ public class Appointment {
     public static final String MESSAGE_APPOINTMENT_CONSTRAINTS =
             "Appointment must be in exact format dd/MM/yyyy hh:mm duration, the date must be older than today";
     public static final String DATETIME_PATTERN = "dd/MM/uuuu HH:mm";
-    private static final String MESSAGE_DURATION_CONSTRAINT = "Duration must be a positive integer in minutes";
-    private static final String MESSAGE_DATETIME_CONSTRAINT = "Date time cannot be in the past";
-    private static final String MESSAGE_INVALID_DATETIME = "Date or time is invalid";
+    public static final String MESSAGE_DURATION_CONSTRAINT = "Duration must be a positive integer in minutes";
+    public static final String MESSAGE_DATETIME_CONSTRAINT = "Date time cannot be in the past";
+    public static final String MESSAGE_INVALID_DATETIME = "Date or time is invalid";
 
     public final String value;
     public final LocalDateTime start;

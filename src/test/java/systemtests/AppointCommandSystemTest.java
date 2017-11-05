@@ -15,6 +15,7 @@ import seedu.address.logic.commands.AppointCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -71,6 +72,45 @@ public class AppointCommandSystemTest extends AddressBookSystemTest {
         editedPerson = new PersonBuilder(personToEdit).withAppointment(VALID_APPOINTMENT).build();
         model.updatePerson(getModel().getFilteredPersonList().get(otherIndex.getZeroBased()), editedPerson);
         assertCommandFailure(command, AppointCommand.MESSAGE_APPOINTMENT_CLASH);
+
+        /* Case: wrong format -> fails */
+        command = AppointCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_APPOINT + "1/1/20 00:00 60";
+        assertCommandFailure(command, Appointment.MESSAGE_INVALID_DATETIME);
+
+        /* Case: missing duration -> fails */
+        command = AppointCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_APPOINT + "15/12/2020 00:00";
+        assertCommandFailure(command, Appointment.MESSAGE_APPOINTMENT_CONSTRAINTS);
+
+        /* Case: missing time -> fails */
+        command = AppointCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_APPOINT + "15/12/2020 60";
+        assertCommandFailure(command, Appointment.MESSAGE_APPOINTMENT_CONSTRAINTS);
+
+        /* Case: missing date -> fails */
+        command = AppointCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_APPOINT + "12:00 60";
+        assertCommandFailure(command, Appointment.MESSAGE_APPOINTMENT_CONSTRAINTS);
+
+        /* Case: invalid day of month -> fails */
+        command = AppointCommand.COMMAND_WORD + " " + index.getOneBased() + " "
+                + PREFIX_APPOINT + "32/01/2020 00:00 60";
+        assertCommandFailure(command, Appointment.MESSAGE_INVALID_DATETIME);
+
+        /* Case: invalid month -> fails */
+        command = AppointCommand.COMMAND_WORD + " " + index.getOneBased() + " "
+                + PREFIX_APPOINT + "31/13/2020 00:00 60";
+        assertCommandFailure(command, Appointment.MESSAGE_INVALID_DATETIME);
+
+        /* Case: invalid duration -> fails */
+        command = AppointCommand.COMMAND_WORD + " " + index.getOneBased() + " "
+                + PREFIX_APPOINT + "31/13/2020 00:00 -12";
+        assertCommandFailure(command, Appointment.MESSAGE_DURATION_CONSTRAINT);
+        command = AppointCommand.COMMAND_WORD + " " + index.getOneBased() + " "
+                + PREFIX_APPOINT + "31/13/2020 00:00 random";
+        assertCommandFailure(command, Appointment.MESSAGE_DURATION_CONSTRAINT);
+
+        /* Case: invalid date -> fails */
+        command = AppointCommand.COMMAND_WORD + " " + index.getOneBased() + " "
+                + PREFIX_APPOINT + "29/02/2019 00:00 60";
+        assertCommandFailure(command, Appointment.MESSAGE_INVALID_DATETIME);
     }
 
     /**
