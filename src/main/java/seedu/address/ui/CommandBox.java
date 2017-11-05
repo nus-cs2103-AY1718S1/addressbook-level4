@@ -120,7 +120,6 @@ public class CommandBox extends UiPart<Region> {
                 //Multiple options for autocomplete
                 setStyleToIndicateCommandFailure();
                 showAutoCompleteOptions(commandTrie.getOptions(input));
-                logger.info(String.format("Autocomplete failed with input: ", input));
             } else if (commandSet.contains(command)) {
                 //Able to autocomplete to a correct command
                 this.replaceText(command);
@@ -153,7 +152,7 @@ public class CommandBox extends UiPart<Region> {
             });
             autoCompleteBox.getItems().add(item);
         }
-
+        logger.info("Autocomplete returned possible options.");
         autoCompleteBox.show(commandTextField, Side.BOTTOM, 0.0, 0.0);
     }
     //@@author
