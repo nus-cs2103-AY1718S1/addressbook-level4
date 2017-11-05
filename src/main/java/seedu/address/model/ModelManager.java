@@ -513,6 +513,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
+     * Deselects the currently selected person.
+     */
+    @Override
+    public void deselectPerson() {
+        this.selectedPerson = null;
+        nearbyPersons = null;
+    }
+
+    /**
      * Retrieves the full list of persons nearby a particular person.
      */
     @Override

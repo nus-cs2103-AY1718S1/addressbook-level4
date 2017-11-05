@@ -28,6 +28,7 @@ public class FilterCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
 
+        model.deselectPerson();
         model.updateFilteredPersonList(new PersonContainsTagPredicate(tags));
 
         String allTagKeywords = tags.toString();
