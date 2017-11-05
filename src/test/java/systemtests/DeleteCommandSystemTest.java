@@ -165,7 +165,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
             Index expectedSelectedCardIndex) {
         executeCommand(command);
-        assertApplicationDisplaysExpected("---Command Info---",
+        assertApplicationDisplaysExpected("",
                 expectedResultMessage, expectedModel);
 
         if (expectedSelectedCardIndex != null) {

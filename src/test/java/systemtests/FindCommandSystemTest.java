@@ -172,7 +172,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
                 MESSAGE_PERSONS_LISTED_OVERVIEW, expectedModel.getFilteredPersonList().size());
 
         executeCommand(command);
-        assertApplicationDisplaysExpected("---Command Info---",
+        assertApplicationDisplaysExpected("",
                 expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchanged();
