@@ -4,16 +4,12 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import java.io.IOException;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,17 +26,15 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Photo;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.storage.PhotoStorage;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddPhotoCommandTest {
+    private static final String INVALID_FILETYPE = "docs/AboutUs.adoc";
     private static final String VALID_FILEPATH = "src/main/resources/images/noPhoto.png";
     private static final String VALID_ALT_FILEPATH = "src/main/resources/images/fail.png";
-    private static final String INVALID_FILETYPE = "docs/AboutUs.adoc";
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -84,13 +78,13 @@ public class AddPhotoCommandTest {
         try {
             AddPhotoCommand addPhotoCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getPhoto().getFilePath());
         } catch (CommandException e) {
-            assertEquals(e.getMessage(),PhotoStorage.WRITE_FAILURE_MESSAGE);
+            assertEquals(e.getMessage(), PhotoStorage.WRITE_FAILURE_MESSAGE);
         }
     }
     @Test
     public void constructor_nullPhoto_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddPhotoCommand(null,null);
+        new AddPhotoCommand(null, null);
     }
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
