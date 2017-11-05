@@ -39,7 +39,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
     private ReadOnlyInsurance insurance;
 
     @FXML
-    private ScrollPane scrollPane;
+    private ScrollPane insuranceScrollPane;
     @FXML
     private AnchorPane insuranceProfilePanel;
     @FXML
@@ -61,8 +61,9 @@ public class InsuranceProfilePanel extends UiPart<Region> {
 
     public InsuranceProfilePanel() {
         super(FXML);
-        scrollPane.setFitToWidth(true);
-        insuranceProfilePanel.prefWidthProperty().bind(scrollPane.widthProperty());
+        insuranceScrollPane.setFitToWidth(true);
+        insuranceProfilePanel.prefWidthProperty().bind(insuranceScrollPane.widthProperty());
+        insuranceProfilePanel.prefHeightProperty().bind(insuranceScrollPane.heightProperty());
         enableNameToProfileLink(insurance);
         registerAsAnEventHandler(this);
     }
@@ -176,8 +177,10 @@ public class InsuranceProfilePanel extends UiPart<Region> {
     @Subscribe
     private void handleSwitchToInsurancePanelRequestEvent(InsurancePanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        enableNameToProfileLink(event.getInsurance());
         initializeContractFile(event.getInsurance());
         bindListeners(event.getInsurance());
+        setPremiumLevel(event.getInsurance().getPremium());
         raise(new SwitchToInsurancePanelRequestEvent());
     }
     //@@author

@@ -6,15 +6,15 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-
+<!-- @@author Juxarius -->
 <StackPane prefHeight="439.0" prefWidth="556.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ScrollPane fx:id="scrollPane">
+      <ScrollPane fx:id="insuranceScrollPane" styleClass="anchor-pane">
         <content>
-            <AnchorPane fx:id="insuranceProfilePanel">
+            <AnchorPane fx:id="insuranceProfilePanel" styleClass="anchor-pane">
                <children>
-                  <Label fx:id="insuranceName" layoutX="14.0" layoutY="14.0" styleClass="profile-header" text="\$insuranceName" />
-                  <HBox layoutX="28.0" layoutY="63.0" prefHeight="342.0" prefWidth="500.0" spacing="3.0">
+                  <Label fx:id="insuranceName" layoutX="5.0" layoutY="5.0" styleClass="insurance-profile-header" text="\$insuranceName" />
+                  <HBox layoutX="28.0" layoutY="63.0" prefHeight="342.0" prefWidth="500.0" spacing="10.0">
                      <children>
                         <VBox prefHeight="201.0" prefWidth="131.0">
                            <children>
@@ -27,15 +27,15 @@
                               <Label styleClass="static-labels" text="Expiry Date" />
                            </children>
                         </VBox>
-                        <VBox prefHeight="201.0" prefWidth="178.0">
+                        <VBox prefHeight="201.0" prefWidth="250.0">
                            <children>
-                              <Label fx:id="owner" text="\$owner" />
-                              <Label fx:id="insured" text="\$insured" />
-                              <Label fx:id="beneficiary" text="\$beneficiary" />
-                              <Label fx:id="contractPath" text="\$contractPath" />
-                              <Label fx:id="premium" text="\$premium" />
-                              <Label fx:id="signingDate" text="\$signingDate" />
-                              <Label fx:id="expiryDate" text="\$expiryDate" />
+                              <Label fx:id="owner" styleClass="dynamic-labels" text="\$owner" />
+                              <Label fx:id="insured" styleClass="dynamic-labels" text="\$insured" />
+                              <Label fx:id="beneficiary" styleClass="dynamic-labels" text="\$beneficiary" />
+                              <Label fx:id="contractPath" styleClass="dynamic-labels" text="\$contractPath" />
+                              <Label fx:id="premium" styleClass="dynamic-labels" text="\$premium" />
+                              <Label fx:id="signingDate" styleClass="dynamic-labels" text="\$signingDate" />
+                              <Label fx:id="expiryDate" styleClass="dynamic-labels" text="\$expiryDate" />
                            </children>
                         </VBox>
                      </children>

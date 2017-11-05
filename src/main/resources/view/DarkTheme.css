@@ -47,7 +47,7 @@
     -fx-opacity: 1;
 }
 
-#profilePanel .profile-field {
+.profile-field {
     -fx-font-size: 15pt;
     -fx-font-family: "Segoe UI SemiLight";
     -fx-text-fill: white;
@@ -61,9 +61,16 @@
     -fx-opacity: 1;
 }
 
+#insuranceProfilePanel .dynamic-labels {
+    -fx-font-size: 15pt;
+    -fx-font-family: "Segoe UI SemiLight";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
 .static-insurance-labels {
     -fx-font-size: 13pt;
-    -fx-font-family: "Segoe UI SemiBold";
+    -fx-font-family: "Segoe UI Bold";
     -fx-text-fill: white;
     -fx-opacity: 1;
 }
@@ -73,6 +80,28 @@
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: #ff4500;
     -fx-opacity: 1;
+}
+
+#insuranceProfilePanel #owner:hover, #insuranceProfilePanel #insured:hover, #insuranceProfilePanel #beneficiary:hover {
+    -fx-text-fill: #ff4500;
+}
+
+.insurance-profile-header {
+    -fx-font-size: 30pt;
+    -fx-font-family: "Impact";
+    -fx-opacity: 1;
+}
+
+#insuranceProfilePanel .gold-insurance-header {
+    -fx-text-fill: #daa520;
+}
+
+#insuranceProfilePanel .silver-insurance-header {
+    -fx-text-fill: #a9a9a9;
+}
+
+#insuranceProfilePanel .normal-insurance-header {
+    -fx-text-fill: white;
 }
 
 #insuranceListView .insurance-header {
