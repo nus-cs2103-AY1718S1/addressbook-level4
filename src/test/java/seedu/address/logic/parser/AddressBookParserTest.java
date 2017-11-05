@@ -33,6 +33,7 @@ import seedu.address.logic.commands.FindRegexCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.QuickHelpCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -371,6 +372,18 @@ public class AddressBookParserTest {
                 SocialMediaCommand.COMMAND_ALIAS + " "
                         + SocialMediaCommand.TYPE_FACEBOOK + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SocialMediaCommand(INDEX_FIRST_PERSON, SocialMediaCommand.TYPE_FACEBOOK), command);
+    }
+
+    @Test
+    public void parseCommand_quickhelp() throws Exception {
+        QuickHelpCommand command = (QuickHelpCommand) parser.parseCommand(QuickHelpCommand.COMMAND_WORD);
+        assertEquals(new QuickHelpCommand(), command);
+    }
+
+    @Test
+    public void parseCommand_quickhelp_alias() throws Exception {
+        QuickHelpCommand command = (QuickHelpCommand) parser.parseCommand(QuickHelpCommand.COMMAND_ALIAS);
+        assertEquals(new QuickHelpCommand(), command);
     }
     //@@author
 }

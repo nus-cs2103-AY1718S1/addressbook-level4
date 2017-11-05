@@ -19,6 +19,7 @@ import seedu.address.logic.commands.FindTagCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.QuickHelpCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -134,6 +135,10 @@ public class AddressBookParser {
         case ToggleAccessDisplayCommand.COMMAND_WORD:
         case ToggleAccessDisplayCommand.COMMAND_ALIAS:
             return new ToggleAccessDisplayCommandParser().parse(arguments);
+
+        case QuickHelpCommand.COMMAND_WORD:
+        case QuickHelpCommand.COMMAND_ALIAS:
+            return new QuickHelpCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
