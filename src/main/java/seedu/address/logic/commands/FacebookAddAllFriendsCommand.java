@@ -85,9 +85,12 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
                 throw new CommandException(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_PAGING_ERROR);
             }
             if(currentList == null){
+                friendIndex = 0;
+                FacebookConnectCommand.loadUserPage();
                 EventsCenter.getInstance().post(new NewResultAvailableEvent(
                         MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_SUCCESS + " (From "
                                 + FacebookConnectCommand.getAuthenticatedUsername() + "'s account)", false));
+                return;
             }
             friendIndex = 0;
             currentPaging = currentList.getPaging();
@@ -142,14 +145,4 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
                     + FacebookConnectCommand.getAuthenticatedUsername() + "'s account)");
         }
     }
-
-
-    /*
-            ResponseList<TaggableFriend> page1 = facebookInstance.getTaggableFriends();
-            Paging<TaggableFriend> paging1 = page1.getPaging();
-            System.out.println("Page 1: " + page1);
-            System.out.println("Next: " + page1.getPaging().getNext());
-            System.out.println("size: " + page1.size());
-    */
-
 }

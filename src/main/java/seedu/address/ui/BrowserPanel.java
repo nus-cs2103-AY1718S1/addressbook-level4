@@ -152,9 +152,11 @@ public class BrowserPanel extends UiPart<Region> {
         browser.getEngine().getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
             if (Worker.State.SUCCEEDED.equals(newValue)) {
                 //TODO: alex see if want to make it only fb commands
+                //TODO: store as variables
                 String currentContent = getStringFromDocument(browser.getEngine().getDocument());
                 if (currentContent.contains("Sorry, this content isn't available right now") ||
-                        currentContent.contains("This page isn't available")){
+                        currentContent.contains("This page isn't available") ||
+                        currentContent.contains("Sorry, this content isn't available at the moment")){
                     FacebookAddAllFriendsCommand.setupNextFriend();
                 }
             }

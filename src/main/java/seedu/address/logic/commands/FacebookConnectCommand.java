@@ -90,6 +90,13 @@ public class FacebookConnectCommand extends Command {
 
 
     /**
+     * Loads user page
+     */
+    public static void loadUserPage() {
+        webEngine.load(authenticatedUserPage);
+    }
+
+    /**
      * Completes the authentication process
      */
     public static void completeAuth(String url) throws CommandException {

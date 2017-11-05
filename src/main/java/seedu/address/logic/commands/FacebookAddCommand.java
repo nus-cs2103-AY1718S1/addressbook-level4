@@ -89,9 +89,12 @@ public class FacebookAddCommand extends UndoableCommand {
             toAddID = user.getId();
         }
 
+        // wait for browser process to finish
+        //TODO: see if necessary
         while(toAddID == null){
             ;
         }
+
         // Assign data to Person object
         try {
             Set<SocialInfo> socialInfos = new HashSet<>();
