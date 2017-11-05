@@ -1,18 +1,26 @@
 package seedu.address.logic.parser;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.BirthdayAddCommand;
+import seedu.address.logic.commands.BirthdayRemoveCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.MapRouteCommand;
+import seedu.address.logic.commands.MapShowCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.ScheduleAddCommand;
+import seedu.address.logic.commands.ScheduleRemoveCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.TagAddCommand;
+import seedu.address.logic.commands.TagFindCommand;
 import seedu.address.logic.commands.TagRemoveCommand;
 import seedu.address.logic.commands.UndoCommand;
 
@@ -62,6 +70,22 @@ public class HelpCommandParser implements Parser<HelpCommand> {
             return new HelpCommand("tagadd");
         } else if (input.equals(TagRemoveCommand.COMMAND_WORD)) {
             return new HelpCommand("tagremove");
+        } else if (input.equals(TagFindCommand.COMMAND_WORD)) {
+            return new HelpCommand("tagfind");
+        } else if (input.equals(BirthdayAddCommand.COMMAND_WORD)) {
+            return new HelpCommand("birthdayadd");
+        } else if (input.equals(BirthdayRemoveCommand.COMMAND_WORD)) {
+            return new HelpCommand("birthdayremove");
+        } else if (input.equals(MapShowCommand.COMMAND_WORD)) {
+            return new HelpCommand("mapshow");
+        } else if (input.equals(MapRouteCommand.COMMAND_WORD)) {
+            return new HelpCommand("maproute");
+        } else if (input.equals(ScheduleAddCommand.COMMAND_WORD)) {
+            return new HelpCommand("scheduleadd");
+        } else if (input.equals(ScheduleRemoveCommand.COMMAND_WORD)) {
+            return new HelpCommand("scheduleremove");
+        } else if (input.equals(ExportCommand.COMMAND_WORD)) {
+            return new HelpCommand("export");
         } else if (input.equals(UndoCommand.COMMAND_WORD)) {
             return new HelpCommand("undo");
         } else {

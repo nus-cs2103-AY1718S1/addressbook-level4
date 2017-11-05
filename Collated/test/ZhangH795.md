@@ -9,7 +9,7 @@ public class TagAddCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void executeTagAddSinglePersonSuccess() throws Exception {
+    public void executeTagAddSinglePerson() throws Exception {
         showFirstPersonOnly(model);
 
         Set<Tag> singleTagSet = new HashSet<Tag>();
@@ -31,6 +31,11 @@ public class TagAddCommandTest {
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(tagAddCommand, model, expectedMessage, expectedModel);
+
+        tagAddCommand = prepareCommand(singlePersonIndexList,
+                new TagAddDescriptor(new PersonBuilder().withATags(VALID_TAG_HUSBAND).build()));
+        assertCommandFailure(tagAddCommand, model, String.format(tagAddCommand.MESSAGE_TAG_ALREADY_EXISTS,
+                "[" + VALID_TAG_HUSBAND + "]"));
     }
 
 
@@ -105,7 +110,6 @@ public class TagAddCommandTest {
 
     }
 
-
     @Test
     public void tagAddDescriptorTest()throws Exception {
         Set<Tag> tagSet = new HashSet<>();
@@ -153,10 +157,11 @@ public class TagFindCommandTest {
 
     @Test
     public void equals() {
+        boolean looseFind = true;
         TagMatchingKeywordPredicate firstPredicate =
-                new TagMatchingKeywordPredicate("first");
+                new TagMatchingKeywordPredicate("first", looseFind);
         TagMatchingKeywordPredicate secondPredicate =
-                new TagMatchingKeywordPredicate("second");
+                new TagMatchingKeywordPredicate("second", looseFind);
 
         TagFindCommand findFirstCommand = new TagFindCommand(firstPredicate);
         TagFindCommand findSecondCommand = new TagFindCommand(secondPredicate);
@@ -180,31 +185,34 @@ public class TagFindCommandTest {
 
     @Test
     public void executeZeroKeywordNoPersonFound() {
+        boolean looseFind = true;
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        TagFindCommand command = prepareCommand(" ");
+        TagFindCommand command = prepareCommand(" ", looseFind);
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
     public void executeSinglePersonFound() {
+        boolean looseFind = true;
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
-        TagFindCommand command = prepareCommand("owesMoney");
+        TagFindCommand command = prepareCommand("owesMoney", looseFind);
         assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
     }
 
     @Test
     public void executeMultiplePersonsFound() {
+        boolean looseFind = true;
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 7);
-        TagFindCommand command = prepareCommand("Friends");
+        TagFindCommand command = prepareCommand("Friends", looseFind);
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 
     /**
      * Parses {@code userInput} into a {@code TagFindCommand}.
      */
-    private TagFindCommand prepareCommand(String userInput) {
+    private TagFindCommand prepareCommand(String userInput, boolean looseFind) {
         TagFindCommand command =
-                new TagFindCommand(new TagMatchingKeywordPredicate(userInput));
+                new TagFindCommand(new TagMatchingKeywordPredicate(userInput, looseFind));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -411,7 +419,7 @@ public class TagRemoveCommandTest {
         TagRemoveDescriptor tagRemoveDescriptor = new TagRemoveDescriptor();
         tagRemoveDescriptor.setTags(tagSet);
         TagRemoveCommand tagRemoveCommand = new TagRemoveCommand(singlePersonIndexList, tagRemoveDescriptor);
-        ArrayList<Index> indexList = tagRemoveCommand.makeFullIndexList(personList);
+        ArrayList<Index> indexList = tagRemoveCommand.makeFullIndexList(personList.size());
         assertTrue(indexList.size() == personList.size());
     }
 
@@ -430,7 +438,7 @@ public class TagRemoveCommandTest {
         TagRemoveDescriptor tagRemoveDescriptor = new TagRemoveDescriptor();
         tagRemoveDescriptor.setTags(tagSet);
         TagRemoveCommand tagRemoveCommand = new TagRemoveCommand(singlePersonIndexList, tagRemoveDescriptor);
-        Set<Tag> tagSetCopy = tagRemoveCommand.createModifiableTagSet(originalTagSet);
+        Set<Tag> tagSetCopy = tagRemoveCommand.createModifiableTagSet(originalTagSet, new Tag("tag"));
         assertTrue(tagSetCopy.equals(originalTagSet));
     }
 

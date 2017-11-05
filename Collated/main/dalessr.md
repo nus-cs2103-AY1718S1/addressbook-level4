@@ -51,6 +51,134 @@ public class BrowserPanelShowLocationEvent extends BaseEvent {
     }
 }
 ```
+###### \java\seedu\address\commons\events\ui\ClearPersonListEvent.java
+``` java
+/**
+ * Indicates a request to clear the person list
+ */
+public class ClearPersonListEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\OpenFaceBookWebViewEvent.java
+``` java
+/**
+ * Indicates a request for opening facebook webview
+ */
+public class OpenFaceBookWebViewEvent extends BaseEvent {
+
+    private final PersonCard newSelection;
+
+    public OpenFaceBookWebViewEvent(PersonCard newSelection) {
+        this.newSelection = newSelection;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public PersonCard getNewSelection() {
+        return newSelection;
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\OpenGithubWebViewEvent.java
+``` java
+/**
+ * Indicates a request for opening github webview
+ */
+public class OpenGithubWebViewEvent extends BaseEvent {
+
+    private final PersonCard newSelection;
+
+    public OpenGithubWebViewEvent(PersonCard newSelection) {
+        this.newSelection = newSelection;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public PersonCard getNewSelection() {
+        return newSelection;
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\OpenInstagramWebViewEvent.java
+``` java
+/**
+ * Indicates a request for opening instagram webview
+ */
+public class OpenInstagramWebViewEvent extends BaseEvent {
+
+    private final PersonCard newSelection;
+
+    public OpenInstagramWebViewEvent(PersonCard newSelection) {
+        this.newSelection = newSelection;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public PersonCard getNewSelection() {
+        return newSelection;
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\OpenNusModsWebViewEvent.java
+``` java
+/**
+ * Indicates a request for opening nusmods webview
+ */
+public class OpenNusModsWebViewEvent extends BaseEvent {
+
+    private final PersonCard newSelection;
+
+    public OpenNusModsWebViewEvent(PersonCard newSelection) {
+        this.newSelection = newSelection;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public PersonCard getNewSelection() {
+        return newSelection;
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\OpenTwitterWebViewEvent.java
+``` java
+/**
+ * Indicates a request for opening twitter webview
+ */
+public class OpenTwitterWebViewEvent extends BaseEvent {
+
+    private final PersonCard newSelection;
+
+    public OpenTwitterWebViewEvent(PersonCard newSelection) {
+        this.newSelection = newSelection;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public PersonCard getNewSelection() {
+        return newSelection;
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\BirthdayAddCommand.java
 ``` java
 /**
@@ -110,6 +238,63 @@ public class BirthdayAddCommand extends UndoableCommand {
                 && this.targetIndex.equals(((BirthdayAddCommand) other).targetIndex))
                 && (other instanceof BirthdayAddCommand
                 && this.birthdayToAdd.equals(((BirthdayAddCommand) other).birthdayToAdd)); // state check
+    }
+}
+```
+###### \java\seedu\address\logic\commands\BirthdayRemoveCommand.java
+``` java
+/**
+ * Remove a birthday from an existing person in the address book.
+ */
+public class BirthdayRemoveCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "b-remove";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Remove birthday from the person selected "
+            + "by the index number used in the last person listing.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
+
+    public static final String MESSAGE_REMOVE_BIRTHDAY_SUCCESS = "Removed Birthday from Person: %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+
+    private final Index targetIndex;
+
+    public BirthdayRemoveCommand (Index index) {
+        this.targetIndex = index;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson currentPerson = lastShownList.get(targetIndex.getZeroBased());
+        Person personToEdit = (Person) lastShownList.get(targetIndex.getZeroBased());
+        Birthday birthdayToAdd = new Birthday();
+        personToEdit.setBirthday(birthdayToAdd);
+
+        try {
+            model.updatePerson(currentPerson, personToEdit);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
+        return new CommandResult(String.format(MESSAGE_REMOVE_BIRTHDAY_SUCCESS, personToEdit));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof BirthdayRemoveCommand // instanceof handles nulls
+                && this.targetIndex.equals(((BirthdayRemoveCommand) other).targetIndex)); // state check
     }
 }
 ```
@@ -367,6 +552,45 @@ public class MapShowCommand extends Command {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\AddressBookParser.java
+``` java
+    private static ArrayList<String> commandNames = new ArrayList<>();
+
+    public AddressBookParser() {
+        commandNames.add(AddCommand.COMMAND_WORD);
+        commandNames.add(SortCommand.COMMAND_WORD);
+        commandNames.add(EditCommand.COMMAND_WORD);
+        commandNames.add(TagAddCommand.COMMAND_WORD);
+        commandNames.add(TagFindCommand.COMMAND_WORD);
+        commandNames.add(TagRemoveCommand.COMMAND_WORD);
+        commandNames.add(BirthdayAddCommand.COMMAND_WORD);
+        commandNames.add(BirthdayRemoveCommand.COMMAND_WORD);
+        commandNames.add(SelectCommand.COMMAND_WORD);
+        commandNames.add(MapShowCommand.COMMAND_WORD);
+        commandNames.add(MapRouteCommand.COMMAND_WORD);
+        commandNames.add(DeleteCommand.COMMAND_WORD);
+        commandNames.add(ClearCommand.COMMAND_WORD);
+        commandNames.add(FindCommand.COMMAND_WORD);
+        commandNames.add(ListCommand.COMMAND_WORD);
+        commandNames.add(HistoryCommand.COMMAND_WORD);
+        commandNames.add(ExitCommand.COMMAND_WORD);
+        commandNames.add(HelpCommand.COMMAND_WORD);
+        commandNames.add(ScheduleAddCommand.COMMAND_WORD);
+        commandNames.add(ScheduleRemoveCommand.COMMAND_WORD);
+        commandNames.add(UndoCommand.COMMAND_WORD);
+        commandNames.add(RedoCommand.COMMAND_WORD);
+        commandNames.add(ExportCommand.COMMAND_WORD);
+    }
+
+```
+###### \java\seedu\address\logic\parser\AddressBookParser.java
+``` java
+    public static ArrayList<String> getCommandNames() {
+        return commandNames;
+    }
+
+}
+```
 ###### \java\seedu\address\logic\parser\BirthdayAddCommandParser.java
 ``` java
 /**
@@ -394,6 +618,31 @@ public class BirthdayAddCommandParser implements Parser<BirthdayAddCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, BirthdayAddCommand.MESSAGE_USAGE));
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\parser\BirthdayRemoveCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new BirthdayRemoveCommand object
+ */
+public class BirthdayRemoveCommandParser implements Parser<BirthdayRemoveCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the BirthdayRemoveCommand
+     * and returns an BirthdayRemoveCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public BirthdayRemoveCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        String trimmedArgs = args.trim();
+        try {
+            Index index = ParserUtil.parseIndex(trimmedArgs);
+            return new BirthdayRemoveCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, BirthdayRemoveCommand.MESSAGE_USAGE));
         }
     }
 }
@@ -630,31 +879,15 @@ public class Birthday {
      */
     public static boolean isValidBirthday(String test) {
 
-        Calendar now = Calendar.getInstance();   // Gets the current date and time
-        int currentYear = now.get(Calendar.YEAR);       // The current year
-
-        String[] date = test.split("/");
-        if (date.length != 3) {
+        String dateFormat = "dd/MM/yyyy";
+        try {
+            DateFormat df = new SimpleDateFormat(dateFormat);
+            df.setLenient(false);
+            df.parse(test);
+            return true;
+        } catch (ParseException e) {
             return false;
         }
-
-        for (int i = 0; i < date.length; i++) {
-            for (int j = 0; j < date[i].length(); j++) {
-                if (date[i].charAt(j) > 57 || date[i].charAt(j) < 48) {
-                    return false;
-                }
-            }
-        }
-
-        int day = Integer.parseInt(date[0]);
-        int month = Integer.parseInt(date[1]);
-        int year = Integer.parseInt(date[2]);
-
-        if (day > 0 && day < 32 && month > 0 && month < 13 && year >= 1900 && year <= currentYear) {
-            return true;
-        }
-
-        return false;
     }
 
     @Override
@@ -673,6 +906,293 @@ public class Birthday {
     public int hashCode() {
         return value.hashCode();
     }
+
+}
+```
+###### \java\seedu\address\model\util\SampleDataUtil.java
+``` java
+        try {
+            Person[] persons =  new Person[] {
+                new Person(new Name("Alex Yeoh"), new Birthday("30/09/2000"), new Phone("87438807"),
+                        new Email("alexyeoh@example.com"), new Address("Blk 30 Geylang Street 29, #06-40"),
+                        getTagSet("friends", "classmates"), new HashSet<>(),
+                        new DateAdded("01/01/2016 11:11:53")),
+                new Person(new Name("Bernice Yu"), new Birthday("27/02/1983"), new Phone("99272758"),
+                        new Email("berniceyu@example.com"), new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
+                        getTagSet("colleagues", "friends"), new HashSet<>(),
+                        new DateAdded("07/02/2016 12:00:01")),
+                new Person(new Name("Charlotte Oliveiro"), new Birthday("03/12/1992"), new Phone("93210283"),
+                        new Email("charlotte@example.com"), new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
+                        getTagSet("neighbours"), new HashSet<>(),
+                        new DateAdded("01/05/2016 12:00:01")),
+                new Person(new Name("David Li"), new Birthday("30/05/1976"), new Phone("91031282"),
+                        new Email("lidavid@example.com"), new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
+                        getTagSet("family"), new HashSet<>(),
+                        new DateAdded("15/09/2016 12:00:01")),
+                new Person(new Name("Irfan Ibrahim"), new Birthday("18/11/1960"), new Phone("92492021"),
+                        new Email("irfan@example.com"), new Address("Blk 47 Tampines Street 20, #17-35"),
+                        getTagSet("profs"), new HashSet<>(),
+                        new DateAdded("15/09/2016 12:01:01")),
+                new Person(new Name("Roy Balakrishnan"), new Birthday("25/08/1996"), new Phone("92624417"),
+                        new Email("royb@example.com"), new Address("Blk 45 Aljunied Street 85, #11-31"),
+                        getTagSet("colleagues"), new HashSet<>(),
+                        new DateAdded("20/09/2016 12:00:01")),
+
+                new Person(new Name("Quintin Levell"), new Birthday("04/09/1997"), new Phone("66012135"),
+                        new Email("levellq@example.com"), new Address("Blk 39 Aljunied Street 18, #03-44"),
+                        getTagSet("friends", "cs2103"), new HashSet<>(),
+                        new DateAdded("01/10/2016 11:11:53")),
+                new Person(new Name("Gino Trost"), new Birthday("27/05/1987"), new Phone("85154314"),
+                        new Email("trostg@example.com"), new Address("Blk 40 Boon Lay Street 87, #03-12"),
+                        getTagSet("colleagues", "friends"), new HashSet<>(),
+                        new DateAdded("07/10/2016 12:00:01")),
+                new Person(new Name("Honey Digiacomo"), new Birthday("14/12/1994"), new Phone("98500414"),
+                        new Email("digiahoney@example.com"), new Address("Blk 166 Ang Mo Kio Vista, #03-28"),
+                        getTagSet("neighbours"), new HashSet<>(),
+                        new DateAdded("01/12/2016 12:00:01")),
+                new Person(new Name("Fred Greenland"), new Birthday("27/05/1982"), new Phone("62667227"),
+                        new Email("greenfd@example.com"), new Address("Blk 395 Woodlands Street 10, #15-18"),
+                        getTagSet("family"), new HashSet<>(),
+                        new DateAdded("15/12/2016 12:00:01")),
+                new Person(new Name("Francina Schepers"), new Birthday("07/08/1997"), new Phone("62667887"),
+                        new Email("francina@example.com"), new Address("Blk 477 Jurong East Street 28, #01-33"),
+                        getTagSet("classmates", "cs2103"), new HashSet<>(),
+                        new DateAdded("01/02/2017 12:01:01")),
+                new Person(new Name("Ima Mauffray"), new Birthday("17/10/1969"), new Phone("86159036"),
+                        new Email("imamau@example.com"), new Address("Blk 395 Lorong 6 Orchard Road, #04-36"),
+                        getTagSet("profs"), new HashSet<>(),
+                        new DateAdded("20/02/2017 12:00:01")),
+
+                new Person(new Name("Han Slankard"), new Birthday("18/10/1970"), new Phone("82034763"),
+                        new Email("hans@example.com"), new Address("Blk 322 Lorong 2 Paya Lebar, #15-21"),
+                        getTagSet("family"), new HashSet<>(),
+                        new DateAdded("01/05/2017 11:11:53")),
+                new Person(new Name("Audry Sustaita"), new Birthday("25/10/1983"), new Phone("72394273"),
+                        new Email("audrys@example.com"), new Address("Blk 20 Jurong West Street 82, #10-02"),
+                        getTagSet("colleagues", "friends"), new HashSet<>(),
+                        new DateAdded("07/05/2017 12:00:01")),
+                new Person(new Name("Jade Dimas"), new Birthday("28/01/1976"), new Phone("99282463"),
+                        new Email("dimasj@example.com"), new Address("Blk 142 Geylang East Street 86, #18-33"),
+                        getTagSet("tutors"), new HashSet<>(),
+                        new DateAdded("01/08/2017 12:00:01")),
+                new Person(new Name("Lory Prosper"), new Birthday("05/05/1978"), new Phone("65029401"),
+                        new Email("lory123@example.com"), new Address("Blk 145 Shunfu Point, #11-05"),
+                        getTagSet("family"), new HashSet<>(),
+                        new DateAdded("15/09/2017 12:00:01")),
+                new Person(new Name("Leone Tipps"), new Birthday("08/12/1989"), new Phone("82058265"),
+                        new Email("tippsl@example.com"), new Address("Blk 39 Ang Mo Kio Street 86, #07-22"),
+                        getTagSet("classmates"), new HashSet<>(),
+                        new DateAdded("28/09/2017 12:01:01")),
+                new Person(new Name("Rusty Lucena"), new Birthday("12/06/1973"), new Phone("93376847"),
+                        new Email("lucenar@example.com"), new Address("Blk 345 Geylang East Street 27, #15-03"),
+                        getTagSet("tutors"), new HashSet<>(),
+                        new DateAdded("01/10/2017 12:00:01")),
+
+                new Person(new Name("Rhea Vallo"), new Birthday("18/09/1999"), new Phone("65028849"),
+                        new Email("vallor@example.com"), new Address("Blk 12 Lorong 14 Marine Parade, #05-25"),
+                        getTagSet("family"), new HashSet<>(),
+                        new DateAdded("01/10/2017 11:11:53")),
+                new Person(new Name("Stanford Blakemore"), new Birthday("15/01/1983"), new Phone("52170156"),
+                        new Email("stanford@example.com"), new Address("Blk 397 Serangoon Gardens Street 24, #03-26"),
+                        getTagSet("colleagues", "friends"), new HashSet<>(),
+                        new DateAdded("10/10/2017 12:00:01")),
+                new Person(new Name("Lori Bancroft"), new Birthday("21/03/1992"), new Phone("88305967"),
+                        new Email("lorib@example.com"), new Address("Blk 453 Jurong East Street 25, #10-13"),
+                        getTagSet("neighbours"), new HashSet<>(),
+                        new DateAdded("15/10/2017 12:00:01")),
+                new Person(new Name("Hollis Biles"), new Birthday("29/07/1988"), new Phone("92264773"),
+                        new Email("bilesh@example.com"), new Address("Blk 48 Lorong 10 Caldecott, #07-02"),
+                        getTagSet("family"), new HashSet<>(),
+                        new DateAdded("29/10/2017 12:00:01")),
+                new Person(new Name("Linn Mcewen"), new Birthday("10/10/1966"), new Phone("93045568"),
+                        new Email("mcewenlinn@example.com"), new Address("Blk 17 Boon Lay Street 29, #13-32"),
+                        getTagSet("profs"), new HashSet<>(),
+                        new DateAdded("01/11/2017 12:01:01")),
+                new Person(new Name("Melvin Sigmund"), new Birthday("02/09/1995"), new Phone("66083995"),
+                        new Email("melvins@example.com"), new Address("Blk 29 Aljunied Street 76, #09-25"),
+                        getTagSet("colleagues"), new HashSet<>(),
+                        new DateAdded("05/11/2017 12:00:01"))
+            };
+
+            ArrayList<ReadOnlyPerson> eventPersonOne = new ArrayList<>();
+            eventPersonOne.add(persons[0]);
+            eventPersonOne.add(persons[10]);
+            eventPersonOne.add(persons[16]);
+            EventName eventNameOne = new EventName("CS2103T Exam");
+            EventTime eventTimeOne = new EventTime(LocalDateTime.of(LocalDate.of(2017, 12, 04),
+                    LocalTime.of(10, 00, 00, 00)), Duration.ofMinutes(120));
+            EventDuration eventDurationOne = new EventDuration(Duration.ofMinutes(120));
+            Event eventOne = new Event(new MemberList(eventPersonOne), eventNameOne, eventTimeOne, eventDurationOne);
+
+            ArrayList<ReadOnlyPerson> eventPersonTwo = new ArrayList<>();
+            eventPersonTwo.add(persons[1]);
+            eventPersonTwo.add(persons[6]);
+            eventPersonTwo.add(persons[7]);
+            eventPersonTwo.add(persons[17]);
+            EventName eventNameTwo = new EventName("Meeting for Project Demo");
+            EventTime eventTimeTwo = new EventTime(LocalDateTime.of(LocalDate.of(2017, 10, 24),
+                    LocalTime.of(9, 00, 00, 00)), Duration.ofMinutes(60));
+            EventDuration eventDurationTwo = new EventDuration(Duration.ofMinutes(60));
+            Event eventTwo = new Event(new MemberList(eventPersonTwo), eventNameTwo, eventTimeTwo, eventDurationTwo);
+
+            ArrayList<ReadOnlyPerson> eventPersonThree = new ArrayList<>();
+            eventPersonThree.add(persons[3]);
+            eventPersonThree.add(persons[9]);
+            eventPersonThree.add(persons[12]);
+            eventPersonThree.add(persons[15]);
+            eventPersonThree.add(persons[18]);
+            eventPersonThree.add(persons[21]);
+            EventName eventNameThree = new EventName("Family Gathering and Outing");
+            EventTime eventTimeThree = new EventTime(LocalDateTime.of(LocalDate.of(2017, 12, 16),
+                    LocalTime.of(17, 00, 00, 00)), Duration.ofMinutes(180));
+            EventDuration eventDurationThree = new EventDuration(Duration.ofMinutes(180));
+            Event eventThree = new Event(new MemberList(eventPersonThree), eventNameThree, eventTimeThree,
+                    eventDurationThree);
+
+            ArrayList<ReadOnlyPerson> eventPersonFour = new ArrayList<>();
+            eventPersonFour.add(persons[0]);
+            eventPersonFour.add(persons[1]);
+            eventPersonFour.add(persons[10]);
+            eventPersonFour.add(persons[16]);
+            eventPersonFour.add(persons[19]);
+            eventPersonFour.add(persons[23]);
+            EventName eventNameFour = new EventName("Matchmaking Event");
+            EventTime eventTimeFour = new EventTime(LocalDateTime.of(LocalDate.of(2017, 9, 23),
+                    LocalTime.of(18, 30, 00, 00)), Duration.ofMinutes(90));
+            EventDuration eventDurationFour = new EventDuration(Duration.ofMinutes(90));
+            Event eventFour = new Event(new MemberList(eventPersonFour), eventNameFour, eventTimeFour,
+                    eventDurationFour);
+
+            HashSet<Event> eventsOne = new HashSet<>();
+            eventsOne.add(eventOne);
+            eventsOne.add(eventFour);
+            persons[0].setEvents(eventsOne);
+
+            HashSet<Event> eventsTwo = new HashSet<>();
+            eventsTwo.add(eventTwo);
+            eventsTwo.add(eventFour);
+            persons[1].setEvents(eventsTwo);
+
+            HashSet<Event> eventsThree = new HashSet<>();
+            //eventsThree.add();
+            persons[2].setEvents(eventsThree);
+
+            HashSet<Event> eventsFour = new HashSet<>();
+            eventsFour.add(eventThree);
+            persons[3].setEvents(eventsFour);
+
+            HashSet<Event> eventsFive = new HashSet<>();
+            //eventsFive.add();
+            persons[4].setEvents(eventsFive);
+
+            HashSet<Event> eventsSix = new HashSet<>();
+            //eventsSix.add();
+            persons[5].setEvents(eventsSix);
+
+            HashSet<Event> eventsSeven = new HashSet<>();
+            eventsSeven.add(eventTwo);
+            persons[6].setEvents(eventsSeven);
+
+            HashSet<Event> eventsEight = new HashSet<>();
+            eventsEight.add(eventTwo);
+            persons[7].setEvents(eventsEight);
+
+            HashSet<Event> eventsNine = new HashSet<>();
+            //eventsNine.add();
+            persons[8].setEvents(eventsNine);
+
+            HashSet<Event> eventsTen = new HashSet<>();
+            eventsTen.add(eventThree);
+            persons[9].setEvents(eventsTen);
+
+            HashSet<Event> eventsEleven = new HashSet<>();
+            eventsEleven.add(eventOne);
+            eventsEleven.add(eventFour);
+            persons[10].setEvents(eventsEleven);
+
+            HashSet<Event> eventsTwelve = new HashSet<>();
+            //eventsTwelve.add();
+            persons[11].setEvents(eventsTwelve);
+
+            HashSet<Event> eventsThirteen = new HashSet<>();
+            eventsThirteen.add(eventThree);
+            persons[12].setEvents(eventsThirteen);
+
+            HashSet<Event> eventsFourteen = new HashSet<>();
+            //eventsFourteen.add();
+            persons[13].setEvents(eventsFourteen);
+
+            HashSet<Event> eventsFifteen = new HashSet<>();
+            //eventsFifteen.add();
+            persons[14].setEvents(eventsFifteen);
+
+            HashSet<Event> eventsSixteen = new HashSet<>();
+            eventsSixteen.add(eventThree);
+            persons[15].setEvents(eventsSixteen);
+
+            HashSet<Event> eventsSeventeen = new HashSet<>();
+            eventsSeventeen.add(eventOne);
+            eventsSeventeen.add(eventFour);
+            persons[16].setEvents(eventsSeventeen);
+
+            HashSet<Event> eventsEighteen = new HashSet<>();
+            eventsEighteen.add(eventTwo);
+            persons[17].setEvents(eventsEighteen);
+
+            HashSet<Event> eventsNineteen = new HashSet<>();
+            eventsNineteen.add(eventThree);
+            persons[18].setEvents(eventsNineteen);
+
+            HashSet<Event> eventsTwenty = new HashSet<>();
+            eventsTwenty.add(eventFour);
+            persons[19].setEvents(eventsTwenty);
+
+            HashSet<Event> eventsTwoOne = new HashSet<>();
+            //eventsTwoOne.add();
+            persons[20].setEvents(eventsTwoOne);
+
+            HashSet<Event> eventsTwoTwo = new HashSet<>();
+            eventsTwoTwo.add(eventThree);
+            persons[21].setEvents(eventsTwoTwo);
+
+            HashSet<Event> eventsTwoThree = new HashSet<>();
+            //eventsTwoThree.add();
+            persons[22].setEvents(eventsTwoThree);
+
+            HashSet<Event> eventsTwoFour = new HashSet<>();
+            eventsTwoFour.add(eventFour);
+            persons[23].setEvents(eventsTwoFour);
+
+            return persons;
+        } catch (IllegalValueException e) {
+            throw new AssertionError("sample data cannot be invalid", e);
+        }
+    }
+
+    public static ReadOnlyAddressBook getSampleAddressBook() {
+        try {
+            AddressBook sampleAb = new AddressBook();
+            for (Person samplePerson : getSamplePersons()) {
+                sampleAb.addPerson(samplePerson);
+            }
+            return sampleAb;
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("sample data cannot contain duplicate persons", e);
+        }
+    }
+
+    /**
+     * Returns a tag set containing the list of strings given.
+     */
+    public static Set<Tag> getTagSet(String... strings) throws IllegalValueException {
+        HashSet<Tag> tags = new HashSet<>();
+        for (String s : strings) {
+            tags.add(new Tag(s));
+        }
+
+        return tags;
+    }
+
 
 }
 ```
@@ -726,6 +1246,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
     private static final String FXML = "PersonDetailsPanel.fxml";
 
     private ObservableList<ReadOnlyPerson> personList;
+    private TabPane tabPane;
 
     private final Logger logger = LogsCenter.getLogger(PersonDetailsPanel.class);
 
@@ -756,10 +1277,81 @@ public class PersonDetailsPanel extends UiPart<Region> {
     @FXML
     private TextArea eventsArea;
 
-    public PersonDetailsPanel(ObservableList<ReadOnlyPerson> personList) {
+    public PersonDetailsPanel(ObservableList<ReadOnlyPerson> personList, TabPane tabPane) {
         super(FXML);
         this.personList = personList;
+        this.tabPane = tabPane;
         registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Open another tab to show twitter webview
+     */
+    @FXML
+    private void openTwitterWebView() {
+        Tab tab = new Tab();
+        tab.setText("twitter");
+        tab.setClosable(true);
+        WebView webView = new WebView();
+        webView.getEngine().load("https://twitter.com/search?q=news&src=typd");
+        tab.setContent(webView);
+        tabPane.getTabs().add(tab);
+    }
+
+    /**
+     * Open another tab to show nusmods webview
+     */
+    @FXML
+    private void openNusModsWebView() {
+        Tab tab = new Tab();
+        tab.setText("nusmods");
+        tab.setClosable(true);
+        WebView webView = new WebView();
+        webView.getEngine().load("https://nusmods.com/timetable/2017-2018/sem1");
+        tab.setContent(webView);
+        tabPane.getTabs().add(tab);
+    }
+
+    /**
+     * Open another tab to show facebook webview
+     */
+    @FXML
+    private void openFaceBookWebView() {
+        Tab tab = new Tab();
+        tab.setText("facebook");
+        tab.setClosable(true);
+        WebView webView = new WebView();
+        webView.getEngine().load("https://www.facebook.com/people-search.php");
+        tab.setContent(webView);
+        tabPane.getTabs().add(tab);
+    }
+
+    /**
+     * Open another tab to show instagram webview
+     */
+    @FXML
+    private void openInstagramWebView() {
+        Tab tab = new Tab();
+        tab.setText("instagram");
+        tab.setClosable(true);
+        WebView webView = new WebView();
+        webView.getEngine().load("https://www.instagram.com/instagram/");
+        tab.setContent(webView);
+        tabPane.getTabs().add(tab);
+    }
+
+    /**
+     * Open another tab to show github webview
+     */
+    @FXML
+    private void openGitHubWebView() {
+        Tab tab = new Tab();
+        tab.setText("github");
+        tab.setClosable(true);
+        WebView webView = new WebView();
+        webView.getEngine().load("https://github.com/github");
+        tab.setContent(webView);
+        tabPane.getTabs().add(tab);
     }
 
     @Subscribe
@@ -788,34 +1380,38 @@ public class PersonDetailsPanel extends UiPart<Region> {
 
         addressLabelContinue.setText("");
         String[] address = person.getAddress().toString().split(" ");
-        StringBuffer firstBuffer = new StringBuffer();
+        StringBuilder firstBuilder = new StringBuilder();
         int index = 0;
-        while (index < address.length && address[index].length() <= 32 - firstBuffer.length()) {
-            firstBuffer.append(address[index]);
-            firstBuffer.append(" ");
+        while (index < address.length && address[index].length() <= 32 - firstBuilder.length()) {
+            firstBuilder.append(address[index]);
+            firstBuilder.append(" ");
             index++;
         }
-        String firstAddress = firstBuffer.toString();
+        String firstAddress = firstBuilder.toString();
         addressLabel.setText(firstAddress);
-        StringBuffer secondBuffer = new StringBuffer();
+        StringBuilder secondBuilder = new StringBuilder();
         for (; index < address.length; index++) {
-            secondBuffer.append(address[index]);
-            secondBuffer.append(" ");
+            secondBuilder.append(address[index]);
+            secondBuilder.append(" ");
         }
-        if (secondBuffer.length() != 0) {
-            String secondAddress = secondBuffer.toString();
+        if (secondBuilder.length() != 0) {
+            String secondAddress = secondBuilder.toString();
             addressLabelContinue.setText(secondAddress);
         }
 
         eventsArea.setText("");
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuilder = new StringBuilder();
         int counter = 1;
         for (Event e: person.getEvents()) {
-            stringBuffer.append(counter + ". " + e.getEventName().fullName + " -- "
-                    + e.getEventTime().toString() + "\n");
+            stringBuilder.append(counter)
+                    .append(". ")
+                    .append(e.getEventName().fullName)
+                    .append(" -- ")
+                    .append(e.getEventTime().toString())
+                    .append("\n");
             counter++;
         }
-        eventsArea.setText(stringBuffer.toString());
+        eventsArea.setText(stringBuilder.toString());
     }
 
     @Subscribe
@@ -833,41 +1429,74 @@ public class PersonDetailsPanel extends UiPart<Region> {
 
         addressLabelContinue.setText("");
         String[] address = person.getAddress().toString().split(" ");
-        StringBuffer firstBuffer = new StringBuffer();
+        StringBuilder firstBuilder = new StringBuilder();
         int index = 0;
-        while (index < address.length && address[index].length() <= 32 - firstBuffer.length()) {
-            firstBuffer.append(address[index]);
-            firstBuffer.append(" ");
+        while (index < address.length && address[index].length() <= 32 - firstBuilder.length()) {
+            firstBuilder.append(address[index]);
+            firstBuilder.append(" ");
             index++;
         }
-        String firstAddress = firstBuffer.toString();
+        String firstAddress = firstBuilder.toString();
         addressLabel.setText(firstAddress);
-        StringBuffer secondBuffer = new StringBuffer();
+        StringBuilder secondBuilder = new StringBuilder();
         for (; index < address.length; index++) {
-            secondBuffer.append(address[index]);
-            secondBuffer.append(" ");
+            secondBuilder.append(address[index]);
+            secondBuilder.append(" ");
         }
-        if (secondBuffer.length() != 0) {
-            String secondAddress = secondBuffer.toString();
+        if (secondBuilder.length() != 0) {
+            String secondAddress = secondBuilder.toString();
             addressLabelContinue.setText(secondAddress);
         }
 
         eventsArea.setText("");
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuilder = new StringBuilder();
         int counter = 1;
         for (Event e: person.getEvents()) {
-            stringBuffer.append(counter + ". " + e.getEventName().fullName + " -- "
-                    + e.getEventTime().toString() + "\n");
+            stringBuilder.append(counter)
+                    .append(". ")
+                    .append(e.getEventName().fullName)
+                    .append(" -- ")
+                    .append(e.getEventTime().toString())
+                    .append("\n");
             counter++;
         }
-        eventsArea.setText(stringBuffer.toString());
+        eventsArea.setText(stringBuilder.toString());
+    }
+
+    @Subscribe
+    private void handleOpenTwitterWebViewEvent(OpenTwitterWebViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        openTwitterWebView();
+    }
+
+    @Subscribe
+    private void handleOpenNusModsWebViewEvent(OpenNusModsWebViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        openNusModsWebView();
+    }
+
+    @Subscribe
+    private void handleOpenFaceBookWebViewEvent(OpenFaceBookWebViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        openFaceBookWebView();
+    }
+
+    @Subscribe
+    private void handleOpenInstagramWebViewEvent(OpenInstagramWebViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        openInstagramWebView();
+    }
+
+    @Subscribe
+    private void handleOpenGithubWebViewEvent(OpenGithubWebViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        openGitHubWebView();
     }
 }
 ```
 ###### \resources\view\PersonDetailsPanel.fxml
 ``` fxml
-
-<StackPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane fx:id="personDetailsGrid" style="-fx-background-image: url(images/wallpaper1.png);">
         <columnConstraints>
@@ -881,12 +1510,12 @@ public class PersonDetailsPanel extends UiPart<Region> {
          <children>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="180.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="images/profile.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="nameLabel" alignment="BOTTOM_CENTER" contentDisplay="CENTER" style="-fx-font-size: 36px; -fx-font-weight: bold;" text="Person Name" textAlignment="CENTER" underline="true" wrapText="true">
+                  <Label fx:id="nameLabel" alignment="BOTTOM_CENTER" contentDisplay="CENTER" style="-fx-font-size: 40px; -fx-font-weight: bold;" text="Person Name" textAlignment="CENTER" underline="true" wrapText="true">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
@@ -897,10 +1526,10 @@ public class PersonDetailsPanel extends UiPart<Region> {
                <children>
                   <HBox prefHeight="50.0" prefWidth="200.0">
                      <children>
-                        <Label style="-fx-font-size: 20;" text="Birthday:" />
-                        <Label fx:id="birthdayLabel" style="-fx-font-size: 20;">
+                        <Label style="-fx-font-size: 22;" text="Birthday:" />
+                        <Label fx:id="birthdayLabel" style="-fx-font-size: 22;">
                            <HBox.margin>
-                              <Insets left="5.0" />
+                              <Insets left="10.0" />
                            </HBox.margin>
                         </Label>
                      </children>
@@ -910,47 +1539,59 @@ public class PersonDetailsPanel extends UiPart<Region> {
                   </HBox>
                   <HBox prefHeight="50.0" prefWidth="200.0">
                      <children>
-                        <Label style="-fx-font-size: 20;" text="Phone:" />
-                        <Label fx:id="phoneLabel" style="-fx-font-size: 20;">
+                        <Label style="-fx-font-size: 22;" text="Phone:" />
+                        <Label fx:id="phoneLabel" style="-fx-font-size: 22;">
                            <HBox.margin>
-                              <Insets left="5.0" />
+                              <Insets left="10.0" />
                            </HBox.margin>
                         </Label>
                      </children>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
                   </HBox>
                   <HBox prefHeight="50.0" prefWidth="200.0">
                      <children>
-                        <Label style="-fx-font-size: 20;" text="Email:" />
-                        <Label fx:id="emailLabel" style="-fx-font-size: 20;">
+                        <Label style="-fx-font-size: 22;" text="Email:" />
+                        <Label fx:id="emailLabel" style="-fx-font-size: 22;">
                            <HBox.margin>
-                              <Insets left="5.0" />
+                              <Insets left="10.0" />
                            </HBox.margin>
                         </Label>
                      </children>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
                   </HBox>
                   <HBox prefHeight="30.0" prefWidth="200.0">
                      <children>
-                        <Label style="-fx-font-size: 19;" text="Address:" />
-                        <Label fx:id="addressLabel" style="-fx-font-size: 20;">
+                        <Label style="-fx-font-size: 22;" text="Address:" />
+                        <Label fx:id="addressLabel" style="-fx-font-size: 22;">
                            <HBox.margin>
-                              <Insets left="5.0" />
+                              <Insets left="10.0" />
                            </HBox.margin>
                         </Label>
                      </children>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
                   </HBox>
                   <HBox prefHeight="40.0" prefWidth="200.0">
                      <children>
-                        <Label style="-fx-font-size: 19;" text="Address:" visible="false" />
-                        <Label fx:id="addressLabelContinue" style="-fx-font-size: 20;">
+                        <Label style="-fx-font-size: 22;" text="Address:" visible="false" />
+                        <Label fx:id="addressLabelContinue" style="-fx-font-size: 22;">
                            <HBox.margin>
-                              <Insets left="5.0" />
+                              <Insets left="10.0" />
                            </HBox.margin>
                         </Label>
                      </children>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
                   </HBox>
                </children>
                <GridPane.margin>
-                  <Insets left="10.0" />
+                  <Insets left="25.0" top="10.0" />
                </GridPane.margin>
             </VBox>
             <GridPane GridPane.columnIndex="1">
@@ -965,7 +1606,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView fx:id="twitterIcon" fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
+                  <ImageView fx:id="twitterIcon" fitHeight="90.0" fitWidth="120.0" onMouseClicked="#openTwitterWebView" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
                      <image>
                         <Image url="images/twitter.png" />
                      </image>
@@ -973,7 +1614,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
                         <Insets right="5.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="nusmodsIcon" fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
+                  <ImageView fx:id="nusmodsIcon" fitHeight="90.0" fitWidth="120.0" onMouseClicked="#openNusModsWebView" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
                      <image>
                         <Image url="images/nusmods.png" />
                      </image>
@@ -981,12 +1622,12 @@ public class PersonDetailsPanel extends UiPart<Region> {
                         <Insets left="5.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="facebookIcon" fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <ImageView fx:id="facebookIcon" fitHeight="90.0" fitWidth="120.0" onMouseClicked="#openFaceBookWebView" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <image>
                         <Image url="images/facebook.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="instagramIcon" fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                  <ImageView fx:id="instagramIcon" fitHeight="90.0" fitWidth="120.0" onMouseClicked="#openInstagramWebView" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP">
                      <image>
                         <Image url="images/instagram.png" />
                      </image>
@@ -994,7 +1635,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
                         <Insets right="5.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="githubIcon" fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                  <ImageView fx:id="githubIcon" fitHeight="90.0" fitWidth="120.0" onMouseClicked="#openGitHubWebView" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
                      <image>
                         <Image url="images/github.png" />
                      </image>
@@ -1010,7 +1651,10 @@ public class PersonDetailsPanel extends UiPart<Region> {
                      <VBox.margin>
                         <Insets left="20.0" />
                      </VBox.margin></Label>
-                  <TextArea fx:id="eventsArea" editable="false" opacity="0.5" prefWidth="200.0" style="-fx-font-size: 20px; -fx-font-family: fantasy; -fx-border-color: #003366; -fx-border-width: 8;" />
+                  <TextArea fx:id="eventsArea" editable="false" opacity="0.6" prefHeight="400.0" prefWidth="200.0" style="-fx-font-size: 22px; -fx-font-family: fantasy; -fx-border-color: #003366; -fx-border-width: 8;">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin></TextArea>
                </children>
             </VBox>
          </children>

@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.BirthdayAddCommand;
+import seedu.address.logic.commands.BirthdayRemoveCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -37,11 +38,13 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class AddressBookParser {
 
-    private static ArrayList<String> commandNames = new ArrayList<>();
     /**
      * Used for initial separation of command word and args.
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+
+    //@@author dalessr
+    private static ArrayList<String> commandNames = new ArrayList<>();
 
     public AddressBookParser() {
         commandNames.add(AddCommand.COMMAND_WORD);
@@ -51,6 +54,7 @@ public class AddressBookParser {
         commandNames.add(TagFindCommand.COMMAND_WORD);
         commandNames.add(TagRemoveCommand.COMMAND_WORD);
         commandNames.add(BirthdayAddCommand.COMMAND_WORD);
+        commandNames.add(BirthdayRemoveCommand.COMMAND_WORD);
         commandNames.add(SelectCommand.COMMAND_WORD);
         commandNames.add(MapShowCommand.COMMAND_WORD);
         commandNames.add(MapRouteCommand.COMMAND_WORD);
@@ -68,6 +72,7 @@ public class AddressBookParser {
         commandNames.add(ExportCommand.COMMAND_WORD);
     }
 
+    //@@author
     /**
      * Parses user input into command for execution.
      *
@@ -109,6 +114,9 @@ public class AddressBookParser {
 
         case BirthdayAddCommand.COMMAND_WORD:
             return new BirthdayAddCommandParser().parse(arguments);
+
+        case BirthdayRemoveCommand.COMMAND_WORD:
+            return new BirthdayRemoveCommandParser().parse(arguments);
 
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_WORD_2:
@@ -169,6 +177,7 @@ public class AddressBookParser {
         }
     }
 
+    //@@author dalessr
     public static ArrayList<String> getCommandNames() {
         return commandNames;
     }
