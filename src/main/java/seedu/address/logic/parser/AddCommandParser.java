@@ -15,6 +15,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -77,15 +78,15 @@ public class AddCommandParser implements Parser<AddCommand> {
             Status status = new Status("NIL");
             Priority priority = new Priority("L");
             Note note = new Note("NIL");
+            Set<Relationship> relationList = new HashSet<>();
             //Initialize photo to the default icon
             String s = File.separator;
             Photo photo = new Photo("src" + s + "main" + s + "resources" + s
                     + "images" + s + "default.jpg");
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            Set<Relationship> relationList = ParserUtil.parseRel(argMultimap.getAllValues(PREFIX_ADD_RELATIONSHIP));
 
-            //Since Company, Position, Status, Priority and Phot are optional
+            //Since Company, Position, Status, Priority, Photo and Relationship are optional
             // parameters, set them if they are present
             if (arePrefixesPresent(argMultimap, PREFIX_COMPANY)) {
                 company = ParserUtil.parseCompany(argMultimap.getValue(PREFIX_COMPANY)).get();
@@ -111,6 +112,9 @@ public class AddCommandParser implements Parser<AddCommand> {
                 photo = ParserUtil.parsePhoto(argMultimap.getValue
                         (PREFIX_PHOTO)).get();
 
+            }
+            if (arePrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP)) {
+                relationList = ParserUtil.parseRel(argMultimap.getAllValues(PREFIX_ADD_RELATIONSHIP));
             }
 
             ReadOnlyPerson person = new Person(name, phone, email, address, company, position, status, priority,
