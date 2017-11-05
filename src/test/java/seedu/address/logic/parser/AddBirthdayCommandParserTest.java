@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_BIRTHDAY_AMY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -20,11 +21,10 @@ public class AddBirthdayCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsBirthdayCommand() throws IllegalValueException {
-        final String birthdayValue = "190917";
 
-        Birthday toAdd = new Birthday(birthdayValue);
+        Birthday toAdd = new Birthday(VALID_BIRTHDAY_AMY);
         Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_BIRTHDAY.toString() + birthdayValue;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_BIRTHDAY.toString() + VALID_BIRTHDAY_AMY;
         assertParseSuccess(parser, userInput, new AddBirthdayCommand(INDEX_FIRST_PERSON, toAdd));
     }
 

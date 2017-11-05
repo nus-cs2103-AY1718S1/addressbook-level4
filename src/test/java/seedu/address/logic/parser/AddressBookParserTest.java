@@ -175,7 +175,7 @@ public class AddressBookParserTest {
     //@@author jacoblipech
     @Test
     public void parseCommand_birthday() throws Exception {
-        final String birthdayName = "240795";
+        final String birthdayName = "24/07/95";
         Birthday toAdd = new Birthday(birthdayName);
 
         AddBirthdayCommand command = (AddBirthdayCommand) parser.parseCommand(
