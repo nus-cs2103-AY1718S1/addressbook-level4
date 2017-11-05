@@ -22,7 +22,7 @@ import seedu.address.model.person.exceptions.NotParticipateEventException;
 /**
  * Shows a person does not participate an event any more
  */
-public class DisconnectCommand extends UndoableCommand {
+public class DisjoinCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "disjoin";
 
@@ -42,7 +42,7 @@ public class DisconnectCommand extends UndoableCommand {
     private Person personToRemove;
     private Event eventToRemove;
 
-    public DisconnectCommand(Index personIndex, Index eventIndex) {
+    public DisjoinCommand(Index personIndex, Index eventIndex) {
         this.personIndex = personIndex;
         this.eventIndex = eventIndex;
     }
@@ -102,8 +102,8 @@ public class DisconnectCommand extends UndoableCommand {
     @Override
     public boolean equals(Object other) {
         return this == other
-                || (other instanceof DisconnectCommand
-                && this.eventIndex.equals(((DisconnectCommand) other).eventIndex)
-                && this.personIndex.equals(((DisconnectCommand) other).personIndex));
+                || (other instanceof DisjoinCommand
+                && this.eventIndex.equals(((DisjoinCommand) other).eventIndex)
+                && this.personIndex.equals(((DisjoinCommand) other).personIndex));
     }
 }

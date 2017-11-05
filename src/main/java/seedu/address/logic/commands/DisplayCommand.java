@@ -47,26 +47,27 @@ public class DisplayCommand extends Command {
 
         if (!lastShownList.get(targetIndex.getZeroBased()).getParticipants().isEmpty()) {
             switch (particular) {
-                case PARTICULAR_EMAIL:
-                    for (Person person : lastShownList.get(targetIndex.getZeroBased()).getParticipants()) {
-                        result += person.getEmail().value + "\n\t     ";
-                    }
-                    return new CommandResult(result.trim());
 
-                case PARTICULAR_PHONE:
-                    for (Person person : lastShownList.get(targetIndex.getZeroBased()).getParticipants()) {
-                        result += person.getPhone().value + "\n\t     ";
-                    }
-                    return new CommandResult(result.trim());
+            case PARTICULAR_EMAIL:
+                for (Person person : lastShownList.get(targetIndex.getZeroBased()).getParticipants()) {
+                    result += person.getEmail().value + "\n\t     ";
+                }
+                return new CommandResult(result.trim());
 
-                case PARTICULAR_ADDRESS:
-                    for (Person person : lastShownList.get(targetIndex.getZeroBased()).getParticipants()) {
-                        result += person.getAddress().value + "\n\t     ";
-                    }
-                    return new CommandResult(result.trim());
+            case PARTICULAR_PHONE:
+                for (Person person : lastShownList.get(targetIndex.getZeroBased()).getParticipants()) {
+                    result += person.getPhone().value + "\n\t     ";
+                }
+                return new CommandResult(result.trim());
 
-                default:
-                    return new CommandResult(String.format(MESSAGE_INVALID_PARTICULAR, particular));
+            case PARTICULAR_ADDRESS:
+                for (Person person : lastShownList.get(targetIndex.getZeroBased()).getParticipants()) {
+                    result += person.getAddress().value + "\n\t     ";
+                }
+                return new CommandResult(result.trim());
+
+            default:
+                return new CommandResult(String.format(MESSAGE_INVALID_PARTICULAR, particular));
             }
 
         } else {
