@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import seedu.address.model.person.CheckIfBirthday;
 
+//@@author archthegit
 /**
  * Lists all persons with a birthday today
  */

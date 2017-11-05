@@ -15,12 +15,15 @@ import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import seedu.address.commons.core.LogsCenter;
+
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author archthegit
+
 /**
- * The Info Panel of the App that displays full information of a {@code Person}.
+ * The Details Panel of the App that displays full information of a {@code Person}.
  */
 public class DetailsPanel extends UiPart<Region> {
 
@@ -71,6 +74,7 @@ public class DetailsPanel extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
+
     public DetailsPanel() {
         super(FXML);
         this.logic = logic;
@@ -90,6 +94,10 @@ public class DetailsPanel extends UiPart<Region> {
         birthdayField.setText(PREFIX_BIRTHDAY_FIELD);
         websiteField.setText(PREFIX_WEBSITE_FIELD);
         homePhoneField.setText(PREFIX_HOME_PHONE_FIELD);
+        person.tagProperty().addListener((observable, oldValue, newValue) -> {
+            tags.getChildren().clear();
+            initTags(person);
+        });
         bindListeners(person);
     }
 
