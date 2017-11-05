@@ -3,7 +3,6 @@ package seedu.address.ui;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.meeting.Meeting;
@@ -25,7 +24,9 @@ public class MeetingCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private FlowPane meetings;
+    private Label meetingName;
+    @FXML
+    private Label meetingTime;
 
     public MeetingCard(Meeting meeting, int displayedIndex) {
         super(FXML);
@@ -40,8 +41,8 @@ public class MeetingCard extends UiPart<Region> {
      */
     private void bindListeners(Meeting meeting) {
         name.textProperty().bind(Bindings.convert(meeting.nameProperty()));
-        Label tagLabel = new Label(meeting.value);
-        meetings.getChildren().add(tagLabel);
+        meetingName.textProperty().bind(Bindings.convert(meeting.meetingNameProperty()));
+        meetingTime.textProperty().bind(Bindings.convert(meeting.meetingTimeProperty()));
     }
 
 }

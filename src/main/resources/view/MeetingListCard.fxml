@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
@@ -11,6 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <!-- @@author LimYangSheng -->
+
 <HBox id="meetingCardPane" fx:id="meetingCardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane HBox.hgrow="ALWAYS">
@@ -23,7 +23,7 @@
                   <Insets bottom="5" left="15" right="5" top="5" />
                </padding>
                <children>
-                  <HBox alignment="CENTER_LEFT" spacing="5">
+                  <HBox alignment="CENTER_LEFT" prefWidth="130.0" spacing="5">
                      <children>
                         <Label fx:id="id" styleClass="cell_big_label">
                            <minWidth>
@@ -33,7 +33,16 @@
                         <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
                      </children>
                   </HBox>
-                  <FlowPane fx:id="meetings" />
+                  <Label fx:id="meetingName" text="\$second">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="meetingTime" text="\$third">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
                </children>
             </VBox>
          </children>

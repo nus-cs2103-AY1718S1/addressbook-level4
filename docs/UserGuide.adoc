@@ -92,7 +92,7 @@ _Figure 4.1.1_
 Command Name: `add` +
 Shorthand Alias: `a` +
 Function: adds a person to *ABC* +
-Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]... [m/MEETING]...` +
+Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 [TIP]
 A person can have any number of tags (including 0)
 [TIP]

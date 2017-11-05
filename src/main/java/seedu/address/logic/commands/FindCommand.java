@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import seedu.address.model.meeting.MeetingContainPersonPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 /**
@@ -24,6 +25,7 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
+        model.updateFilteredMeetingList(new MeetingContainPersonPredicate(model.getFilteredPersonList()));
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
