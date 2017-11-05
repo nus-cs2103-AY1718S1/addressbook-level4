@@ -53,13 +53,15 @@ public class SyncCommand extends UndoableCommand {
 
     private static HashSet<String> syncedIDs;
 
+    private static final Logger logger = LogsCenter.getLogger(SyncCommand.class);
+
     private HashMap<String, ReadOnlyPerson> hashId;
 
     private List<Person> connections;
 
     private HashMap<String, Person> hashGoogleId;
 
-    private static final Logger logger = LogsCenter.getLogger(SyncCommand.class);
+
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
@@ -127,19 +129,19 @@ public class SyncCommand extends UndoableCommand {
 
     public void exportContacts (List<ReadOnlyPerson> personList) throws Exception {
         for (ReadOnlyPerson person : personList) {
-                if (person.getId().getValue().equals("")) {
-                    Person contactToCreate = convertAPerson(person);
-                    Person createdContact = client.people().createContact(contactToCreate).execute();
+            if (person.getId().getValue().equals("")) {
+                Person contactToCreate = convertAPerson(person);
+                Person createdContact = client.people().createContact(contactToCreate).execute();
 
-                    String id = createdContact.getResourceName();
+                String id = createdContact.getResourceName();
 
-                    seedu.address.model.person.Person updatedPerson = setId(person, id);
-                    updatedPerson.setLastUpdated(new LastUpdated(getLastUpdated(createdContact)));
+                seedu.address.model.person.Person updatedPerson = setId(person, id);
+                updatedPerson.setLastUpdated(new LastUpdated(getLastUpdated(createdContact)));
 
-                    updatePerson(person, updatedPerson);
-                    syncedIDs.add(id);
-                }
+                updatePerson(person, updatedPerson);
+                syncedIDs.add(id);
             }
+        }
     }
 
     /**Pulls Google contacts and import new contacts, while checking for updates
@@ -147,21 +149,21 @@ public class SyncCommand extends UndoableCommand {
 
     private void importContacts () throws IOException {
 
-            for (Person person : connections) {
-                try {
-                    seedu.address.model.person.Person aPerson = convertGooglePerson(person);
-                    String id = person.getResourceName();
-                    if (!syncedIDs.contains(id)) {
-                        model.addPerson(aPerson);
-                        syncedIDs.add(id);
-                    }
-                } catch (DuplicatePersonException e) {
-                    logger.info("Not importing duplicate");
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+        for (Person person : connections) {
+            try {
+                seedu.address.model.person.Person aPerson = convertGooglePerson(person);
+                String id = person.getResourceName();
+                if (!syncedIDs.contains(id)) {
+                    model.addPerson(aPerson);
+                    syncedIDs.add(id);
                 }
+            } catch (DuplicatePersonException e) {
+                logger.info("Not importing duplicate");
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+        }
     }
 
     /** Update all contacts
@@ -184,7 +186,7 @@ public class SyncCommand extends UndoableCommand {
 
             aPerson = hashId.get(id);
 
-            if (hashGoogleId.containsKey(id)){
+            if (hashGoogleId.containsKey(id)) {
                 person = hashGoogleId.get(id);
             } else {
                 // Contact is no longer existent on Google servers
@@ -228,17 +230,21 @@ public class SyncCommand extends UndoableCommand {
 
     }
 
+    /**Ensures that we do not override a Google Contact with null fields when updating
+     *
+     * @param person
+     * @param updatedPerson
+     */
     private void checkNullFields(Person person, Person updatedPerson) {
-       if (updatedPerson.getPhoneNumbers() == null && person.getPhoneNumbers() != null){
-           updatedPerson.setPhoneNumbers(person.getPhoneNumbers());
-       }
-       if (updatedPerson.getAddresses() == null && person.getAddresses() != null){
-           updatedPerson.setAddresses(person.getAddresses());
-       }
-       if (updatedPerson.getEmailAddresses() == null && person.getEmailAddresses() != null){
-           updatedPerson.setEmailAddresses(person.getEmailAddresses());
-       }
-        
+        if (updatedPerson.getPhoneNumbers() == null && person.getPhoneNumbers() != null) {
+            updatedPerson.setPhoneNumbers(person.getPhoneNumbers());
+        }
+        if (updatedPerson.getAddresses() == null && person.getAddresses() != null) {
+            updatedPerson.setAddresses(person.getAddresses());
+        }
+        if (updatedPerson.getEmailAddresses() == null && person.getEmailAddresses() != null) {
+            updatedPerson.setEmailAddresses(person.getEmailAddresses());
+        }
     }
 
     /** Converts a Google Person to a local Person
@@ -270,13 +276,13 @@ public class SyncCommand extends UndoableCommand {
             logger.warning("Google Contact has no retrievable name");
         } else {
             seedu.address.model.person.Name aName = (name.getFamilyName() == null)
-            ? new seedu.address.model.person.Name(name.getGivenName())
-            : new seedu.address.model.person.Name(name.getGivenName()+ " " + name.getFamilyName());
+                ? new seedu.address.model.person.Name(name.getGivenName())
+                : new seedu.address.model.person.Name(name.getGivenName() + " " + name.getFamilyName());
             Phone aPhone = (phone == null || !Phone.isValidPhone(phone.getValue()))
                     ? new Phone(null)
                     : new seedu.address.model.person.Phone(phone.getValue());
-            seedu.address.model.person.Address aAddress =
-                    (address == null || !seedu.address.model.person.Address.isValidAddress(address.getStreetAddress()))
+            seedu.address.model.person.Address aAddress = (
+                    address == null || !seedu.address.model.person.Address.isValidAddress(address.getStreetAddress()))
                     ? new seedu.address.model.person.Address(null)
                     : new seedu.address.model.person.Address(address.getStreetAddress());
             Email aEmail = (email == null || !Email.isValidEmail(email.getValue()))
@@ -361,6 +367,12 @@ public class SyncCommand extends UndoableCommand {
         return meta.getUpdateTime();
     }
 
+    /**Constructs a HashMap of a Person's ID and itself
+     *
+     * @param personList
+     * @return
+     */
+
     private HashMap<String, ReadOnlyPerson> constructHashId (List<ReadOnlyPerson> personList) {
         HashMap<String, ReadOnlyPerson> result = new HashMap<>();
 
@@ -370,6 +382,11 @@ public class SyncCommand extends UndoableCommand {
 
         return result;
     }
+
+    /**Constructs a HashMap of Google ResourceName and their Person objects
+     *
+     * @return Hashmap
+     */
 
     private HashMap<String, Person> constructGoogleHashId () {
         HashMap<String, Person> result = new HashMap<>();

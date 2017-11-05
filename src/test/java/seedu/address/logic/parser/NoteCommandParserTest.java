@@ -20,8 +20,10 @@ import seedu.address.model.person.Note;
  */
 public class NoteCommandParserTest {
 
+    private static final String MESSAGE_INVALID_FORMAT =
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, NoteCommand.MESSAGE_USAGE);
+
     private NoteCommandParser parser = new NoteCommandParser();
-    private final String MESSAGE_INVALID_FORMAT = String.format(MESSAGE_INVALID_COMMAND_FORMAT, NoteCommand.MESSAGE_USAGE);
 
     @Test
     public void parse_validArgs_returnsNoteCommand() {
