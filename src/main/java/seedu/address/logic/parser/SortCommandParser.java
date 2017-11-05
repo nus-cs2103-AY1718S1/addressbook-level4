@@ -24,7 +24,7 @@ public class SortCommandParser implements Parser<SortCommand> {
         OptionBearingArgument opArgs = new OptionBearingArgument(args);
         Set<String> options = opArgs.getOptions();
 
-        if (!opArgs.getFilteredArgs().isEmpty()) {
+        if (!opArgs.getFilteredArgs().isEmpty() || options.size() > 1) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
 
@@ -32,8 +32,12 @@ public class SortCommandParser implements Parser<SortCommand> {
             return new SortByNameCommand();
         } else if (options.contains(SortByRecentCommand.COMMAND_OPTION)) {
             return new SortByRecentCommand();
-        } else {
+        } else if (options.size() == 0) {
+            // no options, so return sort by default command
             return new SortByDefaultCommand();
+        } else {
+            // invalid option, throw exception
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
     }
 }
