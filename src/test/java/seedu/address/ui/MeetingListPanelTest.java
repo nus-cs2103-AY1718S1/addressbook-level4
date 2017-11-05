@@ -22,7 +22,8 @@ public class MeetingListPanelTest extends GuiUnitTest {
     private static final ObservableList<ReadOnlyMeeting> TYPICAL_MEETINGS =
             FXCollections.observableList(getTypicalMeetings());
 
-    private static final JumpToMeetingListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToMeetingListRequestEvent(INDEX_SECOND_MEETING);
+    private static final JumpToMeetingListRequestEvent JUMP_TO_SECOND_EVENT =
+            new JumpToMeetingListRequestEvent(INDEX_SECOND_MEETING);
 
     private MeetingListPanelHandle meetingListPanelHandle;
 
