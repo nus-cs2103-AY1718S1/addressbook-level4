@@ -159,6 +159,10 @@
     -fx-text-fill: white;
 }
 
+.result-display *.text {
+    -fx-text-alignment: center;
+}
+
 .result-display .label {
     -fx-text-fill: black !important;
 }

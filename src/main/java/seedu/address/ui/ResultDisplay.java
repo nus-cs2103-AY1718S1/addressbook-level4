@@ -25,6 +25,15 @@ public class ResultDisplay extends UiPart<Region> {
 
     private static final Logger logger = LogsCenter.getLogger(ResultDisplay.class);
     private static final String FXML = "ResultDisplay.fxml";
+    private static final String DELETE_ICON = "/images/DeleteBird.png";
+    private static final String EDIT_ICON = "/images/EditBird.png";
+    private static final String ERROR_ICON = "/images/ErrorBird.png";
+    private static final String FIND_ICON = "/images/FindBird.png";
+    private static final String HIDE_ICON = "/images/HideBird.png";
+    private static final String SUCCESS_ICON = "/images/SuccessBird.png";
+    private static final String TASK_ICON = "/images/TaskBird.png";
+    private static final String UNDO_ICON = "/images/UndoBird.png";
+
 
     private final StringProperty displayed = new SimpleStringProperty("");
 
@@ -53,13 +62,41 @@ public class ResultDisplay extends UiPart<Region> {
     @Subscribe
     private void handleValidResultDisplayEvent(ValidResultDisplayEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        imageDisplay.setImage(new Image("/images/success.png"));
+        displayResultIcon(event);
+    }
+
+    /**
+     * Displays icon feedback for result.
+     */
+    private void displayResultIcon(ValidResultDisplayEvent event) {
+        switch (event.message.trim()) {
+        case "delete":
+            imageDisplay.setImage(new Image(DELETE_ICON));
+            break;
+        case "edit":
+            imageDisplay.setImage(new Image(EDIT_ICON));
+            break;
+        case "find":
+            imageDisplay.setImage(new Image(FIND_ICON));
+            break;
+        case "hide":
+            imageDisplay.setImage(new Image(HIDE_ICON));
+            break;
+        case "task":
+            imageDisplay.setImage(new Image(TASK_ICON));
+            break;
+        case "undo":
+            imageDisplay.setImage(new Image(UNDO_ICON));
+            break;
+        default:
+            imageDisplay.setImage(new Image(SUCCESS_ICON));
+        }
     }
 
     @Subscribe
     private void handleInvalidResultDisplayEvent(InvalidResultDisplayEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        imageDisplay.setImage(new Image("/images/error.png"));
+        imageDisplay.setImage(new Image(ERROR_ICON));
     }
 
     public void highlight() {

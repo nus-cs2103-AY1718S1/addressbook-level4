@@ -51,14 +51,17 @@ public class Tutorial {
             mainWindow.highlightResultDisplay();
             break;
         case 2:
-            mainWindow.highlightSortMenu();
-            break;
-        case 3:
-            mainWindow.highlightSearchBox();
-            break;
-        case 4:
             mainWindow.highlightPersonListPanel();
             break;
+
+        case 3:
+            mainWindow.highlightSortMenu();
+            break;
+
+        case 4:
+            mainWindow.highlightSearchBox();
+            break;
+
         default:
             break;
         }
