@@ -82,17 +82,11 @@ public class DeleteCommand extends UndoableCommand {
 
         if (allvalid && exist) {
             try {
-                for (ReadOnlyPerson o: personstodelete) {
-                    if (model.getRecycleBin().getPersonList().contains(o)) {
-                       model.deletePerson(o);
-                       personstodelete.remove(o);
-                    }
-                }
                 model.deletePerson(personstodelete);
             } catch (PersonNotFoundException pnfe) {
                 assert false : "The target person cannot be missing";
             } catch (DuplicatePersonException d) {
-                assert false: "The duplicate person cannot exist";
+                assert false : "the duplicate person in bin should be handled";
             }
             return new CommandResult(MESSAGE_DELETE_PERSON_SUCCESS);
         } else {

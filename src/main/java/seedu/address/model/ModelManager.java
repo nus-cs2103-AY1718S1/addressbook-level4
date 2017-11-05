@@ -108,8 +108,12 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deletePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException,
             DuplicatePersonException {
         for (ReadOnlyPerson s : targets) {
-            addressBook.removePerson(s);
-            recycleBin.addPerson(s);
+            if (recycleBin.getPersonList().contains(s)) {
+                addressBook.removePerson(s);
+            } else {
+                addressBook.removePerson(s);
+                recycleBin.addPerson(s);
+            }
         }
         indicateAddressBookChanged();
         indicateRecycleBinChnaged();
