@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Set;
@@ -76,10 +77,13 @@ public class SetPictureCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(targetIndex.getZeroBased());
 
+
         // copy picture to resource/image folder and name copied file as PERSON_NAME.png
         Path dest = new File("resources/images" + personToEdit.getName().toString() + ".png").toPath();
 
+
         try {
+            Files.createDirectories(Paths.get("resources/images")); // Creates missing directories if any
             Files.copy(file.toPath(), dest, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ioException) {
             // ???
@@ -106,7 +110,7 @@ public class SetPictureCommand extends UndoableCommand {
         Phone updatedPhone = personToEdit.getPhone();
         Email updatedEmail = personToEdit.getEmail();
         Address updatedAddress = personToEdit.getAddress();
-        ProfPic updatedProfPic = new ProfPic(updatedName + "png");
+        ProfPic updatedProfPic = new ProfPic(updatedName + ".png");
         Favourite updatedFavourite = personToEdit.getFavourite();
         Set<Tag> updatedTags = personToEdit.getTags();
 

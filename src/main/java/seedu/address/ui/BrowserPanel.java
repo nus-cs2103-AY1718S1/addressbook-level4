@@ -87,8 +87,8 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void setContactImage() {
-        Image img = new Image("images/maleIcon.png");
+    private void setContactImage(ReadOnlyPerson person) {
+        Image img = new Image("images/" + person.getProfPic().getPath());
         contactImageCircle.setVisible(true);
         contactImageCircle.setFill(new ImagePattern(img));
         easeIn(contactImageCircle);
@@ -177,7 +177,7 @@ public class BrowserPanel extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
-        setContactImage();
+        setContactImage(event.getNewSelection().person);
         setContactDetails(event.getNewSelection().person);
         setIcons();
         setSchedule(event.getNewSelection().person);
