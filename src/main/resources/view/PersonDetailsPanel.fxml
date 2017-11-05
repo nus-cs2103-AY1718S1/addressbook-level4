@@ -14,7 +14,7 @@
 
 <!-- @@author dalessr -->
 
-<StackPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane fx:id="personDetailsGrid" style="-fx-background-image: url(images/wallpaper1.png);">
         <columnConstraints>
@@ -28,12 +28,12 @@
          <children>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="180.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="images/profile.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="nameLabel" alignment="BOTTOM_CENTER" contentDisplay="CENTER" style="-fx-font-size: 36px; -fx-font-weight: bold;" text="Person Name" textAlignment="CENTER" underline="true" wrapText="true">
+                  <Label fx:id="nameLabel" alignment="BOTTOM_CENTER" contentDisplay="CENTER" style="-fx-font-size: 40px; -fx-font-weight: bold;" text="Person Name" textAlignment="CENTER" underline="true" wrapText="true">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
@@ -44,8 +44,8 @@
                <children>
                   <HBox prefHeight="50.0" prefWidth="200.0">
                      <children>
-                        <Label style="-fx-font-size: 20;" text="Birthday:" />
-                        <Label fx:id="birthdayLabel" style="-fx-font-size: 20;">
+                        <Label style="-fx-font-size: 22;" text="Birthday:" />
+                        <Label fx:id="birthdayLabel" style="-fx-font-size: 22;">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
@@ -57,47 +57,59 @@
                   </HBox>
                   <HBox prefHeight="50.0" prefWidth="200.0">
                      <children>
-                        <Label style="-fx-font-size: 20;" text="Phone:" />
-                        <Label fx:id="phoneLabel" style="-fx-font-size: 20;">
+                        <Label style="-fx-font-size: 22;" text="Phone:" />
+                        <Label fx:id="phoneLabel" style="-fx-font-size: 22;">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
                         </Label>
                      </children>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
                   </HBox>
                   <HBox prefHeight="50.0" prefWidth="200.0">
                      <children>
-                        <Label style="-fx-font-size: 20;" text="Email:" />
-                        <Label fx:id="emailLabel" style="-fx-font-size: 20;">
+                        <Label style="-fx-font-size: 22;" text="Email:" />
+                        <Label fx:id="emailLabel" style="-fx-font-size: 22;">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
                         </Label>
                      </children>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
                   </HBox>
                   <HBox prefHeight="30.0" prefWidth="200.0">
                      <children>
-                        <Label style="-fx-font-size: 19;" text="Address:" />
-                        <Label fx:id="addressLabel" style="-fx-font-size: 20;">
+                        <Label style="-fx-font-size: 22;" text="Address:" />
+                        <Label fx:id="addressLabel" style="-fx-font-size: 22;">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
                         </Label>
                      </children>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
                   </HBox>
                   <HBox prefHeight="40.0" prefWidth="200.0">
                      <children>
-                        <Label style="-fx-font-size: 19;" text="Address:" visible="false" />
-                        <Label fx:id="addressLabelContinue" style="-fx-font-size: 20;">
+                        <Label style="-fx-font-size: 22;" text="Address:" visible="false" />
+                        <Label fx:id="addressLabelContinue" style="-fx-font-size: 22;">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
                         </Label>
                      </children>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
                   </HBox>
                </children>
                <GridPane.margin>
-                  <Insets left="10.0" />
+                  <Insets left="25.0" top="10.0" />
                </GridPane.margin>
             </VBox>
             <GridPane GridPane.columnIndex="1">
@@ -112,7 +124,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView fx:id="twitterIcon" fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM" onMouseClicked="#openTwitterWebView">
+                  <ImageView fx:id="twitterIcon" fitHeight="90.0" fitWidth="120.0" onMouseClicked="#openTwitterWebView" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
                      <image>
                         <Image url="images/twitter.png" />
                      </image>
@@ -120,7 +132,7 @@
                         <Insets right="5.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="nusmodsIcon" fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM" onMouseClicked="#openNusModsWebView">
+                  <ImageView fx:id="nusmodsIcon" fitHeight="90.0" fitWidth="120.0" onMouseClicked="#openNusModsWebView" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
                      <image>
                         <Image url="images/nusmods.png" />
                      </image>
@@ -128,12 +140,12 @@
                         <Insets left="5.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="facebookIcon" fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" onMouseClicked="#openFaceBookWebView">
+                  <ImageView fx:id="facebookIcon" fitHeight="90.0" fitWidth="120.0" onMouseClicked="#openFaceBookWebView" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <image>
                         <Image url="images/facebook.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="instagramIcon" fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP" onMouseClicked="#openInstagramWebView">
+                  <ImageView fx:id="instagramIcon" fitHeight="90.0" fitWidth="120.0" onMouseClicked="#openInstagramWebView" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP">
                      <image>
                         <Image url="images/instagram.png" />
                      </image>
@@ -141,7 +153,7 @@
                         <Insets right="5.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="githubIcon" fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP" onMouseClicked="#openGitHubWebView">
+                  <ImageView fx:id="githubIcon" fitHeight="90.0" fitWidth="120.0" onMouseClicked="#openGitHubWebView" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
                      <image>
                         <Image url="images/github.png" />
                      </image>
@@ -157,7 +169,10 @@
                      <VBox.margin>
                         <Insets left="20.0" />
                      </VBox.margin></Label>
-                  <TextArea fx:id="eventsArea" editable="false" opacity="0.5" prefWidth="200.0" style="-fx-font-size: 20px; -fx-font-family: fantasy; -fx-border-color: #003366; -fx-border-width: 8;" />
+                  <TextArea fx:id="eventsArea" editable="false" opacity="0.6" prefHeight="400.0" prefWidth="200.0" style="-fx-font-size: 22px; -fx-font-family: fantasy; -fx-border-color: #003366; -fx-border-width: 8;">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin></TextArea>
                </children>
             </VBox>
          </children>
