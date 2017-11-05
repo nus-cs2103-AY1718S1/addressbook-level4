@@ -36,12 +36,10 @@ public class PersonUtil {
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
         sb.append(PREFIX_BLOODTYPE + person.getBloodType().type + " ");
         sb.append(PREFIX_REMARK + person.getRemark().value + " ");
-        if (person.getAppointment().getDate() != null) {
-            sb.append(PREFIX_DATE + Appointment.DATE_FORMATTER.format(person.getAppointment().getDate()) + " ");
-        }
         person.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
         return sb.toString();
     }
+
 }

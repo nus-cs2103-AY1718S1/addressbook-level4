@@ -117,13 +117,12 @@ public class ParserUtil {
         }
         return tagSet;
     }
-    /**
-     * Parses a {@code Optional<String> date} into an {@code Optional<Date>} if {@code appointment} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Date> parseDate(Optional<String> date) throws ParseException {
-        requireNonNull(date);
-        return date.isPresent() ? Optional.of(Appointment.DATE_FORMATTER.parse(date.get())) : Optional.empty();
-
-    }
+//    /**
+//     * Parses a {@code Optional<String> date} into an {@code Optional<Date>} if {@code appointment} is present.
+//     * See header comment of this class regarding the use of {@code Optional} parameters.
+//     */
+//    public static Optional<Date> parseDate(Optional<String> date) throws ParseException {
+//        requireNonNull(date);
+//        return date.isPresent() ? Optional.of(Appointment.DATE_FORMATTER.parse(date.get())) : Optional.empty();
+//    }
 }

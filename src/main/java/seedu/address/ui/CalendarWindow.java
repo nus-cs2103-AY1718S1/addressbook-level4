@@ -5,7 +5,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
@@ -13,6 +16,7 @@ import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
 import com.calendarfx.view.CalendarView;
 
+import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 
@@ -20,6 +24,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.NewAppointmentEvent;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author Eric
@@ -29,35 +38,33 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class CalendarWindow extends UiPart<Region> {
 
     private static final String FXML = "CalendarPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(CalendarWindow.class);
+
 
     @FXML
     private CalendarView calendarView;
 
     private ObservableList<ReadOnlyPerson> personList;
-    private ArrayList<ReadOnlyPerson> internalList = new ArrayList<>();
-    private Calendar calendar;
+    private CalendarSource calendarSource;
 
     public CalendarWindow(ObservableList<ReadOnlyPerson> personList) {
         super(FXML);
 
         this.personList = personList;
-        deepCopy(personList);
 
         calendarView = new CalendarView();
-
-        CalendarSource myCalendarSource = new CalendarSource("My Calendars");
-
-        calendarView.getCalendarSources().addAll(myCalendarSource);
-
         calendarView.setRequestedTime(LocalTime.now());
+        updateCalendar();
+        startUpdateTimeThread();
+        setKeyBindings();
+        disableViews();
+        registerAsAnEventHandler(this);
+    }
 
-        calendar = new Calendar("Appointment");
-
-        CalendarSource calendarSource = new CalendarSource("Appointments");
-
-        calendarSource.getCalendars().add(calendar);
-        calendarView.getCalendarSources().add(calendarSource);
-
+    /**
+     * Runs in the background to keep the calendar updated to current time
+     */
+    private void startUpdateTimeThread() {
         Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
             @Override
             public void run() {
@@ -65,12 +72,11 @@ public class CalendarWindow extends UiPart<Region> {
                     Platform.runLater(() -> {
                         calendarView.setToday(LocalDate.now());
                         calendarView.setTime(LocalTime.now());
-                        setAppointments();
                     });
 
                     try {
-                        // update every 1 second
-                        sleep(1000);
+                        // update every 1 minute
+                        sleep(60000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -82,13 +88,6 @@ public class CalendarWindow extends UiPart<Region> {
         updateTimeThread.setPriority(Thread.MIN_PRIORITY);
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
-
-        setKeyBindings();
-        disableViews();
-    }
-
-    private void deepCopy(ObservableList<ReadOnlyPerson> personList) {
-        internalList.addAll(personList);
     }
 
     /**
@@ -104,16 +103,13 @@ public class CalendarWindow extends UiPart<Region> {
 
     private void setKeyBindings() {
 
-        calendarView.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                switch (event.getCode()) {
-                    case C:
-                        event.consume();
-                        showNextPage();
-                        break;
-                    default:
-                }
+        calendarView.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case C:
+                    event.consume();
+                    showNextPage();
+                    break;
+                default:
             }
         });
     }
@@ -138,54 +134,47 @@ public class CalendarWindow extends UiPart<Region> {
         return this.calendarView;
     }
 
-    private void setAppointments() {
-
-        if (internalList.size() != personList.size()) {
-            removeDeleted();
-            deepCopy(personList);
-        }
-
-        for (ReadOnlyPerson person : personList) {
-            if (person.getAppointment().getDate() == null) {
-                removeEntry(person);
-                continue;
-            }
-            LocalDateTime ldt = LocalDateTime.ofInstant(person.getAppointment().getDate().toInstant(),
-                    ZoneId.systemDefault());
-            LocalDateTime ldt2 = getEndTime(person, ldt);
-            Entry entry = new Entry(person.getName().toString());
-            entry.setInterval(new Interval(ldt, ldt2));
-            removeEntry(person);
-            calendar.addEntry(entry);
-        }
-        deepCopy(personList);
+    @Subscribe
+    private void handleNewAppointmentEvent(NewAppointmentEvent event) {
+        personList = event.data.getPersonList();
+        updateCalendar();
     }
 
     /**
-     * Find the person that is in the internal list and not in the ObservedList and remove the appointment entry
+     * Creates a new a calendar with the update information
      */
-    private void removeDeleted() {
-        for (ReadOnlyPerson person : internalList) {
-            if (!personList.contains(person)) {
-                removeEntry(person);
+    private void updateCalendar() {
+
+        calendarView.getCalendarSources().clear();
+        calendarSource = new CalendarSource("Appointments");
+        int styleNum = 0;
+        for (ReadOnlyPerson person : personList) {
+            Calendar calendar = new Calendar(person.getName().toString());
+            calendar.setStyle(Calendar.Style.getStyle(styleNum));
+            styleNum++;
+            styleNum = styleNum % 5;
+            calendarSource.getCalendars().add(calendar);
+            ArrayList<Entry> entries = getEntries(person);
+
+            for (Entry entry : entries) {
+                calendar.addEntry(entry);
             }
         }
+        calendarView.getCalendarSources().add(calendarSource);
     }
 
-    private LocalDateTime getEndTime(ReadOnlyPerson person, LocalDateTime ldt) {
-        LocalDateTime ldt2;
-        if (person.getAppointment().getEndDate() != null) {
-            ldt2 = LocalDateTime.ofInstant(person.getAppointment().getEndDate().toInstant(),
+    private ArrayList<Entry> getEntries(ReadOnlyPerson person) {
+        ArrayList<Entry> entries = new ArrayList<>();
+        for (Appointment appointment : person.getAppointments()) {
+            LocalDateTime ldtstart = LocalDateTime.ofInstant(appointment.getDate().toInstant(),
                     ZoneId.systemDefault());
-        } else {
-            //if no end time set, default appointment is one hour
-            ldt2 = ldt.plusHours(1);
+            LocalDateTime ldtend = LocalDateTime.ofInstant(appointment.getEndDate().toInstant(),
+                    ZoneId.systemDefault());
+
+            entries.add(new Entry(appointment.getDescription() + " with " + person.getName(),
+                    new Interval(ldtstart, ldtend)));
         }
-        return ldt2;
+        return entries;
     }
 
-    private void removeEntry(ReadOnlyPerson person) {
-        List<Entry<?>> result = calendar.findEntries(person.getName().toString());
-        calendar.removeEntries(result);
-    }
 }

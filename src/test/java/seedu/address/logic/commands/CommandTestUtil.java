@@ -42,8 +42,8 @@ public class CommandTestUtil {
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_REMARK_AMY = "";
     public static final String VALID_REMARK_BOB = "loves coffee";
-    public static final String VALID_DATE_AMY = "2020/01/01 00:00";
-    public static final String VALID_DATE_BOB = "2020/01/01 00:00";
+    public static final String VALID_APPOINTMENT_AMY = "Lunch, tomorrow 5pm";
+    public static final String VALID_APPOINTMENT_BOB = "Dinner, tomorrow 5pm to 7pm";
 
     public static final String NON_COMPULSORY_PHONE_AMY = "000";
     public static final String NON_COMPULSORY_EMAIL_AMY = "null@null.com";
@@ -65,8 +65,8 @@ public class CommandTestUtil {
     public static final String REMARK_DESC_BOB = " " + PREFIX_REMARK + VALID_REMARK_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
-    public static final String DATE_DESC_AMY = " " + PREFIX_DATE + VALID_DATE_AMY;
-    public static final String DATE_DESC_BOB = " " + PREFIX_DATE + VALID_DATE_BOB;
+    public static final String DATE_DESC_AMY = " " + PREFIX_DATE + VALID_APPOINTMENT_AMY;
+    public static final String DATE_DESC_BOB = " " + PREFIX_DATE + VALID_APPOINTMENT_BOB;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -87,7 +87,7 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withBloodType(VALID_BLOODTYPE_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-                .withDate(VALID_DATE_BOB).build();
+                .build();
     }
 
     /**

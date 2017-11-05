@@ -11,13 +11,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.person.Bloodtype.NON_COMPULSORY_BLOODTYPE;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.List;
-
 import java.util.Set;
 import java.util.stream.Stream;
-
-import com.joestelmach.natty.DateGroup;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
@@ -71,40 +68,22 @@ public class AddCommandParser implements Parser<AddCommand> {
                     ? new Remark("") : ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
             //@@author
 
+            List<Appointment> appointmentList = new ArrayList<>();
             Appointment appointment;
             if (arePrefixesPresent(argMultimap, PREFIX_DATE)) {
-                appointment = getAppointment(argMultimap, name);
-            } else {
-                appointment = new Appointment (name.toString());
+                appointment = AddAppointmentParser.getAppointmentFromString(argMultimap.getValue(PREFIX_DATE).get());
+                appointmentList.add(appointment);
             }
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            ReadOnlyPerson person = new Person(name, phone, email, address, bloodType, tagList, remark, appointment);
+            ReadOnlyPerson person = new Person(name, phone, email, address, bloodType, tagList, remark,
+                    appointmentList);
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
     }
 
-    private Appointment getAppointment(ArgumentMultimap argMultimap, Name name) throws ParseException {
-        Appointment appointment;
-        List<DateGroup> groups = AddAppointmentParser.getDatesFromString(
-                argMultimap.getValue(PREFIX_DATE).toString());
-        Calendar calendar = Calendar.getInstance();
-        if (groups.size() == 0) {
-            throw new ParseException("Please be more specific with your appointment time");
-        }
-        //If there is a start and end time that is parsed
-        if (groups.get(0).getDates().size() == 2) {
-            calendar.setTime(groups.get(0).getDates().get(0));
-            Calendar calendarEnd = Calendar.getInstance();
-            calendarEnd.setTime(groups.get(0).getDates().get(1));
-            appointment = new Appointment(name.toString(), calendar, calendarEnd);
-        } else {
-            calendar.setTime(groups.get(0).getDates().get(0));
-            appointment = new Appointment(name.toString(), calendar);
-        }
-        return appointment;
-    }
+
 
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given

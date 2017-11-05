@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
+import seedu.address.model.person.AppointmentList;
 import seedu.address.model.person.Bloodtype;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -39,9 +40,7 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String bloodType;
     @XmlElement
-    private String appointmentDate;
-    @XmlElement
-    private String appointmentEndDate;
+    private List<XmlAdaptedAppointment> appointments = new ArrayList<>();
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -66,19 +65,12 @@ public class XmlAdaptedPerson {
         address = source.getAddress().value;
         bloodType = source.getBloodType().type;
         tagged = new ArrayList<>();
+        remark = source.getRemark().value;
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
-        remark = source.getRemark().value;
-        if (source.getAppointment().getDate() != null) {
-            appointmentDate = Appointment.DATE_FORMATTER.format(source.getAppointment().getDate());
-        } else {
-            appointmentDate = null;
-        }
-        if (source.getAppointment().getEndDate() != null) {
-            appointmentEndDate = Appointment.DATE_FORMATTER.format(source.getAppointment().getEndDate());
-        } else {
-            appointmentEndDate = null;
+        for (Appointment appointment : source.getAppointments()) {
+            appointments.add(new XmlAdaptedAppointment(appointment));
         }
     }
 
@@ -86,8 +78,9 @@ public class XmlAdaptedPerson {
      * Converts this jaxb-friendly adapted person object into the model's Person object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     * @throws ParseException if there were any data contraints violated in the appointments
      */
-    public Person toModelType() throws IllegalValueException {
+    public Person toModelType() throws IllegalValueException, ParseException {
         final List<Tag> personTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
@@ -99,27 +92,12 @@ public class XmlAdaptedPerson {
         final Bloodtype bloodType = new Bloodtype(this.bloodType);
         final Set<Tag> tags = new HashSet<>(personTags);
         final Remark remark = new Remark(this.remark);
-        final Appointment appointment;
-        // if there is previously an appointment date, the constructor with appointment date is called
-        try {
-            if (appointmentDate != null && appointmentEndDate != null) {
-                Calendar calendar = Calendar.getInstance();
-                Calendar endCalendar = Calendar.getInstance();
-                calendar.setTime(Appointment.DATE_FORMATTER.parse(this.appointmentDate));
-                endCalendar.setTime(Appointment.DATE_FORMATTER.parse(this.appointmentEndDate));
-                appointment = new Appointment(name.toString(), calendar, endCalendar);
-            } else if (appointmentDate != null) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(Appointment.DATE_FORMATTER.parse(this.appointmentDate));
-                appointment = new Appointment(name.toString(), calendar);
-            } else {
-                appointment = new Appointment(name.toString());
-            }
-            return new Person(name, phone, email, address, bloodType, tags, remark, appointment);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return new Person(name, phone, email, address, bloodType, tags, remark, new Appointment(name.toString()));
+        final List<Appointment> personAppointmentList = new ArrayList<>();
+        for (XmlAdaptedAppointment appointment : appointments) {
+            personAppointmentList.add(appointment.toModelType());
         }
+            return new Person(name, phone, email, address, bloodType, tags, remark, personAppointmentList);
+
 
     }
 }

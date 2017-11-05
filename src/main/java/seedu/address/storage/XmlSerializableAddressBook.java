@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
@@ -48,7 +49,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         final ObservableList<ReadOnlyPerson> persons = this.persons.stream().map(p -> {
             try {
                 return p.toModelType();
-            } catch (IllegalValueException e) {
+            } catch (IllegalValueException | java.text.ParseException e) {
                 e.printStackTrace();
                 //TODO: better error handling
                 return null;

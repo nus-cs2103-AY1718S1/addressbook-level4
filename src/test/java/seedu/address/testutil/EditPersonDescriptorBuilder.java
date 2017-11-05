@@ -36,7 +36,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setBloodType(person.getBloodType());
         descriptor.setRemark(person.getRemark());
         descriptor.setTags(person.getTags());
-        descriptor.setDate(person.getAppointment().getDate());
+
     }
 
     /**
@@ -128,18 +128,6 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
-    /**
-     * Parses the {@code Date} into a {@code EditPersonDescriptor}
-     * that we are building.
-     */
-    public EditPersonDescriptorBuilder withDate(String date) {
-        try {
-            ParserUtil.parseDate(Optional.of(date)).ifPresent(descriptor::setDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return this;
-    }
     public EditPersonDescriptor build() {
         return descriptor;
     }

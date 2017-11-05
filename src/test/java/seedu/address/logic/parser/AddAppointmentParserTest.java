@@ -31,7 +31,7 @@ public class AddAppointmentParserTest {
     @Test
     public void prefixesNotPresent() throws ParseException {
         thrown.expect(ParseException.class);
-        parser.parse("Alice 2018/02/10 10:10");
+        parser.parse("1 lunch tomorrow 5pm");
     }
 
     @Test
@@ -43,15 +43,14 @@ public class AddAppointmentParserTest {
     @Test
     public void nonParsableString() throws ParseException {
         thrown.expect(ParseException.class);
-        parser.parse("appt 1 d/cant parse this string");
+        parser.parse("appt 1 d/lunch ,cant parse this string");
     }
     @Test
     public void parseDateExpression() throws ParseException, java.text.ParseException {
 
-        AddAppointmentCommand command = parser.parse("appt 1 d/The 30th of April in the year 2018 12am");
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(Appointment.DATE_FORMATTER.parse("2018/04/30 00:00"));
-        assertEquals(new AddAppointmentCommand(Index.fromOneBased(1), calendar), command);
+        AddAppointmentCommand command = parser.parse("appt 1 d/Lunch, tomorrow 5pm");
+        Appointment appointment = AddAppointmentParser.getAppointmentFromString("Lunch, tomorrow 5pm");
+        assertEquals(new AddAppointmentCommand(Index.fromOneBased(1), appointment), command);
 
     }
 
@@ -68,33 +67,13 @@ public class AddAppointmentParserTest {
     }
 
     @Test
-    public void parseOffAppointment() {
-        try {
-            AddAppointmentCommand command = parser.parse("appointment 1 d/off");
-            assertTrue(command.getIndex().getOneBased() == 1);
-            command.setData(new ModelManager(TypicalPersons.getTypicalAddressBook(), new UserPrefs()));
-            CommandResult result = command.execute();
-            assertEquals(("Appointment with "
-                    + TypicalPersons.getTypicalAddressBook().getPersonList().get(0).getName().toString()
-                    + " set to off."), result.feedbackToUser);
-        } catch (ParseException e) {
-            fail(e.getMessage());
-        } catch (CommandException e) {
-            fail();
-        }
-    }
-
-    @Test
     public void parseAppointmentsWithDuration() {
 
         try {
-            AddAppointmentCommand command = parser.parse("appt 1 d/7am 5th april 2018 to 10am 5th april 2018");
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(Appointment.DATE_FORMATTER.parse("2018/04/05 07:00"));
-            Calendar calendar2 = Calendar.getInstance();
-            calendar2.setTime(Appointment.DATE_FORMATTER.parse("2018/04/05 10:00"));
-            assertEquals(new AddAppointmentCommand(Index.fromOneBased(1), calendar, calendar2), command);
-        } catch (java.text.ParseException | ParseException e) {
+            AddAppointmentCommand command = parser.parse("appt 1 d/Lunch, tomorrow 5pm to 7pm");
+            Appointment appointment =AddAppointmentParser.getAppointmentFromString("Lunch, tomorrow 5pm to 7pm");
+            assertEquals(new AddAppointmentCommand(Index.fromOneBased(1), appointment), command);
+        } catch (ParseException e) {
             e.printStackTrace();
         }
     }

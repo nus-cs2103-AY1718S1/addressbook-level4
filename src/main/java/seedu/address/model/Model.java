@@ -66,7 +66,7 @@ public interface Model {
     /**
      * Adds appoints to a person
      */
-    void addAppointment(Appointment appointment) throws PersonNotFoundException;
+    void addAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException;
 
     /**
      * Returns a list of ReadOnlyPerson that is ordered chronologically in terms of appointment time
