@@ -208,7 +208,6 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //@@author limcel
     public ObservableList<Schedule> getScheduleList() {
-        System.out.println(schedules.asObservableList());
         return schedules.asObservableList();
     }
     //@@author
