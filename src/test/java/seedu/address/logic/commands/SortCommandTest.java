@@ -37,7 +37,7 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_sortList_Successful() throws Exception {
+    public void execute_sortList_successful() throws Exception {
         assertCommandSuccess(sortCommand, model, SortCommand.MESSAGE_SUCCESS, expectedModel);
     }
 

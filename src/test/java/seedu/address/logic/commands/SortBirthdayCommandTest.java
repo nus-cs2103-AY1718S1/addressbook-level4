@@ -37,7 +37,7 @@ public class SortBirthdayCommandTest {
     }
 
     @Test
-    public void execute_sortList_Successful() throws Exception {
+    public void execute_sortList_successful() throws Exception {
         assertCommandSuccess(sortBirthdayCommand, model, SortBirthdayCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
