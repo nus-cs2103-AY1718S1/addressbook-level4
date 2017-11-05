@@ -10,6 +10,7 @@ public class ListReminderCommand extends Command {
 
     public static final String COMMAND_WORD = "listReminder";
     public static final String COMMAND_ALIAS = "lr";
+
     public static final String MESSAGE_SUCCESS = "Listed all reminders";
 
 
