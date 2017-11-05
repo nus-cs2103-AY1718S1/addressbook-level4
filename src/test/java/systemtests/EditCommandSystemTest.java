@@ -3,11 +3,8 @@ package systemtests;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.DELIVERY_DATE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DELIVERY_DATE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DELIVERY_DATE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
@@ -19,32 +16,31 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_TRACKING_NUMB
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_COMPLETED;
 import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_DELIVERING;
 import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_PENDING;
+import static seedu.address.logic.commands.CommandTestUtil.TAB_ALL_PARCELS;
+import static seedu.address.logic.commands.CommandTestUtil.TAB_COMPLETED_PARCELS;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FLAMMABLE;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FROZEN;
 import static seedu.address.logic.commands.CommandTestUtil.TRACKING_NUMBER_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.TRACKING_NUMBER_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_COMPLETED;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_DELIVERING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_OVERDUE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_PENDING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FLAMMABLE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FROZEN;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER_AMY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PARCELS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PARCEL;
 import static seedu.address.testutil.TypicalParcels.ADDRESS_DESC_BENSON;
 import static seedu.address.testutil.TypicalParcels.AMY;
-import static seedu.address.testutil.TypicalParcels.BENSON;
 import static seedu.address.testutil.TypicalParcels.DELIVERY_DATE_DESC_BENSON;
 import static seedu.address.testutil.TypicalParcels.EMAIL_DESC_BENSON;
 import static seedu.address.testutil.TypicalParcels.KEYWORD_MATCHING_MEIER;
@@ -87,13 +83,13 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
          * -> edited
          */
         Index index = Index.fromOneBased(model.getActiveList().size());
-        String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + TRACKING_NUMBER_DESC_BOB
-                + " " + NAME_DESC_BOB + "  " + PHONE_DESC_BOB + " " + EMAIL_DESC_BOB + "  " + ADDRESS_DESC_BOB + " "
-                + DELIVERY_DATE_DESC_BOB + STATUS_DESC_PENDING + TAG_DESC_FROZEN + " ";
-        Parcel editedParcel = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_BOB).withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withDeliveryDate(VALID_DELIVERY_DATE_BOB).withStatus(VALID_STATUS_PENDING)
-                .withTags(VALID_TAG_FROZEN).build();
+        String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + TRACKING_NUMBER_DESC_AMY
+                + " " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " " + EMAIL_DESC_AMY + "  " + ADDRESS_DESC_AMY + " "
+                + DELIVERY_DATE_DESC_AMY + STATUS_DESC_DELIVERING + TAG_DESC_FLAMMABLE + " ";
+        Parcel editedParcel = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY).withName(VALID_NAME_AMY)
+                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_DELIVERING)
+                .withTags(VALID_TAG_FLAMMABLE).build();
         assertCommandSuccess(command, index, editedParcel);
 
         /* Case: undo editing the last parcel in the list -> last parcel restored */
@@ -104,19 +100,22 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: redo editing the last parcel in the list -> last parcel edited again */
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
+        model.updateParcel(model.getActiveList().get(model.getActiveList().size() - 1),
+                            editedParcel);
+        model.maintainSorted();
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: edit a parcel with new values same as existing values -> edited */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TRACKING_NUMBER_DESC_BENSON + NAME_DESC_BENSON
-                + PHONE_DESC_BENSON + EMAIL_DESC_BENSON + ADDRESS_DESC_BENSON + DELIVERY_DATE_DESC_BENSON
-                + STATUS_DESC_PENDING + TAG_DESC_FROZEN + TAG_DESC_FLAMMABLE;
-        assertCommandSuccess(command, index, BENSON);
+        index = INDEX_FIRST_PARCEL;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY
+                + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY
+                + STATUS_DESC_DELIVERING + TAG_DESC_FLAMMABLE;
+        assertCommandSuccess(command, index, AMY);
 
         /* Case: edit some fields -> edited */
-        index = INDEX_FIRST_PARCEL;
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FLAMMABLE;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FROZEN;
         ReadOnlyParcel parcelToEdit = getModel().getActiveList().get(index.getZeroBased());
-        editedParcel = new ParcelBuilder(parcelToEdit).withTags(VALID_TAG_FLAMMABLE).build();
+        editedParcel = new ParcelBuilder(parcelToEdit).withTags(VALID_TAG_FROZEN).build();
         assertCommandSuccess(command, index, editedParcel);
 
         /* Case: clear tags -> cleared */
@@ -148,9 +147,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         showParcelsWithName(KEYWORD_MATCHING_MEIER);
         index = INDEX_FIRST_PARCEL;
         assertTrue(index.getZeroBased() < getModel().getActiveList().size());
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + STATUS_DESC_COMPLETED;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + STATUS_DESC_PENDING;
         parcelToEdit = getModel().getActiveList().get(index.getZeroBased());
-        editedParcel = new ParcelBuilder(parcelToEdit).withStatus(VALID_STATUS_COMPLETED).build();
+        editedParcel = new ParcelBuilder(parcelToEdit).withStatus(VALID_STATUS_PENDING).build();
         assertCommandSuccess(command, index, editedParcel);
 
         /* --------------------- Performing edit operation while a parcel card is selected -------------------------- */
@@ -167,6 +166,20 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new parcel's name
         assertCommandSuccess(command, index, AMY, index);
+
+        /* ----------------------------- Performing edit operation with tab switches -------------------------------- */
+
+        /* Case: Edit status of first parcel to completed and check if tab is switched back and forth*/
+        model = getModel();
+        assertTrue(model.getTabIndex().equals(TAB_ALL_PARCELS));
+        parcelToEdit = model.getActiveList().get(index.getZeroBased());
+        editedParcel = new ParcelBuilder(parcelToEdit).withStatus(VALID_STATUS_COMPLETED).build();
+        model.editParcelCommand(parcelToEdit, editedParcel);
+        assertTrue(model.getTabIndex().equals(TAB_COMPLETED_PARCELS));
+        parcelToEdit = editedParcel;
+        editedParcel = new ParcelBuilder(parcelToEdit).withStatus(VALID_STATUS_OVERDUE).build();
+        model.editParcelCommand(parcelToEdit, editedParcel);
+        assertTrue(model.getTabIndex().equals(TAB_ALL_PARCELS));
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
 

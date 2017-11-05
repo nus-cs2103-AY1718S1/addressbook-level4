@@ -123,7 +123,8 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void editParcelCommand(ReadOnlyParcel parcelToEdit, ReadOnlyParcel editedParce) throws DuplicateParcelException, ParcelNotFoundException {
+    public void editParcelCommand(ReadOnlyParcel parcelToEdit, ReadOnlyParcel editedParcel)
+            throws DuplicateParcelException, ParcelNotFoundException {
         fail("This method should not be called.");
     }
 

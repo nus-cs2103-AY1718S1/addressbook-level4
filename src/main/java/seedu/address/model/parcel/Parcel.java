@@ -192,6 +192,12 @@ public class Parcel implements ReadOnlyParcel {
         Parcel other = (Parcel) o;
         if (other == this) {
             return 0;
+        } else if (this.getDeliveryDate().compareTo(other.getDeliveryDate()) == 0) {
+            if (this.getName().compareTo(other.getName()) == 0) {
+                return this.getTrackingNumber().compareTo(other.getTrackingNumber());
+            } else {
+                return this.getName().compareTo(other.getName());
+            }
         } else {
             return this.getDeliveryDate().compareTo(other.getDeliveryDate());
         }

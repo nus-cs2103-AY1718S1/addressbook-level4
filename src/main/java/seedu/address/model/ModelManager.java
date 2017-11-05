@@ -57,6 +57,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        this.addressBook.sort();
         filteredParcels = new FilteredList<>(this.addressBook.getParcelList());
         updatedDeliveredAndUndeliveredList();
         activeFilteredList = filteredUndeliveredParcels;
@@ -286,14 +287,14 @@ public class ModelManager extends ComponentManager implements Model {
                 System.out.println("I think it's completed.");
                 if (this.getTabIndex().equals(TAB_ALL_PARCELS)) {
                     System.out.println("But i'm at all parcels tab");
-                    setActiveList(true);
+                    this.setActiveList(true);
                     uiJumpToTabCompleted();
                 }
             } else {
                 System.out.println("I guess it's not completed");
                 if (this.getTabIndex().equals(TAB_COMPLETED_PARCELS)) {
                     System.out.println("But I'm at completed tab");
-                    setActiveList(false);
+                    this.setActiveList(false);
                     uiJumpToTabAll();
                 }
             }

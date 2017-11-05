@@ -4,10 +4,8 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
 
-import seedu.address.commons.events.ui.JumpToTabRequestEvent;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
