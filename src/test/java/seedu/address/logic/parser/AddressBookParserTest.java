@@ -23,6 +23,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddBirthdayCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddTagCommand;
+import seedu.address.logic.commands.ChangeWindowSizeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -164,12 +165,12 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(SortCommand.COMMAND_WORDVAR_2.toUpperCase() + " 3") instanceof SortCommand);
     }
 
-    //@@author
+    //@@author vivekscl
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORDVAR_1) instanceof RedoCommand);
-        assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
-        assertTrue(parser.parseCommand("redomult 1") instanceof RedoCommand);
+        assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORDVAR_2 + " 1") instanceof RedoCommand);
+        assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORDVAR_3 + " 2") instanceof RedoCommand);
     }
 
     //@@author jacoblipech
@@ -218,6 +219,13 @@ public class AddressBookParserTest {
         assertEquals(new AddTagCommand(indexes, toAdd), command);
     }
 
+    @Test
+    public void parseCommand_changeWindowSizeCommand() throws Exception {
+        assertTrue(parser.parseCommand(ChangeWindowSizeCommand.COMMAND_WORD) instanceof ChangeWindowSizeCommand);
+        assertTrue(parser.parseCommand(ChangeWindowSizeCommand.COMMAND_WORD + " "
+            + ChangeWindowSizeCommand.BIG_WINDOW_SIZE_PARAM) instanceof ChangeWindowSizeCommand);
+    }
+
     //@@author taojiashu
     @Test
     public void parseCommand_showFavourite() throws Exception {
@@ -225,13 +233,15 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ShowFavouriteCommand.COMMAND_WORD_2 + " 3") instanceof ShowFavouriteCommand);
     }
 
+    //@@author vivekscl
     @Test
     public void parseCommand_undoCommandWord_returnsUndoCommand() throws Exception {
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORDVAR_1) instanceof UndoCommand);
-        assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
-        assertTrue(parser.parseCommand("undomult 3") instanceof UndoCommand);
+        assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORDVAR_2 + " 2") instanceof UndoCommand);
+        assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORDVAR_3 + " 3") instanceof UndoCommand);
     }
 
+    //@@author
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);
