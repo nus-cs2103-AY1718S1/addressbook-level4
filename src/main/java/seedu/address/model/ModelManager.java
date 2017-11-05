@@ -115,6 +115,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addSchedule(Schedule schedule) {
         addressBook.addSchedule(schedule);
+        addressBook.sortSchedules();
         indicateAddressBookChanged();
     }
 
