@@ -84,7 +84,7 @@ public class CommandBox extends UiPart<Region> {
     private ArrayList<String> prefixList;
     private int fontIndex = 0;
     private boolean enableHighlight = false;
-    private String userPrefFontSize = "-fx-font-size: normal;";
+    private String userPrefFontSize = "-fx-font-size: medium;";
 
     private final ImageView tick = new ImageView("/images/tick.png");
     private final ImageView cross = new ImageView("/images/cross.png");
@@ -581,8 +581,8 @@ public class CommandBox extends UiPart<Region> {
             break;
 
         case FONT_SIZE_NORMAL:
-            commandTextField.setStyle("-fx-font-size: normal;");
-            userPrefFontSize = "-fx-font-size: normal;";
+            commandTextField.setStyle("-fx-font-size: medium;");
+            userPrefFontSize = "-fx-font-size: medium;";
             fontIndex = 3;
             break;
 
