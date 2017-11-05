@@ -61,7 +61,7 @@ public class PersonCard extends UiPart<Region> {
     //@@author wishingmaid
     @FXML
     private ImageView imageView;
-    @FXML 
+    @FXML
     private Circle circle;
     //@@author
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {

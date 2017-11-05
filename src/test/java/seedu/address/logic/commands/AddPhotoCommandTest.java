@@ -55,7 +55,6 @@ public class AddPhotoCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
         // different index -> returns false
         assertFalse(standardCommand.equals(new AddPhotoCommand(INDEX_SECOND_PERSON, new Photo(VALID_ALT_FILEPATH))));
-        
     }
     @Test
     public void execute_addPhoto_success() throws PersonNotFoundException, DuplicatePersonException, CommandException {

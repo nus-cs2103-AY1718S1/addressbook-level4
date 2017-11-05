@@ -21,11 +21,11 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
-/** 
+/**
  *A UI component that displays the selected Person's details.
  * */
 public class ExtendedPersonDetails extends UiPart<Region> {
-    //@@author wishingmaid 
+    //@@author wishingmaid
     private static final String FXML = "ExtendDetailsPerson.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private final String defaultPicture = "/images/PEERSONAL_icon.png";
@@ -51,7 +51,7 @@ public class ExtendedPersonDetails extends UiPart<Region> {
     @FXML
     private Circle circle;
     //@@author wishingmaid
-    /** 
+    /**
      * This class loads the persons details in the UI for the extended person's panel.
      * */
     public ExtendedPersonDetails() {
@@ -60,7 +60,6 @@ public class ExtendedPersonDetails extends UiPart<Region> {
         Image image = new Image(getClass().getResource(defaultPicture).toExternalForm());
         setCircle(image);
     }//@@author
-    
     /** */
     private void loadPersonDetails(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
@@ -95,6 +94,5 @@ public class ExtendedPersonDetails extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonDetails(event.getNewSelection().person);
     }//@@author
-   
 
 }

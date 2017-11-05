@@ -74,7 +74,6 @@ public class MainApp extends Application {
         imageFolder = new InitImageFolder(userPrefs.getDisplayPicturesPath());
         //@@author
         initLogging(config);
-      
         model = initModelManager(storage, userPrefs);
 
         logic = new LogicManager(model);
@@ -185,7 +184,6 @@ public class MainApp extends Application {
 
         return initializedPrefs;
     }
-    
     private void initEventsCenter() {
         EventsCenter.getInstance().registerHandler(this);
     }

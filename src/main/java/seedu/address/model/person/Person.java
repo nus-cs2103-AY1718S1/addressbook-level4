@@ -146,7 +146,6 @@ public class Person implements ReadOnlyPerson {
     public Photo getPhoto() {
         return photo.get();
     }
-    
     public void setPhoto(Photo photo) {
         this.photo.set(requireNonNull(photo));
     }
