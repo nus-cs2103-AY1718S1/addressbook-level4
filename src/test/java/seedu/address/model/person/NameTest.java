@@ -44,4 +44,5 @@ public class NameTest {
         String newName = Name.toCapitalized(name);
         assertEquals(newName.toString(), expectedName.toString());
     }
+    //@@author
 }

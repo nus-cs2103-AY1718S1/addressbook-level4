@@ -60,6 +60,7 @@ public class Name {
         return fullName.hashCode();
     }
 
+    //@@author DarrenCzen
     /**
      * This method converts a name to become capitalized fully.
      * e.g. from "dArrEn cHiN" to "Darren Chin"
@@ -78,4 +79,5 @@ public class Name {
         }
         return newString.toString();
     }
+    //@@author
 }
