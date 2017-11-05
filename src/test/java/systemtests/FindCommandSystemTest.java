@@ -218,7 +218,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
 
-    //@@author dalessr
+    //@@author
     /**
      * Executes {@code command} and verifies that the command box displays an empty string, the result display
      * box displays {@code Messages#MESSAGE_PERSONS_LISTED_OVERVIEW} with the number of people in the filtered list,

@@ -38,11 +38,13 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class AddressBookParser {
 
-    private static ArrayList<String> commandNames = new ArrayList<>();
     /**
      * Used for initial separation of command word and args.
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+
+    //@@author dalessr
+    private static ArrayList<String> commandNames = new ArrayList<>();
 
     public AddressBookParser() {
         commandNames.add(AddCommand.COMMAND_WORD);
@@ -70,6 +72,7 @@ public class AddressBookParser {
         commandNames.add(ExportCommand.COMMAND_WORD);
     }
 
+    //@@author
     /**
      * Parses user input into command for execution.
      *
@@ -174,6 +177,7 @@ public class AddressBookParser {
         }
     }
 
+    //@@author dalessr
     public static ArrayList<String> getCommandNames() {
         return commandNames;
     }

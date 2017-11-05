@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-//@@author dalessr
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
@@ -16,6 +15,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+//@@author dalessr
 /**
  * Remove a birthday from an existing person in the address book.
  */

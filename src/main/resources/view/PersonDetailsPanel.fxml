@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 
 <!-- @@author dalessr -->
-
 <StackPane xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane fx:id="personDetailsGrid" style="-fx-background-image: url(images/wallpaper1.png);">

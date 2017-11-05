@@ -75,7 +75,8 @@ public class PersonDetailsPanel extends UiPart<Region> {
     /**
      * Open another tab to show twitter webview
      */
-    @FXML void openTwitterWebView() {
+    @FXML
+    private void openTwitterWebView() {
         Tab tab = new Tab();
         tab.setText("twitter");
         tab.setClosable(true);
@@ -88,7 +89,8 @@ public class PersonDetailsPanel extends UiPart<Region> {
     /**
      * Open another tab to show nusmods webview
      */
-    @FXML void openNusModsWebView() {
+    @FXML
+    private void openNusModsWebView() {
         Tab tab = new Tab();
         tab.setText("nusmods");
         tab.setClosable(true);
@@ -101,7 +103,8 @@ public class PersonDetailsPanel extends UiPart<Region> {
     /**
      * Open another tab to show facebook webview
      */
-    @FXML void openFaceBookWebView() {
+    @FXML
+    private void openFaceBookWebView() {
         Tab tab = new Tab();
         tab.setText("facebook");
         tab.setClosable(true);
@@ -114,7 +117,8 @@ public class PersonDetailsPanel extends UiPart<Region> {
     /**
      * Open another tab to show instagram webview
      */
-    @FXML void openInstagramWebView() {
+    @FXML
+    private void openInstagramWebView() {
         Tab tab = new Tab();
         tab.setText("instagram");
         tab.setClosable(true);
@@ -127,7 +131,8 @@ public class PersonDetailsPanel extends UiPart<Region> {
     /**
      * Open another tab to show github webview
      */
-    @FXML void openGitHubWebView() {
+    @FXML
+    private void openGitHubWebView() {
         Tab tab = new Tab();
         tab.setText("github");
         tab.setClosable(true);
@@ -163,34 +168,38 @@ public class PersonDetailsPanel extends UiPart<Region> {
 
         addressLabelContinue.setText("");
         String[] address = person.getAddress().toString().split(" ");
-        StringBuffer firstBuffer = new StringBuffer();
+        StringBuilder firstBuilder = new StringBuilder();
         int index = 0;
-        while (index < address.length && address[index].length() <= 32 - firstBuffer.length()) {
-            firstBuffer.append(address[index]);
-            firstBuffer.append(" ");
+        while (index < address.length && address[index].length() <= 32 - firstBuilder.length()) {
+            firstBuilder.append(address[index]);
+            firstBuilder.append(" ");
             index++;
         }
-        String firstAddress = firstBuffer.toString();
+        String firstAddress = firstBuilder.toString();
         addressLabel.setText(firstAddress);
-        StringBuffer secondBuffer = new StringBuffer();
+        StringBuilder secondBuilder = new StringBuilder();
         for (; index < address.length; index++) {
-            secondBuffer.append(address[index]);
-            secondBuffer.append(" ");
+            secondBuilder.append(address[index]);
+            secondBuilder.append(" ");
         }
-        if (secondBuffer.length() != 0) {
-            String secondAddress = secondBuffer.toString();
+        if (secondBuilder.length() != 0) {
+            String secondAddress = secondBuilder.toString();
             addressLabelContinue.setText(secondAddress);
         }
 
         eventsArea.setText("");
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuilder = new StringBuilder();
         int counter = 1;
         for (Event e: person.getEvents()) {
-            stringBuffer.append(counter + ". " + e.getEventName().fullName + " -- "
-                    + e.getEventTime().toString() + "\n");
+            stringBuilder.append(counter)
+                    .append(". ")
+                    .append(e.getEventName().fullName)
+                    .append(" -- ")
+                    .append(e.getEventTime().toString())
+                    .append("\n");
             counter++;
         }
-        eventsArea.setText(stringBuffer.toString());
+        eventsArea.setText(stringBuilder.toString());
     }
 
     @Subscribe
@@ -208,34 +217,38 @@ public class PersonDetailsPanel extends UiPart<Region> {
 
         addressLabelContinue.setText("");
         String[] address = person.getAddress().toString().split(" ");
-        StringBuffer firstBuffer = new StringBuffer();
+        StringBuilder firstBuilder = new StringBuilder();
         int index = 0;
-        while (index < address.length && address[index].length() <= 32 - firstBuffer.length()) {
-            firstBuffer.append(address[index]);
-            firstBuffer.append(" ");
+        while (index < address.length && address[index].length() <= 32 - firstBuilder.length()) {
+            firstBuilder.append(address[index]);
+            firstBuilder.append(" ");
             index++;
         }
-        String firstAddress = firstBuffer.toString();
+        String firstAddress = firstBuilder.toString();
         addressLabel.setText(firstAddress);
-        StringBuffer secondBuffer = new StringBuffer();
+        StringBuilder secondBuilder = new StringBuilder();
         for (; index < address.length; index++) {
-            secondBuffer.append(address[index]);
-            secondBuffer.append(" ");
+            secondBuilder.append(address[index]);
+            secondBuilder.append(" ");
         }
-        if (secondBuffer.length() != 0) {
-            String secondAddress = secondBuffer.toString();
+        if (secondBuilder.length() != 0) {
+            String secondAddress = secondBuilder.toString();
             addressLabelContinue.setText(secondAddress);
         }
 
         eventsArea.setText("");
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuilder = new StringBuilder();
         int counter = 1;
         for (Event e: person.getEvents()) {
-            stringBuffer.append(counter + ". " + e.getEventName().fullName + " -- "
-                    + e.getEventTime().toString() + "\n");
+            stringBuilder.append(counter)
+                    .append(". ")
+                    .append(e.getEventName().fullName)
+                    .append(" -- ")
+                    .append(e.getEventTime().toString())
+                    .append("\n");
             counter++;
         }
-        eventsArea.setText(stringBuffer.toString());
+        eventsArea.setText(stringBuilder.toString());
     }
 
     @Subscribe
@@ -247,24 +260,24 @@ public class PersonDetailsPanel extends UiPart<Region> {
     @Subscribe
     private void handleOpenNusModsWebViewEvent(OpenNusModsWebViewEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        openTwitterWebView();
+        openNusModsWebView();
     }
 
     @Subscribe
     private void handleOpenFaceBookWebViewEvent(OpenFaceBookWebViewEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        openTwitterWebView();
+        openFaceBookWebView();
     }
 
     @Subscribe
     private void handleOpenInstagramWebViewEvent(OpenInstagramWebViewEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        openTwitterWebView();
+        openInstagramWebView();
     }
 
     @Subscribe
     private void handleOpenGithubWebViewEvent(OpenGithubWebViewEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        openTwitterWebView();
+        openGitHubWebView();
     }
 }

@@ -33,7 +33,7 @@ import seedu.address.model.tag.Tag;
 public class SampleDataUtil {
     public static Person[] getSamplePersons() {
 
-
+        //@@author dalessr
         try {
             Person[] persons =  new Person[] {
                 new Person(new Name("Alex Yeoh"), new Birthday("30/09/2000"), new Phone("87438807"),
@@ -63,7 +63,7 @@ public class SampleDataUtil {
 
                 new Person(new Name("Quintin Levell"), new Birthday("04/09/1997"), new Phone("66012135"),
                         new Email("levellq@example.com"), new Address("Blk 39 Aljunied Street 18, #03-44"),
-                        getTagSet("friends", "tutors"), new HashSet<>(),
+                        getTagSet("friends", "cs2103"), new HashSet<>(),
                         new DateAdded("01/10/2016 11:11:53")),
                 new Person(new Name("Gino Trost"), new Birthday("27/05/1987"), new Phone("85154314"),
                         new Email("trostg@example.com"), new Address("Blk 40 Boon Lay Street 87, #03-12"),
@@ -79,7 +79,7 @@ public class SampleDataUtil {
                         new DateAdded("15/12/2016 12:00:01")),
                 new Person(new Name("Francina Schepers"), new Birthday("07/08/1997"), new Phone("62667887"),
                         new Email("francina@example.com"), new Address("Blk 477 Jurong East Street 28, #01-33"),
-                        getTagSet("classmates"), new HashSet<>(),
+                        getTagSet("classmates", "cs2103"), new HashSet<>(),
                         new DateAdded("01/02/2017 12:01:01")),
                 new Person(new Name("Ima Mauffray"), new Birthday("17/10/1969"), new Phone("86159036"),
                         new Email("imamau@example.com"), new Address("Blk 395 Lorong 6 Orchard Road, #04-36"),

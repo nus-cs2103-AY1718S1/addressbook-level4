@@ -1,6 +1,5 @@
 package seedu.address.logic.parser;
 
-//@@author dalessr
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -10,8 +9,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.BirthdayRemoveCommand;
 
-
-
+//@@author dalessr
 /**
  * Test scope: similar to {@code SelectCommandParserTest}.
  * @see SelectCommandParserTest

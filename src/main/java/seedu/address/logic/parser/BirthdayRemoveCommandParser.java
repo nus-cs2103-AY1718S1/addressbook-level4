@@ -1,7 +1,5 @@
 package seedu.address.logic.parser;
 
-//@@author dalessr
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
@@ -10,6 +8,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.BirthdayRemoveCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author dalessr
 /**
  * Parses input arguments and creates a new BirthdayRemoveCommand object
  */

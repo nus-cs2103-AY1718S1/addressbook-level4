@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-//@@author dalessr
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
@@ -22,6 +21,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Person;
 
+//@@author dalessr
 /**
  * Contains integration tests (interaction with the Model) and unit tests for BirthdayRemoveCommand.
  */
