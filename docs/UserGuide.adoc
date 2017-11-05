@@ -121,7 +121,9 @@ Here are some other ways you can add contacts:
 * `a n/John Watson p/83331122 e/johnw@example.com a/John Avenue, block 2, #01-01`
 * `a n/Dave`
 
-If you type in all commands shown above, you should see:
+If you type in all commands shown above, you should see Figure 4.2.3 +
+image:add3.png[add3, 600] +
+_Figure 4.2.3_
 // end::add[]
 
 === Listing all persons : `list`

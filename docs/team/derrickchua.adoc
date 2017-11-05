@@ -84,7 +84,3 @@ a user from adding him/her.
 
 * Implement tag colours (Pull request https://github.com/CS2103AUG2017-W13-B3/main/pull/1[#1])
 * Fix white PersonListPanel CSS (Pull request https://github.com/CS2103AUG2017-W13-B3/main/pull/75[#75])
-
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}
