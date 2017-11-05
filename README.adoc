@@ -1,4 +1,4 @@
-= Personal Information Management Application (PIMP)
+= Personal Information Management Program (PIMP)
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 

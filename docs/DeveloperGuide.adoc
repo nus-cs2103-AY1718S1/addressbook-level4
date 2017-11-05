@@ -1,4 +1,4 @@
-= Personal Information Management Application (PIMP) - Developer Guide
+= Personal Information Management Program (PIMP) - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
