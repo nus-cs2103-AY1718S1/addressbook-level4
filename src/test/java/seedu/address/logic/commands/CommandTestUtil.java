@@ -31,9 +31,11 @@ public class CommandTestUtil {
 
     public static final String VALID_CODE_MA1101R = "MA1101R";
     public static final String VALID_CODE_CS2101 = "CS2101";
+    public static final String VALID_CODE_MA1102R = "MA1102R";
     public static final String VALID_CLASSTYPE_MA1101R = "Lec";
     public static final String VALID_CLASSTYPE_CS2101 = "Tut";
     public static final String VALID_VENUE_MA1101R = "LT30";
+    public static final String VALID_VENUE_MA1102R = "LT29";
     public static final String VALID_VENUE_CS2101 = "COM02-04";
     public static final String VALID_GROUP_MA1101R = "3";
     public static final String VALID_GROUP_CS2101 = "2";
@@ -41,8 +43,13 @@ public class CommandTestUtil {
     public static final String VALID_TIMESLOT_CS2101 = "TUE[1600-1800]";
     public static final String VALID_LECTURER_MA1101R = "Ma Siu Lun";
     public static final String VALID_LECTURER_CS2101 = "Diana";
+    //@@author cctdaniel
     public static final String VALID_FONT_SIZE_XSMALL = "xsmall";
     public static final String VALID_FONT_SIZE_SMALL = "small";
+    public static final String VALID_THEME_LIGHT = "light";
+    public static final String VALID_THEME_DARK = "dark";
+    //@@author
+
 
     public static final String CODE_DESC_MA1101R = " " + PREFIX_MODULE_CODE + VALID_CODE_MA1101R;
     public static final String CODE_DESC_CS2101 = " " + PREFIX_MODULE_CODE + VALID_CODE_CS2101;
@@ -56,9 +63,10 @@ public class CommandTestUtil {
     public static final String TIMESLOT_DESC_CS2101 = " " + PREFIX_TIME_SLOT + VALID_TIMESLOT_CS2101;
     public static final String LECTURER_DESC_MA1101R = " " + PREFIX_LECTURER + VALID_LECTURER_MA1101R;
     public static final String LECTURER_DESC_CS2101 = " " + PREFIX_LECTURER + VALID_LECTURER_CS2101;
+    //@@author cctdaniel
     public static final String FONT_SIZE_DESC_XSMALL = " " + PREFIX_FONT_SIZE + VALID_FONT_SIZE_XSMALL;
     public static final String FONT_SIZE_DESC_SMALL = " " + PREFIX_FONT_SIZE + VALID_FONT_SIZE_SMALL;
-
+    //@@author
 
 
     public static final String INVALID_CODE_DESC = " " + PREFIX_MODULE_CODE + "MA*"; //code format is not correct
@@ -67,8 +75,11 @@ public class CommandTestUtil {
     public static final String INVALID_GROUP_DESC = " " + PREFIX_GROUP + "SL1"; // 'SL' not allowed for addresses
     public static final String INVALID_TIMESLOT_DESC = " " + PREFIX_TIME_SLOT + "FRIDAY[1200-1300]"; // Only 3 letters
     public static final String INVALID_LECTURER_DESC = " " + PREFIX_LECTURER + ""; // '*' not allowed in tags
+    //@@author cctdaniel
     public static final String INVALID_FONT_SIZE_DESC = " " + PREFIX_FONT_SIZE
             + "small!"; // '!' not allowed in font size
+    public static final String INVALID_THEME_DESC = "blue";
+    //@@author
 
 
     public static final EditCommand.EditLessonDescriptor DESC_MA1101R;

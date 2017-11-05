@@ -1,5 +1,5 @@
 # cctdaniel
-###### \java\seedu\address\logic\commands\CustomiseCommand.java
+###### /java/seedu/address/logic/commands/CustomiseCommand.java
 ``` java
 /**
  * Customise the look of the Address Book application.
@@ -67,7 +67,7 @@ public class CustomiseCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\commands\SwitchThemeCommand.java
+###### /java/seedu/address/logic/commands/SwitchThemeCommand.java
 ``` java
 /**
  * Toggle between light and dark theme.
@@ -112,7 +112,7 @@ public class SwitchThemeCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\CustomiseCommandParser.java
+###### /java/seedu/address/logic/parser/CustomiseCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new CustomiseCommand object
@@ -151,7 +151,7 @@ public class CustomiseCommandParser implements Parser<CustomiseCommand> {
 
 }
 ```
-###### \java\seedu\address\model\font\FontSize.java
+###### /java/seedu/address/model/font/FontSize.java
 ``` java
 /**
  * Represents the font size of the AddressBook.
@@ -203,7 +203,7 @@ public class FontSize {
 
 }
 ```
-###### \java\seedu\address\model\FontSizeUnit.java
+###### /java/seedu/address/model/FontSizeUnit.java
 ``` java
 /**
  * A Enumeration class that consists of all possible FontSize
@@ -225,7 +225,7 @@ public enum FontSizeUnit {
     }
 }
 ```
-###### \java\seedu\address\model\ThemeUnit.java
+###### /java/seedu/address/model/ThemeUnit.java
 ``` java
 /**
  * A Enumeration class that consists of all possible Theme
@@ -247,14 +247,14 @@ public enum ThemeUnit {
     }
 }
 ```
-###### \java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
     @Subscribe
     private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
         setFontSize(event.message);
     }
 ```
-###### \java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
     /**
      * Sets the command box style to user preferred font size.
@@ -297,7 +297,7 @@ public enum ThemeUnit {
     }
 
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     /**
      * Handles SwitchThemeEvent.
@@ -365,7 +365,7 @@ public enum ThemeUnit {
     }
 
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     @Subscribe
     private void handleSwitchThemeRequestEvent(SwitchThemeRequestEvent event) {
@@ -376,7 +376,7 @@ public enum ThemeUnit {
 
 }
 ```
-###### \java\seedu\address\ui\ResultDisplay.java
+###### /java/seedu/address/ui/ResultDisplay.java
 ``` java
     @Subscribe
     private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {

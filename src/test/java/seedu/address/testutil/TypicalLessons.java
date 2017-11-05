@@ -31,15 +31,15 @@ public class TypicalLessons {
     public static final ReadOnlyLesson MA1101R_L1 = new LessonBuilder().withCode("MA1101R")
             .withClassType("Lec").withLocation("LT27")
             .withGroup("1").withTimeSlot("MON[1600-1800]")
-            .withLecturers("Ma Siu Lun").build();
+            .withLecturers("Ma Siu Lun").withMarked().build();
     public static final ReadOnlyLesson MA1101R_L2 = new LessonBuilder().withCode("MA1101R")
             .withClassType("Lec").withLocation("LT27")
             .withGroup("2").withTimeSlot("TUE[0800-1000]")
-            .withLecturers("Ma Siu Lun, Victor Tan").build();
+            .withLecturers("Ma Siu Lun, Victor Tan").withMarked().build();
     public static final ReadOnlyLesson GEQ_T66 = new LessonBuilder().withCode("GEQ1000")
             .withClassType("tut").withLocation("ERC02-08")
             .withGroup("66").withTimeSlot("FRI[1000-1200]")
-            .withLecturers("Carl").build();
+            .withLecturers("Carl").withMarked().build();
     public static final ReadOnlyLesson MA1101R_T1 = new LessonBuilder().withCode("MA1101R")
             .withClassType("Tut").withLocation("COM02-07")
             .withGroup("1").withTimeSlot("WED[0900-1000]")
@@ -75,6 +75,7 @@ public class TypicalLessons {
             .withClassType(VALID_CLASSTYPE_CS2101).withLocation(VALID_VENUE_CS2101).withGroup(VALID_GROUP_CS2101)
             .withTimeSlot(VALID_TIMESLOT_CS2101).withLecturers(VALID_LECTURER_CS2101).build();
 
+    public static final String CLASS_TYPE_LECTURE = "Lec"; // A keyword that matches class type lecture
     public static final String KEYWORD_MATCHING_MA1101R = "MA1101R"; // A keyword that matches MEIER
     public static final String KEYWORD_MATCHING_LT27 = "LT27"; // A keyword that matches MEIER
 

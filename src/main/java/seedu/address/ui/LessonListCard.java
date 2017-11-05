@@ -151,7 +151,7 @@ public class LessonListCard extends UiPart<Region> {
 
         default:
             switchToLessonCard();
-
+            break;
         }
     }
     //@@author
@@ -174,6 +174,7 @@ public class LessonListCard extends UiPart<Region> {
                 && lesson.equals(card.lesson);
     }
 
+    //@@author cctdaniel
     @Subscribe
     private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
         setFontSize(event.message);
@@ -242,5 +243,4 @@ public class LessonListCard extends UiPart<Region> {
             break;
         }
     }
-
 }

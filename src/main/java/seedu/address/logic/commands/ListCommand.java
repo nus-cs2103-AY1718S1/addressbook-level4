@@ -42,30 +42,51 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute() {
 
-        if (parameter.equals(MODULE_KEYWORD)) {
-            ListingUnit.setCurrentListingUnit(MODULE);
-            UniqueModuleCodePredicate codePredicate = new UniqueModuleCodePredicate(model.getUniqueCodeSet());
-            EventsCenter.getInstance().post(new ViewedLessonEvent());
-            ListingUnit.setCurrentPredicate(codePredicate);
-            return executeListByAttribute(codePredicate);
-        } else if (parameter.equals(LOCATION_KEYWORD)) {
-            ListingUnit.setCurrentListingUnit(LOCATION);
-            UniqueLocationPredicate locationPredicate = new UniqueLocationPredicate(model.getUniqueLocationSet());
-            EventsCenter.getInstance().post(new ViewedLessonEvent());
-            ListingUnit.setCurrentPredicate(locationPredicate);
-            return executeListByAttribute(locationPredicate);
-        } else if (parameter.equals(MARKED_LIST_KEYWORD)) {
-            ListingUnit.setCurrentListingUnit(LESSON);
-
-            MarkedListPredicate markedListPredicate = new MarkedListPredicate();
-            model.setViewingPanelAttribute("marked");
-            ListingUnit.setCurrentPredicate(markedListPredicate);
-            EventsCenter.getInstance().post(new ViewedLessonEvent());
-            return executeListByAttribute(markedListPredicate);
-        } else {
+        switch (parameter) {
+        case MODULE_KEYWORD :
+            return executeListModule();
+        case LOCATION_KEYWORD:
+            return executeListLocation();
+        case MARKED_LIST_KEYWORD:
+            return executeListMarked();
+        default:
             assert false : "There cannot be other parameters passed in";
             return null;
         }
+    }
+
+    /**
+     * execute list by module.
+     */
+    private CommandResult executeListModule() {
+        ListingUnit.setCurrentListingUnit(MODULE);
+        UniqueModuleCodePredicate codePredicate = new UniqueModuleCodePredicate(model.getUniqueCodeSet());
+        EventsCenter.getInstance().post(new ViewedLessonEvent());
+        ListingUnit.setCurrentPredicate(codePredicate);
+        return executeListByAttribute(codePredicate);
+    }
+
+    /**
+     * execute list by location.
+     */
+    private CommandResult executeListLocation() {
+        ListingUnit.setCurrentListingUnit(LOCATION);
+        UniqueLocationPredicate locationPredicate = new UniqueLocationPredicate(model.getUniqueLocationSet());
+        EventsCenter.getInstance().post(new ViewedLessonEvent());
+        ListingUnit.setCurrentPredicate(locationPredicate);
+        return executeListByAttribute(locationPredicate);
+    }
+
+    /**
+     * execute list all marked lessons.
+     */
+    private CommandResult executeListMarked() {
+        ListingUnit.setCurrentListingUnit(LESSON);
+        MarkedListPredicate markedListPredicate = new MarkedListPredicate();
+        model.setViewingPanelAttribute(MARKED_LIST_KEYWORD);
+        ListingUnit.setCurrentPredicate(markedListPredicate);
+        EventsCenter.getInstance().post(new ViewedLessonEvent());
+        return executeListByAttribute(markedListPredicate);
     }
 
     /**

@@ -14,7 +14,7 @@ import seedu.address.model.module.TimeSlot;
 import seedu.address.model.util.SampleDataUtil;
 
 /**
- * A utility class to help with building Person objects.
+ * A utility class to help with building Lesson objects.
  */
 public class LessonBuilder {
 
@@ -24,7 +24,6 @@ public class LessonBuilder {
     public static final String DEFAULT_GROUP = "1";
     public static final String DEFAULT_TIME_SLOT = "FRI[1400-1600]";
     public static final String DEFAULT_LECTURER = "Ma Siu Lun";
-    private static final boolean DEFAULT_ISMARKED = true;
 
     private Lesson lesson;
 

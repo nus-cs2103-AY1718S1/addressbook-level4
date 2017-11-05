@@ -1,5 +1,5 @@
 # cctdaniel
-###### \java\seedu\address\logic\commands\CustomiseCommandTest.java
+###### /java/seedu/address/logic/commands/CustomiseCommandTest.java
 ``` java
 public class CustomiseCommandTest {
 
@@ -90,7 +90,7 @@ public class CustomiseCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\parser\CustomiseCommandParserTest.java
+###### /java/seedu/address/logic/parser/CustomiseCommandParserTest.java
 ``` java
 public class CustomiseCommandParserTest {
 

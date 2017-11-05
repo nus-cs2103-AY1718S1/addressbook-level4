@@ -31,7 +31,7 @@ public class ViewCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_VIEW_LESSON_SUCCESS = "lesson founded with %1$s";
+    public static final String MESSAGE_VIEW_LESSON_SUCCESS = "Viewing lesson: %1$s";
     public static final String MESSAGE_VIEW_LOCATION_SUCCESS = "lessons(s) founded with location %1$s";
     public static final String MESSAGE_VIEW_MODULE_SUCCESS = "lessons(s) founded with module code %1$s";
     private final Index targetIndex;
@@ -56,8 +56,6 @@ public class ViewCommand extends Command {
 
         String resultMessage = updateFilterList(toView);
 
-        ListingUnit.setCurrentListingUnit(LESSON);
-
         EventsCenter.getInstance().post(new RefreshPanelEvent());
         EventsCenter.getInstance().post(new ViewedLessonEvent());
         return new CommandResult(resultMessage);
@@ -72,7 +70,7 @@ public class ViewCommand extends Command {
         Predicate predicate;
         String result;
 
-        switch (ListingUnit.getCurrentListingUnit()) {
+        switch (getCurrentListingUnit()) {
 
         case LOCATION:
             predicate = new FixedLocationPredicate(toView.getLocation());
@@ -87,9 +85,11 @@ public class ViewCommand extends Command {
         default:
             predicate = new ShowSpecifiedLessonPredicate(toView.hashCode());
             result = String.format(MESSAGE_VIEW_LESSON_SUCCESS, toView);
+            break;
         }
 
         ListingUnit.setCurrentPredicate(predicate);
+        ListingUnit.setCurrentListingUnit(LESSON);
         model.updateFilteredLessonList(predicate);
         return result;
     }

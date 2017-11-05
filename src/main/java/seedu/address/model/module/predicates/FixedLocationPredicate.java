@@ -18,11 +18,7 @@ public class FixedLocationPredicate implements Predicate<ReadOnlyLesson> {
 
     @Override
     public boolean test(ReadOnlyLesson lesson) {
-        if (lesson.getLocation().equals(locationToTest)) {
-            return true;
-        } else {
-            return false;
-        }
+        return lesson.getLocation().equals(locationToTest);
     }
 
     @Override

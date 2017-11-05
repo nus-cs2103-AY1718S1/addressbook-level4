@@ -169,6 +169,7 @@ public class CommandBox extends UiPart<Region> {
         switch (keyEvent.getCode()) {
         default:
             listenCommandInputChanged();
+            break;
         }
     }
 
@@ -240,6 +241,9 @@ public class CommandBox extends UiPart<Region> {
                     configActiveTag(index, prefixList.get(FONT_SIZE));
                 }
             }
+        } else {
+            commandTextField.setStyle(userPrefFontSize);
+            checkBox.setVisible(false);
         }
 
     }
@@ -266,10 +270,7 @@ public class CommandBox extends UiPart<Region> {
      * @return
      */
     private boolean validCommandKeyword(String keyWord) {
-        if (keywordColorMap.containsKey(keyWord)) {
-            return true;
-        }
-        return false;
+        return keywordColorMap.containsKey(keyWord);
     }
 
 
@@ -291,11 +292,11 @@ public class CommandBox extends UiPart<Region> {
             tester.parseCommand(allTextInput);
             commandTextField.setStyle(userPrefFontSize + "-fx-border-color: green; -fx-border-width: 2");
             checkBox.setGraphic(tick);
-            checkBox.toFront();
+            checkBox.setVisible(true);
         } catch (ParseException e) {
             commandTextField.setStyle(userPrefFontSize + "-fx-border-color: red; -fx-border-width: 2");
             checkBox.setGraphic(cross);
-            checkBox.toFront();
+            checkBox.setVisible(true);
         }
     }
     //@@author
@@ -337,6 +338,7 @@ public class CommandBox extends UiPart<Region> {
             break;
         default:
             keywordLabel.getStyleClass().add("keyword-label-default");
+            break;
         }
 
         stackPane.setAlignment(keywordLabel, Pos.CENTER_LEFT);
@@ -470,6 +472,7 @@ public class CommandBox extends UiPart<Region> {
             break;
         default:
             text.setFont(commandTextDefault.getFont());
+            break;
 
         }
 
@@ -577,7 +580,6 @@ public class CommandBox extends UiPart<Region> {
             break;
         }
     }
-
     //@@author
     /**
      * Initializes the history snapshot.

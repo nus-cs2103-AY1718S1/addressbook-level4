@@ -6,7 +6,7 @@
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: monospace;
-    -fx-text-fill: #555555;
+    -fx-text-fill: white;
     -fx-opacity: 0.9;
 }
 
@@ -121,29 +121,33 @@
 
 .cell_big_label {
     -fx-font-family: monospace;
-    -fx-font-size: 16px;
-    -fx-text-fill: #010504;
+    -fx-font-size: 24px;
+    -fx-text-fill: white;
 }
 
 .cell_small_label {
-    -fx-font-family: "Segoe UI";
-    -fx-font-size: 13px;
-    -fx-text-fill: #010504;
+    -fx-font-family: monospace;
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
 }
 
 .anchor-pane {
-     -fx-background-color: derive(#1d1d1d, 60%);
+    -fx-background-color: derive(#1d1d1d, 60%);
 }
 
 .pane-with-border {
      -fx-background-color: derive(#1d1d1d, 20%);
-     -fx-border-color: derive(#1d1d1d, 10%);
-     -fx-border-top-width: 1px;
+     -fx-border-color: derive(#1d1d1d, 20%);
+     -fx-border-width: 10px;
+}
+
+.pane-without-border {
+    -fx-background-color: derive(#1d1d1d, 50%);
 }
 
 .status-bar {
     -fx-background-color: derive(#1d1d1d, 20%);
-    -fx-text-fill: black;
+    -fx-text-fill: white;
 }
 
 .result-display {
@@ -155,7 +159,7 @@
 }
 
 .result-display .label {
-    -fx-text-fill: black !important;
+    -fx-text-fill: white !important;
 }
 
 .status-bar .label {
@@ -235,10 +239,6 @@
         -fx-font-size: xx-large;
         -fx-text-fill: white;
 }
-
-
-
-
 
 /*
  * Metro style Push Button
@@ -426,10 +426,19 @@
     -fx-font-size: 11;
 }
 
+#lessonNode {
+    -fx-font-family: monospace;
+    -fx-font-size: x-large;
+    -fx-font-weight: bolder;
+    -fx-control-inner-background: #6B4A40;
+    -fx-text-fill: derive(#d4cbb3, 50%);
+    -fx-text-alignment: center;
+}
+
 #stickyNote {
     -fx-background-color: transparent;
     -fx-padding:5px 5px 5px;
-    -fx-font:20px 'Gloria Hallelujah', cursive;
+    -fx-font:20px monospace;
     -fx-line-height:1.5;
 }
 
@@ -437,11 +446,16 @@
     -fx-background-color: transparent;
 }
 
-#stickyNote .scroll-pane .viewport{
+#stickyNote .scroll-pane .viewport {
     -fx-background-color: transparent;
 }
 
 
-#stickyNote .scroll-pane .content{
+#stickyNote .scroll-pane .content {
     -fx-background-color: transparent;
+}
+
+#header {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
 }

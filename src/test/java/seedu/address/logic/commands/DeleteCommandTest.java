@@ -53,7 +53,6 @@ public class DeleteCommandTest {
     public void execute_validIndexMarkedList_success() throws Exception {
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         ReadOnlyLesson lessonToDelete = model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
-        model.bookmarkLesson(lessonToDelete);
         model.updateFilteredLessonList(new MarkedListPredicate());
 
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_LESSON);

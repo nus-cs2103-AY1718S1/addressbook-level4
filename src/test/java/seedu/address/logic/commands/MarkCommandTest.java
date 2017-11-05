@@ -36,12 +36,12 @@ public class MarkCommandTest {
     public void execute_validIndexUnfilteredList_success() throws DuplicateLessonException {
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         ReadOnlyLesson lessonToMark = model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
+        lessonToMark.setAsUnmarked();
         MarkCommand markCommand = prepareCommand(INDEX_FIRST_LESSON);
 
         String expectedMessage = String.format(MarkCommand.MESSAGE_BOOKMARK_LESSON_SUCCESS, lessonToMark);
 
         ModelManager expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel.bookmarkLesson(expectedModel.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()));
 
         assertCommandSuccess(markCommand, model, expectedMessage, expectedModel);
     }
@@ -52,6 +52,7 @@ public class MarkCommandTest {
         model.updateFilteredLessonList(new FixedCodePredicate(
                 model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()).getCode()));
         ReadOnlyLesson lessonToMark = model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
+        lessonToMark.setAsUnmarked();
         MarkCommand markCommand = prepareCommand(INDEX_FIRST_LESSON);
 
         String expectedMessage = String.format(MarkCommand.MESSAGE_BOOKMARK_LESSON_SUCCESS, lessonToMark);
@@ -59,7 +60,6 @@ public class MarkCommandTest {
         ModelManager expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         expectedModel.updateFilteredLessonList(new FixedCodePredicate(
                 expectedModel.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()).getCode()));
-        expectedModel.bookmarkLesson(expectedModel.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()));
 
         assertCommandSuccess(markCommand, model, expectedMessage, expectedModel);
     }

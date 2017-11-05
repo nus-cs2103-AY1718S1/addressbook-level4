@@ -90,7 +90,7 @@ public class EditCommand extends UndoableCommand {
 
     /**
      * @param index          of the address in the filtered address list to edit
-     * @param attributeValue the new edited address
+     * @param attributeValue the new edited attribute value
      */
     public EditCommand(Index index, String attributeValue) {
         requireNonNull(index);
@@ -134,6 +134,9 @@ public class EditCommand extends UndoableCommand {
 
         try {
             model.updateBookedSlot(bookedSlotToEdit, editedBookedSlot);
+            if (lessonToEdit.isMarked()) {
+                editedLesson.setAsMarked();
+            }
             model.updateLesson(lessonToEdit, editedLesson);
         } catch (DuplicateLessonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_LESSON);
@@ -148,7 +151,7 @@ public class EditCommand extends UndoableCommand {
 
 
     /**
-     * Edit the address, all lessons with the edited address is updated with a new given address.
+     * Edit the location, all lessons with the edited location is updated with a new given location.
      */
     private CommandResult executeEditLocation(Location addressToEdit) throws CommandException {
         model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);

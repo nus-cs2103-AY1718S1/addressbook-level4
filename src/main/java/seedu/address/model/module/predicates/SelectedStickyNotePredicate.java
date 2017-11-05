@@ -18,11 +18,7 @@ public class SelectedStickyNotePredicate implements Predicate<Remark> {
 
     @Override
     public boolean test(Remark remark) {
-        if (remark.moduleCode.equals(codeTotest)) {
-            return true;
-        } else {
-            return false;
-        }
+        return remark.moduleCode.equals(codeTotest);
     }
 
     @Override
