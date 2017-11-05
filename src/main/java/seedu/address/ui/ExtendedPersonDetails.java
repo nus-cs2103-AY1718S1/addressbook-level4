@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import java.util.HashMap;
-import java.util.Random;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -59,7 +57,8 @@ public class ExtendedPersonDetails extends UiPart<Region> {
         registerAsAnEventHandler(this);
         Image image = new Image(getClass().getResource(defaultPicture).toExternalForm());
         setCircle(image);
-    }//@@author
+    }
+    //@@author
     /** */
     private void loadPersonDetails(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
@@ -93,6 +92,7 @@ public class ExtendedPersonDetails extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonDetails(event.getNewSelection().person);
-    }//@@author
+    }
+    //@@author
 
 }
