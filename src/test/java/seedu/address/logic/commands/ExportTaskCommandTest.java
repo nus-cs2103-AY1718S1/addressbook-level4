@@ -54,7 +54,7 @@ public class ExportTaskCommandTest {
                 String.join(" ", "n/" + firstTaskToExport.getName(),
                         "d/" + firstTaskToExport.getDescription(),
                         "s/" + firstTaskToExport.getStartDateTime(),
-                        "e/" + firstTaskToExport.getEndDateTime(),
+                        "f/" + firstTaskToExport.getEndDateTime(),
                         "t/" + firstBuilder));
         final StringBuilder lastBuilder = new StringBuilder();
         lastTaskToExport.getTags().forEach(lastBuilder::append);
@@ -62,7 +62,7 @@ public class ExportTaskCommandTest {
                 String.join(" ", "n/" + lastTaskToExport.getName(),
                         "d/" + lastTaskToExport.getDescription(),
                         "s/" + lastTaskToExport.getStartDateTime(),
-                        "e/" + lastTaskToExport.getEndDateTime(),
+                        "f/" + lastTaskToExport.getEndDateTime(),
                         "t/" + lastBuilder));
 
         assertExecutionSuccess(INDEX_FIRST_TASK, firstMessage);
@@ -88,7 +88,7 @@ public class ExportTaskCommandTest {
                 String.join(" ", "n/" + taskToExport.getName(),
                         "d/" + taskToExport.getDescription(),
                         "s/" + taskToExport.getStartDateTime(),
-                        "e/" + taskToExport.getEndDateTime(),
+                        "f/" + taskToExport.getEndDateTime(),
                         "t/" + builder));
 
         assertExecutionSuccess(INDEX_FIRST_TASK, expectedMessage);

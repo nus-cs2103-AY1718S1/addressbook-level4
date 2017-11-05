@@ -57,7 +57,7 @@ public class ExportTaskCommand extends Command {
                         "n/" + taskToExport.getName(),
                         "d/" + taskToExport.getDescription(),
                         "s/" + taskToExport.getStartDateTime(),
-                        "e/" + taskToExport.getEndDateTime(),
+                        "f/" + taskToExport.getEndDateTime(),
                         "t/" + builder.toString()));
 
         return new CommandResult(feedBack);
