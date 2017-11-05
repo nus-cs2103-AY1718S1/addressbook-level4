@@ -126,9 +126,9 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author
 
     @Override
-    public void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+    public boolean removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
         if (!addressBook.getTagList().contains(tag)) {
-            return;
+            return false;
         }
 
         for (ReadOnlyPerson oldPerson : addressBook.getPersonList()) {
@@ -149,6 +149,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.setTags(newTags);
         indicateAddressBookChanged();
+        return true;
     }
 
     //@@author namvd2709

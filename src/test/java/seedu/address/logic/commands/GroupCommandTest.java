@@ -71,9 +71,9 @@ public class GroupCommandTest {
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        GroupCommand remarkCommand = prepareCommand(outOfBoundIndex, new Group(VALID_GROUP_NAME_FAMILY));
+        GroupCommand groupCommand = prepareCommand(outOfBoundIndex, new Group(VALID_GROUP_NAME_FAMILY));
 
-        assertCommandFailure(remarkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(groupCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     /**

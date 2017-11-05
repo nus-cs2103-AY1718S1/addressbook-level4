@@ -239,11 +239,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
-    //// group-level operations
-
-    public void addGroup(Group g) throws UniqueGroupList.DuplicateGroupException {
-        groups.add(g);
-    }
     //// util methods
 
     @Override
