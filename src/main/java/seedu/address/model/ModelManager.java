@@ -80,6 +80,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author namvd2709
     @Override
     public synchronized void addAppointment(Appointment appointment) throws IllegalValueException,
                                         UniqueAppointmentList.ClashAppointmentException {
@@ -93,6 +94,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -149,6 +151,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author namvd2709
     @Override
     public Set<Appointment> getAllAppointments() {
         return addressBook.getAllAppointments();

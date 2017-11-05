@@ -108,6 +108,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.add(newPerson);
     }
 
+    //@@author namvd2709
     /**
      * Adds an appointment to address book.
      */
@@ -124,6 +125,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         appointments.remove(a);
     }
 
+    //@@author
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
@@ -281,6 +283,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 && this.groups.equalsOrderInsensitive(((AddressBook) other).groups));
     }
 
+    //@@author
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
