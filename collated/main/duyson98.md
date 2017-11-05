@@ -15,6 +15,7 @@ import seedu.address.model.tag.TagContainsKeywordPredicate;
 public class RetrieveCommand extends Command {
 
     public static final String COMMAND_WORD = "retrieve";
+    public static final String COMMAND_ALIAS = "re";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Retrieves all persons belonging to an existing tag "
             + "and displays them as a list with index numbers.\n"
@@ -83,7 +84,7 @@ import seedu.address.model.tag.UniqueTagList;
 public class TagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "tag";
-
+    public static final String COMMAND_ALIAS = "t";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Tags one or more persons identified by the index numbers used in the last person listing.\n"
             + "Parameters: INDEX,[MORE_INDEXES]... (must be positive integers) + TAGNAME\n"
@@ -211,6 +212,7 @@ import seedu.address.model.tag.UniqueTagList;
 public class UntagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "untag";
+    public static final String COMMAND_ALIAS = "ut";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Untags one or more persons in the last person listing.\n"

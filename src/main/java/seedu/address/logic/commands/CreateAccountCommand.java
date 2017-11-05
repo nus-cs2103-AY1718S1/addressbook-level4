@@ -15,7 +15,8 @@ import seedu.address.model.account.exceptions.DuplicateAccountException;
  */
 public class CreateAccountCommand extends Command {
 
-    public static final String COMMAND_WORD = "Create";
+    public static final String COMMAND_WORD = "create";
+    public static final String COMMAND_ALIAS = "ca";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a Account to the database. "
             + "Parameters: "

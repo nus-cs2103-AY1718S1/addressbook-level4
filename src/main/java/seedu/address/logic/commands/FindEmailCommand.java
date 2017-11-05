@@ -10,6 +10,7 @@ import seedu.address.model.person.EmailContainsKeywordsPredicate;
 public class FindEmailCommand extends Command {
 
     public static final String COMMAND_WORD = "findEmail";
+    public static final String COMMAND_ALIAS = "fe";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose emails contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"

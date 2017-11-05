@@ -21,6 +21,7 @@ import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 public class AddReminderCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addReminder";
+    public static final String COMMAND_ALIAS = "ar";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a reminder to the address book. "
             + "Parameters: "
@@ -94,6 +95,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class BirthdayCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "birthday";
+    public static final String COMMAND_ALIAS = "b";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the birthday of the person identified "
             + "by the index number used in the last person listing. "
@@ -194,6 +196,7 @@ import seedu.address.model.reminder.exceptions.ReminderNotFoundException;
 public class DeleteReminderCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "deleteReminder";
+    public static final String COMMAND_ALIAS = "dr";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the reminder identified by the index number used in the last reminder listing.\n"
@@ -274,6 +277,7 @@ import seedu.address.model.tag.Tag;
 public class EditReminderCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "editReminder";
+    public static final String COMMAND_ALIAS = "er";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the reminder identified "
             + "by the index number used in the last reminder listing. "
@@ -470,6 +474,7 @@ import seedu.address.model.person.EmailContainsKeywordsPredicate;
 public class FindEmailCommand extends Command {
 
     public static final String COMMAND_WORD = "findEmail";
+    public static final String COMMAND_ALIAS = "fe";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose emails contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
@@ -509,6 +514,7 @@ import seedu.address.model.person.PhoneContainsKeywordsPredicate;
 public class FindPhoneCommand extends Command {
 
     public static final String COMMAND_WORD = "findPhone";
+    public static final String COMMAND_ALIAS = "fp";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose phone numbers contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
@@ -548,6 +554,7 @@ import seedu.address.model.reminder.PriorityContainsKeywordsPredicate;
 public class FindPriorityCommand extends Command {
 
     public static final String COMMAND_WORD = "findPriority";
+    public static final String COMMAND_ALIAS = "fpr";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all reminders whose priority contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
@@ -587,6 +594,7 @@ import seedu.address.model.reminder.TaskContainsKeywordsPredicate;
 public class FindReminderCommand extends Command {
 
     public static final String COMMAND_WORD = "findReminder";
+    public static final String COMMAND_ALIAS = "fr";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all reminders whose names contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
@@ -625,7 +633,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_REMINDERS;
 public class ListReminderCommand extends Command {
 
     public static final String COMMAND_WORD = "listReminder";
-
+    public static final String COMMAND_ALIAS = "lr";
     public static final String MESSAGE_SUCCESS = "Listed all reminders";
 
 
@@ -653,7 +661,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class SortAgeCommand extends Command {
     public static final String COMMAND_WORD = "sortAge";
-
+    public static final String COMMAND_ALIAS = "sa";
     public static final String MESSAGE_SUCCESS = "All contacts are sorted by age. (Oldest To Youngest)";
     public static final String MESSAGE_EMPTY_LIST = "Contact list is empty.";
 
@@ -692,7 +700,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class SortBirthdayCommand extends Command {
     public static final String COMMAND_WORD = "sortBirthday";
-
+    public static final String COMMAND_ALIAS = "sb";
     public static final String MESSAGE_SUCCESS = "All contacts are sorted by birthday.";
     public static final String MESSAGE_EMPTY_LIST = "Contact list is empty.";
 
@@ -731,7 +739,7 @@ import seedu.address.model.person.ReadOnlyPerson;
   */
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
-
+    public static final String COMMAND_ALIAS = "s";
     public static final String MESSAGE_SUCCESS = "All contacts are sorted.";
     public static final String MESSAGE_EMPTY_LIST = "Contact list is empty.";
 
@@ -770,7 +778,7 @@ import seedu.address.model.reminder.ReadOnlyReminder;
  */
 public class SortPriorityCommand extends Command {
     public static final String COMMAND_WORD = "sortPriority";
-
+    public static final String COMMAND_ALIAS = "sp";
     public static final String MESSAGE_SUCCESS = "All contacts are sorted by priority. (High -> Medium -> Low)";
     public static final String MESSAGE_EMPTY_LIST = "Contact list is empty.";
 

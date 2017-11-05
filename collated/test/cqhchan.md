@@ -397,6 +397,7 @@ public class LoginCommandTest {
 
 }
 ```
+
 ###### \java\seedu\address\logic\commands\LogoutCommandTest.java
 ``` java
 package seedu.address.logic.commands;
@@ -417,6 +418,7 @@ public class LogoutCommandTest {
     }
 }
 ```
+
 ###### \java\seedu\address\logic\parser\CreateAccountCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
@@ -452,6 +454,7 @@ public class CreateAccountCommandParserTest {
 
 }
 ```
+
 ###### \java\seedu\address\logic\parser\LoginCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
@@ -487,6 +490,7 @@ public class LoginCommandParserTest {
 
 }
 ```
+
 ###### \java\seedu\address\model\account\PasswordTest.java
 ``` java
 package seedu.address.model.account;
@@ -799,3 +803,4 @@ public class TypicalAccounts {
 
 }
 ```
+

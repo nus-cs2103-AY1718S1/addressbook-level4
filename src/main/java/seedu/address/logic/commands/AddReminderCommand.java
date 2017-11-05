@@ -19,6 +19,7 @@ import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 public class AddReminderCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addReminder";
+    public static final String COMMAND_ALIAS = "ar";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a reminder to the address book. "
             + "Parameters: "

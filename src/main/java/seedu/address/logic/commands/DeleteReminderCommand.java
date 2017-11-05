@@ -15,6 +15,7 @@ import seedu.address.model.reminder.exceptions.ReminderNotFoundException;
 public class DeleteReminderCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "deleteReminder";
+    public static final String COMMAND_ALIAS = "dr";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the reminder identified by the index number used in the last reminder listing.\n"

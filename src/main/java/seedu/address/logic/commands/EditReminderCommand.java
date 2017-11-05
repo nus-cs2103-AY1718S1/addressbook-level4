@@ -34,6 +34,7 @@ import seedu.address.model.tag.Tag;
 public class EditReminderCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "editReminder";
+    public static final String COMMAND_ALIAS = "er";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the reminder identified "
             + "by the index number used in the last reminder listing. "

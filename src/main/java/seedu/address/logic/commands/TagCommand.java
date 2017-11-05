@@ -24,6 +24,7 @@ import seedu.address.model.tag.UniqueTagList;
 public class TagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "tag";
+    public static final String COMMAND_ALIAS = "t";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Tags one or more persons identified by the index numbers used in the last person listing.\n"
