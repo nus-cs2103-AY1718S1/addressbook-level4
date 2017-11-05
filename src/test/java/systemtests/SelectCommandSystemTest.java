@@ -130,7 +130,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         }
 
         assertCommandBoxShowsDefaultStyle();
-        assertStatusBarUnchanged();
+        assertStatusBarUnchangedExceptSyncStatus();
     }
 
     /**
