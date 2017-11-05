@@ -143,7 +143,6 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
 
             char[] nextItemArray = newToken.toCharArray();
 
-
             // Check characters of remaining keywords
             for (char c : nextItemArray) {
                 if (!Character.isDigit(c)) {
