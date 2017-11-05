@@ -17,9 +17,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.ChangeInternalListEvent;
+import seedu.address.commons.events.ui.EmptyListEvent;
 import seedu.address.commons.events.ui.LoginAppRequestEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.exceptions.UserNotFoundException;
@@ -519,6 +521,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void deselectPerson() {
         this.selectedPerson = null;
         nearbyPersons = null;
+        EventsCenter.getInstance().post(new EmptyListEvent());
     }
 
     /**
