@@ -36,6 +36,11 @@ public class UniqueLifeInsuranceList implements Iterable<LifeInsurance> {
     }
 
     //@@author Juxarius
+
+    /**
+     * sort insurance in descending order according to premium,
+     * change the sign in the return statement to make it ascending
+     */
     public void sortInsurances() {
         internalList.sort((insurance1, insurance2) -> {
             if (insurance1.getPremium().equals(insurance2.getPremium())) {
