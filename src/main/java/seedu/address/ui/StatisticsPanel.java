@@ -48,7 +48,7 @@ public class StatisticsPanel extends UiPart<Region> {
         super(FXML);
         registerAsAnEventHandler(this);
         statistics = new Statistics(currentList);
-
+        loadListStatistics();
     }
 
     /**
