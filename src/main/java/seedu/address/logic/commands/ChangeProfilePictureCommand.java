@@ -1,12 +1,9 @@
 package seedu.address.logic.commands;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import javax.imageio.ImageIO;
 
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.Image;
+import seedu.address.commons.core.ImageStorageHandler;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -26,8 +23,6 @@ public class ChangeProfilePictureCommand extends Command {
 
     public static final String MESSAGE_CHANGE_PROFILE_PICTURE_SUCCESS = "Successfully change profile picture "
             + "of person: %1$s";
-    private static final String DEFAULT_IMAGE_STORAGE_PREFIX = "data/";
-    private static final String DEFAULT_IMAGE_STORAGE_SUFFIX = ".png";
 
     private final Index targetIndex;
     private final String picturePath;
@@ -35,22 +30,6 @@ public class ChangeProfilePictureCommand extends Command {
     public ChangeProfilePictureCommand(Index targetIndex, String picturePath) {
         this.targetIndex = targetIndex;
         this.picturePath = picturePath;
-    }
-
-    /**
-     * Save a given image file to storage
-     * @param file
-     */
-    private void saveImageToStorage(File file, ReadOnlyPerson person) throws CommandException {
-        Image image = new Image(file.toURI().toString());
-        String phoneNum = person.getPhone().value;
-
-        try {
-            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png",
-                    new File(DEFAULT_IMAGE_STORAGE_PREFIX + phoneNum + DEFAULT_IMAGE_STORAGE_SUFFIX));
-        } catch (IOException | IllegalArgumentException e) {
-            throw new CommandException(Messages.MESSAGE_FILE_NOT_FOUND);
-        }
     }
 
     @Override
@@ -63,7 +42,7 @@ public class ChangeProfilePictureCommand extends Command {
         }
 
         ReadOnlyPerson personToChangeProfilePicture = lastShownList.get(targetIndex.getZeroBased());
-        saveImageToStorage(new File(picturePath), personToChangeProfilePicture);
+        ImageStorageHandler.saveImageToStorage(new File(picturePath), personToChangeProfilePicture);
 
         return new CommandResult(String.format(MESSAGE_CHANGE_PROFILE_PICTURE_SUCCESS, targetIndex.getOneBased()));
     }
