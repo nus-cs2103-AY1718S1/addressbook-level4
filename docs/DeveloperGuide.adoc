@@ -659,8 +659,6 @@ image::SwitchThemeCommandActivityDiagram.png[width="900"]
 **Cons:** In order to get it in other components, the variable must be declared static. But we cannot define static abstract method in interface. It also does not follow Java's standard coding style.
 // end::swt[]
 
-// tag::list[]
-
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
