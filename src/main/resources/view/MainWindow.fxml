@@ -131,8 +131,8 @@
          <content>
             <GridPane alignment="TOP_CENTER" blendMode="SRC_ATOP" gridLinesVisible="true" prefHeight="855.0" prefWidth="1249.0" style="-fx-background-color: white;">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="0.0" prefWidth="178.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1064.0" minWidth="10.0" prefWidth="541.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="0.0" prefWidth="0.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1064.0" minWidth="10.0" prefWidth="719.0" />
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints maxHeight="40.0" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
