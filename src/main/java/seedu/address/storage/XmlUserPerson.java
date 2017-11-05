@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
+import seedu.address.model.person.email.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.UserPerson;
@@ -28,7 +28,7 @@ public class XmlUserPerson {
     @XmlElement(required = true)
     private String phone;
     @XmlElement(required = true)
-    private ArrayList<Email> emailList;
+    private List<XmlAdaptedEmail> emailList = new ArrayList<>();
     @XmlElement(required = true)
     private String address;
     @XmlElement
@@ -46,9 +46,9 @@ public class XmlUserPerson {
     public XmlUserPerson(UserPerson source) {
         name = source.getName().fullName;
         phone = source.getPhone().value;
-        emailList = new ArrayList<Email>();
+        emailList = new ArrayList<>();
         for (Email email : source.getEmail()) {
-            emailList.add(email);
+            this.emailList.add(new XmlAdaptedEmail(email));
         }
         address = source.getAddress().value;
         webLinkList = new ArrayList<>();
@@ -60,7 +60,11 @@ public class XmlUserPerson {
     public UserPerson getUser() throws IllegalValueException {
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
-        final ArrayList<Email> email = new ArrayList<>(this.emailList);
+        final List<Email> emailInputs = new ArrayList<>();
+        for (XmlAdaptedEmail email: emailList) {
+            emailInputs.add(email.toModelType());
+        }
+        final Set<Email> email = new HashSet<>(emailInputs);
         final Address address = new Address(this.address);
 
         final List<WebLink> webLinkInputs = new ArrayList<>();

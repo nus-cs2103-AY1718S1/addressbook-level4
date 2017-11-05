@@ -9,7 +9,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEB_LINK;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
@@ -19,7 +18,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.UpdateUserCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Email;
+import seedu.address.model.person.email.Email;
 import seedu.address.model.person.weblink.WebLink;
 
 //@@author bladerail
@@ -72,20 +71,14 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
      * If {@code emails} contain only one element which is an empty string, it will be parsed into a
      * {@code Set<Email>} containing zero emails.
      */
-    private Optional<ArrayList<Email>> parseEmailsForEdit(Collection<String> emails) throws IllegalValueException {
+    private Optional<Set<Email>> parseEmailsForEdit(Collection<String> emails) throws IllegalValueException {
         assert emails != null;
 
         if (emails.isEmpty()) {
             return Optional.empty();
         }
-        Collection<String> emailSet = emails.size() == 1 && emails.contains("") ? Collections.emptySet() :  emails;
-        Collection<String> emailSetToParse = new ArrayList<>();
-        for (String email : emailSet) {
-            if (!emailSetToParse.contains(email)) {
-                emailSetToParse.add(email);
-            }
-        }
-        return Optional.of(ParserUtil.parseEmail(emailSetToParse));
+        Collection<String> emailSet =emails.size() == 1 && emails.contains("") ? Collections.emptySet() : emails;
+        return Optional.of(ParserUtil.parseEmail(emailSet));
     }
 
     /**

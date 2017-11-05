@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
+import seedu.address.model.person.email.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -28,7 +28,7 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String phone;
     @XmlElement(required = true)
-    private ArrayList<Email> emailList;
+    private List<XmlAdaptedEmail> emailList = new ArrayList<>();
     @XmlElement(required = true)
     private String address;
     @XmlElement(required = true)
@@ -36,7 +36,6 @@ public class XmlAdaptedPerson {
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
-
     @XmlElement
     private List<XmlAdaptedWebLink> webLink = new ArrayList<>();
 
@@ -57,7 +56,7 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         emailList = new ArrayList<>();
         for (Email email : source.getEmail()) {
-            emailList.add(email);
+            emailList.add(new XmlAdaptedEmail(email));
         }
         address = source.getAddress().value;
         remark = source.getRemark().value;
@@ -85,9 +84,13 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedWebLink webLink: webLink) {
             webLinkInputs.add(webLink.toModelType());
         }
+        final List<Email> personEmails = new ArrayList<>();
+        for (XmlAdaptedEmail email : emailList) {
+            personEmails.add(email.toModelType());
+        }
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
-        final ArrayList<Email> email = new ArrayList<>(this.emailList);
+        final Set<Email> email = new HashSet<>(personEmails);
         final Address address = new Address(this.address);
         final Remark remark = new Remark(this.remark);
         final Set<Tag> tags = new HashSet<>(personTags);

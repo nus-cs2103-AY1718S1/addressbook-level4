@@ -5,7 +5,7 @@ import java.util.HashSet;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
+import seedu.address.model.person.email.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -21,7 +21,7 @@ import seedu.address.model.tag.Tag;
 public class SampleUserPersonUtil {
     public static ReadOnlyPerson getDefaultSamplePerson() {
         try {
-            ArrayList<Email> emails = new ArrayList<Email>();
+            HashSet<Email> emails = new HashSet<Email>();
             emails.add(new Email("default@default.com"));
             HashSet<WebLink> webLinks = new HashSet<>();
             webLinks.add(new WebLink("default@facebook.com"));
@@ -34,7 +34,7 @@ public class SampleUserPersonUtil {
 
     public static ReadOnlyPerson getDummySamplePerson() {
         try {
-            ArrayList<Email> emails = new ArrayList<Email>();
+            HashSet<Email> emails = new HashSet<Email>();
             emails.add(new Email("dummy@dummy.com"));
             HashSet<WebLink> webLinks = new HashSet<>();
             webLinks.add(new WebLink("default@facebook.com"));
