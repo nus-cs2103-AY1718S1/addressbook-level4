@@ -11,7 +11,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
-    <URL value="@DarkTheme.css" />
+    <URL value="@BlueTheme.css" />
     <URL value="@Extensions.css" />
   </stylesheets>
 
