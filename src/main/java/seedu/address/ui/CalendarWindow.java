@@ -5,9 +5,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 import java.util.logging.Logger;
 
 import com.calendarfx.model.Calendar;
@@ -17,17 +14,14 @@ import com.calendarfx.model.Interval;
 import com.calendarfx.view.CalendarView;
 
 import com.google.common.eventbus.Subscribe;
+
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.NewAppointmentEvent;
-import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -105,11 +99,11 @@ public class CalendarWindow extends UiPart<Region> {
 
         calendarView.setOnKeyPressed(event -> {
             switch (event.getCode()) {
-                case C:
-                    event.consume();
-                    showNextPage();
-                    break;
-                default:
+            case C:
+                event.consume();
+                showNextPage();
+                break;
+            default:
             }
         });
     }

@@ -21,7 +21,6 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
-import seedu.address.model.person.AppointmentList;
 import seedu.address.model.person.Bloodtype;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;

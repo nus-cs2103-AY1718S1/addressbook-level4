@@ -2,7 +2,6 @@ package seedu.address.storage;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,7 +11,6 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
-import seedu.address.model.person.AppointmentList;
 import seedu.address.model.person.Bloodtype;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -96,8 +94,6 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedAppointment appointment : appointments) {
             personAppointmentList.add(appointment.toModelType());
         }
-            return new Person(name, phone, email, address, bloodType, tags, remark, personAppointmentList);
-
-
+        return new Person(name, phone, email, address, bloodType, tags, remark, personAppointmentList);
     }
 }

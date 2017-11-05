@@ -4,21 +4,14 @@ import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.Calendar;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddAppointmentCommand;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Appointment;
-import seedu.address.testutil.TypicalPersons;
 
 //@@author Eric
 public class AddAppointmentParserTest {
@@ -71,7 +64,7 @@ public class AddAppointmentParserTest {
 
         try {
             AddAppointmentCommand command = parser.parse("appt 1 d/Lunch, tomorrow 5pm to 7pm");
-            Appointment appointment =AddAppointmentParser.getAppointmentFromString("Lunch, tomorrow 5pm to 7pm");
+            Appointment appointment = AddAppointmentParser.getAppointmentFromString("Lunch, tomorrow 5pm to 7pm");
             assertEquals(new AddAppointmentCommand(Index.fromOneBased(1), appointment), command);
         } catch (ParseException e) {
             e.printStackTrace();

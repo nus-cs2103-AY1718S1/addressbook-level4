@@ -2,9 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
-import java.text.ParseException;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -13,7 +11,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Bloodtype;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -117,12 +114,5 @@ public class ParserUtil {
         }
         return tagSet;
     }
-//    /**
-//     * Parses a {@code Optional<String> date} into an {@code Optional<Date>} if {@code appointment} is present.
-//     * See header comment of this class regarding the use of {@code Optional} parameters.
-//     */
-//    public static Optional<Date> parseDate(Optional<String> date) throws ParseException {
-//        requireNonNull(date);
-//        return date.isPresent() ? Optional.of(Appointment.DATE_FORMATTER.parse(date.get())) : Optional.empty();
-//    }
+
 }

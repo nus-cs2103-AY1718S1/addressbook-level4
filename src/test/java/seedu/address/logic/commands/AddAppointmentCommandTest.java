@@ -3,11 +3,10 @@ package seedu.address.logic.commands;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.parser.AddAppointmentParser.*;
+
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.text.ParseException;
-import java.util.Calendar;
 
 import org.junit.Rule;
 import org.junit.Test;

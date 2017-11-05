@@ -4,9 +4,6 @@ import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.text.ParseException;
-import java.util.Calendar;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -14,15 +11,11 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.ObservableList;
 
 import seedu.address.logic.parser.AddAppointmentParser;
-import seedu.address.model.person.Appointment;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TypicalPersons;
-
-
 
 public class UniquePersonListTest {
     @Rule
