@@ -12,7 +12,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 public class Website {
     public static final String MESSAGE_WEBSITE_CONSTRAINTS =
-            "Person websites should be 3 alphanumeric strings separated by '.'";
+            "Website inputted should follow format https://www.anyName.com/anyContent"
+                    + " where both anyName and anyContent can be alphanumeric."
+                    + " You must have https://www. and a domain name like .com";
     public static final String WEBSITE_TEMPORARY = "NIL";
 
     public final String value;
