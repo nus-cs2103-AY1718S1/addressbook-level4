@@ -537,17 +537,46 @@ A high average implies that the class/cohort has performed above expectations.
 ....
 
 == Patch Notes
-//TODO: Fill in all major updates and feature implementations here
+//TODO: Fill in all major updates and feature implementations that i missed out here
 === Features added in v1.0
 
+In version v1.0, users will be able to:
+
+* Use command shortcuts
+
 === Features added in v1.1
+In version v1.1, users will be able to:
+
+* Find students by tags using the `findtags` command
+* Sort Students by name using the `sort` command
+* Add `PostalCode` attributes to their students
 
 === Features added in v1.2
+In version v1.2, users will be able to:
+
+* Add `Grades` and `FormClass` attributes to their students
+* Add multiple phone numbers for each student
 
 === Features added in v1.3
+In version v1.3, users will be able to:
+
+* Add Remarks to their students
 
 === Features added in v1.4
+In version v1.4, users will be able to:
+
+* View statistics of the current list of students from the `Statistics Panel`
+* View the grades of the currently selected student's class in the `Graph Panel`
+//TODO: uhm celine...
+* Schedule appointments?
 
 === Features added in v1.5
+In version v1.5, users will be able to:
+
+* Select between two graphs: Line graph or Bar chart, to see the statistics of the currently selected person's class
 
 === Features Coming in v2.0
+In version v2.0, users will be able to:
+
+* Compare statistics of different groups with the `compare` command
+* Send emails to the students and parents directly from cherBook using the `sendemail` command
