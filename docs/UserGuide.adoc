@@ -243,6 +243,8 @@ Events will be sorted by date/time (increment).
 
 === Editing a person : `(e)edit`
 
+_(Editing of customize properties coming in v2.0)_
+
 Edits an existing person in the application. +
 Format: `(e)edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
