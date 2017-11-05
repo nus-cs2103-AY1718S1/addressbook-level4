@@ -1,4 +1,3 @@
-<!-- @@author wishingmaid -->
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
@@ -66,3 +65,4 @@
          </graphic></Label>
    </children>
 </VBox>
+        <!-- @@author wishingmaid -->
