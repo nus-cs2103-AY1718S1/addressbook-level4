@@ -8,6 +8,8 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.ui.PropertyLabel;
@@ -24,6 +26,8 @@ public class PersonDetailsPanel extends UiPart<Region> {
 
     @FXML
     private Label name;
+    @FXML
+    private ImageView avatar;
     @FXML
     private ListView<Label> propertyListKeys;
     @FXML
