@@ -5,7 +5,7 @@ import seedu.address.commons.events.model.ModelToggleEvent;
 
 //@@author Alim95
 /**
- * Enables person commands for the user
+ * Enables all commands for the user
  */
 public class ParentModeCommand extends Command {
 
