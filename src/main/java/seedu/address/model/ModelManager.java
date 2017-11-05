@@ -283,16 +283,12 @@ public class ModelManager extends ComponentManager implements Model {
     private void handleTabChange(ReadOnlyParcel targetParcel) {
         try {
             if (findStatus(targetParcel).equals(Status.getInstance("COMPLETED"))) {
-                System.out.println("I think it's completed.");
                 if (this.getTabIndex().equals(TAB_ALL_PARCELS)) {
-                    System.out.println("But i'm at all parcels tab");
                     this.setActiveList(true);
                     uiJumpToTabCompleted();
                 }
             } else {
-                System.out.println("I guess it's not completed");
                 if (this.getTabIndex().equals(TAB_COMPLETED_PARCELS)) {
-                    System.out.println("But I'm at completed tab");
                     this.setActiveList(false);
                     uiJumpToTabAll();
                 }
@@ -301,7 +297,6 @@ public class ModelManager extends ComponentManager implements Model {
             e.printStackTrace();
         }
 
-        System.out.println("IT'S HERE: " + findIndex(targetParcel));
     }
 
     @Override

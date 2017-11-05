@@ -31,7 +31,6 @@ public class ModelListener {
 
     @Subscribe
     private void handleJumpToTabEvent(JumpToTabRequestEvent event) {
-        System.out.println("tab changed to " + event.targetIndex);
         model.setTabIndex(Index.fromZeroBased(event.targetIndex));
     }
 }

@@ -23,7 +23,6 @@ public abstract class UndoableCommand extends Command {
     private void saveAddressBookSnapshot() {
         requireNonNull(model);
         this.previousAddressBook = new AddressBook(model.getAddressBook());
-        System.out.println(model.getActiveIsAllBool());
         this.previousActiveListIsAll = model.getActiveIsAllBool();
     }
 
