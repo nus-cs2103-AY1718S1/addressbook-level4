@@ -11,7 +11,7 @@
 
 <VBox fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Label fx:id="name" lineSpacing="10.0" styleClass="cell_big_label" text="\$name">
+        <Label fx:id="name" lineSpacing="10" styleClass="cell_big_label" text="\$name">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
@@ -30,7 +30,7 @@
             <graphic>
                 <ImageView>
                     <image>
-                        <Image url="@../images/phone.png" />
+                        <Image url="@../images/studentPhone.png" />
                     </image>
                 </ImageView>
             </graphic>
@@ -45,7 +45,7 @@
             <graphic>
                 <ImageView>
                     <image>
-                        <Image url="@../images/phone.png" />
+                        <Image url="@../images/parentPhone.png" />
                     </image>
                 </ImageView>
             </graphic>
