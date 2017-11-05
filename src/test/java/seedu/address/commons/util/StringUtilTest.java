@@ -357,6 +357,8 @@ public class StringUtilTest {
 
         // Sentence with wrong format date
         assertCorrectDateResult("20/10/17", new ArrayList<>());
+        assertCorrectDateResult("01/13/2017", new ArrayList<>()); // date wrong format with mm/dd/yyyy
+        assertCorrectDateResult("01-01-2017", new ArrayList<>()); // date dd-mm-yyyy
 
         // single date
         assertCorrectDateResult("20/10/2017", expectedSingleDateList);
@@ -399,9 +401,9 @@ public class StringUtilTest {
         expectedSingleTimeList.add("05:30");
 
         ArrayList<String> expectedMultipleTimesList1 = new ArrayList<>();
-        expectedMultipleTimesList1.add("10:30");
+        expectedMultipleTimesList1.add("00:00");
         expectedMultipleTimesList1.add("10:40");
-        expectedMultipleTimesList1.add("10:50");
+        expectedMultipleTimesList1.add("23:59");
 
         ArrayList<String> expectedMultipleTimesList2 = new ArrayList<>();
         expectedMultipleTimesList2.add("10:30");
@@ -412,13 +414,16 @@ public class StringUtilTest {
         assertCorrectTimeResult("    ", new ArrayList<>());
 
         // Sentence with wrong format time
+        assertCorrectTimeResult("0:00", new ArrayList<>());
         assertCorrectTimeResult("5:30", new ArrayList<>());
+        assertCorrectTimeResult("24:59", new ArrayList<>());
+        assertCorrectTimeResult("05-30", new ArrayList<>());
 
         // single date
         assertCorrectTimeResult("05:30", expectedSingleTimeList);
 
         // multiple dates, dates as the first, middle and last word
-        assertCorrectTimeResult("10:30 10:40 10:50", expectedMultipleTimesList1);
+        assertCorrectTimeResult("00:00 10:40 23:59", expectedMultipleTimesList1);
         assertCorrectTimeResult("10:30 10:30", expectedMultipleTimesList2); // multiple same dates
         assertCorrectTimeResult("20/10/2017 05:30", expectedSingleTimeList);
     }
