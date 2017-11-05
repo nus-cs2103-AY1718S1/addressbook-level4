@@ -78,7 +78,8 @@ public class DeleteTagCommand extends Command {
             }
             Person newPerson = new Person(originalPerson.getName(), originalPerson.getPhone(),
                     originalPerson.getEmail(), originalPerson.getAddress(),
-                    originalPerson.getBirthday(), originalPerson.getRemark(), tagList);
+                    originalPerson.getBirthday(), originalPerson.getRemark(),
+                    originalPerson.getMajor(), originalPerson.getFacebook(), tagList);
             try {
                 model.updatePerson(originalPerson, newPerson);
                 model.propagateToGroup(originalPerson, newPerson, this.getClass());
@@ -340,9 +341,9 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class FavoritePersonsPredicate implements Predicate<ReadOnlyPerson> {
     private final boolean favorite;
+
     public FavoritePersonsPredicate(String keyword) {
-        if ("favorite".equals(keyword)) { this.favorite = true; }
-        else { this.favorite = false; }
+        this.favorite = "favorite".equals(keyword);
     }
 
     @Override

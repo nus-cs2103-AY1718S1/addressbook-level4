@@ -1,4 +1,4 @@
-//@@author A0143832J
+//@@author heiseish
 package seedu.address.model.person.predicates;
 
 import java.util.Collections;
@@ -26,8 +26,11 @@ public class AnyContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
                 .anyMatch(keyword ->
                         StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword)
                 || StringUtil.containsWordIgnoreCase(person.getEmail().value, keyword)
+                || StringUtil.containsWordIgnoreCase(person.getRemark().remark, keyword)
                 || StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword)
                 || StringUtil.containsWordIgnoreCase(person.getPhone().value, keyword)
+                || StringUtil.containsWordIgnoreCase(person.getMajor().value, keyword)
+                || StringUtil.containsWordIgnoreCase(person.getFacebook().value, keyword)
                 || !Collections.disjoint(person.getTagsString(), keywords));
     }
 

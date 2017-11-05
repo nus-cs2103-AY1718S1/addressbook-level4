@@ -18,8 +18,11 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.model.person.predicates.AddressContainsKeywordsPredicate;
 import seedu.address.model.person.predicates.AnyContainsKeywordsPredicate;
 import seedu.address.model.person.predicates.EmailContainsKeywordsPredicate;
+import seedu.address.model.person.predicates.FacebookContainsKeywordsPredicate;
+import seedu.address.model.person.predicates.MajorContainsKeywordsPredicate;
 import seedu.address.model.person.predicates.NameContainsKeywordsPredicate;
 import seedu.address.model.person.predicates.PhoneContainsKeywordsPredicate;
+import seedu.address.model.person.predicates.RemarkContainsKeywordsPredicate;
 import seedu.address.model.person.predicates.TagContainsKeywordsPredicate;
 import seedu.address.model.tag.Tag;
 
@@ -52,6 +55,13 @@ public class FindCommandParserTest {
                 new FindCommand(new EmailContainsKeywordsPredicate(Collections.singletonList("Alice@gmail.com")));
         FindCommand expectedFindCommand3 =
                 new FindCommand(new PhoneContainsKeywordsPredicate(Collections.singletonList("85355255")));
+        FindCommand expectedFindCommandRemark =
+                new FindCommand(new RemarkContainsKeywordsPredicate(Collections.singletonList("dev")));
+        FindCommand expectedFindCommandMajor =
+                new FindCommand(new MajorContainsKeywordsPredicate(Collections.singletonList("CS")));
+        FindCommand expectedFindCommandFacebook =
+                new FindCommand(new FacebookContainsKeywordsPredicate(Collections.singletonList("zuck")));
+
         String[] keywords = "123, Jurong West Ave 6, #08-111".trim().split("\\s+");
         FindCommand expectedFindCommand4 =
                 new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
@@ -74,6 +84,19 @@ public class FindCommandParserTest {
         //with an address prefix
         assertParseSuccess(parser, FindCommand.COMMAND_WORD
                 + " a/123, Jurong West Ave 6, #08-111", expectedFindCommand4);
+
+        //with an remark prefix
+        assertParseSuccess(parser, FindCommand.COMMAND_WORD
+                + " r/dev", expectedFindCommandRemark);
+
+        //with an major prefix
+        assertParseSuccess(parser, FindCommand.COMMAND_WORD
+                + " m/CS", expectedFindCommandMajor);
+
+        //with an facebook prefix
+        assertParseSuccess(parser, FindCommand.COMMAND_WORD
+                + " fb/zuck", expectedFindCommandFacebook);
+
 
         //with an tag prefix
         assertParseSuccess(parser, FindCommand.COMMAND_WORD + " t/friends", expectedFindCommand5);

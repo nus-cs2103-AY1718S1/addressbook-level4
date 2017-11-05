@@ -28,6 +28,10 @@ public interface ReadOnlyPerson {
     ObjectProperty<Favorite> favoriteProperty();
     Favorite getFavorite();
     ObjectProperty<UniqueTagList> tagProperty();
+    Major getMajor();
+    ObjectProperty<Major> majorProperty();
+    Facebook getFacebook();
+    ObjectProperty<Facebook> facebookProperty();
     Set<Tag> getTags();
     List<String> getTagsString();
 
@@ -43,7 +47,9 @@ public interface ReadOnlyPerson {
                 && other.getAddress().equals(this.getAddress()))
                 && other.getBirthday().equals(this.getBirthday())
                 && other.getRemark().equals(this.getRemark())
-                && other.getFavorite().equals(this.getFavorite());
+                && other.getFavorite().equals(this.getFavorite())
+                && other.getMajor().equals(this.getMajor())
+                && other.getFacebook().equals(this.getFacebook());
     }
 
     /**
@@ -64,6 +70,10 @@ public interface ReadOnlyPerson {
                 .append(getRemark())
                 .append(" Favorite: ")
                 .append(getFavorite())
+                .append(" Major: ")
+                .append(getMajor())
+                .append(" Facebook: ")
+                .append(getFacebook())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

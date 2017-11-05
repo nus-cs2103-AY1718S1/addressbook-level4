@@ -1,4 +1,4 @@
-# A0143832J
+# heiseish
 ###### /java/seedu/address/commons/util/CollectionUtilTest.java
 ``` java
     @Test
@@ -82,6 +82,331 @@ public class LanguageUtilTest {
 
 }
 ```
+###### /java/seedu/address/logic/commands/FavoriteCommandTest.java
+``` java
+package seedu.address.logic.commands;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Favorite;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for {@code FavoriteCommand}.
+ */
+public class FavoriteCommandTest {
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void execute_validIndexUnfilteredList_success() throws Exception {
+        ReadOnlyPerson personToFavorite = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person favoritedPerson = new Person(personToFavorite);
+        favoritedPerson.setFavorite(new Favorite(!personToFavorite.getFavorite().favorite));
+
+        FavoriteCommand favoriteCommand = prepareCommand(INDEX_FIRST_PERSON);
+
+        String expectedMessage = String.format(FavoriteCommand.MESSAGE_FAVORITE_PERSON_SUCCESS, favoritedPerson);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.favoritePerson(personToFavorite);
+
+        assertCommandSuccess(favoriteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        FavoriteCommand favoriteCommand = prepareCommand(outOfBoundIndex);
+
+        assertCommandFailure(favoriteCommand, model, MESSAGE_EXECUTION_FAILURE
+                + Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_validIndexFilteredList_success() throws Exception {
+        showFirstPersonOnly(model);
+
+        ReadOnlyPerson personToFavorite = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person favoritedPerson = new Person(personToFavorite);
+        favoritedPerson.setFavorite(new Favorite(!personToFavorite.getFavorite().favorite));
+
+        FavoriteCommand favoriteCommand = prepareCommand(INDEX_FIRST_PERSON);
+
+        String expectedMessage = String.format(FavoriteCommand.MESSAGE_FAVORITE_PERSON_SUCCESS, favoritedPerson);
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.favoritePerson(personToFavorite);
+        showFirstPersonOnly(expectedModel);
+
+        assertCommandSuccess(favoriteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidIndexFilteredList_throwsCommandException() {
+        showFirstPersonOnly(model);
+
+        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+
+        FavoriteCommand favoriteCommand = prepareCommand(outOfBoundIndex);
+
+        assertCommandFailure(favoriteCommand, model,
+                MESSAGE_EXECUTION_FAILURE + Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() {
+        FavoriteCommand favoriteFirstCommand = new FavoriteCommand(INDEX_FIRST_PERSON);
+        FavoriteCommand favoriteSecondCommand = new FavoriteCommand(INDEX_SECOND_PERSON);
+
+        // same object -> returns true
+        assertTrue(favoriteFirstCommand.equals(favoriteFirstCommand));
+
+        // same values -> returns true
+        FavoriteCommand favoriteFirstCommandCopy = new FavoriteCommand(INDEX_FIRST_PERSON);
+        assertTrue(favoriteFirstCommand.equals(favoriteFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(favoriteFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(favoriteFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(favoriteFirstCommand.equals(favoriteSecondCommand));
+    }
+
+    /**
+     * Returns a {@code FavoriteCommand} with the parameter {@code index}.
+     */
+    private FavoriteCommand prepareCommand(Index index) {
+        FavoriteCommand favoriteCommand = new FavoriteCommand(index);
+        favoriteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return favoriteCommand;
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show no one.
+     */
+    private void showNoPerson(Model model) {
+        model.updateFilteredPersonList(p -> false);
+
+        assert model.getFilteredPersonList().isEmpty();
+    }
+}
+```
+###### /java/seedu/address/logic/commands/RemarkCommandTest.java
+``` java
+package seedu.address.logic.commands;
+
+import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
+
+public class RemarkCommandTest {
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private String remarkString = "";
+
+    @Test
+    public void testExecuteUndoableCommand() throws Exception {
+    }
+
+    @Test
+    public void testEqual() throws Exception {
+        RemarkCommand remark1 = new RemarkCommand(Index.fromOneBased(1), new Remark("haha"));
+        RemarkCommand remark2 = new RemarkCommand(Index.fromOneBased(1), new Remark("haha"));
+        assertTrue(assertRemarkCommandEqual(remark1, remark2));
+    }
+
+
+
+    @Test
+    public void execute_unfilteredList_success() {
+        RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, new Remark(remarkString));
+        ReadOnlyPerson remarkedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        String expectedMessage = String.format(RemarkCommand.MESSAGE_REMARK_PERSON_SUCCESS, remarkedPerson);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+
+        assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
+    }
+
+
+    /**
+     * Check if two RemarkCommand objects are equal
+     */
+    private boolean assertRemarkCommandEqual(RemarkCommand remark1, RemarkCommand remark2) {
+        if (remark1.equals(remark2)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Remark filtered list where index is larger than size of filtered list,
+     * but smaller than size of address book
+     */
+    @Test
+    public void execute_invalidPersonIndexFilteredList_failure() {
+        showFirstPersonOnly(model);
+        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+
+        RemarkCommand remarkCommand = prepareCommand(outOfBoundIndex,
+                new Remark("Nice"));
+
+        assertCommandFailure(remarkCommand, model,
+                MESSAGE_EXECUTION_FAILURE + Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    /**
+     * Returns an {@code EditCommand} with parameters {@code index} and {@code descriptor}
+     */
+    private RemarkCommand prepareCommand(Index index, Remark remark) {
+        RemarkCommand remarkCommand = new RemarkCommand(index, remark);
+        remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return remarkCommand;
+    }
+}
+```
+###### /java/seedu/address/logic/parser/FavoriteCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.FavoriteCommand;
+
+/**
+ * As we are only doing white-box testing, our test cases do not cover path variations
+ * outside of the DeleteCommand code. For example, inputs "1" and "1 abc" take the
+ * same path through the DeleteCommand, and therefore we test only one of them.
+ * The path variation for those two cases occur inside the ParserUtil, and
+ * therefore should be covered by the ParserUtilTest.
+ */
+public class FavoriteCommandParserTest {
+
+    private FavoriteCommandParser parser = new FavoriteCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsDeleteCommand() {
+        assertParseSuccess(parser, "1", new FavoriteCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a",
+                MESSAGE_INVALID_COMMAND_FORMAT + FavoriteCommand.MESSAGE_USAGE);
+    }
+}
+```
+###### /java/seedu/address/logic/parser/RemarkCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_ANY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.model.person.Remark;
+
+public class RemarkCommandParserTest {
+
+    private static final String MESSAGE_INVALID_FORMAT = MESSAGE_INVALID_COMMAND_FORMAT + RemarkCommand.MESSAGE_USAGE;
+
+    private RemarkCommandParser parser = new RemarkCommandParser();
+
+    @Test
+    public void parse_missingParts_failure() {
+        // no index specified
+        assertParseFailure(parser, VALID_NAME_AMY, MESSAGE_INVALID_FORMAT);
+
+        // no index and no field specified
+        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_invalidPreamble_failure() {
+        // negative index
+        assertParseFailure(parser, "-70" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
+
+        // zero index
+        assertParseFailure(parser, "0" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
+
+        // invalid arguments being parsed as preamble
+        assertParseFailure(parser, "2 blah blah", MESSAGE_INVALID_FORMAT);
+
+        // invalid prefix being parsed as preamble
+        assertParseFailure(parser, "2 i/ string", MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_remark_success() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + REMARK_DESC_ANY;
+
+        String randomRemark = REMARK_DESC_ANY;
+        RemarkCommand expected = new RemarkCommand(Index.fromOneBased(1), new Remark(randomRemark));
+        //success
+        assertParseSuccess(parser, userInput, expected);
+    }
+
+}
+```
 ###### /java/seedu/address/model/person/FavoriteTest.java
 ``` java
 package seedu.address.model.person;
@@ -102,6 +427,29 @@ public class FavoriteTest {
         //unequal Favorite objects
         assertFalse(new Favorite(true).equals(new Favorite(false)));
         assertFalse(new Favorite(false).equals(new Favorite(true)));
+    }
+}
+```
+###### /java/seedu/address/model/person/MajorTest.java
+``` java
+package seedu.address.model.person;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+public class MajorTest {
+    @Test
+    public void isEqualMajor() {
+
+        // equal Major objects
+        assertTrue(new Major("Chemical Engineering").equals(new Major("Chemical Engineering")));
+        assertTrue(new Major("Computer Science").equals(new Major("Computer Science")));
+
+        //unequal Major objects
+        assertFalse(new Major("Chemical Engineering").equals(new Major("Computer Science")));
+        assertFalse(new Major("Computer Science").equals(new Major("")));
     }
 }
 ```
@@ -218,6 +566,36 @@ public class PersonTest {
     @Test
     public void getFavorite() throws Exception {
         assertEquals(person.getFavorite(), new Favorite());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void setMajor() throws Exception {
+        person.setMajor(null);
+    }
+
+    @Test
+    public void majorProperty() throws Exception {
+        assertEquals(person.majorProperty().get(), new Major(""));
+    }
+
+    @Test
+    public void getMajor() throws Exception {
+        assertEquals(person.getMajor(), new Major(""));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void setFacebook() throws Exception {
+        person.setFacebook(null);
+    }
+
+    @Test
+    public void facebookProperty() throws Exception {
+        assertEquals(person.facebookProperty().get(), new Facebook(""));
+    }
+
+    @Test
+    public void getFacebook() throws Exception {
+        assertEquals(person.getFacebook(), new Facebook(""));
     }
 
     @Test
@@ -496,6 +874,174 @@ public class EmailContainsKeywordsPredicateTest {
 
 }
 ```
+###### /java/seedu/address/model/person/predicates/FacebookContainsKeywordsPredicateTest.java
+``` java
+package seedu.address.model.person.predicates;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Test;
+
+import seedu.address.testutil.PersonBuilder;
+
+public class FacebookContainsKeywordsPredicateTest {
+    @Test
+    public void test_facebookContainsKeywords_returnsTrue() {
+        // One keyword
+        FacebookContainsKeywordsPredicate predicate = new FacebookContainsKeywordsPredicate(
+                Collections.singletonList("zuck"));
+        assertTrue(predicate.test(new PersonBuilder().withFacebook("zuck").build()));
+
+        // Multiple keywords
+        predicate = new FacebookContainsKeywordsPredicate(Arrays.asList("zuck", "galois"));
+        assertTrue(predicate.test(new PersonBuilder().withFacebook("zuck").build()));
+
+        // Only one matching keyword
+        predicate = new FacebookContainsKeywordsPredicate(Arrays.asList("zuck", "galois"));
+        assertTrue(predicate.test(new PersonBuilder().withFacebook("zuckerberg").build()));
+
+        // Mixed-case keywords
+        predicate = new FacebookContainsKeywordsPredicate(Collections.singletonList("zuck"));
+        assertTrue(predicate.test(new PersonBuilder().withFacebook("ZUCK").build()));
+    }
+
+    @Test
+    public void test_facebookDoesNotContainKeywords_returnsFalse() {
+        // Zero keywords
+        FacebookContainsKeywordsPredicate predicate = new FacebookContainsKeywordsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withFacebook("zuck").build()));
+
+        // Non-matching keyword
+        predicate = new FacebookContainsKeywordsPredicate(Arrays.asList("zuck", "galois"));
+        assertFalse(predicate.test(new PersonBuilder().withFacebook("michaelJackson").build()));
+
+        // Keywords match name, email and birthday, address, but does not match facebook
+        predicate = new FacebookContainsKeywordsPredicate(
+                Arrays.asList("Alice", "alice@email.com", "Main", "01/01/1990"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
+                .withEmail("alice@email.com").withAddress("Street")
+                .withFacebook("galois").withBirthday("01/01/1990").build()));
+    }
+
+    @Test
+    public void equals() throws Exception {
+        List<String> firstPredicateKeywordList = Collections.singletonList("first");
+        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
+
+        FacebookContainsKeywordsPredicate firstPredicate =
+                new FacebookContainsKeywordsPredicate(firstPredicateKeywordList);
+        FacebookContainsKeywordsPredicate secondPredicate =
+                new FacebookContainsKeywordsPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        FacebookContainsKeywordsPredicate firstPredicateCopy =
+                new FacebookContainsKeywordsPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+}
+```
+###### /java/seedu/address/model/person/predicates/MajorContainsKeywordsPredicateTest.java
+``` java
+package seedu.address.model.person.predicates;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Test;
+
+import seedu.address.testutil.PersonBuilder;
+
+public class MajorContainsKeywordsPredicateTest {
+    @Test
+    public void test_majorContainsKeywords_returnsTrue() {
+        // One keyword
+        MajorContainsKeywordsPredicate predicate = new MajorContainsKeywordsPredicate(
+                Collections.singletonList("Chemical"));
+        assertTrue(predicate.test(new PersonBuilder().withMajor("Chemical Engineering").build()));
+
+        // Multiple keywords
+        predicate = new MajorContainsKeywordsPredicate(Arrays.asList("Chemical", "Engineering"));
+        assertTrue(predicate.test(new PersonBuilder().withMajor("Chemical Engineering").build()));
+
+        // Only one matching keyword
+        predicate = new MajorContainsKeywordsPredicate(Arrays.asList("Chemical", "Engineering"));
+        assertTrue(predicate.test(new PersonBuilder().withMajor("Computer Engineering").build()));
+
+        // Mixed-case keywords
+        predicate = new MajorContainsKeywordsPredicate(Collections.singletonList("chemical"));
+        assertTrue(predicate.test(new PersonBuilder().withMajor("Chemical Engineering").build()));
+    }
+
+    @Test
+    public void test_majorDoesNotContainKeywords_returnsFalse() {
+        // Zero keywords
+        MajorContainsKeywordsPredicate predicate = new MajorContainsKeywordsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withMajor("chemical").build()));
+
+        // Non-matching keyword
+        predicate = new MajorContainsKeywordsPredicate(Arrays.asList("chemical", "engineering"));
+        assertFalse(predicate.test(new PersonBuilder().withMajor("computer science").build()));
+
+        // Keywords match name, email and birthday, address, but does not match major
+        predicate = new MajorContainsKeywordsPredicate(
+                Arrays.asList("Alice", "alice@email.com", "Main", "01/01/1990"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
+                .withEmail("alice@email.com").withAddress("Street")
+                .withMajor("chemical").withBirthday("01/01/1990").build()));
+    }
+
+    @Test
+    public void equals() throws Exception {
+        List<String> firstPredicateKeywordList = Collections.singletonList("first");
+        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
+
+        MajorContainsKeywordsPredicate firstPredicate =
+                new MajorContainsKeywordsPredicate(firstPredicateKeywordList);
+        MajorContainsKeywordsPredicate secondPredicate =
+                new MajorContainsKeywordsPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        MajorContainsKeywordsPredicate firstPredicateCopy =
+                new MajorContainsKeywordsPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+}
+```
 ###### /java/seedu/address/model/person/predicates/PhoneContainsKeywordsPredicateTest.java
 ``` java
 package seedu.address.model.person.predicates;
@@ -559,6 +1105,90 @@ public class PhoneContainsKeywordsPredicateTest {
         // same values -> returns true
         PhoneContainsKeywordsPredicate firstPredicateCopy =
                 new PhoneContainsKeywordsPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+}
+```
+###### /java/seedu/address/model/person/predicates/RemarkContainsKeywordsPredicateTest.java
+``` java
+package seedu.address.model.person.predicates;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Test;
+
+import seedu.address.testutil.PersonBuilder;
+
+public class RemarkContainsKeywordsPredicateTest {
+    @Test
+    public void test_remarkContainsKeywords_returnsTrue() {
+        // One keyword
+        RemarkContainsKeywordsPredicate predicate = new RemarkContainsKeywordsPredicate(
+                Collections.singletonList("dev"));
+        assertTrue(predicate.test(new PersonBuilder().withRemark("dev").build()));
+
+        // Multiple keywords
+        predicate = new RemarkContainsKeywordsPredicate(Arrays.asList("dev", "UI"));
+        assertTrue(predicate.test(new PersonBuilder().withRemark("UI").build()));
+
+        // Only one matching keyword
+        predicate = new RemarkContainsKeywordsPredicate(Arrays.asList("dev", "UI"));
+        assertTrue(predicate.test(new PersonBuilder().withRemark("dev of UI").build()));
+
+        // Mixed-case keywords
+        predicate = new RemarkContainsKeywordsPredicate(Collections.singletonList("dev"));
+        assertTrue(predicate.test(new PersonBuilder().withRemark("DEV").build()));
+    }
+
+    @Test
+    public void test_remarkDoesNotContainKeywords_returnsFalse() {
+        // Zero keywords
+        RemarkContainsKeywordsPredicate predicate = new RemarkContainsKeywordsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withRemark("dev").build()));
+
+        // Non-matching keyword
+        predicate = new RemarkContainsKeywordsPredicate(Arrays.asList("dev", "UI"));
+        assertFalse(predicate.test(new PersonBuilder().withRemark("Model").build()));
+
+        // Keywords match name, email and birthday, address, but does not match Remark
+        predicate = new RemarkContainsKeywordsPredicate(
+                Arrays.asList("Alice", "alice@email.com", "Main", "01/01/1990"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
+                .withEmail("alice@email.com").withAddress("Street")
+                .withRemark("dev").withBirthday("01/01/1990").build()));
+    }
+
+    @Test
+    public void equals() throws Exception {
+        List<String> firstPredicateKeywordList = Collections.singletonList("first");
+        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
+
+        RemarkContainsKeywordsPredicate firstPredicate =
+                new RemarkContainsKeywordsPredicate(firstPredicateKeywordList);
+        RemarkContainsKeywordsPredicate secondPredicate =
+                new RemarkContainsKeywordsPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        RemarkContainsKeywordsPredicate firstPredicateCopy =
+                new RemarkContainsKeywordsPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -654,6 +1284,102 @@ public class TagContainsKeywordsPredicateTest {
     }
 
 }
+```
+###### /java/seedu/address/model/person/RemarkTest.java
+``` java
+package seedu.address.model.person;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+public class RemarkTest {
+    @Test
+    public void isEqualRemarks() {
+
+        // equal Remark objects
+        assertTrue(new Remark("haha").equals(new Remark("haha")));
+        assertTrue(new Remark("hmpq").equals(new Remark("hmpq")));
+
+        //unequal Remark objects
+        assertFalse(new Remark("haha").equals(new Remark("bobo")));
+        assertFalse(new Remark("owing money").equals(new Remark("new friend")));
+    }
+}
+```
+###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
+``` java
+    /**
+     * Sets the {@code Remark} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withRemark(String remark) {
+        ParserUtil.parseRemark(Optional.of(remark)).ifPresent(descriptor::setRemark);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Major} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withMajor(String major) {
+        ParserUtil.parseMajor(Optional.of(major)).ifPresent(descriptor::setMajor);
+        return this;
+    }
+
+
+    /**
+     * Sets the {@code Facebook} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withFacebook(String facebook) {
+        ParserUtil.parseFacebook(Optional.of(facebook)).ifPresent(descriptor::setFacebook);
+        return this;
+    }
+
+    //author
+    /**
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withTags(String... tags) {
+        try {
+            descriptor.setTags(ParserUtil.parseTags(Arrays.asList(tags)));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+
+    public EditPersonDescriptor build() {
+        return descriptor;
+    }
+}
+```
+###### /java/seedu/address/testutil/PersonBuilder.java
+``` java
+    /**
+     * Sets the {@code Remark} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withRemark(String remark) {
+        this.person.setRemark(new Remark(remark));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Remark} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withMajor(String major) {
+        this.person.setMajor(new Major(major));
+        return this;
+    }
+
+
+    /**
+     * Sets the {@code Remark} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withFacebook(String facebook) {
+        this.person.setFacebook(new Facebook(facebook));
+        return this;
+    }
 ```
 ###### /java/systemtests/FavoriteCommandSystemTest.java
 ``` java
@@ -893,6 +1619,34 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
         assertStatusBarUnchanged();
     }
 }
+```
+###### /java/systemtests/FindCommandSystemTest.java
+``` java
+        /* Case: find phone number of person in address book -> 1 person (Daniel) found */
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find address of person in address book -> 3 persons found */
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getAddress().value;
+        ModelHelper.setFilteredList(expectedModel, DANIEL, GEORGE, CARL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find email of person in address book -> 1 person (Daniel) found */
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find tags of person in address book -> empty tag so all found */
+        List<Tag> tags = new ArrayList<>(DANIEL.getTags());
+        command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName;
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
 ```
 ###### /java/systemtests/RemarkCommandSystemTest.java
 ``` java

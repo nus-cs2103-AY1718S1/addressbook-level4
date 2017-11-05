@@ -81,7 +81,7 @@ public class StringUtil {
                 .replaceAll("#", "%23");
     }
 
-    //@@author A0143832J
+    //@@author heiseish
     /**
      * check if a string contains another substring, ignoring case
      * @param str String to be checked

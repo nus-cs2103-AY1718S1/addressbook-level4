@@ -1,4 +1,4 @@
-//@@author A0143832J
+//@@author heiseish
 package seedu.address.logic.util;
 
 import seedu.address.commons.util.CollectionUtil;

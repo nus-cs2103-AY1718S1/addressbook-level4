@@ -5,6 +5,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
@@ -29,7 +31,11 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
             + PREFIX_BIRTHDAY + "BIRTHDAY "
+            + "[" + PREFIX_REMARK + "REMARK]"
+            + "[" + PREFIX_MAJOR + "MAJOR] "
+            + "[" + PREFIX_FACEBOOK + "FACEBOOK]"
             + "[" + PREFIX_TAG + "TAG]...\n"
+            + "facebook be can be a profile link eg.`wwww.facebook.com/zuck` or just user-id eg.`zuck`"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
@@ -37,6 +43,8 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_BIRTHDAY + "01/01/1990 "
             + PREFIX_REMARK + "Good friends "
+            + PREFIX_MAJOR + "Chemical Engineering "
+            + PREFIX_FACEBOOK + "zuck "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 

@@ -6,7 +6,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Facebook;
 import seedu.address.model.person.Favorite;
+import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -27,6 +29,8 @@ public class PersonBuilder {
     public static final String DEFAULT_BIRTHDAY = "01/01/1990";
     public static final String DEFAULT_REMARK = "";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_MAJOR = "";
+    public static final String DEFAULT_FACEBOOK = "";
     public static final boolean DEFAULT_FAVORITE = false;
 
     private Person person;
@@ -39,9 +43,12 @@ public class PersonBuilder {
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Birthday defaultBirthday = new Birthday(DEFAULT_BIRTHDAY);
             Remark defaultRemark = new Remark(DEFAULT_REMARK);
+            Major defaultMajor = new Major(DEFAULT_MAJOR);
+            Facebook defaultFacebook = new Facebook(DEFAULT_FACEBOOK);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultPhone,
-                    defaultEmail, defaultAddress, defaultBirthday, defaultRemark, defaultTags);
+                    defaultEmail, defaultAddress, defaultBirthday, defaultRemark,
+                    defaultMajor, defaultFacebook, defaultTags);
             this.person.setFavorite(new Favorite(DEFAULT_FAVORITE));
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
@@ -99,7 +106,7 @@ public class PersonBuilder {
         return this;
     }
 
-    //@@author Giang
+    //@@author heiseish
     /**
      * Sets the {@code Remark} of the {@code Person} that we are building.
      */
@@ -107,6 +114,24 @@ public class PersonBuilder {
         this.person.setRemark(new Remark(remark));
         return this;
     }
+
+    /**
+     * Sets the {@code Remark} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withMajor(String major) {
+        this.person.setMajor(new Major(major));
+        return this;
+    }
+
+
+    /**
+     * Sets the {@code Remark} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withFacebook(String facebook) {
+        this.person.setFacebook(new Facebook(facebook));
+        return this;
+    }
+    //@@author
 
     /**
      * Sets the {@code Phone} of the {@code Person} that we are building.

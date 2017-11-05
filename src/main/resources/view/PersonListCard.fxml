@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -26,18 +28,49 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
+        <Label fx:id="picture" />
         <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
         <Label fx:id="favorite" />
+          <Label fx:id="facebookPage" onMouseClicked="#openFacebookPage">
+               <contextMenu>
+                  <ContextMenu fx:id="facebookMenu">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                    </items>
+                  </ContextMenu>
+               </contextMenu></Label>
       </HBox>
-      <FlowPane fx:id="tags" prefHeight="30.0" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-      <Label fx:id="birthday" styleClass="cell_small_label" text="\$birthday" />
-      <Label fx:id="remark" styleClass="cell_small_label" text="\$remark" />
+      <FlowPane fx:id="tags" prefHeight="30.0">
+            <VBox.margin>
+               <Insets left="23.0" />
+            </VBox.margin></FlowPane>
+        <Label fx:id="major" styleClass="cell_small_label" text="\$major">
+            <VBox.margin>
+                <Insets left="23.0" />
+            </VBox.margin></Label>
+      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone">
+            <VBox.margin>
+               <Insets left="23.0" />
+            </VBox.margin></Label>
+      <Label fx:id="address" styleClass="cell_small_label" text="\$address">
+            <VBox.margin>
+               <Insets left="23.0" />
+            </VBox.margin></Label>
+      <Label fx:id="email" styleClass="cell_small_label" text="\$email">
+            <VBox.margin>
+               <Insets left="23.0" />
+            </VBox.margin></Label>
+      <Label fx:id="birthday" styleClass="cell_small_label" text="\$birthday">
+            <VBox.margin>
+               <Insets left="23.0" />
+            </VBox.margin></Label>
+      <Label fx:id="remark" styleClass="cell_small_label" text="\$remark">
+            <VBox.margin>
+               <Insets left="23.0" />
+            </VBox.margin></Label>
     </VBox>
-      <rowConstraints>
-         <RowConstraints />
-      </rowConstraints>
+    <rowConstraints>
+      <RowConstraints />
+    </rowConstraints>
   </GridPane>
 </HBox>

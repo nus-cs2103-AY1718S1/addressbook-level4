@@ -13,6 +13,8 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Facebook;
+import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Remark;
@@ -116,13 +118,32 @@ public class ParserUtil {
         return tagSet;
     }
 
-    //@@author Giang
+    //@@author heiseish
     /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Remark> parseRemark(Optional<String> remark) throws IllegalValueException {
+    public static Optional<Remark> parseRemark(Optional<String> remark) {
         requireNonNull(remark);
         return remark.isPresent() ? Optional.of(new Remark(remark.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> rmajor} into an {@code Optional<Major>} if {@code major} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Major> parseMajor(Optional<String> major) {
+        requireNonNull(major);
+        return major.isPresent() ? Optional.of(new Major(major.get())) : Optional.empty();
+    }
+
+
+    /**
+     * Parses a {@code Optional<String> facebook} into an {@code Optional<Facebook>} if {@code facebook} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Facebook> parseFacebook(Optional<String> facebook) {
+        requireNonNull(facebook);
+        return facebook.isPresent() ? Optional.of(new Facebook(facebook.get())) : Optional.empty();
     }
 }

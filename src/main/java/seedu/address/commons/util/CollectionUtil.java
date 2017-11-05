@@ -52,7 +52,7 @@ public class CollectionUtil {
         return true;
     }
 
-    //@@author A0143832J
+    //@@author heiseish
     /**
      * Return true if two collections has mutual member or 1 member of the first collections contains
      * the second member of the 2nd set

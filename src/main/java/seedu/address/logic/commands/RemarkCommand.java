@@ -1,4 +1,4 @@
-//@@author Giang
+//@@author heiseish
 package seedu.address.logic.commands;
 
 import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
@@ -14,6 +14,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Facebook;
+import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -88,10 +90,13 @@ public class RemarkCommand extends UndoableCommand {
         Email updatedEmail = person.getEmail();
         Address updatedAddress = person.getAddress();
         Birthday updatedBirthday = person.getBirthday();
+        Major updatedMajor = person.getMajor();
+        Facebook updatedFacebook = person.getFacebook();
         Set<Tag> updatedTags = person.getTags();
 
         return new Person(updatedName, updatedPhone,
-                updatedEmail, updatedAddress, updatedBirthday, remark, updatedTags);
+                updatedEmail, updatedAddress, updatedBirthday, remark,
+                updatedMajor, updatedFacebook, updatedTags);
     }
 
 }

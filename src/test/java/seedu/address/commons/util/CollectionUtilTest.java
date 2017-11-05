@@ -111,7 +111,7 @@ public class CollectionUtilTest {
         assertNotUnique(null, null);
         assertNotUnique(null, "a", "b", null);
     }
-    //@@author A0143832J
+    //@@author heiseish
     @Test
     public void checkMutualOrContains() throws IllegalValueException {
         UniqueTagList list1 = new UniqueTagList();

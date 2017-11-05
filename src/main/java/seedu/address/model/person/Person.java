@@ -26,6 +26,8 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Birthday> birthday;
     private ObjectProperty<Remark> remark;
     private ObjectProperty<Favorite> favorite;
+    private ObjectProperty<Major> major;
+    private ObjectProperty<Facebook> facebook;
 
     private ObjectProperty<UniqueTagList> tags;
 
@@ -33,7 +35,7 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address,
-                  Birthday birthday, Remark remark, Set<Tag> tags) {
+                  Birthday birthday, Remark remark, Major major, Facebook facebook, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, birthday, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -41,6 +43,8 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         this.birthday = new SimpleObjectProperty<>(birthday);
         this.remark = new SimpleObjectProperty<>(remark);
+        this.major = new SimpleObjectProperty<>(major);
+        this.facebook = new SimpleObjectProperty<>(facebook);
         this.favorite = new SimpleObjectProperty<>(new Favorite());
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
@@ -52,7 +56,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getBirthday(),
-                source.getRemark(), source.getTags());
+                source.getRemark(), source.getMajor(), source.getFacebook(), source.getTags());
         this.setFavorite(source.getFavorite());
     }
 
@@ -126,6 +130,7 @@ public class Person implements ReadOnlyPerson {
         return birthday.get();
     }
 
+    //@@author heiseish
     public void setRemark(Remark remark) {
         this.remark.set(requireNonNull(remark));
     }
@@ -154,7 +159,34 @@ public class Person implements ReadOnlyPerson {
         return favorite.get();
     }
 
+    public void setMajor(Major major) {
+        this.major.set(requireNonNull(major));
+    }
 
+    @Override
+    public ObjectProperty<Major> majorProperty() {
+        return major;
+    }
+
+    @Override
+    public Major getMajor() {
+        return major.get();
+    }
+
+    public void setFacebook(Facebook facebook) {
+        this.facebook.set(requireNonNull(facebook));
+    }
+
+    @Override
+    public ObjectProperty<Facebook> facebookProperty() {
+        return facebook;
+    }
+
+    @Override
+    public Facebook getFacebook() {
+        return facebook.get();
+    }
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
@@ -214,6 +246,8 @@ public class Person implements ReadOnlyPerson {
         this.setBirthday(replacement.getBirthday());
         this.setRemark(replacement.getRemark());
         this.setFavorite(replacement.getFavorite());
+        this.setMajor(replacement.getMajor());
+        this.setFacebook(replacement.getFacebook());
         this.setTags(replacement.getTags());
     }
 

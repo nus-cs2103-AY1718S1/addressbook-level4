@@ -1,4 +1,4 @@
-//@@author A0143832J
+//@@author heiseish
 package seedu.address.commons.util;
 
 import static org.junit.Assert.assertEquals;

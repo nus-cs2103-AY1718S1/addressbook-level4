@@ -1,4 +1,4 @@
-//@@author 0143832J
+//@@author heiseish
 package seedu.address.model.person.predicates;
 
 import java.util.Set;

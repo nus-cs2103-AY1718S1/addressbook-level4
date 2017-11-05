@@ -1,4 +1,4 @@
-//@@author Giang
+//@@author heiseish
 package seedu.address.model.person;
 
 import static org.junit.Assert.assertFalse;

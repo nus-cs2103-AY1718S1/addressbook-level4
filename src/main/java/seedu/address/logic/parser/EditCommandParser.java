@@ -6,6 +6,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_VALUE_ARGUMENT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
@@ -37,7 +39,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_BIRTHDAY, PREFIX_REMARK, PREFIX_TAG);
+                        PREFIX_BIRTHDAY, PREFIX_REMARK, PREFIX_MAJOR, PREFIX_FACEBOOK, PREFIX_TAG);
 
         Index index;
 
@@ -56,6 +58,10 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY))
                     .ifPresent(editPersonDescriptor::setBirthday);
             ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).ifPresent(editPersonDescriptor::setRemark);
+            ParserUtil.parseMajor(argMultimap.getValue(PREFIX_MAJOR)).ifPresent(editPersonDescriptor::setMajor);
+            ParserUtil.parseFacebook(argMultimap.getValue(PREFIX_FACEBOOK))
+                    .ifPresent(editPersonDescriptor::setFacebook);
+
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(MESSAGE_INVALID_VALUE_ARGUMENT, ive.getMessage(), ive);

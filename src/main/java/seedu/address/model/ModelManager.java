@@ -167,7 +167,7 @@ public class ModelManager extends ComponentManager implements Model {
             tagList.remove(tag);
             Person newPerson = new Person(originalPerson.getName(), originalPerson.getPhone(),
                     originalPerson.getEmail(), originalPerson.getAddress(), originalPerson.getBirthday(),
-                    originalPerson.getRemark(), tagList);
+                    originalPerson.getRemark(), originalPerson.getMajor(), originalPerson.getFacebook(), tagList);
             if (!newPerson.equals(originalPerson)) {
                 addressBook.updatePerson(originalPerson, newPerson);
                 isAddressBookChanged = true;

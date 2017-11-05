@@ -1,4 +1,4 @@
-//@@author A0143832J
+//@@author heiseish
 package systemtests;
 
 import static org.junit.Assert.assertTrue;

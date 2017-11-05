@@ -11,7 +11,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Facebook;
 import seedu.address.model.person.Favorite;
+import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -37,6 +39,10 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String remark;
     @XmlElement(required = true)
+    private String major;
+    @XmlElement(required = true)
+    private String facebook;
+    @XmlElement(required = true)
     private boolean favorite;
 
     @XmlElement
@@ -61,6 +67,8 @@ public class XmlAdaptedPerson {
         address = source.getAddress().value;
         birthday = source.getBirthday().value;
         remark = source.getRemark().remark;
+        major = source.getMajor().value;
+        facebook = source.getFacebook().value;
         favorite = source.getFavorite().favorite;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
@@ -84,9 +92,11 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address);
         final Birthday birthday = new Birthday(this.birthday);
         final Remark remark = new Remark(this.remark);
+        final Major major = new Major(this.major);
+        final Facebook facebook = new Facebook(this.facebook);
         final Favorite favorite = new Favorite(this.favorite);
         final Set<Tag> tags = new HashSet<>(personTags);
-        Person person = new Person(name, phone, email, address, birthday, remark, tags);
+        Person person = new Person(name, phone, email, address, birthday, remark, major, facebook, tags);
         person.setFavorite(favorite);
         return person;
     }

@@ -59,7 +59,7 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> {
             setStyleToDefault();
-            //@@author A0143832J
+            //@@author heiseish
             String enteredText = commandTextField.getText();
             //always hide suggestion if nothing has been entered (only "spacebars"
             // are dissalowed in TextFieldWithLengthLimit)
@@ -234,7 +234,7 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
-    //@@author A0143832J
+    //@@author heiseish
     /**
      * Fill up the command word from the characters
      * if there exists a command word with the same starting chars
