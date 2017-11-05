@@ -24,9 +24,10 @@ import seedu.address.testutil.TypicalPersons;
 /**
  * A GUI Test class for AddressBook.
  */
+
 public abstract class AddressBookGuiTest {
 
-    /* The TestName Rule makes the current test name available inside test methods */
+    /* The TestName Rule makes the current test name available inside test methods*/
     @Rule
     public TestName name = new TestName();
 

@@ -12,6 +12,7 @@ import javafx.stage.Stage;
  * Robot used to simulate user actions on the GUI.
  * Extends {@link FxRobot} by adding some customized functionality and workarounds.
  */
+
 public class GuiRobot extends FxRobot {
 
     private static final int PAUSE_FOR_HUMAN_DELAY_MILLISECONDS = 250;
@@ -30,7 +31,7 @@ public class GuiRobot extends FxRobot {
      * Pauses execution for {@code PAUSE_FOR_HUMAN_DELAY_MILLISECONDS} milliseconds for a human to examine the
      * effects of the test. This method will be disabled when the GUI tests are executed in headless mode to avoid
      * unnecessary delays.
-     */
+    */
     public void pauseForHuman() {
         if (isHeadlessMode) {
             return;
@@ -45,6 +46,7 @@ public class GuiRobot extends FxRobot {
      * @throws EventTimeoutException if the time taken exceeds {@code DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS}
      * milliseconds.
      */
+
     public void waitForEvent(BooleanSupplier event) {
         waitForEvent(event, DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS);
     }
@@ -55,6 +57,7 @@ public class GuiRobot extends FxRobot {
      * @param timeOut in milliseconds
      * @throws EventTimeoutException if the time taken exceeds {@code timeOut}.
      */
+
     public void waitForEvent(BooleanSupplier event, int timeOut) {
         int timePassed = 0;
         final int retryInterval = 50;
@@ -74,6 +77,7 @@ public class GuiRobot extends FxRobot {
     /**
      * Returns true if the window with {@code stageTitle} is currently open.
      */
+
     public boolean isWindowShown(String stageTitle) {
         return listTargetWindows().stream()
                 .filter(window -> window instanceof Stage && ((Stage) window).getTitle().equals(stageTitle))
@@ -87,6 +91,7 @@ public class GuiRobot extends FxRobot {
      *
      * @throws StageNotFoundException if the stage is not found.
      */
+
     public Stage getStage(String stageTitle) {
         Optional<Stage> targetStage = listTargetWindows().stream()
                 .filter(Stage.class::isInstance)    // checks that the window is of type Stage
@@ -100,6 +105,7 @@ public class GuiRobot extends FxRobot {
     /**
      * Represents an error which occurs when a timeout occurs when waiting for an event.
      */
+
     private class EventTimeoutException extends RuntimeException {
     }
 }
