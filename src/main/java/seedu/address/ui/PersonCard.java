@@ -22,8 +22,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static String[] colors = { "darkred", "forestgreen", "blue", "orange", "brown", "black", "pink",
-        "darkgrey", "limegreen" };
+    private static String[] colors = { "red", "forestgreen", "blue", "orange", "brown", "navyblue", "pink",
+        "snow", "limegreen", "yellow" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Integer colourNum = 0;
     private static final String FAVOURITE_IMAGE = "/images/favouriteIcon.png";
