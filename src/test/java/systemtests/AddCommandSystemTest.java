@@ -51,7 +51,6 @@ import static seedu.address.testutil.TypicalParcels.BOB;
 import static seedu.address.testutil.TypicalParcels.CARL;
 import static seedu.address.testutil.TypicalParcels.HOON;
 import static seedu.address.testutil.TypicalParcels.IDA;
-import static seedu.address.testutil.TypicalParcels.JOHN;
 import static seedu.address.testutil.TypicalParcels.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
@@ -277,13 +276,15 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_DELIVERING + TAG_DESC_FLAMMABLE;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add John's parcel (completed) and Ida's parcel (pending) and check if tab is switched back and forth*/
+        /* Case: add Hoon's parcel (completed) and Ida's parcel (pending) and check if tab is switched back and forth*/
         model = getModel();
         assertTrue(model.getTabIndex().equals(TAB_ALL_PARCELS));
-        model.addParcelCommand(JOHN);
+        model.addParcelCommand(HOON);
         assertTrue(model.getTabIndex().equals(TAB_COMPLETED_PARCELS));
         model.addParcelCommand(IDA);
         assertTrue(model.getTabIndex().equals(TAB_ALL_PARCELS));
+        model.deleteParcel(HOON);
+        model.deleteParcel(IDA);
 
         /* Case: missing tracking number -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
