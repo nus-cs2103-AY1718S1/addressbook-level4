@@ -9,7 +9,6 @@ import static seedu.address.testutil.TypicalAccounts.PRIVATE;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalReminders.BIRTHDAY;
-import static seedu.address.testutil.TypicalReminders.DATING;
 
 import java.util.Arrays;
 
