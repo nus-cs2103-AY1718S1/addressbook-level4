@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+//@@author chernghann
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_ADDRESS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_DATE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_NAME;

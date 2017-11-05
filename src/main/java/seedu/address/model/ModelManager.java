@@ -102,12 +102,14 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author chernghann
     @Override
     public synchronized void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
         addressBook.addEvent(event);
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public synchronized void deleteEvent(ReadOnlyEvent event) throws EventNotFoundException {
@@ -162,6 +164,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author chernghann
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyEvent} backed by the internal list of
      * {@code addressBook}
@@ -176,6 +179,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
     }
+    //@@author
 
     @Override
     public boolean equals(Object obj) {
@@ -196,6 +200,7 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredEvents.equals(other.filteredEvents);
     }
 
+    //@@author chernghann
     @Subscribe
     private void handleAddEvent(AddEventRequestEvent event) throws DuplicateEventException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -203,4 +208,5 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         indicateAddressBookChanged();
     }
+    //@@author
 }

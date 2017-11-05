@@ -1,5 +1,6 @@
 package seedu.address.model.event;
 
+//@@author chernghann
 import static java.util.Objects.requireNonNull;
 
 import java.util.Iterator;
