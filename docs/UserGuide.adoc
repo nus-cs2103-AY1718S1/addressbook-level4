@@ -469,7 +469,8 @@ Example:
 * `swt`
 // end::switch[]
 
-// tag::highlight[]
+
+// tag::colorKeyword[]
 === Highlighting keywords : `color`
 
 Highlight the command keywords. +
@@ -481,7 +482,8 @@ Examples:
 * `color disable`
 
 image::video/color.gif[width="790"]
-// end::highlight[]
+
+// end::colorKeyword[]
 
 === Saving the data
 

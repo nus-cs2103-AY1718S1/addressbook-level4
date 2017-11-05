@@ -288,14 +288,17 @@ public class CommandBox extends UiPart<Region> {
      * Configure border colour to indicate validity of user input.
      */
     private void configBorderColor(String allTextInput) {
+        checkBox.setVisible(true);
         try {
             tester.parseCommand(allTextInput);
             commandTextField.setStyle(userPrefFontSize + "-fx-border-color: green; -fx-border-width: 2");
             checkBox.setGraphic(tick);
+            checkBox.toFront();
             checkBox.setVisible(true);
         } catch (ParseException e) {
             commandTextField.setStyle(userPrefFontSize + "-fx-border-color: red; -fx-border-width: 2");
             checkBox.setGraphic(cross);
+            checkBox.toFront();
             checkBox.setVisible(true);
         }
     }

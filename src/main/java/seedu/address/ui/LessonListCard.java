@@ -214,7 +214,7 @@ public class LessonListCard extends UiPart<Region> {
         classType.setStyle("-fx-font-size: " + fontSize + ";");
         timeSlot.setStyle("-fx-font-size: " + fontSize + ";");
         group.setStyle("-fx-font-size: " + fontSize + ";");
-        lecturers.setStyle("-fx-font-size: " + fontSize + ";");
+        lecturers.getChildren().forEach(node -> node.setStyle("-fx-font-size: " + fontSize + ";"));
     }
 
     private void setFontSizeUnit(FontSizeUnit currFontSizeUnit) {

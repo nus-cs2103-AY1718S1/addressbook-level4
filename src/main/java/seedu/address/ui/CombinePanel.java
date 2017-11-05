@@ -1,6 +1,12 @@
 //@@author caoliangnus
 package seedu.address.ui;
 
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_LARGE;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
+
 import java.net.URL;
 import java.time.DayOfWeek;
 import java.util.Objects;
@@ -24,6 +30,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.commons.events.ui.LessonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.RemarkChangedEvent;
 import seedu.address.commons.events.ui.ViewedLessonEvent;
@@ -55,6 +62,7 @@ public class CombinePanel extends UiPart<Region> {
     private String[][]noteData;
     private ReadOnlyLesson selectedModule;
 
+    private StackPane noteStackPane;
     @FXML
     private StackPane stackPane;
     @FXML
@@ -348,20 +356,57 @@ public class CombinePanel extends UiPart<Region> {
                 int z = 120 + (int) (Math.random() * 255);
 
                 TextArea ta = new TextArea(text);
+
                 ta.setWrapText(true);
                 ta.setEditable(false);
 
 
-                StackPane stackPane = new StackPane();
-                stackPane.setStyle("-fx-background-color: rgba(" + x + "," + y + ", " + z + ", 0.5);"
+                noteStackPane = new StackPane();
+                noteStackPane.setStyle("-fx-background-color: rgba(" + x + "," + y + ", " + z + ", 0.5);"
                         + "-fx-effect: dropshadow(gaussian, red, " + 20 + ", 0, 0, 0);"
                         + "-fx-background-insets: " + 10 + ";");
                 ta.setId(STICKY_NOTE);
-                stackPane.getChildren().add(ta);
-                noteGrid.add(stackPane, j, i);
+                noteStackPane.getChildren().add(ta);
+                noteGrid.add(noteStackPane, j, i);
             }
         }
     }
+
+    /**
+     * Sets the command box style to user preferred font size.
+     */
+    private void setFontSize(String userPref) {
+        switch (userPref) {
+        case FONT_SIZE_XSMALL:
+            noteStackPane.getChildren().forEach(node -> node.setStyle("-fx-font-size: 10;"));
+            break;
+
+        case FONT_SIZE_SMALL:
+            noteStackPane.getChildren().forEach(node -> node.setStyle("-fx-font-size: 12;"));
+            break;
+
+        case FONT_SIZE_NORMAL:
+            noteStackPane.getChildren().forEach(node -> node.setStyle("-fx-font-size: 16;"));
+            break;
+
+        case FONT_SIZE_LARGE:
+            noteStackPane.getChildren().forEach(node -> node.setStyle("-fx-font-size: 30;"));
+            break;
+
+        case FONT_SIZE_XLARGE:
+            noteStackPane.getChildren().forEach(node -> node.setStyle("-fx-font-size: 40;"));
+            break;
+
+        default:
+            break;
+        }
+    }
+
+    @Subscribe
+    private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
+        setFontSize(event.message);
+    }
+    //@@author
 }
 
 /**
