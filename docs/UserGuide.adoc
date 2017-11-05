@@ -157,6 +157,7 @@ Deletes the 1st, 3rd and 4th person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+// tag::addphoto[]
 === Adding photo : `addphoto` (Since v1.3)
 
 Adds a photo for the specified person in the address book. +
@@ -168,6 +169,7 @@ Examples:
 Adds a photo `cutedog.png` to the first person of PEERSONAL.
 * `addphoto 1` or `addphoto 1 f/` +
 Removes the current photo from the first person of PEERSONAL.
+// end::addphoto[]
 
 === Selecting a person : `select`
 
@@ -307,10 +309,12 @@ Format: `exit`
 Lists contacts added in the past 24 hours. +
 Format: `listrecent`
 
+// tag::import[]
 === Import data from Address Books : `import` (Coming in v2.0)
 
 Imports data from external Address Books and merges into the current Address Book. +
 Format: `import [FILEPATH]`
+// end::import[]
 
 === Mass email : `emailall` (Coming in v2.0)
 

@@ -1,10 +1,10 @@
-= John Doe - Project Portfolio
+= Yap Zuo Xuan - Project Portfolio
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
 == Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+PEERSONAL is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
@@ -15,35 +15,46 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=addphoto]
 
 #End of Extract#
 
 ---
 
 ==== Justification
+The option to add a photo to a contact is a much needed feature that gives users more details pertaining to that individual contact. In addition to a chunk of words, users are more visually impacted from visual cues like photos and it gives a more wholesome description of a contact inside PEERSONAL.
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=addphoto]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed: 
 
-{Explain similar to the Undo/Redo feature above.}
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=import]
+
+#End of Extract#
+
+**Justification:** Allows more flexibility in the case of adding a large number of contacts. Users do not have to painstakingly add each contact repeatedly. 
+
+---
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+* Updated the GUI color scheme and appearance (Pull requests https://github.com[#33], https://github.com[#34])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Designed the PEERSONAL icon
 
 == Project: PowerPointLabs
 
