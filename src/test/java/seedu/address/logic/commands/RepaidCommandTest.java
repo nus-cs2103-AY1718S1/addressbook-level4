@@ -104,7 +104,6 @@ public class RepaidCommandTest {
     }
 
     //@@author jaivigneshvenugopal
-
     @Test
     public void equals() {
         RepaidCommand repaidFirstCommand = new RepaidCommand(INDEX_FIRST_PERSON);
