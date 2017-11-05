@@ -54,9 +54,7 @@ public class TypicalPersons {
 
     public static final ReadOnlyPerson JON = new PersonBuilder().withName("Jon Anderson").withPhone("9482442")
             .withEmail("null@null.com").withAddress("4th street")
-            .withBloodType("AB-")
-   
-
+            .withBloodType("AB-").build();
 
     // Manually added
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
