@@ -77,7 +77,7 @@ public class Meeting {
     /**
      * Overloaded constructor to create a new meeting object given a meeting for reference purposes.
      */
-    public Meeting(Meeting meeting){
+    public Meeting(Meeting meeting) {
         this.meetingName = meeting.meetingName;
         this.date = meeting.date;
         this.value = meeting.value;

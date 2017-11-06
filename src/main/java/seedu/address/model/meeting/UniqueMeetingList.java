@@ -131,9 +131,9 @@ public class UniqueMeetingList implements Iterable<Meeting> {
      * {@code editedReadOnlyPerson}
      */
     public void updateMeetings(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson) {
-        for(int i=0; i<internalList.size(); i++) {
+        for (int i = 0; i < internalList.size(); i++) {
             Meeting meeting = new Meeting(internalList.get(i));
-            if(meeting.getPerson().equals(target)) {
+            if (meeting.getPerson().equals(target)) {
                 meeting.setPerson(editedReadOnlyPerson);
                 internalList.set(i, meeting);
             }
