@@ -27,25 +27,33 @@
                    <VBox minHeight="10" />
                </children>
             </HBox>
-            <HBox>
+            <HBox prefHeight="20.0" prefWidth="400.0">
                <children>
-                   <VBox minHeight="30" />
-                  <Label styleClass="label-bright" text="Phone: " />
-                  <Label fx:id="phone" styleClass="label-bright" />
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label fx:id="phoneLabel" prefHeight="17.0" prefWidth="111.0" styleClass="label-bright" text="Phone: " />
+                        <VBox fx:id="optionalPhoneLabel" prefHeight="0.0" prefWidth="400.0" styleClass="label-bright" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="0.0" prefWidth="400.0">
+                     <children>
+                        <Label fx:id="phone" styleClass="label-bright" />
+                        <VBox fx:id="optionalPhoneList" prefHeight="0.0" prefWidth="400.0" styleClass="label-bright" />
+                     </children>
+                  </VBox>
                </children>
             </HBox>
-            <VBox fx:id="optionalPhoneList" prefHeight="0.0" prefWidth="400.0" />
             <HBox>
                <children>
                    <VBox minHeight="30" />
-                  <Label styleClass="label-bright" text="Address: " />
+                  <Label fx:id="addressLabel" styleClass="label-bright" text="Address: " />
                   <Label fx:id="address" styleClass="label-bright" />
                </children>
             </HBox>
             <HBox>
                <children>
                    <VBox minHeight="30" />
-                  <Label styleClass="label-bright" text="Email: " />
+                  <Label fx:id="emailLabel" styleClass="label-bright" text="Email: " />
                   <Label fx:id="email" styleClass="label-bright" />
                </children>
             </HBox>
