@@ -5,7 +5,7 @@ import java.util.List;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.QrEvent;
+import seedu.address.commons.events.ui.QrSmsEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -39,7 +39,7 @@ public class QrSmsCommand extends Command {
         }
         int indexOfPersonInList;
         indexOfPersonInList = targetIndex.getOneBased() - 1;
-        EventsCenter.getInstance().post(new QrEvent(lastShownList.get(indexOfPersonInList)));
+        EventsCenter.getInstance().post(new QrSmsEvent(lastShownList.get(indexOfPersonInList)));
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
 
     }
