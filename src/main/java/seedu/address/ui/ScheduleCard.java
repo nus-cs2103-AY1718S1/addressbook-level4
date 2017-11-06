@@ -41,12 +41,28 @@ public class ScheduleCard extends UiPart<Region> {
     @FXML
     private VBox personNames;
 
+    @FXML
+    private Label dateHeader;
+    @FXML
+    private Label personsInvolvedHeader;
+
     public ScheduleCard(Schedule schedule, int displayedIndex) {
         super(FXML);
         this.schedule = schedule;
         number.setText(displayedIndex + ". ");
+        setHeaderStyles();
         initPersonNames(schedule);
         bindListeners(schedule);
+    }
+
+    /**
+     * Sets the styles for headings in the ScheduleCard.
+     */
+    private void setHeaderStyles() {
+        dateHeader.getStyleClass().remove("label");
+        dateHeader.getStyleClass().add("headers");
+        personsInvolvedHeader.getStyleClass().remove("label");
+        personsInvolvedHeader.getStyleClass().add("headers");
     }
 
     /**
