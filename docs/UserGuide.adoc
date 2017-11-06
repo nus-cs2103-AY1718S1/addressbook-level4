@@ -20,39 +20,56 @@ By: `Team W10-B2`      Since: `Aug 2017`      Licence: `MIT`
 === About
 
 This user guide will provide you with instructions on how to use the KayPoh! application.
-You should not need any prior technical knowledge to make use of this guide.
+You should not need any prior technical knowledge to make use of this guide, however,
+some knowledge about a command line interface would be helpful.
 
 === Product Overview
 
-KayPoh! is a desktop contact management application for desktop computers for social users.
+Have you, at some point in time, got curious about what your friends, family, or maybe even
+that old classmate you haven’t spoke to in years have been up to? But perhaps you don’t really
+want to talk to them right now. So, what do you do? You stalk their social media accounts!
+
+KayPoh! is a desktop contact management application designed specifically for social users.
 You can use KayPoh! to store contact and social information information about people,
 and use it to view your contacts' social media feeds at any time.
 
 == Getting Started
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your computer.
+=== Set Up
+.  Ensure that you have Java version `1.8.0_60` or later installed in your computer.
+Verify your java version link:https://www.java.com/en/download/installed.jsp[here].
 +
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This app will not work with earlier versions of Java 8. +
+Download the latest Java version link:https://www.java.com/en/download/manual.jsp[here].
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Store the `addressbook.jar` file into a folder of your choice. This will be the `home` folder for the application.
+.  Double-click the file to start the application.
+
+=== First Usage
+
+.  Figure 1 below displays the application's starting display.
+
 +
 .User Interface of KayPoh!
 image::Ui.png[width="790"]
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+
+.  Figure 2 below introduces the key panels of the application.
++
+.User Interface of KayPoh!
+image::Ui_with_markings.png[width="790"]
++
+.  Try it yourself! Type some of these commands in the command input box and press kbd:[Enter] to execute it:
 
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  Refer to the link:#features[Features] section below for the details of each command.
 
 == Using Commands
 
