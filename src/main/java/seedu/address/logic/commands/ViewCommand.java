@@ -83,7 +83,7 @@ public class ViewCommand extends Command {
             break;
 
         default:
-            predicate = new ShowSpecifiedLessonPredicate(toView.hashCode());
+            predicate = new ShowSpecifiedLessonPredicate(toView);
             result = String.format(MESSAGE_VIEW_LESSON_SUCCESS, toView);
             break;
         }

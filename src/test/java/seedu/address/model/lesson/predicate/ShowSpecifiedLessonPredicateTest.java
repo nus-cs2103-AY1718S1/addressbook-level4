@@ -16,14 +16,14 @@ public class ShowSpecifiedLessonPredicateTest {
     @Test
     public void equals() {
 
-        ShowSpecifiedLessonPredicate firstPredicate = new ShowSpecifiedLessonPredicate(MA1101R_L1.hashCode());
-        ShowSpecifiedLessonPredicate secondPredicate = new ShowSpecifiedLessonPredicate(CS2101_L1.hashCode());
+        ShowSpecifiedLessonPredicate firstPredicate = new ShowSpecifiedLessonPredicate(MA1101R_L1);
+        ShowSpecifiedLessonPredicate secondPredicate = new ShowSpecifiedLessonPredicate(CS2101_L1);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        ShowSpecifiedLessonPredicate firstPredicateCopy = new ShowSpecifiedLessonPredicate(MA1101R_L1.hashCode());
+        ShowSpecifiedLessonPredicate firstPredicateCopy = new ShowSpecifiedLessonPredicate(MA1101R_L1);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -40,7 +40,7 @@ public class ShowSpecifiedLessonPredicateTest {
     public void test_isTheLessonGiven_returnsTrue() {
 
 
-        ShowSpecifiedLessonPredicate predicate = new ShowSpecifiedLessonPredicate(MA1101R_L1.hashCode());
+        ShowSpecifiedLessonPredicate predicate = new ShowSpecifiedLessonPredicate(MA1101R_L1);
         assertTrue(predicate.test(MA1101R_L1));
 
     }
@@ -48,7 +48,7 @@ public class ShowSpecifiedLessonPredicateTest {
     @Test
     public void test_isThePersonGiven_returnsFalse() {
 
-        ShowSpecifiedLessonPredicate predicate = new ShowSpecifiedLessonPredicate(MA1101R_L1.hashCode());
+        ShowSpecifiedLessonPredicate predicate = new ShowSpecifiedLessonPredicate(MA1101R_L1);
         assertFalse(predicate.test(CS2101_L1));
     }
 }

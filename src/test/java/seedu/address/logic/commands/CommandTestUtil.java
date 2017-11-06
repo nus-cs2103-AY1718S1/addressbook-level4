@@ -137,7 +137,7 @@ public class CommandTestUtil {
      */
     public static void showFirstLessonOnly(Model model) {
         ReadOnlyLesson lesson = model.getAddressBook().getLessonList().get(0);
-        model.updateFilteredLessonList(new ShowSpecifiedLessonPredicate(lesson.hashCode()));
+        model.updateFilteredLessonList(new ShowSpecifiedLessonPredicate(lesson));
 
         assert model.getFilteredLessonList().size() == 1;
     }
