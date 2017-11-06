@@ -39,6 +39,8 @@ public class AddEventCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
     public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_REMINDER = "This reminder already exists in the address book";
+
 
     private final Event toAdd;
 
@@ -61,7 +63,7 @@ public class AddEventCommand extends UndoableCommand {
         } catch (DuplicateEventException e) {
             throw new CommandException(MESSAGE_DUPLICATE_EVENT);
         } catch (DuplicateReminderException e) {
-            throw new CommandException("HEHE");
+            throw new CommandException(MESSAGE_DUPLICATE_REMINDER);
         }
     }
 
