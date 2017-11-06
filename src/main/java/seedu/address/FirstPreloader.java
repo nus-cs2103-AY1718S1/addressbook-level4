@@ -19,6 +19,10 @@ public class FirstPreloader extends Preloader {
     private static final double WIDTH = 506.0;
     private static final double HEIGHT = 311;
 
+    /**
+     * Method to create splash screen
+     * @return Scene containing splashscreen
+     */
     private Scene createPreloaderScene() {
         SplashScreen splashScreen = new SplashScreen();
         splashScreen.getRoot().setBackground(Background.EMPTY);
@@ -27,6 +31,9 @@ public class FirstPreloader extends Preloader {
         return scene;
     }
 
+    /**
+     * Starts the splash screen
+     */
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         stage.setScene(createPreloaderScene());

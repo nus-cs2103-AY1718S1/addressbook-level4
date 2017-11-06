@@ -21,28 +21,26 @@ public class SplashScreen extends UiPart<Region> {
     private Timeline timeline;
 
     @FXML
-    private ImageView SplashImage;
+    private ImageView splashImage;
 
     @FXML
-    private ImageView SplashLoadingImage;
+    private ImageView splashLoadingImage;
 
-    @FXML
-    private ImageView SplashLineImage;
 
     public SplashScreen() {
         super(FXML);
-        SplashImage.setImage(new Image("/images/SplashScreen.png"));
-        SplashLoadingImage.setImage(new Image("/images/SplashScreenLoading.png"));
+        splashImage.setImage(new Image("/images/SplashScreen.png"));
+        splashLoadingImage.setImage(new Image("/images/SplashScreenLoading.png"));
         setAnimation();
     }
 
     private void setAnimation() {
-        KeyValue moveRight = new KeyValue(SplashLoadingImage.translateXProperty(), 460);
+        KeyValue moveRight = new KeyValue(splashLoadingImage.translateXProperty(), 460);
 
         EventHandler onFinished = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                SplashLoadingImage.setTranslateX(-92);
+                splashLoadingImage.setTranslateX(-92);
             }
         };
 
