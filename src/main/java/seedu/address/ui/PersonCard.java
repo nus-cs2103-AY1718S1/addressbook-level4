@@ -86,7 +86,7 @@ public class PersonCard extends UiPart<Region> {
                         + " -fx-font-size: 15px;"
                         + " -fx-text-fill: black");
             } else {
-                tagLabel.setStyle("-fx-background-color: snow;"
+                tagLabel.setStyle("-fx-background-color: #adcbe3;"
                         + " -fx-font-size: 15px;"
                         + " -fx-text-fill: black");
             }

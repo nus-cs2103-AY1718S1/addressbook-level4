@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
+import com.sun.javafx.application.LauncherImpl;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -234,5 +235,6 @@ public class MainApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
+        //LauncherImpl.launchApplication(MainApp.class, FirstPreloader.class, args);
     }
 }
