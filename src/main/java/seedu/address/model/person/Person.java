@@ -174,6 +174,11 @@ public class Person implements ReadOnlyPerson {
         return avatar.get();
     }
 
+    public void setAvatar(Avatar avatar) {
+        requireNonNull(avatar);
+        this.avatar.set(avatar);
+    }
+
     @Override
     public ObjectProperty<UniquePropertyMap> properties() {
         return properties;
