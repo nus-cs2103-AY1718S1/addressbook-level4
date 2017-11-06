@@ -19,7 +19,7 @@ import javafx.collections.ObservableList;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
-import seedu.address.commons.events.ui.NewAppointmentEvent;
+import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -96,7 +96,7 @@ public class CalendarWindow extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleNewAppointmentEvent(NewAppointmentEvent event) {
+    private void handleNewAppointmentEvent(AddressBookChangedEvent event) {
         personList = event.data.getPersonList();
         Platform.runLater(
                 this::updateCalendar

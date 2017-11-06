@@ -12,10 +12,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.commons.events.ui.NewAppointmentEvent;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.HasPotentialDuplicatesPredicate;
 import seedu.address.model.person.Name;
@@ -135,7 +133,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
         addressBook.addAppointment(target, appointment);
-        EventsCenter.getInstance().post(new NewAppointmentEvent(addressBook));
         indicateAddressBookChanged();
     }
 
