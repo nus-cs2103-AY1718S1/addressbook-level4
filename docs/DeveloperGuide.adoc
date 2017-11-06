@@ -14,6 +14,26 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `CS2103AUG2017-T09-B2`      Since: `AUG 2017`      Licence: `MIT`
 
+== Introduction
+
+Welcome to _ScheduBook_! The aim of __ScheduBook __is to allow users with busy and hectic schedules to better plan meetings and be reminded of high priority meetings, in addition to the conventional AddressBook functionalities.
+Upon starting the application, a Graphical User Interface that is completely functional using a command-line interface will be launched.
+
+This developer guide is intended get you up-and-running with our application. We will cover everything you need to know,
+from setting up, to the implementation of commands, to troubleshooting testing. This guide is written in a top-down approach which will help you to better understand the overall design
+before diving into the detailed explanation of each component.
+
+== Contribution
+There are plenty of ways for you to contribute to this project such as (list is not exhaustive):
+
+* Implementing new features
+* Enhancing overall code quality
+* Integrating external Application Programming Interfaces(API)
+* Testing of codes
+
+You do not have to worry about being an inexperienced programmer as this guide will not only will help you to get started as a __ScheduBook __contributor,
+but also allow you to learn and understand the basic concepts behind Object-oriented programming(OOP) in Java.
+
 == Setting up
 
 === Prerequisites
@@ -518,7 +538,7 @@ the same as one of the preexisting Meetings in the addressbook.
 **Aspect:** how `EditMeetingCommand` executes +
 **Alternative 1 :** Comparing the different parameters individually without the creation
  of a new instance of a `Meeting` +
-**Pros:** More direct and faster way of editting the different parameters of the `Meeting` object +
+**Pros:** More direct and faster way of editing the different parameters of the `Meeting` object +
 
 ---
 
@@ -541,7 +561,7 @@ To show the urgency of the meeting. Colours are assigned to the card by comparin
 
 * `darkRed` : Meeting is in next 24 hours.
 
-image::MeetingCard1.png[align="center'][width="250"]
+image::MeetingCard1.png[width="250"]
 _Figure 3.9.3 : Meeting card that due within 24 hours_
 
 * `red` : Meeting is in next 48 hours.

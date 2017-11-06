@@ -4,11 +4,12 @@
     /**
      * Creates an AddMeetingCommand to add the specified {@code ReadOnlyMeeting}
      */
-    public AddMeetingCommand (NameMeeting name, DateTime date, Place location, Index index) {
+    public AddMeetingCommand (NameMeeting name, DateTime date, Place location, Index index, MeetingTag meetTag) {
         this.index = index;
         this.name = name;
         this.date = date;
         this.location = location;
+        this.meetTag = meetTag;
     }
 
     @Override
@@ -24,13 +25,13 @@
         PersonToMeet personName = new PersonToMeet(personToAdd.getName().toString());
         PhoneNum phoneNum = new PhoneNum(personToAdd.getPhone().toString());
 
-        toAdd = new Meeting(name, date, location, personName, phoneNum);
+        toAdd = new Meeting(name, date, location, personName, phoneNum, meetTag);
         try {
             model.addMeeting(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateMeetingException e) {
             throw new CommandException(MESSAGE_DUPLICATE_MEETING);
-        } catch (MeetingBeforeCurrDateException mde) {
+        } catch (MeetingBeforeCurrDateException mde) { //This exception throw handles auto deletion of Meeting cards
             throw new CommandException(MESSAGE_OVERDUE_MEETING);
         } catch (MeetingClashException mce) {
             throw new CommandException(MESSAGE_MEETING_CLASH);
@@ -73,12 +74,20 @@ public class ListMeetingCommand extends Command {
 ###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
-     * Parses a {@code Optional<String> name} into an {@code Optional<NameMeeting>} if {@code name} is present.
+     * Parses a {@code Optional<String> phonenum} into an {@code Optional<PhoneNum>} if {@code phonenum} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<PhoneNum> parsePhoneNum(Optional<String> phoneNum) throws IllegalValueException {
         requireNonNull(phoneNum);
         return phoneNum.isPresent() ? Optional.of(new PhoneNum(phoneNum.get())) : Optional.empty();
+    }
+    /**
+     * Parses a {@code Optional<String> tagname} into an {@code Optional<MeetingTag>} if {@code ntagame} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<MeetingTag> parseMeetTag(Optional<String> meetingTag) throws IllegalValueException {
+        requireNonNull(meetingTag);
+        return meetingTag.isPresent() ? Optional.of(new MeetingTag(meetingTag.get())) : Optional.empty();
     }
 
     /**
@@ -132,7 +141,12 @@ public class DateTime {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String DATETIME_VALIDATION_REGEX = "\\d{2}-\\d{2}-\\d{4} \\d{2}:\\d{2}";
+    public static final String DATETIME_VALIDATION_REGEX = "^(((0[1-9]|[12]\\d|3[01])[\\/\\.-](0[13578]|1[02])"
+            + "[\\/\\.-]((19|[2-9]\\d)\\d{2})\\s(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]))|((0[1-9]|[12]\\d|30)"
+            + "[\\/\\.-](0[13456789]|1[012])[\\/\\.-]((19|[2-9]\\d)\\d{2})\\s(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]))"
+            + "|((0[1-9]|1\\d|2[0-8])[\\/\\.-](02)[\\/\\.-]((19|[2-9]\\d)\\d{2})\\s(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]))"
+            + "|((29)[\\/\\.-](02)[\\/\\.-]((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|"
+            + "((16|[2468][048]|[3579][26])00))\\s(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])))$";
 
     public final String value;
 
@@ -156,7 +170,7 @@ public class DateTime {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         try {
             LocalDateTime localDateTime = LocalDateTime.parse(test, formatter);
-            return true;
+            return test.matches(DATETIME_VALIDATION_REGEX);
         } catch (DateTimeException e) {
             return false;
         }
@@ -216,22 +230,25 @@ public class Meeting implements ReadOnlyMeeting {
     private ObjectProperty<Place> place;
     private ObjectProperty<PersonToMeet> personMeet;
     private ObjectProperty<PhoneNum> phoneMeet;
+    private ObjectProperty<MeetingTag> tag;
 
-    public Meeting(NameMeeting name, DateTime date, Place place, PersonToMeet personMeet, PhoneNum phoneMeet) {
+    public Meeting (NameMeeting name, DateTime date, Place place, PersonToMeet personMeet,
+                   PhoneNum phoneMeet, MeetingTag tag) {
         requireAllNonNull(name, date, place);
         this.name = new SimpleObjectProperty<>(name);
         this.date = new SimpleObjectProperty<>(date);
         this.place = new SimpleObjectProperty<>(place);
         this.personMeet = new SimpleObjectProperty<>(personMeet);
         this.phoneMeet = new SimpleObjectProperty<>(phoneMeet);
-        // protect internal tags from changes in the arg list
+        this.tag = new SimpleObjectProperty<>(tag);
     }
 
     /**
      * Creates a copy of the given ReadOnlyMeeting.
      */
     public Meeting(ReadOnlyMeeting source) {
-        this(source.getName(), source.getDate(), source.getPlace(), source.getPersonName(), source.getPersonPhone());
+        this(source.getName(), source.getDate(), source.getPlace(), source.getPersonName(), source.getPersonPhone(),
+                source.getMeetTag());
     }
 
     public void setName(NameMeeting name) {
@@ -311,11 +328,15 @@ public class Meeting implements ReadOnlyMeeting {
         return phoneMeet.get();
     }
 
-    /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
+    @Override
+    public ObjectProperty<MeetingTag> meetTagProperty() {
+        return tag;
+    }
 
+    @Override
+    public MeetingTag getMeetTag() {
+        return tag.get();
+    }
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -334,6 +355,48 @@ public class Meeting implements ReadOnlyMeeting {
         return getAsText();
     }
 
+}
+```
+###### \java\seedu\address\model\meeting\MeetingTag.java
+``` java
+/**
+ * Contains the tag for the meeting to show significance of meeting
+ */
+public class MeetingTag {
+    public static final String MESSAGE_MEETTAG_CONSTRAINTS = "Importance tag should be from 0 to 2";
+    public static final String MEETTAG_VALIDATION_REGEX = "[0-2]";
+
+    public final String tagName;
+
+    /**
+     * Validates given tag name.
+     *
+     * @throws IllegalValueException if the given tag name string is invalid.
+     */
+    public MeetingTag(String name) throws IllegalValueException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        if (!isValidTagName(trimmedName)) {
+            throw new IllegalValueException(MESSAGE_MEETTAG_CONSTRAINTS);
+        }
+        this.tagName = trimmedName;
+    }
+    /**
+     * Returns true if a given string is a valid tag name.
+     */
+    public static boolean isValidTagName(String test) {
+        return test.matches(MEETTAG_VALIDATION_REGEX);
+    }
+
+    @Override
+    public int hashCode() {
+        return tagName.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return tagName;
+    }
 }
 ```
 ###### \java\seedu\address\model\meeting\NameMeeting.java
@@ -531,6 +594,8 @@ public interface ReadOnlyMeeting {
     PersonToMeet getPersonName();
     ObjectProperty<PhoneNum> phoneMeetProperty();
     PhoneNum getPersonPhone();
+    ObjectProperty<MeetingTag> meetTagProperty();
+    MeetingTag getMeetTag();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -641,6 +706,7 @@ public interface ReadOnlyMeeting {
         date = source.getDate().toString();
         personToMeet = source.getPersonName().toString();
         phoneNum = source.getPersonPhone().toString();
+        meetTag = source.getMeetTag().toString();
     }
 
 ```
@@ -759,6 +825,8 @@ public class MeetingCard extends UiPart<Region> {
 
     private static final String FXML = "MeetingListCard.fxml";
     private static String[] colors = { "darkRed", "red", "orangeRed", "grey" };
+    private static final String ICONIMPT = "/images/important.png";
+    private static final String ICONHATE = "/images/dislike.png";
 
     public final ReadOnlyMeeting meeting;
 
@@ -776,6 +844,8 @@ public class MeetingCard extends UiPart<Region> {
     private Label person;
     @FXML
     private Label phoneNum;
+    @FXML
+    private ImageView icon;
 
 
     public MeetingCard(ReadOnlyMeeting meeting, int displayedIndex) {
@@ -805,6 +875,12 @@ public class MeetingCard extends UiPart<Region> {
             initMeeting(meeting, colors[1]);
         } else if (daysBet == 2) {
             initMeeting(meeting, colors[2]);
+        }
+        if (meeting.getMeetTag().toString().equals("2")) {
+            icon.setImage(new Image(ICONIMPT));
+        }
+        if (meeting.getMeetTag().toString().equals("0")) {
+            icon.setImage(new Image(ICONHATE));
         }
 
     }
@@ -960,11 +1036,17 @@ public class MeetingListPanel extends UiPart<Region> {
 ```
 ###### \resources\view\MeetingListCard.fxml
 ``` fxml
+
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane HBox.hgrow="ALWAYS">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
         </columnConstraints>
+      <ImageView fx:id="icon" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+         <GridPane.margin>
+            <Insets left="180.0" top="65.0" />
+         </GridPane.margin>
+      </ImageView>
         <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
             <padding>
                 <Insets bottom="5" left="15" right="5" top="5" />

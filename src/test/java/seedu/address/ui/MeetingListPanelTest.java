@@ -14,7 +14,7 @@ import guitests.guihandles.MeetingCardHandle;
 import guitests.guihandles.MeetingListPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.JumpToMeetingListRequestEvent;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 //@@author Melvin-leo
 public class MeetingListPanelTest extends GuiUnitTest {
@@ -22,7 +22,8 @@ public class MeetingListPanelTest extends GuiUnitTest {
     private static final ObservableList<ReadOnlyMeeting> TYPICAL_MEETINGS =
             FXCollections.observableList(getTypicalMeetings());
 
-    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_MEETING);
+    private static final JumpToMeetingListRequestEvent JUMP_TO_SECOND_EVENT =
+            new JumpToMeetingListRequestEvent(INDEX_SECOND_MEETING);
 
     private MeetingListPanelHandle meetingListPanelHandle;
 
@@ -48,7 +49,7 @@ public class MeetingListPanelTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleJumpToListRequestEvent() {
+    public void handleJumpToMeetingListRequestEvent() {
         postNow(JUMP_TO_SECOND_EVENT);
         guiRobot.pauseForHuman();
 

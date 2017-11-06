@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.meeting.DateTime;
 import seedu.address.model.meeting.Meeting;
+import seedu.address.model.meeting.MeetingTag;
 import seedu.address.model.meeting.NameMeeting;
 import seedu.address.model.meeting.PersonToMeet;
 import seedu.address.model.meeting.PhoneNum;
@@ -30,6 +31,8 @@ public class XmlAdaptedMeeting {
     private String personToMeet;
     @XmlElement(required = true)
     private String phoneNum;
+    @XmlElement(required = true)
+    private String meetTag;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -53,6 +56,7 @@ public class XmlAdaptedMeeting {
         date = source.getDate().toString();
         personToMeet = source.getPersonName().toString();
         phoneNum = source.getPersonPhone().toString();
+        meetTag = source.getMeetTag().toString();
     }
 
     //@@author nelsonqyj
@@ -68,8 +72,9 @@ public class XmlAdaptedMeeting {
         final Place place = new Place(this.place);
         final PersonToMeet personToMeet = new PersonToMeet(this.personToMeet);
         final PhoneNum phoneNum = new PhoneNum(this.phoneNum);
+        final MeetingTag meetTag = new MeetingTag(this.meetTag);
 
-        return new Meeting(name, dateTime, place, personToMeet, phoneNum);
+        return new Meeting(name, dateTime, place, personToMeet, phoneNum, meetTag);
     }
 
 }

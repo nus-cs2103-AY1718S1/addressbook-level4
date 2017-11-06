@@ -21,22 +21,25 @@ public class Meeting implements ReadOnlyMeeting {
     private ObjectProperty<Place> place;
     private ObjectProperty<PersonToMeet> personMeet;
     private ObjectProperty<PhoneNum> phoneMeet;
+    private ObjectProperty<MeetingTag> tag;
 
-    public Meeting(NameMeeting name, DateTime date, Place place, PersonToMeet personMeet, PhoneNum phoneMeet) {
+    public Meeting (NameMeeting name, DateTime date, Place place, PersonToMeet personMeet,
+                   PhoneNum phoneMeet, MeetingTag tag) {
         requireAllNonNull(name, date, place);
         this.name = new SimpleObjectProperty<>(name);
         this.date = new SimpleObjectProperty<>(date);
         this.place = new SimpleObjectProperty<>(place);
         this.personMeet = new SimpleObjectProperty<>(personMeet);
         this.phoneMeet = new SimpleObjectProperty<>(phoneMeet);
-        // protect internal tags from changes in the arg list
+        this.tag = new SimpleObjectProperty<>(tag);
     }
 
     /**
      * Creates a copy of the given ReadOnlyMeeting.
      */
     public Meeting(ReadOnlyMeeting source) {
-        this(source.getName(), source.getDate(), source.getPlace(), source.getPersonName(), source.getPersonPhone());
+        this(source.getName(), source.getDate(), source.getPlace(), source.getPersonName(), source.getPersonPhone(),
+                source.getMeetTag());
     }
 
     public void setName(NameMeeting name) {
@@ -116,11 +119,15 @@ public class Meeting implements ReadOnlyMeeting {
         return phoneMeet.get();
     }
 
-    /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
+    @Override
+    public ObjectProperty<MeetingTag> meetTagProperty() {
+        return tag;
+    }
 
+    @Override
+    public MeetingTag getMeetTag() {
+        return tag.get();
+    }
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
