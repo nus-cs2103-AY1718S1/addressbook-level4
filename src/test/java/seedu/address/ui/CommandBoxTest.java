@@ -1,8 +1,10 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,6 +26,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
+    private HashMap<String, String> keywordColorMap;
 
     private CommandBoxHandle commandBoxHandle;
 
@@ -41,6 +44,8 @@ public class CommandBoxTest extends GuiUnitTest {
 
         errorStyleOfCommandBox = new ArrayList<>(defaultStyleOfCommandBox);
         errorStyleOfCommandBox.add(CommandBox.ERROR_STYLE_CLASS);
+
+        keywordColorMap = commandBox.getCommandKeywordColorMap();
     }
 
     @Test
@@ -127,6 +132,26 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
 
+
+    @Test
+    public void configActiveKeywordTest() {
+        String commandKeyword = "list";
+        String commandColorTrue = "red";
+        String commandColorFalse = "black";
+        assertColorSame(commandColorTrue, commandKeyword);
+        assertColorNotSame(commandColorFalse, commandKeyword);
+    }
+
+
+    private void assertColorSame(String commandColor, String commandKeyword) {
+        assertEquals(commandColor, keywordColorMap.get(commandKeyword));
+    }
+
+    private void assertColorNotSame(String commandColor, String commandKeyword) {
+        assertNotEquals(commandColor, keywordColorMap.get(commandKeyword));
+    }
+
+
     /**
      * Runs a command that fails, then verifies that <br>
      *      - the text remains <br>
@@ -156,4 +181,9 @@ public class CommandBoxTest extends GuiUnitTest {
         guiRobot.push(keycode);
         assertEquals(expectedCommand, commandBoxHandle.getInput());
     }
+
+
+
+
+
 }
