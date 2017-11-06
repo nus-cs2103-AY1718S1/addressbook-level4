@@ -46,7 +46,22 @@ public class SampleDataUtil {
                         new FavouriteStatus(false), getTagSet("classmates"), new Link("")),
                 new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                     new Address("Blk 45 Aljunied Street 85, #11-31"), getRemarkArrayList(),
-                        new FavouriteStatus(false), getTagSet("colleagues"), new Link(""))
+                        new FavouriteStatus(false), getTagSet("colleagues"), new Link("")),
+                new Person(new Name("James Willian"), new Phone("82623417"), new Email("jamesW@example.com"),
+                        new Address("Blk 38 Aljunied Street 84, #10-28"), getRemarkArrayList(),
+                        new FavouriteStatus(false), getTagSet("classmates"), new Link("")),
+                new Person(new Name("Pojack Wee"), new Phone("82623417"), new Email("pojack@example.com"),
+                        new Address("Blk 382 Hougang Street 84, #07-28"), getRemarkArrayList(),
+                        new FavouriteStatus(false), getTagSet("classmates"), new Link("")),
+                new Person(new Name("Zack Power"), new Phone("82623417"), new Email("zackPower@example.com"),
+                        new Address("Blk 122 Kent Ridge Street 12, #02-28"), getRemarkArrayList(),
+                        new FavouriteStatus(false), getTagSet("classmates"), new Link("")),
+                new Person(new Name("Young Ashley"), new Phone("82623417"), new Email("ashleyy@example.com"),
+                        new Address("Blk 222 Kent Ridge Street 32, #03-19"), getRemarkArrayList(),
+                        new FavouriteStatus(false), getTagSet("classmates"), new Link("")),
+                new Person(new Name("Jacob Yasim"), new Phone("82623417"), new Email("jacobYas@example.com"),
+                        new Address("Blk 512 Sengkang Street 81, #03-19"), getRemarkArrayList(),
+                        new FavouriteStatus(false), getTagSet("classmates"), new Link(""))
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
