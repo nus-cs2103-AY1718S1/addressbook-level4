@@ -19,7 +19,7 @@ import seedu.address.ui.GuiUnitTest;
 /**
  * Contains integration tests (interaction with the Model) for {@code AddCommand}.
  */
-public class AddCommandIntegrationTest extends GuiUnitTest{
+public class AddCommandIntegrationTest extends GuiUnitTest {
 
     private Model model;
 

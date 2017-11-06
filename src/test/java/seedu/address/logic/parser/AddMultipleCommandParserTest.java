@@ -39,21 +39,21 @@ public class AddMultipleCommandParserTest extends GuiUnitTest {
 
     @Test
     public void parse_fileNotExist_failure() {
-        final String FILE_NOT_EXIST = "./src/test/data/AddMultipleCommandSystemTest/doesNotExist.txt";
-        String expectedMessage = String.format(AddMultipleCommand.MESSAGE_INVALID_FILE, FILE_NOT_EXIST);
-        assertParseFailure(parser, FILE_NOT_EXIST, expectedMessage);
+        final String fileNotExist = "./src/test/data/AddMultipleCommandSystemTest/doesNotExist.txt";
+        String expectedMessage = String.format(AddMultipleCommand.MESSAGE_INVALID_FILE, fileNotExist);
+        assertParseFailure(parser, fileNotExist, expectedMessage);
     }
 
     @Test
     public void parse_emptyInput_failure() {
-        final String EMPTY_INPUT = "";
+        final String emptyInput = "";
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMultipleCommand.MESSAGE_USAGE);
-        assertParseFailure(parser, EMPTY_INPUT, expectedMessage);
+        assertParseFailure(parser, emptyInput, expectedMessage);
     }
 
     @Test
     public void parse_compulsoryFieldsPresent_success() {
-        final String VALID_PERSONS_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/validPersons.txt";
+        final String validPersonsFilepath = "./src/test/data/AddMultipleCommandSystemTest/validPersons.txt";
         ArrayList<ReadOnlyPerson> expectedPersonList = new ArrayList<>();
 
         expectedPersonList.add(ALICE);
@@ -63,75 +63,83 @@ public class AddMultipleCommandParserTest extends GuiUnitTest {
         expectedPersonList.add(AMY);
         expectedPersonList.add(BOB);
 
-        assertParseSuccess(parser, VALID_PERSONS_FILEPATH, new AddMultipleCommand(expectedPersonList));
+        assertParseSuccess(parser, validPersonsFilepath, new AddMultipleCommand(expectedPersonList));
     }
 
     @Test
     public void parse_optionalFieldsMissing_success() {
-        final String MISSING_OPTIONAL_FILE_PATH = "./src/test/data/AddMultipleCommandSystemTest/validPersons_missingOptionalFields.txt";
+        final String missingOptionalFilePath =
+                "./src/test/data/AddMultipleCommandSystemTest/validPersons_missingOptionalFields.txt";
         ArrayList<ReadOnlyPerson> expectedPersonList = new ArrayList<>();
 
-        ReadOnlyPerson AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+        ReadOnlyPerson amy = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags().build();
-        ReadOnlyPerson BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+        ReadOnlyPerson bob = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags().build();
 
-        expectedPersonList.add(AMY);
-        expectedPersonList.add(BOB);
+        expectedPersonList.add(amy);
+        expectedPersonList.add(bob);
 
-        assertParseSuccess(parser, MISSING_OPTIONAL_FILE_PATH, new AddMultipleCommand(expectedPersonList));
+        assertParseSuccess(parser, missingOptionalFilePath, new AddMultipleCommand(expectedPersonList));
     }
 
     @Test
     public void parse_compulsoryFieldMissing_failure() {
-        final String MISSING_FIELD_NAME_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/missingPrefix_name.txt";
-        final String MISSING_FIELD_PHONE_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/missingPrefix_phone.txt";
-        final String MISSING_FIELD_EMAIL_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/missingPrefix_email.txt";
-        final String MISSING_FIELD_ADDRESS_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/missingPrefix_address.txt";
-        final String MISSING_FIELD_COMPULSORY_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/missingPrefix_allCompulsory.txt";
+        final String missingFieldNameFilepath =
+                "./src/test/data/AddMultipleCommandSystemTest/missingPrefix_name.txt";
+        final String missingFieldPhoneFilepath =
+                "./src/test/data/AddMultipleCommandSystemTest/missingPrefix_phone.txt";
+        final String missingFieldEmailFilepath =
+                "./src/test/data/AddMultipleCommandSystemTest/missingPrefix_email.txt";
+        final String missingFieldAddressFilepath =
+                "./src/test/data/AddMultipleCommandSystemTest/missingPrefix_address.txt";
+        final String missingFieldCompulsoryFilepath =
+                "./src/test/data/AddMultipleCommandSystemTest/missingPrefix_allCompulsory.txt";
         String expectedMessage = String.format(MESSAGE_INVALID_PERSON_FORMAT, AddMultipleCommand.MESSAGE_PERSON_FORMAT);
 
         // missing name prefix
-        assertParseFailure(parser, MISSING_FIELD_NAME_FILEPATH, expectedMessage);
+        assertParseFailure(parser, missingFieldNameFilepath, expectedMessage);
 
         // missing phone prefix
-        assertParseFailure(parser, MISSING_FIELD_PHONE_FILEPATH, expectedMessage);
+        assertParseFailure(parser, missingFieldPhoneFilepath, expectedMessage);
 
         // missing email prefix
-        assertParseFailure(parser, MISSING_FIELD_EMAIL_FILEPATH, expectedMessage);
+        assertParseFailure(parser, missingFieldEmailFilepath, expectedMessage);
 
         // missing address prefix
-        assertParseFailure(parser, MISSING_FIELD_ADDRESS_FILEPATH, expectedMessage);
+        assertParseFailure(parser, missingFieldAddressFilepath, expectedMessage);
 
         // all prefixes missing
-        assertParseFailure(parser, MISSING_FIELD_COMPULSORY_FILEPATH, expectedMessage);
+        assertParseFailure(parser, missingFieldCompulsoryFilepath, expectedMessage);
     }
 
     @Test
     public void parse_invalidValue_failure() {
-        final String INVALID_FIELD_NAME_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/invalidNameFormat.txt";
-        final String INVALID_FIELD_PHONE_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/invalidPhoneFormat.txt";
-        final String INVALID_FIELD_EMAIL_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/invalidEmailFormat.txt";
-        final String INVALID_FIELD_ADDRESS_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/invalidAddressFormat.txt";
-        final String INVALID_FIELD_TAG_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/invalidTagFormat.txt";
-        final String INVALID_FIELD_NAME_PHONE_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/invalidFormatNamePhone.txt";
+        final String invalidFieldNameFilepath = "./src/test/data/AddMultipleCommandSystemTest/invalidNameFormat.txt";
+        final String invalidFieldPhoneFilepath = "./src/test/data/AddMultipleCommandSystemTest/invalidPhoneFormat.txt";
+        final String invalidFieldEmailFilepath = "./src/test/data/AddMultipleCommandSystemTest/invalidEmailFormat.txt";
+        final String invalidFieldAddressFilepath =
+                "./src/test/data/AddMultipleCommandSystemTest/invalidAddressFormat.txt";
+        final String invalidFieldTagFilepath = "./src/test/data/AddMultipleCommandSystemTest/invalidTagFormat.txt";
+        final String invalidFieldNamePhoneFilepath =
+                "./src/test/data/AddMultipleCommandSystemTest/invalidFormatNamePhone.txt";
 
         // invalid name
-        assertParseFailure(parser, INVALID_FIELD_NAME_FILEPATH, Name.MESSAGE_NAME_CONSTRAINTS);
+        assertParseFailure(parser, invalidFieldNameFilepath, Name.MESSAGE_NAME_CONSTRAINTS);
 
         // invalid phone
-        assertParseFailure(parser, INVALID_FIELD_PHONE_FILEPATH, Phone.MESSAGE_PHONE_CONSTRAINTS);
+        assertParseFailure(parser, invalidFieldPhoneFilepath, Phone.MESSAGE_PHONE_CONSTRAINTS);
 
         // invalid email
-        assertParseFailure(parser, INVALID_FIELD_EMAIL_FILEPATH, Email.MESSAGE_EMAIL_CONSTRAINTS);
+        assertParseFailure(parser, invalidFieldEmailFilepath, Email.MESSAGE_EMAIL_CONSTRAINTS);
 
         // invalid address
-        assertParseFailure(parser, INVALID_FIELD_ADDRESS_FILEPATH, Address.MESSAGE_ADDRESS_CONSTRAINTS);
+        assertParseFailure(parser, invalidFieldAddressFilepath, Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
         // invalid tag
-        assertParseFailure(parser, INVALID_FIELD_TAG_FILEPATH, Tag.MESSAGE_TAG_CONSTRAINTS);
+        assertParseFailure(parser, invalidFieldTagFilepath, Tag.MESSAGE_TAG_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
-        assertParseFailure(parser, INVALID_FIELD_NAME_PHONE_FILEPATH, Name.MESSAGE_NAME_CONSTRAINTS);
+        assertParseFailure(parser, invalidFieldNamePhoneFilepath, Name.MESSAGE_NAME_CONSTRAINTS);
     }
 }
