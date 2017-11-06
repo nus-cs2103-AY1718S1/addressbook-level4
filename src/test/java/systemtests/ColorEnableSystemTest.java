@@ -26,7 +26,8 @@ public class ColorEnableSystemTest extends AddressBookSystemTest {
 
         /* Case: attempt to enable highlighting command keyword that are undefined */
         command = ColorKeywordCommand.COMMAND_WORD + " " + "Enabled";
-        expectedResultMessage = String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, ColorKeywordCommand.MESSAGE_USAGE);
+        expectedResultMessage = String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                ColorKeywordCommand.MESSAGE_USAGE);
         assertCommandFailure(command, expectedResultMessage);
 
         /* Case: disable highlighting feature with leading spaces and trailing space
@@ -39,7 +40,8 @@ public class ColorEnableSystemTest extends AddressBookSystemTest {
 
         /* Case: attempt to disable highlighting command keyword that are undefined */
         command = ColorKeywordCommand.COMMAND_WORD + " " + "Disabled";
-        expectedResultMessage = String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, ColorKeywordCommand.MESSAGE_USAGE);
+        expectedResultMessage = String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                ColorKeywordCommand.MESSAGE_USAGE);
         assertCommandFailure(command, expectedResultMessage);
 
 
