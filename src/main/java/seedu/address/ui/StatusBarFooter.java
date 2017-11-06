@@ -47,6 +47,8 @@ public class StatusBarFooter extends UiPart<Region> {
     @FXML
     private StatusBar syncStatus;
     @FXML
+    private Label displayDate;
+    @FXML
     private Label displayClock;
     @FXML
     private StatusBar saveLocationStatus;
@@ -104,7 +106,11 @@ public class StatusBarFooter extends UiPart<Region> {
             public void run() {
                 footerClock.getClock().setCurrentTime();
                 footerClock.setClock(requireNonNull(footerClock.getClock()));
-                Platform.runLater(() -> displayClock.setText(footerClock.toString()));
+                Platform.runLater(() -> displayClock.setText(footerClock.getTimeAsText()));
+
+                footerClock.getDate().setCurrentDate();
+                footerClock.setDate(requireNonNull(footerClock.getDate()));
+                Platform.runLater(() -> displayDate.setText(footerClock.getDateAsText()));
             }
         };
         timer.scheduleAtFixedRate(task, 0, 1000);
