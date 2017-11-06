@@ -12,7 +12,6 @@ import java.util.function.Predicate;
 import seedu.address.model.meeting.MeetingContainPersonPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
-
 /**
  * Finds and lists all persons in address book whose specified fields contains any of the argument keywords.
  * Keyword matching is case insensitive.
@@ -59,7 +58,6 @@ public class FindCommand extends Command {
         } else {
             model.updateFilteredPersonList(finalPredicate.and(currentPredicate));
         }
-
         model.updateFilteredMeetingList(new MeetingContainPersonPredicate(model.getFilteredPersonList()));
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
