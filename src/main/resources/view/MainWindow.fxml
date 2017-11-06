@@ -34,7 +34,7 @@
                      <Insets />
                   </opaqueInsets>
                   <VBox.margin>
-                     <Insets bottom="5.0" />
+                     <Insets bottom="22.0" />
                   </VBox.margin></StackPane>
               <StackPane fx:id="resultDisplayPlaceholder" maxHeight="133.0" minHeight="133.0" prefHeight="133.0" styleClass="pane-with-border" VBox.vgrow="NEVER">
                   <VBox.margin>
