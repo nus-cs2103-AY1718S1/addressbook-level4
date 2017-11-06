@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= ABC Business Contact - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,16 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W13-B3/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W13-B3`      Since: `Jun 2016`      Licence: `MIT`
+
+Welcome to *ABC*!
+
+*ABC* is a desktop Business Contact Management application, which is primarily a CLI (Command Line Interface)
+application, but also uses a GUI (graphical user interface). It provides a convenient way for users
+to customize their contacts and keep track of appointments. This guide provides information that will
+help both experienced contributors and first-time users contribute to *ABC*.
 
 == Setting up
 
@@ -21,70 +28,66 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 . *JDK `1.8.0_60`* or later
 +
 [NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This app is not compatible with earlier versions of Java 8.
 +
 
 . *IntelliJ* IDE
 +
 [NOTE]
-IntelliJ by default has Gradle and JavaFx plugins installed. +
-Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
+IntelliJ has Gradle and JavaFx plugins installed by default. +
+Do not disable them. If they are disabled, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 
-=== Setting up the project in your computer
+=== Setting up the project in a local computer
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
-. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
+. Fork this repo, and clone the fork to the local computer.
+. Open IntelliJ (if the welcome screen is not displayed, click `File` > `Close Project` to close the existing project dialog first).
+. Set up the correct JDK version for Gradle.
+.. Click `Configure` > `Project Defaults` > `Project Structure`.
+.. Click `New...` and find the directory of the JDK.
+. Click `Import Project`.
+. Locate the `build.gradle` file, select it and click `OK`.
+. Click `Open as Project`.
+. Click `OK` to accept the default settings.
+. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message.
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
-. link:#testing[Run the tests] to ensure they all pass.
+. Run the `seedu.address.MainApp` and try a few commands.
+. link:#testing[Run the tests] to ensure that they all pass.
 
 === Configurations to do before writing code
 
 ==== Configuring the coding style
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with this standard, except for its different import order. To rectify,
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
+. Select `Editor` > `Code Style` > `Java`.
+. Click on the `Imports` tab to set the order.
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements.
+* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
-Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
+Optionally, follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance while writing code.
 
-==== Updating documentation to match your fork
+==== Updating documentation to match the fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If there are plans to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` should be replaced with the URL of the fork.
 
-==== Setting up CI
+==== Setting up Continuous Integration (CI)
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+Set up Travis to perform CI for the fork. See <<UsingTravis#, UsingTravis.adoc>> for information on how to set it up.
 
-Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
+Optionally, set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
 [NOTE]
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+Having both Travis and AppVeyor ensures that the App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
 
 ==== Getting started with coding
 
-When you are ready to start coding,
-
-1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
-2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
+Before starting to code, it is advisable to get a sense of the overall design by reading the link:#architecture[Architecture] section.
 
 == Design
 
@@ -93,34 +96,34 @@ When you are ready to start coding,
 image::Architecture.png[width="600"]
 _Figure 2.1.1 : Architecture Diagram_
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+The *_Architecture Diagram_*(Figure 2.1.1) given above explains the high-level design of the App. Given below is a quick overview of each component.
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* At app launch: Initializing the components in the correct sequence, and connecting them up with each other.
+* At shut down: Shutting down the components and invoking cleanup method where necessary.
 
-link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level:
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+* `EventsCenter` (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
+* `LogsCenter` is used by many classes to write log messages to the App's log file.
 
-The rest of the App consists of four components.
+The rest of the App consists of four components:
 
-* link:#ui-component[*`UI`*] : The UI of the App.
-* link:#logic-component[*`Logic`*] : The command executor.
+* link:#ui-component[*`UI`*] : Takes charge of the UI of the App.
+* link:#logic-component[*`Logic`*] : Executes commands.
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
 
 Each of the four components
 
 * Defines its _API_ in an `interface` with the same name as the Component.
-* Exposes its functionality using a `{Component Name}Manager` class.
+* Exposes its functionality via a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see Figure 2.1.2 for its class diagram) defines it's API in the `Logic.java` interface and exposes its functionality via the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.1.2 : Class Diagram of the Logic Component_
@@ -128,21 +131,21 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 [discrete]
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _Sequence Diagram_(Figure 2.1.3a) below shows how the components interact in a scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 2.1.3a : Sequence Diagram for `delete 1` command (part a)_
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+`Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+The diagram(Figure 2.1.3b) below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 2.1.3b : Sequence Diagram for `delete 1` command (part b)_
 
 [NOTE]
-Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
+The event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
 The sections below give more details of each component.
 
@@ -153,14 +156,14 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+As seen in _Figure 2.2.1_, the UI consists of a `MainWindow` that is made up of different parts such as `CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel`. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in their corresponding `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
 
 The `UI` component,
 
 * Executes user commands using the `Logic` component.
-* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
+* Binds itself to some data in the `Model` so that the UI can be updated automatically when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
 === Logic component
@@ -174,15 +177,17 @@ _Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
+As seen in _Figure 2.3.1_,
+
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+_Figure 2.3.3_ below shows the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 2.3.3 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
@@ -191,11 +196,11 @@ _Figure 2.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The `Model`,
+As seen in _Figure2.4.1_, the `Model` component,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bounded to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 === Storage component
@@ -205,7 +210,7 @@ _Figure 2.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-The `Storage` component,
+As seen in _Figure 2.5.1_, the `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
@@ -221,13 +226,15 @@ This section describes some noteworthy details on how certain features are imple
 // tag::undoredo[]
 === Undo/Redo mechanism
 
+==== Mechanism
+
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As can be seen from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -344,6 +351,363 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+// tag::restoreandbackup[]
+=== Backup / Restoring Backup
+
+==== Mechanism
+
+The backing up of ABC is done by `BackupCommand` and the restoring of data from a backup file is done by `RestoreBackupCommand`.
+`BackupCommand` inherits from `Command` as it does not support the undoing and redoing of user actions, whereas `RestoreBackupCommand` inherits from `UndoableCommand`.
+These commands require access to `Storage` from `Logic` and the way to accomplish this is to post an event to `EventsCenter`. `Subscribers` in `StorageManager` will handle these events and respond correspondingly.
+The following shows a sequence diagram of how the `BackupCommand` is carried out.
+
+image::BackupCommandSequenceDiagram.png[width="800"]
+
+[NOTE]
+`RestoreBackupCommand` shares a similar sequence diagram in terms of logic.
+
+The `BackupCommand` is executed when the commands `backup` or `b` is entered. The data that is in `model` or the active address book is first passed as a parameter to `BackupDataEvent`. The event will be handled by `StorageManager` and is saved into the default file path "data/addressbook-backup.xml".
+The following is the implementation of `BackupCommand`:
+[source, java]
+----
+public class BackupCommand extends Command {
+    //... variables, constructor, other methods...
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        // reading data from model
+        ReadOnlyAddressBook backupAddressBookData = model.getAddressBook();
+
+        // posting event to backup data
+        EventsCenter.getInstance().post(new BackupDataEvent(backupAddressBookData));
+        return new CommandResult(String.format(MESSAGE_SUCCESS));
+    }
+}
+----
+
+The `RestoreBackupCommand` is executed when the commands `restore` or `rb` is entered. `RestoreBackupDataEvent` is posted and `StorageManager` handles it.
+The data from default file path "data/addressbook-backup.xml" will be retrieved and it will replace the active address book.
+The following is the implementation of `RestoreBackupCommand`:
+[source, java]
+----
+public class RestoreBackupCommand extends Command {
+    //... variables, constructor, other methods...
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        //... other codes and checks...
+
+        RestoreBackupDataEvent event = new RestoreBackupDataEvent();
+
+        // posting event to help with restoring backup data
+        EventsCenter.getInstance().post(event);
+
+        // overwriting the data in active address book
+        ReadOnlyAddressBook backupAddressBookData = event.getAddressBookData();
+        model.resetData(backupAddressBookData);
+        return new CommandResult(String.format(MESSAGE_SUCCESS));
+
+        //... other codes and checks...
+    }
+}
+----
+
+If the backup file does not exist in the default file path, an error message will be shown to the user.
+This check is done before `RestoreBackupEvent` is posted. Once again, this requires `Logic` to access `Storage`.
+Therefore, a `BackupFilePresentEvent` will be posted and the `Subscriber` in `StorageManager` would handle this event to check if the backup file exist.
+
+[NOTE]
+A backup of the data is automatically created when *ABC* is closed.
+
+==== Design Considerations
+
+**Aspect:** Accessing `Storage` from `Logic` +
+**Alternative 1 (current choice):** Make use of `EventBus` to post events and have `StorageManager` handle the backing up or retrieval of data +
+**Pros:** Follows the architecture closely without introducing dependencies between components. +
+**Cons:** New `Event` classes have to be created every time a command requires access to data in the storage.  +
+**Alternative 2:** Allow `Logic` to access `Storage` and its functions +
+**Pros:** Easier implementation for current and future functions or commands related to `Storage`. +
+**Cons:** Increases coupling between the components. +
+// end::restoreandbackup[]
+
+// tag::addremovetag[]
+=== Adding/Removing a tag
+
+==== Mechanism
+
+Adding or removing a tag is facilitated by `AddTagCommand` and `DeleteTagCommand`, which are subclasses of `UndoableCommand`. These commands work by changing the value of the `Tag` objects associated with the contact.
+
+These commands take in an integer and a string as arguments. The command is first parsed in `AddressBookParser` to identify it as the appropriate command. It will then be parsed by `AddTagCommandParser` or `DeleteTagCommandParser`, to parse the index, which was the integer argument, and the `Tag`, which was represented by the string argument. Invalid indexes and tags will be handled by throwing an exception. This is how `AddTagCommandParser` is implemented:
+[source, java]
+----
+public class AddTagCommandParser implements Parser<AddTagCommand> {
+    public AddTagCommand parse(String args) throws ParseException {
+        try {
+            // ... parse `Index` and `Tag` and pass it to `AddTagCommand` ...
+        } catch (IllegalValueException ive) {
+            // ... throw an exception ...
+        }
+    }
+}
+----
+
+To update the `Tag` objects associated with a `Person`, the set of `Tag` objects of that `Person` is copied to a new set. The new data is then modified, then copied into a newly created `Person` instance. This is implemented as follows:
+[source, java]
+----
+public class AddTagCommand extends UndoableCommand {
+    // ... variables, constructor, other methods ...
+    private final Tag newTag;
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        // ... fetch personToEdit ...
+
+        Set<Tag> oldTags = new HashSet<Tag>(personToEdit.getTags());
+        // ... check if tag is duplicated ...
+        Person editedPerson = new Person(personToEdit);
+        oldTags.add(newTag);
+        editedPerson.setTags(oldTags);
+
+        // ... try to replace personToEdit with editedPerson ...
+    }
+}
+
+----
+The diagram below (Figure 3.3.1) shows how `AddTagCommand` works.
+
+image::AddTagSequenceDiagram.png[]
+_Figure 3.3.1 : Sequence Diagram for AddTag_
+
+`RemoveTagCommand` works in a similar way. Note that `AddTagCommand` will throw an exception if the `Tag` already exists for the `Person` selected. `DeleteTagCommand` throws an exception if the `Tag` is not found on the `Person`.
+
+==== Design Considerations
+
+**Aspect:** Changing the `Tag` objects of the selected `Person` +
+**Alternative 1 (current choice):** Copy set of `Tag` objects to a newly created set. Modify the newly created set. Then create a copy of the selected `Person` instance and replace its set of `Tag` objects. +
+**Pros:** Ensures that the original value will be unchanged, which is important in the event that updating the `Person` instance fails in a later stage. +
+**Cons:** Additional memory required to create a new `Person` instance. +
+**Alternative 2:** Just edit the `Tag` set directly +
+**Pros:** No need to instantiate new `Person` instance. Easy to implement. +
+**Cons:** Problematic implementation and bad coding practice. Modifying the original values directly can cause problems if updating the `Person` instance fails in a later stage.
+// end::addremovetag[]
+
+// tag::filter[]
+=== Filtering mechanism in find
+
+==== Mechanism
+The list of persons displayed is filtered by a [https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html[Predicate]]
+when the method `updateFilteredPersonList(predicate)` from the `Model` interface is invoked.
+
+The relevant methods in the Model interface are as follows:
+
+[source,java]
+----
+public interface Model {
+
+    ...
+
+    /** Returns the predicate of the current filtered person list */
+    Predicate<? super ReadOnlyPerson> getPersonListPredicate();
+
+    /** Updates the filter of the filtered person list to filter by the given {@code predicate}.*/
+    void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+}
+----
+
+
+When `updateFilteredPersonList(predicate)` is invoked, every `person` in the **AddressBook** is evaluated against the `predicate`. +
+A `person` is added to the displayed list if `predicate.test(person)` is evaluated to be TRUE. +
+All `person` instances that fulfill the conditions specified in `predicate` are filtered to be displayed.
+
+==== Filtering on the existing list
+Note that all `person` instances in the existing list satisfy a Predicate `currentPredicate`. +
+Given a new Predicate `newPredicate`, filtering on the existing list is equivalent to selecting `person` instancesthat satisfy both `currentPredicate` and `newPredicate`. +
+From Figure 3.2.1, it can also be viewed as the intersection of two lists of `person` objects, each satisfying one of the two predicates respectively.
+
+image::venn_diagram.png[height = 200, width = 250]
+_Figure 3.4.1 : Venn Diagram for Filtering_
+
+===== Implementation
+The actual implementation of filtering on the existing list involves three steps. +
+
+.  Invoke `getPersonListPredicate()` provided in the Model interface to get the `currentPredicate`.
+.  Use [https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html#and-java.util.function.Predicate-[Predicate.and()]] to generated the logical AND of the two predicates.
+.  Update the list using the predicate generated in step 2.
+
+For more detail, refer to the sequence diagram(Figure 3.4.2) below.
+
+image::FindCommandSequenceDiagram.png[]
+_Figure 3.4.2 : Sequence Diagram for Filter_
+
+===== Design consideration
+The design for filtering on the existing list applies the [https://en.wikipedia.org/wiki/Open/closed_principle[Open/Close Principle]].
+
+* By providing a new extension of `getPersonListPredicate()` in the `Model` interface, the new feature is enabled. +
+* By making use of the logical AND of two predicates, the list can be filtered without modification of the fundamental filtering mechanism. +
+// end::filter[]
+
+// tag::sync[]
+=== Synchronisation with Google Contacts
+
+==== Mechanism
+Authentication and synchronisation of data with a user's Google Contacts is done via the `sync` command, which is a subclass of `Command`. This command works in conjunction with the Google Client and People API.
+
+Firstly, the command posts an `AuthorizationEvent` event to the EventCenter, which is then handled by a `OAuth` class, which is chiefly responsible for authorization and interaction with a user's Google Contacts. Hence, threading allows for the application to run in the background, while the user can perform other tasks. The user is redirected to login to Google via his default browser through the invoked `authorize` method. A callback is then done to create a `Credential` which is then used to instantiate a `PeopleService` instance. The `PeopleService` is then used to perform CRUD functions on the user's Google Contacts. The following diagram shows the entire sequence.
+
+image::SyncCommandSequenceDiagram.png[width="1000"]
+
+==== Methods
+
+===== SyncCommand
+Below is the implementation of `SyncCommand`, where the `AuthorizationEvent` is sent upon execution, and the command notifies the user that synchronisation has been initiated.
+
+[source,java]
+----
+public class SyncCommand extends Command {
+    //...variables, constructor, other methods
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+
+        try {
+            List<ReadOnlyPerson> personList = model.getFilteredPersonList();
+            AuthorizationEvent event = new AuthorizationEvent(personList);
+            EventsCenter.getInstance().post(event);
+            return new CommandResult(String.format(MESSAGE_SUCCESS));
+        } catch (Exception e) {
+            throw new CommandException(MESSAGE_FAILURE);
+        }
+
+    }
+}
+----
+
+===== AuthorizationEvent Handler
+The `OAuth` class handles the AuthorizationEvent. It first runs the `authorize` method to obtain a Credential, and uses that to create a `PeopleService`. The `exportContacts` method is then invoked to export all contacts to the AddressBook to Google Contacts. Below is the code for the handler.
+
+[source,java]
+----
+public class OAuth {
+    // variables, constructor and other methods
+
+    @Subscribe
+    public static void handleAuthorizationEvent(AuthorizationEvent event) throws Throwable {
+        new Thread (() -> {
+            try {
+                // initialize the transport
+                httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+
+                // initialize the data store factory
+                dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
+
+                // authorization
+                Credential credential = authorize();
+                // set up global People instance
+                client = new PeopleService.Builder(
+                        httpTransport, JSON_FACTORY, credential).setApplicationName(APPLICATION_NAME).build();
+
+                exportContacts(event.getPersonList());
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+        }).start();
+
+
+    }
+----
+
+===== Authorize with Google servers
+Below is the `authorize` method implemented in `OAuth`, which uses the `People API` to get an authorization token, used to create a `PeopleService` to retrieve Google Contacts information. A `clients_secret.json` file is used to provide the required Client ID and Secret for the Google API. A `Credential` is returned from this method, which is then used to create a `PeopleService`.
+
+[source,java]
+----
+public class OAuth {
+    // variables, constructor and other methods
+
+    /** Authorizes the installed application to access user's protected data. */
+    private static Credential authorize() throws Exception {
+        // load client secrets
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
+                new InputStreamReader(OAuth.class.getResourceAsStream("/client_secrets.json")));
+        if (clientSecrets.getDetails().getClientId().startsWith("Enter")
+                || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
+            System.out.println(
+                    "Enter Client ID and Secret from https://code.google.com/apis/console/?api=people "
+                            + "into seedu/address/src/main/resources/client_secrets.json");
+            System.exit(1);
+        }
+
+        // set up authorization code flow
+        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+                httpTransport, JSON_FACTORY, clientSecrets,
+                Collections.singleton(PeopleServiceScopes.CONTACTS)).setDataStoreFactory(dataStoreFactory)
+                .build();
+
+        // authorize
+
+        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+    }
+
+}
+----
+
+===== Export contacts to Google Contacts
+Lastly, AddressBook contacts are then exported to Google Contacts via the `exportContacts` method. A `ReadOnlyPersonList` is obtained from the current AddressBook, and iterated through to add their entries into the user's Google account via the `createContact` method provided by People API. The code is shown below.
+
+[source,java]
+----
+public class OAuth {
+
+    /**Uploads AddressBook contacts to Google Contacts
+     * TODO: Prevent adding of duplicates
+     */
+    private static void exportContacts (List<ReadOnlyPerson> personList) throws IOException {
+        for (ReadOnlyPerson person : personList) {
+            Person contactToCreate = new Person();
+            List<Name> name = new ArrayList<Name>();
+            List<EmailAddress> email = new ArrayList<EmailAddress>();
+            List<Address> address = new ArrayList<Address>();
+            List<PhoneNumber> phone = new ArrayList<PhoneNumber>();
+            name.add(new Name().setGivenName(person.getName().fullName));
+            email.add(new EmailAddress().setValue(person.getEmail().value));
+            address.add(new Address().setFormattedValue(person.getAddress().value));
+            phone.add(new PhoneNumber().setValue(person.getPhone().value));
+
+            contactToCreate.setNames(name)
+                            .setEmailAddresses(email)
+                            .setAddresses(address)
+                            .setPhoneNumbers(phone);
+
+            Person createdContact = client.people().createContact(contactToCreate).execute();
+        }
+    }
+----
+
+==== Design Considerations
+**Aspect:** Google Authorization +
+**Alternative 1 (current choice):** A thread is used +
+**Pros:** Users can use the application and execute other commands asynchronously from the authorization +
+**Cons:** It is thus more difficult to show the progress of the syncCommand
+
+**Alternative 2:** Block the application while waiting for authorization +
+**Pros:** Users will know the progress of the SyncCommand +
+**Cons:** The application will freeze if authorization is done, or done in a manner not coded for by the People API (e.g. exiting the window via the 'X' or 'Close' button
+
+---
+
+**Aspect:** Accessing `OAuth` from `Logic` +
+**Alternative 1 (current choice):** An `Event` and a `Subscriber` is used to communicate between the two different components +
+**Pros:** Maintain low coupling and prevent unnecessary addition of dependencies +
+**Cons:** Handlers have to be created to handle `Events` when they occur +
+
+**Alternative 2:** Create an `OAuth` object in `Logic` +
+**Pros:** No handlers are required to process `Events` +
+**Cons:** Introduce unnecessary dependencies
+// end::sync[]
 
 === Logging
 
@@ -469,251 +833,6 @@ a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
-
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-[TIP]
-Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-[TIP]
-Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
-** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Ui` component
-
-[TIP]
-Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(event)`] to react to this event appropriately.
-** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-[TIP]
-Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
-****
-
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Main:**
-
-. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Tests:**
-
-. Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#bindListeners()`] to add the binding for `remark`.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
-. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
-
-[appendix]
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
@@ -729,12 +848,82 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |use shorter aliases for commands|enter commands quickly and not have to type in the full command
+
+|`* * *` |user |find people by their tags|locate a specific group of persons
+
+|`* * *` |user |have a responsive inbuilt browser with similar response times to external browsers|use the inbuilt browser smoothly
+
+|`* * *` |user |add tags cumulatively|edit tags conveniently
+
+|`* * *` |user |add a person with fewer parameters|add someone I don't know all the details of
+
+|`* * *` |user |edit contact details|modify contacts without having to delete the contact
+
+|`* * *` |user |view in-line help via the help command|view the help without having to navigate the user guide(which is not CLI friendly)
+
+|`* * *` |user |add contacts with multiple phone numbers|have contact entries with multiple phone numbers without the need for multiple entries
+
+|`* * *` |user |revert to a previous version of my AddressBook|restore from a backup if my contact data is accidentally lost
+
+|`* * *` |user |navigate the navigation using only my keyboard (using preset keybindings)|use the application solely with my keyboard, as with CLI-focused apps
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |have Google Contacts integration link:#google-contacts-api[Google Contacts API]| view and modify my contacts on other platforms than my computer
+
+|`* *` |user |have a reminder system tag to names| remember my appointments with other people
+
+|`* *` |user |access a person's Facebook account via in the in-built browser|use Facebook features from the AddressBook
+
+|`* *` |user |find a subset of contacts using specified parameters|filter through my contacts
+
+|`* *` |user |locate a person's address on Google Maps|easily navigate to my contact's location
+
+|`* *` |user |resize the dimensions of the command and output bar|customise the application to the desired layout
+
+|`* *` |user |upload pictures of my contacts|identify my contacts with similar names
+
+|`* *` |user |change the layout and enable/disable certain components e.g. the inbuilt browser|change the layout as desired and customise my AddressBook
+
+|`* *` |user |clear the screen to the default view|reset my AddressBook and start from a clean slate
+
+|`* *` |user |have a plugin manager to download and use plugins I want|only use resources I want to
+
+|`* *` |user |have a theme manager|change the colours to fit my desires
+
+|`* *` |user |modify private information|conveniently modify private information
+
+|`* *` |user |encrypt private information with a passphrase|secure my private information and hide it from others
+
+|`* *` |user |have a Favourites section where popular contacts are shown|access my frequently viewed contacts quickly
+
+|`* *` |user |have a settings manager/config file|customise the application and preferences
+
+|`* *` |user |send an email via the inbuilt browser by clicking on a contact's email|easily and quickly send an email to an existing contact
+
+|`* *` |user |have a Notes section to add notes that attaches to a person|jot down certain events and details
+
+|`* *` |user who is privacy focused |encrypt my contacts|hide and secure my contacts from others
+
+|`* *` |user |tab-complete my commands|quickly complete my commands and do inline searching for contacts
+
+|`* *` |user |add aliases for contacts|label my contacts with a different name
+
+|`* *` |user |use regex for find command|type less and perform a wider variety of searches
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |be able to sort the contacts|look for people easily
+
+|`*` |user |send a message to my contacts in the AddressBook|contact people directly from the application
+
+|`*` |user |use the application on my phone|access contact details directly on my phone
+
+|`*` |user |store/see the relationship between our contacts in a graph|see our mutual friends
+
 |=======================================================================
 
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -767,14 +956,265 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Delete tag
+
+*MSS*
+
+1.  User requests to delete a specific tag by name
+2.  AddressBook deletes the tag from every person in the address book
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The tag does not exist.
++
+[none]
+** 1a1. AddressBook shows an error message.
+Use case ends.
+
+* 1b. The tag is not a valid tag.
++
+[none]
+** 1b1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit contact details
+
+*MSS*
+
+1.  User requests to edit contact
+2.  AddressBook shows a list of persons
+3.  User requests to edit a specific index in the list with required tags on new information
+4.  AddressBook confirms that user wishes to change data
+5.  User confirms the change
+6.  AddressBook changes the information in the field
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The user does not provide fields for new data.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. The user does not change any field.
++
+[none]
+** 3c1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 5a. User inputs no.
++
+Use case ends.
+
+* 5b. User inputs something other than yes or no.
++
+[none]
+** 5b1. AddressBook shows an error message.
++
+Use case resumes at step 4.
+
+[discrete]
+=== Use case: Add tag to contact
+
+*MSS*
+
+1.  User requests to add tag to contact
+2.  AddressBook shows a list of persons
+3.  User requests to add tag to the person at a specific index in the list
+4.  AddressBook changes the information in the field
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The user does not provide a new tag.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. The user provides an invalid tag.
++
+[none]
+** 3c1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3d. The user provides a tag that already exists on the specified contact.
++
+[none]
+** 3d1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Backup data
+
+*MSS*
+
+1.  User requests to backup data
+2.  AddressBook backs up the data to the hard drive
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. AddressBook fails to save the data.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Restore backup
+
+*MSS*
+
+1.  User requests to restore backup
+2.  AddressBook shows a list of backups available
+3.  User selects index of specific backup in the list
+4.  AddressBook confirms that user wishes to restore backup and will lose current data
+5.  User confirms the change
+6.  AddressBook restores to backup specified by user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 5a. User inputs no.
++
+Use case ends.
+
+* 5b. User inputs something other than yes or no.
++
+[none]
+** 5b1. AddressBook shows an error message.
++
+Use case resumes at step 4.
+
+
+[discrete]
+=== Use case: upload pictures
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to upload a picture in a directory for a specific person in the list
+4.  AddressBook saves the picture for the person in the address book
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The specified picture is invalid
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+
+[discrete]
+=== Use case: add remark to a person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add remark to a person in the list
+4.  AddressBook adds remark to the person in the address book
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 {More to be added}
 
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 1000 contacts without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be able to respond to a command within 500ms.
+.  Data should only be accessible to the user himself.
+.  Should be compatible with earlier versions.
+.  Should be able to handle all possible exceptions.
+.  Should adhere to the Java coding standard.
 
 {More to be added}
 
@@ -795,6 +1235,12 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+[[google-contacts-api]]
+Google Contacts API
+
+....
+An API provided by Google for client applications to perform basic CRUD functions on a user's contacts.
+....
 [appendix]
 == Product Survey
 

@@ -3,8 +3,14 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,9 +18,15 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.model.meeting.Meeting;
+import seedu.address.model.meeting.MeetingContainPersonPredicate;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.TagNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -25,6 +37,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<Meeting> filteredMeeting;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -35,8 +48,17 @@ public class ModelManager extends ComponentManager implements Model {
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
+        Set<Meeting> meetingSet = new HashSet<Meeting>();
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        for (ReadOnlyPerson person : this.addressBook.getPersonList()) {
+            for (Meeting meeting : person.getMeetings()) {
+                meeting.setPerson(person);
+                meetingSet.add(meeting);
+            }
+        }
+        this.addressBook.setMeetings(meetingSet);
+        filteredMeeting = new FilteredList<>(this.addressBook.getMeetingList());
     }
 
     public ModelManager() {
@@ -69,6 +91,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
         indicateAddressBookChanged();
     }
 
@@ -81,6 +104,45 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author alexanderleegs
+    @Override
+    public void deleteTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException {
+        ObservableList<ReadOnlyPerson> personList = addressBook.getPersonList();
+        boolean tagFound = false;
+
+        for (int i = 0; i < personList.size(); i++) {
+            ReadOnlyPerson oldPerson = personList.get(i);
+            Set<Tag> oldTags = new HashSet<Tag>(oldPerson.getTags());
+            if (oldTags.contains(tag)) {
+                Person newPerson = new Person(oldPerson);
+                oldTags.remove(tag);
+                newPerson.setTags(oldTags);
+                addressBook.updatePerson(oldPerson, newPerson);
+                tagFound = true;
+            }
+        }
+
+        if (!tagFound) {
+            throw new TagNotFoundException();
+        }
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void sort(String field) {
+        addressBook.sort(field);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void sortMeeting() {
+        addressBook.sortMeeting();
+        updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
+    }
+
+    //@@author
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -92,10 +154,40 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
+    //@@author newalter
+    @Override
+    public Predicate<? super ReadOnlyPerson> getPersonListPredicate() {
+        return filteredPersons.getPredicate();
+    }
+    //@@author
+
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    //=========== Filtered Meeting List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Meeting} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<Meeting> getFilteredMeetingList() {
+        sortMeeting();
+        return FXCollections.unmodifiableObservableList(filteredMeeting);
+    }
+
+    @Override
+    public Predicate<? super Meeting> getMeetingListPredicate() {
+        return filteredMeeting.getPredicate();
+    }
+
+    @Override
+    public void updateFilteredMeetingList(Predicate<Meeting> predicate) {
+        requireNonNull(predicate);
+        filteredMeeting.setPredicate(predicate);
     }
 
     @Override
@@ -115,5 +207,15 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
     }
+
+    //@@author LimYangSheng
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        List<ReadOnlyPerson> personSelected = new ArrayList<>();
+        personSelected.add(event.getNewSelection().person);
+        updateFilteredMeetingList(new MeetingContainPersonPredicate(personSelected));
+    }
+    //@@author
 
 }

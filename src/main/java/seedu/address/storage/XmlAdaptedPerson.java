@@ -8,9 +8,13 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.meeting.Meeting;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Id;
+import seedu.address.model.person.LastUpdated;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Note;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -19,7 +23,7 @@ import seedu.address.model.tag.Tag;
 /**
  * JAXB-friendly version of the Person.
  */
-public class XmlAdaptedPerson {
+public class XmlAdaptedPerson implements XmlAdaptedClass<ReadOnlyPerson> {
 
     @XmlElement(required = true)
     private String name;
@@ -29,9 +33,18 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String note;
+    @XmlElement(required = true)
+    private String id;
+    @XmlElement(required = true)
+    private String lastUpdated;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+
+    @XmlElement
+    private List<XmlAdaptedMeeting> meetings = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -50,9 +63,16 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        note = source.getNote().getValue();
+        id = source.getId().getValue();
+        lastUpdated = source.getLastUpdated().getValue();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
+        }
+        meetings = new ArrayList<>();
+        for (Meeting meeting : source.getMeetings()) {
+            meetings.add(new XmlAdaptedMeeting(meeting));
         }
     }
 
@@ -63,14 +83,26 @@ public class XmlAdaptedPerson {
      */
     public Person toModelType() throws IllegalValueException {
         final List<Tag> personTags = new ArrayList<>();
+        final List<Meeting> personMeetings = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
+        }
+        for (XmlAdaptedMeeting meeting : meetings) {
+            personMeetings.add(meeting.toModelType());
         }
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
+        final Note note = new Note(this.note);
+        final Id id = new Id(this.id);
+        final LastUpdated lastUpdated = new LastUpdated(this.lastUpdated);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        final Set<Meeting> meetings = new HashSet<> (personMeetings);
+        Person person = new Person(name, phone, email, address, note, id, lastUpdated, tags, meetings);
+        for (Meeting meeting : person.getMeetings()) {
+            meeting.setPerson(person);
+        }
+        return person;
     }
 }

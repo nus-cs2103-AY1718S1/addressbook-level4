@@ -8,7 +8,7 @@ import seedu.address.model.tag.Tag;
 /**
  * JAXB-friendly adapted version of the Tag.
  */
-public class XmlAdaptedTag {
+public class XmlAdaptedTag implements XmlAdaptedClass<Tag> {
 
     @XmlValue
     private String tagName;

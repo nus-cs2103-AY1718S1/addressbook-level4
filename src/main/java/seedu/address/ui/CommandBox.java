@@ -4,7 +4,6 @@ import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
@@ -28,13 +27,16 @@ public class CommandBox extends UiPart<Region> {
     private ListElementPointer historySnapshot;
 
     @FXML
-    private TextField commandTextField;
+    private TabCompleteTextField commandTextField;
 
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+        //@@author newalter
+        commandTextField.generateArgumentOptions(logic.getFilteredPersonList());
+        //@@author
         historySnapshot = logic.getHistorySnapshot();
     }
 
@@ -48,13 +50,19 @@ public class CommandBox extends UiPart<Region> {
             // As up and down buttons will alter the position of the caret,
             // consuming it causes the caret's position to remain unchanged
             keyEvent.consume();
-
             navigateToPreviousInput();
             break;
         case DOWN:
             keyEvent.consume();
             navigateToNextInput();
             break;
+        //@@author newalter
+        case TAB:
+            // Auto-complete using the first entry of the drop down menu
+            keyEvent.consume();;
+            commandTextField.completeFirst();
+            break;
+        //@@author
         default:
             // let JavaFx handle the keypress
         }
@@ -69,8 +77,9 @@ public class CommandBox extends UiPart<Region> {
         if (!historySnapshot.hasPrevious()) {
             return;
         }
-
-        replaceText(historySnapshot.previous());
+        //@@author newalter
+        commandTextField.replaceText(historySnapshot.previous());
+        //@@author
     }
 
     /**
@@ -82,17 +91,9 @@ public class CommandBox extends UiPart<Region> {
         if (!historySnapshot.hasNext()) {
             return;
         }
-
-        replaceText(historySnapshot.next());
-    }
-
-    /**
-     * Sets {@code CommandBox}'s text field with {@code text} and
-     * positions the caret to the end of the {@code text}.
-     */
-    private void replaceText(String text) {
-        commandTextField.setText(text);
-        commandTextField.positionCaret(commandTextField.getText().length());
+        //@@author newalter
+        commandTextField.replaceText(historySnapshot.next());
+        //@@author
     }
 
     /**
@@ -101,11 +102,15 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleCommandInputChanged() {
         try {
-            CommandResult commandResult = logic.execute(commandTextField.getText());
+            //@@author newalter
+            String command = commandTextField.getText();
+            CommandResult commandResult = logic.execute(command);
+            commandTextField.updateOptions(command);
+            //@@author
             initHistory();
             historySnapshot.next();
             // process result of the command
-            commandTextField.setText("");
+            commandTextField.replaceText("");
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
 

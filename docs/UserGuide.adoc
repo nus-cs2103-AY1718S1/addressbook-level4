@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= ABC Business Contact - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,24 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W13-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W13-B3`      Since: `Jun 2016`      Licence: `MIT`
+
+== Product Overview
+Product Name: *ABC Business Contact* +
+Version: 1.4 +
+{empty} +
+*ABC* is a free desktop contact management application that helps you manage your large collection of contacts conveniently and keep track of your appointments. You can store contacts as well as other information and retrieve them efficiently with the help of *ABC*. +
+
+*ABC* is available for the `Linux`, `Unix`, `Windows 10`, and `Mac OS X` operating systems.
+
+== About
+
+This User Guide introduces a detailed description of the various features that are available to *ABC*.
+It also contains a summary of all the commands, giving you a quick overview on how to use all the features.
+Being familiar with Command-Line Interface(CLI) will help you with understanding the document, but do not worry if you are not.
+As long as you follow the guide closely, we are sure you can still comprehend the document.
 
 == Quick Start
 
@@ -22,11 +37,12 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `ABC.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your *ABC*.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
+
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -44,86 +60,113 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 *Command Format*
 
+* Command can be substituted with shorthand alias.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Wildcard symbol `\*` and `?` are allowed in parameters for `find` where `\*` matches any non-space string and `?` matches any non-space unit-length symbol.
+* Suggestions would pop up for partial words keyed in. Press kbd:[TAB] to auto-complete using the first suggestion.
 ====
 
 === Viewing help : `help`
 
+====
+Command Name: `help` +
+Shorthand Alias: `hp` +
+Function: Displays the *User Guide* +
 Format: `help`
+====
 
+If you want to view the *User Guide*: +
+
+.  Type in +
+`>> help` +
+image:help.png[] +
+_Figure 4.1.1_
+.  Press kbd:[Enter] and a *User Guide* document would show up.
+
+// tag::add[]
 === Adding a person: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
-
+====
+Command Name: `add` +
+Shorthand Alias: `a` +
+Function: adds a person to *ABC* +
+Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 [TIP]
 A person can have any number of tags (including 0)
+[TIP]
+A person can have any number of meetings (including 0)
+[TIP]
+Parameters can be in any order e.g. `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` are equivalent.
+====
 
-Examples:
+If you want to add a new contact to your *ABC*: +
+
+.  Type in (Figure 4.2.1) +
+`>> add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+image:add1.png[add1, 600] +
+_Figure 4.2.1_
+.  Press kbd:[Enter] and you should see (Figure 4.2.2): +
+image:add2.png[UI, 600] +
+_Figure 4.2.2_
+
+
+Here are some other ways you can add contacts:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Jack Daniels`
+* `a n/John Watson p/83331122 e/johnw@example.com a/John Avenue, block 2, #01-01`
+* `a n/Dave`
+
+If you type in all commands shown above, you should see Figure 4.2.3 +
+image:add3.png[add3, 600] +
+_Figure 4.2.3_
+// end::add[]
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+====
+Command Name: `list` +
+Shorthand Alias: `l` +
+Function: List all contacts in ABC +
 Format: `list`
+====
 
-=== Editing a person : `edit`
+You can view all your contacts by following the steps below:
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+.   Type in (Figure 4.3.1) +
+`>> list` +
+image:list1.png[list1, 600] +
+_Figure 4.3.1(`find` was run)_
+.   Press kbd:[Enter]. You should now see a list of all your contacts (Figure 4.3.2) +
+image:list2.png[list2, 600] +
+_Figure 4.3.2_
 
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
-
-Examples:
-
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
-=== Locating persons by name: `find`
-
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+====
+Command Name: `delete` +
+Shorthand Alias: `d` +
+Function: Deletes the specified person at the specified `INDEX` from your *ABC*. +
+Format: `delete INDEX` +
+====
 
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
+If you want to delete a contact in your *ABC*: +
 
-Examples:
+.  Locate the contact you want to delete and the index of the contact. +
+.  Type in the index of the contact. (Figure 4.4.1) +
+`>> delete 1`.
+image:Delete_1.png[600] +
+_Figure 4.4.1_
+.  Press kbd:[Enter] and you should see that the selected contact has been deleted. (Figure 4.4.2) +
+image:Delete_2.png[600] +
+_Figure 4.4.2_
+
+You can also delete contacts in a filtered list:
 
 * `list` +
 `delete 2` +
@@ -131,17 +174,244 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+* `find t/friends` +
+`d 4` +
+Deletes the 4th person in the results of the `find` command.
+
+=== Editing a person : `edit`
+
+====
+Command Name: `edit` +
+Shorthand Alias: `e` +
+Function: Edits the person at the specified `INDEX`. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]... [m/MEETING]...` +
+[TIP]
+A person can have any number of tags (including 0)
+[TIP]
+A person can have any number of meetings (including 0)
+[TIP]
+Parameters can be in any order e.g. `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` are equivalent.
+[NOTE]
+You must provide at least one of the optional fields.
+====
+
+If you want to change the details of a contact in your *ABC*: +
+
+.  Locate the contact you want to edit and the index of the contact. +
+.  Type in the index of the contact, and the details you wish to replace. (Figure 4.5.1) +
+`>> edit 1 p/91234567 e/johndoe@example.com`.
+image:Edit_1.png[600] +
+_Figure 4.5.1_
+.  Press kbd:[Enter] and you should see that the contact that you selected has been modified. (Figure 4.5.2) +
+image:Edit_2.png[600] +
+_Figure 4.5.2_
+
+[NOTE]
+====
+Existing values will be updated to the input values.
+====
+
+You can also edit contacts in a filtered list:
+
+* `>> find t/friends` +
+`>> edit 2 n/Betsy Crower t/` +
+Edits the name of the 2nd person in the results of the `find` command to be `Betsy Crower`
+and clears all existing tags.
+
+[NOTE]
+====
+You can remove all the person's tags by typing `t/` without specifying any tags after it.
+====
+
+* `>> find Betsy` +
+`>> e 1 t/friend` +
+Edits the tag of the 1st person in the results of the `find` command.
+
+[NOTE]
+====
+When you edit tags, the existing tags of the person will be removed. To add tags cumulatively, use `addtag` instead. +
+====
+
+=== Adding a tag to a person : `addtag`
+
+====
+Command Name: `addtag` +
+Shorthand Alias: `at` +
+Function: Adds a tag to an existing person at the specified `INDEX` in your *ABC*. +
+Format: `addtag INDEX TAG` +
+[NOTE]
+Only one alphanumeric tag can be added at a time. Special characters will not be accepted. e.g !, @, #, ...
+====
+
+If you want to add a single tag to a contact in your *ABC*: +
+
+.  Locate the contact you want to add a tag to and the index of the contact. +
+.  Type in the index of the contact, and the tag you wish to add. (Figure 4.6.1) +
+`>> addtag 1 classmate`.
+image:addtag_1.png[addtag1, 600] +
+_Figure 4.6.1_
+.  Press kbd:[Enter] and you should see that the contact that you selected has been modified. (Figure 4.6.2) +
+image:addtag_2.png[addtag2, 600] +
+_Figure 4.6.2_
+
+[NOTE]
+====
+The tag added must not already exist on the desired contact.
+====
+
+You can also add tags to contacts in a filtered list:
+
+* `>> find t/friends` +
+`>> addtag 2 friends` +
+Adds the `friends` tag to the 2nd person in the results of the `find` command.
+
+* `>> find John` +
+`>> at 1 9pmclass` +
+Adds the `9pmclass` tag to the 1st person in the results of the `find` command.
+
+=== Deleting a tag : `deletetag`
+
+====
+Command Name: `deletetag` +
+Shorthand Alias: `dt` +
+Function: Deletes the specified tag from an existing person at the specified `INDEX` in your *ABC*.
+Can also remove all instances of a tag from your *ABC*. +
+Format: `deletetag INDEX TAG` +
+====
+
+_Coming in v1.3_ +
+If you want to delete a single tag from a contact in your *ABC*: +
+
+.  Locate the contact you want to delete a tag from and the index of the contact. +
+.  Type in the index of the contact, and the tag you wish to delete. (Figure 4.7.1) +
+`>> deletetag 1 classmate`.
+image:deletetag_1.png[600] +
+_Figure 4.7.1_
+.  Press kbd:[Enter] and you should see that the contact that you selected has been modified. (Figure 4.7.2) +
+image:deletetag_2.png[600] +
+_Figure 4.7.2_
+
+You can also delete tags from contacts in a filtered list:
+
+* `>> find t/friends` +
+`>> deletetag 2 friends` +
+Deletes the `friends` tag from the 2nd person in the results of the `find` command.
+
+* `>> find n/John` +
+`>> dt 1 9pmclass` +
+Deletes the `9pmclass` tag from the 1st person in the results of the `find` command.
+
+If you would like to delete all instances of a particular tag from your *ABC*: +
+
+.  Type in `all`, followed by the tag you wish to delete. (Figure 4.7.3) +
+`>> deletetag all friends`.
+image:deletetag_3.png[600] +
+_Figure 4.7.3_
+
+.  Press kbd:[Enter] and you should see that this tag has been deleted from all contacts. (Figure 4.7.4) +
+image:deletetag_4.png[600] +
+_Figure 4.7.4_
+
+=== Locating persons by keywords: `find`
+
+====
+Command Name: `find` +
+Shorthand Alias: `f` +
+Function : Finds persons whose specified fields contain any of the given keywords. +
+Format: `find [n/KEYWORD...] [p/KEYWORD...] [e/KEYWORD...] [a/KEYWORD...] [t/KEYWORD...]` +
+[NOTE] There must be at least one argument.
+====
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching at least one keyword in one field will be returned (i.e. `OR` search). e.g. `find n/Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search is done on the existing list. Successive `find` makes the list smaller and smaller
+****
+
+If you want to find a person named `John Watson`:
+
+.  Type in (Figure 4.8.1) +
+`>> find n/john` +
+image:to be updated[] +
+_Figure 4.8.1_
+.  Press kbd:[Enter] and you should see a list of persons having the name `john`: (Figure 4.8.2) +
+image:to be updated[] +
+_Figure 4.8.2_
+
+Here are some other commands you can do with `find`:
+
+* `find Betsy Tim John` +
+Lists any person having names `Betsy`, `Tim`, or `John`
+* `f Watson` +
+Lists any person having the name `Watson`
+* `find j*` +
+Lists any person whose name starts with `j`
+
+
+=== Sorting contact list: `sort`
+
+====
+Command Name: `sort` +
+Shorthand Alias: `s` +
+Function: Sorts the contact list in alphabetical order of a `FIELD` +
+Format: `sort FIELD`
+[NOTE]
+Only one `FIELD` (`NAME`, `PHONE`, `ADDRESS`, `EMAIL`, `TAG`, `MEETING`) can be used at a time.
+[NOTE]
+For fields with multiple entries (`TAG`, `MEETING`), the order is detemined by using the entry which comes first alphabetically for each contact.
+====
+
+If you would like to sort your contact list:
+
+.  Type in the `FIELD` you would like to sort your contact list by (Figure 4.10.1) +
+`>> sort name`  +
+image:sort_1.png[600] +
+_Figure 4.10.1_
+.  Press `Enter` and your contact list will be sorted (Figure 4.10.2).
+image:sort_2.png[600] +
+_Figure 4.10.2_
+
+Here are some other ways to sort your contact list:
+
+* `sort phone` +
+Sorts the contact list by phone number.
+* `s tag` +
+Sorts the contact list by tag.
+* `sort meeting` +
+Sorts the contact list by meeting time.
+
+
 
 === Selecting a person : `select`
 
-Selects the person identified by the index number used in the last person listing. +
+====
+Command Name: `select` +
+Shorthand Alias: `sl` +
+Function: Select a contact with the specified `INDEX` +
 Format: `select INDEX`
 
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
+[TIP]
+The index refers to the index number shown in the most recent listing.
+[TIP]
+The index *must be a positive integer* `1, 2, 3, ...`
+====
+
+You can select a contact from the displayed list by:
+
+. Typing (Figure 4.11.1) +
+`>>select 1` +
+image:select1.png[select1, 600] +
+
+_Figure 4.10.1_
+. Pressing kbd:[Enter]. Your choice should now be selected (Figure 4.10.2) +
+image:select2.png[select2, 600] +
+_Figure 4.11.2_
+
+Here is another way to select a contact:
+
+* s 1
 
 Examples:
 
@@ -151,102 +421,453 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+* `list` +
+`s 7` +
+Selects the 7th person in the address book.
+
+// tag::note[]
+=== Making a note: `note`
+
+====
+Command Name: `note` +
+Shorthand Alias: `n` +
+Function: Inserts the NOTE for an entry specified by INDEX in the ABC +
+Format: `note INDEX [n/NOTE]`
+
+[NOTE]
+Each contact can only have a maximum of 1 note
+
+[TIP]
+Notes can be blank to delete existing notes, i.e. `note n/`
+====
+
+If you want to add a note for a ABC contact:
+
+.   Locate the index of the contact +
+.   Type in your desired INDEX and NOTE (Figure 4.12.1) +
+`>> note 1 n/This is an important note` +
+image:note1.png[note1, 600] +
+_Figure 4.12.1_
+. Press kbd:[Enter]. Your note should now be displayed as the last row in your contact's details (Figure 4.12.2) +
+image:note2.png[note2, 600, 40] +
+_Figure 4.12.2_
+
+Here are some other ways to change your ABC contact's note:
+
+
+* `note 2 n/` +
+Removes all existing notes from the 2nd person +
+* `n 3 n/This is a note` +
+Changes the 3rd contact's note to "This is a note" +
+* `n 3 n/` +
+Removes all existing notes from the 3rd person
+// end::note[]
+
+=== Creating a backup : `backup`
+
+====
+Command Name: `backup` +
+Shorthand Alias: `b` +
+Function: Creates a backup file to store the data in address book. +
+Format: `backup`
+====
+
+You may want to be safe and backup often when using *ABC*:
+
+. Type in `backup`. (Figure 4.13.1) +
+`>> backup` +
+image:Backup_1.png[600] +
+_Figure 4.13.1_ +
+. Press kbd:[Enter] and you should see a message indicating the successful backup of your data. (Figure 4.13.2) +
+image:Backup_2.png[600] +
+_Figure 4.13.2_ +
+
+[NOTE]
+Your data is automatically backed up every time you close the app.
+
+=== Restoring a backup : `restore`
+
+====
+Command Name: `restore` +
+Shorthand Alias: `rb` +
+Function: Retrieves data from a backup file and store it in *ABC*. +
+Format: `restore`
+====
+
+You encounter an unforeseen circumstance and want to revert to a backup file: +
+
+. Execute the `backup` command to save the current data. (Figure 4.14.1) +
+`>> backup` +
+image:Restore_1.png[600] +
+_Figure 4.14.1_ +
+
+. Enter the `clear` command to simulate a lost of data. (Figure 4.14.2) +
+`>> clear` +
+image:Restore_2.png[600] +
+_Figure 4.14.2_ +
+
+. Type in `restore` command. (Figure 4.14.3) +
+`>> restore` +
+image:Restore_3.png[600] +
+_Figure 4.14.3_ +
+
+. Press kbd:[Enter] and you should see that the backup data is restored. (Figure 4.14.4) +
+image:Restore_4.png[600] +
+_Figure 4.14.4_ +
+
+[NOTE]
+An error message will be shown if you do not already have a backup file in the default file path. (Figure 4.13.5)
+
+image:Restore_5.png[600] +
+_Figure 4.13.5_ +
+
+// tag::sync[]
+=== Logging in to Google Contacts: `login`
+
+====
+Command Name: `login` +
+Shorthand Alias: `sy` +
+Function: Logs in to Google Contacts +
+Format: `login`
+====
+
+If you would like to login to Google Contacts before running `sync`:
+
+.  Type in (Figure 4.14.1) +
+`>> login`  +
+image:login1.png[600] +
+_Figure 4.14.1_
+.   Press kbd:[Enter]. Your default browser should open a login window (Figure 4.15.2) +
+image:login2.png[sync2, 600] +
+_Figure 4.14.2_
+.   Enter your login details and press Next (Figure 4.15.3) +
+image:login3.png[sync3, 600] +
+
+_Figure 4.14.3_
+.   Allow *ABC* to access your Google Contacts information (Figure 4.14.4) +
+image:login4.png[sync4, 600] +
+_Figure 4.14.4_
+
+Here are some other ways to sort your contact list:
+
+* `sort phone` +
+Sorts the contact list by phone number.
+* `s tag` +
+Sorts the contact list by tag.
+* `sort meeting` +
+Sorts the contact list by meeting time.
+
+
+=== Synchronising with Google Contacts : `sync`
+
+====
+Command Name: `sync`
+Shorthand Alias: `sy` +
+Function: Synchronise your contacts with Google Contacts after authentication +
+Format: `sync`
+[NOTE]
+A browser is necessary for logging in to Google
+
+[NOTE]
+You have to run the `login` command before you can run `sync`
+====
+
+You can easily synchronise your *ABC* contacts with Google Contacts through the following steps:
+
+.   Type (Figure 4.15.1) +
+`>> sync` +
+image:sync1.png[sync1, 600] +
+_Figure 4.15.1_ +
+
+.   Your contacts are now synchronised. Figure (4.15.5)
+image:sync5.png[sync5, 600] +
+_Figure 4.15.5_
+// end::sync[]
 
 === Listing entered commands : `history`
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
-
-[NOTE]
 ====
+Command Name: `history` +
+Shorthand Alias: `hx` +
+Function: Lists all the commands that you have entered in reverse chronological order. +
+Format: `history`
+[NOTE]
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+
+If you want to view the list of commands entered: +
+
+.  Type in (Figure 4.16.1) +
+`>> history` +
+image:history.png[] +
+_Figure 4.16.1_
+.  Press kbd:[Enter] and the lists of commands that you entered before would show up.
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+====
+Command Name: `undo` +
+Shorthand Alias: `u` +
+Function: Restore the address book to the state where the previous _undoable_ command was not executed. +
 Format: `undo`
+====
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+_Undoable_ commands: those commands that modify the address book's content. They include `add`, `delete`, `edit`, `note` and `clear`.
 ====
 
-Examples:
+When you `delete` a contact by accident: +
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
+. Remove the first contact. (Figure 4.17.1) +
+`>> delete 1` +
+image:Undo_1.png[600] +
+_Figure 4.17.1_ +
 
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
+. Type in the `undo` command. (Figure 4.17.2) +
+`>> undo` +
+image:Undo_2.png[600] +
+_Figure 4.17.2_ +
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+. Press kbd:[Enter] and you should see that the effects of `delete 1` has been reverted. (Figure 4.17.3) +
+image:Undo_3.png[600] +
+_Figure 4.17.3_ +
+
+The following are more examples to help you better understand the `undo` command:
+
+* Failure to `undo` as there are no undoable commands executed previously.
+. Restart the application.
+. Select the first contact. (Figure 4.17.4) +
+`>> select 1` +
+image:Undo_4.png[600] +
+_Figure 4.17.4_ +
+. List all the contacts. (Figure 4.17.5) +
+`>> list` +
+image:Undo_5.png[600] +
+_Figure 4.17.5_ +
+. Type in `undo` and you will see an error message. (Figure 4.17.6) +
+`>> undo` +
+image:Undo_6.png[600] +
+_Figure 4.17.6_ +
+
+* Attempting to `undo` multiple commands.
+. Delete the first contact. (Figure 4.17.7) +
+`>> delete 1` +
+image:Undo_7.png[600] +
+_Figure 4.17.7_ +
+. Clear out all the contacts. (Figure 4.17.8) +
+`>> clear`
+image:Undo_8.png[600] +
+_Figure 4.17.8_ +
+. Type in the shorthand alias for `undo` (Figure 4.17.9) +
+`>> u` +
+image:Undo_9.png[600] +
+_Figure 4.17.9_ +
+. Press kbd:[Enter] and you should see that the `clear` command is reverted. (Figure 4.17.10)+
+image:Undo_10.png[600] +
+ _Figure 4.17.10_ +
+. Type in `undo` and you should see that the `delete 1` command is reverted as well. (Figure 4.17.11)+
+`>> undo` +
+image:Undo_11.png[600] +
+_Figure 4.17.11_ +
 
 === Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
+====
+Command Name: `redo` +
+Shorthand Alias: `r` +
+Function: Reverts the most recent `undo` command. +
 Format: `redo`
+====
 
-Examples:
+You `delete` a contact and `undo` the `delete` by mistake: +
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+. Type in the command to delete the first contact. (Figure 4.18.1) +
+`>> delete 1` +
+image:Redo_1.png[600] +
+_Figure 4.18.1_ +
+. Press kbd:[Enter] and the contact is removed. (Figure 4.18.2)+
+image:Redo_2.png[600] +
+. Type in `undo` by mistake. (Figure 4.18.3) +
+`>> undo` +
+image:Redo_3.png[600] +
+_Figure 4.18.3_ +
+. Enter the command `redo` to revert the `undo` command. (Figure 4.18.4) +
+`>> redo` +
+image:Redo_4.png[600] +
+_Figure 4.18.4_ +
+. Press kbd:[Enter] and you shoud see that the `undo` command has been reverted and the contact remains deleted. Refer to _Fig_ to see that you have obtained the correct results. (Figure 4.18.5) +
+image:Redo_5.png[600] +
+_Figure 4.18.5_ +
 
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
+The following are more examples to help you better understand the `redo` command.
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+* Failure to `redo` as there are no `undo` commands executed previously:
+. Select a contact to delete. (Figure 4.18.6) +
+`>> delete 1`
+image:Redo_6.png[600] +
+_Figure 4.18.6_ +
+. Type in the `redo` command. (Figure 4.18.7)+
+`>> redo`
+image:Redo_7.png[600] +
+_Figure 4.18.7_ +
+. Press kbd:[Enter] and you should see an error message. (Figure 4.18.8) +
+image:Redo_8.png[600] +
+_Figure 4.18.8_ +
+
+* Attempting to `redo` multiple commands:
+. Select a contact to delete. (Figure 4.18.9) +
+`>> delete 1`
+image:Redo_9.png[600] +
+_Figure 4.18.9_ +
+. Remove all the contacts by `clear` command. (Figure 4.18.10) +
+`>> clear`
+image:Redo_10.png[600] +
+_Figure 4.18.10_ +
+. Type in `undo` to revert the `clear` command. (Figure 4.18.11) +
+`>> undo` +
+image:Redo_11.png[600] +
+_Figure 4.18.11_ +
+. Type in `undo` to revert the `delete 1` command. (Figure 4.18.12) +
+`>> undo` +
+image:Redo_12.png[600] +
+_Figure 4.18.12_ +
+. Type in `redo` to reapply the `delete 1` command. (Figure 4.18.13) +
+`>> redo` +
+image:Redo_13.png[600] +
+_Figure 4.18.13_ +
+. Type in `redo` to reapply the `clear` command. (Figure 4.18.14) +
+`>> redo` +
+image:Redo_14.png[600] +
+_Figure 4.18.14_ +
 // end::undoredo[]
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+
+====
+Command Name: `clear` +
+Shorthand Alias: `c` +
+Function: Clears all existing contacts in the ABC +
 Format: `clear`
+====
+
+You can also clear all ABC contacts. To do so,
+
+.   Type (Figure 4.19.1) +
+`>> clear` +
+image:clear1.png[clear1, 600] +
+_Figure 4.19.1_
+.   Press kbd:[Enter]. Your contacts should now be cleared (Figure 4.19.2) +
+image:clear2.png[clear2, 600] +
+_Figure 4.19.2_
+
+
+=== Resizing the main window : `resize`
+
+====
+Command Name: `resize` +
+Shorthand Alias: `rs` +
+Function: Resizes the main window to the specified width and height in pixels +
+Format: `resize WIDTH HEIGHT`
+[NOTE]
+Restriction on WIDTH and HEIGHT: `WIDTH < = width of the screen display`, `HEIGHT < = height of the screen display`
+[NOTE]
+You *CANNOT* `undo` a `resize` command
+====
+
+If you want to resize your main window to 1280 * 720: +
+
+.  Type in (Figure 4.20.1) +
+`>> resize 1280 720` +
+image:resize.png[] +
+_Figure 4.20.1_
+.  Press kbd:[Enter] and the main window would be resized to 1280 * 720.
 
 === Exiting the program : `exit`
 
-Exits the program. +
+====
+Command Name: `exit` +
+Shorthand Alias: `q` +
+Function: Exits the app. +
 Format: `exit`
+====
+
+If you want to close the app:
+
+. Type in the command. (Figure 4.21.1) +
+`>> exit` +
+image:Exit_1.png[600] +
+_Figure 4.20.1_ +
+. Press kbd:[Enter] and you will see that *ABC* is closed. +
+Do not worry about losing your contacts as they will be saved automatically.
 
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+== Since v1.2
+* Adding and deleting of tags
+* Resize window size
+* Restore to a AddressBook backup
+* Synchronise with Google Contacts
+
+== Since v1.3
+* Add a person without all his/her parameters
+* Confirmation for restoring a backup
+* Wildcard `*` for searching of contacts
+* Meetings
+
+== Coming in v2.0
+
+* Add tags cumulatively
+* Hide private contact details
+* Access a contact's Facebook profile
+* Get direction to a contact's address
+* Upload pictures
+* Clear command to reset application to starting state
+* Theme and plugin manager
+* Encrypt private information
+* Add and view Favourites
+* Email contacts directly in AddressBook
+* Use regex in `find` command
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous *ABC* folder.
 
-== Command Summary
+*Q*: I can't sync my contacts with my Google contacts! +
+*A*: Make sure you have a default browser enabled as attempting to sync your data
+will open up a new window in your default browser.
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+*Q*: I have a question that isn't answered here. How do I get further support? +
+*A*: You can contact us by mailto:alexleegs@gmail.com[email].
+
+== Command Summary/ Cheatsheet
+
+[width="100%",cols="24%,1%, 75%",options="header",]
+|=======================================================================
+|Command | Alias| Format
+|Help |`hp` | `help`
+|Add |`a` | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]... [m/MEETING]...`
+|List |`l` |`list`
+|Delete |`d` | `delete INDEX`
+|Edit |`e` | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]... [m/MEETING]...`
+|Add Tag |`at` |`addtag INDEX TAG`
+|Delete Tag |`dt` |`deletetag TAGNAME`
+|Select |`sl` | `select INDEX
+|Note |`n` | `note INDEX n/NOTE`
+|Backup |`b` | `backup`
+|Restore Backup |`rb` | 'restore'
+|Synchronise with Google Contacts | `sy` | `sync`
+|History |'hx' | `history`
+|Undo | `u`| `undo`
+|Redo | `r`| `redo`
+|Clear |`c` | `clear`
+|Resize |`rs` | `resize WIDTH HEIGHT`
+|Exit |`q` | exit
+|Saving Data|
+|=======================================================================

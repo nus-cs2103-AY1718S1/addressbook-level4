@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.util.Optional;
 
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.storage.BackupDataEvent;
+import seedu.address.commons.events.storage.BackupFilePresentEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.events.storage.RestoreBackupDataEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
@@ -29,10 +32,29 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage {
     @Override
     void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
 
+    @Override
+    void backupAddressBook(ReadOnlyAddressBook addressBook);
+
     /**
      * Saves the current version of the Address Book to the hard disk.
      *   Creates the data file if it is missing.
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
     void handleAddressBookChangedEvent(AddressBookChangedEvent abce);
+
+    /**
+     * Create a backup of the current version of Address Book to the hard disk.
+     * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
+     */
+    void handleBackupDataEvent(BackupDataEvent event);
+
+    /**
+     * Replace the current Address Book with the backup version of Address Book.
+     */
+    void handleRestoreBackupDataEvent(RestoreBackupDataEvent event) throws DataConversionException, IOException;
+
+    /**
+     * Check if there is a backup file in the default file path
+     */
+    void handleBackupFilePresentEvent(BackupFilePresentEvent event);
 }

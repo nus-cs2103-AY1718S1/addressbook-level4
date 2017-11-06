@@ -10,6 +10,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.meeting.Meeting;
+import seedu.address.model.meeting.UniqueMeetingList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -26,6 +28,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueMeetingList meetings;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,6 +40,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        meetings = new UniqueMeetingList();
     }
 
     public AddressBook() {}
@@ -59,6 +63,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    public void setMeetings(Set<Meeting> meetings) {
+        this.meetings.setMeetings(meetings);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -71,7 +79,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
 
         setTags(new HashSet<>(newData.getTagList()));
+        setMeetings(new HashSet<>(newData.getMeetingList()));
         syncMasterTagListWith(persons);
+        syncMasterMeetingListWith(persons);
     }
 
     //// person-level operations
@@ -89,18 +99,21 @@ public class AddressBook implements ReadOnlyAddressBook {
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
+        syncMasterMeetingListWith(newPerson);
         persons.add(newPerson);
     }
 
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
+     * {@code AddressBook}'s meeting list will be updated with the meetings of {@code editedReadOnlyPerson}.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
      *      another existing person in the list.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      *
      * @see #syncMasterTagListWith(Person)
+     * @see #syncMasterMeetingListWith(Person)
      */
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -108,6 +121,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         Person editedPerson = new Person(editedReadOnlyPerson);
         syncMasterTagListWith(editedPerson);
+        syncMasterMeetingListWith(editedPerson);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
@@ -144,6 +158,38 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.forEach(this::syncMasterTagListWith);
     }
 
+    //@@author alexanderleegs
+    /**
+     * Ensures that every meeting in this person:
+     *  - exists in the master list {@link #meetings}
+     *  - points to a Meeting object in the master list
+     */
+    private void syncMasterMeetingListWith(Person person) {
+        final UniqueMeetingList personMeetings = new UniqueMeetingList(person.getMeetings());
+        meetings.mergeFrom(personMeetings);
+
+        // Create map with values = meeting object references in the master list
+        // used for checking person meeting references
+        final Map<Meeting, Meeting> masterMeetingObjects = new HashMap<>();
+        meetings.forEach(meeting -> masterMeetingObjects.put(meeting, meeting));
+
+        // Rebuild the list of person meetings to point to the relevant meetings in the master tag list.
+        final Set<Meeting> correctMeetingReferences = new HashSet<>();
+        personMeetings.forEach(meeting -> correctMeetingReferences.add(masterMeetingObjects.get(meeting)));
+        person.setMeetings(correctMeetingReferences);
+    }
+
+    /**
+     * Ensures that every meeting in these persons:
+     *  - exists in the master list {@link #meetings}
+     *  - points to a Meeting object in the master list
+     *  @see #syncMasterMeetingListWith(Person)
+     */
+    private void syncMasterMeetingListWith(UniquePersonList persons) {
+        persons.forEach(this::syncMasterMeetingListWith);
+    }
+    //@@author
+
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
@@ -156,10 +202,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author alexanderleegs
+    public void sort(String field) {
+        persons.sort(field);
+    }
+
+    //@@author
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    }
+
+    public void sortMeeting() {
+        meetings.sortMeeting();
     }
 
     //// util methods
@@ -180,12 +236,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         return tags.asObservableList();
     }
 
+    //@@author alexanderleegs
+    @Override
+    public ObservableList<Meeting> getMeetingList() {
+        return meetings.asObservableList();
+    }
+
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags)
+                && this.meetings.equalsOrderInsensitive(((AddressBook) other).meetings));
     }
 
     @Override

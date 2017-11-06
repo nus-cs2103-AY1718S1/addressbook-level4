@@ -4,10 +4,14 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.google.OAuth;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -23,7 +27,9 @@ public class LogicManagerTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private Model model = new ModelManager();
-    private Logic logic = new LogicManager(model);
+    private OAuth oauth = OAuth.getInstance();
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
+    private Logic logic = new LogicManager(model, oauth, executor);
 
     @Test
     public void execute_invalidCommandFormat_throwsParseException() {
@@ -93,8 +99,15 @@ public class LogicManagerTest {
      *      - {@code expectedModel}'s address book was saved to the storage file.
      */
     private void assertCommandBehavior(Class<?> expectedException, String inputCommand,
-                                           String expectedMessage, Model expectedModel) {
+                                       String expectedMessage, Model expectedModel) {
+        executeCommand(expectedException, inputCommand, expectedMessage, expectedModel);
+    }
 
+    /**
+     * Executes the command and check for correct exception thrown and correct feedback returned.
+     */
+    private void executeCommand(Class<?> expectedException, String inputCommand,
+                                      String expectedMessage, Model expectedModel) {
         try {
             CommandResult result = logic.execute(inputCommand);
             assertEquals(expectedException, null);
