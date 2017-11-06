@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Meeting;
+import seedu.address.model.ReadOnlyMeeting;
 import seedu.address.model.person.InternalId;
 //@@author liuhang0213
 /**
@@ -37,7 +38,7 @@ public class XmlAdaptedMeeting {
      *
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
-    public XmlAdaptedMeeting(Meeting source) {
+    public XmlAdaptedMeeting(ReadOnlyMeeting source) {
         dateTime = source.getDateTimeStr();
         location = source.getLocation();
         notes = source.getNotes();

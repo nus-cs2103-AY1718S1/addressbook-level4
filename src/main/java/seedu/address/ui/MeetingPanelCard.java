@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import seedu.address.model.Meeting;
+import seedu.address.model.ReadOnlyMeeting;
 
 //@@author fongwz
 /**
@@ -30,7 +31,7 @@ public class MeetingPanelCard extends UiPart<Region> {
     @FXML
     private Label meetingNotesLabel;
 
-    public MeetingPanelCard(Meeting meeting, ArrayList<String> names) {
+    public MeetingPanelCard(ReadOnlyMeeting meeting, ArrayList<String> names) {
         super(FXML);
         meetingDateLabel.textProperty().setValue(meeting.getDate());
         meetingPersonLabel.textProperty().setValue(names.toString());

@@ -25,7 +25,6 @@ import seedu.address.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new AddCommand object
- * Edited by: Sri-vatsa
  */
 public class AddCommandParser implements Parser<AddCommand> {
     private String resetValue = "0";

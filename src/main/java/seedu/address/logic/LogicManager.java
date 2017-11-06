@@ -9,32 +9,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.ChooseCommand;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.DeleteTagCommand;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.HistoryCommand;
-import seedu.address.logic.commands.ListByMostSearchedCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.MapCommand;
-import seedu.address.logic.commands.NextMeetingCommand;
-import seedu.address.logic.commands.PrefCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SearchCommand;
-import seedu.address.logic.commands.SelectCommand;
-import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.*;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Meeting;
 import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyMeeting;
 import seedu.address.model.person.InternalId;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -81,6 +62,7 @@ public class LogicManager extends ComponentManager implements Logic {
     public ObservableList<String> getCommandList() {
         List<String> commandList = Arrays.asList(
                 AddCommand.COMMAND_WORD,
+                AddMeetingCommand.COMMAND_WORD,
                 ClearCommand.COMMAND_WORD,
                 DeleteCommand.COMMAND_WORD,
                 DeleteTagCommand.COMMAND_WORD,
@@ -130,12 +112,12 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public ObservableList<Meeting> getMeetingList() {
+    public ObservableList<ReadOnlyMeeting> getMeetingList() {
         return model.getMeetingList().getMeetingList();
     }
 
     @Override
-    public ArrayList<String> getMeetingNames(Meeting meeting) {
+    public ArrayList<String> getMeetingNames(ReadOnlyMeeting meeting) {
         ArrayList<String> nameList = new ArrayList<>();
         try {
             for (InternalId id : meeting.getListOfPersonsId()) {

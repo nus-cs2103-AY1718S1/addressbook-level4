@@ -58,15 +58,15 @@ public class BrowserPanel extends UiPart<Region> {
      */
     private void loadPersonPage(ReadOnlyPerson person) {
         personSelected = person;
-
+        /*
         String[] name = personSelected.getName().fullName.split(" ");
 
         loadPage(LINKEDIN_SEARCH_URL_PREFIX + LINKEDIN_SEARCH_PEOPLE + LINKEDIN_SEARCH_PARAM_LOCATION
                 + LINKEDIN_SEARCH_PARAM_FIRST_NAME + name[0] + LINKEDIN_SEARCH_PARAM_LAST_NAME + name[1]
-                + LINKEDIN_URL_SUFFIX);
+                + LINKEDIN_URL_SUFFIX);*/
 
-        /*loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                + GOOGLE_SEARCH_URL_SUFFIX);*/
+        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
+                + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
     //@@author martyn-wong
@@ -89,9 +89,9 @@ public class BrowserPanel extends UiPart<Region> {
         if (page == "linkedin") {
             String[] name = personSelected.getName().fullName.split(" ");
 
-            loadPage(LINKEDIN_SEARCH_URL_PREFIX + LINKEDIN_SEARCH_PEOPLE + LINKEDIN_SEARCH_PARAM_LOCATION
+            Platform.runLater(() -> browser.getEngine().load(LINKEDIN_SEARCH_URL_PREFIX + LINKEDIN_SEARCH_PEOPLE + LINKEDIN_SEARCH_PARAM_LOCATION
                     + LINKEDIN_SEARCH_PARAM_FIRST_NAME + name[0] + LINKEDIN_SEARCH_PARAM_LAST_NAME + name[1]
-                    + LINKEDIN_URL_SUFFIX);
+                    + LINKEDIN_URL_SUFFIX));
         }
     }
     //@@author

@@ -5,6 +5,8 @@ import seedu.address.model.Meeting;
 import seedu.address.model.ReadOnlyMeeting;
 import seedu.address.model.UniqueMeetingList;
 
+import java.time.format.DateTimeParseException;
+
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.*;
 //@@author Sri-vatsa
@@ -25,6 +27,7 @@ public class AddMeetingCommand extends UndoableCommand {
             + PREFIX_PERSON + "PERSON 1 "
             + PREFIX_PERSON + "PERSON 2 ...\n"
             + "Example: "
+            + COMMAND_WORD + " "
             + PREFIX_DATE + "20/11/2017 "
             + PREFIX_TIME + "1800 "
             + PREFIX_LOCATION + "UTown Starbucks "
@@ -55,6 +58,7 @@ public class AddMeetingCommand extends UndoableCommand {
         } catch (UniqueMeetingList.DuplicateMeetingException e) {
             throw new CommandException(MESSAGE_DUPLICATE_MEETING);
         }
+
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
 
     }

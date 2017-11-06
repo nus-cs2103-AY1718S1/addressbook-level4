@@ -3,11 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,9 +17,9 @@ import seedu.address.commons.util.CollectionUtil;
  *
  * @see Meeting#equals(Object)
  */
-public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList {
+public class UniqueMeetingList implements Iterable<ReadOnlyMeeting>, ReadOnlyMeetingList {
 
-    private final ObservableList<Meeting> internalList = FXCollections.observableArrayList();
+    private final ObservableList<ReadOnlyMeeting> internalList = FXCollections.observableArrayList();
 
     /**
      * Constructs empty MeetingList.
@@ -50,7 +46,7 @@ public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList
     }
 
     @Override
-    public ObservableList<Meeting> getMeetingList() {
+    public ObservableList<ReadOnlyMeeting> getMeetingList() {
         return internalList;
     }
 
@@ -58,7 +54,7 @@ public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList
      * Returns all meetings in this list as a Set.
      * This set is mutable and change-insulated against the internal list.
      */
-    public Set<Meeting> toSet() {
+    public Set<ReadOnlyMeeting> toSet() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return new HashSet<>(internalList);
     }
@@ -76,7 +72,7 @@ public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList
      * Ensures every meeting in the argument list exists in this object.
      */
     public void mergeFrom(UniqueMeetingList from) {
-        final Set<Meeting> alreadyInside = this.toSet();
+        final Set<ReadOnlyMeeting> alreadyInside = this.toSet();
         from.internalList.stream()
                 .filter(meeting -> !alreadyInside.contains(meeting))
                 .forEach(internalList::add);
@@ -87,7 +83,7 @@ public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList
     /**
      * Returns true if the list contains an equivalent Meeting as the given argument.
      */
-    public boolean contains(Meeting toCheck) {
+    public boolean contains(ReadOnlyMeeting toCheck) {
         requireNonNull(toCheck);
         return internalList.contains(toCheck);
     }
@@ -97,7 +93,7 @@ public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList
      *
      * @throws DuplicateMeetingException if the Meeting to add is a duplicate of an existing Meeting in the list.
      */
-    public void add(Meeting toAdd) throws DuplicateMeetingException {
+    public void add(ReadOnlyMeeting toAdd) throws DuplicateMeetingException {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
             throw new DuplicateMeetingException();
@@ -107,29 +103,47 @@ public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    //@@author Sri-vatsa
     /**
      * Sorts the meeting by date. For retrieving earliest meeting in the list
      */
     public void sortByDate() {
-        Collections.sort(internalList);
+        internalList.sort(new dateTimeComparator());
     }
 
+    /**
+     * Comparator that compares date time to sort meetings
+     */
+    public class dateTimeComparator implements Comparator<ReadOnlyMeeting> {
+        /**
+         * Custom comparator to compare meetings based on chronological order
+         * @param rom1 ReadOnlyMeeting 1
+         * @param rom2 ReadOnlyMeeting 2
+         * @return which meeting comes before the other
+         */
+        @Override
+        public int compare(ReadOnlyMeeting rom1, ReadOnlyMeeting rom2) {
+            return rom1.getDateTimeStr().compareTo(rom2.getDateTimeStr());
+        }
+    }
+
+    //@@liuhang0213
     /**
      * Returns the meeting with earliest date in the internal list
      * Currently not checking if it is happening in the future
      */
     @Override
-    public Meeting getUpcomingMeeting() {
+    public ReadOnlyMeeting getUpcomingMeeting() {
         this.sortByDate();
         return internalList.get(0);
     }
 
-    public ObservableList<Meeting> getInternalList() {
+    public ObservableList<ReadOnlyMeeting> getInternalList() {
         return internalList;
     }
 
     @Override
-    public Iterator<Meeting> iterator() {
+    public Iterator<ReadOnlyMeeting> iterator() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.iterator();
     }
@@ -137,7 +151,7 @@ public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
-    public ObservableList<Meeting> asObservableList() {
+    public ObservableList<ReadOnlyMeeting> asObservableList() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return FXCollections.unmodifiableObservableList(internalList);
     }

@@ -2,18 +2,12 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -89,5 +83,59 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    //@@author Sri-vatsa
+    /**
+     * Parses a {@code Optional<String> location} into an {@code Optional<String>} if {@code location} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseLocation(Optional<String> location) throws IllegalValueException {
+        requireNonNull(location);
+        return location.isPresent() ? Optional.of(location.get()) : Optional.empty();
+    }
+
+    //@@author Sri-vatsa
+    /**
+     * Parses a {@code Optional<String> location} into an {@code Optional<String>} if {@code location} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(date.get()) : Optional.empty();
+    }
+
+    //@@author Sri-vatsa
+    /**
+     * Parses a {@code Optional<String> location} into an {@code Optional<String>} if {@code location} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseTime(Optional<String> time) throws IllegalValueException {
+        requireNonNull(time);
+        return time.isPresent() ? Optional.of(time.get()) : Optional.empty();
+    }
+
+
+    //@@author Sri-vatsa
+    /**
+     * Parses a {@code Optional<String> location} into an {@code Optional<String>} if {@code location} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseNotes(Optional<String> notes) throws IllegalValueException {
+        requireNonNull(notes);
+        return notes.isPresent() ? Optional.of(notes.get()) : Optional.empty();
+    }
+
+    //@@author Sri-vatsa
+    /**
+     * Parses {@code Collection<String> ids} into a {@code Set<>}.
+     */
+    public static ArrayList<InternalId> parseIds(Collection<String> ids) throws IllegalValueException {
+        requireNonNull(ids);
+        final ArrayList<InternalId> idSet = new ArrayList<>();
+        for (String id : ids) {
+            idSet.add(new InternalId(Integer.parseInt(id)));
+        }
+        return idSet;
     }
 }

@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Meeting;
+import seedu.address.model.ReadOnlyMeeting;
 import seedu.address.model.ReadOnlyMeetingList;
 
 //@@author liuhang0213
@@ -40,8 +41,8 @@ public class XmlSerializableMeetingList extends XmlSerializableData implements R
     }
 
     @Override
-    public ObservableList<Meeting> getMeetingList() {
-        final ObservableList<Meeting> meetings = this.meetings.stream().map(m -> {
+    public ObservableList<ReadOnlyMeeting> getMeetingList() {
+        final ObservableList<ReadOnlyMeeting> meetings = this.meetings.stream().map(m -> {
             try {
                 return m.toModelType();
             } catch (IllegalValueException e) {
@@ -58,7 +59,7 @@ public class XmlSerializableMeetingList extends XmlSerializableData implements R
      * @return
      */
     @Override
-    public Meeting getUpcomingMeeting() {
+    public ReadOnlyMeeting getUpcomingMeeting() {
         return null;
     }
 }

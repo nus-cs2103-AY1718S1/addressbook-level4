@@ -8,20 +8,19 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
 import seedu.address.model.person.InternalId;
 //@@author liuhang0213
 /**
  * Represents a Meeting
  * Guarantees: immutable; meeting time is in the future
  */
-public class Meeting implements Comparable<Meeting> {
+public class Meeting implements ReadOnlyMeeting {
 
     public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
     public static final String MESSAGE_INVALID_DATE = "The meeting must be in the future.";
     private LocalDateTime dateTime;
-    private Address location;
+    private String location;
     private String notes;
     private ArrayList<InternalId> listOfPersonsId;
     private Boolean isMeetingInFuture;
@@ -31,7 +30,7 @@ public class Meeting implements Comparable<Meeting> {
      *
      * @throws IllegalValueException if the given meeting time is not in the future
      */
-    public Meeting(LocalDateTime dateTime, Address location, String notes, ArrayList<InternalId> listOfPersonsId) {
+    public Meeting(LocalDateTime dateTime, String location, String notes, ArrayList<InternalId> listOfPersonsId) {
         requireNonNull(dateTime);
         requireNonNull(location);
         requireNonNull(listOfPersonsId);
@@ -50,8 +49,8 @@ public class Meeting implements Comparable<Meeting> {
     /**
      * Creates a copy of the given meeting
      */
-    public Meeting(Meeting source) {
-        this(source.dateTime, source.location, source.notes, source.listOfPersonsId);
+    public Meeting(ReadOnlyMeeting source) {
+        this(source.getDateTime(), source.getLocation(), source.getNotes(), source.getListOfPersonsId());
     }
 
     // Get methods
@@ -63,11 +62,13 @@ public class Meeting implements Comparable<Meeting> {
         return dateTime.format(TIME_FORMATTER);
     }
 
-    public String getDateTime() {
+    public String getDateTimeStr() {
         return dateTime.toString();
     }
 
-    public Address getLocation() {
+    public LocalDateTime getDateTime() {return dateTime;}
+
+    public String getLocation() {
         return location;
     }
 
@@ -102,10 +103,10 @@ public class Meeting implements Comparable<Meeting> {
                 + "Location: " + location + '\n'
                 + "Notes: " + notes;
     }
-
-    //TODO
+    /*
     @Override
     public int compareTo(Meeting other) {
         return dateTime.compareTo(other.dateTime);
     }
+    */
 }

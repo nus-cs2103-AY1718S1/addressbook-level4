@@ -8,6 +8,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Meeting;
+import seedu.address.model.ReadOnlyMeeting;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -34,10 +35,10 @@ public interface Logic {
     List<String> getCommandTemplateList();
 
     /** Returns the list of meetings */
-    ObservableList<Meeting> getMeetingList();
-
+    ObservableList<ReadOnlyMeeting> getMeetingList();
+    //@@author Sri-vatsa
     /** Returns the address book */
-    ArrayList<String> getMeetingNames(Meeting meeting);
+    ArrayList<String> getMeetingNames(ReadOnlyMeeting meeting);
     //@@author
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
