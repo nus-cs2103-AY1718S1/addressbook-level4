@@ -8,11 +8,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
@@ -33,6 +36,8 @@ public class MainWindow extends UiPart<Region> {
 
     private static final String ICON = "/images/lisalogo.png";
     private static final String FXML = "MainWindow.fxml";
+    private static final String COMMANDBOX_TEXTFIELD_ID = "#commandTextField";
+    private static final String SEARCHBOX_TEXTFIELD_ID = "#searchTextField";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 600;
 
@@ -49,6 +54,9 @@ public class MainWindow extends UiPart<Region> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+
+    @FXML
+    private VBox mainWindow;
 
     @FXML
     private StackPane rightPanelPlaceholder;
@@ -73,6 +81,12 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private TextField commandTextField;
+
+    @FXML
+    private TextField searchTextField;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -126,6 +140,15 @@ public class MainWindow extends UiPart<Region> {
          * in CommandBox or ResultDisplay.
          */
         getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode().equals(KeyCode.TAB)) {
+                if (commandTextField.isFocused()) {
+                    searchTextField.requestFocus();
+                }
+                else {
+                    commandTextField.requestFocus();
+                }
+                event.consume();
+            }
             if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
                 menuItem.getOnAction().handle(new ActionEvent());
                 event.consume();
@@ -160,6 +183,8 @@ public class MainWindow extends UiPart<Region> {
 
         SearchBox searchBox = new SearchBox(logic);
         searchBoxPlaceholder.getChildren().add(searchBox.getRoot());
+
+        setTransversableTextFields();
     }
 
     void hide() {
@@ -195,6 +220,11 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.setMinWidth(MIN_WIDTH);
     }
 
+    public void setTransversableTextFields() {
+        commandTextField = (TextField) primaryStage.getScene().lookup(COMMANDBOX_TEXTFIELD_ID);
+        searchTextField = (TextField) primaryStage.getScene().lookup(SEARCHBOX_TEXTFIELD_ID);
+    }
+
     /**
      * Returns the current size and the position of the main Window.
      */
@@ -211,6 +241,7 @@ public class MainWindow extends UiPart<Region> {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
+
 
     void show() {
         primaryStage.show();
