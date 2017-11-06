@@ -43,10 +43,13 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.Prefix;
+import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Gender;
@@ -61,6 +64,8 @@ import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
 public class EditCommandSystemTest extends AddressBookSystemTest {
+
+    AddressBookParser addressBookParser = new AddressBookParser();
 
     @Test
     public void edit() throws Exception {
@@ -82,10 +87,15 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 .withTags(VALID_TAG_HUSBAND).build();
         assertCommandSuccess(command, index, editedPerson);
 
+        //@@author arnollim
         /* Case: undo editing the last person in the list -> last person restored */
+        Command previousCommand = addressBookParser.parseCommand(command);
+        String previousCommandString = previousCommand.toString();
         command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        String expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
+        //String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
+        //@@author
 
         /* Case: redo editing the last person in the list -> last person edited again */
         command = RedoCommand.COMMAND_WORD;

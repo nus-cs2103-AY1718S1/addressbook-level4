@@ -90,8 +90,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: undo adding Amy to the list -> Amy deleted */
         Command previousCommand = addressBookParser.parseCommand(command);
         String previousCommandString = previousCommand.toString();
-        String expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
         command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
         //String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
         //author

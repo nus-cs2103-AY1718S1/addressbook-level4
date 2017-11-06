@@ -18,7 +18,6 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.AddressBookParser;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -31,7 +30,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
 
     @Test
-    public void delete() throws ParseException {
+    public void delete() throws Exception {
         /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
 
         /* Case: delete the first person in the list, command with leading spaces and trailing spaces -> deleted */
@@ -46,14 +45,16 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         Index lastPersonIndex = getLastIndex(modelBeforeDeletingLast);
         assertCommandSuccess(lastPersonIndex);
 
+        //@@author arnollim
         /* Case: undo deleting the last person in the list -> last person restored */
         String lastCommand = DeleteCommand.COMMAND_WORD + " " + lastPersonIndex.getOneBased();
         Command previousCommand = addressBookParser.parseCommand(lastCommand);
         String previousCommandString = previousCommand.toString();
-        expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
         command = UndoCommand.COMMAND_WORD;
+        expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
         //expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
+        //@@author
 
         /* Case: redo deleting the last person in the list -> last person deleted again */
         command = RedoCommand.COMMAND_WORD;
