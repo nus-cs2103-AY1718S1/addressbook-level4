@@ -16,7 +16,6 @@ public class UndoCommand extends Command {
     public static final String COMMAND_WORD = "undo";
     public static final String MESSAGE_SUCCESS = "Undo success!";
     public static final String MESSAGE_SUCCESS_FULL = "Undo success!\nUndone Command: %1$s";
-    public static String MESSAGE_OUTPUT = "";//To be completed before output
     public static final String MESSAGE_FAILURE = "No more commands to undo!";
 
     @Override
@@ -26,17 +25,22 @@ public class UndoCommand extends Command {
         if (!undoRedoStack.canUndo()) {
             throw new CommandException(MESSAGE_FAILURE);
         }
-        MESSAGE_OUTPUT = parseCommand(undoRedoStack);
+        String feedbackToUser = parseCommand(undoRedoStack);
         undoRedoStack.popUndo().undo();
         return new CommandResult(MESSAGE_SUCCESS);
-        //return new CommandResult(MESSAGE_OUTPUT);
+        //return new CommandResult(feedbackToUser);
     }
 
-    public String parseCommand(UndoRedoStack undoRedoStack){
+    //@@author arnollim
+    /**
+     * Parses the output command to display the previously undone command
+     */
+    public String parseCommand(UndoRedoStack undoRedoStack) {
         String commandString = undoRedoStack.peekUndo().toString();
         String output = String.format(MESSAGE_SUCCESS_FULL, commandString);
         return output;
     }
+    //@@author
 
     @Override
     public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack) {

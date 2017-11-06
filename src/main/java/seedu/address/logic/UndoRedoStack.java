@@ -45,10 +45,15 @@ public class UndoRedoStack {
         return toUndo;
     }
 
+    //@@author arnollim
+    /**
+     * Peeks and returns the Command at the top of the Stack.
+     */
     public UndoableCommand peekUndo() {
         UndoableCommand toUndo = undoStack.peek();
         return toUndo;
     }
+    //@@author
 
     /**
      * Pops and returns the next {@code UndoableCommand} to be redone in the stack.
