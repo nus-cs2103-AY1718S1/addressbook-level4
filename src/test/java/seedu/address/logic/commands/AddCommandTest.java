@@ -146,7 +146,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void sortByDataFieldFirst(String dataField) {
+        public void sortByDataFieldFirst(String dataField, boolean isFavIgnored) {
             fail("This method should not be called.");
         }
 
