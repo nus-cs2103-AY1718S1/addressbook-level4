@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import java.io.File;
+
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -87,8 +90,17 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void setContactImage() {
-        Image img = new Image("images/maleIcon.png");
+    private void setContactImage(ReadOnlyPerson person) throws MalformedURLException {
+        Image img = null;
+        if ("maleIcon.png".equals(person.getProfPic().getPath())) {
+            img = new Image("images/maleIcon.png");
+        } else {
+            try {
+                img = new Image(new File("images/" + person.getProfPic().getPath()).toURI().toURL().toString());
+            } catch (MalformedURLException e) {
+                throw new MalformedURLException("URL is malformed in setContactImage()");
+            }
+        }
         contactImageCircle.setVisible(true);
         contactImageCircle.setFill(new ImagePattern(img));
         easeIn(contactImageCircle);
@@ -177,7 +189,7 @@ public class BrowserPanel extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
-        setContactImage();
+        setContactImage(event.getNewSelection().person);
         setContactDetails(event.getNewSelection().person);
         setIcons();
         setSchedule(event.getNewSelection().person);
