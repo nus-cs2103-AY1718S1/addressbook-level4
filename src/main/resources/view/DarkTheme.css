@@ -133,7 +133,7 @@
 }
 
 .list-cell:filled:hover {
-    -fx-background-color: #5b6446;
+    -fx-background-color: #356a7d;
 }
 
 .list-cell:filled:selected {
