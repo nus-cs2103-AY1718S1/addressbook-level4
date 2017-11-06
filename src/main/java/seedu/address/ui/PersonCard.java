@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -9,8 +11,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
-
-import com.google.common.eventbus.Subscribe;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -95,21 +95,30 @@ public class PersonCard extends UiPart<Region> {
     }
 
     //@@author qihao27
+    /**
+     * Initialise the favourited contacts with star
+     */
     private void addFavouriteStar(ReadOnlyPerson person) {
         if (person.getFavourite()) {
             favourite.setId("favouriteStar");
         }
     }
 
+    /**
+     * Initialise contacts with todolist(s) count
+     */
     private void addTodoCount(ReadOnlyPerson person) {
         if (person.getTodoItems().size() > 0) {
-            totalTodo.setText((person.getTodoItems().size()+""));
+            totalTodo.setText((person.getTodoItems().size() + ""));
             todo.setId("todoBackground");
         } else {
             totalTodo.setText("");
         }
     }
 
+    /**
+     * Sets the todoCount with {@code totalTodo}.
+     */
     private void setTodoCount(int totalTodo) {
         if (totalTodo > 0) {
             this.totalTodo.setText(totalTodo + "");
