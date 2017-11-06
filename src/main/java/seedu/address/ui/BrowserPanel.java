@@ -59,7 +59,7 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+"));
     }
     /**
-     * Loads call qr 
+     * Loads call qr
      */
     public void loadQrCode(ReadOnlyPerson person) {
         QrGenCallCommand qrGenCallCommand = new QrGenCallCommand();
@@ -68,7 +68,7 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(qrGenCallCommand.qrCall(person.getPhone().toString()));
     }
     /**
-     * Loads sms qr 
+     * Loads sms qr
      */
     public void loadSmsQrCode(ReadOnlyPerson person) {
         QrGenSmsCommand qrGenSmsCommand = new QrGenSmsCommand();
@@ -77,7 +77,7 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(qrGenSmsCommand.qrSms(person.getPhone().toString(), person.getName().fullName));
     }
     /**
-     * Loads save qr 
+     * Loads save qr
      */
     public void loadSaveQrCode(ReadOnlyPerson person) {
         QrGenSaveContactCommand qrGenSaveContactCommand = new QrGenSaveContactCommand();
