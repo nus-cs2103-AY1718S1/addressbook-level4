@@ -29,7 +29,6 @@ public class AppointmentList {
      */
     public AppointmentList(List<Appointment> appointments) {
         requireAllNonNull(appointments);
-        requireAllSorted(appointments);
         internalList.addAll(appointments);
     }
 

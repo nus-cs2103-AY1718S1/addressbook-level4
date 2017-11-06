@@ -43,40 +43,12 @@ public class CalendarWindow extends UiPart<Region> {
 
         calendarView = new CalendarView();
         calendarView.setRequestedTime(LocalTime.now());
+        calendarView.setToday(LocalDate.now());
+        calendarView.setTime(LocalTime.now());
         updateCalendar();
-        startUpdateTimeThread();
         setKeyBindings();
         disableViews();
         registerAsAnEventHandler(this);
-    }
-
-    /**
-     * Runs in the background to keep the calendar updated to current time
-     */
-    private void startUpdateTimeThread() {
-        Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
-            @Override
-            public void run() {
-                while (true) {
-                    Platform.runLater(() -> {
-                        calendarView.setToday(LocalDate.now());
-                        calendarView.setTime(LocalTime.now());
-                    });
-
-                    try {
-                        // update every 1 minute
-                        sleep(60000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-        };
-
-        updateTimeThread.setPriority(Thread.MIN_PRIORITY);
-        updateTimeThread.setDaemon(true);
-        updateTimeThread.start();
     }
 
     /**
@@ -126,14 +98,18 @@ public class CalendarWindow extends UiPart<Region> {
     @Subscribe
     private void handleNewAppointmentEvent(NewAppointmentEvent event) {
         personList = event.data.getPersonList();
-        updateCalendar();
+        Platform.runLater(
+                this::updateCalendar
+        );
+
     }
 
     /**
      * Creates a new a calendar with the update information
      */
     private void updateCalendar() {
-
+        calendarView.setToday(LocalDate.now());
+        calendarView.setTime(LocalTime.now());
         calendarView.getCalendarSources().clear();
         CalendarSource calendarSource = new CalendarSource("Appointments");
         int styleNum = 0;
