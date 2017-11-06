@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +22,8 @@ public class FindCommandParserTest {
 
     @Test
     public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "     ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
 
     @Test
@@ -36,9 +36,11 @@ public class FindCommandParserTest {
         FindCommand expectedFindCommand =
                 new FindCommand(new PersonContainsKeywordsPredicate(expectedFindCmdMap));
         // leading whitespaces is not part of user input, but to accommodate for tokenizer
-        assertParseSuccess(parser, " n/Alice Bob r/friends family e/@gmail.com @hotmail.com", expectedFindCommand);
+        assertParseSuccess(parser, " n/Alice Bob r/friends family e/@gmail.com @hotmail.com",
+                expectedFindCommand);
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, "  n/ \n Alice \n \t Bob  \t  r/ \n friends \t family   \t e/ @gmail.com \n @hotmail.com",
+        assertParseSuccess(parser,
+                "  n/ \n Alice \n \t Bob  \t  r/ \n friends \t family   \t e/ @gmail.com \n @hotmail.com",
                 expectedFindCommand);
     }
 
