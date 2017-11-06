@@ -1,5 +1,5 @@
 # caoliangnus
-###### \java\seedu\address\commons\events\ui\ColorKeywordEvent.java
+###### /java/seedu/address/commons/events/ui/ColorKeywordEvent.java
 ``` java
 /**
  * Indicates a request to enable highlighting the command keywords in the application
@@ -18,7 +18,7 @@ public class ColorKeywordEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ColorKeywordCommand.java
+###### /java/seedu/address/logic/commands/ColorKeywordCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -68,7 +68,7 @@ public class ColorKeywordCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ColorKeywordCommandParser.java
+###### /java/seedu/address/logic/parser/ColorKeywordCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -105,7 +105,7 @@ public class ColorKeywordCommandParser implements Parser<ColorKeywordCommand> {
     }
 }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
 /**
  * Wraps all data at the address-book level
@@ -151,7 +151,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
 ```
-###### \java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
 /**
  * The API of the Model component.
@@ -168,7 +168,7 @@ public interface Model {
     Predicate<Remark> PREDICATE_SHOW_ALL_REMARKS = unused -> true;
 
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
 /**
  * Represents the in-memory model of the address book data.
@@ -210,7 +210,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
 ```
-###### \java\seedu\address\model\module\ClassType.java
+###### /java/seedu/address/model/module/ClassType.java
 ``` java
 /**
  * Represents a Lesson's class type in the application.
@@ -268,7 +268,7 @@ public class ClassType {
     }
 }
 ```
-###### \java\seedu\address\model\module\Code.java
+###### /java/seedu/address/model/module/Code.java
 ``` java
 /**
  * Represents a Module code in the application.
@@ -326,7 +326,7 @@ public class Code {
 
 }
 ```
-###### \java\seedu\address\model\module\Group.java
+###### /java/seedu/address/model/module/Group.java
 ``` java
 /**
  * Represents a Lesson's group number in the application.
@@ -378,7 +378,7 @@ public class Group {
     }
 }
 ```
-###### \java\seedu\address\model\module\Lesson.java
+###### /java/seedu/address/model/module/Lesson.java
 ``` java
 /**
  * Represents a Lesson in the address book.
@@ -547,7 +547,7 @@ public class Lesson implements ReadOnlyLesson {
     }
 }
 ```
-###### \java\seedu\address\model\module\Location.java
+###### /java/seedu/address/model/module/Location.java
 ``` java
 /**
  * Represents a Lesson's location in the application.
@@ -611,7 +611,7 @@ public class Location {
 
 }
 ```
-###### \java\seedu\address\model\module\ReadOnlyLesson.java
+###### /java/seedu/address/model/module/ReadOnlyLesson.java
 ``` java
 /**
  * A read-only immutable interface for a Lesson in the application.
@@ -671,7 +671,7 @@ public interface ReadOnlyLesson {
 
 }
 ```
-###### \java\seedu\address\model\module\TimeSlot.java
+###### /java/seedu/address/model/module/TimeSlot.java
 ``` java
 /**
  * Represents a Lesson time slot in the application.
@@ -788,7 +788,7 @@ public class TimeSlot {
     }
 }
 ```
-###### \java\seedu\address\model\module\UniqueLessonList.java
+###### /java/seedu/address/model/module/UniqueLessonList.java
 ``` java
 /**
  * A list of lessons that enforces uniqueness between its elements and does not allow nulls.
@@ -874,7 +874,7 @@ public class UniqueLessonList implements Iterable<Lesson> {
     }
 
 ```
-###### \java\seedu\address\model\ReadOnlyAddressBook.java
+###### /java/seedu/address/model/ReadOnlyAddressBook.java
 ``` java
 /**
  * Unmodifiable view of an address book
@@ -894,7 +894,7 @@ public interface ReadOnlyAddressBook {
     ObservableList<Lecturer> getLecturerList();
 
 ```
-###### \java\seedu\address\model\util\SampleDataUtil.java
+###### /java/seedu/address/model/util/SampleDataUtil.java
 ``` java
 import java.util.HashSet;
 import java.util.Set;
@@ -963,7 +963,7 @@ public class SampleDataUtil {
 
 }
 ```
-###### \java\seedu\address\storage\XmlAdaptedLecturer.java
+###### /java/seedu/address/storage/XmlAdaptedLecturer.java
 ``` java
 /**
  * Stores lecturer data in an XML file
@@ -999,7 +999,7 @@ public class XmlAdaptedLecturer {
 
 }
 ```
-###### \java\seedu\address\storage\XmlAdaptedLesson.java
+###### /java/seedu/address/storage/XmlAdaptedLesson.java
 ``` java
 /**
  * Stores lesson data in an XML file
@@ -1073,7 +1073,7 @@ public class XmlAdaptedLesson {
     }
 }
 ```
-###### \java\seedu\address\ui\CombinePanel.java
+###### /java/seedu/address/ui/CombinePanel.java
 ``` java
 package seedu.address.ui;
 
@@ -1377,7 +1377,7 @@ public class CombinePanel extends UiPart<Region> {
 
     /***************** Sticky Note *****************/
 ```
-###### \java\seedu\address\ui\CombinePanel.java
+###### /java/seedu/address/ui/CombinePanel.java
 ``` java
     /**
      * This method will initialize StickyNote screen
@@ -1418,7 +1418,7 @@ public class CombinePanel extends UiPart<Region> {
     }
 
 ```
-###### \java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
     /**
      * This method create a list of prefix used in the command
@@ -1435,7 +1435,7 @@ public class CombinePanel extends UiPart<Region> {
     }
 
 ```
-###### \java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
     /**
      * Handles the key released event, {@code keyEvent}.
@@ -1560,7 +1560,7 @@ public class CombinePanel extends UiPart<Region> {
     }
 
 ```
-###### \java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
     /**
      * Configure command keyword when appeared on Command Box
@@ -1671,7 +1671,7 @@ public class CombinePanel extends UiPart<Region> {
     }
 
 ```
-###### \java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
     @Subscribe
     private void handleColorKeywordEvent(ColorKeywordEvent event) {
@@ -1735,7 +1735,7 @@ public class CombinePanel extends UiPart<Region> {
 
 
 ```
-###### \java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
     /**
      * Sets the command box to enable highlighting of command keywords
@@ -1745,7 +1745,7 @@ public class CombinePanel extends UiPart<Region> {
     }
 
 ```
-###### \java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
     public HashMap<String, String> getCommandKeywordColorMap() {
         HashMap<String, String> keywordColorMap = new HashMap<>();
@@ -1770,7 +1770,7 @@ public class CombinePanel extends UiPart<Region> {
 
 }
 ```
-###### \resources\view\CombinePanel.fxml
+###### /resources/view/CombinePanel.fxml
 ``` fxml
 
 <?import javafx.scene.layout.ColumnConstraints?>
