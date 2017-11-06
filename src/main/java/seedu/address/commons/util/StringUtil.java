@@ -87,12 +87,14 @@ public class StringUtil {
      * Returns a ArrayList<String> of dates that contains in {@code sentence} in the format [DD/MM/YYYY]
      *
      * <br>examples:<pre>
-     *              extractDates("20/10/2017") -> returns an ArrayList<String> that contains ["20/10/2017"]
-     *              extractDates("20/10/2017 20/10/2017") -> returns an ArrayList<String> that contains ["20/10/2017", "20/10/2017"]
-     *              extractDates("20/10/2017, 20/10/2018") -> returns an ArrayList<String> that contains ["20/10/2017", "20/10/2018"]
-     *              extractDates("20/10/201720/10/2018") -> returns an ArrayList<String> that contains ["20/10/2017", "20/10/2018"]
-     *              extractDates("20/10/2017 10:15") -> returns an ArrayList<String> that contains ["20/10/2017"]
-     *              extractDates("20/10/17") -> returns an ArrayList<String> that contains []
+     *              extractDates("20/10/2017") -> returns an ArrayList that contains ["20/10/2017"]
+     *              extractDates("20/10/2017 20/10/2017")
+     *                          -> returns an ArrayList that contains ["20/10/2017", "20/10/2017"]
+     *              extractDates("20/10/2017, 20/10/2018")
+     *                          -> returns an ArrayList that contains ["20/10/2017", "20/10/2018"]
+     *              extractDates("20/10/201720/10/2018") -> returns an ArrayList that contains ["20/10/2017", "20/10/2018"]
+     *              extractDates("20/10/2017 10:15") -> returns an ArrayList that contains ["20/10/2017"]
+     *              extractDates("20/10/17") -> returns an ArrayList that contains []
      *              </pre>
      *
      * @param sentence cannot be null
