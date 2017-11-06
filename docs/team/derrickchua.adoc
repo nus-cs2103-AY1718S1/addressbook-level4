@@ -77,7 +77,11 @@ a user from adding him/her.
 
 === Enhancement Proposed: Add different views for Meetings
 
-{To Update}
+A command `view` is added, where the user can specify how he wants to view his meetings, i.e. by week, month or year
+
+==== Justification
+
+Users should be able to categorise their contacts by period, i.e. week, month or year
 
 === Other contributions
 
