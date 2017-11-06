@@ -30,36 +30,39 @@ public class AddMultipleCommandSystemTest extends AddressBookSystemTest {
         Model model = getModel();
 
         /* Case: add from a file that contains duplicated persons --> rejected */
-        final String DUPLICATE_PERSONS_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/duplicatePersons.txt";
-        String command = AddMultipleCommand.COMMAND_WORD + " " + DUPLICATE_PERSONS_FILEPATH;
+        final String duplicatePersonsFilepath = "./src/test/data/AddMultipleCommandSystemTest/duplicatePersons.txt";
+        String command = AddMultipleCommand.COMMAND_WORD + " " + duplicatePersonsFilepath;
         String expectedResultMessage = AddMultipleCommand.MESSAGE_DUPLICATE_PERSON;
         assertCommandFailure(command, expectedResultMessage);
 
         /* Case: add from a file that contains missing field name */
-        final String MISSING_FIELD_NAME_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/missingPrefix_name.txt";
-        command = AddMultipleCommand.COMMAND_WORD + " " + MISSING_FIELD_NAME_FILEPATH;
+        final String missingFieldNameFilepath = "./src/test/data/AddMultipleCommandSystemTest/missingPrefix_name.txt";
+        command = AddMultipleCommand.COMMAND_WORD + " " + missingFieldNameFilepath;
         expectedResultMessage = String.format(MESSAGE_INVALID_PERSON_FORMAT, AddMultipleCommand.MESSAGE_PERSON_FORMAT);
         assertCommandFailure(command, expectedResultMessage);
 
         /* Case: add from a file that does not exist in the data folder --> rejected */
-        String NOT_EXISTS_FILE = "doesNotExist.txt";
-        command = AddMultipleCommand.COMMAND_WORD + "  " + NOT_EXISTS_FILE;
-        expectedResultMessage = String.format(AddMultipleCommand.MESSAGE_INVALID_FILE, NOT_EXISTS_FILE);
+        String notExistsFile = "doesNotExist.txt";
+        command = AddMultipleCommand.COMMAND_WORD + "  " + notExistsFile;
+        expectedResultMessage = String.format(AddMultipleCommand.MESSAGE_INVALID_FILE, notExistsFile);
         assertCommandFailure(command, expectedResultMessage);
 
-       /* Case add from a file containing valid persons --> added */
-        String VALID_PERSONS_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/validPersons_missingOptionalFields.txt";
+        /* Case add from a file containing valid persons --> added */
+        String validPersonsFilepath =
+                "./src/test/data/AddMultipleCommandSystemTest/validPersons_missingOptionalFields.txt";
         ArrayList<ReadOnlyPerson> personList = new ArrayList<>();
-        ReadOnlyPerson amy = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+        ReadOnlyPerson amy = new PersonBuilder().withName(VALID_NAME_AMY)
+                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withTags().build();
-        ReadOnlyPerson bob = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
+        ReadOnlyPerson bob = new PersonBuilder().withName(VALID_NAME_BOB)
+                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
                 .withAddress(VALID_ADDRESS_BOB).withTags().build();
         personList.add(amy);
         personList.add(bob);
-        command = AddMultipleCommand.COMMAND_WORD + " " + VALID_PERSONS_FILEPATH;
+        command = AddMultipleCommand.COMMAND_WORD + " " + validPersonsFilepath;
         assertCommandSuccess(command, personList);
 
-         /* Case: undo adding persons to the list -> persons deleted */
+        /* Case: undo adding persons to the list -> persons deleted */
         command = UndoCommand.COMMAND_WORD;
         expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
@@ -78,9 +81,10 @@ public class AddMultipleCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Executes the {@code AddMultipleCommand} that adds {@code toAdd} to the model and verifies that the command box displays
-     * an empty string, the result display box displays the success message of executing {@code AddMultipleCommand} with the
-     * details of {@code toAdd}, and the model related components equal to the current model added with {@code toAdd}.
+     * Executes the {@code AddMultipleCommand} that adds {@code toAdd} to the model and verifies that the command box
+     * displays an empty string, the result display box displays the success message of executing
+     * {@code AddMultipleCommand} with the details of {@code toAdd}, and the model related components equal to the
+     * current model added with {@code toAdd}.
      * These verifications are done by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the command box has the default style class, the status bar's sync status changes,
@@ -109,10 +113,12 @@ public class AddMultipleCommandSystemTest extends AddressBookSystemTest {
     //@@author
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(String, ArrayList<ReadOnlyPerson>)} except that the result
-     * display box displays {@code expectedResultMessage} and the model related components equal to
+     * Performs the same verification as {@code assertCommandSuccess(String, ArrayList<ReadOnlyPerson>)} except that the
+     * result display box displays {@code expectedResultMessage} and the model related components equal to
      * {@code expectedModel}.
-     * @see AddMultipleCommandSystemTest#assertCommandSuccess(String, ArrayList<ReadOnlyPerson>)
+     * @param command command
+     * @param expectedModel expected model
+     * @param expectedResultMessage expected message
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);

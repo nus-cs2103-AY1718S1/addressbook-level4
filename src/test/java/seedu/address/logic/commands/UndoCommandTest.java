@@ -21,8 +21,8 @@ import seedu.address.model.UserPrefs;
 import seedu.address.ui.GuiUnitTest;
 
 public class UndoCommandTest extends GuiUnitTest {
-    private static CommandHistory EMPTY_COMMAND_HISTORY;
-    private static UndoRedoStack EMPTY_STACK;
+    private static CommandHistory emptyCommandHistory;
+    private static UndoRedoStack emptyStack;
 
     private Model model;
     private DeleteCommand deleteCommandOne;
@@ -30,14 +30,14 @@ public class UndoCommandTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        EMPTY_COMMAND_HISTORY = new CommandHistory();
-        EMPTY_STACK = new UndoRedoStack();
+        emptyCommandHistory = new CommandHistory();
+        emptyStack = new UndoRedoStack();
 
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
         deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
-        deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK, null);
-        deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK, null);
+        deleteCommandOne.setData(model, emptyCommandHistory, emptyStack, null);
+        deleteCommandTwo.setData(model, emptyCommandHistory, emptyStack, null);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class UndoCommandTest extends GuiUnitTest {
         UndoRedoStack undoRedoStack = prepareStack(
                 Arrays.asList(deleteCommandOne, deleteCommandTwo), Collections.emptyList());
         UndoCommand undoCommand = new UndoCommand();
-        undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack, null);
+        undoCommand.setData(model, emptyCommandHistory, undoRedoStack, null);
         deleteCommandOne.execute();
         deleteCommandTwo.execute();
 

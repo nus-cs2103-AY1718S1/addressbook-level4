@@ -34,11 +34,12 @@ import seedu.address.ui.GuiUnitTest;
  * Contains integration test (interaction with Model) for {@code MergeCommand}
  */
 public class MergeCommandTest extends GuiUnitTest {
-    private final String TEST_DATA_ERROR_FILE_PATH = "./src/test/data/XmlAddressBookStorageTest/DataConversionError.xml";
-    private final String TEST_NEW_FILE_PATH = "./src/test/data/XmlAddressBookStorageTest/TestNewFile.xml";
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    private final String testDataErrorFilePath =
+            "./src/test/data/XmlAddressBookStorageTest/DataConversionError.xml";
+    private final String testNewFilePath = "./src/test/data/XmlAddressBookStorageTest/TestNewFile.xml";
 
     private Model model = new ModelManager();
     private Email emailManager = new EmailManager();
@@ -72,7 +73,7 @@ public class MergeCommandTest extends GuiUnitTest {
         ModelStubAcceptingMergePath modelStub = new ModelStubAcceptingMergePath();
         Logic logicStub = new LogicManager(modelStub, emailManager);
 
-        String mergeCommand = MergeCommand.COMMAND_WORD + " " + TEST_NEW_FILE_PATH;
+        String mergeCommand = MergeCommand.COMMAND_WORD + " " + testNewFilePath;
         assertCommandSuccess(mergeCommand, MergeCommand.MESSAGE_SUCCESS, logicStub);
     }
 
@@ -84,7 +85,7 @@ public class MergeCommandTest extends GuiUnitTest {
 
     @Test
     public void merge_dataConversionError_failure() {
-        String mergeCommand = MergeCommand.COMMAND_WORD + " " + TEST_DATA_ERROR_FILE_PATH;
+        String mergeCommand = MergeCommand.COMMAND_WORD + " " + testDataErrorFilePath;
         assertCommandFailure(mergeCommand, CommandException.class, MergeCommand.MESSAGE_DATA_CONVERSION_ERROR, logic);
     }
 
@@ -103,10 +104,18 @@ public class MergeCommandTest extends GuiUnitTest {
      *
      * @see #assertCommandBehavior(Class, String, String, Logic)
      */
-    private void assertCommandFailure(String inputCommand, Class<?> expectedException, String expectedMessage, Logic expectedLogic) {
+    private void assertCommandFailure(String inputCommand, Class<?> expectedException, String expectedMessage,
+                                      Logic expectedLogic) {
         assertCommandBehavior(expectedException, inputCommand, expectedMessage, expectedLogic);
     }
 
+    /**
+     * Executes the command, confirms that the exception is thrown and that the result message is correct.
+     * @param expectedException expected exception
+     * @param inputCommand input command
+     * @param expectedMessage expected message
+     * @param expectedLogic expected logic
+     */
     private void assertCommandBehavior(Class<?> expectedException, String inputCommand,
                                        String expectedMessage, Logic expectedLogic) {
 
@@ -183,7 +192,7 @@ public class MergeCommandTest extends GuiUnitTest {
      * A Model stub that always accept the merge path given.
      */
     private class ModelStubAcceptingMergePath extends MergeCommandTest.ModelStub {
-        ObservableList<ReadOnlyPerson> mergeFilePersonList;
+        private ObservableList<ReadOnlyPerson> mergeFilePersonList;
 
         @Override
         public void mergeAddressBook(ObservableList<ReadOnlyPerson> newFilePersonList) {

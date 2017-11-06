@@ -12,7 +12,6 @@ import static seedu.address.testutil.TypicalPersons.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -27,7 +26,6 @@ import seedu.address.model.person.Comment;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.PersonBuilder;
-import seedu.address.testutil.TypicalPersons;
 import seedu.address.ui.GuiUnitTest;
 
 //@@author risashindo7
