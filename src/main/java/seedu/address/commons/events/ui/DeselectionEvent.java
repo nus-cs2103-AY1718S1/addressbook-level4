@@ -5,7 +5,7 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * Represents the current list becoming empty.
  */
-public class EmptyListEvent extends BaseEvent {
+public class DeselectionEvent extends BaseEvent {
 
     @Override
     public String toString() {

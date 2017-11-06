@@ -115,7 +115,7 @@ public class FilterCommandTest {
                                       List<ReadOnlyPerson> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         try {
-            CommandResult commandResult = command.executeUndoableCommand();
+            CommandResult commandResult = command.execute();
             assertEquals(expectedMessage, commandResult.feedbackToUser);
             assertEquals(expectedList, model.getFilteredPersonList());
             assertEquals(expectedAddressBook, model.getAddressBook());

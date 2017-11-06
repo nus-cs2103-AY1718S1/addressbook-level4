@@ -143,6 +143,11 @@ public interface Model {
      */
     void updateSelectedPerson(ReadOnlyPerson person);
 
+    /**
+     * Deselects the currently selected person.
+     */
+    void deselectPerson();
+
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException;
 
     /**

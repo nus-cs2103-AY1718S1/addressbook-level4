@@ -11,7 +11,7 @@ import seedu.address.model.person.PersonContainsTagPredicate;
 /**
  * Filters contacts by tags in masterlist
  */
-public class FilterCommand extends UndoableCommand {
+public class FilterCommand extends Command {
     public static final String COMMAND_WORD = "filter";
     public static final String MESSAGE_FILTER_ACKNOWLEDGEMENT = "Showing all contacts with the tag(s): %1$s\n%2$s ";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": filters the address book by tag(s)\n"
@@ -25,9 +25,10 @@ public class FilterCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
 
+        model.deselectPerson();
         model.updateFilteredPersonList(new PersonContainsTagPredicate(tags));
 
         String allTagKeywords = tags.toString();
