@@ -23,27 +23,33 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 public class ExportCommandTest extends GuiUnitTest {
     private Model model;
+    private String os;
 
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        os = System.getProperty("os.name").toLowerCase();
+
     }
 
-    @Test(expected = CommandException.class)
+    @Test
     public void accessDeniedFolder() throws CommandException {
         //when trying to create parent folder
         ExportCommand command = new ExportCommand(".txt", "C:/Windows/a");
         command.setData(model, null, null, null);
-        assertEquals(command.execute(), new CommandException(MESSAGE_ACCESS_DENIED));
-
+        if (os.indexOf("win") > 0) {
+            assertEquals(command.execute(), new CommandException(MESSAGE_ACCESS_DENIED));
+        }
     }
 
-    @Test(expected = CommandException.class)
+    @Test
     public void accessDeniedFile() throws CommandException {
         //when trying to create file
         ExportCommand command = new ExportCommand(".txt", "C:/Windows/a");
         command.setData(model, null, null, null);
-        assertEquals(command.execute(), new CommandException(MESSAGE_ACCESS_DENIED));
+        if (os.indexOf("win") > 0) {
+            assertEquals(command.execute(), new CommandException(MESSAGE_ACCESS_DENIED));
+        }
     }
 
     @Test

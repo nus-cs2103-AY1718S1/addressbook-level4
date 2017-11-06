@@ -10,8 +10,9 @@ import java.util.List;
 import org.junit.Test;
 
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.ui.GuiUnitTest;
 
-public class NameContainsKeywordsPredicateTest {
+public class NameContainsKeywordsPredicateTest extends GuiUnitTest {
 
     @Test
     public void equals() {
