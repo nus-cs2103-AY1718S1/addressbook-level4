@@ -109,7 +109,6 @@ public class MarkCommandSystemTest extends AddressBookSystemTest {
 
     }
 
-
     /**
      * Executes {@code command} and in addition,<br>
      * 1. Asserts that the command box displays an empty string.<br>

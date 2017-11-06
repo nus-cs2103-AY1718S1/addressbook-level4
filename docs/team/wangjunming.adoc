@@ -45,10 +45,8 @@ It offers a convenient way of managing lessons. You can see all the lessons of o
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=list]
-include::../DeveloperGuide.adoc[tag=view]
-include::../DeveloperGuide.adoc[tag=edit]
-include::../DeveloperGuide.adoc[tag=delete]
+include::../DeveloperGuide.adoc[tag=ListingUnit]
+include::../DeveloperGuide.adoc[tag=list/view]
 
 #End of Extract#
 
@@ -77,8 +75,7 @@ By marking lessons, you can have a marked list. By which as a student, you can c
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=mark]
-include::../DeveloperGuide.adoc[tag=unmark]
+include::../DeveloperGuide.adoc[tag=mark/unmark]
 
 #End of Extract#
 
