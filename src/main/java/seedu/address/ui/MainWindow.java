@@ -19,12 +19,17 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.EmptyListEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.NearbyPersonNotInCurrentListEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.BlacklistCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.OverdueListCommand;
+import seedu.address.logic.commands.WhitelistCommand;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -135,7 +140,7 @@ public class MainWindow extends UiPart<Region> {
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList(), ListCommand.COMMAND_WORD);
         personListPanelPlaceholder.getChildren().clear();
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -177,17 +182,17 @@ public class MainWindow extends UiPart<Region> {
 
         switch(listName) {
 
-        case "blacklist":
-            personListPanel = new PersonListPanel(logic.getFilteredBlacklistedPersonList());
+        case BlacklistCommand.COMMAND_WORD:
+            personListPanel = new PersonListPanel(logic.getFilteredBlacklistedPersonList(), listName);
             break;
-        case "whitelist":
-            personListPanel = new PersonListPanel(logic.getFilteredWhitelistedPersonList());
+        case WhitelistCommand.COMMAND_WORD:
+            personListPanel = new PersonListPanel(logic.getFilteredWhitelistedPersonList(), listName);
             break;
-        case "overduelist":
-            personListPanel = new PersonListPanel(logic.getFilteredOverduePersonList());
+        case OverdueListCommand.COMMAND_WORD:
+            personListPanel = new PersonListPanel(logic.getFilteredOverduePersonList(), listName);
             break;
         default:
-            personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+            personListPanel = new PersonListPanel(logic.getFilteredPersonList(), ListCommand.COMMAND_WORD);
         }
 
         personListPanelPlaceholder.getChildren().clear();
@@ -269,16 +274,27 @@ public class MainWindow extends UiPart<Region> {
     //@@author khooroko
     /**
      * Sets the person panel to display the unfiltered masterlist and raises a {@code JumpToListRequestEvent}.
-     * @param event
      */
     @Subscribe
     private void handleNearbyPersonNotInCurrentListEvent(NearbyPersonNotInCurrentListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         logic.resetFilteredPersonList();
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().removeAll();
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList(), ListCommand.COMMAND_WORD);
+        personListPanelPlaceholder.getChildren().clear();
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
         raise(new JumpToListRequestEvent(Index.fromZeroBased(logic.getFilteredPersonList()
                 .indexOf(event.getNewSelection().person))));
+    }
+
+    /**
+     * Ensures that the {@code InfoPanel} is cleared when the current list is empty (via {@code DeleteCommand} and
+     * {@code ClearCommand}).
+     * @param event
+     */
+    @Subscribe
+    private void handleEmptyListEvent(EmptyListEvent event) {
+        infoPanel = new InfoPanel(logic);
+        infoPanelPlaceholder.getChildren().clear();
+        infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
     }
 }

@@ -2,7 +2,9 @@ package seedu.address.logic.commands;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.EmptyListEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -45,6 +47,10 @@ public class DeleteCommand extends UndoableCommand {
         }
 
         listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+
+        if (listObserver.getCurrentFilteredList().size() == 0) {
+            EventsCenter.getInstance().post(new EmptyListEvent());
+        }
 
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete.getName()));
     }
