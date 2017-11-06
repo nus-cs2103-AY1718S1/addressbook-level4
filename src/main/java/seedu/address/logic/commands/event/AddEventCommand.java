@@ -56,11 +56,12 @@ public class AddEventCommand extends UndoableCommand {
         try {
             Reminder r = new Reminder(toAdd, "Reminder : You have an event!");
             toAdd.addReminder(r);
-            model.addReminder(r);
             model.addEvent(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (DuplicateEventException | DuplicateReminderException e) {
+        } catch (DuplicateEventException e) {
             throw new CommandException(MESSAGE_DUPLICATE_EVENT);
+        } catch (DuplicateReminderException e) {
+            throw new CommandException("HEHE");
         }
     }
 

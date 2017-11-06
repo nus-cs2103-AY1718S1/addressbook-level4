@@ -80,7 +80,6 @@ public class EditEventCommand extends UndoableCommand {
         try {
             Reminder r = new Reminder(editedEvent, "Reminder: You have an event!");
             editedEvent.addReminder(r);
-            model.addReminder(r);
             model.updateEvent(eventToEdit, editedEvent);
         } catch (DuplicateEventException dee) {
             throw new CommandException(MESSAGE_DUPLICATE_EVENT);
