@@ -102,7 +102,8 @@ public class SortCommandTest {
     public void execute_listIsNotFilteredSortsByNameIgnoreFav_sameList() {
         SortCommand sortCommand = prepareCommand(addressField, favIgnored);
         assertCommandSuccess(sortCommand, model,
-                String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, addressField), expectedModel);
+                String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, addressField)
+                        + " ignoring favourites", expectedModel);
     }
 
     /**
