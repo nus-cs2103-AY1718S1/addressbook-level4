@@ -23,6 +23,8 @@ public class TogglePanel extends UiPart<Region> {
     private static final Logger logger = LogsCenter.getLogger(TogglePanel.class);
     private static final String FXML = "TogglePanel.fxml";
 
+    boolean browserIsFront;
+
     @FXML
     private SplitPane toggleSplitPane;
 
@@ -41,6 +43,7 @@ public class TogglePanel extends UiPart<Region> {
         browserPlaceHolder.getChildren().add(browserPanel.getRoot());
         informationBoardPlaceHolder.getChildren().add(informationBoard.getRoot());
         eventListPanelPlaceHolder.getChildren().add(eventListPanel.getRoot());
+        browserIsFront = false;
         registerAsAnEventHandler(this);
     }
 
@@ -60,45 +63,34 @@ public class TogglePanel extends UiPart<Region> {
     * Triggers the toggling mechanism to switch the browserPlaceHolder and the splitPane.
     */
     private void triggerToggle() {
-        if (browserPlaceHolder.isVisible()) {
-            splitPaneToFront();
+        if (browserIsFront) {
             browserToBack();
         } else {
-            splitPaneToBack();
             browserToFront();
         }
     }
 
     /**
-     * Sets the browserPlaceHolder to be visible and in front.
+     * Sets the browserPlaceHolder to be visible and in front
+     * while setting the splitPane to be invisible and at the back.
      */
     private void browserToFront() {
         browserPlaceHolder.setVisible(true);
         browserPlaceHolder.toFront();
+        toggleSplitPane.setVisible(false);
+        toggleSplitPane.toBack();
+        browserIsFront = true;
     }
 
     /**
-     * Sets the browserPlaceHolder to be invisible and at the back.
+     * Sets the browserPlaceHolder to be invisible and at the back
+     * while setting the splitPane to be visible and in front.
      */
     private void browserToBack() {
         browserPlaceHolder.setVisible(false);
         browserPlaceHolder.toBack();
-    }
-
-    /**
-     * Sets the splitPane to be visible and in front.
-    */
-    private void splitPaneToFront() {
         toggleSplitPane.setVisible(true);
         toggleSplitPane.toFront();
+        browserIsFront = false;
     }
-
-    /**
-     * Sets the splitPane to be invisible and at the back.
-     */
-    private void splitPaneToBack() {
-        toggleSplitPane.setVisible(false);
-        toggleSplitPane.toBack();
-    }
-
 }
