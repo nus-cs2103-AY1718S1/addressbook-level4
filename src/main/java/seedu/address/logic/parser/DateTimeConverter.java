@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.IllegalDateException;
 import seedu.address.logic.parser.exceptions.IllegalTimeException;
 

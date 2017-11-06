@@ -85,14 +85,13 @@ public class BrowserPanel extends UiPart<Region> {
      * Loads pages based on choose command selection
      * @param page
      */
-    private void loadOtherPages(String page) {
-        if (page == "linkedin") {
-            String[] name = personSelected.getName().fullName.split(" ");
+    private void loadLinkedIn(String page) {
 
-            Platform.runLater(() -> browser.getEngine().load(LINKEDIN_SEARCH_URL_PREFIX + LINKEDIN_SEARCH_PEOPLE + LINKEDIN_SEARCH_PARAM_LOCATION
-                    + LINKEDIN_SEARCH_PARAM_FIRST_NAME + name[0] + LINKEDIN_SEARCH_PARAM_LAST_NAME + name[1]
-                    + LINKEDIN_URL_SUFFIX));
-        }
+        String[] name = personSelected.getName().fullName.split(" ");
+
+        loadPage(LINKEDIN_SEARCH_URL_PREFIX + LINKEDIN_SEARCH_PEOPLE + LINKEDIN_SEARCH_PARAM_LOCATION
+                + LINKEDIN_SEARCH_PARAM_FIRST_NAME + name[0] + LINKEDIN_SEARCH_PARAM_LAST_NAME + name[1]
+                + LINKEDIN_URL_SUFFIX);
     }
     //@@author
     /**
@@ -119,7 +118,8 @@ public class BrowserPanel extends UiPart<Region> {
     //@@author fongwz
     @Subscribe
     private void handleBrowserPanelSelectionChangedEvent(BrowserPanelSelectionChangedEvent event) {
-        loadOtherPages(event.getBrowserSelection());
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadLinkedIn(event.getBrowserSelection());
     }
 
     //@author martyn-wong
