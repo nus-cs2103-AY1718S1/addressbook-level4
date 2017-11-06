@@ -18,7 +18,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
     public static final String FILE_NAME_VALIDATION_REGEX = "([a-zA-Z0-9_]+)";
     public static final String MESSAGE_FILE_NAME_INVALID = "File name should be an xml file that only contains "
-            + "alphanumeric characters";
+            + "alphanumeric and underscore characters";
 
     /**
      * Parses the given {@code String} of arguments in the context of the ImportCommand
