@@ -1,5 +1,5 @@
 # junming403
-###### \java\seedu\address\logic\commands\AddCommandTest.java
+###### /java/seedu/address/logic/commands/AddCommandTest.java
 ``` java
 public class AddCommandTest {
 
@@ -291,7 +291,7 @@ public class AddCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\DeleteCommandTest.java
+###### /java/seedu/address/logic/commands/DeleteCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -497,7 +497,7 @@ public class DeleteCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\DeleteRemarkCommandTest.java
+###### /java/seedu/address/logic/commands/DeleteRemarkCommandTest.java
 ``` java
 public class DeleteRemarkCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -541,7 +541,7 @@ public class DeleteRemarkCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\EditCommandTest.java
+###### /java/seedu/address/logic/commands/EditCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
@@ -830,7 +830,7 @@ public class EditCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ListCommandTest.java
+###### /java/seedu/address/logic/commands/ListCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
@@ -882,7 +882,7 @@ public class ListCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\MarkCommandTest.java
+###### /java/seedu/address/logic/commands/MarkCommandTest.java
 ``` java
 public class MarkCommandTest {
 
@@ -963,7 +963,7 @@ public class MarkCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\RemarkCommandTest.java
+###### /java/seedu/address/logic/commands/RemarkCommandTest.java
 ``` java
 public class RemarkCommandTest {
 
@@ -1065,7 +1065,7 @@ public class RemarkCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\UnmarkCommandTest.java
+###### /java/seedu/address/logic/commands/UnmarkCommandTest.java
 ``` java
 public class UnmarkCommandTest {
 
@@ -1159,7 +1159,7 @@ public class UnmarkCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ViewCommandTest.java
+###### /java/seedu/address/logic/commands/ViewCommandTest.java
 ``` java
 public class ViewCommandTest {
 
@@ -1225,7 +1225,7 @@ public class ViewCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\parser\EditCommandParserTest.java
+###### /java/seedu/address/logic/parser/EditCommandParserTest.java
 ``` java
 public class EditCommandParserTest {
 
@@ -1450,7 +1450,7 @@ public class EditCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ListCommandParserTest.java
+###### /java/seedu/address/logic/parser/ListCommandParserTest.java
 ``` java
 public class ListCommandParserTest {
 
@@ -1478,7 +1478,7 @@ public class ListCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\MarkCommandParserTest.java
+###### /java/seedu/address/logic/parser/MarkCommandParserTest.java
 ``` java
 public class MarkCommandParserTest {
     private MarkCommandParser parser = new MarkCommandParser();
@@ -1495,7 +1495,7 @@ public class MarkCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\RemarkCommandParserTest.java
+###### /java/seedu/address/logic/parser/RemarkCommandParserTest.java
 ``` java
 public class RemarkCommandParserTest {
     private RemarkCommandParser parser = new RemarkCommandParser();
@@ -1519,7 +1519,7 @@ public class RemarkCommandParserTest {
 
 }
 ```
-###### \java\seedu\address\logic\parser\UnmarkCommandParserTest.java
+###### /java/seedu/address/logic/parser/UnmarkCommandParserTest.java
 ``` java
 public class UnmarkCommandParserTest {
     private UnmarkCommandParser parser = new UnmarkCommandParser();
@@ -1536,7 +1536,7 @@ public class UnmarkCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ViewCommandParserTest.java
+###### /java/seedu/address/logic/parser/ViewCommandParserTest.java
 ``` java
 public class ViewCommandParserTest {
 
@@ -1553,7 +1553,7 @@ public class ViewCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\model\lesson\predicate\FixedCodePredicateTest.java
+###### /java/seedu/address/model/lesson/predicate/FixedCodePredicateTest.java
 ``` java
 public class FixedCodePredicateTest {
     @Test
@@ -1618,7 +1618,7 @@ public class FixedCodePredicateTest {
     }
 }
 ```
-###### \java\seedu\address\model\lesson\predicate\FixedLocationPredicateTest.java
+###### /java/seedu/address/model/lesson/predicate/FixedLocationPredicateTest.java
 ``` java
 public class FixedLocationPredicateTest {
 
@@ -1684,7 +1684,7 @@ public class FixedLocationPredicateTest {
     }
 }
 ```
-###### \java\seedu\address\model\lesson\predicate\SelectedStickyNotePredicateTest.java
+###### /java/seedu/address/model/lesson/predicate/SelectedStickyNotePredicateTest.java
 ``` java
 public class SelectedStickyNotePredicateTest {
 
@@ -1752,7 +1752,7 @@ public class SelectedStickyNotePredicateTest {
 
 }
 ```
-###### \java\seedu\address\model\lesson\predicate\ShowSpecifiedLessonPredicateTest.java
+###### /java/seedu/address/model/lesson/predicate/ShowSpecifiedLessonPredicateTest.java
 ``` java
 public class ShowSpecifiedLessonPredicateTest {
 
@@ -1796,7 +1796,7 @@ public class ShowSpecifiedLessonPredicateTest {
     }
 }
 ```
-###### \java\seedu\address\model\lesson\predicate\UniqueLocationPredicateTest.java
+###### /java/seedu/address/model/lesson/predicate/UniqueLocationPredicateTest.java
 ``` java
 public class UniqueLocationPredicateTest {
 
@@ -1836,7 +1836,7 @@ public class UniqueLocationPredicateTest {
     }
 }
 ```
-###### \java\seedu\address\model\lesson\predicate\UniqueModuleCodePredicateTest.java
+###### /java/seedu/address/model/lesson/predicate/UniqueModuleCodePredicateTest.java
 ``` java
 public class UniqueModuleCodePredicateTest {
 
@@ -1876,7 +1876,7 @@ public class UniqueModuleCodePredicateTest {
     }
 }
 ```
-###### \java\seedu\address\model\lesson\RemarkTest.java
+###### /java/seedu/address/model/lesson/RemarkTest.java
 ``` java
 public class RemarkTest {
 
@@ -1903,7 +1903,7 @@ public class RemarkTest {
 
 }
 ```
-###### \java\seedu\address\model\ListingUnitTest.java
+###### /java/seedu/address/model/ListingUnitTest.java
 ``` java
 public class ListingUnitTest {
 
@@ -1930,7 +1930,7 @@ public class ListingUnitTest {
     }
 }
 ```
-###### \java\seedu\address\model\UniqueRemarkListTest.java
+###### /java/seedu/address/model/UniqueRemarkListTest.java
 ``` java
 public class UniqueRemarkListTest {
     @Rule
@@ -1944,7 +1944,7 @@ public class UniqueRemarkListTest {
     }
 }
 ```
-###### \java\systemtests\AddCommandSystemTest.java
+###### /java/systemtests/AddCommandSystemTest.java
 ``` java
 public class AddCommandSystemTest extends AddressBookSystemTest {
 
@@ -2148,7 +2148,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
     }
 }
 ```
-###### \java\systemtests\DeleteCommandSystemTest.java
+###### /java/systemtests/DeleteCommandSystemTest.java
 ``` java
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
@@ -2430,7 +2430,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
     }
 }
 ```
-###### \java\systemtests\EditCommandSystemTest.java
+###### /java/systemtests/EditCommandSystemTest.java
 ``` java
 public class EditCommandSystemTest extends AddressBookSystemTest {
 
@@ -2806,7 +2806,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
     }
 }
 ```
-###### \java\systemtests\MarkCommandSystemTest.java
+###### /java/systemtests/MarkCommandSystemTest.java
 ``` java
 public class MarkCommandSystemTest extends AddressBookSystemTest {
 
@@ -2940,7 +2940,7 @@ public class MarkCommandSystemTest extends AddressBookSystemTest {
 
 }
 ```
-###### \java\systemtests\RemarkCommandSystemTest.java
+###### /java/systemtests/RemarkCommandSystemTest.java
 ``` java
 public class RemarkCommandSystemTest extends AddressBookSystemTest {
 
