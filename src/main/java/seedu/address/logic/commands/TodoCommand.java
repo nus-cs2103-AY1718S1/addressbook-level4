@@ -183,6 +183,10 @@ public class TodoCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof TodoCommand // instanceof handles nulls
-                && todoItem.equals(((TodoCommand) other).todoItem));
+                && optionPrefix.equals(((TodoCommand) other).optionPrefix)
+                && (personIndex == null || personIndex.equals(((TodoCommand) other).personIndex))
+                && (todoItem == null || todoItem.equals(((TodoCommand) other).todoItem))
+                && (itemIndex == null || itemIndex.equals(((TodoCommand) other).itemIndex))
+            );
     }
 }

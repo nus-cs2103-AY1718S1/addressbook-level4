@@ -33,7 +33,7 @@ public class TimeConvertUtil {
      * @throws DateTimeParseException when timeStr does not match {@code DATE_TIME_FORMATTER}
      */
     public static LocalDateTime convertStringToTime(String timeStr) throws DateTimeParseException {
-        if (timeStr == null) {
+        if (timeStr == null || timeStr.isEmpty()) {
             return null;
         }
         return LocalDateTime.parse(timeStr, DATE_TIME_FORMATTER);

@@ -14,7 +14,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class TodoItem implements Comparable<TodoItem> {
 
     public static final String MESSAGE_TODOITEM_CONSTRAINTS =
-            "The end time should be later than start time.";
+            "The end time should be later than start time. Task cannot be empty.";
 
     public final LocalDateTime start;
     public final LocalDateTime end;
@@ -29,7 +29,7 @@ public class TodoItem implements Comparable<TodoItem> {
     public TodoItem(LocalDateTime start, LocalDateTime end, String task)
             throws IllegalValueException {
         requireNonNull(start, task);
-        if (!isValidTodoItem(start, end)) {
+        if (!isValidTodoItem(start, end, task)) {
             throw new IllegalValueException(MESSAGE_TODOITEM_CONSTRAINTS);
         }
         this.start = start;
@@ -40,7 +40,10 @@ public class TodoItem implements Comparable<TodoItem> {
     /**
      * Checks whether the inputs are valid.
      */
-    public boolean isValidTodoItem(LocalDateTime start, LocalDateTime end) {
+    private boolean isValidTodoItem(LocalDateTime start, LocalDateTime end, String task) {
+        if (task.isEmpty()) {
+            return false;
+        }
         if (end != null && end.compareTo(start) < 0) {
             return false;
         }

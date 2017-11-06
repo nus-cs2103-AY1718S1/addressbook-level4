@@ -246,16 +246,3 @@ public class FavouriteCommandParser implements Parser<FavouriteCommand> {
         this.favourite = favourite;
     }
 ```
-###### \java\seedu\address\ui\PersonCard.java
-``` java
-        name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        highlightName(person);
-```
-###### \java\seedu\address\ui\PersonCard.java
-``` java
-    private void highlightName(ReadOnlyPerson person) {
-        if (person.getFavourite()) {
-            name.setStyle("-fx-text-fill: red");
-        }
-    }
-```

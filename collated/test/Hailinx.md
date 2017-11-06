@@ -219,6 +219,279 @@ public class LockCommandTest {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\SwitchCommandTest.java
+``` java
+package seedu.address.logic.commands;
+
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+public class SwitchCommandTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void test_equals() throws Exception {
+        SwitchCommand firstSwitchCommand = new SwitchCommand("1");
+        SwitchCommand secondSwitchCommand = new SwitchCommand("2");
+
+        Assert.assertTrue(firstSwitchCommand.equals(firstSwitchCommand));
+
+        Assert.assertFalse(firstSwitchCommand.equals(secondSwitchCommand));
+
+        SwitchCommand firstSwitchCommandCopy = new SwitchCommand("1");
+
+        Assert.assertTrue(firstSwitchCommand.equals(firstSwitchCommandCopy));
+    }
+
+    @Test
+    public void test_emptyParams_throwsException() throws Exception {
+        thrown.expect(ParseException.class);
+        new SwitchCommand("");
+    }
+
+    @Test
+    public void test_notNumberParams_throwsException() throws Exception {
+        thrown.expect(ParseException.class);
+        new SwitchCommand("a");
+    }
+
+    @Test
+    public void execute_switch_returnSuccess() throws ParseException, CommandException {
+        SwitchCommand switchCommand = new SwitchCommand(String.valueOf(SwitchCommand.SWITCH_TO_TODOLIST));
+        String expectedCommandResult =
+                String.format(SwitchCommand.MESSAGE_SUCCESS, "Todo list");
+
+        CommandResult result = switchCommand.execute();
+        Assert.assertTrue(result.feedbackToUser.equals(expectedCommandResult));
+
+        switchCommand = new SwitchCommand(String.valueOf(SwitchCommand.SWITCH_TO_BROWSER));
+        expectedCommandResult =
+                String.format(SwitchCommand.MESSAGE_SUCCESS, "browser");
+
+        result = switchCommand.execute();
+        Assert.assertTrue(result.feedbackToUser.equals(expectedCommandResult));
+    }
+
+    @Test
+    public void execute_notDefinedMode_throwsException() throws Exception {
+        try {
+            new SwitchCommand("0").execute();
+            Assert.fail("CommandException is not thrown");
+        } catch (CommandException e) {
+            Assert.assertEquals(e.getMessage(), SwitchCommand.PARSE_EXCEPTION_MESSAGE);
+        }
+
+        try {
+            new SwitchCommand("3").execute();
+            Assert.fail("CommandException is not thrown");
+        } catch (CommandException e) {
+            Assert.assertEquals(e.getMessage(), SwitchCommand.PARSE_EXCEPTION_MESSAGE);
+        }
+
+        try {
+            new SwitchCommand("-1").execute();
+            Assert.fail("CommandException is not thrown");
+        } catch (CommandException e) {
+            Assert.assertEquals(e.getMessage(), SwitchCommand.PARSE_EXCEPTION_MESSAGE);
+        }
+    }
+
+}
+```
+###### \java\seedu\address\logic\commands\TodoCommandTest.java
+``` java
+package seedu.address.logic.commands;
+
+import static seedu.address.logic.commands.TodoCommand.MESSAGE_DUPLICATE_TODOITEM;
+import static seedu.address.logic.commands.TodoCommand.MESSAGE_ERROR_PREFIX;
+import static seedu.address.logic.commands.TodoCommand.MESSAGE_SUCCESS_ADD;
+import static seedu.address.logic.commands.TodoCommand.MESSAGE_SUCCESS_DELETE_ALL;
+import static seedu.address.logic.commands.TodoCommand.MESSAGE_SUCCESS_DELETE_ONE;
+import static seedu.address.logic.commands.TodoCommand.MESSAGE_SUCCESS_LIST;
+import static seedu.address.logic.commands.TodoCommand.MESSAGE_SUCCESS_LIST_ALL;
+import static seedu.address.testutil.TodoItemUtil.getTodoItemOne;
+import static seedu.address.testutil.TodoItemUtil.getTodoItemTwo;
+import static seedu.address.testutil.TypicalPersons.getTodoItemAddressBook;
+
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TodoItem;
+
+public class TodoCommandTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private Model model = new ModelManager(getTodoItemAddressBook(), new UserPrefs());
+
+    @Test
+    public void test_equals() {
+        TodoCommand firstTodoCommand;
+        TodoCommand secondTodoCommand;
+        firstTodoCommand = new TodoCommand(TodoCommand.PREFIX_TODO_ADD,
+                Index.fromOneBased(1), getTodoItemOne(), Index.fromOneBased(1));
+
+        secondTodoCommand = new TodoCommand(TodoCommand.PREFIX_TODO_ADD,
+                Index.fromOneBased(1), getTodoItemOne(), Index.fromOneBased(1));
+        Assert.assertTrue(firstTodoCommand.equals(secondTodoCommand));
+
+        secondTodoCommand =  new TodoCommand(TodoCommand.PREFIX_TODO_ADD,
+                null, getTodoItemOne(), Index.fromOneBased(1));
+        Assert.assertFalse(firstTodoCommand.equals(secondTodoCommand));
+
+        secondTodoCommand =  new TodoCommand(TodoCommand.PREFIX_TODO_ADD,
+                Index.fromOneBased(1), null, Index.fromOneBased(1));
+        Assert.assertFalse(firstTodoCommand.equals(secondTodoCommand));
+
+        secondTodoCommand =  new TodoCommand(TodoCommand.PREFIX_TODO_ADD,
+                Index.fromOneBased(1), getTodoItemOne(), Index.fromOneBased(3));
+        Assert.assertFalse(firstTodoCommand.equals(secondTodoCommand));
+    }
+
+    @Test
+    public void execute_addTodo_success() throws Exception {
+        // add a new todoItem to Alice (INDEX = 1)
+        Index index = Index.fromOneBased(1);
+        TodoCommand todoCommand = prepareCommand(TodoCommand.PREFIX_TODO_ADD,
+                index, getTodoItemOne(), null);
+        String expectedResult = String.format(MESSAGE_SUCCESS_ADD, getTodoItemOne());
+
+        CommandResult commandResult = todoCommand.execute();
+        Assert.assertTrue(commandResult.feedbackToUser.equals(expectedResult));
+
+        // check whether the new TodoItem is added
+        ReadOnlyPerson person = model.getFilteredPersonList().get(index.getZeroBased());
+        Assert.assertTrue(person.getTodoItems().contains(getTodoItemOne()));
+    }
+
+    @Test
+    public void execute_deleteOne_success() throws Exception {
+        // delete a todoItem from Bill (INDEX = 2)
+        Index index = Index.fromOneBased(2);
+
+        // check whether the TodoItem exists
+        ReadOnlyPerson person = model.getFilteredPersonList().get(index.getZeroBased());
+        Assert.assertTrue(person.getTodoItems().contains(getTodoItemOne()));
+
+        // prepare the command
+        TodoCommand todoCommand = prepareCommand(TodoCommand.PREFIX_TODO_DELETE_ONE,
+                index, null, Index.fromOneBased(1));
+        String expectedResult = String.format(MESSAGE_SUCCESS_DELETE_ONE, getTodoItemOne());
+
+        CommandResult commandResult = todoCommand.execute();
+        Assert.assertTrue(commandResult.feedbackToUser.equals(expectedResult));
+
+        // check whether the TodoItem is deleted
+        person = model.getFilteredPersonList().get(index.getZeroBased());
+        Assert.assertFalse(person.getTodoItems().contains(getTodoItemOne()));
+    }
+
+    @Test
+    public void execute_deleteAll_success() throws Exception {
+        // delete all todoItem from Darwin (INDEX = 4)
+        Index index = Index.fromOneBased(4);
+
+        // check whether the TodoItem exists
+        ReadOnlyPerson person = model.getFilteredPersonList().get(index.getZeroBased());
+        Assert.assertTrue(person.getTodoItems().contains(getTodoItemOne()));
+        Assert.assertTrue(person.getTodoItems().contains(getTodoItemTwo()));
+
+        // prepare the command
+        TodoCommand todoCommand = prepareCommand(TodoCommand.PREFIX_TODO_DELETE_ALL,
+                index, null, null);
+        String expectedResult = String.format(MESSAGE_SUCCESS_DELETE_ALL, index.getOneBased());
+
+        CommandResult commandResult = todoCommand.execute();
+        Assert.assertTrue(commandResult.feedbackToUser.equals(expectedResult));
+
+        // check whether the TodoItem is deleted
+        person = model.getFilteredPersonList().get(index.getZeroBased());
+        Assert.assertFalse(person.getTodoItems().contains(getTodoItemOne()));
+        Assert.assertFalse(person.getTodoItems().contains(getTodoItemTwo()));
+    }
+
+    @Test
+    public void execute_listTodoList_success() throws Exception {
+        Index index = Index.fromOneBased(3);
+        TodoCommand todoCommand = prepareCommand(TodoCommand.PREFIX_TODO_LIST,
+                index, null, null);
+        String expectedResult = String.format(MESSAGE_SUCCESS_LIST, index.getOneBased());
+
+        CommandResult commandResult = todoCommand.execute();
+        Assert.assertTrue(commandResult.feedbackToUser.equals(expectedResult));
+    }
+
+    @Test
+    public void execute_listAllTodoList_success()  throws Exception {
+        TodoCommand todoCommand = prepareCommand(TodoCommand.PREFIX_TODO_LIST_ALL, null, null, null);
+
+        CommandResult commandResult = todoCommand.execute();
+        Assert.assertTrue(commandResult.feedbackToUser.equals(MESSAGE_SUCCESS_LIST_ALL));
+    }
+
+    @Test
+    public void execute_undefinedMode_throwsException() {
+        try {
+            prepareCommand("-p", null, null, null).execute();
+            Assert.fail("Execute without throwing exception");
+        } catch (CommandException e) {
+            Assert.assertEquals(e.getMessage(), MESSAGE_ERROR_PREFIX);
+        }
+    }
+
+    @Test
+    public void execute_duplicateTodoItem_throwsException() {
+        try {
+            Index index = Index.fromOneBased(4);
+            prepareCommand(TodoCommand.PREFIX_TODO_ADD, index, getTodoItemOne(), null).execute();
+            Assert.fail("Execute without throwing exception");
+        } catch (CommandException e) {
+            Assert.assertEquals(e.getMessage(), MESSAGE_DUPLICATE_TODOITEM);
+        }
+    }
+
+    @Test
+    public void execute_invalidIndex_throwsException() {
+        try {
+            Index index = Index.fromOneBased(5);
+            prepareCommand(TodoCommand.PREFIX_TODO_ADD, index, getTodoItemOne(), null).execute();
+            Assert.fail("Execute without throwing exception");
+        } catch (CommandException e) {
+            Assert.assertEquals(e.getMessage(), Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+    }
+
+    /**
+     * Returns an {@code TodoCommand} with parameters
+     */
+    private TodoCommand prepareCommand(String optionPrefix,
+            Index personIndex, TodoItem todoItem, Index itemIndex) {
+        TodoCommand todoCommand = new TodoCommand(optionPrefix, personIndex, todoItem, itemIndex);
+        todoCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return todoCommand;
+    }
+
+}
+```
 ###### \java\seedu\address\logic\commands\UnlockCommandTest.java
 ``` java
 package seedu.address.logic.commands;
@@ -813,6 +1086,199 @@ public class FindOptionInDetailTest {
 
 }
 ```
+###### \java\seedu\address\logic\parser\optionparser\TodoOptionAddTest.java
+``` java
+package seedu.address.logic.parser.optionparser;
+
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
+import static seedu.address.testutil.TodoItemUtil.getTodoItemOne;
+import static seedu.address.testutil.TodoItemUtil.getTodoItemThree;
+
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.TodoCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+public class TodoOptionAddTest {
+
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
+
+    private Index index = Index.fromOneBased(1);
+
+    @Test
+    public void test_parseEmptyArg_throwException() throws Exception {
+        thrown.expect(ParseException.class);
+        new TodoOptionAdd("", index).parse();
+    }
+
+    @Test
+    public void test_parseSuccess() throws Exception {
+        TodoCommand firstTodoCommand = new TodoOptionAdd(
+                  PREFIX_START_TIME + "01-01-2017 12:00" + " "
+                + PREFIX_END_TIME + "01-12-2017 12:00" + " "
+                + PREFIX_TASK + "task: item one",
+                index).parse();
+        TodoCommand expectedTodoCommand =
+                new TodoCommand(TodoCommand.PREFIX_TODO_ADD, index, getTodoItemOne(), null);
+        Assert.assertTrue(firstTodoCommand.equals(expectedTodoCommand));
+
+        TodoCommand secondTodoCommand = new TodoOptionAdd(
+                  PREFIX_START_TIME + "01-01-2017 12:00" + " "
+                + PREFIX_TASK + "task: item three",
+                index).parse();
+        expectedTodoCommand =
+                new TodoCommand(TodoCommand.PREFIX_TODO_ADD, index, getTodoItemThree(), null);
+        Assert.assertTrue(secondTodoCommand.equals(expectedTodoCommand));
+    }
+
+    @Test
+    public void test_parseEmptyArgs_throwsException() throws Exception {
+        thrown.expect(ParseException.class);
+        new TodoOptionAdd("", index).parse();
+    }
+
+    @Test
+    public void test_parseInvalidTime_throwsException() throws Exception {
+        thrown.expect(ParseException.class);
+        new TodoOptionAdd(PREFIX_START_TIME + "0-01-2017 12:00" + " " + PREFIX_TASK + "task", index).parse();
+    }
+
+    @Test
+    public void test_parseEmptyTask_throwsException() throws Exception {
+        thrown.expect(ParseException.class);
+        new TodoOptionAdd(PREFIX_START_TIME + "01-01-2017 12:00" + " " + PREFIX_TASK + "", index).parse();
+    }
+
+}
+```
+###### \java\seedu\address\logic\parser\optionparser\TodoOptionDeleteAllTest.java
+``` java
+package seedu.address.logic.parser.optionparser;
+
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.TodoCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+public class TodoOptionDeleteAllTest {
+
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
+
+    private Index index = Index.fromOneBased(1);
+
+    @Test
+    public void test_parseEmptyArg_success() throws Exception {
+        TodoCommand todoCommand = new TodoOptionDeleteAll(" ", index).parse();
+        TodoCommand expectedCommand = new TodoCommand(TodoCommand.PREFIX_TODO_DELETE_ALL, index, null, null);
+
+        Assert.assertTrue(todoCommand.equals(expectedCommand));
+    }
+
+    @Test
+    public void test_parseNotEmptyArg_throwsException() throws Exception {
+        thrown.expect(ParseException.class);
+        new TodoOptionDeleteAll("1", index).parse();
+    }
+
+}
+```
+###### \java\seedu\address\logic\parser\optionparser\TodoOptionDeleteOneTest.java
+``` java
+package seedu.address.logic.parser.optionparser;
+
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.TodoCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+public class TodoOptionDeleteOneTest {
+
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
+
+    private Index index = Index.fromOneBased(1);
+
+    @Test
+    public void test_parseEmptyArg_throwException() throws Exception {
+        thrown.expect(ParseException.class);
+        new TodoOptionDeleteOne("", index).parse();
+    }
+
+    @Test
+    public void test_parseSuccess() throws Exception {
+        TodoCommand todoCommand = new TodoOptionDeleteOne("5", index).parse();
+        TodoCommand expectedCommand =
+                new TodoCommand(TodoCommand.PREFIX_TODO_DELETE_ONE, index, null, Index.fromOneBased(5));
+
+        Assert.assertTrue(todoCommand.equals(expectedCommand));
+    }
+
+    @Test
+    public void test_parseInvalidArgs_throwException() throws Exception {
+        thrown.expect(ParseException.class);
+        new TodoOptionDeleteOne("a", index).parse();
+    }
+
+    @Test
+    public void test_parseInvalidIndex_throwException() throws Exception {
+        thrown.expect(ParseException.class);
+        new TodoOptionDeleteOne("0", index).parse();
+    }
+
+}
+```
+###### \java\seedu\address\logic\parser\optionparser\TodoOptionListTest.java
+``` java
+package seedu.address.logic.parser.optionparser;
+
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.TodoCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+public class TodoOptionListTest {
+
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
+
+    private Index index = Index.fromOneBased(1);
+
+    @Test
+    public void test_parseEmptyArg_success() throws Exception {
+        TodoCommand todoCommand = new TodoOptionList(" ", index).parse();
+        TodoCommand expectedCommand = new TodoCommand(TodoCommand.PREFIX_TODO_LIST, index, null, null);
+
+        Assert.assertTrue(todoCommand.equals(expectedCommand));
+    }
+
+    @Test
+    public void test_parseNotEmptyArg_throwsException() throws Exception {
+        thrown.expect(ParseException.class);
+        new TodoOptionList("1", index).parse();
+    }
+
+}
+```
 ###### \java\seedu\address\logic\parser\SelectCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
@@ -874,6 +1340,100 @@ public class SelectCommandParserTest {
         assertParseFailure(parser, SelectCommand.PREFIX_SELECT_SEARCH_ADDRESS + " -1",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
     }
+}
+```
+###### \java\seedu\address\logic\parser\TodoCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.logic.parser.TodoCommandParser.PARSE_EXCEPTION_MESSAGE;
+import static seedu.address.logic.parser.TodoCommandParser.parseIndexString;
+import static seedu.address.logic.parser.TodoCommandParser.parseStrAfterIndex;
+import static seedu.address.testutil.TodoItemUtil.getTodoItemThree;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.TodoCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+public class TodoCommandParserTest {
+
+    private TodoCommandParser parser = new TodoCommandParser();
+
+    @Test
+    public void test_parseIndexString_success() throws Exception {
+        Assert.assertEquals("3", parseIndexString("3"));
+
+        Assert.assertEquals("3", parseIndexString("3 abcd"));
+
+        Assert.assertEquals("3", parseIndexString("3 -n"));
+    }
+
+    @Test
+    public void test_parseIndexString_throwsException() {
+        try {
+            parseIndexString("");
+            Assert.fail("Execute without throwing exception");
+        } catch (ParseException e) {
+            Assert.assertEquals(e.getMessage(), PARSE_EXCEPTION_MESSAGE);
+        }
+
+        try {
+            parseIndexString("a");
+            Assert.fail("Execute without throwing exception");
+        } catch (ParseException e) {
+            Assert.assertEquals(e.getMessage(), PARSE_EXCEPTION_MESSAGE);
+        }
+    }
+
+    @Test
+    public void test_parseStrAfterIndex() throws Exception {
+        Assert.assertEquals("abcd", parseStrAfterIndex(parseIndexString("5 abcd"), "5 abcd"));
+
+        Assert.assertEquals("", parseStrAfterIndex(parseIndexString("5"), "5"));
+    }
+
+    @Test
+    public void parse_validArgs_returnsTodoCommand() {
+        Index personIndex = Index.fromOneBased(5);
+
+        // TodoOption: Add
+        assertParseSuccess(parser, "5 -a f/01-01-2017 12:00 d/task: item three",
+                new TodoCommand(TodoCommand.PREFIX_TODO_ADD, personIndex, getTodoItemThree(), null));
+
+        // TodoOption: Delete one
+        assertParseSuccess(parser, "5 -d 3",
+                new TodoCommand(TodoCommand.PREFIX_TODO_DELETE_ONE, personIndex, null, Index.fromOneBased(3)));
+
+        // TodoOption: Delete all
+        assertParseSuccess(parser, "5 -c",
+                new TodoCommand(TodoCommand.PREFIX_TODO_DELETE_ALL, personIndex, null, null));
+
+        // TodoOption: List one
+        assertParseSuccess(parser, "5 -l",
+                new TodoCommand(TodoCommand.PREFIX_TODO_LIST, personIndex, null, null));
+
+        // TodoOption: List all
+        assertParseSuccess(parser, "",
+                new TodoCommand(TodoCommand.PREFIX_TODO_LIST_ALL, null, null, null));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "-p", String.format(MESSAGE_INVALID_COMMAND_FORMAT, TodoCommand.MESSAGE_USAGE));
+
+        assertParseFailure(parser, "0 -l", String.format(MESSAGE_INVALID_COMMAND_FORMAT, TodoCommand.MESSAGE_USAGE));
+
+        assertParseFailure(parser, "--p", String.format(MESSAGE_INVALID_COMMAND_FORMAT, TodoCommand.MESSAGE_USAGE));
+
+        assertParseFailure(parser, "1 -p", String.format(MESSAGE_INVALID_COMMAND_FORMAT, TodoCommand.MESSAGE_USAGE));
+    }
+
 }
 ```
 ###### \java\seedu\address\logic\parser\UnlockCommandParserTest.java
@@ -1099,6 +1659,80 @@ public class FuzzySearchPredicateTest {
 
         predicate = new FuzzySearchPredicate("Utown");
         assertFalse(predicate.test(person));
+    }
+}
+```
+###### \java\seedu\address\model\person\TodoItemTest.java
+``` java
+package seedu.address.model.person;
+
+import static seedu.address.testutil.TodoItemUtil.EARLY_TIME_ONE;
+import static seedu.address.testutil.TodoItemUtil.LATE_TIME_ONE;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
+public class TodoItemTest {
+
+    @Test
+    public void test_equals() throws Exception {
+        TodoItem firstTodoItem = new TodoItem(EARLY_TIME_ONE, LATE_TIME_ONE, "task");
+        TodoItem secondTodoItem = new TodoItem(EARLY_TIME_ONE, null, "task");
+
+        Assert.assertTrue(firstTodoItem.equals(firstTodoItem));
+
+        Assert.assertFalse(firstTodoItem.equals(secondTodoItem));
+
+        TodoItem firstTodoItemCopy = new TodoItem(EARLY_TIME_ONE, LATE_TIME_ONE, "task");
+
+        Assert.assertTrue(firstTodoItem.equals(firstTodoItemCopy));
+    }
+
+    @Test
+    public void test_invalidInput_throwException() {
+        try {
+            new TodoItem(LATE_TIME_ONE, EARLY_TIME_ONE, "task");
+            Assert.fail("CommandException is not thrown");
+        } catch (IllegalValueException e) {
+            Assert.assertEquals(e.getMessage(), TodoItem.MESSAGE_TODOITEM_CONSTRAINTS);
+        }
+
+        try {
+            new TodoItem(LATE_TIME_ONE, EARLY_TIME_ONE, "");
+            Assert.fail("CommandException is not thrown");
+        } catch (IllegalValueException e) {
+            Assert.assertEquals(e.getMessage(), TodoItem.MESSAGE_TODOITEM_CONSTRAINTS);
+        }
+    }
+}
+```
+###### \java\seedu\address\model\util\TimeConvertUtilTest.java
+``` java
+package seedu.address.model.util;
+
+import static seedu.address.model.util.TimeConvertUtil.EMPTY_STRING;
+import static seedu.address.model.util.TimeConvertUtil.convertStringToTime;
+import static seedu.address.model.util.TimeConvertUtil.convertTimeToString;
+import static seedu.address.testutil.TodoItemUtil.EARLY_TIME_ONE;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class TimeConvertUtilTest {
+
+    @Test
+    public void test() {
+        Assert.assertEquals(convertTimeToString(EARLY_TIME_ONE), "01-01-2017 12:00");
+
+        Assert.assertTrue(convertTimeToString(null).equals(EMPTY_STRING));
+
+        Assert.assertEquals(convertStringToTime("01-01-2017 12:00"), EARLY_TIME_ONE);
+
+        Assert.assertNull(convertStringToTime(""));
+
+        Assert.assertNull(convertStringToTime(null));
     }
 }
 ```
@@ -1649,6 +2283,117 @@ public class FindDetailDescriptorBuilder {
         return descriptor;
     }
 }
+```
+###### \java\seedu\address\testutil\PersonBuilder.java
+``` java
+    /**
+     * Sets the {@code TodoItem} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withTodoItem(TodoItem... todoItem) {
+        this.person.setTodoItems(Arrays.asList(todoItem));
+        return this;
+    }
+```
+###### \java\seedu\address\testutil\TodoItemUtil.java
+``` java
+package seedu.address.testutil;
+
+import java.time.LocalDateTime;
+
+import seedu.address.model.person.TodoItem;
+
+/**
+ * A utility class for {@code LocalDateTime}
+ */
+public class TodoItemUtil {
+
+    public static final LocalDateTime EARLY_TIME_ONE = LocalDateTime.of(2017, 1, 1, 12, 0);
+
+    public static final LocalDateTime LATE_TIME_ONE = LocalDateTime.of(2017, 12, 1, 12, 0);
+
+    public static final LocalDateTime EARLY_TIME_TWO = LocalDateTime.of(2018, 1, 1, 12, 0);
+
+    public static final LocalDateTime LATE_TIME_TWO = LocalDateTime.of(2018, 12, 1, 12, 0);
+
+    public static final LocalDateTime TIME_THREE = LocalDateTime.of(2017, 1, 1, 12, 0);
+
+    /**
+     * @return a todoItem object
+     */
+    public static TodoItem getTodoItemOne() {
+        TodoItem todoItem = null;
+        try {
+            todoItem =  new TodoItem(EARLY_TIME_ONE, LATE_TIME_ONE, "task: item one");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return todoItem;
+    }
+
+    /**
+     * @return a todoItem object
+     */
+    public static TodoItem getTodoItemTwo() {
+        TodoItem todoItem = null;
+        try {
+            todoItem =  new TodoItem(EARLY_TIME_TWO, LATE_TIME_TWO, "task: item two");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return todoItem;
+    }
+
+    /**
+     * @return a todoItem object with field {@code end} null.
+     */
+    public static TodoItem getTodoItemThree() {
+        TodoItem todoItem = null;
+        try {
+            todoItem =  new TodoItem(TIME_THREE, null, "task: item three");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return todoItem;
+    }
+
+}
+```
+###### \java\seedu\address\testutil\TypicalPersons.java
+``` java
+    // Persons with TodoItems fields
+    public static final ReadOnlyPerson BILL = new PersonBuilder().withName("Bill")
+            .withAddress("PGPR B1").withEmail("bill@example.com")
+            .withPhone("12345678").withTags("friends")
+            .withTodoItem(getTodoItemOne())
+            .build();
+    public static final ReadOnlyPerson CAT = new PersonBuilder().withName("Cat")
+            .withAddress("PGPR B2").withEmail("cat@example.com")
+            .withPhone("23456789").withTags("friends")
+            .withTodoItem(getTodoItemTwo())
+            .build();
+    public static final ReadOnlyPerson DARWIN = new PersonBuilder().withName("Drawin")
+            .withAddress("PGPR B3").withEmail("drawin@example.com")
+            .withPhone("34567890").withTags("friends")
+            .withTodoItem(getTodoItemOne(), getTodoItemTwo())
+            .build();
+```
+###### \java\seedu\address\testutil\TypicalPersons.java
+``` java
+    /**
+     * Returns an {@code AddressBook} with ItemTodo filed not empty.
+     */
+    public static AddressBook getTodoItemAddressBook() {
+        AddressBook ab = new AddressBook();
+        List<ReadOnlyPerson> personList = Arrays.asList(ALICE, BILL, CAT, DARWIN);
+        for (ReadOnlyPerson person : personList) {
+            try {
+                ab.addPerson(person);
+            } catch (DuplicatePersonException e) {
+                assert false : "not possible";
+            }
+        }
+        return ab;
+    }
 ```
 ###### \java\seedu\address\ui\BrowserPanelTest.java
 ``` java

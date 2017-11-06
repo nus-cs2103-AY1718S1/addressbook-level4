@@ -38,5 +38,7 @@ public class ExportCommandParserTest {
                 ExportCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "C/", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 ExportCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "docs/ab.xmla", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ExportCommand.MESSAGE_USAGE));
     }
 }
