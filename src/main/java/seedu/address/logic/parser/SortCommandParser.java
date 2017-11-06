@@ -19,8 +19,13 @@ public class SortCommandParser implements Parser<SortCommand> {
     public static final String DATA_FIELD_EMAIL = "email";
     public static final String DATA_FIELD_ADDRESS = "address";
 
+
+    /**
+     * Used to get the datafield to sort by and check if ignore favourite is inputted
+     */
     private static final Pattern SORT_ARGUMENT_FORMAT =
             Pattern.compile("(?<dataField>\\S+)(?<option>\\s+-ignorefav)?");
+
     private static boolean FAV_NOT_IGNORED = false;
     private static boolean FAV_IGNORED = true;
 
@@ -38,7 +43,7 @@ public class SortCommandParser implements Parser<SortCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
 
-        String dataFieldToSortByFirst = matcher.group("dataField");
+        String dataFieldToSortByFirst = matcher.group("dataField").toLowerCase();
         String ignoreFavOption = matcher.group("option");
 
         switch (dataFieldToSortByFirst) {
