@@ -323,11 +323,11 @@ Format: `(em)editmeeting INDEX [n/NAME] [d/DATETIME] [l/LOCATION]`
 * Edits the meeting at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* Once a meeting is successfully editted, a message showing the edited meeting will be displayed as shown below
+* Once a meeting is successfully edited, a message showing the edited meeting will be displayed as shown below
 +
 image::EditMeetingSuccess.png[width="500"]
 +
-Figure 5: Successful Editted Meeting
+Figure 5: Successful edited Meeting
 
 ****
 
