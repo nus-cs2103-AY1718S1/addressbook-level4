@@ -107,7 +107,7 @@ public class Person implements ReadOnlyPerson {
     public ObjectProperty<Address> addressProperty() {
         return address;
     }
-	//@@author renkai91
+    //@@author renkai91
     @Override
     public Address getAddress() {
         return address.get();
@@ -126,7 +126,7 @@ public class Person implements ReadOnlyPerson {
     public Birthday getBirthday() {
         return birthday.get();
     }
-	//@@author
+    //@@author
     public void setRemark(Remark remark) {
         this.remark.set(requireNonNull(remark));
     }
@@ -153,7 +153,7 @@ public class Person implements ReadOnlyPerson {
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;
     }
-	//@@author renkai91
+    //@@author renkai91
     @Override
     public ObjectProperty<Picture> pictureProperty() {
         return picture;
@@ -161,7 +161,8 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Picture getPicture() {
         return picture.get();
-    }//@@author
+    }
+    //@@author
     /**
      * Replaces this person's tags with the tags in the argument tag set.
      */
