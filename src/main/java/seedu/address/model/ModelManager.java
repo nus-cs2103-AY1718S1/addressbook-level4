@@ -115,14 +115,6 @@ public class ModelManager extends ComponentManager implements Model {
         indicateNewPersonInfoAvailable(editedPerson);
     }
 
-    //@@author LimYangSheng
-    @Override
-    public void updateMeeting(ReadOnlyPerson target, ReadOnlyPerson editedPerson) {
-        requireAllNonNull(target, editedPerson);
-        addressBook.updateMeeting(target, editedPerson);
-        indicateAddressBookChanged();
-    }
-
     //@@author alexanderleegs
     @Override
     public void deleteTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException {

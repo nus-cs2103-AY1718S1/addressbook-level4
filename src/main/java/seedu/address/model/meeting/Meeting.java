@@ -54,9 +54,8 @@ public class Meeting {
         }
     }
 
-    //@@author LimYangSheng
     /**
-     * Overloaded constructor for creating meeting objects with no proper reference to their person object.
+     * Overloaded constructor for creating meeting objects with no proper reference to their person object
      */
     public Meeting(String meetingName, String time) throws IllegalValueException {
         this.meetingName = meetingName;
@@ -72,19 +71,6 @@ public class Meeting {
         } catch (DateTimeParseException dtpe) {
             throw new IllegalValueException(MESSAGE_TIME_CONSTRAINTS);
         }
-    }
-
-    /**
-     * Overloaded constructor to create a new meeting object given a meeting for reference purposes.
-     */
-    public Meeting(Meeting meeting){
-        this.meetingName = meeting.meetingName;
-        this.date = meeting.date;
-        this.value = meeting.value;
-        this.person = meeting.person;
-        this.displayValue = meeting.displayValue;
-        this.displayMeetingName = meeting.displayMeetingName;
-        this.displayName = meeting.displayName;
     }
 
     /**
@@ -123,7 +109,7 @@ public class Meeting {
         return displayValue;
     }
 
-    //@@author alexanderleegs
+
     @Override
     public boolean equals(Object other) {
         /* Only happens for testing as name attribute will be set for the main app*/
