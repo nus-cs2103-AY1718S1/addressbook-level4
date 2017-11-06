@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 /**
@@ -15,6 +16,8 @@ public class ListCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        requireNonNull(model);
+        model.deselectPerson();
         model.changeListTo(COMMAND_WORD);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         String currentList = listObserver.getCurrentListName();

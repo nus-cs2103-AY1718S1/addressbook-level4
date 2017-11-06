@@ -20,6 +20,7 @@ public class NearbyCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsNearbyCommand() {
+        assertParseSuccess(parser, "", new NearbyCommand());
         assertParseSuccess(parser, "1", new NearbyCommand(INDEX_FIRST_PERSON));
     }
 

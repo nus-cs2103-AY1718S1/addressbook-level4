@@ -20,6 +20,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeInternalListEvent;
+import seedu.address.commons.events.ui.DeselectionEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.NearbyPersonNotInCurrentListEvent;
 import seedu.address.commons.events.ui.NearbyPersonPanelSelectionChangedEvent;
@@ -122,6 +123,11 @@ public class PersonListPanel extends UiPart<Region> {
             raise(new NearbyPersonNotInCurrentListEvent(event.getNewSelection()));
             unregisterAsAnEventHandler(this);
         }
+    }
+
+    @Subscribe
+    private void handleDeselectionEvent(DeselectionEvent event) {
+        personListView.getSelectionModel().clearSelection();
     }
 
     @Subscribe

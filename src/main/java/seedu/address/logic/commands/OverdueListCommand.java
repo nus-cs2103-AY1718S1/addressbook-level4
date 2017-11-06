@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_OVERDUE_PERSONS;
 
 //@@author lawwman
@@ -15,6 +16,8 @@ public class OverdueListCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        requireNonNull(model);
+        model.deselectPerson();
         model.changeListTo(COMMAND_WORD);
         model.updateFilteredOverduePersonList(PREDICATE_SHOW_ALL_OVERDUE_PERSONS);
         String currentList = listObserver.getCurrentListName();

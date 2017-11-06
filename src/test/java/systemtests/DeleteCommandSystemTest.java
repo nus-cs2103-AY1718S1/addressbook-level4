@@ -13,7 +13,6 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
-import guitests.GuiRobot;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteCommand;
@@ -173,7 +172,6 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
 
         if (expectedSelectedCardIndex != null) {
-            GuiRobot guiRobot = new GuiRobot();
             assertSelectedCardChanged();
         } else {
             assertSelectedCardUnchanged();

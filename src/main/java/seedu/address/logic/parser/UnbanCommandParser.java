@@ -17,11 +17,14 @@ public class UnbanCommandParser implements Parser<UnbanCommand> {
      * and returns an UnbanCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-
     public UnbanCommand parse(String args) throws ParseException {
         try {
-            Index index = ParserUtil.parseIndex(args);
-            return new UnbanCommand(index);
+            if (args.trim().equals("")) {
+                return new UnbanCommand();
+            } else {
+                Index index = ParserUtil.parseIndex(args);
+                return new UnbanCommand(index);
+            }
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnbanCommand.MESSAGE_USAGE));

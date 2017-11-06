@@ -20,8 +20,12 @@ public class NearbyCommandParser implements Parser<NearbyCommand> {
      */
     public NearbyCommand parse(String args) throws ParseException {
         try {
-            Index index = ParserUtil.parseIndex(args);
-            return new NearbyCommand(index);
+            if (args.trim().equals("")) {
+                return new NearbyCommand();
+            } else {
+                Index index = ParserUtil.parseIndex(args);
+                return new NearbyCommand(index);
+            }
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, NearbyCommand.MESSAGE_USAGE));

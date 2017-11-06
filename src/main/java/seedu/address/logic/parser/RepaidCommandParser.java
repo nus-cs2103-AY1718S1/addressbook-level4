@@ -19,12 +19,15 @@ public class RepaidCommandParser implements Parser<RepaidCommand> {
     */
     public RepaidCommand parse(String args) throws ParseException {
         try {
-            Index index = ParserUtil.parseIndex(args);
-            return new RepaidCommand(index);
+            if (args.trim().equals("")) {
+                return new RepaidCommand();
+            } else {
+                Index index = ParserUtil.parseIndex(args);
+                return new RepaidCommand(index);
+            }
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, RepaidCommand.MESSAGE_USAGE));
         }
     }
-
 }

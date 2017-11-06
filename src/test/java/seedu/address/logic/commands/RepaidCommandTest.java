@@ -80,6 +80,30 @@ public class RepaidCommandTest {
         assertCommandFailure(repaidCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
+    //@@author khooroko
+    @Test
+    public void execute_noIndexPersonSelected_success() throws Exception {
+        model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
+        ReadOnlyPerson personToRepaid = model.getSelectedPerson();
+        RepaidCommand repaidCommand = prepareCommand();
+
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(RepaidCommand.MESSAGE_REPAID_PERSON_SUCCESS, personToRepaid.getName());
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.addWhitelistedPerson(personToRepaid);
+
+        assertCommandSuccess(repaidCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_noIndexNoSelection_failure() throws Exception {
+        RepaidCommand repaidCommand = prepareCommand();
+
+        assertCommandFailure(repaidCommand, model, Messages.MESSAGE_NO_PERSON_SELECTED);
+    }
+
+    //@@author jaivigneshvenugopal
     @Test
     public void equals() {
         RepaidCommand repaidFirstCommand = new RepaidCommand(INDEX_FIRST_PERSON);
@@ -107,6 +131,15 @@ public class RepaidCommandTest {
      */
     private RepaidCommand prepareCommand(Index index) {
         RepaidCommand repaidCommand = new RepaidCommand(index);
+        repaidCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return repaidCommand;
+    }
+
+    /**
+     * Returns a {@code RepaidCommand} with no parameters.
+     */
+    private RepaidCommand prepareCommand() {
+        RepaidCommand repaidCommand = new RepaidCommand();
         repaidCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return repaidCommand;
     }

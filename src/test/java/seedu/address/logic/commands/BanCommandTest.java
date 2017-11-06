@@ -83,6 +83,30 @@ public class BanCommandTest {
         assertCommandFailure(banCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
+    //@@author khooroko
+    @Test
+    public void execute_noIndexPersonSelected_success() throws Exception {
+        model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
+        ReadOnlyPerson personToBan = model.getSelectedPerson();
+        BanCommand banCommand = prepareCommand();
+
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(BanCommand.MESSAGE_BAN_PERSON_SUCCESS, personToBan.getName());
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.addBlacklistedPerson(personToBan);
+
+        assertCommandSuccess(banCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_noIndexNoSelection_failure() throws Exception {
+        BanCommand banCommand = prepareCommand();
+
+        assertCommandFailure(banCommand, model, Messages.MESSAGE_NO_PERSON_SELECTED);
+    }
+
+    //@@author jaivigneshvenugopal
     @Test
     public void equals() {
         BanCommand banFirstCommand = new BanCommand(INDEX_FIRST_PERSON);
@@ -110,6 +134,15 @@ public class BanCommandTest {
      */
     private BanCommand prepareCommand(Index index) {
         BanCommand banCommand = new BanCommand(index);
+        banCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return banCommand;
+    }
+
+    /**
+     * Returns a {@code BanCommand} with no parameters.
+     */
+    private BanCommand prepareCommand() {
+        BanCommand banCommand = new BanCommand();
         banCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return banCommand;
     }

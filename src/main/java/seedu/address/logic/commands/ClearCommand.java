@@ -2,8 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.EmptyListEvent;
 import seedu.address.model.AddressBook;
 
 /**
@@ -19,8 +17,8 @@ public class ClearCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() {
         requireNonNull(model);
+        model.deselectPerson();
         model.resetData(new AddressBook());
-        EventsCenter.getInstance().post(new EmptyListEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

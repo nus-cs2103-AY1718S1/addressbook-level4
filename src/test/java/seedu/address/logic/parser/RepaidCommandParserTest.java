@@ -23,6 +23,7 @@ public class RepaidCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsRepaidCommand() {
+        assertParseSuccess(parser, "", new RepaidCommand());
         assertParseSuccess(parser, "1", new RepaidCommand(INDEX_FIRST_PERSON));
     }
 
