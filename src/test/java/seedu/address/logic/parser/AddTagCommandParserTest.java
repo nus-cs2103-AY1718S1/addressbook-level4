@@ -28,7 +28,7 @@ public class AddTagCommandParserTest {
         tagSet.add(tagToAdd);
         indexSet.add(INDEX_SECOND_PERSON);
         AddTagCommand addTagCommand = new AddTagCommand(tagSet, indexSet, "2");
-        assertParseSuccess(parser, "enemy 2", addTagCommand);
+        assertParseSuccess(parser, "2 enemy", addTagCommand);
     }
 
     @Test
@@ -40,7 +40,7 @@ public class AddTagCommandParserTest {
         indexSet.add(INDEX_FIRST_PERSON);
         indexSet.add(INDEX_SECOND_PERSON);
         AddTagCommand addTagCommand = new AddTagCommand(tagSet, indexSet, "1, 2");
-        assertParseSuccess(parser, "enemy 1 2", addTagCommand);
+        assertParseSuccess(parser, "1 2 enemy", addTagCommand);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class AddTagCommandParserTest {
 
     @Test
     public void parse_validArgsWithInvalidIndex_throwsParseException() {
-        assertParseFailure(parser, "friends 0", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+        assertParseFailure(parser, "0 friends", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 AddTagCommand.MESSAGE_USAGE));
     }
 
@@ -69,13 +69,13 @@ public class AddTagCommandParserTest {
 
     @Test
     public void parse_invalidArgsOrder_throwsParseException() {
-        assertParseFailure(parser, "enemy 1 wendy", String.format(
+        assertParseFailure(parser, "1 enemy 3", String.format(
                 MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_validArgsEmptyIndex_throwsParseException() {
-        assertParseFailure(parser, "enemy", "Please provide at least one index.\n"
+        assertParseFailure(parser, "enemy", "Please provide an input for index.\n"
                 + String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
     }
 

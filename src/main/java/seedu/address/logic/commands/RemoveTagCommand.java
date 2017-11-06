@@ -28,10 +28,10 @@ public class RemoveTagCommand extends UndoableCommand {
             + ": Remove the tag from a person by the index number used "
             + "in the last person listing.\n"
             + "Remove the specified tag in the whole address book by excluding the [INDEX] parameter.\n"
-            + "Parameters: TAG... INDEX...(INDEX must be positive integer)\n"
+            + "Parameters: INDEX... TAG...(INDEX must be positive integer)\n"
             + "[INDEX] can be set as a range."
-            + "Example: " + COMMAND_WORD + " friends 1"
-            + "Example: " + COMMAND_WORD + " friends 1-4";
+            + "Example: " + COMMAND_WORD + " 1 friends"
+            + "Example: " + COMMAND_WORD + " 1-4 friends";
 
     public static final String MESSAGE_REMOVE_SUCCESS = "Removed Tag: %1$s";
     public static final String MESSAGE_TAG_NOT_FOUND = "Tag: %1$s does not exist in";
