@@ -4,6 +4,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_PROMPT_COMMAND;
 import static seedu.address.commons.util.StringUtil.levenshteinDistance;
 import static seedu.address.commons.util.StringUtil.tryParseInt;
 import static seedu.address.logic.parser.CliSyntax.POSSIBLE_COMMAND_WORDS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -24,14 +25,14 @@ public class Suggestion {
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
             new HashSet<>(Arrays.asList(COMMAND_WORD, "yes", "ok", "yea", "yeah"));
 
+    private static final int COMMAND_TYPO_TOLERANCE = 3;
+
     private final String commandWord;
     private final String arguments;
 
-    private int COMMAND_TYPO_TOLERANCE = 3;
-
     public Suggestion(String commandWord, String arguments) {
-        this.commandWord = commandWord;
-        this.arguments = arguments;
+        this.commandWord = commandWord.trim();
+        this.arguments = arguments.trim();
     }
 
     /**
@@ -47,11 +48,7 @@ public class Suggestion {
      */
     public String getCommandString() {
         String closestCommand = getClosestCommandWord();
-        try {
-            return closestCommand + " " + getFormattedArgs(closestCommand);
-        } catch (IOException e) {
-            return null;
-        }
+        return closestCommand + getFormattedArgs(closestCommand);
     }
 
     /**
@@ -59,21 +56,16 @@ public class Suggestion {
      * into proper arguments for the given {@code closestCommand}.
      */
     private boolean isFormattableArgs(String closestCommand) {
-        String formattedArgs;
-        try {
-            formattedArgs = getFormattedArgs(closestCommand);
-            return closestCommand != null
-                    && formattedArgs != null;
-        } catch (IOException e) {
-            return false;
-        }
+        String formattedArgs = getFormattedArgs(closestCommand);
+        return closestCommand != null
+                && formattedArgs != null;
     }
 
     /**
      * Returns the formatted arguments given a {@code closestCommand}
      * or a {@code null} {@code String} otherwise.
      */
-    private String getFormattedArgs(String closestCommand) throws IOException {
+    public String getFormattedArgs(String closestCommand) {
         if (AddCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
             // try to match arguments with ALL person models, otherwise return null (maybe use AddCommandParser?)
         } else if (EditCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
@@ -84,26 +76,22 @@ public class Suggestion {
         } else if (SelectCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
                 || DeleteCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
             if (tryParseInt(arguments)) {
-                return arguments;
+                return " " + arguments;
             }
         } else if (RemarkCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
             // try test for index, return all arguments, checked for typos.
-            JLanguageTool langTool = new JLanguageTool(new AmericanEnglish());
+            String[] argArray = arguments.split(" ");
+            if (argArray.length > 0 && tryParseInt(argArray[0])) {
 
-            String retVal = arguments.trim();
-            List<RuleMatch> matches = langTool.check(retVal);
-            while (!matches.isEmpty()) {
-                RuleMatch match = matches.iterator().next();
-                retVal = retVal.substring(0, match.getFromPos())
-                        + match.getSuggestedReplacements().iterator().next()
-                        + retVal.substring(match.getToPos());
-                matches = langTool.check(retVal);
+                String retVal = arguments.replace(argArray[0], "").trim().replace(PREFIX_REMARK.toString(), "");
+                // retVal = setToAmerican(retVal);
+                return " " + argArray[0] + " " + PREFIX_REMARK + retVal;
             }
-            retVal.replaceAll("\\<.*?>", "");
-            return retVal;
         } else if (FindCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            // return all arguments as is.
-            return arguments;
+            // return all arguments as is. TODO: Check if args exist, move to constant.
+            if (arguments.matches("^(?=\\s*\\S).*$")) {
+                return " " + arguments;
+            }
         } else if (ClearCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
                 || ListCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
                 || HistoryCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
@@ -114,6 +102,24 @@ public class Suggestion {
             return "";
         }
         return null;
+    }
+
+    private String setToAmerican(String input) {
+        String output = input;
+        JLanguageTool langTool = new JLanguageTool(new AmericanEnglish());
+        try {
+            List<RuleMatch> matches = langTool.check(output);
+            while (!matches.isEmpty()) {
+                RuleMatch match = matches.iterator().next();
+                output = output.substring(0, match.getFromPos())
+                        + match.getSuggestedReplacements().iterator().next()
+                        + output.substring(match.getToPos());
+                matches = langTool.check(output);
+            }
+        } catch (IOException e) {
+            return null;
+        }
+        return output;
     }
 
     /**
