@@ -259,6 +259,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.maintainSorted();
         this.handleTabChange(toAdd);
         this.forceSelectParcel(toAdd);
+        indicateAddressBookChanged();
     }
 
     @Override
@@ -268,6 +269,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.maintainSorted();
         this.handleTabChange(editedParcel);
         this.forceSelectParcel(editedParcel);
+        indicateAddressBookChanged();
     }
 
     @Override
@@ -282,7 +284,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private void handleTabChange(ReadOnlyParcel targetParcel) {
         try {
-            if (findStatus(targetParcel).equals(Status.getInstance("COMPLETED"))) {
+            if (targetParcel.getStatus().equals(Status.getInstance("COMPLETED"))) {
                 if (this.getTabIndex().equals(TAB_ALL_PARCELS)) {
                     this.setActiveList(true);
                     uiJumpToTabCompleted();
@@ -309,18 +311,12 @@ public class ModelManager extends ComponentManager implements Model {
         EventsCenter.getInstance().post(new JumpToTabRequestEvent(TAB_COMPLETED_PARCELS));
     }
 
-    private Status findStatus(ReadOnlyParcel target) {
-        return target.getStatus();
-    }
-
     /**
      * Method to retrieve the index of a given parcel in the active list.
      */
     private int findIndex(ReadOnlyParcel target) {
         return getActiveList().indexOf(target);
     }
-
-
     //@@author
 
     @Override
@@ -341,7 +337,6 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredParcels.equals(other.filteredParcels)
                 && filteredDeliveredParcels.equals(other.filteredDeliveredParcels)
                 && filteredUndeliveredParcels.equals(other.filteredUndeliveredParcels);
-        // && activeFilteredList.equals(other.activeFilteredList);
     }
 
     public static Predicate<ReadOnlyParcel> getDeliveredPredicate() {
