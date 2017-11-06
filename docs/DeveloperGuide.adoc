@@ -423,6 +423,7 @@ by specifying the correct path to the file. In case the picture cannot be access
 // end::profile[]
 
 // tag::searching[]
+
 === Searching mechanism
 Here, searching entails the autocomplete function, finding mechanism and suggesting mechanism.
 The search mechanism is done with user's usability in mind and is fully implemented such that it is most intuitive to use for the users.
@@ -446,7 +447,34 @@ will be shown as the user type commands. This has not been implemented but will 
 
 // end::searching[]
 
+// tag::appoint[]
+
+=== Appointment
+Appointment is stored in a `UniqueAppointmentList`, which makes sure that the appointment is unique and does not clash with other +
+appointments.
+
+==== Design Considerations
+**Aspect:** Storing appointments +
+**Alternative 1 (current choice):** Storing appointment using an in-memory UniqueAppointmentList. +
+**Pro:** Does not take up space. +
+**Cons:** Might be slow if there is a huge number of appointments (which is unlikely for a student) +
+**Alternative 2:** Storing appointment using a separate XML file +
+**Pro:** Will be faster if theres many appointments +
+**Cons:** Harder to understand. Does not follow convention of other commands.
+
+---
+**Aspect:** Number of appointments +
+**Alternative 1 (current choice):** Allows 1 appointment per contact. +
+**Pro:** Easier to manage (add, remove, overwrite, etc.) +
+**Cons:** Is limited in case user have multiple appointments with others. +
+**Alternative 2:** Allows multiple appointment per contact. +
+**Pro:** Catered to users with multiple appointments per contact. +
+**Cons:** Would be hard to view on address book person card, hard to manage.
+
+// end::appoint[]
+
 // tag::findtag[]
+
 === Find Tag
 
 The `FindTagCommand` allows the user to locate persons in the addressbook by their tag instead of their names.

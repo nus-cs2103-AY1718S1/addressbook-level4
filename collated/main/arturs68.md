@@ -10,7 +10,6 @@ import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ProfilePicture;
@@ -70,8 +69,6 @@ public class ChangePicCommand extends UndoableCommand {
             throw new CommandException("The person cannot be duplicated when changing the profile picture");
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
-        } catch (IllegalValueException ive) {
-            throw new CommandException(ive.getMessage());
         }
         model.updateFilteredPersonList(p ->true);
         return new CommandResult(generateSuccessMessage(editedPerson));
@@ -201,6 +198,63 @@ public class GroupCommand extends UndoableCommand {
         GroupCommand e = (GroupCommand) other;
         return index.equals(e.index)
                 && group.equals(e.group);
+    }
+}
+```
+###### /java/seedu/address/logic/commands/RemoveTagCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+
+/**
+ * Removes the specified tag from all the persons and from the address book tag list
+ */
+public class RemoveTagCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "removetag";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Removes the tag identified by TAG name.\n"
+            + "Parameters: " + PREFIX_TAG + "TAG\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_TAG + "OwesMoney";
+
+    public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Removed tag: %1$s";
+
+    private final Tag tagToBeRemoved;
+
+    public RemoveTagCommand(Tag tagToBeRemoved) {
+        this.tagToBeRemoved = tagToBeRemoved;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        try {
+            boolean wasRemoved = model.removeTag(tagToBeRemoved);
+            if (!wasRemoved) {
+                throw new CommandException("Such a tag does not exit");
+            }
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException("The person cannot be duplicated when adding to a group");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, tagToBeRemoved.toString()));
+
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof RemoveTagCommand // instanceof handles nulls
+                && this.tagToBeRemoved.equals(((RemoveTagCommand) other).tagToBeRemoved)); // state check
     }
 }
 ```
@@ -400,6 +454,63 @@ public class GroupCommandParser implements Parser<GroupCommand> {
         requireNonNull(groupName);
         return groupName.isPresent() ? Optional.of(new Group(groupName.get())) : Optional.empty();
     }
+```
+###### /java/seedu/address/logic/parser/ParserUtil.java
+``` java
+    /**
+     * Parses a {@code Optional<String> tag} into an {@code Optional<Tag>} if {@code tag} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Tag> parseTag(Optional<String> tag) throws IllegalValueException {
+        requireNonNull(tag);
+        return tag.isPresent() ? Optional.of(new Tag(tag.get())) : Optional.empty();
+    }
+}
+```
+###### /java/seedu/address/logic/parser/RemoveTagCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.RemoveTagCommand;
+
+import seedu.address.logic.parser.exceptions.ParseException;
+
+import seedu.address.model.tag.Tag;
+
+/**
+ * Parses input arguments and creates a new RemoveTagCommand object
+ */
+public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the RemoveTagCommand
+     * and returns an RemoveTagCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public RemoveTagCommand parse(String args) throws ParseException {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_TAG);
+        if (!isPrefixPresent(argMultimap, PREFIX_TAG)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            Tag tag = ParserUtil.parseTag(argMultimap.getValue(PREFIX_TAG)).get();
+            return new RemoveTagCommand(tag);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+        }
+    }
+
+    private boolean isPrefixPresent(ArgumentMultimap argMultimap, Prefix prefix) {
+        return argMultimap.getValue(prefix).isPresent();
+    }
+}
 ```
 ###### /java/seedu/address/logic/parser/UngroupCommandParser.java
 ``` java
@@ -699,8 +810,10 @@ public class UniqueGroupList implements Iterable<Group> {
 ```
 ###### /java/seedu/address/model/Model.java
 ``` java
-    /** Removes the given tag from everyone in the address book and deletes it from the addressBook tag list. */
-    void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException;
+    /** Removes the given tag from everyone in the address book and deletes it from the addressBook tag list.
+     * Returns false if no such a tag exists and true otherwise
+     */
+    boolean removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException;
 
     /** Checks if the group has some members. If it does, does nothing,
      * otherwise removes the group from the group list of the addressBook */
@@ -840,13 +953,7 @@ public class ProfilePicture {
      * @param addressBook cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
 }
-```
-###### /java/seedu/address/storage/Storage.java
-``` java
-    @Override
-    void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
 ```
 ###### /java/seedu/address/storage/XmlAdaptedGroup.java
 ``` java
@@ -890,13 +997,6 @@ public class XmlAdaptedGroup {
     }
 
 }
-```
-###### /java/seedu/address/storage/XmlAddressBookStorage.java
-``` java
-    @Override
-    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        saveAddressBook(addressBook, filePath + "-backup.xml");
-    }
 ```
 ###### /java/seedu/address/storage/XmlSerializableAddressBook.java
 ``` java

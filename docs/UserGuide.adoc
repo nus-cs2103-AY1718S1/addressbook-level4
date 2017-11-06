@@ -105,9 +105,11 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+// tag::searching[]
+
 === Locating persons by name: `find` (alias `f`)
 
-Finds persons whose names is a close match to a given keywords. +
+Finds persons whose names starts with the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`
 
 ****
@@ -124,8 +126,9 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names starting with `Betsy`, `Tim`, or `John`
-* `f Nam` +
-Returns `Nam`
+* `f Na` +
+Returns `Nam` (if Nam is the only close match).
+// end::searching[]
 
 === Locating persons by tag: `findtag` (alias `ft`)
 
@@ -245,6 +248,8 @@ Selects the 1st person in the results of the `find` command.
 `select all` +
 Selects all persons currently displayed.
 
+// tag::appoint[]
+
 === Adding an appointment: `appoint`
 
 Since v1.3
@@ -257,7 +262,8 @@ Example: `appoint 1 ap/12/12/2020 15:12 60` +
 * If ap/ is left blank, the old appointment will be deleted.
 ****
 
-=======
+// end::appoint[]
+
 === Removing tag : `removetag`
 
 Since v1.5
@@ -452,6 +458,8 @@ Imports the data from the Documents folder and saves them in the current Contact
 Contact Pro data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+// tag::searching[]
+
 === Suggestions as you type
 
 [NOTE]
@@ -462,6 +470,8 @@ Commands and parameters will be suggested as you type, where applicable.
 
 After you type first few characters, user can press TAB to autocomplete to the if there is a unique command starting +
 with those characters.
+
+// end::searching[]
 
 == Course mode
 
