@@ -2,6 +2,10 @@ package seedu.address.storage;
 
 import java.io.File;
 
+//@@author freesoup
+/**
+ * A File Wrapper class to allow modification of File Object after it has been created.
+ */
 public class FileWrapper {
     private File file;
 

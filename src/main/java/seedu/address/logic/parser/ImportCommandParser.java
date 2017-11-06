@@ -1,7 +1,5 @@
 package seedu.address.logic.parser;
 
-import static com.sun.xml.internal.ws.policy.sourcemodel.wspolicy.XmlToken.Optional;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;

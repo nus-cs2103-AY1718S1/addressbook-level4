@@ -212,6 +212,7 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.show();
     }
 
+    //@@author freesoup
     /**
      * Opens the FileChooser
      */
@@ -227,6 +228,7 @@ public class MainWindow extends UiPart<Region> {
         File selectedFile = chooser.showOpenDialog(primaryStage);
         file.setFile(selectedFile);
     }
+    //@@author
 
     /**
      * Closes the application.
@@ -250,6 +252,7 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author freesoup
     @Subscribe
     private void handleImportFileChooseEvent(ImportFileChooseEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
