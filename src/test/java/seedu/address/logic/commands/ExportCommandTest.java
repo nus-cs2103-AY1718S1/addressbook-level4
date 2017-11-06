@@ -2,7 +2,9 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -32,10 +34,39 @@ public class ExportCommandTest {
     }
 
     @Test
+    public void execute_export_emptyList() throws Exception {
+
+        CommandResult r = logic.execute("export");
+        assertEquals(ExportCommand.MESSAGE_EMPTY_AB, r.feedbackToUser);
+
+    }
+
+    @Test
+    public void execute_export_fail() throws Exception {
+        PersonBuilder testPerson = new PersonBuilder();
+
+        model.addPerson(testPerson.build());
+
+        // to throw IOException
+        File f = new File("output.vcf");
+        Boolean cannotWrite = f.setWritable(false);
+        assertTrue(cannotWrite);
+
+        CommandResult r = logic.execute("export");
+        assertEquals(ExportCommand.MESSAGE_FAIL, r.feedbackToUser);
+
+    }
+
+    @Test
     public void execute_export_success() throws Exception {
         PersonBuilder testPerson = new PersonBuilder();
 
         model.addPerson(testPerson.build());
+
+        // reset file permission from execute_export_fail()
+        File f = new File("output.vcf");
+        Boolean canWrite = f.setWritable(true);
+        assertTrue(canWrite);
 
         CommandResult r = logic.execute("export");
         assertEquals(ExportCommand.MESSAGE_SUCCESS, r.feedbackToUser);
@@ -50,4 +81,5 @@ public class ExportCommandTest {
         assertArrayEquals(file1, file2);
 
     }
+
 }
