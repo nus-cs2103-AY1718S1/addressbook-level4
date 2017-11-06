@@ -98,7 +98,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 === Locating persons by name: `find` (obsoleted)
 
 [NOTE]
-This 'find' command is obsoleted . +
+This 'find' command is obsoleted. +
 Please refer to new link:#since-code-v1-1-code[finds] command.
 
 Finds persons whose names contain any of the given keywords. +
@@ -268,13 +268,16 @@ Total number of person in addressbook will now be displayed at the footer bar.
 Finds persons who contain any of the given keywords. +
 Format: `finds n/[MORE_KEYWORDS] or p/[MORE_KEYWORDS] or e/[MORE_KEYWORDS] or t/[MORE_KEYWORDS]`
 
+[NOTE]
+Only can search using one type of details each time. +
+E.g. If `finds p/12345678` then `n/` and `t/` should not be included.
+
 ****
 * The search for name is case insensitive. e.g `hans` will match `Hans`
-* The search for tag is case sensitive. e.g `friends` will match `friends` but not `Friends`
 * The search for email is case sensitive. e.g `email@example.com` will not match `Email@example.com`
+* The search for tag is case sensitive. e.g `friends` will match `friends` but not `Friends`
 * The order of the keywords for name does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * The order of the keywords when searching a few tags does not matter. e.g. `[friends] [colleagues]` will match `[colleagues] [friends]`
-* Only can search using one type of details each time. e.g. `finds p/12345678` then `n/` and `t/` should not be included
 * Only full words will be matched e.g. `friend` will not match `friends`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
