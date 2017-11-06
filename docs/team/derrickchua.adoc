@@ -41,7 +41,6 @@ include::../DeveloperGuide.adoc[tag=sync]
 ---
 
 === Enhancement Added: Add command `note`
-
 ==== External behavior
 
 ---
