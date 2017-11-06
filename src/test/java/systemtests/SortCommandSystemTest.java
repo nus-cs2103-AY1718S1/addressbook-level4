@@ -204,11 +204,12 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccessWithStatusBarUnchanged(String, Model, String)} except
-     * that the sync status in the status bar changes.
+     * Performs the same verification as {@code assertCommandSuccessWithStatusBarUnchanged(String, Model, String)}
+     * except that the sync status in the status bar changes.
      * @see SortCommandSystemTest#assertCommandSuccessWithStatusBarUnchanged(String, Model, String)
      */
-    private void assertCommandSuccessWithSyncStatusChanged(String command, Model expectedModel, String expectedResultMessage) {
+    private void assertCommandSuccessWithSyncStatusChanged(String command, Model expectedModel,
+            String expectedResultMessage) {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertSelectedCardDeselected();
