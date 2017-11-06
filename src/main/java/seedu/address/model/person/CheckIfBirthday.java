@@ -12,12 +12,7 @@ import java.util.function.Predicate;
 public class CheckIfBirthday implements Predicate<ReadOnlyPerson> {
 
     public CheckIfBirthday(){ }
-    /**
-     * Checks if today's day and month matches a person's birthday
-     * @param person
-     * @return
-     * @throws ParseException
-     */
+
     public boolean birthdayList(ReadOnlyPerson person)throws ParseException {
         String birthday = person.getBirthday().toString();
         Date date = new SimpleDateFormat("dd/MM/yyyy").parse(birthday);
