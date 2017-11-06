@@ -31,9 +31,10 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.ui.GuiUnitTest;
 
 //@author KhorSL
-public class AddMultipleCommandParserTest {
+public class AddMultipleCommandParserTest extends GuiUnitTest {
     private AddMultipleCommandParser parser = new AddMultipleCommandParser();
 
     @Test

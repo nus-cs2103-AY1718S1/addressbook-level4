@@ -12,11 +12,12 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.ui.GuiUnitTest;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
  */
-public class ListCommandTest {
+public class ListCommandTest extends GuiUnitTest {
 
     private Model model;
     private Model expectedModel;

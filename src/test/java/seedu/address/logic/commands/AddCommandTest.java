@@ -9,11 +9,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
+import javafx.application.Application;
+import javafx.stage.Stage;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.MainApp;
+import seedu.address.TestApp;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -25,9 +31,10 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.ui.GuiUnitTest;
 import seedu.address.testutil.PersonBuilder;
 
-public class AddCommandTest {
+public class AddCommandTest extends GuiUnitTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

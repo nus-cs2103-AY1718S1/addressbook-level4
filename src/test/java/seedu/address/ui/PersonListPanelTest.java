@@ -18,8 +18,7 @@ import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 public class PersonListPanelTest extends GuiUnitTest {
-    private static final ObservableList<ReadOnlyPerson> TYPICAL_PERSONS =
-            FXCollections.observableList(getTypicalPersons());
+    private ObservableList<ReadOnlyPerson> TYPICAL_PERSONS;
 
     private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_PERSON);
 
@@ -27,6 +26,7 @@ public class PersonListPanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
+        TYPICAL_PERSONS = FXCollections.observableList(getTypicalPersons());
         PersonListPanel personListPanel = new PersonListPanel(TYPICAL_PERSONS);
         uiPartRule.setUiPart(personListPanel);
 

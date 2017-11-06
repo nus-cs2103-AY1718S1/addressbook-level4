@@ -18,17 +18,24 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.ui.GuiUnitTest;
 
-public class UndoCommandTest {
-    private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
-    private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
+public class UndoCommandTest extends GuiUnitTest {
+    private static CommandHistory EMPTY_COMMAND_HISTORY;
+    private static UndoRedoStack EMPTY_STACK;
 
-    private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
-    private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
+    private Model model;
+    private DeleteCommand deleteCommandOne;
+    private DeleteCommand deleteCommandTwo;
 
     @Before
     public void setUp() {
+        EMPTY_COMMAND_HISTORY = new CommandHistory();
+        EMPTY_STACK = new UndoRedoStack();
+
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
+        deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
         deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK, null);
         deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK, null);
     }
