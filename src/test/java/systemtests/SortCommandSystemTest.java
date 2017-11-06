@@ -1,5 +1,13 @@
 package systemtests;
 
+import static org.junit.Assert.assertEquals;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.model.ListingUnit.LESSON;
+import static seedu.address.model.ListingUnit.LOCATION;
+import static seedu.address.model.ListingUnit.MODULE;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
+import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
+
 import org.junit.After;
 import org.junit.Test;
 
@@ -14,14 +22,6 @@ import seedu.address.model.module.predicates.FixedCodePredicate;
 import seedu.address.model.module.predicates.MarkedListPredicate;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
-
-import static org.junit.Assert.assertEquals;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.model.ListingUnit.LESSON;
-import static seedu.address.model.ListingUnit.LOCATION;
-import static seedu.address.model.ListingUnit.MODULE;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
-import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
 //@@author angtianlannus
 public class SortCommandSystemTest extends AddressBookSystemTest {
@@ -39,10 +39,10 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
         model.sortLessons();
         assertCommandSuccess(command, expectedResultMessage, model);
 
-         /* Case 1: capped sort command word -> rejected */
+        /* Case : capped sort command word -> rejected */
         assertCommandFailure("SORT", MESSAGE_UNKNOWN_COMMAND);
 
-        /* Case 2: mixed cap command word -> rejected */
+        /* Case : mixed cap command word -> rejected */
         assertCommandFailure("SoRt", MESSAGE_UNKNOWN_COMMAND);
     }
 
@@ -105,35 +105,46 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccessSortByMarkedLessons(command, expectedResultMessage, model);
     }
 
+    /**
+     * Executes {@code SortCommand} in lesson list and
+     * verifies that the result equals to {@code expectedResultMessage},{@code expectedModel}.
+     */
     public void assertCommandSuccessSortByLessons(String command, String expectedResultMessage,
                                                   Model expectedModel) {
         executeCommand(ViewCommand.COMMAND_WORD + " 1");
-        executeCommand(command);
-        assertCommandSuccess(command, expectedResultMessage, expectedModel);
-    }
-
-
-    public void assertCommandSuccessSortByMarkedLessons(String command, String expectedResultMessage,
-                                                        Model expectedModel) {
-        executeCommand(ListCommand.COMMAND_WORD + " " + ListCommand.MARKED_LIST_KEYWORD);
-        executeCommand(command);
-        assertCommandSuccess(command, expectedResultMessage, expectedModel);
-    }
-
-    public void assertCommandSuccessSortByLocation(String command, String expectedResultMessage, Model expectedModel) {
-        executeCommand(ListCommand.COMMAND_WORD + " " + ListCommand.LOCATION_KEYWORD);
-        executeCommand(command);
-        assertCommandSuccess(command, expectedResultMessage, expectedModel);
-    }
-
-    public void assertCommandSuccessSortByModule(String command, String expectedResultMessage, Model expectedModel) {
-        executeCommand(ListCommand.COMMAND_WORD + " " + ListCommand.MODULE_KEYWORD);
-        executeCommand(command);
         assertCommandSuccess(command, expectedResultMessage, expectedModel);
     }
 
     /**
-     * Executes {@code command} and verifies that the result equals to {@code expectedResultMessage}.
+     * Executes {@code SortCommand} in marked lesson list and
+     * verifies that the result equals to {@code expectedResultMessage},{@code expectedModel}.
+     */
+    public void assertCommandSuccessSortByMarkedLessons(String command, String expectedResultMessage,
+                                                        Model expectedModel) {
+        executeCommand(ListCommand.COMMAND_WORD + " " + ListCommand.MARKED_LIST_KEYWORD);
+        assertCommandSuccess(command, expectedResultMessage, expectedModel);
+    }
+
+    /**
+     * Executes {@code SortCommand} in location list and
+     * verifies that the result equals to {@code expectedResultMessage},{@code expectedModel}.
+     */
+    public void assertCommandSuccessSortByLocation(String command, String expectedResultMessage, Model expectedModel) {
+        executeCommand(ListCommand.COMMAND_WORD + " " + ListCommand.LOCATION_KEYWORD);
+        assertCommandSuccess(command, expectedResultMessage, expectedModel);
+    }
+
+    /**
+     * Executes {@code SortCommand} in module list and
+     * verifies that the result equals to {@code expectedResultMessage},{@code expectedModel}.
+     */
+    public void assertCommandSuccessSortByModule(String command, String expectedResultMessage, Model expectedModel) {
+        executeCommand(ListCommand.COMMAND_WORD + " " + ListCommand.MODULE_KEYWORD);
+        assertCommandSuccess(command, expectedResultMessage, expectedModel);
+    }
+
+    /**
+     * Executes {@code SortCommand} and verifies that the result equals to {@code expectedResultMessage}.
      */
     private void assertCommandSuccess(String command, String expectedResultMessage, Model expectedModel) {
         executeCommand(command);
