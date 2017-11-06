@@ -50,7 +50,6 @@ public class ExportCommandTest {
         // to throw IOException
         File f = new File("output.vcf");
         Boolean cannotWrite = f.setWritable(false);
-        assertTrue(cannotWrite);
 
         CommandResult r = logic.execute("export");
         assertEquals(ExportCommand.MESSAGE_FAIL, r.feedbackToUser);
@@ -66,7 +65,6 @@ public class ExportCommandTest {
         // reset file permission from execute_export_fail()
         File f = new File("output.vcf");
         Boolean canWrite = f.setWritable(true);
-        assertTrue(canWrite);
 
         CommandResult r = logic.execute("export");
         assertEquals(ExportCommand.MESSAGE_SUCCESS, r.feedbackToUser);
