@@ -2,6 +2,8 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.ui.ParcelListPanel.INDEX_FIRST_TAB;
+import static seedu.address.ui.ParcelListPanel.INDEX_SECOND_TAB;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -37,8 +39,8 @@ import seedu.address.model.tag.exceptions.TagNotFoundException;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
     private static final Predicate<ReadOnlyParcel> deliveredPredicate = p -> p.getStatus().equals(Status.COMPLETED);
-    private static final Index TAB_ALL_PARCELS = Index.fromZeroBased(0);
-    private static final Index TAB_COMPLETED_PARCELS = Index.fromZeroBased(1);
+    private static final Index TAB_ALL_PARCELS = INDEX_FIRST_TAB;
+    private static final Index TAB_COMPLETED_PARCELS = INDEX_SECOND_TAB;
 
     private static Index tabIndex = Index.fromOneBased(1);
     private final AddressBook addressBook;
