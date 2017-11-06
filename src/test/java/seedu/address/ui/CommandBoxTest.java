@@ -133,6 +133,7 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
 
+    //@@author caoliangnus
     @Test
     public void configActiveKeywordTest() {
         String commandKeyword = "list";
@@ -150,7 +151,7 @@ public class CommandBoxTest extends GuiUnitTest {
     private void assertColorNotSame(String commandColor, String commandKeyword) {
         assertNotEquals(commandColor, keywordColorMap.get(commandKeyword));
     }
-
+    //@@author
 
     /**
      * Runs a command that fails, then verifies that <br>
