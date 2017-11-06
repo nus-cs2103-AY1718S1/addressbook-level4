@@ -17,9 +17,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TodoItem;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.DuplicateTodoItemException;
-//@@author qihao27
 import seedu.address.model.person.exceptions.NoPersonFoundException;
-//@@author
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -135,7 +133,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateTodoItemList() {
         raise(new ShowAllTodoItemsEvent());
     }
-    //@@author
 
     //@@author qihao27
     @Override

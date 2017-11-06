@@ -56,7 +56,6 @@ public interface Model {
      */
     void favouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
-    //@@author
 
     //@@author Hailinx
     /** Adds the given todoItem to target person */
@@ -84,7 +83,6 @@ public interface Model {
     //@@author Hailinx
     /** Updates the UI to show all todoItems for all persons */
     void updateTodoItemList();
-    //@@author
 
     //@@author qihao27
     /**
