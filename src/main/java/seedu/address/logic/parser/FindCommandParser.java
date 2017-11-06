@@ -37,18 +37,24 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         StringTokenizer st = new StringTokenizer(trimmedArgs, " ");
+        String newArgs = "";
+        String current = "";
         while (st.hasMoreTokens()) {
             String token = st.nextToken();
-            if (!((token.contains(PREFIX_NAME.getPrefix())) || (token.contains(PREFIX_PHONE.getPrefix()))
-                || (token.contains(PREFIX_EMAIL.getPrefix())) || (token.contains(PREFIX_ADDRESS.getPrefix()))
-                    || (token.contains(PREFIX_TAG.getPrefix())))) {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            if ((token.contains(PREFIX_NAME.getPrefix())) || (token.contains(PREFIX_PHONE.getPrefix()))
+                    || (token.contains(PREFIX_EMAIL.getPrefix())) || (token.contains(PREFIX_ADDRESS.getPrefix()))
+                    || (token.contains(PREFIX_TAG.getPrefix()))) {
+                current = token.substring(0, 1) + "/";
+                newArgs += token + " ";
+            } else {
+                newArgs += current + token + " ";
             }
         }
 
+        String trimmedNewArgs = newArgs.trim();
+
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_TAG, PREFIX_EMAIL, PREFIX_NAME,
+                ArgumentTokenizer.tokenize(trimmedNewArgs, PREFIX_TAG, PREFIX_EMAIL, PREFIX_NAME,
                         PREFIX_PHONE, PREFIX_ADDRESS);
 
         List<String> nameList = argMultimap.getAllValues(PREFIX_NAME);
@@ -76,7 +82,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         for (int i = 0; i < keywords.size(); i++) {
             List<String> list = keywords.get(i);
             String prefix = prefixList.get(i).getPrefix();
-            if (checkNoInput(list) && trimmedArgs.contains(prefix)) {
+            if (checkNoInput(list) && (trimmedNewArgs.contains(prefix))) {
                 missingInput += prefix + " ";
                 checkMissingInput = true;
             }
