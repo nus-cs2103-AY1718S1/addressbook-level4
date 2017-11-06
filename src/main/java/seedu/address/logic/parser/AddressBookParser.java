@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.BinclearCommand;
 import seedu.address.logic.commands.BindeleteCommand;
+import seedu.address.logic.commands.BinrestoreCommand;
 import seedu.address.logic.commands.BirthdayAddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
@@ -47,8 +48,9 @@ public class AddressBookParser {
 
     public AddressBookParser() {
         commandNames.add(AddCommand.COMMAND_WORD);
-        commandNames.add(BindeleteCommand.COMMAND_WORD);
         commandNames.add(BinclearCommand.COMMAND_WORD);
+        commandNames.add(BindeleteCommand.COMMAND_WORD);
+        commandNames.add(BinrestoreCommand.COMMAND_WORD);
         commandNames.add(SortCommand.COMMAND_WORD);
         commandNames.add(EditCommand.COMMAND_WORD);
         commandNames.add(TagAddCommand.COMMAND_WORD);
@@ -96,8 +98,12 @@ public class AddressBookParser {
 
         case BindeleteCommand.COMMAND_WORD:
             return new BindeleteCommandParser().parse(arguments);
+
         case BinclearCommand.COMMAND_WORD:
             return new BinclearCommand();
+
+        case BinrestoreCommand.COMMAND_WORD:
+            return new BinrestoreCommandParser().parse(arguments);
 
         case SortCommand.COMMAND_WORD:
             return new SortCommandParser().parse(arguments);

@@ -108,6 +108,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public void restorePerson(ReadOnlyPerson person) throws DuplicatePersonException, PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+        @Override
+        public void restorePerson(ArrayList<ReadOnlyPerson> person) throws DuplicatePersonException,
+                PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void sortPerson(Comparator<ReadOnlyPerson> sortType, boolean isDescending) throws EmptyListException {
             fail("This method should not be called.");
         }

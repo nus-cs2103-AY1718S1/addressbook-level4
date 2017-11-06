@@ -37,6 +37,8 @@ public interface Model {
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+    void restorePerson(ReadOnlyPerson perosn) throws DuplicatePersonException, PersonNotFoundException;
+    void restorePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException, DuplicatePersonException;
 
     /** Sorts the list of persons */
     void sortPerson(Comparator<ReadOnlyPerson> sortType, boolean isDescending) throws EmptyListException;

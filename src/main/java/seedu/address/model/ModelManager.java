@@ -79,7 +79,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetRecyclebin(ReadOnlyAddressBook newData) {
         recycleBin.resetData(newData);
-        indicateRecycleBinChnaged();
+        indicateRecycleBinChanged();
     }
 
     @Override
@@ -98,7 +98,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
-    private void indicateRecycleBinChnaged() {
+    private void indicateRecycleBinChanged() {
         raise(new RecyclebinChangeEvent(recycleBin));
     }
 
@@ -120,14 +120,14 @@ public class ModelManager extends ComponentManager implements Model {
                 recycleBin.addPerson(s);
             }
         }
+        indicateRecycleBinChanged();
         indicateAddressBookChanged();
-        indicateRecycleBinChnaged();
     }
 
     @Override
     public synchronized void deleteBinPerson(ReadOnlyPerson target) throws PersonNotFoundException {
         recycleBin.removePerson(target);
-        indicateRecycleBinChnaged();
+        indicateRecycleBinChanged();
     }
 
     @Override
@@ -135,6 +135,34 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
+    }
+    @Override
+    public synchronized void restorePerson(ReadOnlyPerson person) throws DuplicatePersonException,
+            PersonNotFoundException {
+        addressBook.addPerson(person);
+        recycleBin.removePerson(person);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredBinList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+        indicateAddressBookChanged();
+    }
+    @Override
+    public synchronized void restorePerson(ArrayList<ReadOnlyPerson> targets) throws DuplicatePersonException,
+            PersonNotFoundException {
+        boolean flag = true;
+        for (ReadOnlyPerson s : targets) {
+            if (addressBook.getPersonList().contains(s)) {
+                recycleBin.removePerson(s);
+            } else {
+                recycleBin.removePerson(s);
+                addressBook.addPerson(s);
+                flag = false;
+            }
+        }
+        if (!flag) {
+            indicateAddressBookChanged();
+        }
+        indicateRecycleBinChanged();
     }
 
     @Override
