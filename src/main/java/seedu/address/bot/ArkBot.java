@@ -36,8 +36,6 @@ import seedu.address.model.parcel.ReadOnlyParcel;
  */
 public class ArkBot extends AbilityBot {
 
-    private static final String BOT_TOKEN = "339790464:AAGUN2BmhnU0I2B2ULenDdIudWyv1d4OTqY";
-    private static final String BOT_USERNAME = "ArkBot";
     private static final String BOT_MESSAGE_FAILURE = "Sorry, I don't understand.";
     private static final String BOT_MESSAGE_SUCCESS = "%s command has been successfully executed!";
     private static final String BOT_MESSAGE_HELP = "Welcome to ArkBot, your friendly companion to ArkBot on Desktop.\n"
@@ -48,8 +46,8 @@ public class ArkBot extends AbilityBot {
     private Model model;
     private Optional<Message> lastKnownMessage;
 
-    public ArkBot(Logic logic, Model model) {
-        super(BOT_TOKEN, BOT_USERNAME);
+    public ArkBot(Logic logic, Model model, String botToken, String botUsername) {
+        super(botToken, botUsername);
         this.logic = logic;
         this.model = model;
     }

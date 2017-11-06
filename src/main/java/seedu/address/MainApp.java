@@ -15,6 +15,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import seedu.address.bot.ArkBot;
+import seedu.address.bot.BotSettings;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
@@ -55,6 +56,7 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
+    protected BotSettings botSettings;
 
 
     @Override
@@ -80,12 +82,15 @@ public class MainApp extends Application {
         initEventsCenter();
 
         // Instantiate bot here
+        botSettings = new BotSettings();
+
         ApiContextInitializer.init();
 
         TelegramBotsApi botsApi = new TelegramBotsApi();
 
         try {
-            botsApi.registerBot(new ArkBot(logic, model));
+            botsApi.registerBot(new ArkBot(logic, model,
+                    botSettings.getBotToken(), botSettings.getBotUsername()));
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
