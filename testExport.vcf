@@ -1,0 +1,8 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:Alice Pauline
+N:;Alice Pauline;;;
+EMAIL;TYPE=INTERNET;TYPE=HOME:alice@gmail.com
+TEL;TYPE=CELL:85355255
+ADR:;;123, Jurong West Ave 6, #08-111;;;;
+END:VCARD
