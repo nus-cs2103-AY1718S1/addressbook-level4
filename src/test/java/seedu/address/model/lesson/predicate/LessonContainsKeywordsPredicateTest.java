@@ -68,7 +68,7 @@ public class LessonContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_lessonAllAttributeContainsKeywords_returnsTrue() {
+    public void test_lessonAllAttributeContainsKeywordsForModule_returnsTrue() {
         // One keyword to find location
         LessonContainsKeywordsPredicate predicate = new LessonContainsKeywordsPredicate(Collections.singletonList(
                 "LT27"), LESSON, ATTRIBUTE_MODULE);
@@ -132,6 +132,76 @@ public class LessonContainsKeywordsPredicateTest {
 
         // partial keywords that is a substring of the class type that user intend to find
         predicate = new LessonContainsKeywordsPredicate(Arrays.asList("T"), LESSON, ATTRIBUTE_MODULE);
+        assertTrue(predicate.test(new LessonBuilder().withClassType("TUT").build()));
+
+    }
+
+    @Test
+    public void test_lessonAllAttributeContainsKeywordsForLocation_returnsTrue() {
+
+        // One keyword to find group
+        LessonContainsKeywordsPredicate predicate = new LessonContainsKeywordsPredicate(Collections.singletonList(
+                "12"), LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withGroup("12").build()));
+
+        // One keyword to find module
+        predicate = new LessonContainsKeywordsPredicate(Collections.singletonList(
+                "MA1101R"), LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withCode("MA1101R").build()));
+
+        // One keyword to find class type
+        predicate = new LessonContainsKeywordsPredicate(Collections.singletonList(
+                "LEC"), LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withClassType("LEC").build()));
+
+        // One keyword to find time slot
+        predicate = new LessonContainsKeywordsPredicate(Collections.singletonList(
+                "MON[1200-1300]"), LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withTimeSlot("MON[1200-1300]").build()));
+
+        // Only one matching keyword to find module
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("MA1101R", "CS2200"), LESSON,
+                ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withCode("CS2200").build()));
+
+        // Only one matching keyword to find group
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("1", "2"), LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withGroup("1").build()));
+
+        // Only one matching keyword to find class type
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("TUT", "LEC"), LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withClassType("LEC").build()));
+
+        // Only one matching keyword to find time slot
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("MON[1200-1300]", "TUE[0900-1000]"),
+                LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withTimeSlot("MON[1200-1300]").build()));
+
+        // Mixed-case keywords to find module
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("cs2200"),
+                LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withCode("CS2200").build()));
+
+        // Mixed-case keywords to find class type
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("LeC"),
+                LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withClassType("LEC").build()));
+
+        // Mixed-case keywords to find time slot
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("mOn[1200-1300]"),
+                LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withTimeSlot("MON[1200-1300]").build()));
+
+        // partial keywords that is a substring of the module that user intend to find
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("CS22"), LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withCode("CS2200").build()));
+
+        // partial keywords that is a substring of the time slot that user intend to find
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("MON"), LESSON, ATTRIBUTE_LOCATION);
+        assertTrue(predicate.test(new LessonBuilder().withTimeSlot("MON[1200-1300]").build()));
+
+        // partial keywords that is a substring of the class type that user intend to find
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("T"), LESSON, ATTRIBUTE_LOCATION);
         assertTrue(predicate.test(new LessonBuilder().withClassType("TUT").build()));
 
     }

@@ -5,6 +5,11 @@ import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
+import static seedu.address.model.font.FontSize.FONT_SIZE_LARGE_NUMBER;
+import static seedu.address.model.font.FontSize.FONT_SIZE_NORMAL_NUMBER;
+import static seedu.address.model.font.FontSize.FONT_SIZE_SMALL_NUMBER;
+import static seedu.address.model.font.FontSize.FONT_SIZE_XLARGE_NUMBER;
+import static seedu.address.model.font.FontSize.FONT_SIZE_XSMALL_NUMBER;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,7 +89,7 @@ public class CommandBox extends UiPart<Region> {
     private ArrayList<String> prefixList;
     private int fontIndex = 0;
     private boolean enableHighlight = false;
-    private String userPrefFontSize = "-fx-font-size: medium;";
+    private String userPrefFontSize = "-fx-font-size: " + FONT_SIZE_NORMAL_NUMBER + ";";
 
     private final ImageView tick = new ImageView("/images/tick.png");
     private final ImageView cross = new ImageView("/images/cross.png");
@@ -332,28 +337,28 @@ public class CommandBox extends UiPart<Region> {
         keywordLabel.setVisible(true);
 
         keywordLabel.getStyleClass().clear();
-        Insets leftInset = new Insets(0, 0, 0, 14);
+        Insets leftInset = new Insets(0, 0, 0, 17);
 
         switch (fontIndex) {
         case 1:
             keywordLabel.getStyleClass().add("keyword-label-xsmall");
-            leftInset = new Insets(0, 0, 0, 11);
+            leftInset = new Insets(0, 0, 0, 10);
             break;
         case 2:
             keywordLabel.getStyleClass().add("keyword-label-small");
-            leftInset = new Insets(0, 0, 0, 11);
+            leftInset = new Insets(0, 0, 0, 12);
             break;
         case 3:
             keywordLabel.getStyleClass().add("keyword-label-default");
-            leftInset = new Insets(0, 0, 0, 15);
+            leftInset = new Insets(0, 0, 0, 17);
             break;
         case 4:
             keywordLabel.getStyleClass().add("keyword-label-large");
-            leftInset = new Insets(0, 0, 0, 11);
+            leftInset = new Insets(0, 0, 0, 21);
             break;
         case 5:
             keywordLabel.getStyleClass().add("keyword-label-xlarge");
-            leftInset = new Insets(0, 0, 0, 11);
+            leftInset = new Insets(0, 0, 0, 26);
             break;
         default:
             keywordLabel.getStyleClass().add("keyword-label-default");
@@ -385,33 +390,33 @@ public class CommandBox extends UiPart<Region> {
 
         tagLabel.getStyleClass().clear();
         double margin = computeMargin(0, inputText);
-        Insets leftInset = new Insets(0, 0, 0, margin + 13);
+        Insets leftInset = new Insets(0, 0, 0, margin + 17);
 
         switch (fontIndex) {
         case 1:
             tagLabel.getStyleClass().add("keyword-label-xsmall");
             margin = computeMargin(1, inputText);
-            leftInset = new Insets(0, 0, 0, margin + 11);
+            leftInset = new Insets(0, 0, 0, margin + 10);
             break;
         case 2:
             tagLabel.getStyleClass().add("keyword-label-small");
             margin = computeMargin(2, inputText);
-            leftInset = new Insets(0, 0, 0, margin + 11);
+            leftInset = new Insets(0, 0, 0, margin + 12);
             break;
         case 3:
             tagLabel.getStyleClass().add("keyword-label-default");
             margin = computeMargin(3, inputText);
-            leftInset = new Insets(0, 0, 0, margin + 15);
+            leftInset = new Insets(0, 0, 0, margin + 17);
             break;
         case 4:
             tagLabel.getStyleClass().add("keyword-label-large");
             margin = computeMargin(4, inputText);
-            leftInset = new Insets(0, 0, 0, margin + 11);
+            leftInset = new Insets(0, 0, 0, margin + 21);
             break;
         case 5:
             tagLabel.getStyleClass().add("keyword-label-xlarge");
             margin = computeMargin(5, inputText);
-            leftInset = new Insets(0, 0, 0, margin + 11);
+            leftInset = new Insets(0, 0, 0, margin + 26);
             break;
         default:
             tagLabel.getStyleClass().add("keyword-label-default");
@@ -566,32 +571,32 @@ public class CommandBox extends UiPart<Region> {
     private void setFontSize(String userPref) {
         switch (userPref) {
         case FONT_SIZE_XSMALL:
-            commandTextField.setStyle("-fx-font-size: x-small;");
-            userPrefFontSize = "-fx-font-size: x-small;";
+            commandTextField.setStyle("-fx-font-size: " + FONT_SIZE_XSMALL_NUMBER + ";");
+            userPrefFontSize = "-fx-font-size: " + FONT_SIZE_XSMALL_NUMBER + ";";
             fontIndex = 1;
             break;
 
         case FONT_SIZE_SMALL:
-            commandTextField.setStyle("-fx-font-size: small;");
-            userPrefFontSize = "-fx-font-size: small;";
+            commandTextField.setStyle("-fx-font-size: " + FONT_SIZE_SMALL_NUMBER + ";");
+            userPrefFontSize = "-fx-font-size: " + FONT_SIZE_SMALL_NUMBER + ";";
             fontIndex = 2;
             break;
 
         case FONT_SIZE_NORMAL:
-            commandTextField.setStyle("-fx-font-size: normal;");
-            userPrefFontSize = "-fx-font-size: normal;";
+            commandTextField.setStyle("-fx-font-size: " + FONT_SIZE_NORMAL_NUMBER + ";");
+            userPrefFontSize = "-fx-font-size: " + FONT_SIZE_NORMAL_NUMBER + ";";
             fontIndex = 3;
             break;
 
         case FONT_SIZE_LARGE:
-            commandTextField.setStyle("-fx-font-size: x-large;");
-            userPrefFontSize = "-fx-font-size: x-large;";
+            commandTextField.setStyle("-fx-font-size: " + FONT_SIZE_LARGE_NUMBER + ";");
+            userPrefFontSize = "-fx-font-size: " + FONT_SIZE_LARGE_NUMBER + ";";
             fontIndex = 4;
             break;
 
         case FONT_SIZE_XLARGE:
-            commandTextField.setStyle("-fx-font-size: xx-large;");
-            userPrefFontSize = "-fx-font-size: xx-large;";
+            commandTextField.setStyle("-fx-font-size: " + FONT_SIZE_XLARGE_NUMBER + ";");
+            userPrefFontSize = "-fx-font-size: " + FONT_SIZE_XLARGE_NUMBER + ";";
             fontIndex = 5;
             break;
 

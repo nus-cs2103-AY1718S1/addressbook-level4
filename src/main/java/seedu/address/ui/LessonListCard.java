@@ -5,6 +5,11 @@ import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
+import static seedu.address.model.font.FontSize.FONT_SIZE_LARGE_NUMBER;
+import static seedu.address.model.font.FontSize.FONT_SIZE_NORMAL_NUMBER;
+import static seedu.address.model.font.FontSize.FONT_SIZE_SMALL_NUMBER;
+import static seedu.address.model.font.FontSize.FONT_SIZE_XLARGE_NUMBER;
+import static seedu.address.model.font.FontSize.FONT_SIZE_XSMALL_NUMBER;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -183,23 +188,23 @@ public class LessonListCard extends UiPart<Region> {
     private void setFontSize(String userPref) {
         switch (userPref) {
         case FONT_SIZE_XSMALL:
-            setFontSizeHelper("x-small");
+            setFontSizeHelper(FONT_SIZE_XSMALL_NUMBER);
             break;
 
         case FONT_SIZE_SMALL:
-            setFontSizeHelper("small");
+            setFontSizeHelper(FONT_SIZE_SMALL_NUMBER);
             break;
 
         case FONT_SIZE_NORMAL:
-            setFontSizeHelper("normal");
+            setFontSizeHelper(FONT_SIZE_NORMAL_NUMBER);
             break;
 
         case FONT_SIZE_LARGE:
-            setFontSizeHelper("x-large");
+            setFontSizeHelper(FONT_SIZE_LARGE_NUMBER);
             break;
 
         case FONT_SIZE_XLARGE:
-            setFontSizeHelper("xx-large");
+            setFontSizeHelper(FONT_SIZE_XLARGE_NUMBER);
             break;
 
         default:
