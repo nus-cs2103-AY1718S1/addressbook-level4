@@ -27,7 +27,7 @@ By: `CS2103AUG2017-W15-B4`      Since: `Oct 2017`      Licence: `MIT`
 ==== Routes Planning
 
 3W uses google map functions to plan the routes to contacts' address. +
-Usage: Click the certain person(Or use the `select` command), then enter your current position in starting point
+Usage: Put your mouse on the person you want to use map function on and click(Or use the `select` command to select this person), then enter your current position in starting point to plan a route to this person's home.
 
 ==== Contact&Task Linkage
 
@@ -44,7 +44,7 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `3W.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your 3W app.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. You will see 3W's Graphical User Interface (GUI) shown below in a few seconds.
 +
 image::Ui.png[width="790"]
 +
@@ -60,7 +60,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`deleteTask`**`1` : deletes the 1st contact shown in the current task list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  You are now ready to use 3W. Please refer to the link:#features[Features] section below for details of each command.
 
 == Features
 
@@ -482,7 +482,7 @@ e.g. `find James Jake`
 * *Link* : `link TaskIndex p/personIndex [p/personIndex]... ` +
 e.g. `link 1 p/2`
 * *List Contact* : `list`
-* *List Task* : `list`
+* *List Task* : `listTask`
 * *Mark Task* : `markTask INDEX` +
 e.g. markTask 1
 * *Redo* : `redo`
