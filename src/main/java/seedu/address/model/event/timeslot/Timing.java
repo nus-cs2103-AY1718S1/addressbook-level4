@@ -3,6 +3,8 @@ package seedu.address.model.event.timeslot;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalTime;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author reginleiff
@@ -44,6 +46,14 @@ public class Timing implements Comparable<Timing> {
         this.timing = trimmedTiming;
         this.start = startTiming;
         this.end = endTiming;
+    }
+
+    /**
+     * Construct a Timing with a localtime.
+     */
+    public Timing(LocalTime localTime) {
+        this.start = localTime.getHour() * 100 + localTime.getMinute();
+        this.end = this.start;
     }
 
     /**

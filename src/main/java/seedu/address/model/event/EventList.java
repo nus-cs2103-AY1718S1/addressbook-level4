@@ -70,19 +70,19 @@ public class EventList implements Iterable<Event> {
         }
         Event addedEvent = new Event(toAdd);
         internalMap.put(toAdd.getTimeslot(), addedEvent);
-        scheduleRepeatedEvent(addedEvent);
+//        scheduleRepeatedEvent(addedEvent);
     }
 
-    /**
-     * Schedule repeated event if period is not 0.
-     */
-    private void scheduleRepeatedEvent(ReadOnlyEvent addedEvent) {
-        int repeatPeriod = Integer.parseInt(addedEvent.getPeriod().toString());
-        if (repeatPeriod != 0) {
-            Timer timer = new Timer();
-            timer.schedule(new RepeatEventTimerTask(addedEvent, repeatPeriod), addedEvent.getEndDateTime());
-        }
-    }
+//    /**
+//     * Schedule repeated event if period is not 0.
+//     */
+//    private void scheduleRepeatedEvent(ReadOnlyEvent addedEvent) {
+//        int repeatPeriod = Integer.parseInt(addedEvent.getPeriod().toString());
+//        if (repeatPeriod != 0) {
+//            Timer timer = new Timer();
+//            timer.schedule(new RepeatEventTimerTask(addedEvent, repeatPeriod), addedEvent.getEndDateTime());
+//        }
+//    }
 
     /**
      * Replaces the event {@code target} in the tree map with {@code editedEvent}.
@@ -108,7 +108,7 @@ public class EventList implements Iterable<Event> {
         internalMap.remove(targetEvent.getTimeslot());
         internalMap.put(editedEvent.getTimeslot(), editedEvent);
 
-        scheduleRepeatedEvent(editedEvent);
+//        scheduleRepeatedEvent(editedEvent);
         //@@author
     }
 
@@ -213,15 +213,15 @@ public class EventList implements Iterable<Event> {
         return internalMap.hashCode();
     }
 
-    //========== Event Handling =================================================================================
-
-    @Subscribe
-    private void handleCreateEventInstanceEvent(CreateEventInstanceEvent e) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(e));
-        try {
-            add(e.eventToAdd);
-        } catch (EventTimeClashException etce) {
-            scheduleRepeatedEvent(e.eventToAdd);
-        }
-    }
+//    //========== Event Handling =================================================================================
+//
+//    @Subscribe
+//    private void handleCreateEventInstanceEvent(CreateEventInstanceEvent e) {
+//        logger.info(LogsCenter.getEventHandlingLogMessage(e));
+//        try {
+//            add(e.eventToAdd);
+//        } catch (EventTimeClashException etce) {
+//            scheduleRepeatedEvent(e.eventToAdd);
+//        }
+//    }
 }

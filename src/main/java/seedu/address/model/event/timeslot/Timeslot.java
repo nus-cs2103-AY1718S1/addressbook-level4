@@ -3,6 +3,7 @@ package seedu.address.model.event.timeslot;
 import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
@@ -100,12 +101,32 @@ public class Timeslot implements Comparable<Timeslot> {
     //@@author shuang-yang
     /**
      * Increase the date by specified number of days.
+     * @return the new timeslot
      */
     public Timeslot plusDays(int days) {
         Date date = this.getDate().addDays(days);
         Timing timing = this.getTiming();
         return new Timeslot(date, timing);
     }
+
+    /**
+     * Get the current time as Timeslot.
+     * @return the current timesot.
+     */
+    public static Timeslot getNow() {
+        Date dateNow = new Date(LocalDate.now());
+        Timing timeNow = new Timing(LocalTime.now());
+        return new Timeslot(dateNow, timeNow);
+    }
+
+    /**
+     * Check if the timeslot is before another timeslot.
+     * @return true if it is.
+     */
+    public boolean isBefore(Timeslot slot) {
+        return this.compareTo(slot) < 0;
+    }
+
     //@@author
 
     //================================= Setter methods for testing ==========================================

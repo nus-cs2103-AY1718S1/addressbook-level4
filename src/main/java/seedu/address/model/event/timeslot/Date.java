@@ -94,9 +94,17 @@ public class Date implements Comparable<Date> {
         }
     }
 
+    // @@author shuang-yang
     public LocalDate toLocalDate() {
         return LocalDate.of(year, month, day);
     }
+
+    public Date(LocalDate localDate) {
+        this.day = localDate.getDayOfMonth();
+        this.month = localDate.getMonthValue();
+        this.year = localDate.getYear();
+    }
+    //@@author
 
     /**
      * Sets date after {@code days} have elapsed. Works for negative numbers.

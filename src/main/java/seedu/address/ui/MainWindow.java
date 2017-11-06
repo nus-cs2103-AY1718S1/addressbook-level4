@@ -201,7 +201,7 @@ public class MainWindow extends UiPart<Region> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
 
-        //@@author shuangyang
+        //@@author shuang-yang
         //When calendar button is clicked, the browserPlaceHolder will switch
         // to the calendar view
         calendarView = new CalendarView(logic.getFilteredEventList(), logic);
@@ -272,7 +272,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
 
-    //@@author shuangyang
+    //@@author shuang-yang
     /**
      * Opens the calendar view.
      */
@@ -356,7 +356,7 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
-    //@@author shuangyang
+    //@@author shuang-yang
     @Subscribe
     private void handleShowCalendarEvent(ShowCalendarEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

@@ -1,13 +1,13 @@
-//@@author shuangyang
+//@@author shuang-yang
 package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 
 import java.util.TimerTask;
 
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.model.CreateEventInstanceEvent;
+import javafx.application.Platform;
 import seedu.address.model.Model;
+import seedu.address.model.event.exceptions.EventTimeClashException;
 import seedu.address.model.event.timeslot.Timeslot;
 
 public class RepeatEventTimerTask extends TimerTask {
@@ -20,9 +20,10 @@ public class RepeatEventTimerTask extends TimerTask {
      * @param event event to edit
      * @param int period of repetition
      */
-    public RepeatEventTimerTask(ReadOnlyEvent event, int period) {
+    public RepeatEventTimerTask(Model model, ReadOnlyEvent event, int period) {
         requireNonNull(event);
 
+        this.model = model;
         this.targetEvent = event;
         this.period = period;
     }
@@ -34,7 +35,13 @@ public class RepeatEventTimerTask extends TimerTask {
         assert eventToEdit != null;
         Event event = new Event(eventToEdit);
         Timeslot currentTimeslot = event.getTimeslot();
-        event.setTimeslot(currentTimeslot.plusDays(period));
+
+        // If the eventToEdit is far in the past, only add the repeated event in the next week to avoid adding too
+        // many event at the same time
+        while (currentTimeslot.isBefore(Timeslot.getNow())) {
+            currentTimeslot = currentTimeslot.plusDays(period);
+        }
+        event.setTimeslot(currentTimeslot);
 
         return event;
     }
@@ -42,6 +49,17 @@ public class RepeatEventTimerTask extends TimerTask {
     @Override
     public void run() {
         Event editedEvent = createEditedEvent(targetEvent);
-        EventsCenter.getInstance().post(new CreateEventInstanceEvent(editedEvent, period));
+//        EventsCenter.getInstance().post(new CreateEventInstanceEvent(editedEvent, period));
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    model.addEvent(editedEvent);
+                } catch (EventTimeClashException etce) {
+                    model.scheduleRepeatedEvent(editedEvent);
+                }
+            }
+        });
+
     }
 }

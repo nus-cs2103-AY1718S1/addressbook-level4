@@ -53,19 +53,6 @@ public class Event implements ReadOnlyEvent, Comparable<Event> {
         this.period = new SimpleObjectProperty<>(period);
         this.templateEvent = Optional.empty();
 
-//        scheduleRepeatedEvent();
-    }
-
-    /**
-     * Schedule repeated event if period is not 0.
-     */
-    private void scheduleRepeatedEvent() {
-        int repeatPeriod = Integer.parseInt(period.get().toString());
-        if (repeatPeriod != 0) {
-            Timer timer = new Timer();
-            timer.schedule(new RepeatEventTimerTask(this, repeatPeriod), getEndDateTime());
-            logger.info("Event created!!!");
-        }
     }
 
     /**

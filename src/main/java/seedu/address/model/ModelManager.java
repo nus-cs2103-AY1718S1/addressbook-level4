@@ -3,8 +3,11 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Timer;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +15,9 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.CreateEventInstanceEvent;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.RepeatEventTimerTask;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.event.exceptions.EventTimeClashException;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -163,6 +168,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addEvent(ReadOnlyEvent event) throws EventTimeClashException {
         addressBook.addEvent(event);
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        scheduleRepeatedEvent(event);
         indicateAddressBookChanged();
     }
 
@@ -176,6 +182,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
             throws EventNotFoundException, EventTimeClashException {
         addressBook.updateEvent(target, editedEvent);
+        scheduleRepeatedEvent(editedEvent);
         indicateAddressBookChanged();
     }
     //@@author
@@ -199,5 +206,28 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
     }
+
+    /**
+     * Schedule repeated event if period is not 0.
+     */
+    public void scheduleRepeatedEvent(ReadOnlyEvent addedEvent) {
+        int repeatPeriod = Integer.parseInt(addedEvent.getPeriod().toString());
+        if (repeatPeriod != 0) {
+            Timer timer = new Timer();
+            timer.schedule(new RepeatEventTimerTask(this, addedEvent, repeatPeriod), addedEvent.getEndDateTime());
+        }
+    }
+
+//    //========== Event Handling =================================================================================
+//
+//    @Subscribe
+//    private void handleCreateEventInstanceEvent(CreateEventInstanceEvent e) {
+//        logger.info(LogsCenter.getEventHandlingLogMessage(e));
+//        try {
+//            addEvent(e.eventToAdd);
+//        } catch (EventTimeClashException etce) {
+//            scheduleRepeatedEvent(e.eventToAdd);
+//        }
+//    }
 
 }
