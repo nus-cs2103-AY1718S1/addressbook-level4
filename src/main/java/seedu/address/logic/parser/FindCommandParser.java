@@ -44,7 +44,7 @@ public class FindCommandParser implements Parser<FindCommand> {
             if ((token.contains(PREFIX_NAME.getPrefix())) || (token.contains(PREFIX_PHONE.getPrefix()))
                     || (token.contains(PREFIX_EMAIL.getPrefix())) || (token.contains(PREFIX_ADDRESS.getPrefix()))
                     || (token.contains(PREFIX_TAG.getPrefix()))) {
-                current = token.substring(0,2);
+                current = token.substring(0, 2);
                 if (token.length() != 2) {
                     newArgs += token + " ";
                 }
