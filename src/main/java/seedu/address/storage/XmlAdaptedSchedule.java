@@ -1,5 +1,8 @@
 package seedu.address.storage;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -7,6 +10,7 @@ import javax.xml.bind.annotation.XmlValue;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Name;
 import seedu.address.model.schedule.Activity;
 import seedu.address.model.schedule.Schedule;
@@ -39,9 +43,10 @@ public class XmlAdaptedSchedule {
         ScheduleDate scheduleDate = source.getScheduleDate();
         Activity activity = source.getActivity();
         Set<Name> personInvolvedNames = source.getPersonInvolvedNames();
+        List<Name> personInvolvedNamesList = new ArrayList<>(personInvolvedNames);
 
         schedule = "Date: " + scheduleDate.toString() + " Activity: " + activity.toString()
-                + " Person(s): " + personInvolvedName.toString();
+                + " Person(s): " + StringUtil.convertListToString(personInvolvedNamesList);
     }
 
     /**
@@ -55,13 +60,23 @@ public class XmlAdaptedSchedule {
         int endingIndexOfDate = 16;
         int startingIndexOfActivity = schedule.indexOf("Activity: ") + 10;
         int personHeaderIndex = schedule.indexOf("Person(s): ");
-        int startingIndexOfPerson = personHeaderIndex + 8;
+        int startingIndexOfPerson = personHeaderIndex + 11;
 
         String scheduleDate = schedule.substring(startingIndexOfDate, endingIndexOfDate);
         String activity = schedule.substring(startingIndexOfActivity, personHeaderIndex - 1);
-        String personInvolvedNames = schedule.substring(startingIndexOfPerson);
+        String personInvolvedNamesString = schedule.substring(startingIndexOfPerson);
 
-        logger.info("Date: " + scheduleDate + " Activity: " + activity + " Person: " + personInvolvedName);
-        return new Schedule(new ScheduleDate(scheduleDate), new Activity(activity), new Name(personInvolvedName));
+        logger.info("Date: " + scheduleDate + " Activity: " + activity + " Person(s): " + personInvolvedNamesString);
+
+        String[] personInvolvedNames = personInvolvedNamesString.split("; ");
+        Set<Name> scheduleModelNames = new HashSet<>();
+
+        //extract person names into set
+        for (int i = 0; i < personInvolvedNames.length; i++) {
+            scheduleModelNames.add(new Name(personInvolvedNames[i].trim()));
+            logger.info(personInvolvedNames[i].trim());
+        }
+
+        return new Schedule(new ScheduleDate(scheduleDate), new Activity(activity), scheduleModelNames);
     }
 }

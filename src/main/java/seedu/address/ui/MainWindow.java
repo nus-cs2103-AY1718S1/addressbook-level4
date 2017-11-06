@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -222,7 +224,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     @FXML
-    public void handleEmail() {
+    public void handleEmail() throws IOException, URISyntaxException {
         browserPanel.loadEmail();
     }
 

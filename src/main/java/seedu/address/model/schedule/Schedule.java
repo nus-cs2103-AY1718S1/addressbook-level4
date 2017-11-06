@@ -8,6 +8,7 @@ import java.util.Set;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.UniquePersonNameList;
 
 //@@author CT15
 /**
@@ -17,7 +18,7 @@ import seedu.address.model.person.Name;
 public class Schedule {
     private ObjectProperty<ScheduleDate> scheduleDate;
     private ObjectProperty<Activity> activity;
-    private ObjectProperty<Set<Name>> personInvolvedNames;
+    private ObjectProperty<UniquePersonNameList> personInvolvedNames;
 
     /**
      * Every field must be present and not null.
@@ -26,7 +27,7 @@ public class Schedule {
         requireAllNonNull(scheduleDate, activity, personInvolvedNames);
         this.scheduleDate = new SimpleObjectProperty<>(scheduleDate);
         this.activity = new SimpleObjectProperty<>(activity);
-        this.personInvolvedNames = new SimpleObjectProperty<>(personInvolvedNames);
+        this.personInvolvedNames = new SimpleObjectProperty<>(new UniquePersonNameList(personInvolvedNames));
     }
 
     /**
@@ -62,15 +63,15 @@ public class Schedule {
     }
 
     public Set<Name> getPersonInvolvedNames() {
-        return personInvolvedNames.get();
+        return personInvolvedNames.get().toSet();
     }
 
-    public ObjectProperty<Set<Name>> getPersonInvolvedNamesProperty() {
+    public ObjectProperty<UniquePersonNameList> getPersonInvolvedNamesProperty() {
         return personInvolvedNames;
     }
 
     public void setPersonInvolvedNames(Set<Name> personInvolvedNames) {
-        this.personInvolvedNames.set(personInvolvedNames);
+        this.personInvolvedNames.set(new UniquePersonNameList(personInvolvedNames));
     }
 
     //@@author
@@ -105,7 +106,7 @@ public class Schedule {
                 .append(getScheduleDate())
                 .append(" Activity: ")
                 .append(getActivity())
-                .append(" Person: ")
+                .append(" Person(s): ")
                 .append(getPersonInvolvedNames());
         return builder.toString();
     }

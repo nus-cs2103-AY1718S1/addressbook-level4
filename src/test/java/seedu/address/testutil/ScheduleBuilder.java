@@ -1,10 +1,13 @@
 package seedu.address.testutil;
 
+import java.util.Set;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Name;
 import seedu.address.model.schedule.Activity;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.ScheduleDate;
+import seedu.address.model.util.SampleDataUtil;
 
 //@@author CT15
 /**
@@ -21,7 +24,7 @@ public class ScheduleBuilder {
         try {
             ScheduleDate defaultScheduleDate = new ScheduleDate(DEFAULT_SCHEDULE_DATE);
             Activity defaultActivity = new Activity(DEFAULT_ACTIVITY);
-            Name defaultPersonName = new Name(DEFAULT_PERSON_NAME);
+            Set<Name> defaultPersonName = SampleDataUtil.getPersonNamesSet(DEFAULT_PERSON_NAME);
             this.schedule = new Schedule(defaultScheduleDate, defaultActivity, defaultPersonName);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default schedule's values are invalid.");
@@ -42,7 +45,7 @@ public class ScheduleBuilder {
     public ScheduleBuilder withScheduleDate(String scheduleDate) {
         try {
             schedule = new Schedule(new ScheduleDate(scheduleDate), schedule.getActivity(),
-                    schedule.getPersonInvolvedName());
+                    schedule.getPersonInvolvedNames());
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("schedule date is expected to be unique.");
         }
@@ -55,7 +58,7 @@ public class ScheduleBuilder {
     public ScheduleBuilder withActivity(String activity) {
         try {
             schedule = new Schedule(schedule.getScheduleDate(), new Activity(activity),
-                    schedule.getPersonInvolvedName());
+                    schedule.getPersonInvolvedNames());
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("activity is expected to be unique.");
         }
@@ -64,14 +67,14 @@ public class ScheduleBuilder {
 
     //@@author CT15
     /**
-     * Sets the {@code Activity} of the {@code Schedule} that we are building.
+     * Sets the {@code personInvolvedNames} of the {@code Schedule} that we are building.
      */
-    public ScheduleBuilder withPersonName(String personName) {
+    public ScheduleBuilder withPersonName(String... personNames) {
         try {
             schedule = new Schedule(schedule.getScheduleDate(), schedule.getActivity(),
-                    new Name(personName));
+                    SampleDataUtil.getPersonNamesSet(personNames));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("activity is expected to be unique.");
+            throw new IllegalArgumentException("Person names are expected to be unique.");
         }
         return this;
     }
