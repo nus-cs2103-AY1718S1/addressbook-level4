@@ -1,4 +1,4 @@
-= cherBook v1.3 - Developer Guide
+= cherBook v1.5 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
