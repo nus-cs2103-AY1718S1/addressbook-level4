@@ -21,7 +21,12 @@ public class SetPathCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        ProfilePicturesFolder.setPath(path);
+        ProfilePicturesFolder.setPath(reformatPath(path));
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    private String reformatPath(String path) {
+        path = path.replaceAll("\\\\", "/");
+        return path;
     }
 }
