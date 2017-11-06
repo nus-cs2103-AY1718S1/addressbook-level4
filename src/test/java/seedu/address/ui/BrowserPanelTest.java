@@ -18,6 +18,7 @@ import guitests.guihandles.BrowserPanelHandle;
 import seedu.address.MainApp;
 import seedu.address.commons.events.ui.LessonPanelSelectionChangedEvent;
 
+//@@author cctdaniel
 public class BrowserPanelTest extends GuiUnitTest {
     private LessonPanelSelectionChangedEvent selectionChangedEventStub;
 

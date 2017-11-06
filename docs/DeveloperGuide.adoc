@@ -662,6 +662,108 @@ image::SwitchThemeCommandActivityDiagram.png[width="900"]
 **Cons:** In order to get it in other components, the variable must be declared static. But we cannot define static abstract method in interface. It also does not follow Java's standard coding style.
 // end::theme[]
 
+
+// tag::timetable[]
+=== Timetable mechanism
+
+`Timetable` is an enhancement of UI. The role of the timetable view is to display a timetable of all the lessons listed in the display panel. +
+
+`Timetable` mechanism is facilitated by the `GridPane` properties in javafx. +
+The first row of timetable view is the header for time slot. The range is from 0800 to 2000. +
+The generation of timetable column header is implemented this way:
+[source,java]
+----
+ public void generateTimeslotHeader() {
+        // ... generate column header for time slots ...//
+    }
+----
+
+The first col of timetable view is the header for weekday. The range is from Monday to Friday.
+The generation of timetable row header is implemented this way:
+[source,java]
+----
+    public void generateWeekDay() {
+       // ... generate row header for weekday ...//
+    }
+----
++
+
+When the `view` command is used, a number of lessons will be displayed on the display panel. The `handleViewedLessonEvent()` will then generate the timetable view and set it as visible. +
+
+The generation of timetable data is implemented this way:
+[source,java]
+----
+public void generateTimeTableData() {
+        // ... initGridData() ...//
+        // ... generate grid data for grid view ...//
+    }
+----
+
+The generation of timetable view is implemented this way:
+[source,java]
+----
+public void generateTimeTableGrid() {
+
+        // ... generateTimeTableData(); ...//
+        // ... generateTimeslotHeader(); ...//
+       // ... generateWeekDay();  ...//
+       // ... generate timetable view  ...//
+    }
+----
+==== Design considerations
+
+**Aspect:** Implementation of Timetable. +
+**Alternative1 (current choice): ** Using code to create timetable view. +
+**Pros:** It is more flexible to change the style or the text of the label. +
+**Cons:** Since everything is written in code, you can not visualise the layout until you run the code. +
+**Alternative2:** Using Scene Builder to create timetable view +
+**Pros:** It is easier to visualise the layout +
+**Cons:** There are many limitations such as unable to add time slot to span 2 columns. +
+
+// end::timetable[]
+
+// tag::stickyNote[]
+=== StickyNotes mechanism
+
+`StickyNotes` is an enhancement of UI. The role of the stickynotes view is to display information about a module when. +
+
+[NOTE]
+The maximum number of notes for a module is 9.
+
+`StickyNotes` mechanism is facilitated by the `GridPane` properties in javafx. +
+
+When the `remark` command is used, a new note will be created and linked to a module. +
+The `handleRemarkChangedEvent()` will then generate the stickynotes view and set it as visible. +
+
+The generation of stickynotes data is implemented this way:
+[source,java]
+----
+public void noteDataInit() {
+        // ... generate note data for stickynotes view ...//
+    }
+----
+
+The generation of stickynotes view is implemented this way:
+[source,java]
+----
+public void stickyNotesInit() {
+
+        // ... noteDataInit(); ...//
+       // ... generate stickynotes view  ...//
+    }
+----
+==== Design considerations
+
+**Aspect:** Implementation of StickyNotes. +
+**Alternative1 (current choice): ** Using code to create stickynotes view. +
+**Pros:** The color of stickynotes can be changed easily. +
+**Cons:** THe developer needs to understand how to code for UI. +
+**Alternative2:** Using Scene Builder to create stickynotes view +
+**Pros:** It is easier to visualise the layout and set the properties+
+**Cons:** There are many limitations such as unable to show only a few TextArea objects. +
+
+// end::timetable[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

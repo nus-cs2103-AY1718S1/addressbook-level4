@@ -19,6 +19,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.module.ReadOnlyLesson;
 
+//@@author cctdaniel
 public class LessonListPanelTest extends GuiUnitTest {
     private static final ObservableList<ReadOnlyLesson> TYPICAL_LESSONS =
             FXCollections.observableList(getTypicalLessons());

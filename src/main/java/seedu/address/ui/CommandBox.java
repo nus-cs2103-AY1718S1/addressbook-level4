@@ -35,7 +35,23 @@ import seedu.address.commons.events.ui.ColorKeywordEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.ColorKeywordCommand;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.CustomiseCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.CliSyntax;
@@ -68,7 +84,7 @@ public class CommandBox extends UiPart<Region> {
     private ArrayList<String> prefixList;
     private int fontIndex = 0;
     private boolean enableHighlight = false;
-    private String userPrefFontSize = "-fx-font-size: normal;";
+    private String userPrefFontSize = "-fx-font-size: medium;";
 
     private final ImageView tick = new ImageView("/images/tick.png");
     private final ImageView cross = new ImageView("/images/cross.png");
@@ -109,12 +125,10 @@ public class CommandBox extends UiPart<Region> {
         configInactiveKeyword();
         configPrefixList();
         keywordLabel.getStyleClass().add("keyword-label-default");
-        keywordColorMap = logic.getCommandKeywordColorMap();
-        //@@author cctdaniel
+        keywordColorMap = getCommandKeywordColorMap();
         String[] commands = {"help", "add", "list", "edit", "find",
             "delete", "select", "history", "undo", "redo", "clear", "exit", "customise", "view", "swt"};
-        TextFields.bindAutoCompletion(commandTextField, commands); // credit to controlsfx
-        //@@author
+        TextFields.bindAutoCompletion(commandTextField, commands); // controlsfx
         tick.setFitHeight(30);
         tick.setFitWidth(30);
         cross.setFitHeight(25);
@@ -622,6 +636,28 @@ public class CommandBox extends UiPart<Region> {
      */
     public void setEnableHighlight(boolean enableHighlight) {
         this.enableHighlight = enableHighlight;
+    }
+
+    //@@author caoliangnus
+    public HashMap<String, String> getCommandKeywordColorMap() {
+        HashMap<String, String> keywordColorMap = new HashMap<>();
+        keywordColorMap.put(AddCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(DeleteCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(EditCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(ExitCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(FindCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(HelpCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(ListCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(SelectCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(SortCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(ClearCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(UndoCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(RedoCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(CustomiseCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(HistoryCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(ViewCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(ColorKeywordCommand.COMMAND_WORD, "red");
+        return keywordColorMap;
     }
 
 }
