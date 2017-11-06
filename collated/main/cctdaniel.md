@@ -1,5 +1,5 @@
 # cctdaniel
-###### /java/seedu/address/commons/events/ui/ChangeFontSizeEvent.java
+###### \java\seedu\address\commons\events\ui\ChangeFontSizeEvent.java
 ``` java
 /**
  * Indicates a request to change the font size of the application
@@ -19,7 +19,7 @@ public class ChangeFontSizeEvent extends BaseEvent {
 
 }
 ```
-###### /java/seedu/address/commons/events/ui/SwitchThemeRequestEvent.java
+###### \java\seedu\address\commons\events\ui\SwitchThemeRequestEvent.java
 ``` java
 /**
  * An event requesting to switch current theme.
@@ -39,7 +39,7 @@ public class SwitchThemeRequestEvent extends BaseEvent {
 
 }
 ```
-###### /java/seedu/address/logic/commands/CustomiseCommand.java
+###### \java\seedu\address\logic\commands\CustomiseCommand.java
 ``` java
 /**
  * Customise the look of the Address Book application.
@@ -107,7 +107,7 @@ public class CustomiseCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/commands/ThemeCommand.java
+###### \java\seedu\address\logic\commands\ThemeCommand.java
 ``` java
 /**
  * Switch between light and dark theme
@@ -178,7 +178,7 @@ public class ThemeCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
+###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case CustomiseCommand.COMMAND_WORD:
             return new CustomiseCommandParser().parse(arguments);
@@ -186,7 +186,7 @@ public class ThemeCommand extends Command {
         case ThemeCommand.COMMAND_WORD:
             return new ThemeCommandParser().parse(arguments);
 ```
-###### /java/seedu/address/logic/parser/CustomiseCommandParser.java
+###### \java\seedu\address\logic\parser\CustomiseCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new CustomiseCommand object
@@ -225,7 +225,7 @@ public class CustomiseCommandParser implements Parser<CustomiseCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> fontSize} into an {@code Optional<FontSize>} if {@code fontSize} is present.
@@ -236,7 +236,7 @@ public class CustomiseCommandParser implements Parser<CustomiseCommand> {
         return fontSize.isPresent() ? Optional.of(new FontSize(fontSize.get())) : Optional.empty();
     }
 ```
-###### /java/seedu/address/logic/parser/ThemeCommandParser.java
+###### \java\seedu\address\logic\parser\ThemeCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ThemeCommand object
@@ -266,7 +266,7 @@ public class ThemeCommandParser implements Parser<ThemeCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/font/FontSize.java
+###### \java\seedu\address\model\font\FontSize.java
 ``` java
 /**
  * Represents the font size of the AddressBook.
@@ -278,6 +278,13 @@ public class FontSize {
             "Font size can only be either \"xsmall\", \"small\","
                     + " \"normal\", \"large\",  or \"xlarge\" (case-sensitive).";
     public static final String[] FONT_SIZE_VALIDATION = {"xsmall", "small", "normal", "large", "xlarge"};
+    public static final String FONT_SIZE_XSMALL_NUMBER = "12";
+    public static final String FONT_SIZE_SMALL_NUMBER = "17";
+    public static final String FONT_SIZE_NORMAL_NUMBER = "25";
+    public static final String FONT_SIZE_LARGE_NUMBER = "32";
+    public static final String FONT_SIZE_XLARGE_NUMBER = "40";
+
+
     public final String value;
 
     /**
@@ -318,7 +325,7 @@ public class FontSize {
 
 }
 ```
-###### /java/seedu/address/model/FontSizeUnit.java
+###### \java\seedu\address\model\FontSizeUnit.java
 ``` java
 /**
  * A Enumeration class that consists of all possible FontSize
@@ -340,7 +347,7 @@ public enum FontSizeUnit {
     }
 }
 ```
-###### /java/seedu/address/model/ThemeUnit.java
+###### \java\seedu\address\model\ThemeUnit.java
 ``` java
 /**
  * A Enumeration class that consists of all possible Theme
@@ -362,7 +369,7 @@ public enum ThemeUnit {
     }
 }
 ```
-###### /java/seedu/address/ui/CombinePanel.java
+###### \java\seedu\address\ui\CombinePanel.java
 ``` java
     /**
      * Sets the remark style to user preferred font size.
@@ -370,11 +377,11 @@ public enum ThemeUnit {
     private void setFontSize(String userPref) {
         switch (userPref) {
         case FONT_SIZE_XSMALL:
-            setFontSizeHelper("10");
+            setFontSizeHelper("12");
             break;
 
         case FONT_SIZE_SMALL:
-            setFontSizeHelper("12");
+            setFontSizeHelper("17");
             break;
 
         case FONT_SIZE_NORMAL:
@@ -445,14 +452,14 @@ public enum ThemeUnit {
         }
     }
 ```
-###### /java/seedu/address/ui/CommandBox.java
+###### \java\seedu\address\ui\CommandBox.java
 ``` java
     @Subscribe
     private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
         setFontSize(event.message);
     }
 ```
-###### /java/seedu/address/ui/CommandBox.java
+###### \java\seedu\address\ui\CommandBox.java
 ``` java
     /**
      * Sets the command box style to user preferred font size.
@@ -460,32 +467,32 @@ public enum ThemeUnit {
     private void setFontSize(String userPref) {
         switch (userPref) {
         case FONT_SIZE_XSMALL:
-            commandTextField.setStyle("-fx-font-size: x-small;");
-            userPrefFontSize = "-fx-font-size: x-small;";
+            commandTextField.setStyle("-fx-font-size: " + FONT_SIZE_XSMALL_NUMBER + ";");
+            userPrefFontSize = "-fx-font-size: " + FONT_SIZE_XSMALL_NUMBER + ";";
             fontIndex = 1;
             break;
 
         case FONT_SIZE_SMALL:
-            commandTextField.setStyle("-fx-font-size: small;");
-            userPrefFontSize = "-fx-font-size: small;";
+            commandTextField.setStyle("-fx-font-size: " + FONT_SIZE_SMALL_NUMBER + ";");
+            userPrefFontSize = "-fx-font-size: " + FONT_SIZE_SMALL_NUMBER + ";";
             fontIndex = 2;
             break;
 
         case FONT_SIZE_NORMAL:
-            commandTextField.setStyle("-fx-font-size: normal;");
-            userPrefFontSize = "-fx-font-size: normal;";
+            commandTextField.setStyle("-fx-font-size: " + FONT_SIZE_NORMAL_NUMBER + ";");
+            userPrefFontSize = "-fx-font-size: " + FONT_SIZE_NORMAL_NUMBER + ";";
             fontIndex = 3;
             break;
 
         case FONT_SIZE_LARGE:
-            commandTextField.setStyle("-fx-font-size: x-large;");
-            userPrefFontSize = "-fx-font-size: x-large;";
+            commandTextField.setStyle("-fx-font-size: " + FONT_SIZE_LARGE_NUMBER + ";");
+            userPrefFontSize = "-fx-font-size: " + FONT_SIZE_LARGE_NUMBER + ";";
             fontIndex = 4;
             break;
 
         case FONT_SIZE_XLARGE:
-            commandTextField.setStyle("-fx-font-size: xx-large;");
-            userPrefFontSize = "-fx-font-size: xx-large;";
+            commandTextField.setStyle("-fx-font-size: " + FONT_SIZE_XLARGE_NUMBER + ";");
+            userPrefFontSize = "-fx-font-size: " + FONT_SIZE_XLARGE_NUMBER + ";";
             fontIndex = 5;
             break;
 
@@ -494,7 +501,7 @@ public enum ThemeUnit {
         }
     }
 ```
-###### /java/seedu/address/ui/LessonListCard.java
+###### \java\seedu\address\ui\LessonListCard.java
 ``` java
     @Subscribe
     private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
@@ -504,23 +511,23 @@ public enum ThemeUnit {
     private void setFontSize(String userPref) {
         switch (userPref) {
         case FONT_SIZE_XSMALL:
-            setFontSizeHelper("x-small");
+            setFontSizeHelper(FONT_SIZE_XSMALL_NUMBER);
             break;
 
         case FONT_SIZE_SMALL:
-            setFontSizeHelper("small");
+            setFontSizeHelper(FONT_SIZE_SMALL_NUMBER);
             break;
 
         case FONT_SIZE_NORMAL:
-            setFontSizeHelper("normal");
+            setFontSizeHelper(FONT_SIZE_NORMAL_NUMBER);
             break;
 
         case FONT_SIZE_LARGE:
-            setFontSizeHelper("x-large");
+            setFontSizeHelper(FONT_SIZE_LARGE_NUMBER);
             break;
 
         case FONT_SIZE_XLARGE:
-            setFontSizeHelper("xx-large");
+            setFontSizeHelper(FONT_SIZE_XLARGE_NUMBER);
             break;
 
         default:
@@ -566,7 +573,7 @@ public enum ThemeUnit {
     }
 }
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     @Subscribe
     private void handleSwitchThemeRequestEvent(SwitchThemeRequestEvent event) {
@@ -593,7 +600,7 @@ public enum ThemeUnit {
 
 }
 ```
-###### /java/seedu/address/ui/ResultDisplay.java
+###### \java\seedu\address\ui\ResultDisplay.java
 ``` java
     @Subscribe
     private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
@@ -603,23 +610,23 @@ public enum ThemeUnit {
     private void setFontSize(String userPref) {
         switch (userPref) {
         case FONT_SIZE_XSMALL:
-            resultDisplay.setStyle("-fx-font-size: x-small;");
+            resultDisplay.setStyle("-fx-font-size: " + FONT_SIZE_XSMALL_NUMBER + ";");
             break;
 
         case FONT_SIZE_SMALL:
-            resultDisplay.setStyle("-fx-font-size: small;");
+            resultDisplay.setStyle("-fx-font-size: " + FONT_SIZE_SMALL_NUMBER + ";");
             break;
 
         case FONT_SIZE_NORMAL:
-            resultDisplay.setStyle("-fx-font-size: normal;");
+            resultDisplay.setStyle("-fx-font-size: " + FONT_SIZE_NORMAL_NUMBER + ";");
             break;
 
         case FONT_SIZE_LARGE:
-            resultDisplay.setStyle("-fx-font-size: x-large;");
+            resultDisplay.setStyle("-fx-font-size: " + FONT_SIZE_LARGE_NUMBER + ";");
             break;
 
         case FONT_SIZE_XLARGE:
-            resultDisplay.setStyle("-fx-font-size: xx-large;");
+            resultDisplay.setStyle("-fx-font-size: " + FONT_SIZE_XLARGE_NUMBER + ";");
             break;
 
         default:
@@ -629,7 +636,7 @@ public enum ThemeUnit {
 
 }
 ```
-###### /resources/view/LightExtensions.css
+###### \resources\view\LightExtensions.css
 ``` css
 .error {
     -fx-text-fill: #d06651 !important; /* The error class should always override the default text-fill style */
@@ -652,7 +659,7 @@ public enum ThemeUnit {
 }
 
 ```
-###### /resources/view/LightTheme.css
+###### \resources\view\LightTheme.css
 ``` css
 .background {
     -fx-background-color: derive(#d4cbb3, 50%);
@@ -884,32 +891,32 @@ public enum ThemeUnit {
 
 .keyword-label-default {
     -fx-font-family: monospace;
-    -fx-font-size: 13pt;
+    -fx-font-size: 25;
     -fx-text-fill: white;
 }
 
 .keyword-label-xsmall {
-        -fx-font-family: monospace;
-        -fx-font-size: x-small;
-        -fx-text-fill: white;
+    -fx-font-family: monospace;
+    -fx-font-size: 12;
+    -fx-text-fill: white;
 }
 
 .keyword-label-small {
-        -fx-font-family: monospace;
-        -fx-font-size: small;
-        -fx-text-fill: white;
+    -fx-font-family: monospace;
+    -fx-font-size: 17;
+    -fx-text-fill: white;
 }
 
 .keyword-label-large {
-        -fx-font-family: monospace;
-        -fx-font-size: x-large;
-        -fx-text-fill: white;
+    -fx-font-family: monospace;
+    -fx-font-size: 32;
+    -fx-text-fill: white;
 }
 
 .keyword-label-xlarge {
-        -fx-font-family: monospace;
-        -fx-font-size: xx-large;
-        -fx-text-fill: white;
+    -fx-font-family: monospace;
+    -fx-font-size: 40;
+    -fx-text-fill: white;
 }
 
 
@@ -1034,7 +1041,7 @@ public enum ThemeUnit {
     -fx-border-width: 2;
     -fx-font-family: monospace;
     -fx-font-weight: bolder;
-    -fx-font-size: 13pt;
+    -fx-font-size: 25;
     -fx-text-fill: #6B4A40;
 }
 
@@ -1045,37 +1052,37 @@ public enum ThemeUnit {
     -fx-border-insets: 0;
     -fx-border-width: 1;
     -fx-font-family: monospace;
-    -fx-font-size: 13pt;
+    -fx-font-size: 25;
     -fx-text-fill: #6B4A40;
 }
 
 #commandTextDefault {
     -fx-font-family: monospace;
-    -fx-font-size: 13pt;
+    -fx-font-size: 25;
     -fx-text-fill: #6B4A40;
 }
 
 #commandTextXsmall{
     -fx-font-family: monospace;
-    -fx-font-size: x-small;
+    -fx-font-size: 12;
     -fx-text-fill: #6B4A40;
 }
 
 #commandTextSmall{
     -fx-font-family: monospace;
-    -fx-font-size: small;
+    -fx-font-size: 17;
     -fx-text-fill: #6B4A40;
 }
 
 #commandTextLarge{
     -fx-font-family: monospace;
-    -fx-font-size: x-large;
+    -fx-font-size: 32;
     -fx-text-fill: #6B4A40;
 }
 
 #commandTextXLarge{
     -fx-font-family: monospace;
-    -fx-font-size: xx-large;
+    -fx-font-size: 40;
     -fx-text-fill: #6B4A40;
 }
 
