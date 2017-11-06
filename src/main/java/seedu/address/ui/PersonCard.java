@@ -7,7 +7,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
+
+import com.google.common.eventbus.Subscribe;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -15,9 +18,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    //@@author qihao27
     private static final String tagColor = "#5AC0FB";
-    //@@author
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -43,8 +44,14 @@ public class PersonCard extends UiPart<Region> {
     private Label email;
     @FXML
     private FlowPane tags;
+    //@@author qihao27
     @FXML
     private ImageView favourite;
+    @FXML
+    private ImageView todo;
+    @FXML
+    private Label totalTodo;
+    //@@author
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
@@ -72,6 +79,7 @@ public class PersonCard extends UiPart<Region> {
         });
         //@@author qihao27
         addFavouriteStar(person);
+        addTodoCount(person);
         //@@author
     }
 
@@ -81,9 +89,7 @@ public class PersonCard extends UiPart<Region> {
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            //@@author qihao27
             tagLabel.setStyle("-fx-background-color: " + tagColor);
-            //@@author
             tags.getChildren().add(tagLabel);
         });
     }
@@ -94,7 +100,23 @@ public class PersonCard extends UiPart<Region> {
             favourite.setId("favouriteStar");
         }
     }
-    //@@author
+
+    private void addTodoCount(ReadOnlyPerson person) {
+        if (person.getTodoItems().size() > 0) {
+            totalTodo.setText((person.getTodoItems().size()+""));
+            todo.setId("todoBackground");
+        } else {
+            totalTodo.setText("");
+        }
+    }
+
+    private void setTodoCount(int totalTodo) {
+        if (totalTodo > 0) {
+            this.totalTodo.setText(totalTodo + "");
+        } else {
+            this.totalTodo.setText("");
+        }
+    }
 
     //@@author aaronyhsoh-unsed
     /*private void highlightName(ReadOnlyPerson person) {
@@ -120,5 +142,11 @@ public class PersonCard extends UiPart<Region> {
         PersonCard card = (PersonCard) other;
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
+    }
+
+    //@@author qihao27
+    @Subscribe
+    public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
+        setTodoCount(abce.data.getTodoList().size());
     }
 }

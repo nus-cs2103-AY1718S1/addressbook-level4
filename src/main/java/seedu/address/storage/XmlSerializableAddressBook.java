@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TodoItem;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -24,6 +25,8 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     private List<XmlAdaptedPerson> persons;
     @XmlElement
     private List<XmlAdaptedTag> tags;
+    @XmlElement
+    private List<XmlAdapterTodoItem> todoItems;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -71,4 +74,17 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         return FXCollections.unmodifiableObservableList(tags);
     }
 
+    @Override
+    public ObservableList<TodoItem> getTodoList() {
+        final ObservableList<TodoItem> todoItems = this.todoItems.stream().map(t -> {
+            try {
+                return t.toModelType();
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+                //TODO: better error handling
+                return null;
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(todoItems);
+    }
 }
