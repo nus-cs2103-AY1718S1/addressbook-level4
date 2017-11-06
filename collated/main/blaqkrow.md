@@ -146,10 +146,10 @@ public class AddressTextField extends UiPart<Region> {
      * Loads Webpage
      */
     public void loadQrCode(ReadOnlyPerson person) {
-        QrGenerateCommand qrGenerateCommand = new QrGenerateCommand();
+        QrGenCallCommand qrGenCallCommand = new QrGenCallCommand();
         browser.getEngine().setUserAgent("Mozilla/5.0 "
                 + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0");
-        loadPage(qrGenerateCommand.qrCall(person.getPhone().toString()));
+        loadPage(qrGenCallCommand.qrCall(person.getPhone().toString()));
     }
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
@@ -691,6 +691,10 @@ public class QrButton extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.person = event.getNewSelection().person;
+    }
+    @Subscribe
+    private void clickButton(QrEvent event ) {
+        bp.loadQrCode((ReadOnlyPerson) event.getPerson());
     }
 }
 ```
