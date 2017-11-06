@@ -172,6 +172,7 @@ public class PersonBuilder {
         return this;
     }
 
+    // @@author itsdickson
     /**
      * Sets the {@code Boolean} of the {@code Person} that we are building.
      */
@@ -179,6 +180,7 @@ public class PersonBuilder {
         this.person.setFavourite(new Boolean(favourite));
         return this;
     }
+    // @@author
 
     public Person build() {
         return this.person;

@@ -70,6 +70,7 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(defaultPage.toExternalForm());
     }
 
+    // @@author itsdickson
     /**
      * Sets the default HTML file based on the current theme.
      */
@@ -82,6 +83,7 @@ public class BrowserPanel extends UiPart<Region> {
         }
         loadPage(defaultPage.toExternalForm());
     }
+    // @@author
 
     /**
      * Frees resources allocated to the browser.

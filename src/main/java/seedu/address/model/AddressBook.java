@@ -135,6 +135,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+    // @@author itsdickson
     /**
      * Favourites {@code target} to this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code target} is not in this {@code AddressBook}.
@@ -150,6 +151,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         persons.unfavouritePerson(target);
     }
+    // @@author
 
     /**
      * Ensures that every tag in this person:
@@ -220,10 +222,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    // @@author itsdickson
     /**
      * Initialises the Themes ArrayList
      */
-
     private void initialiseThemes() {
         themes.add("DarkTheme.css");
         themes.add("BrightTheme.css");
@@ -232,6 +234,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ArrayList<String> getThemesList() {
         return themes;
     }
+    // @@author
 
     //@@author DarrenCzen
     /** Ensures that every person in the AddressBook
