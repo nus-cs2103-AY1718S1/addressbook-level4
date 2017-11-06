@@ -86,24 +86,31 @@ public class ResultDisplay extends UiPart<Region> {
     private void displayResultIcon(ValidResultDisplayEvent event) {
         switch (event.message.trim()) {
         case "delete":
+            listSizeDisplay.setVisible(false);
             imageDisplay.setImage(new Image(DELETE_ICON));
             break;
         case "edit":
+            listSizeDisplay.setVisible(false);
             imageDisplay.setImage(new Image(EDIT_ICON));
             break;
         case "find":
+            listSizeDisplay.setVisible(true);
             imageDisplay.setImage(new Image(FIND_ICON));
             break;
         case "hide":
+            listSizeDisplay.setVisible(true);
             imageDisplay.setImage(new Image(HIDE_ICON));
             break;
         case "task":
+            listSizeDisplay.setVisible(false);
             imageDisplay.setImage(new Image(TASK_ICON));
             break;
         case "undo":
+            listSizeDisplay.setVisible(false);
             imageDisplay.setImage(new Image(UNDO_ICON));
             break;
         default:
+            listSizeDisplay.setVisible(true);
             imageDisplay.setImage(new Image(SUCCESS_ICON));
         }
     }
@@ -111,6 +118,7 @@ public class ResultDisplay extends UiPart<Region> {
     @Subscribe
     private void handleInvalidResultDisplayEvent(InvalidResultDisplayEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        listSizeDisplay.setVisible(false);
         imageDisplay.setImage(new Image(ERROR_ICON));
     }
 
