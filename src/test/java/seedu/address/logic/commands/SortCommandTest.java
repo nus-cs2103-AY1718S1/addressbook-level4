@@ -163,6 +163,11 @@ public class SortCommandTest {
         }
 
         @Override
+        public void resetRecyclebin(ReadOnlyAddressBook newData) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ReadOnlyAddressBook getAddressBook() {
             fail("This method should not be called.");
             return null;

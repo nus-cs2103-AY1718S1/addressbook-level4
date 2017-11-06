@@ -76,6 +76,11 @@ public class ModelManager extends ComponentManager implements Model {
         EventsCenter.getInstance().post(new ScheduleUpdateEvent(getEventList()));
         indicateAddressBookChanged();
     }
+    @Override
+    public void resetRecyclebin(ReadOnlyAddressBook newData) {
+        recycleBin.resetData(newData);
+        indicateRecycleBinChnaged();
+    }
 
     @Override
     public ReadOnlyAddressBook getAddressBook() {
