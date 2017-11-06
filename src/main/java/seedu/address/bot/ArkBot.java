@@ -3,7 +3,10 @@ package seedu.address.bot;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.telegram.abilitybots.api.bot.AbilityBot;
@@ -11,17 +14,24 @@ import org.telegram.abilitybots.api.objects.Ability;
 import org.telegram.abilitybots.api.objects.Locality;
 import org.telegram.abilitybots.api.objects.MessageContext;
 import org.telegram.abilitybots.api.objects.Privacy;
+import org.telegram.telegrambots.api.methods.GetFile;
 import org.telegram.telegrambots.api.methods.updatingmessages.EditMessageText;
+import org.telegram.telegrambots.api.objects.File;
 import org.telegram.telegrambots.api.objects.Message;
+import org.telegram.telegrambots.api.objects.PhotoSize;
+import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 
 import seedu.address.bot.parcel.DisplayParcel;
+import seedu.address.bot.parcel.ParcelParser;
+import seedu.address.bot.qrcode.QRCodeAnalyser;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -31,22 +41,36 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.parcel.ReadOnlyParcel;
 
+/**
+ * Arkbot contains all of the commands available for use.
+ */
 public class ArkBot extends AbilityBot {
 
-    private static final String BOT_MESSAGE_FAILURE = "Sorry, I don't understand.";
+    private static final String BOT_MESSAGE_FAILURE = "Oh dear, something went wrong! Please try again!";
     private static final String BOT_MESSAGE_SUCCESS = "%s command has been successfully executed!";
     private static final String BOT_MESSAGE_HELP = "Welcome to ArkBot, your friendly companion to ArkBot on Desktop.\n"
                                                  + "Over here, you can interface with your Desktop application with "
                                                  + "the following functions /add, /list, /delete, /undo, /redo, "
                                                  + "/complete and /help.";
+    private static final String BOT_SET_COMPLETED = " " + "s/Completed";
+    private static final String BOT_DEMO_JOHN = "#/RR000000000SG n/John Doe p/98765432 e/johnd@example.com "
+            + "a/John street, block 123, #01-01 S123121 d/01-01-2001 s/DELIVERING";
+    private static final String BOT_DEMO_BETSY = "add #/RR000000000SG n/Betsy Crowe t/frozen d/02-02-2002 "
+            + "e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567 t/fragile";
     private Logic logic;
     private Model model;
+    private String botToken;
+    private String botUsername;
     private Optional<Message> lastKnownMessage;
+    private boolean waitingForImage;
 
     public ArkBot(Logic logic, Model model, String botToken, String botUsername) {
         super(botToken, botUsername);
         this.logic = logic;
         this.model = model;
+        this.botToken = botToken;
+        this.botUsername = botUsername;
+        this.waitingForImage = false;
     }
 
     @Override
@@ -209,6 +233,61 @@ public class ArkBot extends AbilityBot {
     }
 
     /**
+     * Command to complete tasks with QR code or number
+     */
+    public Ability completeCommand() {
+        return Ability
+                .builder()
+                .name("complete")
+                .info("completes a parcel in list")
+                .input(0)
+                .locality(Locality.ALL)
+                .privacy(Privacy.ADMIN)
+                .action(ctx -> {
+                    Platform.runLater(() -> {
+                        try {
+                            if (combineArguments(ctx.arguments()).trim().equals("")) {
+                                this.waitingForImage = true;
+                                sender.send("Please upload QR code to complete delivery.\n"
+                                        + "Type \"/cancel\" to stop uploading process.", ctx.chatId());
+                            } else {
+                                logic.execute(EditCommand.COMMAND_WORD + " "
+                                        + combineArguments(ctx.arguments()) + BOT_SET_COMPLETED);
+                                ObservableList<ReadOnlyParcel> parcels = model.getFilteredUndeliveredParcelList();
+                                EditMessageText editedText =
+                                        new EditMessageText().setChatId(ctx.chatId())
+                                                .setMessageId(lastKnownMessage.get().getMessageId())
+                                                .setText(parseDisplayParcels(formatParcelsForBot(parcels)));
+                                sender.editMessageText(editedText);
+                            }
+                        } catch (CommandException | ParseException e) {
+                            sender.send(BOT_MESSAGE_FAILURE, ctx.chatId());
+                        } catch (TelegramApiException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                })
+                .build();
+    }
+
+    public Ability cancelCommand() {
+        return Ability
+                .builder()
+                .name("cancel")
+                .info("cancels QR code upload")
+                .input(0)
+                .locality(Locality.ALL)
+                .privacy(Privacy.ADMIN)
+                .action(ctx -> {
+                    Platform.runLater(() -> {
+                        this.waitingForImage = false;
+                        sender.send("QR Code upload successfully cancelled!", ctx.chatId());
+                    });
+                })
+                .build();
+    }
+
+    /**
      * Command to advise user on usage of bot.
      */
     public Ability helpCommand() {
@@ -225,6 +304,31 @@ public class ArkBot extends AbilityBot {
                     });
                 })
                 .post(ctx -> sender.send("What would you like to do next?", ctx.chatId()))
+                .build();
+    }
+
+    /**
+     * Demo command, adds JOHN and BETSY
+     */
+    public Ability demoCommand() {
+        return Ability
+                .builder()
+                .name("demo")
+                .info("adds demo parcels to list")
+                .input(0)
+                .locality(Locality.ALL)
+                .privacy(Privacy.ADMIN)
+                .action(ctx -> {
+                    Platform.runLater(() -> {
+                        try {
+                            logic.execute(AddCommand.COMMAND_WORD + " " + BOT_DEMO_JOHN);
+                            logic.execute(AddCommand.COMMAND_WORD + " " + BOT_DEMO_BETSY);
+                            sender.send(String.format(BOT_MESSAGE_SUCCESS, "Demo"), ctx.chatId());
+                        } catch (CommandException | ParseException e) {
+                            sender.send(BOT_MESSAGE_FAILURE, ctx.chatId());
+                        }
+                    });
+                })
                 .build();
     }
 
@@ -275,6 +379,96 @@ public class ArkBot extends AbilityBot {
 
             return result;
         }
+    }
+
+    @Override
+    public void onUpdateReceived(Update update) {
+        if (update.hasMessage() && update.getMessage().hasPhoto()) {
+            java.io.File picture = downloadPhotoByFilePath(getFilePath(getPhoto(update)));
+            QRCodeAnalyser qrca = new QRCodeAnalyser(picture);
+            ParcelParser pp = new ParcelParser();
+            Message ctx = update.getMessage();
+            try {
+                ReadOnlyParcel retrievedParcel = pp.parse(qrca.getDecodedText());
+                if (this.waitingForImage) {
+                    int indexZeroBased = model.getFilteredUndeliveredParcelList().indexOf(retrievedParcel);
+
+                    if (indexZeroBased < 0) {
+                        sender.send("The parcel cannot be found! Please try again.",
+                                ctx.getChatId());
+                    } else {
+                        logic.execute(EditCommand.COMMAND_WORD + " "
+                                + (indexZeroBased + 1) + BOT_SET_COMPLETED);
+                        ObservableList<ReadOnlyParcel> parcels = model.getFilteredUndeliveredParcelList();
+                        EditMessageText editedText =
+                                new EditMessageText().setChatId(ctx.getChatId())
+                                        .setMessageId(lastKnownMessage.get().getMessageId())
+                                        .setText(parseDisplayParcels(formatParcelsForBot(parcels)));
+                        sender.editMessageText(editedText);
+                        this.waitingForImage = false;
+                    }
+                } else {
+                    sender.send("Here are the details of the parcel: \n" + retrievedParcel.toString(),
+                            ctx.getChatId());
+                }
+            } catch (ParseException | CommandException e) {
+                sender.send(BOT_MESSAGE_FAILURE, ctx.getChatId());
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    /* The following three methods are from https://github.com/rubenlagus/TelegramBots/wiki/FAQ#how_to_get_picture */
+    public PhotoSize getPhoto(Update update) {
+        // Check that the update contains a message and the message has a photo
+        if (update.hasMessage() && update.getMessage().hasPhoto()) {
+            // When receiving a photo, you usually get different sizes of it
+            List<PhotoSize> photos = update.getMessage().getPhoto();
+
+            // We fetch the bigger photo
+            return photos.stream()
+                    .sorted(Comparator.comparing(PhotoSize::getFileSize).reversed())
+                    .findFirst()
+                    .orElse(null);
+        }
+
+        // Return null if not found
+        return null;
+    }
+
+    public String getFilePath(PhotoSize photo) {
+        Objects.requireNonNull(photo);
+
+        if (photo.hasFilePath()) { // If the file_path is already present, we are done!
+            return photo.getFilePath();
+        } else { // If not, let find it
+            // We create a GetFile method and set the file_id from the photo
+            GetFile getFileMethod = new GetFile();
+            getFileMethod.setFileId(photo.getFileId());
+            try {
+                // We execute the method using AbsSender::getFile method.
+                File file = getFile(getFileMethod);
+                // We now have the file_path
+                return file.getFilePath();
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null; // Just in case
+    }
+
+    public java.io.File downloadPhotoByFilePath(String filePath) {
+        try {
+            // Download the file calling AbsSender::downloadFile method
+            return downloadFile(filePath);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
 }

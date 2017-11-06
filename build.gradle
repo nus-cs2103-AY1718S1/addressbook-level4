@@ -63,6 +63,8 @@ allprojects {
         compile group: 'org.fxmisc.easybind', name: 'easybind', version: '1.0.3'
         compile group: 'org.telegram', name: 'telegrambots', version: '3.4'
         compile "org.telegram:telegrambots-abilities:3.4"
+        compile "com.google.zxing:core:3.3.0"
+        compile 'com.google.zxing:javase:3.3.0'
         compile "org.controlsfx:controlsfx:$controlsFxVersion"
         compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
         compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonDataTypeVersion"
