@@ -1,5 +1,5 @@
 # angtianlannus
-###### /java/seedu/address/logic/commands/FindCommandTest.java
+###### \java\seedu\address\logic\commands\FindCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -112,7 +112,7 @@ public class FindCommandTest {
         assertCommandSuccess(findByMarkedLesson, expectedMessage, expectedList);
     }
 ```
-###### /java/seedu/address/logic/commands/FindCommandTest.java
+###### \java\seedu\address\logic\commands\FindCommandTest.java
 ``` java
     @After
     public void wrapUp() {
@@ -121,7 +121,7 @@ public class FindCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/SortCommandTest.java
+###### \java\seedu\address\logic\commands\SortCommandTest.java
 ``` java
 public class SortCommandTest {
 
@@ -176,7 +176,7 @@ public class SortCommandTest {
 
     }
 ```
-###### /java/seedu/address/logic/commands/SortCommandTest.java
+###### \java\seedu\address\logic\commands\SortCommandTest.java
 ``` java
     @After
     public void wrapUp() {
@@ -184,7 +184,7 @@ public class SortCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_find() throws Exception {
@@ -194,7 +194,7 @@ public class SortCommandTest {
         assertEquals(new FindCommand(keywords), command);
     }
 ```
-###### /java/seedu/address/logic/parser/FindCommandParserTest.java
+###### \java\seedu\address\logic\parser\FindCommandParserTest.java
 ``` java
     @Test
     public void parse_validTrimmedKeywordsToList_returnsFindCommand() {
@@ -207,7 +207,7 @@ public class SortCommandTest {
 
 }
 ```
-###### /java/seedu/address/model/lesson/predicate/LessonContainsKeywordsPredicateTest.java
+###### \java\seedu\address\model\lesson\predicate\LessonContainsKeywordsPredicateTest.java
 ``` java
 public class LessonContainsKeywordsPredicateTest {
 
@@ -358,7 +358,7 @@ public class LessonContainsKeywordsPredicateTest {
     }
 }
 ```
-###### /java/seedu/address/model/lesson/predicate/LocationContainsKeywordsPredicateTest.java
+###### \java\seedu\address\model\lesson\predicate\LocationContainsKeywordsPredicateTest.java
 ``` java
 public class LocationContainsKeywordsPredicateTest {
 
@@ -440,7 +440,7 @@ public class LocationContainsKeywordsPredicateTest {
 
 }
 ```
-###### /java/seedu/address/model/lesson/predicate/MarkedLessonsContainsKeywordsPredicateTest.java
+###### \java\seedu\address\model\lesson\predicate\MarkedLessonsContainsKeywordsPredicateTest.java
 ``` java
 public class MarkedLessonsContainsKeywordsPredicateTest {
 
@@ -568,7 +568,7 @@ public class MarkedLessonsContainsKeywordsPredicateTest {
     }
 }
 ```
-###### /java/seedu/address/model/lesson/predicate/ModuleContainsKeywordsPredicateTest.java
+###### \java\seedu\address\model\lesson\predicate\ModuleContainsKeywordsPredicateTest.java
 ``` java
 public class ModuleContainsKeywordsPredicateTest {
 
@@ -649,4 +649,171 @@ public class ModuleContainsKeywordsPredicateTest {
     }
 }
 
+```
+###### \java\systemtests\SortCommandSystemTest.java
+``` java
+public class SortCommandSystemTest extends AddressBookSystemTest {
+
+    private final ListingUnit beginningListingUnit = ListingUnit.getCurrentListingUnit();
+
+    @Test
+    public void sortAnyAttribute() {
+        Model model = getModel();
+        String command;
+        String expectedResultMessage;
+
+        command = SortCommand.COMMAND_WORD;
+        expectedResultMessage = SortCommand.MESSAGE_SORT_LESSON_SUCCESS;
+        model.sortLessons();
+        assertCommandSuccess(command, expectedResultMessage, model);
+
+        /* Case : capped sort command word -> rejected */
+        assertCommandFailure("SORT", MESSAGE_UNKNOWN_COMMAND);
+
+        /* Case : mixed cap command word -> rejected */
+        assertCommandFailure("SoRt", MESSAGE_UNKNOWN_COMMAND);
+    }
+
+    @Test
+    public void sortByModule() {
+        Model model = getModel();
+        String command;
+        String expectedResultMessage;
+
+        command = SortCommand.COMMAND_WORD;
+        expectedResultMessage = SortCommand.MESSAGE_SORT_LESSON_SUCCESS;
+        ListingUnit.setCurrentListingUnit(MODULE);
+        model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
+        model.sortLessons();
+        assertCommandSuccessSortByModule(command, expectedResultMessage, model);
+    }
+
+    @Test
+    public void sortByLocation() {
+        Model model = getModel();
+        String command;
+        String expectedResultMessage;
+
+        command = SortCommand.COMMAND_WORD;
+        expectedResultMessage = SortCommand.MESSAGE_SORT_LESSON_SUCCESS;
+        ListingUnit.setCurrentListingUnit(LOCATION);
+        model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
+        model.sortLessons();
+        assertCommandSuccessSortByLocation(command, expectedResultMessage, model);
+    }
+
+    @Test
+    public void sortByLesson() {
+        Model model = getModel();
+        String command;
+        String expectedResultMessage;
+
+        command = SortCommand.COMMAND_WORD;
+        expectedResultMessage = SortCommand.MESSAGE_SORT_LESSON_SUCCESS;
+        Index index = INDEX_FIRST_LESSON;
+        ReadOnlyLesson toView = model.getFilteredLessonList().get(index.getZeroBased());
+        model.updateFilteredLessonList(new FixedCodePredicate(toView.getCode()));
+        ListingUnit.setCurrentListingUnit(LESSON);
+        model.sortLessons();
+        ListingUnit.setCurrentListingUnit(MODULE);
+        assertCommandSuccessSortByLessons(command, expectedResultMessage, model);
+    }
+
+    @Test
+    public void sortByMarkedLesson() {
+        Model model = getModel();
+        String command;
+        String expectedResultMessage;
+
+        command = SortCommand.COMMAND_WORD;
+        expectedResultMessage = SortCommand.MESSAGE_SORT_LESSON_SUCCESS;
+        ListingUnit.setCurrentListingUnit(LESSON);
+        model.updateFilteredLessonList(new MarkedListPredicate());
+        model.sortLessons();
+        assertCommandSuccessSortByMarkedLessons(command, expectedResultMessage, model);
+    }
+
+    /**
+     * Executes {@code SortCommand} in lesson list and
+     * verifies that the result equals to {@code expectedResultMessage},{@code expectedModel}.
+     */
+    public void assertCommandSuccessSortByLessons(String command, String expectedResultMessage,
+                                                  Model expectedModel) {
+        executeCommand(ViewCommand.COMMAND_WORD + " 1");
+        assertCommandSuccess(command, expectedResultMessage, expectedModel);
+    }
+
+    /**
+     * Executes {@code SortCommand} in marked lesson list and
+     * verifies that the result equals to {@code expectedResultMessage},{@code expectedModel}.
+     */
+    public void assertCommandSuccessSortByMarkedLessons(String command, String expectedResultMessage,
+                                                        Model expectedModel) {
+        executeCommand(ListCommand.COMMAND_WORD + " " + ListCommand.MARKED_LIST_KEYWORD);
+        assertCommandSuccess(command, expectedResultMessage, expectedModel);
+    }
+
+    /**
+     * Executes {@code SortCommand} in location list and
+     * verifies that the result equals to {@code expectedResultMessage},{@code expectedModel}.
+     */
+    public void assertCommandSuccessSortByLocation(String command, String expectedResultMessage, Model expectedModel) {
+        executeCommand(ListCommand.COMMAND_WORD + " " + ListCommand.LOCATION_KEYWORD);
+        assertCommandSuccess(command, expectedResultMessage, expectedModel);
+    }
+
+    /**
+     * Executes {@code SortCommand} in module list and
+     * verifies that the result equals to {@code expectedResultMessage},{@code expectedModel}.
+     */
+    public void assertCommandSuccessSortByModule(String command, String expectedResultMessage, Model expectedModel) {
+        executeCommand(ListCommand.COMMAND_WORD + " " + ListCommand.MODULE_KEYWORD);
+        assertCommandSuccess(command, expectedResultMessage, expectedModel);
+    }
+
+    /**
+     * Executes {@code SortCommand} and verifies that the result equals to {@code expectedResultMessage}.
+     */
+    private void assertCommandSuccess(String command, String expectedResultMessage, Model expectedModel) {
+        executeCommand(command);
+        assertEquals(expectedResultMessage, getResultDisplay().getText());
+        Model model = getModel();
+        assertEquals("", getCommandBox().getInput());
+        assertEquals(expectedModel, model);
+        assertListMatching(getLessonListPanel(), expectedModel.getFilteredLessonList());
+        //assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+    }
+
+    /**
+     * Executes {@code command} and in addition,<br>
+     * 1. Asserts that the command box displays {@code command}.<br>
+     * 2. Asserts that result display box displays {@code expectedResultMessage}.<br>
+     * 3. Asserts that the model related components equal to the current model.<br>
+     * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
+     * 5. Asserts that the command box has the error style.<br>
+     * Verifications 1 to 3 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     *
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+
+        executeCommand(command);
+        assertEquals(expectedResultMessage, getResultDisplay().getText());
+        Model model = getModel();
+        assertEquals(expectedModel, model);
+        assertEquals(command, getCommandBox().getInput());
+        assertListMatching(getLessonListPanel(), expectedModel.getFilteredLessonList());
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+
+    @After
+    public void wrapUp() {
+        ListingUnit.setCurrentListingUnit(beginningListingUnit);
+    }
+
+}
 ```
