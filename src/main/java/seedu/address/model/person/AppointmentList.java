@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -29,7 +30,9 @@ public class AppointmentList {
      */
     public AppointmentList(List<Appointment> appointments) {
         requireAllNonNull(appointments);
+        sortAppointmentsInChronologicalOrder(appointments);
         internalList.addAll(appointments);
+
     }
 
     /**
@@ -42,25 +45,20 @@ public class AppointmentList {
     }
 
     /**
-     * Adds an appointment to the list that is sorted according to appointments that come first
+     * sorts all the appointments in the list before adding it to the internal list
      */
-    public void add (Appointment appointment) {
-        addToListInChronologicalOrder(appointment);
-    }
-
-    /**
-     * Search the list for the index to place the appointment in chronological order and places the appointment
-     */
-    private void addToListInChronologicalOrder(Appointment appointment) {
+    private void sortAppointmentsInChronologicalOrder(List<Appointment> appointment) {
         requireNonNull(appointment);
 
-        for (int i = 0; i < internalList.size(); i++) {
-            if (internalList.get(i).getDate().before(appointment.getDate())) {
-                internalList.add(i, appointment);
+        appointment.sort((o1, o2) -> {
+            if (o1.getDate().toInstant().isBefore(o2.getDate().toInstant())) {
+                return -1;
+            } else {
+                return 1;
             }
-        }
+        });
 
-        requireAllSorted(internalList);
+        requireAllSorted(appointment);
     }
 
     /**
@@ -81,7 +79,7 @@ public class AppointmentList {
      * Returns all appointments in this list as a list.
      * This List is mutable and change-insulated against the internal list.
      */
-    public List<Appointment> toSet() {
+    public List<Appointment> toList() {
         return new ArrayList<>(internalList);
     }
 

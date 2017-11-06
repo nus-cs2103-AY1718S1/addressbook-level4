@@ -174,7 +174,7 @@ public class Person implements ReadOnlyPerson {
 
     @Override
     public List<Appointment> getAppointments() {
-        return appointments.get().toSet();
+        return appointments.get().toList();
     }
 
     public void setAppointment(List<Appointment> appointments) {
