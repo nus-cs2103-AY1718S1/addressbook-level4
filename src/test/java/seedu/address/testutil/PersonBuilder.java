@@ -1,10 +1,11 @@
 package seedu.address.testutil;
 
-import java.text.ParseException;
-import java.util.Calendar;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.AddAppointmentParser;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Bloodtype;
@@ -41,15 +42,9 @@ public class PersonBuilder {
             Bloodtype defaultBloodType = new Bloodtype(DEFAULT_BLOODTYPE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             Remark defaultRemark = new Remark(DEFAULT_REMARK);
-            Calendar calendar = Calendar.getInstance();
-            try {
-                calendar.setTime(Appointment.DATE_FORMATTER.parse(DEFAULT_DATE));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            Appointment  appointment = new Appointment(defaultName.toString(), calendar);
+            List<Appointment> defaultAppointments = new ArrayList<>();
             this.person = new Person(defaultName, defaultPhone, defaultEmail,
-                defaultAddress, defaultBloodType, defaultTags, defaultRemark, appointment);
+                defaultAddress, defaultBloodType, defaultTags, defaultRemark, defaultAppointments);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -148,38 +143,16 @@ public class PersonBuilder {
     /**
      * Sets appointment with Date of the person that we are building
      */
-    public PersonBuilder withAppointment(String name, String date) {
-        Calendar calendar = Calendar.getInstance();
-        try {
-            calendar.setTime(Appointment.DATE_FORMATTER.parse(date));
-        } catch (ParseException e) {
-            e.printStackTrace();
+    public PersonBuilder withAppointment(String... arg) {
+        List<Appointment> list = new ArrayList<>();
+        for (String s : arg) {
+            try {
+                list.add(AddAppointmentParser.getAppointmentFromString(s));
+            } catch (seedu.address.logic.parser.exceptions.ParseException e) {
+                e.printStackTrace();
+            }
         }
-        this.person.setAppointment(new Appointment(person.getName().toString(), calendar));
-        return this;
-    }
-
-    /**
-     * With appointment that specified a endDate
-     */
-    public PersonBuilder withAppointment(String name, String date, String endDate) {
-        Calendar calendar = Calendar.getInstance();
-        Calendar calendar1 = Calendar.getInstance();
-        try {
-            calendar.setTime(Appointment.DATE_FORMATTER.parse(date));
-            calendar1.setTime(Appointment.DATE_FORMATTER.parse(endDate));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        this.person.setAppointment(new Appointment(person.getName().toString(), calendar, calendar1));
-        return this;
-    }
-
-    /**
-     * Sets an empty appointment with the person that we are building
-     */
-    public PersonBuilder withAppointment(String name) {
-        this.person.setAppointment(new Appointment(person.getName().toString()));
+        this.person.setAppointment(list);
         return this;
     }
     //@@author

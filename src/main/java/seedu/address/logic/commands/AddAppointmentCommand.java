@@ -19,7 +19,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 /**
  * Command to add appointment to a person in addressBook
  */
-public class AddAppointmentCommand extends Command {
+public class AddAppointmentCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "appointment";
     public static final String COMMAND_ALIAS = "appt";
@@ -35,48 +35,35 @@ public class AddAppointmentCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New appointment added. ";
     public static final String INVALID_PERSON = "This person is not in your address book";
     public static final String INVALID_DATE = "Invalid Date. Please enter a valid date.";
+    public static final String SORT_APPOINTMENT_FEEDBACK = "Rearranged contacts to show upcoming appointments.";
 
 
     private final Index index;
-    private final Calendar date;
-    private final Calendar endDate;
+    private final Appointment appointment;
 
 
+    //For sorting
     public AddAppointmentCommand() {
-        date = null;
-        index = null;
-        endDate = null;
+        this.index = null;
+        this.appointment = null;
     }
 
-    public AddAppointmentCommand(Index index) {
+    //For setting appointments
+    public AddAppointmentCommand(Index index, Appointment appointment) {
         this.index = index;
-        this.date = null;
-        endDate = null;
-    }
-
-    public AddAppointmentCommand(Index index, Calendar date) {
-        this.index = index;
-        this.date = date;
-        this.endDate = null;
-    }
-
-    public AddAppointmentCommand(Index index, Calendar date, Calendar endDate) {
-        this.index = index;
-        this.date = date;
-        this.endDate = endDate;
+        this.appointment = appointment;
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
-
-
-        if (date == null && index == null) {
+    protected CommandResult executeUndoableCommand() throws CommandException {
+        if (appointment == null && index == null) {
             model.listAppointment();
-            return new CommandResult("Rearranged contacts to show upcoming appointments.");
+            return new CommandResult(SORT_APPOINTMENT_FEEDBACK);
         }
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
+        requireNonNull(index);
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -84,41 +71,27 @@ public class AddAppointmentCommand extends Command {
 
         ReadOnlyPerson personToAddAppointment = lastShownList.get(index.getZeroBased());
 
-        Appointment appointment;
-        requireNonNull(index);
-        if (date == null) {
-            appointment = new Appointment(personToAddAppointment.getName().toString());
-        } else if (date != null && endDate == null) {
-            appointment = new Appointment(personToAddAppointment.getName().toString(), date);
-        } else {
-            appointment = new Appointment(personToAddAppointment.getName().toString(), date, endDate);
-        }
-
-        if (date != null && !isDateValid()) {
+        if (appointment.getDate() != null && !isDateValid()) {
             return new CommandResult(INVALID_DATE);
         }
 
         try {
-            model.addAppointment(appointment);
+            model.addAppointment(personToAddAppointment, appointment);
         } catch (PersonNotFoundException e) {
             return new CommandResult(INVALID_PERSON);
         }
-        if (date == null) {
-            return new CommandResult("Appointment with " + personToAddAppointment.getName().toString()
-                    + " set to off.");
-        }
-        return new CommandResult(MESSAGE_SUCCESS + "Meet " +  appointment.getPersonName()
-                + " on "
-                +  appointment.getDate().toString());
+
+        return new CommandResult(MESSAGE_SUCCESS);
+
     }
 
     /**
      * @return is appointment date set to after current time
      */
     private boolean isDateValid() {
-        requireNonNull(date);
+        requireNonNull(appointment);
         Calendar calendar = Calendar.getInstance();
-        return !date.getTime().before(calendar.getTime());
+        return !appointment.getDate().before(calendar.getTime());
     }
 
     public Index getIndex() {
@@ -129,8 +102,8 @@ public class AddAppointmentCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddAppointmentCommand // instanceof handles nulls
-                && this.index.getZeroBased() ==  ((AddAppointmentCommand) other).index.getZeroBased())
-                && this.date.getTimeInMillis() == ((AddAppointmentCommand) other).date.getTimeInMillis();
+                && (this.index.getZeroBased() == ((AddAppointmentCommand) other).index.getZeroBased())
+                && (this.appointment.equals(((AddAppointmentCommand) other).appointment)));
     }
 
     /**

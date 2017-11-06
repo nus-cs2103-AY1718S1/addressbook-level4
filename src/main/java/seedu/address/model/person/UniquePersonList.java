@@ -9,7 +9,6 @@ import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -19,7 +18,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * Supports a minimal set of list operations.
  *
  * @see Person#equals(Object)
- * @see CollectionUtil#elementsAreUnique(Collection)
  */
 public class UniquePersonList implements Iterable<Person> {
 
@@ -103,15 +101,16 @@ public class UniquePersonList implements Iterable<Person> {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
-
+    //@@author Eric
     /**
      * @return the backing list that is sorted by appointment dates
      */
     public ObservableList<ReadOnlyPerson> asObservableListSortedByAppointment() {
 
         internalList.sort((o1, o2) -> {
-            if (o1.getAppointment().getDate() != null && o2.getAppointment().getDate() != null
-                    && o2.getAppointment().getDate().before(o1.getAppointment().getDate())) {
+            if (!o1.getAppointments().isEmpty() && !o2.getAppointments().isEmpty()
+                    && o2.getAppointments().get(0).getDate()
+                    .before(o1.getAppointments().get(0).getDate())) {
                 return 1;
             } else {
                 return -1;
@@ -170,19 +169,24 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.hashCode();
     }
 
+    //@@author Eric
     /**
      * Adds appointment to a person in the internal list.
      *
-     * @param appointment
      * @throws PersonNotFoundException if no such person exist in the internal list
      */
-    public void addAppointment(Appointment appointment) throws PersonNotFoundException {
+    public void addAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
+        requireNonNull(target);
+        requireNonNull(appointment);
         for (Person person : internalList) {
-            if (person.getName().toString().equals(appointment.getPersonName())) {
-                person.setAppointment(appointment);
+            if (person.equals(target)) {
+                List<Appointment> list = target.getAppointments();
+                list.add(appointment);
+                person.setAppointment(list);
                 return;
             }
         }
         throw new PersonNotFoundException();
     }
+    //@@author
 }

@@ -154,7 +154,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addAppointment(Appointment appointment) throws PersonNotFoundException {
+        public void addAppointment(ReadOnlyPerson person, Appointment appointment) throws PersonNotFoundException {
             fail("This method should not be called");
         }
 

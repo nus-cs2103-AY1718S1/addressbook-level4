@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -25,16 +26,16 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Bloodtype> bloodType;
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<Remark> remark;
-    private ObjectProperty<Appointment> appointment;
+    private ObjectProperty<AppointmentList> appointments;
 
     /**
      * Every field must be present and not null.
      */
 
     public Person(Name name, Phone phone, Email email, Address address,
-                  Bloodtype bloodType, Set<Tag> tags, Remark remark, Appointment appointment) {
+                  Bloodtype bloodType, Set<Tag> tags, Remark remark, List<Appointment> appointments) {
 
-        requireAllNonNull(name, phone, email, address, bloodType, tags, remark, appointment);
+        requireAllNonNull(name, phone, email, address, bloodType, tags, remark, appointments);
 
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -44,7 +45,7 @@ public class Person implements ReadOnlyPerson {
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.remark = new SimpleObjectProperty<>(remark);
-        this.appointment = new SimpleObjectProperty<>(appointment);
+        this.appointments = new SimpleObjectProperty<>(new AppointmentList(appointments));
     }
 
     /**
@@ -52,7 +53,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getBloodType(), source.getTags(), source.getRemark(), source.getAppointment());
+                source.getBloodType(), source.getTags(), source.getRemark(), source.getAppointments());
     }
 
     public void setName(Name name) {
@@ -165,19 +166,21 @@ public class Person implements ReadOnlyPerson {
         return remark.get();
     }
 
+    //@@author Eric
     @Override
-    public ObjectProperty<Appointment> appointmentProperty() {
-        return appointment;
+    public ObjectProperty<AppointmentList> appointmentProperty() {
+        return appointments;
     }
 
     @Override
-    public Appointment getAppointment() {
-        return appointment.get();
+    public List<Appointment> getAppointments() {
+        return appointments.get().toList();
     }
 
-    public void setAppointment(Appointment appointment) {
-        this.appointment.set(appointment);
+    public void setAppointment(List<Appointment> appointments) {
+        this.appointments.set(new AppointmentList(appointments));
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
