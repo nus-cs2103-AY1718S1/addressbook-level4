@@ -128,10 +128,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+
     //@@author LimYangSheng
-    public void updateMeeting(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson) {
+    /**
+     * Finds the meetings in meeting list with {@code Person} that equals {@code target} and replaces it with
+     * {@code editedReadOnlyPerson}
+     */
+    public void updateMeetings(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson) {
         requireNonNull(editedReadOnlyPerson);
-        meetings.changeMeeting(target, editedReadOnlyPerson);
+        meetings.updateMeetings(target, editedReadOnlyPerson);
     }
 
     //@@author

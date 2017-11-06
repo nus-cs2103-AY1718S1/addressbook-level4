@@ -111,16 +111,9 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
+        addressBook.updateMeetings(target, editedPerson);
         indicateAddressBookChanged();
         indicateNewPersonInfoAvailable(editedPerson);
-    }
-
-    //@@author LimYangSheng
-    @Override
-    public void updateMeeting(ReadOnlyPerson target, ReadOnlyPerson editedPerson) {
-        requireAllNonNull(target, editedPerson);
-        addressBook.updateMeeting(target, editedPerson);
-        indicateAddressBookChanged();
     }
 
     //@@author alexanderleegs

@@ -127,9 +127,10 @@ public class UniqueMeetingList implements Iterable<Meeting> {
     }
 
     /**
-     * Change the {@code Person} in {@code Meeting} to a new edited person.
+     * Finds the meetings in meeting list with {@code Person} that equals {@code target} and replaces it with
+     * {@code editedReadOnlyPerson}
      */
-    public void changeMeeting(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson) {
+    public void updateMeetings(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson) {
         for(int i=0; i<internalList.size(); i++) {
             Meeting meeting = new Meeting(internalList.get(i));
             if(meeting.getPerson().equals(target)) {
