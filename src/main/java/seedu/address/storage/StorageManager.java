@@ -95,7 +95,7 @@ public class StorageManager extends ComponentManager implements Storage {
 
     @Override
     public String getRecycleBinFilePath() {
-        return addressBookStorage.getAddressBookFilePath();
+        return recycleBinStorage.getRecycleBinFilePath();
     }
 
     @Override
@@ -115,9 +115,9 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public void saveRecycleBin(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
+    public void saveRecycleBin(ReadOnlyAddressBook recycleBin, String filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
-        recycleBinStorage.saveRecycleBin(addressBook, filePath);
+        recycleBinStorage.saveRecycleBin(recycleBin, filePath);
     }
 
 

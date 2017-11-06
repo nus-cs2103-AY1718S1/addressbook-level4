@@ -18,7 +18,7 @@ import seedu.address.model.ReadOnlyAddressBook;
  */
 public class XmlRecycleBinStorage implements RecycleBinStorage {
 
-    private static final Logger logger = LogsCenter.getLogger(XmlAddressBookStorage.class);
+    private static final Logger logger = LogsCenter.getLogger(XmlRecycleBinStorage.class);
 
     private String filePath;
 

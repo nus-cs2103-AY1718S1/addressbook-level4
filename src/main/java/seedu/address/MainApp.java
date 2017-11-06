@@ -101,7 +101,7 @@ public class MainApp extends Application {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
-            initialRe = addressBookOptional.orElseGet(SampleRecycleUtil::getSampleRecycleBin);
+            initialRe = recycleBinOptional.orElseGet(SampleRecycleUtil::getSampleRecycleBin);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
             initialData = new AddressBook();

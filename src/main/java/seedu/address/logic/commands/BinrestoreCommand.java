@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +15,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 /**
  * Restore the person in bin to address book;
  */
-public class BinrestoreCommand extends UndoableCommand {
+public class BinrestoreCommand extends Command {
 
     public static final String COMMAND_WORD = "bin-restore";
 
@@ -33,7 +31,7 @@ public class BinrestoreCommand extends UndoableCommand {
 
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         List<ReadOnlyPerson> lastshownlist = model.getRecycleBinPersonList();
         ArrayList<ReadOnlyPerson> personstodelete = new ArrayList<>();
 
@@ -59,10 +57,5 @@ public class BinrestoreCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
     }
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                ||  (other instanceof BinrestoreCommand
-                && this.targets.equals(((BinrestoreCommand) other).targets)); // state check
-    }
+
 }

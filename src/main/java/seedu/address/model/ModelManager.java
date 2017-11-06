@@ -59,7 +59,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.recycleBin = new AddressBook(recycleBin);
-        filteredRecycle = new FilteredList<ReadOnlyPerson>(this.recycleBin.getPersonList());
+        filteredRecycle = new FilteredList<>(this.recycleBin.getPersonList());
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredEvents = new FilteredList<>(this.addressBook.getEventList());
     }
@@ -70,16 +70,24 @@ public class ModelManager extends ComponentManager implements Model {
 
 
     @Override
-    public void resetData(ReadOnlyAddressBook newData) {
+    public void resetData(ReadOnlyAddressBook newData, ReadOnlyAddressBook newRecyclebin) {
         addressBook.resetData(newData);
+        recycleBin.resetData(newRecyclebin);
 
         EventsCenter.getInstance().post(new ScheduleUpdateEvent(getEventList()));
         indicateAddressBookChanged();
+        indicateRecycleBinChanged();
     }
     @Override
     public void resetRecyclebin(ReadOnlyAddressBook newData) {
         recycleBin.resetData(newData);
         indicateRecycleBinChanged();
+    }
+
+    @Override
+    public void fresh() {
+        indicateRecycleBinChanged();
+        indicateAddressBookChanged();
     }
 
     @Override
@@ -112,6 +120,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deletePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException,
             DuplicatePersonException {
+
         for (ReadOnlyPerson s : targets) {
             if (recycleBin.getPersonList().contains(s)) {
                 addressBook.removePerson(s);
