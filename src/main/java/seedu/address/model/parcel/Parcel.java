@@ -187,6 +187,10 @@ public class Parcel implements ReadOnlyParcel {
         return getAsText();
     }
 
+    /**
+     * We choose to order parcels first by delivery date, next by tracking number if the delivery dates
+     * are the same, and lastly by name if the tracking numbers are the same as well.
+     */
     @Override
     public int compareTo(Object o) {
         Parcel other = (Parcel) o;
