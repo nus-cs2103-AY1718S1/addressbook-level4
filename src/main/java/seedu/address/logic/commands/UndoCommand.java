@@ -28,8 +28,8 @@ public class UndoCommand extends Command {
         }
         MESSAGE_OUTPUT = parseCommand(undoRedoStack);
         undoRedoStack.popUndo().undo();
-        //return new CommandResult(MESSAGE_SUCCESS);
-        return new CommandResult(MESSAGE_OUTPUT);
+        return new CommandResult(MESSAGE_SUCCESS);
+        //return new CommandResult(MESSAGE_OUTPUT);
     }
 
     public String parseCommand(UndoRedoStack undoRedoStack){
