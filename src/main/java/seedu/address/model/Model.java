@@ -89,6 +89,10 @@ public interface Model {
 
     //=========== Filtered Person/Activity List support =============================================================
 
+    //@@author dennaloh
+    /** Iterates through person list and checks for duplicates */
+    boolean haveDuplicate (String name, ObservableList<ReadOnlyPerson> list);
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
