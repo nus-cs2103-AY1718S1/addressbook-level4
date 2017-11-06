@@ -116,7 +116,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
 
         if (preExecutionSelectedCardIndex == expectedSelectedCardIndex.getZeroBased()) {
             assertSelectedCardUnchanged();
-        } 
+        }
 
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchanged();
