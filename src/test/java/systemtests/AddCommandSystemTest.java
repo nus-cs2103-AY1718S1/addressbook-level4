@@ -52,10 +52,12 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.DateParser;
 import seedu.address.model.Model;
 import seedu.address.model.person.Email;
@@ -70,6 +72,8 @@ import seedu.address.testutil.PersonUtil;
 
 public class AddCommandSystemTest extends AddressBookSystemTest {
 
+    AddressBookParser addressBookParser = new AddressBookParser();
+
     @Test
     public void add() throws Exception {
         Model model = getModel();
@@ -82,10 +86,15 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + "   " + GENDER_DESC_AMY + "   " + TAG_DESC_FRIEND + " ";
         assertCommandSuccess(command, toAdd);
 
+        //@@author arnollim
         /* Case: undo adding Amy to the list -> Amy deleted */
+        Command previousCommand = addressBookParser.parseCommand(command);
+        String previousCommandString = previousCommand.toString();
+        String expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
         command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        //String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
+        //author
 
         /* Case: redo adding Amy to the list -> Amy added again */
         command = RedoCommand.COMMAND_WORD;
