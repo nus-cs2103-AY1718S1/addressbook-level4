@@ -186,12 +186,6 @@ public class ThemeCommand extends Command {
         case ThemeCommand.COMMAND_WORD:
             return new ThemeCommandParser().parse(arguments);
 ```
-###### /java/seedu/address/logic/parser/CliSyntax.java
-``` java
-    public static final Prefix PREFIX_FONT_SIZE = new Prefix("fs/");
-
-}
-```
 ###### /java/seedu/address/logic/parser/CustomiseCommandParser.java
 ``` java
 /**
@@ -450,12 +444,6 @@ public enum ThemeUnit {
             break;
         }
     }
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
-        String[] commands = {"help", "add", "list", "edit", "find",
-            "delete", "select", "history", "undo", "redo", "clear", "exit", "customise", "view", "swt"};
-        TextFields.bindAutoCompletion(commandTextField, commands); // credit to controlsfx
 ```
 ###### /java/seedu/address/ui/CommandBox.java
 ``` java

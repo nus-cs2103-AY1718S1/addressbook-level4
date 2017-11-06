@@ -153,6 +153,26 @@ public class TimeSlotTest {
     }
 }
 ```
+###### /java/seedu/address/ui/CommandBoxTest.java
+``` java
+    @Test
+    public void configActiveKeywordTest() {
+        String commandKeyword = "list";
+        String commandColorTrue = "red";
+        String commandColorFalse = "black";
+        assertColorSame(commandColorTrue, commandKeyword);
+        assertColorNotSame(commandColorFalse, commandKeyword);
+    }
+
+
+    private void assertColorSame(String commandColor, String commandKeyword) {
+        assertEquals(commandColor, keywordColorMap.get(commandKeyword));
+    }
+
+    private void assertColorNotSame(String commandColor, String commandKeyword) {
+        assertNotEquals(commandColor, keywordColorMap.get(commandKeyword));
+    }
+```
 ###### /java/systemtests/ColorEnableSystemTest.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
@@ -165,7 +185,6 @@ import seedu.address.model.Model;
 public class ColorEnableSystemTest extends AddressBookSystemTest {
     @Test
     public void colorEnable() {
-        final Model defaultModel = getModel();
 
         /* Case: enable highlighting feature with leading spaces and trailing space
          */
@@ -215,7 +234,6 @@ public class ColorEnableSystemTest extends AddressBookSystemTest {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
-        assertStatusBarUnchangedExceptSyncStatus();
         assertStatusBarUnchanged();
     }
 
