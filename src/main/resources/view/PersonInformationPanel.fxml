@@ -16,7 +16,6 @@
                <children>
                   <VBox>
                      <children>
-            
                         <Label fx:id="id" styleClass="label-header" />
                         <Label fx:id="name" styleClass="name" />
                         <HBox prefHeight="100.0" prefWidth="200.0">
@@ -40,7 +39,6 @@
                      <children>
                          <VBox minHeight="10">
                            <children>
-                  
                               <HBox>
                                  <children>
                                     <FlowPane fx:id="tags" />
