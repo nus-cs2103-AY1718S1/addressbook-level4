@@ -165,6 +165,8 @@ public class InsuranceProfilePanel extends UiPart<Region> {
 
     //@@author Juxarius
     private void setPremiumLevel(Double premium) {
+        insuranceName.getStyleClass().clear();
+        insuranceName.getStyleClass().add("insurance-profile-header");
         if (premium > 500.0) {
             insuranceName.getStyleClass().add("gold-insurance-header");
         } else if (premium > 100.0) {
