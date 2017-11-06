@@ -67,8 +67,6 @@ public class FindCommandParser implements Parser<FindCommand> {
 
 
         }
-        
-
         String trimmedNewArgs = newArgs.trim();
 
         ArgumentMultimap argMultimap =
