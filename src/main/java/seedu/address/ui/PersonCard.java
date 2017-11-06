@@ -126,7 +126,7 @@ public class PersonCard extends UiPart<Region> {
     public void handleGoogleMap() {
         raise(new DisplayGmapEvent(Index.fromOneBased(this.displayedIndex)));
     }
-//@@author renkai91
+    //@@author renkai91
     /**
      * Menu list option: add image
      * Raises PersonPanelOptionsDelete, handled by UIManager
@@ -150,7 +150,7 @@ public class PersonCard extends UiPart<Region> {
             System.out.println("Invalid File");
         }
     }
-//@@author
+    //@@author
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
@@ -167,7 +167,7 @@ public class PersonCard extends UiPart<Region> {
             initTags(person);
         });
     }
-//@@author renkai91
+    //@@author renkai91
     /**
      * Initialize image for ever person
      */
@@ -184,7 +184,7 @@ public class PersonCard extends UiPart<Region> {
             System.out.println("Image not found");
         }
     }
-//@@author
+    //@@author
     /**
      * Initialize respective person tag style {@code Person}
      */
