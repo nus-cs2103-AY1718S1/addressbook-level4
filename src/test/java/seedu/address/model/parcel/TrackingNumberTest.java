@@ -55,7 +55,7 @@ public class TrackingNumberTest {
 
         assertEquals(trackingNumber, sameTrackingNumber);
 
-        // check toString() equality
+        // check getFormattedString() equality
         assertFalse(trackingNumber.toString().equals(differentTrackingNumber.toString()));
         assertEquals(trackingNumber.toString(), sameTrackingNumber.toString());
         assertEquals(trackingNumber.toString(), "RR001231230SG");

@@ -80,7 +80,8 @@ public class TabHandle extends NodeHandle<Node> {
 ###### \java\guitests\guihandles\TabPaneHandle.java
 ``` java
 /**
- * Provides a handle for {@code ParcelListPanel} containing the list of {@code ParcelCard}.
+ * Provides a handle for {@code ParcelListPanel} containing the both lists of {@code ParcelCard} and their related
+ * tabs.
  */
 public class TabPaneHandle extends NodeHandle<TabPane> {
     public static final String TAB_PANE_ID = "#tabPanePlaceholder";
@@ -95,6 +96,9 @@ public class TabPaneHandle extends NodeHandle<TabPane> {
                 .DELIVERED_PARCEL_LIST_VIEW_ID));
     }
 
+    /**
+     * gets the TabHandle based on the handle index
+     */
     public TabHandle getTabHandle(int index) {
         if (index == INDEX_FIRST_TAB.getZeroBased()) {
             return new TabHandle(getChildNode(TabHandle.UNDELIVERED_PARCEL_TAB_ID));
@@ -208,6 +212,7 @@ public class TabPaneHandle extends NodeHandle<TabPane> {
         final String[] splitName = firstParcelOptional.get().getName().fullName.split("\\s+");
         model.updateFilteredParcelList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
+        assert model.getActiveList().size() == 1;
         assert model.getFilteredParcelList().size() == 1;
     }
 ```
@@ -423,7 +428,7 @@ public class ImportCommandParserTest {
         }
 
         // ensure that addressbook updated
-        assertEquals(4, modelManager.getAddressBook().getTagList().size());
+        assertEquals(3, modelManager.getAddressBook().getTagList().size());
         assertEquals(8, modelManager.getAddressBook().getParcelList().size());
         assertEquals(2, modelManager.getFilteredDeliveredParcelList().size());
         assertEquals(6, modelManager.getFilteredUndeliveredParcelList().size());
@@ -686,7 +691,7 @@ public class TrackingNumberTest {
 
         assertEquals(trackingNumber, sameTrackingNumber);
 
-        // check toString() equality
+        // check getFormattedString() equality
         assertFalse(trackingNumber.toString().equals(differentTrackingNumber.toString()));
         assertEquals(trackingNumber.toString(), sameTrackingNumber.toString());
         assertEquals(trackingNumber.toString(), "RR001231230SG");
@@ -789,12 +794,6 @@ public class TrackingNumberTest {
     public static final String VALID_EMAIL_ALICE = "alice@example.com";
     public static final String VALID_ADDRESS_ALICE = "6, Jurong West Ave 1, #08-111 S649520";
     public static final String VALID_DELIVERY_DATE_ALICE = "01-02-2000";
-    public static final String TRACKING_NUMBER_DESC_ALICE = " " + PREFIX_TRACKING_NUMBER + VALID_TRACKING_NUMBER_ALICE;
-    public static final String NAME_DESC_ALICE = " " + PREFIX_NAME + VALID_NAME_ALICE;
-    public static final String PHONE_DESC_ALICE = " " + PREFIX_PHONE + VALID_PHONE_ALICE;
-    public static final String EMAIL_DESC_ALICE = " " + PREFIX_EMAIL + VALID_EMAIL_ALICE;
-    public static final String ADDRESS_DESC_ALICE = " " + PREFIX_ADDRESS + VALID_ADDRESS_ALICE;
-    public static final String DELIVERY_DATE_DESC_ALICE = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_ALICE;
 
     public static final String VALID_TRACKING_NUMBER_BENSON = "RR111000111SG";
     public static final String VALID_NAME_BENSON = "Benson Meier";
@@ -897,7 +896,7 @@ public class TrackingNumberTest {
     public static final ReadOnlyParcel GEORGE = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_GEORGE)
             .withName(VALID_NAME_GEORGE).withPhone(VALID_PHONE_GEORGE).withEmail(VALID_EMAIL_GEORGE)
             .withAddress(VALID_ADDRESS_GEORGE).withDeliveryDate(VALID_DELIVERY_DATE_GEORGE)
-            .withTags(VALID_TAG_FRAGILE, VALID_TAG_HEAVY).withStatus(VALID_STATUS_COMPLETED).build();
+            .withTags(VALID_TAG_HEAVY).withStatus(VALID_STATUS_COMPLETED).build();
     public static final ReadOnlyParcel HOON = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_HOON)
             .withName(VALID_NAME_HOON).withPhone(VALID_PHONE_HOON).withEmail(VALID_EMAIL_HOON)
             .withAddress(VALID_ADDRESS_HOON).withDeliveryDate(VALID_DELIVERY_DATE_HOON)
@@ -1011,8 +1010,8 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: import an addressbook xml file containing duplicate parcels except with different tags -> rejected */
         // AddressBook#addAllParcels(List<ReadOnlyParcel>)
-        addressBook = new AddressBookBuilder().withParcel(new ParcelBuilder(AMY).withTags("DURABLE").build())
-                .withParcel(new ParcelBuilder(BOB).withTags("FRAGILE").build()).build();
+        addressBook = new AddressBookBuilder().withParcel(new ParcelBuilder(AMY).withTags(Tag.HEAVY.toString()).build())
+                .withParcel(new ParcelBuilder(BOB).withTags(Tag.FRAGILE.toString()).build()).build();
         storage.saveAddressBook(addressBook);
         command = ImportCommand.COMMAND_WORD + " " + STORAGE_FILE;
         assertCommandFailure(command, ImportCommand.MESSAGE_DUPLICATE_PARCELS);

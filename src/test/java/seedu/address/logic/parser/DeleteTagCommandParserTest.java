@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FROZEN;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -20,12 +21,12 @@ import seedu.address.model.tag.Tag;
 public class DeleteTagCommandParserTest {
 
     private static final String INVALID_TAG = "#friend";
-    private static final String VALID_TAG_1 = "friend";
+    private static final String VALID_TAG_1 = VALID_TAG_FROZEN;
     private DeleteTagCommandParser parser = new DeleteTagCommandParser();
 
     @Test
     public void parse_validArgs_returnsDeleteTagCommand() throws IllegalValueException {
-        assertParseSuccess(parser, "friend", new DeleteTagCommand(new Tag(VALID_TAG_1)));
+        assertParseSuccess(parser, VALID_TAG_FROZEN, new DeleteTagCommand(Tag.getInstance(VALID_TAG_1)));
     }
 
     @Test

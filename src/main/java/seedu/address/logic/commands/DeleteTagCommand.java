@@ -1,3 +1,4 @@
+//@@author fustilio
 package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -49,3 +50,4 @@ public class DeleteTagCommand extends UndoableCommand {
                 && this.targetTag.equals(((DeleteTagCommand) other).targetTag)); // state check
     }
 }
+//@@author

@@ -23,6 +23,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.JumpToTabRequestEvent;
+import seedu.address.commons.events.ui.ParcelPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowParcelListEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -35,7 +36,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/ark_icon.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
@@ -223,11 +224,19 @@ public class MainWindow extends UiPart<Region> {
         browserPanel.freeResources();
     }
 
+    //@@author vicisapotato
     @FXML @Subscribe
     private void handleMinimizeParcelListEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         splitPanePlaceholder.setDividerPositions(0.6);
     }
+
+    @FXML @Subscribe
+    private void handleParcelPanelSelectionChangedEvent(ParcelPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        splitPanePlaceholder.setDividerPositions(0.6);
+    }
+    //@@author
 
     //@@author kennard123661
     @FXML @Subscribe
@@ -236,12 +245,13 @@ public class MainWindow extends UiPart<Region> {
     }
     //@@author
 
+    //@@author vicisapotato
     @FXML @Subscribe
     private void handleShowParcelListEvent(ShowParcelListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         splitPanePlaceholder.setDividerPositions(0.0);
     }
-
+    //@@author
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

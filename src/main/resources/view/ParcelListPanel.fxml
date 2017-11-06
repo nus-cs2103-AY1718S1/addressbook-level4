@@ -6,18 +6,20 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox prefHeight="240.0" prefWidth="1543.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-   <TabPane fx:id="tabPanePlaceholder" styleClass="tab-pane" tabClosingPolicy="UNAVAILABLE">
+    <!-- @@author vicisapotato -->
+    <TabPane fx:id="tabPanePlaceholder" styleClass="tab-pane" tabClosingPolicy="UNAVAILABLE">
      <tabs>
        <Tab fx:id="undeliveredParcelsTab" text="All Parcels">
             <content>
-              <ListView fx:id="allUncompletedParcelListView" />
+              <ListView fx:id="allUncompletedParcelListView" style="-fx-background-color: #383838;" />
             </content>
          </Tab>
        <Tab fx:id="deliveredParcelsTab" styleClass="tab-header-area" text="Completed Parcels">
             <content>
-               <ListView fx:id="allCompletedParcelListView" prefHeight="200.0" prefWidth="200.0" />
+               <ListView fx:id="allCompletedParcelListView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #383838;" />
             </content>
          </Tab>
      </tabs>
    </TabPane>
+    <!-- @@author -->
 </VBox>

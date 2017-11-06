@@ -48,8 +48,8 @@ public class ParserUtilTest {
     private static final String VALID_ADDRESS = "505 Beach Road, Golden Mile Food Centre, #02-193/194, S199583";
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_STATUS = "delivering";
-    private static final String VALID_TAG_1 = "friend";
-    private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_TAG_1 = Tag.FLAMMABLE.toString();
+    private static final String VALID_TAG_2 = Tag.FROZEN.toString();
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
@@ -277,7 +277,8 @@ public class ParserUtilTest {
     @Test
     public void parseTags_collectionWithValidTags_returnsTagSet() throws Exception {
         Set<Tag> actualTagSet = ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
-        Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
+        Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(Tag.getInstance(VALID_TAG_1),
+                Tag.getInstance(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
     }
@@ -285,7 +286,7 @@ public class ParserUtilTest {
     @Test
     public void parseTags_validInput_success() throws Exception {
         Tag actualTag = ParserUtil.parseTag(VALID_TAG_1);
-        Tag expectedTag = new Tag(VALID_TAG_1);
+        Tag expectedTag = Tag.getInstance(VALID_TAG_1);
 
         assertEquals(expectedTag, actualTag);
     }

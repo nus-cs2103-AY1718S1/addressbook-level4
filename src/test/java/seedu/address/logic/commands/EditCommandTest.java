@@ -197,6 +197,7 @@ public class EditCommandTest {
         assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_PARCEL, DESC_BOB)));
     }
 
+    //@@author fustilio
     /**
      * Returns an {@code EditCommand} with parameters {@code index} and {@code descriptor}
      */
@@ -205,4 +206,5 @@ public class EditCommandTest {
         editCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return editCommand;
     }
+    //@@author
 }

@@ -1,3 +1,4 @@
+//@@author fustilio
 package seedu.address.model.parcel;
 
 import static java.util.Objects.requireNonNull;
@@ -138,3 +139,4 @@ public class DeliveryDate {
         return this.date.compareTo(deliveryDate.getDate());
     }
 }
+//@@author

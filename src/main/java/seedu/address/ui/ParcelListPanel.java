@@ -118,11 +118,13 @@ public class ParcelListPanel extends UiPart<Region> {
         scrollTo(event.targetIndex);
     }
 
+    //@@author vicisapotato
     @FXML @Subscribe
     private void handleJumpToTabEvent(JumpToTabRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         tabPanePlaceholder.getSelectionModel().select(event.targetIndex);
     }
+    //@@author
 
     //@@author kennard123661
     public void handleTabSelection(Index selectedIndex) {

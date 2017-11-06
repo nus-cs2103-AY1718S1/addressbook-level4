@@ -86,6 +86,54 @@ public class ImportCommand extends UndoableCommand {
     }
 }
 ```
+###### \java\seedu\address\logic\Logic.java
+``` java
+    /** Returns an unmodifiable view of the filtered list of parcels */
+    ObservableList<ReadOnlyParcel> getFilteredParcelList();
+
+    /** Returns an unmodifiable view of the filtered list of parcels with Status COMPLETE */
+    ObservableList<ReadOnlyParcel> getDeliveredParcelList();
+
+    /** Returns an unmodifiable view of the filtered list of parcels with Status not COMPLETE */
+    ObservableList<ReadOnlyParcel> getUndeliveredParcelList();
+
+    /** Returns an unmodifiable view of the filtered list of parcels with Status not COMPLETE */
+    void setActiveList(boolean isDelivered);
+```
+###### \java\seedu\address\logic\LogicManager.java
+``` java
+    @Override
+    public ObservableList<ReadOnlyParcel> getFilteredParcelList() {
+        return model.getFilteredParcelList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyParcel> getDeliveredParcelList() {
+        return model.getFilteredDeliveredParcelList();
+    }
+
+    @Override
+    public void setActiveList(boolean isDelivered) {
+        model.setActiveList(isDelivered);
+    }
+
+    @Override
+    public ObservableList<ReadOnlyParcel> getUndeliveredParcelList() {
+        return model.getFilteredUndeliveredParcelList();
+    }
+    //@@ author
+
+    @Override
+    public ObservableList<ReadOnlyParcel> getActiveList() {
+        return model.getActiveList();
+    }
+
+    @Override
+    public ListElementPointer getHistorySnapshot() {
+        return new ListElementPointer(history.getHistory());
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\ImportCommandParser.java
 ``` java
 /**
@@ -136,6 +184,10 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 ```
 ###### \java\seedu\address\model\Model.java
 ``` java
+    void setActiveList(boolean isDelivered);
+```
+###### \java\seedu\address\model\Model.java
+``` java
     /**
      * Adds all Parcel objects in parcels to the AddressBook
      * @param parcels list of parcels to add
@@ -144,72 +196,40 @@ public class ImportCommandParser implements Parser<ImportCommand> {
      */
     void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> parcelsAdded, List<ReadOnlyParcel>
             duplicateParcels);
-
+```
+###### \java\seedu\address\model\Model.java
+``` java
     /**
-     * Replaces the given parcel {@code target} with {@code editedParcel}.
-     *
-     * @throws DuplicateParcelException if updating the parcel's details causes the parcel to be equivalent to
-     *                                  another existing parcel in the list.
-     * @throws ParcelNotFoundException  if {@code target} could not be found in the list.
+     * Returns an unmodifiable view of the filtered parcel list
      */
-    void updateParcel(ReadOnlyParcel target, ReadOnlyParcel editedParcel)
-            throws DuplicateParcelException, ParcelNotFoundException;
+    ObservableList<ReadOnlyParcel> getFilteredDeliveredParcelList();
+
+    ObservableList<ReadOnlyParcel> getActiveList();
 
     /**
      * Returns an unmodifiable view of the filtered parcel list
      */
-    ObservableList<ReadOnlyParcel> getFilteredParcelList();
-
+    ObservableList<ReadOnlyParcel> getFilteredUndeliveredParcelList();
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
     /**
-     * Updates the filter of the filtered parcel list to filter by the given {@code predicate}.
-     *
-     * @throws NullPointerException if {@code predicate} is null.
+     * Updates Delivered and UndeliveredParcelList and resets the Active List to the correct reference
      */
-    void updateFilteredParcelList(Predicate<ReadOnlyParcel> predicate);
+    private void updatedDeliveredAndUndeliveredList() {
+        // checks reference equality
+        boolean isActiveDelivered = activeFilteredList == filteredDeliveredParcels;
 
-    /**
-     * Method to sort the lists of addresses by delivery date with the earliest date in front
-     */
-    void maintainSorted();
+        filteredDeliveredParcels = filteredParcels.filtered(deliveredPredicate);
+        filteredUndeliveredParcels = filteredParcels.filtered(deliveredPredicate.negate());
 
-    /**
-     * Method to check if there is a parcel selected.
-     */
-    boolean hasSelected();
+        setActiveList(isActiveDelivered);
+    }
 
-    /**
-     * Method to toggle whether or not a parcel has been selected
-     */
-    void select();
-
-    /**
-     * Method to toggle whether or not a parcel has been selected
-     */
-    void unselect();
-
-    /**
-     * Method to set the prevIndex attribute to the specified target.
-     */
-    void setPrevIndex(Index target);
-
-    /**
-     * Method to retrieve Index of last selected Parcel Card.
-     */
-    Index getPrevIndex();
-
-    /**
-     * Method to force the model to select a card without using the select command.
-     */
-    void forceSelect(Index target);
-
-    /**
-     * Method to reselect a parcel card if there is a card selected.
-     */
-    void reselect(ReadOnlyParcel parcel);
-
-}
-
-
+    @Override
+    public void setActiveList(boolean isDelivered) {
+        activeFilteredList = isDelivered ? filteredDeliveredParcels : filteredUndeliveredParcels;
+    }
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -228,7 +248,37 @@ public class ImportCommandParser implements Parser<ImportCommand> {
         }
 
         updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
+        updatedDeliveredAndUndeliveredList();
         indicateAddressBookChanged();
+    }
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyParcel} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyParcel> getFilteredDeliveredParcelList() {
+        return FXCollections.unmodifiableObservableList(filteredDeliveredParcels);
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyParcel} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyParcel> getActiveList() {
+        return FXCollections.unmodifiableObservableList(activeFilteredList);
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyParcel} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyParcel> getFilteredUndeliveredParcelList() {
+        return FXCollections.unmodifiableObservableList(filteredUndeliveredParcels);
     }
 ```
 ###### \java\seedu\address\model\parcel\PostalCode.java
@@ -435,5 +485,120 @@ public class TrackingNumber {
      */
     public String getBackupStorageFilePath() {
         return addressBookStorage.getAddressBookFilePath() + "-backup.xml";
+    }
+```
+###### \java\seedu\address\ui\BrowserPanel.java
+``` java
+    public static String getMapQueryStringFromPostalString(String postalCode) {
+        int firstDigitIndex = 1;
+        int lastDigitIndex = 7;
+
+        return "Singapore+" + postalCode.substring(firstDigitIndex, lastDigitIndex);
+    }
+}
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    @FXML @Subscribe
+    private void handleTabEvent(JumpToTabRequestEvent event) {
+        logic.setActiveList(event.targetIndex == INDEX_SECOND_TAB.getZeroBased());
+    }
+```
+###### \java\seedu\address\ui\ParcelCard.java
+``` java
+    /**
+     * Sets color for the status labels based on the current status.
+     */
+    private void setColorForStatus() {
+        switch (status.textProperty().get()) {
+        case "PENDING":
+            status.setStyle("-fx-background-color: " + "#d68411");
+            break;
+
+        case "DELIVERING":
+            status.setStyle("-fx-background-color: " + "#ffc200");
+            break;
+
+        case "OVERDUE":
+            status.setStyle("-fx-background-color: " + "red");
+            break;
+
+        case "COMPLETED":
+        default: // fall through
+            status.setStyle("-fx-background-color: " + "#00bf00");
+            break;
+
+        }
+    }
+```
+###### \java\seedu\address\ui\ParcelListPanel.java
+``` java
+    private void setConnections(ObservableList<ReadOnlyParcel> uncompletedParcels,
+                                ObservableList<ReadOnlyParcel> completedParcels) {
+        ObservableList<ParcelCard> mappedList = EasyBind.map(
+                uncompletedParcels, (parcel) -> new ParcelCard(parcel,
+                        uncompletedParcels.indexOf(parcel) + 1));
+        allUncompletedParcelListView.setItems(mappedList);
+        allUncompletedParcelListView.setCellFactory(listView -> new ParcelListViewCell());
+
+        mappedList = EasyBind.map(completedParcels, (parcel) -> new ParcelCard(parcel,
+                        completedParcels.indexOf(parcel) + 1));
+        allCompletedParcelListView.setItems(mappedList);
+        allCompletedParcelListView.setCellFactory(listView -> new ParcelListViewCell());
+
+        setEventHandlerForSelectionChangeEvent();
+    }
+
+    private void setEventHandlerForSelectionChangeEvent() {
+        allUncompletedParcelListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in parcel list panel changed to : '" + newValue + "'");
+                        raise(new ParcelPanelSelectionChangedEvent(newValue));
+                    }
+                });
+
+        allCompletedParcelListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in parcel list panel changed to : '" + newValue + "'");
+                        raise(new ParcelPanelSelectionChangedEvent(newValue));
+                    }
+                });
+
+        tabPanePlaceholder.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    logger.fine("Tab in parcel list panel changed to : '" + newValue.getText() + "'");
+                    if (newValue.getText().equals("All Parcels")) {
+                        handleTabSelection(INDEX_FIRST_TAB);
+                    } else {
+                        handleTabSelection(INDEX_SECOND_TAB);
+                    }
+                });
+    }
+
+    /**
+     * Scrolls to the {@code ParcelCard} at the {@code index} and selects it.
+     */
+    private void scrollTo(int index) {
+        Platform.runLater(() -> {
+            if (tabPanePlaceholder.getSelectionModel().getSelectedIndex() == 0) {
+                allUncompletedParcelListView.scrollTo(index);
+                allUncompletedParcelListView.getSelectionModel().clearAndSelect(index);
+            }
+        });
+
+        Platform.runLater(() -> {
+            if (tabPanePlaceholder.getSelectionModel().getSelectedIndex() == 1) {
+                allCompletedParcelListView.scrollTo(index);
+                allCompletedParcelListView.getSelectionModel().clearAndSelect(index);
+            }
+        });
+    }
+```
+###### \java\seedu\address\ui\ParcelListPanel.java
+``` java
+    public void handleTabSelection(Index selectedIndex) {
+        EventsCenter.getInstance().post(new JumpToTabRequestEvent(selectedIndex));
     }
 ```

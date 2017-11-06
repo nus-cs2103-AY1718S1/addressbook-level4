@@ -8,6 +8,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 /**
  * Changes the remark of an existing person in the address book.
  */
+//@@author vicisapotato
 public class TabCommand extends Command {
     public static final String COMMAND_WORD = "tab";
 
@@ -47,3 +48,4 @@ public class TabCommand extends Command {
                 && this.targetIndex.equals(((TabCommand) other).targetIndex)); // state check
     }
 }
+//@@author

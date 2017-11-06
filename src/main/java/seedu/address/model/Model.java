@@ -41,10 +41,12 @@ public interface Model {
      */
     void deleteParcel(ReadOnlyParcel target) throws ParcelNotFoundException;
 
+    //@@author fustilio
     /**
      * Deletes the given tag from every parcel.
      */
     void deleteTag(Tag target) throws TagNotFoundException, TagInternalErrorException;
+    //@@author
 
     /**
      * Adds the given parcel

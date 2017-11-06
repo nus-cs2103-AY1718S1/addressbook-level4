@@ -62,7 +62,7 @@
         <address isPrivate="false">4th street S123127</address>
         <deliveryDate>05-05-2017</deliveryDate>
         <status>pending</status>
-        <tagged>friends</tagged>
+        <tagged>FLAMMABLE</tagged>
     </parcels>
     <parcels>
         <trackingNumber>RR123444789SG</trackingNumber>
@@ -72,8 +72,8 @@
         <address isPrivate="false">little india S123123</address>
         <deliveryDate>05-05-2017</deliveryDate>
         <status>compeleted</status>
-        <tagged>owesMoney</tagged>
-        <tagged>friends</tagged>
+        <tagged>FROZEN</tagged>
+        <tagged>FLAMMABLE</tagged>
     </parcels>
     <parcels>
         <trackingNumber>RR123666789SG</trackingNumber>
@@ -84,6 +84,6 @@
         <status>overdue</status>
         <address isPrivate="false">chicago ave S123123</address>
     </parcels>
-    <tags>owesMoney</tags>
-    <tags>friends</tags>
+    <tags>FROZEN</tags>
+    <tags>FLAMMABLE</tags>
 </addressbook>

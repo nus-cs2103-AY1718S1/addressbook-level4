@@ -40,7 +40,7 @@ public class GuiTestAssert {
         assertEquals(expectedParcel.getAddress().toString(), actualCard.getAddress());
         assertEquals(expectedParcel.getDeliveryDate().value, actualCard.getDeliveryDate());
         assertEquals(expectedParcel.getStatus().toString(), actualCard.getStatus());
-        assertEquals(expectedParcel.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
+        assertEquals(expectedParcel.getTags().stream().map(tag -> tag.toString()).collect(Collectors.toList()),
                 actualCard.getTags());
     }
 

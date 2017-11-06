@@ -28,6 +28,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.tag.Tag;
 import seedu.address.storage.XmlAddressBookStorage;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.ParcelBuilder;
@@ -82,8 +83,8 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: import an addressbook xml file containing duplicate parcels except with different tags -> rejected */
         // AddressBook#addAllParcels(List<ReadOnlyParcel>)
-        addressBook = new AddressBookBuilder().withParcel(new ParcelBuilder(AMY).withTags("DURABLE").build())
-                .withParcel(new ParcelBuilder(BOB).withTags("FRAGILE").build()).build();
+        addressBook = new AddressBookBuilder().withParcel(new ParcelBuilder(AMY).withTags(Tag.HEAVY.toString()).build())
+                .withParcel(new ParcelBuilder(BOB).withTags(Tag.FRAGILE.toString()).build()).build();
         storage.saveAddressBook(addressBook);
         command = ImportCommand.COMMAND_WORD + " " + STORAGE_FILE;
         assertCommandFailure(command, ImportCommand.MESSAGE_DUPLICATE_PARCELS);

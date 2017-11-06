@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.ParcelBuilder;
@@ -92,10 +93,10 @@ public class ParcelTest {
         assertEquals(otherParcel, differentParcel);
 
         // Tags Equality
-        differentParcel.setTags(SampleDataUtil.getTagSet("test"));
-        assertEquals(differentParcel.getTags(), SampleDataUtil.getTagSet("test"));
+        differentParcel.setTags(SampleDataUtil.getTagSet(Tag.FLAMMABLE.toString()));
+        assertEquals(differentParcel.getTags(), SampleDataUtil.getTagSet(Tag.FLAMMABLE.toString()));
         assertEquals(differentParcel.tagProperty().get(), new SimpleObjectProperty<>(
-                new UniqueTagList(SampleDataUtil.getTagSet("test"))).get());
+                new UniqueTagList(SampleDataUtil.getTagSet(Tag.FLAMMABLE.toString()))).get());
 
         // check state equality
         assertEquals(parcel.getTrackingNumber(), new TrackingNumber(DEFAULT_TRACKING_NUMBER));
@@ -106,7 +107,7 @@ public class ParcelTest {
         assertEquals(parcel.getStatus(), Status.getInstance(DEFAULT_STATUS));
         assertEquals(parcel.getTags(), SampleDataUtil.getTagSet(DEFAULT_TAGS));
 
-        // toString() equality
+        // getFormattedString() equality
         assertEquals(parcel.toString(), sameParcel.toString());
         assertEquals(parcel.toString(), "Tracking No.: " + DEFAULT_TRACKING_NUMBER + " Recipient Name: "
                 + DEFAULT_NAME + " Phone: " + DEFAULT_PHONE  + " Email: " + DEFAULT_EMAIL + " Address: "
