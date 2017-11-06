@@ -124,14 +124,14 @@ public class ParserUtil {
     /**
      * Returns the first integer found in a {@code String}.
      * @param value to be parsed.
-     * @return {@code int} value of the integer.
+     * @return {@code int} positive value of the integer.
      * @throws NumberFormatException if no integer was found.
      */
     public static int parseFirstInt(String value) throws NumberFormatException {
         Pattern numbers = Pattern.compile("-?\\d+");
         Matcher m = numbers.matcher(value);
         if (m.find()) {
-            return Integer.parseInt(m.group());
+            return Math.abs(Integer.parseInt(m.group()));
         }
         throw new NumberFormatException();
     }
