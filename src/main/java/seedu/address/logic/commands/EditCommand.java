@@ -87,6 +87,7 @@ public class EditCommand extends UndoableCommand {
         try {
             editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
             model.updatePerson(personToEdit, editedPerson);
+            model.updateMeeting(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {

@@ -42,6 +42,13 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    //@@author LimYangSheng
+    /**
+     * Replaces the {@code target} in meeting object with {@code editedPerson}.
+     * No exception should be thrown as it is taken care by updatePerson already.
+     */
+    void updateMeeting(ReadOnlyPerson target, ReadOnlyPerson editedPerson);
+
     //@@author alexanderleegs
     /** Deletes given tag from AddressBook */
     void deleteTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException;

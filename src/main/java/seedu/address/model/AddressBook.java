@@ -128,6 +128,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+    //@@author LimYangSheng
+    public void updateMeeting(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson) {
+        requireNonNull(editedReadOnlyPerson);
+        meetings.changeMeeting(target, editedReadOnlyPerson);
+    }
+
+    //@@author
     /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}
