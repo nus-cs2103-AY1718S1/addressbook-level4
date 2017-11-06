@@ -25,7 +25,7 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
     //@@author keithsoc
-    private static HashMap<ReadOnlyPerson, String> personColors = new HashMap<>();
+    private static HashMap<String, String> personColors = new HashMap<>();
     private static HashMap<String, String> tagColors = new HashMap<>();
     private static Random random = new Random();
     private static final String defaultThemeTagColor = "#fc4465";
@@ -71,6 +71,8 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
+        initProfilePhoto(person);
+        initFavorite(person);
         initTags(person);
         initSocialInfos(person);
         bindListeners(person);
@@ -111,11 +113,11 @@ public class PersonCard extends UiPart<Region> {
     /**
      * Binds a profile photo background with a random pastel color and store it into personColors HashMap.
      */
-    private String getColorForPerson(ReadOnlyPerson person) {
-        if (!personColors.containsKey(person)) {
-            personColors.put(person, generateRandomPastelColor());
+    private String getColorForPerson(String name) {
+        if (!personColors.containsKey(name)) {
+            personColors.put(name, generateRandomPastelColor());
         }
-        return personColors.get(person);
+        return personColors.get(name);
     }
 
 
@@ -139,12 +141,14 @@ public class PersonCard extends UiPart<Region> {
      * so that they will be notified of any changes.
      */
     private void bindListeners(ReadOnlyPerson person) {
-        initProfilePhoto(person);
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        initFavorite(person);
+        person.favoriteProperty().addListener((observable, oldValue, newValue) -> {
+            favoriteImageView.setId("favoriteImageView");
+            initFavorite(person);
+        });
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);
@@ -167,22 +171,22 @@ public class PersonCard extends UiPart<Region> {
         profilePhotoImageView.setClip(clip);
 
         // Add background circle with a random pastel color
+        String nameOfPerson = person.getName().toString().trim();
         Circle backgroundCircle = new Circle(value);
-        backgroundCircle.setFill(Paint.valueOf(getColorForPerson(person)));
+        backgroundCircle.setFill(Paint.valueOf(getColorForPerson(nameOfPerson)));
 
         // Add text
-        Text personInitialsText = new Text(extractInitials(person));
+        Text personInitialsText = new Text(extractInitials(nameOfPerson));
         personInitialsText.setFill(Paint.valueOf("white"));
         profilePhotoStackPane.getChildren().addAll(backgroundCircle, personInitialsText);
     }
 
     /**
-     * Extracts the initials from the name of the given {@code person}.
+     * Extracts the initials from the name of the given {@code name}.
      * Extract only one initial if the name contains a single word;
      * Extract two initials if the name contains more than one word.
      */
-    private String extractInitials (ReadOnlyPerson person) {
-        String name = person.getName().toString().trim();
+    private String extractInitials (String name) {
         int noOfInitials = 1;
         if (name.split("\\s+").length > 1) {
             noOfInitials = 2;

@@ -40,6 +40,7 @@ public interface Model {
     //@@author marvinchin
     /** Sorts the persons in the address book based on the input {@code comparator} */
     void sortPersons(Comparator<ReadOnlyPerson> comparator);
+    //@@author
 
     //@@author keithsoc
     /** Favorites or unfavorites the given person. Should update the last accessed time of the person. */
