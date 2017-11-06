@@ -506,6 +506,7 @@ and creating a new comparator in link:{repoURL}/src/main/java/seedu/address/mode
 
 <<<
 
+//tag::delete[]
 === Deleting Multiple Contacts
 
 A method added to previous address book as an enhancement was to be able to delete multiple contacts at a time.
@@ -559,6 +560,84 @@ Command for Delete will be updated after parsing of new array for delete functio
 *Alternative 1 (current choice):* Use an one-based array to accept deletion of multiple contacts using their index +
 *Pros:* Implementation is simple +
 *Cons:* Might be slower than previous delete method as it has to read from an array before executing the deletion itself +
+//end::delete[]
+
+<<<
+
+//tag::optional[]
+=== Optional Fields
+Previously in the `add` function, all fields implemented are compulsory to be filled in. The function `requirednonnull()`
+ensures that the method `AddCommand` does not take in any empty parameters for any fields. +
+The fields which was previously required were `name`, `phone`, `birthdate`, `email` and `address`. +
+ +
+The enhancement for the `add` function ensures that user can add in contacts even without a full set of parameters. Only
+`name` field is compulsory now. All other fields will read in empty fields and parse the parameters into the `AddCommand`,
+reading it as "-" now. +
+
+Name will stay compulsory as follow while other fields make use of the extended list
+`Optional` from `import java.util.Optional` :
+[source, java]
+----
+ try {
+            Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+            Optional<Phone> checkPhone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE));
+            if (!checkPhone.isPresent()) {
+                phone = new Phone(null);
+            } else {
+                phone = checkPhone.get();
+            }
+            Optional<Birthday> checkBirthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY));
+            if (!checkBirthday.isPresent()) {
+                birthday = new Birthday(null);
+            } else {
+                birthday = checkBirthday.get();
+            }
+            Optional<Email> checkEmail = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL));
+            if (!checkEmail.isPresent()) {
+                email = new Email(null);
+            } else {
+                email = checkEmail.get();
+            }
+            Optional<Address> checkAddress = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS));
+            if (!checkAddress.isPresent()) {
+                address = new Address(null);
+            } else {
+                address = checkAddress.get();
+            }
+            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+----
+Each parameter will then be taught to accept null input and read it as `-`. The implementation takes place in each field's
+model. +
+An example of teaching the parameter to reflect `-` in the person card is as shown below from `model/person/Address.java`:
+
+[source,java]
+----
+...
+public static final String ADDRESS_EMPTY = "-";
+...
+public Address(String address) throws IllegalValueException {
+        if (address == null) {
+            this.value = ADDRESS_EMPTY;
+        } else {
+            if (!isValidAddress(address)) {
+                throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
+            }
+            this.value = address;
+        }
+    }
+...
+
+public static boolean isValidAddress(String test) {
+    return test.matches(ADDRESS_VALIDATION_REGEX) || test.matches(ADDRESS_EMPTY);
+    }
+----
+
+==== Design Considerations
+*Aspect:* Optional Fields +
+*Alternative 1 (current choice):* Extends from Optional list to each parameter and replace null field with "-" +
+*Pros:* Implementation is simple +
+*Cons:* May accept same name with different fields filled in as different person cards +
+//end::optional[]
 
 <<<
 
