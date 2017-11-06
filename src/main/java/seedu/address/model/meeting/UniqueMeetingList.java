@@ -96,10 +96,12 @@ public class UniqueMeetingList implements Iterable<Meeting> {
 
     //@@author alexanderleegs
     /**
-     * Removes a Meeting from the list.
+     * Removes the equivalent meeting from the list.
      */
-    public void remove(Meeting toRemove) {
-        internalList.remove(toRemove);
+    public boolean remove(Meeting toRemove) {
+        requireNonNull(toRemove);
+        final boolean meetingFoundAndDeleted = internalList.remove(toRemove);
+        return meetingFoundAndDeleted;
     }
 
     //@@author LimYangSheng

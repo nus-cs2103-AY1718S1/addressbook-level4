@@ -195,7 +195,12 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
-        if (persons.remove(key)) {
+        if (persons.contains(key)) {
+            persons.remove(key);
+            Set<Meeting> meetingsToRemove = key.getMeetings();
+            for (Meeting meeting : meetingsToRemove) {
+                meetings.remove(meeting);
+            }
             return true;
         } else {
             throw new PersonNotFoundException();
