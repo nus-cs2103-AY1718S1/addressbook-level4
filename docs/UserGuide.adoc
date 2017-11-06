@@ -43,8 +43,9 @@ You are required to know how to use Java to run a Graphical User Interface (GUI)
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  You can download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  You can download the latest `MedNus.jar` link:{repoURL}/releases[here].
+.  You should create a new folder to store the jar file.
+.  Copy the jar file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The graphical user interface (GUI) should appear in a few seconds.
 +
 image::Ui.png[width="500"]
@@ -343,33 +344,40 @@ Color name input can be in english or hexadecimal form.
 // tag::appointment[]
 === Set appointment: `appointment`
 
-You can set an appointment to a specific contact at a given index. +
+You can add, sort and remove appointments from a specific contact at a given index. +
+
+Appointment can be set using natural language. +
+You can refer to the following http://natty.joestelmach.com/doc.jsp[link] for the supported formats. +
 
 [NOTE]
-Appointment can be set using natural language. +
-If no end time is specified, default appointment time is 1 hour.
-However, please include at least the hour and a day that can be specified.
+If no end time is specified, default appointment time is 1 hour. +
+However, please include at least the hour and a day that can be specified. +
 
+[WARNING]
+You can only set dates that are after current time. (i.e. You cannot set a time to yesterday) +
 
-*Format:* `appointment INDEX d/TIME to TIME` +
-*Shorthand format:* `appt INDEX d/TIME to TIME` +
+[width="59%",cols="<23%,<25%,<30%",options="header",]
+|=======================================================================
+|Purpose |Format |Example
 
-*Example:* appt 1 d/5pm to 7pm tomorrow
+|Add an appointment to the contact |`appointment INDEX d/TIME to TIME` |`appointment 1 d/tomorrow 5pm`
+
+|Shorthand for adding appointment  |`appt INDEX d/TIME to TIME` |`appt 1 d/tomorrow 5pm`
+
+|Remove an appointment from the contact |`appointment INDEX d/off`| `appointment 1 d/off`
+
+|Shorthand for removing appointment |`appt INDEX d/off`| `appt 1 d/off`
+
+|Sort list by appointment dates |`appointment` |`appointment`
+
+|Shorthand for appointment sorting |`appt` |`appt`
+
+|=======================================================================
+
+*Example:*
 
 image::aptexample.png[width="500"]
     Figure 11: Appointment Command Usage Diagram
-
-You can sort list by appointment dates. +
-*Format:* `appointment` +
-*Shorthand format:* `appt`
-
-[NOTE]
-You can only set dates that are after current time. (i.e. You cannot set a time to yesterday) +
-
-To remove appointment,
-
-*Format:* `appointment INDEX d/off` +
-*Shorthand format:* `appt INDEX d/off`
 
 // end::appointment[]
 
