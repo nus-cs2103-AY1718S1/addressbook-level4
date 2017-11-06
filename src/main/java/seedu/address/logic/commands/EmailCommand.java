@@ -30,10 +30,12 @@ public class EmailCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Opening email composer";
     public static final String MESSAGE_NOT_SUPPORTED = "Function not supported";
     private final Index targetIndex;
-    private URI mailToUri = null;
+    private final String subject;
+    private URI mailtoUri = null;
 
-    public EmailCommand(Index targetIndex) {
+    public EmailCommand(Index targetIndex, String subject) {
         this.targetIndex = targetIndex;
+        this.subject = subject;
     }
 
     @Override
@@ -51,8 +53,8 @@ public class EmailCommand extends Command {
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.MAIL)) {
             Desktop desktop = Desktop.getDesktop();
             try {
-                mailToUri = new URI("mailto:" + recipientEmailAddress);
-                desktop.mail(mailToUri);
+                mailtoUri = new URI("mailto:" + recipientEmailAddress + "?subject=" + subject);
+                desktop.mail(mailtoUri);
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             } catch (IOException e) {
