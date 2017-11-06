@@ -193,4 +193,12 @@ public class ParcelCard extends UiPart<Region> {
         return id.getText().equals(card.id.getText())
                 && parcel.equals(card.parcel);
     }
+
+    @FXML
+    public void changeCardColor() {
+        //set card to new when created
+        //on mouse over, card is no longer "new"
+        //when card no longer "new" (created) change back to norm color
+        //set card to false for new card
+    }
 }
