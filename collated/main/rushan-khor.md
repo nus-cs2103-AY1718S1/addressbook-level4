@@ -1,173 +1,5 @@
 # rushan-khor
-###### /,CS2103/addressbook-level4/src/test/java/seedu/address/logic/commands/BatchCommandTest.java
-``` java
-public class BatchCommandTest {
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    @Test
-    public void execute() throws IllegalValueException, CommandException {
-
-        Model model = new ModelManager(TypicalPersons.getTypicalAddressBook(), new UserPrefs());
-
-        Set<Tag> tagsToDelete = new HashSet<>();
-        BatchCommand command = new BatchCommand(tagsToDelete);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-
-        //Should not throw any error
-        try {
-            command.execute();
-        } catch (CommandException e) {
-            fail();
-        }
-
-        tagsToDelete.add(new Tag("nosuczhtag", "red"));
-
-        command = new BatchCommand(tagsToDelete);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-
-        thrown.expect(CommandException.class);
-        command.execute();
-
-    }
-}
-
-```
-###### /,CS2103/addressbook-level4/src/test/java/seedu/address/logic/commands/DuplicatesCommandTest.java
-``` java
-/**
- * Contains integration tests (interaction with the Model) for {@code FindCommand}.
- */
-public class DuplicatesCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    /**
-     * Parses {@code userInput} into a {@code FindCommand}.
-     */
-    private DuplicatesCommand prepareCommand() {
-        DuplicatesCommand command = new DuplicatesCommand();
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-        return command;
-    }
-
-    @Test
-    public void executeZeroDuplicatesFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        DuplicatesCommand command = prepareCommand();
-        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
-    }
-
-    /**
-     * Asserts that {@code command} is successfully executed, and<br>
-     * - the command feedback is equal to {@code expectedMessage}<br>
-     * - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
-     * - the {@code AddressBook} in model remains the same after executing the {@code command}
-     */
-    private void assertCommandSuccess(DuplicatesCommand command, String expectedMessage,
-                                      List<ReadOnlyPerson> expectedList) {
-        AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
-        CommandResult commandResult = command.execute();
-
-        assertEquals(expectedMessage, commandResult.feedbackToUser);
-        assertEquals(expectedList, model.getFilteredPersonList());
-        assertEquals(expectedAddressBook, model.getAddressBook());
-    }
-
-}
-```
-###### /,CS2103/addressbook-level4/src/test/java/seedu/address/model/AddressBookTest.java
-``` java
-    @Test
-    public void testDeletePersonsWithTag() {
-        // Setup for testing
-        AddressBook addressBookUnderTest = new AddressBook();
-        try {
-            addressBookUnderTest.addPerson(ALICE);
-            addressBookUnderTest.addPerson(BENSON);
-            addressBookUnderTest.addPerson(CARL);
-        } catch (DuplicatePersonException dpe) {
-            System.out.println(dpe.getMessage());
-        }
-        try {
-            addressBookUnderTest.deletePersonsWithTag(new Tag("friends", Tag.DEFAULT_COLOR));
-        } catch (IllegalValueException | PersonNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-
-        // Setup expected outcome
-        AddressBook expectedAddressBook = new AddressBook();
-        try {
-            expectedAddressBook.addPerson(CARL);
-        } catch (DuplicatePersonException dpe) {
-            System.out.println(dpe.getMessage());
-        }
-
-        // Test equality
-        assertEquals(addressBookUnderTest, expectedAddressBook);
-    }
-```
-###### /,CS2103/addressbook-level4/src/test/java/seedu/address/model/ModelManagerTest.java
-``` java
-    @Test
-    public void testDeletePersonsWithTag() {
-        // Setup for testing
-        ModelManager modelManagerUnderTest = new ModelManager();
-        try {
-            modelManagerUnderTest.addPerson(ALICE);
-            modelManagerUnderTest.addPerson(BENSON);
-            modelManagerUnderTest.addPerson(CARL);
-        } catch (DuplicatePersonException dpe) {
-            System.out.println(dpe.getMessage());
-        }
-        Set<Tag> tagSet = new HashSet<>();
-        try {
-            tagSet.add(new Tag("friends", Tag.DEFAULT_COLOR));
-            modelManagerUnderTest.deletePersonsByTags(tagSet);
-        } catch (IllegalValueException | PersonNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-
-        // Setup expected outcome
-        ModelManager expectedModelManager = new ModelManager();
-        try {
-            expectedModelManager.addPerson(CARL);
-        } catch (DuplicatePersonException dpe) {
-            System.out.println(dpe.getMessage());
-        }
-
-        // Test equality
-        assertEquals(modelManagerUnderTest, expectedModelManager);
-    }
-```
-###### /,CS2103/addressbook-level4/src/main/java/seedu/address/logic/parser/BatchCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new DeleteCommand object
- */
-public class BatchCommandParser implements Parser<BatchCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the DeleteCommand
-     * and returns an DeleteCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public BatchCommand parse(String args) throws ParseException {
-        try {
-            final Set<String> stringSet = new HashSet<>();
-            stringSet.add(args);
-
-            Set<Tag> tags = ParserUtil.parseTags(stringSet);
-            return new BatchCommand(tags);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, BatchCommand.MESSAGE_USAGE));
-        }
-    }
-
-}
-```
-###### /,CS2103/addressbook-level4/src/main/java/seedu/address/logic/commands/BatchCommand.java
+###### \java\seedu\address\logic\commands\BatchCommand.java
 ``` java
 /**
  * Deletes a person identified using it's last displayed index from the address book.
@@ -212,7 +44,57 @@ public class BatchCommand extends UndoableCommand {
     }
 }
 ```
-###### /,CS2103/addressbook-level4/src/main/java/seedu/address/logic/commands/DuplicatesCommand.java
+###### \java\seedu\address\logic\commands\CopyCommand.java
+``` java
+    @Override
+    public CommandResult execute() throws CommandException {
+        String targetEmail = getTargetEmail();
+        String commandResultMessage = "";
+
+        boolean emailIsValid = isEmailValid(targetEmail);
+        if (emailIsValid) {
+            putIntoClipboard(targetEmail);
+            commandResultMessage = String.format(MESSAGE_COPY_PERSON_SUCCESS, targetPerson.getName());
+        } else {
+            commandResultMessage = String.format(MESSAGE_COPY_PERSON_EMPTY, targetPerson.getName());
+        }
+
+        return new CommandResult(commandResultMessage);
+    }
+
+    /**
+     * Gets the target person's email address.
+     * @return     the email address of the person at the list {@code targetIndex}
+     * @exception  CommandException if the {@code targetIndex}
+     *             argument is greater than or equal to the {@code lastShownList} size.
+     */
+    public String getTargetEmail() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        boolean indexIsOutOfBounds = targetIndex.getZeroBased() >= lastShownList.size();
+        if (indexIsOutOfBounds) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        targetPerson = lastShownList.get(targetIndex.getZeroBased());
+        return targetPerson.getEmail().toString();
+    }
+
+    public boolean isEmailValid(String email) {
+        return !"null@null.com".equalsIgnoreCase(email) && !"".equals(email);
+    }
+
+    /**
+     * Puts target person's email address into the system clipboard.
+     */
+    private void putIntoClipboard(String resultantEmailAddress) {
+        Clipboard systemClipboard = Clipboard.getSystemClipboard();
+        ClipboardContent systemClipboardContent = new ClipboardContent();
+
+        systemClipboardContent.putString(resultantEmailAddress);
+        systemClipboard.setContent(systemClipboardContent);
+    }
+```
+###### \java\seedu\address\logic\commands\DuplicatesCommand.java
 ``` java
 /**
  * Finds and lists persons in address book with possible duplicate entries (by name).
@@ -241,33 +123,62 @@ public class DuplicatesCommand extends Command {
     }
 }
 ```
-###### /,CS2103/addressbook-level4/src/main/java/seedu/address/model/person/HasPotentialDuplicatesPredicate.java
+###### \java\seedu\address\logic\parser\BatchCommandParser.java
 ``` java
 /**
- * Tests that a {@code ReadOnlyPerson}'s {@code Bloodtype} matches any of the keywords given.
+ * Parses input arguments and creates a new DeleteCommand object
  */
-public class HasPotentialDuplicatesPredicate implements Predicate<ReadOnlyPerson> {
-    private final ArrayList<Name> duplicateNames;
+public class BatchCommandParser implements Parser<BatchCommand> {
 
-    public HasPotentialDuplicatesPredicate(ArrayList<Name> duplicateNames) {
-        this.duplicateNames = duplicateNames;
-    }
+    /**
+     * Parses the given {@code String} of arguments in the context of the DeleteCommand
+     * and returns an DeleteCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public BatchCommand parse(String args) throws ParseException {
+        try {
+            final Set<String> stringSet = new HashSet<>();
+            Scanner sc = new Scanner(args);
 
-    @Override
-    public boolean test(ReadOnlyPerson person) {
-        return duplicateNames.contains(person.getName());
-    }
+            while (sc.hasNext()) {
+                stringSet.add(sc.next());
+            }
 
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof HasPotentialDuplicatesPredicate // instanceof handles nulls
-                && this.duplicateNames.equals(((HasPotentialDuplicatesPredicate) other).duplicateNames)); // state check
+            Set<Tag> tags = ParserUtil.parseTags(stringSet);
+            return new BatchCommand(tags);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, BatchCommand.MESSAGE_USAGE));
+        }
     }
 
 }
 ```
-###### /,CS2103/addressbook-level4/src/main/java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\logic\parser\CopyCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new CopyCommand object
+ */
+public class CopyCommandParser implements Parser<CopyCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the CopyCommand
+     * and returns an CopyCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public CopyCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new CopyCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, CopyCommand.MESSAGE_USAGE));
+        }
+    }
+
+}
+```
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
      * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
@@ -291,7 +202,7 @@ public class HasPotentialDuplicatesPredicate implements Predicate<ReadOnlyPerson
         }
     }
 ```
-###### /,CS2103/addressbook-level4/src/main/java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
      * Removes {@code tagsToRemove} from this {@code AddressBook} if and only if they are not help by any persons.
@@ -313,7 +224,7 @@ public class HasPotentialDuplicatesPredicate implements Predicate<ReadOnlyPerson
         return results;
     }
 ```
-###### /,CS2103/addressbook-level4/src/main/java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
@@ -321,7 +232,7 @@ public class HasPotentialDuplicatesPredicate implements Predicate<ReadOnlyPerson
         indicateAddressBookChanged();
     }
 ```
-###### /,CS2103/addressbook-level4/src/main/java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     /**
      * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
@@ -346,14 +257,14 @@ public class HasPotentialDuplicatesPredicate implements Predicate<ReadOnlyPerson
     }
 
 ```
-###### /,CS2103/addressbook-level4/src/main/java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     /**
      * Gets a list of duplicate names
      */
-    private ArrayList<Name> getDuplicateNames() {
-        ArrayList<Name> examinedNames = new ArrayList<>();
-        ArrayList<Name> duplicateNames = new ArrayList<>();
+    private HashSet<Name> getDuplicateNames() {
+        HashSet<Name> examinedNames = new HashSet<>();
+        HashSet<Name> duplicateNames = new HashSet<>();
         ObservableList<ReadOnlyPerson> allPersonsInAddressBook = getFilteredPersonList();
 
         for (ReadOnlyPerson person : allPersonsInAddressBook) {
@@ -365,7 +276,7 @@ public class HasPotentialDuplicatesPredicate implements Predicate<ReadOnlyPerson
         return duplicateNames;
     }
 ```
-###### /,CS2103/addressbook-level4/src/main/java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
@@ -375,8 +286,34 @@ public class HasPotentialDuplicatesPredicate implements Predicate<ReadOnlyPerson
 
     @Override
     public void updateDuplicatePersonList() {
-        ArrayList<Name> duplicateNames = getDuplicateNames();
+        HashSet<Name> duplicateNames = getDuplicateNames();
         HasPotentialDuplicatesPredicate predicate = new HasPotentialDuplicatesPredicate(duplicateNames);
         updateFilteredPersonList(predicate);
     }
+```
+###### \java\seedu\address\model\person\HasPotentialDuplicatesPredicate.java
+``` java
+/**
+ * Tests that a {@code ReadOnlyPerson}'s {@code Bloodtype} matches any of the keywords given.
+ */
+public class HasPotentialDuplicatesPredicate implements Predicate<ReadOnlyPerson> {
+    private final HashSet<Name> duplicateNames;
+
+    public HasPotentialDuplicatesPredicate(HashSet<Name> duplicateNames) {
+        this.duplicateNames = duplicateNames;
+    }
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return duplicateNames.contains(person.getName());
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof HasPotentialDuplicatesPredicate // instanceof handles nulls
+                && this.duplicateNames.equals(((HasPotentialDuplicatesPredicate) other).duplicateNames)); // state check
+    }
+
+}
 ```

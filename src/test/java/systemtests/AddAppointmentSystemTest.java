@@ -9,6 +9,7 @@ import seedu.address.model.person.Appointment;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+//@@author Eric
 public class AddAppointmentSystemTest extends AddressBookSystemTest {
 
     @Test
