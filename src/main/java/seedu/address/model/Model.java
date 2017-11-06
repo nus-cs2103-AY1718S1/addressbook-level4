@@ -72,4 +72,10 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    //@@author marvinchin
+    /**
+     * Returns a defensive copy of the {@code model}.
+     */
+    Model makeCopy();
 }

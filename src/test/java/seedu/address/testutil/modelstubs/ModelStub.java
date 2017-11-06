@@ -84,4 +84,10 @@ public class ModelStub implements Model {
     public void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
         fail("This method should not be called.");
     }
+
+    @Override
+    public Model makeCopy() {
+        fail("This method should not be called.");
+        return null;
+    }
 }
