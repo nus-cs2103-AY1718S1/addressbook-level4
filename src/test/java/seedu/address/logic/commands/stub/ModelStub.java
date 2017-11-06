@@ -42,11 +42,6 @@ public class ModelStub implements Model {
     public void addReminder(ReadOnlyReminder reminder) throws DuplicateReminderException {
     }
 
-    @Override
-    public void deleteReminder(ReadOnlyReminder reminder) throws ReminderNotFoundException {
-        fail("This method should not be called.");
-    }
-
     //@@author dennaloh
     @Override
     public boolean haveDuplicate(String name, ObservableList<ReadOnlyPerson> list) {
