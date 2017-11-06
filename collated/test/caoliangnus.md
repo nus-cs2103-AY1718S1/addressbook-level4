@@ -1,5 +1,5 @@
 # caoliangnus
-###### /java/seedu/address/logic/commands/ColorKeywordCommandTest.java
+###### \java\seedu\address\logic\commands\ColorKeywordCommandTest.java
 ``` java
 public class ColorKeywordCommandTest {
 
@@ -24,7 +24,7 @@ public class ColorKeywordCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/parser/ColorKeywordCommandParserTest.java
+###### \java\seedu\address\logic\parser\ColorKeywordCommandParserTest.java
 ``` java
 public class ColorKeywordCommandParserTest {
     private ColorKeywordCommandParser parser = new ColorKeywordCommandParser();
@@ -42,7 +42,7 @@ public class ColorKeywordCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/model/lesson/ClassTypeTest.java
+###### \java\seedu\address\model\lesson\ClassTypeTest.java
 ``` java
 public class ClassTypeTest {
 
@@ -68,7 +68,7 @@ public class ClassTypeTest {
     }
 }
 ```
-###### /java/seedu/address/model/lesson/CodeTest.java
+###### \java\seedu\address\model\lesson\CodeTest.java
 ``` java
 public class CodeTest {
     @Test
@@ -98,7 +98,7 @@ public class CodeTest {
     }
 }
 ```
-###### /java/seedu/address/model/lesson/GroupTest.java
+###### \java\seedu\address\model\lesson\GroupTest.java
 ``` java
 public class GroupTest {
 
@@ -118,7 +118,7 @@ public class GroupTest {
     }
 }
 ```
-###### /java/seedu/address/model/lesson/LocationTest.java
+###### \java\seedu\address\model\lesson\LocationTest.java
 ``` java
 public class LocationTest {
     @Test
@@ -134,7 +134,7 @@ public class LocationTest {
     }
 }
 ```
-###### /java/seedu/address/model/lesson/TimeSlotTest.java
+###### \java\seedu\address\model\lesson\TimeSlotTest.java
 ``` java
 public class TimeSlotTest {
     @Test
@@ -153,7 +153,7 @@ public class TimeSlotTest {
     }
 }
 ```
-###### /java/seedu/address/ui/CommandBoxTest.java
+###### \java\seedu\address\ui\CommandBoxTest.java
 ``` java
     @Test
     public void configActiveKeywordTest() {
@@ -173,7 +173,7 @@ public class TimeSlotTest {
         assertNotEquals(commandColor, keywordColorMap.get(commandKeyword));
     }
 ```
-###### /java/systemtests/ColorEnableSystemTest.java
+###### \java\systemtests\ColorEnableSystemTest.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
