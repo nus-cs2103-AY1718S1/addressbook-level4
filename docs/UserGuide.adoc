@@ -275,7 +275,6 @@ Can also remove all instances of a tag from your *ABC*. +
 Format: `deletetag INDEX TAG` +
 ====
 
-_Coming in v1.3_ +
 If you want to delete a single tag from a contact in your *ABC*: +
 
 .  Locate the contact you want to delete a tag from and the index of the contact. +
@@ -307,6 +306,71 @@ _Figure 4.7.3_
 .  Press kbd:[Enter] and you should see that this tag has been deleted from all contacts. (Figure 4.7.4) +
 image:deletetag_4.png[600] +
 _Figure 4.7.4_
+
+=== Adding a meeting to a person : `addmeeting`
+
+====
+Command Name: `addmeeting` +
+Shorthand Alias: `am` +
+Function: Adds a meeting to an existing person at the specified `INDEX` in your *ABC*. +
+Format: `addmeeting MEETING_NAME/MEETING_TIME` +
+[NOTE]
+`MEETING_TIME` must be in the format YYYY-MM-DD HH:MM
+====
+
+If you want to add a single meeting to a contact in your *ABC*: +
+
+.  Locate the contact you want to add a meeting to and the index of the contact. +
+.  Type in the index of the contact, the name of the meeting and the time of the meeting you wish to add. (Figure 4.8.1) +
+`>> addmeeting 1 class lunch/2017-12-20 12:00`.
+image:addmeeting_1.png[addmeeting1, 600] +
+_Figure 4.8.1_
+.  Press kbd:[Enter] and you should see that the contact that you selected has been modified. (Figure 4.8.2) +
+image:addmeeting_2.png[addmeeting2, 600] +
+_Figure 4.8.2_
+
+[NOTE]
+====
+The meeting added must not already exist on the desired contact.
+====
+
+You can also add meetings to contacts in a filtered list:
+
+* `>> find t/friends` +
+`>> addmeeting 2 breakfast/2017-12-15 10:00` +
+Adds a meeting named `breakfast` at `2017-12-15 10:00` to the 2nd person in the results of the `find` command.
+
+=== Deleting a meeting : `deletemeeting`
+
+====
+Command Name: `deletemeeting` +
+Shorthand Alias: `dm` +
+Function: Deletes the specified meeting at the specified `INDEX` in the meeting list from your *ABC*. +
+Format: `deletemeeting INDEX` +
+====
+
+If you want to delete a meeting in your *ABC*: +
+
+.  Locate the meeting you want to delete and the meeting of the contact. +
+.  Type in the index of the meeting. (Figure 4.9.1) +
+`>> deletemeeting 1`.
+image:deletemeeting_1.png[600] +
+_Figure 4.9.1_
+.  Press kbd:[Enter] and you should see that the selected meeting has been deleted. (Figure 4.9.2) +
+image:deletemeeting_2.png[600] +
+_Figure 4.9.2_
+
+You can also delete contacts in a filtered list:
+
+* `list` +
+`deletemeeting 2` +
+Deletes the 2nd meeting in the address book.
+* `find Betsy` +
+`deletemeeting 1` +
+Deletes the 1st meeting in the results of the `find` command.
+* `find t/friends` +
+`dm 4` +
+Deletes the 4th meeting in the results of the `find` command.
 
 === Locating persons by keywords: `find`
 
@@ -850,6 +914,9 @@ will open up a new window in your default browser.
 |Edit |`e` | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]... [m/MEETING]...`
 |Add Tag |`at` |`addtag INDEX TAG`
 |Delete Tag |`dt` |`deletetag TAGNAME`
+|Add Meeting |`am` |`addmeeting INDEX MEETING_NAME/MEETING_TIME`
+|Delete Meeting |`dm` |`deletemeeting INDEX`
+|Find |`f` |`find [n/KEYWORD…​] [p/KEYWORD…​] [e/KEYWORD…​] [a/KEYWORD…​] [t/KEYWORD…​]`
 |Select |`sl` | `select INDEX
 |Note |`n` | `note INDEX n/NOTE`
 |Backup |`b` | `backup`

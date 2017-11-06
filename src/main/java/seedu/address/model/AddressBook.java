@@ -203,6 +203,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //@@author alexanderleegs
+    public void deleteMeeting(Meeting meeting) {
+        meetings.remove(meeting);
+    }
+
     public void sort(String field) {
         persons.sort(field);
     }

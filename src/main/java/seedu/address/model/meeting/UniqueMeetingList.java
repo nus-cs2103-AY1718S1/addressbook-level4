@@ -94,6 +94,14 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    //@@author alexanderleegs
+    /**
+     * Removes a Meeting from the list.
+     */
+    public void remove(Meeting toRemove) {
+        internalList.remove(toRemove);
+    }
+
     //@@author LimYangSheng
     /**
      * Sorts the meeting list by date.

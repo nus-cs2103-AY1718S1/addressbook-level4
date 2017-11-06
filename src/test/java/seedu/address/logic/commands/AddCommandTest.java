@@ -167,9 +167,14 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
-        //@@author
+        //@@author alexanderleegs
         @Override
         public void deleteTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteMeeting(Meeting meeting) {
             fail("This method should not be called.");
         }
 
@@ -178,10 +183,12 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author LimYangSheng
         @Override
         public void sortMeeting() {
             fail("This method should not be called.");
         }
+        //@@author
     }
 
     /**

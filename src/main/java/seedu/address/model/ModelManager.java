@@ -129,6 +129,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void deleteMeeting(Meeting meeting) {
+        addressBook.deleteMeeting(meeting);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public void sort(String field) {
         addressBook.sort(field);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
