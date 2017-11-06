@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.sun.xml.internal.ws.policy.spi.AssertionCreationException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.AddAppointmentParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -100,7 +101,7 @@ public class SampleDataUtil {
             try {
                 list.add(AddAppointmentParser.getAppointmentFromString(s));
             } catch (ParseException e) {
-                e.printStackTrace();
+                throw new AssertionError("sample data cannot contain invalid appointments");
             }
         }
         return list;
