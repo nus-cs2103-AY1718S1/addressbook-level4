@@ -460,29 +460,33 @@ _Figure 4.3.3.1 : Sequence Diagram for Adding a Customize Property_
 
 === Auto Reminders
 
-We are adding reminders to events whenever an event is added. Reminders will automatically be set to a day before
+We are adding a reminder to the event whenever an event is added. Reminders will notify users 3 days in advance before
 event itself.
 
 As we are targeting NUS students, in view of the busy schedules of students, students should be able to set reminders
 for events that they have to attend to. In the case that students forget to set reminders themselves, we automatically
-preset the reminder to a day before the event such that students have ample time to be aware and prepared for the event
-itself.
-
-Also, users can add their own reminders as well.
+preset a reminder that will trigger from 3 days before the event such that students have ample time to be aware and be
+prepared for the event itself.
 
 Learning from many modern applications, the logic behind the applications are usually efficient and is able to handle
 multiple tasks at once. By automatically adding reminders alongside the addition of events, it makes it more
-convenient for the users themselves. We have set the default reminders to a day before the actual event to remind
-users of their upcoming events via notifications on System Tray.
+convenient for the users themselves. We have set a default reminder to trigger 3 days before the actual event
+to remind users of their upcoming events via different colour schemes.
 
-image::SystemTrayNotifications.png[width="300"]
-_Figure 4.4.1 : Notifications via System Tray_
+As shown in the _Figure 4.4.1_
+
+1. The red bell indicates the day of the event
+2. The orange bell indicates one day to event.
+3. The green bell indicates two days to event.
+
+image::ReminderColorScheme.png[width="300"]
+_Figure 4.4.1 : Reminders via different colour schemes to indicate urgency_
 
 
 ==== Design consideration
 **Aspect:**  How to implement the idea of reminders into Events +
 **Alternative 1 (current choice):** Create a new reminder class that contains an event parameter to it. Events have a +
-list of reminders within them. +
+list of reminders within them (Figure 4.4.1.1). +
 **Pros:** Independent. Reminder class is on its own and easy for future usage since it is already a class by itself. +
 Each reminder is tagged to an event, such that if we want to access the reminders in an event, it is easy to do so. +
 **Cons:** Require major changes to Logic and Model components for Event +
@@ -506,8 +510,8 @@ Such a design makes Reminder class more adaptable to changes and ready for futur
 3. `Reminder` is now more open to changes if needed and can easily add parameters and methods now that it is a class
 on its own.
 
-4. Have a list of reminders in `Event` class (Figure 3.37). Since `Event` can have multiple reminders, each reminder is
-instantiated with an `Event` parameter in it such that a `Reminder` is tagged to an Event itself. Figure 3.38 depicts the
+4. Have a list of reminders in `Event` class (Figure 4.4.2.1). Since `Event` can have multiple reminders, each reminder is
+instantiated with an `Event` parameter in it such that a `Reminder` is tagged to an Event itself. Figure 4.4.2.2 depicts the
 relationship between `Event` and `Reminder`.
 
 image::EventClassDiagram.png[width="200"]
@@ -516,7 +520,7 @@ _Figure 4.4.2.1 : Class Diagram for `Event`_
 image::EventReminderRS.png[width="300"]
 _Figure 4.4.2.2 : Relationship of Event and Reminder_
 
-The following sequence diagram shows how the automatic adding of reminders work
+The following sequence diagram (Figure 4.4.2.3) shows how reminders are automatically added upon the addition of events.
 
 image::SDaddEventLogicReminder.png[width="700"]
 _Figure 4.4.2.3 : Sequence Diagram for Adding an event (reminders are automatically added)_
