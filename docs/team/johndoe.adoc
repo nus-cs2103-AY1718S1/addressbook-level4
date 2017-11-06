@@ -1,36 +1,62 @@
-= John Doe - Project Portfolio
+= TravisPhey - Project Portfolio
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+== Project: TheYellowPage
+TheYellowPage is a desktop address book application designed with the needs of office workers in mind. The user interacts with it using a Command Line Interface (CLI), and it has a Graphical User Interface (GUI) created with JavaFX. It is written in Java, and has about 6000 lines of code.
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== Enhancement Added: Undo/Redo
+=== 1st Enhancement Added: DeleteMultipleCommand 
 
 ==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=deleteMultipleCommand]
 
 #End of Extract#
 
 ---
 
-==== Justification
+==== Justification of 1st Enhancement
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+As TheYellowPage is designed with the typical office worker/Human Resource agent in mind, the features implemented are meant to make their work processes more efficient.
 
-==== Implementation
+The original delete command only allows the user to delete one contact at a time. While feasible for the average user, it becomes a cumbersome process for the HR agent who has to deal with a massive number of contacts. 
+
+The DeleteMultipleCommand feature allows HR agents to clear off multiple contacts off their company's address book quickly, without having to clear the entire list.
+
+==== Implementation of 1st Enhancement
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=deleteMultipleCommand]
+
+#End of Extract#
+
+---
+
+=== 2nd Enhancement added: Find Command
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=FindCommand]
+
+#End of Extract#
+
+---
+
+=== Justification of 2nd Enhancement
+=== Implementation of 2nd Enhancement
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=FindCommand]
 
 #End of Extract#
 

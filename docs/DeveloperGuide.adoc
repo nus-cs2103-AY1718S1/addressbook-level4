@@ -401,20 +401,56 @@ Users specify the path to their list of contact as the only argument of the comm
 
 After `readContactFromFile` is finished, `AddMultipleByTsvCommandParser` calls `getToAddPeople()` for `toAddPeople` (a list of people to add) and `getFailedEntries` for failedEntries (a list of integer of entries that were failed to add due to errors). `AddMultipleByTsvCommandParser` creates a new instance of `addMultipleByTsvCommand` given `toAddPeople` and `failedEntries`. Within this instance, `addPerson` will be called for each person in `toAddPeople`. After this, `addMultipleByTsvCommand` creates a new instance of `CommandResult` and sends the `result` back to `LogicManager`.
 
+// tag::FindCommand[]
+=== Find contact by multiple parameters
+
+Finding contacts using different parameters is used so as to allow the user to find their contacts without having to rely on just one contact detail.
+
+image::FindCommandSequenceDiagram.PNG[width="800"]
+_Figure 4.3 : Sequence diagram for FindCommand_
+
+Find command extends from commands, and it cannot be undone using the undo function. By keying in the command word `find`, along with the required parameters, the command word will be detected in the `AddressBookParser` class where the arguments will be passed over to the `FindCommandParser` class, as seen from figure 4.3 above.
+
+The find command is implemented this way:
+----
+public class FindCommand extends Command {
+    @Override
+    public CommandResult executeCommand() {
+        // ... find logic ...
+    }
+}
+----
+
+// end::FindCommand[]
+
+// tag::deleteMultipleCommand[]
+
 === Delete multiple contacts
 
 Deleting multiple contacts is used so as to allow the user to delete multiple contacts with the use of a single command, saving time and without the need to clear the entire list.
 
 image::DeleteMultipleCommandSequenceDiagram.PNG[width="800"]
-_Figure 4.3 : Sequence diagram for deleteMultipleCommand_
+_Figure 4.4 : Sequence diagram for deleteMultipleCommand_
 
-Delete multiple contacts extends from undoable commands, and it can be undone using the undo function. By keying in the command word `deleteMul` along with `indexes`, the command word will be detected in the `AddressBookParser` class where the arguments (indexes in this case) will be passed over to the `DeleteMultipleCommandParser` class, as seen from figure 4.3 above.
+Delete multiple contacts extends from undoable commands, and it can be undone using the undo function. By keying in the command word `deleteMul` along with `indexes`, the command word will be detected in the `AddressBookParser` class where the arguments (indexes in this case) will be passed over to the `DeleteMultipleCommandParser` class, as seen from figure 4.4 above.
+
+The deleteMultipleCommand is implemented this way:
+----
+public class DeleteMultipleCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... delete multiple logic ...
+    }
+}
+----
 
 As our indexes are intended to take in multiple index values, we will use a `String[] listOfIndex = trimmedArgs.split("\\s+");` to split the arguments into individual indexes and store them into the String array for use. We will use a `Collections.reverse(list);` to ensure that the user will be able to delete the correct indexes. The `ArrayList<String> list = new ArrayList<String>(Arrays.asList(listOfIndex));` is used to convert the list of index into an arrayList for use by the collections utility.
 
 We will now create a `ArrayList<Index> arrayOfIndex = new ArrayList<Index>();` to store the indexes that we will need for the feature. We will store the indexes into the arraylist using a for loop. However, as the arguments in the `listOfIndex` arraylist is in a string format, we will need to convert them into an integer format before storing it into the `ArrayList<Index> arrayOfIndex`. This arrayList will be returned to the `DeleteMultipleCommand` class for use.
 
 In the `DeleteMultipleCommand` class, the commandResult method is used which compares the index with the `lastShownList` in the model, similar to the method used in the `deleteCommand`. However, as `DeleteMultipleCommand` is designed to take in multiple indexes, a for-loop is used to loop the commandResult method so as to check for every index within the arrayList. The names that are deleted will be stored inside a `String listOfDeletedContacts` which will be used to display the results on the UI.
+
+// end::deleteMultipleCommand[]
 
 === Recently Deleted List
 
