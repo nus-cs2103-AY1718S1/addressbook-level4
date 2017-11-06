@@ -42,6 +42,8 @@ include::../DeveloperGuide.adoc[tag=deleteMultipleCommand]
 
 === 2nd Enhancement added: Find Command
 
+==== External behaviour
+---
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=FindCommand]
@@ -51,6 +53,13 @@ include::../UserGuide.adoc[tag=FindCommand]
 ---
 
 === Justification of 2nd Enhancement
+
+As TheYellowPage is designed with the typical office worker/Human Resource agent in mind, the features implemented are meant to make their work processes more efficient.
+
+The original find command only allows the user to find the contact by their name. However, when taken into context of the HR agent, the HR agent may sometimes only know a contact by their company name, company address or company phone number. Thus, finding a contact by name may not be as feasible.
+
+The new Find Command feature allows HR agents to find the contacts they want via their name, address, number, email, occupation, company name or company website. This is more efficient as the HR agent will be able to find the contact they want more easily.
+
 === Implementation of 2nd Enhancement
 
 ---
