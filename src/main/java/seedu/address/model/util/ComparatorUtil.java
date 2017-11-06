@@ -4,11 +4,14 @@ package seedu.address.model.util;
 import java.util.Comparator;
 
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.tag.Tag;
 
 /**
  * Contains utility methods for getting Comparators to sort {@code AddressBook}
  */
 public class ComparatorUtil {
+
+    // Person Comparators
 
     // Comparator that sorts ReadOnlyPerson objects by their favourite status, favourited first
     private static final Comparator<ReadOnlyPerson> favouriteComparator = new Comparator<ReadOnlyPerson>() {
@@ -104,4 +107,14 @@ public class ComparatorUtil {
         return addressComparator.thenComparing(nameComparator).thenComparing(phoneComparator)
                 .thenComparing(emailComparator);
     }
+
+    // Comparator that sorts Tag objects by their name
+    private static final Comparator<Tag> tagComparator = new Comparator<Tag>() {
+        @Override
+        public int compare(Tag t1, Tag t2) {
+            return t1.tagName.compareTo(t2.tagName);
+        }
+    };
+
+    public static Comparator<Tag> getTagComparator() {return tagComparator; }
 }

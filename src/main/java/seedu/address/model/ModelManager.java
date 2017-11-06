@@ -56,6 +56,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.tags = new SortedList<Tag>(this.addressBook.getTagList());
+        tags.setComparator(ComparatorUtil.getTagComparator());
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         sortedFilteredPersons = new SortedList<>(filteredPersons);
         // Sort contacts by favourite status, then name, then phone, then email, then address
