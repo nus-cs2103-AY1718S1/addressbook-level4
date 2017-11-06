@@ -2,13 +2,10 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.SortCommandTestUtil.assertFilteredSortCommandSuccess;
 import static seedu.address.logic.commands.SortCommandTestUtil.assertUnfilteredSortCommandSuccess;
 import static seedu.address.testutil.StorageUtil.getNullStorage;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import java.util.Arrays;
 
 import org.junit.Test;
 
@@ -17,11 +14,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonDefaultComparator;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.TagsContainKeywordsPredicate;
-import seedu.address.testutil.PersonBuilder;
 
 //@@author marvinchin
 /**

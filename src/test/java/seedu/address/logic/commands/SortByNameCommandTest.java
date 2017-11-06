@@ -7,8 +7,6 @@ import static seedu.address.logic.commands.SortCommandTestUtil.assertUnfilteredS
 import static seedu.address.testutil.StorageUtil.getNullStorage;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import java.util.Arrays;
-
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
@@ -16,11 +14,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonNameComparator;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.TagsContainKeywordsPredicate;
-import seedu.address.testutil.PersonBuilder;
 
 //@@author marvinchin
 /**
