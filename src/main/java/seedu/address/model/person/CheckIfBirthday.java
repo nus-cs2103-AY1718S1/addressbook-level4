@@ -7,12 +7,15 @@ import java.util.Date;
 import java.util.function.Predicate;
 
 /**
- * Tests that a {@code ReadOnlyPerson}'s {@code Birthday month and day} matches today.
+ * Tests that a {@code ReadOnlyPerson}'s {@code Birthday} matches today.
  */
 public class CheckIfBirthday implements Predicate<ReadOnlyPerson> {
 
     public CheckIfBirthday(){ }
 
+    /**
+     * Method checks if month and day match
+     */
     public boolean birthdayList(ReadOnlyPerson person)throws ParseException {
         String birthday = person.getBirthday().toString();
         Date date = new SimpleDateFormat("dd/MM/yyyy").parse(birthday);
