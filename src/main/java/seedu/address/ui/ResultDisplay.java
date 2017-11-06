@@ -21,7 +21,7 @@ public class ResultDisplay extends UiPart<Region> {
     private static final Logger logger = LogsCenter.getLogger(ResultDisplay.class);
     private static final String FXML = "ResultDisplay.fxml";
 
-    private final StringProperty displayed = new SimpleStringProperty("");
+    private final StringProperty displayed = new SimpleStringProperty("---Command Info---");
 
     @FXML
     private TextArea resultDisplay;
@@ -40,7 +40,7 @@ public class ResultDisplay extends UiPart<Region> {
         if (event.isError) {
             resultDisplay.setStyle("-fx-text-fill:" + "red");
         } else {
-            resultDisplay.setStyle("-fx-text-fill:" + "white");
+            resultDisplay.setStyle("-fx-text-fill:" + "black");
         }
 
     }

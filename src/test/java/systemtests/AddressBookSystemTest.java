@@ -245,7 +245,7 @@ public abstract class AddressBookSystemTest {
     private void assertApplicationStartingStateIsCorrect() {
         try {
             assertEquals("", getCommandBox().getInput());
-            assertEquals("", getResultDisplay().getText());
+            assertEquals("---Command Info---", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
             assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
