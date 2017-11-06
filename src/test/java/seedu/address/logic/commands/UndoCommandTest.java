@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -26,6 +27,8 @@ public class UndoCommandTest {
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
     private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
+
+    AddressBookParser addressBookParser = new AddressBookParser();
 
     @Before
     public void setUp() {
@@ -45,11 +48,23 @@ public class UndoCommandTest {
         // multiple commands in undoStack
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         deleteFirstPerson(expectedModel);
-        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+
+        String lastCommand = undoRedoStack.peekUndo().toString();
+        Command previousCommand = addressBookParser.parseCommand(lastCommand);
+        String previousCommandString = previousCommand.toString();
+        String expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
+        //assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(undoCommand, model, expectedResultMessage, expectedModel);
+
 
         // single command in undoStack
         expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+        lastCommand = undoRedoStack.peekUndo().toString();
+        previousCommand = addressBookParser.parseCommand(lastCommand);
+        previousCommandString = previousCommand.toString();
+        expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
+        //assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(undoCommand, model, expectedResultMessage, expectedModel);
 
         // no command in undoStack
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
