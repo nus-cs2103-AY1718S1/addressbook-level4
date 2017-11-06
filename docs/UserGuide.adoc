@@ -342,7 +342,7 @@ The second `redo` command reverses the first `undo` command and re-execute the `
 
 *Description:* Adds the specified tag(s).
 
-*Format:* `addtag` `TAG...` `INDEX...`
+*Format:* `addtag` `INDEX...` `TAG...`
 
 
 ****
@@ -357,19 +357,19 @@ The second `redo` command reverses the first `undo` command and re-execute the `
 *Examples:*
 
 * `list` +
-`addtag` `friends` `1` +
+`addtag` `1` `friends` +
 Adds the `friends` tag to the first person in the contact list.
 
 * `list` +
-`addtag` `friends` `family` `2` +
+`addtag` `2` `friends` `family` +
 Adds the `friends` and `family` tag to the second person in the contact list.
 
 * `list` +
-`addtag` `friends` `family` `2` `5` +
+`addtag` `2` `5` `friends` `family` +
 Adds the `friends` and `family` tag to the second and fifth person in the contact list.
 
 * `list` +
-`addtag` `friends` `2-5` +
+`addtag` `2-5` `friends` +
 Adds the `friends` tag to the person from the second to fifth index in the contact list.
 
 *Suggestion for use:* If you want to add tags cumulatively to a contact's details.
@@ -380,7 +380,7 @@ Adds the `friends` tag to the person from the second to fifth index in the conta
 
 *Description:* Removes the specified tag(s).
 
-*Format:* `removetag` `TAG...` `INDEX...`
+*Format:* `removetag` `INDEX...` `TAG...`
 
 [NOTE]
 ====
@@ -399,7 +399,7 @@ Executing command without the INDEX will remove the given tag(s) from the whole 
 Examples:
 
 * `list` +
-`removetag` `friends` `1` +
+`removetag` `1` `friends` +
 Removes the `friends` tag from the first person in the contact list.
 
 * `list` +
@@ -407,15 +407,15 @@ Removes the `friends` tag from the first person in the contact list.
 Removes the `friends` tag from every person in the contact list.
 
 * `list` +
-`removetag` `friends` `family` `2` +
+`removetag` `2` `friends` `family` +
 Removes the `friends` and `family` tag from the second person in the contact list.
 
 * `list` +
-`removetag` `friends` `family` `2` `5` +
+`removetag` `2` `5` `friends` `family` +
 Removes the `friends` and `family` tag from the second and fifth person in the contact list.
 
 * `list` +
-`removetag` `friends` `2-5` +
+`removetag` `2-5` `friends` +
 Removes the `friends` tag from the second to fifth person in the contact list.
 
 *Suggestion for use:* If you want to mass delete a tag that is no longer in use.
@@ -578,6 +578,19 @@ Format: `removetag friends 1-4`
 Allows user to add tag to multiple persons in the address book by specifying the corresponding range of index. +
 
 Format: `addtag friends 1-4`
+
+
+=== Standardised `removetag` command
+
+Input of format has been changed to be consistent with the rest of commands. +
+
+Format: `removetag 1-4 friends`
+
+=== Standardised `addtag` command
+
+Input of format has been changed to be consistent with the rest of commands. +
+
+Format: `addtag 1-4 friends`
 
 === Favourite a person using `favourite` command
 

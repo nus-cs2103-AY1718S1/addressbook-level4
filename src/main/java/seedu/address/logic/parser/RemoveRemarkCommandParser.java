@@ -43,7 +43,7 @@ public class RemoveRemarkCommandParser implements Parser<RemoveRemarkCommand> {
             while (scan.hasNext()) {
                 tempString = scan.next();
                 //Makes sure index accepted are integers
-                if (!tempString.matches("\\d+") ) {
+                if (!tempString.matches("\\d+")) {
                     throw new ParseException(String.format(MESSAGE_INVALID_REMARK_INDEX_FORMAT,
                             RemoveRemarkCommand.MESSAGE_USAGE));
                 }

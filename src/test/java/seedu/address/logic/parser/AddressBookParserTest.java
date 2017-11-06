@@ -145,7 +145,7 @@ public class AddressBookParserTest {
     public void parseCommand_remove() throws Exception {
         Tag tag = new Tag("friends");
         RemoveTagCommand command = (RemoveTagCommand) parser.parseCommand(
-                RemoveTagCommand.COMMAND_WORD + " friends 1");
+                RemoveTagCommand.COMMAND_WORD + " 1 friends");
         Set<Index> indexSet = new HashSet<>();
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tag);
@@ -159,7 +159,7 @@ public class AddressBookParserTest {
     public void parseCommand_addTag() throws Exception {
         Tag tag = new Tag("enemy");
         AddTagCommand command = (AddTagCommand) parser.parseCommand(
-                AddTagCommand.COMMAND_WORD + " enemy 1");
+                AddTagCommand.COMMAND_WORD + " 1 enemy");
         Set<Index> indexSet = new HashSet<>();
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tag);
