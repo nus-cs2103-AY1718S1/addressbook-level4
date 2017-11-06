@@ -346,16 +346,16 @@ removes remark from the 2nd person in cherBook.
 
 // end::remark[]
 
-// tag::linechart[]
-=== Displaying results : `lineChart` `Since v1.3`
-
+// tag::tab[]
+=== Switching Between LineChart and BarGraph : `tab` `Since v1.3`
+//TODO: jonathan to explain how the tab command works
 Plots a graph of names against grades based on the selected student's class.
 
 [NOTE]
 ====
 Selecting another student from a different class would plot a different graph.
 ====
-// end::linechart[]
+// end::tab[]
 
 === Listing entered commands : `history` `Since v1.0`
 
@@ -457,8 +457,7 @@ You can use these statistics to pick out trends in your student's grades and als
 
 // tag::graphpanel[]
 === Graph Panel
-
-//TODO: Jonathan can add explanations for this
+//TODO: Jonathan can add explanations for how this brhaves and works
 
 
 // end::graphpanel[]
