@@ -195,4 +195,5 @@ public class ParcelCard extends UiPart<Region> {
         return id.getText().equals(card.id.getText())
                 && parcel.equals(card.parcel);
     }
+
 }
