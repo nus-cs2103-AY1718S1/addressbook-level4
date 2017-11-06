@@ -97,7 +97,7 @@ public class BorrowCommandTest {
             BorrowCommand borrowThirdCommand = new BorrowCommand(new Debt("20000"));
 
             // same object -> returns true
-            assertTrue(borrowThirdCommand.equals(borrowThirdCommand));
+            assertTrue(borrowFirstCommand.equals(borrowFirstCommand));
             assertTrue(borrowThirdCommand.equals(borrowThirdCommand));
 
             // same values -> returns true

@@ -22,6 +22,7 @@ public class UnbanCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsUnBanCommand() {
+        assertParseSuccess(parser, "", new UnbanCommand());
         assertParseSuccess(parser, "1", new UnbanCommand(INDEX_FIRST_PERSON));
     }
 

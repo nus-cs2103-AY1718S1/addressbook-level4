@@ -61,18 +61,34 @@ public class NearbyCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() {
+        model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased()));
+
+        assertExecutionSuccess(INDEX_SECOND_PERSON);
+    }
+
+    @Test
+    public void execute_noIndexNearbyListOnlyOnePerson_failure() {
         model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON);
+        assertExecutionFailure(null, NearbyCommand.MESSAGE_NO_NEARBY_PERSON);
+    }
+
+    @Test
+    public void execute_noIndex_success() {
+        model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased()));
+
+        assertExecutionSuccess(null);
     }
 
     @Test
     public void equals() {
         NearbyCommand nearbyFirstCommand = new NearbyCommand(INDEX_FIRST_PERSON);
         NearbyCommand nearbySecondCommand = new NearbyCommand(INDEX_SECOND_PERSON);
+        NearbyCommand nearbyThirdCommand = new NearbyCommand();
 
         // same object -> returns true
         assertTrue(nearbyFirstCommand.equals(nearbyFirstCommand));
+        assertTrue(nearbyThirdCommand.equals(nearbyThirdCommand));
 
         // same values -> returns true
         NearbyCommand nearbyFirstCommandCopy = new NearbyCommand(INDEX_FIRST_PERSON);
@@ -98,7 +114,8 @@ public class NearbyCommandTest {
         try {
             CommandResult commandResult = nearbyCommand.execute();
             assertEquals(String.format(ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
-                            + NearbyCommand.MESSAGE_NEARBY_PERSON_SUCCESS, index.getOneBased()),
+                    + NearbyCommand.MESSAGE_NEARBY_PERSON_SUCCESS,
+                    model.getNearbyPersons().indexOf(model.getSelectedPerson()) + 1),
                     commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
@@ -106,7 +123,11 @@ public class NearbyCommandTest {
 
         JumpToNearbyListRequestEvent lastEvent =
                 (JumpToNearbyListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
-        assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
+        if (index != null) {
+            assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
+        }
+        assertEquals(model.getNearbyPersons().indexOf(model.getSelectedPerson()),
+                lastEvent.targetIndex);
     }
 
     /**
@@ -129,7 +150,12 @@ public class NearbyCommandTest {
      * Returns a {@code NearbyCommand} with parameters {@code index}.
      */
     private NearbyCommand prepareCommand(Index index) {
-        NearbyCommand nearbyCommand = new NearbyCommand(index);
+        NearbyCommand nearbyCommand;
+        if (index == null) {
+            nearbyCommand = new NearbyCommand();
+        } else {
+            nearbyCommand = new NearbyCommand(index);
+        }
         nearbyCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return nearbyCommand;
     }
