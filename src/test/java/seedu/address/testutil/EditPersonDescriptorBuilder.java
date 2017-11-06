@@ -82,7 +82,8 @@ public class EditPersonDescriptorBuilder {
             throw new IllegalArgumentException("address is expected to be unique.");
         }
         return this;
-    }//@@author renkai91
+    }
+    //@@author renkai91
     /**
      * Sets the {@code Birthday} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -94,7 +95,7 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
-//@@author
+    //@@author
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
      * that we are building.
