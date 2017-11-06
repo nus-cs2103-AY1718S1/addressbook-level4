@@ -29,6 +29,10 @@ public class ModelListener {
         EventsCenter.getInstance().registerHandler(handler);
     }
 
+    /**
+     * Triggers when there is a JumpToTabRequestEvent and sets the tabIndex in the model
+     * to keep track of which tab the model is "on".
+     */
     @Subscribe
     private void handleJumpToTabEvent(JumpToTabRequestEvent event) {
         model.setTabIndex(Index.fromZeroBased(event.targetIndex));
