@@ -75,6 +75,7 @@ public class EditCommand extends UndoableCommand {
 
 
     /**
+     * Creates an edit command that will edit a specific lesson when executed.
      * @param index                of the lesson in the filtered lesson list to edit
      * @param editLessonDescriptor details to edit the lesson with
      */
@@ -89,7 +90,8 @@ public class EditCommand extends UndoableCommand {
     }
 
     /**
-     * @param index          of the address in the filtered address list to edit
+     * Creates an edit command that will edit a set of lessons with some common attribute when executed.
+     * @param index          of the element in the filtered list to edit
      * @param attributeValue the new edited attribute value
      */
     public EditCommand(Index index, String attributeValue) {
