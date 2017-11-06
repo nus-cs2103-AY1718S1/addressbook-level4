@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddMultipleByTsvCommand;
+import seedu.address.logic.commands.ChangeProfilePictureCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -63,6 +64,10 @@ public class AddressBookParser {
         case AddMultipleByTsvCommand.COMMAND_WORD:
         case AddMultipleByTsvCommand.COMMAND_ALIAS:
             return new AddMultipleByTsvCommandParser().parse(arguments);
+
+        case ChangeProfilePictureCommand.COMMAND_WORD:
+        case ChangeProfilePictureCommand.COMMAND_ALIAS:
+            return new ChangeProfilePictureCommandParser().parse(arguments);
         //@@author
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:
