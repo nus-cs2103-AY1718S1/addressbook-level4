@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox id="cardPane" fx:id="cardPane" onMouseMoved="#changeCardColor" prefHeight="40.0" prefWidth="1840.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="cardPane" fx:id="cardPane" prefHeight="40.0" prefWidth="1840.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <VBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="1846.0">
     <padding>
       <Insets bottom="5" left="15" right="5" top="5" />
