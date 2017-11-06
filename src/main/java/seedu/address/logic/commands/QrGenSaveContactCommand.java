@@ -8,7 +8,7 @@ public class QrGenSaveContactCommand {
     /**
      * Method to Generate SaveContact for Phone QRCode
      */
-    public String qrSaveContact(String phoneNum, String contactName, String contactAddress, String contactEmail) {
+    public String qrSaveContact(String phoneNum, String contactName, String contactEmail) {
 
         String qrCodeA = "http://";
         String qrCodeB = "api.qrserver.com/";
@@ -63,7 +63,7 @@ public class QrGenSaveContactCommand {
         String qrpartfCodeH = "&margin";
         String qrpartfCodeI = "=0";
         String qrpartfCodeJ = "&size";
-        String qrpartfCodeK = "400x400";
+        String qrpartfCodeK = "500x500";
         String qrpartfCodeL = "&ecc";
         String qrpartfCodeM = "=L";
         String qrLineF = qrpartfCodeA + qrpartfCodeB + qrpartfCodeC + qrpartfCodeD + qrpartfCodeE + qrpartfCodeF
@@ -71,7 +71,7 @@ public class QrGenSaveContactCommand {
                 + qrpartfCodeM;
 
         String fullQr = qrLineA + contactName + qrLineB + contactName + qrLineC + phoneNum + qrLineD + contactEmail
-                + qrLineE + contactAddress + qrLineF;
+                + qrLineE + qrLineF;
         return fullQr;
     }
 }

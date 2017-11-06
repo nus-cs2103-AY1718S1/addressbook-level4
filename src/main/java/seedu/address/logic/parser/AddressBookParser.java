@@ -143,7 +143,7 @@ public class AddressBookParser {
 
         case QrSmsCommand.COMMAND_WORD:
         case QrSmsCommand.COMMAND_ALIAS:
-            return new QrCallCommandParser().parse(arguments);
+            return new QrSmsCommandParser().parse(arguments);
 
         case QrSaveContactCommand.COMMAND_WORD:
         case QrSaveContactCommand.COMMAND_ALIAS:

@@ -14,6 +14,8 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.commands.QrGenCallCommand;
+import seedu.address.logic.commands.QrGenSaveContactCommand;
+import seedu.address.logic.commands.QrGenSmsCommand;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -56,13 +58,32 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+"));
     }
     /**
-     * Loads Webpage
+     * Loads call qr
      */
     public void loadQrCode(ReadOnlyPerson person) {
         QrGenCallCommand qrGenCallCommand = new QrGenCallCommand();
         browser.getEngine().setUserAgent("Mozilla/5.0 "
                 + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0");
         loadPage(qrGenCallCommand.qrCall(person.getPhone().toString()));
+    }
+    /**
+     * Loads sms qr
+     */
+    public void loadSmsQrCode(ReadOnlyPerson person) {
+        QrGenSmsCommand qrGenSmsCommand = new QrGenSmsCommand();
+        browser.getEngine().setUserAgent("Mozilla/5.0 "
+                + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0");
+        loadPage(qrGenSmsCommand.qrSms(person.getPhone().toString(), person.getName().fullName));
+    }
+    /**
+     * Loads save qr
+     */
+    public void loadSaveQrCode(ReadOnlyPerson person) {
+        QrGenSaveContactCommand qrGenSaveContactCommand = new QrGenSaveContactCommand();
+        browser.getEngine().setUserAgent("Mozilla/5.0 "
+                + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0");
+        loadPage(qrGenSaveContactCommand.qrSaveContact(person.getPhone().toString(), person.getName().fullName,
+                person.getEmail().toString()));
     }
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));

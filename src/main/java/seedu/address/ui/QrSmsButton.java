@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.QrEvent;
+import seedu.address.commons.events.ui.QrSmsEvent;
 import seedu.address.logic.commands.LoggingCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -19,16 +19,16 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * The UI component that is responsible for deleting selected contacts in the PersonListPanel.
  */
-public class QrButton extends UiPart<Region> {
+public class QrSmsButton extends UiPart<Region> {
     public static final String MESSAGE_FAIL = "Please select someone";
     public static final String ERROR_STYLE_CLASS = "error";
-    private static final String FXML = "QrButton.fxml";
+    private static final String FXML = "QrSmsButton.fxml";
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private LoggingCommand loggingCommand;
     private BrowserPanel bp;
     private ReadOnlyPerson person;
 
-    public QrButton(BrowserPanel bp) {
+    public QrSmsButton(BrowserPanel bp) {
         super(FXML);
         loggingCommand = new LoggingCommand();
         this.bp = bp;
@@ -38,9 +38,9 @@ public class QrButton extends UiPart<Region> {
      * Handles the QR button pressed event.
      */
     @FXML
-    private void handleQrButtonPressed() throws CommandException, ParseException, IOException {
+    private void handleQrSmsButtonPressed() throws CommandException, ParseException, IOException {
         if ( person != null) {
-            bp.loadQrCode(person);
+            bp.loadSmsQrCode(person);
             logger.info("QR Code displayed");
         } else {
             logger.info(MESSAGE_FAIL);
@@ -51,8 +51,11 @@ public class QrButton extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.person = event.getNewSelection().person;
     }
+
     @Subscribe
-    private void clickButton(QrEvent event ) {
-        bp.loadQrCode((ReadOnlyPerson) event.getPerson());
+    private void clickButton(QrSmsEvent event ) {
+        bp.loadSmsQrCode((ReadOnlyPerson) event.getPerson());
     }
+
 }
+
