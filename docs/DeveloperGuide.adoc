@@ -818,6 +818,51 @@ pressing the kbd:[esc] key will result in the application focusing on the person
 
 // end::shortcut[]
 
+// tag::detailPanel[]
+=== Person Detail Panel
+The person detail panel displays the complete information of a person that is selected.
+
+image::detailPanel.png[width="600"]
+
+The behavior of the panel is mostly event-driven, where the information displayed on the panel
+changes depending on various user actions, such as a person selection, editing of a person and addition of a person.
+
+For example, the sequence diagram below shows the sequence of events to update the panel display when the user edits a person
+(the logic aspect of updating the person detail is omitted for brevity).
+
+image::DetailPanelSequenceDiagram.png[width="800"]
+
+The information displayed on the panel is extracted from the `ReadOnlyPerson` that is returned by the `EventsCenter`.
+The details of the implementation can be seen from the following code snippet.
+[source, java]
+----
+/**
+* Shows the details of the person on the panel
+*/
+private void showPersonDetails(ReadOnlyPerson person) {
+    setAvatar(person);
+    setTextFields(person);
+    setTags(person);
+}
+----
+
+The behavior of the panel is summarized in the table below.
+
+[width=60%, cols="2,3"]
+|===
+| User Action | Panel Behavior
+
+| Select a person | Display selected person
+| Edit a person | Display newly edited person
+| Add a person | Display newly added person
+| Clear the list | Display empty panel
+| Call undo | Display empty panel
+| Call redo | Behavior as per command that is redone
+| Other commands | No change in display
+|===
+
+// end::detailPanel[]
+
 // tag::helpWindowHighlight[]
 === Help Window Highlighting
 Rolodex uses link:#java-fx[JavaFx] version http://javafx.com/javafx/8.0.111[8.0.111], where WebView does not support
