@@ -97,7 +97,7 @@ public class XmlAdaptedPerson {
         dateRepaid = source.getDateRepaid().value;
         lastAccruedDate = DateUtil.formatDate(source.getLastAccruedDate());
         isBlacklisted = String.valueOf(source.isBlacklisted());
-        isWhitelisted= String.valueOf(source.isWhitelisted());
+        isWhitelisted = String.valueOf(source.isWhitelisted());
         hasOverdueDebt = String.valueOf(source.hasOverdueDebt());
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
