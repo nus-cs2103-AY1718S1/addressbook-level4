@@ -23,13 +23,14 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Comment;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.Comment;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.ui.GuiUnitTest;
 
+//@@author risashindo7
 /**
  * Contains integration tests (interaction with the Model) and unit tests for CommentCommand.
  */
@@ -129,3 +130,4 @@ public class CommentCommandTest extends GuiUnitTest {
         return commentCommand;
     }
 }
+//@@author

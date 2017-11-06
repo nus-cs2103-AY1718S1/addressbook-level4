@@ -2,7 +2,7 @@
 package seedu.address.email.exceptions;
 
 /**
- *  Exception when the given string is not a valid email
+ * Exception when the given string is not a valid email
  */
 public class NotAnEmailException extends Exception {
     public NotAnEmailException() {

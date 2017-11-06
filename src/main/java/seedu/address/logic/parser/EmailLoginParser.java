@@ -13,7 +13,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new EmailLoginCommand object
  */
-public class EmailLoginParser implements  Parser<EmailLoginCommand> {
+public class EmailLoginParser implements Parser<EmailLoginCommand> {
 
 
     @Override

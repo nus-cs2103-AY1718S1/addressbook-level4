@@ -2,7 +2,14 @@
 package seedu.address.logic.commands;
 
 import org.junit.Before;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.ExportCommand.MESSAGE_ACCESS_DENIED;
+import static seedu.address.logic.commands.ExportCommand.MESSAGE_SUCCESS;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
 import org.junit.Test;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -23,7 +30,7 @@ public class ExportCommandTest extends GuiUnitTest {
     }
 
     @Test(expected = CommandException.class)
-    public void accessDeniedFolder() throws CommandException{
+    public void accessDeniedFolder() throws CommandException {
         //when trying to create parent folder
         ExportCommand command = new ExportCommand(".txt", "C:/Windows/a");
         command.setData(model, null, null, null);
@@ -32,7 +39,7 @@ public class ExportCommandTest extends GuiUnitTest {
     }
 
     @Test(expected = CommandException.class)
-    public void accessDeniedFile() throws CommandException{
+    public void accessDeniedFile() throws CommandException {
         //when trying to create file
         ExportCommand command = new ExportCommand(".txt", "C:/Windows/a");
         command.setData(model, null, null, null);

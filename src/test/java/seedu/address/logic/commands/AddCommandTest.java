@@ -30,9 +30,9 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.testutil.PersonBuilder;
 import seedu.address.model.tag.Tag;
 import seedu.address.ui.GuiUnitTest;
+import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest extends GuiUnitTest {
 
@@ -100,7 +100,7 @@ public class AddCommandTest extends GuiUnitTest {
         return command;
     }
 
-     /**
+    /**
      * A default model stub that have all of the methods failing.
      */
     private class ModelStub implements Model {

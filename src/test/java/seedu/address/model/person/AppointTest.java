@@ -4,7 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-
+//@@author risashindo7
 public class AppointTest {
 
     @Test
@@ -29,3 +29,4 @@ public class AppointTest {
         assertFalse(appoint.equals(differentAppoint));
     }
 }
+//@@author

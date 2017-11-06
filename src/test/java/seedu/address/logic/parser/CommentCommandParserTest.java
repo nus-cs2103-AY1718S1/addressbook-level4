@@ -13,6 +13,7 @@ import seedu.address.logic.commands.CommentCommand;
 import seedu.address.model.person.Comment;
 import seedu.address.ui.GuiUnitTest;
 
+//@@author risashindo7
 public class CommentCommandParserTest extends GuiUnitTest {
     private CommentCommandParser parser = new CommentCommandParser();
 
@@ -40,3 +41,4 @@ public class CommentCommandParserTest extends GuiUnitTest {
         assertParseFailure(parser, CommentCommand.COMMAND_WORD, expectedMessage);
     }
 }
+//@@author

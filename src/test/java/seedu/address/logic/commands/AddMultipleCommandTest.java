@@ -51,7 +51,7 @@ public class AddMultipleCommandTest extends GuiUnitTest {
         CommandResult commandResult = getAddMultipleCommandForPerson(validPersonArrayList, modelStub).execute();
 
         StringBuilder successMessage = new StringBuilder();
-        for(ReadOnlyPerson personToAdd: validPersonArrayList) {
+        for (ReadOnlyPerson personToAdd: validPersonArrayList) {
             successMessage.append(System.lineSeparator());
             successMessage.append(personToAdd);
         }

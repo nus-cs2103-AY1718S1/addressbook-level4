@@ -29,6 +29,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.ui.GuiUnitTest;
 
 //@@author KhorSL
+
 /**
  * Contains integration test (interaction with Model) for {@code MergeCommand}
  */

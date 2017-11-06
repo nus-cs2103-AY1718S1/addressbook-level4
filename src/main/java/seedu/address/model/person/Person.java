@@ -64,7 +64,6 @@ public class Person implements ReadOnlyPerson {
     }
 
 
-
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
@@ -134,6 +133,7 @@ public class Person implements ReadOnlyPerson {
         return avatar;
     }
 
+    //@@author vsudhakar
     @Override
     public Avatar getAvatar() {
         return avatar.get();
@@ -142,7 +142,9 @@ public class Person implements ReadOnlyPerson {
     public void setAvatar(Avatar avatar) {
         this.avatar.set(requireNonNull(avatar));
     }
-
+    //@@author
+  
+    //@@author risashindo7
     public void setComment(Comment comment) {
         this.comment.set(requireNonNull(comment));
     }
@@ -156,12 +158,12 @@ public class Person implements ReadOnlyPerson {
     public Comment getComment() {
         return comment.get();
     }
-
+    
 
     public void setAppoint(Appoint appoint) {
         this.appoint.set(requireNonNull(appoint));
     }
-
+    
     @Override
     public ObjectProperty<Appoint> appointProperty() {
         return appoint;
@@ -171,7 +173,7 @@ public class Person implements ReadOnlyPerson {
     public Appoint getAppoint() {
         return appoint.get();
     }
-
+    //@@author
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

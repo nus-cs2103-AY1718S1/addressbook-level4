@@ -1,19 +1,18 @@
 package seedu.address.email;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
 import org.junit.Test;
+
 import seedu.address.email.exceptions.LoginFailedException;
-
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Authenticator;
-
-import static org.junit.Assert.*;
 
 public class EmailManagerTest {
     private Email emailManager = new EmailManager();
     private String correctEmail = "cs2103testacc@gmail.com";
     private String correctPass = "testpass";
-    private String wrongEmail = "phungtuanhoang1996@gmail." +
+    private String wrongEmail = "phungtuanhoang1996@gmail."
+            +
             "com";
     private String wrongPass = "thisisnotmypassword";
 
@@ -25,7 +24,7 @@ public class EmailManagerTest {
         assertEquals(emailManager.isLoggedIn(), true);
     }
 
-    @Test (expected = LoginFailedException.class)
+    @Test(expected = LoginFailedException.class)
     public void testInvalidLogin() throws LoginFailedException {
         emailManager.login(wrongEmail, wrongPass);
 

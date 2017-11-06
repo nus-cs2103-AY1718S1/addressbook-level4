@@ -77,8 +77,8 @@ public class EmailLoginWindow extends UiPart<Region> {
 
         try {
             CommandResult commandResult = logic.execute("email_login "
-                                    + "\"" + emailString + "\"" + " "
-                                    + "\"" + passwordString + "\"");
+                    + "\"" + emailString + "\"" + " "
+                    + "\"" + passwordString + "\"");
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
             functionButtonsPanel.updateLoginStatus();

@@ -1,7 +1,7 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
-
+//@@author risashindo7
 /**
  * Represents a Person's comment in the address book.
  * Guarantees: immutable; is always valid
@@ -35,3 +35,4 @@ public class Comment {
         return value.hashCode();
     }
 }
+//@@author

@@ -32,13 +32,12 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.ui.GuiUnitTest;
 
 //@@author KhorSL
+
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
@@ -152,9 +151,9 @@ public class FindCommandTest extends GuiUnitTest {
 
     /**
      * Asserts that {@code command} is successfully executed, and<br>
-     *     - the command feedback is equal to {@code expectedMessage}<br>
-     *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
-     *     - the {@code AddressBook} in model remains the same after executing the {@code command}
+     * - the command feedback is equal to {@code expectedMessage}<br>
+     * - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
+     * - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
     private void assertCommandSuccess(FindCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());

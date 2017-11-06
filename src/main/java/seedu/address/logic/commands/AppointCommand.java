@@ -17,6 +17,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 /**
  * Changes the appoint of an existing person in the address book.
  */
+//@@author risashindo7
 public class AppointCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "appoint";
@@ -74,6 +75,7 @@ public class AppointCommand extends UndoableCommand {
 
     /**
      * Produces success/failure messages when adding an appointment
+     *
      * @param personToEdit the person making the appointment for
      */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
@@ -102,3 +104,4 @@ public class AppointCommand extends UndoableCommand {
                 && appoint.equals(e.appoint);
     }
 }
+//@@author risashindo7
