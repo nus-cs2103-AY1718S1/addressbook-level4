@@ -37,15 +37,17 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         StringTokenizer st = new StringTokenizer(trimmedArgs, " ");
-        String newArgs = "";
+        String newArgs = " ";
         String current = "";
         while (st.hasMoreTokens()) {
             String token = st.nextToken();
             if ((token.contains(PREFIX_NAME.getPrefix())) || (token.contains(PREFIX_PHONE.getPrefix()))
                     || (token.contains(PREFIX_EMAIL.getPrefix())) || (token.contains(PREFIX_ADDRESS.getPrefix()))
                     || (token.contains(PREFIX_TAG.getPrefix()))) {
-                current = token.substring(0, 1) + "/";
-                newArgs += token + " ";
+                current = token.substring(0,2);
+                if (token.length() != 2) {
+                    newArgs += token + " ";
+                }
             } else {
                 newArgs += current + token + " ";
             }
@@ -54,7 +56,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         String trimmedNewArgs = newArgs.trim();
 
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(trimmedNewArgs, PREFIX_TAG, PREFIX_EMAIL, PREFIX_NAME,
+                ArgumentTokenizer.tokenize(newArgs, PREFIX_TAG, PREFIX_EMAIL, PREFIX_NAME,
                         PREFIX_PHONE, PREFIX_ADDRESS);
 
         List<String> nameList = argMultimap.getAllValues(PREFIX_NAME);
