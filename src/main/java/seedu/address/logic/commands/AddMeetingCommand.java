@@ -30,7 +30,7 @@ public class AddMeetingCommand extends UndoableCommand {
             + "MEETING NAME " + "/ "
             + "MEETING TIME (YYYY-MM-DD HH:MM)\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + "business " + "2017-12-20 10:00";
+            + "business " + "/ " + "2017-12-20 10:00";
 
     public static final String MESSAGE_ADD_TAG_SUCCESS = "Added Meeting: %1$s";
     public static final String MESSAGE_DUPLICATE_MEETING = "This person already has this meeting.";

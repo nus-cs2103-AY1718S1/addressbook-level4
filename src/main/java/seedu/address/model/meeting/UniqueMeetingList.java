@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author alexanderleegs
 /**
@@ -124,8 +125,22 @@ public class UniqueMeetingList implements Iterable<Meeting> {
             }
         });
     }
-    //@@author
 
+    /**
+     * Finds the meetings in meeting list with {@code Person} that equals {@code target} and replaces it with
+     * {@code editedReadOnlyPerson}
+     */
+    public void updateMeetings(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson) {
+        for (int i = 0; i < internalList.size(); i++) {
+            Meeting meeting = new Meeting(internalList.get(i));
+            if (meeting.getPerson().equals(target)) {
+                meeting.setPerson(editedReadOnlyPerson);
+                internalList.set(i, meeting);
+            }
+        }
+    }
+
+    //@@author alexanderleegs
     @Override
     public Iterator<Meeting> iterator() {
         assert CollectionUtil.elementsAreUnique(internalList);
