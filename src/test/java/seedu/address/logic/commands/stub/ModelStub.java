@@ -35,8 +35,9 @@ public class ModelStub implements Model {
     public void deleteEvent(ReadOnlyEvent event) throws EventNotFoundException {
         fail("This method should not be called.");
     }
-    
+
     //@@author dennaloh
+
     @Override
     public boolean haveDuplicate(String name, ObservableList<ReadOnlyPerson> list) {
         return false;
