@@ -229,32 +229,32 @@
 
 .keyword-label-default {
     -fx-font-family: monospace;
-    -fx-font-size: 13pt;
+    -fx-font-size: 25;
     -fx-text-fill: white;
 }
 
 .keyword-label-xsmall {
-        -fx-font-family: monospace;
-        -fx-font-size: x-small;
-        -fx-text-fill: white;
+    -fx-font-family: monospace;
+    -fx-font-size: 12;
+    -fx-text-fill: white;
 }
 
 .keyword-label-small {
-        -fx-font-family: monospace;
-        -fx-font-size: small;
-        -fx-text-fill: white;
+    -fx-font-family: monospace;
+    -fx-font-size: 17;
+    -fx-text-fill: white;
 }
 
 .keyword-label-large {
-        -fx-font-family: monospace;
-        -fx-font-size: x-large;
-        -fx-text-fill: white;
+    -fx-font-family: monospace;
+    -fx-font-size: 32;
+    -fx-text-fill: white;
 }
 
 .keyword-label-xlarge {
-        -fx-font-family: monospace;
-        -fx-font-size: xx-large;
-        -fx-text-fill: white;
+    -fx-font-family: monospace;
+    -fx-font-size: 40;
+    -fx-text-fill: white;
 }
 
 
@@ -379,7 +379,7 @@
     -fx-border-width: 2;
     -fx-font-family: monospace;
     -fx-font-weight: bolder;
-    -fx-font-size: 13pt;
+    -fx-font-size: 25;
     -fx-text-fill: #6B4A40;
 }
 
@@ -390,37 +390,37 @@
     -fx-border-insets: 0;
     -fx-border-width: 1;
     -fx-font-family: monospace;
-    -fx-font-size: 13pt;
+    -fx-font-size: 25;
     -fx-text-fill: #6B4A40;
 }
 
 #commandTextDefault {
     -fx-font-family: monospace;
-    -fx-font-size: 13pt;
+    -fx-font-size: 25;
     -fx-text-fill: #6B4A40;
 }
 
 #commandTextXsmall{
     -fx-font-family: monospace;
-    -fx-font-size: x-small;
+    -fx-font-size: 12;
     -fx-text-fill: #6B4A40;
 }
 
 #commandTextSmall{
     -fx-font-family: monospace;
-    -fx-font-size: small;
+    -fx-font-size: 17;
     -fx-text-fill: #6B4A40;
 }
 
 #commandTextLarge{
     -fx-font-family: monospace;
-    -fx-font-size: x-large;
+    -fx-font-size: 32;
     -fx-text-fill: #6B4A40;
 }
 
 #commandTextXLarge{
     -fx-font-family: monospace;
-    -fx-font-size: xx-large;
+    -fx-font-size: 40;
     -fx-text-fill: #6B4A40;
 }
 

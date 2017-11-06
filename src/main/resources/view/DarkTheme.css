@@ -212,31 +212,31 @@
 
 .keyword-label-default {
     -fx-font-family: monospace;
-    -fx-font-size: 13pt;
+    -fx-font-size: 25;
     -fx-text-fill: white;
 }
 
 .keyword-label-xsmall {
         -fx-font-family: monospace;
-        -fx-font-size: x-small;
+        -fx-font-size: 12;
         -fx-text-fill: white;
 }
 
 .keyword-label-small {
         -fx-font-family: monospace;
-        -fx-font-size: small;
+        -fx-font-size: 17;
         -fx-text-fill: white;
 }
 
 .keyword-label-large {
         -fx-font-family: monospace;
-        -fx-font-size: x-large;
+        -fx-font-size: 32;
         -fx-text-fill: white;
 }
 
 .keyword-label-xlarge {
         -fx-font-family: monospace;
-        -fx-font-size: xx-large;
+        -fx-font-size: 40;
         -fx-text-fill: white;
 }
 
@@ -374,31 +374,31 @@
 
 #commandTextDefault {
     -fx-font-family: monospace;
-    -fx-font-size: 13pt;
+    -fx-font-size: 25t;
     -fx-text-fill: white;
 }
 
 #commandTextXsmall{
     -fx-font-family: monospace;
-    -fx-font-size: x-small;
+    -fx-font-size: 12;
     -fx-text-fill: white;
 }
 
 #commandTextSmall{
     -fx-font-family: monospace;
-    -fx-font-size: small;
+    -fx-font-size: 17;
     -fx-text-fill: white;
 }
 
 #commandTextLarge{
     -fx-font-family: monospace;
-    -fx-font-size: x-large;
+    -fx-font-size: 32;
     -fx-text-fill: white;
 }
 
 #commandTextXLarge{
     -fx-font-family: monospace;
-    -fx-font-size: xx-large;
+    -fx-font-size: 40;
     -fx-text-fill: white;
 }
 

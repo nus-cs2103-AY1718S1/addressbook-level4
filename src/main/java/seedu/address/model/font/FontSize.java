@@ -15,6 +15,13 @@ public class FontSize {
             "Font size can only be either \"xsmall\", \"small\","
                     + " \"normal\", \"large\",  or \"xlarge\" (case-sensitive).";
     public static final String[] FONT_SIZE_VALIDATION = {"xsmall", "small", "normal", "large", "xlarge"};
+    public static final String FONT_SIZE_XSMALL_NUMBER = "12";
+    public static final String FONT_SIZE_SMALL_NUMBER = "17";
+    public static final String FONT_SIZE_NORMAL_NUMBER = "25";
+    public static final String FONT_SIZE_LARGE_NUMBER = "32";
+    public static final String FONT_SIZE_XLARGE_NUMBER = "40";
+
+
     public final String value;
 
     /**

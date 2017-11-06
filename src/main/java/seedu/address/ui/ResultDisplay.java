@@ -5,6 +5,11 @@ import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
+import static seedu.address.model.font.FontSize.FONT_SIZE_LARGE_NUMBER;
+import static seedu.address.model.font.FontSize.FONT_SIZE_NORMAL_NUMBER;
+import static seedu.address.model.font.FontSize.FONT_SIZE_SMALL_NUMBER;
+import static seedu.address.model.font.FontSize.FONT_SIZE_XLARGE_NUMBER;
+import static seedu.address.model.font.FontSize.FONT_SIZE_XSMALL_NUMBER;
 
 import java.util.logging.Logger;
 
@@ -54,23 +59,23 @@ public class ResultDisplay extends UiPart<Region> {
     private void setFontSize(String userPref) {
         switch (userPref) {
         case FONT_SIZE_XSMALL:
-            resultDisplay.setStyle("-fx-font-size: x-small;");
+            resultDisplay.setStyle("-fx-font-size: " + FONT_SIZE_XSMALL_NUMBER + ";");
             break;
 
         case FONT_SIZE_SMALL:
-            resultDisplay.setStyle("-fx-font-size: small;");
+            resultDisplay.setStyle("-fx-font-size: " + FONT_SIZE_SMALL_NUMBER + ";");
             break;
 
         case FONT_SIZE_NORMAL:
-            resultDisplay.setStyle("-fx-font-size: normal;");
+            resultDisplay.setStyle("-fx-font-size: " + FONT_SIZE_NORMAL_NUMBER + ";");
             break;
 
         case FONT_SIZE_LARGE:
-            resultDisplay.setStyle("-fx-font-size: x-large;");
+            resultDisplay.setStyle("-fx-font-size: " + FONT_SIZE_LARGE_NUMBER + ";");
             break;
 
         case FONT_SIZE_XLARGE:
-            resultDisplay.setStyle("-fx-font-size: xx-large;");
+            resultDisplay.setStyle("-fx-font-size: " + FONT_SIZE_XLARGE_NUMBER + ";");
             break;
 
         default:
