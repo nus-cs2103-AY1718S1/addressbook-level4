@@ -392,7 +392,12 @@
     -fx-text-fill: white;
 }
 
-#displayClock {
+#displayDate {
+    -fx-font-size: 25;
+    -fx-text-fill: white;
+}
+
+#displayTime {
     -fx-font-size: 50;
     -fx-text-fill: white;
 }
