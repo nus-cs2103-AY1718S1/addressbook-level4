@@ -14,6 +14,6 @@
   </columnConstraints>
   <StatusBar styleClass="anchor-pane" fx:id="syncStatus" />
   <Label styleClass="anchor-pane" fx:id="displayDate" GridPane.columnIndex="1" nodeOrientation="RIGHT_TO_LEFT" />
-  <Label styleClass="anchor-pane" fx:id="displayClock" GridPane.columnIndex="2" nodeOrientation="RIGHT_TO_LEFT" />
+  <Label styleClass="anchor-pane" fx:id="displayTime" GridPane.columnIndex="2" nodeOrientation="RIGHT_TO_LEFT" />
   <StatusBar styleClass="anchor-pane" fx:id="saveLocationStatus" GridPane.columnIndex="3" nodeOrientation="RIGHT_TO_LEFT" />
 </GridPane>

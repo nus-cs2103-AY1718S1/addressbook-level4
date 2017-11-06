@@ -12,24 +12,24 @@ import javafx.beans.property.SimpleObjectProperty;
  */
 public class ClockDisplay {
 
-    private ObjectProperty<RunningClock> clock;
+    private ObjectProperty<RunningTime> time;
     private ObjectProperty<RunningDate> date;
 
     public ClockDisplay() {
-        this.clock = new SimpleObjectProperty<>(new RunningClock());
+        this.time = new SimpleObjectProperty<>(new RunningTime());
         this.date = new SimpleObjectProperty<>(new RunningDate());
     }
 
-    public void setClock(RunningClock clock) {
-        this.clock.set(clock);
+    public void setTime(RunningTime time) {
+        this.time.set(time);
     }
 
-    public ObjectProperty<RunningClock> clockProperty() {
-        return clock;
+    public ObjectProperty<RunningTime> timeProperty() {
+        return time;
     }
 
-    public RunningClock getClock() {
-        return clock.get();
+    public RunningTime getTime() {
+        return time.get();
     }
 
     public void setDate(RunningDate date) {
@@ -45,7 +45,7 @@ public class ClockDisplay {
     }
 
     public String getTimeAsText() {
-        return clock.get().toString();
+        return time.get().toString();
     }
 
     public String getDateAsText() {
@@ -56,13 +56,13 @@ public class ClockDisplay {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ClockDisplay // instanceof handles nulls
-                && this.clock.equals(((ClockDisplay) other).clock) // state checks onwards
+                && this.time.equals(((ClockDisplay) other).time) // state checks onwards
                 && this.date.equals(((ClockDisplay) other).date));
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(clock, date);
+        return Objects.hash(time, date);
     }
 
 }
