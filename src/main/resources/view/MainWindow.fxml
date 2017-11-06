@@ -6,8 +6,6 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -17,7 +15,7 @@
 
 <!-- @@author eeching-->
 
-<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
     <URL value="@DarkTheme.css" />
     <URL value="@Extensions.css" />
@@ -66,16 +64,14 @@
       <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
       <GridPane minWidth="1000" prefHeight="650">
-          <AnchorPane  minWidth="500" GridPane.columnIndex="0" GridPane.rowIndex="0">
-            <children>
-               <ImageView fitHeight="283.0" fitWidth="231.0" nodeOrientation="INHERIT" pickOnBounds="true" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
-                  <image>
-                     <Image url="@../docs/images/default_photo.png" />
-                  </image>
-               </ImageView>
-            </children>
-          </AnchorPane>
       <StackPane fx:id="personInformationPanelPlaceholder" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+         </rowConstraints>
 
       </GridPane>
 <!-- Commented out to remove browser panel
