@@ -59,9 +59,15 @@ public class AddAppointmentCommandTest {
             command = setCommand(index1, setAppointment(arg));
             result = command.execute();
             assertEquals(result.feedbackToUser, AddAppointmentCommand.MESSAGE_SUCCESS);
+
+            //sort appointment
+            command = setCommandForSort();
+            result = command.execute();
+            assertEquals(result.feedbackToUser, AddAppointmentCommand.SORT_APPOINTMENT_FEEDBACK);
         } catch (seedu.address.logic.parser.exceptions.ParseException ive) {
             fail();
         }
+
     }
 
     @Test
@@ -75,6 +81,12 @@ public class AddAppointmentCommandTest {
      */
     private Command setCommand(Index index, Appointment appointment) {
         AddAppointmentCommand command = new AddAppointmentCommand(index, appointment);
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        command.setData(model);
+        return command;
+    }
+    private Command setCommandForSort() {
+        AddAppointmentCommand command = new AddAppointmentCommand();
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         command.setData(model);
         return command;

@@ -35,6 +35,7 @@ public class AddAppointmentCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "New appointment added. ";
     public static final String INVALID_PERSON = "This person is not in your address book";
     public static final String INVALID_DATE = "Invalid Date. Please enter a valid date.";
+    public static final String SORT_APPOINTMENT_FEEDBACK = "Rearranged contacts to show upcoming appointments.";
 
 
     private final Index index;
@@ -57,7 +58,7 @@ public class AddAppointmentCommand extends UndoableCommand {
     protected CommandResult executeUndoableCommand() throws CommandException {
         if (appointment == null && index == null) {
             model.listAppointment();
-            return new CommandResult("Rearranged contacts to show upcoming appointments.");
+            return new CommandResult(SORT_APPOINTMENT_FEEDBACK);
         }
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
