@@ -53,7 +53,7 @@
             </padding>
             <StackPane fx:id="personListPanelPlaceholder" alignment="TOP_LEFT" VBox.vgrow="ALWAYS" />
         </VBox>
-      <StackPane prefWidth="340.0">
+      <StackPane fx:id="mainDisplayContainer" prefWidth="340.0">
          <children>
                           <StackPane fx:id="browserPlaceholder" prefWidth="340.0" StackPane.alignment="CENTER">
                   <padding>
