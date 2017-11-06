@@ -80,6 +80,16 @@ public class AddCommand extends UndoableCommand {
                 && toAdd.equals(((AddCommand) other).toAdd));
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
+    public String toString() {
+        String name = toAdd.getName().fullName;
+        return COMMAND_WORD;
+    }
+
     //@@author OscarWang114
     /**
      * Stores the optional details to add the person with. By default each field is an object
