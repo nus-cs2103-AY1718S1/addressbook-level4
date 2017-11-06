@@ -1,5 +1,7 @@
 package seedu.address.model.person;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Date;
 
 //@@author marvinchin
@@ -21,6 +23,7 @@ public class LastAccessDate implements Comparable<LastAccessDate> {
      * Constructs a new LastAccessDate with the date equivalent to the date.
      */
     public LastAccessDate(Date date) {
+        requireNonNull(date);
         // save a copy instead of using input date directly to avoid reference to external objects that can be mutated
         lastAccessDate = copyDate(date);
     }
