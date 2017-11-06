@@ -5,11 +5,11 @@ import seedu.address.commons.events.BaseEvent;
 // @@author leonchowwenhao
 
 /**
- * Indicates a request to toggle between event display and browser.
+ * Indicates that a select command has been entered and a request to toggle browser to the front.
  */
-public class TogglePanelEvent extends BaseEvent {
+public class ToggleSelectEvent extends BaseEvent {
 
-    public TogglePanelEvent() {
+    public ToggleSelectEvent() {
 
     }
 

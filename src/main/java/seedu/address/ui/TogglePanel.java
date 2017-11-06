@@ -4,14 +4,15 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
-//import javafx.application.Platform;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.TogglePanelEvent;
+import seedu.address.commons.events.ui.ToggleSelectEvent;
+
+// @@author leonchowwenhao
 
 /**
  * A ui containing browserpanel, informationboard and eventlistpanel.
@@ -21,8 +22,6 @@ public class TogglePanel extends UiPart<Region> {
 
     private static final Logger logger = LogsCenter.getLogger(TogglePanel.class);
     private static final String FXML = "TogglePanel.fxml";
-
-    Boolean browserInfront;
 
     @FXML
     private SplitPane toggleSplitPane;
@@ -42,31 +41,64 @@ public class TogglePanel extends UiPart<Region> {
         browserPlaceHolder.getChildren().add(browserPanel.getRoot());
         informationBoardPlaceHolder.getChildren().add(informationBoard.getRoot());
         eventListPanelPlaceHolder.getChildren().add(eventListPanel.getRoot());
-        browserInfront = false;
         registerAsAnEventHandler(this);
     }
 
     @Subscribe
-    private void handleNewTogglePanelEvent(TogglePanelEvent event) {
+    private void handleToggleSelectEvent(ToggleSelectEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        //Platform.runLater(() -> displayed.setValue(event.message));
+        browserToFront();
+    }
+
+    @Subscribe
+    private void handleTogglePanelEvent(TogglePanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         triggerToggle();
     }
 
-    public void triggerToggle() {
-        if (browserInfront) {
-            toggleSplitPane.toFront();
-            toggleSplitPane.setVisible(true);
-            browserPlaceHolder.toBack();
-            browserPlaceHolder.setVisible(false);
-            browserInfront = false;
+    /**
+    * Triggers the toggling mechanism to switch the browserPlaceHolder and the splitPane.
+    */
+    private void triggerToggle() {
+        if (browserPlaceHolder.isVisible()) {
+            splitPaneToFront();
+            browserToBack();
         } else {
-            toggleSplitPane.toBack();
-            toggleSplitPane.setVisible(false);
-            browserPlaceHolder.toFront();
-            browserPlaceHolder.setVisible(true);
-            browserInfront = true;
+            splitPaneToBack();
+            browserToFront();
         }
+    }
+
+    /**
+     * Sets the browserPlaceHolder to be visible and in front.
+     */
+    private void browserToFront() {
+        browserPlaceHolder.setVisible(true);
+        browserPlaceHolder.toFront();
+    }
+
+    /**
+     * Sets the browserPlaceHolder to be invisible and at the back.
+     */
+    private void browserToBack() {
+        browserPlaceHolder.setVisible(false);
+        browserPlaceHolder.toBack();
+    }
+
+    /**
+     * Sets the splitPane to be visible and in front.
+    */
+    private void splitPaneToFront() {
+        toggleSplitPane.setVisible(true);
+        toggleSplitPane.toFront();
+    }
+
+    /**
+     * Sets the splitPane to be invisible and at the back.
+     */
+    private void splitPaneToBack() {
+        toggleSplitPane.setVisible(false);
+        toggleSplitPane.toBack();
     }
 
 }
