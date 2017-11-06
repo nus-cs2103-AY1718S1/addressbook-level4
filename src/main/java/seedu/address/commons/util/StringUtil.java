@@ -84,17 +84,21 @@ public class StringUtil {
     }
 
     /**
-     * Returns a ArrayList<String> of dates that contains in {@code sentence} in the format [DD/MM/YYYY]
+     * Returns a ArrayList of dates that contains in {@code sentence} in the format [DD/MM/YYYY]
      *
      * <br>examples:<pre>
-     *              extractDates("20/10/2017") -> returns an ArrayList that contains ["20/10/2017"]
+     *              extractDates("20/10/2017")
+     *                          -> returns an ArrayList that contains ["20/10/2017"]
      *              extractDates("20/10/2017 20/10/2017")
      *                          -> returns an ArrayList that contains ["20/10/2017", "20/10/2017"]
      *              extractDates("20/10/2017, 20/10/2018")
      *                          -> returns an ArrayList that contains ["20/10/2017", "20/10/2018"]
-     *              extractDates("20/10/201720/10/2018") -> returns an ArrayList that contains ["20/10/2017", "20/10/2018"]
-     *              extractDates("20/10/2017 10:15") -> returns an ArrayList that contains ["20/10/2017"]
-     *              extractDates("20/10/17") -> returns an ArrayList that contains []
+     *              extractDates("20/10/201720/10/2018")
+     *                          -> returns an ArrayList that contains ["20/10/2017", "20/10/2018"]
+     *              extractDates("20/10/2017 10:15")
+     *                          -> returns an ArrayList that contains ["20/10/2017"]
+     *              extractDates("20/10/17")
+     *                          -> returns an ArrayList that contains []
      *              </pre>
      *
      * @param sentence cannot be null
@@ -119,14 +123,20 @@ public class StringUtil {
     }
 
     /**
-     * Returns a ArrayList<String> of times that contains in {@code sentence} in the format [HH:mm]
+     * Returns a ArrayList of times that contains in {@code sentence} in the format [HH:mm]
      * <br>examples:<pre>
-     *              extractDates("05:50") -> returns an ArrayList<String> that contains ["05:50"]
-     *              extractDates("21:01 21:03") -> returns an ArrayList<String> that contains ["21:01", "21:03"]
-     *              extractDates("21:01, 21:03") -> returns an ArrayList<String> that contains ["21:01", "21:03"]
-     *              extractDates("10:5010:10") -> returns an ArrayList<String> that contains ["10:50", "10:10"]
-     *              extractDates("20/10/2017 10:15") -> returns an ArrayList<String> that contains ["10:15"]
-     *              extractDates("5:15") -> returns an ArrayList<String> that contains []
+     *              extractDates("05:50")
+     *                          -> returns an ArrayList that contains ["05:50"]
+     *              extractDates("21:01 21:03")
+     *                          -> returns an ArrayList that contains ["21:01", "21:03"]
+     *              extractDates("21:01, 21:03")
+     *                          -> returns an ArrayList  that contains ["21:01", "21:03"]
+     *              extractDates("10:5010:10")
+     *                          -> returns an ArrayList that contains ["10:50", "10:10"]
+     *              extractDates("20/10/2017 10:15")
+     *                          -> returns an ArrayList that contains ["10:15"]
+     *              extractDates("5:15")
+     *                          -> returns an ArrayList that contains []
      *              </pre>
      * @param sentence cannot be null
      */
