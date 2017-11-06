@@ -379,11 +379,11 @@ public class CombinePanel extends UiPart<Region> {
     private void setFontSize(String userPref) {
         switch (userPref) {
         case FONT_SIZE_XSMALL:
-            setFontSizeHelper("10");
+            setFontSizeHelper("12");
             break;
 
         case FONT_SIZE_SMALL:
-            setFontSizeHelper("12");
+            setFontSizeHelper("17");
             break;
 
         case FONT_SIZE_NORMAL:

@@ -1,22 +1,4 @@
 # cctdaniel
-###### /java/seedu/address/logic/commands/CommandTestUtil.java
-``` java
-    public static final String VALID_FONT_SIZE_XSMALL = "xsmall";
-    public static final String VALID_FONT_SIZE_SMALL = "small";
-    public static final String VALID_THEME_LIGHT = "light";
-    public static final String VALID_THEME_DARK = "dark";
-```
-###### /java/seedu/address/logic/commands/CommandTestUtil.java
-``` java
-    public static final String FONT_SIZE_DESC_XSMALL = " " + PREFIX_FONT_SIZE + VALID_FONT_SIZE_XSMALL;
-    public static final String FONT_SIZE_DESC_SMALL = " " + PREFIX_FONT_SIZE + VALID_FONT_SIZE_SMALL;
-```
-###### /java/seedu/address/logic/commands/CommandTestUtil.java
-``` java
-    public static final String INVALID_FONT_SIZE_DESC = " " + PREFIX_FONT_SIZE
-            + "small!"; // '!' not allowed in font size
-    public static final String INVALID_THEME_DESC = "blue";
-```
 ###### /java/seedu/address/logic/commands/CustomiseCommandTest.java
 ``` java
 public class CustomiseCommandTest {
@@ -365,6 +347,87 @@ public class StageRule implements TestRule {
     }
 }
 ```
+###### /java/systemtests/CustomiseCommandSystemTest.java
+``` java
+public class CustomiseCommandSystemTest extends AddressBookSystemTest {
+    @Test
+    public void customise() {
+        Model model = getModel();
+        String command;
+        String expectedResultMessage;
+
+        /* Case: change font size to xsmall */
+        command = CustomiseCommand.COMMAND_WORD + " " + CliSyntax.PREFIX_FONT_SIZE + CustomiseCommand.FONT_SIZE_XSMALL;
+        expectedResultMessage = CustomiseCommand.MESSAGE_SUCCESS + CustomiseCommand.FONT_SIZE_XSMALL + ".";
+        assertCommandSuccess(command, expectedResultMessage, model);
+
+        /* Case: change font size to small */
+        command = CustomiseCommand.COMMAND_WORD + " " + CliSyntax.PREFIX_FONT_SIZE + CustomiseCommand.FONT_SIZE_SMALL;
+        expectedResultMessage = CustomiseCommand.MESSAGE_SUCCESS + CustomiseCommand.FONT_SIZE_SMALL + ".";
+        assertCommandSuccess(command, expectedResultMessage, model);
+
+        /* Case: change font size to normal */
+        command = CustomiseCommand.COMMAND_WORD + " " + CliSyntax.PREFIX_FONT_SIZE + CustomiseCommand.FONT_SIZE_NORMAL;
+        expectedResultMessage = CustomiseCommand.MESSAGE_SUCCESS + CustomiseCommand.FONT_SIZE_NORMAL + ".";
+        assertCommandSuccess(command, expectedResultMessage, model);
+
+        /* Case: change font size to large */
+        command = CustomiseCommand.COMMAND_WORD + " " + CliSyntax.PREFIX_FONT_SIZE + CustomiseCommand.FONT_SIZE_LARGE;
+        expectedResultMessage = CustomiseCommand.MESSAGE_SUCCESS + CustomiseCommand.FONT_SIZE_LARGE + ".";
+        assertCommandSuccess(command, expectedResultMessage, model);
+
+        /* Case: change font size to xlarge */
+        command = CustomiseCommand.COMMAND_WORD + " " + CliSyntax.PREFIX_FONT_SIZE + CustomiseCommand.FONT_SIZE_XLARGE;
+        expectedResultMessage = CustomiseCommand.MESSAGE_SUCCESS + CustomiseCommand.FONT_SIZE_XLARGE + ".";
+        assertCommandSuccess(command, expectedResultMessage, model);
+
+        /* Case: attempt to change font size without typing prefix */
+        command = CustomiseCommand.COMMAND_WORD + " " + CustomiseCommand.FONT_SIZE_XLARGE;
+        expectedResultMessage = String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, CustomiseCommand.MESSAGE_USAGE);
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: attempt to change font size to undefined sizes */
+        command = CustomiseCommand.COMMAND_WORD + " " + CliSyntax.PREFIX_FONT_SIZE + "xxxlarge";
+        expectedResultMessage = FontSize.MESSAGE_FONT_SIZE_CONSTRAINTS;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: attempt to undo customise command */
+        // CustomiseCommand is not undoable and hence should display an error message
+        command = UndoCommand.COMMAND_WORD;
+        expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: attempt to redo customise command */
+        // CustomiseCommand is not undoable and hence should display an error message
+        command = RedoCommand.COMMAND_WORD;
+        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+    }
+
+    /**
+     * Executes {@code command} and verifies that the result equals to {@code expectedResultMessage}.
+     */
+    private void assertCommandSuccess(String command, String expectedResultMessage, Model model) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, model);
+    }
+
+    /**
+     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
+     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
+     * These verifications are done by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
+     * error style.
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+    }
+}
+```
 ###### /java/systemtests/SelectCommandSystemTest.java
 ``` java
 public class SelectCommandSystemTest extends AddressBookSystemTest {
@@ -495,6 +558,79 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertStatusBarUnchanged();
     }
 
+
+}
+```
+###### /java/systemtests/ThemeCommandSystemTest.java
+``` java
+public class ThemeCommandSystemTest extends AddressBookSystemTest {
+    @Test
+    public void theme() {
+        Model model = getModel();
+        String command;
+        String expectedResultMessage;
+
+        /* Case: change theme to dark theme */
+        command = ThemeCommand.COMMAND_WORD + " " + ThemeCommand.DARK_THEME;
+        expectedResultMessage = ThemeCommand.SWITCH_THEME_SUCCESS_MESSAGE + ThemeCommand.DARK_THEME + ".";
+        assertCommandSuccess(command, expectedResultMessage, model);
+
+        /* Case: attempt to change theme to dark even when already in dark theme */
+        command = ThemeCommand.COMMAND_WORD + " " + ThemeCommand.DARK_THEME;
+        expectedResultMessage = ThemeCommand.SWITCH_THEME_FAILURE_MESSAGE;
+        assertCommandSuccess(command, expectedResultMessage, model);
+
+        /* Case: change theme to light theme */
+        command = ThemeCommand.COMMAND_WORD + " " + ThemeCommand.LIGHT_THEME;
+        expectedResultMessage = ThemeCommand.SWITCH_THEME_SUCCESS_MESSAGE + ThemeCommand.LIGHT_THEME + ".";
+        assertCommandSuccess(command, expectedResultMessage, model);
+
+        /* Case: attempt to change theme to light even when already in light theme */
+        command = ThemeCommand.COMMAND_WORD + " " + ThemeCommand.LIGHT_THEME;
+        expectedResultMessage = ThemeCommand.SWITCH_THEME_FAILURE_MESSAGE;
+        assertCommandSuccess(command, expectedResultMessage, model);
+
+        /* Case: attempt to change to other themes that are undefined */
+        command = ThemeCommand.COMMAND_WORD + " " + "blue";
+        expectedResultMessage = String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE);
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: attempt to undo theme command */
+        // ThemeCommand is not undoable and hence should display an error message
+        command = UndoCommand.COMMAND_WORD;
+        expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: attempt to redo theme command */
+        // ThemeCommand is not undoable and hence should display an error message
+        command = RedoCommand.COMMAND_WORD;
+        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+    }
+
+    /**
+     * Executes {@code command} and verifies that the result equals to {@code expectedResultMessage}.
+     */
+    private void assertCommandSuccess(String command, String expectedResultMessage, Model model) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, model);
+    }
+
+    /**
+     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
+     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
+     * These verifications are done by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
+     * error style.
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+    }
 
 }
 ```

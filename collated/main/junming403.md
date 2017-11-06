@@ -1096,7 +1096,7 @@ public class ViewCommand extends Command {
             break;
 
         default:
-            predicate = new ShowSpecifiedLessonPredicate(toView.hashCode());
+            predicate = new ShowSpecifiedLessonPredicate(toView);
             result = String.format(MESSAGE_VIEW_LESSON_SUCCESS, toView);
             break;
         }
@@ -2009,22 +2009,18 @@ public class SelectedStickyNotePredicate implements Predicate<Remark> {
  * Tests that a {@code ReadOnlyLesson} matches the given lesson.
  */
 public class ShowSpecifiedLessonPredicate implements Predicate<ReadOnlyLesson> {
-    private final int hashcode;
+    private final ReadOnlyLesson lesson;
 
-    public ShowSpecifiedLessonPredicate(int hashcode) {
-        this.hashcode = hashcode;
-    }
+    public ShowSpecifiedLessonPredicate(ReadOnlyLesson lesson) { this.lesson = lesson; }
 
     @Override
-    public boolean test(ReadOnlyLesson lesson) {
-        return lesson.hashCode() == hashcode;
-    }
+    public boolean test(ReadOnlyLesson lesson) { return this.lesson.isSameStateAs(lesson); }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ShowSpecifiedLessonPredicate // instanceof handles nulls
-                && this.hashcode == (((ShowSpecifiedLessonPredicate) other).hashcode)); // state check
+                && this.lesson.isSameStateAs((((ShowSpecifiedLessonPredicate) other).lesson))); // state check
     }
 
 }
