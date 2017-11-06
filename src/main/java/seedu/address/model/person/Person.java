@@ -143,7 +143,7 @@ public class Person implements ReadOnlyPerson {
         this.avatar.set(requireNonNull(avatar));
     }
     //@@author
-  
+
     //@@author risashindo7
     public void setComment(Comment comment) {
         this.comment.set(requireNonNull(comment));
@@ -158,12 +158,12 @@ public class Person implements ReadOnlyPerson {
     public Comment getComment() {
         return comment.get();
     }
-    
+
 
     public void setAppoint(Appoint appoint) {
         this.appoint.set(requireNonNull(appoint));
     }
-    
+
     @Override
     public ObjectProperty<Appoint> appointProperty() {
         return appoint;
