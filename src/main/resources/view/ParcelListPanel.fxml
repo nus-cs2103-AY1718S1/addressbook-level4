@@ -1,22 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="240.0" prefWidth="1543.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <!-- @@author vicisapotato -->
     <TabPane fx:id="tabPanePlaceholder" styleClass="tab-pane" tabClosingPolicy="UNAVAILABLE">
      <tabs>
-       <Tab fx:id="undeliveredParcelsTab" text="All Parcels">
+       <Tab fx:id="undeliveredParcelsTab" styleClass="tab-header-area" text="All Parcels">
             <content>
-              <ListView fx:id="allUncompletedParcelListView" style="-fx-background-color: #383838;" />
+               <VBox>
+                  <children>
+                     <GridPane hgap="15.0">
+                        <columnConstraints>
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.66668701171875" minWidth="10.0" prefWidth="37.33333206176758" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.33331298828125" minWidth="10.0" prefWidth="128.66666793823242" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="213.0" minWidth="10.0" prefWidth="114.33334350585938" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.5" minWidth="10.0" prefWidth="180.6666259765625" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="359.6666259765625" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="347.3333740234375" minWidth="10.0" prefWidth="296.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="107.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="113.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="383.0" minWidth="10.0" prefWidth="357.0" />
+                        </columnConstraints>
+                        <rowConstraints>
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        </rowConstraints>
+                        <children>
+                           <Label styleClass="cell_big_label" text="No." />
+                           <Label styleClass="cell_big_label" text="Name" GridPane.columnIndex="1" />
+                           <Label styleClass="cell_big_label" text="Tracking No." GridPane.columnIndex="2" />
+                           <Label styleClass="cell_big_label" text="Phone No." GridPane.columnIndex="3" />
+                           <Label styleClass="cell_big_label" text="Address" GridPane.columnIndex="4" />
+                           <Label styleClass="cell_big_label" text="Email" GridPane.columnIndex="5" />
+                           <Label styleClass="cell_big_label" text="Status" GridPane.columnIndex="7" />
+                           <Label styleClass="cell_big_label" text="Tags" GridPane.columnIndex="8" />
+                           <Label styleClass="cell_big_label" text="Due Date" GridPane.columnIndex="6" />
+                        </children>
+                        <padding>
+                           <Insets bottom="5.0" left="5.0" top="5.0" />
+                        </padding>
+                     </GridPane>
+                    <ListView fx:id="allUncompletedParcelListView" prefHeight="972.0" prefWidth="1806.0" style="-fx-background-color: #383838;" />
+                  </children>
+               </VBox>
             </content>
          </Tab>
        <Tab fx:id="deliveredParcelsTab" styleClass="tab-header-area" text="Completed Parcels">
             <content>
-               <ListView fx:id="allCompletedParcelListView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #383838;" />
+               <VBox>
+                  <children>
+                     <GridPane hgap="15.0">
+                        <columnConstraints>
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.66668701171875" minWidth="10.0" prefWidth="37.33333206176758" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.33331298828125" minWidth="10.0" prefWidth="128.66666793823242" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="213.0" minWidth="10.0" prefWidth="114.33334350585938" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.5" minWidth="10.0" prefWidth="180.6666259765625" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="359.6666259765625" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="347.3333740234375" minWidth="10.0" prefWidth="296.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="107.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="113.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="383.0" minWidth="10.0" prefWidth="357.0" />
+                        </columnConstraints>
+                        <rowConstraints>
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        </rowConstraints>
+                        <children>
+                           <Label styleClass="cell_big_label" text="No." />
+                           <Label styleClass="cell_big_label" text="Name" GridPane.columnIndex="1" />
+                           <Label styleClass="cell_big_label" text="Tracking No." GridPane.columnIndex="2" />
+                           <Label styleClass="cell_big_label" text="Phone No." GridPane.columnIndex="3" />
+                           <Label styleClass="cell_big_label" text="Address" GridPane.columnIndex="4" />
+                           <Label styleClass="cell_big_label" text="Email" GridPane.columnIndex="5" />
+                           <Label styleClass="cell_big_label" text="Status" GridPane.columnIndex="7" />
+                           <Label styleClass="cell_big_label" text="Tags" GridPane.columnIndex="8" />
+                           <Label styleClass="cell_big_label" text="Due Date" GridPane.columnIndex="6" />
+                        </children>
+                        <padding>
+                           <Insets bottom="5.0" left="5.0" top="5.0" />
+                        </padding>
+                     </GridPane>
+                     <ListView fx:id="allCompletedParcelListView" prefHeight="1156.0" prefWidth="1806.0" style="-fx-background-color: #383838;" />
+                  </children>
+               </VBox>
             </content>
          </Tab>
      </tabs>
