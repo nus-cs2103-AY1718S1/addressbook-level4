@@ -23,7 +23,7 @@ public class TogglePanel extends UiPart<Region> {
     private static final Logger logger = LogsCenter.getLogger(TogglePanel.class);
     private static final String FXML = "TogglePanel.fxml";
 
-    boolean browserIsFront;
+    private boolean browserIsFront;
 
     @FXML
     private SplitPane toggleSplitPane;
