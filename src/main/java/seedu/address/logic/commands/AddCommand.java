@@ -80,15 +80,30 @@ public class AddCommand extends UndoableCommand {
                 && toAdd.equals(((AddCommand) other).toAdd));
     }
 
+    //@@author arnollim
     /**
-     *
-     * @return
+     * Returns the Command String of that added this person into the addressbook
      */
     @Override
     public String toString() {
-        String name = toAdd.getName().fullName;
-        return COMMAND_WORD;
+        final StringBuilder builder = new StringBuilder();
+        builder.append(toAdd.getName())
+                .append(" Phone: ")
+                .append(toAdd.getPhone())
+                .append("Email: ")
+                .append(toAdd.getEmail())
+                .append("Address: ")
+                .append(toAdd.getAddress())
+                .append("DateOfBirth: ")
+                .append(toAdd.getDateOfBirth())
+                .append("Gender: ")
+                .append(toAdd.getGender())
+                .append(" Tags: ");
+        toAdd.getTags().forEach(builder::append);
+        String person = builder.toString();
+        return COMMAND_WORD + " " + person;
     }
+    //@@author
 
     //@@author OscarWang114
     /**
