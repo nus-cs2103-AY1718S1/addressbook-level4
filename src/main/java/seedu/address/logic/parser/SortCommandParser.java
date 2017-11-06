@@ -26,8 +26,8 @@ public class SortCommandParser implements Parser<SortCommand> {
     private static final Pattern SORT_ARGUMENT_FORMAT =
             Pattern.compile("(?<dataField>\\S+)(?<option>\\s+-ignorefav)?");
 
-    private static boolean FAV_NOT_IGNORED = false;
-    private static boolean FAV_IGNORED = true;
+    private static final boolean FAV_NOT_IGNORED = false;
+    private static final boolean FAV_IGNORED = true;
 
     /**
      * Parses the given {@code String} of arguments in the context of the SortCommand

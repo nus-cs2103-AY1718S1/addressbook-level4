@@ -60,6 +60,14 @@ public class ComparatorUtil {
         }
     };
 
+    // Comparator that sorts Tag objects by their name
+    private static final Comparator<Tag> tagComparator = new Comparator<Tag>() {
+        @Override
+        public int compare(Tag t1, Tag t2) {
+            return t1.tagName.compareTo(t2.tagName);
+        }
+    };
+
     public static Comparator<ReadOnlyPerson> getFavouriteComparator() {
         return favouriteComparator;
     }
@@ -108,13 +116,7 @@ public class ComparatorUtil {
                 .thenComparing(emailComparator);
     }
 
-    // Comparator that sorts Tag objects by their name
-    private static final Comparator<Tag> tagComparator = new Comparator<Tag>() {
-        @Override
-        public int compare(Tag t1, Tag t2) {
-            return t1.tagName.compareTo(t2.tagName);
-        }
-    };
-
-    public static Comparator<Tag> getTagComparator() {return tagComparator; }
+    public static Comparator<Tag> getTagComparator() {
+        return tagComparator;
+    }
 }

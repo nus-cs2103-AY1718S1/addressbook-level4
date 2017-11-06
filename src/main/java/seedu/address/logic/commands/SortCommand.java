@@ -23,7 +23,7 @@ public class SortCommand extends Command {
     private final String dataField;
     private final boolean isFavIgnored;
 
-    public SortCommand(String dataField, boolean isFavIgnored) { 
+    public SortCommand(String dataField, boolean isFavIgnored) {
         this.dataField = dataField;
         this.isFavIgnored = isFavIgnored;
     }
