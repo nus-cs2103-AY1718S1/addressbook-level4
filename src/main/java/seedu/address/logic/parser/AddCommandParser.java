@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.parser.exceptions.SuggestibleParseException;
+import seedu.address.logic.parser.exceptions.ParseArgsException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -31,15 +31,15 @@ public class AddCommandParser implements Parser<AddCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
      * and returns an AddCommand object for execution.
-     * @throws SuggestibleParseException if the user input does not conform the expected format
+     * @throws ParseArgsException if the user input does not conform the expected format
      */
-    public AddCommand parse(String args) throws SuggestibleParseException {
+    public AddCommand parse(String args) throws ParseArgsException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                         PREFIX_REMARK, PREFIX_TAG);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
-            throw new SuggestibleParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            throw new ParseArgsException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
         try {
@@ -54,7 +54,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
-            throw new SuggestibleParseException(ive.getMessage(), ive);
+            throw new ParseArgsException(ive.getMessage(), ive);
         }
     }
 

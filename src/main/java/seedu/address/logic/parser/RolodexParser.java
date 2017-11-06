@@ -24,8 +24,9 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.StarWarsCommand;
 import seedu.address.logic.commands.Suggestion;
 import seedu.address.logic.commands.UndoCommand;
-import seedu.address.logic.parser.exceptions.SuggestibleParseException;
+import seedu.address.logic.parser.exceptions.ParseArgsException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.exceptions.SuggestibleParseException;
 
 /**
  * Parses user input.
@@ -96,7 +97,7 @@ public class RolodexParser {
             } else {
                 handleSuggestion(commandWord, arguments);
             }
-        } catch (SuggestibleParseException e) {
+        } catch (ParseArgsException e) {
             handleSuggestion(commandWord, arguments);
         }
 
