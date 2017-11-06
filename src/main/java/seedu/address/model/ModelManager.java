@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_EMAIL;
 import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_NAME;
 import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_PHONE;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -58,7 +59,8 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         sortedFilteredPersons = new SortedList<>(filteredPersons);
         // Sort contacts by favourite status, then name, then phone, then email, then address
-        sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenNameFirst());
+        sortedFilteredPersons.setComparator(ComparatorUtil.getFavouriteComparator()
+                .thenComparing(ComparatorUtil.getAllComparatorsNameFirst()));
     }
 
     //@@author
@@ -143,23 +145,37 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void sortByDataFieldFirst(String dataField) {
+    public void sortByDataFieldFirst(String dataField, boolean isFavIgnored) {
         indicateChangedToPersonListView();
+        Comparator<ReadOnlyPerson> comparatorOrder = new Comparator<ReadOnlyPerson>() {
+            @Override
+            public int compare(ReadOnlyPerson o1, ReadOnlyPerson o2) {
+                return 0;
+            }
+        };
         switch (dataField) {
         case DATA_FIELD_NAME:
-            sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenNameFirst());
+            comparatorOrder = ComparatorUtil.getAllComparatorsNameFirst();
             break;
         case DATA_FIELD_PHONE:
-            sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenPhoneFirst());
+            comparatorOrder = ComparatorUtil.getAllComparatorsPhoneFirst();
             break;
         case DATA_FIELD_EMAIL:
-            sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenEmailFirst());
+            comparatorOrder = ComparatorUtil.getAllComparatorsEmailFirst();
             break;
         case DATA_FIELD_ADDRESS:
-            sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenAddressFirst());
+            comparatorOrder = ComparatorUtil.getAllComparatorsAddressFirst();
             break;
         default:
             break;
+        }
+
+        if (isFavIgnored) {
+            sortedFilteredPersons.setComparator(comparatorOrder
+                    .thenComparing(ComparatorUtil.getFavouriteComparator()));
+        } else {
+            sortedFilteredPersons.setComparator(ComparatorUtil.getFavouriteComparator()
+                    .thenComparing(comparatorOrder));
         }
     }
 

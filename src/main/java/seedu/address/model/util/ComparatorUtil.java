@@ -77,31 +77,31 @@ public class ComparatorUtil {
         return addressComparator;
     }
 
-    // Returns a lexicographic-order comparator that compares by favourite status first,
-    // followed by name, phone, email then address
-    public static Comparator<ReadOnlyPerson> getAllComparatorsFavThenNameFirst() {
-        return favouriteComparator.thenComparing(nameComparator).thenComparing(phoneComparator)
-                .thenComparing(emailComparator).thenComparing(addressComparator);
+    // Returns a lexicographic-order comparator that compares by name first,
+    // followed by phone, email then address
+    public static Comparator<ReadOnlyPerson> getAllComparatorsNameFirst() {
+        return nameComparator.thenComparing(phoneComparator).thenComparing(emailComparator)
+                .thenComparing(addressComparator);
     }
 
-    // Returns a lexicographic-order comparator that compares by favourite status first,
-    // followed by name, phone, email then address
-    public static Comparator<ReadOnlyPerson> getAllComparatorsFavThenPhoneFirst() {
-        return favouriteComparator.thenComparing(phoneComparator).thenComparing(nameComparator)
-                .thenComparing(emailComparator).thenComparing(addressComparator);
+    // Returns a lexicographic-order comparator that compares by phone first,
+    // followed by name, email then address
+    public static Comparator<ReadOnlyPerson> getAllComparatorsPhoneFirst() {
+        return phoneComparator.thenComparing(nameComparator).thenComparing(emailComparator)
+                .thenComparing(addressComparator);
     }
 
-    // Returns a lexicographic-order comparator that compares by favourite status first,
-    // followed by name, phone, email then address
-    public static Comparator<ReadOnlyPerson> getAllComparatorsFavThenEmailFirst() {
-        return favouriteComparator.thenComparing(emailComparator).thenComparing(nameComparator)
-                .thenComparing(phoneComparator).thenComparing(addressComparator);
+    // Returns a lexicographic-order comparator that compares by email first,
+    // followed by name, phone then address
+    public static Comparator<ReadOnlyPerson> getAllComparatorsEmailFirst() {
+        return emailComparator.thenComparing(nameComparator).thenComparing(phoneComparator)
+                .thenComparing(addressComparator);
     }
 
-    // Returns a lexicographic-order comparator that compares by favourite status first,
-    // followed by name, phone, email then address
-    public static Comparator<ReadOnlyPerson> getAllComparatorsFavThenAddressFirst() {
-        return favouriteComparator.thenComparing(addressComparator).thenComparing(nameComparator)
-                .thenComparing(phoneComparator).thenComparing(emailComparator);
+    // Returns a lexicographic-order comparator that compares by address first,
+    // followed by name, phone, then email
+    public static Comparator<ReadOnlyPerson> getAllComparatorsAddressFirst() {
+        return addressComparator.thenComparing(nameComparator).thenComparing(phoneComparator)
+                .thenComparing(emailComparator);
     }
 }

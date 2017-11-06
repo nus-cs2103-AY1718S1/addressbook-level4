@@ -19,14 +19,16 @@ public class SortCommand extends Command {
     public static final String MESSAGE_SORT_LIST_SUCCESS = "Sorted list according to %1$s";
 
     private final String dataField;
+    private final boolean isFavIgnored;
 
-    public SortCommand(String dataField) {
+    public SortCommand(String dataField, boolean isFavIgnored) { 
         this.dataField = dataField;
+        this.isFavIgnored = isFavIgnored;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
-        model.sortByDataFieldFirst(dataField);
+        model.sortByDataFieldFirst(dataField, isFavIgnored);
         model.getFilteredPersonList();
 
         return new CommandResult(String.format(MESSAGE_SORT_LIST_SUCCESS, dataField));
