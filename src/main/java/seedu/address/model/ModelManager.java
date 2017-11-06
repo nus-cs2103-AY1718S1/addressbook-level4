@@ -134,8 +134,10 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deleteBinPerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        recycleBin.removePerson(target);
+    public synchronized void deleteBinPerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException {
+        for (ReadOnlyPerson s: targets) {
+            recycleBin.removePerson(s);
+        }
         indicateRecycleBinChanged();
     }
 

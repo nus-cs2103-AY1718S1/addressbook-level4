@@ -1,42 +1,57 @@
 package seedu.address.logic.commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 
 /**
  * Delete the person in bin forever
  */
-public class BindeleteCommand extends Command {
+public class BindeleteCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "bin-delete";
 
     public static final String MESSAGE_SUCCESS = "Forever deleted.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + "Delete the person in bin forever.";
-    private Index persontodelete;
+    private ArrayList<Index> targets;
+    private boolean allvalid = true;
+    private boolean exist  = false;
 
-    public BindeleteCommand(Index in) {
-        persontodelete = in;
+    public BindeleteCommand(ArrayList<Index> targets) {
+        this.targets = targets;
     }
 
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastshownlist = model.getRecycleBinPersonList();
-        if (persontodelete.getZeroBased() >= lastshownlist.size()) {
+        ArrayList<ReadOnlyPerson> personstodelete = new ArrayList<>();
+
+        for (Index s: targets) {
+            if (s.getZeroBased() >= lastshownlist.size()) {
+                allvalid = false;
+            } else {
+                personstodelete.add(lastshownlist.get(s.getZeroBased()));
+                exist = true;
+            }
+        }
+
+        if (allvalid && exist) {
+            try {
+                model.deleteBinPerson(personstodelete);
+            } catch (PersonNotFoundException pnfe) {
+                assert false : "The target person cannot be missing";
+            }
+            return new CommandResult(MESSAGE_SUCCESS);
+        } else {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-        ReadOnlyPerson target = lastshownlist.get(persontodelete.getZeroBased());
-        try {
-            model.deleteBinPerson(target);
-        } catch (PersonNotFoundException pnfe) {
-            assert false : "The target person cannot be missing";
-        }
-        return new CommandResult(String.format(MESSAGE_SUCCESS, target));
     }
 }

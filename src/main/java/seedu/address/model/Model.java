@@ -34,7 +34,7 @@ public interface Model {
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
     void deletePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException, DuplicatePersonException;
-    void deleteBinPerson(ReadOnlyPerson target) throws PersonNotFoundException;
+    void deleteBinPerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException;
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;

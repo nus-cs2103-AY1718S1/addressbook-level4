@@ -15,7 +15,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 /**
  * Restore the person in bin to address book;
  */
-public class BinrestoreCommand extends Command {
+public class BinrestoreCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "bin-restore";
 
@@ -31,7 +31,7 @@ public class BinrestoreCommand extends Command {
 
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastshownlist = model.getRecycleBinPersonList();
         ArrayList<ReadOnlyPerson> personstodelete = new ArrayList<>();
 
