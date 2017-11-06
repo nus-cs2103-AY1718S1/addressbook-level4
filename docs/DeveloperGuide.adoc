@@ -917,6 +917,11 @@ _Figure 3.5.1 : Sequence Diagram of `FindTags` Operation_
 **Cons:** It adds complexity to the `FindTagsCommand` source file and reduces reusability of the `Predicate` outside of the `FindTagsCommand` +
 // end::findtags[]
 
+// tag::statisticspanel[]
+=== Statistics Panel mechanism
+
+// end::statisticspanel[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
