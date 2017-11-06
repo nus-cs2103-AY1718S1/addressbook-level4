@@ -16,7 +16,6 @@ import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.commands.QrGenCallCommand;
 import seedu.address.logic.commands.QrGenSaveContactCommand;
 import seedu.address.logic.commands.QrGenSmsCommand;
-import seedu.address.logic.commands.QrSaveContactCommand;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -84,7 +83,7 @@ public class BrowserPanel extends UiPart<Region> {
         browser.getEngine().setUserAgent("Mozilla/5.0 "
                 + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0");
         loadPage(qrGenSaveContactCommand.qrSaveContact(person.getPhone().toString(), person.getName().fullName,
-                person.getAddress().toString(), person.getEmail().toString()));
+                person.getEmail().toString()));
     }
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
