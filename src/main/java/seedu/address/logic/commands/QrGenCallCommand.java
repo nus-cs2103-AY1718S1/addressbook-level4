@@ -23,7 +23,7 @@ public class QrGenCallCommand {
         String qrCodeL = "&margin";
         String qrCodeM = "=0";
         String qrCodeN = "&size";
-        String qrCodeO = "=450x450";
+        String qrCodeO = "=500x500";
         String qrCodeP = "&ecc";
         String qrCodeQ = "=L";
         String qrLineA = qrCodeA + qrCodeB + qrCodeC + qrCodeD + qrCodeE + qrCodeF

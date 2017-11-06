@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.QrSaveEvent;
 import seedu.address.logic.commands.LoggingCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -39,7 +40,7 @@ public class QrSaveButton extends UiPart<Region> {
     @FXML
     private void handleQrSaveButtonPressed() throws CommandException, ParseException, IOException {
         if ( person != null) {
-            bp.loadQrCode(person);
+            bp.loadSaveQrCode(person);
             logger.info("QR Code displayed");
         } else {
             logger.info(MESSAGE_FAIL);
@@ -49,6 +50,11 @@ public class QrSaveButton extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.person = event.getNewSelection().person;
+    }
+
+    @Subscribe
+    private void clickButton(QrSaveEvent event ) {
+        bp.loadSaveQrCode((ReadOnlyPerson) event.getPerson());
     }
 
 }
