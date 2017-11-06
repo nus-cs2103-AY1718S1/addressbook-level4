@@ -69,7 +69,7 @@ public class QrGenSaveContactCommand {
         String qrLineF = qrpartfCodeA + qrpartfCodeB + qrpartfCodeC + qrpartfCodeD + qrpartfCodeE + qrpartfCodeF
                 + qrpartfCodeG + qrpartfCodeH + qrpartfCodeI + qrpartfCodeJ + qrpartfCodeK + qrpartfCodeL
                 + qrpartfCodeM;
-
+        //String that will generate the QR Code
         String fullQr = qrLineA + contactName + qrLineB + contactName + qrLineC + phoneNum + qrLineD + contactEmail
                 + qrLineE + qrLineF;
         return fullQr;
