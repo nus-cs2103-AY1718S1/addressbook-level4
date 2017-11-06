@@ -63,7 +63,7 @@ public class QrGenSaveContactCommand {
         String qrpartfCodeH = "&margin";
         String qrpartfCodeI = "=0";
         String qrpartfCodeJ = "&size";
-        String qrpartfCodeK = "400x400";
+        String qrpartfCodeK = "500x500";
         String qrpartfCodeL = "&ecc";
         String qrpartfCodeM = "=L";
         String qrLineF = qrpartfCodeA + qrpartfCodeB + qrpartfCodeC + qrpartfCodeD + qrpartfCodeE + qrpartfCodeF

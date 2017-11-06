@@ -23,12 +23,12 @@ public class QrGenSmsCommand {
         String qrCodeL = "&margin";
         String qrCodeM = "=0";
         String qrCodeN = "&size";
-        String qrCodeO = "=450x450";
+        String qrCodeO = "=500x500";
         String qrCodeP = "&ecc";
         String qrCodeQ = "=L";
         String qrLineA = qrCodeA + qrCodeB + qrCodeC + qrCodeD + qrCodeE + qrCodeF
                 + qrCodeG + qrCodeH + qrCodeI;
-        String qrLineB = "Dear+" + contactName + "%2C";
+        String qrLineB = qrCodeI + "Dear+" + contactName + "%2C";
         String qrLineC = qrCodeJ + qrCodeK + qrCodeL + qrCodeM + qrCodeN + qrCodeO
                 + qrCodeP + qrCodeQ;
         String fullQr = qrLineA + phoneNum + qrLineB + qrLineC;
