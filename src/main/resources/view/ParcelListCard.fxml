@@ -11,23 +11,23 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox id="cardPane" fx:id="cardPane" prefHeight="43.0" prefWidth="1544.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-  <VBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="1548.0">
+<HBox id="cardPane" fx:id="cardPane" prefHeight="40.0" prefWidth="1840.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <VBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="1846.0">
     <padding>
       <Insets bottom="5" left="15" right="5" top="5" />
     </padding>
         <!-- @@author vicisapotato -->
-      <GridPane hgap="20.0" prefWidth="1367.0">
+      <GridPane hgap="15.0" prefWidth="1367.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.66668701171875" minWidth="10.0" prefWidth="28.33331298828125" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.33331298828125" minWidth="10.0" prefWidth="131.0" />
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="213.0" minWidth="10.0" prefWidth="129.0" />
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="89.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="276.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="347.3333740234375" minWidth="10.0" prefWidth="205.0" />
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="109.0" />
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="89.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="383.0" minWidth="10.0" prefWidth="313.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.66668701171875" minWidth="10.0" prefWidth="37.33333206176758" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.33331298828125" minWidth="10.0" prefWidth="128.66666793823242" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="213.0" minWidth="10.0" prefWidth="125.5" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.5" minWidth="10.0" prefWidth="129.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="342.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="334.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="111.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="109.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="386.0" minWidth="10.0" prefWidth="377.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -71,7 +71,7 @@
                <tooltip>
                   <Tooltip fx:id="statusTooltip" text="status tooltip" />
                </tooltip></Label>
-          <FlowPane fx:id="tags" alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="176.0" GridPane.columnIndex="8" />
+          <FlowPane fx:id="tags" alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="249.0" GridPane.columnIndex="8" />
          </children>
       </GridPane>
     <!-- @@author -->

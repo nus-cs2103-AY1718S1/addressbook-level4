@@ -1,8 +1,5 @@
 package seedu.address.ui;
 
-import java.util.HashMap;
-import java.util.Random;
-
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -18,11 +15,6 @@ import seedu.address.model.parcel.ReadOnlyParcel;
 public class ParcelCard extends UiPart<Region> {
 
     private static final String FXML = "ParcelListCard.fxml";
-    //@@author vicisapotato
-    private static String[] colors = { "#cc4f4f", "#57b233", "#2696b5", "#5045c6", "#7739ba", "#b534a1", "black" };
-    private static HashMap<String, String> tagColors = new HashMap<String, String>();
-    private static Random random = new Random();
-    //@@author
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -31,7 +23,6 @@ public class ParcelCard extends UiPart<Region> {
      *
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
-
     public final ReadOnlyParcel parcel;
 
     @FXML
@@ -164,15 +155,26 @@ public class ParcelCard extends UiPart<Region> {
         });
     }
 
+    //@@author kennard123661
     /**
-     * tags with value tagValue will be assigned a random color from a list colors field
+     * tags with value tagValue will be assigned a specific colour based on their values
      */
     private static String setColorForTag(String tagValue) {
-        if (!tagColors.containsKey(tagValue)) {
-            tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
-        }
+        switch (tagValue) {
+        case "FLAMMABLE":
+            return "#d6130a"; // Chrysler Radiant Fire Red
 
-        return tagColors.get(tagValue);
+        case "FROZEN":
+            return "#1db1b8"; // light blue
+
+        case "HEAVY":
+            return "#8b8d7a"; // Stone Gray
+
+        case "FRAGILE": //fallthrough
+        default:
+            return "#bf9900"; // gold yellow
+
+        }
     }
     //@@author
 
@@ -193,4 +195,5 @@ public class ParcelCard extends UiPart<Region> {
         return id.getText().equals(card.id.getText())
                 && parcel.equals(card.parcel);
     }
+
 }
