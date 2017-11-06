@@ -1,4 +1,4 @@
-= cherBook v1.3 - Developer Guide
+= cherBook v1.5 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -337,10 +337,10 @@ _Figure 3.1.7 : Activity Diagram of UndoRedoStack_
 ==== Design Considerations
 
 **Aspect:** Implementation of `UndoableCommand` +
-**Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
+**Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`. +
 **Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
 **Cons:** Hard for new developers to understand the template pattern. +
-**Alternative 2:** Just override `execute()` +
+**Alternative 2:** Just override `execute()`. +
 **Pros:** Does not involve the template pattern, easier for new developers to understand. +
 **Cons:** Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
 
@@ -368,10 +368,10 @@ _Figure 3.1.7 : Activity Diagram of UndoRedoStack_
 ---
 
 **Aspect:** Data structure to support the undo/redo commands +
-**Alternative 1 (current choice):** Use separate stack for undo and redo +
+**Alternative 1 (current choice):** Use separate stack for undo and redo. +
 **Pros:** Easy to understand for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project. +
 **Cons:** Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `UndoRedoStack`. +
-**Alternative 2:** Use `HistoryManager` for undo/redo +
+**Alternative 2:** Use `HistoryManager` for undo/redo. +
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
@@ -379,13 +379,13 @@ _Figure 3.1.7 : Activity Diagram of UndoRedoStack_
 
 // tag::sort[]
 === Sort mechanism
-The sort mechanism is implemented using SortCommand. It supports sorting of contacts names in the AddressBook according to alphabetical order from A to Z.
+The `sort` mechanism is implemented using `SortCommand`. It supports sorting of contacts names in the AddressBook according to alphabetical order from A to Z.
 
-When user calls for sorting to be implemented, an empty ArrayList would be created. Under the Model component, UniquePersonList would compare the names of all persons in lower case using a comparator and return an Observable List containing of ReadOnlyPerson.
+When the user calls for sorting to be implemented, an empty `ArrayList` would be created. Under the `Model` component, `UniquePersonList` would compare the names of all persons in lower case using a comparator and return an `Observable List` containing of `ReadOnlyPerson`.
 
-`SortCommand` inherits from Command.
+`SortCommand` inherits from `Command`.
 
-SortCommand is implemented this way:
+`SortCommand` is implemented this way:
 [source,java]
 ----
 public class SortCommand extends Command {
@@ -396,16 +396,16 @@ public class SortCommand extends Command {
 }
 ----
 [NOTE]
-The sort is case insensitive.
+The `sort` is case insensitive.
 
-The following sequence diagram shows how the sort operation works:
+The following sequence diagram shows how the `sort` operation works:
 
 image::SortSequenceDiagram.png[width="800"]
 _Figure 3.2.1 : Sequence Diagram of Sort Operation_
 
-When the user calls ‘sort’ or ‘st’ to sort the contacts, the Model will take in an ArrayList named contactList from the Parser.
+When the user calls ‘sort’ or ‘st’ to `sort` the contacts, the `Model` will take in an `ArrayList` named contactList from the `Parser`.
 
-Upon a successful sort, contacts are displayed in alphabetical order.
+Upon a successful `sort`, contacts are displayed in alphabetical order.
 If an empty list is given, the address book will return with message: “No contacts to be sorted”.
 If the list is already in correct order, the address book will return with: “All contacts are sorted alphabetically by name”.
 
@@ -423,35 +423,35 @@ public ObservableList<ReadOnlyPerson> asObservableListSortedByName() {
     }
 }
 ----
-It is implemented this way to ensure that all person names in the UniquePersonList is compared to at the lowest level of abstraction.
+It is implemented this way to ensure that all person names in the `UniquePersonList` is compared to at the lowest level of abstraction.
 
 ==== Design Considerations
 
 **Aspect:** Implementation of `SortCommand` +
-**Alternative 1 (current choice):** `SortCommand` inherits from Command +
+**Alternative 1 (current choice):** `SortCommand` inherits from Command. +
 **Pros:** After sorting his/her contacts, it remains sorted and the original list of unsorted contacts is replaced by this list. +
 **Cons:** The user is unable to save the list of contacts in the original order(unsorted format). +
-**Alternative 2:** Implement undo/redo function for SortCommand +
+**Alternative 2:** Implement undo/redo function for SortCommand. +
 **Pros:** When undo is called, the list will return back to the most recent unsorted list. When redo is called, the list will return back to the sorted list of contacts. +
 **Cons:** The user is able to alter the list easily and may get confused whether is the current list the most recent sorted list.
 
 ---
 
 **Aspect:** How sort executes +
-**Alternative 1 (current choice):** Uses the comparator in Java Collections to sort the arrays in alphabetical order. +
+**Alternative 1 (current choice):** Uses the `comparator` in `Java Collections` to sort the arrays in alphabetical order. +
 **Pros:** Easy to implement. +
 **Cons:** Since method is inherited, it is difficult to debug and the only way is via the usage of vigorous user testing and logging. +
-**Alternative 2:** Writing a sort algorithm. +
+**Alternative 2:** Write a `sort` algorithm. +
 **Pros:** Case sensitivity can be accounted for and debugging is made simpler. +
 **Cons:** More error-proned as algorithm's logic must be checked constantly to ensure that it accounts for all cases.
 
 ---
 
-**Aspect:** Data structure to support the sort command +
-**Alternative 1 (current choice):** Creates an empty ArrayList to obtain the names from the UniquePersonList before sorting occurs. The sort overwrites the existing list of unsorted contacts.  +
+**Aspect:** Data structure to support the `sort` command +
+**Alternative 1 (current choice):** Creates an empty `ArrayList` to obtain the names from the `UniquePersonList` before sorting occurs. The `sort` overwrites the existing list of unsorted contacts.  +
 **Pros:** The original list of unsorted contacts is not altered. +
 **Cons:** Additional space usage and longer time needed to overwrite the original contact list, inefficiency and memory wastage may arise. +
-**Alternative 2:** Manually edit the list of contacts in the AddressBook +
+**Alternative 2:** Manually edits the list of contacts in the AddressBook. +
 **Pros:** We do not need to maintain a separate list, and just reuse what is already in the codebase, and it saves space. +
 **Cons:**  Inefficient as compared to using an algorithm. If the user made a mistake, the change cannot be reverted as the original list of contacts is not saved. +
 // end::sort[]
@@ -459,13 +459,13 @@ It is implemented this way to ensure that all person names in the UniquePersonLi
 
 // tag::schedule[]
 === Schedule mechanism
-The schedule mechanism is implemented using ScheduleCommand. It supports scheduling of contacts in the AddressBook for better management of time.
+The `schedule` mechanism is implemented using `ScheduleCommand`. It supports scheduling of contacts in the AddressBook for better management of time.
 
-When user calls for scheduling to be implemented, two arguments would have to be passed into the constructor.
-The two arguments are name of the person being scheduled and the Calendar date with time.
-Under the Model component, UniqueScheduleList would add the created schedule into the set of schedules.
+When the user calls for scheduling to be implemented, two arguments would have to be passed into the constructor.
+The two arguments are Name of the person being scheduled and the Calendar date with time.
+Under the `Model` component, `UniqueScheduleList` would add the created `schedule` into the `set of schedules`.
 
-`ScheduleCommand` inherits from Command.
+`ScheduleCommand` inherits from `Command`.
 
 ScheduleCommand is implemented this way:
 [source,java]
@@ -478,20 +478,20 @@ public class ScheduleCommand extends Command {
 }
 ----
 [NOTE]
-Adding of schedules into the AddressBook can be done in natural language.
+Adding of `schedules` into the AddressBook can be done in natural language.
 
-The following sequence diagram shows how the sort operation works:
+The following sequence diagram shows how the `schedule` operation works:
 
 image::ScheduleSequenceDiagram.png[width="800"]
 _Figure 3.2.1 : Sequence Diagram of Schedule Operation_
 
 When the user calls ‘schedule’ or ‘sch’ to schedule the contacts in cherBook, the Model will receive a schedule from the Parser.
 
-Upon successful scheduling, contacts are added into the set of schedules.
+Upon successful scheduling, contacts are added into the `set of schedules`.
 If one or more arguments required to schedule a person is missing, the AddressBook will return with error messages corresponding to the missing arguments.
 If one or more arguments required to schedule a person is invalid, the AddressBook will return with error messages corresponding to the invalid arguments.
 
-The following will show how the schedule is added into the AddressBook:
+The following will show how the `schedule` is added into the AddressBook:
 [source,java]
 ----
     /**
@@ -503,43 +503,48 @@ The following will show how the schedule is added into the AddressBook:
         indicateAddressBookChanged();
     }
 ----
-It is implemented this way to ensure that all schedules are added into the AddressBook with the lowest level of abstraction.
+It is implemented this way to ensure that all `schedules` are added into the AddressBook with the lowest level of abstraction.
 
 ==== Design Considerations
 
 **Aspect:** Implementation of `ScheduleCommand` +
-**Alternative 1 (current choice):** `ScheduleCommand` inherits from Command +
-**Pros:** After scheduling the contacts, the schedules remain in their order they are entered into the AddressBook. +
+**Alternative 1 (current choice):** `ScheduleCommand` inherits from Command. +
+**Pros:** After scheduling the contacts, the schedules remain in the order they are entered into the AddressBook. +
 **Cons:** The user is unable to sort the list of schedules according to chronological order. +
 
 ---
 
-**Aspect:** How schedule executes +
-**Alternative 1 (current choice):** Adds a schedule into the schedules list once the person name and calendar date is parsed. +
+**Aspect:** How `schedule` executes +
+**Alternative 1 (current choice):** Adds a `schedule` into the `schedules list` once the person name and calendar date is parsed. +
 **Pros:** Easy to implement. +
 **Cons:** Vigorous user testing and logging is required to debug corner test cases. +
 
 ---
 
-**Aspect:** Data structure to support the schedule command +
-**Alternative 1 (current choice):** Creates an empty Set to obtain the schedules from the UniqueScheduleList. +
-**Pros:** The original set of schedules is not altered. +
-**Cons:** Additional space usage is needed so inefficiency and memory wastage may arise. +
-**Alternative 2:** Adding a new attribute in each individual person card to hold the schedules. +
-**Pros:** The teacher would be able to identify each student respectively. +
-**Cons:** Inefficiency and time consuming because to find a schedule, the algorithm would have to iterate through all person cards to get the schedules.
+**Aspect:** Data structure to support the `schedule` command +
+**Alternative 1 (current choice):** Creates an empty `Set` to obtain the `schedules` from the `UniqueScheduleList`. +
+**Pros:** The original set of `schedules` is not altered. +
+**Cons:** Able to change the contents of the schedules easily. +
+**Alternative 2:** Add a new field in each individual person card to hold their respective `schedule`. +
+**Pros:** The teacher would be able to identify each student respectively, and it makes tracking and debugging easier. +
+**Cons:** Inefficiency and time consuming because to find a `schedule`, the algorithm would have to iterate through all `PersonCards` to get the list of `schedules`.
 // end::schedule[]
 
 
 // tag::studentparentcontact[]
 === Add Student/Parent Phone Contact mechanism
 
-The student/parent phone contact mechanism is facilitated by making changes
+The `student/parent phone contact` mechanism is facilitated by making changes
 to the Phone class in the model component. It enables the input
 of the phone contact information of the student and his/her parent.
 
-To ensure consistency across the user inputs for add command, users have to input p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)
+To ensure consistency across the user inputs for add command, the user will have to input p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)
 instead of p/ Student: (STUDENT_NUMBER) Parent: (PARENT_NUMBER).
+
+The following sequence diagram shows how the `student/parent phone contact` operation works:
+
+image::MultipleNumberSequenceDiagram.png[width="800"]
+_Figure 4.4.1 : Sequence Diagram of Student/Parent Phone Contact Operation_
 
 The following method replaces `/` with `:`````, `s` with `S`, and `p` with `P` in the user input string
 for appropriate presentation of `displayed person card phone information`:
@@ -569,19 +574,19 @@ The regex ensures that the string for `displayed person card phone information` 
 correct format of `Student: (STUDENT_NUMBER) Parent: (PARENT_NUMBER)` or `Parent: (PARENT_NUMBER)` as it is optional to
 add the phone number of students.
 
-The phone numbers must be exactly 8 digits long.
+The phone numbers must be exactly `8 digits` long.
 
 image::PhoneDisplay.png[width="400"]
-_Figure 4.3.1 : Valid Displayed Person Card Phone Information_
+_Figure 4.4.2 : Valid Displayed Person Card Phone Information_
 
 If the string format for `displayed person card phone information` is valid, the
 phone contact information of the student and his/her parent will be displayed
 below the student's name in the person card as seen in the figure above.
 
 image::message_constraint.png[width="1100"]
-_Figure 4.3.2 : Message to prompt Users to Enter Correct Phone Format_
+_Figure 4.4.3 : Message to prompt Users to Enter Correct Phone Format_
 
-If the string format for `displayed person card phone information` is invalid, an IllegalValueException
+If the string format for `displayed person card phone information` is invalid, an `IllegalValueException`
 is thrown. The user will be prompted to follow the accepted format as seen in the figure above.
 [source,java]
 ----
@@ -609,24 +614,29 @@ public Phone(String phone) throws IllegalValueException {
 ---
 
 **Aspect:** Validity of phone number +
-**Alternative 1 (current choice):** Only allow numbers that are exactly 8 digits long. +
+**Alternative 1 (current choice):** Only allow numbers that are exactly `8 digits` long. +
 **Pros:** Ensures consistency across all phone numbers. +
-**Cons:** Student's parents might not have foreign numbers that are not exactly 8 digits long. +
+**Cons:** Student's parents might not have foreign numbers that are not exactly `8 digits` long. +
 **Alternative 2:** Modify phone validity regex to allow any length of phone numbers. +
 **Pros:** Able to have phone numbers that are local or non-local. +
 **Cons:** Inconsistent phone lengths displayed, might look very messy. +
 // end::studentparentcontact[]
 
 // tag::uniquetagcolor[]
-=== Add Unique Color Tag mechanism
+=== Unique Color Tag mechanism
 
-The unique tag mechanism is facilitated by making changes to PersonCard class in the UI component. This feature enables
+The `unique color tag` mechanism is facilitated by making changes to `PersonCard` class in the `UI` component. This feature enables
 the assignment of unique colors to tags.
 
 The color generated to be assigned to tags is random and all tags with the same description will be assigned a same color.
 
 The following method receives `String tagName` (description of the tag) and returns the `String assignedColor`
 associated to the tagName.
+
+The following sequence diagram shows how the `unique color tag` operation works:
+
+image::UniqueTagColorSequenceDiagram.png[width="800"]
+_Figure 4.5.1 : Sequence Diagram of Unique Color Tag Operation_
 
 ----
 public static String obtainTagColors(String tagName) {
@@ -675,7 +685,7 @@ Random range of saturation and luminance are specified to ensure that the random
 the tag description. This can be seen in the picture below.
 
 image::tagColorPic.png[width="400"]
-_Figure 4.4.1 : Tag color meshes well with white font of tag description_
+_Figure 4.5.2 : Tag color meshes well with white font of tag description_
 
 Next, in the code segment below, the `red`, `green` and `blue` components are extracted from `color`. It is then formatted into a `hexadecimal
 representation` of the color, before being converted to a String data type and assigned to `assignedColor`.
@@ -709,8 +719,8 @@ private void initialiseTags(ReadOnlyPerson person) {
 
 ==== Design Considerations
 
-Aspect: Randomness of the assigned color. +
-Alternative 1 (current choice): +
+Aspect: How tag colors are assigned. +
+Alternative 1 (current choice): Tag colors are assigned randomly. +
 Pros: Easy for developers to understand the mechanism of this feature. +
 Cons: User has no control over the assigning of tag colors. +
 Alternative 2: Allow user to assign the colors to the tags themselves. +
@@ -720,14 +730,14 @@ Cons: The range of colors will be more limited. +
 
 // tag::remark[]
 === Add/Remove a remark mechanism
-The remark mechanism is facilitated by making changes to the Remark class in the model component. It enables the user to add or remove a single remark of the student.
+The `remark` mechanism is facilitated by making changes to the `Remark` class in the `Model` component. It enables the user to add or remove a single `remark` of the student.
 
-To avoid confusion and an overly complicated UI, only one `remark` per person is stored.
+To avoid confusion and an overly complicated `UI`, only one `remark` per person is stored.
 
 The following sequence diagram shows how the `remark` operation works:
 
-image::RemarkSequenceDiagramForLogic.PNG[width="350"]
-_Figure 3.4.1 : Sequence Diagram of Remark Operation_
+image::RemarkSequenceDiagramForLogic.PNG[width="800"]
+_Figure 3.4.1 : Sequence Diagram of `Remark` Operation_
 
 `Remark` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
@@ -739,10 +749,10 @@ As you can see from the diagram, `UndoableCommand` adds an extra layer between t
 Commands that are not undoable are implemented this way:
 [source,java]
 ----
-public class ListCommand extends Command {
+public class RemarkCommand extends Command {
     @Override
     public CommandResult execute() {
-        // ... list logic ...
+        // ... remark logic ...
     }
 }
 ----
@@ -764,24 +774,24 @@ public class DeleteCommand extends UndoableCommand {
     }
 }
 ----
-When the user adds a new `person` to the address book, the person's `remark` field will be denoted by `(add a remark)`. Users are then able to add a single `remark`.
+When the user adds a new person to the address book, the person's `remark` field will be denoted by `(add a remark)`. Users are then able to add a single `remark`.
 
 [NOTE]
-If user tries to add `remark` together with adding a new `Person`, it will display as invalid as the `addCommand` does not allow the addition of remarks other then through the use of using the `Remark` command.
+If the user tries to add `remark` together with adding a new `Person`, it will be displayed as invalid as the `addCommand` does not allow the addition of remarks other then through the use of using the `Remark` command.
 
 [NOTE]
-When a user attempts to `add`/`edit` a remark via the `add`/`edit` command, he will be prompted by a message stating
+When a user attempts to `add`/`edit` a `remark` via the `add`/`edit` command, he will be prompted by a message stating
 that adding of remarks in `add`/`edit` command is not allowed.
 
 [NOTE]
-Only one `remark` is saved at any one time, if user does `Remark` on the same person, it will be overwritten.
+Only one `remark` is saved at any one time, if the user does adds a `remark` on the same person, it will be overwritten.
 
 ==== Design Considerations
 **Aspect:** Implementation of `UndoableCommand` +
-**Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
+**Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`. +
 **Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
 **Cons:** Hard for new developers to understand the template pattern. +
-**Alternative 2:** Just override `execute()` +
+**Alternative 2:** Just override `execute()`. +
 **Pros:** Does not involve the template pattern, easier for new developers to understand. +
 **Cons:** Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
 
@@ -819,7 +829,7 @@ for (ReadOnlyPerson people : people) {
        //...other logic...
 ----
 
-==== Alternatives Considered
+==== Design Considerations
 **Aspect:** What graph to be displayed to show the most effective visual aid +
 **Alternative 1 (current choice):** Do a `lineChart` using XYChart.series. +
 **Pros:** Easier to implement. +
@@ -834,18 +844,18 @@ for (ReadOnlyPerson people : people) {
 // tag::findtags[]
 === FindTags mechanism
 
-The FindTags mechanism is implemented using FindTagsCommand.
+The `FindTags` mechanism is implemented using FindTagsCommand.
 It supports searching for persons whose tags contains at least all the tags input by the user.
 
-When the user uses the FindTags feature, a `TagsContainKeywordsPredicate` is created.
+When the user uses the `FindTags` command, a `TagsContainKeywordsPredicate` is created.
 The `TagsContainKeywordsPredicate` tests whether each person's tags contain all keywords input by the user.
-Under the Model component, `TagsContainKeywordsPredicate` is used to filter the persons in the addressbook.
+Under the `Model` component, `TagsContainKeywordsPredicate` is used to filter the persons in the AddressBook.
 After filtering, `PersonListPanel` only shows persons whose tags contain all keywords input by the user.
 
-This search operation is an AND search. Suppose the user executes `findtags friends NUS`. +
+This search operation is an `AND search`. Suppose the user executes `findtags friends NUS`. +
 Only persons with at least both `friends` and `NUS` will be displayed. Persons with only `friends` or only `NUS` will not be displayed. +
 
-The FindTagsCommand is implemented this way:
+The `FindTagsCommand` is implemented this way:
 
 ----
 public class FindTagsCommand extends Command {
@@ -887,24 +897,24 @@ This supports the evaluation of the person by the predicate.
 The `PersonListPanel` will show persons whose tags contain at least all keywords input by the user.
 However if there are no persons with all keywords in the tags, the `PersonListPanel` will just be blank.
 
-This is implemented using Predicates because Predicates help move the business logic to a more central place, helping in unit-testing them separately.
-Also, the Predicate can can be reused, improving code manageability. +
+This is implemented using `Predicates` because `Predicates` help move the business logic to a more central place, helping in unit-testing them separately.
+Also, the `Predicate` can can be reused, improving code manageability. +
 The code with Predicates is also much more readable than using if-else blocks.
 
 The following sequence diagram shows how the FindTags operation works:
 
-image::FindtagsSequenceDiagramForLogic.png[width="800"]
-_Figure 3.5.1 : Sequence Diagram of FindTags Operation_
+image::FindTagsSequenceDiagramForLogic.png[width="800"]
+_Figure 3.5.1 : Sequence Diagram of `FindTags` Operation_
 
-==== Alternatives considered.
+==== Design Considerations.
 
-**Aspect:** Having a separate predicate class to support `findtags` +
-**Alternative 1 (current choice):** Have a `TagsContainsKeywordsPredicate` to facilitate search +
+**Aspect:** Have a separate predicate class to support `findtags` +
+**Alternative 1 (current choice):** Have a `TagsContainsKeywordsPredicate` to facilitate search. +
 **Pros:** Easy for new Computer Science undergraduates to understand. They are likely to be the new incoming developers of our project. +
 **Cons:** Makes the application more complex to understand according to the More Is More Complex (MIMC) principle. For example, a separate `TagsContainsKeywordsPredicate` class is needed when the same can be done by inserting it as an inner class in the `FindTagsCommand` class. +
 **Alternative 2:** Create `TagsContainsKeywordsPredicate` as an inner class in `FindTagsCommand` class. +
 **Pros:** It makes the codebase less complex as there are less classes. +
-**Cons:** It adds complexity to the `FindTagsCommand` source file and reduces reusability of the predicate outside of the `FindTagsCommand` +
+**Cons:** It adds complexity to the `FindTagsCommand` source file and reduces reusability of the `Predicate` outside of the `FindTagsCommand` +
 // end::findtags[]
 
 === Logging
