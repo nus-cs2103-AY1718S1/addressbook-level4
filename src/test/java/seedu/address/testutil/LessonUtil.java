@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+//@@author caoliangnus
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLASS_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LECTURER;
