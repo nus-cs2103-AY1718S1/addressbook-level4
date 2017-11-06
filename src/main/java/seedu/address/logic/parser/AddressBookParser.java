@@ -26,6 +26,7 @@ import seedu.address.logic.commands.event.CheckScheduleCommand;
 import seedu.address.logic.commands.event.DeleteEventCommand;
 import seedu.address.logic.commands.event.EditEventCommand;
 import seedu.address.logic.commands.event.FindEventCommand;
+import seedu.address.logic.commands.event.ToggleTimetableCommand;
 import seedu.address.logic.commands.relationship.SetRelCommand;
 import seedu.address.logic.parser.event.AddEventCommandParser;
 import seedu.address.logic.parser.event.DeleteEventCommandParser;
@@ -96,6 +97,7 @@ public class AddressBookParser {
 
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
+
         case SortCommand.COMMAND_WORD:
             return new SortCommandParser().parse(arguments);
 
@@ -113,12 +115,16 @@ public class AddressBookParser {
 
         case FindEventCommand.COMMAND_WORD:
             return new FindEventCommandParser().parse(arguments);
+
         case SetRelCommand.COMMAND_WORD:
             return new SetRelCommandParser().parse(arguments);
 
         case UpdatePhotoCommand.COMMAND_WORD:
             return new UpdatePhotoCommandParser().parse(arguments);
 
+        case ToggleTimetableCommand.COMMAND_WORD:
+            return new ToggleTimetableCommand();
+            
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }

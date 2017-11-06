@@ -331,7 +331,8 @@ Format: `eventfind KEYWORD [MORE_KEYWORDS]`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the title is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Events matching at least one keyword will be returned (i.e. `OR` search). e.g. `cs2103 midterm` will return `Submission for CS2103 Week 9`, `CS2106 Midterm`
+* Events matching at least one keyword will be returned (i.e. `OR` search). e.g. `cs2103 midterm` will
+return `Submission for CS2103 Week 9`, `CS2106 Midterm`
 ****
 
 Examples:
@@ -346,10 +347,41 @@ Returns any event having titles that contain `Birthday`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+=== Tagging contacts in events: `addeventtag`
+
+`Coming in v1.5` +
+Synonyms/Aliases for the command: `addeventtag` /`aet` +
+
+Tags a contact that is involved in a specific event. +
+Format: `addeventtag [INDEX_OF_EVENT] [INDEX_OF_CONTACT]`
+
+****
+* Adds contact at `INDEX_OF_CONTACT` to the particpants of event at `INDEX_OF_EVENT`. The indexes refers to the index
+numbers shown in the last contact listing and event listing. The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Example:
+
+* `aet 1 1` +
+Tags the first contact in the contact listing to the first event in te event listing.
+
+=== Removing tags of contacts in events: `removeeventtag`
+
+`Coming in v1.5` +
+Synonyms/Aliases for the command: `removeeventtag` /`ret` +
+
+Remove a contact that is involved in a specific event. +
+Format:
+
+****
+* Work in Progress.
+****
+
 === Displaying user's schedule: `checkschedule`
 
 `Since v1.4` +
 Synonyms/Aliases for the command: `checkschedule` / `thisweek`/`cs`/`tw` +
+
 Displays user's schedule for the current week upon executing the command. +
 After execution of the command, a calendar GUI will appear in the main +
 window, with events displayed in the corresponding time slots. Each time slot
@@ -375,6 +407,34 @@ is already occupied by an event, cannot drop at this time slot) +
 (eg. cannot drop at the last time slot, if event's duration is longer than 30
 minutes) +
 ****
+
+=== Displaying user's timetable: `timetable`
+
+`Coming in v1.5` +
+Synonyms/Aliases for this command: `timetable`/ `tt`/`today` +
+Displays the user's timetable, showing a list of events that are scheduled today. Timetable is enabled upon first use
+of the application and can be closed/reopened upon the command. Timetable will be empty if there are no events
+scheduled today. +
+
+With the timetable UI, the user can:
+
+* View all events that are schedules as of the local machine's current date
+** Changes to events via CLI commands and Schedule drag-and-drop will reflect immediately
+* Open and close the timetable via clicking the button
+
+=== Setting default settings for timetable: `ett`/ `dtt`
+
+`Coming in v1.5` +
+Synonyms/Aliases for this command: `enabletimetable`/ `disabletimetable`/ `ett`/ `dtt` +
+
+Timetable will be opened upon the start of the application by default depending on the setting last set here. +
+
+If the setting is last set to enabled/disabled:
+
+* Timetable will be/not be displayed upon restart of the application by default.
+* Attempt to change the default setting to disabled will remind the user that it is already the default setting.
+
+
 
 === Listing entered commands : `history`
 
@@ -562,6 +622,9 @@ e.g. `edit 1 time/1400-1830 d/Bring drinks and buy cake!`
 e.g. `find James Jake`
 * *Find Event* : `eventfind KEYWORD [MORE_KEYWORDS]` +
 e.g. `find Bob's`
+* *Show/Hide Timetable* : `timetable` +
+* *Enable Timetable by default* : `ett` +
+* *Disable Timetable by default* : `dtt` +
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
