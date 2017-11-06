@@ -1,22 +1,25 @@
 package seedu.address.commons.events.ui;
 
-import java.io.File;
-
 import seedu.address.commons.events.BaseEvent;
+import seedu.address.storage.FileWrapper;
 
 /**
  * Indicates a request to open a FileChooser Window to import a file.
  */
 public class ImportFileChooseEvent extends BaseEvent {
 
-    public static final File file;
+    private FileWrapper file;
 
-    public ImportFileChooseEvent (File file) {
+    public ImportFileChooseEvent (FileWrapper file) {
         this.file = file;
     }
 
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
+    }
+
+    public FileWrapper getFile() {
+        return this.file;
     }
 }
