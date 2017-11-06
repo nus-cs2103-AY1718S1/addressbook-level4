@@ -1,0 +1,52 @@
+= John Doe - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: 3W
+3W is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W15-B4/main/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-W15-B4/main/tree/master/src/test[Test code]]
+
+=== Enhancement Added:
+==== TaskBook
+* A parallel book besides addressbook to record the user's multiple events.
+* It uses external storage different from addressbook.
+* AddTask command
+* deleteTask command
+* seleteTask command
+* Help on implementing markTask command
+* setPriority command
+* taskByPriority command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=undoredo]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=undoredo]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `remark`
+
+{Explain similar to the Undo/Redo feature above.}
+
+=== Other contributions

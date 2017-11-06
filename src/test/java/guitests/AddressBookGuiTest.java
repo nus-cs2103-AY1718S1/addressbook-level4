@@ -20,7 +20,9 @@ import javafx.stage.Stage;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.model.AddressBook;
+import seedu.address.model.TaskBook;
 import seedu.address.testutil.TypicalPersons;
+import seedu.address.testutil.TypicalTasks;
 
 /**
  * A GUI Test class for AddressBook.
@@ -52,7 +54,8 @@ public abstract class AddressBookGuiTest {
         FxToolkit.setupStage((stage) -> {
             this.stage = stage;
         });
-        FxToolkit.setupApplication(() -> new TestApp(this::getInitialData, getDataFileLocation()));
+        FxToolkit.setupApplication(() -> new TestApp(this::getInitialData, this::getInitialTaskData,
+                getDataFileLocation(), getTaskDataFileLocation()));
         FxToolkit.showStage();
 
         mainWindowHandle = new MainWindowHandle(stage);
@@ -65,6 +68,10 @@ public abstract class AddressBookGuiTest {
      */
     protected AddressBook getInitialData() {
         return TypicalPersons.getTypicalAddressBook();
+    }
+
+    protected TaskBook getInitialTaskData() {
+        return TypicalTasks.getTypicalTaskbook();
     }
 
     protected CommandBoxHandle getCommandBox() {
@@ -104,6 +111,13 @@ public abstract class AddressBookGuiTest {
      */
     protected String getDataFileLocation() {
         return TestApp.SAVE_LOCATION_FOR_TESTING;
+    }
+
+    /**
+     * Override this in child class to set the task data location.
+     */
+    protected String getTaskDataFileLocation() {
+        return TestApp.SAVE_LOCATION_FOR_TASK_BOOK_TESTING;
     }
 
     @After

@@ -1,5 +1,7 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +37,9 @@ public class ArgumentMultimap {
      * Returns the last value of {@code prefix}.
      */
     public Optional<String> getValue(Prefix prefix) {
+        if (prefix == PREFIX_PRIORITY && (!argMultimap.containsKey(prefix))) {
+            return Optional.empty();
+        }
         List<String> values = getAllValues(prefix);
         return values.isEmpty() ? Optional.empty() : Optional.of(values.get(values.size() - 1));
     }
