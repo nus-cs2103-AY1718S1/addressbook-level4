@@ -57,6 +57,7 @@ public class DeleteCommand extends UndoableCommand {
                 && this.targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
     }
 
+    //@@author arnollim
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
@@ -65,4 +66,5 @@ public class DeleteCommand extends UndoableCommand {
         String command = builder.toString();
         return command;
     }
+    //@@author
 }

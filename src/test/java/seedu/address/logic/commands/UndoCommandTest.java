@@ -49,6 +49,7 @@ public class UndoCommandTest {
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         deleteFirstPerson(expectedModel);
 
+        //@@author arnollim
         String lastCommand = undoRedoStack.peekUndo().toString();
         Command previousCommand = addressBookParser.parseCommand(lastCommand);
         String previousCommandString = previousCommand.toString();
@@ -65,6 +66,7 @@ public class UndoCommandTest {
         expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
         //assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
         assertCommandSuccess(undoCommand, model, expectedResultMessage, expectedModel);
+        //@@author
 
         // no command in undoStack
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);

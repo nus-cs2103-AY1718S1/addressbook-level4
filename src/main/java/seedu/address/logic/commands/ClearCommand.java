@@ -21,8 +21,10 @@ public class ClearCommand extends UndoableCommand {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
+    //@@author arnollim
     @Override
     public String toString() {
         return COMMAND_WORD;
     }
+    //@@author
 }
