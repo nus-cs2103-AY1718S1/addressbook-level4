@@ -36,7 +36,7 @@ public class UndoCommand extends Command {
     /**
      * Parses the output command to display the previously undone command
      */
-    public String parseCommand(String commandString) {
+    public static String parseCommand(String commandString) {
         String output = String.format(MESSAGE_SUCCESS_FULL, commandString);
         return output;
     }
