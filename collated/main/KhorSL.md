@@ -333,10 +333,6 @@ public class MergeCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/MergeCommand.java
-``` java
-
-```
 ###### /java/seedu/address/logic/parser/AddMultipleCommandParser.java
 ``` java
 /**
