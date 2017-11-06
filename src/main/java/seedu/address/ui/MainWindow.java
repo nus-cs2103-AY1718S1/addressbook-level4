@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
+import java.io.IOException;
 import java.util.logging.Logger;
+import javax.xml.bind.JAXBException;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -131,7 +133,7 @@ public class MainWindow extends UiPart<Region> {
     /**
      * Fills up all the placeholders of this window.
      */
-    void fillInnerParts() {
+    void fillInnerParts() throws JAXBException, IOException {
         //browserPanel = new BrowserPanel();
         //browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
@@ -144,8 +146,9 @@ public class MainWindow extends UiPart<Region> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
-        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
+        //StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusbarFooter = new StatusBarFooter(logic.getFilteredPersonList().size());
+        statusbarPlaceholder.getChildren().add(statusbarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
@@ -203,6 +206,15 @@ public class MainWindow extends UiPart<Region> {
     public void handleHelp() {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
+    }
+
+    /**
+     +     * Opens the weather forecast window.
+     +     */
+    @FXML
+    public void handleWeather() throws JAXBException, IOException {
+        WeatherWindow weatherWindow = new WeatherWindow();
+        weatherWindow.show();
     }
 
     void show() {

@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <!-- @@author eeching-->
-<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
     <URL value="@DarkTheme.css" />
     <URL value="@Extensions.css" />
@@ -27,6 +27,7 @@
     <MenuBar fx:id="menuBar" styleClass="menu-bar" VBox.vgrow="NEVER">
         <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" onAction="#handleExit" styleClass="menu-bar-item" text="Exit" />
+            <MenuItem fx:id="weatherForecast" mnemonicParsing="false" onAction="#handleWeather" text="Weather Forecast" />
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" styleClass="menu-bar-item" text="Help" />
@@ -85,7 +86,7 @@
     </StackPane>-->
   </SplitPane>
 
-  <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+    <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
    <stylesheets>
       <URL value="@DarkTheme.css" />
       <URL value="@Extensions.css" />
