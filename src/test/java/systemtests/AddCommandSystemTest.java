@@ -5,6 +5,8 @@ import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.BLOODTYPE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.BLOODTYPE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.DATE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.DATE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
@@ -26,6 +28,7 @@ import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_BLOODTYPE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_BLOODTYPE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
@@ -105,9 +108,9 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person with all fields same as another person in the address book except name -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withBloodType(VALID_BLOODTYPE_AMY).withTags(VALID_TAG_FRIEND)
-                .withAppointment(VALID_NAME_BOB).build();
+                .withAppointment(VALID_NAME_BOB).withAppointment(VALID_APPOINTMENT_BOB).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + BLOODTYPE_DESC_AMY + TAG_DESC_FRIEND;
+                + BLOODTYPE_DESC_AMY + TAG_DESC_FRIEND + DATE_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except phone -> added */
@@ -175,7 +178,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: missing remark -> success */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withBloodType(VALID_BLOODTYPE_AMY).withRemark(NON_COMPULSORY_REMARK)
-                .withTags(VALID_TAG_FRIEND).withAppointment(VALID_NAME_AMY).build();
+                .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + TAG_DESC_FRIEND
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BLOODTYPE_DESC_AMY;
         assertCommandSuccess(command, toAdd);
@@ -184,7 +187,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(NON_COMPULSORY_PHONE_AMY)
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withBloodType(VALID_BLOODTYPE_AMY).withRemark(NON_COMPULSORY_REMARK)
-                .withTags(VALID_TAG_FRIEND).withAppointment(VALID_NAME_AMY).build();
+                .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND
                 + ADDRESS_DESC_AMY + BLOODTYPE_DESC_AMY;
         assertCommandSuccess(command, toAdd);
@@ -193,7 +196,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(NON_COMPULSORY_PHONE_AMY)
                 .withEmail(NON_COMPULSORY_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withBloodType(VALID_BLOODTYPE_AMY).withRemark(NON_COMPULSORY_REMARK)
-                .withTags(VALID_TAG_FRIEND).withAppointment(VALID_NAME_AMY).build();
+                .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + ADDRESS_DESC_AMY + TAG_DESC_FRIEND
                 + BLOODTYPE_DESC_AMY;
         assertCommandSuccess(command, toAdd);
@@ -202,7 +205,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(NON_COMPULSORY_PHONE_AMY)
                 .withEmail(NON_COMPULSORY_EMAIL_AMY).withAddress(NON_COMPULSORY_ADDRESS_AMY)
                 .withBloodType(VALID_BLOODTYPE_AMY).withRemark(NON_COMPULSORY_REMARK)
-                .withTags(VALID_TAG_FRIEND).withAppointment(VALID_NAME_AMY).build();
+                .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + BLOODTYPE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
@@ -210,10 +213,16 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(NON_COMPULSORY_PHONE_AMY)
                 .withEmail(NON_COMPULSORY_EMAIL_AMY).withAddress(NON_COMPULSORY_ADDRESS_AMY)
                 .withBloodType(NON_COMPULSORY_BLOODTYPE).withRemark(NON_COMPULSORY_REMARK)
-                .withTags(VALID_TAG_FRIEND).withAppointment(VALID_NAME_AMY).build();
+                .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
         //@@author
+
+        /* Case: with appointment*/
+        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(NON_COMPULSORY_PHONE_AMY)
+                .withEmail(NON_COMPULSORY_EMAIL_AMY).withAddress(NON_COMPULSORY_ADDRESS_AMY)
+                .withBloodType(NON_COMPULSORY_BLOODTYPE).withRemark(NON_COMPULSORY_REMARK)
+                .withTags(VALID_TAG_FRIEND).withAppointment(DATE_DESC_AMY).build();
 
         /* Case: invalid keyword -> rejected */
         command = "adds " + PersonUtil.getPersonDetails(toAdd);
@@ -250,6 +259,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + BLOODTYPE_DESC_AMY + INVALID_TAG_DESC;
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
+
     }
 
     /**
