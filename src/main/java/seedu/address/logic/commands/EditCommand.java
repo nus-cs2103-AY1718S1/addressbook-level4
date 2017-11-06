@@ -150,6 +150,11 @@ public class EditCommand extends UndoableCommand {
                 && editPersonDescriptor.equals(e.editPersonDescriptor);
     }
 
+    @Override
+    public String toString() {
+        return COMMAND_WORD + " " + index.getOneBased();
+    }
+
     /**
      * Stores the details to edit the person with. Each non-empty field value will replace the
      * corresponding field value of the person.

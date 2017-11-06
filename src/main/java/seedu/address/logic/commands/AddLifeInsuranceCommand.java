@@ -72,6 +72,11 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
         //TODO: need to compare every nonstatic class member.
     }
 
+    @Override
+    public String toString() {
+        return COMMAND_WORD;
+    }
+
     /**
      * Check if all the Person parameters required to create an insurance are inside the list
      */

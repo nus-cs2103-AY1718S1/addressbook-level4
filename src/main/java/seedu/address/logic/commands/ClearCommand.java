@@ -20,4 +20,9 @@ public class ClearCommand extends UndoableCommand {
         model.resetData(new AddressBook());
         return new CommandResult(MESSAGE_SUCCESS);
     }
+
+    @Override
+    public String toString() {
+        return COMMAND_WORD;
+    }
 }
