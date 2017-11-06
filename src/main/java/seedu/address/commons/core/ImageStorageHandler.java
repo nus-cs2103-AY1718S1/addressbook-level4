@@ -1,11 +1,10 @@
 package seedu.address.commons.core;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.Image;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -27,11 +26,10 @@ public class ImageStorageHandler {
      * @param file
      */
     public static void saveImageToStorage(File file, ReadOnlyPerson person) throws CommandException {
-        Image image = new Image(file.toURI().toString());
 
         try {
-            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png",
-                    new File(getProfilePicturePath(person)));
+            BufferedImage image = ImageIO.read(file);
+            ImageIO.write(image, "png", new File(getProfilePicturePath(person)));
         } catch (IOException | IllegalArgumentException e) {
             throw new CommandException(Messages.MESSAGE_FILE_NOT_FOUND);
         }
