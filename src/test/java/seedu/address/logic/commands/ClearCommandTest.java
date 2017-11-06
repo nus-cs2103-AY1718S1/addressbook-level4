@@ -10,8 +10,9 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.ui.GuiUnitTest;
 
-public class ClearCommandTest {
+public class ClearCommandTest extends GuiUnitTest {
 
     @Test
     public void execute_emptyAddressBook_success() {

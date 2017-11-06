@@ -75,10 +75,14 @@ public class XmlAdaptedPerson {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
 
-        final Avatar avatar;
-        if (Avatar.validFile(this.avatar)) {
-            avatar = new Avatar(this.avatar);
-        } else {
+        Avatar avatar;
+        try {
+            if (Avatar.validFile(this.avatar)) {
+                avatar = new Avatar(this.avatar);
+            } else {
+                avatar = new Avatar();
+            }
+        } catch (Exception e) {
             avatar = new Avatar();
         }
 

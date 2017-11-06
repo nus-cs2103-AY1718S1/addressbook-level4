@@ -29,9 +29,11 @@ import seedu.address.model.person.Appoint;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
+import seedu.address.ui.GuiUnitTest;
+
 import javax.mail.internet.AddressException;
 
-public class AddressBookParserTest {
+public class AddressBookParserTest extends GuiUnitTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 

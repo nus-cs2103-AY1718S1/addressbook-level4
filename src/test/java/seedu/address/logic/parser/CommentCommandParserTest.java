@@ -11,8 +11,9 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.CommentCommand;
 import seedu.address.model.person.Comment;
+import seedu.address.ui.GuiUnitTest;
 
-public class CommentCommandParserTest {
+public class CommentCommandParserTest extends GuiUnitTest {
     private CommentCommandParser parser = new CommentCommandParser();
 
     @Test
