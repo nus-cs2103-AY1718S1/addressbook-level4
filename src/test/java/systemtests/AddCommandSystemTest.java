@@ -59,6 +59,7 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -93,7 +94,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + WEBSITE_DESC_AMY + "   "
                 + ADDRESS_DESC_AMY + "   " + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND + " ";
 
-        assertCommandSuccess(command, toAdd);
+        assertCommandSuccess(command, toAdd, Index.fromZeroBased(model.getFilteredPersonList().size()));
 
         /* Case: undo adding Amy to the list -> Amy deleted */
         command = UndoCommand.COMMAND_WORD;
@@ -358,6 +359,30 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyPerson)} except that the result
+     * display box displays {@code expectedResultMessage} and the model related components equal to
+     * {@code expectedModel}.
+     * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyPerson)
+     */
+    private void assertCommandSuccess(String command, ReadOnlyPerson toAdd, Index expectedSelectedCardIndex) {
+        Model expectedModel = getModel();
+        try {
+            expectedModel.addPerson(toAdd);
+        } catch (DuplicatePersonException dpe) {
+            throw new IllegalArgumentException("toAdd already exists in the model.");
+        }
+        int preExecutionSelectedCardIndex = getPersonListPanel().getSelectedCardIndex();
+        executeCommand(command);
+        if (preExecutionSelectedCardIndex == expectedSelectedCardIndex.getZeroBased()) {
+            assertSelectedCardUnchanged();
+        } else {
+            assertSelectedCardChanged(expectedSelectedCardIndex);
+        }
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
     }
