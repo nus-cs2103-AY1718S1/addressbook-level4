@@ -110,7 +110,8 @@ public class PersonBuilder {
             throw new IllegalArgumentException("email is expected to be unique.");
         }
         return this;
-    }//@@author renkai91
+    }
+    //@@author renkai91
     /**
      * Sets the {@code Birthday} of the {@code Person} that we are building.
      */
@@ -122,7 +123,7 @@ public class PersonBuilder {
         }
         return this;
     }
-//@@author
+    //@@author
     /**
      * Sets the {@code Remark} of the {@code Person} that we are building.
      */
