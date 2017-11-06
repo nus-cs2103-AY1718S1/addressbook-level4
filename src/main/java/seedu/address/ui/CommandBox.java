@@ -641,22 +641,22 @@ public class CommandBox extends UiPart<Region> {
     //@@author caoliangnus
     public HashMap<String, String> getCommandKeywordColorMap() {
         HashMap<String, String> keywordColorMap = new HashMap<>();
-        keywordColorMap.put(AddCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(AddCommand.COMMAND_WORD, "#ff0000");
         keywordColorMap.put(DeleteCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(EditCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(EditCommand.COMMAND_WORD, "#ff7f7f");
         keywordColorMap.put(ExitCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(FindCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(FindCommand.COMMAND_WORD, "#cc0000");
         keywordColorMap.put(HelpCommand.COMMAND_WORD, "red");
         keywordColorMap.put(ListCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(SelectCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(SelectCommand.COMMAND_WORD, "#b20000");
         keywordColorMap.put(SortCommand.COMMAND_WORD, "red");
         keywordColorMap.put(ClearCommand.COMMAND_WORD, "red");
         keywordColorMap.put(UndoCommand.COMMAND_WORD, "red");
         keywordColorMap.put(RedoCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(CustomiseCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(CustomiseCommand.COMMAND_WORD, "#990000");
         keywordColorMap.put(HistoryCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(ViewCommand.COMMAND_WORD, "red");
-        keywordColorMap.put(ColorKeywordCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(ViewCommand.COMMAND_WORD, "#ff6666");
+        keywordColorMap.put(ColorKeywordCommand.COMMAND_WORD, "#660000");
         return keywordColorMap;
     }
 
