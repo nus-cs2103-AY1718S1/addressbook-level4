@@ -1,11 +1,15 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.person.Email.EMAIL_VALIDATION_REGEX;
+import static seedu.address.model.person.Phone.PHONE_VALIDATION_REGEX;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -99,5 +103,134 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Attempts to parse a {@code String} to an {@code Integer}.
+     * Looks for numbers given a value and parses the first instance of the number.
+     *
+     * @return {@code true} if successfully parsed,
+     * {@code false} otherwise.
+     */
+    public static boolean tryParseInt(String value) {
+        try {
+            parseFirstInt(value);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns the first integer found in a {@code String}.
+     * @param value to be parsed.
+     * @return {@code int} value of the integer.
+     * @throws NumberFormatException if no integer was found.
+     */
+    public static int parseFirstInt(String value) throws NumberFormatException {
+        Pattern numbers = Pattern.compile("-?\\d+");
+        Matcher m = numbers.matcher(value);
+        if (m.find()) {
+            return Integer.parseInt(m.group());
+        }
+        throw new NumberFormatException();
+    }
+
+    /**
+     * Returns a {@code String} after the first integer has been removed.
+     * @param value to be parsed.
+     * @return a {@code String} without the first integer.
+     */
+    public static String parseRemoveFirstInt(String value) {
+        String firstInt = Integer.toString(parseFirstInt(value));
+        return value.substring(0, value.indexOf(firstInt)).trim()
+                + " "
+                + value.substring(value.indexOf(firstInt) + firstInt.length()).trim();
+    }
+
+    /**
+     * Attempts to parse a {@code String} to a phone.
+     * Looks for a regex given a value and parses the first instance of the phone.
+     *
+     * @return {@code true} if successfully parsed,
+     * {@code false} otherwise.
+     */
+    public static boolean tryParsePhone(String value) {
+        try {
+            parseFirstPhone(value);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns the phone found in a {@code String}.
+     * @param value to be parsed.
+     * @return {@code String} value of the phone.
+     * @throws IllegalArgumentException if no phone was found.
+     */
+    public static String parseFirstPhone(String value) throws IllegalArgumentException {
+        Pattern phone = Pattern.compile(PHONE_VALIDATION_REGEX);
+        Matcher m = phone.matcher(value);
+        if (m.find()) {
+            return m.group();
+        }
+        throw new IllegalArgumentException();
+    }
+
+    /**
+     * Returns a {@code String} after the first phone has been removed.
+     * @param value to be parsed.
+     * @return a {@code String} without the first phone.
+     */
+    public static String parseRemoveFirstPhone(String value) {
+        String firstPhone = parseFirstPhone(value);
+        return value.substring(0, value.indexOf(firstPhone)).trim()
+                + " "
+                + value.substring(value.indexOf(firstPhone) + firstPhone.length()).trim();
+    }
+
+    /**
+     * Attempts to parse a {@code String} to a email.
+     * Looks for a regex given a value and parses the first instance of the email.
+     *
+     * @return {@code true} if successfully parsed,
+     * {@code false} otherwise.
+     */
+    public static boolean tryParseEmail(String value) {
+        try {
+            parseFirstEmail(value);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns the email found in a {@code String}.
+     * @param value to be parsed.
+     * @return {@code String} value of the email.
+     * @throws IllegalArgumentException if no email was found.
+     */
+    public static String parseFirstEmail(String value) throws IllegalArgumentException {
+        Pattern email = Pattern.compile(EMAIL_VALIDATION_REGEX);
+        Matcher m = email.matcher(value);
+        if (m.find()) {
+            return m.group();
+        }
+        throw new IllegalArgumentException();
+    }
+
+    /**
+     * Returns a {@code String} after the first email has been removed.
+     * @param value to be parsed.
+     * @return a {@code String} without the first email.
+     */
+    public static String parseRemoveFirstEmail(String value) {
+        String firstEmail = parseFirstEmail(value);
+        return value.substring(0, value.indexOf(firstEmail)).trim()
+                + " "
+                + value.substring(value.indexOf(firstEmail) + firstEmail.length()).trim();
     }
 }

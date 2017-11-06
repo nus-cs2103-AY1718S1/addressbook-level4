@@ -97,22 +97,6 @@ public class StringUtil {
         return costs[b.length()];
     }
 
-    /**
-     * Attempts to parse a {@code String} to an {@code Integer}.
-     * Similar to C# Int32.TryParse
-     *
-     * @return {@code true} if successfully parsed,
-     * {@code false} otherwise.
-     */
-    public static boolean tryParseInt(String value) {
-        try {
-            Integer.parseInt(value);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
     public static String appendCrotchets(String s) {
         return "[" + s + "]";
     }
