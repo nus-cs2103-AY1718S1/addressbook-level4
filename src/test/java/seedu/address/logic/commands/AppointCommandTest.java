@@ -8,19 +8,27 @@ import static seedu.address.testutil.TypicalPersons.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Appoint;
+import seedu.address.ui.GuiUnitTest;
+
 //@@author risashindo7
 /**
  * Contains integration tests (interaction with the Model) and unit tests for AppointCommand.
  */
-public class AppointCommandTest {
+public class AppointCommandTest extends GuiUnitTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    }
 
     @Test
     public void execute() throws Exception {

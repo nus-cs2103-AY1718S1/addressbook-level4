@@ -65,21 +65,26 @@ public class TypicalPersons {
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
-    private TypicalPersons() {} // prevents instantiation
+    public TypicalPersons() {} // prevents instantiation
 
     /**
      * Returns an {@code AddressBook} with all the typical persons.
      */
     public static AddressBook getTypicalAddressBook() {
-        AddressBook ab = new AddressBook();
-        for (ReadOnlyPerson person : getTypicalPersons()) {
-            try {
-                ab.addPerson(person);
-            } catch (DuplicatePersonException e) {
-                assert false : "not possible";
+        try {
+            AddressBook ab = new AddressBook();
+            for (ReadOnlyPerson person : getTypicalPersons()) {
+                try {
+                    ab.addPerson(person);
+                } catch (DuplicatePersonException e) {
+                    assert false : "not possible";
+                }
             }
+            return ab;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return ab;
+        return null;
     }
 
     public static List<ReadOnlyPerson> getTypicalPersons() {

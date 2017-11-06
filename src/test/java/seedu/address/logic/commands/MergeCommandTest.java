@@ -26,13 +26,14 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.ui.GuiUnitTest;
 
 //@@author KhorSL
 
 /**
  * Contains integration test (interaction with Model) for {@code MergeCommand}
  */
-public class MergeCommandTest {
+public class MergeCommandTest extends GuiUnitTest {
     private final String TEST_DATA_ERROR_FILE_PATH = "./src/test/data/XmlAddressBookStorageTest/DataConversionError.xml";
     private final String TEST_NEW_FILE_PATH = "./src/test/data/XmlAddressBookStorageTest/TestNewFile.xml";
 
