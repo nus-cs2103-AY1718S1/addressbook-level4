@@ -10,7 +10,7 @@ import org.junit.Test;
 import guitests.guihandles.StatisticsPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.events.model.FilteredListChangedEvent;
+import seedu.address.commons.events.model.FilteredPersonListChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author lincredibleJC
@@ -36,7 +36,7 @@ public class StatisticsPanelTest extends GuiUnitTest {
     @Test
     public void display() throws Exception {
         guiRobot.pauseForHuman();
-        postNow(new FilteredListChangedEvent(TYPICAL_PERSONS));
+        postNow(new FilteredPersonListChangedEvent(TYPICAL_PERSONS));
         assertPanelDisplaysStatistics(TYPICAL_PERSONS, statisticsPanelHandle);
     }
 

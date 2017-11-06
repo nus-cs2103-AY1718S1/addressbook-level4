@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.FilteredListChangedEvent;
+import seedu.address.commons.events.model.FilteredPersonListChangedEvent;
 import seedu.address.logic.statistics.Statistics;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -67,9 +67,9 @@ public class StatisticsPanel extends UiPart<Region> {
 
     @FXML
     @Subscribe
-    private void handleFilteredListChangedEvent(FilteredListChangedEvent event) {
+    private void handleFilteredPersonListChangedEvent(FilteredPersonListChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        statistics.initScore(event.getCurrentFilteredList()); // Update currentList data
+        statistics.initScore(event.getCurrentFilteredPersonList()); // Update currentList data
         loadListStatistics();
     }
 
