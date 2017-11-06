@@ -17,7 +17,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * Launches the mail composing window of the default mail client.
  */
-public class EmailCommand extends UndoCommand {
+public class EmailCommand extends Command {
 
     public static final String COMMAND_WORD = "mail";
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
