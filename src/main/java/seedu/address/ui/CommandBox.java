@@ -128,7 +128,7 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         configInactiveKeyword();
-        prefixList = configPrefixList();
+        configPrefixList();
         keywordLabel.getStyleClass().add("keyword-label-default");
         keywordColorMap = getCommandKeywordColorMap();
         String[] commands = {"help", "add", "list", "edit", "find",
@@ -147,8 +147,8 @@ public class CommandBox extends UiPart<Region> {
     /**
      * This method create a list of prefix used in the command
      */
-    public ArrayList<String> configPrefixList() {
-        ArrayList<String> prefixList = new ArrayList<String>();
+    private void configPrefixList() {
+        prefixList = new ArrayList<String>();
         prefixList.add(CliSyntax.PREFIX_MODULE_CODE.getPrefix());
         prefixList.add(CliSyntax.PREFIX_CLASS_TYPE.getPrefix());
         prefixList.add(CliSyntax.PREFIX_VENUE.getPrefix());
@@ -156,7 +156,6 @@ public class CommandBox extends UiPart<Region> {
         prefixList.add(CliSyntax.PREFIX_TIME_SLOT.getPrefix());
         prefixList.add(CliSyntax.PREFIX_LECTURER.getPrefix());
         prefixList.add(CliSyntax.PREFIX_FONT_SIZE.getPrefix());
-        return prefixList;
     }
 
     //@@author

@@ -24,18 +24,9 @@ public class CommandBoxTest extends GuiUnitTest {
     private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD + " module";
     private static final String COMMAND_THAT_FAILS = "invalid command";
 
-    private static final int CODE = 0;
-    private static final int CLASSTYPE = 1;
-    private static final int VENUE = 2;
-    private static final int GROUP = 3;
-    private static final int TIMESLOT = 4;
-    private static final int LECTURER = 5;
-    private static final int FONT_SIZE = 6;
-
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
     private HashMap<String, String> keywordColorMap;
-    private ArrayList<String> prefixList;
 
 
     private CommandBoxHandle commandBoxHandle;
@@ -56,7 +47,6 @@ public class CommandBoxTest extends GuiUnitTest {
         errorStyleOfCommandBox.add(CommandBox.ERROR_STYLE_CLASS);
 
         keywordColorMap = commandBox.getCommandKeywordColorMap();
-        prefixList = commandBox.configPrefixList();
     }
 
     @Test
@@ -143,45 +133,8 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
 
+
     //@@author caoliangnus
-    @Test
-    public void listenCommandInputChangedTest() {
-        int index;
-        String allTextInput = "m/MA1101R ct/LEC v/LT27 gp/1 ts/FRI[1400-1600] l/Ma Siu Lun";
-
-        //Code
-        index = allTextInput.indexOf(prefixList.get(CODE));
-        assertEquals(index, 0); //Start index is 0
-
-        //ClassType
-        index = allTextInput.indexOf(prefixList.get(CLASSTYPE));
-        assertEquals(index, 10); //Start index is 10
-
-        //Venue
-        index = allTextInput.indexOf(prefixList.get(VENUE));
-        assertEquals(index, 17); //Start index is 17
-
-        //Group
-        index = allTextInput.indexOf(prefixList.get(GROUP));
-        assertEquals(index, 24); //Start index is 24
-
-        //Time slot
-        index = allTextInput.indexOf(prefixList.get(TIMESLOT));
-        assertEquals(index, 29); //Start index is 29
-
-        //Lecturer
-        index = allTextInput.indexOf(prefixList.get(LECTURER));
-        assertEquals(index, 47); //Start index is 47
-
-        //Font size
-        allTextInput = "fs/xlarge";
-        index = allTextInput.indexOf(prefixList.get(FONT_SIZE));
-        assertEquals(index, 0); //Start index is 0
-
-
-    }
-
-
     @Test
     public void configActiveKeywordTest() {
         String commandKeyword = "list";
