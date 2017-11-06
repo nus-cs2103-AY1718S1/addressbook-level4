@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.SortUtil.setupArguments;
 
@@ -38,6 +39,19 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         return new FindCommand(new PersonDataContainsKeywordsPredicate(dataKeywords), sortArgumentList);
+    }
+
+    /**
+     * Returns a formatted argument string given unformatted {@code rawArgs}
+     * or a {@code null} {@code String} if not formattable.
+     */
+    public static String parseArguments(String rawArgs) {
+        // Check if null and is a non-empty string.
+        requireNonNull(rawArgs);
+        if (!rawArgs.trim().isEmpty()) {
+            return " " + rawArgs;
+        }
+        return null;
     }
 
 }
