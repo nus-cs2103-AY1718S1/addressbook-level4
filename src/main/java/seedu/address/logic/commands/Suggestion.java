@@ -2,9 +2,9 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.core.Messages.MESSAGE_PROMPT_COMMAND;
 import static seedu.address.commons.util.StringUtil.levenshteinDistance;
-import static seedu.address.commons.util.StringUtil.tryParseInt;
 import static seedu.address.logic.parser.CliSyntax.POSSIBLE_COMMAND_WORDS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.logic.parser.ParserUtil.parseFirstInt;
+import static seedu.address.logic.parser.ParserUtil.tryParseInt;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -15,6 +15,9 @@ import java.util.Set;
 import org.languagetool.JLanguageTool;
 import org.languagetool.language.AmericanEnglish;
 import org.languagetool.rules.RuleMatch;
+
+import seedu.address.logic.parser.FindCommandParser;
+import seedu.address.logic.parser.RemarkCommandParser;
 
 /**
  * Suggests another command that could be used for execution.
@@ -63,35 +66,40 @@ public class Suggestion {
 
     /**
      * Returns the formatted arguments given a {@code closestCommand}
-     * or a {@code null} {@code String} otherwise.
+     * or a {@code null} {@code String} if not formattable.
      */
     public String getFormattedArgs(String closestCommand) {
+        // Custom parser for AddCommand.
         if (AddCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            // try to match arguments with ALL person models, otherwise return null (maybe use AddCommandParser?)
+            // TODO: try to match arguments with ALL person models, otherwise return null (maybe use AddCommandParser?)
+            
+        // Custom parser for EditCommand.
         } else if (EditCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            // try to match arguments with SOME person models, otherwise return null
+            // TODO: try to match arguments with SOME person models, otherwise return null
+            
+        // Custom parser for RemarkCommand.
+        } else if (RemarkCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
+            return RemarkCommandParser.parseArguments(commandWord, arguments);
+
+        // Custom parser for FindCommand.
+        } else if (FindCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
+            return FindCommandParser.parseArguments(arguments);
+
+        // Commands with directory-type arguments.
         } else if (OpenCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
                 || NewCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            // try test if dir exists, otherwise look for close matches?
+            // TODO: try test if dir exists, otherwise look for close matches?
+
+        // Commands with simple index-type arguments.
         } else if (SelectCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
                 || DeleteCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
             if (tryParseInt(arguments)) {
-                return " " + arguments;
+                return " " + Integer.toString(parseFirstInt(arguments));
+            } else if (tryParseInt(commandWord)) {
+                return " " + Integer.toString(parseFirstInt(commandWord));
             }
-        } else if (RemarkCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            // try test for index, return all arguments, checked for typos.
-            String[] argArray = arguments.split(" ");
-            if (argArray.length > 0 && tryParseInt(argArray[0])) {
 
-                String retVal = arguments.replace(argArray[0], "").trim().replace(PREFIX_REMARK.toString(), "");
-                // retVal = setToAmerican(retVal);
-                return " " + argArray[0] + " " + PREFIX_REMARK + retVal;
-            }
-        } else if (FindCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            // return all arguments as is. TODO: Check if args exist, move to constant.
-            if (arguments.matches("^(?=\\s*\\S).*$")) {
-                return " " + arguments;
-            }
+        // Commands with no arguments.
         } else if (ClearCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
                 || ListCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
                 || HistoryCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)

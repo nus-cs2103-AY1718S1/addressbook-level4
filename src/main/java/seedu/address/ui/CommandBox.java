@@ -36,6 +36,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.SuggestibleParseException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -205,7 +206,14 @@ public class CommandBox extends UiPart<Region> {
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();
-            logger.info("Invalid command: " + commandTextField.getText());
+            logger.info("Invalid command, un-suggestible: " + commandTextField.getText());
+            raise(new NewResultAvailableEvent(e.getMessage()));
+        } catch (SuggestibleParseException e) {
+            initHistory();
+            // handle command failure
+            setStyleToIndicateCommandFailure();
+            logger.info("Invalid command, suggestible: " + commandTextField.getText());
+            commandTextField.setText("");
             raise(new NewResultAvailableEvent(e.getMessage()));
         }
     }
