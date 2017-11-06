@@ -764,26 +764,39 @@ public void handleKeyPress() {
 }
 ----
 The `mainNode` refers to the node containing the all UI components in the application,
-and `addEventFilter` captures key events received by that node.
+and `addEventFilter` captures key events received by that node. The application will continue to listen
+to key presses done by the user once this method is called.
 
-NOTE: Another common method used for capturing key events is `keyOnPressed`.
+NOTE: Another common method used for capturing key events is `onKeyPressed`.
 In this case, `addEventFilter` is used instead as key events captured by the former will be consumed by the `TextField` used in the application.
 `addEventFilter` captures the key events before they are consumed by the `TextField`.
 
-When the user presses a key combination which matches one that is assigned to the `KeyCombination` attribute in the `KeyListenerUtil` class, the corresponding action will be executed.
+When the user presses a key combination which matches one that is assigned, a corresponding action will be executed.
 An example of such an execution is given as shown:
 
 [source, java]
 ----
 private void executeKeyEvents(KeyEvent keyEvent) {
-	if (FOCUS_PERSON_LIST.match(keyEvent)) {
+	if (KEY_COMBINATION_FOCUS_PERSON_LIST.match(keyEvent)) {
 		// action to focus on person list
 	}
 	// … more cases
 }
 ----
-Where the key combination `FOCUS_PERSON_LIST` matches the `keyEvent` captured by the event filter.
+Where the application focuses on the person list when the user presses a key combination that is assigned to `KEY_COMBINATION_FOCUS_PERSON_LIST`.
 
+The mapping of `KEY_COMBINATION_FOCUS_PERSON_LIST` to a key combination can be found in the `KeyListenerUtil` class.
+
+[source, java]
+----
+public class KeyListenerUtil {
+
+    public static final KeyCombination KEY_COMBINATION_FOCUS_PERSON_LIST = KeyCombination.valueOf("Esc");
+    // … more mappings
+}
+----
+In this case, `KEY_COMBINATION_FOCUS_PERSON_LIST` is mapped to the kbd:[esc] key. As such, a user
+pressing the kbd:[esc] key will result in the application focusing on the person list.
 
 ==== Design Considerations
 
