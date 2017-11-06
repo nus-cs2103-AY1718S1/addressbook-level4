@@ -111,12 +111,19 @@ public class PersonPanel extends UiPart<Region> {
      */
     private void initImage() {
         try {
-            File picFile = new File(person.getPicture().getPictureUrl());
-            FileInputStream fileStream = new FileInputStream(picFile);
-            Image personPicture = new Image(fileStream);
+            try {
+                InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
+                person.getPicture().setJarResourcePath();
+                Image personPicture = new Image(in);
+                picture.setImage(personPicture);
+            } catch (Exception e) {
+                File picFile = new File(person.getPicture().getPictureUrl());
+                FileInputStream fileStream = new FileInputStream(picFile);
+                Image personPicture = new Image(fileStream);
+                picture.setImage(personPicture);
+            }
             picture.setFitHeight(person.getPicture().PIC_HEIGHT);
             picture.setFitWidth(person.getPicture().PIC_WIDTH);
-            picture.setImage(personPicture);
             informationPane.getChildren().add(picture);
             picture.setOnMouseClicked((MouseEvent e) -> {
                 System.out.println("Image clicked");

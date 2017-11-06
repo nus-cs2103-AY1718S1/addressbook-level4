@@ -15,10 +15,18 @@ public class Picture {
     public static final String PLACEHOLDER_IMAGE = System.getProperty("user.dir")
             + "/src/main/resources/images/placeholder_person.png";
 
+    public static final String BASE_JAR_URL = "/images/";
+
+    public static final String PLACEHOLDER_JAR_URL = BASE_JAR_URL + "placeholder_person.png";
+
     private String pictureUrl;
+    private String jarPictureUrl;
+    private boolean jarResourcePath;
 
     public Picture() {
         this.pictureUrl = PLACEHOLDER_IMAGE;
+        this.jarPictureUrl = PLACEHOLDER_JAR_URL;
+        this.jarResourcePath = false;
     }
 
     /**
@@ -26,6 +34,27 @@ public class Picture {
      */
     public String getPictureUrl() {
         return pictureUrl;
+    }
+
+    /**
+     * Handles resource path for jar
+     */
+    public String getJarPictureUrl() {
+        return jarPictureUrl;
+    }
+
+    /**
+     * Sets jar resource path to true
+     */
+    public void setJarResourcePath() {
+        this.jarResourcePath = true;
+    }
+
+    /**
+     * Checks if image is to be retrieved in jar
+     */
+    public boolean checkJarResourcePath() {
+        return this.jarResourcePath;
     }
 
     /**
