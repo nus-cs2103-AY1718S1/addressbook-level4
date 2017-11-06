@@ -16,8 +16,8 @@ import seedu.address.ui.SplashScreen;
 public class FirstPreloader extends Preloader {
     Stage stage;
 
-    private static final double WIDTH = 506.0;
-    private static final double HEIGHT = 311;
+    private static final Double WIDTH = 506.0;
+    private static final Double HEIGHT = 311.0;
 
     /**
      * Method to create splash screen

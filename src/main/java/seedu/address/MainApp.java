@@ -232,8 +232,10 @@ public class MainApp extends Application {
         this.stop();
     }
 
+    /**
+     * Launches the main application.
+     */
     public static void main(String[] args) {
         launch(args);
-        //LauncherImpl.launchApplication(MainApp.class, FirstPreloader.class, args);
     }
 }

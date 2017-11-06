@@ -2,8 +2,6 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
-import javax.swing.text.Style;
-
 import com.google.common.eventbus.Subscribe;
 
 import javafx.animation.KeyFrame;
