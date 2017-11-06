@@ -26,6 +26,13 @@ public class ModelHelper {
     }
 
     /**
+     * @see ModelHelper#setFilteredList(Model, List)
+     */
+    public static void setFilteredList(Model model, ReadOnlyPerson... toDisplay) {
+        setFilteredList(model, Arrays.asList(toDisplay));
+    }
+
+    /**
      * Updates {@code model}'s filtered list to display only {@code toDisplay} but for taskBook.
      */
     public static void setFilteredTaskList(Model model, List<ReadOnlyTask> toDisplay) {
@@ -34,12 +41,6 @@ public class ModelHelper {
         model.updateFilteredTaskList(predicate.orElse(PREDICATE_MATCHING_NO_TASKS));
     }
 
-    /**
-     * @see ModelHelper#setFilteredList(Model, List)
-     */
-    public static void setFilteredList(Model model, ReadOnlyPerson... toDisplay) {
-        setFilteredList(model, Arrays.asList(toDisplay));
-    }
 
     /**
      * @see ModelHelper#setFilteredTaskList(Model, List)

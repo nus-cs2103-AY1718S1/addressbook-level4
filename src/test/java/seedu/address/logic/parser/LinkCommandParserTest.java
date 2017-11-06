@@ -12,26 +12,31 @@ public class LinkCommandParserTest {
 
     @Test
     public void parseEmptyArgThrowsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "     ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parseNoPersonIndicesThrowsParseException() {
-        assertParseFailure(parser, "1    ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "1    ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parseEmptyPersonIndicesThrowsParseException() {
-        assertParseFailure(parser, "1 p/  ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "1 p/  ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parseInvalidPersonIndicesThrowsParseException() {
-        assertParseFailure(parser, "1 p/somethingwrong  ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "1 p/somethingwrong  ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parseNoTaskIndexThrowsParseException() {
-        assertParseFailure(parser, "p/1  ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "p/1  ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE));
     }
 }
