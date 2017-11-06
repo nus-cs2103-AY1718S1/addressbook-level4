@@ -5,4 +5,4 @@
 <?import javafx.scene.control.Button?>
 
 
-<Button fx:id="qrButton" mnemonicParsing="false" onAction="#handleQrButtonPressed" text="Generate QR" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" />
+<Button fx:id="qrButton" mnemonicParsing="false" onAction="#handleQrButtonPressed" text="Call" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" />
