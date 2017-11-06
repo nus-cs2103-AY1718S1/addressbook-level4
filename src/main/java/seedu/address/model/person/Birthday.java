@@ -41,15 +41,15 @@ public class Birthday {
             if (birthday.matches("")) {
                 return true;
             }
-            if (Integer.parseInt(birthday.substring(6,10)) > 2016) {
+            if (Integer.parseInt(birthday.substring(6, 10)) > 2016) {
                 return false;
             }
-            if ((Integer.parseInt(birthday.substring(6,10)) == 2016)
-                && (Integer.parseInt(birthday.substring(3,5)) > 10)) {
+            if ((Integer.parseInt(birthday.substring(6, 10)) == 2016)
+                && (Integer.parseInt(birthday.substring(3, 5)) > 10)) {
                 return false;
             }
             return true;
-            
+
         }
         return false;
     }
