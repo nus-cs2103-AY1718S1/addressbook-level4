@@ -161,11 +161,11 @@ Favourites/Unfavourites the 1st person from the results of the `find` command.
 
 ****
 * `PREFIX` has to be given to specify which _field_ to search for.
-* Keyword must *not* contain whitespaces.
-** e.g. `n/Hans Bo` is *not* accepted.
+* Keyword can contain whitespaces.
+** e.g. `n/Hans Bo` is accepted.
 * The search is *case-insensitive* for all _fields_. +
 ** e.g. `hans` will match `Hans`
-//* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Any _fields_ can be searched.
 ** `name`, `phone`, `address`, `email`, `tags`
 * Partial keyword will be matched
