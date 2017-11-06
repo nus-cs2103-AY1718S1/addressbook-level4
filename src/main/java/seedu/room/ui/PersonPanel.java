@@ -3,6 +3,8 @@ package seedu.room.ui;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.logging.Logger;
@@ -111,22 +113,21 @@ public class PersonPanel extends UiPart<Region> {
      */
     private void initImage() {
         try {
-            try {
-                InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
-                person.getPicture().setJarResourcePath();
-                Image personPicture = new Image(in);
-                picture.setImage(personPicture);
-            } catch (Exception e) {
-                File picFile = new File(person.getPicture().getPictureUrl());
+            File picFile = new File(person.getPicture().getPictureUrl());
+            if (picFile.exists()) {
                 FileInputStream fileStream = new FileInputStream(picFile);
                 Image personPicture = new Image(fileStream);
                 picture.setImage(personPicture);
+            } else {
+                InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
+                Image personPicture = new Image(in);
+                picture.setImage(personPicture);
+                person.getPicture().setJarResourcePath();
             }
             picture.setFitHeight(person.getPicture().PIC_HEIGHT);
             picture.setFitWidth(person.getPicture().PIC_WIDTH);
             informationPane.getChildren().add(picture);
             picture.setOnMouseClicked((MouseEvent e) -> {
-                System.out.println("Image clicked");
                 handleAddImage();
             });
         } catch (Exception e) {
@@ -144,10 +145,17 @@ public class PersonPanel extends UiPart<Region> {
         if (selectedPic != null) {
             try {
                 person.getPicture().setPictureUrl(person.getName().toString() + person.getPhone().toString() + ".jpg");
-                ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
-                FileInputStream fileStream = new FileInputStream(person.getPicture().getPictureUrl());
-                Image newPicture = new Image(fileStream);
-                picture.setImage(newPicture);
+                if (person.getPicture().checkJarResourcePath()) {
+                    ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getJarPictureUrl()));
+                    FileInputStream fileStream = new FileInputStream(person.getPicture().getJarPictureUrl());
+                    Image newPicture = new Image(fileStream);
+                    picture.setImage(newPicture);
+                } else {
+                    ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
+                    FileInputStream fileStream = new FileInputStream(person.getPicture().getPictureUrl());
+                    Image newPicture = new Image(fileStream);
+                    picture.setImage(newPicture);
+                }
             } catch (Exception e) {
                 System.out.println(e + "Invalid File");
             }
@@ -163,10 +171,19 @@ public class PersonPanel extends UiPart<Region> {
     private void handleDeleteImage() {
         try {
             person.getPicture().resetPictureUrl();
-            File picFile = new File(person.getPicture().getPictureUrl());
-            FileInputStream fileStream = new FileInputStream(picFile);
-            Image personPicture = new Image(fileStream);
-            picture.setImage(personPicture);
+            if (person.getPicture().checkJarResourcePath()) {
+                System.out.println(person.getPicture().getJarPictureUrl());
+                InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
+                person.getPicture().setJarResourcePath();
+                Image personPicture = new Image(in);
+                picture.setImage(personPicture);
+            } else {
+                person.getPicture().resetPictureUrl();
+                File picFile = new File(person.getPicture().getPictureUrl());
+                FileInputStream fileStream = new FileInputStream(picFile);
+                Image personPicture = new Image(fileStream);
+                picture.setImage(personPicture);
+            }
         } catch (Exception e) {
             System.out.println("Placeholder Image not found");
         }

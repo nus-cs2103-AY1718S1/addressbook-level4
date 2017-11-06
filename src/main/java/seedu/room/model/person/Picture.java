@@ -15,9 +15,9 @@ public class Picture {
     public static final String PLACEHOLDER_IMAGE = System.getProperty("user.dir")
             + "/src/main/resources/images/placeholder_person.png";
 
-    public static final String BASE_JAR_URL = "/images/";
+    public static final String BASE_JAR_URL = System.getProperty("user.dir");
 
-    public static final String PLACEHOLDER_JAR_URL = BASE_JAR_URL + "placeholder_person.png";
+    public static final String PLACEHOLDER_JAR_URL = "/images/placeholder_person.png";
 
     private String pictureUrl;
     private String jarPictureUrl;
@@ -62,6 +62,7 @@ public class Picture {
      */
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = BASE_URL + pictureUrl;
+        this.jarPictureUrl = BASE_JAR_URL + pictureUrl;
     }
 
     /**
@@ -69,6 +70,7 @@ public class Picture {
      */
     public void resetPictureUrl() {
         this.pictureUrl = PLACEHOLDER_IMAGE;
+        this.jarPictureUrl = PLACEHOLDER_JAR_URL;
     }
 
 }
