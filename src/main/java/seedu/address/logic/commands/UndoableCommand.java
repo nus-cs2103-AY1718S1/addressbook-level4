@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_MEETINGS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -26,18 +27,21 @@ public abstract class UndoableCommand extends Command {
 
     /**
      * Reverts the AddressBook to the state before this command
-     * was executed and updates the filtered person list to
-     * show all persons.
+     * was executed and updates the filtered person list and
+     * filtered meeting list to show all persons and meetings.
      */
     protected final void undo() {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.sortMeeting();
+        model.updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
     }
 
     /**
      * Executes the command and updates the filtered person
-     * list to show all persons.
+     * list and filtered meeting list to show all persons
+     * and meetings.
      */
     protected final void redo() {
         requireNonNull(model);
@@ -48,6 +52,8 @@ public abstract class UndoableCommand extends Command {
                     + "it should not fail now");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.sortMeeting();
+        model.updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
     }
 
     @Override

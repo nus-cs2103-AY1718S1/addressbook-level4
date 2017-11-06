@@ -46,6 +46,9 @@ public interface Model {
     /** Deletes given tag from AddressBook */
     void deleteTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException;
 
+    /** Deletes given meeting from AddressBook */
+    void deleteMeeting(Meeting meeting);
+
     /** Sorts AddressBook by a field in alphabetical order */
     void sort(String field);
 

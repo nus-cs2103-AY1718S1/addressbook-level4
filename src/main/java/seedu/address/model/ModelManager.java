@@ -18,6 +18,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.NewPersonInfoEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.MeetingContainPersonPredicate;
@@ -93,6 +94,15 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
         indicateAddressBookChanged();
+        indicateNewPersonInfoAvailable(person);
+    }
+
+    /**
+     * raise a new NewPersonInfoEvent whenever a person is added or edited
+     * @param person the person added or edited
+     */
+    private void indicateNewPersonInfoAvailable(ReadOnlyPerson person) {
+        raise(new NewPersonInfoEvent(person));
     }
 
     @Override
@@ -102,6 +112,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+        indicateNewPersonInfoAvailable(editedPerson);
     }
 
     //@@author alexanderleegs
@@ -125,6 +136,12 @@ public class ModelManager extends ComponentManager implements Model {
         if (!tagFound) {
             throw new TagNotFoundException();
         }
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void deleteMeeting(Meeting meeting) {
+        addressBook.deleteMeeting(meeting);
         indicateAddressBookChanged();
     }
 

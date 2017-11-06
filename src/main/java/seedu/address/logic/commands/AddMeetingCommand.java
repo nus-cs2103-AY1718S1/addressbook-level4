@@ -27,13 +27,14 @@ public class AddMeetingCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a meeting to the person identified "
             + "by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "MEETING NAME (one word only)"
+            + "MEETING NAME " + "/ "
             + "MEETING TIME (YYYY-MM-DD HH:MM)\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + "business " + "2017-12-20 10:00";
 
     public static final String MESSAGE_ADD_TAG_SUCCESS = "Added Meeting: %1$s";
     public static final String MESSAGE_DUPLICATE_MEETING = "This person already has this meeting.";
+    public static final String MESSAGE_TIME_CONSTRAINTS = "Time format should be YYYY-MM-DD HH:MM";
 
     private final Index index;
     private final String meetingName;
@@ -66,7 +67,7 @@ public class AddMeetingCommand extends UndoableCommand {
         try {
             newMeeting = new Meeting(personToEdit, meetingName, meetingTime);
         } catch (IllegalValueException e) {
-            throw new CommandException(e.getMessage());
+            throw new CommandException(MESSAGE_TIME_CONSTRAINTS);
         }
         Set<Meeting> oldMeetings = new HashSet<Meeting>(personToEdit.getMeetings());
         if (oldMeetings.contains(newMeeting)) {
@@ -78,12 +79,13 @@ public class AddMeetingCommand extends UndoableCommand {
 
         try {
             model.updatePerson(personToEdit, editedPerson);
+            model.sortMeeting();
         } catch (DuplicatePersonException dpe) {
             throw new AssertionError("Not creating a new person");
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
-        return new CommandResult(String.format(MESSAGE_ADD_TAG_SUCCESS, newMeeting.value));
+        return new CommandResult(String.format(MESSAGE_ADD_TAG_SUCCESS, newMeeting.meetingName));
     }
 
     @Override
