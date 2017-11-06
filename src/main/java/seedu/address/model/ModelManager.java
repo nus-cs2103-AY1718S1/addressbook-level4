@@ -129,6 +129,10 @@ public class ModelManager extends ComponentManager implements Model {
             }
         }
 
+        /** If any tags in addressbook contains the {@code keyword},
+		 * then proceed to insert the contact(s) in {@code importantPersons} to
+		 * the top of the addressbook.
+		 */
         if (importantPersons.size() != 0) {
             for (int j = 0; j < notImportantPersons.size(); j++) {
                 importantPersons.add(notImportantPersons.get(j));
