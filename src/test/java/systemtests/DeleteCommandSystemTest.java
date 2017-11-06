@@ -13,14 +13,18 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
+
+    AddressBookParser addressBookParser = new AddressBookParser();
 
     private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
@@ -42,8 +46,12 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(lastPersonIndex);
 
         /* Case: undo deleting the last person in the list -> last person restored */
+        String lastCommand = DeleteCommand.COMMAND_WORD + " " + lastPersonIndex.getOneBased();
+        Command previousCommand = addressBookParser.parseCommand(lastCommand);
+        String previousCommandString = previousCommand.toString();
+        expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
         command = UndoCommand.COMMAND_WORD;
-        expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        //expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
 
         /* Case: redo deleting the last person in the list -> last person deleted again */
