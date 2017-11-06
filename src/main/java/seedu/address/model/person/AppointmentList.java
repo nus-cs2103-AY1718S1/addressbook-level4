@@ -1,10 +1,10 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import javafx.collections.FXCollections;

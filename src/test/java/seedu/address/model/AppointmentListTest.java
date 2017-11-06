@@ -1,17 +1,21 @@
 package seedu.address.model;
 
+import static junit.framework.TestCase.assertFalse;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
+
 import seedu.address.logic.parser.AddAppointmentParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.AppointmentList;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import static junit.framework.TestCase.assertFalse;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 
 public class AppointmentListTest {
@@ -87,7 +91,7 @@ public class AppointmentListTest {
     private boolean sorted(AppointmentList appts) {
         List<Appointment> apptList = appts.toList();
         for (int i = 0; i < apptList.size() - 1; i++) {
-            if (apptList.get(i+1).getDate().before(apptList.get(i).getDate())) {
+            if (apptList.get(i + 1).getDate().before(apptList.get(i).getDate())) {
                 return false;
             }
         }
