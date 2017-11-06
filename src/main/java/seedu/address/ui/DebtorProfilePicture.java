@@ -1,7 +1,11 @@
 package seedu.address.ui;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
+
+import javax.imageio.ImageIO;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
@@ -31,11 +35,25 @@ public class DebtorProfilePicture extends UiPart<Region> {
             file = new File("src/main/resources/images/unknown.jpg");
         }
 
+
         Image image = null;
 
         try {
             image = new Image(file.toURI().toURL().toExternalForm());
         } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        BufferedImage bufferedImage = null;
+        try {
+            bufferedImage = ImageIO.read(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            ImageIO.write(bufferedImage, "jpg", new File("src/main/resources/images/test.jpg"));
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
