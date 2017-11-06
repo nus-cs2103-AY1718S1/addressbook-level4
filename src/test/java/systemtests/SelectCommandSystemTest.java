@@ -114,10 +114,12 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertApplicationDisplaysExpected("",
                 expectedResultMessage, expectedModel);
 
-        if (preExecutionSelectedCardIndex == expectedSelectedCardIndex.getZeroBased()) {
-            assertSelectedCardUnchanged();
-        } else {
+        if (preExecutionSelectedCardIndex != expectedSelectedCardIndex.getZeroBased()) {
             assertSelectedCardChanged(expectedSelectedCardIndex);
+            //assertSelectedCardUnchanged();
+        } else {
+            assertSelectedCardUnchanged();
+            //assertSelectedCardChanged(expectedSelectedCardIndex);
         }
 
         assertCommandBoxShowsDefaultStyle();

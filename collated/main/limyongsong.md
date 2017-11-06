@@ -932,6 +932,11 @@ public class RemarkPanel extends UiPart<Region> {
 ```
 ###### \resources\view\BlueTheme.css
 ``` css
+  /*
+   * DarkTheme
+   * Author: se-edu
+   * https://github.com/se-edu/addressbook-level4
+   */
   .background {
       -fx-background-color: derive(#E6ECF0, 0%);
       background-color: #ffffff; /* Used in the default.html file */
@@ -1274,9 +1279,7 @@ public class RemarkPanel extends UiPart<Region> {
       -fx-background-color: transparent, #ffffff, transparent, #ffffff;
       -fx-background-radius: 0;
   }
-```
-###### \resources\view\BlueTheme.css
-``` css
+
   #remarkPanel .content {
       -fx-background-color: transparent, #ffffff, transparent, #ffffff;
       -fx-background-radius: 0;
@@ -1285,6 +1288,20 @@ public class RemarkPanel extends UiPart<Region> {
   #remarkListPanel .content {
       -fx-background-color: transparent, #ffffff, transparent, #ffffff;
       -fx-background-radius: 0;
+  }
+
+  #tags {
+      -fx-hgap: 7;
+      -fx-vgap: 3;
+  }
+
+  #tags .label {
+      -fx-text-fill: black;
+      -fx-background-color: #3e7b91;
+      -fx-padding: 1 3 1 3;
+      -fx-border-radius: 2;
+      -fx-background-radius: 2;
+      -fx-font-size: 11;
   }
 ```
 ###### \resources\view\DarkTheme.css
