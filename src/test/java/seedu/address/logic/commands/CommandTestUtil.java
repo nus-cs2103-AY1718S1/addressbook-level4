@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FORMCLASS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GRADES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PARENTPHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSTALCODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
@@ -31,8 +32,10 @@ public class CommandTestUtil {
 
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
-    public static final String VALID_PHONE_AMY = "student/97271111 parent/91979797";
-    public static final String VALID_PHONE_BOB = "student/97272222 parent/92979797";
+    public static final String VALID_PHONE_AMY = "91979797";
+    public static final String VALID_PHONE_BOB = "92979797";
+    public static final String VALID_PARENTPHONE_AMY = "97897831";
+    public static final String VALID_PARENTPHONE_BOB = "91122313";
     public static final String VALID_EMAIL_AMY = "amy@example.com";
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
@@ -52,6 +55,8 @@ public class CommandTestUtil {
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
     public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;
     public static final String PHONE_DESC_BOB = " " + PREFIX_PHONE + VALID_PHONE_BOB;
+    public static final String PARENTPHONE_DESC_AMY = " " + PREFIX_PARENTPHONE + VALID_PARENTPHONE_AMY;
+    public static final String PARENTPHONE_DESC_BOB = " " + PREFIX_PARENTPHONE + VALID_PARENTPHONE_BOB;
     public static final String EMAIL_DESC_AMY = " " + PREFIX_EMAIL + VALID_EMAIL_AMY;
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
     public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
@@ -67,7 +72,9 @@ public class CommandTestUtil {
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
-    public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
+    public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "9111 1111a"; // 'a' not allowed in phones
+    public static final String INVALID_PARENTPHONE_DESC = " "
+            + PREFIX_PARENTPHONE + "9111 333"; // parent phone number not exactly 8 digits
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_FORMCLASS_DESC = " " + PREFIX_FORMCLASS + "CLS 5"; // separate words not allowed
     public static final String INVALID_GRADES_DESC = " " + PREFIX_GRADES + "-1"; // negative numbers not allowed
