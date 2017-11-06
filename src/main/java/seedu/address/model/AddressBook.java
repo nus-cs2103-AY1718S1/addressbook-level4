@@ -32,6 +32,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueScheduleList schedules;
     private final UniqueTagList tags;
+    private final UniqueScheduleList schedulesToRemind;
 
     private Logger logger = LogsCenter.getLogger(AddressBook.class);
     /*
@@ -45,6 +46,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         schedules = new UniqueScheduleList();
         tags = new UniqueTagList();
+        schedulesToRemind = new UniqueScheduleList();
     }
 
     public AddressBook() {
@@ -68,6 +70,20 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setSchedules(Set<Schedule> schedules) {
         this.schedules.setSchedules(schedules);
         this.schedules.sort();
+    }
+
+    //@@author 17navasaw
+    public void setSchedulesToRemind() {
+        ObservableList<Schedule> scheduleList = this.schedules.asObservableList();
+        Set<Schedule> schedulesToRemind = new HashSet<>();
+
+        for (Schedule schedule: scheduleList) {
+            if (Schedule.doesScheduleNeedReminder(schedule)) {
+                schedulesToRemind.add(schedule);
+            }
+        }
+
+        this.schedulesToRemind.setSchedules(schedulesToRemind);
     }
 
     //@@author
@@ -146,11 +162,16 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         schedules.mergeFrom(personSchedules);
         schedules.sort();
+        setSchedulesToRemind();
 
         //Testing
         Iterator<Schedule> iterator2 = schedules.iterator();
         while (iterator2.hasNext()) {
             logger.info("Schedules after: " + iterator2.next().toString() + "\n");
+        }
+        Iterator<Schedule> iterator3 = schedulesToRemind.iterator();
+        while (iterator3.hasNext()) {
+            logger.info("Schedules to Remind: " + iterator3.next().toString() + "\n");
         }
 
         // Create map with values = schedule object references in the master list
@@ -243,6 +264,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Schedule> getScheduleList() {
         return schedules.asObservableList();
+    }
+
+    //@@author 17navasaw
+    @Override
+    public ObservableList<Schedule> getScheduleToRemindList() {
+        return schedulesToRemind.asObservableList();
     }
 
     //@@author

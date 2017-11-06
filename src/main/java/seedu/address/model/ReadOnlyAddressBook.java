@@ -3,6 +3,7 @@ package seedu.address.model;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.UniqueScheduleList;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,4 +30,10 @@ public interface ReadOnlyAddressBook {
      */
     ObservableList<Tag> getTagList();
 
+    /**
+     * Returns an unmodifiable view of the list of schedules
+     * needing to be reminded. This list will not contain any
+     * duplicate schedules.
+     */
+    ObservableList<Schedule> getScheduleToRemindList();
 }
