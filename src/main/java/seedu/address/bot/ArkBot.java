@@ -31,9 +31,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.parcel.ReadOnlyParcel;
 
-/**
- * Created by Francis on 31/10/2017.
- */
 public class ArkBot extends AbilityBot {
 
     private static final String BOT_MESSAGE_FAILURE = "Sorry, I don't understand.";
@@ -79,7 +76,6 @@ public class ArkBot extends AbilityBot {
                                     ctx.chatId());
                         }
                     });
-                    // sender.send("You typed: " + combineArguments(ctx.arguments()), ctx.chatId());
                 })
                 .post(ctx -> sender.send("What would you like to do next?", ctx.chatId()))
                 .build();
@@ -227,7 +223,6 @@ public class ArkBot extends AbilityBot {
                     Platform.runLater(() -> {
                         sender.send(BOT_MESSAGE_HELP, ctx.chatId());
                     });
-                    // sender.send("You typed: " + combineArguments(ctx.arguments()), ctx.chatId());
                 })
                 .post(ctx -> sender.send("What would you like to do next?", ctx.chatId()))
                 .build();
