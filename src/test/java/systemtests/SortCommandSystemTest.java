@@ -164,9 +164,10 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
         expectedModel.toggleFavoritePerson(toFav, FavoriteCommand.COMMAND_WORD);
         // expect the persons in the model to be sorted based on the input comparator
         expectedModel.sortPersons(expectedComparator);
-        String favoritePersonMessage = "\n★ " + toFav.getName().toString();
-        String expectedResultMessage = String.format(FavoriteCommand.MESSAGE_FAVORITE_PERSON_SUCCESS,
-                favoritePersonMessage);
+        System.out.println(toFav.getName());
+        String favoritePersonMessage = "\n\t★ " + toFav.getName().toString();
+        System.out.println(favoritePersonMessage);
+        String expectedResultMessage = FavoriteCommand.MESSAGE_FAVORITE_PERSON_SUCCESS + favoritePersonMessage;
         assertCommandSuccessWithSyncStatusChanged(command, expectedModel, expectedResultMessage);
     }
 
