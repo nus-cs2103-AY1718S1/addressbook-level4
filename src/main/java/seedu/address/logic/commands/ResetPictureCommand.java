@@ -74,7 +74,7 @@ public class ResetPictureCommand extends UndoableCommand {
         Phone updatedPhone = personToEdit.getPhone();
         Email updatedEmail = personToEdit.getEmail();
         Address updatedAddress = personToEdit.getAddress();
-        ProfPic updatedProfPic = new ProfPic("maleicon.png");
+        ProfPic updatedProfPic = new ProfPic("maleIcon.png");
         Favourite updatedFavourite = personToEdit.getFavourite();
         Set<Tag> updatedTags = personToEdit.getTags();
 

@@ -14,6 +14,22 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `CS2103AUG2017-W09-B4`      Since: `Aug 2017`      Licence: `MIT`
 
+== Introduction
+
+=== About Bamboo
+
+Bamboo is a command-line interface (CLI) based address book application.
+It is a one-stop solution to help you manage your contacts in an efficient and
+convenient manner. Using Bamboo, you can organize contacts into groups,
+find common schedules and get connected to your contacts’ social media platforms.
+
+=== Purpose
+
+This document serves as the developers' guide for developing Bamboo.
+It assumes that you have an intermediate understanding of Java.
+It describes how to start developing Bamboo with the Intellij IDE,
+as well as the structure of various components in the Bamboo application.
+
 == Setting up
 
 === Prerequisites
@@ -421,14 +437,30 @@ The commands related to the Favourite system rely on the `Favourite` attribute c
 
 **removeFave:** This command's class, `removeFaveCommand`, accepts the parsed index of the contact from the current list of contacts displayed on the GUI. The contact's `Person` class is then retrieved and modified to have it's `Favourite` attribute marked as false and the in-memory model of the addressbook is updated with the modified `Person`.
 
-==== Listing of Favourite contacts (coming in V1.3)
+==== Listing of only Favourite contacts (Since V1.3)
 
-**listFave:** This command will list all contacts who have their Favourite attribute marked as "true".
+**List command option:** The list command has been modified with the option to only show favourite contacts if you enter "list /f".
+This feature works by updating the model's person filteredList with the predicate `isFavourite()` in `ListCommand.java`
 
-==== Modifications to existing commands in regards to Favourite system (Coming in V1.4)
+==== Modifications to existing commands in regards to Favourite system (Since V1.4)
 
-**List Command:** Favourite contacts will be loaded before all other contacts.
+**List2 Command:** Favourite contacts will be loaded before all other contacts. Favourite contacts are pushed to the
+top of the displayed list by using `model.sortPerson(comparator)` with comparator `getFaveComparator()`
 // end::faveSystem[]
+
+// tag::faveSystem[]
+=== Profile Picture Feature
+A user's profile picture is defined with the path stored in a contact's `ProfPic` person attribute and can be
+changed with the use of 2 commands explain below.
+
+==== Setting profile picture (Since V1.4)
+`ppset`: The command first checks if the file given in the filepath is a valid .png file. Then it copies the file to
+addressBook's resource/image folder and renames the file to the contact's name e.g. "eric.png" while setting the ProfPic
+ attribute's path variable of the selected contact to point to the copied image file.
+
+==== Resetting profile picture (Since V1.4)
+`ppreset`: The command resets the contact's `ProfPic` attribute's path variable to point back to the stock photo's filepath.
+// tag::faveSystem[]
 
 // tag::UISystem[]
 === User Interface (UI)

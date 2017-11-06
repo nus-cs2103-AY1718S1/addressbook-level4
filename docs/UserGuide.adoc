@@ -26,7 +26,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::bambooUi.png[width="790"]
+image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -70,9 +70,12 @@ Examples:
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
-Format: `list` +
+Shows a list of all persons in the address book. Has the option of showing only favourite contacts +
+Format: `list [/f]` +
 Alias: `l`
+
+* `list` will show all contacts
+* `list /f` will show only contacts that have been marked as favourites
 
 === Editing a person : `edit`
 
@@ -104,6 +107,7 @@ Alias: `f`
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The search can be done with initials. e.g. `AY` will match `Alex Yeoh`
+* The search can be done with partial string. e.g. `Ber` will match `Bernice Yu`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Name, phone number and addresses are searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
@@ -118,6 +122,8 @@ Returns `john` and `John Doe`
 Returns any person having names `Betsy`, `Tim`, or `John`
 * `find AY` +
 Returns `Alex Yeoh` whose name initial is `AY`
+* `find Ber` +
+Returns `Bernice Yu` whose name contains the partial string `Ber`
 * `find p/83537423` +
 Returns any person with phone number `83537423`
 * `find a/earth` +
@@ -215,7 +221,7 @@ Examples:
 
 === Adding a person to a group: `gadd` (Since V1.3)
 
-Adds a group to the address book. +
+Adds a person to a group. +
 Format: `gadd g/GROUP INDEX p/PERSON INDEX` +
 Alias: `ga`
 
@@ -232,7 +238,7 @@ Examples:
 
 === Removing a person to a group: `gremove` (Since V1.3)
 
-Adds a group to the address book. +
+Removes a person from a group. +
 Format: `gremove g/GROUP INDEX p/PERSON INDEX` +
 Alias: `gr`
 
@@ -268,7 +274,7 @@ Deletes the 2nd group in the address book.
 === Adding a schedule to a person : `cadd` (Since V1.4)
 
 Adds a person's Google Calendar events to schedules. +
-Format: `cadd p/PERSON INDEX i/GOOGLE CALENDAR ID`
+Format: `cadd p/PERSON INDEX i/GOOGLE CALENDAR ID` +
 Alias: `ca`
 
 ****
@@ -280,12 +286,12 @@ Alias: `ca`
 
 Examples:
 
-* `cadd p/2 i/b8dyuv028k71krma10abbc8f3s`
+* `cadd p/2 i/b8dkov028k71krma20qbbc8f3s`
 
 === Setting the photo of a person: `ppset` (Since V1.4)
 
 Sets the photo of a person. +
-Format: `ppset INDEX fp/FILEPATH`
+Format: `ppset INDEX fp/FILEPATH` +
 Alias: pps
 
 ****
@@ -301,7 +307,7 @@ Examples:
 === Resetting the photo of a person: `ppreset` (Since V1.4)
 
 Resets photo of a person to default picture. +
-Format: `ppreset INDEX`
+Format: `ppreset INDEX` +
 Alias: ppr
 
 ****
