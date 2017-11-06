@@ -17,8 +17,10 @@ import java.util.List;
 import org.junit.Test;
 
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.ui.GuiUnitTest;
+
 //@@author KhorSL
-public class PersonContainsKeywordsPredicateTest {
+public class PersonContainsKeywordsPredicateTest extends GuiUnitTest {
 
     @Test
     public void equals() {
