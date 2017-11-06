@@ -67,7 +67,7 @@ public class PersonCard extends UiPart<Region> {
      */
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        //@@author aaronyhsoh-unsed
+        //@@author aaronyhsoh-unused
         //highlightName(person);
         //@@author
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
@@ -127,13 +127,13 @@ public class PersonCard extends UiPart<Region> {
         }
     }
 
-    //@@author aaronyhsoh-unsed
+    //@@author aaronyhsoh-unused
     /*private void highlightName(ReadOnlyPerson person) {
         if (person.getFavourite()) {
             name.setStyle("-fx-text-fill: red");
         }
     }*/
-    //@@auther
+    //@@author
 
     @Override
     public boolean equals(Object other) {

@@ -31,6 +31,7 @@
         public void updateTodoItemList() {
             fail("This method should not be called.");
         }
+
 ```
 ###### \java\seedu\address\logic\commands\FindCommandTest.java
 ``` java
@@ -605,6 +606,7 @@ public class UnlockCommandTest {
                 DeleteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
+
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java

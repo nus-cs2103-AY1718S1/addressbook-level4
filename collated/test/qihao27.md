@@ -76,10 +76,6 @@
 ```
 ###### \java\seedu\address\logic\commands\AddCommandTest.java
 ``` java
-import seedu.address.model.person.exceptions.NoPersonFoundException;
-```
-###### \java\seedu\address\logic\commands\AddCommandTest.java
-``` java
         @Override
         public void sortPerson (String option) throws NoPersonFoundException {
             fail("This method should not be called.");
@@ -301,33 +297,13 @@ public class SortCommandTest {
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
-import static seedu.address.testutil.TypicalFilePath.FILE_PATH_DOCS;
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-import static seedu.address.testutil.TypicalNames.NAME_FIRST_PERSON;
-import static seedu.address.testutil.TypicalOptions.OPTION_NAME;
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-import seedu.address.logic.commands.DeleteAltCommand;
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-import seedu.address.logic.commands.ExportCommand;
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-import seedu.address.logic.commands.SortCommand;
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
     @Test
     public void parseCommand_delete_alt() throws Exception {
         DeleteAltCommand command = (DeleteAltCommand) parser.parseCommand(
                 DeleteAltCommand.COMMAND_WORD + " " + NAME_FIRST_PERSON);
         assertEquals(new DeleteAltCommand(NAME_FIRST_PERSON), command);
     }
+
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
@@ -351,6 +327,7 @@ import seedu.address.logic.commands.SortCommand;
             ExportCommand.COMMAND_ALIAS + " " + FILE_PATH_DOCS);
         assertEquals(new ExportCommand(FILE_PATH_DOCS), command);
     }
+
 ```
 ###### \java\seedu\address\logic\parser\DeleteAltCommandParserTest.java
 ``` java
@@ -387,21 +364,6 @@ public class DeleteAltCommandParserTest {
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteAltCommand.MESSAGE_USAGE));
     }
 }
-```
-###### \java\seedu\address\logic\parser\ParserUtilTest.java
-``` java
-import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_FILE_PATH;
-```
-###### \java\seedu\address\logic\parser\ParserUtilTest.java
-``` java
-import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_OPTION;
-import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_STRING;
-import static seedu.address.testutil.TypicalFilePath.FILE_PATH_DOCS;
-```
-###### \java\seedu\address\logic\parser\ParserUtilTest.java
-``` java
-import static seedu.address.testutil.TypicalNames.NAME_FIRST_PERSON;
-import static seedu.address.testutil.TypicalOptions.OPTION_NAME;
 ```
 ###### \java\seedu\address\logic\parser\ParserUtilTest.java
 ``` java
@@ -497,6 +459,41 @@ public class SortCommandParserTest {
     }
 }
 ```
+###### \java\seedu\address\model\AddressBookTest.java
+``` java
+        assertEquals(Collections.emptyList(), addressBook.getTodoList());
+```
+###### \java\seedu\address\model\AddressBookTest.java
+``` java
+        List<TodoItem> newTodo = new ArrayList<>(ALICE.getTodoItems());
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newTodo);
+```
+###### \java\seedu\address\model\AddressBookTest.java
+``` java
+    @Test
+    public void getTodoList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getTodoList().remove(0);
+    }
+```
+###### \java\seedu\address\model\AddressBookTest.java
+``` java
+        private final ObservableList<TodoItem> todo = FXCollections.observableArrayList();
+
+        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags,
+                        Collection<? extends TodoItem> todoItems) {
+            this.persons.setAll(persons);
+            this.tags.setAll(tags);
+            this.todo.setAll(todoItems);
+        }
+```
+###### \java\seedu\address\model\AddressBookTest.java
+``` java
+        @Override
+        public ObservableList<TodoItem> getTodoList() {
+            return todo;
+        }
+```
 ###### \java\seedu\address\storage\StorageManagerTest.java
 ``` java
         AddressBook backup = getTypicalAddressBook();
@@ -547,10 +544,6 @@ public class TypicalOptions {
     public static final String OPTION_ADDRESS = "-a";
     public static final String OPTION_TAG = "-t";
 }
-```
-###### \java\seedu\address\ui\ResultDisplayTest.java
-``` java
-import seedu.address.commons.events.ui.NewResultCheckEvent;
 ```
 ###### \java\seedu\address\ui\ResultDisplayTest.java
 ``` java

@@ -275,7 +275,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() + " tags";
         // TODO: refine later
     }
 
@@ -289,10 +289,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         return tags.asObservableList();
     }
 
+    //@@author qihao27
     @Override
     public ObservableList<TodoItem> getTodoList() {
         return todo.asObservableList();
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
