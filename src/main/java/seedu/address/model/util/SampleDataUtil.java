@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.sun.xml.internal.ws.policy.spi.AssertionCreationException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.AddAppointmentParser;
 import seedu.address.logic.parser.exceptions.ParseException;
