@@ -43,8 +43,9 @@ You are required to know how to use Java to run a Graphical User Interface (GUI)
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  You can download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  You can download the latest `MedNus.jar` link:{repoURL}/releases[here].
+.  You should create a new folder to store the jar file.
+.  Copy the jar file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The graphical user interface (GUI) should appear in a few seconds.
 +
 image::Ui.png[width="500"]
