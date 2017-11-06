@@ -25,7 +25,9 @@ public class UndoCommand extends Command {
             throw new CommandException(MESSAGE_FAILURE);
         }
 
+        String commandString = undoRedoStack.peekUndo().toString();
         undoRedoStack.popUndo().undo();
+        //return new CommandResult(MESSAGE_SUCCESS + "\n" + commandString);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
