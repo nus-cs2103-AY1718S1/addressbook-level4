@@ -24,7 +24,7 @@ public class RemarkPanel extends UiPart<Region> {
     private static final String FXML = "RemarkPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(RemarkPanel.class);
 
-    private final StringProperty displayed = new SimpleStringProperty("");
+    private final StringProperty displayed = new SimpleStringProperty("---Remarks---\n");
 
     @FXML
     private TextArea remarkPanel;

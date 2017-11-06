@@ -59,7 +59,8 @@ public class LinkCommand extends UndoableCommand {
         }
 
         if (!(link.value.startsWith(PossibleLinks.POSSIBLE_LINK_1)
-                || link.value.startsWith(PossibleLinks.POSSIBLE_LINK_2)) && !link.value.isEmpty()) {
+                || link.value.startsWith(PossibleLinks.POSSIBLE_LINK_2)
+                || link.value.startsWith(PossibleLinks.POSSIBLE_LINK_3)) && !link.value.isEmpty()) {
             throw new CommandException(Messages.MESSAGE_INVALID_LINK_FORMAT);
         }
 
