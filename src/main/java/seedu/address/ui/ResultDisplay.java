@@ -14,6 +14,15 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.model.event.Date;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.HomeNumber;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.SchEmail;
+import seedu.address.model.person.Website;
 
 /**
  * A ui for the status bar that is displayed at the header of the application.
@@ -38,8 +47,7 @@ public class ResultDisplay extends UiPart<Region> {
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        if (event.message.equals(Messages.MESSAGE_UNKNOWN_COMMAND)
-                || event.message.contains(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, ""))) {
+        if (isCommandFailure(event.message)) {
             setStyleToIndicateCommandFailure();
         } else {
             setStyleToDefault();
@@ -65,6 +73,27 @@ public class ResultDisplay extends UiPart<Region> {
         }
 
         styleClass.add(ERROR_STYLE_CLASS);
+    }
+
+    /**
+     * Checks if the event from the result is a command failure.
+     */
+    private boolean isCommandFailure(String message) {
+        return (message.equals(Messages.MESSAGE_UNKNOWN_COMMAND)
+                || message.equals(Messages.MESSAGE_INVALID_DISPLAYED_INDEX)
+                || message.equals(Messages.MESSAGE_INVALID_LOCATION)
+                || message.equals(Messages.MESSAGE_INVALID_SWITCH)
+                || message.equals(Messages.MESSAGE_INVALID_WEBSITE)
+                || message.equals(Name.MESSAGE_NAME_CONSTRAINTS)
+                || message.equals(Phone.MESSAGE_PHONE_CONSTRAINTS)
+                || message.equals(HomeNumber.MESSAGE_HOME_NUMBER_CONSTRAINTS)
+                || message.equals(Email.MESSAGE_EMAIL_CONSTRAINTS)
+                || message.equals(SchEmail.MESSAGE_SCH_EMAIL_CONSTRAINTS)
+                || message.equals(Address.MESSAGE_ADDRESS_CONSTRAINTS)
+                || message.equals(Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS)
+                || message.equals(Website.MESSAGE_WEBSITE_CONSTRAINTS)
+                || message.equals(Date.MESSAGE_DATE_CONSTRAINTS))
+                || message.contains(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, ""));
     }
 
 }
