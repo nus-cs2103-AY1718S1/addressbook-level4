@@ -37,6 +37,21 @@ include::../DeveloperGuide.adoc[leveloffset=2, tag=shortcut]
 
 ---
 
+=== Enhancement Added: Remark Field
+
+The remark field allows the user to store miscellaneous notes about their contacts. The field can be added using a standalone `remark` command,
+or added along with other fields when adding a new person using the existing `add` command. Similarly, the field can be modified with the `remark` command,
+or edited along with other fields using the existing `edit` command.
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[leveloffset=2,tag=remark]
+
+---
+
+
 === Enhancement Proposed: Add Profile Pictures
 
 ---
