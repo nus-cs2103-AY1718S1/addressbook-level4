@@ -3,7 +3,9 @@ package seedu.address.logic.commands;
 import static seedu.address.commons.core.Messages.MESSAGE_PROMPT_COMMAND;
 import static seedu.address.commons.util.StringUtil.levenshteinDistance;
 import static seedu.address.logic.parser.CliSyntax.POSSIBLE_COMMAND_WORDS;
+import static seedu.address.logic.parser.ParserUtil.parseFirstFilePath;
 import static seedu.address.logic.parser.ParserUtil.parseFirstInt;
+import static seedu.address.logic.parser.ParserUtil.tryParseFilePath;
 import static seedu.address.logic.parser.ParserUtil.tryParseInt;
 
 import java.io.IOException;
@@ -76,7 +78,7 @@ public class Suggestion {
         // Custom parser for EditCommand.
         } else if (EditCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
             // TODO: try to match arguments with SOME person models, otherwise return null
-            
+
         // Custom parser for RemarkCommand.
         } else if (RemarkCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
             return RemarkCommandParser.parseArguments(commandWord, arguments);
@@ -88,7 +90,9 @@ public class Suggestion {
         // Commands with directory-type arguments.
         } else if (OpenCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
                 || NewCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            // TODO: try test if dir exists, otherwise look for close matches?
+            if (tryParseFilePath(arguments)) {
+                return " " + parseFirstFilePath(arguments);
+            }
 
         // Commands with simple index-type arguments.
         } else if (SelectCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)

@@ -1,8 +1,13 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.StringUtil.replaceBackslashes;
+import static seedu.address.model.person.Address.ADDRESS_VALIDATION_REGEX;
 import static seedu.address.model.person.Email.EMAIL_VALIDATION_REGEX;
 import static seedu.address.model.person.Phone.PHONE_VALIDATION_REGEX;
+import static seedu.address.storage.util.RolodexStorageUtil.FILEPATH_REGEX_NON_STRICT;
+import static seedu.address.storage.util.RolodexStorageUtil.ROLODEX_FILE_EXTENSION;
+import static seedu.address.storage.util.RolodexStorageUtil.isValidRolodexStorageFilepath;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -232,5 +237,78 @@ public class ParserUtil {
         return value.substring(0, value.indexOf(firstEmail)).trim()
                 + " "
                 + value.substring(value.indexOf(firstEmail) + firstEmail.length()).trim();
+    }
+
+    /**
+     * Attempts to parse a {@code String} to a file path.
+     * Looks for a regex given a value and parses the first instance of the file path.
+     *
+     * @return {@code true} if successfully parsed,
+     * {@code false} otherwise.
+     */
+    public static boolean tryParseFilePath(String value) {
+        try {
+            parseFirstFilePath(value);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns the file path found in a {@code String}.
+     * @param value to be parsed.
+     * @return {@code String} value of the file path appended with the file extension.
+     * @throws IllegalArgumentException if no file path was found.
+     */
+    public static String parseFirstFilePath(String value) throws IllegalArgumentException {
+        Pattern filepath = Pattern.compile(FILEPATH_REGEX_NON_STRICT);
+        Matcher m = filepath.matcher(replaceBackslashes(value).trim());
+        if (m.find() && isValidRolodexStorageFilepath(m.group())) {
+            return m.group().replaceAll(ROLODEX_FILE_EXTENSION, "").trim() + ROLODEX_FILE_EXTENSION;
+        }
+        throw new IllegalArgumentException();
+    }
+
+    /**
+     * Attempts to parse a {@code String} to an address.
+     * Looks for a regex given a value and parses the address, until the end of the string.
+     *
+     * @return {@code true} if successfully parsed,
+     * {@code false} otherwise.
+     */
+    public static boolean tryParseAddressTillEnd(String value) {
+        try {
+            parseAddressTillEnd(value);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns the address found in a {@code String}.
+     * @param value to be parsed.
+     * @return {@code String} value of the address.
+     * @throws IllegalArgumentException if no file path was found.
+     */
+    public static String parseAddressTillEnd(String value) throws IllegalArgumentException {
+        Pattern address = Pattern.compile(ADDRESS_VALIDATION_REGEX);
+        // TODO: Check for numbers <= 5 characters. "Block, Blk..."
+        Matcher m = address.matcher(replaceBackslashes(value).trim());
+        if (m.find() && isValidRolodexStorageFilepath(m.group())) {
+            return m.group().replaceAll(ROLODEX_FILE_EXTENSION, "").trim() + ROLODEX_FILE_EXTENSION;
+        }
+        throw new IllegalArgumentException();
+    }
+
+    /**
+     * Returns a {@code String} after the address has been removed.
+     * @param value to be parsed.
+     * @return a {@code String} without the address.
+     */
+    public static String parseRemoveAddressTillEnd(String value) {
+        String address = parseAddressTillEnd(value);
+        return value.substring(0, value.indexOf(address)).trim();
     }
 }
