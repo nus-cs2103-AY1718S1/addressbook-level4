@@ -23,17 +23,26 @@ public interface Model {
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
-    void resetData(ReadOnlyAddressBook newData);
+    void resetData(ReadOnlyAddressBook newData, ReadOnlyAddressBook newRecyclebin);
+
+    /** Clear existing backing Recyclebin and replace with the provided new data*/
+    void resetRecyclebin(ReadOnlyAddressBook newData);
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
+    ReadOnlyAddressBook getRecycleBin();
 
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
-    void deletePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException;
+    void deletePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException, DuplicatePersonException;
+    void deleteBinPerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException;
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+
+    /** Restore the given person*/
+    void restorePerson(ReadOnlyPerson perosn) throws DuplicatePersonException, PersonNotFoundException;
+    void restorePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException, DuplicatePersonException;
 
     /** Sorts the list of persons */
     void sortPerson(Comparator<ReadOnlyPerson> sortType, boolean isDescending) throws EmptyListException;
@@ -51,6 +60,9 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
+    /** Returns an unmodifiable view of the filtered recyclebin list*/
+    ObservableList<ReadOnlyPerson> getRecycleBinPersonList();
+
     /** Returns an unmodifiable view of the upcoming event list */
     ObservableList<Event> getEventList();
 
@@ -59,6 +71,7 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+    void updateFilteredBinList (Predicate<ReadOnlyPerson> predicate);
 
     /**
      * Replaces the given list of persons {@code target} with the list of edited persons{@code editedPerson}.

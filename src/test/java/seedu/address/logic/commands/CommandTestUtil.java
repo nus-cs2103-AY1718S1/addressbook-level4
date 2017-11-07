@@ -144,6 +144,17 @@ public class CommandTestUtil {
     }
 
     /**
+     *Updates {@code model}'s filtered list to show only the first person in the {@code model}'s recycle bin.
+     */
+    public static void showFirstBinPersonOnly(Model model) {
+        ReadOnlyPerson person = model.getRecycleBin().getPersonList().get(0);
+        final String[] splitName = person.getName().fullName.split("\\s+");
+        model.updateFilteredBinList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+
+        assert model.getRecycleBinPersonList().size() == 1;
+    }
+
+    /**
      * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
      */
     public static void deleteFirstPerson(Model model) {

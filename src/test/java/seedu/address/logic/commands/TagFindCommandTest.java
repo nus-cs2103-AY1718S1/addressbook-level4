@@ -32,7 +32,7 @@ import seedu.address.model.tag.TagMatchingKeywordPredicate;
  * Contains integration tests (interaction with the Model) for {@code TagFindCommand}.
  */
 public class TagFindCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), new AddressBook(), new UserPrefs());
 
     @Test
     public void equals() {

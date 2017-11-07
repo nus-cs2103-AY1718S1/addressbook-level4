@@ -10,6 +10,8 @@ import static seedu.address.testutil.TestUtil.getPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -19,6 +21,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
@@ -32,7 +35,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: delete the first person in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
-        String command = "     " + DeleteCommand.COMMAND_WORD + "    I/" + INDEX_FIRST_PERSON.getOneBased() + "      ";
+        String command = DeleteCommand.COMMAND_WORD + "   I/" + INDEX_FIRST_PERSON.getOneBased();
         ReadOnlyPerson deletedPerson = removePerson(expectedModel, INDEX_FIRST_PERSON);
         String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
@@ -118,10 +121,18 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      */
     private ReadOnlyPerson removePerson(Model model, Index index) {
         ReadOnlyPerson targetPerson = getPerson(model, index);
+        ArrayList<ReadOnlyPerson> target = new ArrayList<>();
+        target.add(targetPerson);
         try {
-            model.deletePerson(targetPerson);
+            if (model.getRecycleBin().getPersonList().contains(targetPerson)) {
+                model.deletePerson(targetPerson);
+            } else {
+                model.deletePerson(target);
+            }
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("targetPerson is retrieved from model.");
+        } catch (DuplicatePersonException d) {
+            throw new AssertionError("impossible");
         }
         return targetPerson;
     }
@@ -170,10 +181,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         if (expectedSelectedCardIndex != null) {
             assertSelectedCardChanged(expectedSelectedCardIndex);
-        } else {
-            assertSelectedCardUnchanged();
         }
-
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
     }

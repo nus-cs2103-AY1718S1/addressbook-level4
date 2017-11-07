@@ -21,6 +21,9 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.BinclearCommand;
+import seedu.address.logic.commands.BindeleteCommand;
+import seedu.address.logic.commands.BinrestoreCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -289,6 +292,30 @@ public class AddressBookParserTest {
                 MapRouteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " "
                         + PREFIX_ADDRESS + startLocation);
         assertEquals(new MapRouteCommand(INDEX_FIRST_PERSON, startLocation), command);
+    }
+
+    @Test
+    public void parseCommand_binclear() throws Exception {
+        assertTrue(parser.parseCommand(BinclearCommand.COMMAND_WORD) instanceof BinclearCommand);
+        assertTrue(parser.parseCommand(BinclearCommand.COMMAND_WORD + " 3") instanceof BinclearCommand);
+    }
+
+    @Test
+    public void parseCommand_bindelete() throws Exception {
+        ArrayList<Index> todelete = new ArrayList<>();
+        todelete.add(INDEX_FIRST_PERSON);
+        BindeleteCommand command = (BindeleteCommand) parser.parseCommand(
+                BindeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new BindeleteCommand(todelete), command);
+    }
+
+    @Test
+    public void parseCommand_bindresotre() throws Exception {
+        ArrayList<Index> todelete = new ArrayList<>();
+        todelete.add(INDEX_FIRST_PERSON);
+        BinrestoreCommand command = (BinrestoreCommand) parser.parseCommand(
+                BinrestoreCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new BinrestoreCommand(todelete), command);
     }
 
     @Test

@@ -67,5 +67,35 @@ public class HelpCommandTest {
 
         result = new HelpCommand("undo").execute();
         assertEquals(UndoCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("bin-clear").execute();
+        assertEquals(BinclearCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("bin-delete").execute();
+        assertEquals(BindeleteCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("bin-restore").execute();
+        assertEquals(BinrestoreCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("export").execute();
+        assertEquals(ExportCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("tagfind").execute();
+        assertEquals(TagFindCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("birthdayadd").execute();
+        assertEquals(BirthdayAddCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("birthdayremove").execute();
+        assertEquals(BirthdayRemoveCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("mapshow").execute();
+        assertEquals(MapShowCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("maproute").execute();
+        assertEquals(MapRouteCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("scheduleremove").execute();
+        assertEquals(ScheduleRemoveCommand.MESSAGE_USAGE, result.feedbackToUser);
     }
 }

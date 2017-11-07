@@ -27,7 +27,7 @@ import seedu.address.model.person.Person;
  */
 public class BirthdayRemoveCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), new AddressBook(), new UserPrefs());
 
 
     /**
@@ -43,7 +43,8 @@ public class BirthdayRemoveCommandTest {
         BirthdayRemoveCommand birthdayRemoveCommand = prepareCommand(INDEX_FIRST_PERSON);
         String expectedMessage = String.format(BirthdayRemoveCommand.MESSAGE_REMOVE_BIRTHDAY_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new AddressBook(),
+                new UserPrefs());
         expectedModel.updatePerson(originalPerson, editedPerson);
 
         assertCommandSuccess(birthdayRemoveCommand, model, expectedMessage, expectedModel);
@@ -62,7 +63,8 @@ public class BirthdayRemoveCommandTest {
         BirthdayRemoveCommand birthdayRemoveCommand = prepareCommand(INDEX_FIRST_PERSON);
         String expectedMessage = String.format(BirthdayRemoveCommand.MESSAGE_REMOVE_BIRTHDAY_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new AddressBook(),
+                new UserPrefs());
         expectedModel.updatePerson(originalPerson, editedPerson);
 
         assertCommandSuccess(birthdayRemoveCommand, model, expectedMessage, expectedModel);

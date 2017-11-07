@@ -11,6 +11,7 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
+    private String recycleBinFilePath = "data/recyclebin.xml";
     private String addressBookName = "MyAddressBook";
 
     public UserPrefs() {
@@ -37,6 +38,14 @@ public class UserPrefs {
         this.addressBookFilePath = addressBookFilePath;
     }
 
+    public String getRecycleBinFilePath() {
+        return recycleBinFilePath;
+    }
+
+    public void setRecycleBinFilePath(String recycleBinFilePath) {
+        this.recycleBinFilePath = recycleBinFilePath;
+    }
+
     public String getAddressBookName() {
         return addressBookName;
     }
@@ -58,6 +67,7 @@ public class UserPrefs {
 
         return Objects.equals(guiSettings, o.guiSettings)
                 && Objects.equals(addressBookFilePath, o.addressBookFilePath)
+                && Objects.equals(recycleBinFilePath, o.recycleBinFilePath)
                 && Objects.equals(addressBookName, o.addressBookName);
     }
 

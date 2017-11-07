@@ -9,11 +9,13 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+
 
 //@@author Pengyuz
 /**
- * Deletes a person identified using it's last displayed index from the address book.
+ * Deletes a person identified using it's last displayed index or name from the address book.
  */
 
 public class DeleteCommand extends UndoableCommand {
@@ -24,9 +26,10 @@ public class DeleteCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Parameters: INDEX (must be a positive integer) or NAME(exactly same)\n"
+            + "Example: " + COMMAND_WORD + " 1" + COMMAND_WORD + "Alex Yeoh";
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the recycle bin";
     private boolean allvalid = true;
     private boolean exist = false;
     private boolean duplicate = false;
@@ -82,6 +85,8 @@ public class DeleteCommand extends UndoableCommand {
                 model.deletePerson(personstodelete);
             } catch (PersonNotFoundException pnfe) {
                 assert false : "The target person cannot be missing";
+            } catch (DuplicatePersonException d) {
+                assert false : "the duplicate person in bin should be handled";
             }
             return new CommandResult(MESSAGE_DELETE_PERSON_SUCCESS);
         } else {
