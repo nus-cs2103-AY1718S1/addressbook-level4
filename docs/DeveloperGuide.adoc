@@ -797,6 +797,105 @@ If the file given is not a valid image file, a 'CommandException' will be thrown
 **Pros:** Reliable as the photo path is always stored for each `Person`. +
 **Cons:** Requires a lot of modification to codes that will requires `Person` , as well as changing tests to reflect the additional attribute.
 
+// tag::export[]
+=== Export Command
+(added in v1.3)
+
+The export command is a new feature implemented that allows the user to export contact details to other external applications.
+
+This feature enables the user to do a backup of their contact details from our application to other applications that support the vCard format for contact details.
+
+Similar to the import command, the logic for the export command will read all the `ReadOnlyPerson` object that is stored in the addressbook array.
+
+And for each `ReadOnlyPerson` object found in the array, the required information (name, email, address, phone number) will be retrieved and placed onto a crafted vCard format string variable for writing to a vCard file.
+
+* The user will first enter the command `export` from the command line interface
+
+* Next, the `AddressBookParser` class will be invoked and the  `ExportCommand` class will be called.
+
+---
+    case ExportCommand.COMMAND_WORD:
+    case ExportCommand.COMMAND_ALIAS:
+        return new ExportCommand();
+
+---
+
+* In the `ExportCommand` class, the class will first check if the address book is empty.
+
+* If the address book is empty, it will return an error message to the user indicating that there is nothing to export.`
+
+---
+        if (model.getAddressBook().getPersonList().isEmpty()) {
+            return new CommandResult(MESSAGE_EMPTY_AB);
+
+---
+
+* Once the class checks that there are objects in the address book array that can be retrieved, the class will call the method `writeToFile()` to do the necessary retrieving of the data
+
+* The `writeTofile()` method will first create a filename called `output.vcf`.
+
+* The method then use the `bufferedWriter` and the `fileWriter` class to write all the information retrieved onto a string variable in each iteration..
+
+* Lastly, we call the `close()` method in both `bufferedWriter` and `fileWriter` in order to save the output onto the file `output.vcf`.
+
+---
+    /**
+     * This method handles the writing of contacts to a file
+     */
+    private void writeToFile() throws IOException {
+        final String filename = "output.vcf";
+        FileWriter fw = new FileWriter(filename);
+        BufferedWriter bw = new BufferedWriter(fw);
+        for (ReadOnlyPerson p : model.getAddressBook().getPersonList()) {
+            String header = "BEGIN:VCARD\n";
+            String version = "VERSION:3.0\n";
+            String fullName = "FN:" + p.getName().toString() + "\n";
+            String name = "N:;" + p.getName().toString() + ";;;\n";
+            String email = "EMAIL;TYPE=INTERNET;TYPE=HOME:" + p.getEmail().toString() + "\n";
+            String tel = "TEL;TYPE=CELL:" + p.getPhone().toString() + "\n";
+            String address = "ADR:;;" + p.getAddress().toString() + ";;;;\n";
+            String footer = "END:VCARD\n";
+            bw.write(header);
+            bw.write(version);
+            bw.write(fullName);
+            bw.write(name);
+            bw.write(email);
+            bw.write(tel);
+            bw.write(address);
+            bw.write(footer);
+        }
+        if (bw != null) {
+            bw.close();
+        }
+        if (fw != null) {
+            fw.close();
+        }
+    }
+
+---
+
+==== Design Considerations
+
+**Aspect:** The types of file that can be exported using the export command. +
+**Alternative 1 (current choice):** Currently, the export command can only output files onto a file with the extension `.vcf`. +
+**Pros:** Multi platform compatibility and the format in `.vcf` file enables the user to use our output as a backup onto other application that supports it. +
+**Cons:** Since the logic is written specifically for `.vcf` files, we will have to rewrite the logic if we want to support other file types in the future. +
+**Alternative 2:** use `.csv` file as the import source +
+**Pros:** Format is simple, each value is separated by a comma. +
+**Cons:** All values will have a hard time to be retrieved and mapped into each variable as each value is only separated by a comma, mistakes can be made when trying to map each values into each category. +
+
+---
+
+**Aspect:** Which directory to access the source file. +
+**Alternative 1 (current choice):** Currently, the file will be stored in `/main` directory. +
+**Pros:** Easy to develop the logic as there is only one filepath . +
+**Cons:** User will have to specifically place the file in the /main directory which does not really make sense. +
+**Alternative 2:** Create a `Export` button for the user on the GUI. +
+**Pros:** User friendly. User can simply click on an `Export` button and all the contacts will be exported.
+**Cons:** Requires an `Export` button to be created, involves UI component.
+
+// end::export[]
+
 == Documentation
 
 We use asciidoc for writing documentation.
