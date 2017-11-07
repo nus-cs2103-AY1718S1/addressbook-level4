@@ -793,17 +793,20 @@ image::divider.png[width="900"]
 === Adding aliases : `alias`
 image::UG_commandheader_aliasadd.png[width="500"]
 
-If you find yourself forgetting your commands often, you can define aliases to make them mean the same thing! +
+If you find yourself forgetting your commands often, you can define aliases to rename the commands to
+something easier to remember!
 
-Unify's `alias' command an alias to another command. If unspecified, lists all aliases. +
+Unify's `alias` command creates an alias to another command. If an alias is unspecified, it lists all aliases. +
 
 image::UG_header_format.png[width="400"]
 Format: `alias [ALIAS COMMAND]`
 
 image::UG_header_examples.png[width="400"]
 
-* `alias unfriend delete` +
-`unfriend` (performs the `delete` command) +
+* `alias unfriend delete 1` +
+`unfriend` (deletes the first person in the list) +
+* `alias friends find t/friend` +
+`friends` (lists all persons with the `friend` tag) +
 * `alias` +
 Lists all your previously defined aliases.
 
