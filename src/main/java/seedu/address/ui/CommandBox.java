@@ -197,9 +197,11 @@ public class CommandBox extends UiPart<Region> {
      * Initializes or reinitializes the autocomplete snapshot.
      */
     private void initAutoComplete() {
+        String autoCompleteStub = commandTextField.getText()
+                .substring(0, commandTextField.getCaretPosition());
+        logger.info("Retrieve autocomplete options: " + autoCompleteStub);
         // only pass the text before the caret into autocomplete
-        logic.updateAutoCompletePossibilities(commandTextField.getText()
-            .substring(0, commandTextField.getCaretPosition()));
+        logic.updateAutoCompletePossibilities(autoCompleteStub);
         // remember the text after caret
         textAfterCaret = commandTextField.getText()
             .substring(commandTextField.getCaretPosition(), commandTextField.getText().length());

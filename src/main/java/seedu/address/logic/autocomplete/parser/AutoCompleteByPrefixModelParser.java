@@ -21,9 +21,10 @@ import seedu.address.model.Model;
  *  based on the names currently present in the address book. */
 public class AutoCompleteByPrefixModelParser implements AutoCompleteParser {
 
-    private final Model model;
     private Prefix currentPrefix;
-    private List<String> allPossibleMatches = Collections.emptyList();
+    private final Model model;
+
+    protected List<String> allPossibleMatches = Collections.emptyList();
 
     public AutoCompleteByPrefixModelParser(Model model) {
         this.model = model;

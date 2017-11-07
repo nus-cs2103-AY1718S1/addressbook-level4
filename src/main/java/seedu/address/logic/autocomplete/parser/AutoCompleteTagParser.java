@@ -1,6 +1,7 @@
 package seedu.address.logic.autocomplete.parser;
 
-import java.util.Collections;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,23 +11,19 @@ import seedu.address.model.Model;
 
 //@@author john19950730
 /** Represents a parser that specifically parses only tags based on last word of incomplete user input. */
-public class AutoCompleteTagParser implements AutoCompleteParser {
-
-    private final Model model;
-    private List<String> allPossibleMatches = Collections.emptyList();
+public class AutoCompleteTagParser extends AutoCompleteByPrefixModelParser {
 
     public AutoCompleteTagParser(Model model) {
-        this.model = model;
+        super(model);
     }
 
     @Override
     public List<String> parseForPossibilities(String stub) {
         final LinkedList<String> possibleMatches = new LinkedList<String>();
-        updateAllPossibleMatches();
+        setPrefix(PREFIX_TAG);
 
-        String[] splitStub = stub.split(" ");
-        String staticSection = getStaticSection(splitStub);
-        String autoCompleteSection = getAutoCompleteSection(splitStub);
+        String staticSection = AutoCompleteUtils.getStaticSection(stub);
+        String autoCompleteSection = AutoCompleteUtils.getAutoCompleteSection(stub);
 
         possibleMatches.addAll(allPossibleMatches.stream()
                 .filter(possibleMatch -> AutoCompleteUtils.startWithSameLetters(autoCompleteSection, possibleMatch))
@@ -35,35 +32,6 @@ public class AutoCompleteTagParser implements AutoCompleteParser {
         possibleMatches.add(stub);
 
         return possibleMatches;
-    }
-
-    /**
-     * * Returns the section of stub that is not to be modified by autocomplete.
-     * @param splitStub Stub that has already been split by whitespace
-     * @return Section of the stub that will not be modified
-     */
-    private String getStaticSection(String[] splitStub) {
-        String staticSection = "";
-        for (int index = 0; index < splitStub.length - 1; ++index) {
-            staticSection = staticSection + splitStub[index] + " ";
-        }
-        return staticSection;
-    }
-
-    /**
-     * Returns the section of stub that is to be completed by autocomplete
-     * @param splitStub Stub that has been split by whitespace
-     * @return Section of the stub that will be modified
-     */
-    private String getAutoCompleteSection(String[] splitStub) {
-        return splitStub[splitStub.length - 1];
-    }
-
-    /**
-     * Updates the possible matches list by obtaining list of all tags in the address book
-     */
-    private void updateAllPossibleMatches() {
-        allPossibleMatches = model.getAllTagsInAddressBook();
     }
 
 }

@@ -49,10 +49,36 @@ public class AutoCompleteUtils {
     }
 
     /**
-     *
+     * Returns the command word in the stub.
+     * @param stub incomplete user input
+     * @return command word of the stub
      */
     public static String getCommandWordInStub(String stub) {
         return stub.split(" ")[0];
+    }
+
+    /**
+     * Returns the section of stub that is not to be modified by autocomplete.
+     * @param splitStub Stub that has already been split by whitespace
+     * @return Section of the stub that will not be modified
+     */
+    public static String getStaticSection(String stub) {
+        String[] splitStub = stub.split(" ");
+        String staticSection = "";
+        for (int index = 0; index < splitStub.length - 1; ++index) {
+            staticSection = staticSection + splitStub[index] + " ";
+        }
+        return staticSection;
+    }
+
+    /**
+     * Returns the section of stub that is to be completed by autocomplete
+     * @param splitStub Stub that has been split by whitespace
+     * @return Section of the stub that will be modified
+     */
+    public static String getAutoCompleteSection(String stub) {
+        String[] splitStub = stub.split(" ");
+        return splitStub[splitStub.length - 1];
     }
 
 }
