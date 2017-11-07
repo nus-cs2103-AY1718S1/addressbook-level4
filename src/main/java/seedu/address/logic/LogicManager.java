@@ -53,7 +53,7 @@ public class LogicManager extends ComponentManager implements Logic {
 
     @Override
     public ObservableList<ReadOnlyParcel> getDeliveredParcelList() {
-        return model.getFilteredDeliveredParcelList();
+        return model.getCompletedParcelList();
     }
 
     @Override
@@ -63,7 +63,7 @@ public class LogicManager extends ComponentManager implements Logic {
 
     @Override
     public ObservableList<ReadOnlyParcel> getUndeliveredParcelList() {
-        return model.getFilteredUndeliveredParcelList();
+        return model.getUncompletedParcelList();
     }
     //@@ author
 

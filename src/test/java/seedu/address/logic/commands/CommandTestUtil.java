@@ -158,7 +158,7 @@ public class CommandTestUtil {
      */
     public static void showFirstParcelInActiveListOnly(Model model) {
         List<ReadOnlyParcel> parcels = model.getAddressBook().getParcelList();
-        Predicate<ReadOnlyParcel> predicate = (model.getActiveList().equals(model.getFilteredUndeliveredParcelList()))
+        Predicate<ReadOnlyParcel> predicate = (model.getActiveList().equals(model.getUncompletedParcelList()))
                 ? getDeliveredPredicate().negate() : getDeliveredPredicate();
 
         // find the first parcel in the master list that meets the active list predicate

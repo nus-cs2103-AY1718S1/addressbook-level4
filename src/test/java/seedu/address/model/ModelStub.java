@@ -29,7 +29,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void setActiveList(boolean isDelivered) {
+    public void setActiveList(boolean isCompleted) {
         fail("This method should not be called.");
     }
 
@@ -68,7 +68,7 @@ public class ModelStub implements Model {
 
     //@@author kennard123661
     @Override
-    public ObservableList<ReadOnlyParcel> getFilteredDeliveredParcelList() {
+    public ObservableList<ReadOnlyParcel> getCompletedParcelList() {
         fail("This method should not be called.");
         return null;
     }
@@ -80,7 +80,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public ObservableList<ReadOnlyParcel> getFilteredUndeliveredParcelList() {
+    public ObservableList<ReadOnlyParcel> getUncompletedParcelList() {
         fail("This method should not be called.");
         return null;
     }
