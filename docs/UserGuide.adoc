@@ -60,6 +60,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [NOTE]
 iConnect will be referred to as *address book* in the following documentation.
 
+// tag::help[]
 === Viewing help : `help` _[Since v1.3]_
 
 If you don't know how to use some commands, don't worry, help command can guide you.
@@ -76,6 +77,7 @@ Examples:
 Shows the usage of command `list`
 * `help add` +
 Shows the usage of command `add`
+// end::help[]
 
 === Adding a person: `add` _[Since v1.1]_
 
@@ -189,6 +191,7 @@ Returns list of persons sorted by phone in ascending order
 * `sort t/DSC` +
 Returns list of persons sorted by time added in descending order
 
+// tag::delete[]
 === Deleting a person : `delete` _[Since v1.2]_
 If you want to keep your person list clean, just using delete command to remove some people to bin.
 
@@ -220,6 +223,7 @@ Deletes the 2nd and 3rd person in the address book
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command
+// end::delete[]
 
 === Adding a tag to a person(s) : `t-add` _[Since v1.1]_
 
@@ -409,7 +413,7 @@ Examples:
 Removes a single event with the index 1.
 * `s-remove 1 2 3` +
 Removes 3 events with the index 1, 2 and 3.
-
+// tag::export[]
 === Making a backup address book: `export` _[Coming in v1.4]_
 
 If you want to keep your address book clean and worry about how to get the contacts back, just export the information.
@@ -421,7 +425,7 @@ Format: `export PATH`
 ****
 * Export all the information of contacts to the given local address.
 ****
-
+// end::export[]
 === Selecting a person : `select` _[Since v1.1]_
 
 _Alias:_ `choose`
@@ -509,7 +513,7 @@ The `redo` command fails as there are no `undo` commands executed previously
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
-
+// tag::bin[]
 === Listing all persons removed: `bin-list` _[Since v1.5]_
 
 If you are worrying about deleting people wrongly, it would be a good way to see if they are in recycle bin.
@@ -565,6 +569,7 @@ Delete the 1st and 2nd person in the bin-list
 Clears all entries in the bin.
 
 Format: `clear-bin`
+// end::bin[]
 
 // tag::birthday[]
 === Adding the birthday to a person : `b-add` _[Since v1.4]_
