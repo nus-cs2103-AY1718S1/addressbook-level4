@@ -10,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.model.person.Birthday;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
@@ -20,6 +19,7 @@ import seedu.address.model.tag.Tag;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    //@@author jacoblipech
     private static String[] colors = { "red", "blue", "orange", "brown", "purple", "black", "gray", "maroon", "coral",
         "blueviolet", "slategrey", "darkseagreen", "darkturquoise", "darkkhaki", "firebrick", "darkcyan" };
     private static HashMap<String, String> tagColors = new HashMap<>();
@@ -33,22 +33,17 @@ public class PersonCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
 
+    //@@author
     public final ReadOnlyPerson person;
 
     @FXML
     private HBox cardPane;
-    @FXML
-    private HBox cardPane2;
     @FXML
     private Label name;
     @FXML
     private Label id;
     @FXML
     private Label phone;
-    @FXML
-    private Label address;
-    @FXML
-    private Label email;
     @FXML
     private FlowPane tags;
 
@@ -58,8 +53,9 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         //@@author taojiashu
         initFavouriteLabel(person);
-        initBirthdayLabel(person);
+        //@@author jacoblipech
         initTags(person);
+        //@@author
         bindListeners(person);
     }
 
@@ -70,12 +66,9 @@ public class PersonCard extends UiPart<Region> {
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
         //@@author taojiashu
         person.favouriteProperty().addListener((observable, oldValue, newValue) -> initFavouriteLabel(person));
-        //birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
-        person.birthdayProperty().addListener((observable, oldValue, newValue) -> initBirthdayLabel(person));
+        //@@author
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);
@@ -103,60 +96,6 @@ public class PersonCard extends UiPart<Region> {
     }
 
     //@@author jacoblipech
-    /**
-     * Binds the birthday string together for each contact to display in a better format
-     * so that it is clearer for the user.
-     */
-    private void initBirthdayLabel(ReadOnlyPerson person) {
-        String initialBirthday = person.getBirthday().getBirthdayNumber();
-        String birthdayToDisplay = "";
-
-        if (!initialBirthday.equals(Birthday.DEFAULT_BIRTHDAY)) {
-            birthdayToDisplay = generateBirthdayMsg(initialBirthday);
-        } else {
-            birthdayToDisplay = Birthday.DEFAULT_BIRTHDAY;
-        }
-
-        Label birthdayLabel = new Label(birthdayToDisplay);
-        cardPane2.getChildren().add(birthdayLabel);
-
-    }
-
-    /**
-     * Returns the birthday in the format needed for display.
-     */
-    private String generateBirthdayMsg (String initialBirthday) {
-        HashMap<String, String> findSelectedMonth = initializeMonthHashMap();
-        String [] splitDates = initialBirthday.split("/", 5);
-        String birthdayToDisplay;
-
-        birthdayToDisplay = splitDates[0] + " " + findSelectedMonth.get(splitDates[1]) + " " + splitDates[2];
-
-        return birthdayToDisplay;
-    }
-
-    /**
-     * Initialize a @HashMap for every integer to the correct month.
-     */
-    private HashMap<String, String> initializeMonthHashMap () {
-
-        HashMap<String, String> monthFormat = new HashMap<>();
-        monthFormat.put("01", "Jan");
-        monthFormat.put("02", "Feb");
-        monthFormat.put("03", "Mar");
-        monthFormat.put("04", "Apr");
-        monthFormat.put("05", "May");
-        monthFormat.put("06", "Jun");
-        monthFormat.put("07", "Jul");
-        monthFormat.put("08", "Aug");
-        monthFormat.put("09", "Sep");
-        monthFormat.put("10", "Oct");
-        monthFormat.put("11", "Nov");
-        monthFormat.put("12", "Dec");
-
-        return monthFormat;
-    }
-
     /**
      * Binds the individual tags shown for each contact to a different color
      * so that it is clearer for the user.
