@@ -11,7 +11,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  * Lists the birthdays in chronological order from the current date.
  */
 public class UpcomingBirthdayCommand extends Command {
-    public static final String COMMAND_WORD = "UpcomingBirthday";
+    public static final String COMMAND_WORD = "upcomingbirthday";
 
     public static final String MESSAGE_SUCCESS = "Upcoming birthdays are shown.";
     private static final String MESSAGE_EMPTY_LIST = "Contact list is empty.";

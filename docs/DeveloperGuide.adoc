@@ -495,6 +495,7 @@ to be stored in an `ArrayList <Index>`.
 **Cons:** Have to be thorough and change `Index` to `ArrayList<Index>` in all occurrences within all relevant
   `DeleteCommand` classes and methods. +
 
+// tag::birthday[]
 === BirthdayCommand mechanism
 
 image::BirthdayUMLClass.png[width="800]
@@ -502,7 +503,7 @@ image::BirthdayUMLClass.png[width="800]
 The `BirthdayCommand` inherits from `Undoable Command` and supports undoing and redoing. When the user inputs the birthday
 , the `UI` calls the `execute()` method in the `LogicManager` Class. The `Logic` will then call for the `parseCommand()`
 in `AddressBookParser` Class and an instance of `BirthdayCommand` will be created. It is then returned and the command
-will be executed. An instance of `Person` will be created to be updated with the birthday and returned to the `BirthdayCommand`.
+will be executed. An instance of `Person` will be created to be updated with the birthday and updated age and returned to the `BirthdayCommand`.
 The command will then call the `updatedFilteredPersonList()` method in the `Model` Class. In the end, the command will
 generate a success message. The following sequence diagram summarises what happens when the `BirthdayCommand` is implemented:
 
@@ -518,9 +519,34 @@ command. Further enhancements are needed to catch more invalid cases. +
 **Alternative 2 (current choice):** Incorporate the birthday into the add, edit, and delete commands. +
 **Pros:** Convenient for users as they have to only remember a few key commands. +
 **Cons:** Difficult to implement and maintain. Testing can be more tedious as well.
-//end::birthday[]
-
+// end::birthday[]
 ---
+
+// tag::upbirthday[]
+=== upcomingbirthdayCommand mechanism
+
+image::UpBirthday.png[width="800]
+
+The `upcomingbirthdayCommand` inherits from `Command` and does not supports undoing and redoing. When the user inputs the birthday
+, the `UI` calls the `execute()` method in the `LogicManager` Class. The `Logic` will then call for the `parseCommand()`
+in `AddressBookParser` Class and an instance of `upcomingbirthdayCommand` will be created. It is then returned and the command
+will be executed. The list will then be checked if it is empty. If it is, it will throw an empty list exception. Else it will be sorted
+according to the chronological order of birthdays in the format DD-MM from the local date in the clock.
+generate a success message. The following sequence diagram summarises what happens when the `upcomingbirthdayCommand` is implemented:
+
+image::UpBirthday2.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `UpcomingBirthdayCommand`. +
+**Alternative 1 (current choice): List all the people with Birthdays entries first in chronological order compared to the local date,
+then the people without birthdays in lexicographical order of their names.
+**Pros:** Easy for debugging and implementation. +
+**Cons:** Inconvenient for users as they have many commands to use. +
+**Alternative 2 (current choice):** Incorporate the birthday into the add, edit, and delete commands. +
+**Pros:** Convenient for users as they have to only remember a few key commands. +
+**Cons:** Difficult to implement and maintain. Testing can be more tedious as well.
+// end::upbirthday[]
 
 === SortCommand mechanism
 

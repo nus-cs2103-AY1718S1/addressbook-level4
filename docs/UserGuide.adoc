@@ -252,8 +252,6 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-// tag::remarkcommand[]
-
 === Adding a remark : `remark` (Since v1.1)
 
 Edits the remark for a person specified in the `INDEX`. +
@@ -266,7 +264,7 @@ Edits the remark for the first person to `Likes to drink coffee.` +
 * `remark 1 r/` +
 Removes the remark for the first person.
 
-// end::remarkcommand[]
+// tag::birthday[]
 
 === Adding birthday : `birthday` (Since v1.2)
 
@@ -281,10 +279,16 @@ Edits the birthday for the first person to `20-12-2012`. +
 * `birthday 1 b/` or `birthday 1` +
 Removes the birthday for the first person.
 
-=== Upcoming birthdays : `UpcomingBirthday` (Since v1.4)
+// end::birthday[]
+
+// tag::upbirthday[]
+
+=== Upcoming birthdays : `upcomingbirthday` (Since v1.4)
 
 Updates the list to show the upcoming birthdays. +
-Format: `UpcomingBirthday`
+Format: `upcomingbirthday`
+
+// end ::upbirthday[]
 
 === Sorting all entries : `sort` (Since v1.2)
 
@@ -334,10 +338,13 @@ Sending mass emails to contacts with the same tag. +
 Format: `emailall t/TAG`
 // end::emailall[]
 
+// tag::calendar[]
+
 === Viewing birthdays in a calendar : `calendar` (Coming in v2.0)
 
 Displays birthdays of contacts according to months in a calendar view. +
 Format: `calendar`
+// end::calendar[]
 
 === Saving the data
 
@@ -374,4 +381,4 @@ e.g. `remark 1 r/is a student in NUS`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *Undo* : `undo`
-* *Upcoming Birthday* : `UpcomingBirthday`
+* *Upcoming Birthday* : `upcomingbirthday`
