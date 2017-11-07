@@ -24,9 +24,9 @@ public class EventTime {
             + "(0[1-9]|1[012]|[1-9])[/](19|20)\\d\\d$";
 
     public final String eventTime;
-    private static String year;
-    private static String month;
-    private static String day;
+    private String year;
+    private String month;
+    private String day;
 
     //@@author Adoby7
     /**
@@ -51,7 +51,7 @@ public class EventTime {
     /**
      * Splits the time into year, day, month
      */
-    private static void splitTime(String trimmedTime) {
+    private void splitTime(String trimmedTime) {
         String[] splitTime = trimmedTime.split("/");
         day = splitTime[0];
         month = splitTime[1];
