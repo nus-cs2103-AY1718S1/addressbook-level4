@@ -12,15 +12,12 @@ public class FilterCommand extends Command {
     public static final String COMMAND_WORD = "filter";
     public static final String COMMAND_ALIAS = "ft";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names, "
-            + "phone, address, email, tag or weblink contain all of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons who are tagged with "
+            + "the specified tag (case-insensitive) and displays them as a list with index numbers.\n"
+            + "Parameters: TAG [MORE_TAGS]...\n"
+            + "Example: " + COMMAND_WORD + " neighbours friends";
 
-    //@@author hansiang93
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {keyword}";
-    //@@author
 
     private final FilterKeywordsPredicate predicate;
 
