@@ -31,6 +31,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 //@@author eldriclim
+
 /**
  * Adds an Event to address book
  */
@@ -90,9 +91,21 @@ public class ScheduleAddCommand extends UndoableCommand {
             toReplace.add(toEditPerson.createUpdatedPerson());
         }
 
+        if (uniqueMemberIndexes.isEmpty()) {
+            System.out.println("null");
+        }
+
         try {
+            String commandResultString = "";
+            if (model.hasEvenClashes(event)) {
+                commandResultString += "Warning: An event clash has been detected.\n";
+            }
+
             model.addEvent(toUpdate, toReplace, event);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, event.toString()));
+
+            commandResultString += String.format(MESSAGE_SUCCESS, event.toString());
+
+            return new CommandResult(commandResultString);
         } catch (DuplicateEventException e) {
             throw new CommandException(MESSAGE_DUPLICATE_EVENT);
         } catch (DuplicatePersonException dpe) {
