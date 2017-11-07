@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--@@author chilipadiboy-->
+
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TitledPane?>
@@ -8,8 +10,8 @@
    <content>
       <TableView fx:id="BirthdayTable" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn fx:id="NameColumn" prefWidth="296.0" text="Name" />
-          <TableColumn fx:id="BirthdayColumn" prefWidth="302.0" text="Birthday" />
+          <TableColumn fx:id="NameColumn" editable="false" sortable="true" prefWidth="300.0" text="Name" />
+          <TableColumn fx:id="BirthdayColumn" editable="false" sortable="true" sortType="DESCENDING" prefWidth="300.0" text="Birthday" />
         </columns>
       </TableView>
    </content>

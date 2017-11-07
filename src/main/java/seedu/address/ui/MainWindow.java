@@ -234,7 +234,6 @@ public class MainWindow extends UiPart<Region> {
     private void handlebirthdayalarms() {
         BirthdayAlarmWindow birthdayAlarmWindow = new BirthdayAlarmWindow(logic.getFilteredPersonList());
         birthdayAlarmWindow.show();
-        raise(new ShowBirthdayAlarmRequestEvent());
     }
     //@@author
 
@@ -258,5 +257,12 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    //@@author chilipadiboy
+    @Subscribe
+    private void handleShowBirthdayAlarmEvent (ShowBirthdayAlarmRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handlebirthdayalarms();
     }
 }

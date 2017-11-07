@@ -27,7 +27,7 @@ public class BirthdayAlarmWindow extends UiPart<Region> implements Initializable
     private static final String FXML = "BirthdayAlarmWindow.fxml";
     private static final String TITLE = "Birthday Alarm";
     private final Logger logger = LogsCenter.getLogger(BirthdayAlarmWindow.class);
-    private ObservableList<ReadOnlyPerson> pl;
+
 
     @FXML
     private TableView<ReadOnlyPerson> BirthdayTable;
@@ -40,6 +40,7 @@ public class BirthdayAlarmWindow extends UiPart<Region> implements Initializable
 
     public BirthdayAlarmWindow(ObservableList<ReadOnlyPerson> personList) {
         super(FXML);
+        ObservableList<ReadOnlyPerson> pl;
         Scene scene = new Scene(getRoot());
         //Null passed as the parent stage to make it non-modal.
         dialogStage = createDialogStage(TITLE, null, scene);
@@ -50,7 +51,7 @@ public class BirthdayAlarmWindow extends UiPart<Region> implements Initializable
     }
 
     /**
-     * Shows the help window.
+     * Shows the reminders window.
      *
      * @throws IllegalStateException <ul>
      *                               <li>
