@@ -211,9 +211,9 @@ public class CommandBox extends UiPart<Region> {
         } catch (SuggestibleParseException e) {
             initHistory();
             // handle command failure
-            setStyleToIndicateCommandFailure();
             logger.info("Invalid command, suggestible: " + commandTextField.getText());
             commandTextField.setText("");
+            setStyleToIndicateCommandFailure();
             raise(new NewResultAvailableEvent(e.getMessage()));
         }
     }

@@ -15,7 +15,7 @@ public class Phone {
             "Phone numbers can only contain numbers, "
                     + "optionally appended with '+', "
                     + "and should be at least 7 digits long.";
-    public static final String PHONE_VALIDATION_REGEX = "\\+?[1-9]\\d{7,14}";
+    public static final String PHONE_VALIDATION_REGEX = "\\d{3,}"; // "\\+?[1-9]\\d{7,14}";
     public final String value;
 
     /**

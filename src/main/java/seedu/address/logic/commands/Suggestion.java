@@ -73,11 +73,11 @@ public class Suggestion {
     public String getFormattedArgs(String closestCommand) {
         // Custom parser for AddCommand.
         if (AddCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            // TODO: try to match arguments with ALL person models, otherwise return null (maybe use AddCommandParser?)
+            // TODO: v1.5 try to match arguments with ALL person models, otherwise return null
 
         // Custom parser for EditCommand.
         } else if (EditCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            // TODO: try to match arguments with SOME person models, otherwise return null
+            // TODO: v1.5 try to match arguments with SOME person models, otherwise return null
 
         // Custom parser for RemarkCommand.
         } else if (RemarkCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {

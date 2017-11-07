@@ -28,7 +28,6 @@ import seedu.address.logic.commands.Suggestion;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseArgsException;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.logic.parser.exceptions.SuggestibleParseException;
 
 /**
  * Contains helper methods for testing command parsers.

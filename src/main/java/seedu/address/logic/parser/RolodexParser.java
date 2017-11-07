@@ -98,7 +98,7 @@ public class RolodexParser {
                 handleSuggestion(commandWord, arguments);
             }
         } catch (ParseArgsException e) {
-            handleSuggestion(commandWord, arguments);
+            handleSuggestion(commandWord, arguments, e);
         }
 
         throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
@@ -121,6 +121,25 @@ public class RolodexParser {
         }
         suggestion = null;
         throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+    }
+
+    /**
+     * Tries to parse a {@code commandWord} and {@code arguments} into
+     * a {@code Suggestion} to be handled by the next parse instruction if
+     * the user chooses.
+     * @param commandWord to be parsed into Suggestion
+     * @param arguments to be parsed into Suggestion
+     * @throws SuggestibleParseException if tbe command word and arguments are suggestible,
+     * @throws ParseException otherwise.
+     */
+    private void handleSuggestion(String commandWord, String arguments, ParseArgsException pae)
+            throws SuggestibleParseException, ParseException {
+        suggestion = new Suggestion(commandWord, arguments);
+        if (suggestion.isSuggestible()) {
+            throw new SuggestibleParseException(suggestion.getPromptMessage());
+        }
+        suggestion = null;
+        throw new ParseException(pae.getMessage(), pae);
     }
 
 }
