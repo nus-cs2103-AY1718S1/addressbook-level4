@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -66,7 +67,8 @@ public class UniqueScheduleList implements Iterable<Schedule> {
      */
     public Set<Schedule> toSet() {
         assert CollectionUtil.elementsAreUnique(internalList);
-        return new HashSet<>(internalList);
+        /** Used LinkedHashSet to preserve insertion order **/
+        return new LinkedHashSet<>(internalList);
     }
 
     /**
