@@ -56,6 +56,8 @@ public class MainWindow extends UiPart<Region> {
     private TagTextField tagTextField;
     private ClearLogButton clearLogButton;
     private QrButton qrButton;
+    private QrSaveButton qrSaveButton;
+    private QrSmsButton qrSmsButton;
     @FXML
     private StackPane browserPlaceholder;
 
@@ -108,6 +110,10 @@ public class MainWindow extends UiPart<Region> {
     private StackPane clearLogButtonPlaceholder;
     @FXML
     private StackPane qrButtonPlaceholder;
+    @FXML
+    private StackPane qrSmsButtonPlaceholder;
+    @FXML
+    private StackPane qrSaveButtonPlaceholder;
     //@@author
     @FXML
     private VBox vBox;
@@ -207,6 +213,12 @@ public class MainWindow extends UiPart<Region> {
 
         qrButton = new QrButton(browserPanel);
         qrButtonPlaceholder.getChildren().add(qrButton.getRoot());
+
+        qrSaveButton = new QrSaveButton(browserPanel);
+        qrSaveButtonPlaceholder.getChildren().add(qrSaveButton.getRoot());
+
+        qrSmsButton = new QrSmsButton(browserPanel);
+        qrSmsButtonPlaceholder.getChildren().add(qrSmsButton.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
