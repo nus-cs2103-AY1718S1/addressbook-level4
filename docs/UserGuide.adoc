@@ -28,17 +28,36 @@ This tutorial gives an overview on the basic functions of ConnectUs such as addi
 and displaying their location on Google Maps. Being a very simple application, no prior technical knowledge is required to use this application.
 
 Below lists the command terminology which would be used throughout this guide:
-====
+
 *Command Format*
 
+
+* These are the list of available prefixes you can use: +
+
+[width="59%",cols="15%,<17%,options="header",]
+|=======================================================================
+|Prefix | Meaning
+
+|n/ | NAME
+
+|p/ | PHONE
+
+|e/ | EMAIL
+
+|a/ | ADDRESS
+
+|t/ | [TAG]
+|=======================================================================
+
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+* Items in square brackets are optional e.g `n/NAME [t/TAG]` ,tag is optional and can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
+
 
 == Installation - Getting Started
 
+This section is to help you get started in setting up the application. +
 
 .  Ensure you have Java link:http://www.oracle.com/technetwork/java/javase/8u60-relnotes-2620227.html[version] `1.8.0_60` or later installed in your Computer.
 [NOTE]
@@ -47,20 +66,41 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `connectUs.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. You will see the GUI (Graphical User Interface) appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::UI.jpeg[width="790"]
+_Figure 3.1 : UI_
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
+....
+Here are some terms of the components in the GUI for you to refer to before you proceed to the next step (you may refer to the labels in Figure 3.1):
+
+1. File menu: allows you to change colour themes and exit the application
+2. Help menu: clicking on the Help menu will pop out a help window
+3. Command box: allows you to type your commands
+4. Result display: shows the outcome or messages of your command
+5. Person list panel: includes photo display and details display for each contact
+   -Photo display: shows the photo of your contact
+   (default image is displayed if photo is not uploaded to the contact yet)
+   -Details display: shows all the details of your contact
+6. Form display: allows you to input the details of your contact that you clicked for editing (form will auto-fill existing details of the contact in the text-fields when you click on a contact)
+7. Delete button: allows you to delete the contact that you chose
+8. Email button: allows you to email the contact that you chose
+9. Save button: saves the edited information of the contact in the form to the chosen contact
+10. Browser panel: shows the logo image and changes to the map view of the contact's location upon clicking on a contact
+11. Clear log button: allows you to clear the log
+12. Generate QR button: allows you to generate QR code of the contact's phone number (the QR code will be displayed in the browser panel)
+....
+
+.  Type the command in the command box (labelled 3 in Figure 3.1)  and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+.  ConnectUs comes with some pre-loaded data to help you get started. Here are some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` or **`d`**`3`: deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+* *`list`* : to list all contacts, you can enter `list`
+* **`add`**: to add a new contact named `John Doe` to ConnectUs, you can enter `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* **`delete`**: to delete the 3rd contact in the current list, enter `delete 3` or **`d`**`3`
+* *`exit`* : to exit from the application, you can enter `exit`
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  Now you are ready to start using the application. Refer to the link:#features[Features] section below for details of each command.
 
 == Features
 
@@ -474,7 +514,8 @@ Generate QR Save Contact Code for the 2nd person in the address book.
 Generate QR Save Contact Code for the 1st person in the results of the `find` command.
 
 == Upcoming Features
-(added in v1.2)
+(added in v1.2) +
+There are more features to be added to the application. You will soon be able to do the following features:
 
 === View address location on map `Coming in v2.0`
 ConnectUs will display the address location of the contact you selected on a map.
@@ -491,10 +532,17 @@ List all contacts by clicking on the `List` button instead of using command line
 === Sorts contact with a click of a button `Coming in v2.0`
 Sorts the contact in the address book based on the name of the contact by clicking on the `Sort` button instead of using command line.
 
+=== Filters contact by tags with a click of a button `Coming in v2.0`
+Filters the contact in the address book based on your inputted tag name on a text-field and clicking on the `Filter` button instead of using command line.
+
+=== Removing tags by clicking on a tag `Coming in v2.0`
+Allows you to choose to remove the tag that you clicked instead of using command line.
+
 === Reads out Command Executed with computer voicing `Coming in v2.0`
 Allows user to decide if they want to activate the function in order to listen to commands they executed and the response feedback from the application.
 
 == FAQ
+This section answers some common questions that you may have. If you have any more queries, feel free to contact us at connectors@connectus.com. +
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
@@ -503,57 +551,50 @@ Allows user to decide if they want to activate the function in order to listen t
 *A*: Click on the `File` drop down menu on the top left hand corner of the screen. A drop down menu appears. Click on the theme you want to apply.
 
 == Command Summary
+[width="59%",cols="22%,<40%,<40%,options="header",]
+|=======================================================================
+|Command |Format |Example
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
-* *Sort* : `sort`
-* *Tag* : `tag KEYWORD [MORE_KEYWORDS]` +
-e.g. `tag friends classmates`
-* *Remove Tag* : `rtag KEYWORD [MORE_KEYWORDS]`
-* *Import* : `import FILENAME.vcf`
-* *Export* : `export`
-* *Upload Photo* : `photo INDEX` +
-e.g. `photo 3` OR +
-`photo INDEX FILEPATH` +
-e.g. `photo 3 C:\Users\Pictures\photo.jpg`
+|*Add* | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` |`add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+|*Clear* | `clear` | `clear`
+|*Delete* | `delete INDEX` | `delete 3`
+|*Edit* | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` | `edit 2 n/James Lee e/jameslee@example.com`
+|*Find* | `find KEYWORD [MORE_KEYWORDS]` |`find James Jake`
+|*List* | `list` | `list`
+|*Help* | `help` | `help`
+|*Select* | `select INDEX` |`select 2`
+|*History* | `history` |`history`
+|*Undo* | `undo` | `undo`
+|*Redo* | `redo` | `redo`
+|*Sort* | `sort` | `sort`
+|*Tag* | `tag KEYWORD [MORE_KEYWORDS]` | `tag friends classmates`
+|*Remove Tag* | `rtag KEYWORD [MORE_KEYWORDS]` |`rtag friends classmates`
+|*Import* | `import FILENAME.vcf` | `import contacts.vcf`
+|*Export* | `export` | `export`
+|*Upload Photo* | `photo INDEX` OR `photo INDEX FILEPATH` |`photo 3` OR `photo 3 C:\Users\Pictures\photo.jpg`
+
+|=======================================================================
 
 == Command Shortcuts Summary
 
-* *Add* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `a n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `c`
-* *Delete* : `d INDEX` +
-e.g. `d 3`
-* *Edit* : `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `e 2 n/James Lee e/jameslee@example.com`
-* *Find* : `f KEYWORD [MORE_KEYWORDS]` +
-e.g. `f James Jake`
-* *List* : `l`
-* *Select* : `s INDEX` +
-e.g.`select 2`
-* *History* : `h`
-* *Undo* : `u`
-* *Redo* : `r`
-* *Sort* : `ss`
-* *Tag*  : `t`
-* *Remove Tag*  : `rt`
-* *Import* : `im FILENAME.vcf`
-* *Export* : `ex`
-* *Upload Photo* : `p INDEX` +
-e.g. `p 3` OR +
-`photo INDEX FILEPATH` +
-e.g. `photo 3 C:\Users\Pictures\photo.jpg`
+[width="59%",cols="22%,<40%,<40%,options="header",]
+|=======================================================================
+|Command |Format |Example
+
+|*Add* | `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` |`a n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+|*Clear* | `c` | `c`
+|*Delete* | `d INDEX` | `d 3`
+|*Edit* | `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` | `e 2 n/James Lee e/jameslee@example.com`
+|*Find* | `f KEYWORD [MORE_KEYWORDS]` |`f James Jake`
+|*List* | `l` | `l`
+|*Select* | `s INDEX` |`s 2`
+|*History* | `h` |`h`
+|*Undo* | `u` | `u`
+|*Redo* | `r` | `r`
+|*Sort* | `ss` | `ss`
+|*Tag* | `t KEYWORD [MORE_KEYWORDS]` | `t friends classmates`
+|*Remove Tag* | `rt KEYWORD [MORE_KEYWORDS]` |`rt friends classmates`
+|*Import* | `im FILENAME.vcf` | `im contacts.vcf`
+|*Export* | `exp` | `exp`
+|*Upload Photo* | `p INDEX` OR `p INDEX FILEPATH` |`p 3` OR `p 3 C:\Users\Pictures\photo.jpg`
+|=======================================================================
