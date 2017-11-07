@@ -161,6 +161,12 @@ public class ParserUtil {
     }
 
     //@@author Juxarius
+
+    /**
+     * @param input String which indicates the user's choice of panel
+     * @return PanelChoice enumerator to indicate to the program the user's choice
+     * @throws IllegalValueException
+     */
     public static PanelChoice parsePanelChoice(String input) throws IllegalValueException {
         if (Arrays.stream(SELECT_ARGS_INSURANCE).anyMatch(key -> key.equals(input))) {
             return PanelChoice.INSURANCE;

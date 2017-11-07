@@ -29,8 +29,17 @@ public class SelectCommand extends Command {
     private final Index targetIndex;
     private final PanelChoice panelChoice;
 
+    /**
+     * Choice of panel to be selected
+     */
     public enum PanelChoice {
         PERSON, INSURANCE
+    }
+
+    //@@author Juxarius
+    public SelectCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+        this.panelChoice = PanelChoice.PERSON;
     }
 
     public SelectCommand(Index targetIndex, PanelChoice panelChoice) {
@@ -38,7 +47,7 @@ public class SelectCommand extends Command {
         this.panelChoice = panelChoice;
     }
 
-    //@@author Juxarius
+
     @Override
     public CommandResult execute() throws CommandException {
 

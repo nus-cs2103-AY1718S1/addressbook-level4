@@ -13,6 +13,11 @@ public class JumpToListRequestEvent extends BaseEvent {
     //@@author Juxarius
     public final PanelChoice panelChoice;
 
+    public JumpToListRequestEvent(Index targetIndex) {
+        this.targetIndex = targetIndex.getZeroBased();
+        this.panelChoice = PanelChoice.PERSON;
+    }
+
     public JumpToListRequestEvent(Index targetIndex, PanelChoice panelChoice) {
         this.targetIndex = targetIndex.getZeroBased();
         this.panelChoice = panelChoice;
