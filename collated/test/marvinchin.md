@@ -1,4 +1,217 @@
 # marvinchin
+###### /java/systemtests/SortCommandSystemTest.java
+``` java
+public class SortCommandSystemTest extends AddressBookSystemTest {
+
+    @Test
+    public void sort() throws DuplicatePersonException, PersonNotFoundException {
+        /* ----------------- Performing sort operations while an unfiltered list is being shown ----------------- */
+
+        /* Case: sort by name -> all persons in the list sorted by name */
+        String command = SortCommand.COMMAND_WORD + " -" + SortByNameCommand.COMMAND_OPTION;
+        String expectedResultMessage = SortByNameCommand.MESSAGE_SORT_SUCCESS;
+        Comparator<ReadOnlyPerson> expectedComparator = new PersonNameComparator();
+        assertSortCommandSuccess(command, expectedResultMessage, expectedComparator);
+
+        /* Case: add a person -> persons in the list are still sorted by name */
+        command = AddCommand.COMMAND_WORD + " "
+                + NAME_DESC_AMY + "  "
+                + PHONE_DESC_AMY + " "
+                + EMAIL_DESC_AMY + "   "
+                + ADDRESS_DESC_AMY + "   "
+                + TAG_DESC_FRIEND + " "
+                + SOCIAL_DESC_AMY + " ";
+        ReadOnlyPerson toAdd = AMY;
+        assertAddCommandRetainsSortOrder(command, toAdd, expectedComparator);
+
+        /* Case: sort by recent -> all persons in the list sorted by last access time */
+        command = SortCommand.COMMAND_WORD + " -" + SortByRecentCommand.COMMAND_OPTION;
+        expectedResultMessage = SortByRecentCommand.MESSAGE_SORT_SUCCESS;
+        expectedComparator = new PersonRecentComparator();
+        assertSortCommandSuccess(command, expectedResultMessage, expectedComparator);
+
+        /* Case: select a person -> persons in the list are still sorted by recent */
+        Index editIndex = Index.fromOneBased(3);
+        command = EditCommand.COMMAND_WORD + " " + editIndex.getOneBased() + NAME_DESC_BOB;
+        ReadOnlyPerson editTarget = getPersonAtIndex(editIndex);
+        ReadOnlyPerson editedPerson = new PersonBuilder(editTarget).withName(VALID_NAME_BOB).build();
+        assertEditCommandRetainsSortOrder(command, editTarget, editedPerson, expectedComparator);
+
+        /* Case: sort by default -> all persons in the list sorted based on default ordering */
+        command = SortCommand.COMMAND_WORD;
+        expectedResultMessage = SortByDefaultCommand.MESSAGE_SORT_SUCCESS;
+        expectedComparator = new PersonDefaultComparator();
+        assertSortCommandSuccess(command, expectedResultMessage, expectedComparator);
+
+        /* Case: favorite a person -> persons in the list are still sorted by default ordering */
+        Index favIndex = Index.fromOneBased(5);
+        command = FavoriteCommand.COMMAND_WORD + " " + favIndex.getOneBased();
+        ReadOnlyPerson favTarget = getPersonAtIndex(favIndex);
+        assertFavoriteCommandRetainsSortOrder(command, favTarget, expectedComparator);
+
+        /* ----------------- Performing sort operations while an filtered list is being shown ----------------- */
+
+        showPersonsWithName("Meier");
+
+        /* Case: sort by name -> all persons in the list sorted by name */
+        command = SortCommand.COMMAND_WORD + " -" + SortByNameCommand.COMMAND_OPTION;
+        expectedResultMessage = SortByNameCommand.MESSAGE_SORT_SUCCESS;
+        expectedComparator = new PersonNameComparator();
+        assertSortCommandSuccess(command, expectedResultMessage, expectedComparator);
+
+        /* Case: sort by recent -> all persons in the list sorted by last access time */
+        command = SortCommand.COMMAND_WORD + " -" + SortByRecentCommand.COMMAND_OPTION;
+        expectedResultMessage = SortByRecentCommand.MESSAGE_SORT_SUCCESS;
+        expectedComparator = new PersonRecentComparator();
+        assertSortCommandSuccess(command, expectedResultMessage, expectedComparator);
+
+        /* Case: sort by default -> all persons in the list sorted based on default ordering */
+        command = SortCommand.COMMAND_WORD;
+        expectedResultMessage = SortByDefaultCommand.MESSAGE_SORT_SUCCESS;
+        expectedComparator = new PersonDefaultComparator();
+        assertSortCommandSuccess(command, expectedResultMessage, expectedComparator);
+
+        /* ----------------- Performing invalid sort operations ----------------- */
+        // sort command with args
+        command = SortCommand.COMMAND_WORD + " hello world";
+        assertSortCommandFailure(command, expectedComparator);
+
+        // sort command with invalid options
+        command = SortCommand.COMMAND_WORD + " -somethinginvalid1234";
+        assertSortCommandFailure(command, expectedComparator);
+
+        // sort command with multiple options
+        command = SortCommand.COMMAND_WORD + " "
+            + "-" + SortByRecentCommand.COMMAND_OPTION + " "
+            + "-" + SortByNameCommand.COMMAND_OPTION;
+        assertSortCommandFailure(command, expectedComparator);
+    }
+
+    /**
+     * Utility method to get the person at the given index in the model's filtered person list
+     */
+    private ReadOnlyPerson getPersonAtIndex(Index index) {
+        Model model = getModel();
+        return model.getFilteredPersonList().get(index.getZeroBased());
+    }
+
+    /**
+     * Verifies that the add command succeeds and that the ordering of persons in the model's filtered person list
+     * set by the last sort function still holds true
+     */
+    private void assertAddCommandRetainsSortOrder(String command, ReadOnlyPerson toAdd,
+            Comparator<ReadOnlyPerson> expectedComparator) throws DuplicatePersonException {
+        Model expectedModel = getModel();
+        expectedModel.addPerson(toAdd);
+        // expect the persons in the model to be sorted based on the input comparator
+        expectedModel.sortPersons(expectedComparator);
+        String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
+        assertCommandSuccessWithSyncStatusChanged(command, expectedModel, expectedResultMessage);
+    }
+
+    /**
+     * Verifies that the edit command succeeds and that the ordering of persons in the model's filtered person list
+     * set by the last sort function still holds true
+     */
+    private void assertEditCommandRetainsSortOrder(String command, ReadOnlyPerson target, ReadOnlyPerson editedPerson,
+            Comparator<ReadOnlyPerson> expectedComparator) throws DuplicatePersonException, PersonNotFoundException {
+        Model expectedModel = getModel();
+        expectedModel.updatePerson(target, editedPerson);
+        // expect the persons in the model to be sorted based on the input comparator
+        expectedModel.sortPersons(expectedComparator);
+        String expectedResultMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
+        assertCommandSuccessWithSyncStatusChanged(command, expectedModel, expectedResultMessage);
+    }
+
+    /**
+     * Verifies that the favorite command succeeds and that the ordering of persons in the model's filtered person list
+     * set by the last sort function still holds true
+     */
+    private void assertFavoriteCommandRetainsSortOrder(String command, ReadOnlyPerson toFav,
+            Comparator<ReadOnlyPerson> expectedComparator) throws DuplicatePersonException, PersonNotFoundException {
+        Model expectedModel = getModel();
+        expectedModel.toggleFavoritePerson(toFav, FavoriteCommand.COMMAND_WORD);
+        // expect the persons in the model to be sorted based on the input comparator
+        expectedModel.sortPersons(expectedComparator);
+        System.out.println(toFav.getName());
+        String favoritePersonMessage = "\n\t★ " + toFav.getName().toString();
+        System.out.println(favoritePersonMessage);
+        String expectedResultMessage = FavoriteCommand.MESSAGE_FAVORITE_PERSON_SUCCESS + favoritePersonMessage;
+        assertCommandSuccessWithSyncStatusChanged(command, expectedModel, expectedResultMessage);
+    }
+
+    /**
+     * Verifies that the sort command succeeds and that the ordering of persons in the model's filtered person list is
+     * correctly set by the sort function
+     */
+    private void assertSortCommandSuccess(String command, String expectedResultMessage,
+            Comparator<ReadOnlyPerson> expectedComparator) {
+        Model expectedModel = getModel();
+        expectedModel.sortPersons(expectedComparator);
+        assertCommandSuccessWithStatusBarUnchanged(command, expectedModel, expectedResultMessage);
+    }
+
+    /**
+     * Executes {@code command} and in addition,<br>
+     * 1. Asserts that the command box displays an empty string.<br>
+     * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
+     * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
+     * 4. Asserts that no card is selected.<br>
+     * 5. Asserts that the status bar's sync status does not change.<br>
+     * 6. Asserts that the command box has the default style class.<br>
+     * Verifications 1 to 3 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
+     */
+    private void assertCommandSuccessWithStatusBarUnchanged(String command, Model expectedModel,
+            String expectedResultMessage) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardDeselected();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchanged();
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccessWithStatusBarUnchanged(String, Model, String)}
+     * except that the sync status in the status bar changes.
+     * @see SortCommandSystemTest#assertCommandSuccessWithStatusBarUnchanged(String, Model, String)
+     */
+    private void assertCommandSuccessWithSyncStatusChanged(String command, Model expectedModel,
+            String expectedResultMessage) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardDeselected();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    /**
+     * Executes {@code command} and in addition,<br>
+     * 1. Asserts that the command box displays {@code command}.<br>
+     * 2. Asserts that result display box displays {@code expectedResultMessage}.<br>
+     * 3. Asserts that the model related components equal to the current model, and that the ordering of the persons in
+     * the model is correct.<br>
+     * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
+     * 5. Asserts that the command box has the error style.<br>
+     * Verifications 1 to 3 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertSortCommandFailure(String command, Comparator<ReadOnlyPerson> lastValidSortComparator) {
+        Model expectedModel = getModel();
+        // model should remain sorted with the last valid sort even if command fails
+        expectedModel.sortPersons(lastValidSortComparator);
+        String expectedResultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE);
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+}
+```
 ###### /java/seedu/address/logic/parser/ImportCommandParserTest.java
 ``` java
 public class ImportCommandParserTest {
@@ -32,15 +245,53 @@ public class SortCommandParserTest {
     private SortCommandParser parser = new SortCommandParser();
 
     @Test
-    public void parse_noOptions_returnsFindByDefaultCommand() {
-        SortCommand expectedSortCommand = new SortByDefaultCommand();
-        assertParseSuccess(parser, "", expectedSortCommand);
+    public void parse_noOptionsAndHasParams_throwsParseException() {
+        String input = "param";
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, input, expectedMessage);
     }
 
     @Test
-    public void parse_nameOption_returnsFindByDefaultCommand() {
+    public void parse_validOptionsAndHasParams_throwsParseException() {
+        String input = "-" + SortByNameCommand.COMMAND_OPTION + " param";
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, input, expectedMessage);
+    }
+
+    @Test
+    public void parse_invalidOption_throwsParseException() {
+        String input = "-someinvalidoption123";
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, input, expectedMessage);
+    }
+
+    @Test
+    public void parse_multipleOptions_throwsParseException() {
+        String input = "-" + SortByNameCommand.COMMAND_OPTION + " "
+                + "-" + SortByRecentCommand.COMMAND_OPTION;
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, input, expectedMessage);
+    }
+
+    @Test
+    public void parse_noOptionsAndNoParams_returnsFindByDefaultCommand() {
+        String input = "";
+        SortCommand expectedSortCommand = new SortByDefaultCommand();
+        assertParseSuccess(parser, input, expectedSortCommand);
+    }
+
+    @Test
+    public void parse_nameOptionAndNoParams_returnsFindByDefaultCommand() {
+        String input = "-" + SortByNameCommand.COMMAND_OPTION;
         SortCommand expectedSortCommand = new SortByNameCommand();
-        assertParseSuccess(parser, "-" + SortByNameCommand.COMMAND_OPTION, expectedSortCommand);
+        assertParseSuccess(parser, input, expectedSortCommand);
+    }
+
+    @Test
+    public void parse_recentOptionAndNoParams_returnsFindByRecentCommand() {
+        String input = "-" + SortByRecentCommand.COMMAND_OPTION;
+        SortCommand expectedSortCommand = new SortByRecentCommand();
+        assertParseSuccess(parser, input, expectedSortCommand);
     }
 }
 ```
@@ -233,37 +484,29 @@ public class ImportCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/SortByNameCommandCommandTest.java
+###### /java/seedu/address/logic/commands/SortByNameCommandTest.java
 ``` java
 /**
- * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
+ * Contains integration tests (interaction with the Model) and unit tests for {@code SortByNameCommand}.
  */
-public class SortByNameCommandCommandTest {
+public class SortByNameCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void execute_unfilteredList_success() throws Exception {
         SortByNameCommand sortCommand = prepareCommand();
+        String expectedMessage = SortByNameCommand.MESSAGE_SORT_SUCCESS;
 
-        String expectedMessage = SortByDefaultCommand.MESSAGE_SORT_SUCCESS;
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.sortPersons(new PersonDefaultComparator());
-
-        assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
+        assertUnfilteredSortCommandSuccess(sortCommand, model, new PersonNameComparator(), expectedMessage);
     }
 
     @Test
     public void execute_filteredList_success() throws Exception {
-        showFirstThreePersonsOnly(model);
         SortByNameCommand sortCommand = prepareCommand();
-
         String expectedMessage = SortByNameCommand.MESSAGE_SORT_SUCCESS;
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        showFirstThreePersonsOnly(expectedModel);
-        expectedModel.sortPersons(new PersonNameComparator());
 
-        assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
+        assertFilteredSortCommandSuccess(sortCommand, model, new PersonNameComparator(), expectedMessage);
     }
 
     @Test
@@ -291,23 +534,6 @@ public class SortByNameCommandCommandTest {
         SortByNameCommand sortCommand = new SortByNameCommand();
         sortCommand.setData(model, getNullStorage(), new CommandHistory(), new UndoRedoStack());
         return sortCommand;
-    }
-
-    // TODO(Marvin): Move this to a util file, update to take variable number of persons
-    /**
-     * Updates {@code model}'s filtered list to show only the three persons in the {@code model}'s address book.
-     */
-    private void showFirstThreePersonsOnly(Model model) throws Exception {
-        String testTag = "test";
-
-        for (int i = 0; i < 3; i++) {
-            ReadOnlyPerson person = model.getAddressBook().getPersonList().get(i);
-            Person personWithTag = new PersonBuilder(person).withTags(testTag).build();
-            model.updatePerson(person, personWithTag);
-        }
-
-        model.updateFilteredPersonList(new TagsContainKeywordsPredicate(Arrays.asList(testTag)));
-        assert model.getFilteredPersonList().size() == 3;
     }
 }
 ```
@@ -405,6 +631,115 @@ public class DeleteByTagCommandTest {
     }
 }
 ```
+###### /java/seedu/address/logic/commands/SortByRecentCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for {@code SortByRecentCommand}.
+ */
+public class SortByRecentCommandTest {
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void execute_unfilteredList_success() throws Exception {
+        SortByRecentCommand sortCommand = prepareCommand();
+        String expectedMessage = SortByRecentCommand.MESSAGE_SORT_SUCCESS;
+
+        assertUnfilteredSortCommandSuccess(sortCommand, model, new PersonRecentComparator(), expectedMessage);
+    }
+
+    @Test
+    public void execute_filteredList_success() throws Exception {
+        SortByRecentCommand sortCommand = prepareCommand();
+        String expectedMessage = SortByRecentCommand.MESSAGE_SORT_SUCCESS;
+
+        assertFilteredSortCommandSuccess(sortCommand, model, new PersonRecentComparator(), expectedMessage);
+    }
+
+    @Test
+    public void equals() {
+        SortByRecentCommand sortByRecentCommandOne = new SortByRecentCommand();
+        SortByRecentCommand sortByRecentCommandTwo = new SortByRecentCommand();
+
+        // same object -> returns true
+        assertTrue(sortByRecentCommandOne.equals(sortByRecentCommandOne));
+
+        // same type -> returns true
+        assertTrue(sortByRecentCommandOne.equals(sortByRecentCommandTwo));
+
+        // different types -> returns false
+        assertFalse(sortByRecentCommandOne.equals(1));
+
+        // null -> returns false
+        assertFalse(sortByRecentCommandOne.equals(null));
+    }
+
+    /**
+     * Returns a {@code DeleteCommand} with the parameter {@code index}.
+     */
+    private SortByRecentCommand prepareCommand() {
+        SortByRecentCommand sortCommand = new SortByRecentCommand();
+        sortCommand.setData(model, getNullStorage(), new CommandHistory(), new UndoRedoStack());
+        return sortCommand;
+    }
+
+    // TODO(Marvin): Move this to a util file, update to take variable number of persons
+
+}
+```
+###### /java/seedu/address/logic/commands/SortByDefaultCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for {@code SortByDefaultCommand}.
+ */
+public class SortByDefaultCommandTest {
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void execute_unfilteredList_success() throws Exception {
+        SortByDefaultCommand sortCommand = prepareCommand();
+        String expectedMessage = SortByDefaultCommand.MESSAGE_SORT_SUCCESS;
+
+        assertUnfilteredSortCommandSuccess(sortCommand, model, new PersonDefaultComparator(), expectedMessage);
+    }
+
+    @Test
+    public void execute_filteredList_success() throws Exception {
+        SortByDefaultCommand sortCommand = prepareCommand();
+        String expectedMessage = SortByDefaultCommand.MESSAGE_SORT_SUCCESS;
+
+        assertFilteredSortCommandSuccess(sortCommand, model, new PersonDefaultComparator(), expectedMessage);
+    }
+
+    @Test
+    public void equals() {
+        SortByDefaultCommand sortByDefaultCommandOne = new SortByDefaultCommand();
+        SortByDefaultCommand sortByDefaultCommandTwo = new SortByDefaultCommand();
+
+        // same object -> returns true
+        assertTrue(sortByDefaultCommandOne.equals(sortByDefaultCommandOne));
+
+        // same type -> returns true
+        assertTrue(sortByDefaultCommandOne.equals(sortByDefaultCommandTwo));
+
+        // different types -> returns false
+        assertFalse(sortByDefaultCommandOne.equals(1));
+
+        // null -> returns false
+        assertFalse(sortByDefaultCommandOne.equals(null));
+    }
+
+    /**
+     * Returns a {@code DeleteCommand} with the parameter {@code index}.
+     */
+    private SortByDefaultCommand prepareCommand() {
+        SortByDefaultCommand sortCommand = new SortByDefaultCommand();
+        sortCommand.setData(model, getNullStorage(), new CommandHistory(), new UndoRedoStack());
+        return sortCommand;
+    }
+}
+```
 ###### /java/seedu/address/logic/commands/ExportCommandTest.java
 ``` java
 public class ExportCommandTest {
@@ -463,83 +798,6 @@ public class ExportCommandTest {
         ExportCommand exportCommand = new ExportCommand(filePath);
         exportCommand.setData(model, storage, new CommandHistory(), new UndoRedoStack());
         return exportCommand;
-    }
-}
-```
-###### /java/seedu/address/logic/commands/SortByDefaultCommandCommandTest.java
-``` java
-/**
- * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
- */
-public class SortByDefaultCommandCommandTest {
-
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    @Test
-    public void execute_unfilteredList_success() throws Exception {
-        SortByDefaultCommand sortCommand = prepareCommand();
-
-        String expectedMessage = SortByDefaultCommand.MESSAGE_SORT_SUCCESS;
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.sortPersons(new PersonDefaultComparator());
-
-        assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_filteredList_success() throws Exception {
-        showFirstThreePersonsOnly(model);
-        SortByDefaultCommand sortCommand = prepareCommand();
-
-        String expectedMessage = SortByDefaultCommand.MESSAGE_SORT_SUCCESS;
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        showFirstThreePersonsOnly(expectedModel);
-        expectedModel.sortPersons(new PersonDefaultComparator());
-
-        assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void equals() {
-        SortByDefaultCommand sortByDefaultCommandOne = new SortByDefaultCommand();
-        SortByDefaultCommand sortByDefaultCommandTwo = new SortByDefaultCommand();
-
-        // same object -> returns true
-        assertTrue(sortByDefaultCommandOne.equals(sortByDefaultCommandOne));
-
-        // same type -> returns true
-        assertTrue(sortByDefaultCommandOne.equals(sortByDefaultCommandTwo));
-
-        // different types -> returns false
-        assertFalse(sortByDefaultCommandOne.equals(1));
-
-        // null -> returns false
-        assertFalse(sortByDefaultCommandOne.equals(null));
-    }
-
-    /**
-     * Returns a {@code DeleteCommand} with the parameter {@code index}.
-     */
-    private SortByDefaultCommand prepareCommand() {
-        SortByDefaultCommand sortCommand = new SortByDefaultCommand();
-        sortCommand.setData(model, getNullStorage(), new CommandHistory(), new UndoRedoStack());
-        return sortCommand;
-    }
-
-    /**
-     * Updates {@code model}'s filtered list to show only the three persons in the {@code model}'s address book.
-     */
-    private void showFirstThreePersonsOnly(Model model) throws Exception {
-        String testTag = "test";
-
-        for (int i = 0; i < 3; i++) {
-            ReadOnlyPerson person = model.getAddressBook().getPersonList().get(i);
-            Person personWithTag = new PersonBuilder(person).withTags(testTag).build();
-            model.updatePerson(person, personWithTag);
-        }
-
-        model.updateFilteredPersonList(new TagsContainKeywordsPredicate(Arrays.asList(testTag)));
-        assert model.getFilteredPersonList().size() == 3;
     }
 }
 ```
@@ -628,6 +886,22 @@ public class ComparatorUtilTest {
         assertEquals(-1, compareEmail(personOne, personTwo));
         assertEquals(1, compareEmail(personTwo, personOne));
     }
+
+    @Test
+    public void compareLastAccessDate_sameLastAccessDate_returnZero() {
+        ReadOnlyPerson personOne = new PersonBuilder(AMY).withLastAccessDate(new Date(1000)).build();
+        ReadOnlyPerson personTwo = new PersonBuilder(BOB).withLastAccessDate(new Date(1000)).build();
+        assertEquals(0, compareLastAccessDate(personOne, personTwo));
+    }
+
+    @Test
+    public void compareLastAccessDate_differentLastAccessDate_returnCorrectOrder() {
+        ReadOnlyPerson personOne = new PersonBuilder(AMY).withLastAccessDate(new Date(2000)).build();
+        ReadOnlyPerson personTwo = new PersonBuilder(BOB).withLastAccessDate(new Date(1000)).build();
+        // expect the person with later last access date to come first in the ordering
+        assertEquals(-1, compareLastAccessDate(personOne, personTwo));
+        assertEquals(1, compareLastAccessDate(personTwo, personOne));
+    }
 }
 ```
 ###### /java/seedu/address/model/person/TagsContainKeywordsPredicateTest.java
@@ -687,6 +961,67 @@ public class TagsContainKeywordsPredicateTest {
         // Non-matching keyword
         predicate = new TagsContainKeywordsPredicate(Arrays.asList("family"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withTags("friend").build()));
+    }
+}
+```
+###### /java/seedu/address/model/person/LastAccessDateTest.java
+``` java
+public class LastAccessDateTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void constructor_nullDate_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new LastAccessDate(null);
+    }
+
+    @Test
+    public void constructor_validDate_success() {
+        Date date = new Date(1000);
+        LastAccessDate lastAccessDate = new LastAccessDate(date);
+        // string value of last access date should be equal to string value of date
+        String originalDateString = date.toString();
+        assertEquals(originalDateString, lastAccessDate.toString());
+
+        // last access date should not be mutated when the original date is changed
+        date.setTime(2000);
+        assertEquals(originalDateString, lastAccessDate.toString());
+    }
+
+    @Test
+    public void getDate_mutateReturnedDate_isNotMutated() {
+        Date originalDate = new Date(1000);
+        LastAccessDate lastAccessDate = new LastAccessDate(originalDate);
+        Date date = lastAccessDate.getDate();
+        // returned date value should be same as original date value
+        assertEquals(originalDate, lastAccessDate.getDate());
+
+        date.setTime(2000);
+        // date value stored in get access date should not have been mutated
+        assertEquals(originalDate, lastAccessDate.getDate());
+    }
+
+    @Test
+    public void equals() {
+        LastAccessDate lastAccessDateOne = new LastAccessDate(new Date(1000));
+        LastAccessDate lastAccessDateTwo = new LastAccessDate(new Date(2000));
+
+        // same object -> returns true
+        assertTrue(lastAccessDateOne.equals(lastAccessDateOne));
+
+        // same value -> returns true
+        LastAccessDate lastAccessDateOneCopy = new LastAccessDate(new Date(1000));
+        assertTrue(lastAccessDateOneCopy.equals(lastAccessDateOne));
+
+        // different types -> returns false
+        assertFalse(lastAccessDateOne.equals(new Date(1000)));
+
+        // null -> returns false
+        assertFalse(lastAccessDateOne.equals(null));
+
+        // different last access date -> returns false
+        assertFalse(lastAccessDateOne.equals(lastAccessDateTwo));
     }
 }
 ```
@@ -850,6 +1185,17 @@ public class StorageUtil {
         }
         return this;
     }
+
+    /**
+     * Sets the {@code LastAccessDate} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withLastAccessDate(Date date) {
+        LastAccessDate lastAccessDate = new LastAccessDate(date);
+        this.person.setLastAccessDate(lastAccessDate);
+
+        return this;
+
+    }
 ```
 ###### /java/seedu/address/testutil/modelstubs/ModelStubThrowingDuplicatePersonException.java
 ``` java
@@ -937,6 +1283,11 @@ public class ModelStub implements Model {
         fail("This method should not be called.");
     }
 
+    @Override
+    public void selectPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        fail("This method should not be called.");
+    }
+
 ```
 ###### /java/seedu/address/testutil/modelstubs/ModelStub.java
 ``` java
@@ -955,6 +1306,12 @@ public class ModelStub implements Model {
     @Override
     public void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
         fail("This method should not be called.");
+    }
+
+    @Override
+    public Model makeCopy() {
+        fail("This method should not be called.");
+        return null;
     }
 }
 ```
