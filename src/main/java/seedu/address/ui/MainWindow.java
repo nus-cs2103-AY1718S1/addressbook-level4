@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -9,10 +11,10 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
@@ -137,6 +139,7 @@ public class MainWindow extends UiPart<Region> {
 
         PersonInformationPanel personInformationPanel = new PersonInformationPanel();
         personInformationPanelPlaceholder.getChildren().add(personInformationPanel.getRoot());
+        setBackground(personInformationPanelPlaceholder);
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -161,6 +164,21 @@ public class MainWindow extends UiPart<Region> {
 
     private void setTitle(String appTitle) {
         primaryStage.setTitle(appTitle);
+    }
+
+    /**
+     *  Sets a background image for a stack pane
+     */
+    private void setBackground(StackPane pane) {
+        File file = new File("../addressbook4/docs/images/background.jpg");
+        try {
+            BackgroundImage myBI= new BackgroundImage(new Image(file.toURI().toURL().toString()),
+                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                    BackgroundSize.DEFAULT);
+            pane.setBackground(new Background(myBI));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
