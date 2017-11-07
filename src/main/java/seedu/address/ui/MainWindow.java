@@ -154,6 +154,10 @@ public class MainWindow extends UiPart<Region> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
+    public void initSplitPanePlaceholder() {
+        splitPanePlaceholder.setDividerPositions(0.0);
+    }
+
     void hide() {
         primaryStage.hide();
     }
