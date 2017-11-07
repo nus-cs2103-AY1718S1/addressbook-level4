@@ -63,7 +63,6 @@ public class EditButton extends UiPart<Region> {
         String checkInputResult = checkInput(nameTextField.getNameTextField(), phoneTextField.getPhoneTextField(),
                 emailTextField.getEmailTextField(), addressTextFieldTextField.getAddressTextField(),
                 tagTextField.getTagTextArea());
-        
         if (checkInputResult.equals(NAME_ERROR)) {
             nameTextField.getObject().setStyle("-fx-text-inner-color: red;");
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter name without numerical values!",
