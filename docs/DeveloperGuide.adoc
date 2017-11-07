@@ -471,7 +471,7 @@ image::FindCommandSequenceDiagram.png[width="800"]
 **Cons:** Difficult to implement because it is tedious to distinguish the user input as several parameters are `String` parameters.
 // end::findcommand[]
 
-//tag:deletecommand[]
+// tag::deletecommand[]
 === Enhancing DeleteCommand mechanism
 
 Prior to enhancement, the `DeleteCommand` class can only delete one entry at a time from the current visible
@@ -526,8 +526,7 @@ to be stored in an `ArrayList <Index>`.
 **Alternative 1 (current choice):** Change the given input from `Index` to `ArrayList<Index>` +
 **Pros:** It allows for most of the base code of `DeleteCommand` to be reused. +
 **Cons:** Have to be thorough and change `Index` to `ArrayList<Index>` in all occurrences within all relevant
-  `DeleteCommand` classes and methods. +
-//end::deletecommand[]
+`DeleteCommand` classes and methods.
 
 // tag::birthday[]
 === BirthdayCommand mechanism
