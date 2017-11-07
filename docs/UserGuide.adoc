@@ -613,6 +613,7 @@ image::UG_clear2.png[width="590"]
 
 image::divider.png[width="900"]
 
+// tag::musiccommand[]
 === Playing background music : `music play`
 image::UG_commandheader_musicplay.png[width="500"]
 
@@ -688,7 +689,8 @@ image::UG_musicpause2.png[width="590"]
 {sp}+
 
 image::divider.png[width="900"]
-
+// end::musiccommand[]
+// tag::emailcommand[]
 === Exporting contact's details as an email : `email`
 image::UG_commandheader_email.png[width="500"]
 
@@ -727,7 +729,7 @@ image::UG_email2.png[width="590"]
 {sp}+
 
 image::divider.png[width="900"]
-
+// end::emailcommand[]
 === Adding / Editing a remark : `remark`
 image::UG_commandheader_remarksadd.png[width="500"]
 

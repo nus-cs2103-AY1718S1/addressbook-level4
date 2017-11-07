@@ -473,6 +473,7 @@ does not have to be aware of new `Predicates` +
 
 ---
 
+// tag::musiccommand[]
 === Playing Music
 Unify has a built-in background music player.
 
@@ -551,7 +552,8 @@ image::MusicActivityDiagram.png[width="400"]
 **Alternative 2:** Play a random music file +
 **Pros:** Has a chance to be different the next time the user starts playing music. +
 **Cons:** User does not know which song is going to be played next. +
-
+// end::musiccommand[]
+// tag::emailcommand[]
 === Sending Email
 The sending email function is an external library and requires internet connection.
 
@@ -564,6 +566,8 @@ The sending email function is an external library and requires internet connecti
 **Alternative 2:** Let user input the subject header +
 **Pros:** Different subject header can be used for different purpose. +
 **Cons:** Can be abused and send negative subject header +
+
+// end::emailcommand[]
 
 === Aliases
 
