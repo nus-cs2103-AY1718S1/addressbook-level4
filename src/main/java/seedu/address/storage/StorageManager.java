@@ -90,7 +90,7 @@ public class StorageManager extends ComponentManager implements Storage {
             raise(new DataSavingExceptionEvent(e));
         }
     }
-
+    //@@author Pengyuz
     // ================ RecycleBinStorage methods ==============================
 
     @Override
@@ -131,4 +131,5 @@ public class StorageManager extends ComponentManager implements Storage {
             raise(new DataSavingExceptionEvent(e));
         }
     }
+    //@@author
 }

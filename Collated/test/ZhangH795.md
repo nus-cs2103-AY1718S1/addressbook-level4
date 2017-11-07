@@ -1,12 +1,12 @@
 # ZhangH795
-###### \java\seedu\address\logic\commands\TagAddCommandTest.java
+###### /java/seedu/address/logic/commands/TagAddCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
  */
 public class TagAddCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), new AddressBook(), new UserPrefs());
 
     @Test
     public void executeTagAddSinglePerson() throws Exception {
@@ -27,7 +27,8 @@ public class TagAddCommandTest {
 
         String expectedMessage = String.format(TagAddCommand.MESSAGE_ADD_TAG_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new AddressBook(),
+                new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(tagAddCommand, model, expectedMessage, expectedModel);
@@ -147,13 +148,13 @@ public class TagAddCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\TagFindCommandTest.java
+###### /java/seedu/address/logic/commands/TagFindCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code TagFindCommand}.
  */
 public class TagFindCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), new AddressBook(), new UserPrefs());
 
     @Test
     public void equals() {
@@ -234,14 +235,14 @@ public class TagFindCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\TagRemoveCommandTest.java
+###### /java/seedu/address/logic/commands/TagRemoveCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
  */
 public class TagRemoveCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), new AddressBook(), new UserPrefs());
 
     @Test
     public void executeTagRemoveSinglePersonFailure() throws Exception {
@@ -261,7 +262,8 @@ public class TagRemoveCommandTest {
         TagRemoveCommand tagRemoveCommand = prepareCommand(singlePersonIndexList, tagRemoveDescriptor);
 
         String expectedMessage = String.format(TagRemoveCommand.MESSAGE_TAG_NOT_FOUND, onlyTag.toString());
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new AddressBook(),
+                new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandFailure(tagRemoveCommand, model, expectedMessage);
