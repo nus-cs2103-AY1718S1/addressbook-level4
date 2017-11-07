@@ -128,16 +128,28 @@ Each person stored in the address book has the following attributes:
 ** More information on the supported social media types can be found in the <<social-media-integrations, Social Media Integrations>> section.
 ** A person can have multiple social media accounts, but can only have one for each social media platform
 
+* *Favorite* (optional)
+** Denote that a person is a favorite contact
+** Represented by the presence of the prefix `f/`
+** If the prefix is not present, then the person is assumed not to be a favorite contact
+
+* *Display Picture* (optional)
+** Represented with the prefix `dp/` followed by the path to the image to be used as the person's display picture
+** The specified image must be less than 1MB in size
+** If no image is specified, the default image will be used instead
+
 Example:
 
-* The parameter `n/John Doe p/81234567 a/123 Clementi Road, Blk 32, #01-01 e/johndoe@example.com t/friends t/school s/facebook john.doe10 s/instagram jdoe`
-represents a person with:
+* The parameter `n/John Doe p/81234567 a/123 Clementi Road, Blk 32, #01-01 e/johndoe@example.com t/friends t/school s/facebook john.doe10 s/instagram jdoe f/ dp//images/display.png`
+represents a person who has:
 ** The name `John Doe`,
 ** phone number `81234567`,
 ** address `123 Clementi Road, Blk 32, #01-01`,
 ** email address `johndoe@example.com`,
 ** tags `friends` and `school`,
-** a `facebook` account with the name `john.doe10` and an `instagram` account with the username `jdoe`.
+** a `facebook` account with the name `john.doe10` and an `instagram` account with the username `jdoe`,
+** been marked as a `favorite` contact,
+** the image at `/images/display.png` used as a display picture.
 
 == Features
 
@@ -325,7 +337,14 @@ Format: `clear`
 To have all your contacts displayed in the person list, use the `list` command.
 
 ====
-Command Format: `[red]#list#` +
+
+Command format: `[red]#list#` +
+
+* Listing all persons:
+`[red]#list#`
+* Listing all favorite persons [Since v1.2]:
+`[red]#list# [blue]#-fav#`
+
 Alias: `[red]#l#`
 ====
 
@@ -338,7 +357,7 @@ image::list-command-result.png[width="790"]
 
 To view the social media feed of a contact, use the `stalk` command.
 ====
-Command Format: `[red]#stalk# [green]#INDEX [SOCIAL_MEDIA_PLATFORM]#` +
+Command format: `[red]#stalk# [green]#INDEX [SOCIAL_MEDIA_PLATFORM]#` +
 Alias: `[red]#s#`
 ====
 
@@ -379,13 +398,13 @@ image:stalk-command-social-info.png[width="300"]
 To find contacts by some criteria, use the `find` command.
 
 ====
-Command Format:
+Command format:
 
 * Finding by `name`:
 `[red]#find# [green]#KEYWORD [ADDITIONAL_KEYWORDS]...#`
 * Finding by `tag`:
 `[red]#find# [blue]#-tag# [green]#KEYWORD [ADDITIONAL_KEYWORDS]...#`
-* Finding `favorite` contacts:
+* Finding `favorite` contacts [Coming in v2.0]:
 `[red]#find# [blue]#-fav#`
 
 Alias: `[red]#f#` +
@@ -417,7 +436,7 @@ Displays `favorite` contacts in the person list.
 To sort the person list, use the `sort` command.
 
 ====
-Command Format:
+Command format:
 
 * Default sort:
 `[red]#sort#`
