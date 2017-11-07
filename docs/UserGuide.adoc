@@ -153,6 +153,10 @@ _Figure 3.3: list command result_
 You can use it to view a list of sorted persons in the address book according to the alphabetical order of their names,
  and a list of sorted events in the event list according to the event time. +
 Format & Example: `sort`
+****
+* The sorting of person names is case-insensitive.
+* event is sorted in ascending order
+****
 
 You will see the following after typing sort command:
 
