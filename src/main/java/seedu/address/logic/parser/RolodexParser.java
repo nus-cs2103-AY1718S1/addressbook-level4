@@ -110,7 +110,7 @@ public class RolodexParser {
      * the user chooses.
      * @param commandWord to be parsed into Suggestion
      * @param arguments to be parsed into Suggestion
-     * @throws SuggestibleParseException if tbe command word and arguments are suggestible,
+     * @throws SuggestibleParseException if the command word and arguments are suggestible,
      * @throws ParseException otherwise.
      */
     private void handleSuggestion(String commandWord, String arguments)
@@ -129,7 +129,7 @@ public class RolodexParser {
      * the user chooses.
      * @param commandWord to be parsed into Suggestion
      * @param arguments to be parsed into Suggestion
-     * @throws SuggestibleParseException if tbe command word and arguments are suggestible,
+     * @throws SuggestibleParseException if the command word and arguments are suggestible,
      * @throws ParseException otherwise.
      */
     private void handleSuggestion(String commandWord, String arguments, ParseArgsException pae)
