@@ -39,7 +39,7 @@ include::../DeveloperGuide.adoc[tag=profilepicture]
 === External behavior
 
 ---
-#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide] #
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide]#
 
 include::../UserGuide.adoc[tag=theme]
 
