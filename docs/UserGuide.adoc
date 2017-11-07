@@ -86,6 +86,7 @@ image:help.png[] +
 _Figure 4.1.1_
 .  Press kbd:[Enter] and a *User Guide* document would show up.
 
+// tag::add[]
 === Adding a person: `add`
 
 ====
@@ -120,7 +121,10 @@ Here are some other ways you can add contacts:
 * `a n/John Watson p/83331122 e/johnw@example.com a/John Avenue, block 2, #01-01`
 * `a n/Dave`
 
-If you type in all commands shown above, you should see:
+If you type in all commands shown above, you should see Figure 4.2.3 +
+image:add3.png[add3, 600] +
+_Figure 4.2.3_
+// end::add[]
 
 === Listing all persons : `list`
 
@@ -485,6 +489,7 @@ Selects the 1st person in the results of the `find` command.
 `s 7` +
 Selects the 7th person in the address book.
 
+// tag::note[]
 === Making a note: `note`
 
 ====
@@ -520,6 +525,7 @@ Removes all existing notes from the 2nd person +
 Changes the 3rd contact's note to "This is a note" +
 * `n 3 n/` +
 Removes all existing notes from the 3rd person
+// end::note[]
 
 === Creating a backup : `backup`
 
@@ -579,6 +585,7 @@ An error message will be shown if you do not already have a backup file in the d
 image:Restore_5.png[600] +
 _Figure 4.13.5_ +
 
+// tag::sync[]
 === Logging in to Google Contacts: `login`
 
 ====
@@ -591,18 +598,18 @@ Format: `login`
 If you would like to login to Google Contacts before running `sync`:
 
 .  Type in (Figure 4.14.1) +
-`>> login  +
-image:login_1.png[600] +
+`>> login`  +
+image:login1.png[600] +
 _Figure 4.14.1_
 .   Press kbd:[Enter]. Your default browser should open a login window (Figure 4.15.2) +
-image:sync2.png[sync2, 600] +
+image:login2.png[sync2, 600] +
 _Figure 4.14.2_
 .   Enter your login details and press Next (Figure 4.15.3) +
-image:sync3.png[sync3, 600] +
+image:login3.png[sync3, 600] +
 
 _Figure 4.14.3_
 .   Allow *ABC* to access your Google Contacts information (Figure 4.14.4) +
-image:sync4.png[sync4, 600] +
+image:login4.png[sync4, 600] +
 _Figure 4.14.4_
 
 Here are some other ways to sort your contact list:
@@ -639,6 +646,7 @@ _Figure 4.15.1_ +
 .   Your contacts are now synchronised. Figure (4.15.5)
 image:sync5.png[sync5, 600] +
 _Figure 4.15.5_
+// end::sync[]
 
 === Listing entered commands : `history`
 

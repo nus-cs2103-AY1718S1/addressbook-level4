@@ -23,7 +23,8 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.model.Model;
 
 //@@author derrickchua-reused
-/**
+/**Singleton class
+ *
  * Command-line sample for the Google OAuth2 API described at <a
  * href="http://code.google.com/apis/accounts/docs/OAuth2Login.html">Using OAuth 2.0 for Login
  * (Experimental)</a>.
