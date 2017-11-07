@@ -1,0 +1,101 @@
+= See Jia Min Jasmine - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ConnectUs
+ConnectUs is a desktop address book application used for handling contact information such as name, phone, email, address and tags.
+Users can sort, import and export contacts to and from the application, as well as filter contacts based on the tags for convenience and efficiency.
+The user interacts with it using a CLI, and it has GUI elements created in JavaFX. Some commands can be done on both the command line and GUI such as emailing a contact,
+editing details of a contact, uploading photo to a contact and generating a QR code to scan the chosen contact's number on the phone for easy calling and messaging of the contact on the phone.
+The GUI has some additional elements where other than the display of all the details of the contacts, the user can view the location of the contact based on the contact's address on Google Maps,
+as well as change the colour theme.
+It is written in Java, and has about 6 kLoC. +
+This Project Portfolio showcases the contributions that I have done for this project and my proposed additional features.
+
+
+*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Undo/Redo
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=filtertag]
+include::../UserGuide.adoc[tag=removetag]
+include::../UserGuide.adoc[tag=colourtheme]
+include::../UserGuide.adoc[tag=uploadphoto]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+====== Filter by tag feature
+ConnectUs aims to give convenience while being user-friendly. By having a feature to filter the contacts based on the tags,
+it can speed up the process of searching for the contact and save precious time especially when there are many contacts in the application. +
+The feature is executed by typing `tag KEYWORD [MORE_KEYWORDS]` on the command line to make it simple and user-friendly for the user to use.
+The command allows multiple keywords of the tag names to give the users the flexibility to optimise their search.
+
+====== Remove tag feature
+In terms of tag features, ConnectUs only had the ability to add and edit the tags of a contact. If the user wanted to remove a specific tag, he/she would have to
+go and edit all the contacts that has the relevant tag to remove it. Hence, this feature allows the user to remove the specific tag from all contacts without
+the trouble of manually editing each contact. This will provide convenience and saves the user a lot of time. +
+The feature is executed by typing `rtag KEYWORD [MORE_KEYWORDS]` on the command line to make it simple and user-friendly for the user to use.
+The command allows multiple keywords of the tag names in case the user wants to remove multiple tags simultaneously.
+
+====== Colour theme feature
+This feature was added to allow users to personalize the application by changing to the colour theme of their preference.
+Some users may want to feel more familiar with the application or they may want a design change once in a while. This feature can help cater to these users. +
+The theme can be changed by clicking on the `File` drop down menu and selecting the theme. This is to make it user-friendly and
+easier for users to change the colour theme as the colour themes are all listed in the menu and they can directly change the colour theme by simply clicking instead of
+having to type in the command line and searching for what available colour themes are there.
+
+====== Upload photo feature
+Since ConnectUs is mainly targeted at business professionals, it is important to know their client's face and by having a feature to upload photo to the contacts,
+users can easily remember the client's face by seeing the photo of their contacts in the application. +
+The feature allows users to upload photo by either choosing the image from a file explorer or typing in the file path of the image on the command line.
+Both methods can be executed by typing on the command line the same command `photo INDEX` with the inclusion of the file path after the stated command if the user chooses the latter method.
+This is to allow the user flexibility in choosing the method they prefer to upload their photo and lessens the need for them to remember additional commands.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=filtertag]
+include::../DeveloperGuide.adoc[tag=removetag]
+include::../DeveloperGuide.adoc[tag=colourtheme]
+include::../DeveloperGuide.adoc[tag=uploadphoto]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Filters contact by tags with a click of a button `Coming in v2.0`
+
+{Explain similar to the Undo/Redo feature above.}
+This feature is an GUI enhancement to the filter by tags feature where user can input in the tag name on a text-field
+and click on the `Filter` button instead of using the command line. This can allow the user a more direct approach to filtering the
+contacts by tag(s) instead of remembering the command to type in the command line. Other filtering methods can also be implemented such
+as filter contacts by location to let user easily find contacts within an area. It can be implemented on both the command line or GUI.
+
+=== Enhancement Proposed: Removing tags by clicking on a tag `Coming in v2.0`
+This is an enhancement to the remove tag feature to allow users to remove the tag that they click on at the `PersonCard` instead of using the command line.
+Upon clicking on the tag, a drop down menu will come out to allow the user to choose to delete this tag only or delete this tag from all contacts.
+This allows user to remove tags just by using the GUI and gives them flexibility in deleting a tag from a specific contact or from all contacts.
+
+=== Other contributions
+
+* In-charge of weekly deliverable and dateline
+* Found some bugs in other team's project during Acceptance Testing (Issues https://github.com/CS2103AUG2017-T11-B2/main/issues/134[134], https://github.com/CS2103AUG2017-T11-B2/main/issues/136[136])
+* Gave suggestions to another team during Acceptance Testing (Issue https://github.com/CS2103AUG2017-T11-B2/main/issues/137[137] )
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}
