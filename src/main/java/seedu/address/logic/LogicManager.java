@@ -38,6 +38,7 @@ public class LogicManager extends ComponentManager implements Logic {
     //@@author alexfoodw
     /**
      * Completes the final step of FacebookAddCommand
+     * Stores the current model and adds the contact to the model.
      */
     public void completeFacebookAddCommand(FacebookAddCommand command, String commandText) throws CommandException {
         command.setData(model, storage, history, undoRedoStack);

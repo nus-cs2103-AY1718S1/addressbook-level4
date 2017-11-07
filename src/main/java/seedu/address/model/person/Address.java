@@ -18,6 +18,7 @@ public class Address {
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
+    public static final String BLANK_ADDRESS = " ";
 
     public final String value;
 
@@ -26,7 +27,7 @@ public class Address {
      * Constructs a blank address field
      */
     public Address() {
-        this.value = " ";
+        this.value = BLANK_ADDRESS;
     }
     //@@author
 

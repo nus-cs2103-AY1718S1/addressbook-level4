@@ -26,8 +26,8 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "fbaddall";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": adds all available friends from a Facebook account. (Due to current runtime constraints, "
-            + "maximum friends that can be added is capped at 30.)\n"
+            + ": adds all available friends from a Facebook account. (maximum friends that can be added is "
+            + "currently capped at 30.)\n"
             + "Alias: " + COMMAND_ALIAS + "\n";
     public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_ERROR = "Error with Facebook Tagable Friends API call."
             + "User may not be registered as 'Test User'";
@@ -35,9 +35,10 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
     public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_SUCCESS = " valid friends added from Facebook!";
     public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATED = "User not authenticated, "
             + "log in to proceed.";
+    public static final String EXTRACT_USER_ID_REGEX = "set=a.(.*?)\\&type";
 
     private static Facebook facebookInstance;
-    private static String currentUserID;
+    private static String currentUserId;
     private static String currentUserName;
     private static ResponseList<TaggableFriend> currentList;
     private static Paging<TaggableFriend> currentPaging;
@@ -48,10 +49,10 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
 
     /**
      * Returns the current Facebook ID of the user being added
-     * @return currentUserID
+     * @return currentUserId
      */
     public static String getCurrentUserId() {
-        return currentUserID;
+        return currentUserId;
     }
 
     /**
@@ -73,7 +74,7 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
      * Adds all facebook contacts to addressbook
      * @throws CommandException
      */
-    public static void addAllFriends() throws CommandException {
+    public static void addFirstFriend() throws CommandException {
         facebookInstance = FacebookConnectCommand.getFacebookInstance();
         try {
             currentList = facebookInstance.getTaggableFriends();
@@ -140,13 +141,13 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
      */
     public static void setUserId(String url) {
         // extract photo ID
-        Pattern p = Pattern.compile("set=a.(.*?)\\&type");
+        Pattern p = Pattern.compile(EXTRACT_USER_ID_REGEX);
         Matcher m = p.matcher(url);
         m.matches();
         m.find();
         String groupId = m.group(1);
         String[] parts = groupId.split("\\.");
-        currentUserID = parts[2];
+        currentUserId = parts[2];
     }
 
     /**
@@ -170,7 +171,7 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
             return new CommandResult(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATED);
         } else {
             BrowserPanel.setProcessType(COMMAND_WORD);
-            addAllFriends();
+            addFirstFriend();
             return new CommandResult(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATED);
         }
     }

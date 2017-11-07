@@ -72,7 +72,9 @@ public class FacebookConnectCommand extends Command {
     /**
      * Returns name of the authenticated user
      */
-    public static String getAuthenticatedUsername() { return authenticatedUsername; }
+    public static String getAuthenticatedUsername() {
+        return authenticatedUsername;
+    }
 
     /**
      * Returns page of the authenticated user
@@ -112,15 +114,6 @@ public class FacebookConnectCommand extends Command {
         try {
             authenticatedUsername = facebookInstance.getName();
             authenticatedUserId = facebookInstance.getMe().getId();
-
-            /*
-            ResponseList<TaggableFriend> page1 = facebookInstance.getTaggableFriends();
-            Paging<TaggableFriend> paging1 = page1.getPaging();
-            System.out.println("Page 1: " + page1);
-            System.out.println("Next: " + page1.getPaging().getNext());
-            System.out.println("size: " + page1.size());
-            *///end
-            //start
         } catch (FacebookException e) {
             throw new CommandException("Error in Facebook Authorisation");
         }

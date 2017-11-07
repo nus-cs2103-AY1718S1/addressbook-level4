@@ -284,7 +284,7 @@ public class BrowserPanel extends UiPart<Region> {
 
             if (!FacebookConnectCommand.isAuthenticated()) {
                 FacebookConnectCommand.completeAuth(browser.getEngine().getLocation());
-                FacebookAddAllFriendsCommand.addAllFriends();
+                FacebookAddAllFriendsCommand.addFirstFriend();
             } else {
                 FacebookAddAllFriendsCommand.setUserId(browser.getEngine().getLocation());
                 FacebookAddCommand facebookAddCommandForAddAll = new FacebookAddCommand(true);
