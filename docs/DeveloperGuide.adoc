@@ -669,7 +669,7 @@ image::SwitchThemeCommandActivityDiagram.png[width="900"]
 `Timetable` is an enhancement of UI. The role of the timetable view is to display a timetable of all the lessons listed in the display panel. +
 
 `Timetable` mechanism is facilitated by the `GridPane` properties in javafx. +
-The first row of timetable view is the header for time slot. The range is from 0800 to 2000. +
+The first row of timetableView is the header for time slot. In our software, the range for available time slots are from 0800 to 2000 +
 The generation of timetable column header is implemented this way:
 [source,java]
 ----
@@ -678,7 +678,7 @@ The generation of timetable column header is implemented this way:
     }
 ----
 
-The first col of timetable view is the header for weekday. The range is from Monday to Friday.
+The first column of timetableView is the header for weekday. In our software, the range is from Monday to Friday. +
 The generation of timetable row header is implemented this way:
 [source,java]
 ----
@@ -688,7 +688,10 @@ The generation of timetable row header is implemented this way:
 ----
 +
 
-When the `view` command is used, a number of lessons will be displayed on the display panel. The `handleViewedLessonEvent()` will then generate the timetable view and set it as visible. +
+When the view command is executed, a number of lessons will be displayed on the display panel. +
+In the CombinePanel, the handleViewedLessonEvent() will call generateTimeTableGrid() to set up the timetableView.  +
+The generateTimeTableGrid() will obtain the grid data from generateTimeTableData(). +
+After that, it will display the data onto the timetableView.
 
 The generation of timetable data is implemented this way:
 [source,java]
@@ -732,8 +735,11 @@ The maximum number of notes for a module is 9.
 
 `StickyNotes` mechanism is facilitated by the `GridPane` properties in javafx. +
 
-When the `remark` command is used, a new note will be created and linked to a module. +
-The `handleRemarkChangedEvent()` will then generate the stickynotes view and set it as visible. +
+When the remark command is executed, a new note will be created and linked to a module. +
+The handleRemarkChangedEvent() will call stickyNotesInit() to set up the stickyNotesView. +
+The stickyNotesInit() will obtain the grid data from noteDataInit(). +
+After that, it will display the data onto the stickyNotesView.
+
 
 The generation of stickynotes data is implemented this way:
 [source,java]
@@ -760,9 +766,9 @@ public void stickyNotesInit() {
 **Cons:** THe developer needs to understand how to code for UI. +
 **Alternative2:** Using Scene Builder to create stickynotes view +
 **Pros:** It is easier to visualise the layout and set the properties +
-**Cons:** There are many limitations such as unable to show only a few TextArea objects. +
+**Cons:** There are many limitations such as unable to show only a few `TextArea` objects. +
 
-// end::timetable[]
+// end::stickyNote[]
 
 === Logging
 
