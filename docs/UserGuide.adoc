@@ -232,6 +232,7 @@ Edits the tag of the 1st person in the results of the `find` command.
 When you edit tags, the existing tags of the person will be removed. To add tags cumulatively, use `addtag` instead. +
 ====
 
+// tag::addremovetag[]
 === Adding a tag to a person : `addtag`
 
 ====
@@ -310,7 +311,9 @@ _Figure 4.7.3_
 .  Press kbd:[Enter] and you should see that this tag has been deleted from all contacts. (Figure 4.7.4) +
 image:deletetag_4.png[600] +
 _Figure 4.7.4_
+// end::addremovetag[]
 
+// tag::addremovemeeting[]
 === Adding a meeting to a person : `addmeeting`
 
 ====
@@ -375,6 +378,7 @@ Deletes the 1st meeting in the results of the `find` command.
 * `find t/friends` +
 `dm 4` +
 Deletes the 4th meeting in the results of the `find` command.
+// end::addremovemeeting[]
 
 === Locating persons by keywords: `find`
 
@@ -413,7 +417,7 @@ Lists any person having the name `Watson`
 * `find j*` +
 Lists any person whose name starts with `j`
 
-
+// tag::sort[]
 === Sorting contact list: `sort`
 
 ====
@@ -445,7 +449,7 @@ Sorts the contact list by phone number.
 Sorts the contact list by tag.
 * `sort meeting` +
 Sorts the contact list by meeting time.
-
+// end::sort[]
 
 
 === Selecting a person : `select`
