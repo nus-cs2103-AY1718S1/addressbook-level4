@@ -15,10 +15,10 @@ import seedu.address.ui.testutil.EventsCollectorRule;
 //@@author freesoup
 public class ImportCommandParserTest {
 
-    private ImportCommandParser parser = new ImportCommandParser();
-
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+    private ImportCommandParser parser = new ImportCommandParser();
 
     @Test
     public void parse_wrongFileFormat_throwsParseException() {
