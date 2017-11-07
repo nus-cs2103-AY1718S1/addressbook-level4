@@ -1,5 +1,5 @@
 # TravisPhey
-###### \java\seedu\address\logic\commands\FindByNumberTest.java
+###### /java/seedu/address/logic/commands/FindByNumberTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -98,7 +98,7 @@ public class FindByNumberTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FindCommandTest.java
+###### /java/seedu/address/logic/commands/FindCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 

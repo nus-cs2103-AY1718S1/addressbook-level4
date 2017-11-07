@@ -1,9 +1,9 @@
 # vmlimshimin
-###### \java\seedu\address\logic\commands\DeleteCommand.java
+###### /java/seedu/address/logic/commands/DeleteCommand.java
 ``` java
             queue.offer(personToDelete);
 ```
-###### \java\seedu\address\logic\commands\DeleteCommand.java
+###### /java/seedu/address/logic/commands/DeleteCommand.java
 ``` java
     @Override
     public void setData(Model model, CommandHistory commandHistory,
@@ -13,11 +13,11 @@
     }
 }
 ```
-###### \java\seedu\address\logic\commands\DeleteMultipleCommand.java
+###### /java/seedu/address/logic/commands/DeleteMultipleCommand.java
 ``` java
                 queue.offer(personToDelete);
 ```
-###### \java\seedu\address\logic\commands\DeleteMultipleCommand.java
+###### /java/seedu/address/logic/commands/DeleteMultipleCommand.java
 ``` java
     @Override
     public void setData(Model model, CommandHistory commandHistory,
@@ -27,7 +27,7 @@
     }
 }
 ```
-###### \java\seedu\address\logic\commands\RecentlyDeletedCommand.java
+###### /java/seedu/address/logic/commands/RecentlyDeletedCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -76,7 +76,7 @@ public class RecentlyDeletedCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\UndoableCommand.java
+###### /java/seedu/address/logic/commands/UndoableCommand.java
 ``` java
     /**
      * Stores the current state of {@code model#addressBook}.
@@ -88,7 +88,7 @@ public class RecentlyDeletedCommand extends Command {
     }
 
 ```
-###### \java\seedu\address\logic\commands\UndoableCommand.java
+###### /java/seedu/address/logic/commands/UndoableCommand.java
 ``` java
     /**
      * Reverts the AddressBook to the state before this command
@@ -103,7 +103,7 @@ public class RecentlyDeletedCommand extends Command {
     }
 
 ```
-###### \java\seedu\address\logic\commands\UndoCommand.java
+###### /java/seedu/address/logic/commands/UndoCommand.java
 ``` java
     @Override
     public void setData(Model model, CommandHistory commandHistory,
@@ -114,22 +114,22 @@ public class RecentlyDeletedCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\LogicManager.java
+###### /java/seedu/address/logic/LogicManager.java
 ``` java
     private final RecentlyDeletedQueue queue;
 
 ```
-###### \java\seedu\address\logic\LogicManager.java
+###### /java/seedu/address/logic/LogicManager.java
 ``` java
         this.queue = new RecentlyDeletedQueue();
     }
 
 ```
-###### \java\seedu\address\logic\LogicManager.java
+###### /java/seedu/address/logic/LogicManager.java
 ``` java
             command.setData(model, history, undoRedoStack, queue);
 ```
-###### \java\seedu\address\logic\RecentlyDeletedQueue.java
+###### /java/seedu/address/logic/RecentlyDeletedQueue.java
 ``` java
 package seedu.address.logic;
 
@@ -183,13 +183,13 @@ public class RecentlyDeletedQueue {
 
 }
 ```
-###### \java\seedu\address\storage\AddressBookStorage.java
+###### /java/seedu/address/storage/AddressBookStorage.java
 ``` java
     void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
 
 }
 ```
-###### \java\seedu\address\storage\StorageManager.java
+###### /java/seedu/address/storage/StorageManager.java
 ``` java
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
@@ -197,7 +197,7 @@ public class RecentlyDeletedQueue {
     }
 
 ```
-###### \java\seedu\address\storage\XmlAddressBookStorage.java
+###### /java/seedu/address/storage/XmlAddressBookStorage.java
 ``` java
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {

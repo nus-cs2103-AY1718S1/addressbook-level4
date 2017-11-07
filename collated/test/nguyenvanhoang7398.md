@@ -1,5 +1,5 @@
 # nguyenvanhoang7398
-###### \java\seedu\address\logic\commands\AddMultipleByTsvCommandTest.java
+###### /java/seedu/address/logic/commands/AddMultipleByTsvCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -110,46 +110,8 @@ public class AddMultipleByTsvCommandTest {
             return null;
         }
 
-        @Override
-        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
-            fail("This method should not be called.");
-        }
-    }
-
-    /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
-     */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
-        @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-    }
-
-    /**
-     * A Model stub that always accept the person being added.
-     */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
-
-        @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            personsAdded.add(new Person(person));
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-    }
-}
 ```
-###### \java\seedu\address\logic\commands\FindTagCommandTest.java
+###### /java/seedu/address/logic/commands/FindTagCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -252,7 +214,7 @@ public class FindTagCommandTest {
     }
 }
 ```
-###### \java\seedu\address\testutil\TsvFileBuilder.java
+###### /java/seedu/address/testutil/TsvFileBuilder.java
 ``` java
 package seedu.address.testutil;
 
@@ -303,7 +265,7 @@ public class TsvFileBuilder {
     }
 }
 ```
-###### \java\seedu\address\testutil\TypicalTsvFiles.java
+###### /java/seedu/address/testutil/TypicalTsvFiles.java
 ``` java
 package seedu.address.testutil;
 
@@ -318,7 +280,7 @@ public class TypicalTsvFiles {
             + "2 new person (people) duplicated, 0 entry (entries) failed: ";
 }
 ```
-###### \java\systemtests\AddMultipleByTsvCommandSystemTest.java
+###### /java/systemtests/AddMultipleByTsvCommandSystemTest.java
 ``` java
 package systemtests;
 
@@ -414,11 +376,11 @@ public class AddMultipleByTsvCommandSystemTest extends AddressBookSystemTest {
     }
 }
 ```
-###### \java\systemtests\AddressBookSystemTest.java
+###### /java/systemtests/AddressBookSystemTest.java
 ``` java
         String selectedCardWebsite = getPersonListPanel().getHandleToSelectedCard().getWebsite();
 ```
-###### \java\systemtests\FindTagCommandSystemTest.java
+###### /java/systemtests/FindTagCommandSystemTest.java
 ``` java
 package systemtests;
 
