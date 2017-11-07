@@ -109,7 +109,7 @@ We have colors for tags so it is easier to distinguish different tags.
 ---
 #Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=colortag]
+include::../DeveloperGuide.adoc[tag=tagcolor]
 
 #End of Extract#
 
