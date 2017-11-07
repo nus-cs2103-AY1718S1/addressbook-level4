@@ -218,6 +218,7 @@ Unmarks the 1st contact as a 'Favourite' in the address book.
 * `fr 1`
 // end::faveSystem[]
 
+// tag::group[]
 === Creating a group: `gcreate` (Since V1.2)
 
 Adds a group to the address book. +
@@ -280,7 +281,9 @@ Examples:
 * `gdelete 2` +
 Deletes the 2nd group in the address book.
 * `gd 2`
+// end::group[]
 
+// tag::calendar[]
 === Adding a schedule to a person : `cadd` (Since V1.4)
 
 Adds a person's Google Calendar events to schedules. +
@@ -297,6 +300,7 @@ Alias: `ca`
 Examples:
 
 * `cadd p/2 i/xderek105243x@gmail.com`
+// end::calendar[]
 
 // tag::profPicSystem[]
 === Setting the photo of a person: `ppset` (Since V1.4)
@@ -332,6 +336,7 @@ Examples:
 * `ppreset 1`
 // end::profPicSystem[]
 
+// tag::sort[]
 === Sorting persons : `sort` (Since V1.1)
 
 Sorts persons based on prefix specified in either ascending or descending order. +
@@ -351,6 +356,8 @@ Examples:
 Sorts persons by name in ascending order. +
 * `sort p/r` +
 Sorts persons by phone in descending order.
+
+// end::sort[]
 
 === Listing entered commands : `history`
 
