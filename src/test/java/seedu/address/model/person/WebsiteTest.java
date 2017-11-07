@@ -15,17 +15,6 @@ public class WebsiteTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void websiteConstructorTest() throws Exception {
-        thrown.expect(IllegalValueException.class);
-
-        // Valid website
-        Website website = new Website(null);
-
-        // Invalid website
-        website = new Website("asd");
-    }
-
-    @Test
     public void isValidWebsite() {
         // invalid Websites
         assertFalse(Website.isValidWebsite("")); // empty string
