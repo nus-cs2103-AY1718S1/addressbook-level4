@@ -172,6 +172,7 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::faveSystem[]
 === Marking a person as 'Favourite': `fadd` (Since V1.2)
 
 Marks the person identified by the index number used in the last person listing as a 'Favourite'. +
@@ -207,6 +208,7 @@ Examples:
 * `fremove 1`
 Unmarks the 1st contact as a 'Favourite' in the address book.
 * `fr 1`
+// end::faveSystem[]
 
 === Creating a group: `gcreate` (Since V1.2)
 
@@ -288,6 +290,7 @@ Examples:
 
 * `cadd p/2 i/b8dkov028k71krma20qbbc8f3s`
 
+// tag::profPicSystem[]
 === Setting the photo of a person: `ppset` (Since V1.4)
 
 Sets the photo of a person. +
@@ -319,7 +322,7 @@ Alias: ppr
 Examples:
 
 * `ppreset 1`
-
+// end::profPicSystem[]
 
 === Sorting persons : `sort` (Since V1.1)
 
