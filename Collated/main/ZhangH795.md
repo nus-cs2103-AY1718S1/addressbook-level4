@@ -1,5 +1,5 @@
 # ZhangH795
-###### \java\seedu\address\logic\commands\TagAddCommand.java
+###### /java/seedu/address/logic/commands/TagAddCommand.java
 ``` java
 /**
  * Edits the details of an existing person in the address book.
@@ -271,7 +271,7 @@ public class TagAddCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\TagFindCommand.java
+###### /java/seedu/address/logic/commands/TagFindCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book whose name contains a certain tag.
@@ -306,7 +306,7 @@ public class TagFindCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\TagRemoveCommand.java
+###### /java/seedu/address/logic/commands/TagRemoveCommand.java
 ``` java
 
 /**
@@ -618,7 +618,7 @@ public class TagRemoveCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\TagAddCommandParser.java
+###### /java/seedu/address/logic/parser/TagAddCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new TagAddCommand object
@@ -692,7 +692,7 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\TagFindCommandParser.java
+###### /java/seedu/address/logic/parser/TagFindCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new TagFindCommand object
@@ -716,7 +716,7 @@ public class TagFindCommandParser implements Parser<TagFindCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\TagRemoveCommandParser.java
+###### /java/seedu/address/logic/parser/TagRemoveCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new TagRemoveCommand object
@@ -790,7 +790,7 @@ public class TagRemoveCommandParser implements Parser<TagRemoveCommand> {
 
 }
 ```
-###### \resources\view\BrightTheme.css
+###### /resources/view/BrightTheme.css
 ``` css
 .background {
     -fx-background-color: derive(#1d1d1d, 20%);
@@ -800,7 +800,7 @@ public class TagRemoveCommandParser implements Parser<TagRemoveCommand> {
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: orange;
+    -fx-text-fill: tomato;
     -fx-opacity: 0.9;
 }
 
@@ -934,7 +934,7 @@ public class TagRemoveCommandParser implements Parser<TagRemoveCommand> {
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: coral;
+    -fx-background-color: skyblue;
 }
 
 .list-cell:filled:selected #cardPane {
@@ -1041,6 +1041,7 @@ public class TagRemoveCommandParser implements Parser<TagRemoveCommand> {
  * Author: Pedro Duque Vieira
  * http://pixelduke.wordpress.com/2012/10/23/jmetro-windows-8-controls-on-java/
  */
+ /*
 .button {
     -fx-padding: 5 22 5 22;
     -fx-border-color: #e2e2e2;
@@ -1052,7 +1053,7 @@ public class TagRemoveCommandParser implements Parser<TagRemoveCommand> {
     -fx-text-fill: #d8d8d8;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
-
+*/
 .button:hover {
     -fx-background-color: derive(orange, 50%);
 }
@@ -1159,6 +1160,7 @@ public class TagRemoveCommandParser implements Parser<TagRemoveCommand> {
 
 #filterField, #personListPanel, #personWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
+    -fx-text-fill: white;
 }
 
 #resultDisplay .content {
@@ -1175,6 +1177,20 @@ public class TagRemoveCommandParser implements Parser<TagRemoveCommand> {
 }
 
 #tags .label {
+    -fx-text-fill: white;
+    -fx-background-color: #3e7b91;
+    -fx-padding: 1 3 1 3;
+    -fx-border-radius: 2;
+    -fx-background-radius: 2;
+    -fx-font-size: 11;
+}
+
+#eventStatus {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#eventStatus  {
     -fx-text-fill: white;
     -fx-background-color: #3e7b91;
     -fx-padding: 1 3 1 3;

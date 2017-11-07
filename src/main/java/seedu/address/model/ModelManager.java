@@ -78,20 +78,24 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
         indicateRecycleBinChanged();
     }
+    //@@author Pengyuz
     @Override
     public void resetRecyclebin(ReadOnlyAddressBook newData) {
         recycleBin.resetData(newData);
         indicateRecycleBinChanged();
     }
+    //@@author
 
     @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
     }
+    //@@author Pengyuz
     @Override
     public ReadOnlyAddressBook getRecycleBin() {
         return recycleBin;
     }
+    //@@author
 
     /**
      * Raises an event to indicate the model has changed
@@ -99,10 +103,11 @@ public class ModelManager extends ComponentManager implements Model {
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
     }
-
+    //@@author Pengyuz
     private void indicateRecycleBinChanged() {
         raise(new RecyclebinChangeEvent(recycleBin));
     }
+    //@@author
 
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
@@ -126,6 +131,8 @@ public class ModelManager extends ComponentManager implements Model {
         indicateRecycleBinChanged();
         indicateAddressBookChanged();
     }
+    //@@author
+
     //@@author Pengyuz
     @Override
     public synchronized void deleteBinPerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException {
@@ -134,6 +141,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
         indicateRecycleBinChanged();
     }
+    //@@author
 
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
@@ -152,6 +160,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
         indicateAddressBookChanged();
     }
+    //@@author
 
     //@@author Pengyuz
     @Override
@@ -172,6 +181,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
         indicateRecycleBinChanged();
     }
+    //@@author
 
     @Override
     public void sortPerson(Comparator<ReadOnlyPerson> sortType, boolean isDescending) throws EmptyListException {
@@ -245,21 +255,25 @@ public class ModelManager extends ComponentManager implements Model {
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
+    //@@author Pengyuz
     @Override
     public ObservableList<ReadOnlyPerson> getRecycleBinPersonList() {
         return FXCollections.unmodifiableObservableList(filteredRecycle);
     }
+    //@@author
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
+    //@@author Pengyuz
     @Override
     public void updateFilteredBinList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredRecycle.setPredicate(predicate);
     }
+    //@@author
 
     @Override
     public boolean equals(Object obj) {
