@@ -10,8 +10,6 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.model.person.email.Email;
-import seedu.address.model.person.email.UniqueEmailList;
 import seedu.address.model.person.weblink.UniqueWebLinkList;
 import seedu.address.model.person.weblink.WebLink;
 import seedu.address.model.tag.Tag;
@@ -26,7 +24,7 @@ import seedu.address.model.util.SampleUserPersonUtil;
 public class UserPerson implements ReadOnlyPerson {
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
-    private ObjectProperty<UniqueEmailList> emails;
+    private ObjectProperty<ArrayList<Email>> emails;
     private ObjectProperty<Address> address;
     private ObjectProperty<Remark> remark;
     private ObjectProperty<UniqueTagList> tags;
@@ -44,11 +42,11 @@ public class UserPerson implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public UserPerson(Name name, Phone phone, Set<Email> email, Address address, Set<WebLink> webLinks) {
+    public UserPerson(Name name, Phone phone, ArrayList<Email> email, Address address, Set<WebLink> webLinks) {
         requireAllNonNull(name, phone, email, address);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
-        this.emails = new SimpleObjectProperty<>(new UniqueEmailList(email));
+        this.emails = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(new Remark(""));
         this.tags = new SimpleObjectProperty<>(new UniqueTagList());
@@ -61,7 +59,7 @@ public class UserPerson implements ReadOnlyPerson {
     public UserPerson(ReadOnlyPerson src) {
         this.name = new SimpleObjectProperty<>(src.getName());
         this.phone = new SimpleObjectProperty<>(src.getPhone());
-        this.emails = new SimpleObjectProperty<>(new UniqueEmailList());
+        this.emails = new SimpleObjectProperty<>(src.getEmail());
         this.address = new SimpleObjectProperty<>(src.getAddress());
         this.remark = new SimpleObjectProperty<>(new Remark(""));
         this.tags = new SimpleObjectProperty<>(new UniqueTagList());
@@ -96,18 +94,18 @@ public class UserPerson implements ReadOnlyPerson {
         return phone.get();
     }
 
-    public void setEmail(Set<Email> replacement) {
-        this.emails.set(new UniqueEmailList(replacement));
+    public void setEmail(ArrayList<Email> email) {
+        this.emails.set(requireNonNull(email));
     }
 
     @Override
-    public ObjectProperty<UniqueEmailList> emailProperty() {
+    public ObjectProperty<ArrayList<Email>> emailProperty() {
         return emails;
     }
 
     @Override
-    public Set<Email> getEmail() {
-        return emails.get().toSet();
+    public ArrayList<Email> getEmail() {
+        return emails.get();
     }
 
     public String getEmailAsText() {
@@ -219,7 +217,7 @@ public class UserPerson implements ReadOnlyPerson {
         }
         return outputWebLinkList;
     }
-    
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

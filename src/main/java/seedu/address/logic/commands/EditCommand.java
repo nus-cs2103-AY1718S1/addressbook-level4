@@ -23,7 +23,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.email.Email;
+import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -124,7 +124,7 @@ public class EditCommand extends UndoableCommand {
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Set<Email> updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
+        ArrayList<Email> updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Remark updatedRemark = personToEdit.getRemark();
         Set<WebLink> updatedWebLinks = editPersonDescriptor.getWebLinks().orElse(personToEdit.getWebLinks());
@@ -163,7 +163,7 @@ public class EditCommand extends UndoableCommand {
     public static class EditPersonDescriptor {
         private Name name;
         private Phone phone;
-        private Set<Email> email;
+        private ArrayList<Email> email;
         private Address address;
         //@@author zhoukai07
         private boolean clearTags = false;
@@ -210,11 +210,11 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(phone);
         }
 
-        public void setEmail(Set<Email> email) {
+        public void setEmail(ArrayList<Email> email) {
             this.email = email;
         }
 
-        public Optional<Set<Email>> getEmail() {
+        public Optional<ArrayList<Email>> getEmail() {
             return Optional.ofNullable(email);
         }
 

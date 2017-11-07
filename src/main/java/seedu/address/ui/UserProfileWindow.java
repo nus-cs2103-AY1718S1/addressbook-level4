@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
@@ -21,7 +22,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.UserPersonChangedEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.email.Email;
+import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.UserPerson;
@@ -173,12 +174,11 @@ public class UserProfileWindow extends UiPart<Region> {
 
         try {
             String[] emails = emailTextField.getText().split(", ");
-            Comparator<Email> comparator = Comparator.comparing(Email::toStringEmail);
-            Set<Email> emailSet = new TreeSet<>(comparator);
+            ArrayList<Email> emailList = new ArrayList<>();
             for (String curr : emails) {
-                emailSet.add(new Email(curr));
+                emailList.add(new Email(curr));
             }
-            userPerson.setEmail(emailSet);
+            userPerson.setEmail(emailList);
 
         } catch (IllegalValueException e) {
             statusLabel.setText("Email(s) must be in x@x format");

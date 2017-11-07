@@ -8,7 +8,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.email.Email;
+import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -74,13 +74,12 @@ public class SampleDataUtil {
 
         return tags;
     }
-    //@@author zhoukai07
     /**
      * @return a email set containing the list of strings given
      * @throws IllegalValueException
      * */
-    public static Set<Email> getEmailSet(String... emails) throws IllegalValueException {
-        HashSet<Email> emailList = new HashSet<>();
+    public static ArrayList<Email> getEmailSet(String... emails) throws IllegalValueException {
+        ArrayList<Email> emailList = new ArrayList<>();
         for (String e : emails) {
             emailList.add(new Email(e));
         }
@@ -95,5 +94,4 @@ public class SampleDataUtil {
         }
         return webLinks;
     }
-    //@@author
 }

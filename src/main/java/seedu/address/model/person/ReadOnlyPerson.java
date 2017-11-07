@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
-import seedu.address.model.person.email.Email;
-import seedu.address.model.person.email.UniqueEmailList;
 import seedu.address.model.person.weblink.UniqueWebLinkList;
 import seedu.address.model.person.weblink.WebLink;
 import seedu.address.model.tag.Tag;
@@ -21,8 +19,8 @@ public interface ReadOnlyPerson {
     Name getName();
     ObjectProperty<Phone> phoneProperty();
     Phone getPhone();
-    ObjectProperty<UniqueEmailList> emailProperty();
-    Set<Email> getEmail();
+    ObjectProperty<ArrayList<Email>> emailProperty();
+    ArrayList<Email> getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
     ObjectProperty<Remark> remarkProperty();
@@ -78,11 +76,12 @@ public interface ReadOnlyPerson {
                 .append(" ")
                 .append(getPhone())
                 .append(" ")
+                .append(getEmail())
+                .append(" ")
                 .append(getAddress())
                 .append(" ")
                 .append(getRemark())
                 .append(" ");
-        getEmail().forEach(builder::append);
         getTags().forEach(builder::append);
         builder.append(" ");
         getWebLinks().forEach(builder::append);

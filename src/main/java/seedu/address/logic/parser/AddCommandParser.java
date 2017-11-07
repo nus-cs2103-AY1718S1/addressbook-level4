@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEB_LINK;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -16,7 +17,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.email.Email;
+import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -56,7 +57,12 @@ public class AddCommandParser implements Parser<AddCommand> {
             } else {
                 phone = checkPhone.get();
             }
-            Set<Email> email = ParserUtil.parseEmail(argMultimap.getAllValues(PREFIX_EMAIL));
+            ArrayList<Email> email = ParserUtil.parseEmail(argMultimap.getAllValues(PREFIX_EMAIL));
+            //if(checkEmail.isEmpty()) {
+            //    email = new ArrayList<>();
+            //} else {
+            //    email = checkEmail;
+            //}
             Optional<Address> checkAddress = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS));
             if (!checkAddress.isPresent()) {
                 address = new Address(null);

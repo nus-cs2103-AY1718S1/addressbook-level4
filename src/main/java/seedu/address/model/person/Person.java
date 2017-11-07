@@ -11,8 +11,6 @@ import java.util.Set;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
-import seedu.address.model.person.email.Email;
-import seedu.address.model.person.email.UniqueEmailList;
 import seedu.address.model.person.weblink.UniqueWebLinkList;
 import seedu.address.model.person.weblink.WebLink;
 import seedu.address.model.tag.Tag;
@@ -27,7 +25,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
     //@@author zhoukai07
-    private ObjectProperty<UniqueEmailList> emails;
+    private ObjectProperty<ArrayList<Email>> emails;
     //@@author
     private ObjectProperty<Address> address;
     private ObjectProperty<Remark> remark;
@@ -37,12 +35,12 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Set<Email> email, Address address,
+    public Person(Name name, Phone phone, ArrayList<Email> email, Address address,
                   Remark remark, Set<Tag> tags, Set<WebLink> webLinks) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
-        this.emails = new SimpleObjectProperty<>(new UniqueEmailList(email));
+        this.emails = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(remark);
         // protect internal tags from changes in the arg list
@@ -87,19 +85,19 @@ public class Person implements ReadOnlyPerson {
     }
 
     //@@author zhoukai07
-    public void setEmail(Set<Email> replacement) {
-        this.emails.set(new UniqueEmailList(replacement));
+    public void setEmail(ArrayList<Email> email) {
+        this.emails.set(requireNonNull(email));
     }
     //@@author
 
     @Override
-    public ObjectProperty<UniqueEmailList> emailProperty() {
+    public ObjectProperty<ArrayList<Email>> emailProperty() {
         return emails;
     }
 
     @Override
-    public Set<Email> getEmail() {
-        return emails.get().toSet();
+    public ArrayList<Email> getEmail() {
+        return emails.get();
     }
 
     public void setAddress(Address address) {

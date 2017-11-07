@@ -15,7 +15,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.email.Email;
+import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.weblink.WebLink;
@@ -78,9 +78,9 @@ public class ParserUtil {
      * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Set<Email> parseEmail(Collection<String> email) throws IllegalValueException {
+    public static ArrayList<Email> parseEmail(Collection<String> email) throws IllegalValueException {
         requireNonNull(email);
-        final Set<Email> temp = new HashSet<>();
+        final ArrayList<Email> temp = new ArrayList<>();
         for (String e : email) {
             temp.add(new Email(e));
         }
