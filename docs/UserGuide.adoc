@@ -406,7 +406,7 @@ Command format:
 
 * Finding by `name`:
 `[red]#find# [green]#KEYWORD [ADDITIONAL_KEYWORDS]...#`
-* Finding by `tag`:
+* Finding by `tag` [Since v1.3]:
 `[red]#find# [blue]#-tag# [green]#KEYWORD [ADDITIONAL_KEYWORDS]...#`
 * Finding `favorite` contacts [Coming in v2.0]:
 `[red]#find# [blue]#-fav#`
@@ -448,7 +448,7 @@ Command format:
 `[red]#sort#`
 * Sorting by `name`:
 `[red]#sort# [blue]#-name#`
-* Sorting by `recency` [Coming in v2.0]:
+* Sorting by `last access date` [Since v1.5]:
 `[red]#sort# [blue]#-recent#`
 
 Alias: `[red]#sr#` +
