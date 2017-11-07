@@ -738,6 +738,7 @@ The `SelectJoinedEventsCommand` then creates a `CommandResult` object and return
 **Cons:** Users would have to type more if the name is long. User may mistype the name. +
 // end::selectE[]
 
+// tag::interaction[]
 === Person-Event interaction
 In this application, we allow users to connect events and persons to show that some persons participate some events. +
 We will explain it in terms of Model and Storage. +
@@ -786,7 +787,9 @@ _Figure 3.9.3: interaction storage_
 **Alternative 2:** Use association class +
 **Pros:** Can save every participation entry. +
 **Cons:** Need to implement extra storage for association class, and it is costly in terms of time to operate `show person` and `select event`.
+// end::interaction[]
 
+// tag::portrait[]
 === Portrait Command mechanism
 The portrait command is facilitated by `LogicManager` and is extended from `UndoableCommand`. +
 The following diagram shows the structure of PortraitPath class:
@@ -816,6 +819,7 @@ _Figure 3.10.2 defensive code for loading file_
 **Alternative 2:** Store the image file. +
 **Pros:** No need to load the image every time. +
 **Cons:** Hard to store images into .xml file. +
+// end::portrait[]
 
 === Toggle mechanism
 The toggle mechanism is an event-driven mechanism. The following diagram _(Figure 3.11.1)_ below shows the overview of the high-level interactions between components for the toggle mechanism:
