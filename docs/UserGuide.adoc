@@ -185,7 +185,7 @@ Alias: `e`
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * You can favorite a person by including the parameter `f/`, or unfavorite by including the parameter `uf/`. [Since v1.2] +
-* You can remove a person's display photo by including the parameter `dp/` without specifying any tags after it. [Since v1.5rc]
+* You can remove a person's display photo by including the parameter `dp/` without specifying any paths after it. [Since v1.5rc]
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by including the parameter `t/` without specifying any tags after it.
 * When editing social media accounts, the existing social media accounts will be removed i.e. adding social media accounts is not cumulative. [Since v1.2]
