@@ -436,7 +436,6 @@ Displays persons with tags `friends` or `colleagues` in the person list.
 Displays `favorite` contacts in the person list.
 // end::find-by-tag[]
 
-
 // tag::sort[]
 ==== Sorting the displayed list [Since v1.4]: `sort`
 
