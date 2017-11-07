@@ -14,7 +14,13 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
@@ -166,20 +172,22 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.setTitle(appTitle);
     }
 
+    //@@author LuLechuan
     /**
      *  Sets a background image for a stack pane
      */
     private void setBackground(StackPane pane) {
         File file = new File("../addressbook4/docs/images/background.jpg");
         try {
-            BackgroundImage myBI= new BackgroundImage(new Image(file.toURI().toURL().toString()),
+            BackgroundImage backgroundImage = new BackgroundImage(new Image(file.toURI().toURL().toString(), 600, 450, false, true),
                     BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                     BackgroundSize.DEFAULT);
-            pane.setBackground(new Background(myBI));
+            pane.setBackground(new Background(backgroundImage));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
     }
+    //@@author
 
     /**
      * Sets the given image as the icon of the main window.
