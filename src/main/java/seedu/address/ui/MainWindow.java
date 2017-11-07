@@ -21,6 +21,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.NewAddressBookRequestEvent;
 import seedu.address.commons.events.ui.OpenAddressBookRequestEvent;
 import seedu.address.commons.events.ui.ShowBirthdayAlarmRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
@@ -228,7 +229,26 @@ public class MainWindow extends UiPart<Region> {
 
         raise(new OpenAddressBookRequestEvent(file));
     }
+
+    /**
+     * Opens a FileChooser to let the user select an address book to save.
+     */
+    @FXML
+    private void handleNew() {
+        FileChooser fileChooser = new FileChooser();
+
+        // Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+            "XML files (*.xml)", "*.xml");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show open file dialog
+        File file = fileChooser.showSaveDialog(new Stage());
+
+        raise(new NewAddressBookRequestEvent(file));
+    }
     //@@author
+
     //@@author chilipadiboy
     @FXML
     private void handlebirthdayalarms() {
