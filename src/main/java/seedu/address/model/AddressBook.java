@@ -208,7 +208,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// event-level operations
 
-
+    //@@author eldriclim
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
@@ -376,6 +376,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private void syncMasterEventListMembers(UniqueEventList events) {
         events.forEach(this::syncMasterEventListMembers);
     }
+    //@@author
 
     //// util methods
 

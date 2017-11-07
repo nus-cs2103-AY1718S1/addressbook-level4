@@ -14,6 +14,7 @@ import seedu.address.commons.util.EventOutputUtil;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.TypicalPersons;
 
+//@@author eldriclim
 public class MemberListTest {
 
     @Test

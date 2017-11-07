@@ -106,12 +106,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void sortPerson(Comparator<ReadOnlyPerson> sortType, boolean isDescending) throws EmptyListException {
-        addressBook.sortPerson(sortType, isDescending);
-    }
-
-
-    @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
@@ -120,6 +114,11 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author eldriclim
+    @Override
+    public void sortPerson(Comparator<ReadOnlyPerson> sortType, boolean isDescending) throws EmptyListException {
+        addressBook.sortPerson(sortType, isDescending);
+    }
 
     @Override
     public void updateListOfPerson(ArrayList<ReadOnlyPerson> targets, ArrayList<ReadOnlyPerson> editedPersons)
@@ -165,6 +164,7 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredEvents);
 
     }
+    //@@author
 
 
     //=========== Filtered Person List Accessors =============================================================
@@ -202,14 +202,14 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
-
+    //@@author eldriclim
     /**
      * Handle event when Event in Event list is clicked.
-     *
+     * <p>
      * Update {@code FilteredList<ReadOnlyPerson> filteredPersons} to show members of Event upon clicking on Event.
-     * @see EventListPanel#setEventHandlerForSelectionChangeEvent()
      *
      * @param event
+     * @see EventListPanel#setEventHandlerForSelectionChangeEvent()
      */
     @Subscribe
     private void handleEventPanelSelectionChangedEvent(EventPanelSelectionChangedEvent event) {
@@ -217,13 +217,13 @@ public class ModelManager extends ComponentManager implements Model {
 
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         updateFilteredPersonList(p ->
-            event.getMemberAsArrayList().contains(p)
+                event.getMemberAsArrayList().contains(p)
         );
     }
 
     /**
      * Handle event when date in CalenderView is clicked.
-     *
+     * <p>
      * Update master UniqueEventList by running a sort with the given date as reference.
      * Comparator logic and sorting details is found in {@see UniqueEventList#sort(LocalDate)}
      *
@@ -235,6 +235,6 @@ public class ModelManager extends ComponentManager implements Model {
 
         sortEvents(event.getSelectedDate());
     }
-
+    //@@author
 
 }

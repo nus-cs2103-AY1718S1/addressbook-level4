@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Event;
 
+//@@author eldriclim
 /**
  * Utility methods for checking event overlaps
  */

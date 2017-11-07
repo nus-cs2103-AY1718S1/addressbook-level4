@@ -9,7 +9,7 @@ import seedu.address.model.event.EventTime;
 import seedu.address.model.event.MemberList;
 import seedu.address.model.person.ReadOnlyPerson;
 
-
+//@@author eldriclim
 /**
  * Utility method to output Event attributes in human-readable time
  */

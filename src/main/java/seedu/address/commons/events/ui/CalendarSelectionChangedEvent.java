@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import seedu.address.commons.events.BaseEvent;
 
-
+//@@author eldriclim
 /**
  * When a selection is made in the calendar
  */

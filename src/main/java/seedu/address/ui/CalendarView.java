@@ -25,6 +25,7 @@ import seedu.address.commons.events.ui.ScheduleUpdateEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.event.Event;
 
+//@@author eldriclim
 /**
  * An UI component that displays a clickable-Calendar.
  */
