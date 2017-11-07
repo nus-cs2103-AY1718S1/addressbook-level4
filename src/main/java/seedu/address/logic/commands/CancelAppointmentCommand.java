@@ -51,7 +51,7 @@ public class CancelAppointmentCommand extends UndoableCommand {
             throws AppointmentNotFoundException {
 
         for (Appointment appointment : person.getAppointments()) {
-            if (appointment.getDescription().toLowerCase().equals(description.trim().toLowerCase())) {
+            if (appointment.getDescription().equalsIgnoreCase(description.trim())) {
                 return appointment;
             }
         }
@@ -66,7 +66,7 @@ public class CancelAppointmentCommand extends UndoableCommand {
     private ReadOnlyPerson getPersonFromName(String personName) throws PersonNotFoundException {
 
         for (ReadOnlyPerson person : model.getAddressBook().getPersonList()) {
-            if (person.getName().toString().toLowerCase().equals(personName.trim().toLowerCase())) {
+            if (person.getName().toString().equalsIgnoreCase(personName.trim())) {
                 return person;
             }
         }
