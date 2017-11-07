@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.StackPane?>
+
+<?import javafx.scene.control.SplitPane?>
+<StackPane fx:id="placeHolder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8"
+           xmlns:fx="http://javafx.com/fxml/1">
+  <StackPane fx:id="browserPlaceHolder" prefHeight="20.0" prefWidth="525.0" visible="false">
+  </StackPane>
+
+  <SplitPane fx:id="toggleSplitPane" dividerPositions="0.4, 0.5">
+    <StackPane fx:id="informationBoardPlaceHolder" prefHeight="20.0" prefWidth="525.0" visible="true">
+    </StackPane>
+    <StackPane fx:id="eventListPanelPlaceHolder" prefHeight="20.0" prefWidth="525.0" visible="true">
+    </StackPane>
+  </SplitPane>
+
+</StackPane>

@@ -821,6 +821,105 @@ _Figure 3.10.2 defensive code for loading file_
 **Pros:** No need to load the image every time. +
 **Cons:** Hard to store images into .xml file. +
 
+=== Toggle mechanism
+The toggle mechanism is an event-driven mechanism. The following diagram _(Figure 3.11.1)_ below shows the overview of the high-level interactions between components for the toggle mechanism:
+
+image::DG_ToggleComponents.png[]
+_Figure 3.11.1 Toggle mechanism component interactions_
+
+The following sequence diagram _(Figure 3.11.2)_ below show how the first half of the toggle mechanism works up till the posting of the event:
+
+image::DG_Toggle1.png[]
+_Figure 3.11.2 Toggle mechanism sequence 1_
+
+As seen in the sequence diagram _(Figure 3.11.2)_ above, when the user enters a toggle command, a `ToggleCommand` is created.
+When the `LogicManager` executes the `ToggleCommand`, the `EventsCenter` will post a `TogglePanelEvent` to the `EventBus`:
+
+[source,java]
+public class ToggleCommand extends Command {
+    @Override
+    public CommandResult execute() throws CommandException {
+        EventsCenter.getInstance().post(new TogglePanelEvent());
+        return new CommandResult(MESSAGE_TOGGLE_SUCCESS);
+    }
+}
+
+The following sequence diagram _(Figure 3.11.3)_ below shows the second half of the toggle mechanism starting with the handling of the posted event:
+
+image::DG_Toggle2.png[]
+_Figure 3.11.3 Toggle mechanism sequence 2_
+
+As seen in the sequence diagram _(Figure 3.11.3)_ above, the event is handled by the `TogglePanel`.
+The `TogglePanel` has a variable called `browserIsFront` which keeps track of whether the browser is currently displayed.
+`TriggerToggle` uses `browserIsFront` to toggle the correct panel to the front and updates `browserToFront` accordingly:
+
+[source,java]
+public class TogglePanel extends UiPart<Region> {
+    @Subscribe
+    private void handleTogglePanelEvent(TogglePanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        triggerToggle();
+    }
+    private void triggerToggle() {
+        if (browserIsFront) {
+            browserToBack();
+        } else {
+            browserToFront();
+        }
+    }
+    private void browserToFront() {
+        browserPlaceHolder.setVisible(true);
+        browserPlaceHolder.toFront();
+        toggleSplitPane.setVisible(false);
+        toggleSplitPane.toBack();
+        browserIsFront = true;
+    }
+    private void browserToBack() {
+        browserPlaceHolder.setVisible(false);
+        browserPlaceHolder.toBack();
+        toggleSplitPane.setVisible(true);
+        toggleSplitPane.toFront();
+        browserIsFront = false;
+    }
+}
+
+As seen from the above code snippet, when `browserIsFront` is true, the place holder where the browser is at, will be sent to the back and made to be invisible. While the `toggleSplitPane`, which holds the information board and events list, is brought to the front and made visible. `BrowserIsFront` is then set to be false.
+When `browserIsFront` is false, the opposite happens. The place holder with the browser is brought to the front and made visible, while the `toggleSplitPane` is sent to the back and made to be invisible. +
+
+One thing to take note of with the select command, is that the browser will be brought to the front and displayed no matter the current status of `browserIsFront`:
+
+[source,java]
+public class BrowserPanel extends UiPart<Region> {
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonPage(event.getNewSelection().person);
+        raise(new ToggleSelectEvent());
+    }
+}
+
+[source,java]
+public class TogglePanel extends UiPart<Region> {
+    @Subscribe
+    private void handleToggleSelectEvent(ToggleSelectEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        browserToFront();
+    }
+}
+
+As seen from the above code snippet, the `BrowserPanel` handles the event posted whenever the select command is executed.
+It does so by raising a `ToggleSelectEvent`, which the `TogglePanel` handles by calling `browserToFront` method which will set the browser to be at the front.
+
+[discrete]
+===== Design Considerations
+
+**Aspect:** How to implement the toggle mechanism. +
+**Alternative 1 (current choice):**  Use a toggle panel to hold the containers of the browser, information board and events list. +
+**Pros:** Easy to implement. Visibility depends on the containers, any modification will not touch the code of the actual panels much if at all. +
+**Cons:** Will need to adjust the FXML file when changes are made to what is togglable. +
+**Alternative 2:** Have each togglable panel know how to toggle. +
+**Pros:** No need change the FXML file when changes are made to what is togglable. +
+**Cons:** Will have to make large changes to the actual panels themselves. +
 
 === Logging
 
@@ -1235,6 +1334,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |secretive user |hide private details  |minimise the chance of someone else seeing them by accident
 
 |`* * *` |careless user |undo decision  |revert changes in case of mistake
+
+|`* *` |user |toggle between the events details and browser |use a browser without having to alternate between many applications
 
 |`* *` |frequent user |change the font and background colour |use address book comfortably
 
