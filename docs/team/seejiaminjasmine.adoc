@@ -146,8 +146,6 @@ include::../DeveloperGuide.adoc[tag=uploadphoto]
 ---
 
 === Enhancement Proposed: Filters contact by tags with a click of a button `Coming in v2.0`
-
-{Explain similar to the Undo/Redo feature above.}
 This feature is an GUI enhancement to the filter by tags feature where user can input in the tag name on a text-field
 and click on the `Filter` button instead of using the command line. This can allow the user a more direct approach to filtering the
 contacts by tag(s) instead of remembering the command to type in the command line. Other filtering methods can also be implemented such
@@ -163,7 +161,3 @@ This allows user to remove tags just by using the GUI and gives them flexibility
 * In-charge of weekly deliverable and dateline
 * Found some bugs in other team's project during Acceptance Testing (Issues https://github.com/CS2103AUG2017-T11-B2/main/issues/134[134], https://github.com/CS2103AUG2017-T11-B2/main/issues/136[136])
 * Gave suggestions to another team during Acceptance Testing (Issue https://github.com/CS2103AUG2017-T11-B2/main/issues/137[137] )
-
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}

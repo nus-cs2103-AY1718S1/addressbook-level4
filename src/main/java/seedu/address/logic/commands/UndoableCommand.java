@@ -31,7 +31,7 @@ public abstract class UndoableCommand extends Command {
      */
     protected final void undo() {
         requireAllNonNull(model, previousAddressBook);
-        model.resetData(previousAddressBook, true);
+        model.resetData(previousAddressBook);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
