@@ -2,8 +2,8 @@ package seedu.address.commons.events.model;
 
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.ReadOnlyAddressBook;
-
-/** Indicates the AddressBook in the model has changed*/
+//@@author Pengyuz
+/** Indicates the Recyclebin in the model has changed*/
 public class RecyclebinChangeEvent extends BaseEvent {
 
     public final ReadOnlyAddressBook data;

@@ -178,10 +178,6 @@ public class SortCommandTest {
             fail("This method should not be called.");
         }
 
-        @Override
-        public void fresh() {
-            fail("This method should not be called.");
-        }
 
         @Override
         public ReadOnlyAddressBook getAddressBook() {

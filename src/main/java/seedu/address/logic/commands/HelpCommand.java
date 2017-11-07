@@ -24,7 +24,15 @@ public class HelpCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        if ("add".equals(commandword)) {
+        if ("bin-clear".equals(commandword)) {
+            return new CommandResult(BinclearCommand.MESSAGE_USAGE);
+        } else if ("bin-delete".equals(commandword)) {
+            return new CommandResult(BindeleteCommand.MESSAGE_USAGE);
+        } else if ("bin-restore".equals(commandword)) {
+            return new CommandResult(BinrestoreCommand.MESSAGE_USAGE);
+        } else if ("export".equals(commandword)) {
+            return new CommandResult(ExportCommand.MESSAGE_USAGE);
+        } else if ("add".equals(commandword)) {
             return new CommandResult(AddCommand.MESSAGE_USAGE);
         } else if ("clear".equals(commandword)) {
             return new CommandResult(ClearCommand.MESSAGE_USAGE);

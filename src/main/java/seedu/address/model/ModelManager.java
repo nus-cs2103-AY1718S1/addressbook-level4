@@ -85,12 +85,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void fresh() {
-        indicateRecycleBinChanged();
-        indicateAddressBookChanged();
-    }
-
-    @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
     }
@@ -116,7 +110,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
 
     }
-
+    //@@author Pengyuz
     @Override
     public synchronized void deletePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException,
             DuplicatePersonException {
@@ -132,7 +126,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateRecycleBinChanged();
         indicateAddressBookChanged();
     }
-
+    //@@author Pengyuz
     @Override
     public synchronized void deleteBinPerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException {
         for (ReadOnlyPerson s: targets) {
@@ -147,6 +141,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
+    //@@author Pengyuz
     @Override
     public synchronized void restorePerson(ReadOnlyPerson person) throws DuplicatePersonException,
             PersonNotFoundException {
@@ -157,6 +152,8 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
         indicateAddressBookChanged();
     }
+
+    //@@author Pengyuz
     @Override
     public synchronized void restorePerson(ArrayList<ReadOnlyPerson> targets) throws DuplicatePersonException,
             PersonNotFoundException {

@@ -24,8 +24,9 @@ public interface Model {
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData, ReadOnlyAddressBook newRecyclebin);
+
+    /** Clear existing backing Recyclebin and replace with the provided new data*/
     void resetRecyclebin(ReadOnlyAddressBook newData);
-    void fresh();
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
@@ -38,6 +39,8 @@ public interface Model {
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+
+    /** Restore the given person*/
     void restorePerson(ReadOnlyPerson perosn) throws DuplicatePersonException, PersonNotFoundException;
     void restorePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException, DuplicatePersonException;
 
@@ -56,6 +59,8 @@ public interface Model {
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
+
+    /** Returns an unmodifiable view of the filtered recyclebin list*/
     ObservableList<ReadOnlyPerson> getRecycleBinPersonList();
 
     /** Returns an unmodifiable view of the upcoming event list */

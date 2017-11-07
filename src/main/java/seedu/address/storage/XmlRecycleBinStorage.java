@@ -12,7 +12,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyAddressBook;
-
+//@@author Pengyuz
 /**
  * A class to access AddressBook data stored as an xml file on the hard disk.
  */
@@ -47,7 +47,7 @@ public class XmlRecycleBinStorage implements RecycleBinStorage {
         File addressBookFile = new File(filePath);
 
         if (!addressBookFile.exists()) {
-            logger.info("AddressBook file "  + addressBookFile + " not found");
+            logger.info("Recyclebin file "  + addressBookFile + " not found");
             return Optional.empty();
         }
 
