@@ -190,6 +190,8 @@ public class AddCommandTest {
             return null;
         }
 
+        //@@author archthegit
+
         @Override
         public void unselectPerson() {
             fail("This method should not be called.");
