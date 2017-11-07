@@ -247,7 +247,7 @@ public class ParserUtilTest {
 
     @Test
     public void parseFirstIntReturnsNonZeroPositiveInteger() throws Exception {
-        assertEquals(parseFirstInt("abc 1"), 1); ; // word then number
+        assertEquals(parseFirstInt("abc 1"), 1); // word then number
         assertEquals(parseFirstInt("del1"), 1); // word then number, without spacing
         assertEquals(parseFirstInt("add n/ 8 to Rolodex"), 8); // characters then number, then characters
         assertEquals(parseFirstInt("-1, acba"), 1); // negative numbers

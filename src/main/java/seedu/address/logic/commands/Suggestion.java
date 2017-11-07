@@ -8,15 +8,9 @@ import static seedu.address.logic.parser.ParserUtil.parseFirstInt;
 import static seedu.address.logic.parser.ParserUtil.tryParseFilePath;
 import static seedu.address.logic.parser.ParserUtil.tryParseInt;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
-import org.languagetool.JLanguageTool;
-import org.languagetool.language.AmericanEnglish;
-import org.languagetool.rules.RuleMatch;
 
 import seedu.address.logic.parser.FindCommandParser;
 import seedu.address.logic.parser.RemarkCommandParser;
@@ -74,10 +68,12 @@ public class Suggestion {
         // Custom parser for AddCommand.
         if (AddCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
             // TODO: v1.5 try to match arguments with ALL person models, otherwise return null
+            return null;
 
         // Custom parser for EditCommand.
         } else if (EditCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
             // TODO: v1.5 try to match arguments with SOME person models, otherwise return null
+            return null;
 
         // Custom parser for RemarkCommand.
         } else if (RemarkCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
@@ -114,24 +110,6 @@ public class Suggestion {
             return "";
         }
         return null;
-    }
-
-    private String setToAmerican(String input) {
-        String output = input;
-        JLanguageTool langTool = new JLanguageTool(new AmericanEnglish());
-        try {
-            List<RuleMatch> matches = langTool.check(output);
-            while (!matches.isEmpty()) {
-                RuleMatch match = matches.iterator().next();
-                output = output.substring(0, match.getFromPos())
-                        + match.getSuggestedReplacements().iterator().next()
-                        + output.substring(match.getToPos());
-                matches = langTool.check(output);
-            }
-        } catch (IOException e) {
-            return null;
-        }
-        return output;
     }
 
     /**
