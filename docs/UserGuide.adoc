@@ -75,7 +75,7 @@ image::Ui_with_markings.png[width="790"]
 
 To perform actions in KayPoh!, you will need to type a command into the command input box, followed by the kbd:[enter] key. +
 
-.User interface with command box highlighted in blue
+.Command box
 image::command-box.png[width="790"]
 
 === Breaking down the command syntax
@@ -97,7 +97,7 @@ Example:
 
 === Representing a person as a parameter
 
-When using commands that involves managing contact information, you may be required to enter information about a person as a `[blue]#PARAMETER#`.
+When using commands that involve managing contact information, you may be required to enter information about a person as a `[blue]#PARAMETER#`.
 
 Each person stored in the address book has the following attributes:
 
@@ -128,16 +128,28 @@ Each person stored in the address book has the following attributes:
 ** More information on the supported social media types can be found in the <<social-media-integrations, Social Media Integrations>> section.
 ** A person can have multiple social media accounts, but can only have one for each social media platform
 
+* *Favorite* (optional)
+** Denote that a person is a favorite contact
+** Represented by the presence of the prefix `f/`
+** If the prefix is not present, then the person is assumed not to be a favorite contact
+
+* *Display Picture* (optional)
+** Represented with the prefix `dp/` followed by the path to the image to be used as the person's display picture
+** The specified image must be less than 1MB in size
+** If no image is specified, the default image will be used instead
+
 Example:
 
-* The parameter `n/John Doe p/81234567 a/123 Clementi Road, Blk 32, #01-01 e/johndoe@example.com t/friends t/school s/facebook john.doe10 s/instagram jdoe`
-represents a person with:
+* The parameter `n/John Doe p/81234567 a/123 Clementi Road, Blk 32, #01-01 e/johndoe@example.com t/friends t/school s/facebook john.doe10 s/instagram jdoe f/ dp//images/display.png`
+represents a person who has:
 ** The name `John Doe`,
 ** phone number `81234567`,
 ** address `123 Clementi Road, Blk 32, #01-01`,
 ** email address `johndoe@example.com`,
 ** tags `friends` and `school`,
-** a `facebook` account with the name `john.doe10` and an `instagram` account with the username `jdoe`.
+** a `facebook` account with the name `john.doe10` and an `instagram` account with the username `jdoe`,
+** been marked as a `favorite` contact,
+** the image at `/images/display.png` used as a display picture.
 
 == Features
 
@@ -322,100 +334,140 @@ Format: `clear`
 
 ==== Listing persons: `list`
 
-Shows a specific list of persons based on user's specified option. +
-Format: `list [OPTION]` +
-Alias: `l`
+To have all your contacts displayed in the person list, use the `list` command.
 
-Options: +
+====
 
-* Default (no option specified) +
-Shows a list of all persons in the address book. +
-* `fav` [Since v1.3] +
-Shows a list of all favorite persons in the address book.
+Command format: `[red]#list#` +
 
-Example:
+* Listing all persons:
+`[red]#list#`
+* Listing all favorite persons [Since v1.2]:
+`[red]#list# [blue]#-fav#`
 
-* `list`
-* `list -fav` [Since v1.3] +
+Alias: `[red]#l#`
+====
+
+You should see the person list populated with all of your contacts after executing the command.
+
+.Person list populated with all contacts
+image::list-command-result.png[width="790"]
 
 ==== Selecting a person: `select`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX [SOCIAL_TYPE]` +
-Alias: `s`
+To view the social media feed of a contact, use the `select` command.
+====
+Command format: `[red]#select# [green]#INDEX [SOCIAL_MEDIA_PLATFORM]#` +
+Alias: `[red]#s#`
+====
 
-****
-* When a person is selected, one of his associated social media feeds will be displayed in the browser.
-* If a `SOCIAL_TYPE` is specified, that social media feed will be displayed. More information about representing social media types can be found in the <<social-media-integrations, Social Media Integrations>> section.
-* If no `SOCIAL_TYPE` is specified, an associated social media feed will be displayed, in the following order:
-** Instagram (if present)
-** Facebook (if present)
-** Google search of the person's name
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
+* The [green]`INDEX` refers to the index number of the person to be stalked in the person list.
+* The [green]`SOCIAL_MEDIA_PLATFORM` identifies which social media account belonging to the person you wish to view.
+* If no [green]`SOCIAL_MEDIA_PLATFORM` is specified, the feed of a random social media account associated
+with the person will be displayed in the browser window. If there is no social media account associated with
+the person, a Google search of the person's name will be displayed instead.
 
-Examples:
+You should see the person's social media feed displayed in the browser window.
 
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book, and displays a social media feed in the browser.
-* `find Betsy` +
-`select 1 facebook` +
-Selects the 1st person in the results of the `find` command, and displays her Facebook feed in the browser.
+.Social media feed displayed in browser window
+image::stalk-command-result.png[width="790"]
+
+Example:
+
+* `[red]#select# [green]#1 facebook#` +
+Displays the Facebook account of the first person in the current person list
+
+.Common Mistakes
+|===
+|Incorrect |Correct
+
+|Input an `INDEX` that is invalid. +
+e.g. `-1`, `0.1`, `abc`
+|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the person list*.
+
+|Input a `SOCIAL_MEDIA_PLATFORM` that the user does not have an associated account for. +
+e.g. If the first user in the person list does not have an instagram account, and the command `stalk 1 instagram` is entered.
+|Ensure that the selected user has an associated account for the `SOCIAL_MEDIA_PLATFORM` specified. The social media accounts associated with
+a user can be found in the person list.
+
+image:stalk-command-social-info.png[width="300"]
+|===
 
 [[find-by-tag]]
 ==== Finding persons: `find`
+To find contacts by some criteria, use the `find` command.
 
-Finds and displays a list of persons based on user's specified option. +
-Format `find [OPTION] KEYWORD [MORE_KEYWORDS]...` +
-Alias: `f`
+====
+Command format:
 
-Options: +
+* Finding by `name`:
+`[red]#find# [green]#KEYWORD [ADDITIONAL_KEYWORDS]...#`
+* Finding by `tag`:
+`[red]#find# [blue]#-tag# [green]#KEYWORD [ADDITIONAL_KEYWORDS]...#`
+* Finding `favorite` contacts [Coming in v2.0]:
+`[red]#find# [blue]#-fav#`
 
-* Default (no option specified) +
-Finds persons whose name contain any of the given keywords. +
-* `tag` [Since v1.3] +
-Finds persons who are associated with any of the given tags. +
+Alias: `[red]#f#` +
+====
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
+* Contacts that match *any* of the provided [green]`KEYWORDS` will be displayed in the person list.
+* The search is case insensitive. e.g `john` will match `John`.
+* The order of the [green]`KEYWORDS` does not matter. e.g. `John Doe` will match `Doe John`.
+* Only full words will be matched e.g. `Jo` will not match `John`.
+
+You should see the persons that meet the provided criteria displayed in the person list after executing the command.
+
+.Person list after finding contacts with the tag `friends`
+image::find-command-result.png[width="300"]
 
 Examples:
 
-* `find John` +
-Shows a list of persons with the names `john` and `John Doe`.
-* `find Betsy Tim John` +
-Shows a list of persons with names `Betsy`, `Tim`, or `John`.
-* `find -tag friends colleagues` +
-Shows a list of persons with tags `friends` or `colleagues`.
+* `[red]#find# [green]#John#` +
+Displays persons with the names `john` and `John Doe` in the person list.
+* `[red]#find# [green]#Betsy Tim John#` +
+Displays persons with names `Betsy`, `Tim`, or `John` in the person list.
+* `[red]#find# [blue]#-tag# [green]#friends colleagues#` +
+Displays persons with tags `friends` or `colleagues` in the person list.
+* `[red]#find# [blue]#-fav#` +
+Displays `favorite` contacts in the person list.
 
 ==== Sorting the displayed list [Since v1.4]: `sort`
 
-Sorts the list of persons in the last displayed listing. +
-Format: `sort [OPTION]` +
+To sort the person list, use the `sort` command.
 
-Options: +
+====
+Command format:
 
-* Default (no option specified) +
-Sorts persons first based on their favorite status, then by their name in alphabetical order.
-* `name` +
-Sorts persons by their name in alphabetical order.
-* `recent` [Coming in v2.0] +
-Sorts persons by how recently they were last added, edited, or selected.
+* Default sort:
+`[red]#sort#`
+* Sorting by `name`:
+`[red]#sort# [blue]#-name#`
+* Sorting by `recency` [Coming in v2.0]:
+`[red]#sort# [blue]#-recent#`
+
+Alias: `[red]#sr#` +
+====
+
+* The default sort orders contacts first by their `favorite` status, then by their `name` in lexicographic order.
+* Sorting with the [blue]`name` option orders contacts by their `name` in lexicographic order.
+* Sorting with the [blue]`recent` option orders contacts by when they were last added, updated, or stalked.
+
+The person list should be sorted based on the specified option after executing the command.
+
+.Person list after executing a default sort
+image::sort-command-default-result.png[width="300"]
+
+.Person list after executing a sort by `name`
+image::sort-command-name-result.png[width="300"]
 
 Examples:
 
-* `list` +
-`sort` +
-lists all person in the address book, sorted first based on their favorite status, then by their name in alphabetical order.
-* `find bob` +
-`sort -recent` +
-lists all the person that contain the keyword `bob`, sorted based on when they were last accessed.
+* `[red]#list#` +
+`[red]#sort#` +
+Lists all person in the address book, sorted first based on their `favorite` status, then by their `name` in lexicographic order.
+* `[red]#find# [green]#john#` +
+`[red]#sort# [blue]#-recent#` +
+Lists all persons whose `names` contain the keyword `john`, sorted based on when they were last added, updated, or stalked.
 
 
 [[social-media-integrations]]
