@@ -448,74 +448,95 @@ Represents the Facebook account with the username `johnd10`.
 * `ig damyth` +
 represents the Instagram account with the username `damyth`.
 
+[[facebook-features]]
 ==== Facebook Integrations
 
-===== Connecting to Facebook [Since v1.2]: `facebook connect`
+// tag::facebookconnect[]
+===== Connecting to Facebook [Since v1.2]: `facebookconnect`
 
 Connects to your Facebook account. +
-Format: `facebook connect`
+Format: `facebookconnect`
 
 ****
+* First ensure that you are added as a test user for the Facebook Application. Add yourself as a test user link:https://developers.facebook.com/apps/131555220900267/roles/[here].
 * Launches a Facebook authorization page in the browser
 * Key in your credentials to connect to your Facebook account
-* Once your Facebook account has been connected, you can <<facebook-import-contact, import contacts from facebook>> and
-<<facebook-make-post, post to your Facebook wall>>.
+* Once your Facebook account has been connected, you can use all the other Facebook features.
 ****
+// end::facebookconnect[]
 
-[[facebook-import-contact]]
-===== Importing a contact from Facebook [Coming in v2.0]:
-
-Imports a Facebook friend as a contact. +
-Format `facebook import USERNAME`
-
-****
-* Your facebook account must be connected to use this feature.
-* If you have not yet connected your Facebook account, the authorization page will automatically be launched in
-the browser for you to connect to your account.
-****
-
-===== Importing all Facebook friends [Coming in v2.0]:
-Imports all your Facebook friends as contacts. +
-Format `facebook importall`
-
-****
-* Your facebook account must be connected to use this feature.
-* If you have not yet connected your Facebook account, the authorization page will automatically be launched in
-the browser for you to connect to your account.
-****
-
-[[facebook-make-post]]
-===== Posting to Facebook [Since v1.2]: `facebook post`
+// tag::facebookpost[]
+[[facebookpost]]
+=====  Posting a status to Facebook [Since v1.3]: `facebookpost`
 
 Posts a status to your Facebook wall. +
-Format: `facebook post STATUS`
+Format `facebookpost STATUS`
 
 ****
-* Your facebook account must be connected to use this feature.
-* If you have not yet connected your Facebook account, the authorization page will automatically be launched in
-the browser for you to connect to your account.
+* Your facebook account must be connected to use this feature. If not, the authorization page will automatically be launched in
+the browser.
+* Your Status will then be posted to Facebook.
 ****
 
 Examples:
 
-* `facebook post hello world!` +
+* `facebookpost hello world!` +
 Posts the status 'hello world!' to your Facebook wall.
 
-===== Posting to Facebook [Since v1.4]: `facebook link`
+// end:facebookpost[]
 
-Posts a link to your Facebook wall. +
-Format: `facebook link LINK_URL`
+// tag::facebooklink[]
+[[facebooklink]]
+=====  Sharing a Link to Facebook [Since v1.4]: `facebooklink`
+
+Shares a link to your Facebook wall. +
+Format `facebooklink URL`
 
 ****
-* Your facebook account must be connected to use this feature.
-* If you have not yet connected your Facebook account, the authorization page will automatically be launched in
-the browser for you to connect to your account.
+* Your facebook account must be connected to use this feature. If not, the authorization page will automatically be launched in
+the browser.
+* Your URL will then be shared to Facebook.
 ****
 
 Examples:
 
 * `facebook post https://www.google.com` +
 Posts the link to `https://www.google.com` to your Facebook wall.
+// end:facebooklink[]
+
+// tag::facebookadd[]
+[[facebookadd]]
+=====  Adding a contact from Facebook [Since v1.5]: `facebookadd`
+
+Imports a Facebook user as a contact. +
+Format `facebookadd USERNAME`
+
+****
+* Your facebook account must be connected to use this feature. If not, the authorization page will automatically be launched in
+the browser.
+* The Facebook user will then be added as a contact.
+****
+
+
+Examples:
+
+* `facebookadd barack obama` +
+Imports the facebook user 'Barack Obama' to your contacts.
+// end:facebookadd[]
+
+// tag::facebookaddallfriends[]
+[[facebookaddallfriends]]
+===== Adding all your Facebook friends [Since v1.5]: `facebookaddallfriends`
+
+Imports all your Facebook friends as contacts. (Current maximum is set at 30 friends) +
+Format `facebookaddallfriends`
+
+****
+* Your facebook account must be connected to use this feature. If not, the authorization page will automatically be launched in
+the browser.
+* All your valid facebook friends will then be added as a contact.
+****
+// end:facebookaddallfriends[]
 
 === Managing Contact Data
 
