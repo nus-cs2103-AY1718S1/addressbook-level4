@@ -44,6 +44,5 @@ public class GroupTest {
         //different group
         assertFalse(group.equals(new Group(differentGroupName)));
     }
-
-
+    
 }
