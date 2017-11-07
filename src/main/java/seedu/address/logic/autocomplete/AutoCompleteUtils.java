@@ -86,7 +86,8 @@ public class AutoCompleteUtils {
     }
 
     /**
-     * Generates list of matches based on static section (not to be considered in matching)
+     * Generates list of matches based on list of all possible options,
+     * static section (not to be considered in matching)
      * and autocomplete section (to be matched with all possible matches)
      * @param allPossibleMatches list of all possible autocomplete options to match against
      * @param staticSection section of the stub to be left untouched
