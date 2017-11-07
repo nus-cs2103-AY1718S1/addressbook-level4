@@ -213,14 +213,15 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
-
+    // @@author Adoby7
     public void removeParticipation(Person person, ReadOnlyEvent event) throws NotParticipateEventException {
         persons.removeParticipateEvent(person, event);
     }
-
+    // @@author HuWanqing
     public void addParticipation(Person person, Event event) throws HaveParticipateEventException {
         persons.addParticipateEvent(person, event);
     }
+    // @@author
     //// util methods
 
     @Override

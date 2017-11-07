@@ -358,7 +358,12 @@ public class EventCard extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(event.eventNameProperty()));
         description.textProperty().bind(Bindings.convert(event.descriptionProperty()));
         time.textProperty().bind(Bindings.convert(event.timeProperty()));
-        timer.textProperty().bind(Bindings.convert(event.daysProperty()));
+        if (event.getEventTime().getDays() == 0) {
+            timer.textProperty().bind(Bindings.convert(new SimpleObjectProperty<>("Today!")));
+        }
+        else {
+            timer.textProperty().bind(Bindings.convert(event.daysProperty()));
+        }
     }
 
 
@@ -483,7 +488,9 @@ public class InformationBoard extends UiPart<Region> {
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Platform.runLater(() -> displayed.setValue(event.message));
+        if (event.message.startsWith("Details: ")) {
+            Platform.runLater(() -> displayed.setValue(event.message));
+        }
     }
 
 }
@@ -548,12 +555,14 @@ public class InformationBoard extends UiPart<Region> {
 ```
 ###### \resources\view\EventListCard.fxml
 ``` fxml
-<HBox id="cardPane" fx:id="cardPane" prefHeight="102.0" prefWidth="264.0" style="-fx-background-color: deepskyblue; -fx-background-radius: 18px; -fx-border-color: blue; -fx-border-radius: 18px; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+
+<HBox id="cardPane" fx:id="cardPane" prefHeight="102.0" prefWidth="200.0" style="-fx-background-color: #66B2F6; -fx-background-radius: 18px; -fx-border-color: white; -fx-border-radius: 18px; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
     </columnConstraints>
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <HBox prefHeight="105.0">
          <children>
           <VBox alignment="CENTER_LEFT" minHeight="105" prefHeight="105.0">
             <padding>
@@ -569,10 +578,31 @@ public class InformationBoard extends UiPart<Region> {
               <Label fx:id="name" styleClass="cell_big_label" text="\$name" />
             </HBox>
             <FlowPane fx:id="tags" />
-            <Label fx:id="description" styleClass="cell_small_label" text="\$description" />
-            <Label fx:id="time" styleClass="cell_small_label" text="\$time" />
+               <HBox>
+                  <children>
+                     <FontAwesomeIconView glyphName="INFO" />
+                  <Label fx:id="description" styleClass="cell_small_label" text="\$description">
+                        <HBox.margin>
+                           <Insets left="4.0" />
+                        </HBox.margin>
+                     </Label>
+                  </children>
+               </HBox>
+               <HBox>
+                  <children>
+                     <FontAwesomeIconView glyphName="CALENDAR" />
+                  <Label fx:id="time" styleClass="cell_small_label" text="\$time">
+                        <HBox.margin>
+                           <Insets left="4.0" />
+                        </HBox.margin>
+                     </Label>
+                  </children>
+               </HBox>
           </VBox>
-            <Label fx:id="timer" alignment="CENTER_RIGHT" prefHeight="105.0" style="-fx-font-size: 35;" text="\$timer" textAlignment="RIGHT" />
+            <Label fx:id="timer" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="105.0" style="-fx-font-size: 35;" text="\$timer">
+               <HBox.margin>
+                  <Insets right="50.0" />
+               </HBox.margin></Label>
          </children>
       </HBox>
       <rowConstraints>
@@ -583,15 +613,16 @@ public class InformationBoard extends UiPart<Region> {
 ```
 ###### \resources\view\EventListPanel.fxml
 ``` fxml
-<VBox style="-fx-background-color: dodgerblue; -fx-background-radius: 18;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-   <Label fx:id="title" contentDisplay="CENTER" text="\$title" style="-fx-text-fill: white; -fx-font-size: 18">
+
+<VBox style="-fx-background-color: #99CCFF; -fx-background-radius: 18;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <Label fx:id="title" contentDisplay="CENTER" style="-fx-text-fill: white; -fx-font-size: 18" text="\$title">
       <VBox.margin>
          <Insets left="20.0" />
       </VBox.margin>
       <font>
          <Font size="18.0" />
       </font></Label>
-  <ListView fx:id="eventListView" style="-fx-background-color: dodgerblue; -fx-background-radius: 18px;" VBox.vgrow="ALWAYS" />
+  <ListView fx:id="eventListView" style="-fx-background-color: #99CCFF; -fx-background-radius: 18px;" VBox.vgrow="ALWAYS" />
 </VBox>
 ```
 ###### \resources\view\InformationBoard.fxml
@@ -599,7 +630,7 @@ public class InformationBoard extends UiPart<Region> {
 <StackPane fx:id="placeHolder" prefHeight="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <VBox style="-fx-background-color: lightgreen; -fx-background-radius: 18px; -fx-border-radius: 18px;">
       <children>
-         <Label fx:id="title" contentDisplay="CENTER" style="-fx-text-fill: white; -fx-font-size: 18" text="\$title">
+         <Label fx:id="title" contentDisplay="CENTER" style="-fx-text-fill: white; -fx-font-size: 20" text="\$title">
             <VBox.margin>
                <Insets left="20.0" />
             </VBox.margin></Label>
@@ -610,7 +641,8 @@ public class InformationBoard extends UiPart<Region> {
 ```
 ###### \resources\view\PersonListCard.fxml
 ``` fxml
-<HBox id="cardPane" fx:id="cardPane" style="-fx-background-color: orangered; -fx-background-radius: 18px; -fx-border-color: red; -fx-border-radius: 18px; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+
+<HBox id="cardPane" fx:id="cardPane" style="-fx-background-color: #FF5A5A; -fx-background-radius: 18px; -fx-border-color: white; -fx-border-radius: 18px; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
      <GridPane HBox.hgrow="ALWAYS">
        <columnConstraints>
@@ -636,10 +668,42 @@ public class InformationBoard extends UiPart<Region> {
                         </children>
                      </HBox>
                      <FlowPane fx:id="tags" />
-                     <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-                     <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-                     <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-                     <Label fx:id="birthday" styleClass="cell_small_label" text="\$birthday" />
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <FontAwesomeIconView glyphName="PHONE" />
+                           <Label fx:id="phone" styleClass="cell_small_label" text="\$phone">
+                                 <HBox.margin>
+                                    <Insets left="4.0" />
+                                 </HBox.margin></Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <FontAwesomeIconView glyphName="HOME" />
+                           <Label fx:id="address" styleClass="cell_small_label" text="\$address">
+                                 <HBox.margin>
+                                    <Insets left="4.0" />
+                                 </HBox.margin></Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <FontAwesomeIconView glyphName="ENVELOPE" />
+                           <Label fx:id="email" styleClass="cell_small_label" text="\$email">
+                                 <HBox.margin>
+                                    <Insets left="4.0" />
+                                 </HBox.margin></Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <FontAwesomeIconView glyphName="BIRTHDAY_CAKE" />
+                           <Label fx:id="birthday" styleClass="cell_small_label" text="\$birthday">
+                                 <HBox.margin>
+                                    <Insets left="4.0" />
+                                 </HBox.margin></Label>
+                           </children>
+                        </HBox>
                    </children>
                 </VBox>
 ```
@@ -657,11 +721,11 @@ public class InformationBoard extends UiPart<Region> {
 ```
 ###### \resources\view\PersonListPanel.fxml
 ``` fxml
-<VBox style="-fx-background-color: #dd2200; -fx-background-radius: 18px;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox style="-fx-background-color: #FF7676; -fx-background-radius: 18px;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <Label fx:id="title" contentDisplay="CENTER" text="\$title" style="-fx-text-fill: white; -fx-font-size: 18">
       <VBox.margin>
          <Insets left="20.0" />
       </VBox.margin></Label>
-  <ListView fx:id="personListView" style="-fx-background-color: #dd2200; -fx-background-radius: 18px;" VBox.vgrow="ALWAYS" />
+  <ListView fx:id="personListView" style="-fx-background-color: #FF7676; -fx-background-radius: 18px;" VBox.vgrow="ALWAYS" />
 </VBox>
 ```

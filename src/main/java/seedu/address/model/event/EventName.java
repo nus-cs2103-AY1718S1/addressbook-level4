@@ -14,7 +14,7 @@ public class EventName {
     public static final String MESSAGE_EVENT_NAME_CONSTRAINTS =
             "Event names should only contain alphanumeric characters and spaces, and it should not be blank";
 
-    /*
+    /**
      * The first character of the event name must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
@@ -12,7 +13,8 @@
 <?import javafx.scene.layout.VBox?>
 
 <!-- @@author HouDenghao -->
-<HBox id="cardPane" fx:id="cardPane" style="-fx-background-color: orangered; -fx-background-radius: 18px; -fx-border-color: red; -fx-border-radius: 18px; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+
+<HBox id="cardPane" fx:id="cardPane" style="-fx-background-color: #FF5A5A; -fx-background-radius: 18px; -fx-border-color: white; -fx-border-radius: 18px; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
      <GridPane HBox.hgrow="ALWAYS">
        <columnConstraints>
@@ -38,10 +40,42 @@
                         </children>
                      </HBox>
                      <FlowPane fx:id="tags" />
-                     <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-                     <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-                     <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-                     <Label fx:id="birthday" styleClass="cell_small_label" text="\$birthday" />
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <FontAwesomeIconView glyphName="PHONE" />
+                           <Label fx:id="phone" styleClass="cell_small_label" text="\$phone">
+                                 <HBox.margin>
+                                    <Insets left="4.0" />
+                                 </HBox.margin></Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <FontAwesomeIconView glyphName="HOME" />
+                           <Label fx:id="address" styleClass="cell_small_label" text="\$address">
+                                 <HBox.margin>
+                                    <Insets left="4.0" />
+                                 </HBox.margin></Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <FontAwesomeIconView glyphName="ENVELOPE" />
+                           <Label fx:id="email" styleClass="cell_small_label" text="\$email">
+                                 <HBox.margin>
+                                    <Insets left="4.0" />
+                                 </HBox.margin></Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <FontAwesomeIconView glyphName="BIRTHDAY_CAKE" />
+                           <Label fx:id="birthday" styleClass="cell_small_label" text="\$birthday">
+                                 <HBox.margin>
+                                    <Insets left="4.0" />
+                                 </HBox.margin></Label>
+                           </children>
+                        </HBox>
                    </children>
                 </VBox>
                    <!-- @@author Adoby7 -->

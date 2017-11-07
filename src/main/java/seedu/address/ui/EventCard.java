@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -53,7 +54,12 @@ public class EventCard extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(event.eventNameProperty()));
         description.textProperty().bind(Bindings.convert(event.descriptionProperty()));
         time.textProperty().bind(Bindings.convert(event.timeProperty()));
-        timer.textProperty().bind(Bindings.convert(event.daysProperty()));
+        if (event.getEventTime().getDays() == 0) {
+            timer.textProperty().bind(Bindings.convert(new SimpleObjectProperty<>("Today!")));
+        }
+        else {
+            timer.textProperty().bind(Bindings.convert(event.daysProperty()));
+        }
     }
 
 

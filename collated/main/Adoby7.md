@@ -118,12 +118,12 @@ public class ClearCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\DisJoinCommand.java
+###### \java\seedu\address\logic\commands\DisjoinCommand.java
 ``` java
 /**
  * Shows a person does not participate an event any more
  */
-public class DisJoinCommand extends UndoableCommand {
+public class DisjoinCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "disjoin";
 
@@ -143,7 +143,7 @@ public class DisJoinCommand extends UndoableCommand {
     private Person personToRemove;
     private Event eventToRemove;
 
-    public DisJoinCommand(Index personIndex, Index eventIndex) {
+    public DisjoinCommand(Index personIndex, Index eventIndex) {
         this.personIndex = personIndex;
         this.eventIndex = eventIndex;
     }
@@ -203,9 +203,9 @@ public class DisJoinCommand extends UndoableCommand {
     @Override
     public boolean equals(Object other) {
         return this == other
-                || (other instanceof DisJoinCommand
-                && this.eventIndex.equals(((DisJoinCommand) other).eventIndex)
-                && this.personIndex.equals(((DisJoinCommand) other).personIndex));
+                || (other instanceof DisjoinCommand
+                && this.eventIndex.equals(((DisjoinCommand) other).eventIndex)
+                && this.personIndex.equals(((DisjoinCommand) other).personIndex));
     }
 }
 ```
@@ -548,7 +548,7 @@ public abstract class UndoableCommand extends Command {
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
-        case DisJoinCommand.COMMAND_WORD:
+        case DisjoinCommand.COMMAND_WORD:
             return new DisjoinCommandParser().parse(arguments);
 
 ```
@@ -650,6 +650,12 @@ public class PortraitCommandParser implements Parser<PortraitCommand> {
 
 }
 ```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    public void removeParticipation(Person person, ReadOnlyEvent event) throws NotParticipateEventException {
+        persons.removeParticipateEvent(person, event);
+    }
+```
 ###### \java\seedu\address\model\event\EventTime.java
 ``` java
     /**
@@ -675,10 +681,10 @@ public class PortraitCommandParser implements Parser<PortraitCommand> {
      * Splits the time into year, day, month
      */
     private void splitTime(String trimmedTime) {
-        String[] splitedTime = trimmedTime.split("/");
-        day = splitedTime[0];
-        month = splitedTime[1];
-        year = splitedTime[2];
+        String[] splitTime = trimmedTime.split("/");
+        day = splitTime[0];
+        month = splitTime[1];
+        year = splitTime[2];
     }
 
     public String orderForSort() {
@@ -693,10 +699,24 @@ public class PortraitCommandParser implements Parser<PortraitCommand> {
                 && isValidDay(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
     }
 
+    public static boolean isValidEventTime(String eventTime) {
+        String trimmedTime = eventTime.trim();
+        if (!isValidFormat(trimmedTime)) {
+            return false;
+        }
+        String[] splitTime = trimmedTime.split("/");
+        String day = splitTime[0];
+        String month = splitTime[1];
+        String year = splitTime[2];
+
+        return isValidMonth(Integer.parseInt(month))
+                && isValidDay(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+    }
+
     /**
      * Returns true if a given day is valid
      */
-    private boolean isValidDay(int year, int month, int day) {
+    private static boolean isValidDay(int year, int month, int day) {
         int[] daysInMonth = new int[] {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         if (month == 2 && isLeapYear(year)) {
             return day >= 1 && day <= daysInMonth[month - 1] + 1;
@@ -708,14 +728,14 @@ public class PortraitCommandParser implements Parser<PortraitCommand> {
     /**
      * Returns true if a given month is valid
      */
-    private boolean isValidMonth(int month) {
+    private static boolean isValidMonth(int month) {
         return month <= 12 && month >= 1;
     }
 
     /**
      * Returns true if a given year is a leap year
      */
-    private boolean isLeapYear(int year) {
+    private static boolean isLeapYear(int year) {
         return (year % 400 == 0)
                 || (year % 100 != 0 && year % 4 == 0);
     }
@@ -723,7 +743,7 @@ public class PortraitCommandParser implements Parser<PortraitCommand> {
     /**
      * Returns true if a given time is valid formatted.
      */
-    public boolean isValidFormat(String test) {
+    public static boolean isValidFormat(String test) {
         return test.matches(EVNET_TIME_VALIDATION_REGEX);
     }
 
@@ -829,6 +849,29 @@ public class EventList implements ReadOnlyEventList {
         events.addParticipant(person, targetEvent);
     }
 
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
+            throws DuplicateEventException, EventNotFoundException {
+        requireAllNonNull(target, editedEvent);
+
+        eventList.updateEvent(target, editedEvent);
+        indicateAddressBookChanged();
+        indicateEventListChanged();
+    }
+
+    //=========== Participant Operations =============================================================
+    @Override
+    public void quitEvent(Person person, Event event)
+            throws PersonNotParticipateException, NotParticipateEventException {
+        eventList.removeParticipant(person, event);
+        indicateEventListChanged();
+
+        addressBook.removeParticipation(person, event);
+        indicateAddressBookChanged();
+    }
 ```
 ###### \java\seedu\address\storage\XmlAdaptedEventNoParticipant.java
 ``` java

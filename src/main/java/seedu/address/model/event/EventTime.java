@@ -20,8 +20,8 @@ public class EventTime {
      * The first character of the event name must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String EVNET_TIME_VALIDATION_REGEX = "^(0[1-9]|[12][\\d]|3[01]|[1-9])[///./-]"
-            + "(0[1-9]|1[012]|[1-9])[///./-](19|20)\\d\\d$";
+    public static final String EVNET_TIME_VALIDATION_REGEX = "^(0[1-9]|[12][\\d]|3[01]|[1-9])[/]"
+            + "(0[1-9]|1[012]|[1-9])[/](19|20)\\d\\d$";
 
     public final String eventTime;
     private String year;
@@ -52,10 +52,10 @@ public class EventTime {
      * Splits the time into year, day, month
      */
     private void splitTime(String trimmedTime) {
-        String[] splitedTime = trimmedTime.split("/");
-        day = splitedTime[0];
-        month = splitedTime[1];
-        year = splitedTime[2];
+        String[] splitTime = trimmedTime.split("/");
+        day = splitTime[0];
+        month = splitTime[1];
+        year = splitTime[2];
     }
 
     public String orderForSort() {
@@ -70,10 +70,24 @@ public class EventTime {
                 && isValidDay(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
     }
 
+    public static boolean isValidEventTime(String eventTime) {
+        String trimmedTime = eventTime.trim();
+        if (!isValidFormat(trimmedTime)) {
+            return false;
+        }
+        String[] splitTime = trimmedTime.split("/");
+        String day = splitTime[0];
+        String month = splitTime[1];
+        String year = splitTime[2];
+
+        return isValidMonth(Integer.parseInt(month))
+                && isValidDay(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+    }
+
     /**
      * Returns true if a given day is valid
      */
-    private boolean isValidDay(int year, int month, int day) {
+    private static boolean isValidDay(int year, int month, int day) {
         int[] daysInMonth = new int[] {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         if (month == 2 && isLeapYear(year)) {
             return day >= 1 && day <= daysInMonth[month - 1] + 1;
@@ -85,14 +99,14 @@ public class EventTime {
     /**
      * Returns true if a given month is valid
      */
-    private boolean isValidMonth(int month) {
+    private static boolean isValidMonth(int month) {
         return month <= 12 && month >= 1;
     }
 
     /**
      * Returns true if a given year is a leap year
      */
-    private boolean isLeapYear(int year) {
+    private static boolean isLeapYear(int year) {
         return (year % 400 == 0)
                 || (year % 100 != 0 && year % 4 == 0);
     }
@@ -100,7 +114,7 @@ public class EventTime {
     /**
      * Returns true if a given time is valid formatted.
      */
-    public boolean isValidFormat(String test) {
+    public static boolean isValidFormat(String test) {
         return test.matches(EVNET_TIME_VALIDATION_REGEX);
     }
 

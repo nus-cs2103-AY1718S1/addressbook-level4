@@ -82,52 +82,81 @@ public class DeleteEventCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\DisplayEmailsCommand.java
+###### \java\seedu\address\logic\commands\DisplayCommand.java
 ``` java
 /**
  * Selects an event identified using it's last displayed index from the address book
  * and displays the emails of every person that has joined.
  */
-public class DisplayEmailsCommand extends Command {
+public class DisplayCommand extends Command {
 
-    public static final String COMMAND_WORD = "displayEmails";
+    public static final String COMMAND_WORD = "display";
+    public static final String PARTICULAR_EMAIL = "email";
+    public static final String PARTICULAR_PHONE = "phone";
+    public static final String PARTICULAR_ADDRESS = "address";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the event identified by the index number used in the last event listing "
             + "and displays the emails of every person that has joined.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Parameters: INDEX (must be a positive integer) PARTICULAR (either email, phone, or address)"
+            + "Example: " + COMMAND_WORD + " 1 " + PARTICULAR_EMAIL;
+    public static final String MESSAGE_NO_PARTICIPANT = "No one has joined this event.";
+    public static final String MESSAGE_INVALID_PARTICULAR = "%1$s is not a valid particular. Please type \""
+        + PARTICULAR_EMAIL + "\", \"" + PARTICULAR_PHONE + "\", or \"" + PARTICULAR_ADDRESS + "\" instead.";
 
     private final Index targetIndex;
+    private final String particular;
 
-    public DisplayEmailsCommand(Index targetIndex) {
+    public DisplayCommand(Index targetIndex, String particular) {
         this.targetIndex = targetIndex;
+        this.particular = particular;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
         List<ReadOnlyEvent> lastShownList = model.getFilteredEventList();
-        String temp = "";
+        String result = "Details: ";
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
         }
 
         if (!lastShownList.get(targetIndex.getZeroBased()).getParticipants().isEmpty()) {
-            for (Person person : lastShownList.get(targetIndex.getZeroBased()).getParticipants()) {
-                temp += person.getEmail().value + ", ";
+            switch (particular) {
+
+            case PARTICULAR_EMAIL:
+                for (Person person : lastShownList.get(targetIndex.getZeroBased()).getParticipants()) {
+                    result += person.getEmail().value + "\n\t     ";
+                }
+                return new CommandResult(result.trim());
+
+            case PARTICULAR_PHONE:
+                for (Person person : lastShownList.get(targetIndex.getZeroBased()).getParticipants()) {
+                    result += person.getPhone().value + "\n\t     ";
+                }
+                return new CommandResult(result.trim());
+
+            case PARTICULAR_ADDRESS:
+                for (Person person : lastShownList.get(targetIndex.getZeroBased()).getParticipants()) {
+                    result += person.getAddress().value + "\n\t     ";
+                }
+                return new CommandResult(result.trim());
+
+            default:
+                return new CommandResult(String.format(MESSAGE_INVALID_PARTICULAR, particular));
             }
+
         } else {
-            temp = "No one has joined this event.";
+            return new CommandResult(MESSAGE_NO_PARTICIPANT);
         }
 
-        return new CommandResult(temp.trim());
+
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof DisplayEmailsCommand // instanceof handles nulls
-                && this.targetIndex.equals(((DisplayEmailsCommand) other).targetIndex)); // state check
+                || (other instanceof DisplayCommand // instanceof handles nulls
+                && this.targetIndex.equals(((DisplayCommand) other).targetIndex)); // state check
     }
 }
 ```
@@ -196,8 +225,8 @@ public class SelectJoinedEventsCommand extends Command {
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
-        case DisplayEmailsCommand.COMMAND_WORD:
-            return new DisplayEmailsCommandParser().parse(arguments);
+        case DisplayCommand.COMMAND_WORD:
+            return new DisplayCommandParser().parse(arguments);
 
 ```
 ###### \java\seedu\address\logic\parser\DeleteEventCommandParser.java
@@ -224,25 +253,27 @@ public class DeleteEventCommandParser implements Parser<DeleteEventCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\DisplayEmailsCommandParser.java
+###### \java\seedu\address\logic\parser\DisplayCommandParser.java
 ``` java
 /**
- * Parses input arguments and creates a new DisplayEmailsCommand object
+ * Parses input arguments and creates a new DisplayCommand object
  */
-public class DisplayEmailsCommandParser implements Parser<DisplayEmailsCommand> {
+public class DisplayCommandParser implements Parser<DisplayCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the DisplayEmailsCommand
-     * and returns an DisplayEmailsCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the DisplayCommand
+     * and returns an DisplayCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public DisplayEmailsCommand parse(String args) throws ParseException {
+    public DisplayCommand parse(String args) throws ParseException {
         try {
-            Index index = ParserUtil.parseIndex(args);
-            return new DisplayEmailsCommand(index);
+            String[] splitArgs = args.trim().split(" ");
+            Index index = ParserUtil.parseIndex(splitArgs[0]);
+            String particular = splitArgs[1];
+            return new DisplayCommand(index, particular);
         } catch (IllegalValueException ive) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DisplayEmailsCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DisplayCommand.MESSAGE_USAGE));
         }
     }
 }

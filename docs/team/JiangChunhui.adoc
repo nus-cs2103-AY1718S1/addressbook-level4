@@ -23,7 +23,8 @@ include::../UserGuide.adoc[tag=undoredo]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+The current design is that each Undoable command knows how to undo and redo individually.
+Compare to the original design: saving whole address book for undoing, my design will save a lot of memory.
 
 ==== Implementation
 
@@ -42,6 +43,4 @@ include::../DeveloperGuide.adoc[tag=undoredo]
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
 

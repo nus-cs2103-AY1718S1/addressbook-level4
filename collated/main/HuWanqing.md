@@ -268,6 +268,12 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
             return new JoinCommandParser().parse(arguments);
 
 ```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    public void addParticipation(Person person, Event event) throws HaveParticipateEventException {
+        persons.addParticipateEvent(person, event);
+    }
+```
 ###### \java\seedu\address\model\event\Event.java
 ``` java
 /**
@@ -279,14 +285,12 @@ public class Event implements ReadOnlyEvent {
     private ObjectProperty<EventTime> time;
     private ObjectProperty<ParticipantList> participants;
     private ObjectProperty<String> days;
-    private EventTime eTime;
 
     /**
      * Event name and time must be present and not null.
      */
     public Event (EventName name, EventDescription desc, EventTime time, Set<Person> participants) {
         requireAllNonNull(name, time);
-        this.eTime = time;
         this.days = new SimpleObjectProperty<>(time.getDaysLeft());
         this.name = new SimpleObjectProperty<>(name);
         this.desc = new SimpleObjectProperty<>(desc);
@@ -299,7 +303,6 @@ public class Event implements ReadOnlyEvent {
      */
     public Event (EventName name, EventDescription desc, EventTime time) {
         requireAllNonNull(name, time);
-        this.eTime = time;
         this.days = new SimpleObjectProperty<>(time.getDaysLeft());
         this.name = new SimpleObjectProperty<>(name);
         this.desc = new SimpleObjectProperty<>(desc);
@@ -417,7 +420,7 @@ public class EventDescription {
     public static final String MESSAGE_EVENT_DESCRIPTION_CONSTRAINTS =
             "Event description should not be blank";
 
-    /*
+    /**
      * The first character of the event name must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
@@ -478,7 +481,7 @@ public class EventName {
     public static final String MESSAGE_EVENT_NAME_CONSTRAINTS =
             "Event names should only contain alphanumeric characters and spaces, and it should not be blank";
 
-    /*
+    /**
      * The first character of the event name must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
@@ -591,6 +594,14 @@ public class DuplicateEventException extends DuplicateDataException {
 public class EventNotFoundException extends Exception {
 }
 
+```
+###### \java\seedu\address\model\event\exceptions\PersonHaveParticipateException.java
+``` java
+/**
+ * Signals that a specific person has participated an specific event
+ */
+public class PersonHaveParticipateException extends Exception {
+}
 ```
 ###### \java\seedu\address\model\event\exceptions\PersonNotParticipateException.java
 ``` java
@@ -933,6 +944,81 @@ public class UniqueEventList implements Iterable<Event> {
     }
 }
 ```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public synchronized void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
+        eventList.addEvent(event);
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        indicateEventListChanged();
+    }
+
+    @Override
+    public synchronized void addEvent(int position, ReadOnlyEvent event) {
+        eventList.addEvent(position, event);
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        indicateEventListChanged();
+    }
+
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public void joinEvent(Person person, Event event)
+            throws PersonHaveParticipateException, HaveParticipateEventException {
+        eventList.addParticipant(person, event);
+        indicateEventListChanged();
+
+        addressBook.addParticipation(person, event);
+        indicateAddressBookChanged();
+    }
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyEvent} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyEvent> getFilteredEventList() {
+        return FXCollections.unmodifiableObservableList(filteredEvents);
+    }
+
+    @Override
+    public void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate) {
+        requireNonNull(predicate);
+        filteredEvents.setPredicate(predicate);
+    }
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+
+    @Override
+    public boolean equals(Object obj) {
+        // short circuit if same object
+        if (obj == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(obj instanceof ModelManager)) {
+            return false;
+        }
+
+        // state check
+        ModelManager other = (ModelManager) obj;
+        return addressBook.equals(other.addressBook)
+                && filteredPersons.equals(other.filteredPersons)
+                && filteredEvents.equals(other.filteredEvents);
+    }
+
+}
+```
+###### \java\seedu\address\model\person\exceptions\HaveParticipateEventException.java
+``` java
+/**
+ * Signals that a specific person has participated a specific event.
+ */
+public class HaveParticipateEventException extends Exception {
+}
+```
 ###### \java\seedu\address\model\person\exceptions\NotParticipateEventException.java
 ``` java
 /**
@@ -940,6 +1026,13 @@ public class UniqueEventList implements Iterable<Event> {
  */
 public class NotParticipateEventException extends Exception {
 }
+```
+###### \java\seedu\address\model\person\exceptions\PersonNotFoundException.java
+``` java
+/**
+ * Signals that the operation is unable to find the specified person.
+ */
+public class PersonNotFoundException extends Exception {}
 ```
 ###### \java\seedu\address\model\person\NameContainsKeywordsPredicate.java
 ``` java
@@ -961,5 +1054,99 @@ public class NotParticipateEventException extends Exception {
             }
         }
         return isSelected;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof NameContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((NameContainsKeywordsPredicate) other).keywords)); // state check
+    }
+
+    public List<String> getSelectedTags() {
+        List<String> tags = new ArrayList<String>();
+        if (keywords.size() == 0) {
+            return null;
+        } else {
+            for (String keyword : keywords) {
+                if (keyword.length() >= 2 && keyword.substring(0, 2).equals("t/")) {
+                    String tagName = "[" + keyword.substring(2) + "]";
+                    tags.add(tagName);
+                }
+            }
+        }
+        return tags;
+    }
+}
+```
+###### \java\seedu\address\model\person\ParticipationList.java
+``` java
+/**
+ * Represents all events which a person participates.
+ */
+public class ParticipationList implements Iterable<Event> {
+
+    private ObservableList<Event> internalList = FXCollections.observableArrayList();
+
+    /**
+     * construct empty participation list
+     */
+    public ParticipationList() {}
+
+    /**
+     * Construct participation list using given participation
+     * Enforces no nulls
+     */
+    public ParticipationList(Set<Event> participation) {
+        requireNonNull(participation);
+        internalList.addAll(participation);
+
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
+    /**
+     * Returns all participation in this list as a Set.
+     * This set is mutable and change-insulated against the internal list.
+     */
+    public Set<Event> toSet() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return new HashSet<>(internalList);
+    }
+
+    /**
+     * Returns true if the participation list contains a specific event given by argument.
+     */
+    public boolean contains(ReadOnlyEvent toCheck) {
+        requireNonNull(toCheck);
+        return internalList.contains(toCheck);
+    }
+
+    /**
+     * Adds an event to the participation list.
+     *
+     * @throws DuplicateEventException if this person has already participate this event
+     */
+    public void add(Event toAdd) throws DuplicateEventException {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new DuplicateEventException();
+        }
+        internalList.add(toAdd);
+
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    /**
+     * Remove an participated event from the list.
+     *
+     * @throws EventNotFoundException if the does not participate this event.
+     */
+    public void remove(ReadOnlyEvent toRemove) throws EventNotFoundException {
+        requireNonNull(toRemove);
+        if (!contains(toRemove)) {
+            throw new EventNotFoundException();
+        }
+        internalList.remove(toRemove);
+
+        assert CollectionUtil.elementsAreUnique(internalList);
     }
 ```
