@@ -18,7 +18,6 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.person.NameContainsFavouritePredicate;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -35,7 +34,6 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyEvent> filteredEvents;
-    private final ObservableList<ReadOnlyPerson> allPersons;
     private  ReadOnlyPerson person;
     private int flag;
 
@@ -51,7 +49,6 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredEvents = new FilteredList<>(this.addressBook.getEventList());
-        allPersons = this.addressBook.getPersonList();
         currentTheme = userPrefs.getTheme();
     }
 
@@ -134,12 +131,12 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void unselectPerson(){
-        this.person =null;
+        this.person = null;
     }
 
     @Override
-    public boolean ifSelectedPerson(){
-        if (flag==1){
+    public boolean ifSelectedPerson() {
+        if (flag == 1) {
             return true;
         }
         return false;

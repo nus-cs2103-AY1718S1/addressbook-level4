@@ -21,7 +21,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelUnselectEvent;
-import seedu.address.commons.events.ui.PersonSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 
 import seedu.address.commons.events.ui.ShowThemeRequestEvent;
@@ -293,7 +292,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     @Subscribe
-    private void UnselectionofPersonCardEvent(PersonPanelUnselectEvent event) {
+    private void handleUnselectOfPersonCardEvent(PersonPanelUnselectEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         detailsPanel = new DetailsPanel();
         detailsPanelPlaceholder.getChildren().clear();

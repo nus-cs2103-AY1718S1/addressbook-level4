@@ -192,7 +192,7 @@ public class DetailsPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void UnselectionofPersonCardEvent(PersonPanelUnselectEvent event) {
+    private void handleUnselectOfPersonCardEvent(PersonPanelUnselectEvent event) {
         unregisterAsAnEventHandler(this);
     }
 
