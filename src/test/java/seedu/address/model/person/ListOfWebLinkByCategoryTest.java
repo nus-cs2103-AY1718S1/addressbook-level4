@@ -2,7 +2,7 @@ package seedu.address.model.person;
 
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_WEB_LINK_DEFAULT;
-import static seedu.address.model.person.weblink.WebLinkUtil.FACEBOOK_TAG;
+import static seedu.address.commons.util.WebLinkUtil.FACEBOOK_TAG;
 import static seedu.address.testutil.TypicalPersons.AMY;
 
 import java.util.ArrayList;

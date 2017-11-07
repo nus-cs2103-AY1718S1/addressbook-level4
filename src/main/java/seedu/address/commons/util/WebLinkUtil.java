@@ -1,4 +1,4 @@
-package seedu.address.model.person.weblink;
+package seedu.address.commons.util;
 
 //@@author AngularJiaSheng
 /**
