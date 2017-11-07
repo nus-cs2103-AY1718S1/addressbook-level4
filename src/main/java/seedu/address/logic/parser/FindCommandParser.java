@@ -51,7 +51,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         // Check if null and is a non-empty string.
         requireNonNull(rawArgs);
         if (!rawArgs.trim().isEmpty()) {
-            return " " + rawArgs;
+            return " " + rawArgs.trim();
         }
         return null;
     }

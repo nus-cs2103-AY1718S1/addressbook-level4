@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.StringUtil.replaceBackslashes;
-import static seedu.address.model.person.Address.ADDRESS_VALIDATION_REGEX;
 import static seedu.address.model.person.Email.EMAIL_VALIDATION_REGEX;
 import static seedu.address.model.person.Phone.PHONE_VALIDATION_REGEX;
 import static seedu.address.storage.util.RolodexStorageUtil.FILEPATH_REGEX_NON_STRICT;
@@ -286,47 +285,5 @@ public class ParserUtil {
         return value.substring(0, value.indexOf(firstEmail)).trim()
                 .concat(" ")
                 .concat(value.substring(value.indexOf(firstEmail) + firstEmail.length()).trim()).trim();
-    }
-
-    /**
-     * Attempts to parse a {@code String} to an address.
-     * Looks for a regex given a value and parses the address, until the end of the string.
-     *
-     * @return {@code true} if successfully parsed,
-     * {@code false} otherwise.
-     */
-    public static boolean tryParseAddressTillEnd(String value) {
-        try {
-            parseAddressTillEnd(value);
-            return true;
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
-    }
-
-    /**
-     * Returns the address found in a {@code String}.
-     * @param value to be parsed.
-     * @return {@code String} value of the address.
-     * @throws IllegalArgumentException if no file path was found.
-     */
-    public static String parseAddressTillEnd(String value) throws IllegalArgumentException {
-        Pattern address = Pattern.compile(ADDRESS_VALIDATION_REGEX);
-        // TODO: Check for numbers <= 5 characters. "Block, Blk..."
-        Matcher m = address.matcher(replaceBackslashes(value).trim());
-        if (m.find() && isValidRolodexStorageFilepath(m.group())) {
-            return m.group().replaceAll(ROLODEX_FILE_EXTENSION, "").trim() + ROLODEX_FILE_EXTENSION;
-        }
-        throw new IllegalArgumentException();
-    }
-
-    /**
-     * Returns a {@code String} after the address has been removed.
-     * @param value to be parsed.
-     * @return a {@code String} without the address.
-     */
-    public static String parseRemoveAddressTillEnd(String value) {
-        String address = parseAddressTillEnd(value);
-        return value.substring(0, value.indexOf(address)).trim();
     }
 }

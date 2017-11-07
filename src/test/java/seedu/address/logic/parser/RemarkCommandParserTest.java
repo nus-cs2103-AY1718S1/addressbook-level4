@@ -1,5 +1,7 @@
 package seedu.address.logic.parser;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -13,6 +15,7 @@ import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.model.person.Remark;
 
 public class RemarkCommandParserTest {
+
     private RemarkCommandParser parser = new RemarkCommandParser();
 
     @Test
@@ -37,6 +40,24 @@ public class RemarkCommandParserTest {
 
         // nothing at all
         assertParseFailure(parser, RemarkCommand.COMMAND_WORD, expectedMessage);
+    }
+
+    @Test
+    public void parseArgumentsNoIndexFailueThrowsParseException() throws Exception {
+        assertTrue(null == RemarkCommandParser.parseArguments("rmk", "no index here!"));
+        assertTrue(null == RemarkCommandParser.parseArguments("remark", "none here either!"));
+    }
+
+    @Test
+    public void parseArgumentsIndexInArgumentsReturnsArguments() throws Exception {
+        assertEquals(" 1 r/someStringV4lue", RemarkCommandParser.parseArguments("rmk", "1someStringV4lue"));
+        assertEquals(" 8 r/someStringV4lue", RemarkCommandParser.parseArguments("rmk", "8someStringV4lue"));
+    }
+
+    @Test
+    public void parseArgumentsIndexInCommandWordReturnsArguments() throws Exception {
+        assertEquals(" 1 r/", RemarkCommandParser.parseArguments("rmk1", ""));
+        assertEquals(" 7 r/", RemarkCommandParser.parseArguments("rmk7", ""));
     }
 
 }
