@@ -26,6 +26,10 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private ListElementPointer autoCompleteSnapshot;
+    private boolean isAutoCompletePossibilitiesUpToDate = false;
+    private int oldCaretPosition = 0;
+    private String textAfterCaret = "";
 
     @FXML
     private TextField commandTextField;
@@ -36,6 +40,7 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+        autoCompleteSnapshot = logic.getAutoCompleteSnapshot();
     }
 
     /**
@@ -55,8 +60,18 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        case TAB:
+            // As tab will shift focus away from the text box,
+            // consuming it causes the text box to remain focused
+            keyEvent.consume();
+            autoCompleteCommand();
+            break;
         default:
             // let JavaFx handle the keypress
+
+            // There has been a key press event that is not consumed (special)
+            // autocomplete possibilities is likely outdated
+            isAutoCompletePossibilitiesUpToDate = false;
         }
     }
 
@@ -86,6 +101,32 @@ public class CommandBox extends UiPart<Region> {
         replaceText(historySnapshot.next());
     }
 
+    //@@author john19950730
+    /**
+     * Autocompletes the command in the textbox from incomplete input,
+     * and if command is already complete change to next possible command
+     */
+    private void autoCompleteCommand() {
+        assert autoCompleteSnapshot != null;
+        if (!isAutoCompletePossibilitiesUpToDate) {
+            // Update the autocomplete possibilities only when textbox is changed by non-shortcut user key press
+            initAutoComplete();
+            // Remember old caret position, so that selected text include all autocompleted text
+            oldCaretPosition = commandTextField.getCaretPosition();
+        }
+
+        // loop back to the start (original user input) if all autocomplete options are exhausted
+        if (!autoCompleteSnapshot.hasPrevious()) {
+            autoCompleteSnapshot = logic.getAutoCompleteSnapshot();
+            replaceText(autoCompleteSnapshot.current());
+            appendText(textAfterCaret);
+        } else {
+            replaceTextAndSelectAllForward(autoCompleteSnapshot.previous());
+            appendText(textAfterCaret);
+        }
+    }
+
+    //@@author
     /**
      * Sets {@code CommandBox}'s text field with {@code text} and
      * positions the caret to the end of the {@code text}.
@@ -95,6 +136,29 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.positionCaret(commandTextField.getText().length());
     }
 
+    //@@author john19950730
+    /**
+     * Sets {@code CommandBox}'s text field with {@code text},
+     * selects all text beyond previous caret position,
+     * and positions the caret to the end of the {@code text}.
+     */
+    private void replaceTextAndSelectAllForward(String text) {
+        commandTextField.setText(text);
+        commandTextField.selectRange(oldCaretPosition, commandTextField.getText().length());
+    }
+
+    /**
+     * Appends {@code text} to the end of the text already in {@code CommandBox},
+     * while maintaining caret position and selection anchor
+     */
+    private void appendText(String text) {
+        int caretPosition = commandTextField.getCaretPosition();
+        int anchor = commandTextField.getAnchor();
+        commandTextField.setText(commandTextField.getText() + text);
+        commandTextField.selectRange(anchor, caretPosition);
+    }
+
+    //@@author
     /**
      * Handles the Enter button pressed event.
      */
@@ -128,6 +192,22 @@ public class CommandBox extends UiPart<Region> {
         historySnapshot.add("");
     }
 
+    //@@author john19950730
+    /**
+     * Initializes or reinitializes the autocomplete snapshot.
+     */
+    private void initAutoComplete() {
+        // only pass the text before the caret into autocomplete
+        logic.updateAutoCompletePossibilities(commandTextField.getText()
+            .substring(0, commandTextField.getCaretPosition()));
+        // remember the text after caret
+        textAfterCaret = commandTextField.getText()
+            .substring(commandTextField.getCaretPosition(), commandTextField.getText().length());
+        autoCompleteSnapshot = logic.getAutoCompleteSnapshot();
+        isAutoCompletePossibilitiesUpToDate = true;
+    }
+
+    //@@author
     /**
      * Sets the command box style to use the default style.
      */

@@ -1,7 +1,7 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
-
+//@@author kosyoz
 /**
  * Represents a Person's remark in the address book.
  * Guarantees: immutable; is always valid
@@ -16,6 +16,10 @@ public class Remark {
     public Remark(String remark) {
         requireNonNull(remark);
         this.value = remark;
+    }
+
+    public boolean isEmpty() {
+        return value.equals("");
     }
 
     @Override

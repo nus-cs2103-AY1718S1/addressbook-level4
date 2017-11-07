@@ -1,8 +1,11 @@
 package seedu.address.model;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -21,6 +24,26 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
+    //@@author john19950730
+    /** Returns all names in the AddressBook */
+    List<String> getAllNamesInAddressBook();
+
+    /** Returns all phones in the AddressBook */
+    List<String> getAllPhonesInAddressBook();
+
+    /** Returns all emails in the AddressBook */
+    List<String> getAllEmailsInAddressBook();
+
+    /** Returns all addresses in the AddressBook */
+    List<String> getAllAddressesInAddressBook();
+
+    /** Returns all tags in the AddressBook */
+    List<String> getAllTagsInAddressBook();
+
+    /** Returns all remarks in the AddressBook */
+    List<String> getAllRemarksInAddressBook();
+
+    //@@author
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
@@ -43,7 +66,11 @@ public interface Model {
     /** Removes a tag from every person in the list.*/
     void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 
+    /** Removes a tag from the specified Index on the list.*/
+    void removeTag(Index index, Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 
+    /** Sorts the filtered list.*/
+    void sortFilteredPersonList(Comparator<ReadOnlyPerson> comparator);
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.

@@ -5,7 +5,7 @@ import java.net.URL;
 
 import guitests.GuiRobot;
 import javafx.scene.web.WebView;
-
+//@@author kosyoz
 /**
  * Helper methods for dealing with {@code WebView}.
  */

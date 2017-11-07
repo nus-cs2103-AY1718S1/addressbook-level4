@@ -42,6 +42,10 @@ public class Phone {
         return value;
     }
 
+    public int compareTo(Phone other) {
+        return this.value.compareToIgnoreCase(other.value);
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

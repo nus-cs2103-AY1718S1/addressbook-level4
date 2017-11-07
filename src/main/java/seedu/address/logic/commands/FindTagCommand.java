@@ -1,12 +1,14 @@
 package seedu.address.logic.commands;
 
 import seedu.address.model.person.TagsContainKeywordsPredicate;
-
+//@@author kosyoz
 /**
  */
 public class FindTagCommand extends Command {
 
     public static final String COMMAND_WORD = "findtag";
+    public static final String COMMAND_USAGE = COMMAND_WORD + " ";
+
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose tags contain any of "
             + "the specified tags (not case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: TAG [MORE_TAGS]...\n"
@@ -14,7 +16,9 @@ public class FindTagCommand extends Command {
 
     private final TagsContainKeywordsPredicate predicate;
 
-    public FindTagCommand(TagsContainKeywordsPredicate predicate) { this.predicate = predicate; }
+    public FindTagCommand(TagsContainKeywordsPredicate predicate) {
+        this.predicate = predicate;
+    }
 
     @Override
     public CommandResult execute() {
