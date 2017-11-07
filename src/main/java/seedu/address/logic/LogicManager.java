@@ -65,5 +65,7 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public AppointmentReminder getAppointmentReminder() { return appointmentReminder; }
+    public AppointmentReminder getAppointmentReminder() {
+        return appointmentReminder;
+    }
 }

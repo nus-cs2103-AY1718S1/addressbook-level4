@@ -10,6 +10,8 @@ import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Represents a Person's appointment created in the address book.
@@ -26,6 +28,7 @@ public class Appointment {
     public final String value;
     public final LocalDateTime start;
     public final LocalDateTime end;
+    private ReadOnlyPerson person;
 
     /**
      * Validates given appointment.
@@ -71,6 +74,14 @@ public class Appointment {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATETIME_PATTERN)
                 .withResolverStyle(ResolverStyle.STRICT);
         return LocalDateTime.parse(datetime, formatter);
+    }
+
+    public void setPerson(ReadOnlyPerson person) {
+        this.person = person;
+    }
+
+    public ReadOnlyPerson getPerson() {
+        return person;
     }
 
     /**

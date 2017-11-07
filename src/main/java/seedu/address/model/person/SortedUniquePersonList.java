@@ -120,8 +120,10 @@ public class SortedUniquePersonList implements Iterable<Person> {
         Set<Appointment> appointments = new HashSet<>();
 
         for (Person p: internalList) {
-            if (!p.getAppointment().value.equals("")) {
-                appointments.add(p.getAppointment());
+            Appointment appointment = p.getAppointment();
+            if (!appointment.value.equals("")) {
+                appointment.setPerson(p);
+                appointments.add(appointment);
             }
         }
         return appointments;
