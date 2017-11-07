@@ -571,6 +571,28 @@ Case (1) is to restore the default list of all contacts after users have used th
 
 The rest of the execution then, follows closely to the case where the command is executed through `CommandBox`
 
+// tag::li[]
+=== Addition of Life Insurances
+
+// end::addli[]
+
+// tag::addli[]
+=== Adding a Life Insurance: `addli`
+`since v1.4`
+
+Adds a life insurance in Lisa +
+
+Format: `add n/NAME o/OWNER i/INSURED b/BENEFICIARY pr/PREMIUM c/CONTRACT_FILE_PATH sd/SIGNING_DATE ed/EXPIRY_DATE`
+
+Examples:
+
+* `addli n/Term Life o/Alex Yeoh i/John Doe b/Mary Jane c/TermLife.pdf
+         pr/600 sd/01 11 2017 ed/01 11 2037`
+* `addli n/Whole Life o/Bernice Yu i/David Li b/Roy Balakrishnan c/WholeLife.pdf
+            pr/8500 sd/01 11 2017 ed/01 11 2117`
+
+// end::addli[]
+
 === Addition of Print Command
 The print command enables the user to save his/her addressbook into a printable .txt file
 

@@ -189,11 +189,22 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::addli[]
 === Adding a Life Insurance: `addli`
 `since v1.4`
 
-Adds a life insurance in Lisa.
+Adds a life insurance in Lisa +
 
+Format: `add n/NAME o/OWNER i/INSURED b/BENEFICIARY pr/PREMIUM c/CONTRACT_FILE_PATH sd/SIGNING_DATE ed/EXPIRY_DATE`
+
+Examples:
+
+* `addli n/Term Life o/Alex Yeoh i/John Doe b/Mary Jane c/TermLife.pdf
+         pr/600 sd/01 11 2017 ed/01 11 2037`
+* `addli n/Whole Life o/Bernice Yu i/David Li b/Roy Balakrishnan c/WholeLife.pdf
+            pr/8500 sd/01 11 2017 ed/01 11 2117`
+
+// end::addli[]
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
