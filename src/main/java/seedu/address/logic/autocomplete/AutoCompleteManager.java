@@ -17,6 +17,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.autocomplete.parser.AutoCompleteByPrefixModelParser;
 import seedu.address.logic.autocomplete.parser.AutoCompleteCommandParser;
 import seedu.address.logic.autocomplete.parser.AutoCompleteParser;
+import seedu.address.logic.autocomplete.parser.AutoCompleteSetStringParser;
 import seedu.address.logic.autocomplete.parser.AutoCompleteTagParser;
 import seedu.address.logic.autocomplete.parser.AutoCompleteWordInNameParser;
 import seedu.address.logic.autocomplete.parser.IdentityParser;
@@ -26,6 +27,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindTagCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 
@@ -51,6 +53,10 @@ public class AutoCompleteManager {
     private final AutoCompleteWordInNameParser wordInNameParser;
     private final AutoCompleteTagParser tagParser;
     private final AutoCompleteByPrefixModelParser modelParser;
+    private final AutoCompleteSetStringParser sortFieldParser =
+            new AutoCompleteSetStringParser(Arrays.asList(new String[] {"name", "phone", "email"}));
+    private final AutoCompleteSetStringParser sortOrderParser =
+            new AutoCompleteSetStringParser(Arrays.asList(new String[] {"asc", "dsc"}));
     private final LinkedList<AutoCompletePossibilities> cache = new LinkedList<AutoCompletePossibilities>();
     private final int maxSize;
 
@@ -131,6 +137,17 @@ public class AutoCompleteManager {
             case RemoveTagCommand.COMMAND_WORD:
                 logger.info("Parsing [Tags in Model]");
                 return tagParser;
+            case SortCommand.COMMAND_WORD:
+                if (numberOfWordsInStub == 2) {
+                    logger.info("Parsing [Sort Fields]");
+                    return sortFieldParser;
+                } else if (numberOfWordsInStub == 3) {
+                    logger.info("Parsing [Sort Orders]");
+                    return sortOrderParser;
+                } else {
+                    logger.info("Parsing back user input as-is");
+                    return identity;
+                }
             default:
                 logger.info("Parsing back user input as-is");
                 return identity;
