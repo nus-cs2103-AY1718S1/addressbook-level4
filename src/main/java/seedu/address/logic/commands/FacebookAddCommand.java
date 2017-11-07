@@ -15,6 +15,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.SocialInfoMapping;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DisplayPhoto;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Favorite;
 import seedu.address.model.person.Name;
@@ -101,7 +102,7 @@ public class FacebookAddCommand extends UndoableCommand {
             tags.add(new Tag("facebookFriend"));
 
             toAdd = new Person(new Name(toAddName), new Phone(), new Email(), new Address(),
-                    new Favorite(false), tags, socialInfos);
+                    new Favorite(false),new DisplayPhoto(null), tags, socialInfos);
         } catch (IllegalValueException e) {
             throw new CommandException(MESSAGE_FACEBOOK_ADD_PERSON_ERROR);
         }
@@ -119,6 +120,7 @@ public class FacebookAddCommand extends UndoableCommand {
         // add to model and return
         try {
             requireNonNull(model);
+            System.out.println(toAdd);
             model.addPerson(toAdd);
         } catch (DuplicatePersonException e) {
             new CommandException(MESSAGE_DUPLICATE_PERSON);
