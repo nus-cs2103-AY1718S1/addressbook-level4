@@ -64,19 +64,17 @@ public class Picture {
         }
 
         if (trimmedFileLocation != null) {
-            String[] split = trimmedFileLocation.split(PICTURE_DELIMITER_SLASH);
-            if (split.length < 2) {
-                split = trimmedFileLocation.split(PICTURE_DELIMITER_BACKSLASH);
-            }
+            String[] split = splitFileLocation(trimmedFileLocation);
+
             // When we save the file, it is a single file name there is nothing to split.
             // No need to copy it either
-
             // last value before '/' is picture we want
             String fileName = split[split.length - 1];
 
             // length will give 1 when it is the file we saved
             // in that case just put PICTURE_IMAGE_LOCATION to find it
             if (split.length != 1) {
+
                 File src = new File(fileLocation);
                 File dest = new File(PICTURE_SAVE_LOCATION + fileName);
 
@@ -91,6 +89,23 @@ public class Picture {
         } else {
             this.value = null;
         }
+    }
+
+    /**
+     * Splits the file depending on the delimiter used '/' or '\'
+     * @param trimmedFileLocation location of valid file
+     * @return split fileLocation
+     */
+    public static String[] splitFileLocation(String trimmedFileLocation) {
+        String [] split = trimmedFileLocation.split(PICTURE_DELIMITER_SLASH);
+
+        // If the fileLocation has been split but has length of 1,
+        // It is either using another delimiter or is the file itself.
+        if (split.length < 2) {
+            split = trimmedFileLocation.split(PICTURE_DELIMITER_BACKSLASH);
+        }
+
+        return split;
     }
 
     /**

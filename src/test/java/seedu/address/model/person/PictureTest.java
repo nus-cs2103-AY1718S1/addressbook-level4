@@ -77,7 +77,7 @@ public class PictureTest {
     }
 
     /**
-     * Returns true of expected string is equals actual string
+     * Asserts true if expected string is equals actual string
      */
     public static void assertPictureLocationTrue(String expected, String actual) {
         assertTrue(expected.equals(actual));
