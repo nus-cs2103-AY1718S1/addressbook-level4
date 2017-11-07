@@ -32,22 +32,22 @@ public class SampleDataUtil {
             return new Person[] {
                 new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                     new Room("09-119"), new Timestamp(0),
-                    getTagSet("friends")),
+                    getTagSet("master")),
                 new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                     new Room("09-100A"), new Timestamp(0),
-                    getTagSet("colleagues", "friends")),
+                    getTagSet("level5", "RA")),
                 new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
                     new Room("21-118"), new Timestamp(0),
-                    getTagSet("neighbours")),
+                    getTagSet("level6")),
                 new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
                     new Room("26-105"), new Timestamp(0),
-                    getTagSet("family")),
+                    getTagSet("level8")),
                 new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
                     new Room("17-135F"), new Timestamp(0),
-                    getTagSet("classmates")),
+                    getTagSet("level20")),
                 new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                     new Room("03-130"), new Timestamp(0),
-                    getTagSet("colleagues"))
+                    getTagSet("staff"))
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
