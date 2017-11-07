@@ -15,7 +15,7 @@ public class UserPrefs {
     private String eventStorageFilePath = "data/eventstorage.xml";
 
     public UserPrefs() {
-        this.setGuiSettings(500, 500, 0, 0);
+        this.setGuiSettings(1000, 1000, 0, 0);
     }
 
     public GuiSettings getGuiSettings() {
