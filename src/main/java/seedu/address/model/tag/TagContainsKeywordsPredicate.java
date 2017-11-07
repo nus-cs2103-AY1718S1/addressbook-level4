@@ -1,7 +1,9 @@
 package seedu.address.model.tag;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.PartialSearchUtil;
@@ -19,9 +21,13 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        List baseList = Arrays.asList(person.getTags());
+        List baseTagList = Arrays.asList(person.getTags().toArray());
+        List baseList = new ArrayList();
+        ListIterator iter = baseTagList.listIterator();
+        while(iter.hasNext()) {
+            baseList.add(iter.next().toString());
+        }
         PartialSearchUtil mySearch = new PartialSearchUtil(keywords, baseList);
-        System.out.println(mySearch.compare());
         return mySearch.compare();
     }
 
