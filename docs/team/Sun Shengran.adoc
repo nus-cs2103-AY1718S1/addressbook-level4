@@ -1,0 +1,47 @@
+= Sun Shengran - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: iConnect
+iConnect is a desktop address book application used for NUS undergraduates social network connection purpose. We aim to make the student's school life much easier and more convenient. The user interacts with the app by typing command line, and it has a GUI created with JavaFX. It is written in Java, and has about 25 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/Collated/main/dalessr.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/Collated/test/dalessr.md[Test code]] {give links to collated code files}
+
+=== Enhancements Added: Find, Map, Birthday
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+include::../UserGuide.adoc[tag=map]
+
+include::../UserGuide.adoc[tag=birthday]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findmech]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `remark`
+
+{Explain similar to the Undo/Redo feature above.}
+
+=== Other contributions
+
+* GUI design: built the person details panel (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/84[#84])
+* GUI design: open a new tab in centre panel to display the browser view for each social media icon (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/98[#98])
+* Wrote additional tests to increase coverage from 80% to 85% (Pull requests https://github.com[#36], https://github.com[#38])
