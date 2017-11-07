@@ -226,7 +226,7 @@ image::inheritCommandUML.png[width="800]
 AddPhotoCommand is undoable and is implemented this way:
 [source,java]
 ----
-public class AddPhotoCommand extends UndoableCommand { 
+public class AddPhotoCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         // ... addphoto logic ...
@@ -256,7 +256,7 @@ image::NewUML.png[width="800]
 **Alternative 1(current choice):** Have `AddPhotoCommand` implement `UndoableCommand` +
 **Pros:** Retains the logic flow of how commands are executed. This option increases code reusability of the UndoableCommand interface. +
 **Cons:** Increases coupling between the AddPhotoCommand class and the UndoableCommand interface. In addition, logic flow is embedded in multiple layers. New developers might find it hard to understand the complicated logic flow. +
-**Alternative 2:** Have `AddPhotoCommand` implement `Command` + 
+**Alternative 2:** Have `AddPhotoCommand` implement `Command` +
 **Pros:** Retains the logic flow of how commands are executed. This option increases code reusability of the Command interface. +
 **Cons:** Increases coupling between the AddPhotoCommand class and the UndoableCommand interface. In addition, users will not have the convenient option to execute `undo` immediately if an incorrect photo is added.
 

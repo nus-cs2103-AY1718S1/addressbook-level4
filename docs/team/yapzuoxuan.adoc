@@ -36,7 +36,7 @@ include::../DeveloperGuide.adoc[tag=addphoto]
 
 ---
 
-=== Enhancement Proposed: 
+=== Enhancement Proposed:
 
 ---
 
@@ -46,7 +46,7 @@ include::../UserGuide.adoc[tag=import]
 
 #End of Extract#
 
-**Justification:** Allows more flexibility in the case of adding a large number of contacts. Users do not have to painstakingly add each contact repeatedly. 
+**Justification:** Allows more flexibility in the case of adding a large number of contacts. Users do not have to painstakingly add each contact repeatedly.
 
 ---
 
