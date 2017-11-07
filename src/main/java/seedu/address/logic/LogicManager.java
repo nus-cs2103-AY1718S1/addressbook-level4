@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.autocomplete.AutoCompleteLogic;
 import seedu.address.logic.autocomplete.AutoCompleteManager;
 import seedu.address.logic.autocomplete.AutoCompletePossibilities;
 import seedu.address.logic.autocomplete.parser.IdentityParser;
@@ -29,7 +30,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
     private AutoCompletePossibilities autoCompletePossibilities;
-    private final AutoCompleteManager autoCompleteManager;
+    private final AutoCompleteLogic autoCompleteLogic;
 
     public LogicManager(Model model) {
         this.model = model;
@@ -37,7 +38,7 @@ public class LogicManager extends ComponentManager implements Logic {
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
         this.autoCompletePossibilities = new AutoCompletePossibilities("", new IdentityParser());
-        this.autoCompleteManager = new AutoCompleteManager(model, AUTOCOMPLETE_CACHE_SIZE);
+        this.autoCompleteLogic = new AutoCompleteManager(model, AUTOCOMPLETE_CACHE_SIZE);
     }
 
     @Override
@@ -72,7 +73,7 @@ public class LogicManager extends ComponentManager implements Logic {
 
     @Override
     public void updateAutoCompletePossibilities(String stub) {
-        autoCompletePossibilities = autoCompleteManager.search(stub);
+        autoCompletePossibilities = autoCompleteLogic.generateAutoCompletePossibilities(stub);
     }
 
 }

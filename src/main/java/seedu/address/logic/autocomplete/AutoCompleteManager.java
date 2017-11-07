@@ -36,7 +36,7 @@ import seedu.address.model.Model;
 /**
  * Manages autocomplete logic, as well as optimizations such as memoization.
  */
-public class AutoCompleteManager {
+public class AutoCompleteManager implements AutoCompleteLogic {
 
     private final Logger logger = LogsCenter.getLogger(AutoCompleteManager.class);
 
@@ -71,6 +71,11 @@ public class AutoCompleteManager {
         maxSize = size;
     }
 
+    @Override
+    public AutoCompletePossibilities generateAutoCompletePossibilities(String stub) {
+        return search(stub);
+    }
+
     /**
      * Searches the cache for old AutoCompletePossibilities that has already been evaluated and stored,
      * based on the command stub specified.
@@ -78,7 +83,7 @@ public class AutoCompleteManager {
      * @return AutoCompletePossibilities object that contains all autocomplete options,
      * new object will be generated if not found in cache
      */
-    public AutoCompletePossibilities search(String stub) {
+    private AutoCompletePossibilities search(String stub) {
         for (AutoCompletePossibilities entryInCache : cache) {
             if (stub.equals(entryInCache.getStub())) {
                 logger.info("Found memoized autocomplete options.");
