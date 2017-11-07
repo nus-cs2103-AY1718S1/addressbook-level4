@@ -49,7 +49,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_PARENTPHONE, PREFIX_EMAIL,
                         PREFIX_ADDRESS, PREFIX_FORMCLASS, PREFIX_GRADES, PREFIX_POSTALCODE, PREFIX_REMARK, PREFIX_TAG);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_PARENTPHONE, PREFIX_FORMCLASS,
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PARENTPHONE, PREFIX_FORMCLASS,
                 PREFIX_GRADES)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
@@ -97,6 +97,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
         if (!input.contains("c/")) {
             input = input + " c/ (Postal code not recorded)";
+        }
+        if (!input.contains("pp/")) {
+            input = input + " pp/ (Parent phone not recorded)";
         }
         return input;
     }
