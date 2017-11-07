@@ -505,6 +505,7 @@ link:#the-myths-book---user-guide[Back To Top]
 
 This `Details Panel` is a graphical user interface that shows you all the `hidden` details of a person that is not shown in the person list.
 
+// tag::calendar[]
 === Calendar
 
 The Calendar is a graphical user interface that displays a calendar for the user. +
@@ -515,6 +516,8 @@ image::calendar.PNG[width="700"]
 Furthermore, you can add events after clicking on the specific date. A pop up window as shown below will appear prompting you to fill up the details of the event.
 
 image::popupwindow.PNG[width="300"]
+
+// end::calendar[]
 
 link:#the-myths-book---user-guide[Back To Top]
 
