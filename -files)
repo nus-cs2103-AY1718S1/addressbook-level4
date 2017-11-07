@@ -1,0 +1,499 @@
+ -backup.xml                                                        |    2 [32m+[m
+ .gitignore                                                         |   23 [32m+[m
+ .travis.yml                                                        |   29 [32m+[m
+ LICENSE                                                            |   21 [32m+[m
+ README.adoc                                                        |   33 [32m+[m
+ _config.yml                                                        |    1 [32m+[m
+ appveyor.yml                                                       |   18 [32m+[m
+ build.gradle                                                       |  239 [32m++++++[m
+ collated/main/LimYangSheng-reused.md                               |   84 [32m++[m
+ collated/main/LimYangSheng.md                                      |  220 [32m+++++[m
+ collated/main/alexanderleegs.md                                    |  862 [32m++++++++++++++++++++[m
+ collated/main/derrickchua-reused.md                                |  177 [32m++++[m
+ collated/main/derrickchua.md                                       |  669 [32m+++++++++++++++[m
+ collated/main/newalter.md                                          |  462 [32m+++++++++++[m
+ collated/test/LimYangSheng-reused.md                               |   15 [32m+[m
+ collated/test/LimYangSheng.md                                      |  118 [32m+++[m
+ collated/test/alexanderleegs.md                                    |  644 [32m+++++++++++++++[m
+ collated/test/derrickchua.md                                       |  376 [32m+++++++++[m
+ collated/test/newalter.md                                          |  688 [32m++++++++++++++++[m
+ config/checkstyle/checkstyle.xml                                   |  429 [32m++++++++++[m
+ config/checkstyle/suppressions.xml                                 |    9 [32m+[m
+ config/travis/check-eof-newline.sh                                 |   14 [32m+[m
+ config/travis/check-line-endings.sh                                |   19 [32m+[m
+ config/travis/check-trailing-whitespace.sh                         |   26 [32m+[m
+ config/travis/deploy_github_pages.sh                               |   42 [32m+[m
+ config/travis/run-checks.sh                                        |   11 [32m+[m
+ copyright.txt                                                      |    9 [32m+[m
+ docs/AboutUs.adoc                                                  |   45 [32m++[m
+ docs/ContactUs.adoc                                                |    6 [32m+[m
+ docs/DeveloperGuide.adoc                                           | 1259 [32m+++++++++++++++++++++++++++++[m
+ docs/FeatureTracking.adoc                                          |   46 [32m++[m
+ docs/TestDocument.adoc                                             |   61 [32m++[m
+ docs/UserGuide.adoc                                                |  932 [32m+++++++++++++++++++++[m
+ docs/UsingAppVeyor.adoc                                            |   87 [32m++[m
+ docs/UsingCheckstyle.adoc                                          |   40 [32m+[m
+ docs/UsingGradle.adoc                                              |  106 [32m+++[m
+ docs/UsingTravis.adoc                                              |  132 [32m+++[m
+ docs/diagrams/AddTagSequenceDiagram.pptx                           |  Bin [31m0[m -> [32m45043[m bytes
+ docs/diagrams/ArchitectureDiagram.pptx                             |  Bin [31m0[m -> [32m57574[m bytes
+ docs/diagrams/FindSequenceDiagram.pptx                             |  Bin [31m0[m -> [32m52398[m bytes
+ docs/diagrams/HighLevelSequenceDiagrams.pptx                       |  Bin [31m0[m -> [32m71479[m bytes
+ docs/diagrams/LogicComponentClassDiagram.pptx                      |  Bin [31m0[m -> [32m45746[m bytes
+ docs/diagrams/LogicComponentCommandClassDiagram.pptx               |  Bin [31m0[m -> [32m40830[m bytes
+ docs/diagrams/LogicComponentSequenceDiagram.pptx                   |  Bin [31m0[m -> [32m44254[m bytes
+ docs/diagrams/ModelComponentClassDiagram.pptx                      |  Bin [31m0[m -> [32m43983[m bytes
+ docs/diagrams/StorageComponentClassDiagram.pptx                    |  Bin [31m0[m -> [32m52461[m bytes
+ docs/diagrams/UiComponentClassDiagram.pptx                         |  Bin [31m0[m -> [32m40744[m bytes
+ docs/diagrams/UndoRedoActivityDiagram.pptx                         |  Bin [31m0[m -> [32m38145[m bytes
+ docs/diagrams/UndoRedoExecuteUndoStackDiagram.pptx                 |  Bin [31m0[m -> [32m40509[m bytes
+ docs/diagrams/UndoRedoNewCommand1StackDiagram.pptx                 |  Bin [31m0[m -> [32m39703[m bytes
+ docs/diagrams/UndoRedoNewCommand2StackDiagram.pptx                 |  Bin [31m0[m -> [32m39187[m bytes
+ docs/diagrams/UndoRedoNewCommand3StackDiagram.pptx                 |  Bin [31m0[m -> [32m38938[m bytes
+ docs/diagrams/UndoRedoSequenceDiagram.pptx                         |  Bin [31m0[m -> [32m43001[m bytes
+ docs/diagrams/UndoRedoStartingStackDiagram.pptx                    |  Bin [31m0[m -> [32m38378[m bytes
+ docs/images/AddTagSequenceDiagram.png                              |  Bin [31m0[m -> [32m65394[m bytes
+ docs/images/Architecture.png                                       |  Bin [31m0[m -> [32m35271[m bytes
+ docs/images/BackupCommandSequenceDiagram.png                       |  Bin [31m0[m -> [32m34103[m bytes
+ docs/images/Backup_1.png                                           |  Bin [31m0[m -> [32m63610[m bytes
+ docs/images/Backup_2.png                                           |  Bin [31m0[m -> [32m64850[m bytes
+ docs/images/DeletePersonSdForLogic.png                             |  Bin [31m0[m -> [32m73808[m bytes
+ docs/images/Delete_1.png                                           |  Bin [31m0[m -> [32m38156[m bytes
+ docs/images/Delete_2.png                                           |  Bin [31m0[m -> [32m42301[m bytes
+ docs/images/Edit_1.png                                             |  Bin [31m0[m -> [32m29466[m bytes
+ docs/images/Edit_2.png                                             |  Bin [31m0[m -> [32m43080[m bytes
+ docs/images/Exit_1.png                                             |  Bin [31m0[m -> [32m66482[m bytes
+ docs/images/FindCommandSequenceDiagram.png                         |  Bin [31m0[m -> [32m78584[m bytes
+ docs/images/LimYangSheng.jpg                                       |  Bin [31m0[m -> [32m37086[m bytes
+ docs/images/LogicClassDiagram.png                                  |  Bin [31m0[m -> [32m82007[m bytes
+ docs/images/LogicCommandClassDiagram.png                           |  Bin [31m0[m -> [32m99721[m bytes
+ docs/images/ModelClassDiagram.png                                  |  Bin [31m0[m -> [32m35506[m bytes
+ docs/images/Redo_1.png                                             |  Bin [31m0[m -> [32m68155[m bytes
+ docs/images/Redo_10.png                                            |  Bin [31m0[m -> [32m46653[m bytes
+ docs/images/Redo_11.png                                            |  Bin [31m0[m -> [32m58220[m bytes
+ docs/images/Redo_12.png                                            |  Bin [31m0[m -> [32m64433[m bytes
+ docs/images/Redo_13.png                                            |  Bin [31m0[m -> [32m58419[m bytes
+ docs/images/Redo_14.png                                            |  Bin [31m0[m -> [32m46230[m bytes
+ docs/images/Redo_2.png                                             |  Bin [31m0[m -> [32m69102[m bytes
+ docs/images/Redo_3.png                                             |  Bin [31m0[m -> [32m72547[m bytes
+ docs/images/Redo_4.png                                             |  Bin [31m0[m -> [32m72916[m bytes
+ docs/images/Redo_5.png                                             |  Bin [31m0[m -> [32m64455[m bytes
+ docs/images/Redo_6.png                                             |  Bin [31m0[m -> [32m68970[m bytes
+ docs/images/Redo_7.png                                             |  Bin [31m0[m -> [32m69474[m bytes
+ docs/images/Redo_8.png                                             |  Bin [31m0[m -> [32m65171[m bytes
+ docs/images/Redo_9.png                                             |  Bin [31m0[m -> [32m62014[m bytes
+ docs/images/Restore_1.png                                          |  Bin [31m0[m -> [32m65111[m bytes
+ docs/images/Restore_2.png                                          |  Bin [31m0[m -> [32m46826[m bytes
+ docs/images/Restore_3.png                                          |  Bin [31m0[m -> [32m47283[m bytes
+ docs/images/Restore_4.png                                          |  Bin [31m0[m -> [32m64823[m bytes
+ docs/images/Restore_5.png                                          |  Bin [31m0[m -> [32m59196[m bytes
+ docs/images/SDforDeletePerson.png                                  |  Bin [31m0[m -> [32m22068[m bytes
+ docs/images/SDforDeletePersonEventHandling.png                     |  Bin [31m0[m -> [32m21553[m bytes
+ docs/images/StorageClassDiagram.png                                |  Bin [31m0[m -> [32m24010[m bytes
+ docs/images/SyncCommandSequenceDiagram.png                         |  Bin [31m0[m -> [32m41962[m bytes
+ docs/images/Ui.png                                                 |  Bin [31m0[m -> [32m34442[m bytes
+ docs/images/UiClassDiagram.png                                     |  Bin [31m0[m -> [32m39426[m bytes
+ docs/images/UndoRedoActivityDiagram.png                            |  Bin [31m0[m -> [32m57206[m bytes
+ docs/images/UndoRedoExecuteUndoStackDiagram.png                    |  Bin [31m0[m -> [32m119990[m bytes
+ docs/images/UndoRedoNewCommand1StackDiagram.png                    |  Bin [31m0[m -> [32m93776[m bytes
+ docs/images/UndoRedoNewCommand2StackDiagram.png                    |  Bin [31m0[m -> [32m101850[m bytes
+ docs/images/UndoRedoNewCommand3StackDiagram.png                    |  Bin [31m0[m -> [32m98181[m bytes
+ docs/images/UndoRedoSequenceDiagram.png                            |  Bin [31m0[m -> [32m40478[m bytes
+ docs/images/UndoRedoStartingStackDiagram.png                       |  Bin [31m0[m -> [32m63301[m bytes
+ docs/images/Undo_1.png                                             |  Bin [31m0[m -> [32m64896[m bytes
+ docs/images/Undo_10.png                                            |  Bin [31m0[m -> [32m58485[m bytes
+ docs/images/Undo_11.png                                            |  Bin [31m0[m -> [32m64618[m bytes
+ docs/images/Undo_2.png                                             |  Bin [31m0[m -> [32m62572[m bytes
+ docs/images/Undo_3.png                                             |  Bin [31m0[m -> [32m64354[m bytes
+ docs/images/Undo_4.png                                             |  Bin [31m0[m -> [32m149266[m bytes
+ docs/images/Undo_5.png                                             |  Bin [31m0[m -> [32m149243[m bytes
+ docs/images/Undo_6.png                                             |  Bin [31m0[m -> [32m149929[m bytes
+ docs/images/Undo_7.png                                             |  Bin [31m0[m -> [32m65008[m bytes
+ docs/images/Undo_8.png                                             |  Bin [31m0[m -> [32m46660[m bytes
+ docs/images/Undo_9.png                                             |  Bin [31m0[m -> [32m46778[m bytes
+ docs/images/add1.png                                               |  Bin [31m0[m -> [32m79527[m bytes
+ docs/images/add2.png                                               |  Bin [31m0[m -> [32m86211[m bytes
+ docs/images/addtag_1.png                                           |  Bin [31m0[m -> [32m38246[m bytes
+ docs/images/addtag_2.png                                           |  Bin [31m0[m -> [32m39398[m bytes
+ docs/images/alexanderlee.jpg                                       |  Bin [31m0[m -> [32m3244[m bytes
+ docs/images/appveyor/add-project-1.png                             |  Bin [31m0[m -> [32m25312[m bytes
+ docs/images/appveyor/add-project-2.png                             |  Bin [31m0[m -> [32m32885[m bytes
+ docs/images/appveyor/add-project-3.png                             |  Bin [31m0[m -> [32m29931[m bytes
+ docs/images/appveyor/ci-log.png                                    |  Bin [31m0[m -> [32m34227[m bytes
+ docs/images/appveyor/ci-pending.png                                |  Bin [31m0[m -> [32m22645[m bytes
+ docs/images/appveyor/login.png                                     |  Bin [31m0[m -> [32m31406[m bytes
+ docs/images/appveyor/project-settings-1.png                        |  Bin [31m0[m -> [32m27283[m bytes
+ docs/images/appveyor/project-settings-2.png                        |  Bin [31m0[m -> [32m42533[m bytes
+ docs/images/appveyor/project-settings-3.png                        |  Bin [31m0[m -> [32m19454[m bytes
+ docs/images/build_pending.png                                      |  Bin [31m0[m -> [32m15446[m bytes
+ docs/images/checkstyle-idea-configuration.png                      |  Bin [31m0[m -> [32m6712[m bytes
+ docs/images/checkstyle-idea-scan-scope.png                         |  Bin [31m0[m -> [32m3207[m bytes
+ docs/images/chrome_save_as_pdf.png                                 |  Bin [31m0[m -> [32m27366[m bytes
+ docs/images/clear1.png                                             |  Bin [31m0[m -> [32m31965[m bytes
+ docs/images/clear2.png                                             |  Bin [31m0[m -> [32m34678[m bytes
+ docs/images/deletetag_1.png                                        |  Bin [31m0[m -> [32m28853[m bytes
+ docs/images/deletetag_2.png                                        |  Bin [31m0[m -> [32m39181[m bytes
+ docs/images/deletetag_3.png                                        |  Bin [31m0[m -> [32m38440[m bytes
+ docs/images/deletetag_4.png                                        |  Bin [31m0[m -> [32m39164[m bytes
+ docs/images/derrickchua.jpg                                        |  Bin [31m0[m -> [32m10212[m bytes
+ docs/images/filter_1.png                                           |  Bin [31m0[m -> [32m7592[m bytes
+ docs/images/filter_2.png                                           |  Bin [31m0[m -> [32m65313[m bytes
+ docs/images/filter_3.png                                           |  Bin [31m0[m -> [32m7318[m bytes
+ docs/images/filter_4.png                                           |  Bin [31m0[m -> [32m48282[m bytes
+ docs/images/find_1.png                                             |  Bin [31m0[m -> [32m6732[m bytes
+ docs/images/find_2.png                                             |  Bin [31m0[m -> [32m38267[m bytes
+ docs/images/flick_repository_switch.png                            |  Bin [31m0[m -> [32m11224[m bytes
+ docs/images/generate_token.png                                     |  Bin [31m0[m -> [32m32431[m bytes
+ docs/images/getting-started-ui-result-after.png                    |  Bin [31m0[m -> [32m5500[m bytes
+ docs/images/getting-started-ui-result-before.png                   |  Bin [31m0[m -> [32m6120[m bytes
+ docs/images/getting-started-ui-status-after.png                    |  Bin [31m0[m -> [32m4249[m bytes
+ docs/images/getting-started-ui-status-before.png                   |  Bin [31m0[m -> [32m3117[m bytes
+ docs/images/getting-started-ui-tag-after.png                       |  Bin [31m0[m -> [32m32237[m bytes
+ docs/images/getting-started-ui-tag-before.png                      |  Bin [31m0[m -> [32m32091[m bytes
+ docs/images/github_repo_settings.png                               |  Bin [31m0[m -> [32m8229[m bytes
+ docs/images/grant_access.png                                       |  Bin [31m0[m -> [32m10013[m bytes
+ docs/images/help.png                                               |  Bin [31m0[m -> [32m5712[m bytes
+ docs/images/history.png                                            |  Bin [31m0[m -> [32m6398[m bytes
+ docs/images/list1.png                                              |  Bin [31m0[m -> [32m38202[m bytes
+ docs/images/list2.png                                              |  Bin [31m0[m -> [32m47109[m bytes
+ docs/images/login1.png                                             |  Bin [31m0[m -> [32m64936[m bytes
+ docs/images/login2.png                                             |  Bin [31m0[m -> [32m66477[m bytes
+ docs/images/login3.png                                             |  Bin [31m0[m -> [32m34753[m bytes
+ docs/images/login4.png                                             |  Bin [31m0[m -> [32m34753[m bytes
+ docs/images/newalter.jpg                                           |  Bin [31m0[m -> [32m165567[m bytes
+ docs/images/note1.png                                              |  Bin [31m0[m -> [32m70149[m bytes
+ docs/images/note2.png                                              |  Bin [31m0[m -> [32m80990[m bytes
+ docs/images/request_access.png                                     |  Bin [31m0[m -> [32m11701[m bytes
+ docs/images/resize.png                                             |  Bin [31m0[m -> [32m8623[m bytes
+ docs/images/review_and_add.png                                     |  Bin [31m0[m -> [32m13783[m bytes
+ docs/images/select1.png                                            |  Bin [31m0[m -> [32m69798[m bytes
+ docs/images/select2.png                                            |  Bin [31m0[m -> [32m193477[m bytes
+ docs/images/signing_in.png                                         |  Bin [31m0[m -> [32m15718[m bytes
+ docs/images/sync1.png                                              |  Bin [31m0[m -> [32m31923[m bytes
+ docs/images/sync2.png                                              |  Bin [31m0[m -> [32m74426[m bytes
+ docs/images/sync3.png                                              |  Bin [31m0[m -> [32m99012[m bytes
+ docs/images/sync4.png                                              |  Bin [31m0[m -> [32m34753[m bytes
+ docs/images/sync5.png                                              |  Bin [31m0[m -> [32m68469[m bytes
+ docs/images/travis_add_token.png                                   |  Bin [31m0[m -> [32m15874[m bytes
+ docs/images/travis_build.png                                       |  Bin [31m0[m -> [32m77047[m bytes
+ docs/images/venn_diagram.png                                       |  Bin [31m0[m -> [32m22172[m bytes
+ docs/index.adoc                                                    |    2 [32m+[m
+ docs/stylesheets/asciidoctor.css                                   |  407 [32m++++++++++[m
+ docs/stylesheets/gh-pages.css                                      |   19 [32m+[m
+ docs/team/johndoe.adoc                                             |   50 [32m++[m
+ gradle.properties                                                  |    3 [32m+[m
+ gradle/wrapper/gradle-wrapper.jar                                  |  Bin [31m0[m -> [32m52266[m bytes
+ gradle/wrapper/gradle-wrapper.properties                           |    6 [32m+[m
+ gradlew                                                            |  164 [32m++++[m
+ gradlew.bat                                                        |   90 [32m+++[m
+ src/main/java/seedu/address/MainApp.java                           |  228 [32m++++++[m
+ src/main/java/seedu/address/commons/core/ComponentManager.java     |   28 [32m+[m
+ src/main/java/seedu/address/commons/core/Config.java               |   72 [32m++[m
+ src/main/java/seedu/address/commons/core/EventsCenter.java         |   45 [32m++[m
+ src/main/java/seedu/address/commons/core/GuiSettings.java          |   73 [32m++[m
+ src/main/java/seedu/address/commons/core/LogsCenter.java           |  130 [32m+++[m
+ src/main/java/seedu/address/commons/core/Messages.java             |   16 [32m+[m
+ src/main/java/seedu/address/commons/core/Version.java              |  113 [32m+++[m
+ src/main/java/seedu/address/commons/core/index/Index.java          |   54 [32m++[m
+ src/main/java/seedu/address/commons/events/BaseEvent.java          |   16 [32m+[m
+ .../address/commons/events/model/AddressBookChangedEvent.java      |   19 [32m+[m
+ .../seedu/address/commons/events/model/NewPersonInfoEvent.java     |   25 [32m+[m
+ .../java/seedu/address/commons/events/storage/BackupDataEvent.java |   25 [32m+[m
+ .../address/commons/events/storage/BackupFilePresentEvent.java     |   28 [32m+[m
+ .../address/commons/events/storage/DataSavingExceptionEvent.java   |   21 [32m+[m
+ .../address/commons/events/storage/RestoreBackupDataEvent.java     |   25 [32m+[m
+ .../java/seedu/address/commons/events/ui/ExitAppRequestEvent.java  |   14 [32m+[m
+ .../seedu/address/commons/events/ui/JumpToListRequestEvent.java    |   22 [32m+[m
+ .../seedu/address/commons/events/ui/NewResultAvailableEvent.java   |   21 [32m+[m
+ .../commons/events/ui/PersonPanelSelectionChangedEvent.java        |   26 [32m+[m
+ .../seedu/address/commons/events/ui/ResizeMainWindowEvent.java     |   31 [32m+[m
+ .../java/seedu/address/commons/events/ui/ShowHelpRequestEvent.java |   15 [32m+[m
+ .../seedu/address/commons/exceptions/DataConversionException.java  |   11 [32m+[m
+ .../seedu/address/commons/exceptions/DuplicateDataException.java   |   10 [32m+[m
+ .../seedu/address/commons/exceptions/IllegalValueException.java    |   21 [32m+[m
+ src/main/java/seedu/address/commons/util/AppUtil.java              |   39 [32m+[m
+ src/main/java/seedu/address/commons/util/CollectionUtil.java       |   51 [32m++[m
+ src/main/java/seedu/address/commons/util/ConfigUtil.java           |   22 [32m+[m
+ src/main/java/seedu/address/commons/util/FileUtil.java             |   93 [32m+++[m
+ src/main/java/seedu/address/commons/util/FxViewUtil.java           |   18 [32m+[m
+ src/main/java/seedu/address/commons/util/JsonUtil.java             |  143 [32m++++[m
+ src/main/java/seedu/address/commons/util/StringUtil.java           |   71 [32m++[m
+ src/main/java/seedu/address/commons/util/XmlUtil.java              |   70 [32m++[m
+ src/main/java/seedu/address/google/OAuth.java                      |  136 [32m++++[m
+ src/main/java/seedu/address/logic/CommandHistory.java              |   32 [32m+[m
+ src/main/java/seedu/address/logic/ListElementPointer.java          |  110 [32m+++[m
+ src/main/java/seedu/address/logic/Logic.java                       |   30 [32m+[m
+ src/main/java/seedu/address/logic/LogicManager.java                |   72 [32m++[m
+ src/main/java/seedu/address/logic/UndoRedoStack.java               |   89 [32m++[m
+ src/main/java/seedu/address/logic/commands/AddCommand.java         |   72 [32m++[m
+ src/main/java/seedu/address/logic/commands/AddMeetingCommand.java  |  109 [32m+++[m
+ src/main/java/seedu/address/logic/commands/AddTagCommand.java      |   96 [32m+++[m
+ src/main/java/seedu/address/logic/commands/BackupCommand.java      |   23 [32m+[m
+ src/main/java/seedu/address/logic/commands/ClearCommand.java       |   23 [32m+[m
+ src/main/java/seedu/address/logic/commands/Command.java            |   65 [32m++[m
+ src/main/java/seedu/address/logic/commands/CommandResult.java      |   16 [32m+[m
+ src/main/java/seedu/address/logic/commands/CommandWordList.java    |   22 [32m+[m
+ src/main/java/seedu/address/logic/commands/DeleteCommand.java      |   59 [32m++[m
+ .../java/seedu/address/logic/commands/DeleteMeetingCommand.java    |   69 [32m++[m
+ src/main/java/seedu/address/logic/commands/DeleteTagCommand.java   |  108 [32m+++[m
+ src/main/java/seedu/address/logic/commands/EditCommand.java        |  234 [32m++++++[m
+ src/main/java/seedu/address/logic/commands/ExitCommand.java        |   21 [32m+[m
+ src/main/java/seedu/address/logic/commands/FindCommand.java        |   72 [32m++[m
+ src/main/java/seedu/address/logic/commands/HelpCommand.java        |   23 [32m+[m
+ src/main/java/seedu/address/logic/commands/HistoryCommand.java     |   39 [32m+[m
+ src/main/java/seedu/address/logic/commands/ListCommand.java        |   22 [32m+[m
+ src/main/java/seedu/address/logic/commands/LoginCommand.java       |   40 [32m+[m
+ src/main/java/seedu/address/logic/commands/NoteCommand.java        |   96 [32m+++[m
+ src/main/java/seedu/address/logic/commands/RedoCommand.java        |   37 [32m+[m
+ src/main/java/seedu/address/logic/commands/ResizeCommand.java      |   53 [32m++[m
+ .../java/seedu/address/logic/commands/RestoreBackupCommand.java    |   40 [32m+[m
+ src/main/java/seedu/address/logic/commands/SelectCommand.java      |   56 [32m++[m
+ src/main/java/seedu/address/logic/commands/SortCommand.java        |   62 [32m++[m
+ src/main/java/seedu/address/logic/commands/SyncCommand.java        |  332 [32m++++++++[m
+ src/main/java/seedu/address/logic/commands/UndoCommand.java        |   37 [32m+[m
+ src/main/java/seedu/address/logic/commands/UndoableCommand.java    |   64 [32m++[m
+ .../seedu/address/logic/commands/exceptions/CommandException.java  |   10 [32m+[m
+ src/main/java/seedu/address/logic/parser/AddCommandParser.java     |   87 [32m++[m
+ .../java/seedu/address/logic/parser/AddMeetingCommandParser.java   |   42 [32m+[m
+ src/main/java/seedu/address/logic/parser/AddTagCommandParser.java  |   38 [32m+[m
+ src/main/java/seedu/address/logic/parser/AddressBookParser.java    |  136 [32m++++[m
+ src/main/java/seedu/address/logic/parser/ArgumentMultimap.java     |   60 [32m++[m
+ src/main/java/seedu/address/logic/parser/ArgumentTokenizer.java    |  150 [32m++++[m
+ .../java/seedu/address/logic/parser/ArgumentWildcardMatcher.java   |   26 [32m+[m
+ src/main/java/seedu/address/logic/parser/CliSyntax.java            |   17 [32m+[m
+ src/main/java/seedu/address/logic/parser/DeleteCommandParser.java  |   30 [32m+[m
+ .../seedu/address/logic/parser/DeleteMeetingCommandParser.java     |   30 [32m+[m
+ .../java/seedu/address/logic/parser/DeleteTagCommandParser.java    |   49 [32m++[m
+ src/main/java/seedu/address/logic/parser/EditCommandParser.java    |   79 [32m++[m
+ src/main/java/seedu/address/logic/parser/FindCommandParser.java    |   99 [32m+++[m
+ src/main/java/seedu/address/logic/parser/NoteCommandParser.java    |   42 [32m+[m
+ src/main/java/seedu/address/logic/parser/Parser.java               |   16 [32m+[m
+ src/main/java/seedu/address/logic/parser/ParserUtil.java           |   91 [32m+++[m
+ src/main/java/seedu/address/logic/parser/Prefix.java               |   39 [32m+[m
+ src/main/java/seedu/address/logic/parser/ResizeCommandParser.java  |   39 [32m+[m
+ src/main/java/seedu/address/logic/parser/SelectCommandParser.java  |   29 [32m+[m
+ src/main/java/seedu/address/logic/parser/SortCommandParser.java    |   27 [32m+[m
+ .../java/seedu/address/logic/parser/exceptions/ParseException.java |   17 [32m+[m
+ src/main/java/seedu/address/model/AddressBook.java                 |  269 [32m++++++[m
+ src/main/java/seedu/address/model/Model.java                       |   85 [32m++[m
+ src/main/java/seedu/address/model/ModelManager.java                |  238 [32m++++++[m
+ src/main/java/seedu/address/model/ReadOnlyAddressBook.java         |   33 [32m+[m
+ src/main/java/seedu/address/model/UserPrefs.java                   |   78 [32m++[m
+ src/main/java/seedu/address/model/meeting/Meeting.java             |  140 [32m++++[m
+ .../seedu/address/model/meeting/MeetingContainPersonPredicate.java |   30 [32m+[m
+ src/main/java/seedu/address/model/meeting/UniqueMeetingList.java   |  176 [32m++++[m
+ src/main/java/seedu/address/model/person/Address.java              |   62 [32m++[m
+ src/main/java/seedu/address/model/person/Email.java                |   58 [32m++[m
+ src/main/java/seedu/address/model/person/Id.java                   |   53 [32m++[m
+ src/main/java/seedu/address/model/person/LastUpdated.java          |   60 [32m++[m
+ src/main/java/seedu/address/model/person/Name.java                 |   67 [32m++[m
+ src/main/java/seedu/address/model/person/Note.java                 |   47 [32m++[m
+ src/main/java/seedu/address/model/person/Person.java               |  218 [32m+++++[m
+ src/main/java/seedu/address/model/person/Phone.java                |   58 [32m++[m
+ src/main/java/seedu/address/model/person/ReadOnlyPerson.java       |   70 [32m++[m
+ src/main/java/seedu/address/model/person/UniquePersonList.java     |  255 [32m++++++[m
+ .../address/model/person/exceptions/DuplicatePersonException.java  |   12 [32m+[m
+ .../address/model/person/exceptions/PersonNotFoundException.java   |    6 [32m+[m
+ .../address/model/person/exceptions/TagNotFoundException.java      |    7 [32m+[m
+ .../model/person/predicate/AddressContainsKeywordsPredicate.java   |   41 [32m+[m
+ .../address/model/person/predicate/ContainsTagsPredicate.java      |   40 [32m+[m
+ .../model/person/predicate/EmailContainsKeywordsPredicate.java     |   35 [32m+[m
+ .../model/person/predicate/NameContainsKeywordsPredicate.java      |   40 [32m+[m
+ .../model/person/predicate/PhoneContainsKeywordsPredicate.java     |   35 [32m+[m
+ src/main/java/seedu/address/model/tag/Tag.java                     |   58 [32m++[m
+ src/main/java/seedu/address/model/tag/UniqueTagList.java           |  142 [32m++++[m
+ src/main/java/seedu/address/model/util/SampleDataUtil.java         |   97 [32m+++[m
+ src/main/java/seedu/address/storage/AddressBookStorage.java        |   50 [32m++[m
+ src/main/java/seedu/address/storage/JsonUserPrefsStorage.java      |   45 [32m++[m
+ src/main/java/seedu/address/storage/Storage.java                   |   60 [32m++[m
+ src/main/java/seedu/address/storage/StorageManager.java            |  150 [32m++++[m
+ src/main/java/seedu/address/storage/UserPrefsStorage.java          |   34 [32m+[m
+ src/main/java/seedu/address/storage/XmlAdaptedClass.java           |   18 [32m+[m
+ src/main/java/seedu/address/storage/XmlAdaptedMeeting.java         |   44 [32m+[m
+ src/main/java/seedu/address/storage/XmlAdaptedPerson.java          |  108 [32m+++[m
+ src/main/java/seedu/address/storage/XmlAdaptedTag.java             |   40 [32m+[m
+ src/main/java/seedu/address/storage/XmlAddressBookStorage.java     |   93 [32m+++[m
+ src/main/java/seedu/address/storage/XmlFileStorage.java            |   39 [32m+[m
+ .../java/seedu/address/storage/XmlSerializableAddressBook.java     |   92 [32m+++[m
+ src/main/java/seedu/address/ui/BrowserPanel.java                   |   65 [32m++[m
+ src/main/java/seedu/address/ui/CommandBox.java                     |  146 [32m++++[m
+ src/main/java/seedu/address/ui/HelpWindow.java                     |   64 [32m++[m
+ src/main/java/seedu/address/ui/MainWindow.java                     |  226 [32m++++++[m
+ src/main/java/seedu/address/ui/MeetingCard.java                    |   48 [32m++[m
+ src/main/java/seedu/address/ui/MeetingListPanel.java               |   56 [32m++[m
+ src/main/java/seedu/address/ui/PersonCard.java                     |  135 [32m++++[m
+ src/main/java/seedu/address/ui/PersonListPanel.java                |   88 [32m++[m
+ src/main/java/seedu/address/ui/ResultDisplay.java                  |   41 [32m+[m
+ src/main/java/seedu/address/ui/ScreenDimension.java                |   26 [32m+[m
+ src/main/java/seedu/address/ui/StatusBarFooter.java                |   81 [32m++[m
+ src/main/java/seedu/address/ui/SuggestionHeuristic.java            |  190 [32m+++++[m
+ src/main/java/seedu/address/ui/TabCompleteTextField.java           |  127 [32m+++[m
+ src/main/java/seedu/address/ui/Ui.java                             |   16 [32m+[m
+ src/main/java/seedu/address/ui/UiManager.java                      |  120 [32m+++[m
+ src/main/java/seedu/address/ui/UiPart.java                         |   89 [32m++[m
+ src/main/resources/images/address_book_32.png                      |  Bin [31m0[m -> [32m4214[m bytes
+ src/main/resources/images/calendar.png                             |  Bin [31m0[m -> [32m1215[m bytes
+ src/main/resources/images/clock.png                                |  Bin [31m0[m -> [32m13751[m bytes
+ src/main/resources/images/fail.png                                 |  Bin [31m0[m -> [32m20783[m bytes
+ src/main/resources/images/help_icon.png                            |  Bin [31m0[m -> [32m31256[m bytes
+ src/main/resources/images/info_icon.png                            |  Bin [31m0[m -> [32m5424[m bytes
+ src/main/resources/view/CommandBox.fxml                            |    8 [32m+[m
+ src/main/resources/view/DarkTheme.css                              |  351 [32m++++++++[m
+ src/main/resources/view/Extensions.css                             |   20 [32m+[m
+ src/main/resources/view/HelpWindow.fxml                            |    8 [32m+[m
+ src/main/resources/view/MainWindow.fxml                            |   57 [32m++[m
+ src/main/resources/view/MeetingListCard.fxml                       |   54 [32m++[m
+ src/main/resources/view/MeetingListPanel.fxml                      |    9 [32m+[m
+ src/main/resources/view/PersonListCard.fxml                        |   37 [32m+[m
+ src/main/resources/view/PersonListPanel.fxml                       |    8 [32m+[m
+ src/main/resources/view/ResultDisplay.fxml                         |    9 [32m+[m
+ src/main/resources/view/StatusBarFooter.fxml                       |   14 [32m+[m
+ src/main/resources/view/default.html                               |    9 [32m+[m
+ src/test/data/ConfigUtilTest/EmptyConfig.json                      |    3 [32m+[m
+ src/test/data/ConfigUtilTest/ExtraValuesConfig.json                |    6 [32m+[m
+ src/test/data/ConfigUtilTest/NotJsonFormatConfig.json              |    1 [32m+[m
+ src/test/data/ConfigUtilTest/TypicalConfig.json                    |    5 [32m+[m
+ src/test/data/JsonUserPrefsStorageTest/EmptyUserPrefs.json         |    3 [32m+[m
+ src/test/data/JsonUserPrefsStorageTest/ExtraValuesUserPref.json    |   14 [32m+[m
+ src/test/data/JsonUserPrefsStorageTest/NotJsonFormatUserPrefs.json |    1 [32m+[m
+ src/test/data/JsonUserPrefsStorageTest/TypicalUserPref.json        |   12 [32m+[m
+ .../data/XmlAddressBookStorageTest/NotXmlFormatAddressBook.xml     |    1 [32m+[m
+ src/test/data/XmlUtilTest/empty.xml                                |    0
+ src/test/data/XmlUtilTest/tempAddressBook.xml                      |   15 [32m+[m
+ src/test/data/XmlUtilTest/validAddressBook.xml                     |   84 [32m++[m
+ src/test/java/guitests/AddressBookGuiTest.java                     |  115 [32m+++[m
+ src/test/java/guitests/ErrorDialogGuiTest.java                     |   32 [32m+[m
+ src/test/java/guitests/GuiRobot.java                               |  105 [32m+++[m
+ src/test/java/guitests/HelpWindowTest.java                         |   63 [32m++[m
+ src/test/java/guitests/SampleDataTest.java                         |   47 [32m++[m
+ src/test/java/guitests/StatusBarFooterTest.java                    |   69 [32m++[m
+ src/test/java/guitests/guihandles/AlertDialogHandle.java           |   32 [32m+[m
+ src/test/java/guitests/guihandles/CommandBoxHandle.java            |   67 [32m++[m
+ src/test/java/guitests/guihandles/HelpWindowHandle.java            |   34 [32m+[m
+ src/test/java/guitests/guihandles/MainMenuHandle.java              |   39 [32m+[m
+ src/test/java/guitests/guihandles/MainWindowHandle.java            |   51 [32m++[m
+ src/test/java/guitests/guihandles/MeetingListPanelHandle.java      |   17 [32m+[m
+ src/test/java/guitests/guihandles/NodeHandle.java                  |   44 [32m+[m
+ src/test/java/guitests/guihandles/PersonCardHandle.java            |   78 [32m++[m
+ src/test/java/guitests/guihandles/PersonListPanelHandle.java       |  134 [32m+++[m
+ src/test/java/guitests/guihandles/ResultDisplayHandle.java         |   22 [32m+[m
+ src/test/java/guitests/guihandles/StageHandle.java                 |   55 [32m++[m
+ src/test/java/guitests/guihandles/StatusBarFooterHandle.java       |   72 [32m++[m
+ src/test/java/guitests/guihandles/WebViewUtil.java                 |   24 [32m+[m
+ .../java/guitests/guihandles/exceptions/NodeNotFoundException.java |    9 [32m+[m
+ .../guitests/guihandles/exceptions/StageNotFoundException.java     |    9 [32m+[m
+ src/test/java/seedu/address/TestApp.java                           |  123 [32m+++[m
+ src/test/java/seedu/address/commons/core/ConfigTest.java           |   32 [32m+[m
+ src/test/java/seedu/address/commons/core/VersionTest.java          |  139 [32m++++[m
+ src/test/java/seedu/address/commons/core/index/IndexTest.java      |   93 [32m+++[m
+ src/test/java/seedu/address/commons/util/AppUtilTest.java          |   47 [32m++[m
+ src/test/java/seedu/address/commons/util/CollectionUtilTest.java   |  151 [32m++++[m
+ src/test/java/seedu/address/commons/util/ConfigUtilTest.java       |  130 [32m+++[m
+ src/test/java/seedu/address/commons/util/FileUtilTest.java         |   31 [32m+[m
+ src/test/java/seedu/address/commons/util/JsonUtilTest.java         |   45 [32m++[m
+ src/test/java/seedu/address/commons/util/StringUtilTest.java       |  159 [32m++++[m
+ src/test/java/seedu/address/commons/util/XmlUtilTest.java          |   97 [32m+++[m
+ src/test/java/seedu/address/logic/CommandHistoryTest.java          |   27 [32m+[m
+ src/test/java/seedu/address/logic/ListElementPointerTest.java      |  166 [32m++++[m
+ src/test/java/seedu/address/logic/LogicManagerTest.java            |  137 [32m++++[m
+ src/test/java/seedu/address/logic/UndoRedoStackTest.java           |  247 [32m++++++[m
+ src/test/java/seedu/address/logic/UndoRedoStackUtil.java           |   29 [32m+[m
+ .../seedu/address/logic/commands/AddCommandIntegrationTest.java    |   55 [32m++[m
+ src/test/java/seedu/address/logic/commands/AddCommandTest.java     |  226 [32m++++++[m
+ src/test/java/seedu/address/logic/commands/AddTagCommandTest.java  |  159 [32m++++[m
+ src/test/java/seedu/address/logic/commands/BackupCommandTest.java  |   60 [32m++[m
+ src/test/java/seedu/address/logic/commands/ClearCommandTest.java   |   36 [32m+[m
+ src/test/java/seedu/address/logic/commands/CommandTestUtil.java    |  134 [32m+++[m
+ src/test/java/seedu/address/logic/commands/DeleteCommandTest.java  |  119 [32m+++[m
+ .../java/seedu/address/logic/commands/DeleteTagCommandTest.java    |  206 [32m+++++[m
+ src/test/java/seedu/address/logic/commands/EditCommandTest.java    |  184 [32m+++++[m
+ .../seedu/address/logic/commands/EditPersonDescriptorTest.java     |   58 [32m++[m
+ src/test/java/seedu/address/logic/commands/ExitCommandTest.java    |   24 [32m+[m
+ src/test/java/seedu/address/logic/commands/FindCommandTest.java    |  169 [32m++++[m
+ src/test/java/seedu/address/logic/commands/HelpCommandTest.java    |   24 [32m+[m
+ src/test/java/seedu/address/logic/commands/HistoryCommandTest.java |   50 [32m++[m
+ src/test/java/seedu/address/logic/commands/ListCommandTest.java    |   44 [32m+[m
+ src/test/java/seedu/address/logic/commands/LoginCommandTest.java   |   73 [32m++[m
+ src/test/java/seedu/address/logic/commands/NoteCommandTest.java    |  119 [32m+++[m
+ src/test/java/seedu/address/logic/commands/RedoCommandTest.java    |   55 [32m++[m
+ src/test/java/seedu/address/logic/commands/ResizeCommandTest.java  |  116 [32m+++[m
+ .../seedu/address/logic/commands/RestoreBackupCommandTest.java     |   72 [32m++[m
+ src/test/java/seedu/address/logic/commands/SelectCommandTest.java  |  141 [32m++++[m
+ src/test/java/seedu/address/logic/commands/SortCommandTest.java    |  132 [32m+++[m
+ src/test/java/seedu/address/logic/commands/SyncCommandTest.java    |   80 [32m++[m
+ src/test/java/seedu/address/logic/commands/UndoCommandTest.java    |   57 [32m++[m
+ .../java/seedu/address/logic/commands/UndoableCommandTest.java     |   67 [32m++[m
+ src/test/java/seedu/address/logic/parser/AddCommandParserTest.java |  155 [32m++++[m
+ .../java/seedu/address/logic/parser/AddTagCommandParserTest.java   |   73 [32m++[m
+ .../java/seedu/address/logic/parser/AddressBookParserTest.java     |  201 [32m+++++[m
+ .../java/seedu/address/logic/parser/ArgumentTokenizerTest.java     |  150 [32m++++[m
+ .../seedu/address/logic/parser/ArgumentWildcardMatcherTest.java    |   19 [32m+[m
+ .../java/seedu/address/logic/parser/CommandParserTestUtil.java     |   39 [32m+[m
+ .../java/seedu/address/logic/parser/DeleteCommandParserTest.java   |   32 [32m+[m
+ .../seedu/address/logic/parser/DeleteTagCommandParserTest.java     |  117 [32m+++[m
+ .../java/seedu/address/logic/parser/EditCommandParserTest.java     |  212 [32m+++++[m
+ .../java/seedu/address/logic/parser/FindCommandParserTest.java     |   52 [32m++[m
+ .../java/seedu/address/logic/parser/NoteCommandParserTest.java     |   40 [32m+[m
+ src/test/java/seedu/address/logic/parser/ParserUtilTest.java       |  190 [32m+++++[m
+ .../java/seedu/address/logic/parser/ResizeCommandParserTest.java   |   38 [32m+[m
+ .../java/seedu/address/logic/parser/SelectCommandParserTest.java   |   29 [32m+[m
+ .../java/seedu/address/logic/parser/SortCommandParserTest.java     |   31 [32m+[m
+ src/test/java/seedu/address/model/AddressBookTest.java             |  102 [32m+++[m
+ src/test/java/seedu/address/model/ModelManagerTest.java            |   65 [32m++[m
+ src/test/java/seedu/address/model/UniqueMeetingListTest.java       |   20 [32m+[m
+ src/test/java/seedu/address/model/UniquePersonListTest.java        |   19 [32m+[m
+ src/test/java/seedu/address/model/UniqueTagListTest.java           |   19 [32m+[m
+ src/test/java/seedu/address/model/person/AddressTest.java          |   24 [32m+[m
+ .../java/seedu/address/model/person/ContainsTagsPredicateTest.java |   77 [32m++[m
+ src/test/java/seedu/address/model/person/EmailTest.java            |   43 [32m+[m
+ src/test/java/seedu/address/model/person/IdTest.java               |   23 [32m+[m
+ src/test/java/seedu/address/model/person/LastUpdatedTest.java      |   25 [32m+[m
+ .../address/model/person/NameContainsKeywordsPredicateTest.java    |   82 [32m++[m
+ src/test/java/seedu/address/model/person/NameTest.java             |   25 [32m+[m
+ src/test/java/seedu/address/model/person/NoteTest.java             |   22 [32m+[m
+ src/test/java/seedu/address/model/person/PhoneTest.java            |   28 [32m+[m
+ src/test/java/seedu/address/storage/JsonUserPrefsStorageTest.java  |  135 [32m++++[m
+ src/test/java/seedu/address/storage/StorageManagerTest.java        |  119 [32m+++[m
+ src/test/java/seedu/address/storage/XmlAddressBookStorageTest.java |  128 [32m+++[m
+ src/test/java/seedu/address/testutil/AddressBookBuilder.java       |   53 [32m++[m
+ src/test/java/seedu/address/testutil/Assert.java                   |   27 [32m+[m
+ .../java/seedu/address/testutil/EditPersonDescriptorBuilder.java   |  102 [32m+++[m
+ src/test/java/seedu/address/testutil/EventsUtil.java               |   26 [32m+[m
+ src/test/java/seedu/address/testutil/PersonBuilder.java            |  135 [32m++++[m
+ src/test/java/seedu/address/testutil/PersonUtil.java               |   38 [32m+[m
+ src/test/java/seedu/address/testutil/SerializableTestClass.java    |   72 [32m++[m
+ src/test/java/seedu/address/testutil/TestUtil.java                 |   54 [32m++[m
+ src/test/java/seedu/address/testutil/TypicalIndexes.java           |   12 [32m+[m
+ src/test/java/seedu/address/testutil/TypicalPersons.java           |   81 [32m++[m
+ src/test/java/seedu/address/ui/CommandBoxTest.java                 |  164 [32m++++[m
+ src/test/java/seedu/address/ui/GuiUnitTest.java                    |   38 [32m+[m
+ src/test/java/seedu/address/ui/HelpWindowTest.java                 |   33 [32m+[m
+ src/test/java/seedu/address/ui/PersonCardTest.java                 |   85 [32m++[m
+ src/test/java/seedu/address/ui/PersonListPanelTest.java            |   58 [32m++[m
+ src/test/java/seedu/address/ui/ResultDisplayTest.java              |   38 [32m+[m
+ src/test/java/seedu/address/ui/StatusBarFooterTest.java            |   75 [32m++[m
+ src/test/java/seedu/address/ui/TestFxmlObject.java                 |   35 [32m+[m
+ src/test/java/seedu/address/ui/UiPartTest.java                     |  101 [32m+++[m
+ src/test/java/seedu/address/ui/testutil/EventsCollectorRule.java   |   86 [32m++[m
+ src/test/java/seedu/address/ui/testutil/GuiTestAssert.java         |   75 [32m++[m
+ src/test/java/seedu/address/ui/testutil/StageRule.java             |   34 [32m+[m
+ src/test/java/seedu/address/ui/testutil/UiPartRule.java            |   29 [32m+[m
+ src/test/java/systemtests/AddCommandSystemTest.java                |  269 [32m++++++[m
+ src/test/java/systemtests/AddressBookSystemTest.java               |  256 [32m++++++[m
+ src/test/java/systemtests/ClearCommandSystemTest.java              |  101 [32m+++[m
+ src/test/java/systemtests/ClockRule.java                           |   57 [32m++[m
+ src/test/java/systemtests/DeleteCommandSystemTest.java             |  200 [32m+++++[m
+ src/test/java/systemtests/EditCommandSystemTest.java               |  286 [32m+++++++[m
+ src/test/java/systemtests/FindCommandSystemTest.java               |  243 [32m++++++[m
+ src/test/java/systemtests/ModelHelper.java                         |   39 [32m+[m
+ src/test/java/systemtests/SelectCommandSystemTest.java             |  144 [32m++++[m
+ src/test/java/systemtests/SystemTestSetupHelper.java               |   71 [32m++[m
+ src/test/java/systemtests/TabCompleteSystemTest.java               |   89 [32m++[m
+ src/test/resources/view/UiPartTest/invalidFile.fxml                |    1 [32m+[m
+ src/test/resources/view/UiPartTest/validFile.fxml                  |    4 [32m+[m
+ unused/FilterCommand.java                                          |   48 [32m++[m
+ unused/FilterCommandParser.java                                    |   34 [32m+[m
+ unused/FilterCommandParserTest.java                                |   35 [32m+[m
+ unused/FilterCommandSystemTest.java                                |  188 [32m+++++[m
+ unused/FilterCommandTest.java                                      |  150 [32m++++[m
+ 498 files changed, 30564 insertions(+)

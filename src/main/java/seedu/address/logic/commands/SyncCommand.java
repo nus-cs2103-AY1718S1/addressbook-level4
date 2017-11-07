@@ -83,13 +83,17 @@ public class SyncCommand extends UndoableCommand {
 
                 if (connections != null) {
                     hashGoogleId = constructGoogleHashId();
-                    importContacts();
                 } else {
                     hashGoogleId = new HashMap<String, Person>();
                 }
 
                 checkContacts();
                 updateContacts();
+
+                if (connections != null) {
+                    importContacts();
+                }
+
                 exportContacts(personList);
 
                 saveStatus(syncedIDs);
