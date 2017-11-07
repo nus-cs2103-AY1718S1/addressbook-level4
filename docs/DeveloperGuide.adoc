@@ -1222,6 +1222,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |busy user |view my agenda for the upcoming days |prepare for my tasks in advance
 
+|`* *` |busy user |be reminded of upcoming activities |avoid missing important events
+
 |`* *` |user |get suggestions on the tags I have used |be consistent with the tags I use
 
 |`* *` |user |see a sorted list of my contacts |save time and energy on my end
