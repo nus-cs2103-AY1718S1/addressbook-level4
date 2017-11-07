@@ -60,16 +60,32 @@ public class FilterCommand extends Command {
     public static final String COMMAND_WORD = "filter";
     public static final String COMMAND_ALIAS = "ft";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names, "
-            + "phone, address, email, tag or weblink contain all of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons who are tagged with "
+            + "the specified tag (case-insensitive) and displays them as a list with index numbers.\n"
+            + "Parameters: TAG [MORE_TAGS]...\n"
+            + "Example: " + COMMAND_WORD + " neighbours friends";
 
-```
-###### \java\seedu\address\logic\commands\FilterCommand.java
-``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {keyword}";
+
+    private final FilterKeywordsPredicate predicate;
+
+    public FilterCommand(FilterKeywordsPredicate predicate) {
+        this.predicate = predicate;
+    }
+
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredPersonList(predicate);
+        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FilterCommand // instanceof handles nulls
+                && this.predicate.equals(((FilterCommand) other).predicate)); // state check
+    }
+}
 ```
 ###### \java\seedu\address\logic\commands\FindCommand.java
 ``` java
@@ -113,14 +129,14 @@ public class WebCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Displays the social links of the selected person in the web view on the right.\n"
-            + "Parameters: 'facebook' OR 'insta' OR 'maps' OR 'search' OR 'linkedin' OR 'personal'\n"
+            + "Parameters: 'facebook' OR 'instagram' OR 'maps' OR 'search' OR 'linkedin' OR 'personal'\n"
             + "Example: " + COMMAND_WORD + " facebook";
 
 ```
 ###### \java\seedu\address\logic\commands\WebCommand.java
 ``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD
-            + " {[facebook|insta|linkedin|maps|search|personal]}";
+            + " {[facebook|instagram|linkedin|maps|search|personal]}";
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
@@ -179,7 +195,7 @@ public class WebCommandParser implements Parser<WebCommand> {
         WEBSITES_MAP.put("facebook", "facebook");
         WEBSITES_MAP.put("maps", "mapsView");
         WEBSITES_MAP.put("search", "searchView");
-        WEBSITES_MAP.put("insta", "instagram");
+        WEBSITES_MAP.put("instagram", "instagram");
         WEBSITES_MAP.put("linkedin", "linkedin");
         WEBSITES_MAP.put("personal", "others");
     }
@@ -286,6 +302,7 @@ public class BrowserPanel extends UiPart<Region> {
     private void loadPersonPage(ReadOnlyPerson person) {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
+        logger.info("Loading Google search of " + person.getName());
     }
 
     private void loadPersonAddress(ReadOnlyPerson person) {
@@ -302,6 +319,7 @@ public class BrowserPanel extends UiPart<Region> {
                 return;
             }
         });
+        logger.info("Loading Personal Page of " + selectedPerson.getName());
     }
 
     /**
@@ -314,6 +332,7 @@ public class BrowserPanel extends UiPart<Region> {
                 return;
             }
         });
+        logger.info("Loading " + websiteRequested + "Page of " + selectedPerson.getName());
     }
 
     public void loadPage(String url) {
@@ -347,6 +366,7 @@ public class BrowserPanel extends UiPart<Region> {
      */
     @Subscribe
     private void handleWebsiteSelectionEvent(WebsiteSelectionRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switch (event.getWebsiteRequested()) {
         case "mapsView":
             loadPersonAddress(selectedPerson);
@@ -512,6 +532,12 @@ public class DetailedPersonCard extends UiPart<Region> {
 ```
 ###### \java\seedu\address\ui\PersonCard.java
 ``` java
+/**
+ * An UI component that displays information of a {@code Person}.
+ */
+public class PersonCard extends UiPart<Region> {
+
+    private static final String FXML = "PersonListCard.fxml";
     private static String[] colors = {"darkblue", "darkolivegreen", "slategray ", "teal", "maroon", "darkslateblue"};
     private static HashMap<String, String> tagColors = new HashMap<>();
     private static HashMap<String, String> webLinkColors = new HashMap<>();
@@ -577,7 +603,7 @@ public class WebsiteButtonBar extends UiPart<Region> {
 
     private void setEventHandlerForButtonClick() {
         mapsButton.setOnMouseClicked(e -> {
-            logger.info("maps button clicked");
+            logger.info("Maps button clicked");
             raise(new WebsiteSelectionRequestEvent("mapsView"));
         });
         searchButton.setOnMouseClicked(e -> {

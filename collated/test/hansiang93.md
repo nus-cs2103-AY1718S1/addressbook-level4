@@ -117,6 +117,12 @@ public class WebCommandTest {
         assertExecutionSuccess(WEBLINK_MAPS);
     }
 
+    @Test
+    public void execute_invalidWebLink_failure() {
+        String invalidWeblink = "invalidString";
+
+        assertExecutionFailure(invalidWeblink, Messages.MESSAGE_INVALID_WEBLINK_TAG);
+    }
 
     @Test
     public void equals() {
@@ -175,6 +181,30 @@ public class WebCommandTest {
             assertTrue(eventsCollectorRule.eventsCollector.isEmpty());
         }
     }
+}
+```
+###### \java\seedu\address\logic\parser\FilterCommandParserTest.java
+``` java
+public class FilterCommandParserTest {
+
+    private FilterCommandParser parser = new FilterCommandParser();
+
+    @Test
+    public void parse_emptyArg_throwsParseException() {
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_validArgs_returnsFindCommand() {
+        // no leading and trailing whitespaces
+        FilterCommand expectedFindCommand =
+                new FilterCommand(new FilterKeywordsPredicate(Arrays.asList("Neighbours", "Friends")));
+        assertParseSuccess(parser, "Neighbours Friends", expectedFindCommand);
+
+        // multiple whitespaces between keywords
+        assertParseSuccess(parser, " \n Neighbours \n \t Friends  \t", expectedFindCommand);
+    }
+
 }
 ```
 ###### \java\seedu\address\logic\parser\WebCommandParserTest.java
