@@ -87,7 +87,7 @@ Format: `add n/NAME [p/PHONE_NUMBER] [b/BIRTHDAY] [e/EMAIL] [a/ADDRESS] [t/TAG].
 
 //end::optional[]
 
-1. Enter `add n/NAME  p/PHONENUMBER e/EMAIL a/ADDRESS t/TAG` +
+1. Enter `add n/NAME  p/PHONENUMBER b/BIRTHDAY e/EMAIL a/ADDRESS t/TAG` +
 _E.g: add n/John Doe p/81234567 b/02-03-1995 e/johnd@gmail.com a/Blk 311, Clementi Ave 2,
 #02-25, t/friends t/owesMoney_
 
