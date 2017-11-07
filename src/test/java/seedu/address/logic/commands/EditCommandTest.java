@@ -40,23 +40,31 @@ public class EditCommandTest {
 
     @Test
     public void testFormValidation() {
+        //Inputs all correct
         assertTrue(EditButton.checkInput("Joshua", "90267500",
-                "joshnfsmw@hotmail.com", "459, Pasir ris drive 4, #04-251", "friends,family,cool").equals(EditButton.VALIDATION_SUCCESS));
+                "joshnfsmw@hotmail.com", "459, Pasir ris drive 4, #04-251",
+                "friends,family,cool").equals(EditButton.VALIDATION_SUCCESS));
+        //"," missing inbetween one of the tags
         assertTrue(EditButton.checkInput("Ben Lim", "93234500",
                 "benny1234@hotmail.com", "7772, Tampines Street 21, #03-551", "friends,colleagues"
                         + "best friend,").equals(EditButton.TAG_ERROR));
+        //long phone number, wrong input
         assertFalse(EditButton.checkInput("Ben Lim", "932393934500",
                 "benny1234@hotmail.com", "7772, Tampines Street 21, #03-551", "friends,colleagues"
                         + ",best friend,").equals(EditButton.VALIDATION_SUCCESS));
+        //gibberish phone number
         assertFalse(EditButton.checkInput("Ben Lim", "9cdmkcf934500",
                 "benny1234@hotmail.com", "7772, Tampines Street 21, #03-551", "friends,colleagues"
                         + ",best friend,").equals(EditButton.VALIDATION_SUCCESS));
+        //invalid email, without ".com"
         assertTrue(EditButton.checkInput("Ben Lim", "90267500",
                 "benny1234@hotmail", "7772, Tampines Street 21, #03-551", "friends,colleagues"
                         + ",best friend,").equals(EditButton.EMAIL_ERROR));
+        //invalid input, numerical name
         assertTrue(EditButton.checkInput("90234", "90267500",
                 "benny1234@hotmail.com", "7772, Tampines Street 21, #03-551", "friends,colleagues"
                         + ",best friend,").equals(EditButton.NAME_ERROR));
+        //valid input, however comparison to wrong case.
         assertFalse(EditButton.checkInput("Joshua Lim", "90267500",
                 "benny1234@hotmail.com", "7772, Tampines Street 21, #03-551", "friends,colleagues"
                         + ",best friend,").equals(EditButton.EMAIL_ERROR));
