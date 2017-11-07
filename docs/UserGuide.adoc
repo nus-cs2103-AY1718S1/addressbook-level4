@@ -455,7 +455,7 @@ represents the Instagram account with the username `damyth`.
 ===== Connecting to Facebook [Since v1.2]: `facebookconnect`
 
 Connects to your Facebook account. +
-Format: `facebookconnect`
+Command Format: `[red]#facebookconnect#`
 
 ****
 * First ensure that you are added as a test user for the Facebook Application. Add yourself as a test user link:https://developers.facebook.com/apps/131555220900267/roles/[here].
@@ -470,12 +470,12 @@ Format: `facebookconnect`
 =====  Posting a status to Facebook [Since v1.3]: `facebookpost`
 
 Posts a status to your Facebook wall. +
-Format `facebookpost STATUS`
+Command Format `[red]#facebookpost# [green]#STATUS#`
 
 ****
 * Your facebook account must be connected to use this feature. If not, the authorization page will automatically be launched in
 the browser.
-* Your Status will then be posted to Facebook.
+* Your status will then be posted to Facebook.
 ****
 
 Examples:
@@ -489,7 +489,7 @@ Posts the status 'hello world!' to your Facebook wall.
 =====  Sharing a Link to Facebook [Since v1.4]: `facebooklink`
 
 Shares a link to your Facebook wall. +
-Format `facebooklink URL`
+Command Format `[red]#facebooklink# [green]#URL#`
 
 ****
 * Your facebook account must be connected to use this feature. If not, the authorization page will automatically be launched in
@@ -508,7 +508,7 @@ Posts the link to `https://www.google.com` to your Facebook wall.
 =====  Adding a contact from Facebook [Since v1.5]: `facebookadd`
 
 Imports a Facebook user as a contact. +
-Format `facebookadd USERNAME`
+Command Format `[red]#facebookadd# [green]#USERNAME#`
 
 ****
 * Your facebook account must be connected to use this feature. If not, the authorization page will automatically be launched in
@@ -528,7 +528,7 @@ Imports the facebook user 'Barack Obama' to your contacts.
 ===== Adding all your Facebook friends [Since v1.5]: `facebookaddallfriends`
 
 Imports all your Facebook friends as contacts. (Current maximum is set at 30 friends) +
-Format `facebookaddallfriends`
+Command Format `[red]#facebookaddallfriends#`
 
 ****
 * Your facebook account must be connected to use this feature. If not, the authorization page will automatically be launched in
