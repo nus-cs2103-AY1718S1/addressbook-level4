@@ -20,11 +20,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_STRING;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AliasCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -39,6 +35,10 @@ import seedu.address.logic.commands.MusicCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.hints.AddCommandHint;
+import seedu.address.logic.commands.hints.DeleteCommandHint;
+import seedu.address.logic.commands.hints.EditCommandHint;
+import seedu.address.logic.commands.hints.FindCommandHint;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
 
@@ -79,38 +79,25 @@ public class HintParser {
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD:
-            hint = generateAddHint().trim();
-            // We only want to autocomplete prefixes (e.g. "n/", "a/", etc)
-            if (hint.startsWith("/")) {
-                return input.trim() + "/";
-            }
-            if (hint.startsWith("/", 1)) {
-                return input.trim() + " " + hint.substring(0, 2);
-            }
-            return input;
+            AddCommandHint addCommandHint = new AddCommandHint(userInput, arguments);
+            addCommandHint.parse();
+            return addCommandHint.autocomplete();
 
         case EditCommand.COMMAND_WORD:
-            if (arguments.length() == 0) {
-                return commandWord + " ";
-            }
-            hint = generateEditHint().trim();
-            if (hint.startsWith("/")) {
-                return input.trim() + "/";
-            }
-            if (hint.startsWith("/", 1)) {
-                return input.trim() + " " + hint.substring(0, 2);
-            }
-            return input;
+            EditCommandHint editCommandHint = new EditCommandHint(userInput, arguments);
+            editCommandHint.parse();
+            return editCommandHint.autocomplete();
 
         case FindCommand.COMMAND_WORD:
-            hint = generateFindHint().trim();
-            if (hint.startsWith("/")) {
-                return input.trim() + "/";
-            }
-            if (hint.startsWith("/", 1)) {
-                return input.trim() + " " + hint.substring(0, 2);
-            }
-            return input;
+            FindCommandHint findCommandHint = new FindCommandHint(userInput, arguments);
+            findCommandHint.parse();
+            return findCommandHint.autocomplete();
+
+        case DeleteCommand.COMMAND_WORD:
+        case SelectCommand.COMMAND_WORD:
+            DeleteCommandHint deleteCommandHint = new DeleteCommandHint(userInput, arguments);
+            deleteCommandHint.parse();
+            return deleteCommandHint.autocomplete();
 
         case MusicCommand.COMMAND_WORD:
             if (arguments.isEmpty()) {
@@ -215,65 +202,6 @@ public class HintParser {
     }
 
     /**
-     * parses the end of arguments to check if user is currently typing a prefix that is not in ignoredPrefixes
-     * returns hint if user is typing a prefix
-     * returns empty Optional if user is not typing a prefix
-     */
-    private static Optional<String> generatePrefixHintBasedOnEndArgs(Prefix... ignoredPrefixes) {
-
-        Set<Prefix> ignoredPrefixSet = Arrays.asList(ignoredPrefixes).stream().collect(Collectors.toSet());
-
-        for (Prefix p : LIST_OF_PREFIXES) {
-            if (ignoredPrefixSet.contains(p)) {
-                continue;
-            }
-            String prefixLetter = " " + (p.getPrefix().toCharArray()[0]); // " n"
-            String identifier = "" + (p.getPrefix().toCharArray()[1]); // "/"
-            String parameter = prefixIntoParameter(p);
-
-            if (arguments.endsWith(p.getPrefix())) {
-                return Optional.of(parameter);
-            } else if (arguments.endsWith(prefixLetter)) {
-                return Optional.of(identifier + parameter);
-            }
-        }
-        return Optional.empty();
-    }
-
-    /**
-     * Currently this method is always called after generatePrefixHintBasedOnEndArgs
-     * It parses arguments to check for parameters that have not been filled up
-     * {@code ignoredPrefixes} are omitted during this check
-     * returns hint for parameter that is not present
-     * returns returns {@code defaultHint} if all parameters are present
-     */
-    private static String offerHint(String defaultHint, Prefix... ignoredPrefixes) {
-
-        Set<Prefix> ignoredPrefixesSet = Arrays.asList(ignoredPrefixes).stream().collect(Collectors.toSet());
-
-        //remove ignored prefixes without losing order
-        List<Prefix> prefixList = new ArrayList<>();
-        for (Prefix p : LIST_OF_PREFIXES) {
-            if (!ignoredPrefixesSet.contains(p)) {
-                prefixList.add(p);
-            }
-        }
-
-        String whitespace = userInput.endsWith(" ") ? "" : " ";
-        ArgumentMultimap argumentMultimap =
-                ArgumentTokenizer.tokenize(arguments, prefixList.toArray(new Prefix[0]));
-
-        for (Prefix p : prefixList) {
-
-            Optional<String> parameterOptional = argumentMultimap.getValue(p);
-            if (!parameterOptional.isPresent()) {
-                return whitespace + p.getPrefix() + prefixIntoParameter(p);
-            }
-        }
-        return whitespace + defaultHint;
-    }
-
-    /**
      * returns a parameter based on {@code prefix}
      */
     private static String prefixIntoParameter(Prefix prefix) {
@@ -298,75 +226,42 @@ public class HintParser {
     }
 
     /**
-     * parses arguments to check if index is present
-     * checks on userInput to handle whitespace
-     * returns "index" if index is not present
-     * else returns an empty Optional
-     */
-    private static Optional<String> generateIndexHint() {
-        String whitespace = userInput.endsWith(" ") ? "" : " ";
-        try {
-            ParserUtil.parseIndex(arguments);
-            return Optional.empty();
-        } catch (IllegalValueException ive) {
-            if (arguments.matches(".*\\s\\d+\\s.*")) {
-                return Optional.empty();
-            }
-            return Optional.of(whitespace + "index");
-        }
-    }
-
-    /**
      * returns a hint specific to the add command
      */
     private static String generateAddHint() {
+        AddCommandHint addCommandHint = new AddCommandHint(userInput, arguments);
+        addCommandHint.parse();
+        return addCommandHint.getArgumentHint() + addCommandHint.getDescription();
 
-        Optional<String> endHintOptional = generatePrefixHintBasedOnEndArgs(PREFIX_EMPTY, PREFIX_REMARK, PREFIX_AVATAR);
-        if (endHintOptional.isPresent()) {
-            return endHintOptional.get();
-        }
-        return offerHint("", PREFIX_EMPTY, PREFIX_REMARK, PREFIX_AVATAR);
     }
 
     /**
      * returns a hint specific to the edit command
      */
     private static String generateEditHint() {
-        Optional<String> indexHintOptional = generateIndexHint();
-        if (indexHintOptional.isPresent()) {
-            return indexHintOptional.get();
-        }
-
-        Optional<String> endHintOptional = generatePrefixHintBasedOnEndArgs(PREFIX_EMPTY, PREFIX_REMARK, PREFIX_AVATAR);
-        if (endHintOptional.isPresent()) {
-            return endHintOptional.get();
-        }
-
-        return offerHint("prefix/KEYWORD", PREFIX_EMPTY, PREFIX_REMARK, PREFIX_AVATAR);
+        EditCommandHint editCommandHint = new EditCommandHint(userInput, arguments);
+        editCommandHint.parse();
+        return editCommandHint.getArgumentHint() + editCommandHint.getDescription();
     }
 
     /**
      * returns a hint specific to the find command
      */
     private static String generateFindHint() {
-        Optional<String> endHintOptional = generatePrefixHintBasedOnEndArgs(PREFIX_EMPTY, PREFIX_AVATAR);
-
-        if (endHintOptional.isPresent()) {
-            return endHintOptional.get();
-        }
-
-        return offerHint("prefix/KEYWORD", PREFIX_EMPTY, PREFIX_AVATAR);
+        FindCommandHint findCommandHint = new FindCommandHint(userInput, arguments);
+        findCommandHint.parse();
+        return findCommandHint.getArgumentHint() + findCommandHint.getDescription();
     }
 
     /**
      * returns a hint specific to the select and delete command
      */
     private static String generateDeleteAndSelectHint() {
-        Optional<String> indexHintOptional = generateIndexHint();
-        if (indexHintOptional.isPresent()) {
-            return indexHintOptional.get();
-        }
-        return "";
+
+        DeleteCommandHint deleteCommandHint = new DeleteCommandHint(userInput, arguments);
+        deleteCommandHint.parse();
+        return deleteCommandHint.getArgumentHint() + deleteCommandHint.getDescription();
+
     }
 
 }
