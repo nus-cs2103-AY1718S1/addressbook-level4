@@ -199,6 +199,7 @@ the 2nd person, or removes it otherwise.
 Edit commands are _undoable_ with the `undo` command.
 ====
 
+// tag::email[]
 === `email`, `mail`, `mailto`, `send` or `m`: Composing an email _(Since v1.5rc)_
 
 Opens the 'compose new email' window of the default email client, with the recipient's email address and subject
@@ -210,8 +211,7 @@ Press kbd:[Tab] after typing `email` to generate the required field(s). See link
 ====
 Alternatives: `email` can be replaced by `mail`, `mailto`, `send` or `m` +
 Keyboard shortcut: kbd:[Ctrl+M]
-
-// tag::find[]
+// end::email[]
 
 === `exit`, `quit`, `close`, `bye` or `esc`: Exiting the Program _(Since v1.3)_
 
@@ -220,6 +220,7 @@ Format: `exit` +
 Alternatives: `exit` can be replaced by `quit`, `close`, `bye` or `esc` +
 Keyboard shortcut: kbd:[Alt+F4]
 
+// tag::find[]
 === `find`, `filter`, `search` or `f`: Locating Persons in Rolodex _(Since v1.4)_
 
 Finds persons in Rolodex. +
@@ -504,6 +505,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `u` (reverses the `delete 1` command) +
 
 [[autocomplete]]
+//tag::autocomplete[]
 === Auto-completion
 
 For commands that require additional field(s), auto-completion can be triggered by pressing kbd:[Tab] after keying in the command word.
@@ -528,6 +530,7 @@ image::AutoCompletionNextField.png[width="500"]
 Commands with auto-completion enabled: `add`, `delete`, `edit`, `find`, `select` and `remark`. +
 These are commands that required additonal field(s).
 ====
+//end::autocomplete[]
 
 
 == Upcoming Features
