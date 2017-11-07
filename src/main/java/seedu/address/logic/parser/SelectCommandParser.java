@@ -25,9 +25,9 @@ public class SelectCommandParser implements Parser<SelectCommand> {
     public SelectCommand parse(String args) throws ParseException {
         try {
             String[] inputs = args.split("\\s");
-            String indexString = Arrays.stream(inputs).filter(s -> s.matches("\\d"))
+            String indexString = Arrays.stream(inputs).filter(s -> s.matches("\\d+"))
                     .findFirst().orElseThrow(() -> new IllegalValueException("No index found!"));
-            Optional<String> panelString = Arrays.stream(inputs).filter(s -> s.matches("\\p{Alpha}")).findFirst();
+            Optional<String> panelString = Arrays.stream(inputs).filter(s -> s.matches("\\p{Alpha}+")).findFirst();
             SelectCommand.PanelChoice panelChoice;
             if (inputs.length < 2) {
                 throw new IllegalValueException("Too little input arguments!");

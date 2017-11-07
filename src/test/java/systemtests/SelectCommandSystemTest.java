@@ -73,13 +73,13 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + -1,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
-        /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " abc",
+        /* Case: invalid arguments (invalid panel choice) -> rejected */
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + validIndex.getZeroBased() +" abc",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
-        /* Case: invalid arguments (extra argument) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " 1 abc",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        /* Case: extra arguments -> cleared */
+        command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased() + " left" + " abc";
+        assertCommandSuccess(command, validIndex);
 
         /* Case: mixed case command word -> cleared */
         command = "SeLeCt" + " " + validIndex.getOneBased();
