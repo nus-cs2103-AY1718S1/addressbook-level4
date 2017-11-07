@@ -5,6 +5,7 @@ import static seedu.address.logic.commands.CommandTestUtil.APPOINTMENT_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 
@@ -79,6 +80,14 @@ public class AppointCommandSystemTest extends AddressBookSystemTest {
         model.updatePerson(getModel().getFilteredPersonList().get(otherIndex.getZeroBased()), editedPerson);
         expectedResultMessage = String.format(AppointCommand.MESSAGE_DELETE_APPOINTMENT_SUCCESS, editedPerson);
         assertCommandSuccess(command, model, expectedResultMessage, null);
+
+        /* Case: trying to re-add removed appointment to another contact -> success */
+        otherIndex = INDEX_FIRST_PERSON;
+        command = AppointCommand.COMMAND_WORD + " " + otherIndex.getOneBased() + " "
+                + PREFIX_APPOINT + "01/01/2021 00:00 60";
+        personToEdit = getModel().getFilteredPersonList().get(otherIndex.getZeroBased());
+        editedPerson = new PersonBuilder(personToEdit).withAppointment("01/01/2021 00:00 60").build();
+        assertCommandSuccess(command, otherIndex, editedPerson, null);
 
         /* Case: wrong format -> fails */
         command = AppointCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_APPOINT + "1/1/20 00:00 60";
