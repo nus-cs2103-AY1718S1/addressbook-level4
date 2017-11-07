@@ -9,13 +9,13 @@ public class AddAppointmentCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "appointment";
     public static final String COMMAND_ALIAS = "appt";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appoint to a person in address book. \n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appointment to a person in address book. \n"
             + COMMAND_ALIAS + ": Shorthand equivalent for add. \n"
             + "Parameters: " + PREFIX_NAME + "PERSON "
-            + PREFIX_DATE + "TIME" + "\n"
+            + PREFIX_DATE + "DESCRIPTION, TIME" + "\n"
             + "Example 1:" + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
-            + PREFIX_DATE + "Next Monday 3pm";
+            + PREFIX_DATE + "Lunch, Next Monday 3pm";
 
     public static final String MESSAGE_SUCCESS = "New appointment added. ";
     public static final String INVALID_PERSON = "This person is not in your address book";
@@ -99,6 +99,85 @@ public class AddAppointmentCommand extends UndoableCommand {
         this.model = model;
     }
 
+}
+```
+###### \java\seedu\address\logic\commands\CancelAppointmentCommand.java
+``` java
+/**
+ * Command to cancel an existing appointment
+ */
+public class CancelAppointmentCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "cancel";
+    public static final String NO_SUCH_PERSON_FOUND = "No such person found";
+    public static final String NO_SUCH_APPOINTMENT = "No such appointment found";
+    public static final String MESSAGE_SUCCESS = "Appointment canceled.";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Cancels an appointment from a person. \n"
+            + "Parameters: " + "DESCRIPTION with PERSON NAME \n"
+            + "Example 1:" + COMMAND_WORD + " "
+            + "Lunch with John Doe";
+    private String personString;
+    private String appointmentString;
+
+    public CancelAppointmentCommand(String person, String appointment) {
+        this.personString = person;
+        this.appointmentString = appointment;
+    }
+
+    @Override
+    protected CommandResult executeUndoableCommand() throws CommandException {
+        try {
+            ReadOnlyPerson person = getPersonFromName(personString);
+            Appointment appointment = getAppointmentFromPerson(person, appointmentString);
+            model.removeAppointment(person, appointment);
+        } catch (PersonNotFoundException e) {
+            throw new CommandException(NO_SUCH_PERSON_FOUND);
+        } catch (AppointmentNotFoundException e) {
+            throw new CommandException(NO_SUCH_APPOINTMENT);
+        }
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    /**
+     * Util method to search for the correct appointment from a person using only the description.
+     * May have multiple appointments if there is same description under one person, but the first one will be deleted
+     * @throws AppointmentNotFoundException if appointment not found
+     */
+    private Appointment getAppointmentFromPerson(ReadOnlyPerson person, String description)
+            throws AppointmentNotFoundException {
+
+        for (Appointment appointment : person.getAppointments()) {
+            if (appointment.getDescription().toLowerCase().equals(description.trim().toLowerCase())) {
+                return appointment;
+            }
+        }
+        throw new AppointmentNotFoundException();
+    }
+
+    /**
+     * Extract person from address book using name. If there are more than one contact with the same name,
+     * the first one will be extracted
+     * @throws PersonNotFoundException if no such person is in the address book
+     */
+    private ReadOnlyPerson getPersonFromName(String personName) throws PersonNotFoundException {
+
+        for (ReadOnlyPerson person : model.getAddressBook().getPersonList()) {
+            if (person.getName().toString().toLowerCase().equals(personName.trim().toLowerCase())) {
+                return person;
+            }
+        }
+
+        throw new PersonNotFoundException();
+    }
+
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof CancelAppointmentCommand // instanceof handles nulls
+                && (this.appointmentString.equals(((CancelAppointmentCommand) other).appointmentString))
+                && (this.personString.equals(((CancelAppointmentCommand) other).personString)));
+    }
 }
 ```
 ###### \java\seedu\address\logic\commands\ToggleTagColorCommand.java
@@ -316,11 +395,18 @@ public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
         this.tags.setTags(tags, tagString, color);
     }
 
-```
-###### \java\seedu\address\model\AddressBook.java
-``` java
+
+    public void setTags(Set<Tag> tags) {
+        this.tags.setTags(tags);
+    }
+
+
     public void addAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
         persons.addAppointment(target, appointment);
+    }
+
+    public void removeAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
+        persons.removeAppointment(target, appointment);
     }
 ```
 ###### \java\seedu\address\model\ModelManager.java
@@ -345,6 +431,13 @@ public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
     @Override
     public void addAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
         addressBook.addAppointment(target, appointment);
+        indicateAddressBookChanged();
+    }
+
+
+    @Override
+    public void removeAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
+        addressBook.removeAppointment(target, appointment);
         indicateAddressBookChanged();
     }
 
@@ -515,6 +608,14 @@ public class AppointmentList {
 
 }
 ```
+###### \java\seedu\address\model\person\exceptions\AppointmentNotFoundException.java
+``` java
+/**
+ * Signals that the appointment cannot be found
+ */
+public class AppointmentNotFoundException extends Exception {
+}
+```
 ###### \java\seedu\address\model\person\Person.java
 ``` java
     @Override
@@ -568,6 +669,35 @@ public class AppointmentList {
                 list.add(appointment);
                 person.setAppointment(list);
                 return;
+            }
+        }
+        throw new PersonNotFoundException();
+    }
+    /**
+     * Removes an appointment from a person in the internal list
+     *
+     * @throws PersonNotFoundException if no such person exist in the internal list
+     */
+    public void removeAppointment(ReadOnlyPerson target, Appointment appointment)
+            throws PersonNotFoundException {
+        requireNonNull(target);
+        requireNonNull(appointment);
+
+        Person person = getPerson(target);
+        List<Appointment> newApptList = person.getAppointments();
+        newApptList.remove(appointment);
+        person.setAppointment(newApptList);
+
+    }
+
+    /**
+     * Util method to extract person out from a list
+     */
+    private Person getPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        requireNonNull(target);
+        for (Person person : internalList) {
+            if (person.equals(target)) {
+                return person;
             }
         }
         throw new PersonNotFoundException();
@@ -761,7 +891,7 @@ public class CalendarWindow extends UiPart<Region> {
         calendarView.setShowSearchField(false);
         calendarView.setShowSearchResultsTray(false);
         calendarView.setShowPrintButton(false);
-        calendarView.showWeekPage();
+        calendarView.showDayPage();
     }
 
     private void setKeyBindings() {
