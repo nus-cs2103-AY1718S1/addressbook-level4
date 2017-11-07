@@ -58,7 +58,7 @@ public class SampleDataUtil {
         try {
             return new Event[]{
                 new Event(new Title("End of Semester Dinner"), new Description("Organised by USC"),
-                        new Location("Cinnamon College"), new Datetime("25/11/2017 2030 10")),
+                        new Location("Cinnamon College"), new Datetime("25/11/2017 2030 2")),
                 new Event(new Title("USPolymath Talk"), new Description("Talk by Students"),
                         new Location("Chatterbox"), new Datetime("1/11/2017 0800 1")),
                 new Event(new Title("USProductions"), new Description("Drama performance"),

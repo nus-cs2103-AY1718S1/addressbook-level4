@@ -35,7 +35,23 @@ public class Datetime {
             if (!isValidDatetime(datetime)) {
                 throw new IllegalValueException(MESSAGE_DATETIME_CONSTRAINTS);
             }
-            this.value = datetime +" hours";
+
+            String[] components = datetime.split(" ");
+
+            int starttime = Integer.parseInt(components[1]);
+            int duration = Integer.parseInt(components[2]);
+            int endtime = (starttime + 100 * duration) % 2400;
+
+            //Convert back integers like 630 to 0630
+            String endtimeString;
+            if (endtime < 1000) {
+                endtimeString = "0" + endtime;
+            } else {
+                endtimeString = String.valueOf(endtime);
+            }
+
+            this.value = components[0] + " " + components[1] + " to " + endtimeString;
+
         } catch (DateTimeException e) {
             throw new IllegalValueException(DATE_CONSTRAINTS_VIOLATION);
         } catch (NumberFormatException e) {
