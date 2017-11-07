@@ -1,15 +1,11 @@
 package seedu.address.ui;
 
-import com.google.common.eventbus.Subscribe;
-
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -31,8 +27,6 @@ public class PersonCard extends UiPart<Region> {
     public final ReadOnlyPerson person;
 
     @FXML
-    private HBox cardPane;
-    @FXML
     private Label name;
     @FXML
     private Label id;
@@ -47,8 +41,6 @@ public class PersonCard extends UiPart<Region> {
     //@@author qihao27
     @FXML
     private ImageView favouriteIcon;
-    @FXML
-    private Label favourite;
     @FXML
     private ImageView todo;
     @FXML
@@ -118,17 +110,6 @@ public class PersonCard extends UiPart<Region> {
         }
     }
 
-    /**
-     * Sets the todoCount with {@code totalTodo}.
-     */
-    private void setTodoCount(int totalTodo) {
-        if (totalTodo > 0) {
-            this.totalTodo.setText(Integer.toString(totalTodo));
-        } else {
-            this.totalTodo.setText("");
-        }
-    }
-
     //@@author aaronyhsoh-unused
     /*private void highlightName(ReadOnlyPerson person) {
         if (person.getFavourite()) {
@@ -153,11 +134,5 @@ public class PersonCard extends UiPart<Region> {
         PersonCard card = (PersonCard) other;
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
-    }
-
-    //@@author qihao27
-    @Subscribe
-    public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
-        setTodoCount(abce.data.getTodoList().size());
     }
 }
