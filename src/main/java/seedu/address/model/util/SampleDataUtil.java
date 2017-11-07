@@ -1,5 +1,7 @@
 package seedu.address.model.util;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,7 +27,7 @@ import seedu.address.model.tag.Tag;
 public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         try {
-            return new Person[] {
+            Person[] personList = new Person[] {
                 new Person(new Name("Alex Yeoh"), new Phone("47261490"), new Email("alexyeoh@gmail.com"),
                     new Address("Blk 30 Geylang Street 29, #06-40"), new Birthday("13/01/1970"),
                     new Remark("Taking CS2103T"), new Website(Website.WEBSITE_NULL),
@@ -107,6 +109,10 @@ public class SampleDataUtil {
                     new Remark("Badminton champion"), new Website(Website.WEBSITE_NULL),
                     new Picture(Picture.DEFAULT_BALAKRISHNAN), getTagSet("friends"))
             };
+
+            Arrays.sort(personList);
+
+            return personList;
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
         }
