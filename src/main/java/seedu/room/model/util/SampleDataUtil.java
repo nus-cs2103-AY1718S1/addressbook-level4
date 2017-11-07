@@ -58,11 +58,11 @@ public class SampleDataUtil {
         try {
             return new Event[]{
                 new Event(new Title("End of Semester Dinner"), new Description("Organised by USC"),
-                        new Location("Cinnamon College"), new Datetime("25-11-17 2030")),
+                        new Location("Cinnamon College"), new Datetime("25/11/2017 2030 10")),
                 new Event(new Title("USPolymath Talk"), new Description("Talk by Students"),
-                        new Location("Chatterbox"), new Datetime("1-11-17 0800")),
+                        new Location("Chatterbox"), new Datetime("1/11/2017 0800 1")),
                 new Event(new Title("USProductions"), new Description("Drama performance"),
-                            new Location("Blackbox"), new Datetime("17-10-17 1200"))
+                            new Location("Blackbox"), new Datetime("17/10/2017 1200 3"))
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
