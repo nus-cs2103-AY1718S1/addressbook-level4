@@ -13,7 +13,6 @@ import seedu.address.commons.events.ui.NewGraphDisplayEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
-import seedu.address.model.graph.GraphWrapper;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author joanneong
@@ -49,12 +48,6 @@ public class GraphDisplayTest extends GuiUnitTest {
     private class LogicStub implements Logic {
         @Override
         public CommandResult execute(String commandText) {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public GraphWrapper getGraphWrapper() {
             fail("This method should not be called.");
             return null;
         }

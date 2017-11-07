@@ -26,6 +26,7 @@ import seedu.address.model.relationship.RelationshipDirection;
 public class GraphWrapper {
 
     public static final String MESSAGE_PERSON_DOES_NOT_EXIST = "The person does not exist in this address book.";
+    private static final GraphWrapper instance = new GraphWrapper();
     private static final String graphId = "ImARandomGraphID";
 
     private SingleGraph graph;
@@ -37,12 +38,16 @@ public class GraphWrapper {
     private final String nodeAttributeNodeLabel = "ui.label";
     private final String nodeAttributePerson = "Person";
 
-    public GraphWrapper() {
+    private GraphWrapper() {
         this.graph = new SingleGraph(graphId);
         this.viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         viewer.enableAutoLayout();
         viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.EXIT);
         this.view = viewer.addDefaultView(false);
+    }
+
+    public static GraphWrapper getInstance() {
+        return instance;
     }
 
     private void setData(Model model) {

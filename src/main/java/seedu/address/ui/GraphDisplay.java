@@ -15,6 +15,7 @@ import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewGraphDisplayEvent;
 import seedu.address.logic.Logic;
+import seedu.address.model.graph.GraphWrapper;
 
 /**
  * Integrating GraphStream graph display into the application.
@@ -43,7 +44,7 @@ public class GraphDisplay extends UiPart<Region> {
      */
     protected void createAndSetSwingContent() {
         SwingUtilities.invokeLater(() ->
-            graphDisplay.setContent((JComponent) logic.getGraphWrapper().getView()));
+            graphDisplay.setContent((JComponent) GraphWrapper.getInstance().getView()));
     }
 
     @Subscribe
