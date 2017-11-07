@@ -133,7 +133,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 
 _Alias:_ `search` `get`
 
-Searches for persons whose specified attribute contains any of the given keywords.
+Sometimes you might not remember the full name of a person. Perhaps you only know the phone number or home address of the person. But don't worry! By using this command, you are able to search for your contacts by some other informations such as phone number, email and home address. Even if you cannot remember the full name of your friend, you can still easily find him by his partial name!
 
 Format: `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]`
 
@@ -323,7 +323,7 @@ Shows all the people with tag `friend` or tag `classmate`
 // tag::map[]
 === Find the location of a person using Google Map: `m-show` _[Since v1.3]_
 
-Finds the location of a person as specified in the contact address in Google Map.
+You might find it not very convenient to only show the contact's location as text. Therefore, iConnect allows you to see the location! By using this command, without typing in the person's address, you can easily find the location of your friend in Google Map, which will show in the centre browser.
 
 Format: `m-show INDEX`
 
@@ -341,7 +341,7 @@ Shows the address of person with index 1 on the google map
 
 === Find the route from user's current location to the person seleted: `m-route` _[Since v1.3]_
 
-Gets the shortest path from the location provided to the address of the selected person in Google map.
+Not only can iConnect show the location, it can also show you how to go there! Simply by adding your current location, it will show you the shortest path from your current address to your friend's home in the Google map.
 
 Format: `m-route INDEX a/ADDRESS`
 
@@ -536,22 +536,10 @@ Clears all entries in the bin.
 
 Format: `clear-bin`
 
-=== Clearing all entries : `clear`
-
-Clears all entries from the address book.
-
-Format: `clear`
-
-=== Exiting the program : `exit`
-
-Exits the program.
-
-Format: `exit`
-
 // tag::birthday[]
 === Adding the birthday to a person : `b-add` _[Since v1.4]_
 
-Adds birthday to a specified person from the address book.
+Would it be nice if you can store the birthday of your contact so that you won't forget to send him a gift? Of course! By using this command, you are allowed to add birthday to a person. You can easily check it out using the calendar in the app. If you accidentally typed a wrong birthday, you can use this command again and enter the correct one.
 
 Format: `b-add INDEX BIRTHDAY`
 
@@ -571,7 +559,7 @@ Adds the birthday 18/10/1993 to the first person named john in the address book
 
 === Removing the birthday from a person : `b-remove` _[Since v1.5]_
 
-Removes birthday from the specified person from the address book.
+If you add the birthday to a wrong person, you can always enter this command to remove the birthday from the person.
 
 Format: `b-remove INDEX`
 
@@ -590,6 +578,18 @@ Removes the birthday from the first person named john in the address book
 * `b-remove 6` +
 Removes the birthday from the 6th person in the most recent listing, and shows an error if there are less than 6 persons in the list
 // end::birthday[]
+
+=== Clearing all entries : `clear`
+
+Clears all entries from the address book.
+
+Format: `clear`
+
+=== Exiting the program : `exit`
+
+Exits the program.
+
+Format: `exit`
 
 === Saving the data
 
