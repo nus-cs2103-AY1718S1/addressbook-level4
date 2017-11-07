@@ -37,7 +37,6 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.social.SocialInfo;
 
-
 /**
  * The Browser Panel of the App.
  */
