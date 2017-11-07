@@ -103,10 +103,12 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+// tag::findcommand[]
+
 === Finding a person: `find`
 
 Finds persons whose attributes match the prefix and keywords input. +
-Format: `find [PREFIX][KEYWORD]`
+Format: `find PREFIX/KEYWORD`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -132,6 +134,8 @@ Returns any person having the tag `[friend]`
 Returns any person having the remarks `Likes coffee`
 * `find b/10-10-1995` +
 Returns any person with birthday on `10-10-1995`
+
+// end::findcommand[]
 
 === Deleting a person : `delete`
 
@@ -199,7 +203,6 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-// tag::undoredo[]
 === Undoing previous command : `undo`
 
 Restores PEERSONAL to the state before the previous _undoable_ command was executed. +
@@ -262,6 +265,7 @@ Edits the remark for the first person to `Likes to drink coffee.` +
 Removes the remark for the first person.
 
 // tag::birthday[]
+
 === Adding birthday : `birthday` (Since v1.2)
 
 Edits the birthday for a person specified in the `INDEX`.
@@ -325,12 +329,14 @@ Format: `listrecent`
 === Importing data from Address Books : `import` (Coming in v2.0)
 
 Imports data from external Address Books and merges into PEERSONAL. +
-Format: `import [FILEPATH]`
+Format: `import FILEPATH`
 
+// tag::emailall[]
 === Sending mass emails : `emailall` (Coming in v2.0)
 
 Sending mass emails to contacts with the same tag. +
-Format: `emailall t/[TAG]`
+Format: `emailall t/TAG`
+// end::emailall[]
 
 // tag::calendar[]
 
