@@ -24,6 +24,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
     private final AutocompleteManager autocompleteManager;
+    private final AppointmentReminder appointmentReminder;
 
     public LogicManager(Model model) {
         this.model = model;
@@ -31,6 +32,7 @@ public class LogicManager extends ComponentManager implements Logic {
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
         this.autocompleteManager = new AutocompleteManager();
+        this.appointmentReminder = new AppointmentReminder(model);
     }
 
     @Override
@@ -61,4 +63,7 @@ public class LogicManager extends ComponentManager implements Logic {
     public AutocompleteManager getAutocompleteManager() {
         return autocompleteManager;
     }
+
+    @Override
+    public AppointmentReminder getAppointmentReminder() { return appointmentReminder; }
 }

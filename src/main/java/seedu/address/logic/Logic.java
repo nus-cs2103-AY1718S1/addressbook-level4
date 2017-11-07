@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -27,4 +28,7 @@ public interface Logic {
 
     /** Returns the autocomplete manager */
     AutocompleteManager getAutocompleteManager();
+
+    /** Returns the appointment reminder */
+    AppointmentReminder getAppointmentReminder();
 }
