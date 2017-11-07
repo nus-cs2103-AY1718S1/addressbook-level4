@@ -7,7 +7,7 @@ import seedu.room.commons.core.Messages;
 import seedu.room.commons.core.index.Index;
 import seedu.room.commons.events.ui.JumpToListRequestEvent;
 import seedu.room.logic.commands.exceptions.CommandException;
-import seedu.room.model.event.ReadOnlyEvent;
+import seedu.room.model.person.ReadOnlyPerson;
 
 /**
  * Selects a person identified using it's last displayed index from the resident book.
@@ -33,7 +33,7 @@ public class SelectCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
-        List<ReadOnlyEvent> lastShownList = model.getFilteredEventList();
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
