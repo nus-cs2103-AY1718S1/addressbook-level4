@@ -105,8 +105,11 @@ include::../UserGuide.adoc[leveloffset=2, tag=picture]
 
 ---
 === Other contributions
+* Added auto-selection to person that is newly edited (Pull request https://github[#102])
+* Added auto-selection to person that is newly added (Pull request https://github[#123])
 * Added the removeTag method (Pull request https://github.com[#6])
-* Updated the General Documentation (Pull requests https://github.com[#2], https://github.com[#66])
+* Updated the General Documentation (Pull requests https://github.com[#2], https://github.com[#66],
+https://github.com[#112])
 
 endif::[]
 
