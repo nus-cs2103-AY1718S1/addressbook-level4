@@ -322,6 +322,7 @@ If more than one same prefix is provided by user, then the person list will be s
 **Alternative 2:** Separate different addresses by a special character (e.g. `;` or `*`) +
 **Pros:** Users are able to find person(s) staying at different locations. +
 **Cons:** The find command becomes very long. It is hard for users to type the addresses correctly.
+// end::findmech[]
 
 // tag::undoredo[]
 === Undo/Redo mechanism
