@@ -528,15 +528,14 @@ There is no need to save manually.
 ===== Exporting contact data: `export`
 
 Exports all contact data to an external file. +
-Command format: `export FILE_PATH` +
+Command format: `[red]#export# [green]#FILE_PATH#` +
 
 ****
-* `FILE_PATH` is the location where the contact data is to be exported to.
-* If a `SOCIAL_TYPE` is specified, that social media feed will be displayed. More information about representing social media types can be found in the <<social-media-integrations, Social Media Integrations>> section.
-* The input `FILE_PATH` must be an absolute file path.
+* `[green]#FILE_PATH#` is the location where the contact data is to be exported to.
+* The input `[green]#FILE_PATH#` must be an absolute file path.
 ** `/Users/seedu/Documents/exportData.xml` for macOS and Linux
 ** `c:\Users\seedu\Documents\exportData.xml` for Windows
-* You must have *write access* to the specified file path.
+* You must have *write access* to the specified `[green]#FILE_PATH#`.
 ****
 
 You should see the confirmation message in the result display. +
@@ -546,21 +545,21 @@ image::export-contacts.png[width="790"]
 
 Examples:
 
-* `export /Users/seedu/Documents/exportData.xml` +
+* `[red]#export# /Users/seedu/Documents/exportData.xml` +
 Exports contact data to the location `/Users/seedu/Documents/exportData.xml`
 
 [[import-command]]
 ===== Importing contact data: `import`
 
 Imports contact data from an external file. +
-Command format: `import FILE_PATH`
+Command format: `[red]#import# [green]#FILE_PATH#`
 
 ****
-* `FILE_PATH` is the location of the data file from which contact data is to be imported.
-* The input `FILE_PATH` must be an absolute file path, e.g.
+* `[green]#FILE_PATH#` is the location of the data file from which contact data is to be imported.
+* The input `[green]#FILE_PATH#` must be an absolute file path, e.g.
 ** `/Users/seedu/Documents/exportData.xml` for macOS and Linux
 ** `c:\Users\seedu\Documents\exportData.xml` for Windows
-* You must have *read access* to the specified file path.
+* You must have *read access* to the specified `[green]#FILE_PATH#`.
 ****
 
 You should see the confirmation message in the result display. +
@@ -570,7 +569,7 @@ image::import-contacts.png[width="790"]
 
 Examples:
 
-* `import /Users/seedu/Documents/exportData.xml` +
+* `[red]#import# /Users/seedu/Documents/exportData.xml` +
 Imports contact data to the location `/Users/seedu/Documents/exportData.xml`
 
 
@@ -579,7 +578,7 @@ Imports contact data to the location `/Users/seedu/Documents/exportData.xml`
 ===== Configuring your cloud account: `sync`
 
 Configures the addressbook to synchronize with the cloud using the given user credentials. +
-Command format: `sync u/USERNAME p/PASSWORD`
+Command format: `[red]#sync# [green]#u/USERNAME p/PASSWORD#`
 
 ===== Synchronizing with the cloud
 
@@ -589,7 +588,7 @@ There is no need to synchronize manually.
 ===== Removing your cloud account: `unsync`
 
 Stops synchronizing of contact information with any previously configured cloud accounts. +
-Command format: `unsync`
+Command format: `[red]#unsync#`
 
 === Miscellaneous
 
