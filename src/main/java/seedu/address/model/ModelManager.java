@@ -232,6 +232,13 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredEvents);
 
     }
+
+    @Override
+    public boolean hasEvenClashes(Event event){
+        requireNonNull(event);
+
+        return addressBook.hasEventClashes(event);
+    }
     //@@author
 
 

@@ -2,6 +2,7 @@ package seedu.address.commons.util;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import seedu.address.model.event.EventDuration;
 import seedu.address.model.event.EventName;
@@ -10,6 +11,7 @@ import seedu.address.model.event.MemberList;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author eldriclim
+
 /**
  * Utility method to output Event attributes in human-readable time
  */
@@ -61,18 +63,10 @@ public class EventOutputUtil {
             return "none";
         }
 
-        StringBuilder sb = new StringBuilder();
+        ArrayList<String> memberNames = new ArrayList<>(
+                members.stream().map(p -> p.getName().toString()).collect(Collectors.toList()));
 
-        for (ReadOnlyPerson p : members) {
-            sb.append(p.getName().fullName);
-            sb.append(", ");
-        }
-
-        //Remove trailing ", "
-        sb.deleteCharAt(sb.length() - 1);
-        sb.deleteCharAt(sb.length() - 1);
-
-        return sb.toString();
+        return StringUtil.multiStringPrint(memberNames, ", ");
     }
 
     /**
@@ -86,8 +80,11 @@ public class EventOutputUtil {
      */
     public static String toStringEvent(EventName eventName, EventTime eventTime,
                                        EventDuration eventDuration, MemberList memberList) {
+
+        ArrayList<ReadOnlyPerson> members = new ArrayList<>(memberList.asReadOnlyMemberList());
+
         return "Name: " + eventName.toString() + " Time: " + eventTime.toString()
                 + " Duration: " + eventDuration.toString() + "\n"
-                + "Members: " + memberList.toString();
+                + "Members: " + toStringMembers(members);
     }
 }

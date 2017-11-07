@@ -14,6 +14,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.util.DateTimeUtil;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.MemberList;
 import seedu.address.model.event.UniqueEventList;
@@ -209,6 +210,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     //// event-level operations
 
     //@@author eldriclim
+
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
@@ -265,7 +267,11 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new DuplicateEventException();
         }
 
-        updateListOfPerson(targets, editedPersons);
+        if (targets.isEmpty() && editedPersons.isEmpty()) {
+            events.add(event);
+        } else {
+            updateListOfPerson(targets, editedPersons);
+        }
         events.sort(LocalDate.now());
     }
 
@@ -304,8 +310,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Sort list of Events based on the the given date.
-     *
+     * <p>
      * Comparator logic and sorting details is found in {@code UniquePersonList#sort}
+     *
      * @param date
      */
     public void sortEvents(LocalDate date) {
@@ -330,6 +337,28 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Event> correctEventReferences = new HashSet<>();
         personEvents.forEach(event -> correctEventReferences.add(masterEventObjects.get(event)));
         person.setEvents(correctEventReferences);
+    }
+
+    /**
+     * Check if the given event clashes with any events in the master list of events
+     *
+     * @param event
+     * @return true if a clash exist, otherwise return false
+     */
+    public boolean hasEventClashes(Event event) {
+
+        boolean hasClash = false;
+
+        for (Event e : events) {
+            hasClash = DateTimeUtil.checkEventClash(e, event);
+
+            if (hasClash) {
+                return hasClash;
+            }
+        }
+
+        return hasClash;
+
     }
 
     /**
@@ -415,7 +444,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(persons, tags);
     }
-
 
 
 }
