@@ -23,7 +23,7 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final String DEFAULT_REMARK = "";
+    public static final String DEFAULT_REMARK = "some remarks";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_AVATAR = "";
 
@@ -119,7 +119,7 @@ public class PersonBuilder {
         this.person.setRemark(new Remark(remark));
         return this;
     }
-
+    //@@author
     /**
      * Sets the {@code Avatar} of the {@code Person} that we are building.
      */
