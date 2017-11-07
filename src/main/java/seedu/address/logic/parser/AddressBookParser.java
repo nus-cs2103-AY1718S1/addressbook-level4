@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.BirthdayAlarmCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -108,6 +109,12 @@ public class AddressBookParser {
         case ThemeCommand.COMMAND_WORD:
         case ThemeCommand.COMMAND_ALIAS:
             return new ThemeCommandParser().parse(arguments);
+        //@@author
+
+        //@@author chilipadiboy
+        case BirthdayAlarmCommand.COMMAND_WORD:
+        case BirthdayAlarmCommand.COMMAND_ALIAS:
+            return new BirthdayAlarmCommand();
         //@@author
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
