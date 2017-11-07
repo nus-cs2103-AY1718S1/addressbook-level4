@@ -644,5 +644,9 @@ e.g.`select 2`
 * *BinRestore* : `bin-restore INDEX INDEX...` +
 e.g. `bin-restore 1 2`
 * *BinClear* : `bin-clear`
+* *BirthdayAdd* : `b-add INDEX BIRTHDAY` +
+e.g. `b-add 1 18/10/1993`
+* *BirthdayRemove* : `b-remove INDEX` +
+e.g. `b-remove 1`
 * *Clear* : `clear`
 * *Exit* : `exit`
