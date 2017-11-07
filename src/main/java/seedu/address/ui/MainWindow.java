@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
@@ -247,6 +248,11 @@ public class MainWindow extends UiPart<Region> {
 
         dataDetailsPanelPlaceholder.getChildren().clear();
         dataDetailsPanelPlaceholder.getChildren().add(new PersonDetailsPanel(person).getRoot());
+    }
+
+    @Subscribe
+    private void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
+        dataDetailsPanelPlaceholder.getChildren().clear();
     }
     //@@author
 

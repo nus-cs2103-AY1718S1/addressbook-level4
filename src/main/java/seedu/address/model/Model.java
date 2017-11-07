@@ -54,6 +54,9 @@ public interface Model {
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
+    /** Adds or updates the avatar of the selected person. */
+    void setPersonAvatar(ReadOnlyPerson target, Avatar avatar) throws PersonNotFoundException;
+
     //=========== Model support for tag component =============================================================
 
     /** Removes the specific tag (from all persons with that tag) */

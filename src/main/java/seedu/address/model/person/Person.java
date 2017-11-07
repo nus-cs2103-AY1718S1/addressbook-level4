@@ -45,6 +45,7 @@ public class Person implements ReadOnlyPerson {
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.avatar = new SimpleObjectProperty<>();
 
         Set<Property> properties = new HashSet<>();
         properties.add(name);
@@ -81,6 +82,7 @@ public class Person implements ReadOnlyPerson {
             System.err.println("This should never happen.");
         }
 
+        this.avatar = new SimpleObjectProperty<>();
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }

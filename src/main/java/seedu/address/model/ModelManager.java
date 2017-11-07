@@ -138,6 +138,25 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author yunpengn
+    @Override
+    public void setPersonAvatar(ReadOnlyPerson target, Avatar avatar) throws PersonNotFoundException {
+        requireAllNonNull(target, avatar);
+
+        ReadOnlyPerson withAvatar = new Person(target);
+        withAvatar.setAvatar(avatar);
+        // Catch the exception because this operation would never create duplicates.
+        try {
+            addressBook.updatePerson(target, withAvatar);
+        } catch (DuplicatePersonException e) {
+            // TODO: Better error handling.
+            System.err.println("This should never happen.");
+        }
+
+        indicateAddressBookChanged();
+    }
+    //@@author
+
 
     //=========== Model support for tag component =============================================================
 

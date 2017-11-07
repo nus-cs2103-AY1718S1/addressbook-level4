@@ -11,6 +11,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -67,6 +68,11 @@ public class ModelStub implements Model {
 
     @Override
     public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void setPersonAvatar(ReadOnlyPerson target, Avatar avatar) throws PersonNotFoundException {
         fail("This method should not be called.");
     }
 

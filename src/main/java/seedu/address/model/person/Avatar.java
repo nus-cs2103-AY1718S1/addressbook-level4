@@ -16,8 +16,8 @@ import seedu.address.ui.person.PersonDetailsPanel;
  */
 public class Avatar {
     private static final String INVALID_URL_MESSAGE = "The provided URL is invalid.";
-    private static final String IMG_URL_PATTERN =
-            "^(https?://)?(?:[a-z0-9\\-]+\\.)+[a-z]{2,6}(?:/[^/#?]+)+\\.(?:jpe?g|gif|png)$";
+    private static final String IMG_URL_PATTERN = "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}"
+            + "\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)";
 
     private String url;
 
