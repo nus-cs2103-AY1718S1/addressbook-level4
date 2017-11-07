@@ -1,5 +1,6 @@
 package seedu.address.bot;
 
+import static org.telegram.abilitybots.api.objects.Flag.PHOTO;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import org.telegram.abilitybots.api.bot.AbilityBot;
 import org.telegram.abilitybots.api.objects.Ability;
@@ -28,6 +30,7 @@ import javafx.collections.ObservableList;
 import seedu.address.bot.parcel.DisplayParcel;
 import seedu.address.bot.parcel.ParcelParser;
 import seedu.address.bot.qrcode.QRCodeAnalyser;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.DeleteCommand;
@@ -57,6 +60,7 @@ public class ArkBot extends AbilityBot {
             + "a/John street, block 123, #01-01 S123121 d/01-01-2001 s/DELIVERING";
     private static final String BOT_DEMO_BETSY = "add #/RR000000000SG n/Betsy Crowe t/frozen d/02-02-2002 "
             + "e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567 t/fragile";
+    private static final Logger logger = LogsCenter.getLogger(ArkBot.class);
     private Logic logic;
     private Model model;
     private String botToken;
@@ -71,6 +75,7 @@ public class ArkBot extends AbilityBot {
         this.botToken = botToken;
         this.botUsername = botUsername;
         this.waitingForImage = false;
+        logger.info("ArkBot successfully booted up.");
     }
 
     @Override
@@ -89,18 +94,16 @@ public class ArkBot extends AbilityBot {
                 .input(0)
                 .locality(Locality.ALL)
                 .privacy(Privacy.ADMIN)
-                .action(ctx -> {
-                    Platform.runLater(() -> {
-                        try {
-                            logic.execute(AddCommand.COMMAND_WORD + " "
-                                    + combineArguments(ctx.arguments()));
-                            sender.send(String.format(BOT_MESSAGE_SUCCESS, AddCommand.COMMAND_WORD), ctx.chatId());
-                        } catch (CommandException | ParseException e) {
-                            sender.send(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE),
-                                    ctx.chatId());
-                        }
-                    });
-                })
+                .action(ctx -> Platform.runLater(() -> {
+                    try {
+                        logic.execute(AddCommand.COMMAND_WORD + " "
+                                + combineArguments(ctx.arguments()));
+                        sender.send(String.format(BOT_MESSAGE_SUCCESS, AddCommand.COMMAND_WORD), ctx.chatId());
+                    } catch (CommandException | ParseException e) {
+                        sender.send(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE),
+                                ctx.chatId());
+                    }
+                }))
                 .post(ctx -> sender.send("What would you like to do next?", ctx.chatId()))
                 .build();
     }
@@ -215,20 +218,18 @@ public class ArkBot extends AbilityBot {
                 .input(0)
                 .locality(Locality.ALL)
                 .privacy(Privacy.ADMIN)
-                .action(ctx -> {
-                    Platform.runLater(() -> {
-                        try {
-                            logic.execute(FindCommand.COMMAND_WORD + " "
-                                    + combineArguments(ctx.arguments()));
-                            ObservableList<ReadOnlyParcel> parcels = model.getFilteredUndeliveredParcelList();
-                            lastKnownMessage = sender.send(parseDisplayParcels(formatParcelsForBot(parcels)),
-                                    ctx.chatId());
-                        } catch (CommandException | ParseException e) {
-                            sender.send(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE),
-                                    ctx.chatId());
-                        }
-                    });
-                })
+                .action(ctx -> Platform.runLater(() -> {
+                    try {
+                        logic.execute(FindCommand.COMMAND_WORD + " "
+                                + combineArguments(ctx.arguments()));
+                        ObservableList<ReadOnlyParcel> parcels = model.getFilteredUndeliveredParcelList();
+                        lastKnownMessage = sender.send(parseDisplayParcels(formatParcelsForBot(parcels)),
+                                ctx.chatId());
+                    } catch (CommandException | ParseException e) {
+                        sender.send(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE),
+                                ctx.chatId());
+                    }
+                }))
                 .build();
     }
 
@@ -243,30 +244,28 @@ public class ArkBot extends AbilityBot {
                 .input(0)
                 .locality(Locality.ALL)
                 .privacy(Privacy.ADMIN)
-                .action(ctx -> {
-                    Platform.runLater(() -> {
-                        try {
-                            if (combineArguments(ctx.arguments()).trim().equals("")) {
-                                this.waitingForImage = true;
-                                sender.send("Please upload QR code to complete delivery.\n"
-                                        + "Type \"/cancel\" to stop uploading process.", ctx.chatId());
-                            } else {
-                                logic.execute(EditCommand.COMMAND_WORD + " "
-                                        + combineArguments(ctx.arguments()) + BOT_SET_COMPLETED);
-                                ObservableList<ReadOnlyParcel> parcels = model.getFilteredUndeliveredParcelList();
-                                EditMessageText editedText =
-                                        new EditMessageText().setChatId(ctx.chatId())
-                                                .setMessageId(lastKnownMessage.get().getMessageId())
-                                                .setText(parseDisplayParcels(formatParcelsForBot(parcels)));
-                                sender.editMessageText(editedText);
-                            }
-                        } catch (CommandException | ParseException e) {
-                            sender.send(BOT_MESSAGE_FAILURE, ctx.chatId());
-                        } catch (TelegramApiException e) {
-                            e.printStackTrace();
+                .action(ctx -> Platform.runLater(() -> {
+                    try {
+                        if (combineArguments(ctx.arguments()).trim().equals("")) {
+                            this.waitingForImage = true;
+                            sender.send("Please upload QR code to complete delivery.\n"
+                                    + "Type \"/cancel\" to stop uploading process.", ctx.chatId());
+                        } else {
+                            logic.execute(EditCommand.COMMAND_WORD + " "
+                                    + combineArguments(ctx.arguments()) + BOT_SET_COMPLETED);
+                            ObservableList<ReadOnlyParcel> parcels = model.getFilteredUndeliveredParcelList();
+                            EditMessageText editedText =
+                                    new EditMessageText().setChatId(ctx.chatId())
+                                            .setMessageId(lastKnownMessage.get().getMessageId())
+                                            .setText(parseDisplayParcels(formatParcelsForBot(parcels)));
+                            sender.editMessageText(editedText);
                         }
-                    });
-                })
+                    } catch (CommandException | ParseException e) {
+                        sender.send(BOT_MESSAGE_FAILURE, ctx.chatId());
+                    } catch (TelegramApiException e) {
+                        e.printStackTrace();
+                    }
+                }))
                 .build();
     }
 
@@ -278,12 +277,10 @@ public class ArkBot extends AbilityBot {
                 .input(0)
                 .locality(Locality.ALL)
                 .privacy(Privacy.ADMIN)
-                .action(ctx -> {
-                    Platform.runLater(() -> {
-                        this.waitingForImage = false;
-                        sender.send("QR Code upload successfully cancelled!", ctx.chatId());
-                    });
-                })
+                .action(ctx -> Platform.runLater(() -> {
+                    this.waitingForImage = false;
+                    sender.send("QR Code upload successfully cancelled!", ctx.chatId());
+                }))
                 .build();
     }
 
@@ -298,11 +295,9 @@ public class ArkBot extends AbilityBot {
                 .input(0)
                 .locality(Locality.ALL)
                 .privacy(Privacy.ADMIN)
-                .action(ctx -> {
-                    Platform.runLater(() -> {
-                        sender.send(BOT_MESSAGE_HELP, ctx.chatId());
-                    });
-                })
+                .action(ctx -> Platform.runLater(() -> {
+                    sender.send(BOT_MESSAGE_HELP, ctx.chatId());
+                }))
                 .post(ctx -> sender.send("What would you like to do next?", ctx.chatId()))
                 .build();
     }
@@ -318,17 +313,15 @@ public class ArkBot extends AbilityBot {
                 .input(0)
                 .locality(Locality.ALL)
                 .privacy(Privacy.ADMIN)
-                .action(ctx -> {
-                    Platform.runLater(() -> {
-                        try {
-                            logic.execute(AddCommand.COMMAND_WORD + " " + BOT_DEMO_JOHN);
-                            logic.execute(AddCommand.COMMAND_WORD + " " + BOT_DEMO_BETSY);
-                            sender.send(String.format(BOT_MESSAGE_SUCCESS, "Demo"), ctx.chatId());
-                        } catch (CommandException | ParseException e) {
-                            sender.send(BOT_MESSAGE_FAILURE, ctx.chatId());
-                        }
-                    });
-                })
+                .action(ctx -> Platform.runLater(() -> {
+                    try {
+                        logic.execute(AddCommand.COMMAND_WORD + " " + BOT_DEMO_JOHN);
+                        logic.execute(AddCommand.COMMAND_WORD + " " + BOT_DEMO_BETSY);
+                        sender.send(String.format(BOT_MESSAGE_SUCCESS, "Demo"), ctx.chatId());
+                    } catch (CommandException | ParseException e) {
+                        sender.send(BOT_MESSAGE_FAILURE, ctx.chatId());
+                    }
+                }))
                 .build();
     }
 
@@ -382,43 +375,67 @@ public class ArkBot extends AbilityBot {
     }
 
     @Override
-    public void onUpdateReceived(Update update) {
-        if (update.hasMessage() && update.getMessage().hasPhoto()) {
-            java.io.File picture = downloadPhotoByFilePath(getFilePath(getPhoto(update)));
-            QRCodeAnalyser qrca = new QRCodeAnalyser(picture);
-            ParcelParser pp = new ParcelParser();
-            Message ctx = update.getMessage();
-            try {
-                ReadOnlyParcel retrievedParcel = pp.parse(qrca.getDecodedText());
-                if (this.waitingForImage) {
-                    int indexZeroBased = model.getFilteredUndeliveredParcelList().indexOf(retrievedParcel);
-
-                    if (indexZeroBased < 0) {
-                        sender.send("The parcel cannot be found! Please try again.",
-                                ctx.getChatId());
-                    } else {
-                        logic.execute(EditCommand.COMMAND_WORD + " "
-                                + (indexZeroBased + 1) + BOT_SET_COMPLETED);
-                        ObservableList<ReadOnlyParcel> parcels = model.getFilteredUndeliveredParcelList();
-                        EditMessageText editedText =
-                                new EditMessageText().setChatId(ctx.getChatId())
-                                        .setMessageId(lastKnownMessage.get().getMessageId())
-                                        .setText(parseDisplayParcels(formatParcelsForBot(parcels)));
-                        sender.editMessageText(editedText);
-                        this.waitingForImage = false;
-                    }
-                } else {
-                    sender.send("Here are the details of the parcel: \n" + retrievedParcel.toString(),
-                            ctx.getChatId());
-                }
-            } catch (ParseException | CommandException e) {
-                sender.send(BOT_MESSAGE_FAILURE, ctx.getChatId());
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
-
-        }
+    public boolean checkGlobalFlags(Update update) {
+        return true;
     }
+
+    /**
+     * This ability has an extra "flag". It needs a photo to activate.
+     */
+    public Ability onPhotoCommand() {
+        return Ability
+                .builder()
+                .name(DEFAULT)
+                .flag(PHOTO)
+                .info("receives Photos")
+                .input(0)
+                .locality(Locality.ALL)
+                .privacy(Privacy.ADMIN)
+                .action((MessageContext ctx) -> Platform.runLater(() -> {
+                    Update update = ctx.update();
+                    if (update.hasMessage() && update.getMessage().hasPhoto()) {
+                        java.io.File picture = downloadPhotoByFilePath(getFilePath(getPhoto(update)));
+                        QRCodeAnalyser qrca = new QRCodeAnalyser(picture);
+                        ParcelParser pp = new ParcelParser();
+                        try {
+                            System.out.println(qrca.getDecodedText());
+                            ReadOnlyParcel retrievedParcel = pp.parse(qrca.getDecodedText());
+                            System.out.println(retrievedParcel);
+                            if (retrievedParcel.equals(null)) {
+                                sender.send("Sorry, I didn't seem to understand your image. Please try again.",
+                                        ctx.chatId());
+                            } else if (this.waitingForImage) {
+                                int indexZeroBased = model.getFilteredUndeliveredParcelList().indexOf(retrievedParcel);
+
+                                if (indexZeroBased < 0) {
+                                    sender.send("The parcel cannot be found! Please try again.",
+                                            ctx.chatId());
+                                } else {
+                                    logic.execute(EditCommand.COMMAND_WORD + " "
+                                            + (indexZeroBased + 1) + BOT_SET_COMPLETED);
+                                    ObservableList<ReadOnlyParcel> parcels = model.getFilteredUndeliveredParcelList();
+                                    EditMessageText editedText =
+                                            new EditMessageText().setChatId(ctx.chatId())
+                                                    .setMessageId(lastKnownMessage.get().getMessageId())
+                                                    .setText(parseDisplayParcels(formatParcelsForBot(parcels)));
+                                    sender.editMessageText(editedText);
+                                    this.waitingForImage = false;
+                                }
+                            } else {
+                                sender.send("Here are the details of the parcel: \n" + retrievedParcel.toString(),
+                                        ctx.chatId());
+                            }
+                        } catch (ParseException | CommandException e) {
+                            e.printStackTrace();
+                            sender.send(BOT_MESSAGE_FAILURE, ctx.chatId());
+                        } catch (TelegramApiException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                })).build();
+    }
+
 
     /* The following three methods are from https://github.com/rubenlagus/TelegramBots/wiki/FAQ#how_to_get_picture */
     public PhotoSize getPhoto(Update update) {
