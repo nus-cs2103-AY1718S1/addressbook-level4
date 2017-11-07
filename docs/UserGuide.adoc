@@ -167,9 +167,17 @@ the 2nd person, or removes it otherwise.
 Edit commands are _undoable_ with the `undo` command.
 ====
 
+=== `email`, `mail`, `mailto`, `send` or `m`: Composing an email _(Since v1.5rc)_
+
+Opens the 'compose new email' window of the default email client, with the recipient's email address and subject
+(if available) filled in. +
+Format: `email` INDEX [s/SUBJECT] +
+(`email` can be replaced by `mail`, `mailto`, `send` or `m`) +
+Keyboard shortcut: kbd:[Ctrl+M]
+
 // tag::find[]
 
-=== `exit`, `quit`, `close`, `bye`, `esc`: Exiting the Program _(Since v1.3)_
+=== `exit`, `quit`, `close`, `bye` or `esc`: Exiting the Program _(Since v1.3)_
 
 Exits the program. +
 Format: `exit` +
@@ -500,6 +508,11 @@ image::profile_pic_after.png[width="500"]
 .3+| Edit | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
           | `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
           | *E.g.* `edit 2 n/James Lee e/jameslee@example.com`
+.5+| Email | `email INDEX [s/SUBJECT]`
+           | `mail INDEX [s/SUBJECT]`
+           | `send INDEX [s/SUBJECT]`
+           | `m INDEX [s/SUBJECT]`
+           | *E.g.* `email 1 s/Long time no see`
 .5+| Remark | `remark INDEX r/REMARK`
             | `note INDEX r/REMARK`
             | `rmk INDEX r/REMARK`
@@ -537,6 +550,7 @@ image::profile_pic_after.png[width="500"]
 | kbd:[Ctrl + A] | Display the add command format in command box
 | kbd:[Ctrl + E] | Display the edit command format in command box
 | kbd:[Ctrl + F] | Display the find command format in command box
+| kbd:[Ctrl + M] | Display the email command format in command box
 | kbd:[Ctrl + S] | Display the select command format in command box
 | kbd:[Ctrl + Shift + D] | Display the delete command format in command box
 |===
