@@ -31,6 +31,9 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     // ================ UserPrefs methods ==============================
+    public void setAddressBookStorage(AddressBookStorage addressBookStorage) {
+        this.addressBookStorage = addressBookStorage;
+    }
 
     @Override
     public String getUserPrefsFilePath() {
@@ -49,6 +52,9 @@ public class StorageManager extends ComponentManager implements Storage {
 
 
     // ================ AddressBook methods ==============================
+    public void setUserPrefsStorage(UserPrefsStorage userPrefsStorage) {
+        this.userPrefsStorage = userPrefsStorage;
+    }
 
     @Override
     public String getAddressBookFilePath() {

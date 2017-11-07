@@ -1,0 +1,10 @@
+{
+  "accountsPath" : "accounts.json",
+  "usernames" : "e0134082@u.nus.edu,admin,user",
+  "passwords" : "19980105,admin,user",
+  "hm" : {
+    "e0134082@u.nus.edu" : "19980105",
+    "admin" : "admin",
+    "user" : "user"
+  }
+}

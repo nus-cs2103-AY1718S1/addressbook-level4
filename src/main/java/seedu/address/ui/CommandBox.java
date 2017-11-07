@@ -2,18 +2,24 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import org.controlsfx.control.textfield.TextFields;
+
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.font.FontSize;
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -22,7 +28,12 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
-
+    //@@author pjunwei95
+    private static final String[] suggestedWords = {"add", "delete", "edit", "help", "find", "list",
+                                                    "select", "search", "clear", "undo", "redo", "history",
+                                                    "deletetag", "findtag", "photo", "facebook", "color",
+                                                    "exit", "fs", "remark"};
+    //@@author pjunwei95
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
@@ -33,9 +44,13 @@ public class CommandBox extends UiPart<Region> {
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
+
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+
+        setFontSize(FontSize.getCurrentFontSizeLabel());
+        registerAsAnEventHandler(this);
     }
 
     /**
@@ -101,20 +116,43 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleCommandInputChanged() {
         try {
-            CommandResult commandResult = logic.execute(commandTextField.getText());
+            String command = commandTextField.getText();
+            CommandResult commandResult = logic.execute(command);
             initHistory();
             historySnapshot.next();
             // process result of the command
             commandTextField.setText("");
             logger.info("Result: " + commandResult.feedbackToUser);
-            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
 
         } catch (CommandException | ParseException e) {
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();
             logger.info("Invalid command: " + commandTextField.getText());
-            raise(new NewResultAvailableEvent(e.getMessage()));
+            raise(new NewResultAvailableEvent(e.getMessage(), true));
+        }
+    }
+
+    /**
+     * Handle a input command by passing a string
+     */
+    public void handleCommandInputChanged(String inputCommand) {
+        try {
+            System.out.println(inputCommand);
+            CommandResult commandResult = logic.execute(inputCommand);
+            initHistory();
+            historySnapshot.next();
+            // process result of the command
+            commandTextField.setText("");
+            logger.info("Result: " + commandResult.feedbackToUser);
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+        } catch (CommandException | ParseException e) {
+            initHistory();
+            // handle command failure
+            setStyleToIndicateCommandFailure();
+            logger.info("Invalid command: " + inputCommand);
+            raise(new NewResultAvailableEvent(e.getMessage(), true));
         }
     }
 
@@ -146,6 +184,30 @@ public class CommandBox extends UiPart<Region> {
         }
 
         styleClass.add(ERROR_STYLE_CLASS);
+    }
+
+    //@@author ChenXiaoman
+    @Subscribe
+    private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
+        setFontSize(event.getFontSize());
+    }
+
+    /**
+     * Sets the command box style to user preferred font size.
+     */
+    private void setFontSize(String newFontSize) {
+        String fxFormatFontSize = FontSize.getAssociateFxFontSizeString(newFontSize);
+        commandTextField.setStyle(fxFormatFontSize);
+    }
+
+    //@@author pjunwei95
+    @FXML
+    /**
+     * Sets the command box style allow autocompletion.
+     * @param suggestedWords - list of words that will autocomplete
+     */
+    private void initialize() {
+        TextFields.bindAutoCompletion(commandTextField, suggestedWords);
     }
 
 }
