@@ -6,13 +6,16 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: DeathNote
 DeathNote is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-W10-B3/DeathNote/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-W10-B3/DeathNote/tree/master/src/test[Test code]]
+*Code contributed*:
+[https://github.com/CS2103AUG2017-W10-B3/main/blob/master/collated/main/chrisboo.md[Functional code]]
+[https://github.com/CS2103AUG2017-W10-B3/main/blob/master/collated/test/chrisboo.md[Test code]]
 
-=== Enhancement Added: Add aliases to commands
+=== Enhancement Added: Add shorthand to commands
 
 ==== External behavior
 
 ---
+
 #Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide]#
 
 include::../UserGuide.adoc[tag=alias]
