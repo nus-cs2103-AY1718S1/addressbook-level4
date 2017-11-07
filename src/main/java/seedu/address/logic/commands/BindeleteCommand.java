@@ -54,4 +54,11 @@ public class BindeleteCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof BindeleteCommand
+                && this.targets.equals(((BindeleteCommand) other).targets)); // state check
+    }
 }

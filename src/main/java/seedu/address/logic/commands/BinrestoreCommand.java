@@ -57,5 +57,11 @@ public class BinrestoreCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
     }
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof BinrestoreCommand
+                && this.targets.equals(((BinrestoreCommand) other).targets)); // state check
+    }
 
 }

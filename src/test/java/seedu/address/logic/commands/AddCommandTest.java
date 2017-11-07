@@ -123,7 +123,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void resetData(ReadOnlyAddressBook newData) {
+        public void resetData(ReadOnlyAddressBook newData, ReadOnlyAddressBook newRecycleibin) {
             fail("This method should not be called.");
         }
 
@@ -144,6 +144,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void fresh() {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
@@ -152,7 +157,7 @@ public class AddCommandTest {
             fail("This method should not be called");
         }
 
-        public void deleteBinPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        public void deleteBinPerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException {
             fail("This method should not be called");
         }
 
@@ -229,6 +234,9 @@ public class AddCommandTest {
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
+
+        @Override
+        public ReadOnlyAddressBook getRecycleBin() {return new AddressBook(); }
     }
 
     /**
@@ -246,6 +254,9 @@ public class AddCommandTest {
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
+
+        @Override
+        public ReadOnlyAddressBook getRecycleBin() { return new AddressBook(); }
     }
 
 }
