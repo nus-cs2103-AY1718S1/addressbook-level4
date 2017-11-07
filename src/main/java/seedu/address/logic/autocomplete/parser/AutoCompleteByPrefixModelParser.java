@@ -21,10 +21,9 @@ import seedu.address.model.Model;
  *  based on the names currently present in the address book. */
 public class AutoCompleteByPrefixModelParser implements AutoCompleteParser {
 
+    protected List<String> allPossibleMatches = Collections.emptyList();
     private Prefix currentPrefix;
     private final Model model;
-
-    protected List<String> allPossibleMatches = Collections.emptyList();
 
     public AutoCompleteByPrefixModelParser(Model model) {
         this.model = model;
@@ -33,22 +32,11 @@ public class AutoCompleteByPrefixModelParser implements AutoCompleteParser {
     @Override
     public List<String> parseForPossibilities(String stub) {
         final LinkedList<String> possibleMatches = new LinkedList<String>();
-        int prefixPosition;
-
-        // if trying to match a tag, do further check that it is the furthest occurence of PREFIX_TAG
-        if (currentPrefix.equals(PREFIX_TAG)) {
-            prefixPosition = AutoCompleteUtils.findLastPrefixPosition(stub, currentPrefix.toString());
-        } else {
-            prefixPosition = AutoCompleteUtils.findFirstPrefixPosition(stub, currentPrefix.toString());
-        }
-
+        int prefixPosition = AutoCompleteUtils.findLastPrefixPosition(stub, currentPrefix.toString());
         String staticSection = stub.substring(0, prefixPosition);
         String autoCompleteSection = stub.substring(prefixPosition, stub.length());
 
-        possibleMatches.addAll(allPossibleMatches.stream()
-                .filter(possibleMatch -> AutoCompleteUtils.startWithSameLetters(autoCompleteSection, possibleMatch))
-                .map(filteredMatch -> staticSection + filteredMatch)
-                .collect(Collectors.toList()));
+        possibleMatches.addAll(generateListOfMatches(staticSection, autoCompleteSection));
         possibleMatches.add(stub);
 
         return possibleMatches;
@@ -62,6 +50,20 @@ public class AutoCompleteByPrefixModelParser implements AutoCompleteParser {
     public void setPrefix(Prefix newPrefix) {
         currentPrefix = newPrefix;
         updateAllPossibleMatches();
+    }
+
+    /**
+     * Generates list of matches based on static section (not to be considered in matching)
+     * and autocomplete section (to be matched with all possible matches)
+     * @param staticSection section of the stub to be left untouched
+     * @param autoCompleteSection section of the stub to match for autocomplete
+     * @return list of possible matches
+     */
+    protected List<String> generateListOfMatches(String staticSection, String autoCompleteSection) {
+        return allPossibleMatches.stream()
+                .filter(possibleMatch -> AutoCompleteUtils.startWithSameLetters(autoCompleteSection, possibleMatch))
+                .map(filteredMatch -> staticSection + filteredMatch)
+                .collect(Collectors.toList());
     }
 
     /**
