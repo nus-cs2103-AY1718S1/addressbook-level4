@@ -497,8 +497,9 @@ Represents the Facebook account with the username `johnd10`.
 represents the Instagram account with the username `damyth`.
 // end::representing-social-media-accounts[]
 
-==== Facebook Integrations
 [[facebook-features]]
+==== Facebook Integrations
+
 // tag::facebookconnect[]
 ===== Connecting to Facebook [Since v1.2]: `facebookconnect`
 
