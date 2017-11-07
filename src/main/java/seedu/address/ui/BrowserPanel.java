@@ -15,6 +15,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
@@ -30,12 +35,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.social.SocialInfo;
-
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 /**
  * The Browser Panel of the App.
@@ -143,8 +142,8 @@ public class BrowserPanel extends UiPart<Region> {
             Transformer transformer = tf.newTransformer();
             transformer.transform(domSource, result);
             return writer.toString();
-        } catch(TransformerException ex) {
-            ex.printStackTrace();
+        } catch (TransformerException ex) {
+            new CommandException("Transform Doc to String Error.");
             return null;
         }
     }
@@ -154,10 +153,10 @@ public class BrowserPanel extends UiPart<Region> {
             if (Worker.State.SUCCEEDED.equals(newValue) && browser.getEngine().getLocation().contains("facebook")) {
                 String currentContent = getStringFromDocument(browser.getEngine().getDocument());
                 // handle invalid friend to be added
-                if (currentContent.contains("Sorry, this content isn't available right now") ||
-                        currentContent.contains("This page isn't available") ||
-                        currentContent.contains("Sorry, this content isn't available at the moment") ||
-                        currentContent.contains("may have been expired")){
+                if (currentContent.contains("Sorry, this content isn't available right now")
+                        || currentContent.contains("This page isn't available")
+                        || currentContent.contains("Sorry, this content isn't available at the moment")
+                        || currentContent.contains("may have been expired")) {
                     FacebookAddAllFriendsCommand.setupNextFriend();
                 }
             }
@@ -282,7 +281,7 @@ public class BrowserPanel extends UiPart<Region> {
         case FacebookAddAllFriendsCommand.COMMAND_ALIAS:
             logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
-            if(!FacebookConnectCommand.isAuthenticated()) {
+            if (!FacebookConnectCommand.isAuthenticated()) {
                 FacebookConnectCommand.completeAuth(browser.getEngine().getLocation());
                 FacebookAddAllFriendsCommand.addAllFriends();
             } else {

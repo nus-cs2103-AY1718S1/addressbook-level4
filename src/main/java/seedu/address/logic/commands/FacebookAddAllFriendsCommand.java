@@ -50,7 +50,7 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
      * Returns the current Facebook ID of the user being added
      * @return currentUserID
      */
-    public static String getCurrentUserID() {
+    public static String getCurrentUserId() {
         return currentUserID;
     }
 
@@ -97,7 +97,7 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
             } catch (FacebookException e) {
                 throw new CommandException(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_PAGING_ERROR);
             }
-            if(currentList == null){
+            if (currentList == null) {
                 finishFacebookAddAllFriends();
                 return;
             }
@@ -107,9 +107,9 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
         TaggableFriend friend = currentList.get(friendIndex);
         currentUserName = friend.getName();
         // extract photo ID
-        String photoURL = friend.getPicture().getURL().toString();
+        String photoUrl = friend.getPicture().getURL().toString();
         Pattern p = Pattern.compile("_(.*?)\\_");
-        Matcher m = p.matcher(photoURL);
+        Matcher m = p.matcher(photoUrl);
         m.matches();
         m.find();
         currentPhotoID = m.group(1);
@@ -149,7 +149,10 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
         currentUserID = parts[2];
     }
 
-    private static void finishFacebookAddAllFriends(){
+    /**
+     * Completes and exits the command
+     */
+    private static void finishFacebookAddAllFriends() {
         FacebookConnectCommand.loadUserPage();
         EventsCenter.getInstance().post(new NewResultAvailableEvent(totalFriendsAdded
                 + MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_SUCCESS + " (From "

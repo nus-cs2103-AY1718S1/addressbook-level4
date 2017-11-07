@@ -47,7 +47,7 @@ public class FacebookAddCommand extends UndoableCommand {
 
     private static String userName;
     private String toAddName;
-    private String toAddID;
+    private String toAddId;
     private Person toAdd;
     private boolean isAddAll;
 
@@ -66,7 +66,7 @@ public class FacebookAddCommand extends UndoableCommand {
     public FacebookAddCommand(boolean isAddAll) {
         this.isAddAll = isAddAll;
         toAddName = FacebookAddAllFriendsCommand.getCurrentUserName();
-        toAddID = FacebookAddAllFriendsCommand.getCurrentUserID();
+        toAddId = FacebookAddAllFriendsCommand.getCurrentUserId();
     }
 
     /**
@@ -75,7 +75,7 @@ public class FacebookAddCommand extends UndoableCommand {
      */
     public void completeAdd() throws CommandException {
         // if add is not called from the FacebookAddAllFriends Command
-        if(!isAddAll) {
+        if (!isAddAll) {
             Facebook facebookInstance = FacebookConnectCommand.getFacebookInstance();
             ResponseList<User> friendList = null;
 
@@ -87,14 +87,14 @@ public class FacebookAddCommand extends UndoableCommand {
             }
             User user = friendList.get(0);
             toAddName = user.getName();
-            toAddID = user.getId();
+            toAddId = user.getId();
         }
 
         // Assign data to Person object
         try {
             Set<SocialInfo> socialInfos = new HashSet<>();
             SocialInfo facebookInfo = null;
-            facebookInfo = SocialInfoMapping.parseSocialInfo("facebook " + toAddID);
+            facebookInfo = SocialInfoMapping.parseSocialInfo("facebook " + toAddId);
             socialInfos.add(facebookInfo);
 
             Set<Tag> tags = new HashSet<>();
