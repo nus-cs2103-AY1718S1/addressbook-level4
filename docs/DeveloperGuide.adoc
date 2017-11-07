@@ -603,7 +603,7 @@ image::configBorderColor.png[width="900"]
 **Alternative 1 (current choice):**  Update boolean variable "isEnable" in the command box by calling event to set the status of this variable. +
 **Pros:** Since only command box will be updated, using event center will maintain a good data encapsulation. +
 **Cons:** Hard for new developers to understand the event center mechanism. +
-**Alternative 1 (current choice):** Declare a global boolean variable +
+**Alternative 2:** Declare a global boolean variable +
 **Pros:** Easier for new developer to design +
 **Cons:** This method breaks encapsulation and fails to follow standard java code style.
 // end::colorKeyword[]
@@ -759,7 +759,7 @@ public void stickyNotesInit() {
 **Pros:** The color of stickynotes can be changed easily. +
 **Cons:** THe developer needs to understand how to code for UI. +
 **Alternative2:** Using Scene Builder to create stickynotes view +
-**Pros:** It is easier to visualise the layout and set the properties+
+**Pros:** It is easier to visualise the layout and set the properties +
 **Cons:** There are many limitations such as unable to show only a few TextArea objects. +
 
 // end::timetable[]
