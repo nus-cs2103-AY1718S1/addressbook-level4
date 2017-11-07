@@ -48,8 +48,8 @@ public class Calendar {
 
         // Days of the week labels
         Text[] dayNames = new Text[]{ new Text("Sunday"), new Text("Monday"),
-                new Text("Tuesday"), new Text("Wednesday"), new Text("Thursday"),
-                new Text("Friday"), new Text("Saturday") };
+                                      new Text("Tuesday"), new Text("Wednesday"), new Text("Thursday"),
+                                      new Text("Friday"), new Text("Saturday") };
 
         GridPane dayLabels = new GridPane();
         dayLabels.setPrefWidth(600);
@@ -141,7 +141,7 @@ public class Calendar {
      * @param yearMonth
      */
 
-    public void populateUpdatedCalendar(UniqueEventList eventList, YearMonth yearMonth ) {
+    public void populateUpdatedCalendar(UniqueEventList eventList, YearMonth yearMonth) {
         // Get the date we want to start with on the calendar
         yearMonth = currentYearMonth;
         LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
