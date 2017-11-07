@@ -1,11 +1,11 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.SocialInfoMapping.getSocialType;
 import static seedu.address.logic.parser.SocialInfoMapping.FACEBOOK_IDENTIFIER;
 import static seedu.address.logic.parser.SocialInfoMapping.FACEBOOK_IDENTIFIER_ALIAS;
 import static seedu.address.logic.parser.SocialInfoMapping.INSTAGRAM_IDENTIFIER;
 import static seedu.address.logic.parser.SocialInfoMapping.INSTAGRAM_IDENTIFIER_ALIAS;
+import static seedu.address.logic.parser.SocialInfoMapping.getSocialType;
 import static seedu.address.logic.parser.SocialInfoMapping.parseSocialInfo;
 
 import java.util.ArrayList;
@@ -162,7 +162,7 @@ public class ParserUtil {
     public static Optional<String> parseSelect(String arg) throws IllegalValueException {
         requireNonNull(arg);
         if (!(arg.equals(FACEBOOK_IDENTIFIER) || arg.equals(INSTAGRAM_IDENTIFIER)
-        || arg.equals(FACEBOOK_IDENTIFIER_ALIAS) || arg.equals(INSTAGRAM_IDENTIFIER_ALIAS))) {
+                || arg.equals(FACEBOOK_IDENTIFIER_ALIAS) || arg.equals(INSTAGRAM_IDENTIFIER_ALIAS))) {
             throw new IllegalValueException(MESSAGE_INVALID_SOCIAL_TYPE);
         }
         return Optional.of(getSocialType(arg));
