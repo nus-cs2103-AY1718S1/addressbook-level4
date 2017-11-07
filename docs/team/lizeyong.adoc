@@ -9,7 +9,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/main/newalter.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/test/newalter.md[Test code]]
 
-=== Enhancement Added: A Universal Find Command that filters the existing list
+=== Enhancement Added: A Universal Find Command
 
 ==== External behavior
 
@@ -24,7 +24,21 @@ include::../UserGuide.adoc[tag=find]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+It allows users to locate specific contacts efficiently using all information available beyond name and tags.
+
+=== Enhancement Added: Filtering of Find command
+
+==== External behavior
+
+---
+
+The `find` command filters the list shown. Successive `find` makes the list smaller and smaller
+
+---
+
+==== Justification
+
+By filtering the existing list, the user can narrow down the list to find the relevant contacts without exact information.
 
 ==== Implementation
 
@@ -36,6 +50,24 @@ include::../DeveloperGuide.adoc[tag=filter]
 #End of Extract#
 
 ---
+
+=== Enhancement Added: Wildcard Symbol
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=wildcard]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The use of wildcard symbol `*` and `?` allows fuzzy search.
+
 
 === Enhancement Added: Resize Command
 
@@ -52,21 +84,35 @@ include::../UserGuide.adoc[tag=resize]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+The resize command allows the user to enlarge/shrink the size of the main window conveniently using CLI so that he/she can have a view more contacts or make space in the screen for other applications.
 
-==== Implementation
+=== Enhancement Added: Auto-Completion Suggestion
+
+==== External behavior
 
 ---
-#Start of Extract [from: Developer Guide]#
+#Start of Extract [from: User Guide]#
 
-include::../DeveloperGuide.adoc[tag=filter]
+include::../UserGuide.adoc[tag=tabcomplete]
 
 #End of Extract#
 
 ---
-=== Enhancement Proposed: Add command `remark`
 
-{Explain similar to the Undo/Redo feature above.}
+==== Justification
+
+Auto-Completion allows users to type less. Moreover, since all suggestions are generated from the database, it reduces the chance of mistyping.
+
+
+=== Enhancement Proposed: Add `filter` command
+
+A `filter` command to filter away unwanted contacts in the list shown.
+For instance, if the user want to see all contacts who are not his friends, he can filter away all contacts tagged with `friends`.
+
+=== Enhancement Proposed: Rank Auto-Completion Suggestions by their occurance
+If a certain keyword is frequently used, it should show up first in the suggestion menu.
+
+
 
 === Other contributions
 
