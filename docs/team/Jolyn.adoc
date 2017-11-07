@@ -3,6 +3,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
+ifdef::env-github[]
+https://cs2103aug2017-w11-b2.github.io/main/team/Jolyn.html[Please click here to view portfolio.]
+endif::[]
+
 ifndef::env-github[]
 == Project: Rolodex
 
@@ -15,7 +19,7 @@ include::../../README.adoc[tag=applicationDescription]
 The table below shows the keyboard shortcuts that are added, with the exception of shortcuts with the behavior `Exit the application`
 and `View help window` which came with the original state of the application.
 
-==== External behavior
+==== External Behavior
 
 ---
 
@@ -37,7 +41,67 @@ include::../DeveloperGuide.adoc[leveloffset=2, tag=shortcut]
 
 ---
 
+=== Enhancement Added: Renovate UI Color Scheme and Layout
+
+The user interface of the application has been revamped to take on a clean design, which aims to improve
+the user's experience with Rolodex.
+
+==== External Behavior
+
+---
+
+image::Ui.png[width="800"]
+
+Some features of the UI:
+
+* A keyboard icon in the command box provides visual feedback for certain user events:
+
+** image:keyboard.png[width="30"] : User is idle
+** image:keyboardTyping.png[width="30"] : User is typing
+** image:keyboardError.png[width="30"] : User entered an invalid command
+
+* Split pane which separates the contact list from the other UI components is responsive;
+the divider is automatically maintained at the optimal position
+when window size changes
+* Avatar colors are randomized
+
+---
+
+=== Enhancement Added: Person Detail Panel
+
+==== External Behavior
+
+---
+
+include::../DeveloperGuide.adoc[leveloffset=2, tag=detailPanelBehavior]
+
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[leveloffset=2, tag=detailPanelImp]
+
+---
+
+=== Enhancement Added: Remark Field
+
+The remark field allows the user to store miscellaneous notes about their contacts. The field can be added using a standalone `remark` command,
+or added along with other fields when adding a new person using the existing `add` command. Similarly, the field can be modified with the `remark` command,
+or edited along with other fields using the existing `edit` command.
+
+==== External Behavior
+
+---
+
+include::../UserGuide.adoc[leveloffset=2,tag=remark]
+
+---
+
+
 === Enhancement Proposed: Add Profile Pictures
+
+==== External Behavior
 
 ---
 
@@ -45,13 +109,14 @@ include::../UserGuide.adoc[leveloffset=2, tag=picture]
 
 ---
 === Other contributions
-* Updated the GUI layout and color scheme (Pull request https://github.com[#16])
-* Added a keyboard icon in the command box which provides visual feedback for some user events (Pull request https://github.com[#28])
-* Added the removeTag method (Pull request https://github.com[#6])
-* Updated the General Documentation (Pull requests https://github.com[#2], https://github.com[#66])
+* Added auto-selection to person that is newly added (Pull request https://github.com/CS2103AUG2017-W11-B2/main/pull/123[#123])
+* Added auto-selection to person that is newly edited (Pull request https://github.com/CS2103AUG2017-W11-B2/main/pull/102[#102])
+* Added the removeTag method (Pull request https://github.com/CS2103AUG2017-W11-B2/main/pull/6[#6])
+* Updated the General Documentation (Pull requests https://github.com/CS2103AUG2017-W11-B2/main/pull/2[#2],
+https://github.com/CS2103AUG2017-W11-B2/main/pull/66[#66],
+https://github.com/CS2103AUG2017-W11-B2/main/pull/112[#112])
 
 endif::[]
-
 
 ifndef::env-github[]
 include::../NavigationMenu.adoc[]
