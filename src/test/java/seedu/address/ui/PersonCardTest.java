@@ -7,10 +7,12 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BILL;
 import static seedu.address.testutil.TypicalPersons.JOHN;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
+import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysTodoCount;
 
 import org.junit.Test;
 
 import guitests.guihandles.PersonCardHandle;
+import guitests.guihandles.TodoCountHandle;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.PersonBuilder;
@@ -98,11 +100,19 @@ public class PersonCardTest extends GuiUnitTest {
         guiRobot.pauseForHuman();
 
         PersonCardHandle personCardHandle = new PersonCardHandle(personCard.getRoot());
+        //@@author qihao27
+        TodoCountHandle todoCountHandle = new TodoCountHandle(personCard.getRoot());
+        //@@author
 
         // verify id is displayed correctly
         assertEquals(Integer.toString(expectedId) + ". ", personCardHandle.getId());
 
         // verify person details are displayed correctly
         assertCardDisplaysPerson(expectedPerson, personCardHandle);
+
+        //@@author qihao27
+        // verify todolist count is displayed correctly
+        assertCardDisplaysTodoCount(expectedPerson, todoCountHandle);
+        //@@author
     }
 }

@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.TodoCountHandle;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -36,14 +37,20 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
-        //@@author qihao27
+    }
+
+    //@@author qihao27
+    /**
+     * Asserts that {@code actualCard} displays the todolists count of {@code expectedPerson}.
+     */
+    public static void assertCardDisplaysTodoCount(ReadOnlyPerson expectedPerson, TodoCountHandle actualCard) {
         if (expectedPerson.getTodoItems().size() > 0) {
             assertEquals(Integer.toString(expectedPerson.getTodoItems().size()), actualCard.getTodoCount());
         } else {
             assertEquals("", actualCard.getTodoCount());
         }
-        //@@author
     }
+    //@@author
 
     /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
