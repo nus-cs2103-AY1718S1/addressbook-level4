@@ -22,6 +22,7 @@ import seedu.address.logic.autocomplete.parser.AutoCompleteTagParser;
 import seedu.address.logic.autocomplete.parser.AutoCompleteWordInNameParser;
 import seedu.address.logic.autocomplete.parser.IdentityParser;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindTagCommand;
@@ -57,6 +58,8 @@ public class AutoCompleteManager {
             new AutoCompleteSetStringParser(Arrays.asList(new String[] {"name", "phone", "email"}));
     private final AutoCompleteSetStringParser sortOrderParser =
             new AutoCompleteSetStringParser(Arrays.asList(new String[] {"asc", "dsc"}));
+    private final AutoCompleteSetStringParser themeParser =
+            new AutoCompleteSetStringParser(Arrays.asList(new String[] {"DarkTheme", "RedTheme"}));
     private final LinkedList<AutoCompletePossibilities> cache = new LinkedList<AutoCompletePossibilities>();
     private final int maxSize;
 
@@ -130,6 +133,9 @@ public class AutoCompleteManager {
             case RemarkCommand.COMMAND_WORD:
                 logger.info("Parsing [Model attributes by Prefix]");
                 return chooseParserFromPrefix(stub);
+            case ChangeThemeCommand.COMMAND_WORD:
+                logger.info("Parsing [Themes]");
+                return themeParser;
             case FindCommand.COMMAND_WORD:
                 logger.info("Parsing [Words in Name in Model]");
                 return wordInNameParser;
