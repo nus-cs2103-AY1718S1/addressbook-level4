@@ -477,7 +477,8 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
-=== Filter mechanism (Since v1.2)
+// tag::filterbytags[]
+=== Filter mechanism
 
 The filter mechanism is facilitated by `FilterCommandParser`, which resides inside the parser folder of the logic component.
 
@@ -570,6 +571,7 @@ some of his contacts may have tags that serve the same purpose but spelt differe
 **Cons:** The user might prefer a wider filter for either-or keywords as he might have forgotten which tag a particular contact was saved under. Narrowing down his filter may cause him some difficulties.
 
 ---
+// end::filterbytags[]
 
 === Sorting mechanism (Since v1.2)
 
@@ -662,7 +664,8 @@ The sorting process is case insensitive.
 **Pros:** Less time and space consuming as sorting is achieved in a single array. +
 **Cons:** There is no way to obtain the origin list of contacts for other functions. If a mistake is made, the original list of contacts will be compromised. Need to update all classes that inherits from Address Book class as well which may be confusing.
 
-=== Facebook mechanism (Coming in v1.3)
+// tag::facebook[]
+=== Facebook mechanism
 
 The facebook mechanism is facilitated by `FacebookCommand`, which resides inside the commands folder of the logic component.
 
@@ -690,6 +693,7 @@ The user has to ensure that an internet connection is established to succeed in 
 **Alternative 2:** User enters the command `facebook`, followed by his username and password in the command box. He is automatically logged into Facebook and is directed to Facebook's newsfeed page.  +
 **Pros:** Saves users the trouble of navigating the facebook log in page. Adheres to the purpose of the application having a CLI. +
 **Cons:** More difficult to implement. May require the use of Facebook API which may cause unexpected regressions that developers may not know how to solve.
+// end::facebook[]
 
 // tag::addremovetag[]
 === Add/Remove Tag mechanism
