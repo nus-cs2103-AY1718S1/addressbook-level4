@@ -47,18 +47,32 @@ public class EventList implements Iterable<Event> {
             ArrayList<>(internalMap.values()));
 
     public EventList() {
-        internalMap.addListener((MapChangeListener.Change<? extends Timeslot, ? extends Event> change) -> {
-            logger.info("Change heard.");
-            boolean removed = change.wasRemoved();
-            if (removed != change.wasAdded()) {
-                if (removed) {
-                    mappedList.remove(change.getValueRemoved());
-                } else {
-                    mappedList.add(change.getValueAdded());
+//        internalMap.addListener((MapChangeListener.Change<? extends Timeslot, ? extends Event> change) -> {
+//            logger.info("Change heard.");
+//            boolean removed = change.wasRemoved();
+//            if (removed != change.wasAdded()) {
+//                if (removed) {
+//                    mappedList.remove(change.getValueRemoved());
+//                } else {
+//                    mappedList.add(change.getValueAdded());
+//                }
+//            }
+//        });
+//        EventsCenter.getInstance().registerHandler(this);
+        internalMap.addListener(new MapChangeListener<Timeslot, Event>() {
+            @Override
+            public void onChanged(Change<? extends Timeslot, ? extends Event> change) {
+                logger.info("Heard change.");
+                boolean removed = change.wasRemoved();
+                if (removed != change.wasAdded()) {
+                    if (removed) {
+                        mappedList.remove(change.getValueRemoved());
+                    } else {
+                        mappedList.add(change.getValueAdded());
+                    }
                 }
             }
         });
-        EventsCenter.getInstance().registerHandler(this);
     }
     /**
      * Adds a event to the tree map.
@@ -170,7 +184,7 @@ public class EventList implements Iterable<Event> {
      */
     public ObservableList<ReadOnlyEvent> asObservableList() {
         ObservableList<ReadOnlyEvent> list = FXCollections.observableList(new ArrayList<>(internalMap.values()));
-        //logger.info("EventList ------------- got " + mappedList.size() + " list.");
+        logger.info("EventList ------------- got " + mappedList.size() + " list.");
         return FXCollections.unmodifiableObservableList(list);
     }
 

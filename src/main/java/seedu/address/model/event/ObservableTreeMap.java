@@ -23,67 +23,67 @@ public class ObservableTreeMap<K, V> extends TreeMap<K, V> implements
 
     private MapListenerHelper<K, V> mapListenerHelper;
 
-    /**
-     * A subclass of MapChangeListener.Change for ObervableTreeMap
-     */
-    public class Change extends MapChangeListener.Change<K, V> {
-        private final K key;
-        private final V old;
-        private final V added;
-        private final boolean wasAdded;
-        private final boolean wasRemoved;
-
-        public Change(K key, V old, V added, boolean wasAdded, boolean wasRemoved) {
-            super(ObservableTreeMap.this);
-            assert(wasAdded || wasRemoved);
-            this.key = key;
-            this.old = old;
-            this.added = added;
-            this.wasAdded = wasAdded;
-            this.wasRemoved = wasRemoved;
-        }
-
-        @Override
-        public boolean wasAdded() {
-            return wasAdded;
-        }
-
-        @Override
-        public boolean wasRemoved() {
-            return wasRemoved;
-        }
-
-        @Override
-        public K getKey() {
-            return key;
-        }
-
-        @Override
-        public V getValueAdded() {
-            return added;
-        }
-
-        @Override
-        public V getValueRemoved() {
-            return old;
-        }
-
-        @Override
-        public String toString() {
-            StringBuilder builder = new StringBuilder();
-            if (wasAdded) {
-                if (wasRemoved) {
-                    builder.append("replaced ").append(old).append("by ").append(added);
-                } else {
-                    builder.append("added ").append(added);
-                }
-            } else {
-                builder.append("removed ").append(old);
-            }
-            builder.append(" at key ").append(key);
-            return builder.toString();
-        }
-    }
+//    /**
+//     * A subclass of MapChangeListener.Change for ObervableTreeMap
+//     */
+//    public class Change extends MapChangeListener.Change<K, V> {
+//        private final K key;
+//        private final V old;
+//        private final V added;
+//        private final boolean wasAdded;
+//        private final boolean wasRemoved;
+//
+//        public Change(K key, V old, V added, boolean wasAdded, boolean wasRemoved) {
+//            super(ObservableTreeMap.this);
+//            assert(wasAdded || wasRemoved);
+//            this.key = key;
+//            this.old = old;
+//            this.added = added;
+//            this.wasAdded = wasAdded;
+//            this.wasRemoved = wasRemoved;
+//        }
+//
+//        @Override
+//        public boolean wasAdded() {
+//            return wasAdded;
+//        }
+//
+//        @Override
+//        public boolean wasRemoved() {
+//            return wasRemoved;
+//        }
+//
+//        @Override
+//        public K getKey() {
+//            return key;
+//        }
+//
+//        @Override
+//        public V getValueAdded() {
+//            return added;
+//        }
+//
+//        @Override
+//        public V getValueRemoved() {
+//            return old;
+//        }
+//
+//        @Override
+//        public String toString() {
+//            StringBuilder builder = new StringBuilder();
+//            if (wasAdded) {
+//                if (wasRemoved) {
+//                    builder.append("replaced ").append(old).append("by ").append(added);
+//                } else {
+//                    builder.append("added ").append(added);
+//                }
+//            } else {
+//                builder.append("removed ").append(old);
+//            }
+//            builder.append(" at key ").append(key);
+//            return builder.toString();
+//        }
+//    }
 
     protected void callObservers(MapChangeListener.Change<K, V> change) {
         MapListenerHelper.fireValueChangedEvent(mapListenerHelper, change);
