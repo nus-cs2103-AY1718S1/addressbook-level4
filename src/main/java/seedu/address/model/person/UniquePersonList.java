@@ -49,12 +49,13 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.add(new Person(toAdd));
     }
 
+    //@@author Estois
     /**
      * Sorts persons in address book by field and in order specified.
      * @param sortComparator
      * @throws EmptyBookException
      */
-    public void sort(Comparator sortComparator) throws EmptyBookException {
+    public void sort(Comparator<ReadOnlyPerson> sortComparator) throws EmptyBookException {
         requireNonNull(sortComparator);
         if (internalList.size() < 1) {
             throw new EmptyBookException();
@@ -62,6 +63,8 @@ public class UniquePersonList implements Iterable<Person> {
 
         Collections.sort(internalList, sortComparator);
     }
+    //@@author
+
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
