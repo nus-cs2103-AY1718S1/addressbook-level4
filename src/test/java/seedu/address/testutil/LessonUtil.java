@@ -1,6 +1,5 @@
 package seedu.address.testutil;
 
-
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLASS_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LECTURER;

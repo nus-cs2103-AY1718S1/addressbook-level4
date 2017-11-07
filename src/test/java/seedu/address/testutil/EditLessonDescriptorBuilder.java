@@ -1,6 +1,5 @@
 package seedu.address.testutil;
 
-
 import java.util.Arrays;
 import java.util.Optional;
 
