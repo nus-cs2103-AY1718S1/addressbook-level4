@@ -392,8 +392,20 @@
     -fx-text-fill: white;
 }
 
-#displayClock {
+#displayDate {
+    -fx-font-family: 'Nova Square';
+    -fx-font-size: 25;
+    -fx-text-fill: white;
+}
+
+#displayTime {
+    -fx-padding: 0 150 0 0;
+    -fx-font-family: 'Digital-7 Italic';
     -fx-font-size: 50;
     -fx-text-fill: white;
+}
+
+.opening-img {
+    height: 584px;
 }
 /* @@author */
