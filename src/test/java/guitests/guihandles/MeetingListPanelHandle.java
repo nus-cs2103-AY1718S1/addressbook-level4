@@ -3,7 +3,7 @@ package guitests.guihandles;
 import javafx.scene.control.ListView;
 import seedu.address.ui.MeetingCard;
 
-//@@author LimYangSheng-reused
+//@@author LimYangSheng
 /**
  * Provides a handle for {@code MeetingListPanel} containing the list of {@code MeetingCard}.
  */

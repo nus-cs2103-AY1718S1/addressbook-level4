@@ -352,7 +352,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
-// tag::restoreandbackup[]
+// tag::backupandrestore[]
 === Backup / Restoring Backup
 
 ==== Mechanism
@@ -429,7 +429,7 @@ A backup of the data is automatically created when *ABC* is closed.
 **Alternative 2:** Allow `Logic` to access `Storage` and its functions +
 **Pros:** Easier implementation for current and future functions or commands related to `Storage`. +
 **Cons:** Increases coupling between the components. +
-// end::restoreandbackup[]
+// end::backupandrestore[]
 
 // tag::addremovetag[]
 === Adding/Removing a tag

@@ -122,6 +122,89 @@ public class RestoreBackupCommand extends UndoableCommand {
     }
 }
 ```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    /**
+     * Finds the meetings in meeting list with {@code Person} that equals {@code target} and replaces it with
+     * {@code editedReadOnlyPerson}
+     */
+    public void updateMeetings(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson) {
+        requireNonNull(editedReadOnlyPerson);
+        meetings.updateMeetings(target, editedReadOnlyPerson);
+    }
+
+```
+###### \java\seedu\address\model\meeting\MeetingContainPersonPredicate.java
+``` java
+/**
+ * Tests {@code ReadOnlyPerson} in list matches that in meeting list.
+ */
+public class MeetingContainPersonPredicate implements Predicate<Meeting> {
+    private final List<ReadOnlyPerson> personList;
+
+    public MeetingContainPersonPredicate(List<ReadOnlyPerson> personList) {
+        this.personList = personList;
+    }
+
+    @Override
+    public boolean test(Meeting meeting) {
+        for (ReadOnlyPerson person : personList) {
+            if (meeting.getPerson().equals(person)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+```
+###### \java\seedu\address\model\meeting\UniqueMeetingList.java
+``` java
+    /**
+     * Sorts the meeting list by date.
+     */
+    public void sortMeeting() {
+        Collections.sort(internalList, new Comparator<Meeting>() {
+            public int compare(Meeting one, Meeting other) {
+                for (int i = 0; i < one.value.length(); i++) {
+                    if (one.value.charAt(i) != (other.value.charAt(i))) {
+                        if (one.value.charAt(i) > other.value.charAt(i)) {
+                            return 1;
+                        } else {
+                            return -1;
+                        }
+                    }
+                }
+                return 0;
+            }
+        });
+    }
+
+    /**
+     * Finds the meetings in meeting list with {@code Person} that equals {@code target} and replaces it with
+     * {@code editedReadOnlyPerson}
+     */
+    public void updateMeetings(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson) {
+        for (int i = 0; i < internalList.size(); i++) {
+            Meeting meeting = new Meeting(internalList.get(i));
+            if (meeting.getPerson().equals(target)) {
+                meeting.setPerson(editedReadOnlyPerson);
+                internalList.set(i, meeting);
+            }
+        }
+    }
+
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        List<ReadOnlyPerson> personSelected = new ArrayList<>();
+        personSelected.add(event.getNewSelection().person);
+        updateFilteredMeetingList(new MeetingContainPersonPredicate(personSelected));
+    }
+```
 ###### \java\seedu\address\storage\StorageManager.java
 ``` java
     @Override
@@ -145,6 +228,7 @@ public class RestoreBackupCommand extends UndoableCommand {
         String nameOfBackupFile = nameOfFile + "-backup.xml";
         return nameOfBackupFile;
     }
+
 ```
 ###### \java\seedu\address\storage\StorageManager.java
 ``` java
@@ -177,8 +261,94 @@ public class RestoreBackupCommand extends UndoableCommand {
         }
     }
 ```
+###### \java\seedu\address\ui\MeetingCard.java
+``` java
+/**
+ * An UI component that displays meetings of a person.
+ */
+public class MeetingCard extends UiPart<Region> {
+
+    private static final String FXML = "MeetingListCard.fxml";
+
+    public final Meeting meeting;
+
+    @FXML
+    private HBox meetingCardPane;
+    @FXML
+    private Label name;
+    @FXML
+    private Label id;
+    @FXML
+    private Label meetingName;
+    @FXML
+    private Label meetingTime;
+
+    public MeetingCard(Meeting meeting, int displayedIndex) {
+        super(FXML);
+        this.meeting = meeting;
+        id.setText(displayedIndex + ". ");
+        bindListeners(meeting);
+    }
+
+    /**
+     * Binds the individual UI elements to observe their respective {@code Person} properties
+     * so that they will be notified of any changes.
+     */
+    private void bindListeners(Meeting meeting) {
+        name.textProperty().bind(Bindings.convert(meeting.nameProperty()));
+        meetingName.textProperty().bind(Bindings.convert(meeting.meetingNameProperty()));
+        meetingTime.textProperty().bind(Bindings.convert(meeting.meetingTimeProperty()));
+    }
+
+}
+```
+###### \java\seedu\address\ui\MeetingListPanel.java
+``` java
+/**
+ * Panel containing the list of meetings.
+ */
+public class MeetingListPanel extends UiPart<Region> {
+    private static final String FXML = "MeetingListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(MeetingListPanel.class);
+
+    @FXML
+    private ListView<MeetingCard> meetingListView;
+
+    public MeetingListPanel(ObservableList<Meeting> meetingList) {
+        super(FXML);
+        setConnections(meetingList);
+        registerAsAnEventHandler(this);
+    }
+
+    private void setConnections(ObservableList<Meeting> meetingList) {
+        ObservableList<MeetingCard> mappedList = EasyBind.map(
+                meetingList, (meeting) -> new MeetingCard(meeting, meetingList.indexOf(meeting) + 1));
+        meetingListView.setItems(mappedList);
+        meetingListView.setCellFactory(listView -> new MeetingListViewCell());
+    }
+
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
+     */
+    class MeetingListViewCell extends ListCell<MeetingCard> {
+
+        @Override
+        protected void updateItem(MeetingCard meeting, boolean empty) {
+            super.updateItem(meeting, empty);
+
+            if (empty || meeting == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                setGraphic(meeting.getRoot());
+            }
+        }
+    }
+}
+```
 ###### \resources\view\MeetingListCard.fxml
 ``` fxml
+
 <HBox id="meetingCardPane" fx:id="meetingCardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane HBox.hgrow="ALWAYS">
@@ -191,7 +361,7 @@ public class RestoreBackupCommand extends UndoableCommand {
                   <Insets bottom="5" left="15" right="5" top="5" />
                </padding>
                <children>
-                  <HBox alignment="CENTER_LEFT" spacing="5">
+                  <HBox alignment="CENTER_LEFT" prefWidth="130.0" spacing="5">
                      <children>
                         <Label fx:id="id" styleClass="cell_big_label">
                            <minWidth>
@@ -201,7 +371,16 @@ public class RestoreBackupCommand extends UndoableCommand {
                         <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
                      </children>
                   </HBox>
-                  <FlowPane fx:id="meetings" />
+                  <Label fx:id="meetingName" text="\$second">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="meetingTime" text="\$third">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
                </children>
             </VBox>
          </children>

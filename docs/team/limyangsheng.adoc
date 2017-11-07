@@ -1,0 +1,52 @@
+= Lim Yang Sheng - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ABC Business Contacts
+ABC Business Contacts (ABC) is a desktop Business Contact Management application. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/main/LimYangSheng.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/test/LimYangSheng.md[Test code]]
+
+=== Enhancement Added: Backup/RestoreBackup
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=backupandrestore]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users may lose their original copy of saved data for many reasons. The file may be corrupted or it may have been edited accidentally.
+As such, the backup and restore backup command will allow users to retrieve back their loss data.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=backupandrestore]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Person and Meeting hashmap data structure
+
+Every time a person object is updated, the corresponding meeting object has to be updated as well.
+This is because the meeting object contains a person object.
+With a hashmap data structure, updating a person will be much faster as compared to looping through a list.
+
+=== Other contributions
+
+* Replace browser UI with meeting list UI  (Pull requests https://github.com/CS2103AUG2017-W13-B3/main/pull/88[#88],
+Pull requests https://github.com/CS2103AUG2017-W13-B3/main/pull/122[#122])
+* Updated various commands to work with new meeting list (Pull requests https://github.com/CS2103AUG2017-W13-B3/main/pull/116[#116],
+Pull requests https://github.com/CS2103AUG2017-W13-B3/main/pull/127[#127],
+Pull requests https://github.com/CS2103AUG2017-W13-B3/main/pull/132[#132],)
