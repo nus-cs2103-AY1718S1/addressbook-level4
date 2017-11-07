@@ -208,6 +208,7 @@ You will see the following after typing 4 above edit command:
 image::UG_edit.png[width="790"]
 _Figure 3.5: edit command result_
 
+// tag::find[]
 === Finding
 ==== Locating persons by name: `find`
 
@@ -244,6 +245,8 @@ Subsequently, you will see the following after typing `find Betsy john`:
 
 image::UG_find_2.png[width="790"]
 _Figure 3.6.2: find command result 2_
+// end::find[]
+
 
 // tag::findE[]
 ==== Locating events by name: `findE`
