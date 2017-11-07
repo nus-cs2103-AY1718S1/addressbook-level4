@@ -1,4 +1,4 @@
-= About Us
+= image:aboutus_header.png[width="900"]
 :relfileprefix: team/
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
@@ -17,7 +17,7 @@ We are computing students from NUS, and are based  in the http://www.comp.nus.ed
 
 === Nicholas Chua
 image::aboutus_nicholas.jpg[width="150", align="left"]
-{empty}[https://github.com/nicholaschuayunzhi[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/nicholaschuayunzhi[github]][https://cs2103aug2017-w11-b4.github.io/main/team/nicholas.html[project portfolio]]
 
 Role: Team Lead + Developer + Documentation + Integration + Testing
 Responsibilities: UI
@@ -26,7 +26,7 @@ Responsibilities: UI
 
 === Goh Wei Wen
 image::aboutus_weiwen.jpg[width="150", align="left"]
-{empty}[http://github.com/goweiwen[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/goweiwen[github]][https://cs2103aug2017-w11-b4.github.io/main/team/weiwen.html[project portfolio]]
 
 Role: Developer + Code Quality + Git Expert + Testing
 Responsibilities: Project Advisor
@@ -35,7 +35,7 @@ Responsibilities: Project Advisor
 
 === Ng Eng Sheng
 image::aboutus_engsheng.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/hanselblack[github]][https://cs2103aug2017-w11-b4.github.io/main/team/engsheng.html[project portfolio]]
 
 Role: Developer + Documentation + Deliverables and deadlines + Testing
 Responsibilities: Project Advisor
