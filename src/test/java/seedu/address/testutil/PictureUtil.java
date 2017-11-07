@@ -12,7 +12,6 @@ import seedu.address.model.person.Picture;
 public class PictureUtil {
 
     private static final String DEFAULT_PICTURE_LOCATION = "src/main/resources/images/";
-    private static final String DEFAULT_PICTURE_LOCATION_BACKSLASH = "src\\main\\resources\\images\\";
     private static final String TEST_FILENAME = "test.png";
 
     public static File getValidFileSrc() {

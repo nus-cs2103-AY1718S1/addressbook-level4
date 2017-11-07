@@ -15,20 +15,8 @@ import seedu.address.testutil.PictureUtil;
 
 public class PictureTest {
 
-    private static final String DEFAULT_PICTURE_LOCATION = "src/main/resources/images/";
-    private static final String DEFAULT_PICTURE_LOCATION_BACKSLASH = "src\\main\\resources\\images\\";
-    private static final String TEST_FILENAME = "test.png";
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
-    @Test
-    public void pictureConstructorTest() throws Exception {
-        thrown.expect(IllegalValueException.class);
-
-        // Invalid location
-        Picture picture = PictureUtil.getPictureWithInvalidLocation();
-    }
 
     @Test
     public void isValidPicture() {
