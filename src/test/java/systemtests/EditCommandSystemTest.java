@@ -174,7 +174,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         selectPerson(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + HANDPHONE_DESC_AMY
                 + HOME_PHONE_DESC_AMY + OFFICE_PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + POSTAL_CODE_DESC_AMY + DEBT_DESC_AMY+ TOTAL_DEBT_DESC_AMY + INTEREST_DESC_AMY + DEADLINE_DESC_AMY
+                + POSTAL_CODE_DESC_AMY + DEBT_DESC_AMY + TOTAL_DEBT_DESC_AMY + INTEREST_DESC_AMY + DEADLINE_DESC_AMY
                 + TAG_DESC_FRIEND;
         // this can be misleading: card selection actually remains unchanged but the
         // info panel is updated to reflect the new person's name
@@ -184,14 +184,15 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: missing index -> edited */
         command = EditCommand.COMMAND_WORD + " " + NAME_DESC_BOB + HANDPHONE_DESC_BOB + HOME_PHONE_DESC_BOB
                 + OFFICE_PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + POSTAL_CODE_DESC_BOB + DEBT_DESC_BOB
-                + TOTAL_DEBT_DESC_BOB+ INTEREST_DESC_BOB + DEADLINE_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+                + TOTAL_DEBT_DESC_BOB + INTEREST_DESC_BOB + DEADLINE_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandSuccess(command, index, BOB, index);
 
         /* Re-edit to previous state */
         selectPerson(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + HANDPHONE_DESC_AMY
                 + HOME_PHONE_DESC_AMY + OFFICE_PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + POSTAL_CODE_DESC_AMY + DEBT_DESC_AMY+ TOTAL_DEBT_DESC_AMY + INTEREST_DESC_AMY + DEADLINE_DESC_AMY + TAG_DESC_FRIEND;
+                + POSTAL_CODE_DESC_AMY + DEBT_DESC_AMY + TOTAL_DEBT_DESC_AMY + INTEREST_DESC_AMY
+                + DEADLINE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, index, AMY, index);
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
