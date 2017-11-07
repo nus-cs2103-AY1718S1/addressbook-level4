@@ -493,7 +493,7 @@ The `HelpCommand` execution is done in `AddressBookParser`. _Figure 4.2.5_ below
 image::HelpEnhancementScreenShot.PNG[width="800"]
 _Figure 4.2.5 : Output of `HelpCommand` execution_
 
-//tag::LocateCommand[]
+//tag::locate[]
 === Locating a contact's address [Since v1.2]
 
 This function is mainly facilitated by two events: `JumpToListRequestEvent` and `PersonPanelSelectionChangedEvent`.
@@ -612,6 +612,7 @@ _Figure 4.3.6 : Full UI outcome of locate implementation_
 **Cons:** User will not able to view contact's location when a `PersonCard` is manually selected.
 
 ---
+// end::locate[]
 
 //tag::FindCommand[]
 === FindCommand by any search field [Since v1.2]
