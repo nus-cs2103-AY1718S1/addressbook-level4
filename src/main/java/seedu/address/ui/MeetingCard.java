@@ -7,7 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.meeting.Meeting;
 
-//@@author LimYangSheng-reused
+//@@author LimYangSheng
 /**
  * An UI component that displays meetings of a person.
  */

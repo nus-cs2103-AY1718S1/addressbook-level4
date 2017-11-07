@@ -12,7 +12,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.meeting.Meeting;
 
-//@@author LimYangSheng-reused
+//@@author LimYangSheng
 /**
  * Panel containing the list of meetings.
  */

@@ -98,8 +98,8 @@ public class StorageManagerTest {
         storage.handleAddressBookChangedEvent(new AddressBookChangedEvent(new AddressBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
-    //@@author
 
+    //@@author
     /**
      * A Stub class to throw an exception when the save method is called
      */
