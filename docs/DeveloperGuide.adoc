@@ -817,6 +817,7 @@ _Figure 3.10.2 defensive code for loading file_
 **Pros:** No need to load the image every time. +
 **Cons:** Hard to store images into .xml file. +
 
+// tag::toggle[]
 === Toggle mechanism
 The toggle mechanism is an event-driven mechanism. The following diagram _(Figure 3.11.1)_ below shows the overview of the high-level interactions between components for the toggle mechanism:
 
@@ -905,6 +906,8 @@ public class TogglePanel extends UiPart<Region> {
 
 As seen from the above code snippet, the `BrowserPanel` handles the event posted whenever the select command is executed.
 It does so by raising a `ToggleSelectEvent`, which the `TogglePanel` handles by calling `browserToFront` method which will set the browser to be at the front.
+
+// end::toggle[]
 
 [discrete]
 ===== Design Considerations

@@ -458,6 +458,7 @@ Then you will see the following after typing the example portrait command
 image::UG_portrait.png[]
 _Figure 3.12.2 attach a portrait_
 
+// tag::toggle[]
 === Toggling between details and browser: `toggle`
 
 You can use this command to toggle between displaying the information board and events list, or a browser.
@@ -484,6 +485,8 @@ You will see the following after typing the toggle command when the information 
 
 image::UG_Toggle3.png[]
 _Figure 3.14.3 toggle result when information board and events list are displayed and a `select` command is entered before_
+
+// end::toggle[]
 
 === Listing entered commands : `history`
 

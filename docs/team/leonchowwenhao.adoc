@@ -3,10 +3,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+== Project: Planno
+Planno is a desktop application which combines the functionality of an address book and a task manager. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-W14-B4/main/blob/master/collated/main/leonchowwenhao.md[Functional code]] [https://github.com/CS2103AUG2017-W14-B4/main/blob/master/collated/test/leonchowwenhao.md[Test code]]
 
 === Enhancement Added: Undo/Redo
 
@@ -15,7 +15,7 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=toggle]
 
 #End of Extract#
 
@@ -30,7 +30,7 @@ include::../UserGuide.adoc[tag=undoredo]
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=toggle]
 
 #End of Extract#
 
