@@ -40,12 +40,18 @@ include::../DeveloperGuide.adoc[tag=birthdaymech]
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed:
 
-{Explain similar to the Undo/Redo feature above.}
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=shell]
+
+include::../UserGuide.adoc[tag=link]
+
+#End of Extract#
 
 === Other contributions
 
 * GUI design: built the person details panel (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/84[#84])
 * GUI design: open a new tab in centre panel to display the browser view for each social media icon (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/98[#98])
-* Wrote additional tests to increase coverage from 80% to 85% (Pull requests https://github.com[#36], https://github.com[#38])
+* Wrote additional tests to increase coverage from 78% to 80% (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/101[#101])
