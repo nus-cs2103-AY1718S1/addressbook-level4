@@ -103,7 +103,7 @@ public class AddressBookParser {
             return new ListCommand();
 
         } else if (commandWord.equalsIgnoreCase(LocateCommand.COMMAND_WORDVAR)) {
-                return new LocateCommandParser().parse(arguments);
+            return new LocateCommandParser().parse(arguments);
 
         } else if (commandWord.equalsIgnoreCase(HistoryCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(HistoryCommand.COMMAND_WORDVAR_2)) {

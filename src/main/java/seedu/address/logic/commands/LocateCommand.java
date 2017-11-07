@@ -1,10 +1,7 @@
 package seedu.address.logic.commands;
 
-import java.util.List;
-
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Display the location of the person with the given index in the contact list in Google Maps
