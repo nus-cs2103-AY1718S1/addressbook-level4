@@ -53,7 +53,6 @@ public class UploadPhotoCommandTest {
 
     @Test
     public void execute_validIndexInvalidFile_throwsCommandException() throws Exception {
-        ReadOnlyPerson personToUploadPhoto = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         UploadPhotoCommand uploadPhotoCommand = prepareCommand(INDEX_FIRST_PERSON,
                 invalidFilePath);
 
