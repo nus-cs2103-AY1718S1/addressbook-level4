@@ -421,6 +421,10 @@ public class FindCommand extends Command {
 }
 ----
 
+A parse exception is thrown by the FindCommandParser if the user does not input any arguments. Suppose the User inputs `find betsy software engineer`. After the arguments have been detected in the parser classes, the FindCommandPredicate will check through the list to find the contacts whose name, address, email, number, occupation, website or remark contains any of the keywords given.
+
+A noteworthy part to mention is that the find function in TheYellowPage is designed to check for every keyword, as such, keying in ambiguous keywords such as `block 42` for address is likely to return many contacts.
+
 // end::FindCommand[]
 
 // tag::deleteMultipleCommand[]

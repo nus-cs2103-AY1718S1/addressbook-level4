@@ -105,7 +105,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 
 === Locating persons: `find`
 
-Finds persons whose name, email, address or phone contains any of the given keywords. +
+Finds persons whose name, email, address, phone, website, occupation or remark contains any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****

@@ -8,6 +8,7 @@ import seedu.address.commons.util.StringUtil;
 
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code name, number, address, email} matches any of the keywords given.
+ * Tests that a {@code ReadOnlyPerson}'s {@code occupation, website, remark} matches any of the keywords given.
  */
 public class FindCommandPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
