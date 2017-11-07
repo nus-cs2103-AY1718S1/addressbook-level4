@@ -67,6 +67,7 @@ import seedu.address.model.person.PostalCode;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
+
 public class AddCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();
 
@@ -300,42 +301,42 @@ public class AddCommandParserTest {
     public void optionalInput() {
 
         // When address, postal code, and email not entered by user
-        assertEquals(AddCommandParser.optionalInput("add n/John Doe p/student/97272031 "
-                + "parent/97979797 f/12S23 g/123.0 "
-                + "t/friends t/owesMoney"), "add n/John Doe p/student/97272031 parent/97979797 f/12S23 g/123.0 "
+        assertEquals(AddCommandParser.optionalInput("add n/John Doe p/97272031 "
+                + "pp/97979797 f/12S23 g/123.0 "
+                + "t/friends t/owesMoney"), "add n/John Doe p/97272031 pp/97979797 f/12S23 g/123.0 "
                 + "t/friends t/owesMoney a/ (Address not recorded) "
                 + "e/ (Email not recorded) c/ (Postal code not recorded)");
 
         // When address and postal code not entered by user
-        assertEquals(AddCommandParser.optionalInput("add n/John Doe p/student/97272031 "
-                + "parent/97979797 e/johnd@example.com f/12S23 g/123.0 "
-                + "t/friends t/owesMoney"), "add n/John Doe p/student/97272031 parent/97979797 e/johnd@example.com "
+        assertEquals(AddCommandParser.optionalInput("add n/John Doe p/97272031 "
+                + "pp/97979797 e/johnd@example.com f/12S23 g/123.0 "
+                + "t/friends t/owesMoney"), "add n/John Doe p/97272031 pp/97979797 e/johnd@example.com "
                 + "f/12S23 g/123.0 "
                 + "t/friends t/owesMoney a/ (Address not recorded) "
                 + "c/ (Postal code not recorded)");
 
         // When email not entered by user
-        assertEquals(AddCommandParser.optionalInput("add n/John Doe p/student/97272031 "
-                + "parent/97979797 a/311, Clementi Ave 2, #02-25 f/12S23 g/123.0 "
-                + "t/friends t/owesMoney"), "add n/John Doe p/student/97272031 "
-                + "parent/97979797 a/311, Clementi Ave 2, #02-25 "
+        assertEquals(AddCommandParser.optionalInput("add n/John Doe p/97272031 "
+                + "pp/97979797 a/311, Clementi Ave 2, #02-25 f/12S23 g/123.0 "
+                + "t/friends t/owesMoney"), "add n/John Doe p/97272031 "
+                + "pp/97979797 a/311, Clementi Ave 2, #02-25 "
                 + "f/12S23 g/123.0 t/friends t/owesMoney "
                 + "e/ (Email not recorded) c/ (Postal code not recorded)");
 
         // When postal code not entered by user
-        assertEquals(AddCommandParser.optionalInput("add n/John Doe p/student/97272031 "
-                + "parent/97979797 e/johnd@example.com a/311, Clementi Ave 2, #02-25 f/12S23 g/123.0 "
-                + "t/friends t/owesMoney"), "add n/John Doe p/student/97272031 parent/97979797 e/johnd@example.com "
+        assertEquals(AddCommandParser.optionalInput("add n/John Doe p/97272031 "
+                + "pp/97979797 e/johnd@example.com a/311, Clementi Ave 2, #02-25 f/12S23 g/123.0 "
+                + "t/friends t/owesMoney"), "add n/John Doe p/97272031 pp/97979797 e/johnd@example.com "
                 + "a/311, Clementi Ave 2, #02-25 f/12S23 g/123.0 "
                 + "t/friends t/owesMoney "
                 + "c/ (Postal code not recorded)");
 
         // When student number not entered by user
-        assertEquals(AddCommandParser.optionalInput("add n/John Doe p/"
-                + "parent/97979797 e/johnd@example.com a/311, Clementi Ave 2, #02-25 f/12S23 g/123.0 c/673349 "
-                + "t/friends t/owesMoney"), "add n/John Doe p/parent/97979797 e/johnd@example.com "
+        assertEquals(AddCommandParser.optionalInput("add n/John Doe "
+                + "pp/97979797 e/johnd@example.com a/311, Clementi Ave 2, #02-25 f/12S23 g/123.0 c/673349 "
+                + "t/friends t/owesMoney"), "add n/John Doe pp/97979797 e/johnd@example.com "
                 + "a/311, Clementi Ave 2, #02-25 f/12S23 g/123.0 "
-                + "c/673349 t/friends t/owesMoney");
+                + "c/673349 t/friends t/owesMoney p/ (Student phone not recorded)");
     }
     //@@author
 }
