@@ -60,7 +60,7 @@ image::Ui.png[width="790"]
 .  Figure 2 below introduces the key panels of the application.
 +
 .User Interface of KayPoh!
-image::Ui_with_markings.png[width="790"]
+image::UiWithMarkings.png[width="790"]
 +
 .  Try it yourself! Type some of these commands in the command input box and press kbd:[Enter] to execute it:
 
