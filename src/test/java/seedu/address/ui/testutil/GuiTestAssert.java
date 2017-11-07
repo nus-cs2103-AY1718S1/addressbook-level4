@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.FavouriteStarHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
@@ -48,6 +49,15 @@ public class GuiTestAssert {
             assertEquals(Integer.toString(expectedPerson.getTodoItems().size()), actualCard.getTodoCount());
         } else {
             assertEquals("", actualCard.getTodoCount());
+        }
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the favourite star of {@code expectedPerson}.
+     */
+    public static void assertCardDisplaysFavouriteStar(ReadOnlyPerson expectedPerson, FavouriteStarHandle actualCard) {
+        if (expectedPerson.getFavourite()) {
+            assertEquals("", actualCard.getFavouriteStar());
         }
     }
     //@@author

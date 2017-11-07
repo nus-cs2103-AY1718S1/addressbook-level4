@@ -6,11 +6,13 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BILL;
 import static seedu.address.testutil.TypicalPersons.JOHN;
+import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysFavouriteStar;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysTodoCount;
 
 import org.junit.Test;
 
+import guitests.guihandles.FavouriteStarHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.TodoCountHandle;
 import seedu.address.model.person.Person;
@@ -52,6 +54,10 @@ public class PersonCardTest extends GuiUnitTest {
         personIsFavourited.setFavourite(JOHN.getFavourite());
         assertEquals(true, personIsFavourited.getFavourite());
 
+        personCard = new PersonCard(personIsFavourited, 3);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personIsFavourited, 3);
+
         // no todolists
         assertEquals(0, personWithNoTags.getTodoItems().size());
 
@@ -60,9 +66,9 @@ public class PersonCardTest extends GuiUnitTest {
         personWithTodo.setTodoItems(BILL.getTodoItems());
         assertEquals(1, personWithTodo.getTodoItems().size());
 
-        personCard = new PersonCard(personWithTodo, 3);
+        personCard = new PersonCard(personWithTodo, 4);
         uiPartRule.setUiPart(personCard);
-        assertCardDisplay(personCard, personWithTodo, 3);
+        assertCardDisplay(personCard, personWithTodo, 4);
         //@@author
     }
 
@@ -102,6 +108,7 @@ public class PersonCardTest extends GuiUnitTest {
         PersonCardHandle personCardHandle = new PersonCardHandle(personCard.getRoot());
         //@@author qihao27
         TodoCountHandle todoCountHandle = new TodoCountHandle(personCard.getRoot());
+        FavouriteStarHandle favouriteStarHandle = new FavouriteStarHandle(personCard.getRoot());
         //@@author
 
         // verify id is displayed correctly
@@ -113,6 +120,9 @@ public class PersonCardTest extends GuiUnitTest {
         //@@author qihao27
         // verify todolist count is displayed correctly
         assertCardDisplaysTodoCount(expectedPerson, todoCountHandle);
+
+        // verify favourite star is displayed correctly
+        assertCardDisplaysFavouriteStar(expectedPerson, favouriteStarHandle);
         //@@author
     }
 }

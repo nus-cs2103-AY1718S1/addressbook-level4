@@ -46,7 +46,9 @@ public class PersonCard extends UiPart<Region> {
     private FlowPane tags;
     //@@author qihao27
     @FXML
-    private ImageView favourite;
+    private ImageView favouriteIcon;
+    @FXML
+    private Label favourite;
     @FXML
     private ImageView todo;
     @FXML
@@ -100,7 +102,7 @@ public class PersonCard extends UiPart<Region> {
      */
     private void addFavouriteStar(ReadOnlyPerson person) {
         if (person.getFavourite()) {
-            favourite.setId("favouriteStar");
+            favouriteIcon.setId("favouriteStar");
         }
     }
 

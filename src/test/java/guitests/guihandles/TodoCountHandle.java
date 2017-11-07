@@ -12,8 +12,8 @@ public class TodoCountHandle extends NodeHandle<Node> {
 
     private final Label todoLabel;
 
-    public TodoCountHandle(Node cardNode) {
-        super(cardNode);
+    public TodoCountHandle(Node todoNode) {
+        super(todoNode);
 
         this.todoLabel = getChildNode(TODO_FIELD_ID);
     }

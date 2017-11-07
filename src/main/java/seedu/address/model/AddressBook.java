@@ -68,6 +68,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    //@@author qihao27
+    public void setTodo(Set<TodoItem> todoItems) {
+        this.todo.setTodo(todoItems);
+    }
+    //@@author
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -80,6 +86,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
 
         setTags(new HashSet<>(newData.getTagList()));
+        setTodo(new HashSet<>(newData.getTodoList()));
         syncMasterTagListWith(persons);
     }
 
