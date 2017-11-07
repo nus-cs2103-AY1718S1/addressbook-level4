@@ -35,7 +35,9 @@ public class NameTextField extends UiPart<Region> {
     public void setNameTextField(String text) {
         nameTextField.setText(text);
     }
-
+    public TextField getObject() {
+        return nameTextField;
+    }
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

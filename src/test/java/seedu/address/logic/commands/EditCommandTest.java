@@ -29,6 +29,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.ui.EditButton;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
@@ -37,6 +38,29 @@ public class EditCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
+    @Test
+    public void testFormValidation() {
+        assertTrue(EditButton.checkInput("Joshua", "90267500",
+                "joshnfsmw@hotmail.com", "459, Pasir ris drive 4, #04-251", "friends,family,cool").equals(EditButton.VALIDATION_SUCCESS));
+        assertTrue(EditButton.checkInput("Ben Lim", "93234500",
+                "benny1234@hotmail.com", "7772, Tampines Street 21, #03-551", "friends,colleagues"
+                        + "best friend,").equals(EditButton.TAG_ERROR));
+        assertFalse(EditButton.checkInput("Ben Lim", "932393934500",
+                "benny1234@hotmail.com", "7772, Tampines Street 21, #03-551", "friends,colleagues"
+                        + ",best friend,").equals(EditButton.VALIDATION_SUCCESS));
+        assertFalse(EditButton.checkInput("Ben Lim", "9cdmkcf934500",
+                "benny1234@hotmail.com", "7772, Tampines Street 21, #03-551", "friends,colleagues"
+                        + ",best friend,").equals(EditButton.VALIDATION_SUCCESS));
+        assertTrue(EditButton.checkInput("Ben Lim", "90267500",
+                "benny1234@hotmail", "7772, Tampines Street 21, #03-551", "friends,colleagues"
+                        + ",best friend,").equals(EditButton.EMAIL_ERROR));
+        assertTrue(EditButton.checkInput("90234", "90267500",
+                "benny1234@hotmail.com", "7772, Tampines Street 21, #03-551", "friends,colleagues"
+                        + ",best friend,").equals(EditButton.NAME_ERROR));
+        assertFalse(EditButton.checkInput("Joshua Lim", "90267500",
+                "benny1234@hotmail.com", "7772, Tampines Street 21, #03-551", "friends,colleagues"
+                        + ",best friend,").equals(EditButton.EMAIL_ERROR));
+    }
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
         Person editedPerson = new PersonBuilder().build();
