@@ -59,7 +59,7 @@ public class AutoCompleteUtils {
 
     /**
      * Returns the section of stub that is not to be modified by autocomplete.
-     * @param splitStub Stub that has already been split by whitespace
+     * @param stub incomplete user input
      * @return Section of the stub that will not be modified
      */
     public static String getStaticSection(String stub) {
@@ -73,7 +73,7 @@ public class AutoCompleteUtils {
 
     /**
      * Returns the section of stub that is to be completed by autocomplete
-     * @param splitStub Stub that has been split by whitespace
+     * @param stub incomplete user input
      * @return Section of the stub that will be modified
      */
     public static String getAutoCompleteSection(String stub) {
