@@ -85,9 +85,9 @@ Alias: `h`
 
 This command takes no arguments.
 
-==== Viewing quick help : `quickhelp` (Not implemented yet. Coming in v2.0)
+==== Viewing quick help : `quickhelp` (Since v1.5)
 
-Opens a quick summary of using the address book. +
+List all the available command words of the address book. +
 Format: `quickhelp` +
 Alias: `qh`
 

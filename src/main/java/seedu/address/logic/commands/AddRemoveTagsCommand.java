@@ -54,23 +54,11 @@ public class AddRemoveTagsCommand extends UndoableCommand {
     protected CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
+        checkParameterValidity(lastShownList);
 
-        if (tags.isEmpty()) {
-            throw new CommandException(MESSAGE_NO_TAG);
-        }
-
-        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson;
-
-        if (isAdd) {
-            editedPerson = addTagsToPerson(personToEdit, tags);
-        } else {
-            editedPerson = removeTagsFromPerson(personToEdit, tags);
-        }
-
+        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+        editedPerson = prepareEditedPerson(personToEdit);
 
         try {
             model.updatePerson(personToEdit, editedPerson);
@@ -80,8 +68,35 @@ public class AddRemoveTagsCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
         return isAdd ? new CommandResult(String.format(MESSAGE_ADD_TAGS_SUCCESS, editedPerson))
                 : new CommandResult(String.format(MESSAGE_REMOVE_TAGS_SUCCESS, editedPerson));
+    }
+
+    /**
+     * Returns the edited Person based on whether is it an add or remove action.
+     */
+    private Person prepareEditedPerson(ReadOnlyPerson personToEdit) {
+        Person editedPerson;
+        if (isAdd) {
+            editedPerson = addTagsToPerson(personToEdit, tags);
+        } else {
+            editedPerson = removeTagsFromPerson(personToEdit, tags);
+        }
+        return editedPerson;
+    }
+
+    /**
+     * Checks that the index is valid and tags are present.
+     */
+    private void checkParameterValidity(List<ReadOnlyPerson> lastShownList) throws CommandException {
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        if (tags.isEmpty()) {
+            throw new CommandException(MESSAGE_NO_TAG);
+        }
     }
 
     /**

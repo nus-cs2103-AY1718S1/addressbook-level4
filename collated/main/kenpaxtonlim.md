@@ -56,23 +56,11 @@ public class AddRemoveTagsCommand extends UndoableCommand {
     protected CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
+        checkParameterValidity(lastShownList);
 
-        if (tags.isEmpty()) {
-            throw new CommandException(MESSAGE_NO_TAG);
-        }
-
-        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson;
-
-        if (isAdd) {
-            editedPerson = addTagsToPerson(personToEdit, tags);
-        } else {
-            editedPerson = removeTagsFromPerson(personToEdit, tags);
-        }
-
+        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+        editedPerson = prepareEditedPerson(personToEdit);
 
         try {
             model.updatePerson(personToEdit, editedPerson);
@@ -82,8 +70,35 @@ public class AddRemoveTagsCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
         return isAdd ? new CommandResult(String.format(MESSAGE_ADD_TAGS_SUCCESS, editedPerson))
                 : new CommandResult(String.format(MESSAGE_REMOVE_TAGS_SUCCESS, editedPerson));
+    }
+
+    /**
+     * Returns the edited Person based on whether is it an add or remove action.
+     */
+    private Person prepareEditedPerson(ReadOnlyPerson personToEdit) {
+        Person editedPerson;
+        if (isAdd) {
+            editedPerson = addTagsToPerson(personToEdit, tags);
+        } else {
+            editedPerson = removeTagsFromPerson(personToEdit, tags);
+        }
+        return editedPerson;
+    }
+
+    /**
+     * Checks that the index is valid and tags are present.
+     */
+    private void checkParameterValidity(List<ReadOnlyPerson> lastShownList) throws CommandException {
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        if (tags.isEmpty()) {
+            throw new CommandException(MESSAGE_NO_TAG);
+        }
     }
 
     /**
@@ -137,6 +152,50 @@ public class AddRemoveTagsCommand extends UndoableCommand {
 
         AddRemoveTagsCommand e = (AddRemoveTagsCommand) other;
         return isAdd == e.isAdd && index.equals(e.index) && tags.equals(e.tags);
+    }
+}
+```
+###### \java\seedu\address\logic\commands\QuickHelpCommand.java
+``` java
+/**
+ * Show a list of valid command words.
+ */
+public class QuickHelpCommand extends Command {
+
+    public static final String COMMAND_WORD = "quickhelp";
+    public static final String COMMAND_ALIAS = "qh";
+
+    public static final String MESSAGE = "Valid Command Words:\n"
+            + SelectCommand.COMMAND_WORD + " "
+            + ListCommand.COMMAND_WORD + " "
+            + AddCommand.COMMAND_WORD + " "
+            + DeleteCommand.COMMAND_WORD + " "
+            + EditCommand.COMMAND_WORD + " "
+            + ClearCommand.COMMAND_WORD + " "
+            + RemarkCommand.COMMAND_WORD + " "
+            + AddRemoveTagsCommand.COMMAND_WORD + " "
+            + FindCommand.COMMAND_WORD + " "
+            + FindRegexCommand.COMMAND_WORD + " "
+            + FindTagCommand.COMMAND_WORD + " "
+            + SocialMediaCommand.COMMAND_WORD + " "
+            + StatisticsCommand.COMMAND_WORD + " "
+            + SizeCommand.COMMAND_WORD + " "
+            + ToggleAccessDisplayCommand.COMMAND_WORD + " "
+            + UndoCommand.COMMAND_WORD + " "
+            + RedoCommand.COMMAND_WORD + " "
+            + HistoryCommand.COMMAND_WORD + " "
+            + HelpCommand.COMMAND_WORD + " "
+            + ExitCommand.COMMAND_WORD;
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        return new CommandResult(MESSAGE);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof QuickHelpCommand); // instanceof handles nulls
     }
 }
 ```
@@ -263,20 +322,9 @@ public class AddRemoveTagsCommandParser implements Parser<AddRemoveTagsCommand> 
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemoveTagsCommand.MESSAGE_USAGE));
         }
 
-        List<String> argsList = Arrays.asList(args.substring(ARGUMENT_START_INDEX).split(" "));
+        List<String> argsList = parseParametersIntoList(args);
 
-        if (argsList.size() < TAG_ARGUMENT_INDEX + 1 || argsList.contains("")) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemoveTagsCommand.MESSAGE_USAGE));
-        }
-
-        boolean isAdd;
-        if (argsList.get(TYPE_ARGUMENT_INDEX).equals(TYPE_ADD)) {
-            isAdd = true;
-        } else if (argsList.get(TYPE_ARGUMENT_INDEX).equals(TYPE_REMOVE)) {
-            isAdd = false;
-        } else {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemoveTagsCommand.MESSAGE_USAGE));
-        }
+        boolean isAdd = checkAddOrRemove(argsList);
 
         Index index;
         try {
@@ -285,6 +333,15 @@ public class AddRemoveTagsCommandParser implements Parser<AddRemoveTagsCommand> 
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemoveTagsCommand.MESSAGE_USAGE));
         }
 
+        Set<Tag> tagsSet = extractTagsIntoSet(argsList);
+
+        return new AddRemoveTagsCommand(isAdd, index, tagsSet);
+    }
+
+    /**
+     * With a given {@code argsList}, convert it to a set of tags.
+     */
+    private Set<Tag> extractTagsIntoSet(List<String> argsList) throws ParseException {
         List<String> tagsList = argsList.subList(TAG_ARGUMENT_INDEX, argsList.size());
         Set<Tag> tagsSet;
         try {
@@ -292,7 +349,34 @@ public class AddRemoveTagsCommandParser implements Parser<AddRemoveTagsCommand> 
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
-        return new AddRemoveTagsCommand(isAdd, index, tagsSet);
+        return tagsSet;
+    }
+
+    /**
+     * Parse the type to determine if it is add or remove.
+     */
+    private boolean checkAddOrRemove(List<String> argsList) throws ParseException {
+        boolean isAdd;
+        if (argsList.get(TYPE_ARGUMENT_INDEX).equals(TYPE_ADD)) {
+            isAdd = true;
+        } else if (argsList.get(TYPE_ARGUMENT_INDEX).equals(TYPE_REMOVE)) {
+            isAdd = false;
+        } else {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemoveTagsCommand.MESSAGE_USAGE));
+        }
+        return isAdd;
+    }
+
+    /**
+     * Parse a string {@code args} into a list of individual argument.
+     */
+    private List<String> parseParametersIntoList(String args) throws ParseException {
+        List<String> argsList = Arrays.asList(args.substring(ARGUMENT_START_INDEX).split(" "));
+
+        if (argsList.size() < TAG_ARGUMENT_INDEX + 1 || argsList.contains("")) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemoveTagsCommand.MESSAGE_USAGE));
+        }
+        return argsList;
     }
 }
 ```
@@ -412,10 +496,6 @@ public class SocialMedia {
         if (instagram == null) {
             instagram = "";
         }
-
-        /*if(!isValidName(facebook) || !isValidName(twitter) || !isValidName(instagram)) {
-            throw new IllegalValueException(MESSAGE_USERNAME_CONSTRAINTS);
-        }*/
 
         this.facebook = facebook;
         this.twitter = twitter;

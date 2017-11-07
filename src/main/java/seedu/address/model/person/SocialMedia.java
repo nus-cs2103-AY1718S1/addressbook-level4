@@ -43,10 +43,6 @@ public class SocialMedia {
             instagram = "";
         }
 
-        /*if(!isValidName(facebook) || !isValidName(twitter) || !isValidName(instagram)) {
-            throw new IllegalValueException(MESSAGE_USERNAME_CONSTRAINTS);
-        }*/
-
         this.facebook = facebook;
         this.twitter = twitter;
         this.instagram = instagram;

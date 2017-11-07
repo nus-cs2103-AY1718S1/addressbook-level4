@@ -135,6 +135,40 @@ public class AddRemoveTagsCommandTest {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\QuickHelpCommandTest.java
+``` java
+public class QuickHelpCommandTest {
+
+    @Test
+    public void execute_command_success() {
+        QuickHelpCommand command = new QuickHelpCommand();
+
+        try {
+            CommandResult commandResult = command.execute();
+            assertEquals(QuickHelpCommand.MESSAGE, commandResult.feedbackToUser);
+        } catch (CommandException e) {
+            throw new IllegalArgumentException("Execution of command should not fail.", e);
+        }
+    }
+
+    @Test
+    public void equals() {
+        QuickHelpCommand command = new QuickHelpCommand();
+
+        // same object -> returns true
+        assertTrue(command.equals(command));
+
+        // same type different objects -> returns true
+        assertTrue(command.equals(new QuickHelpCommand()));
+
+        // different types -> returns false
+        assertFalse(command.equals(1));
+
+        // null -> returns false
+        assertFalse(command.equals(null));
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\SocialMediaCommandTest.java
 ``` java
 public class SocialMediaCommandTest {
@@ -467,6 +501,18 @@ public class AddRemoveTagsCommandParserTest {
                         + SocialMediaCommand.TYPE_FACEBOOK + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SocialMediaCommand(INDEX_FIRST_PERSON, SocialMediaCommand.TYPE_FACEBOOK), command);
     }
+
+    @Test
+    public void parseCommand_quickhelp() throws Exception {
+        QuickHelpCommand command = (QuickHelpCommand) parser.parseCommand(QuickHelpCommand.COMMAND_WORD);
+        assertEquals(new QuickHelpCommand(), command);
+    }
+
+    @Test
+    public void parseCommand_quickhelp_alias() throws Exception {
+        QuickHelpCommand command = (QuickHelpCommand) parser.parseCommand(QuickHelpCommand.COMMAND_ALIAS);
+        assertEquals(new QuickHelpCommand(), command);
+    }
 ```
 ###### \java\seedu\address\logic\parser\SocialMediaCommandParserTest.java
 ``` java
@@ -602,7 +648,7 @@ public class SocialMediaCommandSystemTest extends AddressBookSystemTest {
      * of the selected person, and the model related components equal to the current model.
      * These verifications are done by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the command box has the default style class and the status bar remain unchanged. The resulting
+     * Also verifies that the command box has the default style class remains unchanged. The resulting
      * browser url and selected card will be verified if the current selected card and the card at
      * {@code expectedSelectedCardIndex} are different.
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
@@ -634,7 +680,6 @@ public class SocialMediaCommandSystemTest extends AddressBookSystemTest {
         }
 
         assertCommandBoxShowsDefaultStyle();
-        assertStatusBarUnchanged();
     }
 
     /**
@@ -642,7 +687,7 @@ public class SocialMediaCommandSystemTest extends AddressBookSystemTest {
      * box displays {@code expectedResultMessage} and the model related components equal to the current model.
      * These verifications are done by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the browser url and status bar remain unchanged, and the command box has the
+     * Also verifies that the browser url remains unchanged, and the command box has the
      * error style.
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
@@ -652,7 +697,6 @@ public class SocialMediaCommandSystemTest extends AddressBookSystemTest {
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertCommandBoxShowsErrorStyle();
-        assertStatusBarUnchanged();
     }
 }
 ```
