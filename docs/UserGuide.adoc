@@ -579,6 +579,37 @@ Removes the birthday from the first person named john in the address book
 Removes the birthday from the 6th person in the most recent listing, and shows an error if there are less than 6 persons in the list
 // end::birthday[]
 
+// tag::link[]
+=== Adding a social media URL to a person: `l-add` _[Coming in v2.0]_
+
+You will find it very convenient to add some social media URLs to your friends so that you are able to see their posts and recent activities simply by clicking those social media icons in the centre person details panel. In this way, you do not need to open each social media app and search for the person before you can see their posts.
+
+Format: `l-add INDEX [tt/TWITTER] / [fb/FACEBOOK] / [nm/NUSMODS] / [ig/INSTAGRAM] / [gh/GITHUB]`
+
+****
+* Adds the social media link to the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing, only one index is allowed.
+* The index *must be a positive integer* 1, 2, 3, ...
+* A prefix is required before entering the corresponding URL. Only one prefix and one URL is allowed for each command.
+* This command will also update the existing value to the input value.
+****
+
+Examples:
+
+* `l-add 1 fb/https://www.facebook.com/dale.sun.507` +
+Adds the Facebook URL to the 1st person in the contact list
+* `l-add 3 gh/https://github.com/dalessr` +
+Adds the GitHub URL to the 3rd person in the contact list
+// end::link[]
+
+// tag::shell[]
+=== Launching shell version : `shell` _[Coming in v2.0]_
+
+By using this command, you can open the shell version of the app. In this way, you are able to use the app without the clutter. You can still achieve most of the operations by only using the shell, except for some features related to the browser (e.g. the Map feature).
+
+Format: `shell`
+// end::shell[]
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book.
@@ -648,5 +679,8 @@ e.g. `bin-restore 1 2`
 e.g. `b-add 1 18/10/1993`
 * *BirthdayRemove* : `b-remove INDEX` +
 e.g. `b-remove 1`
+* *LinkAdd* : `l-add INDEX [tt/TWITTER] / [fb/FACEBOOK] / [nm/NUSMODS] / [ig/INSTAGRAM] / [gh/GITHUB]` +
+e.g. `l-add 1 gh/https://github.com/dalessr`
+* *Shell* : `shell`
 * *Clear* : `clear`
 * *Exit* : `exit`
