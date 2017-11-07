@@ -85,6 +85,7 @@ This section lists commands that view a part of UniCity's contact list.
 Shows a list of all persons in the address book. +
 Format: `list`
 
+// tag::filterbytags[]
 ==== Filtering persons by tags: `filter`
 
 Filters persons whose tags contain any of the given keywords. +
@@ -101,9 +102,12 @@ Format: `filter KEYWORD [MORE_KEYWORDS]`
 Examples:
 
 * `filter professor` +
-Returns any person having at least a `[professor]` tag
+Returns any contacts having at least a `[professor]` tag
+Hides contacts that do not contain a `[professor]` tag. Example: Contacts with `[neighbour]`'[senior]' tags will not be shown.
 * `filter professor tutor` +
-Returns any person having at least a `[professor]` or `[tutor]` tags, or both
+Returns any contacts having at least a `[professor]` or `[tutor]` tags, or both.
+Hides contacts that do not contain `[professor]` and `[tutor]`. Example: Contacts with `[coursemate]`'[friend]' tags will not be shown.
+// end::filterbytags[]
 
 ==== Locating persons by name: `find`
 
@@ -325,6 +329,7 @@ Selects the 1st person in the results of the `find` command.
 
 image::select-command-ui.png[width="790"]
 
+// tag::facebook[]
 ==== Logging in to Facebook : `facebook`
 
 Shows the log in page for Facebook. +
@@ -335,6 +340,8 @@ Format: `facebook` or `fb`
 ****
 
 image::facebook-command-ui.png[width="790"]
+
+// end::facebook[]
 
 === Managing Command Sequence and History
 
@@ -412,7 +419,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 Shows this user guide. +
 Format: `help`
-
+// tag::reply[]
 ==== Adding or editing contacts with duplicate fields
 
 Checks and informs user of their actions to save or edit contacts that contain existing fields in UniCity.
@@ -433,6 +440,8 @@ That email already exists in UniCity. +
 UniCity prompts the user, `This person's email is already in use. Would you like to continue? YES or NO?`. +
 User will reply with `yes` in the command box to continue the operation. +
 Otherwise, he may choose to reply with `no`.
+
+// end::reply[]
 
 ==== Changing the window size : `ws`
 
