@@ -43,11 +43,16 @@ public interface ReadOnlyAddressBook {
      */
     //@@author huiyiiih
     ObservableList<Relationship> getRelList();
-    //author
+    //@@author shuangyang
     /**
      * Returns the last changed event.
      */
     ReadOnlyEvent getLastChangedEvent();
+
+    /**
+     * Returns the last changed event.
+     */
+    ReadOnlyEvent getNewlyAddedEvent();
 
     Date getCurrentDate();
 }

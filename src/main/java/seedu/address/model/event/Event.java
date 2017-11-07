@@ -19,7 +19,7 @@ import seedu.address.model.event.timeslot.Timing;
  * Represents an Event in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
-public class Event implements ReadOnlyEvent {
+public class Event implements ReadOnlyEvent, Comparable<Event> {
     private ObjectProperty<Title> title;
     private ObjectProperty<Date> date;
     private ObjectProperty<Timing> timing;
@@ -175,6 +175,11 @@ public class Event implements ReadOnlyEvent {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public int compareTo(Event other) {
+        return this.getTimeslot().compareTo(other.getTimeslot());
     }
 
 
