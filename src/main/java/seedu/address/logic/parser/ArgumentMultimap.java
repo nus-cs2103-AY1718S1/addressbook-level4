@@ -51,9 +51,40 @@ public class ArgumentMultimap {
         return new ArrayList<>(argMultimap.get(prefix));
     }
 
+    //@@author sarahnzx
+    /**
+     * Returns multiple values of {@code prefix}.
+     */
+    public Optional<String> getMultipleValues(Prefix prefix) {
+        List<String> values = getAllValues(prefix);
+        ArrayList<String> added = new ArrayList<>();
+        String str = "";
+        for (String v : values) {
+            if (!added.contains(v)) {
+                str += v + "\n";
+                added.add(v);
+            }
+        }
+        if (!str.isEmpty()) {
+            str = str.substring(0, str.length() - 1);
+        }
+        return str.isEmpty() ? Optional.empty() : Optional.of(str);
+    }
+    //@@author
+
+    //@@author keithsoc
+    /**
+     * Returns a boolean value that indicates whether a prefix is present in user input
+     */
+    public boolean isPrefixPresent(Prefix prefix) {
+        return argMultimap.containsKey(prefix);
+    }
+    //@@author
+
     /**
      * Returns the preamble (text before the first valid prefix). Trims any leading/trailing spaces.
      */
+
     public String getPreamble() {
         return getValue(new Prefix("")).orElse("");
     }

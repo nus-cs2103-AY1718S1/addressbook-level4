@@ -5,8 +5,13 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 import org.junit.Test;
 
+import seedu.address.logic.commands.DeleteByIndexCommand;
+import seedu.address.logic.commands.DeleteByTagCommand;
 import seedu.address.logic.commands.DeleteCommand;
 
 /**
@@ -20,13 +25,30 @@ public class DeleteCommandParserTest {
 
     private DeleteCommandParser parser = new DeleteCommandParser();
 
+    //@@author marvinchin
+    @Test
+    public void parse_emptyTagArgs_throwsParseException() {
+        assertParseFailure(parser, "-tag    ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_validTagArgs_returnsDeleteCommand() {
+        HashSet<String> keys = new HashSet<>(Arrays.asList("friends", "colleagues"));
+        DeleteCommand expectedDeleteCommand = new DeleteByTagCommand(keys);
+        assertParseSuccess(parser, "-tag colleagues friends", expectedDeleteCommand);
+        assertParseSuccess(parser, "-tag   \t friends \t\t\n colleagues", expectedDeleteCommand);
+    }
+    //@@author
+
     @Test
     public void parse_validArgs_returnsDeleteCommand() {
-        assertParseSuccess(parser, "1", new DeleteCommand(INDEX_FIRST_PERSON));
+        assertParseSuccess(parser, "1", new DeleteByIndexCommand(Arrays.asList(INDEX_FIRST_PERSON)));
     }
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "a",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteByIndexCommand.MESSAGE_USAGE));
     }
 }
