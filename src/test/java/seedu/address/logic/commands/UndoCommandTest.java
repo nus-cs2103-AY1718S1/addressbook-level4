@@ -28,7 +28,7 @@ public class UndoCommandTest {
     private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
     private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
 
-    AddressBookParser addressBookParser = new AddressBookParser();
+    private AddressBookParser addressBookParser = new AddressBookParser();
 
     @Before
     public void setUp() {

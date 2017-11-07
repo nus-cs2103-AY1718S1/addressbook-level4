@@ -49,7 +49,6 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.Prefix;
-import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Gender;
@@ -65,7 +64,7 @@ import seedu.address.testutil.PersonUtil;
 
 public class EditCommandSystemTest extends AddressBookSystemTest {
 
-    AddressBookParser addressBookParser = new AddressBookParser();
+    private AddressBookParser addressBookParser = new AddressBookParser();
 
     @Test
     public void edit() throws Exception {

@@ -15,7 +15,7 @@ import seedu.address.model.ModelManager;
 
 public class ClearCommandSystemTest extends AddressBookSystemTest {
 
-    AddressBookParser addressBookParser = new AddressBookParser();
+    private AddressBookParser addressBookParser = new AddressBookParser();
 
     @Test
     public void clear() throws Exception {

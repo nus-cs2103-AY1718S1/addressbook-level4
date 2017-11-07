@@ -72,7 +72,7 @@ import seedu.address.testutil.PersonUtil;
 
 public class AddCommandSystemTest extends AddressBookSystemTest {
 
-    AddressBookParser addressBookParser = new AddressBookParser();
+    private AddressBookParser addressBookParser = new AddressBookParser();
 
     @Test
     public void add() throws Exception {

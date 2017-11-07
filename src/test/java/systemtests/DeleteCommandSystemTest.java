@@ -24,10 +24,10 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
-    AddressBookParser addressBookParser = new AddressBookParser();
-
     private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
+
+    private AddressBookParser addressBookParser = new AddressBookParser();
 
     @Test
     public void delete() throws Exception {
