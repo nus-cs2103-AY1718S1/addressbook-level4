@@ -14,9 +14,17 @@ import seedu.address.model.person.UniquePersonList;
 
 public class GroupTest {
 
-    String groupName = "Bamboo";
-    String differentGroupName = "AnotherGroup";
-    Group group = new Group(groupName);
+    private static final String groupName = "Bamboo";
+    private static final String differentGroupName = "AnotherGroup";
+    private static Group group;
+
+    static {
+        try {
+            group = new Group(groupName);
+        } catch (IllegalValueException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
