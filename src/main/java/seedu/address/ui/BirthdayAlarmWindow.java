@@ -38,13 +38,6 @@ public class BirthdayAlarmWindow extends UiPart<Region> implements Initializable
 
     private final Stage dialogStage;
 
-    public BirthdayAlarmWindow() { //For GuiTest
-        super(FXML);
-        Scene scene = new Scene(getRoot());
-        //Null passed as the parent stage to make it non-modal.
-        dialogStage = createDialogStage(TITLE, null, scene);
-        dialogStage.setResizable(true);
-    }
     public BirthdayAlarmWindow(ObservableList<ReadOnlyPerson> personList) {
         super(FXML);
         ObservableList<ReadOnlyPerson> pl;
