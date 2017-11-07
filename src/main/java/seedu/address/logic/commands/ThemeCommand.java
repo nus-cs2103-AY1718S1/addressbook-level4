@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ThemeRequestEvent;
 import seedu.address.logic.CommandHistory;
@@ -22,7 +21,7 @@ public class ThemeCommand extends Command {
     @Override
     public CommandResult execute() {
 
-        String themeToChange = (theme == "DarkTheme.css")? "LightTheme.css" : "DarkTheme.css";
+        String themeToChange = (theme == "DarkTheme.css") ? "LightTheme.css" : "DarkTheme.css";
 
         EventsCenter.getInstance().post(new ThemeRequestEvent(themeToChange));
 
@@ -33,7 +32,8 @@ public class ThemeCommand extends Command {
     }
 
 
-    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue, String theme) {
+    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack,
+                        RecentlyDeletedQueue queue, String theme) {
         this.theme = theme;
     }
 }
