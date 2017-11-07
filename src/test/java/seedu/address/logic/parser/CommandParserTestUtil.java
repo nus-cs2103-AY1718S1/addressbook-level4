@@ -24,8 +24,11 @@ import seedu.address.logic.commands.OpenCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.StarWarsCommand;
+import seedu.address.logic.commands.Suggestion;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.parser.exceptions.ParseArgsException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.exceptions.SuggestibleParseException;
 
 /**
  * Contains helper methods for testing command parsers.
@@ -47,6 +50,7 @@ public class CommandParserTestUtil {
             RedoCommand.COMMAND_WORD_ABBREVIATIONS,
             SelectCommand.COMMAND_WORD_ABBREVIATIONS,
             UndoCommand.COMMAND_WORD_ABBREVIATIONS,
+            Suggestion.COMMAND_WORD_ABBREVIATIONS,
             StarWarsCommand.COMMAND_WORD_ABBREVIATIONS
     ));
 
@@ -59,7 +63,9 @@ public class CommandParserTestUtil {
             Command command = parser.parse(userInput);
             assertEquals(expectedCommand, command);
         } catch (ParseException pe) {
-            throw new IllegalArgumentException("Invalid userInput.", pe);
+            throw new IllegalArgumentException("Invalid userInput, not suggestible.", pe);
+        } catch (ParseArgsException pae) {
+            throw new IllegalArgumentException("Invalid userInput, suggestible.", pae);
         }
     }
 
@@ -73,6 +79,8 @@ public class CommandParserTestUtil {
             fail("The expected ParseException was not thrown.");
         } catch (ParseException pe) {
             assertEquals(expectedMessage, pe.getMessage());
+        } catch (ParseArgsException pae) {
+            assertEquals(expectedMessage, pae.getMessage());
         }
     }
 
