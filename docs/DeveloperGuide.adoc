@@ -818,14 +818,20 @@ pressing the kbd:[esc] key will result in the application focusing on the person
 
 // end::shortcut[]
 
-// tag::detailPanel[]
 === Person Detail Panel
+
+// tag::detailPanelBehavior[]
+
 The person detail panel displays the complete information of a person that is selected.
 
 image::detailPanel.png[width="600"]
 
+// end::detailPanelBehavior[]
+
+// tag::detailPanelImp[]
+
 The behavior of the panel is mostly event-driven, where the information displayed on the panel
-changes depending on various user actions, such as a person selection, editing of a person and addition of a person.
+changes depending on various user actions, such as a person selection, editing of a person, addition of a person, etc.
 
 For example, the sequence diagram below shows the sequence of events to update the panel display when the user edits a person
 (the logic aspect of updating the person detail is omitted for brevity).
@@ -861,7 +867,7 @@ The behavior of the panel is summarized in the table below.
 | Other commands | No change in display
 |===
 
-// end::detailPanel[]
+// end::detailPanelImp[]
 
 // tag::helpWindowHighlight[]
 === Help Window Highlighting
