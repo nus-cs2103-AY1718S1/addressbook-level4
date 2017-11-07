@@ -13,11 +13,13 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 ==== External behavior
 
 ---
+#Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=sort]
 
+#End of Extract#
 
----s
+---
 
 ==== Justification
 
@@ -28,7 +30,7 @@ include::../UserGuide.adoc[tag=sort]
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=sortmech]
 
 #End of Extract#
 
@@ -40,8 +42,7 @@ include::../DeveloperGuide.adoc[tag=undoredo]
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Add interactive Calendar and Event list panel (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/88[#88])
 
 == Project: PowerPointLabs
 

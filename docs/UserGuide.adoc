@@ -191,7 +191,7 @@ Returns list of persons sorted by name added in ascending order
 Returns list of persons sorted by phone in ascending order
 * `sort t/DSC` +
 Returns list of persons sorted by time added in descending order
-// tag::undoredo[]
+// tag::sort[]
 
 // tag::delete[]
 === Deleting a person : `delete` _[Since v1.2]_
