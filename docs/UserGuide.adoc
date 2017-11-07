@@ -71,11 +71,11 @@ Examples:
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. Has the option of showing only favourite contacts +
-Format: `list [/f]` +
+Format: `list [f/]` +
 Alias: `l`
 
 * `list` will show all contacts
-* `list /f` will show only contacts that have been marked as favourites
+* `list f/` will show only contacts that have been marked as favourites
 
 === Editing a person : `edit`
 
@@ -98,19 +98,18 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name, address or phone number: `find` (Since V1.4)
+=== Locating persons by name, address, email or phone number: `find` (Since V1.4)
 
-Finds persons whose names or name initials or address or phone number contain any of the given keywords. +
+Finds persons whose names or name initials or address or phone number or email contain any of the given keywords. +
 Format: `find [n/] [p/] [e/] [a/] [t/] KEYWORD [MORE_KEYWORDS]` +
 Alias: `f`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The search can be done with initials. e.g. `AY` will match `Alex Yeoh`
-* The search can be done with partial string. e.g. `Ber` will match `Bernice Yu`
+* The search can be done with partial strings. e.g. `Ber` will match `Bernice Yu`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Name, phone number and addresses are searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons can be searched by name, phone number, email or address.
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
@@ -155,14 +154,15 @@ Deletes the 2nd, 3rd and 4th persons in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Selecting a person or a group : `select`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX` +
+Selects the person or group identified by the index number used in the last person listing. +
+Format: `select [g/] INDEX` +
 Alias: `sel`
 
 ****
 * Selects the person and loads the contact card of the person at the specified `INDEX`.
+* If `g/` is specified, selects and loads the group member list of the group at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -175,6 +175,8 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+`select g/2` +
+Selects the 2nd group in the address book.
 
 // tag::faveSystem[]
 === Marking a person as 'Favourite': `fadd` (Since V1.2)
@@ -187,6 +189,7 @@ Alias: `fa`
 * Marks the contact  at the specified `INDEX` as a 'Favourite'.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
+* Contact marked as 'Favourite' will move to the top of the contact list in lexographical order.
 ****
 
 Examples:
@@ -205,6 +208,7 @@ Alias: `fr`
 * Unmarks the contact at the specified `INDEX` as a 'Favourite'.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
+* Contact unmarked as 'Favourite' will move down the contact list till there are no 'Favourite' persons above it.
 ****
 
 Examples:
@@ -284,7 +288,7 @@ Format: `cadd p/PERSON INDEX i/GOOGLE CALENDAR ID` +
 Alias: `ca`
 
 ****
-* Adds schedule list to person at specified `INDEX`
+* Adds events pulled from `GOOGLE CALENDAR ID` to person at specified `PERSON INDEX`
 * Calendar ID must be from publicly shared Calendar.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
@@ -292,7 +296,7 @@ Alias: `ca`
 
 Examples:
 
-* `cadd p/2 i/b8dkov028k71krma20qbbc8f3s`
+* `cadd p/2 i/xderek105243x@gmail.com`
 
 // tag::profPicSystem[]
 === Setting the photo of a person: `ppset` (Since V1.4)
@@ -441,7 +445,7 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3 4`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *Find* : `find [n/] [p/] [e/] [a/] [t/] KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *Mark Favourite Contact* : `fadd INDEX` +
 e.g. `fadd 1`
@@ -451,11 +455,13 @@ e.g. `fremove 2`
 e.g. `gcreate n/Bamboo`
 * *Add Person To Group* : `gadd g/GROUP INDEX p/PERSON INDEX` +
 e.g. `gadd g/1 p/2`
+* *Remove Person To Group* : `gremove g/GROUP INDEX p/PERSON INDEX` +
+e.g. `gremove g/1 p/2`
 * *Delete Group* : `gdelete INDEX` +
 e.g. `gdelete 2`
 * *List* : `list [f/]`
 * *Help* : `help`
-* *Select* : `select INDEX` +
+* *Select* : `select [g/] INDEX` +
 e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
