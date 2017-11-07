@@ -434,7 +434,7 @@ The `getSearchText` method inside the `ReadOnlyPerson` class will convert all th
 
 <<<
 
-=== Sort
+=== Sort mechanism
 
 The `sort` command now allows for the list of contacts to be sorted via phone number, name, or email in lexicographic order.
 It uses the `sorted()` method included in `ObservableList.java`, with comparators defined by the developer.
@@ -500,9 +500,9 @@ and creating a new comparator in link:{repoURL}/src/main/java/seedu/address/mode
 *Pros:* Easy to implement, relatively modular +
 *Cons:* Dependant on Java API, future changes to the method could affect the implementation
 
-*Alternative 2:* Override methods with own implementations +
+*Alternative 2:* Override methods with own implementations; code sorting functionality directly into UniquePersonList +
 *Pros:* Less dependant on provided resources, more flexible with product's requirements +
-*Cons:* Resource-intensive
+*Cons:* Resource-intensive; increases coupling between Logic and Model
 
 <<<
 

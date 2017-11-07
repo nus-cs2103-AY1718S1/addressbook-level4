@@ -343,8 +343,8 @@ image::Figure18.PNG[width="790"]
 _Figure 18: Sorting address book by name_ +
 
 [TIP]
-You can sort the address book by phone and email too! Just enter `sort phone` or
-`sort email` to sort address book by phone and email respectively
+You can sort the address book by phone number or email address too! Just enter `sort phone` or
+`sort email` to sort address book by phone number and email respectively
 
 === Exporting the contacts list : `export`
 Format: `export [directory]\[filename].xml` +

@@ -1,0 +1,34 @@
+= Emil Koh - Project Portfolio
+:imagesDir: images
+:stylesDir: stylesheets
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:repoURL: https://github.com/CS2103AUG2017-T17-B3/main/tree/master
+
+== Project: Circles
+Circles is a personal address book that stores and organises your contacts and their contact information,
+displaying them in a neat and organised fashion.
+
+*Code Contributed*: [link:{repoURL}/collated/main/LimeFallacie.md[`Functional Code`]][link:{repoURL}/collated/test/LimeFallacie.md[`Test Code`]]
+
+=== Enhancement Added: Sorting
+
+==== External Behaviour
+
+include::UserGuide.adoc[lines = 337..348]
+
+==== Justification
+As our target audience was University students, we felt the need to provide tools to organise the contacts list as one student can come across many
+over the course of his studies. With the ability to organise contacts in an intuitive way, users would easily be able to locate contacts by scrolling through the list
+rather than constantly using the `Find` command.
+
+The command word `sort` is used to denote the sort, and the following word would decide how the list would be sorted.
+As there are plenty of different ways to sort contacts, this implementation was chosen to allow modularity for the inclusion of more ways to sort the list in the future.
+
+==== Implementation
+
+include::DeveloperGuide.adoc[leveloffset=+2, lines = 437..506]
+
