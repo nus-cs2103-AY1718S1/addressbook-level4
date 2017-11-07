@@ -82,7 +82,7 @@ public class AddCommandParserTest {
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags().build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY, new AddCommand(expectedPerson));
-
+        //@@author willxujun
         //empty (unknown) email value
         expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withEmail(UNKNOWN_EMAIL).withAddress(VALID_ADDRESS_AMY).withTags().build();
@@ -94,6 +94,7 @@ public class AddCommandParserTest {
                 .withEmail(VALID_EMAIL_AMY).withAddress(UNKNOWN_ADDRESS).withTags().build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + UNKNOWN_ADDRESS_DESC, new AddCommand(expectedPerson));
+        //@@author
     }
 
     @Test

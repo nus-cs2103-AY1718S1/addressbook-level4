@@ -12,6 +12,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Photo;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.phone.Phone;
 import seedu.address.model.person.phone.UniquePhoneList;
@@ -24,9 +25,11 @@ public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         try {
             return new Person[] {
-                new Person(new Name("Alex Yeoh"), new Phone("87438807"), new UniquePhoneList(new Phone("2333")),
+                new Person(new Name("Alex Yeoh"), new Phone("87438807"),
                     new Email("alexyeoh@example.com"),
                     new Address("Blk 30 Geylang Street 29, #06-40"),
+                    new Photo("../addressbook4/docs/images/wolf.jpg"),
+                    new UniquePhoneList(new Phone("2333")),
                     getTagSet("friends"),
                     getCustomFieldSet("Nickname Ah_lex", "Birthday 11/02/1998")),
                 new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),

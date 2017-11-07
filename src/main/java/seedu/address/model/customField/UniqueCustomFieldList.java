@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 
+//@@author LuLechuan
 /**
  * A list of customField that enforces no nulls and uniqueness between its elements.
  *
@@ -152,6 +153,18 @@ public class UniqueCustomFieldList implements Iterable<CustomField> {
     public int hashCode() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (CustomField customField : internalList) {
+            sb.append(customField.customFieldName);
+            sb.append(": ");
+            sb.append(customField.getCustomFieldValue());
+            sb.append("\r\n");
+        }
+        return sb.toString();
     }
 
 }

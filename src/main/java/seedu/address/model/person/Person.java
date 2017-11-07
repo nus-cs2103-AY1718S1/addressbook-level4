@@ -34,7 +34,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
 
 
     /**
-     * Every field must be present and not null except Custom Field and Photo.
+     * Every field must be present and not null except Phone list, Custom Field and Photo.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
@@ -43,70 +43,25 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         this.uniquePhoneList = new SimpleObjectProperty<>(new UniquePhoneList());
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
-
-        // protect internal tags from changes in the arg list
-        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        this.customFields = new SimpleObjectProperty<>(new UniqueCustomFieldList());
-    }
-
-    public Person(Name name, Phone phone, UniquePhoneList uniquePhoneList,
-                  Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, uniquePhoneList, email, address, tags);
-        this.name = new SimpleObjectProperty<>(name);
-        this.primaryPhone = new SimpleObjectProperty<>(phone);
-        this.uniquePhoneList = new SimpleObjectProperty<>(uniquePhoneList);
-        this.email = new SimpleObjectProperty<>(email);
-        this.address = new SimpleObjectProperty<>(address);
         this.photo = new SimpleObjectProperty<>(new Photo());
 
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.customFields = new SimpleObjectProperty<>(new UniqueCustomFieldList());
-    }
-
-    /**
-     * Every field must be present and not null except Photo.
-     */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Set<CustomField> customFields) {
-        requireAllNonNull(name, phone, email, address, tags, customFields);
-        this.name = new SimpleObjectProperty<>(name);
-        this.primaryPhone = new SimpleObjectProperty<>(phone);
-        this.uniquePhoneList = new SimpleObjectProperty<>(new UniquePhoneList());
-        this.email = new SimpleObjectProperty<>(email);
-        this.address = new SimpleObjectProperty<>(address);
-        // protect internal tags from changes in the arg list
-        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        // protect internal custom fields from changes in the arg list
-        this.customFields = new SimpleObjectProperty<>(new UniqueCustomFieldList(customFields));
-    }
-
-    public Person(Name name, Phone phone, UniquePhoneList uniquePhoneList,
-                  Email email, Address address, Set<Tag> tags, Set<CustomField> customFields) {
-        requireAllNonNull(name, uniquePhoneList, email, address, tags, customFields);
-        this.name = new SimpleObjectProperty<>(name);
-        this.primaryPhone = new SimpleObjectProperty<>(phone);
-        this.uniquePhoneList = new SimpleObjectProperty<>(uniquePhoneList);
-        this.email = new SimpleObjectProperty<>(email);
-        this.address = new SimpleObjectProperty<>(address);
-        this.photo = new SimpleObjectProperty<>(new Photo());
-        // protect internal tags from changes in the arg list
-        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        // protect internal custom fields from changes in the arg list
-        this.customFields = new SimpleObjectProperty<>(new UniqueCustomFieldList(customFields));
     }
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Photo photo,
-                  Set<Tag> tags, Set<CustomField> customFields) {
+                  UniquePhoneList uniquePhoneList, Set<Tag> tags, Set<CustomField> customFields) {
         requireAllNonNull(name, phone, email, address, tags, customFields);
         this.name = new SimpleObjectProperty<>(name);
         this.primaryPhone = new SimpleObjectProperty<>(phone);
-        this.uniquePhoneList = new SimpleObjectProperty<>(new UniquePhoneList());
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.photo = new SimpleObjectProperty<>(photo);
+        this.uniquePhoneList = new SimpleObjectProperty<>(uniquePhoneList);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         // protect internal custom fields from changes in the arg list
@@ -114,11 +69,29 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     }
 
     /**
+     * Every field must be present and not null except Custom Field List.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Photo photo,
+                  UniquePhoneList uniquePhoneList, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.primaryPhone = new SimpleObjectProperty<>(phone);
+        this.uniquePhoneList = new SimpleObjectProperty<>(uniquePhoneList);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.photo = new SimpleObjectProperty<>(photo);
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        // protect internal custom fields from changes in the arg list
+        this.customFields = new SimpleObjectProperty<>(new UniqueCustomFieldList());
+    }
+
+    /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getPhoneList(), source.getEmail(), source.getAddress(),
-                source.getTags(), source.getCustomFields());
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+                source.getPhoto(), source.getPhoneList(), source.getTags(), source.getCustomFields());
     }
 
     public void setPhone(Phone phone) {
@@ -149,7 +122,9 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         return name.get();
     }
 
-    public void setPhoneList(UniquePhoneList list) { this.uniquePhoneList.set(requireNonNull(list)); }
+    public void setPhoneList(UniquePhoneList list) {
+        this.uniquePhoneList.set(requireNonNull(list));
+    }
 
     @Override
     public UniquePhoneList getPhoneList() {
@@ -188,6 +163,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         return address.get();
     }
 
+    //@@author LuLechuan
     public void setPhoto(Photo photo) {
         this.photo.set(requireNonNull(photo));
     }
@@ -201,6 +177,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     public Photo getPhoto() {
         return photo.get();
     }
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
@@ -222,6 +199,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         tags.set(new UniqueTagList(replacement));
     }
 
+    //@@author LuLechuan
     /**
      * Returns an immutable custom field set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -251,7 +229,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     public void setCustomFields(Set<CustomField> replacement) {
         customFields.set(new UniqueCustomFieldList(replacement));
     }
-
+    //@@author
 
     @Override
     public boolean equals(Object other) {

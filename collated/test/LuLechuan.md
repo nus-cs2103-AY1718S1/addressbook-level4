@@ -1,22 +1,41 @@
-package seedu.address.logic.commands;
+# LuLechuan
+###### /java/seedu/address/logic/commands/CustomCommandTest.java
+``` java
+public class CustomCommandTest {
 
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
-import org.junit.Test;
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-import seedu.address.commons.core.Messages;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.person.ReadOnlyPerson;
+    @Test
+    public void execute_personAcceptedByModel_updateCustomFieldSuccessful() throws Exception {
+        Person updatedPerson = new PersonBuilder(model.getFilteredPersonList()
+                .get(INDEX_FIRST_PERSON.getZeroBased())).withCustomFields("Birthday 29/02/1996").build();
 
-//@@author LuLechuan
+        CustomField customField = new CustomField("Birthday", "29/02/1996");
+        CustomCommand customCommand = prepareCommand(INDEX_FIRST_PERSON, customField);
+
+        String expectedMessage = String.format(CustomCommand.MESSAGE_UPDATE_PERSON_CUSTOM_FIELD_SUCCESS, updatedPerson);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), updatedPerson);
+
+        assertCommandSuccess(customCommand, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * Returns a {@code CustomCommand} with the parameters {@code index + CustomFieldName + CustomFieldValue}.
+     */
+    private CustomCommand prepareCommand(Index index, CustomField customField) {
+        CustomCommand command = new CustomCommand(index, customField);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+}
+```
+###### /java/seedu/address/logic/commands/DeleteByNameCommandTest.java
+``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
  */
@@ -92,3 +111,4 @@ public class DeleteByNameCommandTest {
         assert model.getFilteredPersonList().isEmpty();
     }
 }
+```

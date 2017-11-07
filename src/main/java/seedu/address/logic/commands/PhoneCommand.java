@@ -13,6 +13,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Photo;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.DuplicatePhoneException;
@@ -21,7 +22,7 @@ import seedu.address.model.person.exceptions.PhoneNotFoundException;
 import seedu.address.model.person.phone.Phone;
 import seedu.address.model.person.phone.UniquePhoneList;
 import seedu.address.model.tag.Tag;
-
+//@@author eeching
 /**
  * Adds or updates a custom field of a person identified using it's last displayed index from the address book.
  */
@@ -62,6 +63,7 @@ public class PhoneCommand extends UndoableCommand {
         UniquePhoneList uniquePhoneList = personToUpdatePhoneList.getPhoneList();
         Email email = personToUpdatePhoneList.getEmail();
         Address address = personToUpdatePhoneList.getAddress();
+        Photo photo = personToUpdatePhoneList.getPhoto();
         Set<Tag> tags = personToUpdatePhoneList.getTags();
         UniqueCustomFieldList customFields = personToUpdatePhoneList.getCustomFieldList();
 
@@ -81,8 +83,8 @@ public class PhoneCommand extends UndoableCommand {
 
         }
 
-        Person personUpdated = new Person(name, primaryPhone, uniquePhoneList, email,
-                address, tags, customFields.toSet());
+        Person personUpdated = new Person(name, primaryPhone, email, address,
+                photo, uniquePhoneList, tags, customFields.toSet());
 
         return personUpdated;
     }
