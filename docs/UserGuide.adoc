@@ -18,7 +18,7 @@ image::contag_logo_ugdg.png[align="center"]
 
 {empty} +
 
-By: `T15-B2`      `Aw Wen Hao`      `Calvin Tantio`      `Cheng Jin Ting`      `Chung Tin Long`       Since: `Jun 2016`      Licence: `MIT`
+By: `T15-B2`      `Aw Wen Hao`      `Calvin Tantio`      `Cheng Jin Ting`      `Chung Tin Long`       Since: `Aug 2017`      Licence: `MIT`
 
 
 == Introduction
@@ -132,10 +132,7 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/12, Newgate Prison, IL 043 p/1234567 t/criminal`
 
 [INFO]
-This feature allows the adding of more than 1 EMAIL for a person since v1.3.
-
-[INFO]
-This feature restricts the ADDRESS to the format: `BLOCK, STREET, [UNIT,] POSTAL CODE` since v1.3.
+v1.3 update: This feature allows the adding of more than 1 EMAIL for a person, as well as restrict the ADDRESS to the format: `BLOCK, STREET, [UNIT,] POSTAL CODE`.
 
 ==== Editing a person : `edit`
 
@@ -177,7 +174,7 @@ Format: `delete INDEX [UNIQUE INDEX]...`
 ****
 
 [INFO]
-This feature allows the deleting of more than 1 person since v1.1.
+v1.1 update: This feature allows the deleting of more than 1 person.
 
 Examples:
 
