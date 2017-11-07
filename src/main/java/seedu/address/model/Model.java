@@ -11,8 +11,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
-import seedu.address.model.reminder.ReadOnlyReminder;
-import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -22,7 +20,7 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
     Predicate<ReadOnlyEvent> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
-    Predicate<ReadOnlyReminder> PREDICATE_SHOW_ALL_REMINDERS = unused -> true;
+
 
     //@@author low5545
     /** Adds extra data to the existing model */
@@ -86,12 +84,6 @@ public interface Model {
 
 
     //@@author
-
-
-    //=========== Model support for reminder component =============================================================
-
-    /** Adds a reminder */
-    void addReminder(ReadOnlyReminder reminder) throws DuplicateReminderException;
 
     //@@author
 
