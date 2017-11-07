@@ -96,6 +96,7 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+// tag::addE[]
 ==== Adding an event : `addE`
 You can use it to add an event to the event list +
 Format: `addE en/EVENT_NAME ed/EVENT_DESCRIPTION et/EVENT_TIME`
@@ -127,6 +128,7 @@ You will see the following after typing 4 above example add command to
 
 image::UG_add.png[width="790"]
 _Figure 3.2.2: add command result_
+// end::addE[]
 
 === Listing
 
@@ -313,6 +315,7 @@ You will see the following after typing `delete 1` and `deleteE 1`:
 image::UG_delete.png[width="790"]
 _Figure 3.7: delete command result_
 
+// tag::join[]
 === Connecting a person to an event : `join`
 You can use it to show a person is involved in an event. +
 Format : `join p/INDEX_P e/INDEX_E` +
@@ -334,6 +337,7 @@ You will see the following after typing above commands: +
 
 image::UG_join.png[width='790']
 _Figure 3.8: join result_
+// end::join[]
 
 === Disconnecting a person to an event : `disjoin`
 You can use it to show a person is not involved in an event any more. +
@@ -464,6 +468,33 @@ Then you will see the following after typing the example portrait command
 
 image::UG_portrait.png[]
 _Figure 3.12.2 attach a portrait_
+
+=== Toggling between details and browser: `toggle`
+
+You can use this command to toggle between displaying the information board and events list, or a browser.
+
+Format & Example: `toggle`
+
+****
+* Toggling when the information board and events list are displayed will have a browser replace them. +
+* Toggling when the browser is displayed will have the information board and events list replace them. +
+* After toggling to the browser, it will not be visible unless a `select` command has been entered once before.
+****
+
+You will see the following after typing the toggle command when the information board and events list are displayed but a `select` command has not been entered:
+
+image::UG_Toggle1.png[]
+_Figure 3.14.1 toggle result when browser is displayed_
+
+You will see the following after typing the toggle command when the browser is displayed:
+
+image::UG_Toggle2.png[]
+_Figure 3.14.2 toggle result when information board and events list are displayed_
+
+You will see the following after typing the toggle command when the information board and events list are displayed and a `select` command:
+
+image::UG_Toggle3.png[]
+_Figure 3.14.3 toggle result when information board and events list are displayed and a `select` command is entered before_
 
 === Listing entered commands : `history`
 

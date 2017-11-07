@@ -40,6 +40,7 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
+    private BrowserPanel browserPanel;
     private EventListPanel eventListPanel;
     private PersonListPanel personListPanel;
     private Config config;
@@ -49,19 +50,16 @@ public class MainWindow extends UiPart<Region> {
     private StackPane commandBoxPlaceholder;
 
     @FXML
-    private StackPane eventListPanelPlaceholder;
-
-    @FXML
     private MenuItem helpMenuItem;
-
-    @FXML
-    private StackPane informationBoardPlaceholder;
 
     @FXML
     private StackPane personListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
+
+    @FXML
+    private StackPane togglePlaceHolder;
 
     @FXML
     private StackPane statusbarPlaceholder;
@@ -129,10 +127,11 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+        //@@ leonchowwenhao
+        browserPanel = new BrowserPanel();
 
         // @@author HouDenghao
         InformationBoard informationBoard = new InformationBoard();
-        informationBoardPlaceholder.getChildren().add(informationBoard.getRoot());
 
         // @@author
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
@@ -140,7 +139,10 @@ public class MainWindow extends UiPart<Region> {
 
         // @@author HouDenghao
         eventListPanel = new EventListPanel(logic.getFilteredEventList());
-        eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+
+        //@@author leonchowwenhao
+        TogglePanel togglePanel = new TogglePanel(browserPanel, informationBoard, eventListPanel);
+        togglePlaceHolder.getChildren().add(togglePanel.getRoot());
 
         // @@author
         ResultDisplay resultDisplay = new ResultDisplay();
@@ -205,6 +207,10 @@ public class MainWindow extends UiPart<Region> {
 
     void show() {
         primaryStage.show();
+    }
+
+    private void releaseResources() {
+        browserPanel.freeResources();
     }
 
     /**

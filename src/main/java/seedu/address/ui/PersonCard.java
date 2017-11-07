@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.io.File;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -79,7 +81,7 @@ public class PersonCard extends UiPart<Region> {
      */
     private void loadPortrait(String filePath) {
         String url;
-        if (filePath.isEmpty()) {
+        if (filePath.isEmpty() || !new File(filePath).exists()) { // In case user deletes the image file
             url = PortraitPath.DEFAULT_PORTRAIT_PATH;
         } else {
             url = PortraitPath.FILE_PREFIX + filePath;

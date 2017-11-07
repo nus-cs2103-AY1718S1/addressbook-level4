@@ -71,7 +71,7 @@ public class EventTime {
     }
 
     /**
-     * Returns true if a given string is a valid time
+     * Checks for valid event time.
      */
     public static boolean isValidEventTime(String eventTime) {
         String trimmedTime = eventTime.trim();

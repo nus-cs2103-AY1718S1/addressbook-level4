@@ -4,37 +4,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: Planno
-Planno is a Java application that helps users to conveniently manage contact as well as event details. To achieve this, Planno provides a large number of easy to use commands for users.
+Planno is a desktop address book application used for managing events and persons. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
-
-=== Enhancement Added: find
-
-==== External behavior
-
----
-#Start of Extract [from: User Guide]#
-
-include::../UserGuide.adoc[tag=find]
-
-#End of Extract#
-
----
-
-==== Justification
-
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
-
-==== Implementation
-
----
-#Start of Extract [from: Developer Guide]#
-
-include::../DeveloperGuide.adoc[tag=find]
-
-#End of Extract#
-
----
+*Code contributed*: [https://github.com/CS2103AUG2017-W14-B4/main/blob/master/collated/main/HuWanqing.md[Functional code]][https://github.com/CS2103AUG2017-W14-B4/main/blob/master/collated/test/HuWanqing.md[Test code]]
 
 === Enhancement Added: find
 
@@ -51,7 +23,8 @@ include::../UserGuide.adoc[tag=find]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+For users who need to frequently locate their contacts, it would be much faster with a find command. The command can find contacts by both person names and tags. In particular, find tag can find a group of contacts with the particular tag. Such
+find procedure is fast and can produce results more efficiently.
 
 ==== Implementation
 
@@ -64,14 +37,56 @@ include::../DeveloperGuide.adoc[tag=find]
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Added: join
 
-{Explain similar to the Undo/Redo feature above.}
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=join]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+For a event, users can join its participants to the event in Planno. In this way, the user can quickly obtain information of the participants in the future.
+The feature will be extremely helpful if the event involve a large number of people. The user only need to join them in the beginning, and can quickly pull out information, such as emails, phone numbers in the future.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=joinDisjoin]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: new component EventLists in Model
+
+==== Justification
+In our model, we added Event class, which is the core feature in our application. Each event object have
+a name, description, date and a participant list.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=model]
+
+#End of Extract#
+
+---
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Code refinement in Model and Logic component.
+* Design of Planno Data
 
 == Project: PowerPointLabs
 
