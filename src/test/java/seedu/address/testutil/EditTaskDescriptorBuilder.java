@@ -4,12 +4,12 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
+import seedu.address.logic.commands.tasks.EditTaskCommand.EditTaskDescriptor;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.task.ReadOnlyTask;
 
 /**
- * A utility class to help with building EditPersonDescriptor objects.
+ * A utility class to help with building EditTaskDescriptor objects.
  */
 public class EditTaskDescriptorBuilder {
 
@@ -71,7 +71,7 @@ public class EditTaskDescriptorBuilder {
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditTaskDescriptor}
      * that we are building.
      */
     public EditTaskDescriptorBuilder withTags(String... tags) {

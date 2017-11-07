@@ -31,7 +31,7 @@ public class LogicManager extends ComponentManager implements Logic {
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
     }
-
+    //@@author tby1994
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
@@ -45,7 +45,7 @@ public class LogicManager extends ComponentManager implements Logic {
             history.add(commandText);
         }
     }
-
+    //@@author
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return model.getFilteredPersonList();

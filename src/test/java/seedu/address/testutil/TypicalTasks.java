@@ -19,6 +19,7 @@ import seedu.address.model.task.ReadOnlyTask;
  */
 public class TypicalTasks {
 
+    // TODO: 26/10/17 Ensure that StartDate is empty string instead of null, if not test case will be wrong
     public static final ReadOnlyTask ASSIGNMENT = new TaskBuilder().withDescription("Finish CS2103T code enhancement")
             .withStartDate("Mon, Oct 23, '17")
             .withDeadline("Thu, Oct 26, '17").build();
@@ -35,14 +36,16 @@ public class TypicalTasks {
     public static final ReadOnlyTask SUBMISSION = new TaskBuilder().withDescription("Self evaluation submission due")
             .withStartDate("")
             .withDeadline("Sat, Nov 18, '17").build();
-    public static final ReadOnlyTask PERSONAL_PROJECT = new TaskBuilder().withDescription("Finish art piece").build();
+    public static final ReadOnlyTask PERSONAL_PROJECT = new TaskBuilder().withDescription("Finish art piece")
+            .withStartDate("")
+            .withDeadline("").build();
     public static final ReadOnlyTask GROCERY = new TaskBuilder().withDescription("Go grocery shopping")
             .withStartDate("")
             .withDeadline("Thu, Mar 8, '18").build();
     public static final ReadOnlyTask MEETUP = new TaskBuilder().withDescription("Meet friends")
             .withStartDate("")
             .withDeadline("Tue, Dec 12, '17").build();
-    // TODO: 26/10/17 Ensure that StartDate is empty string instead of null, if not test case will be wrong
+
     // Manually added
     public static final ReadOnlyTask SCHOOL = new TaskBuilder().withDescription("Semester two starts")
             .withStartDate("Fri, Jan 12, '18").build();

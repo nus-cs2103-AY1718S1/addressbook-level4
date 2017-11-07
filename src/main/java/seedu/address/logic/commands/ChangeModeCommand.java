@@ -9,7 +9,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
  * Change the current command mode
  */
 public class ChangeModeCommand extends Command {
-
+    //@@author tby1994
     public static final String COMMAND_WORD = "switch";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD

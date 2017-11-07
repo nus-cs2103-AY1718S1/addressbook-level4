@@ -20,7 +20,7 @@ import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.StartDate;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.TaskDates;
-
+///@@author raisa2010
 /**
  * Parses input arguments and creates a new AddTaskCommand object
  */
@@ -35,10 +35,9 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
         requireNonNull(args);
 
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_STARTDATE, PREFIX_DEADLINE_ON,
-                        PREFIX_DEADLINE_BY, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_STARTDATE, PREFIX_DEADLINE_ON, PREFIX_DEADLINE_BY, PREFIX_TAG);
 
-        if (!isDescriptionPresent(argMultimap) | areMultiplePrefixesPresent(argMultimap)) {
+        if (!isDescriptionPresent(argMultimap) | !isSinglePrefixPresent(argMultimap)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
         }
 
@@ -48,14 +47,13 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
                     .orElse(new StartDate());
             Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE_BY, PREFIX_DEADLINE_ON))
                     .orElse(new Deadline());
-
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-
-            ReadOnlyTask task = new Task(description, startDate, deadline, tagList);
 
             if (!TaskDates.isStartDateBeforeDeadline(startDate, deadline)) {
                 throw new IllegalValueException(TaskDates.MESSAGE_DATE_CONSTRAINTS);
             }
+
+            ReadOnlyTask task = new Task(description, startDate, deadline, tagList);
 
             return new AddTaskCommand(task);
         } catch (IllegalValueException ive) {
@@ -64,7 +62,7 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
     }
 
     /**
-     * Returns true if the start date prefix does not contain empty {@code Optional} values in the given
+     * Returns true if the preamble (string before first valid prefix) is not empty in the given
      * {@code ArgumentMultimap}.
      */
     private static boolean isDescriptionPresent(ArgumentMultimap argumentMultimap) {
@@ -72,12 +70,11 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
     }
 
     /**
-     * Checks if multiple deadline prefixes have been used.
-     * @param argumentMultimap
-     * @return
+     * Returns true if a single deadline prefix has been used in an unquoted string in the given
+     * {@code ArgumentMultimap}
      */
-    private static boolean areMultiplePrefixesPresent(ArgumentMultimap argumentMultimap) {
-        return argumentMultimap.getValue(PREFIX_DEADLINE_BY).isPresent()
-                && argumentMultimap.getValue(PREFIX_DEADLINE_ON).isPresent();
+    private static boolean isSinglePrefixPresent(ArgumentMultimap argumentMultimap) {
+        return !(argumentMultimap.getValue(PREFIX_DEADLINE_BY).isPresent()
+                && argumentMultimap.getValue(PREFIX_DEADLINE_ON).isPresent());
     }
 }

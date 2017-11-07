@@ -14,7 +14,7 @@ public class MainWindowHandle extends StageHandle {
     private final MainMenuHandle mainMenu;
     private final BrowserPanelHandle browserPanel;
     private final TaskListPanelHandle taskListPanelHandle;
-
+    //@@author tby1994
     public MainWindowHandle(Stage stage) {
         super(stage);
 
@@ -26,7 +26,7 @@ public class MainWindowHandle extends StageHandle {
         browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
         taskListPanelHandle = new TaskListPanelHandle(getChildNode(TaskListPanelHandle.TASK_LIST_VIEW_ID));
     }
-
+    //@@author
     public PersonListPanelHandle getPersonListPanel() {
         return personListPanel;
     }
@@ -50,7 +50,7 @@ public class MainWindowHandle extends StageHandle {
     public BrowserPanelHandle getBrowserPanel() {
         return browserPanel;
     }
-
+    //@@author tby1994
     public TaskListPanelHandle getTaskListPanel() {
         return taskListPanelHandle;
     }

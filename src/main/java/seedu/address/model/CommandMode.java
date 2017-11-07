@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 
+//@@author tby1994
 /**
  * Represents a command mode in the application.
  * Guarantees: details are present and not null, field values are validated.

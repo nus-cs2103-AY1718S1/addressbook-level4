@@ -15,6 +15,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.model.task.ReadOnlyTask;
 
+//@@author tby1994
 /**
  * Selects a task identified using it's last displayed index from the address book.
  */
@@ -34,6 +35,7 @@ public class SelectTaskCommand extends Command {
     public SelectTaskCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
+
 
     @Override
     public CommandResult execute() throws CommandException {
@@ -74,3 +76,4 @@ public class SelectTaskCommand extends Command {
             && this.targetIndex.equals(((SelectTaskCommand) other).targetIndex)); // state check
     }
 }
+

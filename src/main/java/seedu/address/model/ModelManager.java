@@ -93,6 +93,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author tpq95
     @Override
     public synchronized void deleteTag(ReadOnlyPerson person, Tag oldTag) throws PersonNotFoundException,
             DuplicatePersonException, TagNotFoundException {
@@ -108,6 +109,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
@@ -115,6 +117,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author raisa2010
     @Override
     public synchronized void addTask(ReadOnlyTask task) throws DuplicateTaskException {
         addressBook.addTask(task);
@@ -147,6 +150,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //@@author
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -166,6 +170,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Filtered Task List Accessors =============================================================
 
+    //@@author raisa2010
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyTask} backed by the internal list of
      * {@code addressBook}
@@ -180,7 +185,9 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredTasks.setPredicate(predicate);
     }
+    //@@author
 
+    //@@author tby1994
     //========== Command Mode ==============================================================================
     @Override
     public void changeCommandMode(String mode) throws IllegalValueException {
@@ -192,7 +199,7 @@ public class ModelManager extends ComponentManager implements Model {
     public String getCommandMode() {
         return addressBook.getCommandMode();
     }
-
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

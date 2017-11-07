@@ -497,7 +497,7 @@ Suppose the user has just executed the `SelectTaskCommand` using:
 `select 2`
 ----
 
-At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `SelectTaskCommand` feature is being evoked and calls the `SelectTaskCommandParser` to parse the string and check if the index is valid. After validation the `SelectTaskCommand` class is been called. The `LogicManager` then calls the `execute()` in the `SelectTaskCommand` class which calls `EventCenter` with the parameter of `JumpToTaskListRequestEvent` class to highlight selected task card in Ui at target index. Then `execute()` creates and return a `CommandResult` object.
+At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `SelectTaskCommand` feature is being evoked and calls the `SelectTaskCommandParser` to parse the string and check if the index is valid. After validation the `SelectTaskCommand` class is been called. `SelectTaskCommand` will then paraphrase the tag of selected task and pass it through `conductSearch`. `conductSearch` will call `model.updateFilteredPersonList()` with `PersonContainsKeywordsPredicate` with keyword `tag` as parameter to find the tag among person list and update person list. If there are no match found, all person will be listed. Then `LogicManager` then calls the `execute()` in the `SelectTaskCommand` class which calls `EventCenter` with the parameter of `JumpToTaskListRequestEvent` class to highlight selected task card in Ui at target index. Then `execute()` creates and return a `CommandResult` object.
 
 // tag::calendar[]
 === Calendar mechanism
@@ -1166,7 +1166,6 @@ Use case resumes at step 2.
 3. AddressBook shows the list of persons with the details
 +
 Use case ends.
-
 *Extensions*
 
 [none]

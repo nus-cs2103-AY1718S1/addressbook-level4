@@ -130,6 +130,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author tpq95
         @Override
         public void deleteTag(ReadOnlyPerson person, Tag oldTag)
             throws PersonNotFoundException, DuplicatePersonException {
@@ -141,6 +142,7 @@ public class AddCommandTest {
                 throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
         }
+        //@@author
 
         public void updatePersonTags(ReadOnlyPerson person, Set<Tag> tagSet)
                 throws PersonNotFoundException, DuplicatePersonException {
@@ -184,7 +186,7 @@ public class AddCommandTest {
         public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
             fail("This method should not be called");
         }
-
+        //@@author tby1994
         @Override
         public void changeCommandMode(String mode) throws IllegalValueException {
             fail("This method should not be called");
@@ -195,6 +197,7 @@ public class AddCommandTest {
             fail("This method should not be called ");
             return null;
         }
+        //@@author
     }
 
     /**

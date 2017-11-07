@@ -37,6 +37,7 @@ public interface Model {
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
+    //@@author tpq95
     /** Delete tag of given person */
     void deleteTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
             DuplicatePersonException, TagNotFoundException;
@@ -44,6 +45,7 @@ public interface Model {
     /** Add tag of given person */
     void attachTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
             DuplicatePersonException, UniqueTagList.DuplicateTagException;
+    //@@author
 
     /** Updates tags of a given person */
     void updatePersonTags(ReadOnlyPerson person, Set<Tag> newTags)
@@ -70,10 +72,10 @@ public interface Model {
 
     /** Adds the given task */
     void addTask(ReadOnlyTask task) throws DuplicateTaskException;
-
+    //@@author eryao95
     /** Deletes the given task. */
     void deleteTask(ReadOnlyTask target) throws TaskNotFoundException;
-
+    //@@author
     /**
      * Replaces the given task {@code target} with {@code editedTask}.
      *
@@ -92,10 +94,11 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
-
+    //@@author tby1994
     /**Change the current command mode*/
     void changeCommandMode(String mode) throws IllegalValueException;
 
     /**Returns the current command mode*/
     String getCommandMode();
+    //@@author
 }

@@ -36,6 +36,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueTaskList tasks;
     private final CommandMode commandMode;
 
+    //@@author tby1994
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
@@ -49,7 +50,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tasks = new UniqueTaskList();
         commandMode = new CommandMode();
     }
-
+    //@@author
     public AddressBook() {}
 
     /**
@@ -208,6 +209,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.remove(t);
     }*/
 
+    //@@author tpq95
     /**
      * Remove {@code oldTag} from list of person stated by {@code indices} from
      * {@code AddressBook}
@@ -246,9 +248,11 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         updatePerson(oldPerson, newPerson);
     }
+    //@@author
 
     ////task-level operations
 
+    //@@author raisa2010
     /**
      * Adds a task to the address book.
      *
@@ -268,7 +272,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *      another existing task in the list.
      * @throws TaskNotFoundException if {@code target} could not be found in the list.
      *
-     * @see #syncMasterTagListWith(Person)
+     * @see #syncMasterTagListWith(Task)
      */
     public void updateTask(ReadOnlyTask target, ReadOnlyTask editedReadOnlyTask)
             throws DuplicateTaskException, TaskNotFoundException {
@@ -279,6 +283,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tasks.setTask(target, editedTask);
     }
 
+    //@@author
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws TaskNotFoundException if the {@code key} is not in this {@code AddressBook}.
@@ -290,7 +295,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new TaskNotFoundException();
         }
     }
-
+    //@@author tby1994
     public void changeCommandMode(String mode) throws IllegalValueException {
         commandMode.setCommandMode(mode);
     }
@@ -298,7 +303,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public String getCommandMode() {
         return commandMode.toString();
     }
-
+    //@@author
     //// util methods
 
     @Override

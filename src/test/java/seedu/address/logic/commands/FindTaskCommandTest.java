@@ -28,6 +28,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.TaskContainsKeywordsPredicate;
 
+//@@author tby1994
 /**
  * Contains integration tests (interaction with the Model) for {@code FindTaskCommand}.
  */
@@ -75,6 +76,7 @@ public class FindTaskCommandTest {
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ASSIGNMENT, QUIZ, GYM, PERSONAL_PROJECT));
     }
 
+    //@@author tpq95
     @Test
     public void executeMultipleDeadlinesMultipleTasksFound() {
         String expectedMessage = String.format(MESSAGE_TASK_LISTED_OVERVIEW, 2);
@@ -88,6 +90,7 @@ public class FindTaskCommandTest {
         FindTaskCommand command = prepareCommand("code 01-11-2017 18-11-2017");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ASSIGNMENT, QUIZ, SUBMISSION));
     }
+    //@@author
 
     /**
      * Parses {@code userInput} into a {@code FindTaskCommand}.

@@ -21,7 +21,8 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
+import seedu.address.logic.commands.tasks.EditTaskCommand;
+import seedu.address.logic.commands.tasks.EditTaskCommand.EditTaskDescriptor;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -31,10 +32,10 @@ import seedu.address.model.task.Task;
 import seedu.address.testutil.EditTaskDescriptorBuilder;
 import seedu.address.testutil.TaskBuilder;
 
+//@@author raisa2010
 /**
- * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
+ * Contains integration tests (interaction with the Model) and unit tests for EditTaskCommand.
  */
-//TODO: Fix showFirstTaskOnly method
 public class EditTaskCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());

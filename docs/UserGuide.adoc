@@ -115,7 +115,7 @@ exact position as in the syntax, in this case, after the command word i.e. edit.
 
 To help you save time to remember all the commands in Mobilize, you can toggle between address book and task manager using:
 
-Format: `switchmode ab` or `switchmode tm`
+Format: `switch ab` or `switch tm`
 
 [NOTE]
 The default system of Mobilize will be address book.
@@ -219,6 +219,7 @@ __Constraints__
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
+[coming in v2.0]
 ==== Tagging multiple contacts : `tag` +
 
 Tags are a useful way of grouping and labeling contacts. But editing them manually, one by one, can be a tedious process.
@@ -365,7 +366,7 @@ Use prefixes:
 ****
 
 . The command follows: +
-Format: `add DESCRIPTION from START DATE to DEADLINE t/[TAG]…`
+Format: `add DESCRIPTION from START DATE by/on DEADLINE t/[TAG]…`
 
 . As the task is added to a new Task Card, the Result Display shows:
 `Task has been added: DESCRIPTION From: START DATE To: DEADLINE Tags: [TAG]`
@@ -382,7 +383,7 @@ A person can opt to leave out a single or all dates.
 
 Examples:
 
-* `add recess week from tomorrow to 15 Sep`
+* `add recess week from tomorrow by 15 Sep`
 Sets the description to "recess week" start date to the next day and the deadline to the 15th of September in the current or upcoming year.
 
 * `add get groceries`
@@ -496,7 +497,7 @@ Format: `list`
 ==== Selecting a task: `select`
 
 To select the task identified by the index number used in the last task listing, use: +
-Formate: `select INDEX`
+Format: `select INDEX`
 
 ****
 * Selects the task at the specified `INDEX`.
@@ -512,6 +513,11 @@ Selects the 2nd task in the task manager.
 * `find finish` +
 `select 1` +
 Selects the 1st task in the results of the `find` command.
+
+[NOTE]
+====
+The selected task will show involved people in the address book. If there are no involved personnel, there will be no changes in the displayed list of contacts.
+====
 
 === Managing Common Features
 
@@ -624,8 +630,8 @@ The correct usage of all commands is summarized in the next section.
 
 == Command Summary
 
-* *Switch Modes* : `switchmode MODE` +
-e.g. `switchmode ab` or `switchmode tm`
+* *Switch Modes* : `switch MODE` +
+e.g. `switch ab` or `switch tm`
 
 __AddressBook__
 

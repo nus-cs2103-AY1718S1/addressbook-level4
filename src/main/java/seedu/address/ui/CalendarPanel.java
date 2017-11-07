@@ -36,6 +36,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.task.ReadOnlyTask;
 
+//@@author tpq95
 /**
  * The CalendarPanel panel of the App.
  */
@@ -183,48 +184,48 @@ public class CalendarPanel extends UiPart<Region> {
                         }
                         for (ReadOnlyTask task: taskList) {
                             String taskDate = "";
-                            try {
-                                if (!task.getDeadline().isEmpty()) {
+                            if (!task.getDeadline().isEmpty()) {
+                                try {
                                     Date deadline = ParserUtil.parseDate(task.getDeadline().date);
                                     DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
                                     taskDate = dateFormat.format(deadline);
+                                } catch (IllegalValueException e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (IllegalValueException e) {
-                                e.printStackTrace();
-                            }
-                            String finalTaskDate = taskDate;
-                            try {
-                                //ensure that Deadline/Startdate is valid, after computer is invented
-                                assert LocalDate.parse(finalTaskDate, formatter).getYear()
-                                        >= (LocalDate.now().getYear() - 100);
-                                if (item.equals(LocalDate.parse(finalTaskDate, formatter))) {
-                                    if ((bCount == 0) && (dCount == 0)) {
-                                        dCount++;
-                                        s.append(dCount + " Deadline");
-                                    } else if ((bCount > 0) && (dCount == 0)) {
-                                        dCount++;
-                                        s.append(" + " + dCount + " Deadline");
-                                    } else if (dCount > 0) {
-                                        dCount++;
-                                        int endIndex = s.indexOf(" Deadline");
-                                        s.replace(endIndex - 1, endIndex, dCount + "");
-                                        if (dCount == 2) {
-                                            s.append("s");
+                                String finalTaskDate = taskDate;
+                                try {
+                                    //ensure that Deadline/Startdate is valid, after computer is invented
+                                    assert LocalDate.parse(finalTaskDate, formatter).getYear()
+                                            >= (LocalDate.now().getYear() - 100);
+                                    if (item.equals(LocalDate.parse(finalTaskDate, formatter))) {
+                                        if ((bCount == 0) && (dCount == 0)) {
+                                            dCount++;
+                                            s.append(dCount + " Deadline");
+                                        } else if ((bCount > 0) && (dCount == 0)) {
+                                            dCount++;
+                                            s.append(" + " + dCount + " Deadline");
+                                        } else if (dCount > 0) {
+                                            dCount++;
+                                            int endIndex = s.indexOf(" Deadline");
+                                            s.replace(endIndex - 1, endIndex, dCount + "");
+                                            if (dCount == 2) {
+                                                s.append("s");
+                                            }
+                                        }
+
+                                        if (bCount == 0) {
+                                            colour = new StringBuilder("-fx-background-color: #ff444d;");
+                                        } else {
+                                            colour = new StringBuilder("-fx-background-color: #feff31;");
                                         }
                                     }
-
-                                    if (bCount == 0) {
-                                        colour = new StringBuilder("-fx-background-color: #ff444d;");
-                                    } else {
-                                        colour = new StringBuilder("-fx-background-color: #feff31;");
-                                    }
+                                } catch (DateTimeParseException exc) {
+                                    logger.warning("Not parsable: " + task.getDeadline().date);
+                                    throw exc;
                                 }
-                            } catch (DateTimeParseException exc) {
-                                logger.warning("Not parsable: " + finalTaskDate);
-                                throw exc;
                             }
                         }
-                        if (s.length() == 0) {
+                        if (s.length() != 0) {
                             setTooltip(new Tooltip(s.toString()));
                         }
                         setStyle(colour.toString());

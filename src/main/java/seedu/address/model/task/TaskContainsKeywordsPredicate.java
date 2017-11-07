@@ -11,6 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.ParserUtil;
 
+//@@author tby1994
 /**
  * Tests that a {@code ReadOnlyTask}'s {@code Description} and/or {@code Deadline} matches any of the keywords given.
  */
@@ -26,14 +27,15 @@ public class TaskContainsKeywordsPredicate implements Predicate<ReadOnlyTask> {
         String testDate = "";
         String tag = Arrays.toString(task.getTags().toArray())
                 .replaceAll("[\\[\\](),{}]", "");
-        try {
-            if (!task.getDeadline().isEmpty()) {
+
+        if (!task.getDeadline().isEmpty()) {
+            try {
                 Date date = ParserUtil.parseDate(task.getDeadline().date);
                 DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 testDate = dateFormat.format(date);
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
             }
-        } catch (IllegalValueException e) {
-            e.printStackTrace();
         }
         String finalTestDate = testDate;
         return keywords.stream()

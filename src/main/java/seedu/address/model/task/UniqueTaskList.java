@@ -2,6 +2,7 @@ package seedu.address.model.task;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 
+//@@author raisa2010
 /**
  * A list of tasks that enforces uniqueness between its elements and does not allow nulls.
  *
@@ -39,7 +41,7 @@ public class UniqueTaskList implements Iterable<Task> {
     /**
      * Adds a task to the list.
      *
-     * @throws DuplicateTaskException if the person to add is a duplicate of an existing task in the list.
+     * @throws DuplicateTaskException if the task to add is a duplicate of an existing task in the list.
      */
     public void add(ReadOnlyTask toAdd) throws DuplicateTaskException {
         requireNonNull(toAdd);
@@ -52,7 +54,7 @@ public class UniqueTaskList implements Iterable<Task> {
     /**
      * Replaces the task {@code target} in the list with {@code editedTask}.
      *
-     * @throws DuplicateTaskException if the replacement is equivalent to another existing person in the list.
+     * @throws DuplicateTaskException if the replacement is equivalent to another existing task in the list.
      * @throws TaskNotFoundException if {@code target} could not be found in the list.
      */
     public void setTask(ReadOnlyTask target, ReadOnlyTask editedTask)
@@ -72,7 +74,7 @@ public class UniqueTaskList implements Iterable<Task> {
     }
 
     /**
-     * Removes the equivalent person from the list.
+     * Removes the equivalent task from the list.
      *
      * @throws TaskNotFoundException if no such task could be found in the list.
      */
@@ -86,7 +88,6 @@ public class UniqueTaskList implements Iterable<Task> {
     }
 
     public void setTasks(UniqueTaskList replacement) {
-
         this.internalList.setAll(replacement.internalList);
     }
 
@@ -102,12 +103,23 @@ public class UniqueTaskList implements Iterable<Task> {
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<ReadOnlyTask> asObservableList() {
+        sortTasks(internalList);
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
+    //@@author tpq95
+    /**
+     * Sorts the internal list according to the {@code TaskComparator}.
+     * With the format: tasks with expired deadline, task with closer deadlines
+     *                  tasks with null deadline...
+     */
+    private void sortTasks(ObservableList<Task> tasks) {
+        Collections.sort(tasks, new TaskComparator());
+    }
+    //@@author
+
     @Override
     public Iterator<Task> iterator() {
-
         return internalList.iterator();
     }
 
@@ -120,7 +132,6 @@ public class UniqueTaskList implements Iterable<Task> {
 
     @Override
     public int hashCode() {
-
         return internalList.hashCode();
     }
 

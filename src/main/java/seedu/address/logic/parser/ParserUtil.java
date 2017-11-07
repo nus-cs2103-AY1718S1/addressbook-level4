@@ -95,6 +95,7 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
+    //@@author eryao95
     /**
      * Parses a {@code Optional<String> birthday} into an {@code Optional<birthday>} if {@code birthday} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -103,7 +104,7 @@ public class ParserUtil {
         requireNonNull(birthday);
         return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
     }
-
+    //@@author
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
@@ -116,9 +117,10 @@ public class ParserUtil {
         return tagSet;
     }
 
+    //@@author raisa2010
     /**
-     * Parses a {@code Optional<String> DESCRIPTION} into an {@code Optional<Description>} if {@code name} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
+     * Parses a {@code Optional<String> description} into an {@code Optional<Description>} if {@code description}
+     * is present.
      */
     public static Optional<Description> parseDescription(String description) throws IllegalValueException {
         requireNonNull(description);
@@ -128,7 +130,6 @@ public class ParserUtil {
 
     /**
      * Parses a {@code Optional<String> date} into an {@code Optional<StartDate>} if {@code date} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<StartDate> parseStartDate(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
@@ -143,7 +144,6 @@ public class ParserUtil {
 
     /**
      * Parses a {@code Optional<String> date} into an {@code Deadline} if {@code date} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Deadline> parseDeadline(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
@@ -158,7 +158,6 @@ public class ParserUtil {
 
     /**
      * Parses a {@code String naturalLanguageInput} using PrettyTime NLP, into a {@code Date}.
-     * Guarantees: is valid as declared in {@link TaskDates#isDateValid(String)}
      * @throws IllegalValueException if the date cannot be parsed from the phrase or if the given date is invalid.
      */
     public static Date parseDate(String naturalLanguageInput) throws IllegalValueException {

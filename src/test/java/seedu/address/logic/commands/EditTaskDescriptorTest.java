@@ -11,9 +11,12 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_NOT_URGENT;
 
 import org.junit.Test;
 
+import seedu.address.logic.commands.tasks.EditTaskCommand;
 import seedu.address.testutil.EditTaskDescriptorBuilder;
 
+//@@author raisa2010
 public class EditTaskDescriptorTest {
+
     @Test
     public void equals() {
         // same values -> returns true

@@ -17,7 +17,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
     public PersonContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
-
+    //@@author eryao95
     @Override
     public boolean test(ReadOnlyPerson person) {
         String tag = Arrays.toString(person.getTags().toArray())
@@ -27,7 +27,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
                 || StringUtil.containsWordIgnoreCase(tag, keyword)
                 || StringUtil.containsWordIgnoreCase(person.getBirthday().value, keyword));
     }
-
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
