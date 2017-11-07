@@ -56,11 +56,8 @@ public class EditCommandTest {
         EditCommand editCommand = prepareCommand(INDEX_SECOND_PERSON, descriptor);
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
-        String expectedMessage = String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.NAME_FIELD + ", " + UndoableCommand.PHONE_FIELD + ", "
-                        + UndoableCommand.ADDRESS_FIELD + ", " + UndoableCommand.EMAIL_FIELD);
-
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(editCommand, model, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
+                UndoableCommand.NAME_FIELD), expectedModel);
     }
 
     @Test

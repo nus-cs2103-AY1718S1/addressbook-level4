@@ -82,16 +82,18 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORDVAR_2 + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
         expectedModel = getModel();
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
+                UndoableCommand.NAME_FIELD));
 
-        /* Case: add a duplicate person except with different tags -> rejected */
+        /* Case: add a duplicate person except with different tags -> Prompt Message */
+        // "friends" is an existing tag used in the default model, see TypicalPersons#ALICE
+        // This test will fail is a new tag that is not in the model is used, see the bug documented in
+        // AddressBook#addPerson(ReadOnlyPerson)
         command = AddCommand.COMMAND_WORDVAR_1 + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + " " + PREFIX_TAG.getPrefix() + "friends";
         expectedModel = getModel();
         assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.NAME_FIELD + ", " + UndoableCommand.PHONE_FIELD + ", " + UndoableCommand.ADDRESS_FIELD + ", " +
-                        UndoableCommand.EMAIL_FIELD));
-
+                UndoableCommand.NAME_FIELD));
 
         /* Case: add a person with all fields same as another person in the address book except name
          * -> Duplicate Phone Message Prompt
@@ -100,7 +102,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
         expectedModel = getModel();
         assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.PHONE_FIELD + ", " + UndoableCommand.ADDRESS_FIELD + ", " + UndoableCommand.EMAIL_FIELD));
+                UndoableCommand.PHONE_FIELD));
 
         /* Case: add a person with all fields same as another person in the address book except phone
          *  -> Duplicate Name Message Prompt*/
@@ -108,8 +110,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
         expectedModel = getModel();
         assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.NAME_FIELD + ", " + UndoableCommand.ADDRESS_FIELD + ", " +
-                        UndoableCommand.EMAIL_FIELD));
+                UndoableCommand.NAME_FIELD));
 
         /* Case: filters the person list before adding -> added */
         executeCommand(FindCommand.COMMAND_WORDVAR_2 + " " + KEYWORD_MATCHING_MEIER);
