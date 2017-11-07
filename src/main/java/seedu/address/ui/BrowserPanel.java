@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import com.google.common.eventbus.Subscribe;
+
 import javafx.application.Platform;
 import javafx.concurrent.Worker;
 import javafx.event.Event;
