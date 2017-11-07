@@ -1,5 +1,9 @@
 package seedu.address.ui;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -15,8 +19,8 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowCalendarRequestEvent;
 import seedu.address.commons.events.ui.ShowEmailRequestEvent;
-import seedu.address.model.person.Address;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.address.Address;
 
 /**
  * The Browser Panel of the App.
@@ -78,10 +82,23 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     /**
-     * Opens the email window in the browser panel.
+     * Opens the email window in the browser panel for windows or Ubuntu.
      */
-    public void loadEmail() {
-        loadPage("https://www.google.com/gmail/");
+    public void loadEmail() throws URISyntaxException, IOException {
+
+        if (Desktop.isDesktopSupported()) {
+            Desktop desktop = Desktop.getDesktop();
+            if (desktop.isSupported(Desktop.Action.MAIL)) {
+                try {
+                    URI mailto = new URI("mailto:?subject=Hello%20World");
+                    desktop.mail(mailto);
+                } catch (URISyntaxException | IOException e) {
+                    e.printStackTrace();
+
+                }
+            }
+
+        }
     }
 
     /**
@@ -107,7 +124,7 @@ public class BrowserPanel extends UiPart<Region> {
 
     //@@author jin-ting
     @Subscribe
-    private void handleEmailRequestEvent(ShowEmailRequestEvent event) {
+    private void handleEmailRequestEvent(ShowEmailRequestEvent event) throws IOException, URISyntaxException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadEmail();
     }

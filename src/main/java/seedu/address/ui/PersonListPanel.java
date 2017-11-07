@@ -69,6 +69,10 @@ public class PersonListPanel extends UiPart<Region> {
         });
     }
 
+    /**
+     * Handles a {@code JumpToListRequestEvent} by scrolling to the index indicated by {@code event}.
+     * @param event A {@code JumpToListRequestEvent} posted to the EventBus.
+     */
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

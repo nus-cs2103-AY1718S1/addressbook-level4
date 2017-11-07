@@ -27,6 +27,8 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     private List<XmlAdaptedSchedule> schedules;
     @XmlElement
     private List<XmlAdaptedTag> tags;
+    @XmlElement
+    private List<XmlAdaptedSchedule> schedulesToRemind;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -36,6 +38,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         persons = new ArrayList<>();
         schedules = new ArrayList<>();
         tags = new ArrayList<>();
+        schedulesToRemind = new ArrayList<>();
     }
 
     /**
@@ -46,6 +49,8 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         schedules.addAll(src.getScheduleList().stream().map(XmlAdaptedSchedule::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+        schedulesToRemind.addAll(src.getScheduleToRemindList().stream().map(XmlAdaptedSchedule::new)
+                .collect(Collectors.toList()));
     }
 
     @Override
@@ -75,6 +80,21 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(schedules);
+    }
+
+    //@@author 17navasaw
+    @Override
+    public ObservableList<Schedule> getScheduleToRemindList() {
+        final ObservableList<Schedule> schedulesToRemind = this.schedulesToRemind.stream().map(schedule -> {
+            try {
+                return schedule.toModelType();
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+                //TODO: better error handling
+                return null;
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(schedulesToRemind);
     }
 
     //@@author
