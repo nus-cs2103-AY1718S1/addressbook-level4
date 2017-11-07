@@ -70,6 +70,9 @@ public class EventTime {
                 && isValidDay(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
     }
 
+    /**
+     * Checks for valid event time.
+     */
     public static boolean isValidEventTime(String eventTime) {
         String trimmedTime = eventTime.trim();
         if (!isValidFormat(trimmedTime)) {
