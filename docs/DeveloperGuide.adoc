@@ -805,6 +805,7 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
 **Pros:** It is efficient for the user +
 **Cons:** Difficult to implement.
 // end::tagadd[]
+
 // tag::delete[]
 === Improvements on DeleteCommand
 
@@ -941,8 +942,6 @@ The way we deal with recycle bin storage is the same as we deal with addressbook
 
 [NOTE]
 If we find duplicate people when moving a person to recyclebin or moving a person to addressbook, then this person will be omitted and directly remove.
-
-
 // end::bin[]
 
 // tag::export[]
@@ -952,7 +951,6 @@ We are using 'java.io.File' and 'java.io.FileWriter' to export address book data
 
 * The filepath should be a complete path to a specific location of a empty txt file in your computer.
 * The order of the output information is 'person', 'tag', 'event';
-
 // end::export[]
 
 === Logging

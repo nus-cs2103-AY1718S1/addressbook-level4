@@ -59,6 +59,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 [NOTE]
 iConnect will be referred to as *address book* in the following documentation.
+
 // tag::help[]
 === Viewing help : `help` _[Since v1.3]_
 
@@ -77,6 +78,7 @@ Shows the usage of command `list`
 * `help add` +
 Shows the usage of command `add`
 // end::help[]
+
 === Adding a person: `add` _[Since v1.1]_
 
 _Alias:_ `create` `put`
@@ -188,6 +190,7 @@ Returns list of persons sorted by name added in ascending order
 Returns list of persons sorted by phone in ascending order
 * `sort t/DSC` +
 Returns list of persons sorted by time added in descending order
+
 // tag::delete[]
 === Deleting a person : `delete` _[Since v1.2]_
 If you want to keep your person list clean, just using delete command to remove some people to bin.
@@ -221,6 +224,7 @@ Deletes the 2nd and 3rd person in the address book
 `delete 1` +
 Deletes the 1st person in the results of the `find` command
 // end::delete[]
+
 === Adding a tag to a person(s) : `t-add` _[Since v1.1]_
 
 Adds tag to specified person(s) from the address book.
@@ -565,9 +569,7 @@ Delete the 1st and 2nd person in the bin-list
 Clears all entries in the bin.
 
 Format: `clear-bin`
-<<<<<<< HEAD
 // end::bin[]
-=======
 
 // tag::birthday[]
 === Adding the birthday to a person : `b-add` _[Since v1.4]_
