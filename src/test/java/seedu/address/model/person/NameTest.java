@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -25,6 +26,7 @@ public class NameTest {
         assertTrue(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
     }
 
+    //@@author DarrenCzen
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
         // equals and hashCode check name field value
@@ -33,4 +35,15 @@ public class NameTest {
         assertTrue(nameX.equals(nameY) && nameY.equals(nameX));
         assertTrue(nameX.hashCode() == nameY.hashCode());
     }
+
+    @Test
+    public void testCapitaliseMethod() throws IllegalValueException {
+        String name = "peter jack";
+        String expectedName = "Peter Jack";
+        assertTrue(Name.isValidName(name)); // alphabets only
+
+        String newName = Name.toCapitalized(name);
+        assertEquals(newName.toString(), expectedName.toString());
+    }
+    //@@author
 }

@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -30,14 +31,21 @@ public interface Model {
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
+    //@@author chernghann
     /** Adds the given event */
     void addEvent(ReadOnlyEvent event) throws DuplicateEventException;
+    //@@author
 
+    /** Deletes the given event */
+    void deleteEvent(ReadOnlyEvent event) throws EventNotFoundException;
+
+    // @@author itsdickson
     /** Favourites the given person */
     void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /** Unfavourites the given person */
     void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+    // @@author
 
     void updateSelectedPerson(ReadOnlyPerson person);
 
@@ -60,9 +68,12 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
+    //@@author chernghann
     /** Returns an unmodifiable view of the filtered event list */
     ObservableList<ReadOnlyEvent> getFilteredEventList();
+    //@@author
 
+    // @@author itsdickson
     /** Returns the themes list */
     ArrayList<String> getThemesList();
 
@@ -71,6 +82,7 @@ public interface Model {
 
     /** Returns the current theme */
     String getCurrentTheme();
+    // @@author
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
@@ -78,11 +90,13 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    //@@author chernghann
     /**
      * Updates the filter of the filtered events list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate);
+    //@@author
 
     /** Sorts the address book person list */
     void sort();

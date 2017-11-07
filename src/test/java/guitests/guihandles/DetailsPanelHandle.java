@@ -8,6 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 
+//@@author archthegit
+
 /**
  * A handle to the {@code DetailsPanel} of the application.
  */

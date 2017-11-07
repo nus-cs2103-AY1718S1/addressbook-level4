@@ -1,5 +1,6 @@
 package seedu.address.model.event;
 
+//@@author chernghann
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
