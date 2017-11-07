@@ -1,8 +1,11 @@
 //@@author Hailinx
 package seedu.address.model.person;
 
+import static seedu.address.model.util.TimeConvertUtil.convertTimeToString;
 import static seedu.address.testutil.TodoItemUtil.EARLY_TIME_ONE;
 import static seedu.address.testutil.TodoItemUtil.LATE_TIME_ONE;
+import static seedu.address.testutil.TodoItemUtil.getTodoItemOne;
+import static seedu.address.testutil.TodoItemUtil.getTodoItemThree;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -40,5 +43,16 @@ public class TodoItemTest {
         } catch (IllegalValueException e) {
             Assert.assertEquals(e.getMessage(), TodoItem.MESSAGE_TODOITEM_CONSTRAINTS);
         }
+    }
+
+    @Test
+    public void test_getTimeString() {
+        TodoItem todoItemWithEndTime = getTodoItemOne();
+        Assert.assertEquals(todoItemWithEndTime.getTimeString(),
+                "From: " + convertTimeToString(EARLY_TIME_ONE) + "   To: " + convertTimeToString(LATE_TIME_ONE));
+
+        TodoItem todoItemWithoutEndTime = getTodoItemThree();
+        Assert.assertEquals(todoItemWithoutEndTime.getTimeString(),
+                "From: " + convertTimeToString(EARLY_TIME_ONE));
     }
 }
