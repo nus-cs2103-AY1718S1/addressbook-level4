@@ -114,7 +114,7 @@ Examples:
 
 === Modifying contacts
 
-==== Adding a person: `add`
+==== Adding a person: `add` [Last updated in v1.3]
 
 => Alias: `a` <=
 
@@ -124,14 +124,18 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [e/UNIQUE EMAIL]... a/ADDRESS [t/TAG]
 [TIP]
 A person can have any number of tags (including 0).
 A person must have at least 1 email.
-
-[NOTE]
 ADDRESS needs to follow the format: `BLOCK, STREET, [UNIT,] POSTAL CODE` with `UNIT` being an optional parameter.
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/123, John street, #01-01, Singapore 407989`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/12, Newgate Prison, IL 043 p/1234567 t/criminal`
+
+[INFO]
+This feature allows the adding of more than 1 EMAIL for a person since v1.3.
+
+[INFO]
+This feature restricts the ADDRESS to the format: `BLOCK, STREET, [UNIT,] POSTAL CODE` since v1.3.
 
 ==== Editing a person : `edit`
 
@@ -140,7 +144,7 @@ Examples:
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]... [a/ADDRESS] [t/TAG]...`
 
-[NOTE]
+[TIP]
 Ensure that you have input the correct prefix [n/NAME] , [p/PHONE] , [e/EMAIL]  , [a/ADDRESS] ,  [t/TAG]
 
 ****
@@ -158,7 +162,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-==== Deleting person(s) : `delete`
+==== Deleting person(s) : `delete` [Last updated in v1.1]
 
 => Alias: `d` <=
 
@@ -166,11 +170,14 @@ Deletes the specified person(s) from the address book. +
 Format: `delete INDEX [UNIQUE INDEX]...`
 
 ****
-* Deletes the people at the specified `INDEX`.
+* Deletes the people at the specified index or indices.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 * If there is more than one index, the indices indicated must be different from each other.
 ****
+
+[INFO]
+This feature allows the deleting of more than 1 person since v1.1.
 
 Examples:
 
@@ -275,7 +282,7 @@ Locates the 1st person's address in the results of the `find` command.
 => Alias: `sc` <=
 
 Schedules an activity with person(s) specified by the index number(s). +
-Format: `schedule INDEX [INDEX]... d/DATE act/ACTIVITY`
+Format: `schedule INDEX [UNIQUE INDEX]... d/DATE act/ACTIVITY`
 
 ****
 * DATE must follow DD-MM-YYYY format
