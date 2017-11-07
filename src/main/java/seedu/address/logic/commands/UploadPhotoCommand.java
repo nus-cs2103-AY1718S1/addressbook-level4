@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
-import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seedu.address.commons.core.EventsCenter;
@@ -42,7 +41,6 @@ public class UploadPhotoCommand extends Command {
     private final String filePath;
     private final FileChooser fileChooser = new FileChooser();
     private Stage stage;
-    private ImageView imageView = new ImageView();
 
     public UploadPhotoCommand(Index targetIndex, String filePath) {
         this.targetIndex = targetIndex;
