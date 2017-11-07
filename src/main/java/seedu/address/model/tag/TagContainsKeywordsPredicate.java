@@ -1,11 +1,11 @@
 package seedu.address.model.tag;
 
-import seedu.address.commons.util.PartialSearchUtil;
-import seedu.address.model.person.ReadOnlyPerson;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
+
+import seedu.address.commons.util.PartialSearchUtil;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
