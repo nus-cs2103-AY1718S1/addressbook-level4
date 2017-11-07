@@ -72,7 +72,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void setPersonAvatar(ReadOnlyPerson target, Avatar avatar) throws PersonNotFoundException {
+    public void setPersonAvatar(ReadOnlyPerson target, Avatar avatar) {
         fail("This method should not be called.");
     }
 
