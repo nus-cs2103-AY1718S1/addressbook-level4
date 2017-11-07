@@ -17,14 +17,16 @@ By: `Team Rolodex`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
 
-Rolodex is a desktop contact management application for users who prefer working without a mouse to manage their contacts more efficiently.
-If you are a businessmen with a list of clients to remember, a teacher who wants to organize their student information, or anyone with a need for contact
-management, Rolodex provides you with a way to organize your important contacts in a fast and productive manner.
+Rolodex is a desktop contact management application for people who have many social circles and wish to organise different groups of contacts separately and efficiently. +
+If you are a businessmen with a long list of clients to keep in touch with, a teacher with the contact information of hundreds of students in your phone,
+a freelancer with multiple groups of co-workers or customers, or just anyone with a need for fast and easy contact management, Rolodex is perfect for you.
 
 == Quick Start
 
 This section serves as a tutorial for you to familiarize yourself with the usage of Rolodex.
 By following the steps below, getting started with Rolodex should be a fast and smooth process.
+
+=== Installation
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -34,14 +36,31 @@ Rolodex will not work with earlier versions of Java 8.
 +
 .  Download the latest `rolodex.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Rolodex.
-.  Double-click the file to start the app. You should see the GUI in a few seconds as shown below.
+.  Double-click the file to start the app. You should see the GUI (Graphical User Interface) in a few seconds as shown below.
 +
 image::Ui.png[width="790"]
-+
+
+=== User Interface
+
 The following picture labels the main components of the application.
-+
+
 image::UiLabeled.png[width="790"]
-+
+
+The table below summarises the function of each component.
+
+[width=100%, cols="1,3"]
+|===
+
+| Command Box | This is where you type in your commands to tell Rolodex to perform actions.
+| Command Result Panel | After entering a command, the feedback/result will be displayed here. +
+This is to notify you whether the command is valid, and to inform you if the action has been executed successfully.
+| Contact List | All contacts are listed here in alphabetical order by default. +
+When you perform a search action, the search result will be displayed here.
+| Contact Detail Panel | When you select a contact in Contact List, his/her details (name, phone number, email, address, tags and remark) will be displayed here.
+|===
+
+=== Executing Commands
+
 .  Type the command (case insensitive) in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
@@ -51,7 +70,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to Rolodex.
 
 [TIP]
-The standard format for keying in person details is `PREFIX/PERSON_DETAIL` (e.g. n/John Doe for keying in a name). +
+The standard format for keying in person details is `PREFIX/PERSON_DETAIL` (e.g. `n/John Doe` for keying in a name). +
 The following table summarizes the prefixes and the corresponding person details they represent. +
 
 [width=30%, cols="2,3"]
