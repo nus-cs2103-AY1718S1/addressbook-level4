@@ -398,7 +398,7 @@ image::UG_find3.png[width="590"]
 {sp}+
 
 image::divider.png[width="900"]
-// end::tag[]
+// end::find[]
 
 === Deleting a person : `delete`
 image::UG_commandheader_delete.png[width="500"]

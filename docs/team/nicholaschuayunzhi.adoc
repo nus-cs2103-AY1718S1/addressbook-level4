@@ -9,6 +9,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W11-B4/main/blob/master/collated/main/nicholaschuayunzhi.md[Functional code]] [https://github.com/CS2103AUG2017-W11-B4/main/blob/master/collated/test/nicholaschuayunzhi.md[Test code]] {give links to collated code files}
 
+=== image:engsheng_header_enhancementadded.png[width="900"]
 === Enhancement Added: Find by Details
 
 ==== External behavior
