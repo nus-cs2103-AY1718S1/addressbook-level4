@@ -1,0 +1,21 @@
+package seedu.address.commons.events.ui;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.BaseEvent;
+
+/**
+ * Indicates a request to display the address of a person in Google Maps
+ */
+public class ShowLocationRequestEvent extends BaseEvent {
+
+    public final int targetIndex;
+
+    public ShowLocationRequestEvent(Index targetIndex) {
+        this.targetIndex = targetIndex.getZeroBased();
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
