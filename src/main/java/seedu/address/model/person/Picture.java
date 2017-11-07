@@ -75,7 +75,7 @@ public class Picture {
             // in that case just put PICTURE_IMAGE_LOCATION to find it
             if (split.length != 1) {
 
-                File src = new File(fileLocation);
+                File src = new File(trimmedFileLocation);
                 File dest = new File(PICTURE_SAVE_LOCATION + fileName);
 
                 // If file is too big, resize it.

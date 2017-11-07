@@ -14,26 +14,25 @@ DeathNote is a desktop address book application used for teaching Software Engin
 === External behavior
 
 ---
-#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide]#
 
-include::../UserGuide.adoc[tag=alias]
+Profile picture shows the face of contact.
 
-#End of Extract#
-
----
+image::../images/personCard.png[]
 
 === Justification
 
 ---
 
+Adding picture to a contact reminds you who and how your contact looks.
+
 === Implementation
 
 ---
-#Start of Extract [from: Developer Guide]#
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide] written by Jeremy Chan#
+
+include::../DeveloperGuide.adoc[tag=profilepicture]
 
 #End of Extract#
-
----
 
 == Enhancement Added: Themes
 
@@ -42,24 +41,24 @@ include::../UserGuide.adoc[tag=alias]
 ---
 #Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide]#
 
-include::../UserGuide.adoc[tag=openbook]
+include::../UserGuide.adoc[tag=theme]
 
 #End of Extract#
-
----
 
 === Justification
 
 ---
 
+Theme is added so that we can disguise our Death Note (gamification of our application).
+
 === Implementation
 
 ---
-#Start of Extract [from: Developer Guide]#
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide] written by Jeremy Chan#
+
+include::../DeveloperGuide.adoc[tag=theme]
 
 #End of Extract#
-
----
 
 == Enhancement Added: Website
 
@@ -68,20 +67,22 @@ include::../UserGuide.adoc[tag=openbook]
 ---
 #Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide]#
 
-include::../UserGuide.adoc[tag=openbook]
+include::../UserGuide.adoc[tag=website]
 
 #End of Extract#
-
----
 
 === Justification
 
 ---
 
+Having a website so that we can see our contact's website if he or she is a professional contact.
+
 === Implementation
 
 ---
-#Start of Extract [from: Developer Guide]#
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=website]
 
 #End of Extract#
 
@@ -92,53 +93,49 @@ include::../UserGuide.adoc[tag=openbook]
 === External behavior
 
 ---
-#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide]#
 
-include::../UserGuide.adoc[tag=openbook]
+Tags are shown in different colors
 
-#End of Extract#
-
----
+image::../images/tagcolor.png[]
 
 === Justification
 
 ---
 
+We have colors for tags so it is easier to distinguish different tags.
+
 === Implementation
 
 ---
-#Start of Extract [from: Developer Guide]#
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=tagcolor]
 
 #End of Extract#
-
----
 
 == Enhancement Added: Shown list to be sorted
 
 === External behavior
 
 ---
-#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide]#
 
-include::../UserGuide.adoc[tag=openbook]
-
-#End of Extract#
-
----
+List is sorted by name alphabetically
 
 === Justification
 
 ---
 
+It is easier to look for contacts when the contacts are sorted.
+
 === Implementation
 
 ---
-#Start of Extract [from: Developer Guide]#
+#Start of Extract https://github.com/CS2103AUg2017-W10-B3/DeathNote/blob/master/docs/Developerguide.adoc[from: Developer Guide]#
+
+include::../Developerguide.adoc[tag=sortlist]
 
 #End of Extract#
 
----
-
 == Other contributions
 
-. Added travis to group repository
+. Increased test coverage from 87% to 88% (Pull request: https://github.com/CS2103AUG2017-W10-B3/main/pull/83[#86])

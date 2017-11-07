@@ -1,4 +1,4 @@
-= Death Note v1.4 - User Guide
+= Death Note v1.5rc - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -335,7 +335,7 @@ Clears all entries from Death Note.
   Format: `clear`
 
   Shorthand: `c`
-
+//tag::theme[]
 === Change theme of the application : `theme` kbd:[V2.0]
 Changes the theme of Death Note. +
 
@@ -348,8 +348,15 @@ Changes the theme of Death Note. +
 
 Current available themes:
 
-1. light
-2. dark
+* light
+
+image::lightTheme.png[width="200"]
+
+* dark
+
+image::darkTheme.png[width="200"]
+
+//end::theme[]
 
 === Exiting the program : `exit`
 
@@ -357,7 +364,7 @@ Exits Death Note. +
 
   Format: `exit`
 
-=== Open different Address Book kbd:[V2.0]
+=== Open new contact list kbd:[V2.0]
 //tag::openbook[]
 Opens another Death Note data file from within the application.
 
