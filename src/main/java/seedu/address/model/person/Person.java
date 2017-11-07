@@ -50,8 +50,9 @@ public class Person implements ReadOnlyPerson {
     }
 
     public Person(Name name, Phone phone, Email email, Address address, Favorite favorite,
-                  Set<Tag> tags, Set<SocialInfo> socialInfos, LastAccessDate lastAccessDate) {
-        this(name, phone, email, address, favorite, tags, socialInfos);
+                  DisplayPhoto displayPhoto, Set<Tag> tags, Set<SocialInfo> socialInfos,
+                  LastAccessDate lastAccessDate) {
+        this(name, phone, email, address, favorite, displayPhoto, tags, socialInfos);
         requireNonNull(lastAccessDate);
         this.lastAccessDate = new SimpleObjectProperty<>(lastAccessDate);
     }
