@@ -10,6 +10,7 @@ import seedu.address.model.person.AddressContainsKeywordsPredicate;
 import seedu.address.model.person.EmailContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.PhoneContainsKeywordsPredicate;
+import seedu.address.model.tag.TagContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -61,7 +62,10 @@ public class FindCommandParser implements Parser<FindCommand> {
             returnFindCommand = new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(keywords)));
             break;
         case " t/":
-            returnFindCommand = new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
+            returnFindCommand = new FindCommand(new TagContainsKeywordsPredicate(Arrays.asList(keywords)));
+            break;
+        case " p/":
+            returnFindCommand = new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(keywords)));
             break;
         default:
             break;
