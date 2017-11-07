@@ -9,10 +9,6 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class TogglePanelEvent extends BaseEvent {
 
-    public TogglePanelEvent() {
-
-    }
-
     @Override
     public String toString() {
         return this.getClass().getSimpleName();

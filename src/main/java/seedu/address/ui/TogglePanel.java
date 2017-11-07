@@ -48,13 +48,13 @@ public class TogglePanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleToggleSelectEvent(ToggleSelectEvent event) {
+    public void handleToggleSelectEvent(ToggleSelectEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         browserToFront();
     }
 
     @Subscribe
-    private void handleTogglePanelEvent(TogglePanelEvent event) {
+    public void handleTogglePanelEvent(TogglePanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         triggerToggle();
     }

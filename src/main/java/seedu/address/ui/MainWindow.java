@@ -43,7 +43,6 @@ public class MainWindow extends UiPart<Region> {
     private BrowserPanel browserPanel;
     private EventListPanel eventListPanel;
     private PersonListPanel personListPanel;
-    private TogglePanel togglePanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -51,13 +50,7 @@ public class MainWindow extends UiPart<Region> {
     private StackPane commandBoxPlaceholder;
 
     @FXML
-    private StackPane eventListPanelPlaceholder;
-
-    @FXML
     private MenuItem helpMenuItem;
-
-    @FXML
-    private StackPane informationBoardPlaceholder;
 
     @FXML
     private StackPane personListPanelPlaceholder;
@@ -135,11 +128,10 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
         //@@ leonchowwenhao
-        BrowserPanel browserPanel = new BrowserPanel();
+        browserPanel = new BrowserPanel();
 
         // @@author HouDenghao
         InformationBoard informationBoard = new InformationBoard();
-        //informationBoardPlaceholder.getChildren().add(informationBoard.getRoot());
 
         // @@author
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
@@ -147,10 +139,9 @@ public class MainWindow extends UiPart<Region> {
 
         // @@author HouDenghao
         eventListPanel = new EventListPanel(logic.getFilteredEventList());
-        //eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
         //@@author leonchowwenhao
-        togglePanel = new TogglePanel(browserPanel, informationBoard, eventListPanel);
+        TogglePanel togglePanel = new TogglePanel(browserPanel, informationBoard, eventListPanel);
         togglePlaceHolder.getChildren().add(togglePanel.getRoot());
 
         // @@author
@@ -218,7 +209,7 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.show();
     }
 
-    void releaseResources() {
+    private void releaseResources() {
         browserPanel.freeResources();
     }
 

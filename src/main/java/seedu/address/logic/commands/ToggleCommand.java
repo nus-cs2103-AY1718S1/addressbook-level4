@@ -17,10 +17,6 @@ public class ToggleCommand extends Command {
 
     public static final String MESSAGE_TOGGLE_SUCCESS = "Successfully toggled.";
 
-    public ToggleCommand() {
-
-    }
-
     @Override
     public CommandResult execute() throws CommandException {
         EventsCenter.getInstance().post(new TogglePanelEvent());
