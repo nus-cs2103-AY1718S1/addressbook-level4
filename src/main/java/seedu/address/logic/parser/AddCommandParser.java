@@ -98,8 +98,8 @@ public class AddCommandParser implements Parser<AddCommand> {
         if (!input.contains("c/")) {
             input = input + " c/ (Postal code not recorded)";
         }
-        if (!input.contains("pp/")) {
-            input = input + " pp/ (Parent phone not recorded)";
+        if (!input.contains(" p/")) {
+            input = input + " p/ (Student phone not recorded)";
         }
         return input;
     }
