@@ -1,0 +1,49 @@
+= image:engsheng_header.png[width="900"]
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== image:engsheng_projectheader.png[width="900"]
+UNIFY is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W11-B4/main/blob/master/collated/main/hanselblack.md[Functional code]] [https://github.com/CS2103AUG2017-W11-B4/main/blob/master/collated/test/hanselblack.md[Test code]]
+
+=== image:engsheng_header_enhancementadded.png[width="900"]
+This section provides the list of enhancement that has been added to UNIFY address book.
+
+==== image:engsheng_header_music.png[width="500"]
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=musiccommand]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=musiccommand]
+
+#End of Extract#
+
+---
+
+=== image:engsheng_header_enhancementproposed.png[width="900"]
+=== Enhancement Proposed: Add command `remark`
+
+{Explain similar to the Undo/Redo feature above.}
+
+=== image:engsheng_header_contribution.png[width="900"]
+
+* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
