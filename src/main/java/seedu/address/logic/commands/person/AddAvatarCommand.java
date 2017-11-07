@@ -42,7 +42,7 @@ public class AddAvatarCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
-        person.setAvatar(avatar);
+        model.setPersonAvatar(person, avatar);
 
         return new CommandResult(String.format(MESSAGE_ADD_AVATAR_SUCCESS, person));
     }

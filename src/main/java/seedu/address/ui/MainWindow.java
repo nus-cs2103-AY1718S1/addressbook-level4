@@ -249,11 +249,6 @@ public class MainWindow extends UiPart<Region> {
         dataDetailsPanelPlaceholder.getChildren().clear();
         dataDetailsPanelPlaceholder.getChildren().add(new PersonDetailsPanel(person).getRoot());
     }
-
-    @Subscribe
-    private void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
-        dataDetailsPanelPlaceholder.getChildren().clear();
-    }
     //@@author
 
     /**
