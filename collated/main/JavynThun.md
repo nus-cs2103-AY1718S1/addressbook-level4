@@ -240,6 +240,36 @@ public class Occupation {
         return occupation.get();
     }
 ```
+###### \java\seedu\address\model\person\Person.java
+``` java
+    public void setRemark(Remark remark) {
+        this.remark.set(requireNonNull(remark));
+    }
+
+    @Override
+    public ObjectProperty<Remark> remarkProperty() {
+        return remark;
+    }
+
+    @Override
+    public Remark getRemark() {
+        return remark.get();
+    }
+
+    public void setWebsite(Website website) {
+        this.website.set(requireNonNull(website));
+    }
+
+    @Override
+    public ObjectProperty<Website> websiteProperty() {
+        return website;
+    }
+
+    @Override
+    public Website getWebsite() {
+        return website.get();
+    }
+```
 ###### \java\seedu\address\model\person\Remark.java
 ``` java
 /**

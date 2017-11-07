@@ -421,7 +421,7 @@ public class FindCommand extends Command {
 }
 ----
 
-A parse exception is thrown by the FindCommandParser if the user does not input any arguments. Suppose the User inputs `find betsy software engineer`. After the arguments have been detected in the parser classes, the FindCommandPredicate will check through the list to find the contacts whose name, address, email, number, occupation, website or remark contains any of the keywords given.
+A parse exception is thrown by the FindCommandParser if the user does not input any arguments. Suppose the User inputs `find betsy software engineer`. After the arguments have been detected in the parser classes, the FindCommandPredicate will check through the list to find the contacts whose name, address, email, number, occupation, website or remark contains any of the keywords given. A boolean function is used to check for the type of parameter the user has inputted.
 
 A noteworthy part to mention is that the find function in TheYellowPage is designed to check for every keyword, as such, keying in ambiguous keywords such as `block 42` for address is likely to return many contacts.
 
@@ -453,6 +453,18 @@ As our indexes are intended to take in multiple index values, we will use a `Str
 We will now create a `ArrayList<Index> arrayOfIndex = new ArrayList<Index>();` to store the indexes that we will need for the feature. We will store the indexes into the arraylist using a for loop. However, as the arguments in the `listOfIndex` arraylist is in a string format, we will need to convert them into an integer format before storing it into the `ArrayList<Index> arrayOfIndex`. This arrayList will be returned to the `DeleteMultipleCommand` class for use.
 
 In the `DeleteMultipleCommand` class, the commandResult method is used which compares the index with the `lastShownList` in the model, similar to the method used in the `deleteCommand`. However, as `DeleteMultipleCommand` is designed to take in multiple indexes, a for-loop is used to loop the commandResult method so as to check for every index within the arrayList. The names that are deleted will be stored inside a `String listOfDeletedContacts` which will be used to display the results on the UI.
+
+==== Design Considerations
+
+**Aspect:** Parameter of `DeleteMultipleCommand` +
+**Alternative 1 (current choice):** Keep the original delete by index +
+**Pros:** Keying in the delete multiple command and the required parameters is simple when using indexes as compared to other parameters such as name or address, which makes it simpler for the user to use. +
+**Cons:** Different logic flow as compared to the original delete command, which may make it slightly more difficult for new developers to get started on enhancing the feature. +
+**Alternative 2:** Delete multiple contacts by name +
+**Pros:** Deleting a contact by name might be better for some users as they may be able to remember their contact's name more easily compared to the other parameters. +
+**Cons:** Target users are HR professionals who have a lot of contacts to work with, thus deleting by name may not be the most efficient deletion method.
+
+---
 
 // end::deleteMultipleCommand[]
 
