@@ -1,5 +1,5 @@
 # Ernest
-###### /java/seedu/address/logic/commands/ListByBloodtypeCommandTest.java
+###### \java\seedu\address\logic\commands\ListByBloodtypeCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -76,7 +76,7 @@ public class ListByBloodtypeCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommandListByBloodtype() throws Exception {
@@ -87,7 +87,7 @@ public class ListByBloodtypeCommandTest {
         assertEquals(new ListByBloodtypeCommand(new BloodtypeContainsKeywordPredicate(keyword)), command);
     }
 ```
-###### /java/seedu/address/logic/parser/ParserUtilTest.java
+###### \java\seedu\address\logic\parser\ParserUtilTest.java
 ``` java
     @Test
     public void parseBloodTypeNullThrowsNullPointerException() throws Exception {
@@ -114,7 +114,7 @@ public class ListByBloodtypeCommandTest {
         assertEquals(expectedBloodType, actualBloodType.get());
     }
 ```
-###### /java/seedu/address/model/person/BloodtypeContainsKeywordPredicateTest.java
+###### \java\seedu\address\model\person\BloodtypeContainsKeywordPredicateTest.java
 ``` java
 public class BloodtypeContainsKeywordPredicateTest {
 
@@ -170,7 +170,7 @@ public class BloodtypeContainsKeywordPredicateTest {
     }
 }
 ```
-###### /java/seedu/address/model/person/BloodtypeTest.java
+###### \java\seedu\address\model\person\BloodtypeTest.java
 ``` java
 public class BloodtypeTest {
 
@@ -218,7 +218,7 @@ public class BloodtypeTest {
     }
 }
 ```
-###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
+###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
 ``` java
     /**
      * Sets the {@code Bloodtype} of the {@code EditPersonDescriptor} that we are building.
@@ -232,7 +232,7 @@ public class BloodtypeTest {
         return this;
     }
 ```
-###### /java/seedu/address/testutil/PersonBuilder.java
+###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
     /**
      * Sets the {@code Bloodtype} of the {@code Person} that we are building.
@@ -246,20 +246,20 @@ public class BloodtypeTest {
         return this;
     }
 ```
-###### /java/systemtests/AddCommandSystemTest.java
+###### \java\systemtests\AddCommandSystemTest.java
 ``` java
         /* Case: invalid bloodtype -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + INVALID_BLOODTYPE_DESC;
         assertCommandFailure(command, Bloodtype.MESSAGE_BLOODTYPE_CONSTRAINTS);
 ```
-###### /java/systemtests/EditCommandSystemTest.java
+###### \java\systemtests\EditCommandSystemTest.java
 ``` java
         /* Case: invalid bloodtype -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_BLOODTYPE_DESC,
                 Bloodtype.MESSAGE_BLOODTYPE_CONSTRAINTS);
 ```
-###### /java/systemtests/FindCommandSystemTest.java
+###### \java\systemtests\FindCommandSystemTest.java
 ``` java
         /* Case: find bloodtype of person in address book -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getBloodType().type;

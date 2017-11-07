@@ -59,9 +59,8 @@ public class EditCommandParser implements Parser<EditCommand> {
                     .ifPresent(editPersonDescriptor::setBloodType);
             ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK))
                     .ifPresent(editPersonDescriptor::setRemark);
-            ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).ifPresent(editPersonDescriptor::setDate);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
-        } catch (IllegalValueException | java.text.ParseException ive) {
+        } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
 

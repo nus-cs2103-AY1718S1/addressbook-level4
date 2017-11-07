@@ -69,8 +69,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //@@author Eric
-    public void addAppointment(Appointment appointment) throws PersonNotFoundException {
-        persons.addAppointment(appointment);
+    public void addAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
+        persons.addAppointment(target, appointment);
     }
     //@@author
 

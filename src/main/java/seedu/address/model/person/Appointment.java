@@ -9,40 +9,32 @@ import java.util.Date;
 
 //@@author Eric
 /**
- *  Appointment class to hold all the appointment information of an appointment
+ *  Appointment class to hold all the start and end time of the appointment and the description
  *  */
 public class Appointment {
 
-    public static final String DATE_FORMAT = "yyyy/MM/dd HH:mm";
+    private static final String DATE_FORMAT = "yyyy/MM/dd HH:mm";
     public static final DateFormat DATE_FORMATTER = new SimpleDateFormat(DATE_FORMAT);
 
-    private String personString;
+    private String description;
     private Date date;
-
-
-
     private Date endDate;
 
-    public Appointment(String person) {
-        this.personString = person;
-    }
-    public Appointment(String person, Calendar calendar) {
+    public Appointment(String description, Calendar calendar, Calendar calendarEnd) {
         requireNonNull(calendar);
-        Date date = calendar.getTime();
-        this.personString = person;
-        this.date = date;
+        requireNonNull(description);
+        this.description = description;
+        this.date = calendar.getTime();
+        if (calendarEnd != null) {
+            this.endDate = calendarEnd.getTime();
+        } else {
+            calendar.add(Calendar.HOUR, 1);
+            this.endDate = calendar.getTime();
+        }
     }
 
-    public Appointment(String person, Calendar calendar, Calendar calendarEnd) {
-        requireNonNull(calendar);
-        Date date = calendar.getTime();
-        this.personString = person;
-        this.date = date;
-        this.endDate = calendarEnd.getTime();
-    }
-
-    public String getPersonName() {
-        return this.personString;
+    public String getDescription() {
+        return this.description;
     }
 
     public Date getDate() {
@@ -57,15 +49,29 @@ public class Appointment {
         if (date != null) {
             return "Appointment on " + DATE_FORMATTER.format(date);
         } else {
-            return "No appointment set with " + personString;
+            return "No appointment";
         }
+    }
+
+    /**
+     * @return starting appointment time in the format yyyy/MM/dd HH:mm
+     */
+    public String getDateInStringFormat() {
+        return DATE_FORMATTER.format(date);
+    }
+
+    /**
+     * @return ending appointment time in the format yyyy/MM/dd HH:mm
+     */
+    public String getDateEndInStringFormat() {
+        return DATE_FORMATTER.format(endDate);
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Appointment // instanceof handles nulls
-                && this.personString.equals(((Appointment) other).personString)
-                && this.getDate().toInstant().equals(((Appointment) other).getDate().toInstant()));
+                && this.getDateInStringFormat().equals(((Appointment) other).getDateInStringFormat()))
+                && this.getDateEndInStringFormat().equals(((Appointment) other).getDateEndInStringFormat());
     }
 }

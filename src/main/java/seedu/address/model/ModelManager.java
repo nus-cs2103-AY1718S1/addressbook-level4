@@ -131,8 +131,8 @@ public class ModelManager extends ComponentManager implements Model {
      * Adds appointment for a contact in address book
      */
     @Override
-    public void addAppointment(Appointment appointment) throws PersonNotFoundException {
-        addressBook.addAppointment(appointment);
+    public void addAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
+        addressBook.addAppointment(target, appointment);
         indicateAddressBookChanged();
     }
 
@@ -142,10 +142,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<ReadOnlyPerson> listAppointment() {
-
         ObservableList<ReadOnlyPerson> list = addressBook.getPersonListSortByAppointment();
-
-
         return FXCollections.unmodifiableObservableList(list);
     }
 
