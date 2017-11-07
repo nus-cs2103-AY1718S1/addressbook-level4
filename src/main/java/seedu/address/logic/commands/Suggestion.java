@@ -74,7 +74,7 @@ public class Suggestion {
         // Custom parser for AddCommand.
         if (AddCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
             // TODO: try to match arguments with ALL person models, otherwise return null (maybe use AddCommandParser?)
-            
+
         // Custom parser for EditCommand.
         } else if (EditCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
             // TODO: try to match arguments with SOME person models, otherwise return null

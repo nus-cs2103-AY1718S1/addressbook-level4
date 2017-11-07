@@ -47,7 +47,7 @@ public class RolodexParser {
      * @return the command based on the user input
      * @throws ParseException if the user input does not conform the expected format
      */
-    public Command parseCommand(String userInput) throws ParseException, SuggestibleParseException { //{ // TODO re-enable: 
+    public Command parseCommand(String userInput) throws ParseException, SuggestibleParseException {
         Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
@@ -113,7 +113,8 @@ public class RolodexParser {
      * @throws SuggestibleParseException if tbe command word and arguments are suggestible,
      * @throws ParseException otherwise.
      */
-    private void handleSuggestion(String commandWord, String arguments) throws SuggestibleParseException, ParseException {
+    private void handleSuggestion(String commandWord, String arguments)
+            throws SuggestibleParseException, ParseException {
         suggestion = new Suggestion(commandWord, arguments);
         if (suggestion.isSuggestible()) {
             throw new SuggestibleParseException(suggestion.getPromptMessage());
