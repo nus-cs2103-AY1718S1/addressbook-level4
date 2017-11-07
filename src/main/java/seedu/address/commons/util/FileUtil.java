@@ -20,8 +20,11 @@ public class FileUtil {
     private static final Pattern UNIX_NAME_SEPARATOR_FORMAT = Pattern.compile(".*/.*");
     private static final Pattern WINDOWS_NAME_SEPARATOR_FORMAT = Pattern.compile(".*\\\\.*");
     private static final Pattern INVALID_NAME_CHARACTERS_FORMAT = Pattern.compile(".*[?!%*+:|\"<>].*");
+    private static final Pattern MISSING_FILE_NAME_FORMAT = Pattern.compile("(^\\.\\w+)"
+                                                                            + "|(.*/\\.\\w+$)"
+                                                                            + "|(.*\\\\\\.\\w+$)");
     private static final Pattern CONSECUTIVE_NAME_SEPARATOR_FORMAT = Pattern.compile("(.*//.*)|(.*\\\\\\\\.*)");
-    private static final Pattern CONSECUTIVE_EXTENSION_SEPARATOR_FORMAT = Pattern.compile(".*\\.\\..*");
+    private static final Pattern CONSECUTIVE_EXTENSION_SEPARATOR_FORMAT = Pattern.compile(".*\\.\\.\\w+");
     //@@author
 
     public static boolean isFileExists(File file) {
@@ -120,7 +123,7 @@ public class FileUtil {
     }
 
     /**
-     * Checks whether the file name and non-existent folder names in {@filePath} are valid
+     * Checks whether the file name and non-existent folder names in {@code filePath} are valid
      */
     public static boolean hasInvalidNames(String filePath) {
         File file = new File(filePath);
@@ -140,7 +143,14 @@ public class FileUtil {
     }
 
     /**
-     * Checks whether the {@filePath} contain any consecutive name separators (OS-dependent)
+     * Checks whether the {@code filePath} has a missing file name.
+     */
+    public static boolean hasMissingFileName(String filePath) {
+        return MISSING_FILE_NAME_FORMAT.matcher(filePath).matches();
+    }
+
+    /**
+     * Checks whether the {@code filePath} contain any consecutive name separators (OS-dependent)
      *
      * {@link #hasInvalidNameSeparators(String)} should be checked prior this method
      */
@@ -149,7 +159,7 @@ public class FileUtil {
     }
 
     /**
-     * Checks whether the {@filePath} contain any consecutive extension separators (.)
+     * Checks whether the {@code filePath} contain any consecutive extension separators (.)
      *
      */
     public static boolean hasConsecutiveExtensionSeparators(String filePath) {

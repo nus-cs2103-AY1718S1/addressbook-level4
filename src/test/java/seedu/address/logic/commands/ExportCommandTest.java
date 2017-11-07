@@ -78,6 +78,15 @@ public class ExportCommandTest {
     }
 
     @Test
+    public void execute_missingFileName_throwsCommandException() {
+        String filePath = getTempFilePath(".xml");
+        ExportCommand command = prepareCommand(filePath);
+        String expectedMessage = ExportCommand.MESSAGE_INVALID_NAME;
+
+        assertCommandFailure(command, expectedMessage, filePath);
+    }
+
+    @Test
     public void execute_invalidNameSeparator_throwsCommandException() {
         String filePath = getTempFilePath("folder\\folder/invalidExportD.xml");
         ExportCommand command = prepareCommand(filePath);
@@ -130,7 +139,7 @@ public class ExportCommandTest {
      * Helper method to provide temporary file paths
      */
     private String getTempFilePath(String fileName) {
-        return testFolder.getRoot().getPath() + fileName;
+        return testFolder.getRoot().getPath() + File.separator + fileName;
     }
 
     /**

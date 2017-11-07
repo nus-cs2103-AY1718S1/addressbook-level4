@@ -28,8 +28,8 @@ public abstract class ImportCommand extends UndoableCommand {
 
     //@@author low5545
     public static final String MESSAGE_FILE_NOT_FOUND = "The specified file does not exist.";
-    public static final String MESSAGE_INVALID_NAME = "The file path contains file name or folder names with"
-            + " prohibited characters (?!%*+:|\"<>).";
+    public static final String MESSAGE_INVALID_NAME = "The file path contains a file name or folder names with"
+            + " prohibited characters (?!%*+:|\"<>), or a file name is not provided.";
     public static final String MESSAGE_INVALID_NAME_SEPARATOR = "The file path contains name-separators (/ or \\) that"
             + " are not defined in your operating system.";
     public static final String MESSAGE_CONSECUTIVE_SEPARATOR = "The file path contains consecutive"
