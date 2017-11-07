@@ -17,8 +17,6 @@ import seedu.address.model.task.Task;
  */
 public class XmlAdaptedTask {
 
-    @XmlElement
-    private static Integer nextId;
     @XmlElement(required = true)
     private String taskName;
     @XmlElement(required = true)
@@ -52,7 +50,6 @@ public class XmlAdaptedTask {
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
     public XmlAdaptedTask(ReadOnlyTask source) {
-        nextId = Task.getNextId();
         taskName = source.getName();
         taskDescription = source.getDescription();
         startDateTime = source.getStartDateTime();
@@ -73,7 +70,6 @@ public class XmlAdaptedTask {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Task toModelType() throws IllegalValueException {
-        Task.setNextId(nextId);
         final List<Tag> personTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
