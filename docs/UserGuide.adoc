@@ -17,14 +17,16 @@ By: `Team Rolodex`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
 
-Rolodex is a desktop contact management application for users who prefer working without a mouse to manage their contacts more efficiently.
-If you are a businessmen with a list of clients to remember, a teacher who wants to organize their student information, or anyone with a need for contact
-management, Rolodex provides you with a way to organize your important contacts in a fast and productive manner.
+Rolodex is a desktop contact management application for people who have many social circles and wish to organise different groups of contacts separately and efficiently. +
+If you are a businessmen with a long list of clients to keep in touch with, a teacher with the contact information of hundreds of students in your phone,
+a freelancer with multiple groups of co-workers or customers, or just anyone with a need for fast and easy contact management, Rolodex is perfect for you.
 
 == Quick Start
 
 This section serves as a tutorial for you to familiarize yourself with the usage of Rolodex.
 By following the steps below, getting started with Rolodex should be a fast and smooth process.
+
+=== Installation
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -34,14 +36,31 @@ Rolodex will not work with earlier versions of Java 8.
 +
 .  Download the latest `rolodex.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Rolodex.
-.  Double-click the file to start the app. You should see the GUI in a few seconds as shown below.
+.  Double-click the file to start the app. You should see the GUI (Graphical User Interface) in a few seconds as shown below.
 +
 image::Ui.png[width="790"]
-+
+
+=== User Interface
+
 The following picture labels the main components of the application.
-+
+
 image::UiLabeled.png[width="790"]
-+
+
+The table below summarises the function of each component.
+
+[width=100%, cols="1,3"]
+|===
+
+| Command Box | This is where you type in your commands to tell Rolodex to perform actions.
+| Command Result Panel | After entering a command, the feedback/result will be displayed here. +
+This is to notify you whether the command is valid, and to inform you if the action has been executed successfully.
+| Contact List | All contacts are listed here in alphabetical order by default. +
+When you perform a search action, the search result will be displayed here.
+| Contact Detail Panel | When you select a contact in Contact List, his/her details (name, phone number, email, address, tags and remark) will be displayed here.
+|===
+
+=== Executing Commands
+
 .  Type the command (case insensitive) in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
@@ -51,7 +70,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to Rolodex.
 
 [TIP]
-The standard format for keying in person details is `PREFIX/PERSON_DETAIL` (e.g. n/John Doe for keying in a name). +
+The standard format for keying in person details is `PREFIX/PERSON_DETAIL` (e.g. `n/John Doe` for keying in a name). +
 The following table summarizes the prefixes and the corresponding person details they represent. +
 
 [width=30%, cols="2,3"]
@@ -82,10 +101,13 @@ For the details of each command, you may refer to the link:#features[Features] s
 [[add]]
 === `add`, `a` or `+`: Adding a Person _(Since v1.3)_
 
-Adds a person to Rolodex +
+Adds a person to Rolodex. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [t/TAG]...` +
-        or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [t/TAG]...` +
-        (press kbd:[Tab] after typing `add` for auto-completion) +
+[TIP]
+====
+Press kbd:[Tab] after typing `add` to generate the required field(s). See link:#autocomplete[3.19. Auto-completion] for more details.
+====
+Alternatives: `add` can be replaced by `a` or `+` +
 Keyboard shortcut: kbd:[Ctrl+A]
 
 [TIP]
@@ -115,8 +137,13 @@ Clear commands are _undoable_ with the `undo` command.
 === `delete`, `d` or `-`: Deleting a Person _(Since v1.3)_
 
 Deletes the specified person from Rolodex. +
-Format: `delete INDEX` or `d INDEX`
-        (press kbd:[Tab] after typing `delete` for auto-completion)
+Format: `delete INDEX`
+
+[TIP]
+====
+Press kbd:[Tab] after typing `delete` to generate the required field(s). See link:#autocomplete[3.19. Auto-completion] for more details.
+====
+Alternatives: `delete` can be replaced by `d` or `-` +
 Keyboard shortcut: kbd:[Ctrl+Shift+D]
 
 ****
@@ -144,8 +171,11 @@ Delete commands are _undoable_ with the `undo` command.
 
 Edits an existing person in Rolodex. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...` +
-        or `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...` +
-        (press kbd:[Tab] after typing `edit` for auto-completion) +
+[TIP]
+====
+Press kbd:[Tab] after typing `edit` to generate the required field(s). See link:#autocomplete[3.19. Auto-completion] for more details.
+====
+Alternatives: `edit` can be replaced by `change`, `modify` or `e` +
 Keyboard shortcut: kbd:[Ctrl+E]
 
 ****
@@ -169,21 +199,37 @@ the 2nd person, or removes it otherwise.
 Edit commands are _undoable_ with the `undo` command.
 ====
 
-// tag::find[]
+// tag::email[]
+=== `email`, `mail`, `mailto`, `send` or `m`: Composing an email _(Since v1.5rc)_
 
-=== `exit`, `quit`, `close`, `bye`, `esc`: Exiting the Program _(Since v1.3)_
+Opens the 'compose new email' window of the default email client, with the recipient's email address and subject
+(optional) filled in. +
+Format: `email INDEX [s/SUBJECT]` +
+[TIP]
+====
+Press kbd:[Tab] after typing `email` to generate the required field(s). See link:#autocomplete[3.19. Auto-completion] for more details.
+====
+Alternatives: `email` can be replaced by `mail`, `mailto`, `send` or `m` +
+Keyboard shortcut: kbd:[Ctrl+M]
+// end::email[]
+
+=== `exit`, `quit`, `close`, `bye` or `esc`: Exiting the Program _(Since v1.3)_
 
 Exits the program. +
 Format: `exit` +
+Alternatives: `exit` can be replaced by `quit`, `close`, `bye` or `esc` +
 Keyboard shortcut: kbd:[Alt+F4]
 
-=== `find`, `f`, `filter` or `search`: Locating Persons in Rolodex _(Since v1.4)_
+// tag::find[]
+=== `find`, `filter`, `search` or `f`: Locating Persons in Rolodex _(Since v1.4)_
 
 Finds persons in Rolodex. +
-Format: `find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
-        or `f KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
-        or `search KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]` +
-        (press kbd:[Tab] after typing `find` for auto-completion) +
+Format: `find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]` +
+[TIP]
+====
+Press kbd:[Tab] after typing `find` to generate the required field(s). See link:#autocomplete[3.19. Auto-completion] for more details.
+====
+Alternatives: `find` can be replaced by `filter`, `search` or `f` +
 Keyboard shortcut: kbd:[Ctrl+F]
 
 ****
@@ -229,15 +275,16 @@ Returns any person having tag `School` or tag `werk`, sorted by email.
 Returns an error (do not count as search arguments).
 // end::find[]
 
-=== `help`, `h`, `assist` or `faq`: Viewing Help _(Since v1.4)_
+=== `help`, `assist`, `faq` or `h`: Viewing Help _(Since v1.4)_
 
-Format: `help` or `h` +
+Format: `help` +
+Alternatives: `help` can be replaced with `assist`, `faq` or `h` +
 Keyboard shortcut: kbd:[F1]
 
 === `history`, `his` or `past`: Listing Entered Commands _(Since v1.3)_
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history` or `his` or `past` +
+Format: `history`, `his` or `past` +
 Keyboard shortcut: kbd:[Ctrl+H]
 
 [NOTE]
@@ -246,10 +293,11 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::list[]
-=== `list`, `l`, `show` or `display`: Listing All Persons _(Since v1.3)_
+=== `list`, `show`, `display` or `l`: Listing All Persons _(Since v1.3)_
 
 Shows a list of all persons in Rolodex, sorted by the specified sort order or default sort order. +
-Format: `list [SORT_ARGUMENTS]` or `l [SORT_ARGUMENTS]` +
+Format: `list [SORT_ARGUMENTS]` +
+Alternatives: `list` can be replaced by `show`, `display` or `l` +
 Keyboard shortcut: kbd:[Ctrl+L]
 
 // tag::sortUsage[]
@@ -278,7 +326,7 @@ Examples:
 === `new`, `n`, `touch` or `>`: Creating a New Rolodex Storage File _(Since v1.3)_
 
 Creates a new Rolodex at the specified filepath and reloads the application with new sample data. +
-Format: `new FILEPATH` or `n FILEPATH`
+Format: `new FILEPATH` or `n FILEPATH` +
 Keyboard Shortcut: kbd:[Ctrl+N]
 
 ****
@@ -307,7 +355,7 @@ Creates a new Rolodex file `default.rldx` at the relative directory `data` and r
 
 // tag::openfile[]
 
-=== `open`, `o`, `cd`, `ls`, `<`: Opening an Existing Rolodex Storage File _(Since v1.3)_
+=== `open`, `o`, `cd`, `ls` or `<`: Opening an Existing Rolodex Storage File _(Since v1.3)_
 
 Reloads the application with data from a rolodex at the specified filepath. +
 Format: `open FILEPATH` or `o FILEPATH`
@@ -375,7 +423,8 @@ Redo commands are _undoable_ with the `undo` command.
 === `remark`, `rmk`, `note` or `comment` : Adding a Remark _(Since v1.4)_
 
 Adds a remark to the specified person in Rolodex. +
-Format: `remark INDEX [r/REMARK]` or `remark INDEX [r/REMARK]`
+Format: `remark INDEX [r/REMARK]` +
+Alternatives: `remark` can be replaced by `note` or `rmk`
 
 ****
 * Adds a remark to the person at the specified `INDEX`.
@@ -406,8 +455,11 @@ There is no need to save manually.
 === `select` or `s`: Selecting a Person _(Since v1.3)_
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX` or `s INDEX`
-        (press kbd:[Tab] after typing `select` for auto-completion)
+Format: `select INDEX` or `s INDEX` +
+[TIP]
+====
+Press kbd:[Tab] after typing `select` to generate the required field(s). See link:#autocomplete[3.19. Auto-completion] for more details.
+====
 Keyboard shortcut: kbd:[Ctrl+S]
 
 ****
@@ -427,12 +479,13 @@ Selects the 1st person in the results of the `find` command.
 
 === Tagging a Person
 
-If you wish to add tags to a person, you can use the link:#add[`add`] command.
-To edit a tag, you can use the link:#edit[`edit`] command.
+* You can directly add tag(s) to a person when you are adding him/her to Rolodex for the first time.
+See link:#add[3.1. Adding a Person] for more details.
+* To add tag(s) to existing contacts in Rolodex, you use the `edit INDEX t/TAG` command. See link:#edit[3.4. Editing a Person] for more details.
 
 === `undo` or `u`: Undoing a Previous Command _(Since v1.3)_
 
-Restores Rolodex to the state before the previous _undoable_ command was executed. +
+Some commands in rolodex are undoable. If you accidentally executed an undoable command, you can restore Rolodex to the previous state using the undo command. +
 Format: `undo` or `u` +
 Keyboard Shortcut: kbd:[Ctrl+Z]
 
@@ -457,6 +510,35 @@ The `undo` command fails as there are no undoable commands executed previously.
 `clear` +
 `undo` (reverses the `clear` command) +
 `u` (reverses the `delete 1` command) +
+
+[[autocomplete]]
+//tag::autocomplete[]
+=== Auto-completion
+
+For commands that require additional field(s), auto-completion can be triggered by pressing kbd:[Tab] after keying in the command word.
+
+Example:
+
+* Type `add` in the command box +
+* Press kbd:[Tab]
+* You will see the full format displayed in the command box as shown below.
+
+image::AutoCompletionAfterTab.png[width="500"]
+
+* Note that the placeholder for the name field has been auto-selected. Now you can directly type in the name.
+* After you are done typing the name, press kbd:[Tab] again to go to the next field.
+
+image::AutoCompletionNextField.png[width="500"]
+
+* After you are done with the entire command, press kbd:[Enter] to execute the command.
+
+[NOTE]
+====
+Commands with auto-completion enabled: `add`, `delete`, `edit`, `find`, `select` and `remark`. +
+These are commands that required additonal field(s).
+====
+//end::autocomplete[]
+
 
 == Upcoming Features
 
@@ -511,6 +593,11 @@ image::profile_pic_after.png[width="500"]
 .3+| Edit | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
           | `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
           | *E.g.* `edit 2 n/James Lee e/jameslee@example.com`
+.5+| Email | `email INDEX [s/SUBJECT]`
+           | `mail INDEX [s/SUBJECT]`
+           | `send INDEX [s/SUBJECT]`
+           | `m INDEX [s/SUBJECT]`
+           | *E.g.* `email 1 s/Long time no see`
 .5+| Remark | `remark INDEX r/REMARK`
             | `note INDEX r/REMARK`
             | `rmk INDEX r/REMARK`
@@ -548,6 +635,7 @@ image::profile_pic_after.png[width="500"]
 | kbd:[Ctrl + A] | Display the add command format in command box
 | kbd:[Ctrl + E] | Display the edit command format in command box
 | kbd:[Ctrl + F] | Display the find command format in command box
+| kbd:[Ctrl + M] | Display the email command format in command box
 | kbd:[Ctrl + S] | Display the select command format in command box
 | kbd:[Ctrl + Shift + D] | Display the delete command format in command box
 |===
