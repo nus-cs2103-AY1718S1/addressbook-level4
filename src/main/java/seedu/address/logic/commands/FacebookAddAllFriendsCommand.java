@@ -159,7 +159,6 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
                 + FacebookConnectCommand.getAuthenticatedUsername() + "'s account)", false));
         friendIndex = 0;
         totalFriendsAdded = 0;
-        return;
     }
 
     @Override
