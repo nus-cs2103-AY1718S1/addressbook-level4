@@ -99,6 +99,10 @@ public class Person implements ReadOnlyPerson {
             e.printStackTrace();
             System.err.println("This should never happen.");
         }
+
+        if (source.getAvatar() != null) {
+            this.setAvatar(source.getAvatar());
+        }
     }
 
     public void setName(Name name) {
