@@ -1,18 +1,28 @@
 package seedu.address.model;
 // @@author HuWanqing
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import seedu.address.model.event.Event;
-import seedu.address.model.event.ReadOnlyEvent;
-
-import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalEvents.FIRST;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventList;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.ReadOnlyEvent;
+
+
+
+
+
 
 public class EventListTest {
     @Rule

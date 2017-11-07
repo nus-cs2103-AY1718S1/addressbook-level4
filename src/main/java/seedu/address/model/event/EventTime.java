@@ -6,10 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+
 /**
  * Represents a Event's time in the address book.
  */
-
 public class EventTime {
 
 
@@ -71,7 +71,7 @@ public class EventTime {
     }
 
     /**
-     * Checks for valid event time.
+     * Returns true if a given string is a valid time
      */
     public static boolean isValidEventTime(String eventTime) {
         String trimmedTime = eventTime.trim();
