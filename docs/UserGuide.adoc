@@ -415,6 +415,12 @@ image::sampleeventresult.PNG[width="200"]
 
 A `Invalid Command Format` will appear if you have keyed in invalid fields for the event.
 
+[NOTE]
+====
+Do note that for single value dates, do not include a '0' in front on the date.
+Eg. 09/12/2017 will not be accepted as a valid date.
+====
+
 // end::addevent[]
 
 === Favouriting a person : `favourite`
@@ -512,10 +518,17 @@ The Calendar is a graphical user interface that displays a calendar for the user
 You will be able to navigate through different months to view the events on different days and dates of different months.
 
 image::calendar.PNG[width="700"]
+Figure 7.2.1
 
-Furthermore, you can add events after clicking on the specific date. A pop up window as shown below will appear prompting you to fill up the details of the event.
+Furthermore, you can add events after clicking on the specific date. A pop up window (Figure 7.2.2) will appear prompting you to fill up the details of the event.
 
 image::popupwindow.PNG[width="300"]
+Figure 7.2.2
+
+After adding an event, the Calendar will be populated with a colour over the chosen date of the Event. The day that has an event will be shown as seen in Figure 7.2.3 below.
+
+image::populatecalendar.PNG[width="700"]
+Figure 7.2.3
 
 // end::calendar[]
 
