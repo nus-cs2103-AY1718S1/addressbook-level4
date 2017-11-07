@@ -148,10 +148,8 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
-        //@@author keithsoc
         private Favorite favorite;
         private DisplayPhoto displayPhoto;
-        //@@author
         private Set<Tag> tags;
         private Set<SocialInfo> socialInfos;
 

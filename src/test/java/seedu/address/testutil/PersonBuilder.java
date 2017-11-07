@@ -158,7 +158,7 @@ public class PersonBuilder {
         try {
             this.person.setDisplayPhoto(new DisplayPhoto(displayPhoto));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("display photo is expected to be unique");
+            throw new IllegalArgumentException("display photo file does not exist or it exceeded maximum size of 1MB");
         }
         return this;
     }

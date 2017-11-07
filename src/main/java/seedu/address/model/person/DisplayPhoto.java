@@ -34,7 +34,8 @@ public class DisplayPhoto {
      * @throws IllegalValueException if given display photo string is invalid.
      */
     public DisplayPhoto(String photoPath) throws IllegalValueException {
-        if (photoPath == null || photoPath.isEmpty()) { // Allow null values
+        // Allow null values
+        if (photoPath == null || photoPath.isEmpty()) {
             this.value = null;
         } else if (photoPath.equals(SAMPLE_PHOTO_ALEX)) { // Display photos for sample persons
             this.value = photoPath;
