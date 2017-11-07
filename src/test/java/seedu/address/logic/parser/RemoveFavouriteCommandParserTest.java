@@ -15,12 +15,12 @@ public class RemoveFavouriteCommandParserTest {
     private RemoveFavouriteCommandParser parser = new RemoveFavouriteCommandParser();
 
     @Test
-    public void parse_validArgs_returnsAddFavouriteCommand() {
+    public void validArgsReturnsAddFavouriteCommand() {
         assertParseSuccess(parser, "1", new RemoveFavouriteCommand(INDEX_FIRST_PERSON));
     }
 
     @Test
-    public void parse_invalidArgs_throwsParseException() {
+    public void invalidArgsThrowsParseException() {
         assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 RemoveFavouriteCommand.MESSAGE_USAGE));
     }

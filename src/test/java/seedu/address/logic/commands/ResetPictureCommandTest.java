@@ -4,7 +4,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getAltAddressBook;
 
 import org.junit.Test;
 
@@ -23,10 +23,10 @@ import seedu.address.testutil.PersonBuilder;
 
 public class ResetPictureCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getAltAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_resetPicture_success() throws Exception {
+    public void resetPictureSuccess() throws Exception {
         Person editedPerson = new PersonBuilder().withEmail("alice@example.com").build();
         ResetPictureCommand resetPictureCommand = prepareCommand(INDEX_FIRST_PERSON);
 
@@ -38,14 +38,14 @@ public class ResetPictureCommandTest {
         assertCommandSuccess(resetPictureCommand, model, expectedMessage, expectedModel);
     }
     @Test
-    public void execute_invalidPersonIndex_failure() {
+    public void invalidPersonIndexFailure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         ResetPictureCommand resetPictureCommand = prepareCommand(outOfBoundIndex);
 
         assertCommandFailure(resetPictureCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
     @Test
-    public void execute_duplicatePerson_failure() {
+    public void duplicatePersonFailure() {
         ResetPictureCommand resetPictureCommand = prepareCommand(INDEX_SECOND_PERSON);
 
         assertCommandFailure(resetPictureCommand, model, ResetPictureCommand.MESSAGE_ALREADY_DEFAULT);

@@ -4,7 +4,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getAltAddressBook;
 
 import org.junit.Test;
 
@@ -22,10 +22,10 @@ import seedu.address.testutil.PersonBuilder;
 //@@author nassy93
 
 public class RemoveFavouriteCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getAltAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_removeFavourite_success() throws Exception {
+    public void removeFavouriteSuccess() throws Exception {
         Person editedPerson = new PersonBuilder().withName("Benson Meier")
                 .withAddress("311, Clementi Ave 2, #02-25")
                 .withEmail("johnd@example.com").withPhone("98765432")
@@ -40,14 +40,14 @@ public class RemoveFavouriteCommandTest {
         assertCommandSuccess(removeFavouriteCommand, model, expectedMessage, expectedModel);
     }
     @Test
-    public void execute_invalidPersonIndex_failure() {
+    public void invalidPersonIndexFailure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         RemoveFavouriteCommand removeFavouriteCommand = prepareCommand(outOfBoundIndex);
 
         assertCommandFailure(removeFavouriteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
     @Test
-    public void execute_duplicatePerson_failure() {
+    public void duplicatePersonFailure() {
         RemoveFavouriteCommand removeFavouriteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
         assertCommandFailure(removeFavouriteCommand, model, RemoveFavouriteCommand.MESSAGE_ALREADY_NORMAL);
