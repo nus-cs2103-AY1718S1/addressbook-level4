@@ -434,6 +434,7 @@ The `getSearchText` method inside the `ReadOnlyPerson` class will convert all th
 
 <<<
 
+// tag::sort[]
 === Sort mechanism
 
 The `sort` command now allows for the list of contacts to be sorted via phone number, name, or email in lexicographic order.
@@ -503,6 +504,7 @@ and creating a new comparator in link:{repoURL}/src/main/java/seedu/address/mode
 *Alternative 2:* Override methods with own implementations; code sorting functionality directly into UniquePersonList +
 *Pros:* Less dependant on provided resources, more flexible with product's requirements +
 *Cons:* Resource-intensive; increases coupling between Logic and Model
+// end::sort[]
 
 <<<
 
@@ -641,6 +643,7 @@ public static boolean isValidAddress(String test) {
 
 <<<
 
+// tag::listtag[]
 === Listing by tags
 The List command was expanded to accommodate listing contacts with specific tags.
 This was done through the creation of predicates based on the argument passed in when the List command is called.
@@ -683,6 +686,7 @@ The initial command, “list”, which merely displayed all the persons in the l
 *Alternative 2:* creating HashMaps for each tag to each person in the contact list +
 *Pros:* O(1) implementation for filtering +
 *Cons:* Extremely space-inefficient +
+// end::listtag[]
 
 <<<
 

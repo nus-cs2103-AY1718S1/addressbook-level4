@@ -9,8 +9,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-T17-B3/main/tree/master
 
 == Project: Circles
-Circles is a personal address book that stores and organises your contacts and their contact information,
-displaying them in a neat and organised fashion.
+Circles is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 6 kLoC.
 
 *Code Contributed*: [link:{repoURL}/collated/main/LimeFallacie.md[`Functional Code`]][link:{repoURL}/collated/test/LimeFallacie.md[`Test Code`]]
 
@@ -18,7 +18,7 @@ displaying them in a neat and organised fashion.
 
 ==== External Behaviour
 
-include::UserGuide.adoc[lines = 337..348]
+include::UserGuide.adoc[leveloffset=+2, tag=sort]
 
 ==== Justification
 As our target audience was University students, we felt the need to provide tools to organise the contacts list as one student can come across many
@@ -30,5 +30,33 @@ As there are plenty of different ways to sort contacts, this implementation was 
 
 ==== Implementation
 
-include::DeveloperGuide.adoc[leveloffset=+2, lines = 437..506]
+include::DeveloperGuide.adoc[leveloffset=+2, tag=sort]
+
+=== Enhancement Added: Listing by tags
+
+==== External Behaviour
+
+include::UserGuide.adoc[leveloffset=+2, tag=listtag]
+
+==== Justification
+This allows the user more flexibility in searching for several contacts with similar tags, a major quality of life improvement.
+
+==== Implementation
+
+include::DeveloperGuide.adoc[leveloffset=+2, tag=listtag]
+
+=== Enhancement Added: Export/Import contacts list
+
+==== External Behaviour
+
+include::UserGuide.adoc[leveloffset=+2, tag=expimp]
+
+==== Justification
+Exporting and importing of the contacts list allows the user more portability.
+All the user's data can be easily transferred between terminals and can also be easily backed up.
+
+==== Implementation
+
+//to continue after include implementation of export/import in Dev Guide
+
 
