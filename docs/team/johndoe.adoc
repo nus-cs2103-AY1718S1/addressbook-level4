@@ -8,7 +8,7 @@ TheYellowPage is a desktop address book application designed with the needs of o
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== 1st Enhancement Added: DeleteMultipleCommand 
+=== 1st Enhancement Added: DeleteMultipleCommand
 
 ==== External behavior
 
@@ -25,7 +25,7 @@ include::../UserGuide.adoc[tag=deleteMultipleCommand]
 
 As TheYellowPage is designed with the typical office worker/Human Resource agent in mind, the features implemented are meant to make their work processes more efficient.
 
-The original delete command only allows the user to delete one contact at a time. While feasible for the average user, it becomes a cumbersome process for the HR agent who has to deal with a massive number of contacts. 
+The original delete command only allows the user to delete one contact at a time. While feasible for the average user, it becomes a cumbersome process for the HR agent who has to deal with a massive number of contacts.
 
 The DeleteMultipleCommand feature allows HR agents to clear off multiple contacts off their company's address book quickly, without having to clear the entire list.
 
