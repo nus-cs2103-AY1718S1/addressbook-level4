@@ -16,6 +16,8 @@ public interface ReadOnlyPerson {
     Name getName();
     ObjectProperty<Phone> phoneProperty();
     Phone getPhone();
+    ObjectProperty<Phone2> phone2Property();
+    Phone2 getPhone2();
     ObjectProperty<Email> emailProperty();
     Email getEmail();
     ObjectProperty<Address> addressProperty();
@@ -43,6 +45,8 @@ public interface ReadOnlyPerson {
         builder.append(getName())
                 .append(" Phone: ")
                 .append(getPhone())
+                .append(" Phone 2: ")
+                .append(getPhone2())
                 .append(" Email: ")
                 .append(getEmail())
                 .append(" Address: ")

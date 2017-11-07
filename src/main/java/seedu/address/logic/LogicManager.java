@@ -1,10 +1,13 @@
 package seedu.address.logic;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.util.AutoCompleteUtil;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -12,6 +15,7 @@ import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.task.ReadOnlyTask;
 
 /**
  * The main LogicManager of the app.
@@ -46,8 +50,27 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
+    public List<String> getPossibleCommands(String commandText) {
+        logger.info("---------------[AUTO COMPLETE][PREFIX ENTERED:" + commandText + "]");
+        List<String> listOfAvaliableCommands = new ArrayList<>();
+        listOfAvaliableCommands.addAll(Command.getMapOfCommandFormats().keySet());
+        return AutoCompleteUtil.autoCompleteCommand(commandText, listOfAvaliableCommands);
+    }
+
+    @Override
+    public String getAutocompleteFormat(String commandText) {
+        logger.info("---------------[AUTO COMPLETE FORMAT][commandText: :" + commandText + "]");
+        return Command.getMapOfCommandFormats().get(commandText);
+    }
+
+    @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return model.getFilteredPersonList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyTask> getFilteredTaskList() {
+        return model.getFilteredTaskList();
     }
 
     @Override

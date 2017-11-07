@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Daryl Chan</name>
+        <phone>94520014</phone>
+        <phone2>-</phone2>
+        <email>darlychan@gmail.com</email>
+        <address>572, Geylang Serai</address>
+    </persons>
+    <persons>
+        <name>Romanov Li</name>
+        <phone>81729423</phone>
+        <phone2>-</phone2>
+        <email>romanovli@yahoo.com</email>
+        <address>210, Yishun Ring Road</address>
+    </persons>
+    <persons>
+        <name>Lance Hopkins</name>
+        <phone>94327421</phone>
+        <phone2>65301423</phone2>
+        <email>lanceh@hotmail.com</email>
+        <address>522 Punggol Street</address>
+    </persons>
+    <persons>
+        <name>Lance li</name>
+        <phone>914373013</phone>
+        <phone2>-</phone2>
+        <email>lance@gmail.com</email>
+        <address>Blk 123 Serangoon Garden</address>
+    </persons>
+    <persons>
+        <name>James Bond</name>
+        <phone>914373013</phone>
+        <phone2>-</phone2>
+        <email>lance@gmail.com</email>
+        <address>Blk 123 Yishun Ring Road</address>
+    </persons>
+    <tags>owesMoney</tags>
+    <tags>Friend</tags>
+    <tags>boyfriend</tags>
+    <tags>colleagues</tags>
+    <tags>friend</tags>
+    <tags>classmates</tags>
+    <tags>neighbours</tags>
+    <tags>criminal</tags>
+    <tags>family</tags>
+    <tags>friends</tags>
+    <tasks>
+        <description>d/CS2101</description>
+        <priority>2</priority>
+        <duedate>26/10/2017</duedate>
+    </tasks>
+    <tasks>
+        <description>d/CS2101</description>
+        <priority>1</priority>
+        <duedate>26/10/2017</duedate>
+    </tasks>
+    <tasks>
+        <description>d/I hate this mod</description>
+        <priority>2</priority>
+        <duedate>28/10/2017</duedate>
+    </tasks>
+    <tasks>
+        <description>d/Birthday</description>
+        <priority>2</priority>
+        <duedate>10/12/2017</duedate>
+    </tasks>
+    <tasks>
+        <description>d/Hello</description>
+        <priority>2</priority>
+        <duedate>29/10/2017</duedate>
+    </tasks>
+    <tasks>
+        <description>d/CS Assignment</description>
+        <priority>2</priority>
+        <duedate>29/10/2017</duedate>
+    </tasks>
+    <tasks>
+        <description>d/Test</description>
+        <priority>2</priority>
+        <duedate>29/10/2017</duedate>
+    </tasks>
+</addressbook>

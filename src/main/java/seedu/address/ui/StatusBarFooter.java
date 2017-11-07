@@ -1,8 +1,10 @@
 package seedu.address.ui;
 
+import java.io.IOException;
 import java.time.Clock;
 import java.util.Date;
 import java.util.logging.Logger;
+import javax.xml.bind.JAXBException;
 
 import org.controlsfx.control.StatusBar;
 
@@ -40,14 +42,22 @@ public class StatusBarFooter extends UiPart<Region> {
     private StatusBar syncStatus;
     @FXML
     private StatusBar saveLocationStatus;
+    @FXML
+    private StatusBar totalPersons;
 
 
-    public StatusBarFooter(String saveLocation) {
+    public StatusBarFooter(int totalPersons) throws JAXBException, IOException {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
-        setSaveLocation("./" + saveLocation);
+        setSaveLocation(getWeatherCondition());
+        setTotalPersons(totalPersons);
         registerAsAnEventHandler(this);
     }
+
+    private void setTotalPersons(int totalPersons) {
+        this.totalPersons.setText(totalPersons + " person(s) in total");
+    }
+
 
     /**
      * Sets the clock used to determine the current time.
@@ -71,11 +81,18 @@ public class StatusBarFooter extends UiPart<Region> {
         Platform.runLater(() -> this.syncStatus.setText(status));
     }
 
+    //@@author JYL123
+    private String getWeatherCondition() throws JAXBException, IOException {
+        YahooWeatherRequest request = new YahooWeatherRequest();
+        return request.getYahooWeatherConditionSg();
+    }
+
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
         long now = clock.millis();
         String lastUpdated = new Date(now).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
+        setTotalPersons(abce.data.getPersonList().size());
     }
 }
