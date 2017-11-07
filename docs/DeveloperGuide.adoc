@@ -598,6 +598,17 @@ the user, while being able to inform users on the mistakes that they have made.
 **Cons:** The need for access to `Storage` is not a side-effect as with other commands that mutate the address book +
 (eg. `add`, `delete` etc.). The dependency of `Storage` is part of their native behaviour.
 
+---
+
+**Aspect:** Location for Implementation of File Path Validation +
+**Alternative 1 (current choice):** In `Storage` +
+**Pros:** Validation is not just done for user input file paths (ie. via `import` and `export` commands), but also +
+for the address book file path as defined in the user's preferences (ie. `preferences.json`). +
+**Cons:** Validation is performed after every execution of an `UndoableCommand` due to the saving of the address book. +
+**Alternative 2:** In `CommandParser` +
+**Pros:** Validation will not be done after every execution of an `UndoableCommand` unnecessarily. +
+**Cons:** File path validation may also be required for other purposes.
+
 === Contacts/Event listing order by name/date time mechanism
 
 Whenever there is a command that triggers the "_refresh_" of link:{repoURL}/src/main/java/seedu/address/ui/person/PersonListPanel.java[`PersonListPanel`]
