@@ -62,6 +62,10 @@ public class UiManager extends ComponentManager implements Ui {
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
         }
     }
+    
+    public void changeTheme(String themeUrl) {
+        mainWindow.setTheme(themeUrl);
+    }
 
     @Override
     public void stop() {

@@ -248,29 +248,27 @@ public class MainWindow extends UiPart<Region> {
     private void handleDarkTheme() {
         String themeUrl = getClass().getResource("/view/DarkTheme.css").toExternalForm();
         setTheme(themeUrl);
-        raise(new ChangeThemeRequestEvent());
     }
     @FXML
     private void handleDarkTheme2() {
         String themeUrl = getClass().getResource("/view/DarkTheme2.css").toExternalForm();
         setTheme(themeUrl);
-        raise(new ChangeThemeRequestEvent());
     }
     @FXML
     private void handleLightTheme() {
         String themeUrl = getClass().getResource("/view/LightTheme.css").toExternalForm();
         setTheme(themeUrl);
-        raise(new ChangeThemeRequestEvent());
     }
     @FXML
     private void handleLightTheme2() {
         String themeUrl = getClass().getResource("/view/LightTheme2.css").toExternalForm();
         setTheme(themeUrl);
-        raise(new ChangeThemeRequestEvent());
     }
+    
     public void setTheme(String themeUrl) {
         scene2.getStylesheets().clear();
         scene2.getStylesheets().add(themeUrl);
+        raise(new ChangeThemeRequestEvent());
         primaryStage.setScene(scene2);
     }
     //@@author
