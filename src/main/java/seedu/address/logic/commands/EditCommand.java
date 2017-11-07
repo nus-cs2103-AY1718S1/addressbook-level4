@@ -19,7 +19,7 @@ import java.util.Set;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.model.FilteredListChangedEvent;
+import seedu.address.commons.events.model.FilteredPersonListChangedEvent;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
@@ -97,7 +97,7 @@ public class EditCommand extends UndoableCommand {
 
         try {
             model.updatePerson(personToEdit, editedPerson);
-            EventsCenter.getInstance().post(new FilteredListChangedEvent(model.getFilteredPersonList()));
+            EventsCenter.getInstance().post(new FilteredPersonListChangedEvent(model.getFilteredPersonList()));
 
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);

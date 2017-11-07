@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.model.FilteredListChangedEvent;
+import seedu.address.commons.events.model.FilteredPersonListChangedEvent;
 import seedu.address.model.AddressBook;
 
 /**
@@ -20,7 +20,7 @@ public class ClearCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() {
         requireNonNull(model);
         model.resetData(new AddressBook());
-        EventsCenter.getInstance().post(new FilteredListChangedEvent(model.getFilteredPersonList()));
+        EventsCenter.getInstance().post(new FilteredPersonListChangedEvent(model.getFilteredPersonList()));
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

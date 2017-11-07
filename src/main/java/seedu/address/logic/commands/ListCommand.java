@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.model.FilteredListChangedEvent;
+import seedu.address.commons.events.model.FilteredPersonListChangedEvent;
 
 /**
  * Lists all persons in the address book to the user.
@@ -19,7 +19,7 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        EventsCenter.getInstance().post(new FilteredListChangedEvent(model.getFilteredPersonList()));
+        EventsCenter.getInstance().post(new FilteredPersonListChangedEvent(model.getFilteredPersonList()));
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
