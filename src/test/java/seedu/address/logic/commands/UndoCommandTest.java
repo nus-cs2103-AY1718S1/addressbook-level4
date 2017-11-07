@@ -44,19 +44,16 @@ public class UndoCommandTest {
         undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
         deleteCommandOne.execute();
         deleteCommandTwo.execute();
-
+        //@@author arnollim
         // multiple commands in undoStack
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         deleteFirstPerson(expectedModel);
-
-        //@@author arnollim
         String lastCommand = undoRedoStack.peekUndo().toString();
         Command previousCommand = addressBookParser.parseCommand(lastCommand);
         String previousCommandString = previousCommand.toString();
         String expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
         //assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
         assertCommandSuccess(undoCommand, model, expectedResultMessage, expectedModel);
-
 
         // single command in undoStack
         expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
