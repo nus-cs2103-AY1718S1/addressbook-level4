@@ -61,6 +61,7 @@ To perform actions in KayPoh!, you will need to type a command into the command 
 .User interface with command box highlighted in blue
 image::command-box.png[width="790"]
 
+// tag::command-syntax[]
 === Breaking down the command syntax
 Commands have the following format: `[red]#COMMAND_WORD# [blue]#-OPTION# [green]#PARAMETERS#` +
 
@@ -77,6 +78,8 @@ Commands have the following format: `[red]#COMMAND_WORD# [blue]#-OPTION# [green]
 Example:
 
 * `[red]#find# [blue]#-tag# [green]#friends#` can be understood as "[red]#find contacts# [blue]#with the tag# [green]#friends#"
+
+// end::command-syntax[]
 
 === Representing a person as a parameter
 
@@ -375,6 +378,7 @@ Selects the 2nd person in the address book, and displays a social media feed in 
 `select 1 facebook` +
 Selects the 1st person in the results of the `find` command, and displays her Facebook feed in the browser.
 
+// tag::find-by-tag[]
 [[find-by-tag]]
 ==== Finding persons: `find`
 
@@ -404,7 +408,9 @@ Shows a list of persons with the names `john` and `John Doe`.
 Shows a list of persons with names `Betsy`, `Tim`, or `John`.
 * `find -tag friends colleagues` +
 Shows a list of persons with tags `friends` or `colleagues`.
+// end::find-by-tag[]
 
+// tag::sort[]
 ==== Sorting the displayed list [Since v1.4]: `sort`
 
 Sorts the list of persons in the last displayed listing. +
@@ -427,11 +433,12 @@ lists all person in the address book, sorted first based on their favorite statu
 * `find bob` +
 `sort -recent` +
 lists all the person that contain the keyword `bob`, sorted based on when they were last accessed.
-
+// end::sort[]
 
 [[social-media-integrations]]
 === Social Media Integrations [Since v1.2]
 
+// tag::representing-social-media-accounts[]
 ==== Representing Social Media Accounts
 
 Social media accounts are represented in the format `SOCIAL_TYPE USERNAME`.
@@ -447,6 +454,8 @@ Example:
 Represents the Facebook account with the username `johnd10`.
 * `ig damyth` +
 represents the Instagram account with the username `damyth`.
+
+// end::representing-social-media-accounts[]
 
 ==== Facebook Integrations
 
