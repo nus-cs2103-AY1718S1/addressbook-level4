@@ -6,7 +6,7 @@ package seedu.address.model.person;
  */
 public class Favorite {
 
-    public static final String MESSAGE_FAVORITE_CONSTRAINTS = "Only prefix is required.";
+    public static final String MESSAGE_FAVORITE_CONSTRAINTS = "Only prefix is required for favorite status.";
     private boolean value;
 
     /**

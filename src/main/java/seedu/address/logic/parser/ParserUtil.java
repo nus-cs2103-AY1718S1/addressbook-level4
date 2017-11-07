@@ -20,6 +20,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DisplayPhoto;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Favorite;
 import seedu.address.model.person.Name;
@@ -149,6 +150,16 @@ public class ParserUtil {
         } else {
             return Optional.empty();
         }
+    }
+
+    /**
+     * Parses a {@code Optional<String> displayPhoto} into an {@code Optional<DisplayPhoto>}
+     * if {@code displayPhoto} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<DisplayPhoto> parseDisplayPhoto(Optional<String> displayPhoto) throws IllegalValueException {
+        return displayPhoto.isPresent()
+                ? Optional.of(new DisplayPhoto(displayPhoto.get())) : Optional.of(new DisplayPhoto(null));
     }
     //@@author
 

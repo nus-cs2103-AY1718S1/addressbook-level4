@@ -26,6 +26,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
     //@@author keithsoc
     private ObjectProperty<Favorite> favorite;
+    private ObjectProperty<DisplayPhoto> displayPhoto;
     //@@author
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<UniqueSocialInfoList> socialInfos;
@@ -33,7 +34,7 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Favorite favorite,
+    public Person(Name name, Phone phone, Email email, Address address, Favorite favorite, DisplayPhoto displayPhoto,
                   Set<Tag> tags, Set<SocialInfo> socialInfos) {
         requireAllNonNull(name, phone, email, address, tags, socialInfos);
         this.name = new SimpleObjectProperty<>(name);
@@ -41,6 +42,7 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.favorite = new SimpleObjectProperty<>(favorite);
+        this.displayPhoto = new SimpleObjectProperty<>(displayPhoto);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.socialInfos = new SimpleObjectProperty<>(new UniqueSocialInfoList(socialInfos));
@@ -51,7 +53,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getFavorite(),
-                source.getTags(), source.getSocialInfos());
+                source.getDisplayPhoto(), source.getTags(), source.getSocialInfos());
     }
 
     public void setName(Name name) {
@@ -123,6 +125,20 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Favorite getFavorite() {
         return favorite.get();
+    }
+
+    public void setDisplayPhoto(DisplayPhoto displayPhoto) {
+        this.displayPhoto.set(requireNonNull(displayPhoto));
+    }
+
+    @Override
+    public ObjectProperty<DisplayPhoto> displayPhotoProperty() {
+        return displayPhoto;
+    }
+
+    @Override
+    public DisplayPhoto getDisplayPhoto() {
+        return displayPhoto.get();
     }
     //@@author
 
