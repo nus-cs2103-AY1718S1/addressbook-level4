@@ -369,6 +369,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::sort[]
 === Sorting
 The sort mechanism is facilitated by `SortCommand`, which extends `UndoableCommand`.
 It supports the sorting of persons in the address book by the `PREFIX` specified.
@@ -416,7 +417,7 @@ any future changes to these classes may be more contrived and difficult.
 **Alternative 2:** Save address book after every sort +
 **Pros:** Sorting order is preserved after program exits. +
 **Cons:** The original order of the address book is lost during every sort.
-
+// end::sort[]
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
