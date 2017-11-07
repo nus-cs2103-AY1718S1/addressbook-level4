@@ -1,7 +1,7 @@
 :toc:
 :toc-title:
 :toc-placement: macro
-:imagesDir: images\UG_DG
+:imagesDir: images\
 :sectnums:
 :stylesDir: stylesheets
 :experimental:
