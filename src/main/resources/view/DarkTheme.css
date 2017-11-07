@@ -393,12 +393,15 @@
 }
 
 #displayDate {
-    -fx-font-size: 25;
+    -fx-font-family: 'Nova Square';
+    -fx-font-size: 30;
     -fx-text-fill: white;
 }
 
 #displayTime {
-    -fx-font-size: 50;
+    -fx-min-width: 200;
+    -fx-font-family: 'Digital-7 Italic';
+    -fx-font-size: 65;
     -fx-text-fill: white;
 }
 
