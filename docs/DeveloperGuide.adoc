@@ -479,7 +479,7 @@ image::ReminderColorScheme.png[width="300"]
 _Figure 4.4.1 : Reminders via different colour schemes to indicate urgency_
 
 
-==== Design consideration
+==== Design Consideration
 **Aspect:**  How to implement the idea of reminders into Events +
 **Alternative 1 (current choice):** Create a new reminder class that contains an event parameter to it. Events have a +
 list of reminders within them (Figure 4.4.1.1). +
@@ -495,7 +495,7 @@ _Figure 4.4.1.1 : Class Diagram for `Reminder`_
 
 Therefore we have decided to adopt alternative 1 of creating a Reminder class as it is more versatile for future usage.
 
-==== Implementation outline
+==== Implementation Outline
 
 1. Create a ReadOnlyReminder class such that it only contains immutable instances of Reminders.
 
@@ -520,6 +520,83 @@ The following sequence diagram (Figure 4.4.2.3) shows how reminders are automati
 
 image::SDaddEventLogicReminder.png[width="700"]
 _Figure 4.4.2.3 : Sequence Diagram for Adding an event (reminders are automatically added)_
+
+=== Import & Export mechanism
+
+In order to open up more possibilities to **BoNUS**, we have introduced the `import` and `export` commands. We are using
+`ImportXmlCommand` and `ExportCommand` to support importing and exporting of address book data through XML files.
+
+In the following sections, we will focus on how these commands depend on the `Storage` component to retrieve external
+data, as well as the file path validation mechanism adopted on a high-level basis.
+
+==== Implementation
+
+===== External Data Access
+
+In order to achieve their tasks, both `import` and `export` commands natively require access to the external
+environment, unlike other commands. Hence, these commands are designed to depend directly on the `Storage` component.
+
+The dependence of `Storage` in `import` and `export` is achieved through the `Command.setStorage(Storage)` method. This
+method mimics the existing `Command.setData(Model, CommandHistory, UndoRedoStack)` method, where only commands that make
+use of the relevant data will override this method to gain access to the dependencies.
+
+The following shows the implementation of `Command.setStorage(Storage)`, which is not overridden commands other than
+`ImportXmlCommand` and `ExportCommand`:
+
+[source,java]
+----
+public void setStorage(Storage storage) {
+    // intentionally left empty
+}
+----
+
+In `ImportXmlCommand` and `ExportCommand`, the overridden method is implemented in this way:
+
+[source,java]
+----
+@Override
+public void setStorage(Storage storage) {
+    this.storage = storage;
+}
+----
+
+Through this implementation, commands that depend directly on the `Storage` component (ie. `import` and `export`) are
+able to gain full access to `Storage`, while commands that do not rely on `Storage` remain weakly coupled to it. The
+following class diagram of the `Logic` component reflects the overall implementation on an architectural-level point of
+view:
+
+image::LogicClassDiagramStorageEmphasis.png[width="800"]
+_Figure 4.5.1.1 : Structure of the Logic Component_
+
+===== File Path Validation
+
+File paths, as required by `import` and `export` commands, are validated during the execution of the corresponding
+command. The following sequence diagram shows an example of how file path validation is performed prior exporting the
+address book data:
+
+image::ExportCommandSequenceDiagram.png[width="800"]
+_Figure 4.5.1.2 : Sequence Diagram for Export Command_
+
+To facilitate better handling of invalid file paths and to provide appropriate feedback to the user, several exception
+classes, all of which are derived from the `InvalidFilePathException` class, have been implemented. The following shows
+the inheritance diagram of the above-mentioned exception classes:
+
+image::CommonsComponentExceptionClassDiagram.png[width="800"]
+_Figure 4.5.1.3 : Structure of Exception Classes related to File Path Validation_
+
+With that, we are able to ensure that data would be exported to or imported from a truly valid file path as specified by
+the user, while being able to inform users on the mistakes that they have made.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `Storage` dependency for `ImportXmlCommand` and `ExportCommand` +
+**Alternative 1 (current choice):** Add a new `setStorage(Storage)` method in `Command` +
+**Pros:** Provides direct access to `Storage` for commands that only requires it. +
+**Cons:** There is an inherent dependency on `Storage` for all commands, although the coupling is weak. +
+**Alternative 2:** Raise a `BaseEvent` in the `EventsCenter` through `Model` +
+**Pros:** Completely decouples `Command` from `Storage`. +
+**Cons:** The need for access to `Storage` is not a side-effect as with other commands that mutate the address book +
+(eg. `add`, `delete` etc.). The dependency of `Storage` is part of their native behaviour.
 
 === Contacts/Event listing order by name/date time mechanism
 
