@@ -1,4 +1,22 @@
 # hanselblack
+###### \java\seedu\address\logic\commands\EditCommand.java
+``` java
+        Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
+```
+###### \java\seedu\address\logic\commands\EditCommand.java
+``` java
+            this.remark = toCopy.remark;
+```
+###### \java\seedu\address\logic\commands\EditCommand.java
+``` java
+        public void setRemark(Remark remark) {
+            this.remark = remark;
+        }
+
+        public Optional<Remark> getRemark() {
+            return Optional.ofNullable(remark);
+        }
+```
 ###### \java\seedu\address\logic\commands\EmailCommand.java
 ``` java
 /**
@@ -313,6 +331,14 @@ public class RemarkCommand extends UndoableCommand {
 
 }
 ```
+###### \java\seedu\address\logic\parser\AddCommandParser.java
+``` java
+            Remark remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
+```
+###### \java\seedu\address\logic\parser\EditCommandParser.java
+``` java
+            ParserUtil.editParseRemark(argMultimap.getValue(PREFIX_REMARK)).ifPresent(editPersonDescriptor::setRemark);
+```
 ###### \java\seedu\address\logic\parser\EmailCommandParser.java
 ``` java
 /**
@@ -362,6 +388,59 @@ public class MusicCommandParser {
         } else {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MusicCommand.MESSAGE_USAGE));
         }
+    }
+}
+```
+###### \java\seedu\address\logic\parser\ParserUtil.java
+``` java
+    /**
+     * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Remark> parseRemark(Optional<String> remark) throws IllegalValueException {
+        requireNonNull(remark);
+        return remark.isPresent() ? Optional.of(new Remark(remark.get())) : Optional.of(new Remark(""));
+    }
+    /**
+     * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Remark> editParseRemark(Optional<String> remark) throws IllegalValueException {
+        requireNonNull(remark);
+        return remark.isPresent() ? Optional.of(new Remark(remark.get())) : Optional.empty();
+    }
+```
+###### \java\seedu\address\model\person\Remark.java
+``` java
+/**
+ * Represents a Person's remark in the address book.
+ * Guarantees: immutable; is always valid
+ **/
+
+public class Remark {
+
+    public static final String MESSAGE_REMARK_CONSTRAINTS = "Person remarks can take any values, can even be blank";
+
+    public final String value;
+
+    public Remark(String remark) {
+        requireNonNull(remark);
+        this.value = remark;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this || (other instanceof Remark && this.value.equals(((Remark) other).value));
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
     }
 }
 ```

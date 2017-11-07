@@ -924,7 +924,7 @@ public class PersonPanel extends UiPart<Region> {
     base: black;
     accent: #141E30;
     light: white;
-    -fx-font-family: "Montserrat", "Proxima Nova Alt Rg", "Helvetica";
+    -fx-font-family: "Proxima Nova Alt Rg", "Helvetica";
     -fx-background-color: transparent;
     -fx-text-fill: light;
 }

@@ -451,6 +451,56 @@ public class Aliases {
         return aliases;
     }
 ```
+###### \java\seedu\address\ui\CommandBoxIcon.java
+``` java
+/**
+ * Panel that displays the additional details of a Person
+ */
+public class CommandBoxIcon extends UiPart<Region> {
+
+    private static final Logger logger = LogsCenter.getLogger(StatusBarFooter.class);
+
+    private static final String FXML = "CommandBoxIcon.fxml";
+
+    private Ikon iconCode = null;
+
+    @FXML
+    private FontIcon icon;
+
+    public CommandBoxIcon() {
+        super(FXML);
+        icon.setVisible(false);
+        registerAsAnEventHandler(this);
+    }
+
+    @Subscribe
+    private void handleCommandInputChangedEvent(CommandInputChangedEvent event) {
+        String userInput = event.currentInput;
+
+        String[] command;
+        try {
+            command = parseCommandAndArguments(userInput);
+        } catch (ParseException e) {
+            icon.setVisible(false);
+            return;
+        }
+
+        String commandWord = command[0];
+        Ikon iconCode = parseIconCode(commandWord);
+
+        if (iconCode == null) {
+            icon.setVisible(false);
+            return;
+        }
+
+        icon.iconCodeProperty().set(iconCode);
+        icon.setVisible(true);
+        logger.info(LogsCenter.getEventHandlingLogMessage(event,
+                "CommandBoxIcon updated to " + iconCode.getDescription()));
+    }
+
+}
+```
 ###### \resources\view\CommandBoxIcon.fxml
 ``` fxml
 <StackPane alignment="BOTTOM_CENTER" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
