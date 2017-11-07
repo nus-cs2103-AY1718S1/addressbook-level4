@@ -3,12 +3,21 @@ package seedu.address.logic.commands;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.DisplayPhoto;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.storage.Storage;
 
 //@@author marvinchin
@@ -36,14 +45,37 @@ public class ExportCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        ReadOnlyAddressBook readOnlyAddressBook = model.getAddressBook();
+        ReadOnlyAddressBook currentAddressBook = model.getAddressBook();
+        ReadOnlyAddressBook exportAddressBook = generateExportAddressBook(currentAddressBook);
         String absoluteExportFilePathString = exportFilePath.toAbsolutePath().toString();
         try {
-            storage.saveAddressBook(readOnlyAddressBook, absoluteExportFilePathString);
+            storage.saveAddressBook(exportAddressBook, absoluteExportFilePathString);
         } catch (IOException ioe) {
             throw new CommandException(String.format(MESSAGE_EXPORT_CONTACTS_FAILURE, absoluteExportFilePathString));
         }
         return new CommandResult(String.format(MESSAGE_EXPORT_CONTACTS_SUCCESS, absoluteExportFilePathString));
+    }
+
+    /**
+     * Generates an address book for exporting that is equivalent to the current address book, but with all display
+     * pictures removed
+     */
+    private ReadOnlyAddressBook generateExportAddressBook(ReadOnlyAddressBook currentAddressBook) {
+        AddressBook exportAddressBook = new AddressBook(currentAddressBook);
+
+        for (ReadOnlyPerson person : exportAddressBook.getPersonList()) {
+            Person personWithoutDisplayPicture = new Person(person);
+            try {
+                personWithoutDisplayPicture.setDisplayPhoto(new DisplayPhoto(null));
+                exportAddressBook.updatePerson(person, personWithoutDisplayPicture);
+            } catch (IllegalValueException ive) {
+                assert false : "Display photo should not be invalid";
+            } catch (PersonNotFoundException pnfe) {
+                assert false : "Person should not be missing";
+            }
+        }
+
+        return exportAddressBook;
     }
 
     @Override
