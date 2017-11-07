@@ -37,7 +37,7 @@ include::../UserGuide.adoc[tag=qrgeneration]
 ---
 #Start of Extract [from: Developer Guide]#
 
-Ongoing
+Ongoing.
 
 #End of Extract#
 
