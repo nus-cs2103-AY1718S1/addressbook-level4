@@ -144,7 +144,7 @@ public class MainWindow extends UiPart<Region> {
 
         //@@author qihao27
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
-                logic.getFilteredPersonList().size());
+                Integer.toString(logic.getFilteredPersonList().size()));
         //@@author
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 

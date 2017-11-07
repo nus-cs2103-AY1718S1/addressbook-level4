@@ -59,6 +59,7 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
+        setTodoCount(0);
     }
 
     /**
@@ -109,7 +110,7 @@ public class PersonCard extends UiPart<Region> {
      */
     private void addTodoCount(ReadOnlyPerson person) {
         if (person.getTodoItems().size() > 0) {
-            totalTodo.setText((person.getTodoItems().size() + ""));
+            totalTodo.setText(Integer.toString(person.getTodoItems().size()));
             todo.setId("todoBackground");
         } else {
             totalTodo.setText("");
@@ -121,7 +122,7 @@ public class PersonCard extends UiPart<Region> {
      */
     private void setTodoCount(int totalTodo) {
         if (totalTodo > 0) {
-            this.totalTodo.setText(totalTodo + "");
+            this.totalTodo.setText(Integer.toString(totalTodo));
         } else {
             this.totalTodo.setText("");
         }
@@ -153,9 +154,4 @@ public class PersonCard extends UiPart<Region> {
                 && person.equals(card.person);
     }
 
-    //@@author qihao27
-    @Subscribe
-    public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
-        setTodoCount(abce.data.getTodoList().size());
-    }
 }

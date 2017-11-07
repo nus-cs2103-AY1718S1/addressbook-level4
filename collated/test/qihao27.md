@@ -545,6 +545,58 @@ public class TypicalOptions {
     public static final String OPTION_TAG = "-t";
 }
 ```
+###### \java\seedu\address\testutil\TypicalPersons.java
+``` java
+    // Persons with favourite star
+    public static final ReadOnlyPerson JOHN = new PersonBuilder().withName("John")
+        .withAddress("PGPR B4").withEmail("john@example.com")
+        .withPhone("45678901").withTags("friends")
+        .withTodoItem(getTodoItemOne())
+        .withFavourite()
+        .build();
+
+    public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
+
+    private TypicalPersons() {} // prevents instantiation
+
+    /**
+     * Returns an {@code AddressBook} with all the typical persons.
+     */
+    public static AddressBook getTypicalAddressBook() {
+        AddressBook ab = new AddressBook();
+        for (ReadOnlyPerson person : getTypicalPersons()) {
+            try {
+                ab.addPerson(person);
+            } catch (DuplicatePersonException e) {
+                assert false : "not possible";
+            }
+        }
+        return ab;
+    }
+
+    public static List<ReadOnlyPerson> getTypicalPersons() {
+        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE, BILL, CAT, DARWIN));
+    }
+
+```
+###### \java\seedu\address\ui\PersonCardTest.java
+``` java
+        // is not favurited
+        assertEquals(false, personWithNoTags.getFavourite());
+
+        // is favourited
+        Person personIsFavourited = new PersonBuilder().build();
+        personIsFavourited.setFavourite(JOHN.getFavourite());
+        assertEquals(true, personIsFavourited.getFavourite());
+
+        // no todolists
+        assertEquals(0, personWithNoTags.getTodoItems().size());
+
+        // with todolists
+        Person personWithTodo = new PersonBuilder().build();
+        personWithTodo.setTodoItems(BILL.getTodoItems());
+        assertEquals(1, personWithTodo.getTodoItems().size());
+```
 ###### \java\seedu\address\ui\ResultDisplayTest.java
 ``` java
     private static final NewResultCheckEvent NEW_CHECK_EVENT_STUB =
@@ -559,11 +611,13 @@ public class TypicalOptions {
 ```
 ###### \java\seedu\address\ui\StatusBarFooterTest.java
 ``` java
-    private static final int TOTAL_PERSONS_STUB = 0;
+    private static final String STUB_ZERO_TOTAL_PERSON = "0";
+    private static final String STUB_ONE_TOTAL_PERSON = "1";
+    private static final String TOTAL_PERSONS_SUFFIX = " person(s) total";
 ```
 ###### \java\seedu\address\ui\StatusBarFooterTest.java
 ``` java
-        StatusBarFooter statusBarFooter = new StatusBarFooter(STUB_SAVE_LOCATION, TOTAL_PERSONS_STUB);
+        StatusBarFooter statusBarFooter = new StatusBarFooter(STUB_SAVE_LOCATION, STUB_ZERO_TOTAL_PERSON);
 ```
 ###### \java\seedu\address\ui\testutil\UiPartRule.java
 ``` java

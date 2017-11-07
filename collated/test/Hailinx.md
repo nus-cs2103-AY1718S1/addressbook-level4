@@ -2378,6 +2378,7 @@ public class TodoItemUtil {
             .withPhone("34567890").withTags("friends")
             .withTodoItem(getTodoItemOne(), getTodoItemTwo())
             .build();
+
 ```
 ###### \java\seedu\address\testutil\TypicalPersons.java
 ``` java

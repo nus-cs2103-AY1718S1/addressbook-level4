@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BILL;
+import static seedu.address.testutil.TypicalPersons.JOHN;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 
 import org.junit.Test;
@@ -38,6 +40,24 @@ public class PersonCardTest extends GuiUnitTest {
             personWithTags.setTags(ALICE.getTags());
         });
         assertCardDisplay(personCard, personWithTags, 2);
+
+        //@@author qihao27
+        // is not favurited
+        assertEquals(false, personWithNoTags.getFavourite());
+
+        // is favourited
+        Person personIsFavourited = new PersonBuilder().build();
+        personIsFavourited.setFavourite(JOHN.getFavourite());
+        assertEquals(true, personIsFavourited.getFavourite());
+
+        // no todolists
+        assertEquals(0, personWithNoTags.getTodoItems().size());
+
+        // with todolists
+        Person personWithTodo = new PersonBuilder().build();
+        personWithTodo.setTodoItems(BILL.getTodoItems());
+        assertEquals(1, personWithTodo.getTodoItems().size());
+        //@@author
     }
 
     @Test

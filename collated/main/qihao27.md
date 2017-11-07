@@ -459,6 +459,13 @@ public class SortCommandParser implements Parser<SortCommand> {
         persons.sort(parameter);
     }
 ```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    @Override
+    public ObservableList<TodoItem> getTodoList() {
+        return todo.asObservableList();
+    }
+```
 ###### \java\seedu\address\model\Model.java
 ``` java
 import seedu.address.model.person.exceptions.NoPersonFoundException;
@@ -633,6 +640,14 @@ public class UniqueTodoList implements Iterable<TodoItem> {
 
 }
 ```
+###### \java\seedu\address\model\ReadOnlyAddressBook.java
+``` java
+    /**
+     * Returns an unmodifiable view of the todo list.
+     * This list will not contain any duplicate tags.
+     */
+    ObservableList<TodoItem> getTodoList();
+```
 ###### \java\seedu\address\storage\AddressBookStorage.java
 ``` java
     /**
@@ -654,6 +669,30 @@ public class UniqueTodoList implements Iterable<TodoItem> {
         saveAddressBook(addressBook, "backup.fxml");
     }
 ```
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+``` java
+        todoItems = new ArrayList<>();
+```
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+``` java
+        todoItems.addAll(src.getTodoList().stream().map(XmlAdapterTodoItem::new).collect(Collectors.toList()));
+```
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+``` java
+    @Override
+    public ObservableList<TodoItem> getTodoList() {
+        final ObservableList<TodoItem> todoItems = this.todoItems.stream().map(t -> {
+            try {
+                return t.toModelType();
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+                //TODO: better error handling
+                return null;
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(todoItems);
+    }
+```
 ###### \java\seedu\address\ui\CommandBox.java
 ``` java
             raise(new NewResultCheckEvent(commandResult.feedbackToUser, false));
@@ -665,7 +704,7 @@ public class UniqueTodoList implements Iterable<TodoItem> {
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
-                logic.getFilteredPersonList().size());
+                Integer.toString(logic.getFilteredPersonList().size()));
 ```
 ###### \java\seedu\address\ui\PersonCard.java
 ``` java
@@ -697,7 +736,7 @@ public class UniqueTodoList implements Iterable<TodoItem> {
      */
     private void addTodoCount(ReadOnlyPerson person) {
         if (person.getTodoItems().size() > 0) {
-            totalTodo.setText((person.getTodoItems().size() + ""));
+            totalTodo.setText(Integer.toString(person.getTodoItems().size()));
             todo.setId("todoBackground");
         } else {
             totalTodo.setText("");
@@ -709,20 +748,12 @@ public class UniqueTodoList implements Iterable<TodoItem> {
      */
     private void setTodoCount(int totalTodo) {
         if (totalTodo > 0) {
-            this.totalTodo.setText(totalTodo + "");
+            this.totalTodo.setText(Integer.toString(totalTodo));
         } else {
             this.totalTodo.setText("");
         }
     }
 
-```
-###### \java\seedu\address\ui\PersonCard.java
-``` java
-    @Subscribe
-    public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
-        setTodoCount(abce.data.getTodoList().size());
-    }
-}
 ```
 ###### \java\seedu\address\ui\ResultDisplay.java
 ``` java
@@ -765,13 +796,13 @@ public class UniqueTodoList implements Iterable<TodoItem> {
 ```
 ###### \java\seedu\address\ui\StatusBarFooter.java
 ``` java
-    private void setTotalPersons(int totalPersons) {
+    private void setTotalPersons(String totalPersons) {
         Platform.runLater(() -> this.totalPersons.setText(totalPersons + " person(s) total"));
     }
 ```
 ###### \java\seedu\address\ui\StatusBarFooter.java
 ``` java
-        setTotalPersons(abce.data.getPersonList().size());
+        setTotalPersons(Integer.toString(abce.data.getPersonList().size()));
 ```
 ###### \java\seedu\address\ui\UiManager.java
 ``` java
