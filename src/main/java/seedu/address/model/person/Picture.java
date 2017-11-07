@@ -47,8 +47,8 @@ public class Picture {
     public static final String DEFAULT_IRFAN =
             "default_irfan.png";
 
-    private static final int RESIZE_IMAGE_WIDTH = 64;
-    private static final int RESIZE_IMAGE_HEIGHT = 64;
+    private static final int RESIZE_IMAGE_WIDTH = 256;
+    private static final int RESIZE_IMAGE_HEIGHT = 256;
 
     private static final String PICTURE_SUFFIX = ".png";
     private static final String PICTURE_DELIMITER_SLASH = "/";
@@ -68,7 +68,6 @@ public class Picture {
             if (split.length < 2) {
                 split = trimmedFileLocation.split(PICTURE_DELIMITER_BACKSLASH);
             }
-
             // When we save the file, it is a single file name there is nothing to split.
             // No need to copy it either
 
@@ -88,7 +87,6 @@ public class Picture {
                     copyImage(src, dest);
                 }
             }
-
             this.value = fileName;
         } else {
             this.value = null;
@@ -133,9 +131,9 @@ public class Picture {
      * Copies the image and puts into data folder
      * @param src Source of file to save
      * @param dest Destination of the file to save
-     * @throws IllegalValueException
+     * @throws IllegalValueException when src or dest is an invalid file/location
      */
-    private void copyImage(File src, File dest) throws IllegalValueException {
+    public static void copyImage(File src, File dest) throws IllegalValueException {
         try {
             FileUtils.copyFile(src, dest);
         } catch (IOException e) {
@@ -149,7 +147,7 @@ public class Picture {
      * @param newFileName file name to save as
      * @throws IllegalValueException if there is an error loading the file
      */
-    private void resizeAndSaveImage(File file, String newFileName) throws IllegalValueException {
+    public static void resizeAndSaveImage(File file, String newFileName) throws IllegalValueException {
         try {
             BufferedImage resizedImage = resizeImage(ImageIO.read(file));
 
@@ -165,7 +163,7 @@ public class Picture {
      * @param originalImage The original image to be resized
      * @return BufferedImage image that is redrawn and resized
      */
-    private BufferedImage resizeImage(BufferedImage originalImage) {
+    public static BufferedImage resizeImage(BufferedImage originalImage) {
         int type = originalImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
 
         BufferedImage resizedImage = new BufferedImage(RESIZE_IMAGE_WIDTH, RESIZE_IMAGE_HEIGHT, type);
