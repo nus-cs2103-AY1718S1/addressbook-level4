@@ -97,10 +97,12 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        //@@author goweiwen
         case TAB:
             keyEvent.consume();
             autocomplete();
             break;
+        //@@author
         default:
             // let JavaFx handle the keypress
         }
@@ -174,6 +176,7 @@ public class CommandBox extends UiPart<Region> {
         historySnapshot.add("");
     }
 
+    //@@author goweiwen
     /**
      * Automatically completes user's input and replaces it in the command box.
      */
@@ -200,6 +203,7 @@ public class CommandBox extends UiPart<Region> {
         }
         setStyleToDefault();
     }
+    //@@author
 
     /**
      * Sets the command box style to use the default style.
