@@ -77,6 +77,6 @@ public class EmailCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof EmailCommand // instanceof handles nulls
                 && this.targetIndex.equals(((EmailCommand) other).targetIndex))
-                && this.subject.equals(((EmailCommand) other).subject);// state check
+                && this.subject.equals(((EmailCommand) other).subject); // state check
     }
 }
