@@ -139,8 +139,8 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        parcelListPanel = new ParcelListPanel(logic.getUndeliveredParcelList(),
-                logic.getDeliveredParcelList());
+        parcelListPanel = new ParcelListPanel(logic.getUncompletedParcelList(),
+                logic.getCompletedParcelList());
         parcelListPanelPlaceholder.getChildren().add(parcelListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
