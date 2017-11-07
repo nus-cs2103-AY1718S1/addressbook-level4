@@ -1,0 +1,74 @@
+package seedu.address.logic.commands;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Appointment;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.AppointmentNotFoundException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+
+/**
+ * Command to cancel an exisiting appointment
+ */
+public class CancelAppointmentCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "cancel";
+    public static final String NO_SUCH_PERSON_FOUND = "No such person found";
+    private static final String NO_SUCH_APPOINTMENT = "No such appointment found";
+    public static final String MESSAGE_SUCCESS = "Appointment canceled.";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Cancels an appointment from a person. \n"
+            + "Parameters: " + "DESCRIPTION with PERSON NAME \n"
+            + "Example 1:" + COMMAND_WORD + " "
+            + "Lunch with John Doe";
+    private String personString;
+    private String appointmentString;
+
+    public CancelAppointmentCommand(String person, String appointment) {
+        this.personString = person;
+        this.appointmentString = appointment;
+    }
+
+    @Override
+    protected CommandResult executeUndoableCommand() throws CommandException {
+        try {
+            ReadOnlyPerson person = getPersonFromName(personString);
+            Appointment appointment = getAppointmentFromPerson(person, appointmentString);
+            model.removeAppointment(person, appointment);
+        } catch (PersonNotFoundException e) {
+            throw new CommandException(NO_SUCH_PERSON_FOUND);
+        } catch (AppointmentNotFoundException e) {
+            throw new CommandException(NO_SUCH_APPOINTMENT);
+        }
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    /**
+     * Util method to search for the correct appointment from a person using only the description.
+     * May have multiple appointments if there is same description under one person, but the first one will be deleted
+     * @throws AppointmentNotFoundException if appointment not found
+     */
+    private Appointment getAppointmentFromPerson(ReadOnlyPerson person, String description) throws AppointmentNotFoundException {
+
+        for (Appointment appointment : person.getAppointments()) {
+            if (appointment.getDescription().toLowerCase().equals(description.trim().toLowerCase())) {
+                return appointment;
+            }
+        }
+        throw new AppointmentNotFoundException();
+    }
+
+    /**
+     * Extract person from address book using name. If there are more than one contact with the same name,
+     * the first one will be extracted
+     * @throws PersonNotFoundException if no such person is in the address book
+     */
+    private ReadOnlyPerson getPersonFromName(String personName) throws PersonNotFoundException {
+
+        for (ReadOnlyPerson person : model.getAddressBook().getPersonList()) {
+            if (person.getName().toString().toLowerCase().equals(personName.trim().toLowerCase())) {
+                return person;
+            }
+        }
+
+        throw new PersonNotFoundException();
+    }
+}

@@ -136,6 +136,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+
+    @Override
+    public void removeAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
+        addressBook.removeAppointment(target, appointment);
+        indicateAddressBookChanged();
+    }
+
     /**
      * @return an unmodifiable view of the list of ReadOnlyPerson that has nonNull appointment date,
      * in chronological order

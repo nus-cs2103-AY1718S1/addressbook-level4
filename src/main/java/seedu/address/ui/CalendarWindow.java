@@ -59,7 +59,7 @@ public class CalendarWindow extends UiPart<Region> {
         calendarView.setShowSearchField(false);
         calendarView.setShowSearchResultsTray(false);
         calendarView.setShowPrintButton(false);
-        calendarView.showWeekPage();
+        calendarView.showDayPage();
     }
 
     private void setKeyBindings() {
