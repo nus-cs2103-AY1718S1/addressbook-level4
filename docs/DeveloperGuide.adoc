@@ -127,7 +127,7 @@ When you are ready to start coding,
 === Architecture
 
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+_Figure 3.1.1 : Architecture Diagram_
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -159,7 +159,7 @@ Each of the four components
 For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 3.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -167,7 +167,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 3.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -175,7 +175,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 3.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -185,7 +185,7 @@ The sections below give more details of each component.
 === UI component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 3.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -202,10 +202,10 @@ The `UI` component,
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 3.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 3.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -218,12 +218,12 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 3.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 3.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -237,7 +237,7 @@ The `Model`,
 === Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 3.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -262,6 +262,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 4.1.1 : Logic Command Class Diagram_
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -301,10 +302,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 4.1.2 : Starting Stack Diagram_
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 4.1.3 : New Command Stack Diagram_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -314,6 +317,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 4.1.4 : Execute Undo Stack Diagram_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -321,6 +325,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 4.1.5 : Undo Redo Sequence Diagram_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -330,14 +335,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 4.1.6 : New Command Stack Diagram_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 4.1.6 : New Command Stack Diagram_
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 4.1.7 : Undo Redo Activity Diagram_
 
 ==== Design Considerations
 
@@ -393,6 +401,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 === Open new AddressBook mechanism
 
 image::OpenAddressBookEvent.png[width="800"]
+_Figure 4.2.1 : Open New Address Book Sequence Diagram_
 
 As you can see from the diagram, when the `Open` button is clicked in the Application, it raises an event and triggers `MainApp` to update new Application metadata and restart the UI.
 
@@ -456,6 +465,8 @@ can have `null` in their `value` field. +
 **Alternative 2:** Each `Person` can have field objects being `null`. +
 **Pros:** Only little modification needed to make in `Model` component. +
 **Cons:** Since many components rely on each field object being non-null, this design will fail the other components. +
+
+//tag::parameter[]
 
 === Adding new parameters to person
 
@@ -522,15 +533,148 @@ https://github.com/CS2103AUG2017-W10-B3/main/pull/8/files[Adding birthday parame
 **Pros:** Implementation is much easier and it does not affect tests in any way. +
 **Cons:** It is not consistent with the variables in `Person` +
 
+//end::parameter[]
+
+//tag::website[]
+
+=== Website
+
+The website variable in `Person` is a one of the new parameters in Person which stores a website of the `Person` +
+
+Browser is reloaded with the `Person` ' s website if the `Person` selected has a website. If not we google search the
+`Person` 's name.
+
+==== Design considerations
+
+**Aspect:** Implementation of profile picture +
+
+**Alternative 1 (current choice):** Copy image file into data folder and use the image from there +
+**Pros:** Application and data folder can be transferred to different computers and still work +
+**Cons:** May have to take note of size of files added into folder as transferring the data folder may take
+time if the file is too big+
+
+**Alternative 2:** Saving the path of the image +
+**Pros:** No extra work in resizing or copying the file +
+**Cons:** Application and data folder cannot be transferred to different computers and be expected to work +
+
+//end::website[]
+
+//tag::profilepicture[]
+
+=== Profile Picture
+
+The picture variable in `Person` is a normal variable in `Person` which only stores strings with ".png" suffix. +
+The data that we save in our xml file will be "pictureName.png" plus the picture of the person in our data folder in
+.png format. +
+
+image::PersonClassDiagram.png[width="300"]
+_Figure 4.6.1 : Person Class Diagram_
+
+The `Picture` class checks for existence of the file using `File` class. +
+
+[source, java]
+----
+public static boolean isValidPicture(String fileLocation) {
+...
+    File file = new File(fileLocation);
+    if (file.exists() && (fileLocation.endsWith(PICTURE_SUFFIX))) {
+        return true;
+    } else {
+        file = new File(PICTURE_SAVE_LOCATION + fileLocation);
+        if (file.exists()) {
+            return true;
+        }
+        return false;
+    }
+}
+----
+
+Once the existence of the file is checked, we check the size of the file so that we do not save very large files
+as we do not want our data file to be too large. +
+We resize the files if they are too large by shrinking it into a shorter width and height.
+
+[source, java]
+----
+public Picture(String fileLocation) {
+...
+    File src = new File(trimmedFileLocation);
+    File dest = new File(PICTURE_SAVE_LOCATION + fileName);
+
+    // If file is too big, resize it.
+    if (src.length() > PICTURE_MAX_SIZE) {
+        resizeAndSaveImage(src, fileName);
+    } else {
+        copyImage(src, dest);
+    }
+...
+}
+----
+
+After resizing the file or that if the file does not exceed our limit, we save/copy the file into our data folder
+so that we can reuse it next time if we move the application around. +
+
+[source, java]
+----
+public static void resizeAndSaveImage(File file, String newFileName) throws IllegalValueException {
+    try {
+        BufferedImage resizedImage = resizeImage(ImageIO.read(file));
+
+        // Saving of image into data folder
+        ImageIO.write(resizedImage, "png", new File(PICTURE_SAVE_LOCATION + newFileName));
+    } catch (IOException e) {
+        throw new IllegalValueException(MESSAGE_PROFILEPICTURE_ERROR);
+    }
+}
+----
+
+[source, java]
+----
+public static void copyImage(File src, File dest) throws IllegalValueException {
+    try {
+        FileUtils.copyFile(src, dest);
+    } catch (IOException e) {
+        throw new IllegalValueException(MESSAGE_PROFILEPICTURE_ERROR);
+    }
+}
+----
+
+To show the picture in the application, `PersonCard` is updated and we clip the picture with a circle so it looks nice.
+
+[source, java]
+----
+private void initPicture(ReadOnlyPerson person) {
+    picture.setImage(new Image(person.getPicture().getPictureLocation()));
+
+    Circle circle = new Circle(32.0, 32.0, 30.0);
+    picture.setClip(circle);
+}
+----
+
+==== Design considerations
+
+**Aspect:** Implementation of profile picture +
+
+**Alternative 1 (current choice):** Copy image file into data folder and use the image from there +
+**Pros:** Application and data folder can be transferred to different computers and still work +
+**Cons:** May have to take note of size of files added into folder as transferring the data folder may take
+time if the file is too big+
+
+**Alternative 2:** Saving the path of the image +
+**Pros:** No extra work in resizing or copying the file +
+**Cons:** Application and data folder cannot be transferred to different computers and be expected to work +
+
+//end::profilepicture[]
+
+//tag::theme[]
+
 === Theme mechanism
-
-
 
 Theme mechanism uses a singleton class called `UiStyle` which stores the scene of the application in it. +
 This allows the modification of the scene's css at runtime.
 
 The class `UiStyle` requires the scene to be set at `MainWindow` class for it to be used to edit themes.
 
+[source,java]
 ----
 public class UiStyle {
 ...
@@ -560,6 +704,7 @@ UiStyle.getInstance().setToLightTheme();
 ----
 
 image::ThemeSequenceDiagram.png[width="800"]
+_Figure 4.7.1 : Theme Sequence Diagram_
 
 Although this function can be called anywhere, it should only be called when `ThemeCommand` is issued.
 
@@ -574,6 +719,56 @@ Although this function can be called anywhere, it should only be called when `Th
 **Alternative 2:** Passing the scene down from `MainApp` class to `ThemeCommand` class +
 **Pros:** Only `ThemeCommand` class will be able to modify the theme +
 **Cons:** Very tedious as `ThemeCommand` class is very far down the architecture +
+
+//end::theme[]
+//tag::tagcolor[]
+
+=== Tag colors
+
+The colors for tags are randomed upon start up of the application.
+Tags has been modified to use hexadecimal colors instead of having an array of colors
+(e.g. red,blue,green) and selecting from the array of colors. +
+This increases the number of colors we can have for tags tremendously. +
+
+==== Design considerations
+
+**Aspect:** Implementation of color for tags +
+
+**Alternative 1 (current choice):** Have tags to be colored using hex instead of defined words +
+**Pros:** The number of colors for tags are limited to the number of hex values there are +
+**Cons:** Colors are decided by random, the color differences may not be different. (e.g #FFFFFF, #FFFFFE) +
+
+**Alternative 2:** Have tag colors to be in an array and randomly choose from them +
+**Pros:** Colors of tags are defined and the difference between any two colors can be seen easily +
+**Cons:** Limited number of colors codes +
+
+//end::tagcolor[]
+//tag::sortlist[]
+
+=== Sorted list
+
+The list is sorted by names automatically when shown by using java's list.sort.
+
+[source, java]
+----
+public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+    return FXCollections.unmodifiableObservableList(filteredPersons.sorted());
+}
+----
+
+==== Design considerations
+
+**Aspect:** Sorting list of contacts +
+
+**Alternative 1 (current choice):** Return a sorted list when display needs to update +
+**Pros:** Very easy to implement, +
+**Cons:** Only can sort by name +
+
+**Alternative 2:** Have a sort command to sort contacts +
+**Pros:** Contacts can be sorted according to different variables +
+**Cons:** New command has to be added. +
+
+//end::sortlist[]
 
 === Logging
 

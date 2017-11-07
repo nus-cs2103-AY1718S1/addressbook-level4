@@ -89,6 +89,7 @@
 }
 
 .list-view {
+    -fx-background-color: derive(#5fb3d8, 20%);
     -fx-background-insets: 0;
     -fx-padding: 0;
 }

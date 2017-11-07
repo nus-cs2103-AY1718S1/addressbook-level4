@@ -1,4 +1,4 @@
-= Death Note v1.4 - User Guide
+= Death Note v1.5rc - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -119,7 +119,6 @@ Adds a person to Death Note +
 TIPS: +
 
 1. A person can have any number of TAGS.
-2. You can input all the other parameters in any order except *NAME* which comes first
 //end::bday[]
 
 [big green]#Examples#:
@@ -176,9 +175,9 @@ Edits the picture of the 1st person to the picture specified in the path i.e. cl
 
 Finds persons who matches the given attributes. +
 
-  Format: `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [w/WEBSITE] [t/TAG]... `
+  Format: `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]... `
 
-  Shorthand: `f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [w/WEBSITE] [t/TAG]...`
+  Shorthand: `f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...`
 
 * Searches based on the input and prefix.
 * The search is case insensitive for NAME. e.g `hans` will match `Hans`
@@ -335,7 +334,7 @@ Clears all entries from Death Note.
   Format: `clear`
 
   Shorthand: `c`
-
+//tag::theme[]
 === Change theme of the application : `theme` kbd:[V2.0]
 Changes the theme of Death Note. +
 
@@ -348,8 +347,15 @@ Changes the theme of Death Note. +
 
 Current available themes:
 
-1. light
-2. dark
+* light
+
+image::lightTheme.png[width="200"]
+
+* dark
+
+image::darkTheme.png[width="200"]
+
+//end::theme[]
 
 === Exiting the program : `exit`
 
@@ -357,7 +363,7 @@ Exits Death Note. +
 
   Format: `exit`
 
-=== Open different Address Book kbd:[V2.0]
+=== Open new contact list kbd:[V2.0]
 //tag::openbook[]
 Opens another Death Note data file from within the application.
 
