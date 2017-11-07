@@ -35,6 +35,7 @@ public class TypicalPersons {
             .withEmail("alice@example.com")
             .withPhone("85355255")
             .withFavorite(true)
+            .withDisplayPhoto(null)
             .withTags("friends")
             .withLastAccessDate(new Date(1000))
             .build();
@@ -44,6 +45,7 @@ public class TypicalPersons {
             .withEmail("johnd@example.com")
             .withPhone("98765432")
             .withFavorite(true)
+            .withDisplayPhoto(null)
             .withTags("owesMoney", "friends")
             .withLastAccessDate(new Date(2000))
             .build();
@@ -53,6 +55,7 @@ public class TypicalPersons {
             .withEmail("heinz@example.com")
             .withAddress("wall street")
             .withFavorite(false)
+            .withDisplayPhoto(null)
             .withLastAccessDate(new Date(3000))
             .build();
     public static final ReadOnlyPerson DANIEL = new PersonBuilder()
@@ -61,6 +64,7 @@ public class TypicalPersons {
             .withEmail("cornelia@example.com")
             .withAddress("10th street")
             .withFavorite(false)
+            .withDisplayPhoto(null)
             .withLastAccessDate(new Date(4000))
             .build();
     public static final ReadOnlyPerson ELLE = new PersonBuilder()
@@ -69,6 +73,7 @@ public class TypicalPersons {
             .withEmail("werner@example.com")
             .withAddress("michegan ave")
             .withFavorite(false)
+            .withDisplayPhoto(null)
             .withLastAccessDate(new Date(5000))
             .build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder()
@@ -77,6 +82,7 @@ public class TypicalPersons {
             .withEmail("lydia@example.com")
             .withAddress("little tokyo")
             .withFavorite(false)
+            .withDisplayPhoto(null)
             .withLastAccessDate(new Date(6000))
             .build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder()
@@ -85,6 +91,7 @@ public class TypicalPersons {
             .withEmail("anna@example.com")
             .withAddress("4th street")
             .withFavorite(false)
+            .withDisplayPhoto(null)
             .withLastAccessDate(new Date(7000))
             .build();
 
@@ -95,6 +102,7 @@ public class TypicalPersons {
             .withEmail("stefan@example.com")
             .withAddress("little india")
             .withFavorite(false)
+            .withDisplayPhoto(null)
             .withLastAccessDate(new Date(8000))
             .build();
     public static final ReadOnlyPerson IDA = new PersonBuilder()
@@ -103,6 +111,7 @@ public class TypicalPersons {
             .withEmail("hans@example.com")
             .withAddress("chicago ave")
             .withFavorite(false)
+            .withDisplayPhoto(null)
             .withLastAccessDate(new Date(9000))
             .build();
 
@@ -113,6 +122,7 @@ public class TypicalPersons {
             .withEmail(VALID_EMAIL_AMY)
             .withAddress(VALID_ADDRESS_AMY)
             .withFavorite(VALID_FAVORITE_NO)
+            .withDisplayPhoto(null)
             .withTags(VALID_TAG_FRIEND)
             .withSocialInfos(VALID_SOCIAL_AMY_INSTAGRAM)
             .build();
@@ -122,6 +132,7 @@ public class TypicalPersons {
             .withEmail(VALID_EMAIL_BOB)
             .withAddress(VALID_ADDRESS_BOB)
             .withFavorite(VALID_FAVORITE_YES)
+            .withDisplayPhoto(null)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .withSocialInfos(VALID_SOCIAL_BOB_FACEBOOK)
             .build();

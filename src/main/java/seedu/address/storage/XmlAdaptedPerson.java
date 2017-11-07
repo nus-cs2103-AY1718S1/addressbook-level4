@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DisplayPhoto;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Favorite;
 import seedu.address.model.person.LastAccessDate;
@@ -36,6 +37,8 @@ public class XmlAdaptedPerson {
     @XmlElement
     private boolean favorite;
     @XmlElement
+    private String displayPhoto;
+    @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
     @XmlElement
     private List<XmlAdaptedSocialInfo> addedSocialInfos = new ArrayList<>();
@@ -60,6 +63,7 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         favorite = source.getFavorite().isFavorite();
+        displayPhoto = source.getDisplayPhoto().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -91,9 +95,10 @@ public class XmlAdaptedPerson {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Favorite favorite = new Favorite(this.favorite);
+        final DisplayPhoto displayPhoto = new DisplayPhoto(this.displayPhoto);
         final Set<Tag> tags = new HashSet<>(personTags);
         final Set<SocialInfo> socialInfos = new HashSet<>(personSocialInfos);
         final LastAccessDate lastAccessDate = new LastAccessDate(new Date(lastAccessDateEpoch));
-        return new Person(name, phone, email, address, favorite, tags, socialInfos, lastAccessDate);
+        return new Person(name, phone, email, address, favorite, displayPhoto, tags, socialInfos, lastAccessDate);
     }
 }

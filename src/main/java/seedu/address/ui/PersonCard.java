@@ -7,6 +7,7 @@ import java.util.Random;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -46,9 +47,9 @@ public class PersonCard extends UiPart<Region> {
     private HBox cardPane;
     //@@author keithsoc
     @FXML
-    private StackPane profilePhotoStackPane;
+    private StackPane displayPhotoStackPane;
     @FXML
-    private ImageView profilePhotoImageView;
+    private ImageView displayPhotoImageView;
     //@@author
     @FXML
     private Label name;
@@ -71,7 +72,7 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
-        initProfilePhoto(person);
+        initDisplayPhoto(person);
         initFavorite(person);
         initTags(person);
         initSocialInfos(person);
@@ -80,7 +81,7 @@ public class PersonCard extends UiPart<Region> {
 
     //@@author keithsoc
     /**
-     * Generates a random pastel color for profile photos.
+     * Generates a random pastel color for display photos.
      * @return String containing hex value of the color.
      */
     private String generateRandomPastelColor() {
@@ -111,7 +112,7 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
-     * Binds a profile photo background with a random pastel color and store it into personColors HashMap.
+     * Binds a display photo background with a random pastel color and store it into personColors HashMap.
      */
     private String getColorForPerson(String name) {
         if (!personColors.containsKey(name)) {
@@ -161,24 +162,30 @@ public class PersonCard extends UiPart<Region> {
 
     //@@author keithsoc
     /**
-     * Adds a profile photo for each {@code person}.
-     * TODO: This method will be modified for upcoming addPhoto command
+     * Adds a display photo for each {@code person}.
+     * If {@code person} has a non-null display photo field, set ImageView to an image of user's choice.
+     * If {@code person} has a null display photo field, set ImageView to a colored thumbnail with name initials.
      */
-    private void initProfilePhoto (ReadOnlyPerson person) {
-        // Round profile photo
-        double value = profilePhotoImageView.getFitWidth() / 2;
+    private void initDisplayPhoto(ReadOnlyPerson person) {
+        // Round display photo
+        double value = displayPhotoImageView.getFitWidth() / 2;
         Circle clip = new Circle(value, value, value);
-        profilePhotoImageView.setClip(clip);
+        displayPhotoImageView.setClip(clip);
 
-        // Add background circle with a random pastel color
-        String nameOfPerson = person.getName().toString().trim();
-        Circle backgroundCircle = new Circle(value);
-        backgroundCircle.setFill(Paint.valueOf(getColorForPerson(nameOfPerson)));
+        if (person.getDisplayPhoto().value != null) {
+            // Set image to user's choice
+            displayPhotoImageView.setImage(new Image(person.getDisplayPhoto().getAbsoluteFilePath()));
+        } else {
+            // Add background circle with a random pastel color
+            String nameOfPerson = person.getName().toString().trim();
+            Circle backgroundCircle = new Circle(value);
+            backgroundCircle.setFill(Paint.valueOf(getColorForPerson(nameOfPerson)));
 
-        // Add text
-        Text personInitialsText = new Text(extractInitials(nameOfPerson));
-        personInitialsText.setFill(Paint.valueOf("white"));
-        profilePhotoStackPane.getChildren().addAll(backgroundCircle, personInitialsText);
+            // Add text
+            Text personInitialsText = new Text(extractInitials(nameOfPerson));
+            personInitialsText.setFill(Paint.valueOf("white"));
+            displayPhotoStackPane.getChildren().addAll(backgroundCircle, personInitialsText);
+        }
     }
 
     /**

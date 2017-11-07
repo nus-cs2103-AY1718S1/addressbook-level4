@@ -14,6 +14,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddFacebookContactCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DisplayPhoto;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Favorite;
 import seedu.address.model.person.Name;
@@ -73,6 +74,7 @@ public class AddFacebookContactParser implements Parser<AddFacebookContactComman
                     email,
                     new Address("Placeholder Address"), // Placeholder address
                     favorite,
+                    new DisplayPhoto(null),
                     tags,
                     socialInfos);
 

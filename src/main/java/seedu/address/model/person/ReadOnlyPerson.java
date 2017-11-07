@@ -25,6 +25,8 @@ public interface ReadOnlyPerson {
     //@@author keithsoc
     ObjectProperty<Favorite> favoriteProperty();
     Favorite getFavorite();
+    ObjectProperty<DisplayPhoto> displayPhotoProperty();
+    DisplayPhoto getDisplayPhoto();
     //@@author
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
@@ -51,17 +53,19 @@ public interface ReadOnlyPerson {
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
-                .append(" Phone: ")
+                .append(" | Phone: ")
                 .append(getPhone())
-                .append(" Email: ")
+                .append(" | Email: ")
                 .append(getEmail())
-                .append(" Address: ")
+                .append(" | Address: ")
                 .append(getAddress())
-                .append(" Favorite: ")
+                .append(" | Favorite: ")
                 .append(getFavorite())
-                .append(" Tags: ");
+                .append(" | Display Photo: ")
+                .append(getDisplayPhoto())
+                .append(" | Tags: ");
         getTags().forEach(builder::append);
-        builder.append(" Social Infos: ");
+        builder.append(" | Social Infos: ");
         getSocialInfos().forEach(builder::append);
         // omit last access date as it doesn't provide much useful information to the user
         return builder.toString();
