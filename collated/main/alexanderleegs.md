@@ -1,4 +1,97 @@
 # alexanderleegs
+###### \java\seedu\address\logic\commands\AddMeetingCommand.java
+``` java
+/**
+ * Adds a meeting to an existing person in the address book.
+ */
+public class AddMeetingCommand extends UndoableCommand {
+    public static final String COMMAND_WORD = "addmeeting";
+    public static final String COMMAND_ALIAS = "am";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a meeting to the person identified "
+            + "by the index number used in the last person listing.\n"
+            + "Parameters: INDEX (must be a positive integer) "
+            + "MEETING NAME " + "/ "
+            + "MEETING TIME (YYYY-MM-DD HH:MM)\n"
+            + "Example: " + COMMAND_WORD + " 1 "
+            + "business " + "/ " + "2017-12-20 10:00";
+
+    public static final String MESSAGE_ADD_TAG_SUCCESS = "Added Meeting: %1$s";
+    public static final String MESSAGE_DUPLICATE_MEETING = "This person already has this meeting.";
+    public static final String MESSAGE_TIME_CONSTRAINTS = "Time format should be YYYY-MM-DD HH:MM";
+
+    private final Index index;
+    private final String meetingName;
+    private final String meetingTime;
+    private Meeting newMeeting;
+
+    /**
+     * @param index of the person in the filtered person list to edit
+     * @param meetingName to be added to the person
+     * @param meetingTime to be added to the person
+     */
+    public AddMeetingCommand(Index index, String meetingName, String meetingTime) {
+        requireNonNull(index);
+
+        this.index = index;
+        this.meetingName = meetingName;
+        this.meetingTime = meetingTime;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+
+        try {
+            newMeeting = new Meeting(personToEdit, meetingName, meetingTime);
+        } catch (IllegalValueException e) {
+            throw new CommandException(MESSAGE_TIME_CONSTRAINTS);
+        }
+        Set<Meeting> oldMeetings = new HashSet<Meeting>(personToEdit.getMeetings());
+        if (oldMeetings.contains(newMeeting)) {
+            throw new CommandException(MESSAGE_DUPLICATE_MEETING);
+        }
+        Person editedPerson = new Person(personToEdit);
+        oldMeetings.add(newMeeting);
+        editedPerson.setMeetings(oldMeetings);
+
+        try {
+            model.updatePerson(personToEdit, editedPerson);
+            model.sortMeeting();
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("Not creating a new person");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+        return new CommandResult(String.format(MESSAGE_ADD_TAG_SUCCESS, newMeeting.meetingName));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof AddMeetingCommand)) {
+            return false;
+        }
+
+        // state check
+        AddMeetingCommand toCompare = (AddMeetingCommand) other;
+        return index.equals(toCompare.index)
+                && meetingName.equals(toCompare.meetingName)
+                && meetingTime.equals(toCompare.meetingTime);
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\AddTagCommand.java
 ``` java
 /**
@@ -77,6 +170,66 @@ public class AddTagCommand extends UndoableCommand {
         AddTagCommand toCompare = (AddTagCommand) other;
         return index.equals(toCompare.index)
                 && newTag.equals(toCompare.newTag);
+    }
+}
+```
+###### \java\seedu\address\logic\commands\DeleteMeetingCommand.java
+``` java
+/**
+ * Deletes a meeting from an existing person in the address book.
+ */
+public class DeleteMeetingCommand extends UndoableCommand {
+    public static final String COMMAND_WORD = "deletemeeting";
+    public static final String COMMAND_ALIAS = "dm";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a meeting from the meeting list identified "
+            + "by the index number used in the last meeting listing.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1 ";
+
+    public static final String MESSAGE_DELETE_MEETING_SUCCESS = "Deleted Meeting: %1$s";
+
+    private final Index targetIndex;
+
+    /**
+     * @param index of the person in the filtered person list to edit
+     */
+    public DeleteMeetingCommand(Index index) {
+        requireNonNull(index);
+
+        this.targetIndex = index;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        List<Meeting> lastShownList = model.getFilteredMeetingList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_MEETING_DISPLAYED_INDEX);
+        }
+
+        Meeting meetingToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+        model.deleteMeeting(meetingToDelete);
+
+        return new CommandResult(String.format(MESSAGE_DELETE_MEETING_SUCCESS, meetingToDelete.meetingName));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof DeleteMeetingCommand)) {
+            return false;
+        }
+
+        // state check
+        DeleteMeetingCommand toCompare = (DeleteMeetingCommand) other;
+        return targetIndex.equals(toCompare.targetIndex);
     }
 }
 ```
@@ -232,6 +385,40 @@ public class SortCommand extends UndoableCommand {
 }
 
 ```
+###### \java\seedu\address\logic\parser\AddMeetingCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new AddTagCommand object
+ */
+public class AddMeetingCommandParser implements Parser<AddMeetingCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the AddMeetingCommand
+     * and returns an AddMeetingCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public AddMeetingCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        String trimmedArgs = args.trim();
+        String[] parts = trimmedArgs.split("\\s+", 2);
+        if (parts.length < 2) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMeetingCommand.MESSAGE_USAGE));
+        }
+        String[] details = parts[1].trim().split("/", 2);
+        Index index;
+        if (details.length < 2) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMeetingCommand.MESSAGE_USAGE));
+        }
+        try {
+            index = ParserUtil.parseIndex(parts[0]);
+            String meetingName = details[0].trim();
+            String meetingTime = details[1].trim();
+            return new AddMeetingCommand(index, meetingName, meetingTime);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMeetingCommand.MESSAGE_USAGE));
+        }
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\AddTagCommandParser.java
 ``` java
 /**
@@ -257,6 +444,29 @@ public class AddTagCommandParser implements Parser<AddTagCommand> {
             return new AddTagCommand(index, tag);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\parser\DeleteMeetingCommandParser.java
+``` java
+
+/**
+ * Parses input arguments and creates a new DeleteTagCommand object
+ */
+public class DeleteMeetingCommandParser implements Parser<DeleteMeetingCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the AddMeetingCommand
+     * and returns an AddMeetingCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public DeleteMeetingCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new DeleteMeetingCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteMeetingCommand.MESSAGE_USAGE));
         }
     }
 }
@@ -358,6 +568,10 @@ public class SortCommandParser implements Parser<SortCommand> {
 ```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
+    public void deleteMeeting(Meeting meeting) {
+        meetings.remove(meeting);
+    }
+
     public void sort(String field) {
         persons.sort(field);
     }
@@ -379,20 +593,46 @@ public class SortCommandParser implements Parser<SortCommand> {
  */
 public class Meeting {
 
-    public static final String MESSAGE_TIME_CONSTRAINTS = "Time format should be YYYY-MM-DD HH-MM";
+    public static final String MESSAGE_TIME_CONSTRAINTS = "Time format should be YYYY-MM-DD HH:MM";
 
     public final LocalDateTime date;
     public final String value;
-    private Name name;
+    public final String meetingName;
+    private ReadOnlyPerson person;
     private ObjectProperty<Name> displayName;
+    private ObjectProperty<String> displayValue;
+    private ObjectProperty<String> displayMeetingName;
 
     /**
      * Validates given tag name.
      *
      * @throws IllegalValueException if the given tag name string is invalid.
      */
-    public Meeting(String time, Name name) throws IllegalValueException {
-        setName(name);
+    public Meeting(ReadOnlyPerson person, String meetingName, String time) throws IllegalValueException {
+        setPerson(person);
+        this.displayName = new SimpleObjectProperty<>(person.getName());
+        this.meetingName = meetingName;
+        this.displayMeetingName = new SimpleObjectProperty<>(meetingName);
+        requireNonNull(time);
+        String trimmedTime = time.trim();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm")
+                .withResolverStyle(ResolverStyle.STRICT);
+        try {
+            LocalDateTime date = LocalDateTime.parse(trimmedTime, formatter);
+            this.date = date;
+            value = date.format(formatter);
+            this.displayValue = new SimpleObjectProperty<>(value);
+        } catch (DateTimeParseException dtpe) {
+            throw new IllegalValueException(MESSAGE_TIME_CONSTRAINTS);
+        }
+    }
+
+    /**
+     * Overloaded constructor for creating meeting objects with no proper reference to their person object
+     */
+    public Meeting(String meetingName, String time) throws IllegalValueException {
+        this.meetingName = meetingName;
+        this.displayMeetingName = new SimpleObjectProperty<>(meetingName);
         requireNonNull(time);
         String trimmedTime = time.trim();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -400,40 +640,38 @@ public class Meeting {
             LocalDateTime date = LocalDateTime.parse(trimmedTime, formatter);
             this.date = date;
             value = date.format(formatter);
+            this.displayValue = new SimpleObjectProperty<>(value);
         } catch (DateTimeParseException dtpe) {
             throw new IllegalValueException(MESSAGE_TIME_CONSTRAINTS);
         }
     }
 
     /**
-     * Overloaded constructor to be used in edit command parser
+     * Overloaded constructor to create a new meeting object given a meeting for reference purposes.
      */
-    public Meeting(String time) throws IllegalValueException {
-        requireNonNull(time);
-        String trimmedTime = time.trim();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        try {
-            LocalDateTime date = LocalDateTime.parse(trimmedTime, formatter);
-            this.date = date;
-            value = date.format(formatter);
-        } catch (DateTimeParseException dtpe) {
-            throw new IllegalValueException(MESSAGE_TIME_CONSTRAINTS);
-        }
+    public Meeting(Meeting meeting) {
+        this.meetingName = meeting.meetingName;
+        this.date = meeting.date;
+        this.value = meeting.value;
+        this.person = meeting.person;
+        this.displayValue = meeting.displayValue;
+        this.displayMeetingName = meeting.displayMeetingName;
+        this.displayName = meeting.displayName;
     }
 
     /**
-     * Set the name attributes of the meeting object.
+     * Set the person attributes of the meeting object.
      */
-    public void setName(Name name) {
-        this.name = name;
-        this.displayName = new SimpleObjectProperty<>(name);
+    public void setPerson(ReadOnlyPerson person) {
+        this.person = person;
+        this.displayName = new SimpleObjectProperty<>(person.getName());
     }
 
     /**
-     * Returns name of the meeting
+     * Returns ReadOnlyPerson of the meeting
      */
-    public Name getName() {
-        return name;
+    public ReadOnlyPerson getPerson() {
+        return person;
     }
 
     /**
@@ -443,12 +681,25 @@ public class Meeting {
         return displayName;
     }
 
+    /**
+     * Return meeting name for use by UI
+     */
+    public ObjectProperty<String> meetingNameProperty() {
+        return displayMeetingName;
+    }
+
+    /**
+     * Return meeting time for use by UI
+     */
+    public ObjectProperty<String> meetingTimeProperty() {
+        return displayValue;
+    }
 
 
     @Override
     public boolean equals(Object other) {
         /* Only happens for testing as name attribute will be set for the main app*/
-        if (this.name == null && other instanceof Meeting && ((Meeting) other).name == null) {
+        if (this.person == null && other instanceof Meeting && ((Meeting) other).person == null) {
             return other == this // short circuit if same object
                     || (other instanceof Meeting // instanceof handles nulls
                     && this.date.equals(((Meeting) other).date)); //state check
@@ -457,7 +708,7 @@ public class Meeting {
         return other == this // short circuit if same object
                 || (other instanceof Meeting // instanceof handles nulls
                 && this.date.equals(((Meeting) other).date)
-                && this.name.toString().equals(((Meeting) other).name.toString())); // state check
+                && this.person.equals(((Meeting) other).person)); // state check
     }
 
     @Override
@@ -555,6 +806,21 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+```
+###### \java\seedu\address\model\meeting\UniqueMeetingList.java
+``` java
+    /**
+     * Removes the equivalent meeting from the list.
+     */
+    public boolean remove(Meeting toRemove) {
+        requireNonNull(toRemove);
+        final boolean meetingFoundAndDeleted = internalList.remove(toRemove);
+        return meetingFoundAndDeleted;
+    }
+
+```
+###### \java\seedu\address\model\meeting\UniqueMeetingList.java
+``` java
     @Override
     public Iterator<Meeting> iterator() {
         assert CollectionUtil.elementsAreUnique(internalList);
@@ -582,12 +848,6 @@ public class UniqueMeetingList implements Iterable<Meeting> {
      * The elements do not have to be in the same order.
      */
     public boolean equalsOrderInsensitive(UniqueMeetingList other) {
-        for (Meeting m : internalList) {
-            System.out.println(m.value + " " + m.getName().toString() + "checking order insensitive");
-        }
-        for (Meeting m : other.internalList) {
-            System.out.println(m.value + " " + m.getName().toString() + " other checking order insensitive");
-        }
         assert CollectionUtil.elementsAreUnique(internalList);
         assert CollectionUtil.elementsAreUnique(other.internalList);
         return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
@@ -614,6 +874,9 @@ public class UniqueMeetingList implements Iterable<Meeting> {
 ``` java
     /** Deletes given tag from AddressBook */
     void deleteTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException;
+
+    /** Deletes given meeting from AddressBook */
+    void deleteMeeting(Meeting meeting);
 
     /** Sorts AddressBook by a field in alphabetical order */
     void sort(String field);
@@ -645,10 +908,22 @@ public class UniqueMeetingList implements Iterable<Meeting> {
     }
 
     @Override
+    public void deleteMeeting(Meeting meeting) {
+        addressBook.deleteMeeting(meeting);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public void sort(String field) {
         addressBook.sort(field);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void sortMeeting() {
+        addressBook.sortMeeting();
+        updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
     }
 
 ```
@@ -766,7 +1041,13 @@ public class TagNotFoundException extends Exception {}
                             return oneTagsString.get(i).compareTo(otherTagsString.get(i));
                         }
                     }
-                    return 0;
+                    if (oneTagsString.size() < otherTagsString.size()) {
+                        return 1;
+                    } else if (oneTagsString.size() > otherTagsString.size()) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
                 }
             });
             break;
@@ -791,7 +1072,13 @@ public class TagNotFoundException extends Exception {}
                             return oneMeetingsString.get(i).compareTo(otherMeetingsString.get(i));
                         }
                     }
-                    return 0;
+                    if (oneMeetingsString.size() < otherMeetingsString.size()) {
+                        return 1;
+                    } else if (oneMeetingsString.size() > otherMeetingsString.size()) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
                 }
             });
         }
@@ -810,12 +1097,12 @@ public class TagNotFoundException extends Exception {}
 /**
  * JAXB-friendly adapted version of the Tag.
  */
-public class XmlAdaptedMeeting {
+public class XmlAdaptedMeeting implements XmlAdaptedClass<Meeting> {
 
     @XmlElement
     private String meetingName;
     @XmlElement
-    private String userName;
+    private String meetingTime;
 
     /**
      * Constructs an XmlAdaptedMeeting.
@@ -829,8 +1116,8 @@ public class XmlAdaptedMeeting {
      * @param source future changes to this will not affect the created
      */
     public XmlAdaptedMeeting(Meeting source) {
-        meetingName = source.value;
-        userName = source.getName().toString();
+        meetingTime = source.value;
+        meetingName = source.meetingName;
     }
 
     /**
@@ -839,24 +1126,8 @@ public class XmlAdaptedMeeting {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Meeting toModelType() throws IllegalValueException {
-        return new Meeting(meetingName, new Name(userName));
+        return new Meeting(meetingName, meetingTime);
     }
 
 }
-```
-###### \java\seedu\address\storage\XmlSerializableAddressBook.java
-``` java
-    @Override
-    public ObservableList<Meeting> getMeetingList() {
-        final ObservableList<Meeting> meetings = this.meetings.stream().map(m -> {
-            try {
-                return m.toModelType();
-            } catch (IllegalValueException e) {
-                e.printStackTrace();
-                //TODO: better error handling
-                return null;
-            }
-        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
-        return FXCollections.unmodifiableObservableList(meetings);
-    }
 ```

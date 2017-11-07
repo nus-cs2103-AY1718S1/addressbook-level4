@@ -1,69 +1,8 @@
 # derrickchua-reused
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\google\OAuth.java
 ``` java
-    /**
-    * Enumerate fixed colours for tags
-    * */
-    private static enum Colour {
-        MAROON, DARKCYAN, FIREBRICK, LIGHTSLATEGREY, DEEPSKYBLUE, OLIVEDRAB, LIGHTPINK, DARKOLIVEGREEN;
-
-        private static final List<Colour> VALUES =
-                Collections.unmodifiableList(Arrays.asList(values()));
-        private static final int SIZE = VALUES.size();
-        private static final Random RANDOM = new Random();
-
-        public static Colour randomColour()  {
-            return VALUES.get(RANDOM.nextInt(SIZE));
-        }
-    }
-
-    private static HashMap <String, String> tagColours = new HashMap<String, String>();
-
-```
-###### /java/seedu/address/ui/PersonCard.java
-``` java
-    /**
-     *Initialises a label with an assigned colour for a given person
-     * @param person
-     */
-    private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> {
-            Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-background-color: " + getTagColour(tag.tagName));
-            tags.getChildren().add(tagLabel);
-        });
-    }
-
-    private static String getTagColour (String tagName) {
-        if (!(tagColours.containsKey(tagName))) {
-            tagColours.put(tagName, Colour.randomColour().toString());
-        }
-
-        return tagColours.get(tagName);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
-            return false;
-        }
-
-        // state check
-        PersonCard card = (PersonCard) other;
-        return id.getText().equals(card.id.getText())
-                && person.equals(card.person);
-    }
-}
-```
-###### /java/seedu/address/google/OAuth.java
-``` java
-/**
+/**Singleton class
+ *
  * Command-line sample for the Google OAuth2 API described at <a
  * href="http://code.google.com/apis/accounts/docs/OAuth2Login.html">Using OAuth 2.0 for Login
  * (Experimental)</a>.
@@ -79,7 +18,7 @@ public class OAuth extends Observable {
      * Be sure to specify the name of your application. If the application name is {@code null} or
      * blank, the application will log a warning. Suggested format is "MyCompany-ProductName/1.0".
      */
-    private final String appName = "W13B3-AddressBook/1.2";
+    private final String appName = "W13B3-ABC/1.5RC";
 
     /** Directory to store user credentials. */
     private final java.io.File dataStoreDir =
@@ -173,5 +112,67 @@ public class OAuth extends Observable {
         return oauth;
     }
 
+}
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+    /**
+    * Enumerate fixed colours for tags
+    * */
+    private static enum Colour {
+        MAROON, DARKCYAN, FIREBRICK, LIGHTSLATEGREY, DEEPSKYBLUE, OLIVEDRAB, LIGHTPINK, DARKOLIVEGREEN;
+
+        private static final List<Colour> VALUES =
+                Collections.unmodifiableList(Arrays.asList(values()));
+        private static final int SIZE = VALUES.size();
+        private static final Random RANDOM = new Random();
+
+        public static Colour randomColour()  {
+            return VALUES.get(RANDOM.nextInt(SIZE));
+        }
+    }
+
+    private static HashMap <String, String> tagColours = new HashMap<String, String>();
+
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+    /**
+     *Initialises a label with an assigned colour for a given person
+     * @param person
+     */
+    private void initTags(ReadOnlyPerson person) {
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-background-color: " + getTagColour(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
+    }
+
+    private static String getTagColour (String tagName) {
+        if (!(tagColours.containsKey(tagName))) {
+            tagColours.put(tagName, Colour.randomColour().toString());
+        }
+
+        return tagColours.get(tagName);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof PersonCard)) {
+            return false;
+        }
+
+        // state check
+        PersonCard card = (PersonCard) other;
+        return id.getText().equals(card.id.getText())
+                && person.equals(card.person);
+    }
 }
 ```

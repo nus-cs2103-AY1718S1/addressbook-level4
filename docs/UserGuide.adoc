@@ -65,8 +65,12 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+// tag::wildcard[]
 * Wildcard symbol `\*` and `?` are allowed in parameters for `find` where `\*` matches any non-space string and `?` matches any non-space unit-length symbol.
+// end::wildcard[]
+// tag::tabcomplete[]
 * Suggestions would pop up for partial words keyed in. Press kbd:[TAB] to auto-complete using the first suggestion.
+// end::tabcomplete[]
 ====
 
 === Viewing help : `help`
@@ -313,6 +317,7 @@ image:deletetag_4.png[600] +
 _Figure 4.7.4_
 // end::addremovetag[]
 
+
 // tag::addremovemeeting[]
 === Adding a meeting to a person : `addmeeting`
 
@@ -380,6 +385,7 @@ Deletes the 1st meeting in the results of the `find` command.
 Deletes the 4th meeting in the results of the `find` command.
 // end::addremovemeeting[]
 
+// tag::find[]
 === Locating persons by keywords: `find`
 
 ====
@@ -402,10 +408,10 @@ If you want to find a person named `John Watson`:
 
 .  Type in (Figure 4.8.1) +
 `>> find n/john` +
-image:to be updated[] +
+image:to be updated[a] +
 _Figure 4.8.1_
 .  Press kbd:[Enter] and you should see a list of persons having the name `john`: (Figure 4.8.2) +
-image:to be updated[] +
+image:to be updated[a] +
 _Figure 4.8.2_
 
 Here are some other commands you can do with `find`:
@@ -415,7 +421,8 @@ Lists any person having names `Betsy`, `Tim`, or `John`
 * `f Watson` +
 Lists any person having the name `Watson`
 * `find j*` +
-Lists any person whose name starts with `j`
+Lists any person whose name starts with `j` +
+// end::find[]
 
 // tag::sort[]
 === Sorting contact list: `sort`
@@ -833,7 +840,7 @@ _Figure 4.19.1_
 image:clear2.png[clear2, 600] +
 _Figure 4.19.2_
 
-
+// tag::resize[]
 === Resizing the main window : `resize`
 
 ====
@@ -854,6 +861,7 @@ If you want to resize your main window to 1280 * 720: +
 image:resize.png[] +
 _Figure 4.20.1_
 .  Press kbd:[Enter] and the main window would be resized to 1280 * 720.
+// end::resize[]
 
 === Exiting the program : `exit`
 

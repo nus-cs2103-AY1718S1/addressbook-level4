@@ -1,0 +1,121 @@
+= Li Zeyong - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ABC Business Contact
+*ABC Business Contact* is a free desktop contact management application that helps the user to manage a large collection of contacts conveniently and keep track of appointments. The user can store contacts as well as other information and retrieve them efficiently with the help of *ABC*. +
+ The user interact with it using a Command Line Interface(CLI), and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/main/newalter.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/test/newalter.md[Test code]]
+
+=== Enhancement Added: A Universal Find Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+It allows users to locate specific contacts efficiently using all information available beyond name and tags.
+
+=== Enhancement Added: Filtering of Find command
+
+==== External behavior
+
+---
+
+The `find` command filters the list shown. Successive `find` makes the list smaller and smaller
+
+---
+
+==== Justification
+
+By filtering the existing list, the user can narrow down the list to find the relevant contacts without exact information.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=filter]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Wildcard Symbol
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=wildcard]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The use of wildcard symbol `*` and `?` allows fuzzy search.
+
+
+=== Enhancement Added: Resize Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=resize]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The resize command allows the user to enlarge/shrink the size of the main window conveniently using CLI so that he/she can have a view more contacts or make space in the screen for other applications.
+
+=== Enhancement Added: Auto-Completion Suggestion
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=tabcomplete]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Auto-Completion allows users to type less. Moreover, since all suggestions are generated from the database, it reduces the chance of mistyping.
+
+
+=== Enhancement Proposed: Add `filter` command
+
+A `filter` command to filter away unwanted contacts in the list shown.
+For instance, if the user want to see all contacts who are not his friends, he can filter away all contacts tagged with `friends`.
+
+=== Enhancement Proposed: Rank Auto-Completion Suggestions by their occurance
+If a certain keyword is frequently used, it should show up first in the suggestion menu.
+
+
+
+=== Other contributions
+
+* Discovered a bug that causes the app to crush and provided a solution. (https://github.com/nus-cs2103-AY1718S1/forum/issues/137[Issue #137])
+* Discovered bugs during acceptance testing. (Issues https://github.com/CS2103AUG2017-W14-B4/main/issues/116[#116], https://github.com/CS2103AUG2017-W14-B4/main/issues/117[#117], https://github.com/CS2103AUG2017-W14-B4/main/issues/118[#118])
+
