@@ -31,6 +31,8 @@ public class ExportCommandParserTest {
         assertParseFailure(parser, "output.", ExportCommand.MESSAGE_WRONG_FILE_TYPE);
     }
 
+
+
     @Test
     public void parse_validArgs_returnExportCommand() throws ParseException{
         //valid xml Export
