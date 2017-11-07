@@ -17,6 +17,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
@@ -36,6 +37,7 @@ public class TypicalPersons {
             .withFavorite(true)
             .withDisplayPhoto(null)
             .withTags("friends")
+            .withLastAccessDate(new Date(1000))
             .build();
     public static final ReadOnlyPerson BENSON = new PersonBuilder()
             .withName("Benson Meier")
@@ -45,6 +47,7 @@ public class TypicalPersons {
             .withFavorite(true)
             .withDisplayPhoto(null)
             .withTags("owesMoney", "friends")
+            .withLastAccessDate(new Date(2000))
             .build();
     public static final ReadOnlyPerson CARL = new PersonBuilder()
             .withName("Carl Kurz")
@@ -53,6 +56,7 @@ public class TypicalPersons {
             .withAddress("wall street")
             .withFavorite(false)
             .withDisplayPhoto(null)
+            .withLastAccessDate(new Date(3000))
             .build();
     public static final ReadOnlyPerson DANIEL = new PersonBuilder()
             .withName("Daniel Meier")
@@ -61,6 +65,7 @@ public class TypicalPersons {
             .withAddress("10th street")
             .withFavorite(false)
             .withDisplayPhoto(null)
+            .withLastAccessDate(new Date(4000))
             .build();
     public static final ReadOnlyPerson ELLE = new PersonBuilder()
             .withName("Elle Meyer")
@@ -69,6 +74,7 @@ public class TypicalPersons {
             .withAddress("michegan ave")
             .withFavorite(false)
             .withDisplayPhoto(null)
+            .withLastAccessDate(new Date(5000))
             .build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder()
             .withName("Fiona Kunz")
@@ -77,6 +83,7 @@ public class TypicalPersons {
             .withAddress("little tokyo")
             .withFavorite(false)
             .withDisplayPhoto(null)
+            .withLastAccessDate(new Date(6000))
             .build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder()
             .withName("George Best")
@@ -85,6 +92,7 @@ public class TypicalPersons {
             .withAddress("4th street")
             .withFavorite(false)
             .withDisplayPhoto(null)
+            .withLastAccessDate(new Date(7000))
             .build();
 
     // Manually added
@@ -95,6 +103,7 @@ public class TypicalPersons {
             .withAddress("little india")
             .withFavorite(false)
             .withDisplayPhoto(null)
+            .withLastAccessDate(new Date(8000))
             .build();
     public static final ReadOnlyPerson IDA = new PersonBuilder()
             .withName("Ida Mueller")
@@ -103,6 +112,7 @@ public class TypicalPersons {
             .withAddress("chicago ave")
             .withFavorite(false)
             .withDisplayPhoto(null)
+            .withLastAccessDate(new Date(9000))
             .build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}

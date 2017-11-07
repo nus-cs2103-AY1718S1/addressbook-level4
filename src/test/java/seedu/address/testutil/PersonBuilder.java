@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import static seedu.address.logic.parser.SocialInfoMapping.parseSocialInfo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -10,6 +11,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.DisplayPhoto;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Favorite;
+import seedu.address.model.person.LastAccessDate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -103,6 +105,17 @@ public class PersonBuilder {
             throw new IllegalArgumentException("raw social infos must be valid.");
         }
         return this;
+    }
+
+    /**
+     * Sets the {@code LastAccessDate} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withLastAccessDate(Date date) {
+        LastAccessDate lastAccessDate = new LastAccessDate(date);
+        this.person.setLastAccessDate(lastAccessDate);
+
+        return this;
+
     }
     //@@author
 
