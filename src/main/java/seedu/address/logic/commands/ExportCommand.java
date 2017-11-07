@@ -50,7 +50,7 @@ public class ExportCommand extends Command {
                 VcfExport.saveDataToFile(export, addressBook.getPersonList());
             }
         } catch (IOException ioe) {
-            throw new CommandException(MESSAGE_FILE_NOT_FOUND);
+            assert false : "The file should have been created and writable";
         }
         return new CommandResult(MESSAGE_SUCCESS);
     }
