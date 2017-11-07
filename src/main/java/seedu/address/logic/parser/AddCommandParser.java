@@ -36,7 +36,6 @@ import seedu.address.model.tag.Tag;
  * Parses input arguments and creates a new AddCommand object
  */
 public class AddCommandParser implements Parser<AddCommand> {
-    //@@author Lenaldnwj
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
      * and returns an AddCommand object for execution.
@@ -83,9 +82,11 @@ public class AddCommandParser implements Parser<AddCommand> {
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
+
+    //@@author Lenaldnwj
     /**
-     * Returns a appended string stating that specific optional inputs are not recorded if user decides to not enter
-     * any of the optional inputs.
+     * Returns a appended String message stating that specific optional inputs are not recorded if user decides
+     * to not enter any of the optional inputs.
      */
     public static String optionalInput(String input) {
         if (!input.contains("a/")) {
