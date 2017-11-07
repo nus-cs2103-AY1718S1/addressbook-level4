@@ -592,6 +592,7 @@ The sort command object receives the sorted list and creates `CommandResult` obj
 **Cons:** Because address/email/phone number is unique, you can usually find them without sorting the list. +
 // end::sort[]
 
+// tag:: addE[]
 === AddEvent mechanism
 The add event command is facilitated by `LogicManager` class. It allows user to add a new event to the event list. +
 
@@ -604,6 +605,7 @@ The user enters an addEvent command, which is received by `LogicManager`. `Logic
 `AddressBookParser` will first check the format of the parameters. If the format is valid, it calls `AddEventCommand` constructor, which returns an `AddEventCommand` object. +
 `Logic Manager` receives the `AddEventCommand` object and calls execute(). Then, `AddEventCommand` uses `Model` to execute adding operation, and returns `CommandResult`. +
 `Logic Manager` receives the `CommandResult`, and returns to `UI`. +
+// end:: addE[]
 
 // tag::listE[]
 === ListEvent mechanism
@@ -738,6 +740,7 @@ The `SelectJoinedEventsCommand` then creates a `CommandResult` object and return
 **Cons:** Users would have to type more if the name is long. User may mistype the name. +
 // end::selectE[]
 
+// tag::joinDisjoin[]
 === Person-Event interaction
 In this application, we allow users to connect events and persons to show that some persons participate some events. +
 We will explain it in terms of Model and Storage. +
@@ -786,6 +789,7 @@ _Figure 3.9.3: interaction storage_
 **Alternative 2:** Use association class +
 **Pros:** Can save every participation entry. +
 **Cons:** Need to implement extra storage for association class, and it is costly in terms of time to operate `show person` and `select event`.
+// end::joinDisjoin[]
 
 === Portrait Command mechanism
 The portrait command is facilitated by `LogicManager` and is extended from `UndoableCommand`. +
