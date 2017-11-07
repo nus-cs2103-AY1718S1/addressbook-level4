@@ -23,6 +23,7 @@ public class LocateCommand extends Command {
             + "Example: " + COMMAND_WORDVAR + " 1";
 
     public static final String MESSAGE_LOCATE_PERSON_SUCCESS = "Address of the person is displayed";
+    public static final String MESSAGE_NO_ADDRESS = "Address of this person has not been inputted.";
 
     private final Index targetIndex;
 
@@ -40,9 +41,13 @@ public class LocateCommand extends Command {
         }
 
         ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
-        Address address = person.getAddress();
+        String address = person.getAddress().toString();
 
-        EventsCenter.getInstance().post(new ShowLocationRequestEvent(address.toString()));
+        if (address.equals("No Address Added")) {
+            return new CommandResult(String.format(MESSAGE_NO_ADDRESS, targetIndex.getOneBased()));
+        }
+
+        EventsCenter.getInstance().post(new ShowLocationRequestEvent(address));
         return new CommandResult(String.format(MESSAGE_LOCATE_PERSON_SUCCESS, targetIndex.getOneBased()));
     }
 
