@@ -645,11 +645,11 @@ The `ThemeUnit` enumeration is to set a global static variable `currentThemeUnit
 
 The following link:#sequence-diagram[sequence diagram] shows how the switch theme command operation works:
 
-image::SwitchThemeSeqDiagram.png[width="900"]
+image::SwitchThemeSequenceDiagram.png[width="900"]
 
 The following link:#sequence-diagram[activity diagram] summarize what happens when a user execute switch theme command.
 
-image::SwitchThemeCommandActivityDiagram.png[width="900"]
+image::SwitchThemeActivityDiagram.png[width="900"]
 
 ==== Design Considerations
 
