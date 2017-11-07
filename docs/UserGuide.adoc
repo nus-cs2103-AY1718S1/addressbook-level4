@@ -151,7 +151,7 @@ Example:
 ==== Adding a person: `add`
 
 Adds a person to the address book. +
-Format: `add n/NAME p/PHONE_NUMBER [p/ADDITIONAL_PHONE_NUMBERS]... e/EMAIL a/ADDRESS [f/] [t/TAG]... [s/SOCIAL_PLATFORM USERNAME]...` +
+Format: `add n/NAME p/PHONE_NUMBER [p/ADDITIONAL_PHONE_NUMBERS]... e/EMAIL a/ADDRESS [f/] [dp/DISPLAY_PHOTO_FILE_PATH] [t/TAG]... [s/SOCIAL_PLATFORM USERNAME]...` +
 Alias: `a`
 
 ****
@@ -159,6 +159,7 @@ Alias: `a`
 Invalid phone numbers will not be added to the contact,
 and there must be at least one valid phone number entered. +
 * A person can be favorited by including the parameter `f/` +
+* A person can have a display photo imported from the location specified by `DISPLAY_PHOTO_FILE_PATH` [Since v1.5rc]
 * A person can have any number of tags (including zero) +
 * A person can have any number of social media accounts (including zero). [Since v1.2] +
 More information about representing social media accounts can be found in the <<social-media-integrations, Social Media Integrations>> section.
@@ -169,14 +170,14 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` +
 Adds a contact with the name `John Doe`, phone number `98765432`, email address `johnd@example.com`,
 address `John street, block 123, #01-01`.
-* `add n/Rob Cross p/92456877 p/64123456 e/rob@example.com a/Kent Ridge Drive 23 t/husband f/ s/facebook r.cross10` +
+* `add n/Rob Cross p/92456877 p/64123456 e/rob@example.com a/Kent Ridge Drive 23 t/husband f/ s/facebook r.cross10 dp/C:/Users/Seedu/Pictures/batman.png` +
 Adds a `favorite` contact with the name `Rob Cross`, phone numbers `92456877` and `64123456`, email address `rob@example.com`,
-address `Kent Ridge Drive 23`, tag `husband`, and a `Facebook` account with the username `r.cross10`.
+address `Kent Ridge Drive 23`, tag `husband`, a `Facebook` account with the username `r.cross10`, and adds a `display photo` imported from the location `C:/Users/Seedu/Pictures/batman.png`.
 
 ==== Editing a person: `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE]... [e/EMAIL] [a/ADDRESS] [f/ OR uf/] [t/TAG]... [s/SOCIAL_PLATFORM USERNAME]...` +
+Format: `edit INDEX [n/NAME] [p/PHONE]... [e/EMAIL] [a/ADDRESS] [f/ OR uf/] [dp/DISPLAY_PHOTO_FILE_PATH] [t/TAG]... [s/SOCIAL_PLATFORM USERNAME]...` +
 Alias: `e`
 
 ****
@@ -184,6 +185,7 @@ Alias: `e`
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * You can favorite a person by including the parameter `f/`, or unfavorite by including the parameter `uf/`. [Since v1.2] +
+* You can remove a person's display photo by including the parameter `dp/` without specifying any file path after it. [Since v1.5rc]
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by including the parameter `t/` without specifying any tags after it.
 * When editing social media accounts, the existing social media accounts will be removed i.e. adding social media accounts is not cumulative. [Since v1.2]
@@ -195,42 +197,12 @@ Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 s/instagram janedoe123 s/facebook jane.doe f/` +
-Makes the 2nd person a `favorite` contact, and edits the social media accounts to be
+* `edit 2 f/ dp/C:/Users/Seedu/Pictures/superman.png s/instagram janedoe123 s/facebook jane.doe` +
+Marks the 2nd person a `favorite` contact, changes the existing display photo to the new file specified by `C:/Users/Seedu/Pictures/superman.png` and edits the social media accounts to be
 a `Facebook` account with the username `jane.doe`,
 and an Instagram account with the username `janedoe123`.
-* `edit 3 n/Betsy Crower t/` +
-Edits the name of the 3rd person to be `Betsy Crower` and clears all existing tags.
-
-==== Adding contact photos [Coming in v2.0]: `photo`
-
-Adds a display photo for a person. +
-Format: `photo INDEX [FILE_PATH]`
-
-****
-* Adds a display photo for the person at the specified `INDEX`, using the file at the location specified by `FILE_PATH`.
-* You can remove a person's display photo by leaving the `FILE_PATH` parameter blank.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-* The input `FILE_PATH`, if present, must be an absolute file path, e.g.
-** `/Users/seedu/Pictures/photo.jpg` for macOS and Linux
-** `c:\Users\seedu\Pictures\photo.jpg` for Windows
-****
-
-[NOTE]
-====
-* If the specified person already has a display photo, it will be updated to be the image located at `FILE_PATH`.
-* If no `FILE_PATH` is specified, then the contact's existing display photo will be removed.
-====
-
-Examples:
-
-* `list` +
-`photo 2 /Users/seedu/Pictures/photo.jpg` +
-Adds the specified display photo for the 2nd person in the address book.
-* `find Betsy` +
-`photo 1 /Users/seedu/Pictures/betsy.jpg` +
-Adds the specified display photo for the 1st person in the results of the `find` command.
+* `edit 3 n/Betsy Crower dp/ t/` +
+Edits the name of the 3rd person to be `Betsy Crower`, removes existing display photo and clears all existing tags.
 
 ==== Favoriting a person [Since v1.2]: `fav`
 
