@@ -130,6 +130,13 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 * `find Bets` +
 Returns `0 persons listed! Did you mean Betsy?`
 
+// tag::showfavourite[]
+==== Listing all favourite contacts : `showFavourite"
+
+Lists all favourite contacts. +
+Format: `showFavourite` or `sf`
+// end::showfavourite[]
+
 ==== Sorting a person : `sort`
 
 Sort the list of contacts in addressbook by name. +
@@ -188,6 +195,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+// tag::favourite[]
 ==== Editing a person : `favourite`
 
 Change the `favourite` status of an existing person in the address book. +
@@ -207,6 +215,7 @@ Examples:
 Changes the `favourite` status of the 1st person in the latest list.
 
 image::fav-command-ui.png[width="790"]
+// end::favourite[]
 
 ==== Adding a birthday to select person : `birthday`
 
@@ -335,6 +344,25 @@ Format: `facebook` or `fb`
 ****
 
 image::facebook-command-ui.png[width="790"]
+
+// tag::locate[]
+==== Displaying the address of a person on Google Maps : `locate`
+
+Searches Google Maps for the address of the selected person. The location will be displayed in the app. +
+Format: `locate INDEX`
+
+****
+* Loads the address of the person with the input index number and search for it on Google Maps.
+* The index refers to the index number shown in the most recent person listing.
+* The index *must be a positive integer* and *within the length of the current listing*.
+* If no address was keyed in for the selected person, a message will pop up and no search will be done.
+****
+
+Examples:
+
+* `locate 1`
+Find the address of the 1st person in the latest listing on Google Maps.
+// end::locate[]
 
 === Managing Command Sequence and History
 
