@@ -261,6 +261,7 @@ Edits the remark for the first person to `Likes to drink coffee.` +
 * `remark 1 r/` +
 Removes the remark for the first person.
 
+// tag::birthday[]
 === Adding birthday : `birthday` (Since v1.2)
 
 Edits the birthday for a person specified in the `INDEX`.
@@ -274,10 +275,16 @@ Edits the birthday for the first person to `20-12-2012`. +
 * `birthday 1 b/` or `birthday 1` +
 Removes the birthday for the first person.
 
+// end::birthday[]
+
+// tag::upbirthday[]
+
 === Upcoming birthdays : `upcomingbirthday` (Since v1.4)
 
 Updates the list to show the upcoming birthdays. +
 Format: `upcomingbirthday`
+
+// end ::upbirthday[]
 
 === Sorting all entries : `sort` (Since v1.2)
 
@@ -325,10 +332,13 @@ Format: `import [FILEPATH]`
 Sending mass emails to contacts with the same tag. +
 Format: `emailall t/[TAG]`
 
+// tag::calendar[]
+
 === Viewing birthdays in a calendar : `calendar` (Coming in v2.0)
 
 Displays birthdays of contacts according to months in a calendar view. +
 Format: `calendar`
+// end::calendar[]
 
 === Saving the data
 
