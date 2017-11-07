@@ -1,0 +1,73 @@
+= Nguyen Thanh Son - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Tourist-Book
+Tourist-Book is a desktop tourist attractions application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F09-B2/main/blob/master/collated/main/thanhson16198.md[Functional code]] [https://github.com/CS2103AUG2017-F09-B2/main/blob/master/collated/test/thanhson16198.md[Test code]]
+
+=== Enhancement Added: Displaying of Weather
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=weather]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To display the weather in Singapore, for the tourist to plan the schedule.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=weather]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Add command `Goto`, to display the location on Google Map
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=Goto]
+
+* (Pull requests https://github.com/CS2103AUG2017-F09-B2/main/pull/43[#43])
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Add command `Goto`, to display the location on Google Map using PostalCode
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=Goto]
+
+* (Pull requests https://github.com/CS2103AUG2017-F09-B2/main/pull/43[#43])
+* (Pull requests https://github.com/CS2103AUG2017-F09-B2/main/pull/59[#59])
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Updated the colours for tags (Pull requests https://github.com/CS2103AUG2017-F09-B2/main/pull/59[#59])
+* Show the website of the location, instead of searching the name on Google (Pull requests https://github.com/CS2103AUG2017-F09-B2/main/pull/76[#76])

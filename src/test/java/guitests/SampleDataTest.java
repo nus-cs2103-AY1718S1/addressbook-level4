@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import org.junit.Test;
 
 import seedu.address.model.AddressBook;
-import seedu.address.model.person.Person;
+import seedu.address.model.place.Place;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.TestUtil;
 
@@ -41,7 +41,7 @@ public class SampleDataTest extends AddressBookGuiTest {
 
     @Test
     public void addressBook_dataFileDoesNotExist_loadSampleData() {
-        Person[] expectedList = SampleDataUtil.getSamplePersons();
-        assertListMatching(getPersonListPanel(), expectedList);
+        Place[] expectedList = SampleDataUtil.getSamplePlaces();
+        assertListMatching(getPlaceListPanel(), expectedList);
     }
 }

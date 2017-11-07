@@ -1,8 +1,8 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPlaces.ALICE;
+import static seedu.address.testutil.TypicalPlaces.getTypicalAddressBook;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,8 +16,8 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.place.Place;
+import seedu.address.model.place.ReadOnlyPlace;
 import seedu.address.model.tag.Tag;
 
 public class AddressBookTest {
@@ -29,7 +29,7 @@ public class AddressBookTest {
 
     @Test
     public void constructor() {
-        assertEquals(Collections.emptyList(), addressBook.getPersonList());
+        assertEquals(Collections.emptyList(), addressBook.getPlaceList());
         assertEquals(Collections.emptyList(), addressBook.getTagList());
     }
 
@@ -47,20 +47,20 @@ public class AddressBookTest {
     }
 
     @Test
-    public void resetData_withDuplicatePersons_throwsAssertionError() {
+    public void resetData_withDuplicatePlaces_throwsAssertionError() {
         // Repeat ALICE twice
-        List<Person> newPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
+        List<Place> newPlaces = Arrays.asList(new Place(ALICE), new Place(ALICE));
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        AddressBookStub newData = new AddressBookStub(newPlaces, newTags);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
     }
 
     @Test
-    public void getPersonList_modifyList_throwsUnsupportedOperationException() {
+    public void getPlaceList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        addressBook.getPersonList().remove(0);
+        addressBook.getPlaceList().remove(0);
     }
 
     @Test
@@ -70,20 +70,20 @@ public class AddressBookTest {
     }
 
     /**
-     * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
+     * A stub ReadOnlyAddressBook whose places and tags lists can violate interface constraints.
      */
     private static class AddressBookStub implements ReadOnlyAddressBook {
-        private final ObservableList<ReadOnlyPerson> persons = FXCollections.observableArrayList();
+        private final ObservableList<ReadOnlyPlace> places = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags) {
-            this.persons.setAll(persons);
+        AddressBookStub(Collection<? extends ReadOnlyPlace> places, Collection<? extends Tag> tags) {
+            this.places.setAll(places);
             this.tags.setAll(tags);
         }
 
         @Override
-        public ObservableList<ReadOnlyPerson> getPersonList() {
-            return persons;
+        public ObservableList<ReadOnlyPlace> getPlaceList() {
+            return places;
         }
 
         @Override

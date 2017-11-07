@@ -3,7 +3,7 @@ package seedu.address.ui;
 import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
-import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPlaces.ALICE;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
@@ -16,17 +16,17 @@ import org.junit.Test;
 
 import guitests.guihandles.BrowserPanelHandle;
 import seedu.address.MainApp;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.PlacePanelSelectionChangedEvent;
 
 public class BrowserPanelTest extends GuiUnitTest {
-    private PersonPanelSelectionChangedEvent selectionChangedEventStub;
+    private PlacePanelSelectionChangedEvent selectionChangedEventStub;
 
     private BrowserPanel browserPanel;
     private BrowserPanelHandle browserPanelHandle;
 
     @Before
     public void setUp() {
-        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
+        selectionChangedEventStub = new PlacePanelSelectionChangedEvent(new PlaceCard(ALICE, 0));
 
         guiRobot.interact(() -> browserPanel = new BrowserPanel());
         uiPartRule.setUiPart(browserPanel);
@@ -40,12 +40,12 @@ public class BrowserPanelTest extends GuiUnitTest {
         URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
 
-        // associated web page of a person
+        // associated web page of a place
         postNow(selectionChangedEventStub);
-        URL expectedPersonUrl = new URL(GOOGLE_SEARCH_URL_PREFIX
+        URL expectedPlaceUrl = new URL(GOOGLE_SEARCH_URL_PREFIX
                 + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
 
         waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
+        assertEquals(expectedPlaceUrl, browserPanelHandle.getLoadedUrl());
     }
 }

@@ -25,7 +25,7 @@ public class HelpWindowTest extends AddressBookGuiTest {
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
 
-        getPersonListPanel().click();
+        getPlaceListPanel().click();
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
 

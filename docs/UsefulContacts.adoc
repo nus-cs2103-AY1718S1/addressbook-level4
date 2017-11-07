@@ -1,0 +1,54 @@
+= Tourist Book - Useful Contacts
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+:repoURL: https://github.com/CS2103AUG2017-F09-B2/main
+
+By: `Team F09-B2`      Since: `Aug 2017`
+
+[NOTE]
+These important contacts are applicable to Singapore only.
+
+== Emergency Contacts
+
+.  Emergency Ambulance `995`
+.  Police `999`
+
+== Non-Emergency Contacts
+
+.  Police Hotline `1800 255 0000`
+.  Traffic Police `6547 1818`
+.  Non-Emergency Ambulance `1777`
+
+== Ambulance Contacts
+
+.  Ame `6247 7080`
+.  Blesswell `6273 0147`
+.  Civic Ambulance `6333 3000`
+.  Econ `6382 8888`
+.  Green Crescent `6788 8911`
+.  ER `6222 2995`
+
+== Private Hospitals
+
+.  East Shore Hospital `6344 7588`
+.  Gleneagles Hospital `6470 5688` or `6470 5700`
+.  Mount Alvernia Hospital `6347 6210`
+.  Mount Elizabeth Hospital `6731 2218` or `6731 2219`
+.  Raffles Hospital `6311 1555`
+.  Thomson Medical Center `6350 8812`
+
+== Public Hospitals
+.  Changi General Hospital `6788 8833`
+.  KK Women's and Children's Hospital `6293 4044`
+.  National University Hospital `6772 5000`
+.  Singapore General Hospital `6321 4103`
+.  Tan Tock Seng Hospital `6357 8777`

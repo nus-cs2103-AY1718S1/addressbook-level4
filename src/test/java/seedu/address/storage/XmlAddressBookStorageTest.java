@@ -2,10 +2,10 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.HOON;
-import static seedu.address.testutil.TypicalPersons.IDA;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPlaces.ALICE;
+import static seedu.address.testutil.TypicalPlaces.HOON;
+import static seedu.address.testutil.TypicalPlaces.IDA;
+import static seedu.address.testutil.TypicalPlaces.getTypicalAddressBook;
 
 import java.io.IOException;
 
@@ -18,7 +18,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Person;
+import seedu.address.model.place.Place;
 
 public class XmlAddressBookStorageTest {
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/XmlAddressBookStorageTest/");
@@ -73,14 +73,14 @@ public class XmlAddressBookStorageTest {
         assertEquals(original, new AddressBook(readBack));
 
         //Modify data, overwrite exiting file, and read back
-        original.addPerson(new Person(HOON));
-        original.removePerson(new Person(ALICE));
+        original.addPlace(new Place(HOON));
+        original.removePlace(new Place(ALICE));
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new AddressBook(readBack));
 
         //Save and read without specifying file path
-        original.addPerson(new Person(IDA));
+        original.addPlace(new Place(IDA));
         xmlAddressBookStorage.saveAddressBook(original); //file path not specified
         readBack = xmlAddressBookStorage.readAddressBook().get(); //file path not specified
         assertEquals(original, new AddressBook(readBack));
@@ -94,10 +94,10 @@ public class XmlAddressBookStorageTest {
     }
 
     @Test
-    public void getPersonList_modifyList_throwsUnsupportedOperationException() {
+    public void getPlaceList_modifyList_throwsUnsupportedOperationException() {
         XmlSerializableAddressBook addressBook = new XmlSerializableAddressBook();
         thrown.expect(UnsupportedOperationException.class);
-        addressBook.getPersonList().remove(0);
+        addressBook.getPlaceList().remove(0);
     }
 
     @Test

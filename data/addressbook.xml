@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<touristbook>
+    <places>
+        <name>Marina Bay Sands</name>
+        <phone>66888868</phone>
+        <website>http://www.marinabaysands.com</website>
+        <address>10 Bayfront Avenue</address>
+        <postalcode>018956</postalcode>
+        <tags>attractions</tags>
+    </places>
+    <places>
+        <name>Singapore Flyer</name>
+        <phone>6333311</phone>
+        <website>http://www.singaporeflyer.com</website>
+        <address>30 Raffles Ave</address>
+        <postalcode>039803</postalcode>
+        <tags>attractions</tags>
+    </places>
+    <places>
+        <name>Singapore Zoo</name>
+        <phone>62693411</phone>
+        <website>http://www.wrs.com.sg</website>
+        <address>80 Mandai Lake Rd</address>
+        <postalcode>729826</postalcode>
+        <tags>attractions</tags>
+    </places>
+    <places>
+        <name>Beni Singapore</name>
+        <phone>91593177</phone>
+        <website>http://www.beni-sg.com</website>
+        <address>333A Orchard Rd, #02-37</address>
+        <postalcode>238897</postalcode>
+        <tags>onestar</tags>
+    </places>
+    <places>
+        <name>Odette</name>
+        <phone>63850498</phone>
+        <website>http://www.odetterestaurant.com</website>
+        <address>1 Saint Andrew's Rd, #01-04, National Gallery</address>
+        <postalcode>178957</postalcode>
+        <tags>twostars</tags>
+    </places>
+    <places>
+        <name>Joël Robuchon Restaurant</name>
+        <phone>65777888</phone>
+        <website>http://www.rwsentosa.com</website>
+        <address>26 Sentosa Gateway, Hotel Michael, #01-104 and 105</address>
+        <postalcode>098138</postalcode>
+        <tags>threestars</tags>
+    </places>
+    <places>
+        <name>Marina</name>
+        <phone>66888868</phone>
+        <website>http://www.-.com</website>
+        <address>10 Bayfront Avenue</address>
+        <postalcode>018956</postalcode>
+        <tags>attractions</tags>
+    </places>
+    <tags>threestars</tags>
+    <tags>onestar</tags>
+    <tags>twostars</tags>
+    <tags>attractions</tags>
+</touristbook>
