@@ -57,6 +57,10 @@ public class PersonCardTest extends GuiUnitTest {
         Person personWithTodo = new PersonBuilder().build();
         personWithTodo.setTodoItems(BILL.getTodoItems());
         assertEquals(1, personWithTodo.getTodoItems().size());
+
+        personCard = new PersonCard(personWithTodo, 3);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personWithTodo, 3);
         //@@author
     }
 

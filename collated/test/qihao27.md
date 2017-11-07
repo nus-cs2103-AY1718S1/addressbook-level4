@@ -1,4 +1,10 @@
 # qihao27
+###### \java\guitests\guihandles\PersonCardHandle.java
+``` java
+    public String getTodoCount() {
+        return todoLabel.getText();
+    }
+```
 ###### \java\seedu\address\commons\util\StringUtilTest.java
 ``` java
     //---------------- Tests for isAlnumOnly --------------------------------------
@@ -596,6 +602,10 @@ public class TypicalOptions {
         Person personWithTodo = new PersonBuilder().build();
         personWithTodo.setTodoItems(BILL.getTodoItems());
         assertEquals(1, personWithTodo.getTodoItems().size());
+
+        personCard = new PersonCard(personWithTodo, 3);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personWithTodo, 3);
 ```
 ###### \java\seedu\address\ui\ResultDisplayTest.java
 ``` java
@@ -618,6 +628,14 @@ public class TypicalOptions {
 ###### \java\seedu\address\ui\StatusBarFooterTest.java
 ``` java
         StatusBarFooter statusBarFooter = new StatusBarFooter(STUB_SAVE_LOCATION, STUB_ZERO_TOTAL_PERSON);
+```
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
+``` java
+        if (expectedPerson.getTodoItems().size() > 0) {
+            assertEquals(Integer.toString(expectedPerson.getTodoItems().size()), actualCard.getTodoCount());
+        } else {
+            assertEquals("", actualCard.getTodoCount());
+        }
 ```
 ###### \java\seedu\address\ui\testutil\UiPartRule.java
 ``` java

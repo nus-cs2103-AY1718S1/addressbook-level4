@@ -755,6 +755,14 @@ public class UniqueTodoList implements Iterable<TodoItem> {
     }
 
 ```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+    @Subscribe
+    public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
+        setTodoCount(abce.data.getTodoList().size());
+    }
+}
+```
 ###### \java\seedu\address\ui\ResultDisplay.java
 ``` java
     @Subscribe

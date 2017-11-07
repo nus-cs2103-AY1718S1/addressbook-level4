@@ -59,7 +59,6 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
-        setTodoCount(0);
     }
 
     /**
@@ -154,4 +153,9 @@ public class PersonCard extends UiPart<Region> {
                 && person.equals(card.person);
     }
 
+    //@@author qihao27
+    @Subscribe
+    public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
+        setTodoCount(abce.data.getTodoList().size());
+    }
 }

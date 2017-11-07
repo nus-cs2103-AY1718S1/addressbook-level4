@@ -36,6 +36,13 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
+        //@@author qihao27
+        if (expectedPerson.getTodoItems().size() > 0) {
+            assertEquals(Integer.toString(expectedPerson.getTodoItems().size()), actualCard.getTodoCount());
+        } else {
+            assertEquals("", actualCard.getTodoCount());
+        }
+        //@@author
     }
 
     /**
