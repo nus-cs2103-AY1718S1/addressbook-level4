@@ -130,6 +130,14 @@ public class AddCommandTest {
             return null;
         }
 
+        //@@author JavynThun
+        @Override
+        public Boolean sortPersonList(ArrayList<ReadOnlyPerson> personlist) {
+            fail("This method should not be called.");
+            return null;
+        }
+        //@@author
+
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");

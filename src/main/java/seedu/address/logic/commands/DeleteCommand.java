@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import java.util.List;
 
+import seedu.address.commons.core.ImageStorageHandler;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
@@ -32,7 +33,6 @@ public class DeleteCommand extends UndoableCommand {
         this.targetIndex = targetIndex;
     }
 
-
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
@@ -44,12 +44,12 @@ public class DeleteCommand extends UndoableCommand {
 
         ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
 
-
         try {
             model.deletePerson(personToDelete);
             //@@author vmlimshimin
             queue.offer(personToDelete);
             //@@author
+            ImageStorageHandler.deleteProfilePicture(personToDelete);
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }

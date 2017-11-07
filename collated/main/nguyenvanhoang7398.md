@@ -1,5 +1,5 @@
 # nguyenvanhoang7398
-###### \java\seedu\address\logic\commands\AddMultipleByTsvCommand.java
+###### /java/seedu/address/logic/commands/AddMultipleByTsvCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -90,7 +90,7 @@ public class AddMultipleByTsvCommand extends UndoableCommand {
 
 }
 ```
-###### \java\seedu\address\logic\commands\FindTagCommand.java
+###### /java/seedu/address/logic/commands/FindTagCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -131,7 +131,7 @@ public class FindTagCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\ContactTsvReader.java
+###### /java/seedu/address/logic/ContactTsvReader.java
 ``` java
 package seedu.address.logic;
 
@@ -282,7 +282,7 @@ public class ContactTsvReader {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddMultipleByTsvCommandParser.java
+###### /java/seedu/address/logic/parser/AddMultipleByTsvCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -334,13 +334,13 @@ public class AddMultipleByTsvCommandParser implements Parser<AddMultipleByTsvCom
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
         case AddMultipleByTsvCommand.COMMAND_WORD:
         case AddMultipleByTsvCommand.COMMAND_ALIAS:
             return new AddMultipleByTsvCommandParser().parse(arguments);
 ```
-###### \java\seedu\address\logic\parser\FindTagCommandParser.java
+###### /java/seedu/address/logic/parser/FindTagCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -377,7 +377,7 @@ public class FindTagCommandParser implements Parser<FindTagCommand> {
     }
 }
 ```
-###### \java\seedu\address\MainApp.java
+###### /java/seedu/address/MainApp.java
 ``` java
     /**
      * Initialize empty storage folder to store profile picture
@@ -389,7 +389,7 @@ public class FindTagCommandParser implements Parser<FindTagCommand> {
         }
     }
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
     private static final String DEFAULT_NAME = "Full Name";
     private static final String DEFAULT_OCCUPATION = "Google, Software engineer";
@@ -400,7 +400,7 @@ public class FindTagCommandParser implements Parser<FindTagCommand> {
     private static final String DEFAULT_WEBSITE = "https://www.google.com";
     private static final String DEFAULT_TAG = "me";
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
     public Person() {
         try {
@@ -419,7 +419,7 @@ public class FindTagCommandParser implements Parser<FindTagCommand> {
         }
     }
 ```
-###### \java\seedu\address\model\person\TagsContainKeywordsPredicate.java
+###### /java/seedu/address/model/person/TagsContainKeywordsPredicate.java
 ``` java
 package seedu.address.model.person;
 
@@ -475,17 +475,17 @@ public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 }
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     @FXML
     private StackPane profilePlaceholder;
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
         profilePanel = new ProfilePanel(primaryStage);
         profilePlaceholder.getChildren().add(profilePanel.getRoot());
 ```
-###### \java\seedu\address\ui\ProfilePanel.java
+###### /java/seedu/address/ui/ProfilePanel.java
 ``` java
 package seedu.address.ui;
 
@@ -703,7 +703,7 @@ public class ProfilePanel extends UiPart<Region> {
     }
 }
 ```
-###### \resources\view\MainWindow.fxml
+###### /resources/view/MainWindow.fxml
 ``` fxml
     <StackPane fx:id="profilePlaceholder" minWidth="320" >
       <padding>
@@ -721,7 +721,7 @@ public class ProfilePanel extends UiPart<Region> {
   <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
 </VBox>
 ```
-###### \resources\view\ProfilePanel.fxml
+###### /resources/view/ProfilePanel.fxml
 ``` fxml
 
 <?import javafx.geometry.Insets?>
