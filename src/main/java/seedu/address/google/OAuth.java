@@ -39,7 +39,7 @@ public class OAuth extends Observable {
      * Be sure to specify the name of your application. If the application name is {@code null} or
      * blank, the application will log a warning. Suggested format is "MyCompany-ProductName/1.0".
      */
-    private final String appName = "W13B3-AddressBook/1.2";
+    private final String appName = "W13B3-ABC/1.5RC";
 
     /** Directory to store user credentials. */
     private final java.io.File dataStoreDir =

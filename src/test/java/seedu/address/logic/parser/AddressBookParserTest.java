@@ -6,7 +6,6 @@ import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.FindCommand.FALSE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.ArrayList;
@@ -179,7 +178,7 @@ public class AddressBookParserTest {
     public void parseCommand_noteCommandWord_returnsNoteCommand() throws Exception {
         assertTrue(parser.parseCommand(NoteCommand.COMMAND_WORD
                 + " " + INDEX_FIRST_PERSON.getOneBased()
-                + " " + PREFIX_NOTE)
+                + " ")
                 instanceof NoteCommand);
         assertTrue(parser.parseCommand("note 3 n/") instanceof NoteCommand);
     }
