@@ -1,4 +1,4 @@
-= UNIFY
+= image:docs/images/readme_header.png[width="900"]
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
