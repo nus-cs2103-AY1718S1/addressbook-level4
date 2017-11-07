@@ -43,19 +43,10 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
     private static String currentPhotoID;
     private static int friendIndex = 0;
 
-    public static String getCurrentPhotoID() {
-        return currentPhotoID;
-    }
-
-    public static int getFriendIndex() {
-        return friendIndex;
-    }
-
-    public static void setFriendIndex(int friendIndex) {
-        FacebookAddAllFriendsCommand.friendIndex = friendIndex;
-    }
-
-    //TODO: add description
+    /**
+     *
+     * @return currentUserID
+     */
     public static String getCurrentUserID() {
         return currentUserID;
     }

@@ -9,17 +9,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Name {
-
-    public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Person names should only contain alphanumeric characters, periods and spaces, and it should not be blank";
-
-    /*
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
-    //public static final String NAME_VALIDATION_REGEX = "[\\p{ASCII}][\\p{Alnum} -\\.]*";
-
-    public static boolean FacebookContact = false;
+    //@@author alexfoodw
+    public static final String MESSAGE_NAME_CONSTRAINTS = "Person names should not be blank";
 
     public final String fullName;
 
@@ -28,24 +19,22 @@ public class Name {
      *
      * @throws IllegalValueException if given name string is invalid.
      */
-    //TODO: name constraints - cant be blank
     public Name(String name) throws IllegalValueException {
         requireNonNull(name);
         String trimmedName = name.trim();
-        /*if (!isValidName(trimmedName) && !FacebookContact) {
+        if (!isValidName(trimmedName)) {
             throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
-        }*/
+        }
         this.fullName = trimmedName;
     }
 
     /**
      * Returns true if a given string is a valid person name.
      */
-    //TODO:alex
     public static boolean isValidName(String test) {
-        //return test.matches(NAME_VALIDATION_REGEX);
-        return true;
+        return !test.equals("");
     }
+    //@@author
 
 
     @Override

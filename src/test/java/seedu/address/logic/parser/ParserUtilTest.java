@@ -29,9 +29,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
-    private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_PHONE = "+651234";
-    private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
 
@@ -95,12 +93,6 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseName_invalidValue_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        ParserUtil.parseName(Optional.of(INVALID_NAME));
-    }
-
-    @Test
     public void parseName_optionalEmpty_returnsOptionalEmpty() throws Exception {
         assertFalse(ParserUtil.parseName(Optional.empty()).isPresent());
     }
@@ -142,12 +134,6 @@ public class ParserUtilTest {
     public void parseAddress_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         ParserUtil.parseAddress(null);
-    }
-
-    @Test
-    public void parseAddress_invalidValue_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        ParserUtil.parseAddress(Optional.of(INVALID_ADDRESS));
     }
 
     @Test
