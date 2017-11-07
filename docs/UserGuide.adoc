@@ -394,6 +394,7 @@ image::AccessCommandFinalResult.PNG[width="790"]
 
 Figure 6.1.1 `Access 6` Result for Access Command
 
+// tag::addevent[]
 === Adding an event : `addevent`
 
 This command helps you to add an event to The Myth's Book +
@@ -414,6 +415,7 @@ image::sampleeventresult.PNG[width="200"]
 
 A `Invalid Command Format` will appear if you have keyed in invalid fields for the event.
 
+// end::addevent[]
 
 === Favouriting a person : `favourite`
 
