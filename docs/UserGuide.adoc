@@ -246,6 +246,7 @@ Returns all persons with tag `Party` and `Presentation`
 * `find c/Singapore` +
 Returns all persons of country code `Singapore`
 
+// tag::locate[]
 ==== Locating a person's address : `locate` [Since v1.2]
 
 => Alias: `lc` <=
@@ -267,6 +268,7 @@ Locates the 2nd person's address in the address book.
 * `find Betsy` +
 `locate 1` +
 Locates the 1st person's address in the results of the `find` command.
+// tag::locate[]
 
 ==== Scheduling an activity: `schedule` [Since v1.3]
 
