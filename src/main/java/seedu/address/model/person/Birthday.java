@@ -48,7 +48,7 @@ public class Birthday {
         return test.matches(BIRTHDAY_VALIDATION_REGEX)
                 || test.matches(BIRTHDAY_TEMPORARY);
     }
-    //@@author
+    //@@author archthegit
     @Override
     public String toString() {
         return value;

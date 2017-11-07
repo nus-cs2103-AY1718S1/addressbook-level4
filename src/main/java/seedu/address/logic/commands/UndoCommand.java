@@ -1,5 +1,8 @@
 package seedu.address.logic.commands;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.PersonPanelUnselectEvent;
+import seedu.address.commons.events.ui.PersonSelectionChangedEvent;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import seedu.address.logic.CommandHistory;
@@ -27,6 +30,7 @@ public class UndoCommand extends Command {
         }
 
         undoRedoStack.popUndo().undo();
+        EventsCenter.getInstance().post(new PersonPanelUnselectEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

@@ -19,6 +19,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.NameContainsFavouritePredicate;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -134,8 +135,22 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public ArrayList<String> getThemesList() {
+        return this.addressBook.getThemesList();
+    }
 
+    @Override
+    public void setCurrentTheme(String theme) {
+        currentTheme = theme;
+    }
 
+    @Override
+    public String getCurrentTheme() {
+        return currentTheme;
+    }
+
+    //@@author archthegit
     @Override
     public void updateSelectedPerson(ReadOnlyPerson person) {
         this.person = person;
@@ -160,20 +175,6 @@ public class ModelManager extends ComponentManager implements Model {
         return person;
     }
 
-    @Override
-    public ArrayList<String> getThemesList() {
-        return this.addressBook.getThemesList();
-    }
-
-    @Override
-    public void setCurrentTheme(String theme) {
-        currentTheme = theme;
-    }
-
-    @Override
-    public String getCurrentTheme() {
-        return currentTheme;
-    }
     // @@author
 
     //=========== Filtered Person List Accessors =============================================================
