@@ -119,6 +119,8 @@ Custom fonts such as Open Sans and Segoe UI font family were embedded into the a
 
 Implemented random bright color generator using golden ratio to achieve even distribution for coloring of tag labels and display photo thumbnails.
 
+Theme command allows user to switch between the two aforementioned themes easily especially using command alias e.g. `t -night`.
+
 ==== Implementation
 
 Pull Request (with a detailed summary of changes): https://github.com/CS2103AUG2017-W10-B2/main/pull/92[#92]
