@@ -24,7 +24,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         List baseTagList = Arrays.asList(person.getTags().toArray());
         List baseList = new ArrayList();
         ListIterator iter = baseTagList.listIterator();
-        while(iter.hasNext()) {
+        while (iter.hasNext()) {
             baseList.add(iter.next().toString());
         }
         PartialSearchUtil mySearch = new PartialSearchUtil(keywords, baseList);
