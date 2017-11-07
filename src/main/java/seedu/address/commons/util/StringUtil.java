@@ -41,6 +41,8 @@ public class StringUtil {
         return false;
     }
 
+    //@@author archthegit
+
     /**
      * Returns true if the {@code sentence} contains part the {@code word}.
      *   Ignores case and a full word match is not required. The keyword must be in the beginning of any of the names.

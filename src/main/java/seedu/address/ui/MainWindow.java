@@ -207,6 +207,7 @@ public class MainWindow extends UiPart<Region> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
+    // @@author itsdickson
     /**
      * Sets the default theme based on user preferences.
      */
@@ -220,6 +221,7 @@ public class MainWindow extends UiPart<Region> {
     String getCurrentTheme() {
         return getRoot().getStylesheets().get(CURRENT_THEME_INDEX);
     }
+    // @@author
 
     /**
      * Opens the help window.
@@ -230,6 +232,7 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+    // @@author itsdickson
     /**
      * Opens the theme window.
      */
@@ -249,6 +252,7 @@ public class MainWindow extends UiPart<Region> {
         }
         getRoot().getStylesheets().add(VIEW_PATH + theme);
     }
+    // @@author
 
     void show() {
         primaryStage.show();
@@ -277,6 +281,7 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    // @@author itsdickson
     @Subscribe
     private void handleShowThemesEvent(ShowThemeRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -291,6 +296,7 @@ public class MainWindow extends UiPart<Region> {
         logic.setCurrentTheme(getCurrentTheme());
     }
 
+  // @@author archthegit
     @Subscribe
     private void handleUnselectOfPersonCardEvent(PersonPanelUnselectEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -299,5 +305,6 @@ public class MainWindow extends UiPart<Region> {
         detailsPanelPlaceholder.getChildren().add(detailsPanel.getRoot());
 
     }
+
 
 }

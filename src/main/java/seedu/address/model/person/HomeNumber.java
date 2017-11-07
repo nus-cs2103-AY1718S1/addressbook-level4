@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+//@@author chernghann
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -16,6 +17,7 @@ public class HomeNumber {
 
     public final String value;
 
+    //@@author DarrenCzen
     /**
      * Validates given home number.
      *
@@ -41,6 +43,7 @@ public class HomeNumber {
                 || test.matches(HOME_NUMBER_TEMPORARY);
     }
 
+    //@@author
     @Override
     public String toString() {
         return value;

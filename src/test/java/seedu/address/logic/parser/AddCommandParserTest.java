@@ -130,6 +130,7 @@ public class AddCommandParserTest {
                 + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY, new AddCommand(expectedPerson));
     }
 
+    //@@author DarrenCzen
     @Test
     public void parse_compulsoryFieldMissing_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
@@ -224,6 +225,7 @@ public class AddCommandParserTest {
                 + VALID_ADDRESS_BOB + VALID_BIRTHDAY_BOB, expectedMessage);
     }
 
+    //@@author
     @Test
     public void parse_invalidValue_failure() {
         // invalid name

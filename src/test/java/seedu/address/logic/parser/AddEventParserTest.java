@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+//@@author chernghann
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.EVENT_ADDRESS_B_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.EVENT_DATE_B_DESC;
