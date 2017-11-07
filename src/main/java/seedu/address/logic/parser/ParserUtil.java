@@ -222,12 +222,18 @@ public class ParserUtil {
         }
 
         String commandWord = matcher.group("commandWord");
-        final String arguments = matcher.group("arguments");
+        String arguments = matcher.group("arguments");
 
         Aliases aliases = UserPrefs.getInstance().getAliases();
         String aliasedCommand = aliases.getCommand(commandWord);
         if (aliasedCommand != null) {
-            commandWord = aliasedCommand;
+            final Matcher aliasMatcher = BASIC_COMMAND_FORMAT.matcher(aliasedCommand.trim());
+            if (!aliasMatcher.matches()) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+            }
+
+            commandWord = aliasMatcher.group("commandWord");
+            arguments = aliasMatcher.group("arguments") + " " + arguments;
         }
 
         return new String[] {commandWord, arguments};

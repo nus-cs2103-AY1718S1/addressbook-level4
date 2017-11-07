@@ -18,22 +18,21 @@ public class AliasCommandParser implements Parser<AliasCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AliasCommand parse(String arguments) throws ParseException {
-        String[] args = arguments.trim().split("\\s+");
 
-        if (args.length == 1 && args[0].equals("")) {
+        if (arguments.length() == 0) {
             return new AliasCommand();
         }
 
-        if (args.length == 2) {
-            String alias = args[0];
-            String command = ParserUtil.parseCommand(args[1]);
+        int delimiterPosition = arguments.trim().indexOf(' ');
 
-            if (command != null) {
-                return new AliasCommand(alias, command);
-            }
+        if (delimiterPosition == -1) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
         }
 
-        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
+        final String alias = arguments.trim().substring(0, delimiterPosition).trim();
+        final String command = arguments.trim().substring(delimiterPosition + 1).trim();
+        return new AliasCommand(alias, command);
+
     }
 
 }

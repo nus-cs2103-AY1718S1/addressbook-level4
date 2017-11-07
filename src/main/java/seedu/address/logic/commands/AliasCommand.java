@@ -15,7 +15,8 @@ public class AliasCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates an alias for other commands."
             + "Parameters: [ALIAS COMMAND]\n"
-            + "Example: " + COMMAND_WORD + " create add\n";
+            + "Example: " + COMMAND_WORD + " create add\n"
+            + "Example: " + COMMAND_WORD + " friends find t/friends\n";
 
     private final String alias;
     private final String command;
