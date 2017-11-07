@@ -25,6 +25,8 @@ public class ExportCommand extends Command {
     public static final String MESSAGE_EMPTY_BOOK = "No contacts found in Rubrika to export.";
 
     public static final String MESSAGE_SUCCESS = "Successfully exported contacts.";
+    public static final String XML_EXTENSION = ".xml";
+    public static final String VCF_EXTENSION = ".vcf";
     public final String filePath;
 
     public ExportCommand(String path) {
@@ -40,16 +42,23 @@ public class ExportCommand extends Command {
             throw new CommandException(MESSAGE_EMPTY_BOOK);
         }
         try {
-            if (export.getName().endsWith(".xml")) {
+            if (export.getName().endsWith(XML_EXTENSION)) {
                 XmlSerializableAddressBook xmlAddressBook = new XmlSerializableAddressBook(addressBook);
                 export.createNewFile();
                 XmlFileStorage.saveDataToFile(export, xmlAddressBook);
-            } else if (export.getName().endsWith(".vcf")) {
+            } else if (export.getName().endsWith(VCF_EXTENSION)) {
                 VcfExport.saveDataToFile(export, addressBook.getPersonList());
             }
         } catch (IOException ioe) {
             throw new CommandException(MESSAGE_FILE_NOT_FOUND);
         }
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ExportCommand // instanceof handles nulls
+                && this.filePath.equals(((ExportCommand) other).filePath)); // state check
     }
 }
