@@ -21,6 +21,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author JasmineSee
+
 /**
  * Uploads image file to specified person.
  */
@@ -69,6 +70,9 @@ public class UploadPhotoCommand extends Command {
         } else {
             throw new CommandException(String.format(MESSAGE_UPLOAD_IMAGE_FALURE));
         }
+
+        LoggingCommand loggingCommand = new LoggingCommand();
+        loggingCommand.keepLog("", "Uploaded image to " + targetIndex.getOneBased());
         return new CommandResult(String.format(MESSAGE_UPLOAD_IMAGE_SUCCESS, personToUploadImage));
     }
 

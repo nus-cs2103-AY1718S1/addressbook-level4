@@ -8,6 +8,8 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.io.File;
+
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -20,6 +22,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author JasmineSee
+
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code UploadPhotoCommand}.
  */
@@ -30,7 +33,7 @@ public class UploadPhotoCommandTest {
     private String invalidFilePath = "./src/test/resources/photos/default.jpeg";
 
     @Test
-    public void execute_validIndex_success() throws Exception {
+    public void execute_validIndexValidFile_success() throws Exception {
         ReadOnlyPerson personToUploadPhoto = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         UploadPhotoCommand uploadPhotoCommand = prepareCommand(INDEX_FIRST_PERSON,
                 validFilePath);
@@ -40,6 +43,8 @@ public class UploadPhotoCommandTest {
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
         assertCommandSuccess(uploadPhotoCommand, model, expectedMessage, expectedModel);
+
+        deletePhoto(personToUploadPhoto); //delete uploaded test case photo after success
     }
 
     @Test
@@ -88,6 +93,15 @@ public class UploadPhotoCommandTest {
         UploadPhotoCommand uploadPhotoCommand = new UploadPhotoCommand(index, filePath);
         uploadPhotoCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return uploadPhotoCommand;
+    }
+
+    /**
+     * Deletes uploaded test photo after successful check.
+     */
+    private void deletePhoto(ReadOnlyPerson personToUploadPhoto) {
+        File file = new File("photos/" + personToUploadPhoto.getEmail().toString() + ".png");
+        file.delete();
+
     }
 
 }
