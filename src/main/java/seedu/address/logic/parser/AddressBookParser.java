@@ -30,6 +30,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SelectJoinedEventsCommand;
 import seedu.address.logic.commands.ShowParticipantsCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.ToggleCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -131,7 +132,11 @@ public class AddressBookParser {
         case SortCommand.COMMAND_WORD:
             return new SortCommand();
 
-        // @@author
+        // @@author leonchowwenhao
+        case ToggleCommand.COMMAND_WORD:
+            return new ToggleCommand();
+
+        //@@ author
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
 

@@ -458,6 +458,33 @@ Then you will see the following after typing the example portrait command
 image::UG_portrait.png[]
 _Figure 3.12.2 attach a portrait_
 
+=== Toggling between details and browser: `toggle`
+
+You can use this command to toggle between displaying the information board and events list, or a browser.
+
+Format & Example: `toggle`
+
+****
+* Toggling when the information board and events list are displayed will have a browser replace them. +
+* Toggling when the browser is displayed will have the information board and events list replace them. +
+* After toggling to the browser, it will not be visible unless a `select` command has been entered once before.
+****
+
+You will see the following after typing the toggle command when the information board and events list are displayed but a `select` command has not been entered:
+
+image::UG_Toggle1.png[]
+_Figure 3.14.1 toggle result when browser is displayed_
+
+You will see the following after typing the toggle command when the browser is displayed:
+
+image::UG_Toggle2.png[]
+_Figure 3.14.2 toggle result when information board and events list are displayed_
+
+You will see the following after typing the toggle command when the information board and events list are displayed and a `select` command:
+
+image::UG_Toggle3.png[]
+_Figure 3.14.3 toggle result when information board and events list are displayed and a `select` command is entered before_
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +

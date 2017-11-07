@@ -27,6 +27,7 @@ public class InformationBoard extends UiPart<Region> {
 
     @FXML
     private TextArea informationBoard;
+
     @FXML
     private Label title;
 

@@ -56,8 +56,7 @@ public class EventCard extends UiPart<Region> {
         time.textProperty().bind(Bindings.convert(event.timeProperty()));
         if (event.getEventTime().getDays() == 0) {
             timer.textProperty().bind(Bindings.convert(new SimpleObjectProperty<>("Today!")));
-        }
-        else {
+        } else {
             timer.textProperty().bind(Bindings.convert(event.daysProperty()));
         }
     }
