@@ -262,6 +262,12 @@ public class SortCommandTest {
         public void sortEvents(LocalDate date) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public boolean hasEvenClashes(Event event) {
+            fail("This method should not be called.");
+            return false;
+        }
     }
 
     /**
