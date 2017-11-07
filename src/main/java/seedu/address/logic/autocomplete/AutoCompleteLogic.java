@@ -3,6 +3,7 @@ package seedu.address.logic.autocomplete;
 /**
  * API of the AutoCompleteLogic component
  */
+//@@author john19950730
 public interface AutoCompleteLogic {
 
     /**
