@@ -539,7 +539,7 @@ so that the persons with tag `friends` will be displayed.
 **Alternative 2:** Include every information of a person (i.e. phone, email, address) +
 **Pros:** A person can be found in many ways. +
 **Cons:** Implementation is complicated.
-
+// end::find[]
 
 // tag::sort[]
 === Sort mechanism
@@ -605,6 +605,7 @@ The user enters an addEvent command, which is received by `LogicManager`. `Logic
 `Logic Manager` receives the `AddEventCommand` object and calls execute(). Then, `AddEventCommand` uses `Model` to execute adding operation, and returns `CommandResult`. +
 `Logic Manager` receives the `CommandResult`, and returns to `UI`. +
 
+// tag::listE[]
 === ListEvent mechanism
 
 The list event command is facilitated by the `LogicManager` class. It supports listing all the events for user to process.
@@ -623,6 +624,9 @@ Then `Model` processes the event list.
 The list event command object creates `CommandResult` object and returns it.
 `LogicManager` receives the result and shows it through `UI`.
 
+// end::listE[]
+
+// tag::deleteE[]
 === DeleteEvent mechanism
 
 The delete event command is facilitated by the `LogicManager`. It supports `undo` and `redo` as it inherits from `UndoableCommand`. Other delete commands are implemented similarly.
@@ -661,8 +665,10 @@ The `DeleteEventCommand` then creates a `CommandResult` object and returns it to
 **Alternative 2:** Delete the event with the specified name +
 **Pros:** Users can delete directly without having to get the index. +
 **Cons:** Users would have to type more if the event name is long. It will be more complex for developers to maintain and test. +
+
 // end::deleteE[]
 
+// tag:: showP[]
 === ShowParticipants mechanism
 
 The show participants mechanism is facilitated by `PersonJoinsEventsPredicate` and `LogicManager`. This command will help users to find participants of an event. For achieving this function, `PersonJoinsEventsPredicate` will filter the person list. This command inherits from `Command`.
@@ -695,6 +701,9 @@ The show participants command object creates `CommandResult` object and returns 
 **Pros:** Users can use the command without listing events. +
 **Cons:** Users need more time to type if the event name is too long. +
 
+// end::showP[]
+
+// tag::selectE[]
 === ShowAllJoinedEvent mechanism
 
 The selectE command is facilitated by the `LogicManager`. This command inherits from `Command`.
