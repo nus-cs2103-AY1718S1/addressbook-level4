@@ -3,6 +3,9 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -80,6 +83,24 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
+
+    //@@author JavynThun
+    @Override
+    public Boolean sortPersonList(ArrayList<ReadOnlyPerson> personlist) {
+        if (filteredPersons.isEmpty()) {
+            return false;
+        }
+        personlist.addAll(filteredPersons);
+        Collections.sort(personlist, Comparator.comparing(name -> name.toString().toLowerCase()));
+
+        try {
+            addressBook.setPersons(personlist);
+        } catch (DuplicatePersonException e) {
+            System.out.println("Address book cannot not have duplicate persons");
+        }
+        return true;
+    }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
