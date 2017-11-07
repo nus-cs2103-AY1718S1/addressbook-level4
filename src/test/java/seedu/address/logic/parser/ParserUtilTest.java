@@ -22,6 +22,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Grades;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.ParentPhone;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
@@ -168,6 +169,20 @@ public class ParserUtilTest {
 
         assertEquals(expectedEmail, actualEmail.get());
     }
+
+    //@@author Lenaldnwj
+    @Test
+    public void parseParentPhone_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseParentPhone(null);
+    }
+
+    @Test
+    public void parseParentPhone_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseParentPhone(Optional.of(INVALID_GRADES));
+    }
+    //@@author
 
     //@@author lincredibleJC
     @Test
