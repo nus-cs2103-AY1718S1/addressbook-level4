@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
