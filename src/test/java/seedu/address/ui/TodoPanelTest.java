@@ -47,11 +47,7 @@ public class TodoPanelTest extends GuiUnitTest {
 
     @Test
     public void display() {
-        List<TodoItem> expectedList = new ArrayList<>();
-        for (ReadOnlyPerson person : TYPICAL_PERSONS) {
-            expectedList.addAll(person.getTodoItems());
-        }
-
+        List<TodoItem> expectedList = getAllTodoItemList();
         assertTodoDisplayTodoPanel(expectedList);
     }
 
@@ -66,7 +62,9 @@ public class TodoPanelTest extends GuiUnitTest {
     public void handleShowAllTodoItemsEvent() {
         postNow(SHOW_ALL_TODO_EVENT);
         guiRobot.pauseForHuman();
-        display();
+
+        List<TodoItem> expectedList = getAllTodoItemList();
+        assertTodoDisplayTodoPanel(expectedList);
     }
 
     @Test
@@ -74,6 +72,14 @@ public class TodoPanelTest extends GuiUnitTest {
         postNow(JUMP_TO_BILL_TODO_EVENT);
         guiRobot.pauseForHuman();
         assertTodoDisplayTodoPanel(BILL.getTodoItems());
+    }
+
+    private List<TodoItem> getAllTodoItemList() {
+        List<TodoItem> list = new ArrayList<>();
+        for (ReadOnlyPerson person : TYPICAL_PERSONS) {
+            list.addAll(person.getTodoItems());
+        }
+        return list;
     }
 
     /**

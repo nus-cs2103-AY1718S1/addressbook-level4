@@ -42,9 +42,6 @@ public class TodoCardTest extends GuiUnitTest {
         // same object -> returns true
         assertTrue(todoCard.equals(todoCard));
 
-        // null -> returns false
-        assertFalse(todoCard.equals(null));
-
         // different types -> returns false
         assertFalse(todoCard.equals(0));
     }
