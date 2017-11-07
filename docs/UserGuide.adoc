@@ -128,6 +128,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `modify 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively
 
+// tag::find[]
 === Locating persons by different attributes: `find` _[Since v1.2]_
 
 _Alias:_ `search` `get`
@@ -156,6 +157,7 @@ Returns the person having phone number `98765432`
 Returns the person having email `johndoe@gmail.com`
 * `find n/Betsy Tim John a/clementi street` +
 Returns any person having names `Betsy`, `Tim`, `John` or living at `Clementi Street`
+// end::find[]
 
 === Sorting list of persons: `sort` _[Since v1.2]_
 
@@ -318,6 +320,7 @@ Examples:
 * `t-find friend classmate`
 Shows all the people with tag `friend` or tag `classmate`
 
+// tag::map[]
 === Find the location of a person using Google Map: `m-show` _[Since v1.3]_
 
 Finds the location of a person as specified in the contact address in Google Map.
@@ -356,6 +359,7 @@ Examples:
 Shows the route from `Clementi Street` to the address of person with index number `1`
 * `m-route 7 a/John street, block 123, #01-01` +
 Shows the route from `John street, block 123, #01-01` to the address of person with index number `7`
+// end::map[]
 
 === Schedule an Event: s-add _[Since v1.4]_
 
@@ -543,6 +547,49 @@ Format: `clear`
 Exits the program.
 
 Format: `exit`
+
+// tag::birthday[]
+=== Adding the birthday to a person : `b-add` _[Since v1.4]_
+
+Adds birthday to a specified person from the address book.
+
+Format: `b-add INDEX BIRTHDAY`
+
+****
+* Adds birthday to the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing, only one index is allowed.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The `BIRTHDAY` must follow the format DD/MM/YYYY, and it must be a valid date.
+* To update the birthday of a specified person, use `b-add` command and enter the new `BIRTHDAY` value.
+****
+
+Examples:
+
+* `find n/john` +
+`b-add 1 18/10/1993` +
+Adds the birthday 18/10/1993 to the first person named john in the address book
+
+=== Removing the birthday from a person : `b-remove` _[Since v1.5]_
+
+Removes birthday from the specified person from the address book.
+
+Format: `b-remove INDEX`
+
+****
+* Removes the birthday value from the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing, only one index is allowed.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The `BIRTHDAY` removed just now can be restored by using the `undo` command.
+****
+
+Examples:
+
+* `find n/john` +
+`b-remove 1` +
+Removes the birthday from the first person named john in the address book
+* `b-remove 6` +
+Removes the birthday from the 6th person in the most recent listing, and shows an error if there are less than 6 persons in the list
+// end::birthday[]
 
 === Saving the data
 
