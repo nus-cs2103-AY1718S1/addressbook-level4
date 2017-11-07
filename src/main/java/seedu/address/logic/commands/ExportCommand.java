@@ -15,10 +15,11 @@ public class ExportCommand extends Command {
 
     public static final String COMMAND_WORD = "export";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports a compressed copy of the working addressbook  "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports a compressed copy of the working addressbook. "
             + "Existing files will be replaced.\n"
             + "Parameters: [FILEPATH] \n"
-            + "Example: " + COMMAND_WORD + " C:\\Users\\Admin\\Desktop\\.";
+            + "Example: " + COMMAND_WORD + " C:\\Users\\Admin\\Desktop\\NameOfFile\n"
+            + "[FILEPATH] can be omitted to export to the application directory as \"AddressbookData\".";
 
     public static final String MESSAGE_EXPORT_PATH_FAIL =
             "This specified path cannot be read.";
