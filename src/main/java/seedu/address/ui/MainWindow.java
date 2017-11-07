@@ -179,8 +179,8 @@ public class MainWindow extends UiPart<Region> {
     private void setBackground(StackPane pane) {
         File file = new File("../addressbook4/docs/images/background.jpg");
         try {
-            BackgroundImage backgroundImage = new BackgroundImage
-                    (new Image(file.toURI().toURL().toString(), 600, 450, false, true),
+            BackgroundImage backgroundImage = new BackgroundImage(
+                    new Image(file.toURI().toURL().toString(), 600, 450, false, true),
                     BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                     BackgroundSize.DEFAULT);
             pane.setBackground(new Background(backgroundImage));
