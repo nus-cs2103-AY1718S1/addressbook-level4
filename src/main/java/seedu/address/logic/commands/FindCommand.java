@@ -1,12 +1,20 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
+import java.util.Arrays;
+import java.util.List;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
+ * Finds and lists all persons in UniCity whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.
+ * If the name is not in UniCity, a list of the closest matching persons are listed instead.
+ * If the input returns the keyword itself, this means that the given keyword did not pass the tolerance value and
+ * hence does not match with any name in UniCity, In that case, all contacts are shown instead.
  */
 public class FindCommand extends Command {
 
@@ -37,11 +45,20 @@ public class FindCommand extends Command {
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
         int numberOfPersonsShown = model.getFilteredPersonList().size();
+
         if (numberOfPersonsShown == 0 && !predicate.getKeywords().isEmpty()) {
-            model.updateFilteredPersonList(predicate);
-            return new CommandResult(String.format(getMessageForPersonListShownSummary(numberOfPersonsShown)
-                    + Messages.MESSAGE_NO_PERSON_FOUND, model.getClosestMatchingName(predicate)));
+            String targets = model.getClosestMatchingName(predicate);
+            List<String> targetsAsList = Arrays.asList(targets.split("\\s+"));
+            if (targetsAsList.equals(predicate.getKeywords())) {
+                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+                return new CommandResult(String.format(Messages.MESSAGE_NO_MATCHING_NAME_FOUND, predicate));
+            }
+            model.updateFilteredPersonList(new NameContainsKeywordsPredicate(targetsAsList));
+
+            return new CommandResult(String.format(Messages.MESSAGE_NO_PERSON_FOUND, predicate,
+                    String.join(", ", targetsAsList)));
         }
+
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
