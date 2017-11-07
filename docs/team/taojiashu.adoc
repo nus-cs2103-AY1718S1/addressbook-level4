@@ -61,7 +61,8 @@ contacts after some time. Therefore, this functionality is introduced to UniCity
 
 ==== Implementation
 
-
+The command will go through the entire current contact list. If a person is a favourite contact, it will be updated to
+FilterPersonList of the model. This list will be displayed after all persons in the current list are checked.
 
 === Enhancement Added: Locate
 
@@ -83,16 +84,16 @@ Sometimes, users have no idea where the address of some people are. Thus, it wil
 
 ==== Implementation
 
+Similar to `SelectCommand`, `LocateCommand` will raise an event to the event centre. The event will store the address of the selected person as its field.
+Then when loading the Google Maps search page, the address will be added to the Google Maps prefix.
 
+=== Enhancement Proposed: Add command `AddMemory`
 
-=== Enhancement Proposed:
+==== Justification
 
+This feature will definitely make our product stand out from other address book applications. With this feature, users will be able to add their unique memories with their contacts,
+so that they can look back at their memorable moments with certain persons if you want to. They would also be reminded who that person is if they ever forgot who that person is.
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}
+* Fixed a few bugs so that Travis can run properly (Pull requests https://github.com/CS2103AUG2017-W13-B1/main/pull/13[#13], https://github.com/CS2103AUG2017-W13-B1/main/pull/23[#23], https://github.com/CS2103AUG2017-W13-B1/main/pull/90[#90])

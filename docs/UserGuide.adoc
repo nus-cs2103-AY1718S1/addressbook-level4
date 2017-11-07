@@ -131,7 +131,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 Returns `0 persons listed! Did you mean Betsy?`
 
 // tag::showfavourite[]
-==== Listing all favourite contacts: `showFavourite"
+==== Listing all favourite contacts : `showFavourite"
 
 Lists all favourite contacts. +
 Format: `showFavourite` or `sf`
