@@ -138,14 +138,14 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
     /**
      * Extracts the user id for the required URL
      */
-    public static void setUserID(String url){
+    public static void setUserId(String url) {
         // extract photo ID
         Pattern p = Pattern.compile("set=a.(.*?)\\&type");
         Matcher m = p.matcher(url);
         m.matches();
         m.find();
-        String groupID = m.group(1);
-        String[] parts = groupID.split("\\.");
+        String groupId = m.group(1);
+        String[] parts = groupId.split("\\.");
         currentUserID = parts[2];
     }
 
