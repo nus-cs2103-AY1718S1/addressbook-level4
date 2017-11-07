@@ -138,7 +138,7 @@ public class Person implements ReadOnlyPerson {
         this.remark.set(requireNonNull(remark));
     }
     //@@author
-
+    //@@author wishingmaid
     @Override
     public ObjectProperty<Photo> photoProperty() {
         return photo;
@@ -146,11 +146,10 @@ public class Person implements ReadOnlyPerson {
     public Photo getPhoto() {
         return photo.get();
     }
-
     public void setPhoto(Photo photo) {
         this.photo.set(requireNonNull(photo));
     }
-
+    //@@author wishingmaid
     //@@author Affalen
     @Override
     public ObjectProperty<Remark> remarkProperty() {
@@ -237,4 +236,24 @@ public class Person implements ReadOnlyPerson {
         this.setTags(replacement.getTags());
     }
 
+    /**
+     * Comparator function for sort for age, in case of null field.
+     */
+    //@@author Estois
+    public int compareAge(ReadOnlyPerson o1) {
+        if (this.getAge().toString().equals("") && o1.getAge().toString().equals("")) {
+            return 0;
+        }
+
+        if (this.getAge().toString().equals("")) {
+            return 1;
+        }
+
+        if (o1.getAge().toString().equals("")) {
+            return -1;
+        }
+
+        return this.getAge().toString().compareToIgnoreCase(o1.getAge().toString());
+    }
+    //@@author
 }

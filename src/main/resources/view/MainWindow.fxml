@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
     <URL value="@PEERSONAL_THEME.css" />
     <URL value="@Extensions.css" />
@@ -30,26 +30,26 @@
     </padding>
   </StackPane>
 
-  <StackPane fx:id="resultDisplayPlaceholder" maxHeight="386.0" minHeight="100" prefHeight="170.0" prefWidth="853.0" styleClass="pane-with-border" VBox.vgrow="NEVER">
+  <StackPane fx:id="resultDisplayPlaceholder" maxHeight="386.0" minHeight="100" prefHeight="150.0" prefWidth="853.0" styleClass="pane-with-border" VBox.vgrow="NEVER">
     <padding>
       <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
   </StackPane>
 
   <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" VBox.vgrow="ALWAYS">
-    <VBox fx:id="personList" maxWidth="-Infinity" minWidth="128.0" prefHeight="94.0" prefWidth="188.0" styleClass="pane-with-border">
+    <VBox fx:id="personList" maxWidth="-Infinity" minWidth="128.0" prefHeight="60.0" prefWidth="188.0" styleClass="pane-with-border">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
       <StackPane fx:id="personListPanelPlaceholder" maxWidth="-Infinity" VBox.vgrow="ALWAYS" />
     </VBox>
-      <VBox fx:id="PersonsDetails" prefHeight="200.0" prefWidth="286.0" styleClass="pane-with-border">
+      <VBox fx:id="PersonsDetails" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="286.0" styleClass="pane-with-border">
          <children>
-            <StackPane fx:id="personDetailsPlaceholder" minWidth="0.0" prefHeight="198.0" prefWidth="292.0"/>
+            <StackPane fx:id="personDetailsPlaceholder" maxHeight="1.7976931348623157E308" />
          </children>
       </VBox>
 
-    <StackPane fx:id="browserPlaceholder" prefHeight="200.0" prefWidth="1279.0" style="-fx-background-color: #9999ff;" styleClass="pane-with-border">
+    <StackPane fx:id="browserPlaceholder" prefHeight="200.0" prefWidth="1279.0">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
