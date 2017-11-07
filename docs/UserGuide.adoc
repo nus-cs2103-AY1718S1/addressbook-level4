@@ -307,6 +307,7 @@ image::UG_edit2.png[width="590"]
 
 image::divider.png[width="900"]
 
+// tag::find[]
 === Searching for people by details: `find`
 image::UG_commandheader_find.png[width="500"]
 
@@ -397,6 +398,7 @@ image::UG_find3.png[width="590"]
 {sp}+
 
 image::divider.png[width="900"]
+// end::tag[]
 
 === Deleting a person : `delete`
 image::UG_commandheader_delete.png[width="500"]

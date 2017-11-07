@@ -382,6 +382,8 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
+// tag::find[]
+
 === Find by Person Details
 
 Unify offers users the option to find people by their details. To implement the new command syntax,
@@ -472,6 +474,7 @@ does not have to be aware of new `Predicates` +
  statements must be updated. +
 
 ---
+// end::find[]
 
 // tag::musiccommand[]
 === Playing Music

@@ -1,0 +1,57 @@
+= Nicholas Chua - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+
+== image:engsheng_projectheader.png[width="900"]
+`UNIFY` is a Command Line Interface AddressBook that helps users manage your contacts efficiently. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 12 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W11-B4/main/blob/master/collated/main/nicholaschuayunzhi.md[Functional code]] [https://github.com/CS2103AUG2017-W11-B4/main/blob/master/collated/test/nicholaschuayunzhi.md[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Find by Details
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Find by details offers a natural solution for users to search for their contacts. Most of the time, a user would not have the name of the contact
+they are searching for. They may only remember the contact's home address for instance or maybe they are trying to trace a missed call. This feature
+allows users to filter through the address book based on any person's details to get to the contact they are looking for.
+
+At the same time, this feature saves time for the user. It is not uncommon to see people with the same name. By allowing an additional search field,
+users are able to narrow down their search more quickly. For example, to find John who is tagged as a classmate, he can just type `find John t/classmate`
+instead of searching through each and every `John` in his addressbook.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=undoredo]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `remark`
+
+{Explain similar to the Undo/Redo feature above.}
+
+=== Other contributions
+
+* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}
