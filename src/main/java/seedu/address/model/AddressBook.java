@@ -72,6 +72,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.groups.setGroups(groups);
     }
 
+    public void setAppointments(Set<Appointment> appointments) {
+        this.appointments.setAppointments(appointments);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -85,6 +89,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         setTags(new HashSet<>(newData.getTagList()));
         setGroups(new HashSet<>(newData.getGroupList()));
+        setAppointments(getAllAppointments());
         syncMasterTagListWith(persons);
         syncMasterGroupListWith(persons);
     }
@@ -150,12 +155,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         // in the person list.
         persons.setPerson(target, editedPerson);
         appointments.remove(oldAppointment);
-        try {
-            appointments.add(newAppointment);
-        } catch (UniqueAppointmentList.DuplicateAppointmentException e) {
-            e.printStackTrace();
-        } catch (UniqueAppointmentList.ClashAppointmentException e) {
-            e.printStackTrace();
+        if (!newAppointment.value.equals("")) {
+            try {
+                appointments.add(newAppointment);
+            } catch (UniqueAppointmentList.DuplicateAppointmentException e) {
+                e.printStackTrace();
+            } catch (UniqueAppointmentList.ClashAppointmentException e) {
+                e.printStackTrace();
+            }
         }
     }
 

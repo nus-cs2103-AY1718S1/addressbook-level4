@@ -73,6 +73,13 @@ public class AppointCommandSystemTest extends AddressBookSystemTest {
         model.updatePerson(getModel().getFilteredPersonList().get(otherIndex.getZeroBased()), editedPerson);
         assertCommandFailure(command, AppointCommand.MESSAGE_APPOINTMENT_CLASH);
 
+        /* Case: removing an appointment */
+        command = AppointCommand.COMMAND_WORD + " " + otherIndex.getOneBased() + " " + PREFIX_APPOINT;
+        editedPerson = new PersonBuilder(personToEdit).withAppointment("").build();
+        model.updatePerson(getModel().getFilteredPersonList().get(otherIndex.getZeroBased()), editedPerson);
+        expectedResultMessage = String.format(AppointCommand.MESSAGE_DELETE_APPOINTMENT_SUCCESS, editedPerson);
+        assertCommandSuccess(command, model, expectedResultMessage, null);
+
         /* Case: wrong format -> fails */
         command = AppointCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_APPOINT + "1/1/20 00:00 60";
         assertCommandFailure(command, Appointment.MESSAGE_INVALID_DATETIME);

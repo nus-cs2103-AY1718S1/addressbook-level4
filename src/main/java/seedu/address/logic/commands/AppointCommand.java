@@ -78,8 +78,6 @@ public class AppointCommand extends UndoableCommand {
             throw new CommandException("Person cannot be duplicated.");
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
-        } catch (IllegalValueException e) {
-            throw new CommandException("Invalid appointment");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(generateSuccessMessage(editedPerson));
