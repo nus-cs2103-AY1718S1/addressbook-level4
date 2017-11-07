@@ -265,6 +265,22 @@ Example:
 * `removeTag friend` +
 Removes the tag `friend` from all the persons in the address book.
 
+=== Finding shortest relationship path between two people: `relPath`
+
+Highlights the shortest relationship path between two people in the address book in the graph display, if it exists. +
+Format: `relPath FROM_INDEX TO_INDEX`
+
+****
+* Highlights the shortest relationship path between two people as specified by `FROM_INDEX` and `TO_INDEX`.
+* The indices refers to the index number shown in the most recent listing.
+* The indices *must be positive integers* 1, 2, 3, ...
+****
+
+Example:
+
+* `relPath 1 2` +
+Highlights the shortest path between the first and second person in the address book, if it exists.
+
 === Setting a tag colour: `colourtag`
 
 Sets a colour of a tag to a new colour. +
@@ -535,6 +551,8 @@ e.g. `find James Jake`
 e.g. `remark 2 r/The husband of Juliet Lee`
 * *Remove tag* : `removeTag TAG` +
 e.g. `removeTag friend`
+* *Find shortest relationship path* : `relPath FROM_INDEX TO_INDEX` +
+e.g. `relPath 1 2`
 * *Sort* : `sort`
 * *Select* : `select INDEX` +
 e.g.`select 2`
