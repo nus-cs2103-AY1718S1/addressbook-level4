@@ -1,10 +1,10 @@
 # keithsoc
-###### \java\seedu\address\commons\core\GuiSettings.java
+###### /java/seedu/address/commons/core/GuiSettings.java
 ``` java
-    private static final double DEFAULT_HEIGHT = 900;
-    private static final double DEFAULT_WIDTH = 1600;
+    private static final double DEFAULT_HEIGHT = 835;
+    private static final double DEFAULT_WIDTH = 1100;
 ```
-###### \java\seedu\address\commons\core\index\Index.java
+###### /java/seedu/address/commons/core/index/Index.java
 ``` java
     /**
      * Implement comparable for usage such as {@code Collections.max}
@@ -14,11 +14,11 @@
         return Double.compare(getOneBased(), idx.getOneBased());
     }
 ```
-###### \java\seedu\address\commons\core\Messages.java
+###### /java/seedu/address/commons/core/Messages.java
 ``` java
     public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_MULTI = "One or more indexes provided is invalid";
 ```
-###### \java\seedu\address\commons\core\ThemeSettings.java
+###### /java/seedu/address/commons/core/ThemeSettings.java
 ``` java
 /**
  * A Serializable class that contains the Theme settings.
@@ -78,7 +78,7 @@ public class ThemeSettings implements Serializable {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FavoriteCommand.java
+###### /java/seedu/address/logic/commands/FavoriteCommand.java
 ``` java
 /**
  * Favorites the person(s) identified using it's last displayed index from the address book.
@@ -152,7 +152,7 @@ public class FavoriteCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ListCommand.java
+###### /java/seedu/address/logic/commands/ListCommand.java
 ``` java
     public static final String COMMAND_OPTION_FAV = PREFIX_OPTION + FavoriteCommand.COMMAND_WORD;
 
@@ -178,7 +178,7 @@ public class FavoriteCommand extends UndoableCommand {
         }
     }
 ```
-###### \java\seedu\address\logic\commands\ThemeCommand.java
+###### /java/seedu/address/logic/commands/ThemeCommand.java
 ``` java
 /**
  * Changes the application theme to the user specified option.
@@ -222,7 +222,7 @@ public class ThemeCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\UnFavoriteCommand.java
+###### /java/seedu/address/logic/commands/UnFavoriteCommand.java
 ``` java
 /**
  * Unfavorites the person(s) identified using it's last displayed index from the address book.
@@ -295,7 +295,7 @@ public class UnFavoriteCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
         case FavoriteCommand.COMMAND_WORD:
             return new FavoriteCommandParser().parse(arguments);
@@ -303,19 +303,19 @@ public class UnFavoriteCommand extends UndoableCommand {
         case UnFavoriteCommand.COMMAND_WORD:
             return new UnFavoriteCommandParser().parse(arguments);
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand(arguments);
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
         case ThemeCommand.COMMAND_WORD:
         case ThemeCommand.COMMAND_ALIAS:
             return new ThemeCommandParser().parse(arguments);
 ```
-###### \java\seedu\address\logic\parser\ArgumentMultimap.java
+###### /java/seedu/address/logic/parser/ArgumentMultimap.java
 ``` java
     /**
      * Returns a boolean value that indicates whether a prefix is present in user input
@@ -324,16 +324,16 @@ public class UnFavoriteCommand extends UndoableCommand {
         return argMultimap.containsKey(prefix);
     }
 ```
-###### \java\seedu\address\logic\parser\CliSyntax.java
+###### /java/seedu/address/logic/parser/CliSyntax.java
 ``` java
     public static final Prefix PREFIX_FAV = new Prefix("f/");
     public static final Prefix PREFIX_UNFAV = new Prefix("uf/");
 ```
-###### \java\seedu\address\logic\parser\CliSyntax.java
+###### /java/seedu/address/logic/parser/CliSyntax.java
 ``` java
     public static final Prefix PREFIX_OPTION = new Prefix("-");
 ```
-###### \java\seedu\address\logic\parser\FavoriteCommandParser.java
+###### /java/seedu/address/logic/parser/FavoriteCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new FavoriteCommand object
@@ -354,7 +354,7 @@ public class FavoriteCommandParser implements Parser<FavoriteCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Parses {@code args} into an {@code List<Index>} and returns it.
@@ -372,7 +372,7 @@ public class FavoriteCommandParser implements Parser<FavoriteCommand> {
         return indexList;
     }
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Checks if favorite and unfavorite prefixes are present in {@code ArgumentMultimap argMultimap}
@@ -403,7 +403,7 @@ public class FavoriteCommandParser implements Parser<FavoriteCommand> {
         }
     }
 ```
-###### \java\seedu\address\logic\parser\ThemeCommandParser.java
+###### /java/seedu/address/logic/parser/ThemeCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ThemeCommand object
@@ -430,7 +430,7 @@ public class ThemeCommandParser implements Parser<ThemeCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\UnFavoriteCommandParser.java
+###### /java/seedu/address/logic/parser/UnFavoriteCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new UnFavoriteCommand object
@@ -451,7 +451,7 @@ public class UnFavoriteCommandParser implements Parser<UnFavoriteCommand> {
     }
 }
 ```
-###### \java\seedu\address\MainApp.java
+###### /java/seedu/address/MainApp.java
 ``` java
     @Override
     public void start(Stage primaryStage) {
@@ -465,7 +465,7 @@ public class UnFavoriteCommandParser implements Parser<UnFavoriteCommand> {
         ui.start(primaryStage);
     }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     /**
      * Sets {@code personToFav} favorite field to true or false according to {@code type}.
@@ -490,18 +490,18 @@ public class UnFavoriteCommandParser implements Parser<UnFavoriteCommand> {
         }
     }
 ```
-###### \java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
     /** {@code Predicate} that consists of all ReadOnlyPerson who has been favorited */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_FAV_PERSONS = p -> p.getFavorite().isFavorite();
 ```
-###### \java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
     /** Favorites or unfavorites the given person */
     void toggleFavoritePerson(ReadOnlyPerson target, String type)
             throws DuplicatePersonException, PersonNotFoundException;
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public void toggleFavoritePerson(ReadOnlyPerson target, String type)
@@ -511,7 +511,7 @@ public class UnFavoriteCommandParser implements Parser<UnFavoriteCommand> {
         indicateAddressBookChanged();
     }
 ```
-###### \java\seedu\address\model\person\Favorite.java
+###### /java/seedu/address/model/person/Favorite.java
 ``` java
 /**
  * Represents a Favorite status in the address book.
@@ -559,15 +559,13 @@ public class Favorite {
 
 }
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
     private ObjectProperty<Favorite> favorite;
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
-    public void setFavorite(Favorite favorite) {
-        this.favorite.set(requireNonNull(favorite));
-    }
+    public void setFavorite(Favorite favorite) { this.favorite.set(requireNonNull(favorite)); }
 
     @Override
     public ObjectProperty<Favorite> favoriteProperty() {
@@ -579,27 +577,27 @@ public class Favorite {
         return favorite.get();
     }
 ```
-###### \java\seedu\address\model\person\ReadOnlyPerson.java
+###### /java/seedu/address/model/person/ReadOnlyPerson.java
 ``` java
     ObjectProperty<Favorite> favoriteProperty();
     Favorite getFavorite();
 ```
-###### \java\seedu\address\model\UserPrefs.java
+###### /java/seedu/address/model/UserPrefs.java
 ``` java
     private ThemeSettings themeSettings;
 ```
-###### \java\seedu\address\model\UserPrefs.java
+###### /java/seedu/address/model/UserPrefs.java
 ``` java
     private String addressBookName = "KayPoh!";
 ```
-###### \java\seedu\address\model\UserPrefs.java
+###### /java/seedu/address/model/UserPrefs.java
 ``` java
     public UserPrefs() {
-        this.setGuiSettings(1600, 900, 0, 0);
+        this.setGuiSettings(1100, 835, 0, 0);
         this.setThemeSettings("view/ThemeDay.css", "view/ThemeDayExtensions.css");
     }
 ```
-###### \java\seedu\address\model\UserPrefs.java
+###### /java/seedu/address/model/UserPrefs.java
 ``` java
     public ThemeSettings getThemeSettings() {
         return themeSettings == null ? new ThemeSettings() : themeSettings;
@@ -613,17 +611,17 @@ public class Favorite {
         themeSettings = new ThemeSettings(theme, themeExtensions);
     }
 ```
-###### \java\seedu\address\storage\XmlAdaptedPerson.java
+###### /java/seedu/address/storage/XmlAdaptedPerson.java
 ``` java
     @XmlElement
     private boolean favorite;
 ```
-###### \java\seedu\address\ui\BrowserPanel.java
+###### /java/seedu/address/ui/BrowserPanel.java
 ``` java
     public static final String DEFAULT_PAGE_DAY = "defaultDay.html";
     public static final String DEFAULT_PAGE_NIGHT = "defaultNight.html";
 ```
-###### \java\seedu\address\ui\BrowserPanel.java
+###### /java/seedu/address/ui/BrowserPanel.java
 ``` java
     /**
      * Loads a default HTML file with a background that matches the current theme.
@@ -638,16 +636,16 @@ public class Favorite {
         loadPage(defaultPage.toExternalForm());
     }
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
-    private static final int MIN_HEIGHT = 900;
-    private static final int MIN_WIDTH = 1600;
+    private static final int MIN_HEIGHT = 700;
+    private static final int MIN_WIDTH = 600;
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     private Scene scene;
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     @FXML
     private MenuBar menuBar;
@@ -658,21 +656,21 @@ public class Favorite {
     @FXML
     private Button maximiseButton;
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
         scene.setFill(Color.TRANSPARENT);
         setDefaultTheme(prefs, scene);
         UiTheme.getInstance().setScene(scene);
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
         // Enable window navigation
         enableMovableWindow();
         enableMinimiseWindow();
         enableMaximiseWindow();
-        UiResize.enableResizableWindow(primaryStage);
+        UiResize.enableResizableWindow(primaryStage, MIN_WIDTH, MIN_HEIGHT, Double.MAX_VALUE, Double.MAX_VALUE);
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     /**
      * Sets the default theme based on user preferences.
@@ -691,7 +689,7 @@ public class Favorite {
         return new ThemeSettings(cssMain, cssExtensions);
     }
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     /**
      * Enable movable window.
@@ -701,6 +699,7 @@ public class Favorite {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
         });
+
         menuBar.setOnMouseDragged((event) -> {
             primaryStage.setX(event.getScreenX() - xOffset);
             primaryStage.setY(event.getScreenY() - yOffset);
@@ -732,7 +731,7 @@ public class Favorite {
         });
     }
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
     private static HashMap<ReadOnlyPerson, String> personColors = new HashMap<>();
     private static HashMap<String, String> tagColors = new HashMap<>();
@@ -740,14 +739,14 @@ public class Favorite {
     private static final String defaultThemeTagColor = "#fc4465";
     private static final double GOLDEN_RATIO = 0.618033988749895;
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
     @FXML
     private StackPane profilePhotoStackPane;
     @FXML
     private ImageView profilePhotoImageView;
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
     /**
      * Generates a random pastel color for profile photos.
@@ -805,7 +804,7 @@ public class Favorite {
         return tagColors.get(tagValue);
     }
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
     /**
      * Adds a profile photo for each {@code person}.
@@ -850,7 +849,50 @@ public class Favorite {
         }
     }
 ```
-###### \java\seedu\address\ui\UiTheme.java
+###### /java/seedu/address/ui/UiFont.java
+``` java
+/**
+ * A singleton class that manages the loading of custom fonts and embedding it into the application
+ * so that typography will be consistent on different platforms e.g. Windows, macOS, etc.
+ */
+public class UiFont {
+
+    /** Resource folder where font files are stored. */
+    private static final String FONTS_FILE_FOLDER = "/fonts/";
+
+    /** List of all the custom fonts */
+    private static final String[] fontList = {
+        "OpenSans-Light.ttf", "SegoeUI.ttf", "SegoeUI-Bold.ttf", "SegoeUI-Light.ttf", "SegoeUI-Semibold.ttf"
+    };
+
+    private static UiFont instance;
+
+    private UiFont() {
+        // Prevents any other class from instantiating
+    }
+
+    /**
+     * @return instance of UiTheme
+     */
+    public static UiFont getInstance() {
+        if (instance == null) {
+            instance = new UiFont();
+        }
+        return instance;
+    }
+
+    /**
+     * Load in all the fonts specified in fontList String array.
+     */
+    public void embedFonts() {
+        for (String font : fontList) {
+            Font.loadFont(getClass().getResourceAsStream(FONTS_FILE_FOLDER + font), 10);
+        }
+    }
+
+}
+```
+###### /java/seedu/address/ui/UiTheme.java
 ``` java
 /**
  * A singleton class that manages the changing of scene graph's stylesheets at runtime.
@@ -861,7 +903,7 @@ public class UiTheme {
     public static final String THEME_DAY_EXTENSIONS = "view/ThemeDayExtensions.css";
     public static final String THEME_NIGHT_EXTENSIONS = "view/ThemeNightExtensions.css";
 
-    private static UiTheme uiTheme = new UiTheme();
+    private static UiTheme instance;
     private Scene scene;
     private BrowserPanel browserPanel;
 
@@ -873,7 +915,10 @@ public class UiTheme {
      * @return instance of UiTheme
      */
     public static UiTheme getInstance() {
-        return uiTheme;
+        if (instance == null) {
+            instance = new UiTheme();
+        }
+        return instance;
     }
 
     /**
@@ -910,38 +955,11 @@ public class UiTheme {
     }
 }
 ```
-###### \resources\view\defaultDay.html
-``` html
-<html>
-<head>
-    <link rel="stylesheet" href="ThemeDay.css">
-</head>
-
-<body class="background">
-    <div class="center">
-        <div class="text">Please select a contact to start stalking</div>
-    </div>
-</body>
-</html>
-```
-###### \resources\view\defaultNight.html
-``` html
-<html>
-<head>
-    <link rel="stylesheet" href="ThemeNight.css">
-</head>
-
-<body class="background">
-    <div class="center">
-        <div class="text">Please select a contact to start stalking</div>
-    </div>
-</body>
-</html>
-```
-###### \resources\view\MainWindow.fxml
+###### /resources/view/MainWindow.fxml
 ``` fxml
+
 <VBox fx:id="rootVBox" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
-    <HBox fx:id="rootHBox">
+    <HBox fx:id="rootHBox" alignment="CENTER_LEFT" minHeight="45" prefHeight="45">
         <MenuBar fx:id="menuBar" HBox.hgrow="ALWAYS">
             <Menu mnemonicParsing="false" text="File">
                 <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
@@ -950,12 +968,12 @@ public class UiTheme {
                 <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
             </Menu>
         </MenuBar>
-        <Button fx:id="minimiseButton" mnemonicParsing="false" />
-        <Button fx:id="maximiseButton" mnemonicParsing="false" />
-        <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleExit" />
+        <Button fx:id="minimiseButton" mnemonicParsing="false" prefHeight="45" prefWidth="60" />
+        <Button fx:id="maximiseButton" mnemonicParsing="false" prefHeight="45" prefWidth="60" />
+        <Button fx:id="closeButton" mnemonicParsing="false" prefHeight="45" prefWidth="60" onAction="#handleExit" />
     </HBox>
 ```
-###### \resources\view\PersonListCard.fxml
+###### /resources/view/PersonListCard.fxml
 ``` fxml
     <VBox alignment="CENTER" minHeight="105" prefHeight="105" prefWidth="120">
         <StackPane fx:id="profilePhotoStackPane" styleClass="profile-photo-pane">
@@ -964,7 +982,7 @@ public class UiTheme {
         </StackPane>
     </VBox>
 ```
-###### \resources\view\PersonListCard.fxml
+###### /resources/view/PersonListCard.fxml
 ``` fxml
     <VBox alignment="TOP_RIGHT" minHeight="105" prefWidth="40">
         <padding>
@@ -973,7 +991,7 @@ public class UiTheme {
         <ImageView fx:id="favoriteImageView" fitHeight="32" fitWidth="32" preserveRatio="true" />
     </VBox>
 ```
-###### \resources\view\ThemeDay.css
+###### /resources/view/ThemeDay.css
 ``` css
 /* Begin Styling for Default Web Page (used in default.html file) */
 
@@ -1008,14 +1026,14 @@ public class UiTheme {
 
 /* Round Borders */
 
-#rootVBox, #rootHBox {
+#rootVBox {
     -fx-border-radius: 10;
     -fx-background-radius: 10;
 }
 
 #statusBarFooter, #syncStatus, #saveLocationStatus {
     -fx-border-radius: 0 0 10 10;
-    -fx-background-radius: 0 10 10 10;
+    -fx-background-radius: 0 0 10 10;
 }
 
 /* Tab Pane */
@@ -1025,7 +1043,7 @@ public class UiTheme {
 }
 
 .tab-pane .tab-header-area {
-    -fx-padding: 0 0 0 0;
+    -fx-padding: 0;
     -fx-min-height: 0;
     -fx-max-height: 0;
 }
@@ -1084,7 +1102,7 @@ public class UiTheme {
 /* Profile Photo */
 
 .profile-photo-pane {
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: "Open Sans Light";
     -fx-font-size: 30px;
 }
 
@@ -1097,9 +1115,9 @@ public class UiTheme {
 }
 
 .list-cell {
-    -fx-label-padding: 0 0 0 0;
+    -fx-label-padding: 0;
     -fx-graphic-text-gap: 0;
-    -fx-padding: 0 0 0 0;
+    -fx-padding: 0;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
 }
@@ -1119,16 +1137,18 @@ public class UiTheme {
 /* Person List Card Fonts */
 
 .cell_big_label {
-    -fx-font-family: "Helvetica";
+    -fx-font-family: "Segoe UI";
     -fx-font-size: 25px;
     -fx-text-fill: black;
+    -fx-padding: 3 0 3 0;
     -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.5), 1, 0, 0, 0); /* Add extra darkness to font albeit subtly */
 }
 
 .cell_small_label {
-    -fx-font-family: "Helvetica";
+    -fx-font-family: "Segoe UI";
     -fx-font-size: 16px;
     -fx-text-fill: #1f1f1f;
+    -fx-padding: 3 0 3 0;
 }
 
 /* Command Box & Result Display Box Background */
@@ -1171,7 +1191,7 @@ public class UiTheme {
     -fx-text-fill: white;
 }
 
-/* Grid */
+/* Grid Pane used by Status Bar Footer and Command Box */
 
 .grid-pane {
     -fx-background-color: derive(#1f1f1f, 10%);
@@ -1193,14 +1213,20 @@ public class UiTheme {
     -fx-text-fill: white;
 }
 
-/* Menu */
+/* HBox containing Menu Bar and Window Buttons */
+
+#rootHBox {
+    -fx-border-radius: 10 10 0 0;
+    -fx-background-radius: 10 10 0 0;
+    -fx-background-color: #d13438;
+}
+
+/* Menu Bar */
 
 .menu-bar {
     -fx-background-color: #d13438;
     -fx-border-radius: 10 0 0 0;
     -fx-background-radius: 10 0 0 0;
-    -fx-border-color: #d13438;
-    -fx-border-width: 5px;
 }
 
 .menu-bar .label {
@@ -1224,13 +1250,10 @@ public class UiTheme {
 /* Button */
 
 .button {
-    -fx-padding: 12 25 12 35;
-    -fx-background-radius: 0;
     -fx-background-color: #d13438;
-    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
-    -fx-font-size: 11pt;
-    -fx-text-fill: #d8d8d8;
-    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 15pt;
+    -fx-text-fill: white;
 }
 
 .button:hover {
@@ -1250,11 +1273,11 @@ public class UiTheme {
 /* Dialog */
 
 .dialog-pane {
-    -fx-background-color: #1d1d1d;
+    -fx-background-color: #ffffff;
 }
 
 .dialog-pane > *.button-bar > *.container {
-    -fx-background-color: #1d1d1d;
+    -fx-background-color: #ffffff;
 }
 
 .dialog-pane > *.label.content {
@@ -1264,7 +1287,7 @@ public class UiTheme {
 }
 
 .dialog-pane:header *.header-panel {
-    -fx-background-color: derive(#1d1d1d, 25%);
+    -fx-background-color: #ffffff;
 }
 
 .dialog-pane:header *.header-panel *.label {
@@ -1277,7 +1300,7 @@ public class UiTheme {
 /* Scroll Bar */
 
 .scroll-bar {
-    -fx-background-color: transparent;
+    -fx-background-color: #ffffff;
 }
 
 .scroll-bar .thumb {
@@ -1287,7 +1310,7 @@ public class UiTheme {
 
 .scroll-bar .increment-button, .scroll-bar .decrement-button {
     -fx-background-color: transparent;
-    -fx-padding: 0 0 0 0;
+    -fx-padding: 0;
 }
 
 .scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
@@ -1343,11 +1366,10 @@ public class UiTheme {
 }
 
 #tags .label {
-    -fx-font-family: "Helvetica";
+    -fx-font-family: "Segoe UI Bold";
     -fx-font-size: 11pt;
-    -fx-font-weight: bold;
     -fx-text-fill: white;
-    -fx-padding: 1 8 1 8;
+    -fx-padding: 2 8 3 8;
     -fx-background-color: #fc4465;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
@@ -1389,7 +1411,7 @@ public class UiTheme {
     -fx-background-position: center;
 }
 ```
-###### \resources\view\ThemeDayExtensions.css
+###### /resources/view/ThemeDayExtensions.css
 ``` css
 .error {
     -fx-text-fill: #ff0000 !important; /* The error class should always override the default text-fill style */
@@ -1401,7 +1423,7 @@ public class UiTheme {
     -fx-background: #ffffff;
 }
 ```
-###### \resources\view\ThemeNight.css
+###### /resources/view/ThemeNight.css
 ``` css
 /* Begin Styling for Default Web Page (used in default.html file) */
 
@@ -1436,14 +1458,14 @@ public class UiTheme {
 
 /* Round Borders */
 
-#rootVBox, #rootHBox {
+#rootVBox {
     -fx-border-radius: 10;
     -fx-background-radius: 10;
 }
 
 #statusBarFooter, #syncStatus, #saveLocationStatus {
     -fx-border-radius: 0 0 10 10;
-    -fx-background-radius: 0 10 10 10;
+    -fx-background-radius: 0 0 10 10;
 }
 
 /* Tab Pane */
@@ -1453,7 +1475,7 @@ public class UiTheme {
 }
 
 .tab-pane .tab-header-area {
-    -fx-padding: 0 0 0 0;
+    -fx-padding: 0;
     -fx-min-height: 0;
     -fx-max-height: 0;
 }
@@ -1512,7 +1534,7 @@ public class UiTheme {
 /* Profile Photo */
 
 .profile-photo-pane {
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: "Open Sans Light";
     -fx-font-size: 31px;
 }
 
@@ -1525,9 +1547,9 @@ public class UiTheme {
 }
 
 .list-cell {
-    -fx-label-padding: 0 0 0 0;
+    -fx-label-padding: 0;
     -fx-graphic-text-gap: 0;
-    -fx-padding: 0 0 0 0;
+    -fx-padding: 0;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
 }
@@ -1547,15 +1569,17 @@ public class UiTheme {
 /* Person List Card Fonts */
 
 .cell_big_label {
-    -fx-font-family: "Helvetica";
+    -fx-font-family: "Segoe UI";
     -fx-font-size: 25px;
     -fx-text-fill: white;
+    -fx-padding: 3 0 3 0;
 }
 
 .cell_small_label {
-    -fx-font-family: "Helvetica";
+    -fx-font-family: "Segoe UI";
     -fx-font-size: 16px;
     -fx-text-fill: white;
+    -fx-padding: 3 0 3 0;
 }
 
 /* Command Box & Result Display Box Background */
@@ -1598,7 +1622,7 @@ public class UiTheme {
     -fx-text-fill: white;
 }
 
-/* Grid */
+/* Grid Pane used by Status Bar Footer and Command Box */
 
 .grid-pane {
     -fx-background-color: #131411;
@@ -1620,14 +1644,20 @@ public class UiTheme {
     -fx-text-fill: white;
 }
 
-/* Menu */
+/* HBox containing Menu Bar and Window Buttons */
+
+#rootHBox {
+    -fx-border-radius: 10 10 0 0;
+    -fx-background-radius: 10 10 0 0;
+    -fx-background-color: #d13438;
+}
+
+/* Menu Bar */
 
 .menu-bar {
     -fx-background-color: #d13438;
     -fx-border-radius: 10 0 0 0;
     -fx-background-radius: 10 0 0 0;
-    -fx-border-color: #d13438;
-    -fx-border-width: 5px;
 }
 
 .menu-bar .label {
@@ -1651,13 +1681,10 @@ public class UiTheme {
 /* Button */
 
 .button {
-    -fx-padding: 12 25 12 35;
-    -fx-background-radius: 0;
     -fx-background-color: #d13438;
-    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
-    -fx-font-size: 11pt;
-    -fx-text-fill: #d8d8d8;
-    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 15pt;
+    -fx-text-fill: white;
 }
 
 .button:hover {
@@ -1687,7 +1714,7 @@ public class UiTheme {
 .dialog-pane > *.label.content {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-text-fill: black;
+    -fx-text-fill: white;
 }
 
 .dialog-pane:header *.header-panel {
@@ -1697,7 +1724,7 @@ public class UiTheme {
 .dialog-pane:header *.header-panel *.label {
     -fx-font-size: 18px;
     -fx-font-style: italic;
-    -fx-fill: black;
+    -fx-fill: white;
     -fx-text-fill: black;
 }
 
@@ -1714,7 +1741,7 @@ public class UiTheme {
 
 .scroll-bar .increment-button, .scroll-bar .decrement-button {
     -fx-background-color: transparent;
-    -fx-padding: 0 0 0 0;
+    -fx-padding: 0;
 }
 
 .scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
@@ -1770,11 +1797,10 @@ public class UiTheme {
 }
 
 #tags .label {
-    -fx-font-family: "Helvetica";
+    -fx-font-family: "Segoe UI Bold";
     -fx-font-size: 11pt;
-    -fx-font-weight: bold;
     -fx-text-fill: white;
-    -fx-padding: 1 8 1 8;
+    -fx-padding: 2 8 3 8;
     -fx-background-color: #fc4465;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
@@ -1816,7 +1842,7 @@ public class UiTheme {
     -fx-background-position: center;
 }
 ```
-###### \resources\view\ThemeNightExtensions.css
+###### /resources/view/ThemeNightExtensions.css
 ``` css
 .error {
     -fx-text-fill: #ff6161 !important; /* The error class should always override the default text-fill style */

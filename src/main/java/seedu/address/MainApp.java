@@ -76,6 +76,15 @@ public class MainApp extends Application {
         initEventsCenter();
     }
 
+    //@@author alexfoodw
+    /**
+     * Returns the current logic Manager
+     */
+    public Logic getLogic() {
+        return logic;
+    }
+    //@@author
+
     private String getApplicationParameter(String parameterName) {
         Map<String, String> applicationParameters = getParameters().getNamed();
         return applicationParameters.get(parameterName);
