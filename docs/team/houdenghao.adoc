@@ -1,0 +1,55 @@
+= Hou Denghao - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Planno
+Planno is a desktop application which combines address book and task manager.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W14-B4/main/blob/master/collated/main/HouDenghao.md[Functional code]] [https://github.com/CS2103AUG2017-W14-B4/main/blob/master/collated/test/HouDenghao.md[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Sort FindE ListE ShowP
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+include::../UserGuide.adoc[tag=listE]
+include::../UserGuide.adoc[tag=findE]
+include::../UserGuide.adoc[tag=showP]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+include::../DeveloperGuide.adoc[tag=listE]
+include::../DeveloperGuide.adoc[tag=showP]
+
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed:
+
+
+=== Other contributions
+
+* Updated the GUI model and color (Pull requests https://github.com/CS2103AUG2017-W14-B4/main/pull/35[#35], https://github.com/CS2103AUG2017-W14-B4/main/pull/83[#83])
+* Reported bugs in the other team's product(Issues https://github.com/CS2103AUG2017-T15-B1/main/issues/102[#102], https://github.com/CS2103AUG2017-T15-B1/main/issues/103[#103], https://github.com/CS2103AUG2017-T15-B1/main/issues/104[#104])
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}
