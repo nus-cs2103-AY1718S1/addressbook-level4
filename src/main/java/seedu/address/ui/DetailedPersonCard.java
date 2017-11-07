@@ -18,6 +18,7 @@ import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author hansiang93
+
 /**
  * An UI component that displays information of a {@code Person}.
  */
@@ -87,19 +88,19 @@ public class DetailedPersonCard extends UiPart<Region> {
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        if (person.phoneProperty().isNotNull().get()){
+        if (person.phoneProperty().isNotNull().get()) {
             phoneicon.setVisible(true);
         } else {
             phoneicon.setVisible(false);
         }
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        if (person.addressProperty().isNotNull().get()){
+        if (person.addressProperty().isNotNull().get()) {
             addressicon.setVisible(true);
         } else {
             addressicon.setVisible(false);
         }
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        if (person.emailProperty().isNotNull().get()){
+        if (person.emailProperty().isNotNull().get()) {
             emailicon.setVisible(true);
         } else {
             emailicon.setVisible(false);
