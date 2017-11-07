@@ -1,3 +1,4 @@
+//@@author TravisPhey
 package seedu.address.model.person;
 
 import java.util.List;
@@ -29,7 +30,16 @@ public class FindCommandPredicate implements Predicate<ReadOnlyPerson> {
         boolean email = keywords.stream()
             .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getEmail().toString(), keyword));
 
-        if (name || number || address || email) {
+        boolean occupation = keywords.stream()
+            .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getOccupation().toString(), keyword));
+
+        boolean website = keywords.stream()
+            .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getWebsite().toString(), keyword));
+
+        boolean remark = keywords.stream()
+            .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getRemark().toString(), keyword));
+
+        if (name || number || address || email || occupation || website || remark) {
             return true;
         } else {
             return false;
