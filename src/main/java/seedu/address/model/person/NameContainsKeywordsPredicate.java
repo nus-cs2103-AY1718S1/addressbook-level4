@@ -36,7 +36,6 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
         }
         return isSelected;
     }
-    // @@author
 
     @Override
     public boolean equals(Object other) {

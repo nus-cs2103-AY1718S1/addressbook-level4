@@ -14,7 +14,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
-
+// @@author HuWanqing
 /**
  * Represents all events which a person participates.
  */
@@ -83,6 +83,7 @@ public class ParticipationList implements Iterable<Event> {
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }
+    // @@author
 
     @Override
     public Iterator<Event> iterator() {

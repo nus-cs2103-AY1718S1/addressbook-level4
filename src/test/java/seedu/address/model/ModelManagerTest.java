@@ -3,6 +3,8 @@ package seedu.address.model;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.testutil.TypicalEvents.FIRST;
+import static seedu.address.testutil.TypicalEvents.SECOND;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
@@ -12,8 +14,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.model.event.Event;
+import seedu.address.model.event.EventNameContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.EventListBuilder;
 
 public class ModelManagerTest {
     @Rule
@@ -24,13 +29,17 @@ public class ModelManagerTest {
         ModelManager modelManager = new ModelManager();
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredPersonList().remove(0);
+        modelManager.getFilteredEventList().remove(0);
     }
 
     @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        // @@author HuWanqing
+        EventList eventList = new EventListBuilder().withEvent(FIRST).withEvent(SECOND).build();
         AddressBook differentAddressBook = new AddressBook();
-        EventList eventList = new EventList();
+        EventList differentEventList = new EventList();
+        // @@author HuWanqing
         UserPrefs userPrefs = new UserPrefs();
 
         // same values -> returns true
@@ -50,11 +59,23 @@ public class ModelManagerTest {
         // different addressBook -> returns false
         assertFalse(modelManager.equals(new ModelManager(differentAddressBook, eventList, userPrefs)));
 
-        // different filteredList -> returns false
-        String[] keywords = ALICE.getName().fullName.split("\\s+");
-        modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        // @@author HuWanqing
+        // different EventList -> returns false
+        assertFalse(modelManager.equals(new ModelManager(addressBook, differentEventList, userPrefs)));
+
+        // @@author
+        // different filtered person list -> returns false
+        String[] personKeywords = ALICE.getName().fullName.split("\\s+");
+        modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(personKeywords)));
         assertFalse(modelManager.equals(new ModelManager(addressBook, eventList, userPrefs)));
 
+        // @@author HuWanqing
+        // different filtered event list -> returns false
+        String[] eventKeywords = FIRST.getEventName().fullEventName.split("\\s+");
+        modelManager.updateFilteredEventList(new EventNameContainsKeywordsPredicate(Arrays.asList(eventKeywords)));
+        assertFalse(modelManager.equals(new ModelManager(addressBook, eventList, userPrefs)));
+
+        // @@author
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 

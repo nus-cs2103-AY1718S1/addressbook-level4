@@ -163,7 +163,7 @@ public class ModelManager extends ComponentManager implements Model {
         eventList.removeEvent(target);
         indicateEventListChanged();
     }
-
+    // @@author HuWanqing
     @Override
     public synchronized void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
         eventList.addEvent(event);
@@ -185,7 +185,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
 
-    // @@author
+    // @@author Adoby7
     @Override
     public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
             throws DuplicateEventException, EventNotFoundException {
@@ -197,7 +197,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //=========== Participant Operations =============================================================
-
     @Override
     public void quitEvent(Person person, Event event)
             throws PersonNotParticipateException, NotParticipateEventException {
@@ -207,7 +206,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removeParticipation(person, event);
         indicateAddressBookChanged();
     }
-
+    // @@author HuWanqing
     @Override
     public void joinEvent(Person person, Event event)
             throws PersonHaveParticipateException, HaveParticipateEventException {
@@ -231,7 +230,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
     }
-
+    // @@author HuWanqing
 
     @Override
     public boolean equals(Object obj) {
