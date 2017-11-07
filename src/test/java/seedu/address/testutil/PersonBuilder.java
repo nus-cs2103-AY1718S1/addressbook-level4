@@ -3,12 +3,8 @@ package seedu.address.testutil;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.group.Group;
+import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -18,10 +14,17 @@ import seedu.address.model.util.SampleDataUtil;
 public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";
-    public static final String DEFAULT_PHONE = "85355255";
+    public static final String DEFAULT_PHONE = "85657255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
+    //@@author yanji1221
+    public static final String DEFAULT_BIRTHDAY = "1988/08/18";
+    //@@author
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    //@@author quangtdn
+    public static final String DEFAULT_PROFILEPAGE = "www.facebook.com";
+    //@@author
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_GROUPS = "NUS";
 
     private Person person;
 
@@ -30,9 +33,13 @@ public class PersonBuilder {
             Name defaultName = new Name(DEFAULT_NAME);
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
+            Birthday defaultBirthday = new Birthday(DEFAULT_BIRTHDAY);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
+            ProfilePage defaultProfilePage= new ProfilePage(DEFAULT_PROFILEPAGE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
+            Set<Group> defaultGroups = SampleDataUtil.getGroupSet(DEFAULT_GROUPS);
+            this.person = new Person(defaultName, defaultPhone,
+                    defaultEmail, defaultBirthday, defaultAddress, defaultProfilePage, defaultTags , defaultGroups);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -68,7 +75,19 @@ public class PersonBuilder {
         }
         return this;
     }
-
+    //@@author erik0704
+    /**
+     * Parses the {@code groups} into a {@code Set<Group>} and set it to the {@code Person} that we are building.
+     */
+    public PersonBuilder withGroups(String ... groups) {
+        try {
+            this.person.setGroups(SampleDataUtil.getGroupSet(groups));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("groups are expected to be unique.");
+        }
+        return this;
+    }
+    //@@author
     /**
      * Sets the {@code Address} of the {@code Person} that we are building.
      */
@@ -80,6 +99,19 @@ public class PersonBuilder {
         }
         return this;
     }
+    //@@author quangtdn
+    /**
+     * Sets the {@code ProfilePage} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withProfilePage(String profile) {
+        try {
+            this.person.setProfilePage(new ProfilePage(profile));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("profile page is expected to be unique.");
+        }
+        return this;
+    }
+    //@@author
 
     /**
      * Sets the {@code Phone} of the {@code Person} that we are building.
@@ -104,9 +136,21 @@ public class PersonBuilder {
         }
         return this;
     }
+    //@@author yanji1221
+    /**
+     * Sets the {@code Birthday} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withBirthday(String birthday) {
+        try {
+            this.person.setBirthday(new Birthday(birthday));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("birthday is expected to be unique.");
+        }
+        return this;
+    }
 
     public Person build() {
         return this.person;
     }
-
+    //@@author
 }

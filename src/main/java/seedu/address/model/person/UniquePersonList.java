@@ -1,15 +1,16 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -19,7 +20,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * Supports a minimal set of list operations.
  *
  * @see Person#equals(Object)
- * @see CollectionUtil#elementsAreUnique(Collection)
  */
 public class UniquePersonList implements Iterable<Person> {
 
@@ -27,6 +27,17 @@ public class UniquePersonList implements Iterable<Person> {
     // used by asObservableList()
     private final ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(internalList, (person) -> person);
 
+    public UniquePersonList(Set<ReadOnlyPerson> persons) {
+        requireNonNull(persons);
+        ArrayList<ReadOnlyPerson> person_list=new ArrayList<ReadOnlyPerson>(persons);
+        for(int i=0;i<person_list.size();i++){
+            Person p=new Person(person_list.get(i));
+            internalList.add(p);
+        }
+        assert CollectionUtil.elementsAreUnique(mappedList);
+    }
+
+    public UniquePersonList(){}
     /**
      * Returns true if the list contains an equivalent person as the given argument.
      */
@@ -48,6 +59,14 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.add(new Person(toAdd));
     }
 
+    public void mergeFrom(UniquePersonList from) {
+        final Set<ReadOnlyPerson> alreadyInside = this.toSet();
+        from.internalList.stream()
+                .filter(tag -> !alreadyInside.contains(tag))
+                .forEach(internalList::add);
+
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
@@ -101,6 +120,11 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public ObservableList<ReadOnlyPerson> asObservableList() {
         return FXCollections.unmodifiableObservableList(mappedList);
+    }
+
+    public Set<ReadOnlyPerson> toSet() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return new HashSet<>(internalList);
     }
 
     @Override

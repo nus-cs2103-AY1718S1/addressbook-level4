@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.text.ParseException;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -7,6 +8,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -19,8 +21,10 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowReminderRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.model.event.*;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -42,8 +46,11 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private EventListPanel eventListPanel;
+    private ComingBirthdayListPanel comingBirthdayListPanel;
     private Config config;
     private UserPrefs prefs;
+    private GroupListPanel groupListPanel;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -58,11 +65,19 @@ public class MainWindow extends UiPart<Region> {
     private StackPane personListPanelPlaceholder;
 
     @FXML
+    private StackPane eventListPanelPlaceholder;
+
+    @FXML
+    private StackPane comingBirthdayListPanelPlaceholder;
+
+    @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
 
+    @FXML
+    private StackPane groupListPanelPlaceholder;
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
 
@@ -132,10 +147,17 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        comingBirthdayListPanel = new ComingBirthdayListPanel(logic.getFilteredPersonList());
+        comingBirthdayListPanelPlaceholder.getChildren().add(comingBirthdayListPanel.getRoot());
+
+        eventListPanel = new EventListPanel(logic.getFilteredEventList());
+        eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+
+
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -192,6 +214,17 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+    /**
+     * Opens the reminder window.
+     */
+    @FXML
+    public void handleReminder() throws ParseException{
+        for(Event event : logic.getUpcomingEventList()) {
+            ReminderWindow window = new ReminderWindow(event);
+            window.show();
+        }
+    }
+
     void show() {
         primaryStage.show();
     }
@@ -204,10 +237,21 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
+    public GroupListPanel getGroupListPanel() { return this.groupListPanel; }
+
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
     }
 
+    public EventListPanel getEventListPanel() {
+        return this.eventListPanel;
+    }
+
+    //@@author yanji1221
+    public ComingBirthdayListPanel getComingBirthdayListPanel() {
+        return this.comingBirthdayListPanel;
+    }
+    //@author
     void releaseResources() {
         browserPanel.freeResources();
     }
@@ -216,5 +260,11 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+    //@@author erik0704
+    @Subscribe
+    private void handleShowReminderEvent(ShowReminderRequestEvent event) throws ParseException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleReminder();
     }
 }

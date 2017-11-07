@@ -33,7 +33,7 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         browserPanelHandle = new BrowserPanelHandle(browserPanel.getRoot());
     }
-
+    //@@author quangtdn
     @Test
     public void display() throws Exception {
         // default web page
@@ -42,10 +42,12 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         // associated web page of a person
         postNow(selectionChangedEventStub);
-        URL expectedPersonUrl = new URL(GOOGLE_SEARCH_URL_PREFIX
-                + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
+        //URL expectedPersonUrl = new URL(GOOGLE_SEARCH_URL_PREFIX
+          //      + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
 
-        waitUntilBrowserLoaded(browserPanelHandle);
+        URL expectedPersonUrl = new URL("https://"+ALICE.getProfilePage().toString());
+      //  waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
     }
+    //@@author
 }

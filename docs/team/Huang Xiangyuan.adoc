@@ -1,0 +1,52 @@
+= Huang Xiangyuan - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com [Functional code]] [https://github.com[Test code]] {give links to collated code files}
+
+=== Enhancement Added: 
+1. When adding people, everything except for the name is optional.
+2. Can group people into several groups.
+3. Can DeleteGroups.
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: 
+1. Make event corresponding to a group.
+2. Add a person into a group.
+3. Remove a person from a group.
+4. Add password into the group.
+
+=== Other contributions
+Fix the help window problems that can happen to some computers.
+
+
+

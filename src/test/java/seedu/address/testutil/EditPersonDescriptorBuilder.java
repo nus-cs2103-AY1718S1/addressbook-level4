@@ -31,8 +31,13 @@ public class EditPersonDescriptorBuilder {
         descriptor.setName(person.getName());
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
+        //@@author yanji1221
+        descriptor.setBirthday(person.getBirthday());
+        //@@author
         descriptor.setAddress(person.getAddress());
+        descriptor.setProfilePage(person.getProfilePage());
         descriptor.setTags(person.getTags());
+        descriptor.setGroups(person.getGroups());
     }
 
     /**
@@ -70,7 +75,19 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
-
+    //@@author yanji1221
+    /**
+     * Sets the {@code Birthday} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withBirthday(String birthday) {
+        try {
+            ParserUtil.parseBirthday(Optional.of(birthday)).ifPresent(descriptor::setBirthday);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("birthday is expected to be unique.");
+        }
+        return this;
+    }
+    //@@author
     /**
      * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -83,6 +100,19 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author quangtdn
+    /**
+     * Sets the {@code ProfilePage} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withProfilePage(String profile) {
+        try {
+            ParserUtil.parseProfilePage(Optional.of(profile)).ifPresent(descriptor::setProfilePage);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("Profile Page is expected to be unique.");
+        }
+        return this;
+    }
+    //@@author
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
      * that we are building.
@@ -96,6 +126,20 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author erik0704
+    /**
+     * Parses the {@code groups} into a {@code Set<Group>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withGroups(String... groups) {
+        try {
+            descriptor.setGroups(ParserUtil.parseGroups(Arrays.asList(groups)));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+    //@@author
     public EditPersonDescriptor build() {
         return descriptor;
     }

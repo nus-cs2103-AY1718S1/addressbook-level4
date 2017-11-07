@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= NeoXPro Manager - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,27 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W10-B4`      Since: `Jun 2016`      Licence: `MIT`
+
+== Introduction
+
+=== Software Information
+NeoXPro is a command line interface(CLI) address book. NeoXPro not only allows users to keep track of the personal
+information of their friends and acquaintances, it helps users to manage their everyday tasks too. The software consists
+of four components: UI, Logic, Model, Storage. The language used in implementing this software is JAVA.
+
+=== Purpose of Developer Guide
+Do not worry if you have no idea about how to start. This developer guide will help new team members like you to understand
+how NeoXPro works. You will definitely find clues about how to contribute to NeoXPro after thorough reading of this document.
+You can always refer to this document if you have any doubts when implementing new features to NeoXPro.
+
+=== Content Preview
+This developer guide will first bring you through the design and internal structure of NeoXPro. You will be able to understand
+the how four components are linked and inter-related. There will be explanation on the enhancements implemented too. You can
+study on those implemented features and at the same time, try to understand the logic behind every implementation. This will
+help when you are implementing your own new features. After implementing, you will need to update relevant documentations and
+running various tests to check that your codes work fine. The documentation and testing section will guide you through those
+processes. Read this document now to understand the best address book, NeoXPro.
 
 == Setting up
 
@@ -345,6 +365,30 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+=== Adding a Parameter in Add Command
+To add a new parameter in AddCommand, UI, Logic, Model and Storage components are to be modified accordingly. +
+Be aware of the inheritance between each component when implementing.
+Refer to Section 2.1 to observe the relationship between those components.
+
+* `UI Component:` +
+PersonCard should be modified to include the new parameter so that it can be shown in the information of person.
+
+* `Logic Component:` +
+AddCommand and EditCommand are the two commands that should be modified to include new parameter.
+Parser should be modified accordingly to parse the new parameter information. It is also to make sure that information is present before add command
+is executed. Information being added should be parse to model to create persons if command format is correct.
+
+* `Model Component:` +
+Create a new class for new parameter so that it can be used under Person class. Person class uses ReadOnlyPerson interface.
+Person Class is to collect and set all information about a particular person. If all parameters is parsed correctly, a person with
+collected information will be created. +
+The following diagram shows the relationship of different classes in model component:
+
+image::ModelDiagramOfAddParameter.png[width="200"]
+
+* `Storage Component:` +
+To make sure that new parameter can be stored in the xml format for future usage, xmlAdaptedPerson is used to save information of a person in xml format.
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -359,6 +403,85 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `WARNING` : Can continue, but with caution
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+
+=== deleteList: deletes a list of persons with specified indices
+
+'deleteList' command supports modifying the state of address book by deleting all persons whose indices are specified in the input. It inherits from 'UndoableCommand'.
+
+The implementation of 'deleteList' contains the logical part 'DeleteListCommand' and the parser 'DeleteListCommandParser'. They reside inside the package 'seedu.address.logic'.
+
+In 'DeleteListCommand', it stores the list of input indices in a list of 'Index' type: 'listTargetIndices'. 'listTargetIndices' is used later to retrieve all persons with specified indices and store them in 'listPersonsToDelete' (a list of 'ReadOnlyPerson' type). On execution, 'executeUndoableCommand()' will iterate through every person in 'listPersonsToDelete' and remove that person from address book.
+
+This 'DeleteListCommand' is implemented this way:
+[source, java]
+----
+public class DeleteListCommand extends UndoableCommand {
+
+   // ...
+
+    private final List<Index> listTargetIndices;
+
+    public DeleteListCommand(List<Index> listTargetIndices) {
+        this.listTargetIndices = listTargetIndices;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        // ...
+        List<ReadOnlyPerson> listPersonsToDelete= new ArrayList<ReadOnlyPerson>();
+        for(Index targetIndex: listTargetIndices) {
+            ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
+            listPersonsToDelete.add(personToDelete);
+        }
+        // ... deleteList logic ...
+     }
+}
+----
+
+Then its parser 'DeleteListCommandParser' is implemented to parse the input string from user into the input type 'List<Index> listTargetIndices' for 'DeleteListCommand' to read and execute.
+
+The parser is implemented  this way:
+[source, java]
+----
+public class DeleteListCommandParser implements Parser<DeleteListCommand> {
+    public DeleteListCommand parse(String args) throws ParseException {
+        try {
+            List<Index> input= new ArrayList<Index>();
+            // ... Parser logic ...
+            return new DeleteListCommand(input);
+        } catch (IllegalValueException ive) {
+            // throw exception here
+        }
+    }
+}
+----
+
+And finally, we teach the 'AddressBookParser' to read this new command:
+----
+[source, java]
+public class AddressBookParser {
+    // ...
+    public Command parseCommand(String userInput) throws ParseException {
+        // ... AddressBookParser logic ...
+        final String commandWord = matcher.group("commandWord");
+        final String arguments = matcher.group("arguments");
+        switch (commandWord) {
+        // ... other commands ...
+        case DeleteListCommand.COMMAND_WORD:
+            return new DeleteListCommandParser().parse(arguments);
+        // ... other commands ...
+    }
+}
+----
+
+Whenever 'deleteList INDEX[MORE_INDICES]' is invoked, the input data 'INDEX[MORE_INDICES]' is stored in 'arguments', which is then passed to 'DeleteListCommandParser'. The parser will then parse 'arguments' into appropriate input data for 'DeleteListCommand' to execute the logic. The final state of address book is updated at the end of this execution.
+
+=== FindTag Command
+
+The findTag command utilize the same implementation as the Find command for name. Instead of logic execute search via Name attribute of Person, the command search for the TagList attribute.
+
+Name and Tag API structure is roughly similar that they allow to extract value of the object. The search algorithm utilize a class `TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson>`
+which allows the algorithm to use Java `Predicate` class method.
 
 === Configuration
 
@@ -716,6 +839,9 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == User Stories
 
+*User Profile:* John is an undergraduate student in a local university. He has an active social life with many friend circles.
+John wants a way to manage his contacts and a way to remind him tasks and responsibilities in related to these contacts.
+
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
@@ -729,9 +855,34 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |avoid adding duplicate contacts |manage my contact list efficiently
+
+|`* * *` |user |edit contact information |make changes if needed
+
+|`* * *` |user |add birthday information |remember and keep track of my family members/friends birthday
+
+|`* * *` |user |find persons whose names contain a partial string |locate person whose name I forgot how to spell
+
+|`* * *` |user |find persons by tags |identify a group of people with common attributes
+
+|`* * *` |undergraduate student user |add events related to one or multiple contacts such as birthday or meetings |keep track tasks I need to do
+
+|`* *` |user |add or remove some tags of a contact |quickly update contact information
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |add profile photo |can double check the identity if there are persons with the same name
+
+|`* *` |user |add multiple phone number to one person |store different contact number as one person may have more than one phone number
+
+|`* *` |user |have some important contacts |reach to my close friends easily at a click
+
+|`* *` |undergraduate student user |find persons by their address |identify which friends stay in the same campus
+
+|`* *` |undergraduate student user |have a reminder pop up when an event is coming up |remember to prepare and fulfill my responsibility
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
 |=======================================================================
 
 {More to be added}
@@ -764,6 +915,121 @@ Use case ends.
 +
 [none]
 ** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User request to edit contact information
+2.  AddressBook shows old and new information stored
+
+*Extensions*
+
+[none]
+* 2a. No such person.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 2b. Incorrect format of new information.
++
+[none]
+** 2b1. AddressBook shows an error message and request for new information again.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: List all persons
+
+*MSS*
+
+1.  User request to have a list of all persons
+2.  AddressBook shows a list of all persons in the contact list
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Find persons by tags
+
+*MSS*
+
+1.  User request to list keywords
+2.  Application shows a list of persons who has those keywords as tags
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Find persons by name string
+
+*MSS*
+
+1.  User request to key in a name string
+2.  Application shows a list of persons whose names contain the full or partial string
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Find persons by phone number
+
+*MSS*
+
+1.  User request key in a phone number
+2.  Application shows a list of persons associated with the phone number
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Add event associated with a person
+
+*MSS*
+
+1.  User requests to list persons
+2.  Application shows a list of persons
+3.  User requests to add in an event associate with a specific person in the list
+4.  Application adds the event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Application shows an error message.
 +
 Use case resumes at step 2.
 
