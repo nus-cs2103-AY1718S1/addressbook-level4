@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import java.util.logging.Logger;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,12 +12,15 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import seedu.address.commons.core.Config;
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
 
+/**
+ * The Welcome Screen is opened when the application is run. Main Window will be
+ * loaded when the welcome screen is closed.
+ */
 public class WelcomeScreen extends UiPart<Region> {
     private static final String ICON = "/images/contag_logo.png";
     private static final String LOGO = "/images/contag_logo_high_res.png";
@@ -85,6 +86,9 @@ public class WelcomeScreen extends UiPart<Region> {
         welcomeWindow.getChildren().add(closeButton);
     }
 
+    /**
+     * Opens main window.
+     */
     private void loadMainWindow() {
         Stage newStage = new Stage();
         mainWindow = new MainWindow(newStage, config, prefs, logic, model);
