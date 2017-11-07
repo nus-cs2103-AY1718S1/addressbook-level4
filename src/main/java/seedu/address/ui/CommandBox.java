@@ -62,7 +62,6 @@ public class CommandBox extends UiPart<Region> {
             navigateToNextInput();
             break;
         default:
-            TextFields.bindAutoCompletion(commandTextField, suggestions);
         }
     }
 
