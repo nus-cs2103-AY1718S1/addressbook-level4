@@ -208,7 +208,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updateSelectedPerson(ReadOnlyPerson person){
+        public void updateSelectedPerson(ReadOnlyPerson person) {
             fail("This method should not be called.");
         }
     }
