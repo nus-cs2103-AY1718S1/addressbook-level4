@@ -85,6 +85,7 @@ Alias: `h`
 
 This command takes no arguments.
 
+// tag::quickhelp[]
 ==== Viewing quick help : `quickhelp` (Since v1.5)
 
 List all the available command words of the address book. +
@@ -92,6 +93,7 @@ Format: `quickhelp` +
 Alias: `qh`
 
 This command takes no arguments.
+// end::quickhelp[]
 
 ==== Adding a person: `add`
 
@@ -302,10 +304,11 @@ This command takes no arguments.
 
 These are advanced commands available in PIMP that might be useful for the user.
 
+// tag::addremovetags[]
 ==== Adding/Removing tag/s to existing contact : `tags` (Since v1.2)
 
 Add one or more tags to an existing person in the address book. +
-Format: `tags TYPE INDEX TAG [TAG]...` +
+Format: `tags TYPE INDEX TAG [MORE TAGS]...` +
 Alias: `t`
 
 ****
@@ -327,6 +330,7 @@ Remove tags "classmate" and "CS2103" from the 2nd person.
 Alias example:
 
 * `t add 1 friends`
+// end::addremovetags[]
 
 ==== Changing a person's remark : `remark` (Since v1.2)
 
@@ -355,6 +359,7 @@ Alias example:
 
 * `re 1 r/Owe money`
 
+// tag::socialmedia[]
 ==== Accessing a person's social media : `socialmedia` (Since v1.4)
 
 Access a person's social media profile on the browser. +
@@ -377,6 +382,7 @@ Loads the Facebook account of the 1st person in the address book.
 * `find Tony` +
 `socialmedia instagram 2` +
 Loads the Instagram account of the 2nd person returned by the `find` command.
+// end::socialmedia[]
 
 ==== Viewing contacts with birthday in current month : `birthday`
 View a list of persons with birthdays in the current month. +
@@ -504,11 +510,11 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `clear` +
 `undo 2` (reverses the last 2 commands) +
 `redo 2` (reapplies the last 2 commands)
-// end::undoredo[]
 
 Alias example:
 
 * `r 1`
+// end::undoredo[]
 
 ==== Viewing statistics : `statistics`
 
@@ -539,6 +545,12 @@ Stores all contacts into `~/contacts.json` in JSON format.
 === Other Features
 
 These are features that do not have commands but can be helpful to the user.
+
+// tag::sort[]
+==== Auto sorting of list (Since v1.1)
+
+The contact list will automatically be sorted in A-Z order. It will refresh and re-sort accordingly when add and edit commands are executed.
+// end::sort[]
 
 ==== Viewing total number of persons stored
 
@@ -586,14 +598,14 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `delete 3`
 * *Clear* : `clear`
 * *Exit* : `exit`
-* *Add Tags* : `tags add INDEX TAG [TAG]...` +
+* *Add Tags* : `tags add INDEX TAG [MORE TAGS]...` +
 e.g. `addtags 1 friends classmate`
-* *Remove Tags* : `tags remove INDEX TAG [TAG]...` +
+* *Remove Tags* : `tags remove INDEX TAG [MORE TAGS]...` +
 e.g. `removetags 2 neighbour`
 * *Remark* : `remark INDEX r/REMARK` +
 e.g.`remark 4 r/new remark`
-* *Social Media* : `socialmedia INDEX TYPE` +
-e.g. `socialmedia 1 facebook`
+* *Social Media* : `socialmedia TYPE INDEX` +
+e.g. `socialmedia facebook 1`
 * *Birthday* : `birthday`
 * *Font size* : `size AMOUNT` +
 * *Toggle access display* : `accessdisplay TYPE` +

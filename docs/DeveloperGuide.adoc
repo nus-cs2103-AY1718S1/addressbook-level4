@@ -367,6 +367,19 @@ image::UndoRedoActivityDiagram.png[width="200"]
 ** **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
+// tag::sort[]
+=== Sorted List (Since v1.1)
+
+When getting the person list from `ModelManager`, simply sort it first before returning the ObservableList. ObservableList has its own inbuilt sort that returns the list in natural ordering.
+
+[source, java]
+----
+public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+    return FXCollections.unmodifiableObservableList(filteredPersons.sorted());
+}
+----
+// end::sort[]
+
 === Remark Command
 
 The `remark` command allows the user to edit the remark field of a contact. The field is initially empty when a new
@@ -488,6 +501,7 @@ Since this search function involves iterating searching through all tags of all 
 
 However, since these other commands are more commonly used, we decided not to slow down these commands for the performance of the `FingTagCommand` function. Instead, we simply allowed the `FindTagCommand` to search through all possibilities each time it is called.
 
+// tag::addremovetags[]
 === Add/Remove Tags Command (Since v1.2)
 
 The `EditCommand` currently allows the user to edit all the fields of a contact, including tags. However, the tags entered with this command will completely override all the tags existing in that contact.
@@ -545,7 +559,9 @@ After parsing, the TYPE, INDEX, and set of tags is passed to the `AddRemoveTagsC
 * **Alternative 2:** Have separate command for adding and removing tags.
 ** **Pros:** Easier to implement because each command will only handle 1 thing.
 ** **Cons:** Boilerplate codes.
+// end::addremovetags[]
 
+// tag::socialmedia[]
 === Social Media Page Command (Since v1.4)
 
 Since v1.3, users can add social media account details to their contacts. They are mainly Facebook, Twitter, and Instagram.
@@ -582,7 +598,14 @@ EventsCenter.getInstance().post(new ChangeBrowserPanelUrlEvent(url));
 * **Alternative 2:** Have separate command to show Facebook, Twitter, and Instagram.
 ** **Pros:** Easier to implement because each command will only handle 1 thing.
 ** **Cons:** Repeated codes for each social media.
+// end::socialmedia[]
 
+// tag::quickhelp[]
+=== Quickhelp Command (Since v1.5)
+
+This command leverages on the `CommandResult` message to display the list of valid command words.
+
+// end::quickhelp[]
 
 === Logging
 
