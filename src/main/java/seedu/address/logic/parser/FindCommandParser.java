@@ -58,10 +58,10 @@ public class FindCommandParser implements Parser<FindCommand> {
             returnFindCommand = new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
             break;
         case " e/":
-            returnFindCommand = new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
+            returnFindCommand = new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(keywords)));
             break;
-        case " p/":
-            returnFindCommand = new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case " t/":
+            returnFindCommand = new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
             break;
         default:
             break;
