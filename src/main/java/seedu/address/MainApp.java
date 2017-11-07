@@ -219,6 +219,10 @@ public class MainApp extends Application {
     }
 
     //@@author Hailinx
+
+    /**
+     * Restarts the app.
+     */
     private void restart() {
         logger.info("============================ [ Restarting Address Book ] =============================");
 
