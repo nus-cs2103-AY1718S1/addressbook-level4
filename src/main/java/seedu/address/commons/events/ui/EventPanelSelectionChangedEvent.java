@@ -9,6 +9,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author eldriclim
 /**
  * When a selection is made in the EventListPanel
  */

@@ -5,6 +5,7 @@ import java.time.Duration;
 import seedu.address.commons.util.EventOutputUtil;
 
 
+//@@author eldriclim
 /**
  * This Object only serves as a placeholder for UI purposes.
  *

@@ -54,6 +54,7 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.add(new Person(toAdd));
     }
 
+    //@@author eldriclim
     /**
      * Sorts the list of persons.
      *
@@ -73,6 +74,8 @@ public class UniquePersonList implements Iterable<Person> {
             Collections.reverse(internalList);
         }
     }
+    //@@author
+
 
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.

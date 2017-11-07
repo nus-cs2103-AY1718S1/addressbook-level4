@@ -12,6 +12,7 @@ import seedu.address.commons.util.EventOutputUtil;
 import seedu.address.model.person.ReadOnlyPerson;
 
 
+//@@author eldriclim
 /**
  * A list of members of a given event that enforces uniqueness between its elements.
  * Accept an empty list

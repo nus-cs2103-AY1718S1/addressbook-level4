@@ -21,6 +21,7 @@ import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 
 
+//@@author eldriclim
 /**
  * A list of events that enforces no nulls and uniqueness between its elements.
  * Ensures that there is no overlap of events in the list

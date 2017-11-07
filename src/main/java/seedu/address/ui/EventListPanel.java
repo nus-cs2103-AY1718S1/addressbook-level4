@@ -17,6 +17,7 @@ import seedu.address.commons.events.ui.CalendarSelectionChangedEvent;
 import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.model.event.Event;
 
+//@@author eldriclim
 /**
  * Panel containing the list of events.
  */

@@ -8,6 +8,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.commons.util.EventOutputUtil;
 
+//@@author eldriclim
 /**
  * Represents a Event in the address book, accepts an event with no members.
  * Guarantees: validity upon creation; potential errors handled in UniqueEventList

@@ -73,8 +73,10 @@ public class StringUtil {
         }
     }
 
+    //@@author eldriclim
     /**
      * Output a series of Strings with the specified separator.
+     *
      * @param list
      * @param separator
      * @return

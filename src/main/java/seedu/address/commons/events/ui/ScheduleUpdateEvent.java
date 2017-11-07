@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.event.Event;
 
+//@@author eldriclim
 /**
  * When schedule is being updated
  */
