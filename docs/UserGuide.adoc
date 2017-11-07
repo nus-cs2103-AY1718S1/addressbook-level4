@@ -105,7 +105,9 @@ Contact us directly by emailing to `kaihsien.boo[at]u.nus.edu`.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
 === Adding a person: `add` / `a` kbd:[V2.0]
+
 //tag::bday[]
+
 Adds a person to Death Note +
 
   Format: `add n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
@@ -119,6 +121,7 @@ Adds a person to Death Note +
 TIPS: +
 
 1. A person can have any number of TAGS.
+
 //end::bday[]
 
 [big green]#Examples#:
@@ -334,6 +337,19 @@ Clears all entries from Death Note.
   Format: `clear`
 
   Shorthand: `c`
+
+//tag::brem[]
+=== Open Birthday Reminders Window : `reminders` / `rem`
+
+Opens the birthday Reminders Window. The same can be done by clicking Reminders --> Birthdays
+
+image::../images/birthdayalarmwindow.JPG[]
+
+Format: `reminders`
+
+Shorthand: `rem`
+//end::brem[]
+
 //tag::theme[]
 === Change theme of the application : `theme` kbd:[V2.0]
 Changes the theme of Death Note. +
