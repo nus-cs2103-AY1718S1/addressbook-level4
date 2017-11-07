@@ -15,7 +15,7 @@ import seedu.address.commons.events.ui.FontSizeChangeRequestEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
 /**
- * A ui for the status bar that is displayed at the header of the application.
+ * A ui for the display of the results.
  */
 public class ResultDisplay extends UiPart<Region> {
 
