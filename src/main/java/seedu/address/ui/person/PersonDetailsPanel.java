@@ -62,6 +62,9 @@ public class PersonDetailsPanel extends UiPart<Region> {
         propertyListValues.setItems(FXCollections.observableList(values));
     }
 
+    /**
+     * Displays the avatar of the person if the {@code avatar} has been set before.
+     */
     private void setAvatar() {
         if (person.getAvatar() != null) {
             avatar.setImage(new Image(person.getAvatar().getUrl()));

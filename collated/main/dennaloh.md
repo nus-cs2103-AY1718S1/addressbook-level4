@@ -1,67 +1,5 @@
 # dennaloh
-###### \java\seedu\address\logic\commands\FindTagCommand.java
-``` java
-/**
- * Finds and lists all persons in address book who has tags which contains any of the argument keywords.
- * Keyword matching is not case sensitive.
- */
-public class FindTagCommand extends Command {
-
-    public static final String COMMAND_WORD = "findtag";
-    public static final String COMMAND_ALIAS = "ft";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons who has tags which contains any of "
-            + "the specified keywords (not case-sensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " friends neighbours ";
-
-    private final TagContainsKeywordsPredicate predicate;
-
-    public FindTagCommand(TagContainsKeywordsPredicate predicate) {
-        this.predicate = predicate;
-    }
-
-    @Override
-    public CommandResult execute() {
-        model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof FindTagCommand // instanceof handles nulls
-                && this.predicate.equals(((FindTagCommand) other).predicate)); // state check
-    }
-}
-```
-###### \java\seedu\address\logic\parser\FindTagCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new FindTagCommand object
- */
-public class FindTagCommandParser implements Parser<FindTagCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the FindTagCommand
-     * and returns an FindTagCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public FindTagCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindTagCommand.MESSAGE_USAGE));
-        }
-
-        String[] tagKeywords = trimmedArgs.split("\\s+");
-
-        return new FindTagCommand(new TagContainsKeywordsPredicate(Arrays.asList(tagKeywords)));
-    }
-
-}
-```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
     /**
      * Returns the set of tags joined into a string
@@ -77,7 +15,7 @@ public class FindTagCommandParser implements Parser<FindTagCommand> {
         return sb.toString();
     }
 ```
-###### \java\seedu\address\model\person\UniquePersonList.java
+###### /java/seedu/address/model/person/UniquePersonList.java
 ``` java
     /**
      * Sorts the persons based on name
@@ -124,7 +62,68 @@ public class FindTagCommandParser implements Parser<FindTagCommand> {
     }
 
 ```
-###### \java\seedu\address\model\property\TagContainsKeywordsPredicate.java
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    /**
+     * Iterates through person list and checks for duplicates
+     *
+     */
+    public boolean haveDuplicate (String name, ObservableList<ReadOnlyPerson> list) {
+        int count = 0;
+        Iterator<ReadOnlyPerson> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            ReadOnlyPerson person = iterator.next();
+            if (containsWordIgnoreCase(person.getName().getValue(), name)) {
+                count++;
+            }
+        }
+        if (count > 1) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+        return FXCollections.unmodifiableObservableList(filteredPersons);
+    }
+
+    /**
+     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     *
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    @Override
+    public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+        requireNonNull(predicate);
+        filteredPersons.setPredicate(predicate);
+    }
+
+```
+###### /java/seedu/address/model/Model.java
+``` java
+    /** Iterates through person list and checks for duplicates */
+    boolean haveDuplicate (String name, ObservableList<ReadOnlyPerson> list);
+
+    /** Returns an unmodifiable view of the filtered person list */
+    ObservableList<ReadOnlyPerson> getFilteredPersonList();
+
+    /** Returns an unmodifiable view of the filtered event list */
+    ObservableList<ReadOnlyEvent> getFilteredEventList();
+
+    /** Updates the filter of the filtered person list to filter by the given {@code predicate}. */
+    void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    /** Updates the filter of the filtered event list to filter by the given {@code predicate}. */
+    void updateFilteredEventsList(Predicate<ReadOnlyEvent> predicate);
+
+}
+```
+###### /java/seedu/address/model/property/TagContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
@@ -149,5 +148,156 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
                 && this.keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check
     }
 
+}
+```
+###### /java/seedu/address/logic/parser/EmailCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new EmailCommand object
+ */
+public class EmailCommandParser implements Parser<EmailCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the EmailCommand
+     * and returns an EmailCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public EmailCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
+        }
+
+
+        return new EmailCommand(trimmedArgs);
+    }
+
+}
+```
+###### /java/seedu/address/logic/parser/FindTagCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new FindTagCommand object
+ */
+public class FindTagCommandParser implements Parser<FindTagCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the FindTagCommand
+     * and returns an FindTagCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public FindTagCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindTagCommand.MESSAGE_USAGE));
+        }
+
+        String[] tagKeywords = trimmedArgs.split("\\s+");
+
+        return new FindTagCommand(new TagContainsKeywordsPredicate(Arrays.asList(tagKeywords)));
+    }
+
+}
+```
+###### /java/seedu/address/logic/parser/AddressBookParser.java
+``` java
+        case FindTagCommand.COMMAND_WORD:
+        case FindTagCommand.COMMAND_ALIAS:
+            return new FindTagCommandParser().parse(arguments);
+
+        case EmailCommand.COMMAND_WORD:
+        case EmailCommand.COMMAND_ALIAS:
+            return new EmailCommandParser().parse(arguments);
+```
+###### /java/seedu/address/logic/commands/person/FindTagCommand.java
+``` java
+/**
+ * Finds and lists all persons in address book who has tags which contains any of the argument keywords.
+ * Keyword matching is not case sensitive.
+ */
+public class FindTagCommand extends Command {
+
+    public static final String COMMAND_WORD = "findtag";
+    public static final String COMMAND_ALIAS = "ft";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons who has tags which contains any of "
+            + "the specified keywords (not case-sensitive) and displays them as a list with index numbers.\n"
+            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
+            + "Example: " + COMMAND_WORD + " friends neighbours ";
+
+    private final TagContainsKeywordsPredicate predicate;
+
+    public FindTagCommand(TagContainsKeywordsPredicate predicate) {
+        this.predicate = predicate;
+    }
+
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredPersonList(predicate);
+        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FindTagCommand // instanceof handles nulls
+                && this.predicate.equals(((FindTagCommand) other).predicate)); // state check
+    }
+}
+```
+###### /java/seedu/address/logic/commands/EmailCommand.java
+``` java
+/**
+ * Emails a contact from the address book.
+ */
+public class EmailCommand extends Command {
+    public static final String COMMAND_WORD = "email";
+    public static final String COMMAND_ALIAS = "em";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Emails person whose name contains any of "
+            + "the specified keywords (not case-sensitive). Needs Outlook or Apple Mail app.\n"
+            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
+            + "Example: " + COMMAND_WORD + " alex yeoh ";
+
+    public static final String MESSAGE_DUPLICATE_PERSON = "There are multiple contacts containing this name. "
+            + "Type again with full name.";
+    public static final String MESSAGE_SUCCESS = "Opened email!";
+
+    private String email;
+    private String name = "default name";
+    private ObservableList<ReadOnlyPerson> persons;
+
+    public EmailCommand (String name) {
+        this.name = name;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        Desktop desktop;
+        persons = model.getAddressBook().getPersonList();
+
+        for (ReadOnlyPerson person : persons) {
+            if (containsWordIgnoreCase(person.getName().getValue(), name)) {
+                email = person.getEmail().getValue();
+            }
+        }
+        if (model.haveDuplicate(name, persons)) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
+        try {
+            if (Desktop.isDesktopSupported()
+                    && (desktop = Desktop.getDesktop()).isSupported(Desktop.Action.MAIL)) {
+                URI mailto = new URI("mailto:" + email);
+                desktop.mail(mailto);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
 }
 ```

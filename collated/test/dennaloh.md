@@ -1,5 +1,5 @@
 # dennaloh
-###### \java\seedu\address\logic\commands\person\FindCommandTest.java
+###### /java/seedu/address/logic/commands/person/FindCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -71,6 +71,91 @@ public class FindCommandTest {
         assertEquals(expectedMessage, commandResult.feedbackToUser);
         assertEquals(expectedList, model.getFilteredPersonList());
         assertEquals(expectedAddressBook, model.getAddressBook());
+    }
+}
+```
+###### /java/seedu/address/logic/commands/stub/ModelStub.java
+``` java
+
+    @Override
+    public boolean haveDuplicate(String name, ObservableList<ReadOnlyPerson> list) {
+        return false;
+    }
+
+    @Override
+    public void addData(ReadOnlyAddressBook newData) {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void resetData(ReadOnlyAddressBook newData) {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public ReadOnlyAddressBook getAddressBook() {
+        fail("This method should not be called.");
+        return null;
+    }
+
+    @Override
+    public void addProperty(String shortName, String fullName, String message, String regex)
+            throws DuplicatePropertyException, PatternSyntaxException {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
+            throws DuplicatePersonException {
+        fail("This method should not be called.");
+    }
+    @Override
+    public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
+        throws DuplicateEventException {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+        fail("This method should not be called.");
+        return null;
+    }
+
+    @Override
+    public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public ObservableList<ReadOnlyEvent> getFilteredEventList() {
+        fail("This method should not be called.");
+        return null;
+    }
+
+    @Override
+    public void updateFilteredEventsList(Predicate<ReadOnlyEvent> predicate) {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void removeTag(Tag tags) throws DuplicatePersonException, PersonNotFoundException {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public boolean hasTag(Tag tag) {
+        fail("This method should not be called.");
+        return false;
+    }
+
+    @Override
+    public void setTagColor(Tag tag, String color) {
+        fail("This method should not be called.");
     }
 }
 ```

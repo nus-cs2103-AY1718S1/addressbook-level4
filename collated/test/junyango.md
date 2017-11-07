@@ -1,177 +1,434 @@
 # junyango
-###### \java\guitests\guihandles\event\EventCardHandle.java
+###### /java/seedu/address/model/AddressBookTest.java
 ``` java
-/**
- * Provides a handle to an event card in the {@code EventListPanel}.
- */
-public class EventCardHandle extends NodeHandle<Node> {
-    private static final String ID_FIELD_ID = "#id";
-    private static final String NAME_FIELD_ID = "#name";
-    private static final String VENUE_FIELD_ID = "#venue";
-    private static final String TIME_FIELD_ID = "#time";
+    @Test
+    public void getEventList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getEventList().remove(0);
+    }
+    @Test
+    public void removeEvent_eventNotFound_expectException() throws Exception {
+        thrown.expect(EventNotFoundException.class);
 
-
-    private final Label idLabel;
-    private final Label nameLabel;
-    private final Label venueLabel;
-    private final Label timeLabel;
-
-    public EventCardHandle(Node cardNode) {
-        super(cardNode);
-
-        this.idLabel = getChildNode(ID_FIELD_ID);
-        this.nameLabel = getChildNode(NAME_FIELD_ID);
-        this.venueLabel = getChildNode(VENUE_FIELD_ID);
-        this.timeLabel = getChildNode(TIME_FIELD_ID);
+        AddressBook addressBook = getTypicalAddressBook();
+        addressBook.removeEvent(EVENT1);
     }
 
-    public String getId() {
-        return idLabel.getText();
+    @Test
+    public void getTagList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getTagList().remove(0);
     }
 
-    public String getEventName() {
-        return nameLabel.getText();
-    }
+    /**
+     * A stub of {@link ReadOnlyAddressBook} whose persons and tags lists can violate interface constraints.
+     */
+    private static class AddressBookStub implements ReadOnlyAddressBook {
+        private final ObservableList<ReadOnlyPerson> persons = FXCollections.observableArrayList();
+        private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        private final ObservableList<ReadOnlyEvent> events = FXCollections.observableArrayList();
 
-    public String getVenue() {
-        return venueLabel.getText();
-    }
+        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends ReadOnlyEvent> events,
+                        Collection<? extends Tag> tags) {
+            this.persons.setAll(persons);
+            this.tags.setAll(tags);
+            this.events.setAll(events);
+        }
 
-    public String getTime() {
-        return timeLabel.getText();
+        @Override
+        public ObservableList<ReadOnlyPerson> getPersonList() {
+            return persons;
+        }
+
+        @Override
+        public ObservableList<ReadOnlyEvent> getEventList() {
+            return events;
+        }
+
+        @Override
+        public ObservableList<Tag> getTagList() {
+            return tags;
+        }
     }
 
 }
 ```
-###### \java\guitests\guihandles\event\EventListPanelHandle.java
+###### /java/seedu/address/model/ModelManagerTest.java
 ``` java
-/**
- * Provides a handle for {@code EventListPanel} containing the list of {@code EventCard}.
- */
-public class EventListPanelHandle extends NodeHandle<ListView<EventCard>> {
-    public static final String EVENT_LIST_VIEW_ID = "#eventListView";
-
-    private Optional<EventCard> lastRememberedSelectedEventCard;
-
-    public EventListPanelHandle(ListView<EventCard> eventListPanelNode) {
-        super(eventListPanelNode);
+    @Test
+    public void getFilteredEventList_modifyList_throwsUnsupportedOperationException() {
+        ModelManager modelManager = new ModelManager();
+        thrown.expect(UnsupportedOperationException.class);
+        modelManager.getFilteredEventList().remove(0);
+    }
+```
+###### /java/seedu/address/model/ModelManagerTest.java
+``` java
+    @Test
+    public void addPerson_successfullyAddEvent() throws Exception {
+        AddressBook addressBook = getTypicalAddressBook();
+        UserPrefs userPrefs = new UserPrefs();
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        ObservableList<ReadOnlyPerson> persons = modelManager.getAddressBook().getPersonList();
+        int originalPersonListSize = persons.size();
+        modelManager.addPerson(TypicalPersons.HOON);
+        int newPersonListSize = modelManager.getAddressBook().getPersonList().size();
+        assertEquals(1, newPersonListSize - originalPersonListSize);
     }
 
-    /**
-     * Returns a handle to the selected {@code EventCardHandle}.
-     * A maximum of 1 item can be selected at any time.
-     * @throws AssertionError if no card is selected, or more than 1 card is selected.
-     */
-    public EventCardHandle getHandleToSelectedCard() {
-        List<EventCard> eventList = getRootNode().getSelectionModel().getSelectedItems();
-
-        if (eventList.size() != 1) {
-            throw new AssertionError("Event list size expected 1.");
-        }
-
-        return new EventCardHandle(eventList.get(0).getRoot());
+    @Test
+    public void sortEventList_successfullySortEvent() throws Exception {
+        AddressBook addressBook = getTypicalAddressBook();
+        UserPrefs userPrefs = new UserPrefs();
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        ModelManager modelManager1 = new ModelManager(addressBook, userPrefs);
+        modelManager.addEvent(TypicalEvents.EVENT2);
+        modelManager.addEvent(EVENT1);
+        modelManager1.addEvent(EVENT1);
+        modelManager1.addEvent(TypicalEvents.EVENT2);
+        System.out.println(modelManager);
+        assertEquals(modelManager, modelManager1);
     }
 
-    /**
-     * Returns the index of the selected card.
-     */
-    public int getSelectedCardIndex() {
-        return getRootNode().getSelectionModel().getSelectedIndex();
+    @Test
+    public void addEvent_successfullyAddEvent() throws Exception {
+        AddressBook addressBook = getTypicalAddressBook();
+        UserPrefs userPrefs = new UserPrefs();
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        ObservableList<ReadOnlyEvent> events = modelManager.getAddressBook().getEventList();
+        int originalEventListSize = events.size();
+        modelManager.addEvent(EVENT1);
+        int newEventListSize = modelManager.getAddressBook().getEventList().size();
+        assertEquals(1, newEventListSize - originalEventListSize);
+    }
+    @Test
+    public void removePerson_successfullyRemoveEvent() throws Exception {
+        AddressBook addressBook = getTypicalAddressBook();
+        UserPrefs userPrefs = new UserPrefs();
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        ObservableList<ReadOnlyPerson> persons = modelManager.getAddressBook().getPersonList();
+        int originalPersonListSize = persons.size();
+        modelManager.deletePerson(persons.get(1));
+        int newPersonListSize = modelManager.getAddressBook().getPersonList().size();
+        assertEquals(1, originalPersonListSize - newPersonListSize);
     }
 
-    /**
-     * Returns true if a card is currently selected.
-     */
-    public boolean isAnyCardSelected() {
-        List<EventCard> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
-
-        if (selectedCardsList.size() > 1) {
-            throw new AssertionError("Card list size expected 0 or 1.");
-        }
-
-        return !selectedCardsList.isEmpty();
+    @Test
+    public void removeEvent_successfullyRemoveEvent() throws Exception {
+        AddressBook addressBook = getTypicalAddressBook();
+        UserPrefs userPrefs = new UserPrefs();
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        ObservableList<ReadOnlyEvent> events = modelManager.getAddressBook().getEventList();
+        int originalEventListSize = events.size();
+        modelManager.addEvent(EVENT1);
+        modelManager.addEvent(TypicalEvents.EVENT2);
+        modelManager.deleteEvent(events.get(1));
+        int newEventListSize = modelManager.getAddressBook().getEventList().size();
+        assertEquals(1, newEventListSize - originalEventListSize);
+    }
+    @Test
+    public void addEvent_successfullyAddReminder() throws Exception {
+        AddressBook addressBook = getTypicalAddressBook();
+        UserPrefs userPrefs = new UserPrefs();
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        ObservableList<ReadOnlyEvent> events = modelManager.getAddressBook().getEventList();
+        modelManager.addEvent(EVENT1);
+        Reminder r = new Reminder((Event) EVENT1, "You have an event today");
+        events.get(0).addReminder(r);
+        events.get(0).getReminders().size();
+        assertEquals(1, events.get(0).getReminders().size());
     }
 
-    /**
-     * Navigates the listview to display and select the event.
-     */
-    public void navigateToCard(ReadOnlyEvent event) {
-        List<EventCard> cards = getRootNode().getItems();
-        Optional<EventCard> matchingCard = cards.stream().filter(card -> card.event.equals(event)).findFirst();
-
-        if (!matchingCard.isPresent()) {
-            throw new IllegalArgumentException("Event does not exist.");
-        }
-
-        guiRobot.interact(() -> {
-            getRootNode().scrollTo(matchingCard.get());
-            getRootNode().getSelectionModel().select(matchingCard.get());
-        });
-        guiRobot.pauseForHuman();
+```
+###### /java/seedu/address/model/property/DateTimeTest.java
+``` java
+public class DateTimeTest {
+    @BeforeClass
+    public static void setUp() {
+        PropertyManager.initializePropertyManager();
     }
 
-    /**
-     * Returns the event card handle of a event associated with the {@code index} in the list.
-     */
-    public EventCardHandle getEventCardHandle(int index) {
-        return getEventCardHandle(getRootNode().getItems().get(index).event);
+    @Test
+    public void isValidTime() {
+        // invalid time
+        assertFalse(DateTime.isValidTime("")); // empty string
+        assertFalse(DateTime.isValidTime("some random staff")); // unrelated string
+
+        // valid time
+        assertTrue(DateTime.isValidTime("25122015 08:30"));
+        assertTrue(DateTime.isValidTime("14122016 13:30"));
+        assertTrue(DateTime.isValidTime("09121924 23:30"));
     }
 
-    /**
-     * Returns the {@code EventCardHandle} of the specified {@code event} in the list.
-     */
-    public EventCardHandle getEventCardHandle(ReadOnlyEvent event) {
-        Optional<EventCardHandle> handle = getRootNode().getItems().stream()
-                .filter(card -> card.event.equals(event))
-                .map(card -> new EventCardHandle(card.getRoot()))
-                .findFirst();
-        return handle.orElseThrow(() -> new IllegalArgumentException("Event does not exist."));
+    @Test
+    public void create_viaString_checkCorrectness() throws Exception {
+        DateTime dateTime = new DateTime(VALID_DATE_EVENT1);
+        assertEquals(VALID_DATE_EVENT1, dateTime.getValue());
     }
 
-    /**
-     * Selects the {@code EventCard} at {@code index} in the list.
-     */
-    public void select(int index) {
-        getRootNode().getSelectionModel().select(index);
+```
+###### /java/seedu/address/model/property/EventNameContainsKeywordsPredicateTest.java
+``` java
+public class EventNameContainsKeywordsPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("first");
+        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
+
+        EventNameContainsKeywordsPredicate firstPredicate =
+                new EventNameContainsKeywordsPredicate(firstPredicateKeywordList);
+        EventNameContainsKeywordsPredicate secondPredicate =
+                new EventNameContainsKeywordsPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        EventNameContainsKeywordsPredicate firstPredicateCopy =
+                new EventNameContainsKeywordsPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
     }
 
-    /**
-     * Remembers the selected {@code EventCard} in the list.
-     */
-    public void rememberSelectedEventCard() {
-        List<EventCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+    @Test
+    public void test_nameContainsKeywords_returnsTrue() {
+        // One keyword
+        EventNameContainsKeywordsPredicate predicate =
+                new EventNameContainsKeywordsPredicate(Collections.singletonList("Alice"));
+        assertTrue(predicate.test(new EventBuilder().withName("Alice Bob").build()));
 
-        if (selectedItems.size() == 0) {
-            lastRememberedSelectedEventCard = Optional.empty();
-        } else {
-            lastRememberedSelectedEventCard = Optional.of(selectedItems.get(0));
-        }
+        // Multiple keywords
+        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob"));
+        assertTrue(predicate.test(new EventBuilder().withName("Alice Bob").build()));
+
+        // Only one matching keyword
+        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Bob", "Carol"));
+        assertTrue(predicate.test(new EventBuilder().withName("Alice Carol").build()));
+
+        // Mixed-case keywords
+        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("aLIce", "bOB"));
+        assertTrue(predicate.test(new EventBuilder().withName("Alice Bob").build()));
     }
 
-    /**
-     * Returns true if the selected {@code EventCard} is different from the value remembered by the most recent
-     * {@code rememberSelectedEventCard()} call.
-     */
-    public boolean isSelectedEventCardChanged() {
-        List<EventCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+    @Test
+    public void test_nameDoesNotContainKeywords_returnsFalse() {
+        // Zero keywords
+        EventNameContainsKeywordsPredicate predicate = new EventNameContainsKeywordsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new EventBuilder().withName("Alice").build()));
 
-        if (selectedItems.size() == 0) {
-            return lastRememberedSelectedEventCard.isPresent();
-        } else {
-            return !lastRememberedSelectedEventCard.isPresent()
-                    || !lastRememberedSelectedEventCard.get().equals(selectedItems.get(0));
-        }
-    }
-
-    /**
-     * Returns the size of the list.
-     */
-    public int getListSize() {
-        return getRootNode().getItems().size();
+        // Non-matching keyword
+        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Carol"));
+        assertFalse(predicate.test(new EventBuilder().withName("Alice Bob").build()));
     }
 }
 ```
-###### \java\seedu\address\logic\commands\CommandTestUtil.java
+###### /java/seedu/address/model/event/EventTest.java
+``` java
+public class EventTest {
+    private static Name name;
+    private static DateTime dateTime;
+    private static Address address;
+
+    @BeforeClass
+    public static void setUp() throws Exception {
+        PropertyManager.initializePropertyManager();
+
+        name = new Name(VALID_NAME_EVENT1);
+        dateTime = new DateTime(VALID_DATE_EVENT1);
+        address = new Address(VALID_ADDRESS_AMY);
+    }
+
+    @Test
+    public void createEvent_preDefinedFieldsPresent_checkCorrectness() throws Exception {
+        Event event = new Event(name, dateTime, address, Collections.emptyList());
+        assertNotNull(event);
+
+        assertEquals(name, event.getName());
+        assertEquals(dateTime, event.getTime());
+        assertEquals(address, event.getAddress());
+        assertEquals(0, event.getReminders().size());
+        assertEquals(3, event.getProperties().size());
+    }
+
+    @Test
+    public void equal_twoSameStateEvent_checkCorrectness() throws Exception {
+        Event event = new Event(name, dateTime, address, new ArrayList<>());
+        Event another = new Event(name, dateTime, address, new ArrayList<>());
+        assertEquals(event, another);
+
+        Event copied = new Event(event);
+        assertEquals(event, copied);
+    }
+}
+```
+###### /java/seedu/address/model/event/UniqueEventListTest.java
+``` java
+public class UniqueEventListTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
+        UniqueEventList uniqueEventList = new UniqueEventList();
+        thrown.expect(UnsupportedOperationException.class);
+        uniqueEventList.asObservableList().remove(0);
+    }
+}
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_deleteEvent() throws Exception {
+        DeleteEventCommand command = (DeleteEventCommand) parser.parseCommand(
+                DeleteEventCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new DeleteEventCommand(INDEX_FIRST_PERSON), command);
+    }
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_listEvents() throws Exception {
+        assertTrue(parser.parseCommand(ListEventCommand.COMMAND_WORD) instanceof ListEventCommand);
+        assertTrue(parser.parseCommand(ListEventCommand.COMMAND_WORD + " 3") instanceof ListEventCommand);
+    }
+```
+###### /java/seedu/address/logic/parser/event/EditEventCommandParserTest.java
+``` java
+public class EditEventCommandParserTest {
+
+    private static final String MESSAGE_INVALID_FORMAT =
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditEventCommand.MESSAGE_USAGE);
+
+    private EditEventParser parser = new EditEventParser();
+
+    @Test
+    public void parse_missingParts_failure() {
+        // no index specified
+        assertParseFailure(parser, VALID_NAME_EVENT1, MESSAGE_INVALID_FORMAT);
+
+        // no field specified
+        assertParseFailure(parser, "1", EditEventCommand.MESSAGE_NOT_EDITED);
+
+        // no index and no field specified
+        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_invalidPreamble_failure() {
+        // negative index
+        assertParseFailure(parser, "-5" + NAME_DESC_EVENT1, MESSAGE_INVALID_FORMAT);
+
+        // zero index
+        assertParseFailure(parser, "0" + NAME_DESC_EVENT1, MESSAGE_INVALID_FORMAT);
+
+        // invalid arguments being parsed as preamble
+        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
+
+        // invalid prefix being parsed as preamble
+        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_invalidValue_failure() {
+        assertParseFailure(parser, "1" + INVALID_NAME_DESC,
+                PropertyManager.getPropertyConstraintMessage("n")); // invalid name
+        assertParseFailure(parser, "1" + INVALID_DATE_DESC,
+                PropertyManager.getPropertyConstraintMessage("dt")); // invalid date time
+        assertParseFailure(parser, "1" + INVALID_ADDRESS_DESC,
+                PropertyManager.getPropertyConstraintMessage("a")); // invalid address
+
+
+        // multiple invalid values, but only the first invalid value is captured
+        assertParseFailure(parser, "1" + INVALID_NAME_DESC + INVALID_DATE_DESC + VALID_VENUE_EVENT2,
+                PropertyManager.getPropertyConstraintMessage("n"));
+    }
+
+    @Test
+    public void parse_allFieldsSpecified_success() {
+        Index targetIndex = INDEX_SECOND_PERSON;
+        String userInput = targetIndex.getOneBased() + DATE_DESC_EVENT1 + VENUE_DESC_EVENT1 + NAME_DESC_EVENT1;
+
+        EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withName(VALID_NAME_EVENT1)
+                .withTime(VALID_DATE_EVENT1).withAddress(VALID_VENUE_EVENT1).build();
+        EditEventCommand expectedCommand = new EditEventCommand(targetIndex, descriptor);
+
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_someFieldsSpecified_success() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + DATE_DESC_EVENT2 + VENUE_DESC_EVENT1;
+
+        EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withTime(VALID_DATE_EVENT2)
+                .withAddress(VALID_VENUE_EVENT1).build();
+        EditEventCommand expectedCommand = new EditEventCommand(targetIndex, descriptor);
+
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_oneFieldSpecified_success() {
+        // name
+        Index targetIndex = INDEX_THIRD_PERSON;
+        String userInput = targetIndex.getOneBased() + NAME_DESC_EVENT1;
+        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withName(VALID_NAME_EVENT1).build();
+        EditEventCommand expectedCommand = new EditEventCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // date/time
+        userInput = targetIndex.getOneBased() + DATE_DESC_EVENT1;
+        descriptor = new EditEventDescriptorBuilder().withTime(VALID_DATE_EVENT1).build();
+        expectedCommand = new EditEventCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // address
+        userInput = targetIndex.getOneBased() + VENUE_DESC_EVENT1;
+        descriptor = new EditEventDescriptorBuilder().withAddress(VALID_VENUE_EVENT1).build();
+        expectedCommand = new EditEventCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+}
+```
+###### /java/seedu/address/logic/parser/event/DeleteEventParserTest.java
+``` java
+/**
+ * As we are only doing white-box testing, our test cases do not cover path variations
+ * outside of the DeleteEventCommand code. For example, inputs "1" and "1 abc" take the
+ * same path through the DeleteEventCommand, and therefore we test only one of them.
+ * The path variation for those two cases occur inside the ParserUtil, and
+ * therefore should be covered by the ParserUtilTest.
+ */
+public class DeleteEventParserTest {
+
+    private DeleteEventParser parser = new DeleteEventParser();
+
+    @Test
+    public void parse_validArgs_returnsDeleteEventCommand() {
+        assertParseSuccess(parser, "1", new DeleteEventCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format
+                (MESSAGE_INVALID_COMMAND_FORMAT, DeleteEventCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### /java/seedu/address/logic/commands/CommandTestUtil.java
 ``` java
     /**
      * Updates {@code model}'s filtered list to show only the first person in the {@code model}'s address book.
@@ -184,109 +441,7 @@ public class EventListPanelHandle extends NodeHandle<ListView<EventCard>> {
         assert model.getFilteredEventList().size() == 1;
     }
 ```
-###### \java\seedu\address\logic\commands\event\AddEventCommandTest.java
-``` java
-
-public class AddEventCommandTest {
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    @Test
-    public void constructor_nullEvent_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
-        new AddEventCommand(null);
-    }
-
-    @Test
-    public void execute_eventAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingEventAdded modelStub = new ModelStubAcceptingEventAdded();
-        Event validEvent = new EventBuilder().build();
-
-        CommandResult commandResult = getAddEventCommandForEvent(validEvent, modelStub).execute();
-
-        assertEquals(String.format(AddEventCommand.MESSAGE_SUCCESS, validEvent), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validEvent), modelStub.eventsAdded);
-    }
-
-    @Test
-    public void execute_duplicateEvent_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicateEventException();
-        Event validEvent = new EventBuilder().build();
-
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(AddEventCommand.MESSAGE_DUPLICATE_EVENT);
-
-        getAddEventCommandForEvent(validEvent, modelStub).execute();
-    }
-
-    @Test
-    public void equals() {
-        Event hack = new EventBuilder().withName("Hack").build();
-        Event test = new EventBuilder().withName("Test").build();
-        AddEventCommand addHackCommand = new AddEventCommand(hack);
-        AddEventCommand addTestCommand = new AddEventCommand(test);
-
-        // same object -> returns true
-        assertTrue(addHackCommand.equals(addHackCommand));
-
-        // same values -> returns true
-        AddEventCommand addHackCommandCopy = new AddEventCommand(hack);
-        assertTrue(addHackCommand.equals(addHackCommandCopy));
-
-        // different types -> returns false
-        assertFalse(addHackCommand.equals(1));
-
-        // null -> returns false
-        assertFalse(addHackCommand.equals(null));
-
-        // different event -> returns false
-        assertFalse(addHackCommand.equals(addTestCommand));
-    }
-
-    /**
-     * Generates a new AddEventCommand with the details of the given event.
-     */
-    private AddEventCommand getAddEventCommandForEvent(Event event, Model model) {
-        AddEventCommand command = new AddEventCommand(event);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-        return command;
-    }
-
-    /**
-     * A Model stub that always throw a DuplicateEventException when trying to add a event.
-     */
-    private class ModelStubThrowingDuplicateEventException extends ModelStub {
-        @Override
-        public void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
-            throw new DuplicateEventException();
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-    }
-
-    /**
-     * A Model stub that always accept the event being added.
-     */
-    private class ModelStubAcceptingEventAdded extends ModelStub {
-        final ArrayList<Event> eventsAdded = new ArrayList<>();
-
-        @Override
-        public void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
-            eventsAdded.add(new Event(event));
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-    }
-}
-```
-###### \java\seedu\address\logic\commands\event\DeleteEventCommandTest.java
+###### /java/seedu/address/logic/commands/event/DeleteEventCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteEventCommand}.
@@ -375,7 +530,71 @@ public class DeleteEventCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\event\EditEventCommandTest.java
+###### /java/seedu/address/logic/commands/event/ListEventCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
+ */
+public class ListEventCommandTest {
+
+    private Model model;
+    private Model expectedModel;
+    private ListEventCommand listEventCommand;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        listEventCommand = new ListEventCommand();
+        listEventCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+    }
+
+    @Test
+    public void execute_listIsNotFiltered_showsSameList() {
+        assertCommandSuccess(listEventCommand, model, ListEventCommand.MESSAGE_EVENT_SUCCESS, expectedModel);
+    }
+}
+```
+###### /java/seedu/address/logic/commands/event/EditEventDescriptorTest.java
+``` java
+public class EditEventDescriptorTest {
+    @Test
+    public void equals() {
+        // same values -> returns true
+        EditEventCommand.EditEventDescriptor descriptorWithSameValues =
+                new EditEventCommand.EditEventDescriptor(DESC_EVENT1);
+        assertTrue(DESC_EVENT1.equals(descriptorWithSameValues));
+
+        // same object -> returns true
+        assertTrue(DESC_EVENT1.equals(DESC_EVENT1));
+
+        // null -> returns false
+        assertFalse(DESC_EVENT1.equals(null));
+
+        // different types -> returns false
+        assertFalse(DESC_EVENT1.equals(5));
+
+        // different values -> returns false
+        assertFalse(DESC_EVENT1.equals(DESC_EVENT2));
+
+        // different name -> returns false
+        EditEventCommand.EditEventDescriptor editedEvent1 =
+                new EditEventDescriptorBuilder(DESC_EVENT1).withName(VALID_NAME_EVENT2).build();
+        assertFalse(DESC_EVENT1.equals(editedEvent1));
+
+        // different Time -> returns false
+        editedEvent1 = new EditEventDescriptorBuilder(DESC_EVENT1).withTime(VALID_DATE_EVENT2).build();
+        assertFalse(DESC_EVENT1.equals(editedEvent1));
+
+
+        // different address -> returns false
+        editedEvent1 = new EditEventDescriptorBuilder(DESC_EVENT1).withAddress(VALID_VENUE_EVENT2).build();
+        assertFalse(DESC_EVENT1.equals(editedEvent1));
+    }
+}
+```
+###### /java/seedu/address/logic/commands/event/EditEventCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditEventCommand.
@@ -531,500 +750,109 @@ public class EditEventCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\event\EditEventDescriptorTest.java
-``` java
-public class EditEventDescriptorTest {
-    @Test
-    public void equals() {
-        // same values -> returns true
-        EditEventCommand.EditEventDescriptor descriptorWithSameValues =
-                new EditEventCommand.EditEventDescriptor(DESC_EVENT1);
-        assertTrue(DESC_EVENT1.equals(descriptorWithSameValues));
-
-        // same object -> returns true
-        assertTrue(DESC_EVENT1.equals(DESC_EVENT1));
-
-        // null -> returns false
-        assertFalse(DESC_EVENT1.equals(null));
-
-        // different types -> returns false
-        assertFalse(DESC_EVENT1.equals(5));
-
-        // different values -> returns false
-        assertFalse(DESC_EVENT1.equals(DESC_EVENT2));
-
-        // different name -> returns false
-        EditEventCommand.EditEventDescriptor editedEvent1 =
-                new EditEventDescriptorBuilder(DESC_EVENT1).withName(VALID_NAME_EVENT2).build();
-        assertFalse(DESC_EVENT1.equals(editedEvent1));
-
-        // different Time -> returns false
-        editedEvent1 = new EditEventDescriptorBuilder(DESC_EVENT1).withTime(VALID_DATE_EVENT2).build();
-        assertFalse(DESC_EVENT1.equals(editedEvent1));
-
-
-        // different address -> returns false
-        editedEvent1 = new EditEventDescriptorBuilder(DESC_EVENT1).withAddress(VALID_VENUE_EVENT2).build();
-        assertFalse(DESC_EVENT1.equals(editedEvent1));
-    }
-}
-```
-###### \java\seedu\address\logic\commands\event\ListEventCommandTest.java
-``` java
-/**
- * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
- */
-public class ListEventCommandTest {
-
-    private Model model;
-    private Model expectedModel;
-    private ListEventCommand listEventCommand;
-
-    @Before
-    public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-
-        listEventCommand = new ListEventCommand();
-        listEventCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-    }
-
-    @Test
-    public void execute_listIsNotFiltered_showsSameList() {
-        assertCommandSuccess(listEventCommand, model, ListEventCommand.MESSAGE_EVENT_SUCCESS, expectedModel);
-    }
-}
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/commands/event/AddEventCommandTest.java
 ``` java
 
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_deleteEvent() throws Exception {
-        DeleteEventCommand command = (DeleteEventCommand) parser.parseCommand(
-                DeleteEventCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteEventCommand(INDEX_FIRST_PERSON), command);
-    }
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_listEvents() throws Exception {
-        assertTrue(parser.parseCommand(ListEventCommand.COMMAND_WORD) instanceof ListEventCommand);
-        assertTrue(parser.parseCommand(ListEventCommand.COMMAND_WORD + " 3") instanceof ListEventCommand);
-    }
-```
-###### \java\seedu\address\logic\parser\event\DeleteEventParserTest.java
-``` java
-/**
- * As we are only doing white-box testing, our test cases do not cover path variations
- * outside of the DeleteEventCommand code. For example, inputs "1" and "1 abc" take the
- * same path through the DeleteEventCommand, and therefore we test only one of them.
- * The path variation for those two cases occur inside the ParserUtil, and
- * therefore should be covered by the ParserUtilTest.
- */
-public class DeleteEventParserTest {
+public class AddEventCommandTest {
 
-    private DeleteEventParser parser = new DeleteEventParser();
-
-    @Test
-    public void parse_validArgs_returnsDeleteEventCommand() {
-        assertParseSuccess(parser, "1", new DeleteEventCommand(INDEX_FIRST_PERSON));
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format
-                (MESSAGE_INVALID_COMMAND_FORMAT, DeleteEventCommand.MESSAGE_USAGE));
-    }
-}
-```
-###### \java\seedu\address\logic\parser\event\EditEventCommandParserTest.java
-``` java
-public class EditEventCommandParserTest {
-
-    private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditEventCommand.MESSAGE_USAGE);
-
-    private EditEventParser parser = new EditEventParser();
-
-    @Test
-    public void parse_missingParts_failure() {
-        // no index specified
-        assertParseFailure(parser, VALID_NAME_EVENT1, MESSAGE_INVALID_FORMAT);
-
-        // no field specified
-        assertParseFailure(parser, "1", EditEventCommand.MESSAGE_NOT_EDITED);
-
-        // no index and no field specified
-        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
-    public void parse_invalidPreamble_failure() {
-        // negative index
-        assertParseFailure(parser, "-5" + NAME_DESC_EVENT1, MESSAGE_INVALID_FORMAT);
-
-        // zero index
-        assertParseFailure(parser, "0" + NAME_DESC_EVENT1, MESSAGE_INVALID_FORMAT);
-
-        // invalid arguments being parsed as preamble
-        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
-
-        // invalid prefix being parsed as preamble
-        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
-    public void parse_invalidValue_failure() {
-        assertParseFailure(parser, "1" + INVALID_NAME_DESC,
-                PropertyManager.getPropertyConstraintMessage("n")); // invalid name
-        assertParseFailure(parser, "1" + INVALID_DATE_DESC,
-                PropertyManager.getPropertyConstraintMessage("dt")); // invalid date time
-        assertParseFailure(parser, "1" + INVALID_ADDRESS_DESC,
-                PropertyManager.getPropertyConstraintMessage("a")); // invalid address
-
-
-        // multiple invalid values, but only the first invalid value is captured
-        assertParseFailure(parser, "1" + INVALID_NAME_DESC + INVALID_DATE_DESC + VALID_VENUE_EVENT2,
-                PropertyManager.getPropertyConstraintMessage("n"));
-    }
-
-    @Test
-    public void parse_allFieldsSpecified_success() {
-        Index targetIndex = INDEX_SECOND_PERSON;
-        String userInput = targetIndex.getOneBased() + DATE_DESC_EVENT1 + VENUE_DESC_EVENT1 + NAME_DESC_EVENT1;
-
-        EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withName(VALID_NAME_EVENT1)
-                .withTime(VALID_DATE_EVENT1).withAddress(VALID_VENUE_EVENT1).build();
-        EditEventCommand expectedCommand = new EditEventCommand(targetIndex, descriptor);
-
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-
-    @Test
-    public void parse_someFieldsSpecified_success() {
-        Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + DATE_DESC_EVENT2 + VENUE_DESC_EVENT1;
-
-        EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withTime(VALID_DATE_EVENT2)
-                .withAddress(VALID_VENUE_EVENT1).build();
-        EditEventCommand expectedCommand = new EditEventCommand(targetIndex, descriptor);
-
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-
-    @Test
-    public void parse_oneFieldSpecified_success() {
-        // name
-        Index targetIndex = INDEX_THIRD_PERSON;
-        String userInput = targetIndex.getOneBased() + NAME_DESC_EVENT1;
-        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withName(VALID_NAME_EVENT1).build();
-        EditEventCommand expectedCommand = new EditEventCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        // date/time
-        userInput = targetIndex.getOneBased() + DATE_DESC_EVENT1;
-        descriptor = new EditEventDescriptorBuilder().withTime(VALID_DATE_EVENT1).build();
-        expectedCommand = new EditEventCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        // address
-        userInput = targetIndex.getOneBased() + VENUE_DESC_EVENT1;
-        descriptor = new EditEventDescriptorBuilder().withAddress(VALID_VENUE_EVENT1).build();
-        expectedCommand = new EditEventCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-}
-```
-###### \java\seedu\address\model\AddressBookTest.java
-``` java
-    @Test
-    public void getEventList_modifyList_throwsUnsupportedOperationException() {
-        thrown.expect(UnsupportedOperationException.class);
-        addressBook.getEventList().remove(0);
-    }
-    @Test
-    public void removeEvent_eventNotFound_expectException() throws Exception {
-        thrown.expect(EventNotFoundException.class);
-
-        AddressBook addressBook = getTypicalAddressBook();
-        addressBook.removeEvent(EVENT1);
-    }
-
-    @Test
-    public void getTagList_modifyList_throwsUnsupportedOperationException() {
-        thrown.expect(UnsupportedOperationException.class);
-        addressBook.getTagList().remove(0);
-    }
-
-    /**
-     * A stub of {@link ReadOnlyAddressBook} whose persons and tags lists can violate interface constraints.
-     */
-    private static class AddressBookStub implements ReadOnlyAddressBook {
-        private final ObservableList<ReadOnlyPerson> persons = FXCollections.observableArrayList();
-        private final ObservableList<Tag> tags = FXCollections.observableArrayList();
-        private final ObservableList<ReadOnlyEvent> events = FXCollections.observableArrayList();
-
-        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends ReadOnlyEvent> events,
-                        Collection<? extends Tag> tags) {
-            this.persons.setAll(persons);
-            this.tags.setAll(tags);
-            this.events.setAll(events);
-        }
-
-        @Override
-        public ObservableList<ReadOnlyPerson> getPersonList() {
-            return persons;
-        }
-
-        @Override
-        public ObservableList<ReadOnlyEvent> getEventList() {
-            return events;
-        }
-
-        @Override
-        public ObservableList<Tag> getTagList() {
-            return tags;
-        }
-    }
-
-}
-```
-###### \java\seedu\address\model\event\EventTest.java
-``` java
-public class EventTest {
-    private static Name name;
-    private static DateTime dateTime;
-    private static Address address;
-
-    @BeforeClass
-    public static void setUp() throws Exception {
-        PropertyManager.initializePropertyManager();
-
-        name = new Name(VALID_NAME_EVENT1);
-        dateTime = new DateTime(VALID_DATE_EVENT1);
-        address = new Address(VALID_ADDRESS_AMY);
-    }
-
-    @Test
-    public void createEvent_preDefinedFieldsPresent_checkCorrectness() throws Exception {
-        Event event = new Event(name, dateTime, address, Collections.emptyList());
-        assertNotNull(event);
-
-        assertEquals(name, event.getName());
-        assertEquals(dateTime, event.getTime());
-        assertEquals(address, event.getAddress());
-        assertEquals(0, event.getReminders().size());
-        assertEquals(3, event.getProperties().size());
-    }
-
-    @Test
-    public void equal_twoSameStateEvent_checkCorrectness() throws Exception {
-        Event event = new Event(name, dateTime, address, new ArrayList<>());
-        Event another = new Event(name, dateTime, address, new ArrayList<>());
-        assertEquals(event, another);
-
-        Event copied = new Event(event);
-        assertEquals(event, copied);
-    }
-}
-```
-###### \java\seedu\address\model\event\UniqueEventListTest.java
-``` java
-public class UniqueEventListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
-        UniqueEventList uniqueEventList = new UniqueEventList();
-        thrown.expect(UnsupportedOperationException.class);
-        uniqueEventList.asObservableList().remove(0);
-    }
-}
-```
-###### \java\seedu\address\model\ModelManagerTest.java
-``` java
-    @Test
-    public void getFilteredEventList_modifyList_throwsUnsupportedOperationException() {
-        ModelManager modelManager = new ModelManager();
-        thrown.expect(UnsupportedOperationException.class);
-        modelManager.getFilteredEventList().remove(0);
-    }
-```
-###### \java\seedu\address\model\ModelManagerTest.java
-``` java
-    @Test
-    public void addPerson_successfullyAddEvent() throws Exception {
-        AddressBook addressBook = getTypicalAddressBook();
-        UserPrefs userPrefs = new UserPrefs();
-        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
-        ObservableList<ReadOnlyPerson> persons = modelManager.getAddressBook().getPersonList();
-        int originalPersonListSize = persons.size();
-        modelManager.addPerson(TypicalPersons.HOON);
-        int newPersonListSize = modelManager.getAddressBook().getPersonList().size();
-        assertEquals(1, newPersonListSize - originalPersonListSize);
+    public void constructor_nullEvent_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new AddEventCommand(null);
     }
 
     @Test
-    public void sortEventList_successfullySortEvent() throws Exception {
-        AddressBook addressBook = getTypicalAddressBook();
-        UserPrefs userPrefs = new UserPrefs();
-        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
-        ModelManager modelManager1 = new ModelManager(addressBook, userPrefs);
-        modelManager.addEvent(TypicalEvents.EVENT2);
-        modelManager.addEvent(EVENT1);
-        modelManager1.addEvent(EVENT1);
-        modelManager1.addEvent(TypicalEvents.EVENT2);
-        System.out.println(modelManager);
-        assertEquals(modelManager, modelManager1);
+    public void execute_eventAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingEventAdded modelStub = new ModelStubAcceptingEventAdded();
+        Event validEvent = new EventBuilder().build();
+
+        CommandResult commandResult = getAddEventCommandForEvent(validEvent, modelStub).execute();
+
+        assertEquals(String.format(AddEventCommand.MESSAGE_SUCCESS, validEvent), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validEvent), modelStub.eventsAdded);
     }
 
     @Test
-    public void addEvent_successfullyAddEvent() throws Exception {
-        AddressBook addressBook = getTypicalAddressBook();
-        UserPrefs userPrefs = new UserPrefs();
-        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
-        ObservableList<ReadOnlyEvent> events = modelManager.getAddressBook().getEventList();
-        int originalEventListSize = events.size();
-        modelManager.addEvent(EVENT1);
-        int newEventListSize = modelManager.getAddressBook().getEventList().size();
-        assertEquals(1, newEventListSize - originalEventListSize);
-    }
-    @Test
-    public void removePerson_successfullyRemoveEvent() throws Exception {
-        AddressBook addressBook = getTypicalAddressBook();
-        UserPrefs userPrefs = new UserPrefs();
-        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
-        ObservableList<ReadOnlyPerson> persons = modelManager.getAddressBook().getPersonList();
-        int originalPersonListSize = persons.size();
-        modelManager.deletePerson(persons.get(1));
-        int newPersonListSize = modelManager.getAddressBook().getPersonList().size();
-        assertEquals(1, originalPersonListSize - newPersonListSize);
-    }
+    public void execute_duplicateEvent_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateEventException();
+        Event validEvent = new EventBuilder().build();
 
-    @Test
-    public void removeEvent_successfullyRemoveEvent() throws Exception {
-        AddressBook addressBook = getTypicalAddressBook();
-        UserPrefs userPrefs = new UserPrefs();
-        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
-        ObservableList<ReadOnlyEvent> events = modelManager.getAddressBook().getEventList();
-        int originalEventListSize = events.size();
-        modelManager.addEvent(EVENT1);
-        modelManager.addEvent(TypicalEvents.EVENT2);
-        modelManager.deleteEvent(events.get(1));
-        int newEventListSize = modelManager.getAddressBook().getEventList().size();
-        assertEquals(1, newEventListSize - originalEventListSize);
-    }
-    @Test
-    public void addEvent_successfullyAddReminder() throws Exception {
-        AddressBook addressBook = getTypicalAddressBook();
-        UserPrefs userPrefs = new UserPrefs();
-        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
-        ObservableList<ReadOnlyEvent> events = modelManager.getAddressBook().getEventList();
-        modelManager.addEvent(EVENT1);
-        Reminder r = new Reminder((Event) EVENT1, "You have an event today");
-        events.get(0).addReminder(r);
-        events.get(0).getReminders().size();
-        assertEquals(1, events.get(0).getReminders().size());
-    }
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(AddEventCommand.MESSAGE_DUPLICATE_EVENT);
 
-```
-###### \java\seedu\address\model\property\DateTimeTest.java
-``` java
-public class DateTimeTest {
-    @BeforeClass
-    public static void setUp() {
-        PropertyManager.initializePropertyManager();
+        getAddEventCommandForEvent(validEvent, modelStub).execute();
     }
-
-    @Test
-    public void isValidTime() {
-        // invalid time
-        assertFalse(DateTime.isValidTime("")); // empty string
-        assertFalse(DateTime.isValidTime("some random staff")); // unrelated string
-
-        // valid time
-        assertTrue(DateTime.isValidTime("25122015 08:30"));
-        assertTrue(DateTime.isValidTime("14122016 13:30"));
-        assertTrue(DateTime.isValidTime("09121924 23:30"));
-    }
-
-    @Test
-    public void create_viaString_checkCorrectness() throws Exception {
-        DateTime dateTime = new DateTime(VALID_DATE_EVENT1);
-        assertEquals(VALID_DATE_EVENT1, dateTime.getValue());
-    }
-
-```
-###### \java\seedu\address\model\property\EventNameContainsKeywordsPredicateTest.java
-``` java
-public class EventNameContainsKeywordsPredicateTest {
 
     @Test
     public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("first");
-        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
-
-        EventNameContainsKeywordsPredicate firstPredicate =
-                new EventNameContainsKeywordsPredicate(firstPredicateKeywordList);
-        EventNameContainsKeywordsPredicate secondPredicate =
-                new EventNameContainsKeywordsPredicate(secondPredicateKeywordList);
+        Event hack = new EventBuilder().withName("Hack").build();
+        Event test = new EventBuilder().withName("Test").build();
+        AddEventCommand addHackCommand = new AddEventCommand(hack);
+        AddEventCommand addTestCommand = new AddEventCommand(test);
 
         // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
+        assertTrue(addHackCommand.equals(addHackCommand));
 
         // same values -> returns true
-        EventNameContainsKeywordsPredicate firstPredicateCopy =
-                new EventNameContainsKeywordsPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
+        AddEventCommand addHackCommandCopy = new AddEventCommand(hack);
+        assertTrue(addHackCommand.equals(addHackCommandCopy));
 
         // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
+        assertFalse(addHackCommand.equals(1));
 
         // null -> returns false
-        assertFalse(firstPredicate.equals(null));
+        assertFalse(addHackCommand.equals(null));
 
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
+        // different event -> returns false
+        assertFalse(addHackCommand.equals(addTestCommand));
     }
 
-    @Test
-    public void test_nameContainsKeywords_returnsTrue() {
-        // One keyword
-        EventNameContainsKeywordsPredicate predicate =
-                new EventNameContainsKeywordsPredicate(Collections.singletonList("Alice"));
-        assertTrue(predicate.test(new EventBuilder().withName("Alice Bob").build()));
-
-        // Multiple keywords
-        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob"));
-        assertTrue(predicate.test(new EventBuilder().withName("Alice Bob").build()));
-
-        // Only one matching keyword
-        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Bob", "Carol"));
-        assertTrue(predicate.test(new EventBuilder().withName("Alice Carol").build()));
-
-        // Mixed-case keywords
-        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("aLIce", "bOB"));
-        assertTrue(predicate.test(new EventBuilder().withName("Alice Bob").build()));
+    /**
+     * Generates a new AddEventCommand with the details of the given event.
+     */
+    private AddEventCommand getAddEventCommandForEvent(Event event, Model model) {
+        AddEventCommand command = new AddEventCommand(event);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
     }
 
-    @Test
-    public void test_nameDoesNotContainKeywords_returnsFalse() {
-        // Zero keywords
-        EventNameContainsKeywordsPredicate predicate = new EventNameContainsKeywordsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new EventBuilder().withName("Alice").build()));
+    /**
+     * A Model stub that always throw a DuplicateEventException when trying to add a event.
+     */
+    private class ModelStubThrowingDuplicateEventException extends ModelStub {
+        @Override
+        public void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
+            throw new DuplicateEventException();
+        }
 
-        // Non-matching keyword
-        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Carol"));
-        assertFalse(predicate.test(new EventBuilder().withName("Alice Bob").build()));
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+    }
+
+    /**
+     * A Model stub that always accept the event being added.
+     */
+    private class ModelStubAcceptingEventAdded extends ModelStub {
+        final ArrayList<Event> eventsAdded = new ArrayList<>();
+
+        @Override
+        public void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
+            eventsAdded.add(new Event(event));
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
     }
 }
 ```
-###### \java\seedu\address\testutil\EditEventDescriptorBuilder.java
+###### /java/seedu/address/testutil/EditEventDescriptorBuilder.java
 ``` java
 import java.util.Optional;
 
@@ -1100,7 +928,90 @@ public class EditEventDescriptorBuilder {
     }
 }
 ```
-###### \java\seedu\address\testutil\EventBuilder.java
+###### /java/seedu/address/testutil/EventUtil.java
+``` java
+/**
+ * A utility class for Event.
+ */
+public class EventUtil {
+
+    /**
+     * Returns an add command string for adding the {@code event}.
+     */
+    public static String getAddEvent(ReadOnlyEvent event) {
+        return AddEventCommand.COMMAND_WORD + " " + getEventDetails(event);
+    }
+
+    /**
+     * Returns the part of command string for the given {@code event}'s details.
+     */
+    public static String getEventDetails(ReadOnlyEvent event) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(PREFIX_NAME + event.getName().toString() + " ");
+        sb.append(PREFIX_DATE_TIME + event.getTime().toString() + " ");
+        sb.append(PREFIX_ADDRESS + event.getAddress().toString());
+        sb.append(event.getReminders());
+        return sb.toString();
+    }
+}
+```
+###### /java/seedu/address/testutil/TypicalEvents.java
+``` java
+
+/**
+ * A utility class containing a list of {@code Event} objects to be used in tests.
+ */
+public class TypicalEvents {
+
+    public static final ReadOnlyEvent EVENT1 = new EventBuilder().withName("HHN 6001")
+            .withDateTime("22022015 08:30")
+            .withAddress("123, Sentosa, #08-111").withReminder().build();
+    public static final ReadOnlyEvent EVENT2 = new EventBuilder().withName("ZoukOut 6001")
+            .withDateTime("25122017 10:30")
+            .withAddress("123, Clarke Quay #01-111").withReminder().build();
+
+    // Manually added
+    public static final ReadOnlyEvent EVENTM1 = new EventBuilder().withName("Volleyball Tour 17")
+            .withDateTime("25122017 08:30")
+            .withAddress("OCBC ARENA Hall 3, #01-111").withReminder().build();
+    public static final ReadOnlyEvent EVENTM2 = new EventBuilder().withName("Meeting with Jason")
+            .withDateTime("25112016 02:30")
+            .withAddress("123, Sheraton Towers , #06-111").withReminder().build();
+
+    // Manually added - Person's details found in {@code CommandTestUtil}
+    public static final ReadOnlyPerson AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+            .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
+    public static final ReadOnlyPerson BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+            .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+            .build();
+
+
+    private TypicalEvents() {} // prevents instantiation
+
+    /**
+     * Returns an {@code AddressBook} with all the typical persons.
+     */
+    public static AddressBook getTypicalAddressBook() {
+        AddressBook ab = new AddressBook();
+        for (ReadOnlyEvent events : getTypicalEvents()) {
+            try {
+                ab.addEvent(events);
+            } catch (DuplicateEventException e) {
+                assert false : "not possible";
+            }
+        }
+        return ab;
+    }
+    static {
+        PropertyManager.initializePropertyManager();
+    }
+
+    public static List<ReadOnlyEvent> getTypicalEvents() {
+        return new ArrayList<>(Arrays.asList(EVENT1, EVENT2));
+    }
+}
+```
+###### /java/seedu/address/testutil/EventBuilder.java
 ``` java
 
 
@@ -1188,86 +1099,175 @@ public class EventBuilder {
 
 }
 ```
-###### \java\seedu\address\testutil\EventUtil.java
+###### /java/guitests/guihandles/event/EventCardHandle.java
 ``` java
 /**
- * A utility class for Event.
+ * Provides a handle to an event card in the {@code EventListPanel}.
  */
-public class EventUtil {
+public class EventCardHandle extends NodeHandle<Node> {
+    private static final String ID_FIELD_ID = "#id";
+    private static final String NAME_FIELD_ID = "#name";
+    private static final String VENUE_FIELD_ID = "#venue";
+    private static final String TIME_FIELD_ID = "#time";
 
-    /**
-     * Returns an add command string for adding the {@code event}.
-     */
-    public static String getAddEvent(ReadOnlyEvent event) {
-        return AddEventCommand.COMMAND_WORD + " " + getEventDetails(event);
+
+    private final Label idLabel;
+    private final Label nameLabel;
+    private final Label venueLabel;
+    private final Label timeLabel;
+
+    public EventCardHandle(Node cardNode) {
+        super(cardNode);
+
+        this.idLabel = getChildNode(ID_FIELD_ID);
+        this.nameLabel = getChildNode(NAME_FIELD_ID);
+        this.venueLabel = getChildNode(VENUE_FIELD_ID);
+        this.timeLabel = getChildNode(TIME_FIELD_ID);
     }
 
-    /**
-     * Returns the part of command string for the given {@code event}'s details.
-     */
-    public static String getEventDetails(ReadOnlyEvent event) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_NAME + event.getName().toString() + " ");
-        sb.append(PREFIX_DATE_TIME + event.getTime().toString() + " ");
-        sb.append(PREFIX_ADDRESS + event.getAddress().toString());
-        sb.append(event.getReminders());
-        return sb.toString();
+    public String getId() {
+        return idLabel.getText();
     }
+
+    public String getEventName() {
+        return nameLabel.getText();
+    }
+
+    public String getVenue() {
+        return venueLabel.getText();
+    }
+
+    public String getTime() {
+        return timeLabel.getText();
+    }
+
 }
 ```
-###### \java\seedu\address\testutil\TypicalEvents.java
+###### /java/guitests/guihandles/event/EventListPanelHandle.java
 ``` java
-
 /**
- * A utility class containing a list of {@code Event} objects to be used in tests.
+ * Provides a handle for {@code EventListPanel} containing the list of {@code EventCard}.
  */
-public class TypicalEvents {
+public class EventListPanelHandle extends NodeHandle<ListView<EventCard>> {
+    public static final String EVENT_LIST_VIEW_ID = "#eventListView";
 
-    public static final ReadOnlyEvent EVENT1 = new EventBuilder().withName("HHN 6001")
-            .withDateTime("22022015 08:30")
-            .withAddress("123, Sentosa, #08-111").withReminder().build();
-    public static final ReadOnlyEvent EVENT2 = new EventBuilder().withName("ZoukOut 6001")
-            .withDateTime("25122017 10:30")
-            .withAddress("123, Clarke Quay #01-111").withReminder().build();
+    private Optional<EventCard> lastRememberedSelectedEventCard;
 
-    // Manually added
-    public static final ReadOnlyEvent EVENTM1 = new EventBuilder().withName("Volleyball Tour 17")
-            .withDateTime("25122017 08:30")
-            .withAddress("OCBC ARENA Hall 3, #01-111").withReminder().build();
-    public static final ReadOnlyEvent EVENTM2 = new EventBuilder().withName("Meeting with Jason")
-            .withDateTime("25112016 02:30")
-            .withAddress("123, Sheraton Towers , #06-111").withReminder().build();
-
-    // Manually added - Person's details found in {@code CommandTestUtil}
-    public static final ReadOnlyPerson AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-            .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
-    public static final ReadOnlyPerson BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-            .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-            .build();
-
-
-    private TypicalEvents() {} // prevents instantiation
+    public EventListPanelHandle(ListView<EventCard> eventListPanelNode) {
+        super(eventListPanelNode);
+    }
 
     /**
-     * Returns an {@code AddressBook} with all the typical persons.
+     * Returns a handle to the selected {@code EventCardHandle}.
+     * A maximum of 1 item can be selected at any time.
+     * @throws AssertionError if no card is selected, or more than 1 card is selected.
      */
-    public static AddressBook getTypicalAddressBook() {
-        AddressBook ab = new AddressBook();
-        for (ReadOnlyEvent events : getTypicalEvents()) {
-            try {
-                ab.addEvent(events);
-            } catch (DuplicateEventException e) {
-                assert false : "not possible";
-            }
+    public EventCardHandle getHandleToSelectedCard() {
+        List<EventCard> eventList = getRootNode().getSelectionModel().getSelectedItems();
+
+        if (eventList.size() != 1) {
+            throw new AssertionError("Event list size expected 1.");
         }
-        return ab;
-    }
-    static {
-        PropertyManager.initializePropertyManager();
+
+        return new EventCardHandle(eventList.get(0).getRoot());
     }
 
-    public static List<ReadOnlyEvent> getTypicalEvents() {
-        return new ArrayList<>(Arrays.asList(EVENT1, EVENT2));
+    /**
+     * Returns the index of the selected card.
+     */
+    public int getSelectedCardIndex() {
+        return getRootNode().getSelectionModel().getSelectedIndex();
+    }
+
+    /**
+     * Returns true if a card is currently selected.
+     */
+    public boolean isAnyCardSelected() {
+        List<EventCard> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
+
+        if (selectedCardsList.size() > 1) {
+            throw new AssertionError("Card list size expected 0 or 1.");
+        }
+
+        return !selectedCardsList.isEmpty();
+    }
+
+    /**
+     * Navigates the listview to display and select the event.
+     */
+    public void navigateToCard(ReadOnlyEvent event) {
+        List<EventCard> cards = getRootNode().getItems();
+        Optional<EventCard> matchingCard = cards.stream().filter(card -> card.event.equals(event)).findFirst();
+
+        if (!matchingCard.isPresent()) {
+            throw new IllegalArgumentException("Event does not exist.");
+        }
+
+        guiRobot.interact(() -> {
+            getRootNode().scrollTo(matchingCard.get());
+            getRootNode().getSelectionModel().select(matchingCard.get());
+        });
+        guiRobot.pauseForHuman();
+    }
+
+    /**
+     * Returns the event card handle of a event associated with the {@code index} in the list.
+     */
+    public EventCardHandle getEventCardHandle(int index) {
+        return getEventCardHandle(getRootNode().getItems().get(index).event);
+    }
+
+    /**
+     * Returns the {@code EventCardHandle} of the specified {@code event} in the list.
+     */
+    public EventCardHandle getEventCardHandle(ReadOnlyEvent event) {
+        Optional<EventCardHandle> handle = getRootNode().getItems().stream()
+                .filter(card -> card.event.equals(event))
+                .map(card -> new EventCardHandle(card.getRoot()))
+                .findFirst();
+        return handle.orElseThrow(() -> new IllegalArgumentException("Event does not exist."));
+    }
+
+    /**
+     * Selects the {@code EventCard} at {@code index} in the list.
+     */
+    public void select(int index) {
+        getRootNode().getSelectionModel().select(index);
+    }
+
+    /**
+     * Remembers the selected {@code EventCard} in the list.
+     */
+    public void rememberSelectedEventCard() {
+        List<EventCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+
+        if (selectedItems.size() == 0) {
+            lastRememberedSelectedEventCard = Optional.empty();
+        } else {
+            lastRememberedSelectedEventCard = Optional.of(selectedItems.get(0));
+        }
+    }
+
+    /**
+     * Returns true if the selected {@code EventCard} is different from the value remembered by the most recent
+     * {@code rememberSelectedEventCard()} call.
+     */
+    public boolean isSelectedEventCardChanged() {
+        List<EventCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+
+        if (selectedItems.size() == 0) {
+            return lastRememberedSelectedEventCard.isPresent();
+        } else {
+            return !lastRememberedSelectedEventCard.isPresent()
+                    || !lastRememberedSelectedEventCard.get().equals(selectedItems.get(0));
+        }
+    }
+
+    /**
+     * Returns the size of the list.
+     */
+    public int getListSize() {
+        return getRootNode().getItems().size();
     }
 }
 ```

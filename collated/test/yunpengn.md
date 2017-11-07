@@ -1,449 +1,5 @@
 # yunpengn
-###### \java\seedu\address\commons\events\model\TagColorChangedEventTest.java
-``` java
-public class TagColorChangedEventTest {
-    @Test
-    public void createEvent_success() throws Exception {
-        BaseEvent event = new TagColorChangedEvent(new Tag(VALID_TAG_HUSBAND), "7db9a1");
-        assertEquals("The color of tag [husband] has been changed to 7db9a1.", event.toString());
-    }
-}
-```
-###### \java\seedu\address\commons\events\ui\SwitchToContactsListEventTest.java
-``` java
-public class SwitchToContactsListEventTest {
-    @Test
-    public void createEvent_success() throws Exception {
-        BaseEvent event = new SwitchToContactsListEvent();
-        assertEquals("SwitchToContactsListEvent", event.toString());
-    }
-}
-```
-###### \java\seedu\address\commons\events\ui\SwitchToEventsListEventTest.java
-``` java
-public class SwitchToEventsListEventTest {
-    @Test
-    public void createEvent_success() throws Exception {
-        BaseEvent event = new SwitchToEventsListEvent();
-        assertEquals("SwitchToEventsListEvent", event.toString());
-    }
-}
-```
-###### \java\seedu\address\logic\commands\configs\AddPropertyCommandTest.java
-``` java
-public class AddPropertyCommandTest {
-    private ConfigCommand successCommand;
-
-    private final String shortName = "b";
-    private final String shortNameAlter = "b1";
-    private final String fullName = "birthday";
-    private final String message = "something";
-    private final String validRegex = "[^\\s].*";
-    private final String invalidRegex = "*asf";
-
-    @Before
-    public void setUp() {
-        successCommand = new AddPropertyCommand(VALID_NEW_PROPERTY,
-                shortName, fullName, message, validRegex);
-        successCommand.setData(new AddPropertyModelStub(), new CommandHistory(), new UndoRedoStack());
-    }
-
-    @Test
-    public void execute_addNewProperty_success() throws Exception {
-        int propertyCountBefore = PropertyManager.getAllShortNames().size();
-        successCommand.execute();
-        int propertyCountAfter = PropertyManager.getAllShortNames().size();
-
-        assertEquals(1, propertyCountAfter - propertyCountBefore);
-    }
-
-    @Test
-    public void execute_addSamePropertyAgain_expectDuplicateException() {
-        try {
-            // Execute the command (add the same property) again, will get DuplicatePropertyException.
-            successCommand.execute();
-        } catch (CommandException e) {
-            assertEquals(MESSAGE_DUPLICATE_PROPERTY, e.getMessage());
-        }
-    }
-
-    @Test
-    public void execute_invalidRegex_expectRegexException() {
-        ConfigCommand invalidRegexCommand = new AddPropertyCommand(VALID_NEW_PROPERTY,
-                shortNameAlter, fullName, message, invalidRegex);
-        invalidRegexCommand.setData(new AddPropertyModelStub(), new CommandHistory(), new UndoRedoStack());
-
-        try {
-            // Execute the command (add the same property) again, will get DuplicatePropertyException.
-            invalidRegexCommand.execute();
-        } catch (CommandException e) {
-            assertEquals(MESSAGE_INVALID_REGEX, e.getMessage());
-        }
-    }
-
-    @Test
-    public void equal_twoSameCommands_returnTrue() {
-        ConfigCommand command1 = new AddPropertyCommand(VALID_NEW_PROPERTY,
-                shortName, fullName, message, validRegex);
-        ConfigCommand command2 = new AddPropertyCommand(VALID_NEW_PROPERTY,
-                shortName, fullName, message, validRegex);
-
-        assertEquals(command1, command2);
-    }
-
-    private class AddPropertyModelStub extends ModelStub {
-        @Override
-        public void addProperty(String shortName, String fullName, String message, String regex)
-                throws DuplicatePropertyException, PatternSyntaxException {
-            PropertyManager.addNewProperty(shortName, fullName, message, regex);
-        }
-    }
-}
-```
-###### \java\seedu\address\logic\commands\configs\ChangeTagColorCommandTest.java
-``` java
-public class ChangeTagColorCommandTest {
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    @Test
-    public void createCommand_success() throws Exception {
-        ConfigCommand command = new ChangeTagColorCommand(VALID_TAG_FRIEND + VALID_TAG_COLOR,
-                VALID_TAG_FRIEND, VALID_TAG_COLOR);
-
-        assertNotNull(command);
-    }
-
-    @Test
-    public void createCommand_illegalTagName_throwException() throws Exception {
-        thrown.expect(ParseException.class);
-
-        ConfigCommand command = new ChangeTagColorCommand(INVALID_TAG + VALID_TAG_COLOR,
-                INVALID_TAG, VALID_TAG_COLOR);
-
-        assertNotNull(command);
-    }
-
-    @Test
-    public void execute_noSuchTag_throwException() throws Exception {
-        thrown.expect(CommandException.class);
-
-        ConfigCommand command = new ChangeTagColorCommand(VALID_TAG_FRIEND + VALID_TAG_COLOR,
-                VALID_TAG_FRIEND, VALID_TAG_COLOR);
-        command.setData(new NoSuchTagModelStub(), new CommandHistory(), new UndoRedoStack());
-        command.execute();
-    }
-
-    @Test
-    public void execute_hasTag_success() throws Exception {
-        ConfigCommand command = new ChangeTagColorCommand(VALID_TAG_FRIEND + VALID_TAG_COLOR,
-                VALID_TAG_FRIEND, VALID_TAG_COLOR);
-        command.setData(new HasTagModelStub(), new CommandHistory(), new UndoRedoStack());
-        CommandResult result = command.execute();
-
-        assertEquals(String.format(ChangeTagColorCommand.MESSAGE_SUCCESS, "[friend]", VALID_TAG_COLOR),
-                result.feedbackToUser);
-    }
-
-    @Test
-    public void equal_twoSameCommands_returnTrue() throws Exception {
-        ConfigCommand command1 = new ChangeTagColorCommand(VALID_TAG_FRIEND + VALID_TAG_COLOR,
-                VALID_TAG_FRIEND, VALID_TAG_COLOR);
-        ConfigCommand command2 = new ChangeTagColorCommand(VALID_TAG_FRIEND + VALID_TAG_COLOR,
-                VALID_TAG_FRIEND, VALID_TAG_COLOR);
-
-        assertEquals(command1, command2);
-    }
-
-    private class NoSuchTagModelStub extends ModelStub {
-        @Override
-        public boolean hasTag(Tag tag) {
-            return false;
-        }
-    }
-
-    private class HasTagModelStub extends ModelStub {
-        @Override
-        public boolean hasTag(Tag tag) {
-            return true;
-        }
-
-        @Override
-        public void setTagColor(Tag tag, String color) {
-
-        }
-    }
-}
-```
-###### \java\seedu\address\logic\commands\configs\ConfigCommandTest.java
-``` java
-public class ConfigCommandTest {
-    @Test
-    public void configTypes_checkCount() {
-        assertEquals(ConfigCommand.ConfigType.values().length, ConfigCommand.TO_ENUM_CONFIG_TYPE.size());
-    }
-}
-```
-###### \java\seedu\address\logic\commands\imports\ImportNusmodsCommandTest.java
-``` java
-public class ImportNusmodsCommandTest {
-    private static ImportCommand validCommand;
-
-    @BeforeClass
-    public static void setUp() throws Exception {
-        validCommand = new ImportNusmodsCommand(new URL(NUSMODS_VALID_URL));
-    }
-
-    @Test
-    public void createCommand_succeed_checkCorrectness() throws Exception {
-        String expected = "AY2017-2018 Semester 1";
-        assertEquals(expected, validCommand.toString());
-    }
-
-    @Test
-    public void createCommand_wrongSemesterInformation_expectException() throws Exception {
-        assertConstructorFailure(NUSMODS_INVALID_URL_YEAR_START, String.format(INVALID_URL, ""));
-        assertConstructorFailure(NUSMODS_INVALID_URL_YEAR_OFFSET, String.format(INVALID_URL, YEAR_OFFSET_BY_ONE));
-    }
-
-    @Test
-    public void execute_succeed_checkCorrectness() throws Exception {
-        Model modelStub = new ImportNusmodsCommandModelStub();
-        validCommand.setData(modelStub, new CommandHistory(), new UndoRedoStack());
-        CommandResult result = validCommand.execute();
-        ImportNusmodsCommandModelStub stubCount = (ImportNusmodsCommandModelStub) modelStub;
-        assertEquals(1, stubCount.getEventCount());
-        assertEquals(String.format(MESSAGE_SUCCESS, 1), result.feedbackToUser);
-    }
-
-    /**
-     * Constructs an {@link ImportNusmodsCommand} and checks its failure and corresponding error message.
-     */
-    private void assertConstructorFailure(String input, String expectedMessage) throws Exception {
-        ImportCommand command = null;
-        try {
-            command = new ImportNusmodsCommand(new URL(input));
-        } catch (ParseException pe) {
-            assertEquals(expectedMessage, pe.getMessage());
-        }
-        assertNull(command);
-    }
-
-    private class ImportNusmodsCommandModelStub extends ModelStub {
-        private int countEvent = 0;
-
-        ImportNusmodsCommandModelStub() {
-            PropertyManager.initializePropertyManager();
-        }
-
-        @Override
-        public void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
-            countEvent++;
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-
-        int getEventCount() {
-            return countEvent;
-        }
-    }
-}
-```
-###### \java\seedu\address\logic\commands\imports\ModuleInfoTest.java
-``` java
-public class ModuleInfoTest {
-    private static ModuleInfo info;
-    private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/ConfigUtilTest/");
-    private static final String SAMPLE_MODULE_JSON = "SampleModuleInfoJson.json";
-
-    @BeforeClass
-    public static void setUp() throws Exception {
-        info = getSampleModule();
-        assertNotNull(info);
-    }
-
-    @Test
-    @Ignore
-    public void createModuleInfo_fromJsonUrl_checkCorrectness() throws Exception {
-        assertEquals("CS1101S", info.getModuleCode());
-
-        Date expectedDate = DateTime.parseDateTime("29112017 17:00");
-        assertEquals(expectedDate, info.getExamDate());
-    }
-
-    @Test
-    public void equals_returnTrue_checkCorrectness() throws Exception {
-        ModuleInfo another = getSampleModule();
-        assertEquals(info, info);
-        assertEquals(info, another);
-    }
-
-    @Test
-    @Ignore
-    public void toString_checkCorrectness() throws Exception {
-        String expected = "Module Code: CS1101S\n"
-                + "Module Title: Programming Methodology\n"
-                + "Module Credit: 5\n"
-                + "Examination Date: Wed Nov 29 17:00:00 SGT 2017";
-        assertEquals(expected, info.toString());
-    }
-
-    private static ModuleInfo getSampleModule() throws Exception {
-        // Although this method returns an Optional, we do not want to make use of such wrapper here.
-        return JsonUtil.readJsonFile(TEST_DATA_FOLDER + SAMPLE_MODULE_JSON, ModuleInfo.class).orElse(null);
-    }
-}
-```
-###### \java\seedu\address\logic\parser\ArgumentMultimapTest.java
-``` java
-public class ArgumentMultimapTest {
-    private static final String NOT_EXISTS = "not exists";
-
-    @Test
-    public void put_singleEntry_checkCorrectness() {
-        ArgumentMultimap map = new ArgumentMultimap();
-        map.put(PREFIX_NAME, VALID_NAME_AMY);
-        assertEquals(VALID_NAME_AMY, map.getValue(PREFIX_NAME).orElse(NOT_EXISTS));
-    }
-
-    @Test
-    public void put_singleEmptyEntry_checkCorrectness() {
-        ArgumentMultimap map = new ArgumentMultimap();
-        assertEquals(NOT_EXISTS, map.getValue(PREFIX_NAME).orElse(NOT_EXISTS));
-    }
-
-    @Test
-    public void put_sameNameMultipleTimes_checkCorrectness() {
-        ArgumentMultimap map = new ArgumentMultimap();
-        map.put(PREFIX_NAME, VALID_NAME_AMY);
-        map.put(PREFIX_NAME, VALID_NAME_BOB);
-        assertEquals(2, map.getAllValues(PREFIX_NAME).size());
-    }
-
-    @Test
-    public void put_multipleEntries_checkCorrectness() {
-        ArgumentMultimap map = new ArgumentMultimap();
-        map.put(PREFIX_NAME, VALID_NAME_AMY);
-        map.put(PREFIX_PHONE, VALID_PHONE_BOB);
-        assertEquals(VALID_NAME_AMY, map.getValue(PREFIX_NAME).orElse(NOT_EXISTS));
-        assertEquals(VALID_PHONE_BOB, map.getValue(PREFIX_PHONE).orElse(NOT_EXISTS));
-    }
-
-    @Test
-    public void getAllValues_multipleEntries_checkCorrectness() {
-        ArgumentMultimap map = new ArgumentMultimap();
-        map.put(PREFIX_NAME, VALID_NAME_AMY);
-        map.put(PREFIX_NAME, VALID_NAME_BOB);
-        map.put(PREFIX_PHONE, VALID_PHONE_BOB);
-
-        HashMap<Prefix, String> values = map.getAllValues();
-        assertEquals(2, values.size());
-        assertEquals(VALID_NAME_BOB, values.get(PREFIX_NAME));
-        assertEquals(VALID_PHONE_BOB, values.get(PREFIX_PHONE));
-    }
-
-    @Test
-    public void getPreamble_checkCorrectness() {
-        String preamble = "Some things here";
-        ArgumentMultimap map = new ArgumentMultimap();
-        map.put(new Prefix(""), preamble);
-        assertEquals(preamble, map.getPreamble());
-    }
-}
-```
-###### \java\seedu\address\logic\parser\ConfigCommandParserTest.java
-``` java
-public class ConfigCommandParserTest {
-    private ConfigCommandParser parser = new ConfigCommandParser();
-
-    @Test
-    public void parse_allFieldsPresent_success() throws Exception {
-        // Test for ChangeTagColorCommand.
-        ConfigCommand expected = new ChangeTagColorCommand("husband #7db9a1", "husband", "#7db9a1");
-        assertParseSuccess(parser, VALID_CONFIG_TAG_COLOR + VALID_TAG_HUSBAND + VALID_TAG_COLOR, expected);
-
-        // Test for AddPropertyCommand.
-        expected = new AddPropertyCommand(VALID_NEW_PROPERTY.trim(), "b",
-                "birthday", "something", "[^\\s].*");
-        assertParseSuccess(parser, VALID_CONFIG_ADD_PROPERTY + VALID_NEW_PROPERTY, expected);
-
-        // Test for AddPropertyCommand (without using customize constraintMessage and regex).
-        expected = new AddPropertyCommand(VALID_NEW_PROPERTY_NO_REGEX.trim(), "m",
-                "major", String.format(DEFAULT_MESSAGE, "major"), DEFAULT_REGEX);
-        assertParseSuccess(parser, VALID_CONFIG_ADD_PROPERTY + VALID_NEW_PROPERTY_NO_REGEX, expected);
-    }
-
-    @Test
-    public void parse_usePreDefinedColor_success() throws Exception {
-        ConfigCommand expected = new ChangeTagColorCommand("husband red", "husband", VALID_PREDEFINED_COLOR.trim());
-        assertParseSuccess(parser, VALID_CONFIG_TAG_COLOR + VALID_TAG_HUSBAND + VALID_PREDEFINED_COLOR, expected);
-    }
-
-    @Test
-    public void parse_invalidConfigType_expectException() {
-        assertParseFailure(parser, INVALID_CONFIG_TYPE + INVALID_CONFIG_VALUE,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, CONFIG_TYPE_NOT_FOUND));
-    }
-
-    @Test
-    public void parse_invalidTagColor_expectException() {
-        assertParseFailure(parser, VALID_CONFIG_TAG_COLOR + VALID_TAG_HUSBAND + INVALID_TAG_COLOR,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, COLOR_CODE_WRONG));
-    }
-
-    @Test
-    public void parse_invalidNewProperty_expectException() {
-        assertParseFailure(parser, VALID_CONFIG_ADD_PROPERTY + INVALID_NEW_PROPERTY,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPropertyCommand.MESSAGE_USAGE));
-    }
-}
-```
-###### \java\seedu\address\logic\parser\ImportCommandParserTest.java
-``` java
-public class ImportCommandParserTest {
-    private ImportCommandParser parser = new ImportCommandParser();
-
-    @Test
-    public void parse_allFieldsPresent_success() throws Exception {
-        ImportCommand expected = new ImportNusmodsCommand(new URL(NUSMODS_VALID_URL));
-        assertParseSuccess(parser, NUSMODS_VALID_IMPORT, expected);
-    }
-
-    @Test
-    public void parse_invalidConfigType_expectException() {
-        assertParseFailure(parser, INVALID_IMPORT_TYPE + INVALID_IMPORT_PATH,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, IMPORT_TYPE_NOT_FOUND));
-    }
-
-    @Test
-    public void parse_noPathSpecified_expectException() {
-        assertParseFailure(parser, IMPORT_NO_PATH,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
-    }
-
-    @Test
-    public void parse_invalidUrlForNusMods_expectException() {
-        assertParseFailure(parser, NOT_FROM_NUSMODS_IMPORT,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportNusmodsCommand.MESSAGE_USAGE));
-
-        assertParseFailure(parser, NUSMODS_INVALID_IMPORT, String.format(INVALID_URL, ""));
-    }
-}
-```
-###### \java\seedu\address\model\ModelManagerTest.java
-``` java
-    @Test
-    public void setTagColor_validFields_success() throws Exception {
-        ModelManager modelManager = new ModelManager();
-        Tag myTag = new Tag(VALID_TAG_FRIEND);
-        modelManager.setTagColor(myTag, VALID_TAG_COLOR);
-        assertEquals(VALID_TAG_COLOR, TagColorManager.getColor(myTag));
-    }
-```
-###### \java\seedu\address\model\person\PersonTest.java
+###### /java/seedu/address/model/person/PersonTest.java
 ``` java
 public class PersonTest {
     private static Name name;
@@ -486,7 +42,17 @@ public class PersonTest {
     }
 }
 ```
-###### \java\seedu\address\model\property\DateTimeTest.java
+###### /java/seedu/address/model/ModelManagerTest.java
+``` java
+    @Test
+    public void setTagColor_validFields_success() throws Exception {
+        ModelManager modelManager = new ModelManager();
+        Tag myTag = new Tag(VALID_TAG_FRIEND);
+        modelManager.setTagColor(myTag, VALID_TAG_COLOR);
+        assertEquals(VALID_TAG_COLOR, TagColorManager.getColor(myTag));
+    }
+```
+###### /java/seedu/address/model/property/DateTimeTest.java
 ``` java
     @Test
     public void create_viaDateObject_checkCorrectness() throws Exception {
@@ -505,7 +71,60 @@ public class PersonTest {
     }
 }
 ```
-###### \java\seedu\address\model\property\PropertyManagerTest.java
+###### /java/seedu/address/model/property/PropertyTest.java
+``` java
+public class PropertyTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @BeforeClass
+    public static void setUp() {
+        PropertyManager.initializePropertyManager();
+    }
+
+    @Test
+    public void createProperty_preLoadedProperty_successfulCreation() throws Exception {
+        String value = "12345678";
+        Property newProperty = new Property("p", value);
+
+        assertEquals("p", newProperty.getShortName());
+        assertEquals("Phone", newProperty.getFullName());
+        assertEquals(value, newProperty.getValue());
+    }
+
+    @Test
+    public void createProperty_preLoadedProperty_invalidValue() {
+        Property newProperty = null;
+        String value = "12";
+        String expectedMessage = "Phone numbers can only contain numbers, and should be at least 3 digits long";
+
+        try {
+            newProperty = new Property("p", value);
+        } catch (IllegalValueException | PropertyNotFoundException ive) {
+            assertEquals(expectedMessage, ive.getMessage());
+        }
+
+        assertNull(newProperty);
+    }
+
+    @Test
+    public void createProperty_customProperty_noSuchProperty() throws Exception {
+        thrown.expect(PropertyNotFoundException.class);
+
+        Property newProperty = new Property("w", "some random value");
+        assertNull(newProperty);
+    }
+
+    @Test
+    public void equalProperty_sameKeyAndValue_successfulCompare() throws Exception {
+        Property propertyA = new Property("a", "This is my address");
+        Property propertyB = new Property("a", "This is my address");
+
+        assertEquals(propertyA, propertyB);
+    }
+}
+```
+###### /java/seedu/address/model/property/PropertyManagerTest.java
 ``` java
 public class PropertyManagerTest {
     @Rule
@@ -619,60 +238,7 @@ public class PropertyManagerTest {
     }
 }
 ```
-###### \java\seedu\address\model\property\PropertyTest.java
-``` java
-public class PropertyTest {
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    @BeforeClass
-    public static void setUp() {
-        PropertyManager.initializePropertyManager();
-    }
-
-    @Test
-    public void createProperty_preLoadedProperty_successfulCreation() throws Exception {
-        String value = "12345678";
-        Property newProperty = new Property("p", value);
-
-        assertEquals("p", newProperty.getShortName());
-        assertEquals("Phone", newProperty.getFullName());
-        assertEquals(value, newProperty.getValue());
-    }
-
-    @Test
-    public void createProperty_preLoadedProperty_invalidValue() {
-        Property newProperty = null;
-        String value = "12";
-        String expectedMessage = "Phone numbers can only contain numbers, and should be at least 3 digits long";
-
-        try {
-            newProperty = new Property("p", value);
-        } catch (IllegalValueException | PropertyNotFoundException ive) {
-            assertEquals(expectedMessage, ive.getMessage());
-        }
-
-        assertNull(newProperty);
-    }
-
-    @Test
-    public void createProperty_customProperty_noSuchProperty() throws Exception {
-        thrown.expect(PropertyNotFoundException.class);
-
-        Property newProperty = new Property("w", "some random value");
-        assertNull(newProperty);
-    }
-
-    @Test
-    public void equalProperty_sameKeyAndValue_successfulCompare() throws Exception {
-        Property propertyA = new Property("a", "This is my address");
-        Property propertyB = new Property("a", "This is my address");
-
-        assertEquals(propertyA, propertyB);
-    }
-}
-```
-###### \java\seedu\address\model\property\UniquePropertyMapTest.java
+###### /java/seedu/address/model/property/UniquePropertyMapTest.java
 ``` java
 public class UniquePropertyMapTest {
     private static Set<Property> mySet;
@@ -826,7 +392,7 @@ public class UniquePropertyMapTest {
     }
 }
 ```
-###### \java\seedu\address\model\tag\TagColorManagerTest.java
+###### /java/seedu/address/model/tag/TagColorManagerTest.java
 ``` java
 public class TagColorManagerTest {
     @Rule
@@ -854,6 +420,440 @@ public class TagColorManagerTest {
         Tag tag = new Tag(VALID_TAG_FRIEND);
         TagColorManager.setColor(tag);
         assertTrue(TagColorManager.getColor(tag).matches("#[A-Fa-f0-9]{6}"));
+    }
+}
+```
+###### /java/seedu/address/commons/events/model/TagColorChangedEventTest.java
+``` java
+public class TagColorChangedEventTest {
+    @Test
+    public void createEvent_success() throws Exception {
+        BaseEvent event = new TagColorChangedEvent(new Tag(VALID_TAG_HUSBAND), "7db9a1");
+        assertEquals("The color of tag [husband] has been changed to 7db9a1.", event.toString());
+    }
+}
+```
+###### /java/seedu/address/commons/events/ui/SwitchToContactsListEventTest.java
+``` java
+public class SwitchToContactsListEventTest {
+    @Test
+    public void createEvent_success() throws Exception {
+        BaseEvent event = new SwitchToContactsListEvent();
+        assertEquals("SwitchToContactsListEvent", event.toString());
+    }
+}
+```
+###### /java/seedu/address/commons/events/ui/SwitchToEventsListEventTest.java
+``` java
+public class SwitchToEventsListEventTest {
+    @Test
+    public void createEvent_success() throws Exception {
+        BaseEvent event = new SwitchToEventsListEvent();
+        assertEquals("SwitchToEventsListEvent", event.toString());
+    }
+}
+```
+###### /java/seedu/address/logic/parser/ConfigCommandParserTest.java
+``` java
+public class ConfigCommandParserTest {
+    private ConfigCommandParser parser = new ConfigCommandParser();
+
+    @Test
+    public void parse_allFieldsPresent_success() throws Exception {
+        // Test for ChangeTagColorCommand.
+        ConfigCommand expected = new ChangeTagColorCommand("husband #7db9a1", "husband", "#7db9a1");
+        assertParseSuccess(parser, VALID_CONFIG_TAG_COLOR + VALID_TAG_HUSBAND + VALID_TAG_COLOR, expected);
+
+        // Test for AddPropertyCommand.
+        expected = new AddPropertyCommand(VALID_NEW_PROPERTY.trim(), "b",
+                "birthday", "something", "[^\\s].*");
+        assertParseSuccess(parser, VALID_CONFIG_ADD_PROPERTY + VALID_NEW_PROPERTY, expected);
+
+        // Test for AddPropertyCommand (without using customize constraintMessage and regex).
+        expected = new AddPropertyCommand(VALID_NEW_PROPERTY_NO_REGEX.trim(), "m",
+                "major", String.format(DEFAULT_MESSAGE, "major"), DEFAULT_REGEX);
+        assertParseSuccess(parser, VALID_CONFIG_ADD_PROPERTY + VALID_NEW_PROPERTY_NO_REGEX, expected);
+    }
+
+    @Test
+    public void parse_usePreDefinedColor_success() throws Exception {
+        ConfigCommand expected = new ChangeTagColorCommand("husband red", "husband", VALID_PREDEFINED_COLOR.trim());
+        assertParseSuccess(parser, VALID_CONFIG_TAG_COLOR + VALID_TAG_HUSBAND + VALID_PREDEFINED_COLOR, expected);
+    }
+
+    @Test
+    public void parse_invalidConfigType_expectException() {
+        assertParseFailure(parser, INVALID_CONFIG_TYPE + INVALID_CONFIG_VALUE,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, CONFIG_TYPE_NOT_FOUND));
+    }
+
+    @Test
+    public void parse_invalidTagColor_expectException() {
+        assertParseFailure(parser, VALID_CONFIG_TAG_COLOR + VALID_TAG_HUSBAND + INVALID_TAG_COLOR,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, COLOR_CODE_WRONG));
+    }
+
+    @Test
+    public void parse_invalidNewProperty_expectException() {
+        assertParseFailure(parser, VALID_CONFIG_ADD_PROPERTY + INVALID_NEW_PROPERTY,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPropertyCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### /java/seedu/address/logic/parser/ArgumentMultimapTest.java
+``` java
+public class ArgumentMultimapTest {
+    private static final String NOT_EXISTS = "not exists";
+
+    @Test
+    public void put_singleEntry_checkCorrectness() {
+        ArgumentMultimap map = new ArgumentMultimap();
+        map.put(PREFIX_NAME, VALID_NAME_AMY);
+        assertEquals(VALID_NAME_AMY, map.getValue(PREFIX_NAME).orElse(NOT_EXISTS));
+    }
+
+    @Test
+    public void put_singleEmptyEntry_checkCorrectness() {
+        ArgumentMultimap map = new ArgumentMultimap();
+        assertEquals(NOT_EXISTS, map.getValue(PREFIX_NAME).orElse(NOT_EXISTS));
+    }
+
+    @Test
+    public void put_sameNameMultipleTimes_checkCorrectness() {
+        ArgumentMultimap map = new ArgumentMultimap();
+        map.put(PREFIX_NAME, VALID_NAME_AMY);
+        map.put(PREFIX_NAME, VALID_NAME_BOB);
+        assertEquals(2, map.getAllValues(PREFIX_NAME).size());
+    }
+
+    @Test
+    public void put_multipleEntries_checkCorrectness() {
+        ArgumentMultimap map = new ArgumentMultimap();
+        map.put(PREFIX_NAME, VALID_NAME_AMY);
+        map.put(PREFIX_PHONE, VALID_PHONE_BOB);
+        assertEquals(VALID_NAME_AMY, map.getValue(PREFIX_NAME).orElse(NOT_EXISTS));
+        assertEquals(VALID_PHONE_BOB, map.getValue(PREFIX_PHONE).orElse(NOT_EXISTS));
+    }
+
+    @Test
+    public void getAllValues_multipleEntries_checkCorrectness() {
+        ArgumentMultimap map = new ArgumentMultimap();
+        map.put(PREFIX_NAME, VALID_NAME_AMY);
+        map.put(PREFIX_NAME, VALID_NAME_BOB);
+        map.put(PREFIX_PHONE, VALID_PHONE_BOB);
+
+        HashMap<Prefix, String> values = map.getAllValues();
+        assertEquals(2, values.size());
+        assertEquals(VALID_NAME_BOB, values.get(PREFIX_NAME));
+        assertEquals(VALID_PHONE_BOB, values.get(PREFIX_PHONE));
+    }
+
+    @Test
+    public void getPreamble_checkCorrectness() {
+        String preamble = "Some things here";
+        ArgumentMultimap map = new ArgumentMultimap();
+        map.put(new Prefix(""), preamble);
+        assertEquals(preamble, map.getPreamble());
+    }
+}
+```
+###### /java/seedu/address/logic/parser/ImportCommandParserTest.java
+``` java
+public class ImportCommandParserTest {
+    private ImportCommandParser parser = new ImportCommandParser();
+
+    @Test
+    public void parse_allFieldsPresent_success() throws Exception {
+        ImportCommand expected = new ImportNusmodsCommand(new URL(NUSMODS_VALID_URL));
+        assertParseSuccess(parser, NUSMODS_VALID_IMPORT, expected);
+    }
+
+    @Test
+    public void parse_invalidConfigType_expectException() {
+        assertParseFailure(parser, INVALID_IMPORT_TYPE + INVALID_IMPORT_PATH,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, IMPORT_TYPE_NOT_FOUND));
+    }
+
+    @Test
+    public void parse_noPathSpecified_expectException() {
+        assertParseFailure(parser, IMPORT_NO_PATH,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidUrlForNusMods_expectException() {
+        assertParseFailure(parser, NOT_FROM_NUSMODS_IMPORT,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportNusmodsCommand.MESSAGE_USAGE));
+
+        assertParseFailure(parser, NUSMODS_INVALID_IMPORT, String.format(INVALID_URL, ""));
+    }
+}
+```
+###### /java/seedu/address/logic/commands/configs/AddPropertyCommandTest.java
+``` java
+public class AddPropertyCommandTest {
+    private ConfigCommand successCommand;
+
+    private final String shortName = "b";
+    private final String shortNameAlter = "b1";
+    private final String fullName = "birthday";
+    private final String message = "something";
+    private final String validRegex = "[^\\s].*";
+    private final String invalidRegex = "*asf";
+
+    @Before
+    public void setUp() {
+        successCommand = new AddPropertyCommand(VALID_NEW_PROPERTY,
+                shortName, fullName, message, validRegex);
+        successCommand.setData(new AddPropertyModelStub(), new CommandHistory(), new UndoRedoStack());
+    }
+
+    @Test
+    public void execute_addNewProperty_success() throws Exception {
+        int propertyCountBefore = PropertyManager.getAllShortNames().size();
+        successCommand.execute();
+        int propertyCountAfter = PropertyManager.getAllShortNames().size();
+
+        assertEquals(1, propertyCountAfter - propertyCountBefore);
+    }
+
+    @Test
+    public void execute_addSamePropertyAgain_expectDuplicateException() {
+        try {
+            // Execute the command (add the same property) again, will get DuplicatePropertyException.
+            successCommand.execute();
+        } catch (CommandException e) {
+            assertEquals(MESSAGE_DUPLICATE_PROPERTY, e.getMessage());
+        }
+    }
+
+    @Test
+    public void execute_invalidRegex_expectRegexException() {
+        ConfigCommand invalidRegexCommand = new AddPropertyCommand(VALID_NEW_PROPERTY,
+                shortNameAlter, fullName, message, invalidRegex);
+        invalidRegexCommand.setData(new AddPropertyModelStub(), new CommandHistory(), new UndoRedoStack());
+
+        try {
+            // Execute the command (add the same property) again, will get DuplicatePropertyException.
+            invalidRegexCommand.execute();
+        } catch (CommandException e) {
+            assertEquals(MESSAGE_INVALID_REGEX, e.getMessage());
+        }
+    }
+
+    @Test
+    public void equal_twoSameCommands_returnTrue() {
+        ConfigCommand command1 = new AddPropertyCommand(VALID_NEW_PROPERTY,
+                shortName, fullName, message, validRegex);
+        ConfigCommand command2 = new AddPropertyCommand(VALID_NEW_PROPERTY,
+                shortName, fullName, message, validRegex);
+
+        assertEquals(command1, command2);
+    }
+
+    private class AddPropertyModelStub extends ModelStub {
+        @Override
+        public void addProperty(String shortName, String fullName, String message, String regex)
+                throws DuplicatePropertyException, PatternSyntaxException {
+            PropertyManager.addNewProperty(shortName, fullName, message, regex);
+        }
+    }
+}
+```
+###### /java/seedu/address/logic/commands/configs/ChangeTagColorCommandTest.java
+``` java
+public class ChangeTagColorCommandTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void createCommand_success() throws Exception {
+        ConfigCommand command = new ChangeTagColorCommand(VALID_TAG_FRIEND + VALID_TAG_COLOR,
+                VALID_TAG_FRIEND, VALID_TAG_COLOR);
+
+        assertNotNull(command);
+    }
+
+    @Test
+    public void createCommand_illegalTagName_throwException() throws Exception {
+        thrown.expect(ParseException.class);
+
+        ConfigCommand command = new ChangeTagColorCommand(INVALID_TAG + VALID_TAG_COLOR,
+                INVALID_TAG, VALID_TAG_COLOR);
+
+        assertNotNull(command);
+    }
+
+    @Test
+    public void execute_noSuchTag_throwException() throws Exception {
+        thrown.expect(CommandException.class);
+
+        ConfigCommand command = new ChangeTagColorCommand(VALID_TAG_FRIEND + VALID_TAG_COLOR,
+                VALID_TAG_FRIEND, VALID_TAG_COLOR);
+        command.setData(new NoSuchTagModelStub(), new CommandHistory(), new UndoRedoStack());
+        command.execute();
+    }
+
+    @Test
+    public void execute_hasTag_success() throws Exception {
+        ConfigCommand command = new ChangeTagColorCommand(VALID_TAG_FRIEND + VALID_TAG_COLOR,
+                VALID_TAG_FRIEND, VALID_TAG_COLOR);
+        command.setData(new HasTagModelStub(), new CommandHistory(), new UndoRedoStack());
+        CommandResult result = command.execute();
+
+        assertEquals(String.format(ChangeTagColorCommand.MESSAGE_SUCCESS, "[friend]", VALID_TAG_COLOR),
+                result.feedbackToUser);
+    }
+
+    @Test
+    public void equal_twoSameCommands_returnTrue() throws Exception {
+        ConfigCommand command1 = new ChangeTagColorCommand(VALID_TAG_FRIEND + VALID_TAG_COLOR,
+                VALID_TAG_FRIEND, VALID_TAG_COLOR);
+        ConfigCommand command2 = new ChangeTagColorCommand(VALID_TAG_FRIEND + VALID_TAG_COLOR,
+                VALID_TAG_FRIEND, VALID_TAG_COLOR);
+
+        assertEquals(command1, command2);
+    }
+
+    private class NoSuchTagModelStub extends ModelStub {
+        @Override
+        public boolean hasTag(Tag tag) {
+            return false;
+        }
+    }
+
+    private class HasTagModelStub extends ModelStub {
+        @Override
+        public boolean hasTag(Tag tag) {
+            return true;
+        }
+
+        @Override
+        public void setTagColor(Tag tag, String color) {
+
+        }
+    }
+}
+```
+###### /java/seedu/address/logic/commands/configs/ConfigCommandTest.java
+``` java
+public class ConfigCommandTest {
+    @Test
+    public void configTypes_checkCount() {
+        assertEquals(ConfigCommand.ConfigType.values().length, ConfigCommand.TO_ENUM_CONFIG_TYPE.size());
+    }
+}
+```
+###### /java/seedu/address/logic/commands/imports/ModuleInfoTest.java
+``` java
+public class ModuleInfoTest {
+    private static ModuleInfo info;
+    private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/ConfigUtilTest/");
+    private static final String SAMPLE_MODULE_JSON = "SampleModuleInfoJson.json";
+
+    @BeforeClass
+    public static void setUp() throws Exception {
+        info = getSampleModule();
+        assertNotNull(info);
+    }
+
+    @Test
+    @Ignore
+    public void createModuleInfo_fromJsonUrl_checkCorrectness() throws Exception {
+        assertEquals("CS1101S", info.getModuleCode());
+
+        Date expectedDate = DateTime.parseDateTime("29112017 17:00");
+        assertEquals(expectedDate, info.getExamDate());
+    }
+
+    @Test
+    public void equals_returnTrue_checkCorrectness() throws Exception {
+        ModuleInfo another = getSampleModule();
+        assertEquals(info, info);
+        assertEquals(info, another);
+    }
+
+    @Test
+    @Ignore
+    public void toString_checkCorrectness() throws Exception {
+        String expected = "Module Code: CS1101S\n"
+                + "Module Title: Programming Methodology\n"
+                + "Module Credit: 5\n"
+                + "Examination Date: Wed Nov 29 17:00:00 SGT 2017";
+        assertEquals(expected, info.toString());
+    }
+
+    private static ModuleInfo getSampleModule() throws Exception {
+        // Although this method returns an Optional, we do not want to make use of such wrapper here.
+        return JsonUtil.readJsonFile(TEST_DATA_FOLDER + SAMPLE_MODULE_JSON, ModuleInfo.class).orElse(null);
+    }
+}
+```
+###### /java/seedu/address/logic/commands/imports/ImportNusmodsCommandTest.java
+``` java
+public class ImportNusmodsCommandTest {
+    private static ImportCommand validCommand;
+
+    @BeforeClass
+    public static void setUp() throws Exception {
+        validCommand = new ImportNusmodsCommand(new URL(NUSMODS_VALID_URL));
+    }
+
+    @Test
+    public void createCommand_succeed_checkCorrectness() throws Exception {
+        String expected = "AY2017-2018 Semester 1";
+        assertEquals(expected, validCommand.toString());
+    }
+
+    @Test
+    public void createCommand_wrongSemesterInformation_expectException() throws Exception {
+        assertConstructorFailure(NUSMODS_INVALID_URL_YEAR_START, String.format(INVALID_URL, ""));
+        assertConstructorFailure(NUSMODS_INVALID_URL_YEAR_OFFSET, String.format(INVALID_URL, YEAR_OFFSET_BY_ONE));
+    }
+
+    @Test
+    public void execute_succeed_checkCorrectness() throws Exception {
+        Model modelStub = new ImportNusmodsCommandModelStub();
+        validCommand.setData(modelStub, new CommandHistory(), new UndoRedoStack());
+        CommandResult result = validCommand.execute();
+        ImportNusmodsCommandModelStub stubCount = (ImportNusmodsCommandModelStub) modelStub;
+        assertEquals(1, stubCount.getEventCount());
+        assertEquals(String.format(MESSAGE_SUCCESS, 1), result.feedbackToUser);
+    }
+
+    /**
+     * Constructs an {@link ImportNusmodsCommand} and checks its failure and corresponding error message.
+     */
+    private void assertConstructorFailure(String input, String expectedMessage) throws Exception {
+        ImportCommand command = null;
+        try {
+            command = new ImportNusmodsCommand(new URL(input));
+        } catch (ParseException pe) {
+            assertEquals(expectedMessage, pe.getMessage());
+        }
+        assertNull(command);
+    }
+
+    private class ImportNusmodsCommandModelStub extends ModelStub {
+        private int countEvent = 0;
+
+        ImportNusmodsCommandModelStub() {
+            PropertyManager.initializePropertyManager();
+        }
+
+        @Override
+        public void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
+            countEvent++;
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+
+        int getEventCount() {
+            return countEvent;
+        }
     }
 }
 ```

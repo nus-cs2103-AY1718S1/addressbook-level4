@@ -163,12 +163,12 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author yunpengn
     @Override
     public ObjectProperty<Avatar> avatarProperty() {
         return avatar;
     }
 
-    //@@author yunpengn
     @Override
     public Avatar getAvatar() {
         return avatar.get();

@@ -29,6 +29,7 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<Avatar> avatarProperty();
     Avatar getAvatar();
+    void setAvatar(Avatar avatar);
     ObjectProperty<UniquePropertyMap> properties();
     Set<Property> getProperties();
     List<Property> getSortedProperties();

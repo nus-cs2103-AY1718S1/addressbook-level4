@@ -48,4 +48,21 @@ public class Avatar {
     public String getUrl() {
         return url;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Avatar // instanceof handles nulls
+                && this.url.equals(((Avatar) other).url));
+    }
+
+    @Override
+    public int hashCode() {
+        return url.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Avatar from " + url;
+    }
 }

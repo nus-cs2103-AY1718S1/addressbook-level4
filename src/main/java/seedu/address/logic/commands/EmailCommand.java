@@ -12,10 +12,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author dennaloh
-
 /**
- * Emails a contact from the address book
- *
+ * Emails a contact from the address book.
  */
 public class EmailCommand extends Command {
     public static final String COMMAND_WORD = "email";
