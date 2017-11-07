@@ -101,7 +101,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 === Locating persons by name, address or phone number: `find` (Since V1.4)
 
 Finds persons whose names or name initials or address or phone number contain any of the given keywords. +
-Format: `find [n/] [p/] [a/] KEYWORD [MORE_KEYWORDS]` +
+Format: `find [n/] [p/] [e/] [a/] [t/] KEYWORD [MORE_KEYWORDS]` +
 Alias: `f`
 
 ****
@@ -127,7 +127,11 @@ Returns `Bernice Yu` whose name contains the partial string `Ber`
 * `find p/83537423` +
 Returns any person with phone number `83537423`
 * `find a/earth` +
-Returns any person with address `earth`
+Returns any person with address containing `earth`
+* `find e/gmail` +
+Returns any person with email containing keyword `gmail`
+* `find t/friends` +
+Returns any person with tags containing keyword `friends`
 
 
 === Deleting a person : `delete`

@@ -58,6 +58,7 @@ public class SetPictureCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         final File file = new File(filePath);
+        System.out.println(filePath);
         String fileType;
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
@@ -67,9 +68,11 @@ public class SetPictureCommand extends UndoableCommand {
         }
         try {
             fileType = Files.probeContentType(file.toPath());
-            if (!("image/png".equals(fileType))) { // jpeg or png?
+            System.out.println(file.toPath());
+            System.out.println(fileType);
+            /*if (!("image/png".equals(fileType))) { // jpeg or png?
                 throw new CommandException(MESSAGE_INVALID_FILE);
-            }
+            }*/
         } catch (IOException ioException) {
             throw new CommandException(MESSAGE_FILE_NOT_EXIST);
         }
