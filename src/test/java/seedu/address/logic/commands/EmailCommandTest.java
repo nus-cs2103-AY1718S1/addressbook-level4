@@ -24,6 +24,7 @@ import seedu.address.model.UserPrefs;
 public class EmailCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private String[] shareEmailArray = {"unifycs2103@gmail.com"};
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
@@ -35,14 +36,15 @@ public class EmailCommandTest {
 
     @Test
     public void equals() {
-        EmailCommand emailFirstCommand = new EmailCommand(INDEX_FIRST_PERSON, "unifycs2103@gmail.com");
-        EmailCommand emailSecondCommand = new EmailCommand(INDEX_SECOND_PERSON, "unifycs2103@gmail.com");
+
+        EmailCommand emailFirstCommand = new EmailCommand(INDEX_FIRST_PERSON, shareEmailArray);
+        EmailCommand emailSecondCommand = new EmailCommand(INDEX_SECOND_PERSON, shareEmailArray);
 
         // same object -> returns true
         assertTrue(emailFirstCommand.equals(emailFirstCommand));
 
         // same values -> returns true
-        EmailCommand emailFirstCommandCopy = new EmailCommand(INDEX_FIRST_PERSON, "unifycs2103@gmail.com");
+        EmailCommand emailFirstCommandCopy = new EmailCommand(INDEX_FIRST_PERSON, shareEmailArray);
         assertTrue(emailFirstCommand.equals(emailFirstCommandCopy));
 
         // different types -> returns false
@@ -60,7 +62,7 @@ public class EmailCommandTest {
      * Returns a {@code EmailCommand} with the parameter {@code index}.
      */
     private EmailCommand prepareCommand(Index index) {
-        EmailCommand emailCommand = new EmailCommand(index, "unifycs2103@gmail.com");
+        EmailCommand emailCommand = new EmailCommand(index, shareEmailArray);
         emailCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return emailCommand;
     }

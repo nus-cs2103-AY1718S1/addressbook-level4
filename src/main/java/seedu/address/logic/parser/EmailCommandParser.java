@@ -1,6 +1,8 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SHARE;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -18,19 +20,16 @@ public class EmailCommandParser {
      * @throws ParseException if the user input does not conform the expected format
      */
     public EmailCommand parse(String arguments) throws ParseException {
-        String[] args = arguments.trim().split("\\s+");
-        if (args.length == 2) {
-            String email = args[1];
-            try {
-                Index index = ParserUtil.parseIndex(args[0]);
-                return new EmailCommand(index, email);
-            } catch (IllegalValueException ive) {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
-            }
-        } else {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
+        requireNonNull(arguments);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(arguments, PREFIX_SHARE);
+        Index index;
+        try {
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
         }
+        String share = argMultimap.getValue(PREFIX_SHARE).orElse("");
+        String[] shareEmailArray = share.trim().split("\\s+");
+        return new EmailCommand(index, shareEmailArray);
     }
 }

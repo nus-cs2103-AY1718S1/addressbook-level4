@@ -15,7 +15,9 @@ import javax.mail.internet.MimeMultipart;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
@@ -25,7 +27,7 @@ import seedu.address.model.tag.Tag;
  */
 public class EmailCommand extends Command {
 
-    public static final String COMMAND_WORD = "email";
+    public static final String COMMAND_WORD = "share";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Emails the person's contact details identified by the index number used in the last person listing.\n"
@@ -36,16 +38,19 @@ public class EmailCommand extends Command {
 
     private static final String MESSAGE_FAILURE = "Email was not sent!";
 
-    private final Index targetIndex;
+    private Index targetIndex;
+    private Index recipientIndexEmail;
     private String recipientEmail;
+    private String[] shareEmailArray;
 
-    public EmailCommand(Index targetIndex, String recipientEmail) {
+    public EmailCommand(Index targetIndex, String[] shareEmailArray) {
         this.targetIndex = targetIndex;
-        this.recipientEmail = recipientEmail;
+        this.shareEmailArray = shareEmailArray;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
+
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -64,7 +69,7 @@ public class EmailCommand extends Command {
             tags += tag.tagName + " ";
         }
 
-        String to = recipientEmail;
+        String to;
         // Sender's email ID needs to be mentioned
         String from = "unifycs2103@gmail.com";
         // For Gmail host
@@ -85,56 +90,80 @@ public class EmailCommand extends Command {
                 }
         );
 
-        try {
 
-            // Create a default MimeMessage object.
-            MimeMessage message = new MimeMessage(session);
+        for (int index = 0; index < shareEmailArray.length; index++) {
+            to = shareEmailArray[index];
+            if (isNumeric(to)) {
+                try {
+                    Index recepientIndex = ParserUtil.parseIndex(to);
+                    if (recepientIndex.getZeroBased() >= lastShownList.size()) {
+                        throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                    }
+                    ReadOnlyPerson personRecipient = lastShownList.get(recepientIndex.getZeroBased());
+                    to = personRecipient.getEmail().toString();
 
-            // Set From: header field of the header.
-            message.setFrom(new InternetAddress(from));
+                } catch (IllegalValueException ive) {
+                    return new CommandResult(MESSAGE_FAILURE);
+                }
+            }
 
-            // Set To: header field of the header.
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
-            // Set Subject: header field
-            message.setSubject("Unify: Address Book: " + name + "Exported Data");
+            try {
 
-            MimeBodyPart messageBodyPart = new MimeBodyPart();
+                // Create a default MimeMessage object.
+                MimeMessage message = new MimeMessage(session);
 
-            //set the actual message
-            messageBodyPart.setContent("<img src='https://github.com/CS2103AUG2017-W11-B4/"
-                            + "main/blob/master/docs/images/email_header.png?raw=true'/>"
-                            + "<br/><br/><br/><img src='https://github.com/CS2103AUG2017-W11-B4/"
-                            + "main/blob/master/docs/images/email_subheader.png?raw=true'/>"
-                            + "<br/><br/>"
-                            + "<table>"
-                            + "<tr><td style=\"height:20px; width:80px; margin:0;\">"
-                            + "<b>Name</b></td><td>" + name + "</td></tr>"
-                            + "<tr><td style=\"height:20px; width:80px; margin:0;\">"
-                            + "<b>Phone</b></td><td>" + phone + "</td></tr>"
-                            + "<tr><td style=\"height:20px; width:80px; margin:0;\">"
-                            + "<b>Address</b></td><td>" + address + "</td></tr>"
-                            + "<tr><td style=\"height:20px; width:80px; margin:0;\">"
-                            + "<b>Email</b></td><td>" + email + "</td></tr>"
-                            + "<tr><td style=\"height:20px; width:80px; margin:0;\">"
-                            + "<b>Remark</b></td><td>" + remark + "</td></tr>"
-                            + "<tr><td style=\"height:20px; width:80px; margin:0;\">"
-                            + "<b>Tags</b></td><td>" + tags + "</td></tr>"
-                            + "</table>",
-                    "text/html");
+                // Set From: header field of the header.
+                message.setFrom(new InternetAddress(from));
 
-            Multipart multipart = new MimeMultipart();
+                // Set To: header field of the header.
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
-            //set text message part
-            multipart.addBodyPart(messageBodyPart);
-            message.setContent(multipart);
+                // Set Subject: header field
+                message.setSubject("Unify: Address Book: " + name + "Exported Data");
 
-            Transport.send(message);
-            return new CommandResult(MESSAGE_SUCCESS);
-        } catch (MessagingException msg) {
-            msg.printStackTrace();
-            return new CommandResult(MESSAGE_FAILURE);
+                MimeBodyPart messageBodyPart = new MimeBodyPart();
+
+                //set the actual message
+                messageBodyPart.setContent("<img src='https://github.com/CS2103AUG2017-W11-B4/"
+                                + "main/blob/master/docs/images/email_header.png?raw=true'/>"
+                                + "<br/><br/><br/><img src='https://github.com/CS2103AUG2017-W11-B4/"
+                                + "main/blob/master/docs/images/email_subheader.png?raw=true'/>"
+                                + "<br/><br/>"
+                                + "<table>"
+                                + "<tr><td style=\"height:20px; width:80px; margin:0;\">"
+                                + "<b>Name</b></td><td>" + name + "</td></tr>"
+                                + "<tr><td style=\"height:20px; width:80px; margin:0;\">"
+                                + "<b>Phone</b></td><td>" + phone + "</td></tr>"
+                                + "<tr><td style=\"height:20px; width:80px; margin:0;\">"
+                                + "<b>Address</b></td><td>" + address + "</td></tr>"
+                                + "<tr><td style=\"height:20px; width:80px; margin:0;\">"
+                                + "<b>Email</b></td><td>" + email + "</td></tr>"
+                                + "<tr><td style=\"height:20px; width:80px; margin:0;\">"
+                                + "<b>Remark</b></td><td>" + remark + "</td></tr>"
+                                + "<tr><td style=\"height:20px; width:80px; margin:0;\">"
+                                + "<b>Tags</b></td><td>" + tags + "</td></tr>"
+                                + "</table>",
+                        "text/html");
+
+                Multipart multipart = new MimeMultipart();
+
+                //set text message part
+                multipart.addBodyPart(messageBodyPart);
+                message.setContent(multipart);
+
+                Transport.send(message);
+
+            } catch (MessagingException msg) {
+                msg.printStackTrace();
+                return new CommandResult(MESSAGE_FAILURE);
+            }
         }
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    public boolean isNumeric(String s) {
+        return s != null && s.matches("[-+]?\\d*\\.?\\d+");
     }
 
     @Override
