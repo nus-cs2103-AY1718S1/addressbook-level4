@@ -28,7 +28,6 @@ This comprehensive guide brings you all the necessary information you need to na
 
 * Step by step guide to set up your project
 * Design and implementation of ConTag features
-* *(NOT SURE WHETHER TO INCLUDE THE REST)*
 
 === Overview of the ConTag Project
 
@@ -101,7 +100,7 @@ To make sure that the application runs as expected after the initial set up sett
 
 ==== Configuring the Coding Style
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours. However, it uses a different import order from ours. To rectify, *(WHEN TO USE , AND WHEN TO USE : ? ANY WAY TO STANDARDISE?)*
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours. However, it uses a different import order from ours. To rectify,
 
 . Go to `File` > `Settings...` (Windows/Linux) or `IntelliJ IDEA` > `Preferences...` (macOS)
 . Select `Editor` > `Code Style` > `Java`
