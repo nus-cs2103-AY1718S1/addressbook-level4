@@ -58,9 +58,11 @@ public class BrowserPanel extends UiPart<Region> {
                     + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
+    //@@author taojiashu
     public void loadLocationPage(String address) {
         loadPage(MAPS_URL + address);
     }
+    //@@author
 
     //@@author LeeYingZheng
     public void loadFacebookPage() {
@@ -98,9 +100,11 @@ public class BrowserPanel extends UiPart<Region> {
         loadPersonPage(event.getNewSelection().person);
     }
 
+    //@@author taojiashu
     @Subscribe
     private void handleLocationRequest(ShowLocationRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadLocationPage(event.getAddress());
     }
+    //@@author
 }

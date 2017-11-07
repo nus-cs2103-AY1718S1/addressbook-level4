@@ -2,6 +2,7 @@ package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
 
+//@@author taojiashu
 /**
  * Indicates a request to display the address of a person in Google Maps
  */
