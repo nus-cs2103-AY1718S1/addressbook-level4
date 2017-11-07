@@ -22,6 +22,7 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class Person implements ReadOnlyPerson {
 
+    //@@author nguyenvanhoang7398
     private static final String DEFAULT_NAME = "Full Name";
     private static final String DEFAULT_OCCUPATION = "Google, Software engineer";
     private static final String DEFAULT_PHONE = "123456";
@@ -30,6 +31,7 @@ public class Person implements ReadOnlyPerson {
     private static final String DEFAULT_REMARK = "funny";
     private static final String DEFAULT_WEBSITE = "https://www.google.com";
     private static final String DEFAULT_TAG = "me";
+    //@@author
 
     private ObjectProperty<Name> name;
     private ObjectProperty<Occupation> occupation;
@@ -57,6 +59,7 @@ public class Person implements ReadOnlyPerson {
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
 
+    //@@author nguyenvanhoang7398
     public Person() {
         try {
             this.name = new SimpleObjectProperty<>(new Name(DEFAULT_NAME));
@@ -73,6 +76,7 @@ public class Person implements ReadOnlyPerson {
             ive.printStackTrace();
         }
     }
+    //@@author
 
     /**
      * Creates a copy of the given ReadOnlyPerson.
@@ -154,7 +158,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
-    //@@author
+    //@@author JavynThun
     public void setRemark(Remark remark) {
         this.remark.set(requireNonNull(remark));
     }

@@ -51,8 +51,10 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane browserPlaceholder;
 
+    //@@author nguyenvanhoang7398
     @FXML
     private StackPane profilePlaceholder;
+    //@@author
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -135,8 +137,10 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
+        //@@author nguyenvanhoang7398
         profilePanel = new ProfilePanel(primaryStage);
         profilePlaceholder.getChildren().add(profilePanel.getRoot());
+        //@@author
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());

@@ -1,3 +1,4 @@
+//@@author nguyenvanhoang7398
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -16,7 +17,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class AddMultipleByTsvCommandParser implements Parser<AddMultipleByTsvCommand> {
 
     /**
-     * Parse arguments given by AddressBookParser
+     * Parse arguments given by AddressBookParser to add multiple contacts
      * @param args
      * @return
      * @throws ParseException

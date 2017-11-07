@@ -180,7 +180,9 @@ public abstract class AddressBookSystemTest {
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
+        //@@author nguyenvanhoang7398
         String selectedCardWebsite = getPersonListPanel().getHandleToSelectedCard().getWebsite();
+        //@@author
         URL expectedUrl;
         try {
             expectedUrl = new URL(selectedCardWebsite);

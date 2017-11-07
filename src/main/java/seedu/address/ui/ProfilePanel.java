@@ -1,3 +1,4 @@
+//@@author nguyenvanhoang7398
 package seedu.address.ui;
 
 import java.awt.image.BufferedImage;
@@ -24,6 +25,7 @@ import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seedu.address.MainApp;
+import seedu.address.commons.core.ImageStorageHandler;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
@@ -38,6 +40,7 @@ public class ProfilePanel extends UiPart<Region> {
     private static final String DEFAULT_IMAGE_STORAGE_PREFIX = "data/";
     private static final String DEFAULT_IMAGE_STORAGE_SUFFIX = ".png";
     private static final String DEFAULT_PROFILE_PICTURE_PATH = "/images/default_profile_picture.png";
+    private static final String DEFAULT_PROFILE_BACKGROUND_PATH = "/images/profile_background.jpg";
     private static String[] colors = { "red", "yellow", "blue", "orange", "indigo", "green", "violet", "black" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
@@ -99,7 +102,11 @@ public class ProfilePanel extends UiPart<Region> {
                         setExtFilters(fileChooser);
                         File file = fileChooser.showOpenDialog(primaryStage);
                         if (file != null) {
-                            saveImageToStorage(file);
+                            try {
+                                ImageStorageHandler.saveImageToStorage(file, person);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                             refreshState();
                         }
                     }
@@ -112,22 +119,6 @@ public class ProfilePanel extends UiPart<Region> {
                 new FileChooser.ExtensionFilter("All Images", "*.*"),
                 new FileChooser.ExtensionFilter("PNG", "*.png")
         );
-    }
-
-    /**
-     * Save a given image file to storage
-     * @param file
-     */
-    private void saveImageToStorage(File file) {
-        Image image = new Image(file.toURI().toString());
-        String phoneNum = person.getPhone().value;
-
-        try {
-            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png",
-                    new File(DEFAULT_IMAGE_STORAGE_PREFIX + phoneNum + DEFAULT_IMAGE_STORAGE_SUFFIX));
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
     }
 
     /**
@@ -152,7 +143,9 @@ public class ProfilePanel extends UiPart<Region> {
      * Initialize panel's style such as color
      */
     private void initStyle() {
-        profilePane.setStyle("-fx-background-color: #FFFFFF;");
+        profilePane.setStyle(String.format("-fx-background-image: url(%s); "
+                        + "-fx-background-position: center center; -fx-background-size: cover;",
+                DEFAULT_PROFILE_BACKGROUND_PATH));
     }
 
     /**

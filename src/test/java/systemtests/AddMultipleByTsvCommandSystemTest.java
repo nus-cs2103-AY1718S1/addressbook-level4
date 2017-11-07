@@ -1,3 +1,4 @@
+//@@author nguyenvanhoang7398
 package systemtests;
 
 import static seedu.address.logic.commands.AddMultipleByTsvCommand.MESSAGE_DUPLICATE_PERSON;
@@ -9,6 +10,7 @@ import java.util.StringJoiner;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.AddMultipleByTsvCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -40,7 +42,7 @@ public class AddMultipleByTsvCommandSystemTest extends AddressBookSystemTest {
         ArrayList<Integer> failedEntries = tsvFile.getFailedEntries();
 
         if (!isFileFound) {
-            throw new IllegalArgumentException(AddMultipleByTsvCommand.MESSAGE_FILE_NOT_FOUND);
+            throw new IllegalArgumentException(Messages.MESSAGE_FILE_NOT_FOUND);
         }
         int numAdded = 0;
         int numDuplicated = 0;
