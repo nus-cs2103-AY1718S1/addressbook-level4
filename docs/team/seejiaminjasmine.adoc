@@ -16,7 +16,8 @@ This Project Portfolio showcases the contributions that I have done for this pro
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== Enhancement Added: Undo/Redo
+
+=== Enhancement Added: Filter by tag
 
 ==== External behavior
 
@@ -24,9 +25,6 @@ This Project Portfolio showcases the contributions that I have done for this pro
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=filtertag]
-include::../UserGuide.adoc[tag=removetag]
-include::../UserGuide.adoc[tag=colourtheme]
-include::../UserGuide.adoc[tag=uploadphoto]
 
 #End of Extract#
 
@@ -36,25 +34,102 @@ include::../UserGuide.adoc[tag=uploadphoto]
 
 {Justify the need for, and the current design (i.e. external behavior) of, the feature}
 
-====== Filter by tag feature
 ConnectUs aims to give convenience while being user-friendly. By having a feature to filter the contacts based on the tags,
 it can speed up the process of searching for the contact and save precious time especially when there are many contacts in the application. +
 The feature is executed by typing `tag KEYWORD [MORE_KEYWORDS]` on the command line to make it simple and user-friendly for the user to use.
 The command allows multiple keywords of the tag names to give the users the flexibility to optimise their search.
 
-====== Remove tag feature
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=filtertag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Remove tag(s)
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=removetag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
 In terms of tag features, ConnectUs only had the ability to add and edit the tags of a contact. If the user wanted to remove a specific tag, he/she would have to
 go and edit all the contacts that has the relevant tag to remove it. Hence, this feature allows the user to remove the specific tag from all contacts without
 the trouble of manually editing each contact. This will provide convenience and saves the user a lot of time. +
 The feature is executed by typing `rtag KEYWORD [MORE_KEYWORDS]` on the command line to make it simple and user-friendly for the user to use.
 The command allows multiple keywords of the tag names in case the user wants to remove multiple tags simultaneously.
 
-====== Colour theme feature
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=removetag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Colour theme
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=colourtheme]
+
+#End of Extract#
+
+---
+
+==== Justification
+
 This feature was added to allow users to personalize the application by changing to the colour theme of their preference.
 Some users may want to feel more familiar with the application or they may want a design change once in a while. This feature can help cater to these users. +
 The theme can be changed by clicking on the `File` drop down menu and selecting the theme. This is to make it user-friendly and
 easier for users to change the colour theme as the colour themes are all listed in the menu and they can directly change the colour theme by simply clicking instead of
 having to type in the command line and searching for what available colour themes are there.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=colourtheme]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Upload photo to contacts
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=uploadphoto]
+
+#End of Extract#
+
+---
+
+==== Justification
 
 ====== Upload photo feature
 Since ConnectUs is mainly targeted at business professionals, it is important to know their client's face and by having a feature to upload photo to the contacts,
@@ -68,9 +143,6 @@ This is to allow the user flexibility in choosing the method they prefer to uplo
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=filtertag]
-include::../DeveloperGuide.adoc[tag=removetag]
-include::../DeveloperGuide.adoc[tag=colourtheme]
 include::../DeveloperGuide.adoc[tag=uploadphoto]
 
 #End of Extract#
