@@ -94,9 +94,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.add(newPerson);
     }
 
+    //@@author Estois
     public void sortPerson(Comparator<ReadOnlyPerson> sortBy) throws EmptyBookException {
         persons.sort(sortBy);
     }
+    //@@author
 
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.

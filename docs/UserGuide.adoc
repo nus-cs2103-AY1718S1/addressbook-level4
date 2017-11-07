@@ -137,6 +137,8 @@ Returns any person with birthday on `10-10-1995`
 
 // end::findcommand[]
 
+//tag::deletecommand[]
+
 === Deleting a person : `delete`
 
 Deletes the specified person from PEERSONAL. +
@@ -160,6 +162,7 @@ Deletes the 1st, 3rd and 4th person in PEERSONAL.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+//end::deletecommand[]
 
 === Adding photo : `addphoto` (Since v1.3)
 
@@ -290,10 +293,13 @@ Format: `upcomingbirthday`
 
 // end ::upbirthday[]
 
+// tag::sortcommand[]
+
 === Sorting all entries : `sort` (Since v1.2)
 
 Sorts all entries in PEERSONAL based on the given prefix in ascending order. +
 Sorts based on `NAME` by default. +
+Contacts without any entries for that prefix will be listed below the contacts that do have them. +
 Format: `sort [PREFIX]` +
 
 Examples:
@@ -310,6 +316,8 @@ Sorts the list based on `EMAIL`. +
 Sorts the list based on `ADDRESS`. +
 * `sort o/` +
 Sorts the list based on `AGE`.
+
+// end::sortcommand[]
 
 === Clearing all entries : `clear`
 
