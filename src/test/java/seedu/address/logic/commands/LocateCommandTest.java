@@ -117,7 +117,8 @@ public class LocateCommandTest {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
-        ShowLocationRequestEvent lastEvent = (ShowLocationRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        ShowLocationRequestEvent lastEvent = (ShowLocationRequestEvent)
+                eventsCollectorRule.eventsCollector.getMostRecent();
         assertEquals(address, lastEvent.getAddress());
     }
 
