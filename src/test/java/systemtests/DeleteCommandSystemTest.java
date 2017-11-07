@@ -11,7 +11,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import java.util.ArrayList;
-import java.util.DuplicateFormatFlagsException;
+
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -124,10 +124,10 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         ArrayList<ReadOnlyPerson> target = new ArrayList<>();
         target.add(targetPerson);
         try {
-            if(model.getRecycleBin().getPersonList().contains(targetPerson)) {
+            if (model.getRecycleBin().getPersonList().contains(targetPerson)) {
                 model.deletePerson(targetPerson);
             } else {
-               model.deletePerson(target);
+                model.deletePerson(target);
             }
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("targetPerson is retrieved from model.");

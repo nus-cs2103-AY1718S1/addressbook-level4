@@ -25,7 +25,7 @@ public class AddCommandIntegrationTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(),new AddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), new AddressBook(), new UserPrefs());
     }
 
     @Test

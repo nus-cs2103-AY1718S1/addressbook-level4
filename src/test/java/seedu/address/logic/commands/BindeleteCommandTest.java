@@ -5,15 +5,12 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstBinPersonOnly;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalRecycleBin.getTypicalRecyclbin;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Test;
 
@@ -21,13 +18,10 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.testutil.PersonBuilder;
 
 //@@author Pengyuz
 /**
@@ -35,7 +29,7 @@ import seedu.address.testutil.PersonBuilder;
  */
 public class BindeleteCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(),getTypicalRecyclbin(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalRecyclbin(), new UserPrefs());
     private ArrayList<Index> personsToDelete1 = new ArrayList<>();
     private ArrayList<ReadOnlyPerson> persontodelete = new ArrayList<>();
 

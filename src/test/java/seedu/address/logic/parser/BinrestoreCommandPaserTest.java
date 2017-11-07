@@ -5,8 +5,11 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+
 import java.util.ArrayList;
+
 import org.junit.Test;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.BinrestoreCommand;
 
@@ -19,7 +22,7 @@ import seedu.address.logic.commands.BinrestoreCommand;
  */
 public class BinrestoreCommandPaserTest {
 
-    BinrestoreCommandParser parser = new BinrestoreCommandParser();
+    private BinrestoreCommandParser parser = new BinrestoreCommandParser();
 
     @Test
     public void parse_validArgs_returnsBindresotreCommand() {
@@ -38,7 +41,8 @@ public class BinrestoreCommandPaserTest {
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "I/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, BinrestoreCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "I/", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                BinrestoreCommand.MESSAGE_USAGE));
     }
 
     @Test

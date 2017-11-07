@@ -231,7 +231,9 @@ public class AddCommandTest {
         }
 
         @Override
-        public ReadOnlyAddressBook getRecycleBin() {return new AddressBook(); }
+        public ReadOnlyAddressBook getRecycleBin() {
+            return new AddressBook();
+        }
     }
 
     /**
@@ -251,7 +253,9 @@ public class AddCommandTest {
         }
 
         @Override
-        public ReadOnlyAddressBook getRecycleBin() { return new AddressBook(); }
+        public ReadOnlyAddressBook getRecycleBin() {
+            return new AddressBook();
+        }
     }
 
 }

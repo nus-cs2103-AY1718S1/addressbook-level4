@@ -34,7 +34,7 @@ public class ModelManagerTest {
 
         // same values -> returns true
         ModelManager modelManager = new ModelManager(addressBook, new AddressBook(), userPrefs);
-        ModelManager modelManagerCopy = new ModelManager(addressBook,new AddressBook(), userPrefs);
+        ModelManager modelManagerCopy = new ModelManager(addressBook, new AddressBook(), userPrefs);
         assertTrue(modelManager.equals(modelManagerCopy));
 
         // same object -> returns true

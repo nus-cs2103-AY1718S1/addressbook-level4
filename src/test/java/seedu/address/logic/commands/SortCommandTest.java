@@ -297,7 +297,9 @@ public class SortCommandTest {
         }
 
         @Override
-        public ReadOnlyAddressBook getRecycleBin() { return new AddressBook(); }
+        public ReadOnlyAddressBook getRecycleBin() {
+            return new AddressBook();
+        }
     }
 
 

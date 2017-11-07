@@ -39,7 +39,7 @@ public class BirthdayAddCommandTest {
         BirthdayAddCommand birthdayAddCommand = prepareCommand(INDEX_FIRST_PERSON, birthday);
         String expectedMessage = String.format(BirthdayAddCommand.MESSAGE_ADD_BIRTHDAY_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),new AddressBook(),
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new AddressBook(),
                 new UserPrefs());
         expectedModel.updatePerson(originalPerson, editedPerson);
 

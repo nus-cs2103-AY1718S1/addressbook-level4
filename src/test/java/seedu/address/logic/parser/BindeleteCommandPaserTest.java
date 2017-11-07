@@ -5,8 +5,11 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+
 import java.util.ArrayList;
+
 import org.junit.Test;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.BindeleteCommand;
 
@@ -19,7 +22,7 @@ import seedu.address.logic.commands.BindeleteCommand;
  */
 public class BindeleteCommandPaserTest {
 
-    BindeleteCommandParser parser = new BindeleteCommandParser();
+    private BindeleteCommandParser parser = new BindeleteCommandParser();
 
     @Test
     public void parse_validArgs_returnsBindeleteCommand() {

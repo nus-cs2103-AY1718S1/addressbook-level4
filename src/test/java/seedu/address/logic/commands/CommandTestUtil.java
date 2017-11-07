@@ -17,7 +17,6 @@ import seedu.address.logic.commands.TagRemoveCommand.TagRemoveDescriptor;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -144,6 +143,9 @@ public class CommandTestUtil {
         assert model.getFilteredPersonList().size() == 1;
     }
 
+    /**
+     *Updates {@code model}'s filtered list to show only the first person in the {@code model}'s recycle bin.
+     */
     public static void showFirstBinPersonOnly(Model model) {
         ReadOnlyPerson person = model.getRecycleBin().getPersonList().get(0);
         final String[] splitName = person.getName().fullName.split("\\s+");

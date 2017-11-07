@@ -37,7 +37,7 @@ public class DeleteCommandTest {
             .withAddress("124, Jurong West Ave 7, #08-112").withEmail("alicee@example.com")
             .withPhone("85333333")
             .withTags("workmate").build();
-    private Model model = new ModelManager(getTypicalAddressBook(),new AddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), new AddressBook(), new UserPrefs());
     private ArrayList<Index> personsToDelete1 = new ArrayList<>();
 
     @Test
@@ -74,7 +74,7 @@ public class DeleteCommandTest {
 
         String expectedMessage1 = DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
 
-        ModelManager expectedModel1 = new ModelManager(model.getAddressBook(),new AddressBook(), new UserPrefs());
+        ModelManager expectedModel1 = new ModelManager(model.getAddressBook(), new AddressBook(), new UserPrefs());
 
         expectedModel1.deletePerson(personToDelete);
 
