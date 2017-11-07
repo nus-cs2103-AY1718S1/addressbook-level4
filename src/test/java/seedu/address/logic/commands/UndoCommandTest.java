@@ -52,7 +52,6 @@ public class UndoCommandTest {
         Command previousCommand = addressBookParser.parseCommand(lastCommand);
         String previousCommandString = previousCommand.toString();
         String expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
-        //assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
         assertCommandSuccess(undoCommand, model, expectedResultMessage, expectedModel);
 
         // single command in undoStack
@@ -61,7 +60,6 @@ public class UndoCommandTest {
         previousCommand = addressBookParser.parseCommand(lastCommand);
         previousCommandString = previousCommand.toString();
         expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
-        //assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
         assertCommandSuccess(undoCommand, model, expectedResultMessage, expectedModel);
         //@@author
 

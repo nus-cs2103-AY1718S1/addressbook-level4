@@ -34,7 +34,6 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
         String previousCommandString = previousCommand.toString();
         String command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
-        //String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command,  expectedResultMessage, defaultModel);
         assertSelectedCardUnchanged();
         //@@author
@@ -42,7 +41,6 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
         /* Case: redo clearing address book -> cleared */
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.parseCommand(previousCommandString);
-        //expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, expectedResultMessage, new ModelManager());
         assertSelectedCardUnchanged();
 

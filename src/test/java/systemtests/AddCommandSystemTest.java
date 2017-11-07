@@ -92,7 +92,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         String previousCommandString = previousCommand.toString();
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
-        //String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
         //@@author
 
@@ -100,7 +99,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = RedoCommand.COMMAND_WORD;
         model.addPerson(toAdd);
         expectedResultMessage = RedoCommand.parseCommand(previousCommandString);
-        //expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: add a duplicate person -> rejected */

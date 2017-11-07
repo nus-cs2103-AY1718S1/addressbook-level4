@@ -92,14 +92,12 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         String previousCommandString = previousCommand.toString();
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
-        //String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
         //@@author
 
         /* Case: redo editing the last person in the list -> last person edited again */
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.parseCommand(previousCommandString);
-        //expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         model.updatePerson(
                 getModel().getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), editedPerson);
         assertCommandSuccess(command, model, expectedResultMessage);

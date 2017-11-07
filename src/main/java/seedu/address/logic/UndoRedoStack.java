@@ -60,6 +60,7 @@ public class UndoRedoStack {
         UndoableCommand toRedo = redoStack.peek();
         return toRedo;
     }
+    //@@author
 
     /**
      * Pops and returns the next {@code UndoableCommand} to be redone in the stack.

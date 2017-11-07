@@ -52,7 +52,6 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         String previousCommandString = previousCommand.toString();
         command = UndoCommand.COMMAND_WORD;
         expectedResultMessage = UndoCommand.parseCommand(previousCommandString);
-        //expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
         //@@author
 
@@ -60,7 +59,6 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         command = RedoCommand.COMMAND_WORD;
         removePerson(modelBeforeDeletingLast, lastPersonIndex);
         expectedResultMessage = RedoCommand.parseCommand(previousCommandString);
-        //expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
 
         /* Case: delete the middle person in the list -> deleted */

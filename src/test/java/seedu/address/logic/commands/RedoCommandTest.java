@@ -52,7 +52,6 @@ public class RedoCommandTest {
         String previousCommandString = previousCommand.toString();
         String expectedResultMessage = RedoCommand.parseCommand(previousCommandString);
         assertCommandSuccess(redoCommand, model, expectedResultMessage, expectedModel);
-        //assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // single command in redoStack
         deleteFirstPerson(expectedModel);
@@ -61,7 +60,6 @@ public class RedoCommandTest {
         previousCommandString = previousCommand.toString();
         expectedResultMessage = RedoCommand.parseCommand(previousCommandString);
         assertCommandSuccess(redoCommand, model, expectedResultMessage, expectedModel);
-        //assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
         //@@author
 
         // no command in redoStack
