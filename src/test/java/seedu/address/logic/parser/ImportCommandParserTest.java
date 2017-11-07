@@ -14,7 +14,7 @@ import seedu.address.ui.testutil.EventsCollectorRule;
 
 //@@author freesoup
 public class ImportCommandParserTest {
-    public static final String testFileDirectory = "src\\test\\data\\ImportCommandParserTest\\";
+    public static final String TEST_FILE_DIRECTORY = "src\\test\\data\\ImportCommandParserTest\\";
 
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
@@ -34,11 +34,11 @@ public class ImportCommandParserTest {
     public void parse_corruptedFile_throwsParseException() {
         //Corrupted xml
         assertParseFailure(parser,
-                testFileDirectory + "CorruptedXML.xml", ImportCommand.MESSAGE_FILE_CORRUPT);
+                TEST_FILE_DIRECTORY + "CorruptedXML.xml", ImportCommand.MESSAGE_FILE_CORRUPT);
 
         //Corrupted vcf
         assertParseFailure(parser,
-                testFileDirectory + "CorruptedVCF.vcf", ImportCommand.MESSAGE_FILE_CORRUPT);
+                TEST_FILE_DIRECTORY + "CorruptedVCF.vcf", ImportCommand.MESSAGE_FILE_CORRUPT);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class ImportCommandParserTest {
     @Test
     public void parse_validArgs_success() {
         //Valid xml file with data of getTypicalAddressBook.
-        assertParseSuccess(parser,
-                testFileDirectory + "ValidTypicalAddressBook.xml", new ImportCommand(getTypicalAddressBook().getPersonList()));
+        assertParseSuccess(parser, TEST_FILE_DIRECTORY + "ValidTypicalAddressBook.xml",
+                new ImportCommand(getTypicalAddressBook().getPersonList()));
     }
 }
