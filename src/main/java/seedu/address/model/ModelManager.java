@@ -130,7 +130,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void unselectPerson(){
+    public void unselectPerson() {
         this.person = null;
     }
 
