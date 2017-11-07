@@ -50,7 +50,7 @@ public class AddAvatarCommand extends UndoableCommand {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof DeleteCommand // instanceof handles nulls
+                || (other instanceof AddAvatarCommand // instanceof handles nulls
                 && this.targetIndex.equals(((AddAvatarCommand) other).targetIndex)
                 && this.avatar.equals(((AddAvatarCommand) other).avatar)); // state check
     }
