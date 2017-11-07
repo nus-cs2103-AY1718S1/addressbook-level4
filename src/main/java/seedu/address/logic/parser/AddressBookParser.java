@@ -57,9 +57,11 @@ public class AddressBookParser {
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
 
+        case AddPhotoCommand.COMMAND_ALIAS:
         case AddPhotoCommand.COMMAND_WORD:
             return new AddPhotoCommandParser().parse(arguments);
         //@@author zengfengw
+        case BirthdayCommand.COMMAND_ALIAS:
         case BirthdayCommand.COMMAND_WORD:
             return new BirthdayCommandParser().parse(arguments);
         //@@author
@@ -84,6 +86,7 @@ public class AddressBookParser {
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
         //@@author Affalen
+        case RemarkCommand.COMMAND_ALIAS:
         case RemarkCommand.COMMAND_WORD:
             return new RemarkCommandParser().parse(arguments);
         //@@author
@@ -96,6 +99,7 @@ public class AddressBookParser {
             return new HistoryCommand();
 
         //@@author Estois
+        case SortCommand.COMMAND_ALIAS:
         case SortCommand.COMMAND_WORD:
             return new SortCommandParser().parse(arguments);
         //@@author
@@ -114,6 +118,7 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
         //@@author zengfengw
+        case UpcomingBirthdayCommand.COMMAND_ALIAS:
         case UpcomingBirthdayCommand.COMMAND_WORD:
             return new UpcomingBirthdayCommand();
         //@@author
