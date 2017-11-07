@@ -3,13 +3,9 @@ package seedu.address.testutil;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.task.exceptions.DuplicateTaskException;
-import seedu.address.model.task.exceptions.TaskNotFoundException;
-import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
-import seedu.address.model.task.TaskNameContainsKeywordsPredicate;
-import seedu.address.model.task.UniqueTaskList;
 import seedu.address.model.util.SampleDataUtil;
 
 /**
