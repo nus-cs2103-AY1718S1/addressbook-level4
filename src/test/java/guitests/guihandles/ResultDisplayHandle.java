@@ -20,6 +20,10 @@ public class ResultDisplayHandle extends NodeHandle<TextArea> {
         return getRootNode().getText();
     }
 
+    public String getPromptText() {
+        return getRootNode().getPromptText();
+    }
+
     /**
      * Returns true if the text area is focused.
      */

@@ -17,7 +17,7 @@ public class PersonDetailPanelHandle extends NodeHandle<Node> {
     private static final String PHONE_FIELD_ID = "#phone";
     private static final String EMAIL_FIELD_ID = "#email";
     private static final String REMARK_FIELD_ID = "#remark";
-    private static final String TAGS_FIELD_ID = "#tags";
+    private static final String TAGS_FIELD_ID = "#tagsWithBorder";
 
     private Label nameLabel;
     private Label addressLabel;
