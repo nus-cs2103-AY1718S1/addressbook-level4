@@ -8,18 +8,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minWidth="920" minHeight="600" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox>
          <children>
-
             <Label fx:id="id" styleClass="label-header" />
             <Label fx:id="name" styleClass="name" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <ImageView fx:id="photoContainer" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </HBox>
              <VBox minHeight="10" />
 
             <HBox>

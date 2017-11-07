@@ -180,7 +180,7 @@ public class MainWindow extends UiPart<Region> {
         File file = new File("../addressbook4/docs/images/background.jpg");
         try {
             BackgroundImage backgroundImage = new BackgroundImage(
-                    new Image(file.toURI().toURL().toString(), 600, 450, false, true),
+                    new Image(file.toURI().toURL().toString(), 920, 600, false, true),
                     BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                     BackgroundSize.DEFAULT);
             pane.setBackground(new Background(backgroundImage));
