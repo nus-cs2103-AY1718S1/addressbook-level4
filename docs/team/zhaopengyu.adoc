@@ -16,8 +16,11 @@ Iconnect is a desktop address book application used for University Students to m
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=delete]
+
 include::../UserGuide.adoc[tag=help]
+
 include::../UserGuide.adoc[tag=export]
+
 include::../UserGuide.adoc[tag=bin]
 
 
@@ -35,8 +38,11 @@ include::../UserGuide.adoc[tag=bin]
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=undoredo]
+
 include::../DeveloperGuide.adoc[tag=help]
+
 include::../DeveloperGuide.adoc[tag=export]
+
 include::../DeveloperGuide.adoc[tag=bin]
 
 #End of Extract#
