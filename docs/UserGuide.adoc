@@ -116,6 +116,7 @@ Returns `john` and `John Doe`
 * `f Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+// tag::findtag[]
 === Listing persons with specific tag: `findtag`
 
 Finds persons who have any of the given tags. +
@@ -134,6 +135,7 @@ Examples:
 * `findtag friends` +
 Returns all the person with the tag `friends`
 
+// end::findtag[]
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
