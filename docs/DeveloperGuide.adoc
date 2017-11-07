@@ -27,7 +27,7 @@ This developer guide will describe the design and implementation of Gentleman's 
 
 === Prerequisites
 
-First of all , you need to have two of the following:
+First of all, you need to have two of the following:
 
 . *JDK `1.8.0_60`* or later
 +
