@@ -38,7 +38,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_MRT, PREFIX_TAG);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_MRT)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT + AddCommand.MESSAGE_USAGE));
         }
 
         try {
