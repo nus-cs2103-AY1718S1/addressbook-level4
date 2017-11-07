@@ -1,5 +1,5 @@
 # danielweide
-###### \java\seedu\address\commons\events\ui\QrEvent.java
+###### /java/seedu/address/commons/events/ui/QrEvent.java
 ``` java
 /**
  * Represents a selection change in the Qr Event
@@ -19,7 +19,7 @@ public class QrEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ClearLogCommand.java
+###### /java/seedu/address/logic/commands/ClearLogCommand.java
 ``` java
 public class ClearLogCommand extends Command {
     public static final String COMMAND_WORD = "clearlog";
@@ -37,7 +37,7 @@ public class ClearLogCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\commands\LoggingCommand.java
+###### /java/seedu/address/logic/commands/LoggingCommand.java
 ``` java
 public class LoggingCommand {
     /**
@@ -66,7 +66,7 @@ public class LoggingCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\QrCallCommand.java
+###### /java/seedu/address/logic/commands/QrCallCommand.java
 ``` java
 public class QrCallCommand extends Command {
 
@@ -108,7 +108,7 @@ public class QrCallCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\commands\QrGenCallCommand.java
+###### /java/seedu/address/logic/commands/QrGenCallCommand.java
 ``` java
 public class QrGenCallCommand {
     /**
@@ -129,7 +129,7 @@ public class QrGenCallCommand {
         String qrCodeL = "&margin";
         String qrCodeM = "=0";
         String qrCodeN = "&size";
-        String qrCodeO = "=450x450";
+        String qrCodeO = "=500x500";
         String qrCodeP = "&ecc";
         String qrCodeQ = "=L";
         String qrLineA = qrCodeA + qrCodeB + qrCodeC + qrCodeD + qrCodeE + qrCodeF
@@ -141,81 +141,50 @@ public class QrGenCallCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\QrGenSaveContactCommand.java
+###### /java/seedu/address/logic/commands/QrGenSaveContactCommand.java
 ``` java
 public class QrGenSaveContactCommand {
     /**
      * Method to Generate SaveContact for Phone QRCode
      */
-    public String qrSaveContact(String phoneNum, String contactName, String contactAddress, String contactEmail) {
-
-        String qrCodeA = "http://";
-        String qrCodeB = "api.qrserver.com/";
-        String qrCodeC = "v1/";
-        String qrCodeD = "create-qr-code/";
-        String qrCodeE = "?color=000000";
-        String qrCodeF = "&bgcolor=FFFFFF";
-        String qrCodeG = "&data";
-        String qrCodeH = "=BEGIN";
-        String qrCodeI = "%3A";
-        String qrCodeJ = "VCARD";
-        String qrCodeK = "%0";
-        String qrCodeL = "AVERSION";
-        String qrCodeM = "%3A2.1";
-        String qrCodeN = "%0AFN";
-        String qrCodeO = "%3A";
-        String qrLineA = qrCodeA + qrCodeB + qrCodeC + qrCodeD + qrCodeE + qrCodeF
-                + qrCodeG + qrCodeH + qrCodeI + qrCodeJ + qrCodeK + qrCodeL
-                + qrCodeM + qrCodeN + qrCodeO;
-
-        String qrpartbCodeA = "%0";
-        String qrpartbCodeB = "AN";
-        String qrpartbCodeC = "%3A";
-        String qrpartbCodeD = "%3B";
-        String qrLineB = qrpartbCodeA + qrpartbCodeB + qrpartbCodeC + qrpartbCodeD;
-        String qrpartcCodeA = "%0";
-        String qrpartcCodeB = "ATEL";
-        String qrpartcCodeC = "%3BWORK";
-        String qrpartcCodeD = "%3BVOICE";
-        String qrpartcCodeE = "%3A";
-        String qrLineC = qrpartcCodeA + qrpartcCodeB + qrpartcCodeC + qrpartcCodeD + qrpartcCodeE;
-        String qrpartdCodeA = "%0";
-        String qrpartdCodeB = "AEMAIL";
-        String qrpartdCodeC = "%3";
-        String qrpartdCodeD = "BWORK";
-        String qrpartdCodeE = "%3";
-        String qrpartdCodeF = "BINTERNET";
-        String qrpartdCodeG = "%3A";
-        String qrLineD = qrpartdCodeA + qrpartdCodeB + qrpartdCodeC + qrpartdCodeD + qrpartdCodeE + qrpartdCodeF
-                + qrpartdCodeG;
-        String qrparteCodeA = "%0";
-        String qrparteCodeB = "AORG";
-        String qrparteCodeC = "%3A";
-        String qrLineE = qrparteCodeA + qrparteCodeB + qrparteCodeC;
-        String qrpartfCodeA = "%0";
-        String qrpartfCodeB = "AEND";
-        String qrpartfCodeC = "%3";
-        String qrpartfCodeD = "AVCARD";
-        String qrpartfCodeE = "%0A";
-        String qrpartfCodeF = "&qzone";
-        String qrpartfCodeG = "=1";
-        String qrpartfCodeH = "&margin";
-        String qrpartfCodeI = "=0";
-        String qrpartfCodeJ = "&size";
-        String qrpartfCodeK = "400x400";
-        String qrpartfCodeL = "&ecc";
-        String qrpartfCodeM = "=L";
-        String qrLineF = qrpartfCodeA + qrpartfCodeB + qrpartfCodeC + qrpartfCodeD + qrpartfCodeE + qrpartfCodeF
-                + qrpartfCodeG + qrpartfCodeH + qrpartfCodeI + qrpartfCodeJ + qrpartfCodeK + qrpartfCodeL
-                + qrpartfCodeM;
-
-        String fullQr = qrLineA + contactName + qrLineB + contactName + qrLineC + phoneNum + qrLineD + contactEmail
-                + qrLineE + contactAddress + qrLineF;
+    public String qrSaveContact(String phoneNum, String contactName, String contactEmail) {
+        String qrA = "http://";
+        String qrB = "api.qrserver.com/";
+        String qrC = "v1/";
+        String qrD = "create-qr-code/";
+        String qrE = "?color=000000";
+        String qrF = "&bgcolor=FFFFFF";
+        String qrG = "&data=BEGIN";
+        String qrH = "%3AVCARD";
+        String qrI = "%0AVERSION";
+        String qrJ = "%3A2.1%0";
+        String qrK = "AFN%3A";
+        String lineA = qrA + qrB + qrC + qrD + qrE + qrF + qrG + qrH + qrI
+                + qrJ + qrK;
+        String newName = contactName.replace(' ', '+');
+        String lineB = "%0AN%3A%3B";
+        String qrL = "%0ATEL";
+        String qrM = "%3BWORK";
+        String qrN = "%3BVOICE%3A";
+        String lineC = qrL + qrM + qrN;
+        String qrO = "%0AEMAIL";
+        String qrP = "%3BWORK";
+        String qrQ = "%3BINTERNET%3A";
+        String lineD = qrO + qrP + qrQ;
+        String qrCodeA = "%0AEND";
+        String qrCodeB = "%3AVCARD";
+        String qrCodeC = "%0A&qzone=1";
+        String qrCodeD = "&margin=0";
+        String qrCodeE = "&size=500x500";
+        String qrCodeF = "&ecc=L";
+        String lineE = qrCodeA + qrCodeB + qrCodeC + qrCodeD + qrCodeE + qrCodeF;
+        String fullQr = lineA + newName + lineB + newName + lineC + phoneNum + lineD + contactEmail + lineE;
+        System.out.println(fullQr);
         return fullQr;
     }
 }
 ```
-###### \java\seedu\address\logic\commands\QrGenSmsCommand.java
+###### /java/seedu/address/logic/commands/QrGenSmsCommand.java
 ``` java
 public class QrGenSmsCommand {
     /**
@@ -236,12 +205,12 @@ public class QrGenSmsCommand {
         String qrCodeL = "&margin";
         String qrCodeM = "=0";
         String qrCodeN = "&size";
-        String qrCodeO = "=450x450";
+        String qrCodeO = "=500x500";
         String qrCodeP = "&ecc";
         String qrCodeQ = "=L";
         String qrLineA = qrCodeA + qrCodeB + qrCodeC + qrCodeD + qrCodeE + qrCodeF
                 + qrCodeG + qrCodeH + qrCodeI;
-        String qrLineB = "Dear+" + contactName + "%2C";
+        String qrLineB = qrCodeI + "Dear+" + contactName + "%2C";
         String qrLineC = qrCodeJ + qrCodeK + qrCodeL + qrCodeM + qrCodeN + qrCodeO
                 + qrCodeP + qrCodeQ;
         String fullQr = qrLineA + phoneNum + qrLineB + qrLineC;
@@ -249,7 +218,7 @@ public class QrGenSmsCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\QrSaveContactCommand.java
+###### /java/seedu/address/logic/commands/QrSaveContactCommand.java
 ``` java
 public class QrSaveContactCommand extends Command {
 
@@ -277,7 +246,7 @@ public class QrSaveContactCommand extends Command {
         }
         int indexOfPersonInList = 0;
         indexOfPersonInList = targetIndex.getOneBased() - 1;
-        EventsCenter.getInstance().post(new QrEvent(lastShownList.get(indexOfPersonInList)));
+        EventsCenter.getInstance().post(new QrSaveEvent(lastShownList.get(indexOfPersonInList)));
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
 
     }
@@ -291,7 +260,7 @@ public class QrSaveContactCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\commands\QrSmsCommand.java
+###### /java/seedu/address/logic/commands/QrSmsCommand.java
 ``` java
 public class QrSmsCommand extends Command {
 
@@ -319,7 +288,7 @@ public class QrSmsCommand extends Command {
         }
         int indexOfPersonInList;
         indexOfPersonInList = targetIndex.getOneBased() - 1;
-        EventsCenter.getInstance().post(new QrEvent(lastShownList.get(indexOfPersonInList)));
+        EventsCenter.getInstance().post(new QrSmsEvent(lastShownList.get(indexOfPersonInList)));
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
 
     }
@@ -333,7 +302,7 @@ public class QrSmsCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\parser\QrCallCommandParser.java
+###### /java/seedu/address/logic/parser/QrCallCommandParser.java
 ``` java
 public class QrCallCommandParser implements Parser<QrCallCommand> {
     /**
@@ -352,7 +321,7 @@ public class QrCallCommandParser implements Parser<QrCallCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\QrSaveContactCommandParser.java
+###### /java/seedu/address/logic/parser/QrSaveContactCommandParser.java
 ``` java
 public class QrSaveContactCommandParser implements Parser<QrSaveContactCommand> {
     /**
@@ -371,21 +340,21 @@ public class QrSaveContactCommandParser implements Parser<QrSaveContactCommand> 
     }
 }
 ```
-###### \java\seedu\address\logic\parser\QrSmsCommandParser.java
+###### /java/seedu/address/logic/parser/QrSmsCommandParser.java
 ``` java
-public class QrSmsCommandParser implements Parser<QrCallCommand> {
+public class QrSmsCommandParser implements Parser<QrSmsCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the QrCallCommand
      * and returns an QrCallCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public QrCallCommand parse(String args) throws ParseException {
+    public QrSmsCommand parse(String args) throws ParseException {
         try {
             Index index = ParserUtil.parseIndex(args);
-            return new QrCallCommand(index);
+            return new QrSmsCommand(index);
         } catch (IllegalValueException ive) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, QrCallCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, QrSmsCommand.MESSAGE_USAGE));
         }
     }
 }

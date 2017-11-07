@@ -21,18 +21,23 @@ public class ExportCommand extends Command {
             + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = "Contacts successfully exported as output.vcf !!";
+    public static final String MESSAGE_FAIL = "Contacts not exported!!";
+    public static final String MESSAGE_EMPTY_AB = "AddressBook is empty. Nothing to export !!";
 
 
 
     @Override
     public CommandResult execute() {
-
-        try {
-            writeToFile();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (model.getAddressBook().getPersonList().isEmpty()) {
+            return new CommandResult(MESSAGE_EMPTY_AB);
+        } else {
+            try {
+                writeToFile();
+            } catch (IOException e) {
+                return new CommandResult(MESSAGE_FAIL);
+            }
+            return new CommandResult(MESSAGE_SUCCESS);
         }
-        return new CommandResult(MESSAGE_SUCCESS);
     }
 
     /**

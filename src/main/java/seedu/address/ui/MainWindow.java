@@ -308,7 +308,6 @@ public class MainWindow extends UiPart<Region> {
         vBox.getStylesheets().remove("view/WhiteTheme.css");
         vBox.getStylesheets().remove("view/GreenTheme.css");
         vBox.getStylesheets().add("view/DarkTheme.css");
-        // this.scene.setFill(Color.BLUE);
     }
 
     /**
