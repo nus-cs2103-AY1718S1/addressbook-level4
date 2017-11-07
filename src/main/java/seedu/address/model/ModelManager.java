@@ -78,6 +78,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
         indicateRecycleBinChanged();
     }
+
     @Override
     public void resetRecyclebin(ReadOnlyAddressBook newData) {
         recycleBin.resetData(newData);
@@ -88,6 +89,7 @@ public class ModelManager extends ComponentManager implements Model {
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
     }
+
     @Override
     public ReadOnlyAddressBook getRecycleBin() {
         return recycleBin;
@@ -110,6 +112,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
 
     }
+
     //@@author Pengyuz
     @Override
     public synchronized void deletePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException,
@@ -126,10 +129,11 @@ public class ModelManager extends ComponentManager implements Model {
         indicateRecycleBinChanged();
         indicateAddressBookChanged();
     }
+
     //@@author Pengyuz
     @Override
     public synchronized void deleteBinPerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException {
-        for (ReadOnlyPerson s: targets) {
+        for (ReadOnlyPerson s : targets) {
             recycleBin.removePerson(s);
         }
         indicateRecycleBinChanged();
@@ -141,6 +145,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
+
     //@@author Pengyuz
     @Override
     public synchronized void restorePerson(ReadOnlyPerson person) throws DuplicatePersonException,
@@ -234,7 +239,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public boolean hasEvenClashes(Event event){
+    public boolean hasEvenClashes(Event event) {
         requireNonNull(event);
 
         return addressBook.hasEventClashes(event);
@@ -252,6 +257,7 @@ public class ModelManager extends ComponentManager implements Model {
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
+
     @Override
     public ObservableList<ReadOnlyPerson> getRecycleBinPersonList() {
         return FXCollections.unmodifiableObservableList(filteredRecycle);
@@ -262,6 +268,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
+
     @Override
     public void updateFilteredBinList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
@@ -287,6 +294,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author eldriclim
+
     /**
      * Handle event when Event in Event list is clicked.
      * <p>

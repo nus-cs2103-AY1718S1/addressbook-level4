@@ -320,26 +320,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Ensures that every event in this person:
-     * - exists in the master list {@link #events}
-     * - points to a Event object in the master list
-     */
-    private void syncMasterEventListWith(Person person) {
-        final UniqueEventList personEvents = new UniqueEventList(person.getEvents());
-        events.mergeFrom(personEvents);
-
-        // Create map with values = event object references in the master list
-        // used for checking person event references
-        final Map<Event, Event> masterEventObjects = new HashMap<>();
-        events.forEach(event -> masterEventObjects.put(event, event));
-
-        // Rebuild the personal list of events to point to the relevant events in the master event list.
-        final Set<Event> correctEventReferences = new HashSet<>();
-        personEvents.forEach(event -> correctEventReferences.add(masterEventObjects.get(event)));
-        person.setEvents(correctEventReferences);
-    }
-
-    /**
      * Check if the given event clashes with any events in the master list of events
      *
      * @param event
@@ -360,6 +340,27 @@ public class AddressBook implements ReadOnlyAddressBook {
         return hasClash;
 
     }
+
+    /**
+     * Ensures that every event in this person:
+     * - exists in the master list {@link #events}
+     * - points to a Event object in the master list
+     */
+    private void syncMasterEventListWith(Person person) {
+        final UniqueEventList personEvents = new UniqueEventList(person.getEvents());
+        events.mergeFrom(personEvents);
+
+        // Create map with values = event object references in the master list
+        // used for checking person event references
+        final Map<Event, Event> masterEventObjects = new HashMap<>();
+        events.forEach(event -> masterEventObjects.put(event, event));
+
+        // Rebuild the personal list of events to point to the relevant events in the master event list.
+        final Set<Event> correctEventReferences = new HashSet<>();
+        personEvents.forEach(event -> correctEventReferences.add(masterEventObjects.get(event)));
+        person.setEvents(correctEventReferences);
+    }
+
 
     /**
      * Ensures that every event in these persons:
