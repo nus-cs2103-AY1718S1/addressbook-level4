@@ -19,6 +19,8 @@ public class BirthdayTest {
         assertFalse(Birthday.isValidBirthday("29-02-1995")); // not a leap year
         assertFalse(Birthday.isValidBirthday("31-02-1995")); // feb cannot take 30/31
         assertFalse(Birthday.isValidBirthday("29-02-1995")); // not a leap year
+        assertFalse(Birthday.isValidBirthday("31-09-1989")); // no 31st in sept
+        assertFalse(Birthday.isValidBirthday("02.09-1989")); // separators not consistent
 
         // valid birthdays
         assertTrue(Birthday.isValidBirthday("-"));
