@@ -39,7 +39,6 @@ public class ReminderWindow extends UiPart<Region> {
         Scene scene = new Scene(getRoot());
         //Null passed as the parent stage to make it non-modal.
         dialogStage = createDialogStage(TITLE, null, scene);
-        //dialogStage.setMaximized(true); //TODO: set a more appropriate initial size
         FxViewUtil.setStageIcon(dialogStage, ICON);
 
         //set connections
@@ -99,8 +98,10 @@ public class ReminderWindow extends UiPart<Region> {
      */
     public void show() {
         logger.fine("Showing help page about the application.");
+        // Set dimensions
         dialogStage.setWidth(620);
         dialogStage.setHeight(620);
+
         dialogStage.showAndWait();
     }
 }
