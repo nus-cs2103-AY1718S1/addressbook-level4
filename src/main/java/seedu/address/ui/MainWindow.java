@@ -253,6 +253,9 @@ public class MainWindow extends UiPart<Region> {
     }
 
     //@@author freesoup
+    /**
+     * Opens a file explorer to select a file to import.
+     */
     @Subscribe
     private void handleImportFileChooseEvent(ImportFileChooseEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
