@@ -18,7 +18,10 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 
+import seedu.address.commons.events.model.DatabaseChangedEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.account.ReadOnlyAccount;
+import seedu.address.model.account.exceptions.DuplicateAccountException;
 import seedu.address.model.person.AgeComparator;
 import seedu.address.model.person.BirthdayComparator;
 import seedu.address.model.person.Person;
@@ -32,6 +35,7 @@ import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 import seedu.address.model.reminder.exceptions.ReminderNotFoundException;
 import seedu.address.model.tag.Tag;
 
+
 /**
  * Represents the in-memory model of the address book data.
  * All changes to any model should be synchronized.
@@ -44,25 +48,29 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final Database database;
+    private final FilteredList<ReadOnlyAccount> filteredAccount;
     private final FilteredList<ReadOnlyReminder> filteredReminders;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyDatabase database, UserPrefs userPrefs) {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        this.database = new Database(database);
+        filteredAccount = new FilteredList<ReadOnlyAccount>(this.database.getAccountList());
         filteredReminders = new FilteredList<>(this.addressBook.getReminderList());
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
 
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new Database(), new UserPrefs());
     }
 
     @Override
@@ -72,13 +80,28 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void resetDatabase(ReadOnlyDatabase newData) {
+        database.resetData(newData);
+        indicateDatabaseChanged();
+    }
+
+    @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
+    }
+
+    @Override
+    public ReadOnlyDatabase getDatabase() {
+        return database;
     }
 
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
+    }
+
+    private void indicateDatabaseChanged() {
+        raise(new DatabaseChangedEvent(database));
     }
 
     //// person-level operations
@@ -155,6 +178,20 @@ public class ModelManager extends ComponentManager implements Model {
             addressBook.updateReminder(oldReminder, newReminder);
         }
     }
+
+    @Override
+    public synchronized void deleteAccount(ReadOnlyAccount target) throws PersonNotFoundException {
+        database.removeAccount(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addAccount(ReadOnlyAccount account) throws DuplicateAccountException {
+        database.addAccount(account);
+        updateFilteredAccountList(PREDICATE_SHOW_ALL_ACCOUNTS);
+        indicateDatabaseChanged();
+    }
+
     //@@author
 
     //// tag-level operations
@@ -182,6 +219,25 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    //@@author
+
+    //=========== Filtered Account List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyAccount> getFilteredAccountList() {
+        return FXCollections.unmodifiableObservableList(filteredAccount);
+    }
+
+    @Override
+    public void updateFilteredAccountList(Predicate<ReadOnlyAccount> predicate) {
+        requireNonNull(predicate);
+        filteredAccount.setPredicate(predicate);
     }
 
     //@@author duyson98

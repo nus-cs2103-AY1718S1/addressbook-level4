@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_BIRTHDAY_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
+import static seedu.address.testutil.TypicalAccounts.getTypicalDatabase;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -16,6 +17,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
@@ -31,7 +33,7 @@ import seedu.address.model.person.Person;
  */
 public class BirthdayCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalDatabase(), new UserPrefs());
 
     @Test
     public void execute_addBirthday_success() throws Exception {
@@ -42,7 +44,8 @@ public class BirthdayCommandTest {
 
         String expectedMessage = String.format(BirthdayCommand.MESSAGE_ADD_BIRTHDAY_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(birthdayCommand, model, expectedMessage, expectedModel);
@@ -57,7 +60,8 @@ public class BirthdayCommandTest {
 
         String expectedMessage = String.format(BirthdayCommand.MESSAGE_DELETE_BIRTHDAY_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(birthdayCommand, model, expectedMessage, expectedModel);
@@ -106,7 +110,7 @@ public class BirthdayCommandTest {
     }
 
     @Test
-    public void equals() {
+    public void equals() throws Exception {
         final BirthdayCommand standardCommand = new BirthdayCommand(INDEX_FIRST_PERSON,
                 new Birthday(VALID_BIRTHDAY_AMY));
 
@@ -134,7 +138,7 @@ public class BirthdayCommandTest {
     /**
      * Returns an {@code BirthdayCommand} with parameters {@code index} and {@code birthday}
      */
-    private BirthdayCommand prepareCommand(Index index, String birthday) {
+    private BirthdayCommand prepareCommand(Index index, String birthday) throws IllegalValueException {
         BirthdayCommand birthdayCommand = new BirthdayCommand(index, new Birthday(birthday));
         birthdayCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return birthdayCommand;

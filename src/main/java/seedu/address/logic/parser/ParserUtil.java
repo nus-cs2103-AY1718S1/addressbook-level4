@@ -10,6 +10,8 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.account.Password;
+import seedu.address.model.account.Username;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -117,6 +119,25 @@ public class ParserUtil {
     public static Optional<Message> parseMessage(Optional<String> message) throws IllegalValueException {
         requireNonNull(message);
         return message.isPresent() ? Optional.of(new Message(message.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> message} into an {@code Optional<Message>} if {@code message} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Username> parseUsername(Optional<String> username) throws IllegalValueException {
+        requireNonNull(username);
+        return username.isPresent() ? Optional.of(new Username(username.get())) : Optional.empty();
+    }
+
+
+    /**
+     * Parses a {@code Optional<String> message} into an {@code Optional<Message>} if {@code message} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Password> parsePassword(Optional<String> password) throws IllegalValueException {
+        requireNonNull(password);
+        return password.isPresent() ? Optional.of(new Password(password.get())) : Optional.empty();
     }
 
     /**

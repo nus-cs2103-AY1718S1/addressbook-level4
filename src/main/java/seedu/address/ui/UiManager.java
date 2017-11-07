@@ -21,12 +21,15 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.AddressBook;
+import seedu.address.model.Database;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyDatabase;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.DataBaseStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
@@ -54,13 +57,14 @@ public class UiManager extends ComponentManager implements Ui {
     protected UserPrefs userPrefs;
     protected Storage storage;
     protected Model model;
+    protected DataBaseStorage dataBaseStorage;
 
-
-    public UiManager(Logic logic, Config config, UserPrefs prefs) {
+    public UiManager(Logic logic, Config config, UserPrefs prefs, DataBaseStorage dataBaseStorage) {
         super();
         this.logic = logic;
         this.config = config;
         this.prefs = prefs;
+        this.dataBaseStorage = dataBaseStorage;
     }
 
     // From here, use the commented code is you want the full feature.
@@ -89,7 +93,7 @@ public class UiManager extends ComponentManager implements Ui {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath(userName));
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        storage = new StorageManager(addressBookStorage, userPrefsStorage, dataBaseStorage);
         model = initModelManager(storage, userPrefs);
 
         logic = new LogicManager(model);
@@ -158,7 +162,9 @@ public class UiManager extends ComponentManager implements Ui {
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
+        Optional<ReadOnlyDatabase> databaseOptional;
         ReadOnlyAddressBook initialData;
+        ReadOnlyDatabase initialDatabase;
         try {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
@@ -173,7 +179,22 @@ public class UiManager extends ComponentManager implements Ui {
             initialData = new AddressBook();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        try {
+            databaseOptional = storage.readDatabase();
+            if (!databaseOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a empty AddressBook");
+                initialDatabase = new Database();
+            }
+            initialDatabase = databaseOptional.orElseGet(SampleDataUtil::getSampleDatabase);
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
+            initialDatabase = new Database();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+            initialDatabase = new Database();
+        }
+
+        return new ModelManager(initialData, initialDatabase, userPrefs);
     }
     //@@author
 

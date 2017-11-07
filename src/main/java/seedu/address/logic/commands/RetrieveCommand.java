@@ -13,6 +13,7 @@ import seedu.address.model.tag.TagContainsKeywordPredicate;
 public class RetrieveCommand extends Command {
 
     public static final String COMMAND_WORD = "retrieve";
+    public static final String COMMAND_ALIAS = "re";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Retrieves all persons belonging to an existing tag "
             + "and displays them as a list with index numbers.\n"

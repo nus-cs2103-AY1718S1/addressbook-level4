@@ -112,7 +112,7 @@ public class PersonBuilder {
     /**
      * Sets the {@code Birthday} of the {@code Person} that we are building.
      */
-    public PersonBuilder withBirthday(String birthday) {
+    public PersonBuilder withBirthday(String birthday) throws IllegalValueException {
         this.person.setBirthday(new Birthday(birthday));
         return this;
     }

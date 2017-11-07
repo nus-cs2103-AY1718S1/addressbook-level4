@@ -6,6 +6,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.RetagCommand.MESSAGE_SUCCESS;
 import static seedu.address.logic.commands.RetagCommand.MESSAGE_TAG_NOT_FOUND;
+import static seedu.address.testutil.TypicalAccounts.getTypicalDatabase;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
@@ -23,7 +24,7 @@ import seedu.address.model.tag.UniqueTagList;
 
 public class RetagCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalDatabase(), new UserPrefs());
 
     @Test
     public void execute_success() throws Exception {

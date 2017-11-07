@@ -10,6 +10,7 @@ import seedu.address.model.reminder.PriorityContainsKeywordsPredicate;
 public class FindPriorityCommand extends Command {
 
     public static final String COMMAND_WORD = "findPriority";
+    public static final String COMMAND_ALIAS = "fpr";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all reminders whose priority contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_REMINDERS_LISTED_OVERVIEW;
+import static seedu.address.testutil.TypicalAccounts.getTypicalDatabase;
 import static seedu.address.testutil.TypicalReminders.BIRTHDAY;
 import static seedu.address.testutil.TypicalReminders.GATHERING;
 import static seedu.address.testutil.TypicalReminders.MEETING;
@@ -29,7 +30,7 @@ import seedu.address.model.reminder.TaskContainsKeywordsPredicate;
  * Contains integration tests (interaction with the Model) for {@code FindReminderCommand}.
  */
 public class FindReminderCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalDatabase(), new UserPrefs());
 
     @Test
     public void equals() {
@@ -68,7 +69,7 @@ public class FindReminderCommandTest {
     @Test
     public void execute_multipleKeywords_multipleRemindersFound() {
         String expectedMessage = String.format(MESSAGE_REMINDERS_LISTED_OVERVIEW, 3);
-        FindReminderCommand command = prepareCommand("birthday Gathering office");
+        FindReminderCommand command = prepareCommand("birthday Gathering Meeting");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(BIRTHDAY, GATHERING, MEETING));
     }
 

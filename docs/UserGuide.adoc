@@ -498,6 +498,7 @@ Format: `exit`
 
 Login into a Private Database +
 Format: `login u/private p/password`
+e.g. `login u/private p/password`
 
 === Logging out of private database : `logout`
 
@@ -541,6 +542,7 @@ e.g. `findPhone 87654321`
 e.g. `findReminder Project`
 * *Find Priority* : `findPriority KEYWORD [MORE_KEYWORDS]` +
 e.g. `findPriority High`
+e.g. `findPriority Medium`
 * *List Persons* : `list`
 * *List Reminders* : `listReminder`
 * *Help* : `help`
