@@ -574,23 +574,73 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
 
 We have improved the delete command to let it be able to delete by multiple indexes or a name with prefix. The reason why we do this is to improve the efficiency to delete the contacts.The prefix for deleting by name is `n/`. The prefix for deleting by indexes is `I/`.
 
-The way we implemented this is to change the DeleteCommandParser and DeleteCommand.
+The following sequence diagram shows how the delete command works:
+
+image::DeleteCommandSequenceDiagram.png[width="800"]
+
+You can see that the way we implemented this is to change the DeleteCommandParser and DeleteCommand.
 
 As for the DeleteCommandParser, we check whether there is the prefix we want in the userInput. Once the prefix is identified, if it is a `n/`, it will directly return back the parameters to DeleteCommand. If it is a `I/`, the parameters will be parsed by ParserUtil and return back the results to DeleteCommand.
 
-As for the DeleteCommand, it can deal with two kinds of parameters: a list of indexes or a name string. If it is a list of indexes, the DeleteCommand will check whether the indexes are within the size of all persons and assert command failure if there is an illegal index. If it is a name string, the DeleteCommand will assert command failure when there is no such person in the list with name given and when there are multiple persons with the same name given.
+For example, the parser for Index is implemented this way:
+[source,java]
+----
+public static ArrayList<Index> parseIndexes(String oneBasedIndexes) throws IllegalValueException {
+        String[] ns = oneBasedIndexes.trim().split(" ");
+        ArrayList<Index> numbers = new ArrayList<>();
+        boolean allvalid = true;
+        for (String a : ns) {
+            String s = a.trim();
+            if (StringUtil.isNonZeroUnsignedInteger(s)) {
+                numbers.add(Index.fromOneBased(Integer.parseInt(s)));
+            } else {
+                allvalid = false;
+
+            }
+        }
+        if (!allvalid) {
+            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+        }
+        return numbers;
+
+    }
+----
+
+As for the DeleteCommand, you can use it to deal with two kinds of parameters: a list of indexes or a name string. If it is a list of indexes, the DeleteCommand will check whether the indexes are within the size of all persons and assert command failure if there is an illegal index. If it is a name string, the DeleteCommand will assert command failure when there is no such person in the list with name given and when there are multiple persons with the same name given.
+
+For example, the command delete people by index is implemented this way:
+[source,java]
+----
+ List<ReadOnlyPerson> lastShownList =  model.getFilteredPersonList();
+ ArrayList<ReadOnlyPerson> personstodelete =  new ArrayList<ReadOnlyPerson>();
+ //...delete name logic
+ for (Index s: targetIndexs) {
+     if (s.getZeroBased() >= lastShownList.size()) {
+          allvalid = false;
+         } else {
+          personstodelete.add(lastShownList.get(s.getZeroBased()));
+          exist = true;
+         }
+ }
+ //...dealing duplicate logic...
+ if (allvalid && exist) {
+    try {
+        model.deletePerson(personstodelete);
+    }
+    //...catch exception logic...
+ }
+----
+[NOTE]
+If your input doesn't start with correct prefix, then the command can't identify what kind of input it deals with, and a `ParseException` will be thrown when parsing.
 
 [NOTE]
-If the parameter doesn't start with correct prefix, then the command can't identify what kind of input it deals with, and a `ParseException` will be thrown when parsing.
+If your input contains illegal values or nothing after the prefix, the the command can't identify the target person, and a `ParseException` will be thrown when parsing.
 
 [NOTE]
-If the parameter contains illegal values or nothing after the prefix, the the command can't identify the target person, and a `ParseException` will be thrown when parsing.
+If your input is index and it is out of bound of person list, then the command can't find the person to delete, and a `CommandException` will be thrown when processsing.
 
 [NOTE]
-If the parameter is index and it is out of bound of person list, then the command can't find the person to delete, and a `CommandException` will be thrown when processsing.
-
-[NOTE]
-If the parameter is name and there is no person with such name in the list, then the command can't find the person to delete, and a `CommandException` will be thrown when processsing.
+If your input is a name and there is no person with such name in the list, then the command can't find the person to delete, and a `CommandException` will be thrown when processsing.
 
 Moreover, if there is more than one person in the list with the name give, then the command don't know which one ot delete. It will show all the person with same name in GUI and remind the user to choose one to delete.
 
