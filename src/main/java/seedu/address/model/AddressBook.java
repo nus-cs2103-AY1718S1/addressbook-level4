@@ -2,12 +2,8 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.lang.reflect.Array;
+import java.util.*;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
@@ -26,6 +22,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final ArrayList<String> themeList = new ArrayList<>();
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -47,6 +44,19 @@ public class AddressBook implements ReadOnlyAddressBook {
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
         resetData(toBeCopied);
+    }
+
+    /**
+     * Initialises the themes in this {@code AddressBook}.
+     */
+
+    private void initialiseThemes() {
+        themeList.add("DarkTheme.css");
+        themeList.add("LightTheme.css");
+    }
+
+    public ArrayList<String> getThemesList() {
+        return themeList;
     }
 
     //// list overwrite operations
