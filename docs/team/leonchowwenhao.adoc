@@ -15,6 +15,7 @@ Planno is a desktop application which combines the functionality of an address b
 ---
 #Start of Extract [from: User Guide]#
 
+include::../UserGuide.adoc[tag=selectE]
 include::../UserGuide.adoc[tag=toggle]
 
 #End of Extract#
@@ -30,6 +31,7 @@ include::../UserGuide.adoc[tag=toggle]
 ---
 #Start of Extract [from: Developer Guide]#
 
+include::../DeveloperGuide.adoc[tag=selectE]
 include::../DeveloperGuide.adoc[tag=toggle]
 
 #End of Extract#
@@ -42,8 +44,7 @@ include::../DeveloperGuide.adoc[tag=toggle]
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Wrote the code for the storage component for events (Pull requests https://github.com[#33], https://github.com[#34])
 
 == Project: PowerPointLabs
 
