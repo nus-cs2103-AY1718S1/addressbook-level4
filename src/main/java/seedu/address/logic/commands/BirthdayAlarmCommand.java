@@ -10,7 +10,7 @@ import seedu.address.commons.events.ui.ShowBirthdayAlarmRequestEvent;
 public class BirthdayAlarmCommand extends Command {
 
     public static final String COMMAND_WORD = "reminders";
-    public static final String COMMAND_ALIAS = "rem";
+    public static final String COMMAND_SHORT = "rem";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows the reminders window.\n"
         + "Example: " + COMMAND_WORD;
