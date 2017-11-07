@@ -22,7 +22,6 @@ public class ResultDisplay extends UiPart<Region> {
     private static final String FXML = "ResultDisplay.fxml";
 
     private final StringProperty displayed = new SimpleStringProperty("");
-
     @FXML
     private TextArea resultDisplay;
 
