@@ -42,6 +42,7 @@ public class EditTaskCommandTest {
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
         Task editedTask = new TaskBuilder().build();
+        //model.updateTaskPriority(model.getFilteredTaskList().get(0), 3);
         EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder(editedTask).build();
         EditTaskCommand editTaskCommand = prepareTaskCommand(INDEX_FIRST_TASK, descriptor);
 
