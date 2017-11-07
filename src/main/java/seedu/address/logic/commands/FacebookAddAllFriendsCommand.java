@@ -171,8 +171,7 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
         } else {
             BrowserPanel.setProcessType(COMMAND_WORD);
             addAllFriends();
-            return new CommandResult(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_SUCCESS + " (From "
-                    + FacebookConnectCommand.getAuthenticatedUsername() + "'s account)");
+            return new CommandResult(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATED);
         }
     }
 }
