@@ -4,9 +4,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: iConnect
-iConnect is a desktop address book application used for NUS undergraduates social network connection purpose. We aim to make the student's school life much easier and more convenient. The user interacts with the app by typing command line, and it has a GUI created with JavaFX. It is written in Java, and has about 25 kLoC.
+iConnect is a desktop address book application used for NUS undergraduates social network connection purpose. We aim to make the student's school life much easier and more convenient. With this app, students are able to manage their study, work as well as social activities in a more efficient way. The user is required to interact with the app by typing command line, and it has a GUI created with JavaFX for user's convenience. It is written in Java, and has about 25 thousand line of codes (kLoC).
 
-*Code contributed*: [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/Collated/main/dalessr.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/Collated/test/dalessr.md[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/Collated/main/dalessr.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/Collated/test/dalessr.md[Test code]]
 
 === Enhancements Added: Find, Map, Birthday
 
@@ -31,6 +31,10 @@ include::../UserGuide.adoc[tag=birthday]
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=findmech]
+
+include::../DeveloperGuide.adoc[tag=mapmech]
+
+include::../DeveloperGuide.adoc[tag=birthdaymech]
 
 #End of Extract#
 
