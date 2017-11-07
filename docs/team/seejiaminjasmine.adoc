@@ -14,7 +14,7 @@ It is written in Java, and has about 6 kLoC. +
 This Project Portfolio showcases the contributions that I have done for this project and my proposed additional features.
 
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/main/JasmineSee.md] [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/test/JasmineSee.md]
 
 
 === Enhancement Added: Filter by tag
