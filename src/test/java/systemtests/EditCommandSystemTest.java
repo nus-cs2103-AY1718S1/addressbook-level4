@@ -23,6 +23,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -88,21 +89,22 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         Model expectedModel = getModel();
         assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.NAME_FIELD));
+                UndoableCommand.NAME_FIELD + ", " + UndoableCommand.PHONE_FIELD + ", " + UndoableCommand.ADDRESS_FIELD
+                        + ", " + UndoableCommand.EMAIL_FIELD));
 
         /* Case: edit some fields -> edited */
         index = INDEX_FIRST_PERSON;
         command = EditCommand.COMMAND_WORDVAR_2 + " " + index.getOneBased() + TAG_DESC_FRIEND;
         ReadOnlyPerson personToEdit = getModel().getFilteredPersonList().get(index.getZeroBased());
-        assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.NAME_FIELD));
+        editedPerson = new PersonBuilder(personToEdit).withTags(VALID_TAG_FRIEND).build();
+        assertCommandSuccess(command, index, editedPerson);
 
         /* Case: clear tags -> cleared */
         index = INDEX_FIRST_PERSON;
         command = EditCommand.COMMAND_WORDVAR_2.toUpperCase() + " " + index.getOneBased() + " "
                 + PREFIX_TAG.getPrefix();
-        assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.NAME_FIELD));
+        editedPerson = new PersonBuilder(personToEdit).withTags().build();
+        assertCommandSuccess(command, index, editedPerson);
 
 
         /* --------------------- Performing edit operation while a person card is selected -------------------------- */
@@ -169,14 +171,15 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertFalse(getModel().getFilteredPersonList().get(index.getZeroBased()).equals(BOB));
         command = EditCommand.COMMAND_WORDVAR_1 + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB
                 + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        assertCommandSuccess(command, getModel(), String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.NAME_FIELD));
+        String expectedMessage = String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
+                UndoableCommand.NAME_FIELD + ", " + UndoableCommand.PHONE_FIELD + ", "
+                        + UndoableCommand.ADDRESS_FIELD + ", " + UndoableCommand.EMAIL_FIELD);
+        assertCommandSuccess(command, getModel(), expectedMessage);
 
         /* Case: edit a person with new values same as another person's values but with different tags -> rejected */
         command = EditCommand.COMMAND_WORDVAR_1 + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB
                 + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + TAG_DESC_HUSBAND;
-        assertCommandSuccess(command, getModel(), String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.NAME_FIELD));
+        assertCommandSuccess(command, getModel(), expectedMessage);
     }
 
     /**

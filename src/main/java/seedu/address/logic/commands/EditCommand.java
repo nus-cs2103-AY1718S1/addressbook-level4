@@ -8,6 +8,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.person.Address.DEFAULT_ADDRESS;
+import static seedu.address.model.person.Email.DEFAULT_EMAIL;
 
 import java.util.List;
 import java.util.Optional;
@@ -68,6 +70,8 @@ public class EditCommand extends UndoableCommand {
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
 
+    private String duplicateFields = "";
+
     /**
      * @param index of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
@@ -97,8 +101,7 @@ public class EditCommand extends UndoableCommand {
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
-        checkDuplicateField(editedPerson);
-
+        checkDuplicateField(personToEdit, editPersonDescriptor);
 
         if (isWaitingforReply) {
             requiresHandling = true;
@@ -117,7 +120,97 @@ public class EditCommand extends UndoableCommand {
             return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
         }
     }
+
+    private void checkDuplicateField(ReadOnlyPerson toEdit,EditPersonDescriptor editedFields) {
+        requireNonNull(model);
+        List<ReadOnlyPerson> currentContacts = model.getFilteredPersonList();
+
+        for (ReadOnlyPerson contact: currentContacts) {
+            checkDuplicateName(toEdit, contact);
+            checkDuplicatePhone(toEdit, contact);
+            checkDuplicateAddress(toEdit, contact);
+            checkDuplicateEmail(toEdit, contact);
+        }
+        String message = duplicateFields.replace(" ", ", ");
+        result = new CommandResult(String.format(MESSAGE_DUPLICATE_FIELD, message));
+    }
+
+    private void checkDuplicateEmail(ReadOnlyPerson toEdit, ReadOnlyPerson contact) {
+        if ((editPersonDescriptor.email.toString().trim().equals(contact.getEmail().toString().trim()))
+                && (!editPersonDescriptor.email.toString().trim().equals(DEFAULT_EMAIL))) {
+            //same email but different persons
+            if (!toEdit.isSameStateAs(contact)) {
+                isWaitingforReply = true;
+                if (duplicateFields.equals("")) {
+                    duplicateFields = EMAIL_FIELD;
+                } else if (!duplicateFields.contains(EMAIL_FIELD)) {
+                    duplicateFields += " " + EMAIL_FIELD;
+                } else {
+                    //duplicateFields already contain email field.
+                }
+            } else {
+                //same email but same person. No error prompt.
+            }
+        }
+    }
+
+    private void checkDuplicateAddress(ReadOnlyPerson toEdit, ReadOnlyPerson contact) {
+        if ((editPersonDescriptor.address.toString().trim().equals(contact.getAddress().toString().trim()))
+                && (!editPersonDescriptor.address.toString().trim().equals(DEFAULT_ADDRESS))) {
+            //same address but different persons
+            if (!toEdit.isSameStateAs(contact)) {
+                isWaitingforReply = true;
+                if (duplicateFields.equals("")) {
+                    duplicateFields = ADDRESS_FIELD;
+                } else if (!duplicateFields.contains(ADDRESS_FIELD)) {
+                    duplicateFields += " " + ADDRESS_FIELD;
+                } else {
+                    //duplicateFields already contain ADDRESS field.
+                }
+            } else {
+                //same address but same person. No error prompt.
+            }
+        }
+    }
+
+    private void checkDuplicatePhone(ReadOnlyPerson toEdit, ReadOnlyPerson contact) {
+        if (editPersonDescriptor.phone.toString().trim().equals(contact.getPhone().toString().trim())) {
+            //same phone but different persons
+            if (!toEdit.isSameStateAs(contact)) {
+                isWaitingforReply = true;
+                if (duplicateFields.equals("")) {
+                    duplicateFields = PHONE_FIELD;
+                } else if (!duplicateFields.contains(PHONE_FIELD)) {
+                    duplicateFields += " " + PHONE_FIELD;
+                } else {
+                    //duplicateFields already contain phone field.
+                }
+            } else {
+                //same phone but same person. No error prompt.
+            }
+        }
+    }
+
+    private void checkDuplicateName(ReadOnlyPerson toEdit, ReadOnlyPerson contact) {
+        if (editPersonDescriptor.name.toString().trim().equals(contact.getName().toString().trim())) {
+            //same phone but different persons
+            if (!toEdit.isSameStateAs(contact)) {
+                isWaitingforReply = true;
+                if (duplicateFields.equals("")) {
+                    duplicateFields = NAME_FIELD;
+                } else if (!duplicateFields.contains(NAME_FIELD)) {
+                    duplicateFields += " " + NAME_FIELD;
+                } else {
+                    //duplicateFields already contain phone field.
+                }
+            } else {
+                //same name but same person. No error prompt.
+            }
+        }
+    }
+
     //@@author
+
 
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
