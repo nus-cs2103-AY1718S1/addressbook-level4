@@ -13,6 +13,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.EventTime;
 
 
+//@@author eldriclim
 /**
  * An UI component that displays information of a {@code Person}.
  */

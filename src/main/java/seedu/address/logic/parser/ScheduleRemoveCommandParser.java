@@ -13,6 +13,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.ScheduleRemoveCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author eldriclim
 /**
  * Parses input arguments and creates a new ScheduleRemoveCommand object
  */

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author eldriclim
 /**
  * Represents an Event's name in the address book.
  * Guarantees: valid as declared in {@link #isValidName(String)}

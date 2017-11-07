@@ -8,6 +8,7 @@ import java.time.Duration;
 
 import org.junit.Test;
 
+//@@author eldriclim
 public class EventDurationTest {
 
     private EventDuration eventDuration1 = new EventDuration(Duration.ofMinutes(90));

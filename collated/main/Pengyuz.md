@@ -839,6 +839,7 @@ public interface RecycleBinStorage {
  */
 public class XmlRecycleBinStorage implements RecycleBinStorage {
 
+<<<<<<< HEAD
     private static final Logger logger = LogsCenter.getLogger(XmlRecycleBinStorage.class);
 
     private String filePath;
@@ -896,4 +897,6 @@ public class XmlRecycleBinStorage implements RecycleBinStorage {
     }
 
 }
+=======
+>>>>>>> 874d091256290c6782810d04c299fde676c524a4
 ```

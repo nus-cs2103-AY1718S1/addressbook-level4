@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import seedu.address.commons.util.DateTimeUtil;
 
+//@@author eldriclim
 /**
  * Represents an Event's start time and duration in the address book.
  */

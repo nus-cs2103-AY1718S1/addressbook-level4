@@ -12,6 +12,7 @@ import seedu.address.model.event.EventName;
 import seedu.address.model.event.EventTime;
 import seedu.address.model.event.MemberList;
 
+//@@author eldriclim
 /**
  * JAXB-friendly adapted version of the Event.
  */

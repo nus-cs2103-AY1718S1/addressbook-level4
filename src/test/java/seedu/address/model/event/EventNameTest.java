@@ -13,6 +13,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 
 
+//@@author eldriclim
 public class EventNameTest {
 
     @Rule

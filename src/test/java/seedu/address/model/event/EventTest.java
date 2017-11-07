@@ -16,6 +16,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.TypicalPersons;
 
 
+//@@author eldriclim
 public class EventTest {
 
     private Event e1;

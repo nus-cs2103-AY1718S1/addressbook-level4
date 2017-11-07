@@ -1,4 +1,4 @@
-package seedu.address.model.event;
+package seedu.address.model;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -10,10 +10,17 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.EventDuration;
+import seedu.address.model.event.EventName;
+import seedu.address.model.event.EventTime;
+import seedu.address.model.event.MemberList;
+import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.TypicalPersons;
 
 
+//@@author eldriclim
 public class UniqueEventListTest {
     private UniqueEventList eventList = new UniqueEventList();
 
