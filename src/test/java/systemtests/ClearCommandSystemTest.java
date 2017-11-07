@@ -41,7 +41,8 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: redo clearing address book -> cleared */
         command = RedoCommand.COMMAND_WORD;
-        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
+        expectedResultMessage = RedoCommand.parseCommand(previousCommandString);
+        //expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, expectedResultMessage, new ModelManager());
         assertSelectedCardUnchanged();
 
