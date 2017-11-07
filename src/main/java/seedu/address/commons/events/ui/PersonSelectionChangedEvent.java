@@ -2,6 +2,9 @@ package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+
+//@@author archthegit
 
 /**
  * Event to handle info change in the case of edit
@@ -9,9 +12,9 @@ import seedu.address.model.person.Person;
 
 public class PersonSelectionChangedEvent extends BaseEvent {
 
-    private final Person newSelection;
+    private final ReadOnlyPerson newSelection;
 
-    public PersonSelectionChangedEvent(Person newSelection) {
+    public PersonSelectionChangedEvent(ReadOnlyPerson newSelection) {
         this.newSelection = newSelection;
     }
 
@@ -20,7 +23,7 @@ public class PersonSelectionChangedEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 
-    public Person getNewSelection() {
+    public ReadOnlyPerson getNewSelection() {
         return newSelection;
     }
 }
