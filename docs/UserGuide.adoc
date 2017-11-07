@@ -482,8 +482,7 @@ Examples:
 
 * `facebookpost hello world!` +
 Posts the status 'hello world!' to your Facebook wall.
-
-// end:facebookpost[]
+// end::facebookpost[]
 
 // tag::facebooklink[]
 [[facebooklink]]
@@ -502,7 +501,7 @@ Examples:
 
 * `facebook post https://www.google.com` +
 Posts the link to `https://www.google.com` to your Facebook wall.
-// end:facebooklink[]
+// end::facebooklink[]
 
 // tag::facebookadd[]
 [[facebookadd]]
@@ -522,7 +521,7 @@ Examples:
 
 * `facebookadd barack obama` +
 Imports the facebook user 'Barack Obama' to your contacts.
-// end:facebookadd[]
+// end::facebookadd[]
 
 // tag::facebookaddallfriends[]
 [[facebookaddallfriends]]
@@ -536,7 +535,7 @@ Format `facebookaddallfriends`
 the browser.
 * All your valid facebook friends will then be added as a contact.
 ****
-// end:facebookaddallfriends[]
+// end::facebookaddallfriends[]
 
 === Managing Contact Data
 
