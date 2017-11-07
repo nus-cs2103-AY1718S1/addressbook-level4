@@ -103,6 +103,6 @@ https://github.com/CS2103AUG2017-W13-B4/main/pull/53/[#53], https://github.com/C
 https://github.com/CS2103AUG2017-W13-B4/main/pull/58/[#58], https://github.com/CS2103AUG2017-W13-B4/main/pull/63/[#63],)
 
 * Wrote tutorial for User Guide (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/99[#99],
-https://github.com/CS2103AUG2017-W13-B4/main/pull/139[#139], https://github.com/CS2103AUG2017-W13-B4/main/pull/144[#144],
+https://github.com/CS2103AUG2017-W13-B4/main/pull/139[#139], https://github.com/CS2103AUG2017-W13-B4/main/pull/144[#144],)
 
 * Designed a logo for ModU (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/118/[#118])
