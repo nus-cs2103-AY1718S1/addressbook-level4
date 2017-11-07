@@ -13,6 +13,7 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowLocationRequestEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -30,6 +31,10 @@ public class BrowserPanel extends UiPart<Region> {
 
     //FacebookCommand
     public static final String FACEBOOK_URL = "https://www.facebook.com";
+    //@@author
+
+    //LocateCommand
+    public static final String MAPS_URL = "https://www.google.com.sg/maps/search/";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -53,6 +58,13 @@ public class BrowserPanel extends UiPart<Region> {
                     + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
+    //@@author taojiashu
+    public void loadLocationPage(String address) {
+        loadPage(MAPS_URL + address);
+    }
+    //@@author
+
+    //@@author LeeYingZheng
     public void loadFacebookPage() {
         loadPage(FACEBOOK_URL);
     }
@@ -87,4 +99,12 @@ public class BrowserPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
     }
+
+    //@@author taojiashu
+    @Subscribe
+    private void handleLocationRequest(ShowLocationRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadLocationPage(event.getAddress());
+    }
+    //@@author
 }
