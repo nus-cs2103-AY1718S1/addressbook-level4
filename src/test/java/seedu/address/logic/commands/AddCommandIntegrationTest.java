@@ -50,7 +50,8 @@ public class AddCommandIntegrationTest {
      */
     private AddCommand prepareCommand(Person person, Model model) {
         AddCommand command = new AddCommand(person);
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), new RecentlyDeletedQueue());
+        command.setData(model, new CommandHistory(),
+                new UndoRedoStack(), new RecentlyDeletedQueue(), new String());
         return command;
     }
 }
