@@ -637,7 +637,8 @@ The remove tag mechanism is implemented by `Logic` and `Model`.
 
 * When parsing the command,each of the keywords inputted by the user is used to create a new Tag object that is put into a ArrayList<Tag>. +
 * The ArrayList<Tag> is then parsed in to `RemoveTagCommand` which is returned by the `RemoveTagCommandParser` class. +
-* In the execution stage (executeUndoableCommand()) in the `RemoveTagCommand` under `Logic`, each `Tag` inside the ArrayList<Tag> is then sent to the removeTag(Tag) method which is handled by the
+* The `RemoveTagCommand` is undoable so it will execute and override executeUndoableCommand() instead of overriding execute().
+* Under the executeUndoableCommand() method in the `RemoveTagCommand` under `Logic`, each `Tag` inside the ArrayList<Tag> is then sent to the removeTag(Tag) method which is handled by the
 `ModelManager` which implements `Model`. The method removes any tags of a person that matches the tag in the ArrayList. +
 * The method works by looping the person list in the 'AddressBook' and creating a new `Person` object called newPerson for each `Person` in the list. The Set<Tag> is then obtained from the newPerson
 and then removes the `Tag` that is parsed into the method. +
@@ -646,8 +647,6 @@ and then removes the `Tag` that is parsed into the method. +
 
 [NOTE]
 If the keywords is not identical to any of the existing tag names, 'CommandResult' will notify the user that no tags has been removed. Otherwise, a success message will be shown.
-
-The remove tag command is undoable so it will execute and override executeUndoableCommand() instead of overriding execute().
 
 The following sequence diagram shows how the remove tag operation works:
 
@@ -708,19 +707,19 @@ The uploading photo mechanism is implemented by `EventsCenter` and `Logic`.
 
 * There are two ways a user can upload a photo to the contact, either by choosing an image from a file explorer or inputting in the image file path in the command. +
 * After the user enters the command, the `UploadPhotoCommandParser` will separate the argument into the index and file path before parsing both variables into `UploadPhotoCommand`. +
-* In `UploadPhotoCommand`, the `executeUndoableCommand()` method will check for invalid index before checking if filePath string is empty. The file explorer will open for the user to choose an image if the filePath string is empty. +
+* In `UploadPhotoCommand`, the execute() method will check for invalid index before checking if filePath string is empty. The file explorer will open for the user to choose an image if the filePath string is empty. +
 * Next, the method will check if the file is a valid image file before saving the file into the project directory, as well as raising an event called `PhotoChangeEvent` as seen below.
 [source,java]
 ----
     if (isValidImageFile(imageFile)) {
-                imageFile = saveFile(imageFile, personToUploadImage.getEmail());
+                saveFile(imageFile, personToUploadImage.getEmail());
                 EventsCenter.getInstance().post(new PhotoChangeEvent());
             } else {
                 throw new CommandException(String.format(MESSAGE_UPLOAD_IMAGE_FALURE));
             }
 ----
-* The event is raised to allow instant display of the modification of the photo. To implement this, `PersonCard` is registered as an event handler and includes a `@Subscribe handlePhotoChange` to handle the event of uploading the photo. +
-* The `handlePhotoChange` method will set the `ImageView` to the new image file path of the uploaded photo in the project directory.
+* The event is raised to allow instant display of the modification of the photo. To implement this, `PersonCard` is registered as an event handler and includes a @Subscribe handlePhotoChange to handle the event of uploading the photo. +
+* The handlePhotoChange method will set the `ImageView` to the new image file path of the uploaded photo in the project directory.
 
 [NOTE]
 If the file given is not a valid image file, a 'CommandException' will be thrown to specify that the file is invalid.
@@ -732,7 +731,7 @@ If the file given is not a valid image file, a 'CommandException' will be thrown
 **Cons:** Requires other modification to the storage of photo logic such as deleting or clearing contacts, as well as adding and editing a contact. +
 **Alternative 2 :** Modify `Person` in `Model` to include a `Photo` attribute. +
 **Pros:** Reliable as the photo path is always stored for each `Person`. +
-**Cons:** Requires a lot of modification to codes that will requires `Person` , as well as changing tests to reflect the additional attribute.
+**Cons:** Requires a lot of modification to codes that will require `Person` , as well as changing tests to reflect the additional attribute.
 
 // end::uploadphoto[]
 
