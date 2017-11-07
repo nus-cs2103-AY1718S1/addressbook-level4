@@ -1,5 +1,5 @@
 # Pengyuz
-###### /java/seedu/address/logic/commands/DeleteCommand.java
+###### \java\seedu\address\logic\commands\DeleteCommand.java
 ``` java
 /**
  * Deletes a person identified using it's last displayed index from the address book.
@@ -91,7 +91,7 @@ public class DeleteCommand extends UndoableCommand {
 }
 
 ```
-###### /java/seedu/address/logic/commands/HelpCommand.java
+###### \java\seedu\address\logic\commands\HelpCommand.java
 ``` java
 /**
  * Format full help instructions for every command for display.
@@ -139,6 +139,22 @@ public class HelpCommand extends Command {
             return new CommandResult(TagAddCommand.MESSAGE_USAGE);
         } else if ("tagremove".equals(commandword)) {
             return new CommandResult(TagRemoveCommand.MESSAGE_USAGE);
+        } else if ("tagfind".equals(commandword)) {
+            return new CommandResult(TagFindCommand.MESSAGE_USAGE);
+        } else if ("birthdayadd".equals(commandword)) {
+            return new CommandResult(BirthdayAddCommand.MESSAGE_USAGE);
+        } else if ("birthdayremove".equals(commandword)) {
+            return new CommandResult(BirthdayRemoveCommand.MESSAGE_USAGE);
+        } else if ("mapshow".equals(commandword)) {
+            return new CommandResult(MapShowCommand.MESSAGE_USAGE);
+        } else if ("maproute".equals(commandword)) {
+            return new CommandResult(MapRouteCommand.MESSAGE_USAGE);
+        } else if ("scheduleadd".equals(commandword)) {
+            return new CommandResult(ScheduleAddCommand.MESSAGE_USAGE);
+        } else if ("scheduleremove".equals(commandword)) {
+            return new CommandResult(ScheduleRemoveCommand.MESSAGE_USAGE);
+        } else if ("export".equals(commandword)) {
+            return new CommandResult(ExportCommand.MESSAGE_USAGE);
         } else if ("undo".equals(commandword)) {
             return new CommandResult(UndoCommand.MESSAGE_USAGE);
         } else {
@@ -156,7 +172,7 @@ public class HelpCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/DeleteCommandParser.java
+###### \java\seedu\address\logic\parser\DeleteCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new DeleteCommand object
@@ -211,18 +227,18 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
-     *
      * Parses  {@code oneBasedIndex} into an {@code numbers} and return it.the commas will be deleted.
+     *
      * @throws IllegalValueException if the specified index is invalid.
      */
-    public static ArrayList<Index> parseIndexes(String oneBasedIndexes)throws IllegalValueException {
+    public static ArrayList<Index> parseIndexes(String oneBasedIndexes) throws IllegalValueException {
         String[] ns = oneBasedIndexes.trim().split(" ");
-        ArrayList<Index> numbers = new ArrayList<Index>();
+        ArrayList<Index> numbers = new ArrayList<>();
         boolean allvalid = true;
-        for (String a: ns) {
+        for (String a : ns) {
             String s = a.trim();
             if (StringUtil.isNonZeroUnsignedInteger(s)) {
                 numbers.add(Index.fromOneBased(Integer.parseInt(s)));
@@ -285,5 +301,51 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
         }
         return tagSet;
     }
+
+    //// Event-related parsing
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<EventName>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<EventName> parseEventName(Optional<String> name) throws IllegalValueException {
+        requireNonNull(name);
+        return name.isPresent() ? Optional.of(new EventName(name.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses two {@code Optional<String> time} and {@code String duration} into an
+     * {@code Optional<EventTime>} if {@code time} is present.
+     *
+     * String duration is guaranteed to be initialised from input validation in
+     * @see ScheduleAddCommandParser
+     *
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<EventTime> parseEventTime(Optional<String> time, String duration)
+            throws DateTimeParseException, NumberFormatException, IllegalValueException {
+        requireNonNull(time);
+        requireNonNull(duration);
+        return (time.isPresent())
+                ? Optional.of(new EventTime(DateTimeUtil.parseStringToLocalDateTime(time.get()),
+                DateTimeUtil.parseDuration(duration)))
+                : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String duration} into an {@code EventDuration}
+     *
+     * String duration is guaranteed to be initialised from input validation in
+     * @see ScheduleAddCommandParser
+
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static EventDuration parseEventDuration(String duration)
+            throws NumberFormatException, IllegalValueException {
+        requireNonNull(duration);
+        return new EventDuration(DateTimeUtil.parseDuration(duration));
+    }
+
+
 }
 ```
