@@ -22,6 +22,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.OpenAddressBookRequestEvent;
+import seedu.address.commons.events.ui.ShowBirthdayAlarmRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -228,6 +229,13 @@ public class MainWindow extends UiPart<Region> {
         raise(new OpenAddressBookRequestEvent(file));
     }
     //@@author
+    //@@author chilipadiboy
+    @FXML
+    private void handlebirthdayalarms() {
+        BirthdayAlarmWindow birthdayAlarmWindow = new BirthdayAlarmWindow(logic.getFilteredPersonList());
+        birthdayAlarmWindow.show();
+    }
+    //@@author
 
     /**
      * Closes the application.
@@ -249,5 +257,12 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    //@@author chilipadiboy
+    @Subscribe
+    private void handleShowBirthdayAlarmEvent (ShowBirthdayAlarmRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handlebirthdayalarms();
     }
 }

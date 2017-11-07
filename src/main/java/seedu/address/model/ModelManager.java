@@ -85,16 +85,16 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Filtered Person List Accessors =============================================================
 
+    //@@author Jemereny
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
      * {@code addressBook}
      */
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-        //@@author Jemereny
         return FXCollections.unmodifiableObservableList(filteredPersons.sorted());
-        //@@author
     }
+    //@@author
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {

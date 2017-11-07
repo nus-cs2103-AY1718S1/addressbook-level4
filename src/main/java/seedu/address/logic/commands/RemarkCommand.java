@@ -1,3 +1,4 @@
+//@@author chilipadiboy
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
@@ -67,7 +68,6 @@ public class RemarkCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
-        //model.updateFilteredListToShowAll();
 
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
