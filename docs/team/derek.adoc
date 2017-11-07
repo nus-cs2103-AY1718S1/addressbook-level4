@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Bamboo
 Bamboo is a desktop address book application developed as part of a Software Engineering module requirement. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-W09-B4/main/blob/collate/collated/main/Procrastinatus.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B4/main/blob/collate/collated/test/Procrastinatus.md[Test code]]
 
 === Enhancement Added: GUI
 
@@ -67,11 +67,6 @@ It describes how to start developing Bamboo with the Intellij IDE,
 as well as the structure of various components in the Bamboo application.
 
 === UI component
-
-image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
-
-*TODO: Edit diagram towards the end to reflect final names or changes*
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
