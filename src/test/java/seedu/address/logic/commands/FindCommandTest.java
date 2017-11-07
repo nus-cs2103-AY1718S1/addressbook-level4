@@ -69,25 +69,25 @@ public class FindCommandTest {
     //@@author vivekscl
     @Test
     public void execute_oneKeyword_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         FindCommand command = prepareCommand("car");
         ArrayList<String> keywordList = new ArrayList<String>();
         keywordList.add("car");
         NameContainsKeywordsPredicate keyword = new NameContainsKeywordsPredicate(keywordList);
-        expectedMessage += String.format(MESSAGE_NO_PERSON_FOUND,
+        String expectedMessage = String.format(MESSAGE_NO_PERSON_FOUND, "car",
                 model.getClosestMatchingName(keyword));
-        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL));
     }
 
     @Test
     public void execute_multipleKeywords_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        String keywordsAsString = "car ell kun";
+        String keywordsAsString = "kun ell car";
         FindCommand command = prepareCommand(keywordsAsString);
-        expectedMessage += String.format(MESSAGE_NO_PERSON_FOUND,
-                model.getClosestMatchingName(new NameContainsKeywordsPredicate(
-                        Arrays.asList(keywordsAsString.split("\\s+")))));
-        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+        String targets = model.getClosestMatchingName(
+                new NameContainsKeywordsPredicate(Arrays.asList(keywordsAsString.split("\\s+"))));
+        List<String> targetsAsList = Arrays.asList(targets.split("\\s+"));
+        String expectedMessage = String.format(MESSAGE_NO_PERSON_FOUND, keywordsAsString,
+                String.join(", ", targetsAsList));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, FIONA));
     }
 
     //@@author

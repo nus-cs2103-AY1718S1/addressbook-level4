@@ -1,5 +1,6 @@
 package systemtests;
 
+import static seedu.address.commons.core.Messages.MESSAGE_NO_MATCHING_NAME_FOUND;
 import static seedu.address.commons.core.Messages.MESSAGE_NO_PERSON_FOUND;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
@@ -9,6 +10,8 @@ import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
@@ -168,6 +171,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command, Model expectedModel) {
+        boolean isSuggestionMade = false;
         String expectedResultMessage = String.format(
                 MESSAGE_PERSONS_LISTED_OVERVIEW, expectedModel.getFilteredPersonList().size());
         if (expectedModel.getFilteredPersonList().size() == 0) {
@@ -176,14 +180,33 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
             for (int i = 1; i < parts.length; i++) {
                 keywords.add(parts[i]);
             }
-            expectedResultMessage += String.format(MESSAGE_NO_PERSON_FOUND,
-                    expectedModel.getClosestMatchingName(new NameContainsKeywordsPredicate(keywords)));
+
+            String targets = expectedModel.getClosestMatchingName(new NameContainsKeywordsPredicate(keywords));
+            List<String> targetsAsList = Arrays.asList(targets.split("\\s+"));
+
+            if (targetsAsList.equals(keywords)) {
+                expectedModel.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+                expectedResultMessage = String.format(MESSAGE_NO_MATCHING_NAME_FOUND, targets);
+            } else {
+                expectedModel.updateFilteredPersonList(new NameContainsKeywordsPredicate(targetsAsList));
+                expectedResultMessage = String.format(MESSAGE_NO_PERSON_FOUND, String.join(" ", keywords),
+                        String.join(", ", targetsAsList));
+            }
+
+            isSuggestionMade = true;
         }
 
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchanged();
+        /*
+         * If a the find command suggests the closest matching name, revert the filtered list back
+         * to its original state afterwards.
+         */
+        if (isSuggestionMade) {
+            ModelHelper.setFilteredList(expectedModel, Collections.emptyList());
+        }
     }
 
     //@@author

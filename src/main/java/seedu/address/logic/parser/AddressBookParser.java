@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import seedu.address.logic.commands.AddBirthdayCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddTagCommand;
+import seedu.address.logic.commands.ChangeWindowSizeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -21,6 +22,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.ReplyCommand;
@@ -100,6 +102,9 @@ public class AddressBookParser {
                 || commandWord.equalsIgnoreCase(ListCommand.COMMAND_WORDVAR_2)) {
             return new ListCommand();
 
+        } else if (commandWord.equalsIgnoreCase(LocateCommand.COMMAND_WORDVAR)) {
+            return new LocateCommandParser().parse(arguments);
+
         } else if (commandWord.equalsIgnoreCase(HistoryCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(HistoryCommand.COMMAND_WORDVAR_2)) {
             return new HistoryCommand();
@@ -143,6 +148,9 @@ public class AddressBookParser {
         } else if (commandWord.equalsIgnoreCase(SortCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(SortCommand.COMMAND_WORDVAR_2)) {
             return new SortCommand();
+
+        } else if (commandWord.equalsIgnoreCase(ChangeWindowSizeCommand.COMMAND_WORD)) {
+            return new ChangeWindowSizeCommand(arguments.trim());
 
         } else {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

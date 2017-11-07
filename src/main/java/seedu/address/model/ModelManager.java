@@ -175,6 +175,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * This helper method gets a list of all the names, separates them and returns a list of first and last names.
+     * The default value for the result is the first keyword given. Since no such name can be found for the given
+     * input, the keyword itself is returned.
      */
     private ArrayList<String> getListOfAllFirstAndLastNames(NameContainsKeywordsPredicate predicate) {
 
@@ -195,7 +197,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         JaroWinklerDistance currentJaroWinklerDistance = new JaroWinklerDistance();
         String target = keywords.get(0);
-        String result = "";
+        String result = keywords.get(0);
         for (String s : allNames) {
             if (maxDistance < currentJaroWinklerDistance.apply(target, s)) {
                 maxDistance = currentJaroWinklerDistance.apply(target, s);
@@ -224,7 +226,7 @@ public class ModelManager extends ComponentManager implements Model {
                 }
             }
         }
-        return String.join(" OR ", result);
+        return result.isEmpty() ? keywords.get(0) : String.join(" ", result);
     }
 
     //@@author jacoblipech
