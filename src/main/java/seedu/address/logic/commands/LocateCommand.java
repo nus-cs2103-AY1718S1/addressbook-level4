@@ -7,9 +7,9 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ShowLocationRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Address;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author taojiashu
 /**
  * Display the location of the person with the given index in the contact list in Google Maps
  */

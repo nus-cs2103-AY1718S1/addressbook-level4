@@ -36,6 +36,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -104,6 +105,7 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new FavouriteCommand(INDEX_FIRST_PERSON), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_filter() throws Exception {
@@ -232,6 +234,13 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ShowFavouriteCommand.COMMAND_WORD_1) instanceof ShowFavouriteCommand);
         assertTrue(parser.parseCommand(ShowFavouriteCommand.COMMAND_WORD_2 + " 3") instanceof ShowFavouriteCommand);
     }
+
+    @Test
+    public void parseCommand_LocateCommand() throws Exception {
+        assertTrue(parser.parseCommand(LocateCommand.COMMAND_WORDVAR) instanceof  LocateCommand);
+        assertTrue(parser.parseCommand(LocateCommand.COMMAND_WORDVAR + "1") instanceof LocateCommand);
+    }
+    //@@author
 
     //@@author vivekscl
     @Test
