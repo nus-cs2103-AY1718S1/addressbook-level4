@@ -1406,10 +1406,26 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
 ```
 ###### \java\seedu\address\MainApp.java
 ``` java
+
+    /**
+     * Restarts the app.
+     */
+    private void restart() {
+        logger.info("============================ [ Restarting Address Book ] =============================");
+
+        try {
+            storage.saveUserPrefs(userPrefs);
+            init();
+            start(primaryStage);
+        } catch (Exception e) {
+            logger.severe("Failed to restart " + StringUtil.getDetails(e));
+        }
+    }
+
     @Subscribe
     public void handleReloadAddressBookEvent(ReloadAddressBookEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        model.setAddressBook(getInitialData());
+        restart();
     }
 ```
 ###### \java\seedu\address\model\AddressBook.java
@@ -1466,11 +1482,6 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
 ```
 ###### \java\seedu\address\model\Model.java
 ``` java
-    /** Replaces the data in the ModelManager with the given addressBook without writing to Storage */
-    void setAddressBook(ReadOnlyAddressBook newData);
-```
-###### \java\seedu\address\model\Model.java
-``` java
     /** Adds the given todoItem to target person */
     void addTodoItem(ReadOnlyPerson target, TodoItem todoItem)
             throws DuplicatePersonException, PersonNotFoundException, DuplicateTodoItemException;
@@ -1487,13 +1498,6 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
 ``` java
     /** Updates the UI to show all todoItems for all persons */
     void updateTodoItemList();
-```
-###### \java\seedu\address\model\ModelManager.java
-``` java
-    @Override
-    public void setAddressBook(ReadOnlyAddressBook newData) {
-        addressBook.resetData(newData);
-    }
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java

@@ -2,13 +2,6 @@
 ###### \java\seedu\address\logic\commands\AddCommandTest.java
 ``` java
         @Override
-        public void setAddressBook(ReadOnlyAddressBook newData) {
-            fail("This method should not be called.");
-        }
-```
-###### \java\seedu\address\logic\commands\AddCommandTest.java
-``` java
-        @Override
         public void addTodoItem(ReadOnlyPerson target, TodoItem todoItem)
                 throws DuplicatePersonException, PersonNotFoundException, DuplicateTodoItemException {
             fail("This method should not be called.");
