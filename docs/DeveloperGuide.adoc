@@ -496,6 +496,96 @@ If the group cannot be found inside the `UniqueGroupList`, it will throw a `Grou
     }
 ----
 
+=== Pin Feature
+The pin features enables users to pin their contacts to the top of their contact list. This will help them to access contacts that they frequently visit easily. +
+
+A contact is considered pin when the `pinned` is `true`. `pinned` is a `boolean` variable inside the `Person` class. When a person is added into Circles, the `pinned` value will be set to `false`.
+So, every contact in Circles in not pinned by default.
+
+==== Pinning a person
+To pin a person, the user will enter `pin INDEX`, where INDEX is the index of the person in the person list panel. +
+
+Firstly, when a `pin` command is entered into the Command Box, it is parsed by `PinCommandParser`, which will return the `Index` of the target person.
+
+Next, `PinCommand` will get the `Index`, and locate the target person.
+
+Then, `PinCommand` will call the `pinPerson()` method in `Model`, which will set the `pinned` boolean inside `Person` to be true.
+If the person is already pinned, it will show a message, indicating that the person is already pinned. +
+The implementation of the code is shown below, and can be found in
+{repoURL}/src/main/java/seedu/address/logic/commands/PinCommand.java[`PinCommand.java`]
+[source,java]
+----
+ public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToPin = lastShownList.get(index.getZeroBased());
+        try {
+            if (personToPin.isPinned()) {
+                return new CommandResult(MESSAGE_ALREADY_PINNED);
+            } else {
+                model.pinPerson(personToPin);
+                model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+                return new CommandResult(String.format(MESSAGE_PIN_PERSON_SUCCESS, personToPin));
+            }
+        } catch (PersonNotFoundException pnfe) {
+            throw new CommandException(MESSAGE_PIN_PERSON_FAILED);
+        }
+    }
+----
+After that, `Model` will sort the contact list by name, and bring the pinned contact to the top.
+
+Finally, Circles will save the address book, as changes has been made.
+
+==== Unpinning a person
+To unpin a person, the user will enter `unpin INDEX`, where INDEX is the index of the person in the person list panel.
+
+Firstly, when an `unpin` command is entered into the Command Box, it is parsed by `UnpinCommandParser`, which will return the `Index` of the target person.
+
+Next, `UnpinCommand` will get the `Index`, and locate the target person.
+
+Then, `UnpinCommand` will call the unpinPerson() method in `Model`, which will set the `pinned` boolean inside `Person` to be false.
+If the person was already unpinned, it will show a message, indicating that the person is already unpinned.
+The implementation of the code is shown below, and can be found in  {repoURL}/src/main/java/seedu/address/logic/commands/PinCommand.java[`PinCommand.java`]
+[source,java]
+----
+ public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToUnpin = lastShownList.get(index.getZeroBased());
+        try {
+            if (personToUnpin.isPinned()) {
+                model.unpinPerson(personToUnpin);
+                model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+                return new CommandResult(String.format(MESSAGE_UNPIN_PERSON_SUCCESS, personToUnpin));
+            } else {
+                return new CommandResult(MESSAGE_ALREADY_UNPINNED);
+            }
+        } catch (PersonNotFoundException pnfe) {
+            throw new CommandException(MESSAGE_UNPIN_PERSON_FAILED);
+        }
+----
+
+After that, `Model` will sort the contact list by name, bringing the unpinned contact back to the list in alphabetical order.
+
+Finally, Circles will save the address book as changes has been made.
+
+==== Design Considerations
+*Aspect:* Implementation of pin +
+*Alternative 1 (current choice):* Use a boolean variable to store `pin` information +
+*Pros:* Easy to implement, lower risk of having a bug. +
+*Cons:* Required to change the constuctors of `Person`, and modify many existing files to store the boolean `pinned` variable +
+
+*Alternative 2:* Storing the `pin` information as a `Pinned` tag +
+*Pros:* Storing the `pin` information as a tag is easy to implement, and does not cause any storage issues. +
+*Cons:* Potential bug where users can add a similar tag as the pin tag, and thus, be able to pin a contact without using the `pin` command.
+
 
 === Enhanced Find Command
 
