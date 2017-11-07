@@ -5,6 +5,7 @@ import java.util.List;
 
 import seedu.address.logic.autocomplete.AutoCompleteUtils;
 
+//@@author john19950730
 /** Represents autocomplete parser that matches a fixed set of strings, defined in the constructor. */
 public class AutoCompleteSetStringParser implements AutoCompleteParser {
 

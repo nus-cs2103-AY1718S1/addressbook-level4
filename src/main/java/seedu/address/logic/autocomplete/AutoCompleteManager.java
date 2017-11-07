@@ -164,9 +164,9 @@ public class AutoCompleteManager {
     }
 
     /**
-     *
-     * @param stub
-     * @return
+     * Sets up and returns the parser based on the prefix closest to the end of input stub
+     * @param stub incomplete user input
+     * @return model parser that has been set to parse based on prefix found in stub
      */
     private AutoCompleteParser chooseParserFromPrefix(String stub) {
         List<Integer> prefixPositions = allPrefixes.stream()

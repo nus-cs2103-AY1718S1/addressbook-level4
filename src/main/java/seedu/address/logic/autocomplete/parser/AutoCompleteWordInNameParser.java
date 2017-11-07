@@ -9,6 +9,7 @@ import java.util.List;
 import seedu.address.logic.autocomplete.AutoCompleteUtils;
 import seedu.address.model.Model;
 
+//@@author john19950730
 /** Represents a parser that specifically parses only words in names based on last word of incomplete user input. */
 public class AutoCompleteWordInNameParser extends AutoCompleteByPrefixModelParser {
 
@@ -30,7 +31,6 @@ public class AutoCompleteWordInNameParser extends AutoCompleteByPrefixModelParse
         return possibleMatches;
     }
 
-    //@@author john19950730
     /**
      * Updates the possible matches list by flattening out the list of all names in the address book
      */
