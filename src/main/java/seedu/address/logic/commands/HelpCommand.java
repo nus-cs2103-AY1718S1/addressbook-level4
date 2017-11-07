@@ -72,8 +72,6 @@ public class HelpCommand extends Command {
             return new CommandResult(ScheduleAddCommand.MESSAGE_USAGE);
         } else if ("scheduleremove".equals(commandword)) {
             return new CommandResult(ScheduleRemoveCommand.MESSAGE_USAGE);
-        } else if ("export".equals(commandword)) {
-            return new CommandResult(ExportCommand.MESSAGE_USAGE);
         } else if ("undo".equals(commandword)) {
             return new CommandResult(UndoCommand.MESSAGE_USAGE);
         } else {
