@@ -353,11 +353,11 @@ You should see the person list populated with all of your contacts after executi
 .Person list populated with all contacts
 image::list-command-result.png[width="790"]
 
-==== Stalking a person: `stalk`
+==== Selecting a person: `select`
 
-To view the social media feed of a contact, use the `stalk` command.
+To view the social media feed of a contact, use the `select` command.
 ====
-Command format: `[red]#stalk# [green]#INDEX [SOCIAL_MEDIA_PLATFORM]#` +
+Command format: `[red]#select# [green]#INDEX [SOCIAL_MEDIA_PLATFORM]#` +
 Alias: `[red]#s#`
 ====
 
@@ -374,7 +374,7 @@ image::stalk-command-result.png[width="790"]
 
 Example:
 
-* `[red]#stalk# [green]#1 facebook#` +
+* `[red]#select# [green]#1 facebook#` +
 Displays the Facebook account of the first person in the current person list
 
 .Common Mistakes
