@@ -1,5 +1,7 @@
 package seedu.room.logic.commands;
 
+import static seedu.room.model.person.Room.ROOM_NOT_SET_DEFAULT;
+
 import java.util.List;
 
 import seedu.room.commons.core.Messages;
@@ -7,8 +9,6 @@ import seedu.room.commons.core.index.Index;
 import seedu.room.logic.commands.exceptions.CommandException;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
-
-import static seedu.room.model.person.Room.ROOM_NOT_SET_DEFAULT;
 
 //@@author sushinoya
 /**
@@ -50,8 +50,8 @@ public class SwaproomCommand extends UndoableCommand {
         ReadOnlyPerson person2 = lastShownList.get(targetIndex2.getZeroBased());
 
 
-        if (person1.getRoom().toString().equals(ROOM_NOT_SET_DEFAULT) &&
-                person2.getRoom().toString().equals(ROOM_NOT_SET_DEFAULT)) {
+        if (person1.getRoom().toString().equals(ROOM_NOT_SET_DEFAULT)
+                && person2.getRoom().toString().equals(ROOM_NOT_SET_DEFAULT)) {
             throw new CommandException(String.format(ROOMS_NOT_SET_ERROR, person1.getName(), person2.getName()));
         }
 

@@ -2,10 +2,12 @@ package seedu.room.model.event;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.room.commons.exceptions.IllegalValueException;
-
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import seedu.room.commons.exceptions.IllegalValueException;
 
 //@@author sushinoya
 /**
@@ -24,6 +26,7 @@ public class Datetime {
             "Date, time and duration can only be represented using digits";
 
     public final String value;
+    public final LocalDateTime datetime;
 
     /**
      * Validates given datetime.
@@ -42,7 +45,10 @@ public class Datetime {
             int duration = Integer.parseInt(components[2]);
             int endtime = (starttime + 100 * duration) % 2400;
 
-            //Convert back integers like 630 to 0630
+            //Store as a LocalDateTime object
+            this.datetime = this.toLocalDateTime(components[0] + " " + components[1]);
+
+            //This converts back integers like 630 to 0630
             String endtimeString;
             if (endtime < 1000) {
                 endtimeString = "0" + endtime;
@@ -59,7 +65,9 @@ public class Datetime {
         }
     }
 
-
+    /**
+     * Returns true if a given string is a valid datetime in the format dd/mm/yyyy hhmm k.
+     */
     public static boolean isValidDatetime(String test) {
         String[] components = test.split(" ");
 
@@ -76,10 +84,14 @@ public class Datetime {
      * @throws DateTimeException if the date represented by the string is invalid
      */
     public static boolean isValidDate(String date) throws DateTimeException, NumberFormatException {
+
+        if (date.length() != 10) {
+            return false;
+        }
+
         String[] dateComponents = date.split("/");
 
         if (dateComponents.length != 3) {
-
             return false;
         }
 
@@ -107,8 +119,8 @@ public class Datetime {
         char[] timeArray = time.toCharArray();
         int hour = Integer.parseInt(new String(timeArray, 0, 2));
 
-        int minute = 10 * Integer.parseInt(Character.toString(timeArray[2])) +
-                          Integer.parseInt(Character.toString(timeArray[3]));
+        int minute = 10 * Integer.parseInt(Character.toString(timeArray[2]))
+                        + Integer.parseInt(Character.toString(timeArray[3]));
 
         return hour >= 0 && hour < 24 && minute >= 0 && minute < 60;
 
@@ -121,6 +133,18 @@ public class Datetime {
     public static boolean isValidDuration(String duratonString) throws NumberFormatException {
         double duration =  Double.parseDouble(duratonString);
         return duration > 0 && duration < 24;
+    }
+
+    /**
+     * Returns a LocalDateTime object for the input in the format dd/MM/yyyy HHmm
+     * @throws DateTimeException if the datetime represented by the string is invalid
+     */
+    public LocalDateTime toLocalDateTime(String value) throws DateTimeException {
+        String[] valueComponents = value.split(" ");
+        String dateWithStartTime = valueComponents[0] + " " + valueComponents[1];
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+        System.out.println(LocalDateTime.parse(dateWithStartTime, formatter).toString());
+        return LocalDateTime.parse(dateWithStartTime, formatter);
     }
 
     @Override
