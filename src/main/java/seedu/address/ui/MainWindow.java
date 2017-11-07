@@ -152,8 +152,9 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+    }
 
-        // set splitPane divider position to start in list mode.
+    public void initSplitPanePlaceholder() {
         splitPanePlaceholder.setDividerPositions(0.0);
     }
 
