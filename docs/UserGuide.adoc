@@ -447,6 +447,29 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `u` (reverses the `delete 1` command) +
 
+// tag::suggestion[]
+=== `y` or `yes` or `ok` or `yea` or `yeah`: Confirming a suggested command _(Since v1.5rc)_
+
+Confirms a command suggested by Rolodex. +
+Format: `y` or `yes` or `ok` or `yea` or `yeah` +
+
+[TIP]
+====
+A command will be suggested by Rolodex if you make a typo in your command.
+====
+Examples:
+
+* `s3`, a typo for the command `s 3` will be suggested.
+`y` or `yes` or `ok` or `yea` or `yeah` executes `s 3` as normal and _Charlotte Oliviero_ will be selected:
+
+image::SuggestionSelect.png[width="500"]
+
+* `rmke3 Likes to swim` will be suggested as the formatted command, `rmk 3 r/Likes to swim`.
+`y` or `yes` or `ok` or `yea` or `yeah` executes `rmk 3 r/Likes to swim` as normal and `Likes to swim` will be added to _Charlotte Oliviero_:
+
+image::SuggestionRemark.png[width="500"]
+// end::suggestion[]
+
 == Upcoming Features
 
 // tag::picture[]
