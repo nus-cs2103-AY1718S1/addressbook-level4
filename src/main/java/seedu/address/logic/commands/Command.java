@@ -54,6 +54,7 @@ public abstract class Command {
      * Commands making use of {@code Storage} should override this method to gain access.
      */
     public void setStorage(Storage storage) {
+        // intentionally left empty
     }
 
     //=========== Support for getter/setter of commandBox text ========================================================

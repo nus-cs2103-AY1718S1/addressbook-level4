@@ -20,10 +20,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.reminder.ReadOnlyReminder;
-import seedu.address.model.reminder.Reminder;
-import seedu.address.model.reminder.UniqueReminderList;
-import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -36,7 +32,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueTagList tags;
     private final UniqueEventList events;
-    private final UniqueReminderList reminders;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -49,7 +44,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
         events = new UniqueEventList();
-        reminders = new UniqueReminderList();
     }
 
     public AddressBook() {
@@ -101,12 +95,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.events.setEvents(events);
     }
 
-    /**
-     * Replaces all events in this list with those in the argument event list.
-     */
-    public void setReminders(List<? extends ReadOnlyReminder> reminders) throws DuplicateReminderException {
-        this.reminders.setReminders(reminders);
-    }
     //@@author
 
     //@@author low5545
@@ -308,20 +296,6 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     private void syncMasterTagListWith(UniquePersonList persons) {
         persons.forEach(this::syncMasterTagListWith);
-    }
-
-    /*****************************************************
-     * Reminder-level operations
-     *****************************************************/
-
-    /**
-     * Adds a reminder to the address book.
-     *
-     * @throws DuplicateReminderException if an equivalent reminder already exists.
-     */
-    public void addReminder(ReadOnlyReminder r) throws DuplicateReminderException {
-        Reminder newReminder = new Reminder(r);
-        reminders.add(newReminder);
     }
 
     /*****************************************************
