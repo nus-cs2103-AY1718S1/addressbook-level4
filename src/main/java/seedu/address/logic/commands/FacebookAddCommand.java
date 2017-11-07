@@ -102,7 +102,7 @@ public class FacebookAddCommand extends UndoableCommand {
             tags.add(new Tag("facebookFriend"));
 
             toAdd = new Person(new Name(toAddName), new Phone(), new Email(), new Address(),
-                    new Favorite(false),new DisplayPhoto(null), tags, socialInfos);
+                    new Favorite(false), new DisplayPhoto(null), tags, socialInfos);
         } catch (IllegalValueException e) {
             throw new CommandException(MESSAGE_FACEBOOK_ADD_PERSON_ERROR);
         }
