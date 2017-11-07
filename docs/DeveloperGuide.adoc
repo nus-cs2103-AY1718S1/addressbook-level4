@@ -385,6 +385,15 @@ The execution of `sort` results in the reordering of the in-memory `UniquePerson
 However, the change is transient and the order of the list will return to its
 original starting order as when the App initializes.
 
+=== Finding
+The finding mechanism is facilitated by `FindCommand`, which extends `Command`.
+It supports finding a list of specific persons by offering any substring of person's contact field
+(including name, by default, phone numbers, email, address or even their tags) with `PREFIX` specified.
+
+Finding a person is facilitated using PartialSearchUtil which examine whether a base list contains any word whose
+substring appears in the target list. Mapping each attribute to the find Parser and returns a list of persons
+matching find condition.
+
 ==== Design Considerations
 
 **Aspect:** Implementation of `sort` +
