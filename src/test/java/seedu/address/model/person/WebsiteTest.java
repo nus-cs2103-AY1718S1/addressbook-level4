@@ -4,9 +4,26 @@ package seedu.address.model.person;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import seedu.address.commons.exceptions.IllegalValueException;
 
 public class WebsiteTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void websiteConstructorTest() throws Exception {
+        thrown.expect(IllegalValueException.class);
+
+        // Valid website
+        Website website = new Website(null);
+
+        // Invalid website
+        website = new Website("asd");
+    }
 
     @Test
     public void isValidWebsite() {
