@@ -19,8 +19,6 @@ Profile picture shows the face of contact.
 
 image::../images/personCard.png[]
 
----
-
 === Justification
 
 ---
@@ -36,8 +34,6 @@ include::../DeveloperGuide.adoc[tag=profilepicture]
 
 #End of Extract#
 
----
-
 == Enhancement Added: Themes
 
 === External behavior
@@ -48,8 +44,6 @@ include::../DeveloperGuide.adoc[tag=profilepicture]
 include::../UserGuide.adoc[tag=theme]
 
 #End of Extract#
-
----
 
 === Justification
 
@@ -66,8 +60,6 @@ include::../DeveloperGuide.adoc[tag=theme]
 
 #End of Extract#
 
----
-
 == Enhancement Added: Website
 
 === External behavior
@@ -78,8 +70,6 @@ include::../DeveloperGuide.adoc[tag=theme]
 include::../UserGuide.adoc[tag=website]
 
 #End of Extract#
-
----
 
 === Justification
 
@@ -108,8 +98,6 @@ Tags are shown in different colors
 
 image::../images/tagcolor.png[]
 
----
-
 === Justification
 
 ---
@@ -125,8 +113,6 @@ include::../DeveloperGuide.adoc[tag=colortag]
 
 #End of Extract#
 
----
-
 == Enhancement Added: Shown list to be sorted
 
 === External behavior
@@ -134,8 +120,6 @@ include::../DeveloperGuide.adoc[tag=colortag]
 ---
 
 List is sorted by name alphabetically
-
----
 
 === Justification
 
@@ -151,8 +135,6 @@ It is easier to look for contacts when the contacts are sorted.
 include::../Developerguide.adoc[tag=sortlist]
 
 #End of Extract#
-
----
 
 == Other contributions
 
