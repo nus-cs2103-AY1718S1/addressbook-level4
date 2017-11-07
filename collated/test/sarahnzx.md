@@ -1,4 +1,22 @@
 # sarahnzx
+###### /java/systemtests/SelectCommandSystemTest.java
+``` java
+        /* Case: valid arguments (social type instagram) -> selected */
+        command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased() + " instagram";
+        assertCommandSuccess(command, validIndex);
+
+        /* Case: valid arguments (social type facebook) -> selected */
+        command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased() + " facebook";
+        assertCommandSuccess(command, validIndex);
+
+        /* Case: valid arguments (social type ig) -> selected */
+        command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased() + " ig";
+        assertCommandSuccess(command, validIndex);
+
+        /* Case: valid arguments (social type fb) -> selected */
+        command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased() + " fb";
+        assertCommandSuccess(command, validIndex);
+```
 ###### /java/seedu/address/logic/parser/EditCommandParserTest.java
 ``` java
     @Test
