@@ -20,10 +20,10 @@ Role: Project Advisor
 
 === Sun Sheng Ran
 image::dalessr.jpg[width="150", align="left"]
-{empty}[http://github.com/dalessr[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/dalessr[github]] [<<sunshengran#, portfolio>>]
 
 Role: Team Lead +
-Responsibilities: Logic
+Responsibilities: Logic, UI
 
 '''
 
