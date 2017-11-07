@@ -26,12 +26,14 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class UploadPhotoCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private String validFilePath = "./src/test/resources/photos/connectus_icon.png";
+    private String invalidFilePath = "./src/test/resources/photos/default.jpeg";
 
     @Test
     public void execute_validIndex_success() throws Exception {
         ReadOnlyPerson personToUploadPhoto = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         UploadPhotoCommand uploadPhotoCommand = prepareCommand(INDEX_FIRST_PERSON,
-                "./src/test/resources/photos/connectus_icon.png");
+                validFilePath);
 
         String expectedMessage = String.format(UploadPhotoCommand.MESSAGE_UPLOAD_IMAGE_SUCCESS, personToUploadPhoto);
 
@@ -44,7 +46,7 @@ public class UploadPhotoCommandTest {
     public void execute_invalidIndexValidFile_throwsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         UploadPhotoCommand uploadPhotoCommand = prepareCommand(outOfBoundIndex,
-                "./src/test/resources/photos/connectus_icon.png");
+                validFilePath);
 
         assertCommandFailure(uploadPhotoCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
@@ -53,7 +55,7 @@ public class UploadPhotoCommandTest {
     public void execute_validIndexInvalidFile_throwsCommandException() throws Exception {
         ReadOnlyPerson personToUploadPhoto = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         UploadPhotoCommand uploadPhotoCommand = prepareCommand(INDEX_FIRST_PERSON,
-                "./src/test/resources/photos/default.jpeg");
+                invalidFilePath);
 
         assertCommandFailure(uploadPhotoCommand, model, UploadPhotoCommand.MESSAGE_UPLOAD_IMAGE_FALURE);
     }
