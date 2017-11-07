@@ -130,6 +130,11 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         return null;
     }
 
+    @Override
+    public ReadOnlyEvent getNewlyAddedEvent() {
+        return null;
+    }
+
     /**
      *
      * Gets the current date and returns the local implementation of date.
