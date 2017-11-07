@@ -5,9 +5,6 @@ import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
-import static seedu.address.ui.PersonDetailPanel.PERSON_ADDRESS_ICON;
-import static seedu.address.ui.PersonDetailPanel.PERSON_EMAIL_ICON;
-import static seedu.address.ui.PersonDetailPanel.PERSON_PHONE_ICON;
 
 import java.util.stream.Collectors;
 
@@ -60,9 +57,9 @@ public class PersonDetailPanelTest extends GuiUnitTest {
         guiRobot.pauseForHuman();
 
         assertEquals(expectedPerson.getName().toString(), panel.getName());
-        assertEquals(PERSON_PHONE_ICON + expectedPerson.getPhone().toString(), panel.getPhone());
-        assertEquals(PERSON_ADDRESS_ICON + expectedPerson.getAddress().toString(), panel.getAddress());
-        assertEquals(PERSON_EMAIL_ICON + expectedPerson.getEmail().toString(), panel.getEmail());
+        assertEquals(expectedPerson.getPhone().toString(), panel.getPhone());
+        assertEquals(expectedPerson.getAddress().toString(), panel.getAddress());
+        assertEquals(expectedPerson.getEmail().toString(), panel.getEmail());
         assertEquals(expectedPerson.getRemark().toString(), panel.getRemark());
 
         panel.updateTags();
