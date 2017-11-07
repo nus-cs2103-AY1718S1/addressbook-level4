@@ -29,14 +29,17 @@ public class PersonContainsKeywordsPredicateTest extends GuiUnitTest {
         HashMap<String, List<String>> secondPredicateKeywordHashMap = new HashMap<>();
         secondPredicateKeywordHashMap.put("T", Arrays.asList("first", "second"));
 
-        PersonContainsKeywordsPredicate firstPredicate = new PersonContainsKeywordsPredicate(firstPredicateKeywordHashMap);
-        PersonContainsKeywordsPredicate secondPredicate = new PersonContainsKeywordsPredicate(secondPredicateKeywordHashMap);
+        PersonContainsKeywordsPredicate firstPredicate =
+                new PersonContainsKeywordsPredicate(firstPredicateKeywordHashMap);
+        PersonContainsKeywordsPredicate secondPredicate =
+                new PersonContainsKeywordsPredicate(secondPredicateKeywordHashMap);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        PersonContainsKeywordsPredicate firstPredicateCopy = new PersonContainsKeywordsPredicate(firstPredicateKeywordHashMap);
+        PersonContainsKeywordsPredicate firstPredicateCopy =
+                new PersonContainsKeywordsPredicate(firstPredicateKeywordHashMap);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false

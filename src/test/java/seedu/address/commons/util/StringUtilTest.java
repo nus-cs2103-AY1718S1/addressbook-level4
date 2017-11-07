@@ -68,8 +68,8 @@ public class StringUtilTest {
                 null, Optional.empty());
     }
 
-    private void assertExceptionThrownForIgnoreCaseAndCharacters(Class<? extends Throwable> exceptionClass, String sentence,
-                                                                 String word, Optional<String> errorMessage) {
+    private void assertExceptionThrownForIgnoreCaseAndCharacters(Class<? extends Throwable> exceptionClass,
+                                                        String sentence, String word, Optional<String> errorMessage) {
         thrown.expect(exceptionClass);
         errorMessage.ifPresent(message -> thrown.expectMessage(message));
         StringUtil.containsWordIgnoreCaseAndCharacters(sentence, word);
@@ -125,17 +125,17 @@ public class StringUtilTest {
         assertFalse(StringUtil.containsWordIgnoreCaseAndCharacters("    ", "123"));
 
         // Matches a partial word only
-        assertFalse(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bbb ccc", "bb")); // Sentence word bigger than query word
-        assertFalse(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bbb ccc", "bbbb")); // Query word bigger than sentence word
+        assertFalse(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bbb ccc", "bb"));
+        assertFalse(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bbb ccc", "bbbb"));
 
         // Matches word in the sentence, different upper/lower case letters
         assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bBb ccc", "Aaa")); // First word (boundary case)
-        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("aaa. bBb ccc", "Aaa")); // First word with non-word character (boundary case)
+        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("aaa. bBb ccc", "Aaa")); // boundary case
         assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bBb ccc1", "CCc1")); // Last word (boundary case)
-        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bBb ccc_1", "CCc_1")); // Last word with non-word character (boundary case)
-        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("  AAA   bBb   ccc  ", "aaa")); // Sentence has extra spaces
-        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("Aaa", "aaa")); // Only one word in sentence (boundary case)
-        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters(",Aaa", "aaa")); // Only one word in sentence with non-word character (boundary case)
+        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bBb ccc_1", "CCc_1")); // boundary case
+        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("  AAA   bBb   ccc  ", "aaa"));
+        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("Aaa", "aaa")); // boundary case
+        assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters(",Aaa", "aaa")); // boundary case
         assertTrue(StringUtil.containsWordIgnoreCaseAndCharacters("aaa bbb ccc", "  ccc  ")); // Leading/trailing spaces
 
         // Matches multiple words in sentence
@@ -369,6 +369,12 @@ public class StringUtilTest {
         assertCorrectDateResult("20/10/2017 10:50", expectedSingleDateList);
     }
 
+    /**
+     * Assert true if {@code sentence} contains dates in {@code expected}
+     *
+     * @param sentence should not be null
+     * @param expected should not be null
+     */
     public void assertCorrectDateResult(String sentence, ArrayList<String> expected) {
         ArrayList<String> actual = StringUtil.extractDates(sentence);
         assertTrue(actual.equals(expected));
@@ -428,6 +434,12 @@ public class StringUtilTest {
         assertCorrectTimeResult("20/10/2017 05:30", expectedSingleTimeList);
     }
 
+    /**
+     * Assert true if {@code sentence} contains times in {@code expected}
+     *
+     * @param sentence should not be null
+     * @param expected should not be null
+     */
     public void assertCorrectTimeResult(String sentence, ArrayList<String> expected) {
         ArrayList<String> actual = StringUtil.extractTimes(sentence);
         assertTrue(actual.equals(expected));

@@ -33,7 +33,8 @@ public class FindCommandParserTest {
 
     @Test
     public void parse_noPrefix_throwsParseException() {
-        assertParseFailure(parser, "alex john 91234567", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "alex john 91234567",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
 
     @Test
@@ -100,11 +101,12 @@ public class FindCommandParserTest {
         FindCommand expectedFindCommand =
                 new FindCommand(new PersonContainsKeywordsPredicate(expectedFindCmdMap));
         // leading whitespaces is not part of user input, but to accommodate for tokenizer
-        assertParseSuccess(parser, " n/Alice Bob r/friends family e/@gmail.com @hotmail.com a/Felix Road 23 #12-12 " +
-                        "ap/01/01/2017 10:30 c/funny swim p/91234567 81234567", expectedFindCommand);
+        assertParseSuccess(parser, " n/Alice Bob r/friends family e/@gmail.com @hotmail.com a/Felix Road 23 #12-12 "
+                        + "ap/01/01/2017 10:30 c/funny swim p/91234567 81234567", expectedFindCommand);
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, "  n/ \n Alice \n \t Bob  \t  r/ \n friends \t family   \t e/ @gmail.com \n @hotmail.com " +
-                        "a/Felix Road \n 23 #12-12 ap/01/01/2017 \t  \n 10:30 c/funny \n swim p/91234567 81234567", expectedFindCommand);
+        assertParseSuccess(parser, "  n/ \n Alice \n \t Bob  \t  r/ \n friends \t family   "
+                + "\t e/ @gmail.com \n @hotmail.com a/Felix Road \n 23 #12-12 ap/01/01/2017 \t  "
+                + "\n 10:30 c/funny \n swim p/91234567 81234567", expectedFindCommand);
     }
 
 }
