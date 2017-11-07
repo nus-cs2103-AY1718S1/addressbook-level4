@@ -1,0 +1,56 @@
+= Daniel Kwang - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ConnectUs
+ConnectUs is a desktop address book application used to store contact information such as name, phone, email and address.
+The user can tag entries for more efficient search and can open up an email client to send an email. The GUI displays the list of contacts as well as additional information
+such as his/her address on Google Maps. The user interacts with it using a CLI, although there are additional GUI elements created in JavaFX such as a form to edit contacts, and a QR generator for you to scan
+the contact's number and automatically port it to your smartphone. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Undo/Redo
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=connectuslog]
+include::../UserGuide.adoc[tag=qrgeneration]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+"clearlog" feature was implemented on top of another features implement to keep track of important actions such as "Edit" , "Select" , "Add" & "Clear". This ensure the user are able to identify mistakes committed on certain period of time where undo or redo function would not be usable once the application is close. So the "ClearLog" function clears the entries in ConnectUs.txt files and keep a record on when it was cleared. This allows the user to keep neat and organised entries of action used. +
+"qrcall" feature was implemented to reduce chance of human error and time when the user wants to make call to specific contact. With the help of Quick Response Code (QR Code), the user just need to use their smartphone to scan the code which will instruct the phone on what to do. This helps save time and chance for error during the time when the user needs to make a call. +
+"qrsms" feature was implemented to keep our user free from human error and help save time to compose a sms. It comes with function where there is greeting template message . The user simply need to scan the QR Code to compose their sms for the intended contact. +
+"qrsavecontact" feature was implemented to help Android users to save contact easily by simply scanning the QR Code to save contact they want from the addressbook application. This will help save a lot of time if the user needs to save multiple acount and reduce chances of human error with potential of wrong information keyed in during the process of manual saving of contact information.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+Ongoing
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Addition of Voice Command with Google Voice Recognition
+
+As most of the features that i implemented are targeted at user convenience. The proposed suggestion will help make the application more easy to use with just commanding the application on what to do while you can multitask with other task you are busy with.
+
+=== Other contributions
+
+* Offers suggestions for team with alternative solution to solve the issue they encountered with
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}
