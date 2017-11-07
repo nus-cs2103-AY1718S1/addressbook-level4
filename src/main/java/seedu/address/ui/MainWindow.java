@@ -296,7 +296,7 @@ public class MainWindow extends UiPart<Region> {
         logic.setCurrentTheme(getCurrentTheme());
     }
 
-  // @@author archthegit
+    // @@author archthegit
     @Subscribe
     private void handleUnselectOfPersonCardEvent(PersonPanelUnselectEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
