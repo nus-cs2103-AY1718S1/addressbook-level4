@@ -7,6 +7,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ShowLocationRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Address;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -38,7 +39,10 @@ public class LocateCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        EventsCenter.getInstance().post(new ShowLocationRequestEvent(targetIndex));
+        ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
+        Address address = person.getAddress();
+
+        EventsCenter.getInstance().post(new ShowLocationRequestEvent(address.toString()));
         return new CommandResult(String.format(MESSAGE_LOCATE_PERSON_SUCCESS, targetIndex.getOneBased()));
     }
 
