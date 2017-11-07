@@ -73,7 +73,7 @@ import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
 /**
- * Tests add alias1 "a"
+ * Tests add alias "a"
  */
 public class AddCommandAliasSystemTest extends AddressBookSystemTest {
 
@@ -121,7 +121,6 @@ public class AddCommandAliasSystemTest extends AddressBookSystemTest {
             + BIRTHDAY_DESC_AMY + WEBSITE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        //@@author chrisboo
         /* Case: add a person with all fields same as another person in the address book except phone -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY)
             .withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY).withWebsite(VALID_WEBSITE_AMY)
@@ -161,7 +160,6 @@ public class AddCommandAliasSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_ALIAS + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
             + BIRTHDAY_DESC_AMY + WEBSITE_DESC_BOB + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
-        //@@author
 
         /* Case: filters the person list before adding -> added */
         executeCommand(FindCommand.COMMAND_ALIAS + " " + KEYWORD_MATCHING_MEIER);
@@ -193,7 +191,6 @@ public class AddCommandAliasSystemTest extends AddressBookSystemTest {
             + BIRTHDAY_DESC_AMY + WEBSITE_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        //@@author chrisboo
         /* Case: missing phone -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(EMPTY_PHONE).withEmail(VALID_EMAIL_AMY)
             .withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY).withWebsite(VALID_WEBSITE_AMY)
@@ -217,7 +214,6 @@ public class AddCommandAliasSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_ALIAS + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY
             + BIRTHDAY_DESC_AMY + WEBSITE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
-        //@@author
 
         /* Case: missing website -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
@@ -227,7 +223,6 @@ public class AddCommandAliasSystemTest extends AddressBookSystemTest {
             + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        //@@author chrisboo
         /* Case: missing birthday -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
             .withAddress(VALID_ADDRESS_AMY).withBirthday(EMPTY_BIRTHDAY).withWebsite(VALID_WEBSITE_AMY)
@@ -235,7 +230,6 @@ public class AddCommandAliasSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_ALIAS + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY
             + ADDRESS_DESC_AMY + WEBSITE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
-        //@@author
 
         /* Case: invalid keyword -> rejected */
         command = "adds " + PersonUtil.getPersonDetails(toAdd);
@@ -277,6 +271,9 @@ public class AddCommandAliasSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, Website.MESSAGE_WEBSITE_CONSTRAINTS);
     }
 
+    /**
+     * Tests add alias "curse"
+     */
     @Test
     public void addAlias2() throws Exception {
         Model model = getModel();
@@ -321,7 +318,6 @@ public class AddCommandAliasSystemTest extends AddressBookSystemTest {
             + BIRTHDAY_DESC_AMY + WEBSITE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        //@@author chrisboo
         /* Case: add a person with all fields same as another person in the address book except phone -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY)
             .withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY).withWebsite(VALID_WEBSITE_AMY)
@@ -361,7 +357,6 @@ public class AddCommandAliasSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_ALIAS2 + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
             + BIRTHDAY_DESC_AMY + WEBSITE_DESC_BOB + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
-        //@@author
 
         /* Case: filters the person list before adding -> added */
         executeCommand(FindCommand.COMMAND_ALIAS2 + " " + KEYWORD_MATCHING_MEIER);
@@ -393,7 +388,6 @@ public class AddCommandAliasSystemTest extends AddressBookSystemTest {
             + BIRTHDAY_DESC_AMY + WEBSITE_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        //@@author chrisboo
         /* Case: missing phone -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(EMPTY_PHONE).withEmail(VALID_EMAIL_AMY)
             .withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY).withWebsite(VALID_WEBSITE_AMY)
@@ -417,7 +411,6 @@ public class AddCommandAliasSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_ALIAS2 + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY
             + BIRTHDAY_DESC_AMY + WEBSITE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
-        //@@author
 
         /* Case: missing website -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
@@ -427,7 +420,6 @@ public class AddCommandAliasSystemTest extends AddressBookSystemTest {
             + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        //@@author chrisboo
         /* Case: missing birthday -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
             .withAddress(VALID_ADDRESS_AMY).withBirthday(EMPTY_BIRTHDAY).withWebsite(VALID_WEBSITE_AMY)
@@ -435,7 +427,6 @@ public class AddCommandAliasSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_ALIAS2 + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY
             + ADDRESS_DESC_AMY + WEBSITE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
-        //@@author
 
         /* Case: invalid keyword -> rejected */
         command = "adds " + PersonUtil.getPersonDetails(toAdd);
