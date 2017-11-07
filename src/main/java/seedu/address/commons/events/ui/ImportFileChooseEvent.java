@@ -9,7 +9,7 @@ import seedu.address.storage.FileWrapper;
  */
 public class ImportFileChooseEvent extends BaseEvent {
 
-    private FileWrapper file;
+    private final FileWrapper file;
 
     public ImportFileChooseEvent (FileWrapper file) {
         this.file = file;

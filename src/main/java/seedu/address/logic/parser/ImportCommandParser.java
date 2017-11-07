@@ -26,18 +26,18 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
     @Override
     public ImportCommand parse(String userInput) throws ParseException {
-        File file = null;
+        File file;
         if (userInput.trim().isEmpty()) {
-            FileWrapper fw = new FileWrapper(file);
+            FileWrapper fw = new FileWrapper();
             EventsCenter.getInstance().post(new ImportFileChooseEvent(fw));
             file = fw.getFile();
             if (file == null) {
-                throw new ParseException("Import cancelled");
+                throw new ParseException(ImportCommand.MESSAGE_IMPORT_CANCELLED);
             }
         } else {
             file = new File(userInput.trim());
         }
-        if (file.getName().endsWith(".xml")) {
+        if (file.getName().endsWith(ImportCommand.XML_EXTENSION)) {
             try {
                 ReadOnlyAddressBook importingBook = XmlFileStorage.loadDataFromSaveFile(file);
                 List<ReadOnlyPerson> importList = importingBook.getPersonList();
@@ -49,7 +49,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
                 throw new ParseException(ImportCommand.MESSAGE_FILE_NOT_FOUND);
             }
 
-        } else if (file.getName().endsWith(".vcf")) {
+        } else if (file.getName().endsWith(ImportCommand.VCF_EXTENSION)) {
             try {
                 List<ReadOnlyPerson> importList = VcfImport.getPersonList(file);
                 return new ImportCommand(importList);
@@ -63,5 +63,4 @@ public class ImportCommandParser implements Parser<ImportCommand> {
             throw new ParseException(ImportCommand.MESSAGE_WRONG_FORMAT);
         }
     }
-
 }

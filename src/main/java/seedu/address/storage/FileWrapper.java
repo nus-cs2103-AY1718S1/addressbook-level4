@@ -9,6 +9,10 @@ import java.io.File;
 public class FileWrapper {
     private File file;
 
+    public FileWrapper() {
+        this.file = null;
+    }
+
     public FileWrapper(File file) {
         this.file = file;
     }
