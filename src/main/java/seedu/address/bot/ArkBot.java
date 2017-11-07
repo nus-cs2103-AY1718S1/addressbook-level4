@@ -419,6 +419,8 @@ public class ArkBot extends AbilityBot {
                                                     .setMessageId(lastKnownMessage.get().getMessageId())
                                                     .setText(parseDisplayParcels(formatParcelsForBot(parcels)));
                                     sender.editMessageText(editedText);
+                                    sender.send("Here are the details of the parcel you just completed: \n" +
+                                        retrievedParcel.toString(), ctx.chatId());
                                     this.waitingForImage = false;
                                 }
                             } else {
