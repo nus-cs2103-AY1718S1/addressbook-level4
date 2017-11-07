@@ -806,6 +806,59 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
 **Cons:** Difficult to implement.
 // end::tagadd[]
 
+// tag::tagremove[]
+=== Removing a tag to multiple people
+
+You can remove a tag from multiple people. This is realized using `TagRemoveCommand`, which extends `UndoableCommand`, it supports undoing and redoing of commands that modifies the state of the address book.
+
+TagRemoveCommand is implemented in this way:
+[source,java]
+----
+public class TagRemoveCommand extends UndoableCommand {
+@Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        // ... TagRemoveCommand logic ...
+    }
+}
+----
+
+For example, the user input might be `t-remove 1 2 3 college friend`. +
+After the command word `t-remove` is parsed at the `AddresBookParser`, the remaining user input(indices in the list, tag to remove), in the example `t-remove 1 2 3 college friend`, will be passed to and parsed by `TagRemoveCommandParser`.
+We also support multiple words as `tagName`, as long as the first word in `tagName` is not a number. +
+This is because the key is to differentiate between indices and `tagName` is by identifying the last recognized number. If a `tagName` has its first word as a number, that word would be treated as index. +
+In this case, as `3` is the last part that is numeric, `1 2 3` is treated as indices and `college friend` is treated as `tagName`. +
+The `TagRemoveCommandParser` returns `TagRemoveCommand` after execution, which will be further processed by `logic` component.
+
+TagRemoveCommandParser is implemented in this way:
+[source,java]
+----
+public class TagRemoveCommandParser implements Parser<TagRemoveCommand> {
+
+    public TagRemoveCommand parse(String args) throws ParseException {
+        // ... TagRemoveCommandParser logic ...
+    }
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Whether to accept user input that has partially invalid indices +
+**Alternative 1 (current choice):** Do not accept +
+**Pros:** Easy to implement +
+**Cons:** User have to type in the valid indices again +
+**Alternative 2:** Ignore the invalid indices +
+**Pros:** It is efficient for the user +
+**Cons:** Difficult to implement.
+
+**Aspect:** Whether to accept user input that includes someone without the given tag to remove +
+**Alternative 1 (current choice):** Do not accept +
+**Pros:** Easy to implement +
+**Cons:** User have to type in the valid indices again +
+**Alternative 2:** Ignore the invalid indices +
+**Pros:** It is efficient for the user +
+**Cons:** Difficult to implement and might be an issue for undo/redo operation.
+// end::tagremove[]
+
 // tag::delete[]
 === Improvements on DeleteCommand
 
