@@ -14,7 +14,7 @@ The Myth's Book is a `Command Line Input` based software which helps caters to s
 in typing out command line inputs to manipulate with information of their contacts in the address book.
 The Myth's Book is a software application that is coded in `Java` programming language.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/main/chernghann.md[Contributed code]]
+*Code contributed*: [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/main/chernghann.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/test/chernghann.md[Test code]]
 
 === Enhancement Added: Add Events
 
@@ -40,6 +40,8 @@ include::../UserGuide.adoc[tag=calendar]
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=addevent]
+
+include::../DeveloperGuide.adoc[tag=calendar]
 
 #End of Extract#
 
