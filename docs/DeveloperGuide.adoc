@@ -549,7 +549,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
-// tag::ImportCommand[]
+// tag::import[]
 === Import Command
 (added in v1.2)
 
@@ -563,19 +563,90 @@ Once the required information (name, email, address, phone number) is retrieved 
 
 * Next, the `AddressBookParser` class will retrieve the command as well as the argument and then call the `ImportCommandParser` class with the `FILENAME` as the argument.
 
+----
+        case ImportCommand.COMMAND_WORD:
+        case ImportCommand.COMMAND_ALIAS:
+            return new ImportCommandParser().parse(arguments);
+----
+
 * Then, in the `ImportCommandParser` class the file will be retrieved by the java `FILE` class which will access and convert the file into a byte stream using `bufferedReader` and `fileReader` class.
 
 * Once the file is loaded into the `bufferedReader`, the `ImportCommandParser` class will read the file line by line to identify the required contact information that is inside the file.
 
+---
+    public ImportCommand parse(String args) {
+        String filename = args.trim();
+        ArrayList<ReadOnlyPerson> p = new ArrayList<ReadOnlyPerson>();
+        BufferedReader br = null;
+        FileReader fr = null;
+
+---
+
 * The class uses simple String comparison to identify key words such as "FN" for name and "EMAIL" for email address etc.
+
+---
+                if (currLine.contains("FN")) {
+                    name = currLine.split(":")[1];
+                }
+                if (currLine.contains("TEL")) {
+                    phone = currLine.split(":")[1];
+                }
+                if (currLine.contains("ADR")) {
+                    address = currLine.split(";")[2];
+                }
+                if (currLine.contains("EMAIL")) {
+                    email = currLine.split(":")[1];
+                }
+
+---
 
 * Once the line reads the keyword "END", it means that the end of the first contact has been accessed and all its required values were all retrieved by the class.
 
 * Then using the informaton the class retrieved, it will then create a `Person` object. This object is then stored inside a `ReadOnlyPerson` array.
 
+---
+
+ try {
+    Name n = new Name(name);
+    Phone pe = new Phone(phone);
+    Email e = new Email(email);
+    Address a = new Address(address);
+    ReadOnlyPerson person = new Person(n, pe, e, a, tagList);
+         p.add(person);
+      } catch (IllegalValueException ie) {
+        ie.getMessage();
+     }
+
+---
+
 * When all the contact in the file has been accessed and created as a `Person` object and stored inside the array, the `ImportCommandParser` will then return a new `ImportCommand()` that will parse the array to the `ImportCommand` class for execution.
 
 * The `ImportCommand` class will retrieve the `ReadOnlyPerson` array that was parsed into its' constructor and then loop through the array and add each `Person` object into the addressbook.
+
+---
+    private ArrayList<ReadOnlyPerson> p;
+    public ImportCommand(ArrayList<ReadOnlyPerson> list) {
+        this.p = list;
+    }
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        if (p.isEmpty()) {
+            return new CommandResult(MESSAGE_FAILURE);
+        } else {
+            try {
+                for (ReadOnlyPerson pp : p) {
+                    model.addPerson(pp);
+                }
+            } catch (DuplicatePersonException de) {
+                throw new CommandException(AddCommand.MESSAGE_DUPLICATE_PERSON);
+            }
+            LoggingCommand loggingCommand = new LoggingCommand();
+            loggingCommand.keepLog("", "Import Action");
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
+    }
+
+---
 
 * Lastly, the `ImportCommand` class will return a success message to inform the user that all the contacts has been imported.
 
@@ -599,7 +670,7 @@ Once the required information (name, email, address, phone number) is retrieved 
 **Pros:** User friendly. User can upload a file that is residing in any part of the user's PC. Does not require user to specifically place the file at the /data directory. +
 **Cons:** Requires an `Upload` button to be created, involves UI component. Requires more time to develop the upload function. +
 
-// end::ImportCommand[]
+// end::import[]
 
 // tag::filtertag[]
 
