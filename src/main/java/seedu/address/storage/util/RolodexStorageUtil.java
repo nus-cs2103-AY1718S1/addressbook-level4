@@ -7,7 +7,8 @@ import java.util.regex.Pattern;
  */
 public class RolodexStorageUtil {
 
-    public static final Pattern FILEPATH_REGEX = Pattern.compile("^(.+)/([^/]+)$");
+    public static final String FILEPATH_REGEX = "^(.+)/([^/]+)$";
+    public static final String FILEPATH_REGEX_NON_STRICT = "(.+)/([^/]+)";
 
     public static final String ROLODEX_FILE_EXTENSION = ".rldx";
 
@@ -22,6 +23,7 @@ public class RolodexStorageUtil {
      * Returns true if the full filepath string given is a valid filepath
      */
     public static boolean isValidRolodexStorageFilepath(String rolodexFilepath) {
-        return FILEPATH_REGEX.matcher(rolodexFilepath).matches();
+        Pattern filepath = Pattern.compile(FILEPATH_REGEX);
+        return filepath.matcher(rolodexFilepath).matches();
     }
 }

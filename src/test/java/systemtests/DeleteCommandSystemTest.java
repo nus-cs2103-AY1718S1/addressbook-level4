@@ -2,6 +2,7 @@ package systemtests;
 
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.address.commons.core.Messages.MESSAGE_PROMPT_COMMAND;
 import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
 import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
@@ -87,26 +88,27 @@ public class DeleteCommandSystemTest extends RolodexSystemTest {
 
         /* --------------------------------- Performing invalid delete operation ------------------------------------ */
 
-        /* Case: invalid index (0) -> rejected */
+        /* Case: invalid index (0) -> rejected, not suggestible. */
         command = DeleteCommand.COMMAND_WORD + " 0";
         assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
-        /* Case: invalid index (-1) -> rejected */
+        /* Case: invalid index (-1) -> rejected, suggestible. */
         command = DeleteCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " -1";
-        assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+        assertCommandFailure(command, "", String.format(MESSAGE_PROMPT_COMMAND, command.replace("-1", "1")));
 
-        /* Case: invalid index (size + 1) -> rejected */
+        /* Case: invalid index (size + 1) -> rejected, not suggestible. */
         Index outOfBoundsIndex = Index.fromOneBased(
                 getModel().getRolodex().getPersonList().size() + 1);
         command = DeleteCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased();
         assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
-        /* Case: invalid arguments (alphabets) -> rejected */
+        /* Case: invalid arguments (alphabets) -> rejected, not suggestible. */
         assertCommandFailure(DeleteCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " abc",
                 MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
-        /* Case: invalid arguments (extra argument) -> rejected */
-        assertCommandFailure(DeleteCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+        /* Case: invalid arguments (extra argument) -> rejected, suggestible. */
+        command = DeleteCommand.COMMAND_WORD + " 1 abc";
+        assertCommandFailure(command, "", String.format(MESSAGE_PROMPT_COMMAND, command.replace(" abc", "")));
     }
 
     /**
@@ -186,10 +188,25 @@ public class DeleteCommandSystemTest extends RolodexSystemTest {
      * @see RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
+        assertCommandFailure(command, command, expectedResultMessage);
+    }
+
+    /**
+     * Executes {@code command} and in addition,<br>
+     * 1. Asserts that the command box displays {@code expectedCommandBox}.<br>
+     * 2. Asserts that result display box displays {@code expectedResultMessage}.<br>
+     * 3. Asserts that the model related components equal to the current model.<br>
+     * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
+     * 5. Asserts that the command box has the error style.<br>
+     * Verifications 1 to 3 are performed by
+     * {@code RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedCommandBox, String expectedResultMessage) {
         Model expectedModel = getModel();
 
         executeCommand(command);
-        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertApplicationDisplaysExpected(expectedCommandBox, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
