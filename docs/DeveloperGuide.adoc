@@ -436,6 +436,8 @@ The following sequence diagrams show you how the Map commands work:
 
 image::MapShowCommandSequenceDiagram.png[width="800"]
 
+
+
 image::MapRouteCommandSequenceDiagram.png[width="800"]
 
 [NOTE]
