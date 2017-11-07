@@ -545,7 +545,7 @@ image::export-contacts.png[width="790"]
 
 Examples:
 
-* `[red]#export# /Users/seedu/Documents/exportData.xml` +
+* `[red]#export# [green]#/Users/seedu/Documents/exportData.xml#` +
 Exports contact data to the location `/Users/seedu/Documents/exportData.xml`
 
 [[import-command]]
@@ -569,7 +569,7 @@ image::import-contacts.png[width="790"]
 
 Examples:
 
-* `[red]#import# /Users/seedu/Documents/exportData.xml` +
+* `[red]#import# [green]#/Users/seedu/Documents/exportData.xml#` +
 Imports contact data to the location `/Users/seedu/Documents/exportData.xml`
 
 
