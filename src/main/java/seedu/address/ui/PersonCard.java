@@ -76,9 +76,9 @@ public class PersonCard extends UiPart<Region> {
      */
     private static String getColorForTag(String tagValue) {
 
-        if (!tagColors.containsKey(tagValue) && colourNum < colors.length) {
+        if ((!tagColors.containsKey(tagValue)) && (colourNum < colors.length)) {
             tagColors.put(tagValue, colors[colourNum++]);
-        } else if (colourNum >= colors.length && !tagColors.containsKey(tagValue)) {
+        } else if ((colourNum >= colors.length) && (!tagColors.containsKey(tagValue))) {
             colourNum = 0; //Resets the color num for reuse
         } else if (tagColors.containsKey(tagValue)) {
             //if the tag already has a colour in the hasmap, we do not need to do anything
