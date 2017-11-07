@@ -1,5 +1,17 @@
 package seedu.address.ui;
 
+import java.io.StringWriter;
+import java.net.URL;
+import java.util.Iterator;
+import java.util.logging.Logger;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
@@ -10,9 +22,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
-
-import org.w3c.dom.Document;
-
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BrowserUrlChangeEvent;
@@ -27,15 +36,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.social.SocialInfo;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.StringWriter;
-import java.net.URL;
-import java.util.Iterator;
-import java.util.logging.Logger;
+
 
 /**
  * The Browser Panel of the App.
