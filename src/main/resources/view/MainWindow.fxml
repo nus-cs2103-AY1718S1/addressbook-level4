@@ -32,21 +32,9 @@
         <!--@@author-->
     </MenuBar>
 
-    <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
-        <padding>
-            <Insets bottom="5" left="10" right="10" top="5" />
-        </padding>
-    </StackPane>
-
-    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
-        <padding>
-            <Insets bottom="5" left="10" right="10" top="5" />
-        </padding>
-    </StackPane>
-
     <!--@@author hansiang93-->
     <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-        <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+        <VBox fx:id="personList" maxWidth="400.0" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
@@ -70,16 +58,44 @@
                   </items>
                </SplitPane>
                 </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                    <children>
-
-                        <StackPane fx:id="browserPlaceholder" prefHeight="163.0" prefWidth="199.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-                            <padding>
-                                <Insets bottom="10" left="10" right="10" top="10" />
-                            </padding>
-                        </StackPane>
-                    </children>
-                </AnchorPane>
+            <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+              <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="160.0">
+                          <children>
+      
+                                    <StackPane fx:id="browserPlaceholder" prefHeight="163.0" prefWidth="199.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                                  <padding>
+                                      <Insets bottom="10" left="10" right="10" top="10" />
+                                  </padding>
+                              </StackPane>
+                          </children>
+                      </AnchorPane>
+                  <SplitPane dividerPositions="0.5" maxHeight="170.0" orientation="VERTICAL">
+                    <items>
+                      <AnchorPane maxHeight="100.0">
+                           <children>
+                           
+                                     <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                   <padding>
+                                       <Insets bottom="5" left="10" right="10" top="5" />
+                                   </padding>
+                               </StackPane>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane maxHeight="70.0">
+                           <children>
+                           
+                                     <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                   <padding>
+                                       <Insets bottom="5" left="10" right="10" top="5" />
+                                   </padding>
+                               </StackPane>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+              </items>
+            </SplitPane>
             </items>
         </SplitPane>
     </SplitPane>
