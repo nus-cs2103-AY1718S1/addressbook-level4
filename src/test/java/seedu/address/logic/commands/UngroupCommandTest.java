@@ -51,6 +51,18 @@ public class UngroupCommandTest {
     }
 
     @Test
+    public void execute_ungroupGroupNotFound_failure() throws Exception {
+        ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person person = new PersonBuilder(personInFilteredList).build();
+
+        UngroupCommand ungroupCommand = prepareCommand(INDEX_FIRST_PERSON, new Group("Some grou"));
+        String expectedMessage =
+                String.format(UngroupCommand.MESSAGE_GROUP_NOT_FOUND, person.getName(), "Some grou");
+
+        assertCommandFailure(ungroupCommand, model, expectedMessage);
+    }
+
+    @Test
     public void execute_filteredList_success() throws Exception {
         showFirstPersonOnly(model);
 
@@ -71,9 +83,9 @@ public class UngroupCommandTest {
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        UngroupCommand remarkCommand = prepareCommand(outOfBoundIndex, new Group(VALID_GROUP_NAME_FAMILY));
+        UngroupCommand ungroupCommand = prepareCommand(outOfBoundIndex, new Group(VALID_GROUP_NAME_FAMILY));
 
-        assertCommandFailure(remarkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(ungroupCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     /**

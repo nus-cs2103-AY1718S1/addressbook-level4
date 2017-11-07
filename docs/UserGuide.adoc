@@ -65,7 +65,7 @@ Format: `help`
 TBI in v2.0: social media links, auto-capitalization
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [link/LINK]... [t/TAG]...` or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [link/LINK]... [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS ... [t/TAG]...` or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS ... [t/TAG]...`
 
 [TIP]
 A person can have any number of tags and social media links (including 0) +
@@ -73,7 +73,7 @@ If you type full name in small letters, it will be auto-capitalized
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 link/https://www.facebook.com/happy.potter`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 * `a n/Nam p/12345678 e/n@example.com a/Nam street, block 8, #02-03 t/me`
 
@@ -88,7 +88,7 @@ Format: `list` or `ls`
 Coming in v2.0: Changing picture and social media links
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [link/LINK]... [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] ... [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -191,6 +191,9 @@ Returns `Bernice Yu`
 
 === Deleting a person : `delete` (alias `del`)
 
+[NOTE]
+Coming in v2.0: deleting selected persons
+
 Deletes the specified person from the address book. +
 Format: `delete INDEX` or `del INDEX` or `del selected`
 
@@ -218,7 +221,7 @@ Deletes all selected persons.
 === Selecting a person : `select`
 
 [NOTE]
-Coming in v2.0: `select me`
+Coming in v2.0: `select me`, `select all`
 
 Selects the person identified by the index number used in the last person listing or all person currently displayed. +
 Format: `select INDEX` or `select all`
@@ -248,13 +251,27 @@ Since v1.3
 
 Add an appointment to a person in the addressbook. +
 Format: `appoint INDEX ap/date (dd/mm/yyyy) time (hh:mm) duration(minutes)` +
-
+Example: `appoint 1 ap/12/12/2020 15:12 60` +
 ****
 * If the person already have an appointment, the new appointment will override the old one
 * If ap/ is left blank, the old appointment will be deleted.
 ****
 
+=======
+=== Removing tag : `removetag`
 
+Since v1.5
+
+Used to remove a tag with TAG name +
+If such a tag does not exit, nothing happens. +
+Format: `removetag t/TAG` +
+
+Examples:
+
+* `removetag t/friend` +
+Removes the tag `friend` from the address book.
+
+// tag::groupungroup[]
 === Grouping persons : `group`
 
 Since v1.2
@@ -295,13 +312,13 @@ Format: `ungroup INDEX gn/GROUP_NAME` +
 Examples:
 
 * `list` +
-`ungroup n/CS2103 2 3` +
+`ungroup gn/CS2103 2 3` +
 Removes the 2nd and 3rd person from the group CS2103 in the address book.
 * `find Betsy` +
-`ungroup n/Family 1` +
+`ungroup gn/Family 1` +
 Removes the 1st person from the results of the `find` command from the group Family.
 
-
+// end::groupungroup[]
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -312,9 +329,7 @@ Format: `history` or `h`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-[NOTE]
-Coming in v2.0
-
+// tag::profilepic[]
 === Changing profile picture : `changepic` (alias pic)
 
 [NOTE]
@@ -331,19 +346,12 @@ Examples:
 
 * `pic 2 p/C:\Users\User\Documents\mypic.jpg`
 * `changepic 1 p/default_pic.png`
-
-=== Setting up appointment: `appointment`
-
-Set up an appointment with a person indicated by INDEX from START TIME, lasting DURATION (minutes)
-and send them a reminder through email.
-Format: `appointment INDEX START_TIME DURATION`, TIME is in ddmmyy HHMM
-
-Example:
-
-* `list` +
-`appointment 1 121017 1200 60`
+// end::profilepic[]
 
 === Sending my contact detail to someone: `sharecontact`
+
+[NOTE]
+TBI in v2.0
 
 Share my contact details to someone in the address book, indicated by INDEX.
 Format: `sharecontact INDEX`
@@ -446,6 +454,8 @@ There is no need to save manually.
 
 === Suggestions as you type
 
+[NOTE]
+TBI in v2.0
 Commands and parameters will be suggested as you type, where applicable.
 
 === Autocomplete commands
@@ -473,7 +483,7 @@ TBI in v2.0
 == Command Summary
 
 TBI in v.2.0: links to social media +
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [link/LINK]... [t/TAG]...` (`a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [link/LINK]... [t/TAG]...` +
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS ... [t/TAG]...` (`a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS ... [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` +
 * *Clear* : `clear` (`clr`) +
 * *Delete* : `delete INDEX` (`del INDEX`) or `delete selected` +
@@ -484,10 +494,12 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com` +
 e.g. `find James Jake` +
 * *List* : `list` (`ls`) +
 * *Help* : `help` +
-TBI in v2.0: 'select me'+
+TBI in v2.0: 'select me', 'select all' +
 * *Select* : `select INDEX` (also `select me`) +
 e.g.: `select 2`, `select all` +
 `select me` +
+* *Remove Tag* : `removetag t/TAG` +
+e.g.: `removetag t/friend` +
 * *Group* : `group INDEX gn/GROUP_NAME` +
 e.g.: `group 2 gn/Family` +
 * *Ungroup* : `ungroup INDEX gn/NAME` +
@@ -495,6 +507,8 @@ e.g.: `ungroup 2 gn/Family` +
 * *History* : `history` (`h`) +
 * *Undo* : `undo` +
 * *Redo* : `redo` +
+* *Appoint* : `appoint INDEX ap/DATE TIME DURATION` +
+e.g. `appoint 1 ap/12/12/2017 12:00 60`
 * *Change Pic* : `changepic INDEX p/PATH (pic INDEX p/PATH)` +
 e.g.: `changepic 2 p/C:\Users\User\Documents\mypic.jpg` +
 TBI in v2.0: import and export +

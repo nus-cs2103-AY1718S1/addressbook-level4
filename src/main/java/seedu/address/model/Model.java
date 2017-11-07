@@ -41,8 +41,10 @@ public interface Model {
             throws DuplicatePersonException, PersonNotFoundException;
 
     //@@author arturs68
-    /** Removes the given tag from everyone in the address book and deletes it from the addressBook tag list. */
-    void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException;
+    /** Removes the given tag from everyone in the address book and deletes it from the addressBook tag list.
+     * Returns false if no such a tag exists and true otherwise
+     */
+    boolean removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException;
 
     /** Checks if the group has some members. If it does, does nothing,
      * otherwise removes the group from the group list of the addressBook */
