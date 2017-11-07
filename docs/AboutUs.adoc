@@ -21,16 +21,16 @@ We are computing students from NUS, and are based  in the http://www.comp.nus.ed
 image::aboutus_nicholas.jpg[width="150", align="left"]
 {empty}[https://github.com/nicholaschuayunzhi[github]] [<<nicholas#, portfolio>>]
 
-Role: Team Lead + Developer + Documentation + Integration + Testing
+Role: Team Lead + Developer + Documentation + Integration + Testing +
 Responsibilities: UI
 
 '''
 
 === Goh Wei Wen
 image::aboutus_weiwen.jpg[width="150", align="left"]
-{empty}[http://github.com/goweiwen[github]] [<<weiwen#, portfolio>>]
+{empty}[http://github.com/goweiwen[github]] [https://cs2103aug2017-w11-b4.github.io/main/team/goweiwen.html[project portfolio]]
 
-Role: Developer + Code Quality + Git Expert + Testing
+Role: Developer + Code Quality + Git Expert + Testing +
 Responsibilities: Project Advisor
 
 '''
@@ -39,7 +39,7 @@ Responsibilities: Project Advisor
 image::aboutus_engsheng.jpg[width="150", align="left"]
 {empty}[http://github.com/hanselblack[github]][https://cs2103aug2017-w11-b4.github.io/main/team/engsheng.html[project portfolio]]
 
-Role: Developer + Documentation + Deliverables and deadlines + Testing
+Role: Developer + Documentation + Deliverables and deadlines + Testing +
 Responsibilities: Project Advisor
 
 '''

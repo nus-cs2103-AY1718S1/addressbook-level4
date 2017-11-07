@@ -21,7 +21,7 @@ image::UG_mainheader_introduction.png[width="900"]
 {sp}
 
 === Do More with Less
-Unify is a Command Line Interface AddressBook that helps manage your contacts efficiently. Unlike conventional Address Books, Unify adopts a Command-Line Interface (CLI).
+Unify is a Command Line Interface AddressBook that helps you manage your contacts efficiently. Unlike conventional Address Books, Unify adopts a Command-Line Interface (CLI).
 By having a CLI, you can navigate and manage Unify efficiently by typing commands.
 Commands capture the important details of your action into a concise line.
 With just one line, you can traverse your large network to find your old pal John or update your Brother's phone number.
@@ -160,6 +160,28 @@ image::UG_help1.png[width="590"]
 image:step2.png[width="70"] The help window will appear as shown above.
 
 image::UG_help2.png[width="590"]
+{sp}+
+
+image::divider.png[width="900"]
+
+// tag::autocomplete[]
+=== Autocompleting commands: kbd:[Tab]
+
+image::UG_commandheader_autocomplete.png[width="500"]
+{sp}+
+Slow typer? Fret not! Just press kbd:[Tab] and Unify will automatically finish your commands for you.
+
+[TIP]
+Autocomplete understands what you're typing and can automatically complete parameters of some commands,
+too! Simply press kbd:[Tab] whenever you're unsure what to type next.
+
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] Type an incomplete command into the command box, and press kbd:[Tab] to autocomplete it.
+
+image:step2.png[width="70"] The automatically completed command will appear in the command box.
+// end::autocomplete[]
+
 {sp}+
 
 image::divider.png[width="900"]
@@ -767,6 +789,7 @@ Removes the remark for the first person.
 
 image::divider.png[width="900"]
 
+// tag::alias[]
 === Adding aliases : `alias`
 image::UG_commandheader_aliasadd.png[width="500"]
 
@@ -802,6 +825,7 @@ image::UG_header_examples.png[width="400"]
 `unalias unfriend` +
 `unfriend` +
 The `unfriend` command fails as there is no longer such a command.
+// end::alias[]
 
 {sp}+
 

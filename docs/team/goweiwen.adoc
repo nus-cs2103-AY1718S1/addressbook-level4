@@ -1,0 +1,84 @@
+= Goh Wei Wen - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== image:engsheng_projectheader.png[width="900"]
+`UNIFY` is a Command Line Interface AddressBook that helps users manage your contacts efficiently. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 12 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W11-B4/main/blob/master/collated/main/goweiwen.md[Functional code]] [https://github.com/CS2103AUG2017-W11-B4/main/blob/master/collated/test/goweiwen.md[Test code]]
+
+=== image:engsheng_header_enhancementadded.png[width="900"]
+=== Enhancement Added: Alias
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=alias]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Aliases help users execute commands they might forget. For example, if the user can't remember how to
+add a new contact to the address book, they can type any of `add`, `create`, or `new`. In addition,
+we allow users to define their own aliases if the default ones are not memorable enough.
+
+We do not
+provide short-form aliases (e.g. `a` as an alias for `add`) by default as we feel having a powerful
+autocompletion feature completely eclipses any uses for cryptic short-form commands.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=alias]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Alias
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=autocomplete]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=autocomplete]
+
+#End of Extract#
+
+---
+
+=== image:engsheng_header_enhancementproposed.png[width="900"]
+=== Enhancement Proposed: Add command `remark`
+
+{Explain similar to the Undo/Redo feature above.}
+
+=== image:engsheng_header_contribution.png[width="900"]
+=== Other contributions
+
+* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+

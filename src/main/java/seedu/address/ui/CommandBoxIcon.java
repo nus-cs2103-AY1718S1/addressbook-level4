@@ -16,7 +16,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.CommandInputChangedEvent;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-//@@author
+//@@author goweiwen
 /**
  * Panel that displays the additional details of a Person
  */

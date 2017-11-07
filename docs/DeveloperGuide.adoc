@@ -569,6 +569,7 @@ The sending email function is an external library and requires internet connecti
 
 // end::emailcommand[]
 
+// tag::alias[]
 === Aliases
 
 Users can specify aliases that map to other commands, which helps them reduce the amount of typing required,
@@ -605,6 +606,7 @@ image::AliasSequenceDiagram.png[width="800"]
 **Alternative 2:** Pass the `UserPrefs` instance down to the parser +
 **Pros:** Less coupling. Follows Law of Demeter. +
 **Cons:** Heavy changes to code base to pass the instance downstream. +
+// end::alias[]
 
 === Configuration
 
