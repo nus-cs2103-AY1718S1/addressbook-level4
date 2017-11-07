@@ -30,6 +30,8 @@ public interface ReadOnlyPerson {
     Set<Tag> getTags();
     ObjectProperty<UniqueSocialInfoList> socialInfoProperty();
     Set<SocialInfo> getSocialInfos();
+    ObjectProperty<LastAccessDate> lastAccessDateProperty();
+    LastAccessDate getLastAccessDate();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -61,6 +63,7 @@ public interface ReadOnlyPerson {
         getTags().forEach(builder::append);
         builder.append(" Social Infos: ");
         getSocialInfos().forEach(builder::append);
+        // omit last access date as it doesn't provide much useful information to the user
         return builder.toString();
     }
 
