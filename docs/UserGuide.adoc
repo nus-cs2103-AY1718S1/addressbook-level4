@@ -164,6 +164,7 @@ Deletes the 1st, 3rd and 4th person in PEERSONAL.
 Deletes the 1st person in the results of the `find` command.
 //end::deletecommand[]
 
+// tag::addphoto[]
 === Adding photo : `addphoto` (Since v1.3)
 
 Adds a photo for the specified person in PEERSONAL. +
@@ -175,6 +176,13 @@ Examples:
 Adds a photo `cutedog.png` to the first person of PEERSONAL.
 * `addphoto 1` or `addphoto 1 f/` +
 Removes the current photo from the first person of PEERSONAL.
+
+[NOTE]
+====
+Only images in `.jpg` and `.png` are supported.
+====
+
+// end::addphoto[]
 
 === Selecting a person : `select`
 
@@ -213,7 +221,7 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify PEERSONAL's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `addphoto`, `birthday`, `remark`, `sort` and `clear`).
 ====
 
 Examples:
@@ -333,10 +341,12 @@ Format: `exit`
 Lists contacts added in the past 24 hours. +
 Format: `listrecent`
 
-=== Importing data from Address Books : `import` (Coming in v2.0)
+// tag::import[]
+=== Import data from Address Books : `import` (Coming in v2.0)
 
-Imports data from external Address Books and merges into PEERSONAL. +
-Format: `import FILEPATH`
+Imports data from external Address Books and merges into the current Address Book. +
+Format: `import [FILEPATH]`
+// end::import[]
 
 // tag::emailall[]
 === Sending mass emails : `emailall` (Coming in v2.0)
