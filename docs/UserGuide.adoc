@@ -78,16 +78,21 @@ Format: `help` +
 image::Figure2.png[width="790"]
 _Figure 2: Circles’ Help Window_
 
-=== Adding a person: `add`
-The most important feature for any user of an address book is to add the contacts. To add contacts: +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+//tag::optional[]
 
-1. Enter `add n/NAME  p/PHONENUMBER e/EMAIL a/ADDRESS t/TAG` +
-_E.g: add n/John Doe p/81234567 e/johnd@gmail.com a/Blk 311, Clementi Ave 2,
+=== Adding a person: `add`
+The most important feature for any user of an address book is to add the contacts. Optional fields
+are denoted in square brackets [ ]. To add contacts: +
+Format: `add n/NAME [p/PHONE_NUMBER] [b/BIRTHDAY] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+
+//end::optional[]
+
+1. Enter `add n/NAME  p/PHONENUMBER b/BIRTHDAY e/EMAIL a/ADDRESS t/TAG` +
+_E.g: add n/John Doe p/81234567 b/02-03-1995 e/johnd@gmail.com a/Blk 311, Clementi Ave 2,
 #02-25, t/friends t/owesMoney_
 
 2. The following message will appear if the add was successful. (As shown in Figure 3) +
-_E.g: New person added: John Doe Phone: 81234567
+_E.g: New person added: John Doe Phone: 81234567 Birthday: 02-03-1995
 Email: johnd@gmail.com Address: Blk 311, Clementi Ave 2, #02-25, Tags: [owesMoney][friends]_
 
 image::Figure3.png[width="790"]
@@ -164,6 +169,7 @@ _Figure 6: Result of finding "Yeoh"_ +
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
+// tag::delete[]
 === Deleting a person : `delete`
 
 Circles allow you to delete contacts so you can just have the relevant contacts in your address book.
@@ -192,6 +198,7 @@ _Figure 8: Deleting multiple people_ +
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
+//end::delete[]
 
 === Selecting a person : `select`
 
