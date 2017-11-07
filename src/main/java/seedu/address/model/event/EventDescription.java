@@ -14,7 +14,7 @@ public class EventDescription {
     public static final String MESSAGE_EVENT_DESCRIPTION_CONSTRAINTS =
             "Event description should not be blank";
 
-    /*
+    /**
      * The first character of the event name must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
