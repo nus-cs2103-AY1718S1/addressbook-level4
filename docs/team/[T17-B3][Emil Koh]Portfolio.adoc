@@ -1,6 +1,6 @@
 = Emil Koh - Project Portfolio
-:imagesDir: images
-:stylesDir: stylesheets
+:imagesDir: ../images
+:stylesDir: ../stylesheets
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
@@ -18,7 +18,7 @@ It is written in Java, and has about 6 kLoC.
 
 ==== External Behaviour
 
-include::UserGuide.adoc[leveloffset=+2, tag=sort]
+include::../UserGuide.adoc[leveloffset=+2, tag=sort]
 
 ==== Justification
 As our target audience was University students, we felt the need to provide tools to organise the contacts list as one student can come across many
@@ -30,7 +30,7 @@ As there are plenty of different ways to sort contacts, this implementation was 
 
 ==== Implementation
 
-include::DeveloperGuide.adoc[leveloffset=+2, tag=sort]
+include::../DeveloperGuide.adoc[leveloffset=+2, tag=sort]
 
 === Enhancement Added: Listing by tags
 
@@ -43,13 +43,13 @@ This allows the user more flexibility in searching for several contacts with sim
 
 ==== Implementation
 
-include::DeveloperGuide.adoc[leveloffset=+2, tag=listtag]
+include::../DeveloperGuide.adoc[leveloffset=+2, tag=listtag]
 
 === Enhancement Added: Export/Import contacts list
 
 ==== External Behaviour
 
-include::UserGuide.adoc[leveloffset=+2, tag=expimp]
+include::../UserGuide.adoc[leveloffset=+2, tag=expimp]
 
 ==== Justification
 Exporting and importing of the contacts list allows the user more portability.
