@@ -19,7 +19,7 @@ We are computing students from NUS, and are based  in the http://www.comp.nus.ed
 
 === Nicholas Chua
 image::aboutus_nicholas.jpg[width="150", align="left"]
-{empty}[https://github.com/nicholaschuayunzhi[github]] [<<nicholas#, portfolio>>]
+{empty}[https://github.com/nicholaschuayunzhi[github]] [https://cs2103aug2017-w11-b4.github.io/main/team/nicholaschuayunzhi.html[project portfolio]]
 
 Role: Team Lead + Developer + Documentation + Integration + Testing +
 Responsibilities: UI
