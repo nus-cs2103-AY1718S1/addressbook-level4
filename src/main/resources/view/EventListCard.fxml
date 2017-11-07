@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <!-- @@author HouDenghao -->
-<HBox id="cardPane" fx:id="cardPane" prefHeight="102.0" prefWidth="264.0" style="-fx-background-color: deepskyblue; -fx-background-radius: 18px; -fx-border-color: blue; -fx-border-radius: 18px; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="cardPane" fx:id="cardPane" prefHeight="102.0" prefWidth="200.0" style="-fx-background-color: deepskyblue; -fx-background-radius: 18px; -fx-border-color: blue; -fx-border-radius: 18px; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />

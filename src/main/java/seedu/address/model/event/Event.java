@@ -24,14 +24,12 @@ public class Event implements ReadOnlyEvent {
     private ObjectProperty<EventTime> time;
     private ObjectProperty<ParticipantList> participants;
     private ObjectProperty<String> days;
-    private EventTime eTime;
 
     /**
      * Event name and time must be present and not null.
      */
     public Event (EventName name, EventDescription desc, EventTime time, Set<Person> participants) {
         requireAllNonNull(name, time);
-        this.eTime = time;
         this.days = new SimpleObjectProperty<>(time.getDaysLeft());
         this.name = new SimpleObjectProperty<>(name);
         this.desc = new SimpleObjectProperty<>(desc);
@@ -44,7 +42,6 @@ public class Event implements ReadOnlyEvent {
      */
     public Event (EventName name, EventDescription desc, EventTime time) {
         requireAllNonNull(name, time);
-        this.eTime = time;
         this.days = new SimpleObjectProperty<>(time.getDaysLeft());
         this.name = new SimpleObjectProperty<>(name);
         this.desc = new SimpleObjectProperty<>(desc);
