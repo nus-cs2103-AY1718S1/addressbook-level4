@@ -67,6 +67,8 @@ public class RolodexParser {
                 return new AddCommandParser().parse(arguments);
             } else if (EditCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
                 return new EditCommandParser().parse(arguments);
+            } else if (EmailCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new EmailCommandParser().parse(arguments);
             } else if (SelectCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
                 return new SelectCommandParser().parse(arguments);
             } else if (DeleteCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
