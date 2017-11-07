@@ -1,0 +1,52 @@
+= Zhao Pengyu - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: iConnect
+Iconnect is a desktop address book application used for University Students to manage their contacts information and schedule event. It has many attractive features such as using time table to mark up the event, using google map to show the location and using recycle bin to hold deleted person to allow restore.
+
+*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Help/Delete/Export/bin-list/bin-clear/bin-delete/bin-restore
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=delete]
+include::../UserGuide.adoc[tag=help]
+include::../UserGuide.adoc[tag=export]
+include::../UserGuide.adoc[tag=bin]
+
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=help]
+include::../DeveloperGuide.adoc[tag=export]
+include::../DeveloperGuide.adoc[tag=bin]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Enable change of font size
+
+
+=== Other contributions
+
+* Update the GUI of recyclebin list.
+
