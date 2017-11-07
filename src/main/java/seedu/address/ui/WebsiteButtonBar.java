@@ -40,7 +40,7 @@ public class WebsiteButtonBar extends UiPart<Region> {
 
     private void setEventHandlerForButtonClick() {
         mapsButton.setOnMouseClicked(e -> {
-            logger.info("maps button clicked");
+            logger.info("Maps button clicked");
             raise(new WebsiteSelectionRequestEvent("mapsView"));
         });
         searchButton.setOnMouseClicked(e -> {

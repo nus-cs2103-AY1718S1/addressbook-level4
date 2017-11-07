@@ -18,15 +18,15 @@ public class WebCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Displays the social links of the selected person in the web view on the right.\n"
-            + "Parameters: 'facebook' OR 'insta' OR 'maps' OR 'search' OR 'linkedin' OR 'personal'\n"
+            + "Parameters: 'facebook' OR 'instagram' OR 'maps' OR 'search' OR 'linkedin' OR 'personal'\n"
             + "Example: " + COMMAND_WORD + " facebook";
 
     //@@author hansiang93
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD
-            + " {[facebook|insta|linkedin|maps|search|personal]}";
+            + " {[facebook|instagram|linkedin|maps|search|personal]}";
     //@@author
 
-    public static final String MESSAGE_SUCCESS = "Social Site Loaded";
+    public static final String MESSAGE_SUCCESS = "WebLink loading...";
 
     private final String targetWebsite;
 

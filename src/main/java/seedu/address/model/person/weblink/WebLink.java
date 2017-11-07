@@ -1,14 +1,14 @@
 package seedu.address.model.person.weblink;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.person.weblink.WebLinkUtil.FACEBOOK_MATCH_STRING;
-import static seedu.address.model.person.weblink.WebLinkUtil.FACEBOOK_TAG;
-import static seedu.address.model.person.weblink.WebLinkUtil.INSTAGRAM_MATCH_STRING;
-import static seedu.address.model.person.weblink.WebLinkUtil.INSTAGRAM_TAG;
-import static seedu.address.model.person.weblink.WebLinkUtil.LINKEDIN_MATCH_STRING;
-import static seedu.address.model.person.weblink.WebLinkUtil.LINKEDIN_TAG;
-import static seedu.address.model.person.weblink.WebLinkUtil.TWITTER_MATCH_STRING;
-import static seedu.address.model.person.weblink.WebLinkUtil.TWITTER_TAG;
+import static seedu.address.commons.util.WebLinkUtil.FACEBOOK_MATCH_STRING;
+import static seedu.address.commons.util.WebLinkUtil.FACEBOOK_TAG;
+import static seedu.address.commons.util.WebLinkUtil.INSTAGRAM_MATCH_STRING;
+import static seedu.address.commons.util.WebLinkUtil.INSTAGRAM_TAG;
+import static seedu.address.commons.util.WebLinkUtil.LINKEDIN_MATCH_STRING;
+import static seedu.address.commons.util.WebLinkUtil.LINKEDIN_TAG;
+import static seedu.address.commons.util.WebLinkUtil.TWITTER_MATCH_STRING;
+import static seedu.address.commons.util.WebLinkUtil.TWITTER_TAG;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
