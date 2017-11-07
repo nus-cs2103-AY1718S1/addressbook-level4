@@ -10,7 +10,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import seedu.address.logic.autocomplete.AutoCompleteUtils;
 import seedu.address.logic.parser.Prefix;
@@ -36,7 +35,8 @@ public class AutoCompleteByPrefixModelParser implements AutoCompleteParser {
         String staticSection = stub.substring(0, prefixPosition);
         String autoCompleteSection = stub.substring(prefixPosition, stub.length());
 
-        possibleMatches.addAll(generateListOfMatches(staticSection, autoCompleteSection));
+        possibleMatches.addAll(AutoCompleteUtils.generateListOfMatches(allPossibleMatches,
+                staticSection, autoCompleteSection));
         possibleMatches.add(stub);
 
         return possibleMatches;
@@ -50,20 +50,6 @@ public class AutoCompleteByPrefixModelParser implements AutoCompleteParser {
     public void setPrefix(Prefix newPrefix) {
         currentPrefix = newPrefix;
         updateAllPossibleMatches();
-    }
-
-    /**
-     * Generates list of matches based on static section (not to be considered in matching)
-     * and autocomplete section (to be matched with all possible matches)
-     * @param staticSection section of the stub to be left untouched
-     * @param autoCompleteSection section of the stub to match for autocomplete
-     * @return list of possible matches
-     */
-    protected List<String> generateListOfMatches(String staticSection, String autoCompleteSection) {
-        return allPossibleMatches.stream()
-                .filter(possibleMatch -> AutoCompleteUtils.startWithSameLetters(autoCompleteSection, possibleMatch))
-                .map(filteredMatch -> staticSection + filteredMatch)
-                .collect(Collectors.toList());
     }
 
     /**

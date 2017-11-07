@@ -22,7 +22,8 @@ public class AutoCompleteWordInNameParser extends AutoCompleteByPrefixModelParse
         setPrefix(PREFIX_NAME);
         flattenPossibleMatches();
 
-        possibleMatches.addAll(generateListOfMatches(AutoCompleteUtils.getStaticSection(stub),
+        possibleMatches.addAll(AutoCompleteUtils.generateListOfMatches(allPossibleMatches,
+                AutoCompleteUtils.getStaticSection(stub),
                 AutoCompleteUtils.getAutoCompleteSection(stub)));
         possibleMatches.add(stub);
 

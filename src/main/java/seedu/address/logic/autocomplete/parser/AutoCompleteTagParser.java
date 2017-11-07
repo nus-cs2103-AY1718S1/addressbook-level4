@@ -21,7 +21,8 @@ public class AutoCompleteTagParser extends AutoCompleteByPrefixModelParser {
         final LinkedList<String> possibleMatches = new LinkedList<String>();
         setPrefix(PREFIX_TAG);
 
-        possibleMatches.addAll(generateListOfMatches(AutoCompleteUtils.getStaticSection(stub),
+        possibleMatches.addAll(AutoCompleteUtils.generateListOfMatches(allPossibleMatches,
+                AutoCompleteUtils.getStaticSection(stub),
                 AutoCompleteUtils.getAutoCompleteSection(stub)));
         possibleMatches.add(stub);
 
