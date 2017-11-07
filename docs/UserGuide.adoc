@@ -20,12 +20,12 @@ By: `Team W10-B2`      Since: `Aug 2017`      Licence: `MIT`
 === About
 
 This user guide will provide you with instructions on how to use the KayPoh! application.
-You should not need any prior technical knowledge to make use of this guide, however,
+You should not need any prior technical knowledge to make use of this guide. However,
 some knowledge about a command line interface would be helpful.
 
 === Product Overview
 
-Have you, at some point in time, got curious about what your friends, family, or maybe even
+Have you ever gotten curious about what your friends, family, or maybe even
 that old classmate you haven’t spoke to in years have been up to? But perhaps you don’t really
 want to talk to them right now. So, what do you do? You stalk their social media accounts!
 
@@ -41,7 +41,7 @@ Verify your java version link:https://www.java.com/en/download/installed.jsp[her
 +
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8. +
+This appplication will not work with earlier versions of Java 8. +
 Download the latest Java version link:https://www.java.com/en/download/manual.jsp[here].
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
