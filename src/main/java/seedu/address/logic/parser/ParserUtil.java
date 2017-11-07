@@ -76,7 +76,6 @@ public class ParserUtil {
         return numbers;
 
     }
-    //@@author
 
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
@@ -126,9 +125,9 @@ public class ParserUtil {
         return tagSet;
     }
 
+    //@@author eldriclim
     //// Event-related parsing
 
-    //@@author eldriclim
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<EventName>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
