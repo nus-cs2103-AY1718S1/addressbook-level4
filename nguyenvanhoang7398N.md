@@ -1,4 +1,6 @@
-//@@author nguyenvanhoang7398
+# nguyenvanhoang7398N
+###### \src\test\java\seedu\address\testutil\TypicalProfilePicture.java
+``` java
 package seedu.address.testutil;
 
 /**
@@ -17,3 +19,4 @@ public class TypicalProfilePicture {
             "src/test/resources/images/fifthPerfectProfilePicture.jpg";
     public static final String FILE_NOT_FOUND_PATH = "D:/pleaseDontNameYourPictureLikeThis.jpg";
 }
+```

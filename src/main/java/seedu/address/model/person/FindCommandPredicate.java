@@ -29,7 +29,10 @@ public class FindCommandPredicate implements Predicate<ReadOnlyPerson> {
         boolean email = keywords.stream()
             .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getEmail().toString(), keyword));
 
-        if (name || number || address || email) {
+        boolean occupation = keywords.stream()
+            .anyMatch(keywords -> StringUtil.containsWordIgnoreCase(person.getOccupation().toString(), keywords));
+
+        if (name || number || address || email || occupation) {
             return true;
         } else {
             return false;
