@@ -20,7 +20,6 @@ ConnectUs is a professional address book application tailored to small to medium
 who wish for prompt lookup of their business partners particulars. It allows for storage and management of business contacts, quick and easy
 access to their emails, and displays their location on Google Maps.
 
-ConnectUs v1.2 is available for Windows and Mac OS X Operating Systems.
 
 == About
 

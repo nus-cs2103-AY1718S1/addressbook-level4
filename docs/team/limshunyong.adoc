@@ -4,7 +4,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: ConnectUs
-ConnectUs is a professional address book application tailored to small to medium enterprises who wish for prompt lookup of their business partners particulars. It allows for storage and management of business contacts, quick and easy access to their emails, and displays their location on Google Maps.
+ConnectUs is a professional address book application tailored to small to medium enterprises
+who wish for prompt lookup of their business partners particulars. It allows for storage and management of business contacts, quick and easy
+access to their emails, and displays their location on Google Maps.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/main/limshunyong.md[Functional code]] [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/test/limshunyong.md[Test code]]
 
@@ -14,12 +16,15 @@ ConnectUs is a professional address book application tailored to small to medium
 
 ---
 
+#Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
 
 ---
 
 ==== Justification
-
 
 Sorting enables the user to list all its contact details in an organised manner. This allows the
 user to identify a particular contact details based on its name in a quicker manner.
@@ -32,6 +37,7 @@ The sorting make use of self-defined java comparator that compare against the na
 ==== Implementation
 
 ---
+
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=sort]
@@ -40,13 +46,17 @@ include::../DeveloperGuide.adoc[tag=sort]
 
 ---
 
-=== Enhancement Proposed: Added Command `import`
+=== Enhancement Proposed: Add command `import`
 
 ==== External behavior
 
 ---
 
+#Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag=import]
+
+#End of Extract#
 
 ---
 
@@ -60,14 +70,11 @@ So instead of having to add in the contact details one by one, we implemented th
 
 We chose vCard for our import sources because it is supported by other application such as the contact list from the user's mobile application as well as more common web or desktop applications such as Google contacts or Apple contacts.
 
-
-
-
-
-
 ==== Implementation
 
 ---
+
+#Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=import]
 
@@ -81,7 +88,11 @@ include::../DeveloperGuide.adoc[tag=import]
 
 ---
 
+#Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag=export]
+
+#End of Extract#
 
 ---
 
@@ -96,16 +107,18 @@ so that in the event of experiencing a downtime from our application, the user c
 ==== Implementation
 
 ---
+
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=export]
 
 #End of Extract#
 
----
-
-
 === Other contributions
 
+* Ensure each milestone is met and properly closed.
+
 * Wrote additional tests (Pull requests https://github.com/CS2103AUG2017-W15-B3/main/pull/27[#27], https://github.com/CS2103AUG2017-W15-B3/main/pull/72[#72], https://github.com/CS2103AUG2017-W15-B3/main/pull/105[#105])
+
+
 
