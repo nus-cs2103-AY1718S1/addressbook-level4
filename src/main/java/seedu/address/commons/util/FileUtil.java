@@ -20,9 +20,11 @@ public class FileUtil {
     private static final Pattern UNIX_NAME_SEPARATOR_FORMAT = Pattern.compile(".*/.*");
     private static final Pattern WINDOWS_NAME_SEPARATOR_FORMAT = Pattern.compile(".*\\\\.*");
     private static final Pattern INVALID_NAME_CHARACTERS_FORMAT = Pattern.compile(".*[?!%*+:|\"<>].*");
-    private static final Pattern MISSING_FILE_NAME_FORMAT = Pattern.compile("(^\\..*)|(.*/\\..*)|(.*\\\\\\..*)");
+    private static final Pattern MISSING_FILE_NAME_FORMAT = Pattern.compile("(^\\.\\w+)"
+                                                                            + "|(.*/\\.\\w+$)"
+                                                                            + "|(.*\\\\\\.\\w+$)");
     private static final Pattern CONSECUTIVE_NAME_SEPARATOR_FORMAT = Pattern.compile("(.*//.*)|(.*\\\\\\\\.*)");
-    private static final Pattern CONSECUTIVE_EXTENSION_SEPARATOR_FORMAT = Pattern.compile(".*\\.\\..*");
+    private static final Pattern CONSECUTIVE_EXTENSION_SEPARATOR_FORMAT = Pattern.compile(".*\\.\\.\\w+");
     //@@author
 
     public static boolean isFileExists(File file) {
