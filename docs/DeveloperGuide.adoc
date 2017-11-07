@@ -397,7 +397,16 @@ The `MainWindow` class controls the UI
 interface to swap out the `BrowserPanel` for the `StatisticsPanel` class. When other commands require the `BrowserPanel`,
 `MainWindow` will do the corresponding swap in the UI.
 
-The `StatisticsPanel` extends the `UiPart<Region>` and utilises the [] to filter data.
+The `StatisticsPanel` extends the `UiPart<Region>` and utilises the `Statistics` class to collect data.
+
+image::StatisticsPanelSequenceDiagram.png[width="800"]
+_Figure 4.3.1 : Triggering the ToggleStatisticsPanelEvent to display statistics_
+
+When a `ToggleStatisticsPanelEvent` event is posted, the `MainWindow` instance will initialise a new
+`StatisticsPanel` which will then initialise the `Statistics` class for information to be calculated.
+
+Similarly, when a `ToggleBrowserPanelEvent` is posted, the `MainWindow` instance will initialise a new
+`BrowserPanel`.
 
 Here are the information calculated:
 
@@ -405,15 +414,43 @@ Here are the information calculated:
 
 2. Number of Persons with Facebook, Twitter and Instagram accounts recorded in system
 
-Here is an implementation of 1.
+Here is an implementation snippet of 1. from the Statistics class. The `getNewPersonsAddByMonth()` function
+extracts all the creation dates of each Person instance stored, and parses it accordingly into
+an `ArrayList<Integer>` data structure that will be displayed by the `BarChart` class.
 
-[Implementation]
+[source,java]
+----
+public ArrayList<Integer> getNewPersonsAddByMonth(int displayYears) {
+
+        ArrayList<Integer> countByMonth = new ArrayList<>(Collections.nCopies(displayYears * 12 + 1, 0));
+
+        personList.forEach((p) -> {
+            Date givenDate = p.getCreatedAt();
+            ZonedDateTime given = givenDate.toInstant().atZone(ZoneId.of("UTC"));
+
+            int personAddedYear = Integer.parseInt(Year.from(given).toString());
+            int personAddedMonth = Month.from(given).getValue();
+
+            int indOffset = calculateCountByMonthOffset(personAddedMonth, personAddedYear);
+            if (indOffset >= 0 && indOffset <= displayYears * 12) {
+                countByMonth.set(indOffset, countByMonth.get(indOffset) + 1);
+            }
+        });
+
+        return countByMonth;
+    }
+----
 
 ==== Design Considerations
 
 **Aspect:** Implementation of `StatisticsPanel` as a `UiPart`
 
-* **Alternative 1 (current choice):** Utilise the browser class to display the statistics
+* **Alternative 1 (current choice):** Create an new UI part that will be
+** **Pros:** Developer can utilise the charting library provided by JavaFX to render charts easily.
+** **Cons:** Developer has to ensure that the BrowserPanel and the StatisticsPanel is
+shown appropriately (based on the command that is given).
+
+* **Alternative 2:** Utilise the browser class to display the statistics
 ** **Pros:** Developer does not have to manage the swapping UI parts.
 ** **Cons:** Information has to be passed from the Java system into a format that can be rendered
 by the browser engine. It is tricker to test and more likely to break.
