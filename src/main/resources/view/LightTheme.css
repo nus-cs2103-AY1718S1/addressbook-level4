@@ -2,7 +2,7 @@
     -fx-background-color: derive(#F57F17, 20%);
     background-color: #F57F17; /* Used in the default.html file */
 }
-
+/*
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -210,7 +210,7 @@
  * Metro style Push Button
  * Author: Pedro Duque Vieira
  * http://pixelduke.wordpress.com/2012/10/23/jmetro-windows-8-controls-on-java/
- */
+
 .button {
     -fx-padding: 5 22 5 22;
     -fx-border-color: #e2e2e2;

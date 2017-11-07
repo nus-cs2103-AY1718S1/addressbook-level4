@@ -42,6 +42,8 @@ public class CommandBox extends UiPart<Region> {
     private Boolean helpEnabled = false;
     private SplitPane settingsPane;
 
+    private String style;
+
     //Animation attributes
     private Timeline timelineLeft;
     private Timeline timelineRight;
@@ -56,11 +58,13 @@ public class CommandBox extends UiPart<Region> {
         this.commandBoxHelper = new CommandBoxHelper(logic);
         this.helperContainer = commandBoxHelp;
         this.settingsPane = settingsPane;
+        this.style = getRoot().getStyle();
         registerAsAnEventHandler(this);
         setAnimation();
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> {
             setStyleToDefault();
+            commandTextField.setStyle(style);
 
             /** Shows helper if there is text in the command field that corresponds to the command list*/
             if (commandBoxHelper.listHelp(commandTextField) && !helpEnabled) {
@@ -76,7 +80,6 @@ public class CommandBox extends UiPart<Region> {
                 timelineRight.play();
             }
         });
-        commandTextField.setStyle("-fx-font-style: italic;" + " -fx-text-fill: lime");
         historySnapshot = logic.getHistorySnapshot();
     }
     //@@author
@@ -195,6 +198,7 @@ public class CommandBox extends UiPart<Region> {
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();
+            commandTextField.setStyle("-fx-text-fill: firebrick");
             logger.info("Invalid command: " + commandTextField.getText());
             raise(new NewResultAvailableEvent(e.getMessage(), true));
         }
