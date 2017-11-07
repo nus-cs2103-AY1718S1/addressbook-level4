@@ -183,6 +183,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: missing address -> accepted */
         assertCommandSuccess(PERSON_WITHOUT_ADDRESS);
+
         /* Case: invalid keyword -> rejected */
         command = "adds " + PersonUtil.getPersonDetails(toAdd);
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
