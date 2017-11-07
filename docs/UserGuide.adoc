@@ -345,6 +345,25 @@ Format: `facebook` or `fb`
 
 image::facebook-command-ui.png[width="790"]
 
+// tag::locate[]
+==== Displaying the address of a person on Google Maps : `locate`
+
+Searches Google Maps for the address of the selected person. The location will be displayed in the app. +
+Format: `locate INDEX`
+
+****
+* Loads the address of the person with the input index number and search for it on Google Maps.
+* The index refers to the index number shown in the most recent person listing.
+* The index *must be a positive integer* and *within the length of the current listing*.
+* If no address was keyed in for the selected person, a message will pop up and no search will be done.
+****
+
+Examples:
+
+* `locate 1`
+Find the address of the 1st person in the latest listing on Google Maps.
+// end::locate[]
+
 === Managing Command Sequence and History
 
 This section lists commands that toggle with the past and present commands entered in UniCity.
