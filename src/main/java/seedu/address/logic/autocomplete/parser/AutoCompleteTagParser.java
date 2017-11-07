@@ -4,7 +4,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import seedu.address.logic.autocomplete.AutoCompleteUtils;
 import seedu.address.model.Model;
