@@ -237,8 +237,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_locateCommand() throws Exception {
-        assertTrue(parser.parseCommand(LocateCommand.COMMAND_WORDVAR) instanceof  LocateCommand);
-        assertTrue(parser.parseCommand(LocateCommand.COMMAND_WORDVAR + "1") instanceof LocateCommand);
+        assertTrue(parser.parseCommand(LocateCommand.COMMAND_WORDVAR + " 1") instanceof LocateCommand);
     }
     //@@author
 
