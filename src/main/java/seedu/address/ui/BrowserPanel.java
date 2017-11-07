@@ -150,13 +150,14 @@ public class BrowserPanel extends UiPart<Region> {
     }
     private void setEventHandlerForBrowserUrlLoadEvent() {
         browser.getEngine().getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
-            if (Worker.State.SUCCEEDED.equals(newValue)) {
-                //TODO: alex see if want to make it only fb commands
-                //TODO: store as variables
+            // Case: handle facebook related page loads
+            if (Worker.State.SUCCEEDED.equals(newValue) && browser.getEngine().getLocation().contains("facebook")) {
                 String currentContent = getStringFromDocument(browser.getEngine().getDocument());
+                // handle invalid friend to be added
                 if (currentContent.contains("Sorry, this content isn't available right now") ||
                         currentContent.contains("This page isn't available") ||
-                        currentContent.contains("Sorry, this content isn't available at the moment")){
+                        currentContent.contains("Sorry, this content isn't available at the moment") ||
+                        currentContent.contains("may have been expired")){
                     FacebookAddAllFriendsCommand.setupNextFriend();
                 }
             }
@@ -166,6 +167,7 @@ public class BrowserPanel extends UiPart<Region> {
     private void setEventHandlerForBrowserUrlChangeEvent() {
         location.textProperty()
                 .addListener((observable, oldValue, newValue) -> {
+                    // listens for post-accesstoken generation next step
                     if (newValue.contains("access_token")) {
                         switch (processType) {
 
@@ -289,6 +291,7 @@ public class BrowserPanel extends UiPart<Region> {
                 logic.completeFacebookAddCommand(facebookAddCommandForAddAll, processType);
 
                 // go on to add next friend
+                FacebookAddAllFriendsCommand.incrementTotalFriendsAdded();
                 FacebookAddAllFriendsCommand.setupNextFriend();
             }
             break;

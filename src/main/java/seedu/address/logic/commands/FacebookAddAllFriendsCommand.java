@@ -18,20 +18,21 @@ import seedu.address.ui.BrowserPanel;
 //@@author alexfoodw
 /**
  * Adds all available friends from a personal Facebook account.
+ * Current Maximum friends is set at 30.
  */
-//TODO: Alex - kaypoh page add all friends bug
-//TODO: Alex - add all method descriptions
 
 public class FacebookAddAllFriendsCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "facebookaddallfriends";
     public static final String COMMAND_ALIAS = "fbaddall";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": adds all available friends from a Facebook account\n"
+            + ": adds all available friends from a Facebook account. (Due to current runtime constraints, "
+            + "maximum friends that can be added is capped at 30.)\n"
             + "Alias: " + COMMAND_ALIAS + "\n";
-    public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_ERROR = "Error with Facebook Tagable Friends API call.";
+    public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_ERROR = "Error with Facebook Tagable Friends API call."
+            + "User may not be registered as 'Test User'";
     public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_PAGING_ERROR = "Error with getting next page";
-    public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_SUCCESS = "All Valid Friends added to Facebook!";
+    public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_SUCCESS = " valid friends added from Facebook!";
     public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATED = "User not authenticated, "
             + "log in to proceed.";
 
@@ -41,20 +42,37 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
     private static ResponseList<TaggableFriend> currentList;
     private static Paging<TaggableFriend> currentPaging;
     private static String currentPhotoID;
+    private static int maxFriends = 30;
+    private static int totalFriendsAdded = 0;
     private static int friendIndex = 0;
 
     /**
-     *
+     * Returns the current Facebook ID of the user being added
      * @return currentUserID
      */
     public static String getCurrentUserID() {
         return currentUserID;
     }
 
+    /**
+     * Returns the current Facebook Username of the user being added
+     * @return currentUserName
+     */
     public static String getCurrentUserName() {
         return currentUserName;
     }
 
+    /**
+     * Increments the counter of total friends added so far
+     */
+    public static void incrementTotalFriendsAdded() {
+        totalFriendsAdded++;
+    }
+
+    /**
+     * Adds all facebook contacts to addressbook
+     * @throws CommandException
+     */
     public static void addAllFriends() throws CommandException {
         facebookInstance = FacebookConnectCommand.getFacebookInstance();
         try {
@@ -67,6 +85,10 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
 
     }
 
+    /**
+     * Proceeds to add the next available friend from facebook contacts to addressbook
+     * @throws CommandException
+     */
     public static void addNextFriend() throws CommandException {
         if (friendIndex >= currentList.size()) {
             // go to next list
@@ -76,11 +98,7 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
                 throw new CommandException(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_PAGING_ERROR);
             }
             if(currentList == null){
-                friendIndex = 0;
-                FacebookConnectCommand.loadUserPage();
-                EventsCenter.getInstance().post(new NewResultAvailableEvent(
-                        MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_SUCCESS + " (From "
-                                + FacebookConnectCommand.getAuthenticatedUsername() + "'s account)", false));
+                finishFacebookAddAllFriends();
                 return;
             }
             friendIndex = 0;
@@ -99,10 +117,16 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
         // initialise getting user ID
         WebEngine webEngine = FacebookConnectCommand.getWebEngine();
         webEngine.load(FacebookConnectCommand.FACEBOOK_DOMAIN + currentPhotoID);
-
     }
 
+    /**
+     * Sets up the counter and adds the next Facebook Contact
+     */
     public static void setupNextFriend() {
+        if (totalFriendsAdded >= maxFriends) {
+            finishFacebookAddAllFriends();
+            return;
+        }
         friendIndex++;
         try {
             addNextFriend();
@@ -111,6 +135,9 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
         }
     }
 
+    /**
+     * Extracts the user id for the required URL
+     */
     public static void setUserID(String url){
         // extract photo ID
         Pattern p = Pattern.compile("set=a.(.*?)\\&type");
@@ -120,6 +147,16 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
         String groupID = m.group(1);
         String[] parts = groupID.split("\\.");
         currentUserID = parts[2];
+    }
+
+    private static void finishFacebookAddAllFriends(){
+        FacebookConnectCommand.loadUserPage();
+        EventsCenter.getInstance().post(new NewResultAvailableEvent(totalFriendsAdded
+                + MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_SUCCESS + " (From "
+                + FacebookConnectCommand.getAuthenticatedUsername() + "'s account)", false));
+        friendIndex = 0;
+        totalFriendsAdded = 0;
+        return;
     }
 
     @Override

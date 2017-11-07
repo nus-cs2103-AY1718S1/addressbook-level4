@@ -74,6 +74,7 @@ public class FacebookAddCommand extends UndoableCommand {
      * @throws CommandException
      */
     public void completeAdd() throws CommandException {
+        // if add is not called from the FacebookAddAllFriends Command
         if(!isAddAll) {
             Facebook facebookInstance = FacebookConnectCommand.getFacebookInstance();
             ResponseList<User> friendList = null;
@@ -87,12 +88,6 @@ public class FacebookAddCommand extends UndoableCommand {
             User user = friendList.get(0);
             toAddName = user.getName();
             toAddID = user.getId();
-        }
-
-        // wait for browser process to finish
-        //TODO: see if necessary
-        while(toAddID == null){
-            ;
         }
 
         // Assign data to Person object
@@ -117,7 +112,7 @@ public class FacebookAddCommand extends UndoableCommand {
     }
 
     /**
-     * Adds the contact to addressbook
+     * Adds the facebook contact to addressbook
      * @throws CommandException
      */
     private void addContactToAddressBook() throws CommandException {
