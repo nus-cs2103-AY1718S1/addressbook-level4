@@ -117,6 +117,7 @@ public class CommandBox extends UiPart<Region> {
 
         // loop back to the start (original user input) if all autocomplete options are exhausted
         if (!autoCompleteSnapshot.hasPrevious()) {
+            logger.info("No more options, go back to original user input stub.");
             autoCompleteSnapshot = logic.getAutoCompleteSnapshot();
             replaceText(autoCompleteSnapshot.current());
             appendText(textAfterCaret);
@@ -199,12 +200,16 @@ public class CommandBox extends UiPart<Region> {
     private void initAutoComplete() {
         String autoCompleteStub = commandTextField.getText()
                 .substring(0, commandTextField.getCaretPosition());
+
         logger.info("Retrieve autocomplete options: " + autoCompleteStub);
         // only pass the text before the caret into autocomplete
         logic.updateAutoCompletePossibilities(autoCompleteStub);
+
         // remember the text after caret
         textAfterCaret = commandTextField.getText()
             .substring(commandTextField.getCaretPosition(), commandTextField.getText().length());
+        logger.info("Ignore text after caret: " + textAfterCaret);
+
         autoCompleteSnapshot = logic.getAutoCompleteSnapshot();
         isAutoCompletePossibilitiesUpToDate = true;
     }

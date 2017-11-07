@@ -72,9 +72,12 @@ public class AutoCompleteManager {
     public AutoCompletePossibilities search(String stub) {
         for (AutoCompletePossibilities entryInCache : cache) {
             if (stub.equals(entryInCache.getStub())) {
+                logger.info("Found memoized autocomplete options.");
                 return entryInCache;
             }
         }
+
+        logger.info("No memoized autocomplete options found, parsing new list of autocomplete matches.");
         return insert(new AutoCompletePossibilities(stub, chooseParser(stub)));
     }
 
@@ -103,12 +106,14 @@ public class AutoCompleteManager {
     private AutoCompleteParser chooseParser(String stub) {
         // empty input should parse back empty input as well
         if ("".equals(stub)) {
+            logger.info("Parsing back user input as-is");
             return identity;
         }
 
         int numberOfWordsInStub = stub.split(" ").length;
 
         if (numberOfWordsInStub == 1) {
+            logger.info("Parsing [Commands]");
             return commandParser;
         } else {
 
@@ -117,14 +122,17 @@ public class AutoCompleteManager {
             case AddCommand.COMMAND_WORD:
             case EditCommand.COMMAND_WORD:
             case RemarkCommand.COMMAND_WORD:
+                logger.info("Parsing [Model attributes by Prefix]");
                 return chooseParserFromPrefix(stub);
             case FindCommand.COMMAND_WORD:
+                logger.info("Parsing [Words in Name in Model]");
                 return wordInNameParser;
             case FindTagCommand.COMMAND_WORD:
-                return tagParser;
             case RemoveTagCommand.COMMAND_WORD:
+                logger.info("Parsing [Tags in Model]");
                 return tagParser;
             default:
+                logger.info("Parsing back user input as-is");
                 return identity;
             }
 
@@ -145,6 +153,7 @@ public class AutoCompleteManager {
 
         // no prefixes are found, do not autocomplete
         if (maxPrefixPosition == -1) {
+            logger.info("No prefix found, parsing back user input as-is");
             return identity;
         }
         Prefix closestPrefix = allPrefixes.get(prefixPositions.indexOf(maxPrefixPosition));
@@ -155,6 +164,7 @@ public class AutoCompleteManager {
             closestPrefix = PREFIX_TAG;
         }
 
+        logger.info("Parsing by Prefix: " + closestPrefix.toString());
         modelParser.setPrefix(closestPrefix);
         return modelParser;
     }
