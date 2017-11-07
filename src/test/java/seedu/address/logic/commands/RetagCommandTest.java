@@ -34,7 +34,8 @@ public class RetagCommandTest {
 
         String expectedMessage = String.format(MESSAGE_SUCCESS, targetTag.toString(), newTag.toString());
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                model.getDatabase(), new UserPrefs());
         for (ReadOnlyPerson person : expectedModel.getFilteredPersonList()) {
             Person retaggedPerson = new Person(person);
             UniqueTagList updatedTags = new UniqueTagList(retaggedPerson.getTags());
