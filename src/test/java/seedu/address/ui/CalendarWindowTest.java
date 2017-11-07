@@ -30,8 +30,12 @@ public class CalendarWindowTest extends GuiUnitTest {
     @Test
     public void setNextViewTest() {
 
-        //Default view should be week view
+        //Default view should be day view
         CalendarView calendarView = calendarWindow.getRoot();
+        assertEquals(calendarView.getSelectedPage(), calendarView.getDayPage());
+
+        //Switch to week view
+        guiRobot.push(KeyCode.C);
         assertEquals(calendarView.getSelectedPage(), calendarView.getWeekPage());
 
         //Switch to month view
@@ -45,12 +49,6 @@ public class CalendarWindowTest extends GuiUnitTest {
         //Switch to day view
         guiRobot.push(KeyCode.C);
         assertEquals(calendarView.getSelectedPage(), calendarView.getDayPage());
-
-        //Switch to week view
-        guiRobot.push(KeyCode.C);
-        assertEquals(calendarView.getSelectedPage(), calendarView.getWeekPage());
-
-
     }
 
 

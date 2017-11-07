@@ -6,14 +6,15 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.AppointmentNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+//@@author Eric
 /**
- * Command to cancel an exisiting appointment
+ * Command to cancel an existing appointment
  */
 public class CancelAppointmentCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "cancel";
     public static final String NO_SUCH_PERSON_FOUND = "No such person found";
-    private static final String NO_SUCH_APPOINTMENT = "No such appointment found";
+    public static final String NO_SUCH_APPOINTMENT = "No such appointment found";
     public static final String MESSAGE_SUCCESS = "Appointment canceled.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Cancels an appointment from a person. \n"
             + "Parameters: " + "DESCRIPTION with PERSON NAME \n"
@@ -46,7 +47,8 @@ public class CancelAppointmentCommand extends UndoableCommand {
      * May have multiple appointments if there is same description under one person, but the first one will be deleted
      * @throws AppointmentNotFoundException if appointment not found
      */
-    private Appointment getAppointmentFromPerson(ReadOnlyPerson person, String description) throws AppointmentNotFoundException {
+    private Appointment getAppointmentFromPerson(ReadOnlyPerson person, String description)
+            throws AppointmentNotFoundException {
 
         for (Appointment appointment : person.getAppointments()) {
             if (appointment.getDescription().toLowerCase().equals(description.trim().toLowerCase())) {
@@ -70,5 +72,14 @@ public class CancelAppointmentCommand extends UndoableCommand {
         }
 
         throw new PersonNotFoundException();
+    }
+
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof CancelAppointmentCommand // instanceof handles nulls
+                && (this.appointmentString.equals(((CancelAppointmentCommand) other).appointmentString))
+                && (this.personString.equals(((CancelAppointmentCommand) other).personString)));
     }
 }
