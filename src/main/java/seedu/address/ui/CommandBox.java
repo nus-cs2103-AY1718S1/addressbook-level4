@@ -225,7 +225,8 @@ public class CommandBox extends UiPart<Region> {
      */
     public void processInput() {
         input = commandTextField.getText();
-        updateKeyboardIconAndStyle();
+        updateKeyboardIcon();
+        setStyleToDefault();
         autoSelectFirstField();
         if (Arrays.asList(AddCommand.LIST_OF_FIELDS).contains(selectedText)) {
             updateSelection();
@@ -241,12 +242,12 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Sets the command box style to use the default style.
-     * {@code keyboardTyping} icon changes to {@code keyboardIdle} when there is no change
+     * Change {@code keyboardTyping} icon to {@code keyboardIdle} when there is no change
      * to text field after some time.
      */
-    private void updateKeyboardIconAndStyle() {
+    private void updateKeyboardIcon() {
         ObservableList<String> styleClass = commandTextField.getStyleClass();
+
         keyboardIcon.setImage(keyboardTyping);
         pause.setOnFinished(event -> {
             if (!styleClass.contains(ERROR_STYLE_CLASS)) {
@@ -254,6 +255,12 @@ public class CommandBox extends UiPart<Region> {
             }
         });
         pause.playFromStart();
+    }
+
+    /**
+     * Sets the command box style to use the default style.
+     */
+    private void setStyleToDefault() {
         commandTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
     }
 
