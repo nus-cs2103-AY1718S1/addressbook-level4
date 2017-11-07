@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import java.util.HashMap;
-import java.util.Random;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -9,22 +7,27 @@ import com.google.common.eventbus.Subscribe;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
-/** javadoc comment*/
+/**
+ *A UI component that displays the selected Person's details.
+ * */
 public class ExtendedPersonDetails extends UiPart<Region> {
-
+    //@@author wishingmaid
     private static final String FXML = "ExtendDetailsPerson.fxml";
-    private static String[] colors = { "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey" };
-    private static HashMap<String, String> tagColors = new HashMap<>();
-    private static Random random = new Random();
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private final String defaultPicture = "/images/PEERSONAL_icon.png";
+    //@@author
     @FXML
     private Label name;
     @FXML
@@ -43,16 +46,21 @@ public class ExtendedPersonDetails extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private ImageView imageView;
-
-    /** */
+    @FXML
+    private Circle circle;
+    //@@author wishingmaid
+    /**
+     * This class loads the persons details in the UI for the extended person's panel.
+     * */
     public ExtendedPersonDetails() {
         super(FXML);
         registerAsAnEventHandler(this);
+        Image image = new Image(getClass().getResource(defaultPicture).toExternalForm());
+        setCircle(image);
     }
-
+    //@@author
     /** */
     private void loadPersonDetails(ReadOnlyPerson person) {
-        //initTags(person);
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
@@ -61,19 +69,6 @@ public class ExtendedPersonDetails extends UiPart<Region> {
         birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         age.textProperty().bind(Bindings.convert(person.ageProperty()));
         setImage(person);
-        person.tagProperty().addListener((observable, oldValue, newValue) -> {
-            tags.getChildren().clear();
-            initTags(person);
-        });
-    }
-
-    /** */
-    private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> {
-            Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
-            tags.getChildren().add(tagLabel);
-        });
     }
 
     /** */
@@ -81,27 +76,23 @@ public class ExtendedPersonDetails extends UiPart<Region> {
         String url = person.getPhoto().getFilePath(); //gets the filepath directly from the resources folder.
         if (url.equals("")) {
             Image image = new Image(getClass().getResource("/images/noPhoto.png").toExternalForm());
-            imageView.setImage(image);
+            setCircle(image);
         } else {
             Image image = new Image("file:" + person.getPhoto().getFilePath());
-            imageView.setImage(image);
+            setCircle(image);
         }
     }
-
-    /** */
-    private static String getColorForTag(String tagValue) {
-        if (!tagColors.containsKey(tagValue)) {
-            tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
-        }
-        return tagColors.get(tagValue);
+    private void setCircle(Image image) {
+        ImagePattern pattern = new ImagePattern(image);
+        circle.setFill(pattern);
+        circle.setEffect(new DropShadow(10, Color.STEELBLUE));
     }
-
-    /** */
+    //@@author wishingmaid
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonDetails(event.getNewSelection().person);
     }
-
+    //@@author
 
 }

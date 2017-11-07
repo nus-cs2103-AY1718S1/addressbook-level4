@@ -138,7 +138,7 @@ public class Person implements ReadOnlyPerson {
         this.remark.set(requireNonNull(remark));
     }
     //@@author
-
+    //@@author wishingmaid
     @Override
     public ObjectProperty<Photo> photoProperty() {
         return photo;
@@ -146,11 +146,10 @@ public class Person implements ReadOnlyPerson {
     public Photo getPhoto() {
         return photo.get();
     }
-
     public void setPhoto(Photo photo) {
         this.photo.set(requireNonNull(photo));
     }
-
+    //@@author wishingmaid
     //@@author Affalen
     @Override
     public ObjectProperty<Remark> remarkProperty() {

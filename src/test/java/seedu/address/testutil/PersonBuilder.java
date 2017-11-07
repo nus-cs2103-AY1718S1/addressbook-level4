@@ -29,7 +29,7 @@ public class PersonBuilder {
     public static final String DEFAULT_BIRTHDAY = "";
     public static final String DEFAULT_AGE = "";
     public static final String DEFAULT_TAGS = "friends";
-    public static final String DEFAULT_FILEPATH = "";
+    public static final String DEFAULT_FILEPATH = "src/main/resources/images/noPhoto.png";
 
     private Person person;
 

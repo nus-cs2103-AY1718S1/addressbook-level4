@@ -5,11 +5,15 @@ import java.util.Random;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -57,6 +61,8 @@ public class PersonCard extends UiPart<Region> {
     //@@author wishingmaid
     @FXML
     private ImageView imageView;
+    @FXML
+    private Circle circle;
     //@@author
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
@@ -111,11 +117,16 @@ public class PersonCard extends UiPart<Region> {
         String url = person.getPhoto().getFilePath(); //gets the filepath directly from the resources folder.
         if (url.equals("")) {
             Image image = new Image(getClass().getResource("/images/noPhoto.png").toExternalForm());
-            imageView.setImage(image);
+            setCircle(image);
         } else {
             Image image = new Image("file:" + person.getPhoto().getFilePath());
-            imageView.setImage(image);
+            setCircle(image);
         }
+    }
+    private void setCircle(Image image) {
+        ImagePattern pattern = new ImagePattern(image);
+        circle.setFill(pattern);
+        circle.setEffect(new DropShadow(10, Color.STEELBLUE));
     }
     //@@author
     @Override
