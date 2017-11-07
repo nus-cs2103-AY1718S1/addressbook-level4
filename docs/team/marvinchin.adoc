@@ -142,5 +142,5 @@ Deleting by tags make it easy for the user to delete contacts that were added fo
 === Other contributions
 
 * Set up Travis and Codacy for the project
-* Reported bugs in other group's projects
-* Helped resolve issues faced by other classmates
+* Reported bugs in other group's projects [https://github.com/CS2103AUG2017-W09-B1/main/issues?utf8=✓&q=is%3Aissue%20involves%3Amarvinchin[Issues reported in W09-B1's UniFy]]
+* Helped resolve issues faced by other classmates [https://github.com/nus-cs2103-AY1718S1/forum/issues?utf8=✓&q=is%3Aissue%20involves%3Amarvinchin[Contributions to forum]][https://nus-cs2103.slack.com/archives/C6JMW6SSZ/p1508508497000291?thread_ts=1508476015.000144&cid=C6JMW6SSZ[Contributions to queries on Slack]]
