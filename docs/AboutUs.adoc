@@ -37,7 +37,7 @@ Responsibilities: Project Advisor
 
 === Ng Eng Sheng
 image::aboutus_engsheng.jpg[width="150", align="left"]
-{empty}[http://github.com/hanselblack[github]] [<<engsheng#, portfolio>>]
+{empty}[http://github.com/hanselblack[github]][https://cs2103aug2017-w11-b4.github.io/main/team/engsheng.html[project portfolio]]
 
 Role: Developer + Documentation + Deliverables and deadlines + Testing
 Responsibilities: Project Advisor

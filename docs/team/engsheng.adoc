@@ -45,5 +45,8 @@ include::../DeveloperGuide.adoc[tag=musiccommand]
 
 === image:engsheng_header_contribution.png[width="900"]
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Created template for User Guide step by step design (Pull requests https://github.com/CS2103AUG2017-W11-B4/main/pull/74/commits/d3724bd9bd95a51cf9821906166835419259f050[#74])
+* Enhanced and overhauled the design the User Guide to make it user-friendly and appealing, made every images used in User Guide, except for respective developer screenshot (Pull requests https://github.com/CS2103AUG2017-W11-B4/main/pull/62[#62])
+* Made teaser trailer, to showcase application at README (Pull requests https://github.com/CS2103AUG2017-W11-B4/main/pull/78[#78])
+
+
