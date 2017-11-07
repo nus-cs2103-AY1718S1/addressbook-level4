@@ -35,7 +35,7 @@ public class BirthdayAlarmWindowTest extends AddressBookGuiTest {
         assertTrue(ERROR_MESSAGE, BirthdayAlarmWindowHandle.isWindowPresent());
         guiRobot.pauseForHuman();
 
-        new BirthdayAlarmWindowHandle(guiRobot.getStage(BirthdayAlarmWindowHandle.BirthdayAlarm_WINDOW_TITLE)).close();
+        new BirthdayAlarmWindowHandle(guiRobot.getStage(BirthdayAlarmWindowHandle.BIRTHDAYALARM_WINDOW_TITLE)).close();
         mainWindowHandle.focus();
     }
 }

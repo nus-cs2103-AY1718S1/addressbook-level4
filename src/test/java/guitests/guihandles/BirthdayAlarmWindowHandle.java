@@ -8,16 +8,16 @@ import javafx.stage.Stage;
  */
 public class BirthdayAlarmWindowHandle extends StageHandle {
 
-    public static final String BirthdayAlarm_WINDOW_TITLE = "Birthday Alarm";
+    public static final String BIRTHDAYALARM_WINDOW_TITLE = "Birthday Alarm";
 
-    public BirthdayAlarmWindowHandle(Stage BirthdayAlarmWindowStage) {
-        super(BirthdayAlarmWindowStage);
+    public BirthdayAlarmWindowHandle(Stage birthdayAlarmWindowStage) {
+        super(birthdayAlarmWindowStage);
     }
 
     /**
      * Returns true if a help window is currently present in the application.
      */
     public static boolean isWindowPresent() {
-        return new GuiRobot().isWindowShown(BirthdayAlarm_WINDOW_TITLE);
+        return new GuiRobot().isWindowShown(BIRTHDAYALARM_WINDOW_TITLE);
     }
 }
