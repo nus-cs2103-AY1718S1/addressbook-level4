@@ -5,7 +5,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Set;
 
+import org.graphstream.algorithm.Dijkstra;
 import org.graphstream.graph.Edge;
+import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.graph.implementations.SingleNode;
 import org.graphstream.ui.view.View;
@@ -34,6 +36,7 @@ public class GraphWrapper {
     private View view;
     private Model model;
     private ObservableList<ReadOnlyPerson> filteredPersons;
+    private boolean rebuildNext;
 
     private final String nodeAttributeNodeLabel = "ui.label";
     private final String nodeAttributePerson = "Person";
@@ -44,6 +47,7 @@ public class GraphWrapper {
         viewer.enableAutoLayout();
         viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.EXIT);
         this.view = viewer.addDefaultView(false);
+        rebuildNext = true;
     }
 
     public static GraphWrapper getInstance() {
@@ -206,14 +210,18 @@ public class GraphWrapper {
     }
 
     /**
-     * Produce a graph based on model given
+     * Produce a graph based on model given if next rebuild was not cancelled.
      */
     public SingleGraph buildGraph(Model model) {
         requireNonNull(model);
-        this.clear();
-        this.setData(model);
-        this.initiateGraphNodes();
-        this.initiateGraphEdges();
+        if (rebuildNext) {
+            this.clear();
+            this.setData(model);
+            this.initiateGraphNodes();
+            this.initiateGraphEdges();
+        } else {
+            rebuildNext = true;
+        }
 
         return graph;
     }
@@ -223,5 +231,47 @@ public class GraphWrapper {
      */
     public View getView() {
         return this.view;
+    }
+    //@@author
+
+    //@@author Xenonym
+    /**
+     * Highlights the shortest path between two people.
+     * Cancels next graph rebuild for styling to remain.
+     * @return the number of nodes in the path between the two given people.
+     */
+    public int highlightShortestPath(ReadOnlyPerson from, ReadOnlyPerson to) {
+        Dijkstra shortestPath = new Dijkstra(Dijkstra.Element.EDGE, null, null);
+        Node fromNode;
+        Node toNode;
+
+        resetGraph(); // reset graph to clear previously highlighted path first, if any
+        try {
+            fromNode = graph.getNode(getNodeIdFromPerson(from));
+            toNode = graph.getNode(getNodeIdFromPerson(to));
+        } catch (IllegalValueException ive) {
+            throw new AssertionError("impossible to have nonexistent persons in graph");
+        }
+
+        shortestPath.init(graph);
+        shortestPath.setSource(fromNode);
+        shortestPath.compute();
+
+        for (Node n : shortestPath.getPathNodes(toNode)) {
+            n.addAttribute("ui.style", "fill-color: blue;");
+        }
+
+        for (Edge e : shortestPath.getPathEdges(toNode)) {
+            e.addAttribute("ui.style", "fill-color: red;");
+        }
+
+        rebuildNext = false;
+        return shortestPath.getPath(toNode).getNodeCount();
+    }
+
+    private void resetGraph() {
+        graph.clear();
+        initiateGraphNodes();
+        initiateGraphEdges();
     }
 }
