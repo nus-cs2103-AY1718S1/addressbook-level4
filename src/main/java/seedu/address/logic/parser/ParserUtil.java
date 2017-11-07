@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -12,6 +13,7 @@ import java.util.regex.Pattern;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.commands.SelectCommand.PanelChoice;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
@@ -36,6 +38,8 @@ public class ParserUtil {
 
     public static final Pattern PRINT_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
             Pattern.compile("(?<filename>[^/]+)"); //name of .txt file to be saved as
+    public static final String[] SELECT_ARGS_PERSON = {"p", "person", "l", "left"};
+    public static final String[] SELECT_ARGS_INSURANCE = {"i", "insurance", "in", "r", "right"};
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -154,6 +158,17 @@ public class ParserUtil {
     public static Optional<String> parseContract(Optional<String> contract) throws IllegalValueException {
         requireNonNull(contract);
         return contract.isPresent() ? Optional.of(contract.get()) : Optional.empty();
+    }
+
+    //@@author Juxarius
+    public static PanelChoice parsePanelChoice(String input) throws IllegalValueException {
+        if (Arrays.stream(SELECT_ARGS_INSURANCE).anyMatch(key -> key.equals(input))) {
+            return PanelChoice.INSURANCE;
+        } else if (Arrays.stream(SELECT_ARGS_PERSON).anyMatch(key -> key.equals(input))) {
+            return PanelChoice.PERSON;
+        } else {
+            throw new IllegalValueException("Invalid panel choice");
+        }
     }
     //@@author
 }
