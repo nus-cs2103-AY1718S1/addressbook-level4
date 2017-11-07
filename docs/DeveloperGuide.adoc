@@ -833,6 +833,31 @@ The initial command, “list”, which merely displayed all the persons in the l
 
 <<<
 
+=== Changing Tag Colours
+The `setcolour` command allows users to customise the colour of tags in Circles. +
+
+The colours of the tags are stored as a `HashMap<String, String>` inside the `UserPrefs` class. When a `setcolour` command is called, and there is change in a tag colour,
+`SetColourCommand` will call `setTagColour()` in `Model`, which updates the `HashMap<String, String>` inside `UserPrefs`.
+The method `setTagColour()` is shown below, and the code can be found in {repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager.java`]
+[source,java]
+----
+ public void setTagColour(String tagName, String colour) throws IllegalValueException {
+        List<Tag> tagList = addressBook.getTagList();
+        for (Tag tag: tagList) {
+            if (tagName.equals(tag.tagName)) {
+                tagColours.put(tag, colour);
+                updateAllPersons(tagColours);
+                indicateAddressBookChanged();
+                raise(new NewPersonListEvent(getFilteredPersonList()));
+                colourPrefs.updateColorMap(tagColours);
+                return;
+            }
+        }
+        throw new IllegalValueException("No such tag!");
+    }
+----
+Then, the UI will be notified of the change by `NewPersonListEvent`, and updates the `PersonCard` and `PersonInfo` classes to reflect the change in colour.
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
