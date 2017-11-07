@@ -43,11 +43,17 @@ public class EditCommandHint extends ArgumentsHint {
             return;
         }
 
-        if (Character.isDigit(userInput.charAt(userInput.length() - 1))) {
-            //case edit 1|
-            handleIndexTabbing(HintUtil.getPreambleIndex(arguments, PREFIXES));
-            return;
+        try {
+            if (Character.isDigit(userInput.charAt(userInput.length() - 1))) {
+                //case edit 1|
+                Integer.parseInt(arguments.trim());
+                handleIndexTabbing(HintUtil.getPreambleIndex(arguments, PREFIXES));
+                return;
+            }
+        } catch (NumberFormatException e) {
+            //continue with execution
         }
+
         possiblePrefixesToComplete = HintUtil.getUncompletedPrefixes(arguments, PREFIXES);
         Optional<String> prefixCompletionOptional =
                 HintUtil.findPrefixCompletionHint(arguments, possiblePrefixesToComplete);

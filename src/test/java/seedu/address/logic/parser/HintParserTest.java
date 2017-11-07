@@ -42,16 +42,17 @@ public class HintParserTest {
         assertEquals(AddCommand.COMMAND_WORD + " n/", autocomplete(AddCommand.COMMAND_WORD));
         assertEquals(AddCommand.COMMAND_WORD + " n/", autocomplete(AddCommand.COMMAND_WORD + " "));
         assertEquals(AddCommand.COMMAND_WORD + " n/", autocomplete(AddCommand.COMMAND_WORD + " n"));
-        assertEquals(AddCommand.COMMAND_WORD + " n/", autocomplete(AddCommand.COMMAND_WORD + " n/"));
+        assertEquals(AddCommand.COMMAND_WORD + " p/", autocomplete(AddCommand.COMMAND_WORD + " n/"));
 
-        assertEquals(EditCommand.COMMAND_WORD + " ", autocomplete(EditCommand.COMMAND_WORD));
-        assertEquals(EditCommand.COMMAND_WORD + " 1 n/", autocomplete(EditCommand.COMMAND_WORD + " 1"));
+        assertEquals(EditCommand.COMMAND_WORD + " 1", autocomplete(EditCommand.COMMAND_WORD));
+        assertEquals(EditCommand.COMMAND_WORD + " 2", autocomplete(EditCommand.COMMAND_WORD + " 1"));
+        assertEquals(EditCommand.COMMAND_WORD + " 1 n/", autocomplete(EditCommand.COMMAND_WORD + " 1 "));
         assertEquals(EditCommand.COMMAND_WORD + " 1 n/", autocomplete(EditCommand.COMMAND_WORD + " 1 n"));
-        assertEquals(EditCommand.COMMAND_WORD + " 1 n/", autocomplete(EditCommand.COMMAND_WORD + " 1 n/"));
+        assertEquals(EditCommand.COMMAND_WORD + " 1 p/", autocomplete(EditCommand.COMMAND_WORD + " 1 n/"));
 
         assertEquals(FindCommand.COMMAND_WORD + " n/", autocomplete(FindCommand.COMMAND_WORD));
         assertEquals(FindCommand.COMMAND_WORD + " n/", autocomplete(FindCommand.COMMAND_WORD + " n"));
-        assertEquals(FindCommand.COMMAND_WORD + " n/", autocomplete(FindCommand.COMMAND_WORD + " n/"));
+        assertEquals(FindCommand.COMMAND_WORD + " p/", autocomplete(FindCommand.COMMAND_WORD + " n/"));
 
         assertEquals(MusicCommand.COMMAND_WORD + " play", autocomplete(MusicCommand.COMMAND_WORD));
         assertEquals(MusicCommand.COMMAND_WORD + " pause", autocomplete(MusicCommand.COMMAND_WORD + " paus"));
@@ -61,123 +62,121 @@ public class HintParserTest {
     //@@author nicholaschuayunzhi
     @Test
     public void generate_add_hint() {
-        assertHintEquals("add", " n/NAME");
-        assertHintEquals("add ", "n/NAME");
-        assertHintEquals("add n", "/NAME");
-        assertHintEquals("add n/", "NAME");
-        assertHintEquals("add n/name", " p/PHONE");
-        assertHintEquals("add n/name ", "p/PHONE");
-        assertHintEquals("add n/name p", "/PHONE");
-        assertHintEquals("add n/name p/", "PHONE");
-        assertHintEquals("add n/name p/123", " e/EMAIL");
-        assertHintEquals("add n/name p/notValid", " e/EMAIL");
-        assertHintEquals("add n/name p/123 ", "e/EMAIL");
-        assertHintEquals("add n/name p/123 e", "/EMAIL");
-        assertHintEquals("add n/name p/123 e/", "EMAIL");
-        assertHintEquals("add n/name p/123 e/e@e.com", " a/ADDRESS");
-        assertHintEquals("add n/name p/123 e/notValid", " a/ADDRESS");
-        assertHintEquals("add n/name p/123 e/e@e.com" , " a/ADDRESS");
-        assertHintEquals("add n/name p/123 e/e@e.com a" , "/ADDRESS");
-        assertHintEquals("add n/name p/123 e/e@e.com a/" , "ADDRESS");
-        assertHintEquals("add n/name p/123 e/e@e.com a/address" , " t/TAG");
-        assertHintEquals("add n/name p/123 e/e@e.com a/address " , "t/TAG");
-        assertHintEquals("add n/name p/123 e/e@e.com a/address t" , "/TAG");
-        assertHintEquals("add n/name p/123 e/e@e.com a/address t/" , "TAG");
-        assertHintEquals("add n/name p/123 e/e@e.com a/address t/tag" , " ");
-        assertHintEquals("add n/name p/123 e/e@e.com a/address t/tag    " , "");
-        assertHintEquals("add n/name p/123 e/e@e.com a/address t/tag    bla bla" , " ");
+        assertHintEquals("add", " n/name");
+        assertHintEquals("add ", "n/name");
+        assertHintEquals("add n", "/name");
+        assertHintEquals("add n/", "name");
+        assertHintEquals("add n/name", " p/phone");
+        assertHintEquals("add n/name ", "p/phone");
+        assertHintEquals("add n/name p", "/phone");
+        assertHintEquals("add n/name p/", "phone");
+        assertHintEquals("add n/name p/123", " e/email");
+        assertHintEquals("add n/name p/notValid", " e/email");
+        assertHintEquals("add n/name p/123 ", "e/email");
+        assertHintEquals("add n/name p/123 e", "/email");
+        assertHintEquals("add n/name p/123 e/", "email");
+        assertHintEquals("add n/name p/123 e/e@e.com", " a/address");
+        assertHintEquals("add n/name p/123 e/notValid", " a/address");
+        assertHintEquals("add n/name p/123 e/e@e.com" , " a/address");
+        assertHintEquals("add n/name p/123 e/e@e.com a" , "/address");
+        assertHintEquals("add n/name p/123 e/e@e.com a/" , "address");
+        assertHintEquals("add n/name p/123 e/e@e.com a/address" , " t/tag");
+        assertHintEquals("add n/name p/123 e/e@e.com a/address " , "t/tag");
+        assertHintEquals("add n/name p/123 e/e@e.com a/address t" , "/tag");
+        assertHintEquals("add n/name p/123 e/e@e.com a/address t/" , "tag");
+        assertHintEquals("add n/name p/123 e/e@e.com a/address t/tag" , " i/avatar file path");
+        assertHintEquals("add n/name p/123 e/e@e.com a/address t/tag i/avatar file path   " , "");
+        assertHintEquals("add n/name p/123 e/e@e.com a/address t/tag i/avatar file path   bla bla" , " ");
 
-        assertHintEquals("add p/phone", " n/NAME");
-        assertHintEquals("add p/phone n", "/NAME");
-        assertHintEquals("add p/phone t", "/TAG");
+        assertHintEquals("add p/phone", " n/name");
+        assertHintEquals("add p/phone n", "/name");
+        assertHintEquals("add p/phone t", "/tag");
 
-        //hints repeated args
-        assertHintEquals("add t/tag t", "/TAG");
-
-        //TODO: remove repeated args for unrepeatbles
-        assertHintEquals("add n/name p/123 e/e@e.com a/address t/tag p" , "/PHONE");
-        assertHintEquals("add n/name p/123 e/e@e.com a/address t/tag p/" , "PHONE");
+        //tag is not completed twice
+        //TODO: update to account for this
+        assertHintEquals("add t/tag t", " n/name");
     }
 
     @Test
     public void generate_edit_hint() {
-        assertHintEquals("edit", " index");
-        assertHintEquals("edit ", "index");
-        assertHintEquals("edit 12", " n/NAME");
-        assertHintEquals("edit 12 ", "n/NAME");
+        assertHintEquals("edit", " 1 index");
+        assertHintEquals("edit ", "1 index");
+        assertHintEquals("edit 1", " index");
+        assertHintEquals("edit 12", " index");
+        assertHintEquals("edit 12 ", "n/name");
 
-        assertHintEquals("edit 12 p", "/PHONE");
-        assertHintEquals("edit 12 p/", "PHONE");
+        assertHintEquals("edit 12 p", "/phone");
+        assertHintEquals("edit 12 p/", "phone");
 
-        assertHintEquals("edit 12 n", "/NAME");
-        assertHintEquals("edit 12 n/", "NAME");
+        assertHintEquals("edit 12 n", "/name");
+        assertHintEquals("edit 12 n/", "name");
 
-        assertHintEquals("edit 12 e", "/EMAIL");
-        assertHintEquals("edit 12 e/", "EMAIL");
+        assertHintEquals("edit 12 e", "/email");
+        assertHintEquals("edit 12 e/", "email");
 
-        assertHintEquals("edit 12 a", "/ADDRESS");
-        assertHintEquals("edit 12 a/", "ADDRESS");
+        assertHintEquals("edit 12 a", "/address");
+        assertHintEquals("edit 12 a/", "address");
 
-        assertHintEquals("edit 12 t", "/TAG");
-        assertHintEquals("edit 12 t/", "TAG");
+        assertHintEquals("edit 12 t", "/tag");
+        assertHintEquals("edit 12 t/", "tag");
 
-        assertHintEquals("edit 12 p/123", " n/NAME");
-        assertHintEquals("edit 12 p/123 ", "n/NAME");
+        assertHintEquals("edit 12 p/123", " n/name");
+        assertHintEquals("edit 12 p/123 ", "n/name");
 
         //TODO: change this functionality
-        assertHintEquals("edit p/123", " index");
-        assertHintEquals("edit p/123 ", "index");
-        assertHintEquals("edit p/123 1", " index");
-        assertHintEquals("edit p/123 1 ", "index");
+        assertHintEquals("edit p/123", " 1 index");
+        assertHintEquals("edit p/123 ", "1 index");
+        assertHintEquals("edit p/123 1", " 1 index");
+        assertHintEquals("edit p/123 1 ", "1 index");
     }
 
     @Test
     public void generate_find_hint() {
-        assertHintEquals("find", " n/NAME");
-        assertHintEquals("find ", "n/NAME");
-        assertHintEquals("find", " n/NAME");
+        assertHintEquals("find", " n/name");
+        assertHintEquals("find ", "n/name");
+        assertHintEquals("find", " n/name");
 
-        assertHintEquals("find n", "/NAME");
-        assertHintEquals("find n/", "NAME");
-        assertHintEquals("find n/1", " p/PHONE");
+        assertHintEquals("find n", "/name");
+        assertHintEquals("find n/", "name");
+        assertHintEquals("find n/1", " p/phone");
 
-        assertHintEquals("find p", "/PHONE");
-        assertHintEquals("find p/", "PHONE");
-        assertHintEquals("find p/1", " n/NAME");
+        assertHintEquals("find p", "/phone");
+        assertHintEquals("find p/", "phone");
+        assertHintEquals("find p/1", " n/name");
 
-        assertHintEquals("find e", "/EMAIL");
-        assertHintEquals("find e/", "EMAIL");
-        assertHintEquals("find e/1", " n/NAME");
+        assertHintEquals("find e", "/email");
+        assertHintEquals("find e/", "email");
+        assertHintEquals("find e/1", " n/name");
 
-        assertHintEquals("find a", "/ADDRESS");
-        assertHintEquals("find a/", "ADDRESS");
-        assertHintEquals("find a/1", " n/NAME");
+        assertHintEquals("find a", "/address");
+        assertHintEquals("find a/", "address");
+        assertHintEquals("find a/1", " n/name");
 
-        assertHintEquals("find t", "/TAG");
-        assertHintEquals("find t/", "TAG");
-        assertHintEquals("find t/1", " n/NAME");
+        assertHintEquals("find t", "/tag");
+        assertHintEquals("find t/", "tag");
+        assertHintEquals("find t/1", " n/name");
 
-        assertHintEquals("find r", "/REMARK");
-        assertHintEquals("find r/", "REMARK");
-        assertHintEquals("find r/a", " n/NAME");
+        assertHintEquals("find r", "/remark");
+        assertHintEquals("find r/", "remark");
+        assertHintEquals("find r/a", " n/name");
 
 
     }
 
     @Test
     public void generate_select_hint() {
-        assertHintEquals("select", " index");
-        assertHintEquals("select ", "index");
-        assertHintEquals("select 1", "");
-        assertHintEquals("select bla 1", " index");
+        assertHintEquals("select", " 1 index");
+        assertHintEquals("select ", "1 index");
+        assertHintEquals("select 1", " index");
+        assertHintEquals("select bla 1", " 1 index");
     }
 
     @Test
     public void generate_delete_hint() {
-        assertHintEquals("delete", " index");
-        assertHintEquals("delete ", "index");
-        assertHintEquals("delete 1", "");
-        assertHintEquals("delete bla 1", " index");
+        assertHintEquals("delete", " 1 index");
+        assertHintEquals("delete ", "1 index");
+        assertHintEquals("delete 1", " index");
+        assertHintEquals("delete bla 1", " 1 index");
     }
 
     @Test

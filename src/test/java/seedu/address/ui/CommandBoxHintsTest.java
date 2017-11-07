@@ -30,16 +30,16 @@ public class CommandBoxHintsTest extends GuiUnitTest {
     @Test
     public void display() {
         postNow(new CommandInputChangedEvent("add"));
-        assertEquals(" n/NAME", commandBoxHintsHandle.getText());
+        assertEquals(" n/name", commandBoxHintsHandle.getText());
 
         postNow(new CommandInputChangedEvent("add "));
-        assertEquals("n/NAME", commandBoxHintsHandle.getText());
+        assertEquals("n/name", commandBoxHintsHandle.getText());
 
         postNow(new CommandInputChangedEvent("add n"));
-        assertEquals("/NAME", commandBoxHintsHandle.getText());
+        assertEquals("/name", commandBoxHintsHandle.getText());
 
         postNow(new CommandInputChangedEvent("add n/"));
-        assertEquals("NAME", commandBoxHintsHandle.getText());
+        assertEquals("name", commandBoxHintsHandle.getText());
 
         postNow(new CommandInputChangedEvent(""));
         assertEquals("Enter Command Here", commandBoxHintsHandle.getText());
