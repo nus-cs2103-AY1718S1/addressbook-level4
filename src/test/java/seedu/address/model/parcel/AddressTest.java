@@ -20,12 +20,15 @@ public class AddressTest {
         assertFalse(Address.isValidAddress("Blk 456, Den Road, #01-355 345")); // ends with shorter than 6 digits
         assertFalse(Address.isValidAddress("Blk 456, Den Road, #01-355 345123")); // no S prepending 6 digits
         assertFalse(Address.isValidAddress("- S435342")); // one character
+        assertFalse(Address.isValidAddress(",123 blk 3 S435342")); // starts with ,
 
         // valid addresses
         assertTrue(Address.isValidAddress("Blk 456, Den Road, #01-355 S345123")); // upper case s
-        assertTrue(Address.isValidAddress("12- S435342"));
+        assertTrue(Address.isValidAddress("12- S435342")); // starts with numeric character
         assertTrue(Address.isValidAddress("Blk 456, Den Road, #01-355  s345123")); // lower case s
         assertTrue(Address.isValidAddress("Leng Inc; 1234 Market St; USA s123123")); // long address
+        assertTrue(Address.isValidAddress("A S123661")); // one alphabet character
+        assertTrue(Address.isValidAddress("1 S123661")); // one numeric character
     }
 
     @Test
