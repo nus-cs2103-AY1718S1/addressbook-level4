@@ -47,10 +47,6 @@ public class EmailCommandTest {
         // same object -> returns true
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
-        // same values -> returns true
-        EmailCommand deleteFirstCommandCopy = new EmailCommand(INDEX_FIRST_PERSON);
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
-
         // different types -> returns false
         assertFalse(deleteFirstCommand.equals(1));
 
