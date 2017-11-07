@@ -44,7 +44,7 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private InsuranceListPanel insuranceListPanel;
-    private InsuranceProfile insuranceProfile;
+    private InsuranceProfilePanel insuranceProfilePanel;
     private ProfilePanel profilePanel;
     private PersonListPanel personListPanel;
     private Config config;
@@ -140,7 +140,7 @@ public class MainWindow extends UiPart<Region> {
         insuranceListPanel = new InsuranceListPanel(logic.getInsuranceList());
         insuranceListPanelPlaceholder.getChildren().add(insuranceListPanel.getRoot());
 
-        insuranceProfile = new InsuranceProfile();
+        insuranceProfilePanel = new InsuranceProfilePanel();
 
         profilePanel = new ProfilePanel();
         rightPanelPlaceholder.getChildren().add(profilePanel.getRoot());
@@ -248,7 +248,7 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
         rightPanelPlaceholder.getChildren().clear();
-        rightPanelPlaceholder.getChildren().add(insuranceProfile.getRoot());
+        rightPanelPlaceholder.getChildren().add(insuranceProfilePanel.getRoot());
     }
     //@@author
 }
