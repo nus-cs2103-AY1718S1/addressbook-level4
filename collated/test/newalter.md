@@ -24,29 +24,35 @@
             return null;
         }
 ```
-###### \java\seedu\address\logic\commands\FilterCommandTest.java
+###### \java\seedu\address\logic\commands\FindCommandTest.java
 ``` java
 /**
- * Contains integration tests (interaction with the Model) for {@code FilterCommand}.
+ * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
-public class FilterCommandTest {
+public class FindCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void equals() {
-        ContainsTagsPredicate firstPredicate =
-                new ContainsTagsPredicate(Collections.singletonList("first"));
-        ContainsTagsPredicate secondPredicate =
-                new ContainsTagsPredicate(Collections.singletonList("second"));
 
-        FilterCommand findFirstCommand = new FilterCommand(firstPredicate);
-        FilterCommand findSecondCommand = new FilterCommand(secondPredicate);
+        Predicate<ReadOnlyPerson> component1 = new NameContainsKeywordsPredicate(Collections.singletonList("first"));
+        Predicate<ReadOnlyPerson> component2 = new NameContainsKeywordsPredicate(Collections.singletonList("second"));
+        Predicate<ReadOnlyPerson> component3 = new PhoneContainsKeywordsPredicate(Collections.singletonList("third"));
+        Predicate<ReadOnlyPerson> component4 = new PhoneContainsKeywordsPredicate(Collections.singletonList("fourth"));
+
+        ArrayList<Predicate<ReadOnlyPerson>> firstPredicates = new ArrayList<>();
+        ArrayList<Predicate<ReadOnlyPerson>> secondPredicates = new ArrayList<>();
+        firstPredicates.addAll(Arrays.asList(component1, component3, FALSE, FALSE, FALSE));
+        secondPredicates.addAll(Arrays.asList(component2, component4, FALSE, FALSE, FALSE));
+
+        FindCommand findFirstCommand = new FindCommand(firstPredicates);
+        FindCommand findSecondCommand = new FindCommand(secondPredicates);
 
         // same object -> returns true
         assertTrue(findFirstCommand.equals(findFirstCommand));
 
         // same values -> returns true
-        FilterCommand findFirstCommandCopy = new FilterCommand(firstPredicate);
+        FindCommand findFirstCommandCopy = new FindCommand(firstPredicates);
         assertTrue(findFirstCommand.equals(findFirstCommandCopy));
 
         // different types -> returns false
@@ -55,111 +61,85 @@ public class FilterCommandTest {
         // null -> returns false
         assertFalse(findFirstCommand.equals(null));
 
-        // different tags -> returns false
+        // different keyword -> returns false
         assertFalse(findFirstCommand.equals(findSecondCommand));
     }
 
     @Test
-    public void execute_zeroTags_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        FilterCommand command = prepareCommand(" ");
-        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+    public void execute_wildcardKeywordsOnName_onePersonFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        FindCommand command = prepareCommand("n/b?nson");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
     }
 
     @Test
-    public void execute_multipleTags_twoPersonsFound() {
+    public void execute_wildcardKeywordsOnName_twoPersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
-        FilterCommand command = prepareCommand("owesMoney family");
+        FindCommand command = prepareCommand("n/b*");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON, GEORGE));
+    }
+
+    @Test
+    public void execute_multipleKeywordsOnName_multiplePersonsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        FindCommand command = prepareCommand("n/Kurz Elle Kunz");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+    }
+
+    @Test
+    public void execute_multipleKeywordsOnPhone_multiplePersonsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
+        FindCommand command = prepareCommand("p/85355255 98765432");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON));
     }
 
     @Test
-    public void execute_multipleTags_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 7);
-        FilterCommand command = prepareCommand("friends owesMoney");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+    public void execute_wildcardKeywordOnEmail_multiplePersonsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        FindCommand command = prepareCommand("e/*a@example.com");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(DANIEL, FIONA, GEORGE));
     }
 
     @Test
-    public void execute_wildcardKeywords_aliceFound() {
+    public void execute_oneKeywordOnAddress_onePersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
-        FilterCommand command = prepareCommand("fami??");
+        FindCommand command = prepareCommand("a/clementi");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
+    }
+
+    @Test
+    public void execute_oneKeywordOnTag_onePersonFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        FindCommand command = prepareCommand("t/owesMoney");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
+    }
+
+    @Test
+    public void execute_multipleFields_multiplePersonsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        FindCommand command = prepareCommand("n/meier t/fami??");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON, DANIEL));
+    }
+
+    @Test
+    public void execute_multipleFields_onePersonFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        FindCommand command = prepareCommand("n/alice p/85355255 t/fami?y e/alice*");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE));
     }
 
-    @Test
-    public void execute_wildcardKeywords_bensonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
-        FilterCommand command = prepareCommand("o*");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
-    }
-
-    @Test
-    public void execute_successiveCommands_onePersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
-        FilterCommand command1 = prepareCommand("owesMoney");
-        FilterCommand command2 = prepareCommand("friends");
-        assertSuccessiveCommandSuccess(command1, command2, expectedMessage, Arrays.asList(BENSON));
-    }
-
     /**
-     * Parses {@code userInput} into a {@code FilterCommand}.
+     * Parses {@code userInput} into a {@code FindCommand}.
      */
-    private FilterCommand prepareCommand(String userInput) {
-        FilterCommand command =
-                new FilterCommand(new ContainsTagsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+    private FindCommand prepareCommand(String userInput) {
+        FindCommand command = new FindCommand(new ArrayList<>());
+        try {
+            command = (new FindCommandParser()).parse(" " + userInput);
+            command.setData(model, new CommandHistory(), new UndoRedoStack());
+        } catch (ParseException e) {
+            assert false : "userInput is valid";
+        }
         return command;
-    }
-
-    /**
-     * Asserts that {@code command} is successfully executed, and<br>
-     *     - the command feedback is equal to {@code expectedMessage}<br>
-     *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
-     *     - the {@code AddressBook} in model remains the same after executing the {@code command}
-     */
-    private void assertCommandSuccess(FilterCommand command, String expectedMessage,
-                                      List<ReadOnlyPerson> expectedList) {
-        AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
-        CommandResult commandResult = command.execute();
-
-        assertEquals(expectedMessage, commandResult.feedbackToUser);
-        assertEquals(expectedList, model.getFilteredPersonList());
-        assertEquals(expectedAddressBook, model.getAddressBook());
-    }
-
-    /**
-     * Asserts that {@code command1, command2} are successfully executed, and<br>
-     *     - the command feedback is equal to {@code expectedMessage}<br>
-     *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
-     *     - the {@code AddressBook} in model remains the same after executing the {@code command}
-     */
-    private void assertSuccessiveCommandSuccess(FilterCommand command1, FilterCommand command2,
-                                                String expectedMessage, List<ReadOnlyPerson> expectedList) {
-        AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
-        command1.execute();
-        CommandResult commandResult = command2.execute();
-
-        assertEquals(expectedMessage, commandResult.feedbackToUser);
-        assertEquals(expectedList, model.getFilteredPersonList());
-        assertEquals(expectedAddressBook, model.getAddressBook());
-    }
-}
-```
-###### \java\seedu\address\logic\commands\FindCommandTest.java
-``` java
-    @Test
-    public void execute_wildcardKeywords_onePersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
-        FindCommand command = prepareCommand("b?nson");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
-    }
-
-    @Test
-    public void execute_wildcardKeywords_twoPersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
-        FindCommand command = prepareCommand("b*");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON, GEORGE));
     }
 ```
 ###### \java\seedu\address\logic\commands\ResizeCommandTest.java
@@ -261,16 +241,6 @@ public class ResizeCommandTest {
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
-    public void parseCommand_filter() throws Exception {
-        List<String> keywords = Arrays.asList("tag1", "tag2", "tag3");
-        FilterCommand command = (FilterCommand) parser.parseCommand(
-                FilterCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FilterCommand(new ContainsTagsPredicate(keywords)), command);
-    }
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-    @Test
     public void parseCommand_resize() throws Exception {
         ResizeCommand command = (ResizeCommand) parser.parseCommand(
                 ResizeCommand.COMMAND_WORD
@@ -299,26 +269,27 @@ public class ArgumentWildcardMatcherTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\FilterCommandParserTest.java
+###### \java\seedu\address\logic\parser\FindCommandParserTest.java
 ``` java
-public class FilterCommandParserTest {
-
-    private FilterCommandParser parser = new FilterCommandParser();
-
     @Test
-    public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
-    }
-
-    @Test
-    public void parse_validArgs_returnsFilterCommand() {
+    public void parse_validArgs_returnsFindCommand() {
         // no leading and trailing whitespaces
-        FilterCommand expectedFilterCommand =
-                new FilterCommand(new ContainsTagsPredicate(Arrays.asList("friends", "family")));
-        assertParseSuccess(parser, "friends family", expectedFilterCommand);
+        Predicate<ReadOnlyPerson> component1 = new NameContainsKeywordsPredicate(Arrays.asList("alice", "bob"));
+        Predicate<ReadOnlyPerson> component2 = new PhoneContainsKeywordsPredicate(Arrays.asList("88887777"));
+        Predicate<ReadOnlyPerson> component3 = new EmailContainsKeywordsPredicate(Arrays.asList("alice@example.com"));
+        Predicate<ReadOnlyPerson> component4 = new AddressContainsKeywordsPredicate(Arrays.asList("Clementi"));
+        Predicate<ReadOnlyPerson> component5 = new ContainsTagsPredicate(Arrays.asList("family", "friends"));
+
+        ArrayList<Predicate<ReadOnlyPerson>> predicates = new ArrayList<>();
+        predicates.addAll(Arrays.asList(component1, component2, component3, component4, component5));
+        FindCommand expectedFindCommand =
+                new FindCommand(predicates);
+        assertParseSuccess(parser,
+                " n/Alice Bob e/alice@example.com a/Clementi t/family friends p/88887777", expectedFindCommand);
 
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, " \n friends \n \t family  \t", expectedFilterCommand);
+        assertParseSuccess(parser, "  n/Alice Bob \t e/alice@example.com "
+                + "a/Clementi t/family \n friends \t p/88887777 \t ", expectedFindCommand);
     }
 
 }
@@ -437,181 +408,180 @@ public class ContainsTagsPredicateTest {
         clockRule.setInjectedClockToCurrentTime();
 
         mainWindowHandle.getCommandBox().pressAndRun(command, keyPresses);
-
-        waitUntilBrowserLoaded(getBrowserPanel());
     }
 ```
-###### \java\systemtests\FilterCommandSystemTest.java
+###### \java\systemtests\FindCommandSystemTest.java
 ``` java
-public class FilterCommandSystemTest extends AddressBookSystemTest {
-
     @Test
-    public void filter() {
-        /* Case: filter one person in address book, command with leading spaces and trailing spaces
-         * -> 1 person found
+    public void find() {
+        /* Case: find multiple persons in address book, command with leading spaces and trailing spaces
+         * -> 2 persons found
          */
-        String command = "   " + FilterCommand.COMMAND_WORD + " " + "owesMoney" + "   ";
+        String command = "   " + FindCommand.COMMAND_WORD + " " + PREFIX_NAME + KEYWORD_MATCHING_MEIER + "   ";
         Model expectedModel = getModel();
+        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL); // first names of Benson and Daniel are "Meier"
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: repeat previous find command where person list is displaying the persons we are finding
+         * -> 2 persons found
+         */
+        command = FindCommand.COMMAND_WORD + " " + PREFIX_NAME + KEYWORD_MATCHING_MEIER;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person by tag -> 1 person found */
+        command = FindCommand.COMMAND_WORD + " " + PREFIX_TAG + "owes*ney";
         ModelHelper.setFilteredList(expectedModel, BENSON);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: repeat previous filter command where person list is displaying the person we are finding
-         * -> 1 person found
-         */
-        command = FilterCommand.COMMAND_WORD + " " + "owesMoney";
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: filter person where person list is not displaying the person we are finding -> 0 person found */
-        command = FilterCommand.COMMAND_WORD + " son";
+        /* Case: find person where person list is not displaying the person we are finding -> 0 person found */
+        command = FindCommand.COMMAND_WORD + " " + PREFIX_PHONE + "95352563";
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: filter multiple persons in address book, 2 keywords -> 2 persons found */
+        /* Case: find person when person list is empty -> 0 person found */
+        command = FindCommand.COMMAND_WORD + " " + PREFIX_TAG + "owesMoney";
+        ModelHelper.setFilteredList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple persons by email -> 2 persons found */
         showAllPersons();
-        command = FilterCommand.COMMAND_WORD + " family owesMoney";
+        command = FindCommand.COMMAND_WORD + " " + PREFIX_EMAIL + "????@example.com cornelia*";
+        ModelHelper.setFilteredList(expectedModel, DANIEL, GEORGE);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple persons by email, 2 keywords in reversed order -> 2 persons found */
+        command = FindCommand.COMMAND_WORD + " " + PREFIX_EMAIL + "cornelia* ?nn?@example.com";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple persons by address -> 3 persons found */
+        showAllPersons();
+        command = FindCommand.COMMAND_WORD + " " + PREFIX_ADDRESS + "AVE";
+        ModelHelper.setFilteredList(expectedModel, ALICE, BENSON, ELLE);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple persons by tags -> 2 persons found */
+        command = FindCommand.COMMAND_WORD + " " + PREFIX_TAG + "family owesmoney";
         ModelHelper.setFilteredList(expectedModel, ALICE, BENSON);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: filter multiple persons in address book, 2 keywords in reversed order -> 2 persons found */
-        command = FilterCommand.COMMAND_WORD + " owesMoney family";
+        /* Case: find persons by phone -> 1 person found */
+        command = FindCommand.COMMAND_WORD + " " + PREFIX_PHONE + "85355255 95352563";
+        ModelHelper.setFilteredList(expectedModel, ALICE);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: filter multiple persons in address book, 2 keywords with 1 repeat -> 2 persons found */
-        command = FilterCommand.COMMAND_WORD + " family owesMoney family";
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: filter multiple persons in address book, 2 matching keywords and 1 non-matching keyword
-         * -> 2 persons found
-         */
-        command = FilterCommand.COMMAND_WORD + " family owesMoney NonMatchingKeyWord";
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: undo previous filter command -> rejected */
+        /* Case: undo previous find command -> rejected */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
-        /* Case: redo previous filter command -> rejected */
+        /* Case: redo previous find command -> rejected */
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
-        /* Case: filter same persons in address book after deleting 1 of them -> 1 person found */
-        executeCommand(DeleteCommand.COMMAND_WORD + " 1");
-        assert !getModel().getAddressBook().getPersonList().contains(ALICE);
-        command = FilterCommand.COMMAND_WORD + " family owesMoney";
-        expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, BENSON);
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: filter person in address book, keyword is same as name but of different case -> 1 person found */
-        command = FilterCommand.COMMAND_WORD + " OwEsMoNeY";
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: filter person in address book, keyword is substring of tag -> 0 persons found */
-        command = FilterCommand.COMMAND_WORD + " owes";
-        ModelHelper.setFilteredList(expectedModel);
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: filter person in address book, whose tag is substring of keyword -> 0 persons found */
-        command = FilterCommand.COMMAND_WORD + " owesMoney!";
-        ModelHelper.setFilteredList(expectedModel);
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: filter name of person in address book -> 0 persons found */
-        command = FilterCommand.COMMAND_WORD + " " + DANIEL.getName();
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: filter phone number of person in address book -> 0 persons found */
-        command = FilterCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: filter address of person in address book -> 0 persons found */
-        command = FilterCommand.COMMAND_WORD + " " + DANIEL.getAddress().value;
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: filter email of person in address book -> 0 persons found */
-        command = FilterCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: filter while a person is selected -> selected card deselected */
+        /* Case: find persons by name and phone and tag -> 3 person found */
         showAllPersons();
-        selectPerson(Index.fromOneBased(4));
+        command = FindCommand.COMMAND_WORD + " " + PREFIX_NAME + "alic? "
+                + PREFIX_TAG + "owesmoney " + PREFIX_PHONE + "953525??";
+        ModelHelper.setFilteredList(expectedModel, ALICE, BENSON, CARL);
+        assertCommandSuccess(command, expectedModel);
+
+        /* Case: find persons by name and phone and tag with substring keywords -> 0 person found */
+        showAllPersons();
+        command = FindCommand.COMMAND_WORD + " " + PREFIX_NAME + "alic "
+                + PREFIX_TAG + "owesmone " + PREFIX_PHONE + "953525";
+        ModelHelper.setFilteredList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+
+        /* Case: find persons by name and phone and tag with superstring keywords -> 0 person found */
+        showAllPersons();
+        command = FindCommand.COMMAND_WORD + " " + PREFIX_NAME + "alicee "
+                + PREFIX_TAG + "aowesmoney " + PREFIX_PHONE + "953525633";
+        ModelHelper.setFilteredList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+
+        /* Case: find persons by email and address -> 2 person found */
+        showAllPersons();
+        command = FindCommand.COMMAND_WORD + " " + PREFIX_EMAIL + "alice@*.com "
+                + PREFIX_ADDRESS + "tokyo";
+        ModelHelper.setFilteredList(expectedModel, ALICE, FIONA);
+        assertCommandSuccess(command, expectedModel);
+
+        /* Case: find persons by email and address with substring keywords -> 0 person found */
+        showAllPersons();
+        command = FindCommand.COMMAND_WORD + " " + PREFIX_EMAIL + "alice@example.co "
+                + PREFIX_ADDRESS + "toky";
+        ModelHelper.setFilteredList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+
+        /* Case: find persons by email and address with superstring keywords -> 0 person found */
+        showAllPersons();
+        command = FindCommand.COMMAND_WORD + " " + PREFIX_EMAIL + "calice@example.com "
+                + PREFIX_ADDRESS + "tokyo1";
+        ModelHelper.setFilteredList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+
+        /* Case: find persons by name and phone and tag -> 3 person found */
+        showAllPersons();
+        command = FindCommand.COMMAND_WORD + " " + PREFIX_NAME + "b*n "
+                + PREFIX_TAG + "FAmily " + PREFIX_PHONE + "*3525??";
+        ModelHelper.setFilteredList(expectedModel, ALICE, BENSON, CARL);
+        assertCommandSuccess(command, expectedModel);
+
+        /* Case: find persons in address book after deleting 1 of them -> 1 person found */
+        showAllPersons();
+        executeCommand(DeleteCommand.COMMAND_WORD + " 3");
+        assert !getModel().getAddressBook().getPersonList().contains(CARL);
+        showAllPersons();
+        expectedModel = getModel();
+        ModelHelper.setFilteredList(expectedModel, ALICE, BENSON);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person by name and email, keyword of different case -> 2 person found */
+        showAllPersons();
+        command = FindCommand.COMMAND_WORD + " " + PREFIX_NAME + "MeIeR "
+                + PREFIX_EMAIL + "lYdIa@eXaMple.Com";
+        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL, FIONA);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find while a person is selected -> selected card deselected */
+        showAllPersons();
+        selectPerson(Index.fromOneBased(1));
         assert !getPersonListPanel().getHandleToSelectedCard().getName().equals(BENSON.getName().fullName);
-        command = FilterCommand.COMMAND_WORD + " owesMoney";
-        ModelHelper.setFilteredList(expectedModel, BENSON);
+        command = FindCommand.COMMAND_WORD + " " + PREFIX_NAME + "Daniel";
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardDeselected();
 
-        /* Case: filter person in empty address book -> 0 persons found */
+        /* Case: find person in empty address book -> 0 persons found */
         executeCommand(ClearCommand.COMMAND_WORD);
         assert getModel().getAddressBook().getPersonList().size() == 0;
-        command = FilterCommand.COMMAND_WORD + " friends";
+        command = FindCommand.COMMAND_WORD + " " + PREFIX_NAME + KEYWORD_MATCHING_MEIER;
         expectedModel = getModel();
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        /* Case: empty argument -> rejected */
+        command = "find";
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+
         /* Case: mixed case command word -> rejected */
-        command = "FiLtEr friends";
+        command = "FiNd n/Meier";
         assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
-
-
-    /**
-     * Executes {@code command} and verifies that the command box displays an empty string, the result display
-     * box displays {@code Messages#MESSAGE_PERSONS_LISTED_OVERVIEW} with the number of people in the filtered list,
-     * and the model related components equal to {@code expectedModel}.
-     * These verifications are done by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the status bar remains unchanged, and the command box has the default style class, and the
-     * selected card updated accordingly, depending on {@code cardStatus}.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandSuccess(String command, Model expectedModel) {
-        String expectedResultMessage = String.format(
-                MESSAGE_PERSONS_LISTED_OVERVIEW, expectedModel.getFilteredPersonList().size());
-
-        executeCommand(command);
-        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-        assertCommandBoxShowsDefaultStyle();
-        assertStatusBarUnchanged();
-    }
-
-    /**
-     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
-     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
-     * These verifications are done by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
-     * error style.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandFailure(String command, String expectedResultMessage) {
-        Model expectedModel = getModel();
-
-        executeCommand(command);
-        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
-        assertCommandBoxShowsErrorStyle();
-        assertStatusBarUnchanged();
-    }
-}
 ```
 ###### \java\systemtests\TabCompleteSystemTest.java
 ``` java
@@ -622,7 +592,8 @@ public class TabCompleteSystemTest extends AddressBookSystemTest {
         /* Case: partial name in find command, TAB Pressed
          * -> 2 persons found
          */
-        String command = FindCommand.COMMAND_WORD + " Mei";
+        showAllPersons();
+        String command = FindCommand.COMMAND_WORD + " n/Mei";
         Model expectedModel = getModel();
         ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL); // first names of Benson and Daniel are "Meier"
         assertCommandSuccess(command, expectedModel, KeyCode.TAB);
@@ -631,7 +602,8 @@ public class TabCompleteSystemTest extends AddressBookSystemTest {
         /* Case: partial name in find command, DOWN, ENTER Pressed
          * -> 1 person found
          */
-        command = FindCommand.COMMAND_WORD + " Be";
+        showAllPersons();
+        command = FindCommand.COMMAND_WORD + " n/Be";
         ModelHelper.setFilteredList(expectedModel, BENSON);
         assertCommandSuccess(command, expectedModel, KeyCode.DOWN, KeyCode.ENTER);
         assertSelectedCardUnchanged();
@@ -639,7 +611,8 @@ public class TabCompleteSystemTest extends AddressBookSystemTest {
         /* Case: partial name in find command, DOWN, DOWN, ENTER Pressed
          * -> 1 person found
          */
-        command = FindCommand.COMMAND_WORD + " Be";
+        showAllPersons();
+        command = FindCommand.COMMAND_WORD + " n/Be";
         ModelHelper.setFilteredList(expectedModel, GEORGE);
         assertCommandSuccess(command, expectedModel, KeyCode.DOWN, KeyCode.DOWN, KeyCode.ENTER);
         assertSelectedCardUnchanged();
@@ -647,7 +620,8 @@ public class TabCompleteSystemTest extends AddressBookSystemTest {
         /* Case: Non-matching keywords in find command, no suggestions
          * -> 0 persons found
          */
-        command = FindCommand.COMMAND_WORD + " Bee";
+        showAllPersons();
+        command = FindCommand.COMMAND_WORD + " n/Bee";
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel, KeyCode.TAB);
         assertSelectedCardUnchanged();
@@ -655,7 +629,8 @@ public class TabCompleteSystemTest extends AddressBookSystemTest {
         /* Case: partial name in second argument, TAB Pressed
          * -> 2 persons found
          */
-        command = FindCommand.COMMAND_WORD + " Benson Da";
+        showAllPersons();
+        command = FindCommand.COMMAND_WORD + " n/Benson Da";
         expectedModel = getModel();
         ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL); // first names of Benson and Daniel are "Meier"
         assertCommandSuccess(command, expectedModel, KeyCode.TAB);

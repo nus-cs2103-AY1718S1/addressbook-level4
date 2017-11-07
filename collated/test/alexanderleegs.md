@@ -6,6 +6,23 @@
             fail("This method should not be called.");
             return null;
         }
+```
+###### \java\seedu\address\logic\commands\AddCommandTest.java
+``` java
+        @Override
+        public void deleteTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteMeeting(Meeting meeting) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sort(String field) {
+            fail("This method should not be called.");
+        }
 
 ```
 ###### \java\seedu\address\logic\commands\AddTagCommandTest.java
@@ -592,18 +609,6 @@ public class DeleteTagCommandParserTest {
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 }
-```
-###### \java\seedu\address\logic\parser\EditCommandParserTest.java
-``` java
-    @Test
-    public void parse_resetMeetings_success() {
-        Index targetIndex = INDEX_THIRD_PERSON;
-        String userInput = targetIndex.getOneBased() + MEETING_EMPTY;
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withMeetingsForEdit().build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
 ```
 ###### \java\seedu\address\logic\parser\SortCommandParserTest.java
 ``` java

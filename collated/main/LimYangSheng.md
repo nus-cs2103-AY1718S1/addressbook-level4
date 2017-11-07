@@ -125,6 +125,15 @@ public class RestoreBackupCommand extends UndoableCommand {
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
+     * Updates {@code person} meetings to have reference to itself.
+     */
+    private void setMeetingWithPersonDetails(ReadOnlyPerson person) {
+        for (Meeting meeting : person.getMeetings()) {
+            meeting.setPerson(person);
+        }
+    }
+
+    /**
      * Finds the meetings in meeting list with {@code Person} that equals {@code target} and replaces it with
      * {@code editedReadOnlyPerson}
      */
@@ -220,8 +229,6 @@ public class MeetingContainPersonPredicate implements Predicate<Meeting> {
 
     /**
      * Creates file path of the backup data file.
-     * @param addressBookFilePath cannot be null.
-     * @return file path for backup address book.
      */
     private String createBackupAddressBookFilePath(String addressBookFilePath) {
         String nameOfFile = addressBookFilePath.split("[.]")[0];
