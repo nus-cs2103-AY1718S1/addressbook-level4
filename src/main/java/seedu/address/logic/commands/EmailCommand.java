@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SUBJECT;
+
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
@@ -19,14 +21,17 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class EmailCommand extends Command {
 
-    public static final String COMMAND_WORD = "mail";
+    public static final String COMMAND_WORD = "email";
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
-            new HashSet<>(Arrays.asList(COMMAND_WORD, "email", "mailto", "m"));
+            new HashSet<>(Arrays.asList(COMMAND_WORD, "mail", "mailto", "m"));
     public static final String COMMAND_HOTKEY = "Ctrl+M";
-    public static final String FORMAT = "mail INDEX";
+    public static final String FORMAT = "email INDEX";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Launch the mail composing window of the default mail client.";
+            + ": Launch the mail composing window of the default mail client.\n"
+            + "Parameters: INDEX (must be a positive integer) "
+            + "[" + PREFIX_SUBJECT + "SUBJECT]\n"
+            + "Example: " + COMMAND_WORD + " 1 " + PREFIX_SUBJECT + "Hello";
     public static final String MESSAGE_SUCCESS = "Opening email composer";
     public static final String MESSAGE_NOT_SUPPORTED = "Function not supported";
     private final Index targetIndex;
@@ -65,5 +70,13 @@ public class EmailCommand extends Command {
             throw new CommandException(String.format(MESSAGE_NOT_SUPPORTED));
         }
 
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof EmailCommand // instanceof handles nulls
+                && this.targetIndex.equals(((EmailCommand) other).targetIndex))
+                && this.subject.equals(((EmailCommand) other).subject);// state check
     }
 }
