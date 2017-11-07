@@ -17,6 +17,9 @@ public class ImportCommandParserTest {
 
     private ImportCommandParser parser = new ImportCommandParser();
 
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
     @Test
     public void parse_wrongFileFormat_throwsParseException() {
         //Wrong file type
@@ -34,9 +37,6 @@ public class ImportCommandParserTest {
         //Corrupted vcf
         assertParseFailure(parser, "error.vcf", ImportCommand.MESSAGE_FILE_CORRUPT);
     }
-
-    @Rule
-    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     @Test
     public void parse_noArgsCancelImport_throwsParseException() {

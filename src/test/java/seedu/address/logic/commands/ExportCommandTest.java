@@ -54,14 +54,14 @@ public class ExportCommandTest {
     }
 
     @Test
-    public void export_emptyAddressBook_Error() throws PersonNotFoundException {
+    public void export_emptyAddressBook_emptyBookError() throws PersonNotFoundException {
         Model emptyAddressBookModel = new ModelManager();
         assertCommandFailure(prepareCommand(
                 "out.xml", emptyAddressBookModel), emptyAddressBookModel, ExportCommand.MESSAGE_EMPTY_BOOK);
     }
 
     @Test
-    public void export_validAddressBook_Success() {
+    public void export_validAddressBook_success() {
         //Valid .xml export.
         assertCommandSuccess(prepareCommand("out.xml", model), model, ExportCommand.MESSAGE_SUCCESS, model);
 

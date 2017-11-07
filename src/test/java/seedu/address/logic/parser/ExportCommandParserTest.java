@@ -34,7 +34,7 @@ public class ExportCommandParserTest {
 
 
     @Test
-    public void parse_validArgs_returnExportCommand() throws ParseException{
+    public void parse_validArgs_returnExportCommand() throws ParseException {
         //valid xml Export
         ExportCommand exportCommand = new ExportCommand("output.xml");
         assertTrue(parser.parse("output.xml") instanceof ExportCommand);
