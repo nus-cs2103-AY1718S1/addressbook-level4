@@ -645,7 +645,6 @@ By using this command, you can open the shell version of the app. In this way, y
 Format: `shell`
 // end::shell[]
 
->>>>>>> 1d15ad554d4924e835f96d292743a4a7a7c525e4
 === Clearing all entries : `clear`
 
 Clears all entries from the address book.

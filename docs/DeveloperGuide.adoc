@@ -905,6 +905,7 @@ Moreover, if there is more than one person in the list with the name give, then 
 
 // tag::help[]
 ===Improvement on HelpCommand
+
 We make the help command to be able to alert the usage of a speified command.
 
 The way we do it is to make the help command paser to identify the command word after 'help' and show the command usage of that command.
@@ -927,6 +928,7 @@ If the input command word after 'help' can not be identified, then you will see 
 
 // tag::bin[]
 ===RecycleBin Mechanism
+
 We design a recycle bin in the iConnect to store the person removed from address book. In this way, users can restore the people they wrongly deleted. You may think that it can be done by udno/redo command. Actually, if users want to restore a person they deleted long time ago, then the undo/redo command would not hlep.
 
 The users can interact with bin using four commands:'bin-list', 'bin-delete', 'bin-clear', 'bin-restore';
