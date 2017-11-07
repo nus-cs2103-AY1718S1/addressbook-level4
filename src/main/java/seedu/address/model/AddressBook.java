@@ -72,14 +72,18 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
+        Set<Meeting> meetingList = new HashSet<>();
         try {
             setPersons(newData.getPersonList());
+            for (Person person : persons) {
+                setMeetingWithPersonDetails(person);
+                meetingList.addAll(person.getMeetings());
+            }
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
         }
-
         setTags(new HashSet<>(newData.getTagList()));
-        setMeetings(new HashSet<>(newData.getMeetingList()));
+        setMeetings(meetingList);
         syncMasterTagListWith(persons);
         syncMasterMeetingListWith(persons);
     }
@@ -128,8 +132,16 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
-
     //@@author LimYangSheng
+    /**
+     * Updates {@code person} meetings to have reference to itself.
+     */
+    private void setMeetingWithPersonDetails(ReadOnlyPerson person) {
+        for (Meeting meeting : person.getMeetings()) {
+            meeting.setPerson(person);
+        }
+    }
+
     /**
      * Finds the meetings in meeting list with {@code Person} that equals {@code target} and replaces it with
      * {@code editedReadOnlyPerson}
