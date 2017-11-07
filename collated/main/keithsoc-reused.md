@@ -1,8 +1,12 @@
 # keithsoc-reused
-###### \java\seedu\address\ui\UiResize.java
+###### /java/seedu/address/ui/UiResize.java
 ``` java
 /**
  * Manages resizing of UI Window by adding mouse event listeners to each UI component.
+ * To be used when JavaFX StageStyle is set to TRANSPARENT or UNDECORATED.
+ *
+ * By: Evgenii Kanivets and Alexander.Berg
+ * Adapted From: https://stackoverflow.com/questions/19455059/allow-user-to-resize-an-undecorated-stage
  */
 public class UiResize {
 
@@ -10,13 +14,23 @@ public class UiResize {
      * Registers an event handler for the Scene in the specified Stage (top-level UI container)
      * @param stage
      */
-    public static void enableResizableWindow(Stage stage) {
+    public static void enableResizableWindow(Stage stage,
+                                             double minWidth,
+                                             double minHeight,
+                                             double maxWidth,
+                                             double maxHeight) {
         ResizeHandler resizeHandler = new ResizeHandler(stage);
         stage.getScene().addEventHandler(MouseEvent.MOUSE_MOVED, resizeHandler);
         stage.getScene().addEventHandler(MouseEvent.MOUSE_PRESSED, resizeHandler);
         stage.getScene().addEventHandler(MouseEvent.MOUSE_DRAGGED, resizeHandler);
         stage.getScene().addEventHandler(MouseEvent.MOUSE_EXITED, resizeHandler);
         stage.getScene().addEventHandler(MouseEvent.MOUSE_EXITED_TARGET, resizeHandler);
+
+        resizeHandler.setMinWidth(minWidth);
+        resizeHandler.setMinHeight(minHeight);
+        resizeHandler.setMaxWidth(maxWidth);
+        resizeHandler.setMaxHeight(maxHeight);
+
         ObservableList<Node> children = stage.getScene().getRoot().getChildrenUnmodifiable();
         for (Node child : children) {
             addHandlerToNodes(child, resizeHandler);
@@ -28,7 +42,7 @@ public class UiResize {
      * @param node
      * @param handler
      */
-    public static void addHandlerToNodes(Node node, EventHandler<MouseEvent> handler) {
+    private static void addHandlerToNodes(Node node, EventHandler<MouseEvent> handler) {
         node.addEventHandler(MouseEvent.MOUSE_MOVED, handler);
         node.addEventHandler(MouseEvent.MOUSE_PRESSED, handler);
         node.addEventHandler(MouseEvent.MOUSE_DRAGGED, handler);
@@ -53,8 +67,42 @@ public class UiResize {
         private double startX = 0;
         private double startY = 0;
 
+        // Max and min sizes for controlled stage
+        private double minWidth;
+        private double maxWidth;
+        private double minHeight;
+        private double maxHeight;
+
         public ResizeHandler(Stage stage) {
             this.stage = stage;
+        }
+
+        public void setMinWidth(double minWidth) {
+            this.minWidth = minWidth;
+        }
+
+        public void setMinHeight(double minHeight) {
+            this.minHeight = minHeight;
+        }
+
+        public void setMaxWidth(double maxWidth) {
+            this.maxWidth = maxWidth;
+        }
+
+        public void setMaxHeight(double maxHeight) {
+            this.maxHeight = maxHeight;
+        }
+
+        private void setStageWidth(double width) {
+            width = Math.min(width, maxWidth);
+            width = Math.max(width, minWidth);
+            stage.setWidth(width);
+        }
+
+        private void setStageHeight(double height) {
+            height = Math.min(height, maxHeight);
+            height = Math.max(height, minHeight);
+            stage.setHeight(height);
         }
 
         @Override
@@ -67,7 +115,7 @@ public class UiResize {
             double sceneWidth = scene.getWidth();
             double sceneHeight = scene.getHeight();
 
-            if (MouseEvent.MOUSE_MOVED.equals(mouseEventType) == true) {
+            if (MouseEvent.MOUSE_MOVED.equals(mouseEventType)) {
                 if (mouseEventX < border && mouseEventY < border) {
                     cursorEvent = Cursor.NW_RESIZE;
                 } else if (mouseEventX < border && mouseEventY > sceneHeight - border) {
@@ -91,40 +139,38 @@ public class UiResize {
             } else if (MouseEvent.MOUSE_EXITED.equals(mouseEventType)
                     || MouseEvent.MOUSE_EXITED_TARGET.equals(mouseEventType)) {
                 scene.setCursor(Cursor.DEFAULT);
-            } else if (MouseEvent.MOUSE_PRESSED.equals(mouseEventType) == true) {
+            } else if (MouseEvent.MOUSE_PRESSED.equals(mouseEventType)) {
                 startX = stage.getWidth() - mouseEventX;
                 startY = stage.getHeight() - mouseEventY;
-            } else if (MouseEvent.MOUSE_DRAGGED.equals(mouseEventType) == true) {
+            } else if (MouseEvent.MOUSE_DRAGGED.equals(mouseEventType)) {
 
-                if (Cursor.DEFAULT.equals(cursorEvent) == false) {
-                    if (Cursor.W_RESIZE.equals(cursorEvent) == false && Cursor.E_RESIZE.equals(cursorEvent) == false) {
+                if (!Cursor.DEFAULT.equals(cursorEvent)) {
+                    if (!Cursor.W_RESIZE.equals(cursorEvent) && !Cursor.E_RESIZE.equals(cursorEvent)) {
                         double minHeight = stage.getMinHeight() > (border * 2) ? stage.getMinHeight() : (border * 2);
-                        if (Cursor.NW_RESIZE.equals(cursorEvent) == true
-                                || Cursor.N_RESIZE.equals(cursorEvent) == true
-                                || Cursor.NE_RESIZE.equals(cursorEvent) == true) {
+                        if (Cursor.NW_RESIZE.equals(cursorEvent) || Cursor.N_RESIZE.equals(cursorEvent)
+                                || Cursor.NE_RESIZE.equals(cursorEvent)) {
                             if (stage.getHeight() > minHeight || mouseEventY < 0) {
-                                stage.setHeight(stage.getY() - mouseEvent.getScreenY() + stage.getHeight());
+                                setStageHeight(stage.getY() - mouseEvent.getScreenY() + stage.getHeight());
                                 stage.setY(mouseEvent.getScreenY());
                             }
                         } else {
                             if (stage.getHeight() > minHeight || mouseEventY + startY - stage.getHeight() > 0) {
-                                stage.setHeight(mouseEventY + startY);
+                                setStageHeight(mouseEventY + startY);
                             }
                         }
                     }
 
-                    if (Cursor.N_RESIZE.equals(cursorEvent) == false && Cursor.S_RESIZE.equals(cursorEvent) == false) {
+                    if (!Cursor.N_RESIZE.equals(cursorEvent) && !Cursor.S_RESIZE.equals(cursorEvent)) {
                         double minWidth = stage.getMinWidth() > (border * 2) ? stage.getMinWidth() : (border * 2);
-                        if (Cursor.NW_RESIZE.equals(cursorEvent) == true
-                                || Cursor.W_RESIZE.equals(cursorEvent) == true
-                                || Cursor.SW_RESIZE.equals(cursorEvent) == true) {
+                        if (Cursor.NW_RESIZE.equals(cursorEvent) || Cursor.W_RESIZE.equals(cursorEvent)
+                                || Cursor.SW_RESIZE.equals(cursorEvent)) {
                             if (stage.getWidth() > minWidth || mouseEventX < 0) {
-                                stage.setWidth(stage.getX() - mouseEvent.getScreenX() + stage.getWidth());
+                                setStageWidth(stage.getX() - mouseEvent.getScreenX() + stage.getWidth());
                                 stage.setX(mouseEvent.getScreenX());
                             }
                         } else {
                             if (stage.getWidth() > minWidth || mouseEventX + startX - stage.getWidth() > 0) {
-                                stage.setWidth(mouseEventX + startX);
+                                setStageWidth(mouseEventX + startX);
                             }
                         }
                     }

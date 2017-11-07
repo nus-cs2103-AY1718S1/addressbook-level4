@@ -1,337 +1,4 @@
 # marvinchin
-###### /java/seedu/address/ui/PersonCard.java
-``` java
-    /**
-     * Creates a social info label for each {@code Person}
-     */
-    private void initSocialInfos(ReadOnlyPerson person) {
-        person.getSocialInfos().forEach(socialInfo -> {
-            String labelText = socialInfo.getSocialType() + ": " + socialInfo.getUsername();
-            Label socialLabel = new Label(labelText);
-            socialLabel.getStyleClass().add("cell_small_label");
-            socialInfos.getChildren().add(socialLabel);
-        });
-    }
-```
-###### /java/seedu/address/logic/parser/OptionBearingArgument.java
-``` java
-/**
- * The OptionBearingArgument class encapsulates an argument that contains options, and handles the parsing and filtering
- * of these options from the argument.
- */
-public class OptionBearingArgument {
-
-    private String rawArgs;
-    private Set<String> optionsList;
-    private String filteredArgs;
-
-    /**
-     * Constructs an OptionBearingArgument for the input argument string.
-     */
-    public OptionBearingArgument(String args) {
-        requireNonNull(args);
-        String trimmedArgs = args.trim();
-        rawArgs = trimmedArgs;
-        parse(rawArgs);
-    }
-
-    /**
-     * Parses the string to get the list of options, and a filtered argument string with the options removed.
-     */
-    private void parse(String args) {
-        String[] splitArgs = args.split("\\s+");
-        optionsList = Arrays.stream(splitArgs)
-                .filter(arg -> arg.startsWith(PREFIX_OPTION.getPrefix()))
-                .map(optionArg -> optionArg.substring(PREFIX_OPTION.getPrefix().length())) // drop the leading prefix
-                .collect(Collectors.toCollection(HashSet::new));
-
-        filteredArgs = Arrays.stream(splitArgs)
-                .filter(arg -> !arg.startsWith(PREFIX_OPTION.getPrefix()))
-                .collect(Collectors.joining(" "));
-    }
-
-    public String getRawArgs() {
-        return rawArgs;
-    }
-
-    public Set<String> getOptions() {
-        return optionsList;
-    }
-
-    public String getFilteredArgs() {
-        return filteredArgs;
-    }
-
-}
-```
-###### /java/seedu/address/logic/parser/ImportCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new ImportCommand object
- */
-public class ImportCommandParser implements Parser {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the ImportCommand
-     * and returns an ImportCommand object for execution.
-     */
-    public ImportCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
-        }
-
-        return new ImportCommand(trimmedArgs);
-    }
-}
-```
-###### /java/seedu/address/logic/parser/ExportCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new ExportCommand object
- */
-public class ExportCommandParser implements Parser {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the ExportCommand
-     * and returns an ExportCommand object for execution.
-     */
-    public ExportCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
-        }
-
-        return new ExportCommand(trimmedArgs);
-    }
-}
-```
-###### /java/seedu/address/logic/parser/SocialInfoMapping.java
-``` java
-/**
- * Handles mappings of social related identifiers when parsing SocialInfo
- */
-public class SocialInfoMapping {
-
-    private static final int SOCIAL_TYPE_INDEX = 0;
-    private static final int SOCIAL_USERNAME_INDEX = 1;
-
-    private static final String FACEBOOK_IDENTIFIER = "facebook";
-    private static final String FACEBOOK_IDENTIFIER_ALIAS = "fb";
-    private static final String INSTAGRAM_IDENTIFIER = "instagram";
-    private static final String INSTAGRAM_IDENTIFIER_ALIAS = "ig";
-
-    private static final String INVALID_SYNTAX_EXCEPTION_MESSAGE = "Invalid syntax for social info";
-    private static final String UNRECOGNIZED_SOCIAL_TYPE_MESSAGE = "Unrecognized social type.\n"
-        + "Currently supported platforms: "
-        + FACEBOOK_IDENTIFIER + "(aliases: " + FACEBOOK_IDENTIFIER_ALIAS + "), "
-        + INSTAGRAM_IDENTIFIER + "(aliases: " + INSTAGRAM_IDENTIFIER_ALIAS + ")\n";
-
-
-    /**
-     * Returns the SocialInfo object represented by the input String.
-     * @throws IllegalValueException if the input does not represent a valid SocialInfo recognized
-     * by the defined mappings
-     */
-    public static SocialInfo parseSocialInfo(String rawSocialInfo) throws IllegalValueException {
-        String[] splitRawSocialInfo = rawSocialInfo.split(" ", 2);
-        if (splitRawSocialInfo.length != 2) {
-            throw new IllegalValueException(INVALID_SYNTAX_EXCEPTION_MESSAGE);
-        }
-
-        if (isFacebookInfo(splitRawSocialInfo)) {
-            return buildFacebookInfo(splitRawSocialInfo);
-        } else if (isInstagramInfo(splitRawSocialInfo)) {
-            return buildInstagramInfo(splitRawSocialInfo);
-        } else {
-            throw new IllegalValueException(UNRECOGNIZED_SOCIAL_TYPE_MESSAGE);
-        }
-
-    }
-
-    private static boolean isFacebookInfo(String[] splitRawSocialInfo) {
-        String trimmedSocialType = splitRawSocialInfo[SOCIAL_TYPE_INDEX].trim();
-        return trimmedSocialType.equals(FACEBOOK_IDENTIFIER) || trimmedSocialType.equals(FACEBOOK_IDENTIFIER_ALIAS);
-    }
-
-    private static SocialInfo buildFacebookInfo(String[] splitRawSocialInfo) {
-        String trimmedSocialUsername = splitRawSocialInfo[SOCIAL_USERNAME_INDEX].trim();
-        String socialUrl = "https://facebook.com/" + trimmedSocialUsername;
-        return new SocialInfo(FACEBOOK_IDENTIFIER, trimmedSocialUsername, socialUrl);
-    }
-
-    private static boolean isInstagramInfo(String[] splitRawSocialInfo) {
-        String trimmedSocialType = splitRawSocialInfo[SOCIAL_TYPE_INDEX].trim();
-        return trimmedSocialType.equals(INSTAGRAM_IDENTIFIER) || trimmedSocialType.equals(INSTAGRAM_IDENTIFIER_ALIAS);
-    }
-
-    private static SocialInfo buildInstagramInfo(String[] splitRawSocialInfo) {
-        String trimmedSocialUsername = splitRawSocialInfo[SOCIAL_USERNAME_INDEX].trim();
-        String socialUrl = "https://instagram.com/" + trimmedSocialUsername;
-        return new SocialInfo(INSTAGRAM_IDENTIFIER, trimmedSocialUsername, socialUrl);
-    }
-}
-```
-###### /java/seedu/address/logic/parser/DeleteCommandParser.java
-``` java
-    /**
-     * Utility function to check that the input arguments is not empty.
-     * Throws a parse exception if it is empty.
-     */
-    private void checkArgsNotEmpty(String args) throws ParseException {
-        if (args == null || args.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
-        }
-    }
-    /**
-     * Parses the given {@code String} of arguments in the context of the DeleteCommand
-     * and returns an DeleteCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public DeleteCommand parse(String args) throws ParseException {
-        // check that the raw args are not empty before processing
-        checkArgsNotEmpty(args);
-        OptionBearingArgument opArgs = new OptionBearingArgument(args);
-        String filteredArgs = opArgs.getFilteredArgs();
-        // check that the filtered args are not empty
-        checkArgsNotEmpty(filteredArgs);
-
-        if (opArgs.getOptions().contains(DeleteByTagCommand.COMMAND_OPTION)) {
-            List<String> tags = parseWhitespaceSeparatedStrings(filteredArgs);
-            HashSet<String> tagSet = new HashSet<>(tags);
-            return new DeleteByTagCommand(tagSet);
-        } else {
-            try {
-                List<Index> indexes = ParserUtil.parseMultipleIndexes(filteredArgs);
-                return new DeleteByIndexCommand(indexes);
-            } catch (IllegalValueException ive) {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
-            }
-        }
-    }
-```
-###### /java/seedu/address/logic/parser/FindCommandParser.java
-``` java
-    /**
-     * Utility function to check that the input arguments is not empty.
-     * Throws a parse exception if it is empty.
-     */
-    private void checkArgsNotEmpty(String args) throws ParseException {
-        if (args == null || args.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
-    }
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the FindCommand
-     * and returns an FindCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public FindCommand parse(String args) throws ParseException {
-        // check that the raw args are not empty before processing
-        checkArgsNotEmpty(args);
-        OptionBearingArgument opArgs = new OptionBearingArgument(args);
-        String filteredArgs = opArgs.getFilteredArgs();
-        // check that the filtered args are not empty
-        checkArgsNotEmpty(filteredArgs);
-
-        if (opArgs.getOptions().contains(FindByTagsCommand.COMMAND_OPTION)) {
-            List<String> tagKeywords = parseWhitespaceSeparatedStrings(filteredArgs);
-            TagsContainKeywordsPredicate predicate = new TagsContainKeywordsPredicate(tagKeywords);
-            return new FindByTagsCommand(predicate);
-        } else {
-            checkArgsNotEmpty(opArgs.getFilteredArgs());
-            List<String> nameKeywords = parseWhitespaceSeparatedStrings(filteredArgs);
-            NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(nameKeywords);
-            return new FindByNameCommand(predicate);
-        }
-    }
-```
-###### /java/seedu/address/logic/parser/ParserUtil.java
-``` java
-    /**
-     * Splits {@code args} by whitespace and returns it
-     */
-    public static List<String> parseWhitespaceSeparatedStrings(String args) {
-        requireNonNull(args);
-        String[] splitArgs = args.split("\\s+");
-        return Arrays.asList(splitArgs);
-    }
-```
-###### /java/seedu/address/logic/parser/ParserUtil.java
-``` java
-    /**
-     * Parses {@code Collection<String> rawSocialInfos} into {@code Set<SocialInfo}.
-     * @param rawSocialInfos
-     * @return
-     */
-    public static Set<SocialInfo> parseSocialInfos(Collection<String> rawSocialInfos) throws IllegalValueException {
-        requireNonNull(rawSocialInfos);
-        final Set<SocialInfo> socialInfoSet = new HashSet<>();
-        for (String rawSocialInfo : rawSocialInfos) {
-            socialInfoSet.add(parseSocialInfo(rawSocialInfo));
-        }
-        return socialInfoSet;
-    }
-```
-###### /java/seedu/address/logic/parser/SortCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new SortCommand object.
- */
-public class SortCommandParser implements Parser<SortCommand> {
-    /**
-     * Parses the given {@code String} of arguments in the context of the SortCommand
-     * and returns an SortCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public SortCommand parse(String args) throws ParseException {
-        OptionBearingArgument opArgs = new OptionBearingArgument(args);
-        Set<String> options = opArgs.getOptions();
-
-        if (!opArgs.getFilteredArgs().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-        }
-
-        if (options.contains(SortByNameCommand.COMMAND_OPTION)) {
-            return new SortByNameCommand();
-        } else {
-            return new SortByDefaultCommand();
-        }
-    }
-}
-```
-###### /java/seedu/address/logic/parser/EditCommandParser.java
-``` java
-    /**
-     * Parses {@code Collection<String> socialInfos} into a {@code Set<SocialInfo>} if {@code tags} is non-empty.
-     * If {@code socialInfos} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<SocialInfo>} containing zero elements.
-     */
-    private Optional<Set<SocialInfo>> parseSocialInfosForEdit(Collection<String> socialInfos)
-            throws IllegalValueException {
-        assert socialInfos != null;
-
-        if (socialInfos.isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(ParserUtil.parseSocialInfos(getCollectionToParse(socialInfos)));
-    }
-
-    /**
-     * Checks if the input collection represents an empty collection. Returns an empty collection if it is.
-     */
-    private Collection<String> getCollectionToParse(Collection<String> collection) {
-        return collection.size() == 1 && collection.contains("")
-                ? Collections.emptySet()
-                : collection;
-    }
-```
 ###### /java/seedu/address/logic/commands/DeleteByIndexCommand.java
 ``` java
 /**
@@ -374,6 +41,43 @@ public class DeleteByIndexCommand extends DeleteCommand {
     }
 }
 ```
+###### /java/seedu/address/logic/commands/DeleteByTagCommand.java
+``` java
+/**
+ * Deletes persons from the list identified by their indexes in the last displayed list in the address book.
+ */
+public class DeleteByTagCommand extends DeleteCommand {
+    public static final String COMMAND_OPTION = "tag";
+
+    private Set<String> targetTags;
+
+    public DeleteByTagCommand(Set<String> tags) {
+        targetTags = tags;
+    }
+
+    /**
+     * Returns the list of persons in the last shown list referenced by the collection of tags provided.
+     */
+    private Collection<ReadOnlyPerson> mapPersonsToTags(Collection<String> tags) {
+        TagsContainKeywordsPredicate predicate = new TagsContainKeywordsPredicate(tags);
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyPerson> persons = lastShownList.stream().filter(predicate).collect(Collectors.toList());
+        return persons;
+    }
+
+    @Override
+    public Collection<ReadOnlyPerson> getPersonsToDelete() {
+        return mapPersonsToTags(targetTags);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DeleteByTagCommand // instanceof handles nulls
+                && this.targetTags.equals(((DeleteByTagCommand) other).targetTags)); // state check
+    }
+}
+```
 ###### /java/seedu/address/logic/commands/DeleteCommand.java
 ``` java
     /**
@@ -381,6 +85,16 @@ public class DeleteByIndexCommand extends DeleteCommand {
      * To be implemented by the classes inheriting this class.
      */
     public abstract Collection<ReadOnlyPerson> getPersonsToDelete() throws CommandException;
+```
+###### /java/seedu/address/logic/commands/EditCommand.java
+``` java
+        public Optional<Set<SocialInfo>> getSocialInfos() {
+            return Optional.ofNullable(socialInfos);
+        }
+
+        public void setSocialInfos(Set<SocialInfo> socialInfos) {
+            this.socialInfos = socialInfos;
+        }
 ```
 ###### /java/seedu/address/logic/commands/ExportCommand.java
 ``` java
@@ -432,113 +146,16 @@ public class ExportCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/SortByDefaultCommand.java
+###### /java/seedu/address/logic/commands/FindByNameCommand.java
 ``` java
 /**
- * Sorts the displayed person list by their names in alphabetical order.
+ * Finds and lists all persons in address book whose name contains any of the argument keywords.
+ * Keyword matching is case sensitive.
  */
-public class SortByDefaultCommand extends SortCommand {
-    @Override
-    public Comparator<ReadOnlyPerson> getComparator() {
-        return new PersonDefaultComparator();
-    }
+public class FindByNameCommand extends FindCommand {
 
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || other instanceof SortByDefaultCommand; // instanceof handles nulls
-    }
-}
-```
-###### /java/seedu/address/logic/commands/SortCommand.java
-``` java
-/**
- * Sorts the displayed person list.
- */
-public abstract class SortCommand extends Command {
-
-    public static final String COMMAND_WORD = "sort";
-    public static final String COMMAND_ALIAS = "sr";
-
-    public static final String MESSAGE_SORT_SUCCESS = "Person list sorted!\n";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the displayed person list.\n"
-            + "Alias: " + COMMAND_ALIAS + "\n"
-            + "Parameters: [OPTION]\n"
-            + "Options: \n"
-            + "\tdefault - Sorts first by favorite status of a contact, then by name in alphabetical order.\n"
-            + "\t" + SortByNameCommand.COMMAND_OPTION + " - Sorts by name in alphabetical order\n"
-            + "Example: \n"
-            + COMMAND_WORD + "\n";
-
-    @Override
-    public CommandResult execute() {
-        Comparator<ReadOnlyPerson> comparator = getComparator();
-        model.sortPersons(comparator);
-        return new CommandResult(MESSAGE_SORT_SUCCESS);
-    }
-
-    /**
-     * Gets the comparator used to order the person list
-     */
-    public abstract Comparator<ReadOnlyPerson> getComparator();
-}
-```
-###### /java/seedu/address/logic/commands/SortByNameCommand.java
-``` java
-/**
- * Sorts the displayed person list by their names in alphabetical order.
- */
-public class SortByNameCommand extends SortCommand {
-
-    public static final String COMMAND_OPTION = "name";
-
-    @Override
-    public Comparator<ReadOnlyPerson> getComparator() {
-        return new PersonNameComparator();
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || other instanceof SortByNameCommand; // instanceof handles nulls
-    }
-}
-```
-###### /java/seedu/address/logic/commands/DeleteByTagCommand.java
-``` java
-/**
- * Deletes persons from the list identified by their indexes in the last displayed list in the address book.
- */
-public class DeleteByTagCommand extends DeleteCommand {
-    public static final String COMMAND_OPTION = "tag";
-
-    private Set<String> targetTags;
-
-    public DeleteByTagCommand(Set<String> tags) {
-        targetTags = tags;
-    }
-
-    /**
-     * Returns the list of persons in the last shown list referenced by the collection of tags provided.
-     */
-    private Collection<ReadOnlyPerson> mapPersonsToTags(Collection<String> tags) {
-        TagsContainKeywordsPredicate predicate = new TagsContainKeywordsPredicate(tags);
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        List<ReadOnlyPerson> persons = lastShownList.stream().filter(predicate).collect(Collectors.toList());
-        return persons;
-    }
-
-    @Override
-    public Collection<ReadOnlyPerson> getPersonsToDelete() {
-        return mapPersonsToTags(targetTags);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof DeleteByTagCommand // instanceof handles nulls
-                && this.targetTags.equals(((DeleteByTagCommand) other).targetTags)); // state check
+    public FindByNameCommand(NameContainsKeywordsPredicate predicate) {
+        super(predicate);
     }
 }
 ```
@@ -555,16 +172,6 @@ public class FindByTagsCommand extends FindCommand {
         super(predicate);
     }
 }
-```
-###### /java/seedu/address/logic/commands/EditCommand.java
-``` java
-        public Optional<Set<SocialInfo>> getSocialInfos() {
-            return Optional.ofNullable(socialInfos);
-        }
-
-        public void setSocialInfos(Set<SocialInfo> socialInfos) {
-            this.socialInfos = socialInfos;
-        }
 ```
 ###### /java/seedu/address/logic/commands/ImportCommand.java
 ``` java
@@ -634,98 +241,460 @@ public class ImportCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/FindByNameCommand.java
+###### /java/seedu/address/logic/commands/SortByDefaultCommand.java
 ``` java
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * Sorts the displayed person list by their names in alphabetical order.
  */
-public class FindByNameCommand extends FindCommand {
+public class SortByDefaultCommand extends SortCommand {
+    @Override
+    public Comparator<ReadOnlyPerson> getComparator() {
+        return new PersonDefaultComparator();
+    }
 
-    public FindByNameCommand(NameContainsKeywordsPredicate predicate) {
-        super(predicate);
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || other instanceof SortByDefaultCommand; // instanceof handles nulls
     }
 }
 ```
-###### /java/seedu/address/storage/XmlAdaptedSocialInfo.java
+###### /java/seedu/address/logic/commands/SortByNameCommand.java
 ``` java
 /**
- * JAXB-friendly adapted version of the SocialInfo.
+ * Sorts the displayed person list by their names in alphabetical order.
  */
-public class XmlAdaptedSocialInfo {
+public class SortByNameCommand extends SortCommand {
 
-    @XmlElement(required = true)
-    private String username;
-    @XmlElement(required = true)
-    private String socialType;
-    @XmlElement(required = true)
-    private String socialUrl;
+    public static final String COMMAND_OPTION = "name";
 
-    /**
-     * Constructs an XmlAdaptedSocialInfo.
-     * This is the no-arg constructor that is required by JAXB.
-     */
-    public XmlAdaptedSocialInfo() {}
-
-    /**
-     * Converts a given SocialInfo into this class for JAXB use.
-     *
-     * @param source future changes to this will not affect the created
-     */
-    public XmlAdaptedSocialInfo(SocialInfo source) {
-        socialType = source.getSocialType();
-        username = source.getUsername();
-        socialUrl = source.getSocialUrl();
+    @Override
+    public Comparator<ReadOnlyPerson> getComparator() {
+        return new PersonNameComparator();
     }
 
-    /**
-     * Converts this jaxb-friendly adapted social info object into the model's SocialInfo object.
-     *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person
-     */
-    public SocialInfo toModelType() throws IllegalValueException {
-        return new SocialInfo(socialType, username, socialUrl);
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || other instanceof SortByNameCommand; // instanceof handles nulls
     }
-
 }
 ```
-###### /java/seedu/address/model/util/SampleDataUtil.java
+###### /java/seedu/address/logic/commands/SortCommand.java
+``` java
+/**
+ * Sorts the displayed person list.
+ */
+public abstract class SortCommand extends Command {
+
+    public static final String COMMAND_WORD = "sort";
+    public static final String COMMAND_ALIAS = "sr";
+
+    public static final String MESSAGE_SORT_SUCCESS = "Person list sorted!\n";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the displayed person list.\n"
+            + "Alias: " + COMMAND_ALIAS + "\n"
+            + "Parameters: [OPTION]\n"
+            + "Options: \n"
+            + "\tdefault - Sorts first by favorite status of a contact, then by name in alphabetical order.\n"
+            + "\t" + SortByNameCommand.COMMAND_OPTION + " - Sorts by name in alphabetical order\n"
+            + "Example: \n"
+            + COMMAND_WORD + "\n";
+
+    @Override
+    public CommandResult execute() {
+        Comparator<ReadOnlyPerson> comparator = getComparator();
+        model.sortPersons(comparator);
+        return new CommandResult(MESSAGE_SORT_SUCCESS);
+    }
+
+    /**
+     * Gets the comparator used to order the person list
+     */
+    public abstract Comparator<ReadOnlyPerson> getComparator();
+}
+```
+###### /java/seedu/address/logic/parser/DeleteCommandParser.java
 ``` java
     /**
-     * Returns a set containing the list of SocialInfo given
+     * Utility function to check that the input arguments is not empty.
+     * Throws a parse exception if it is empty.
      */
-    public static Set<SocialInfo> getSocialInfoSet(SocialInfo... socialInfos) {
-        HashSet<SocialInfo> socialInfoSet = new HashSet<>();
-        for (SocialInfo socialInfo : socialInfos) {
-            socialInfoSet.add(socialInfo);
+    private void checkArgsNotEmpty(String args) throws ParseException {
+        if (args == null || args.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        }
+    }
+    /**
+     * Parses the given {@code String} of arguments in the context of the DeleteCommand
+     * and returns an DeleteCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public DeleteCommand parse(String args) throws ParseException {
+        // check that the raw args are not empty before processing
+        checkArgsNotEmpty(args);
+        OptionBearingArgument opArgs = new OptionBearingArgument(args);
+        String filteredArgs = opArgs.getFilteredArgs();
+        // check that the filtered args are not empty
+        checkArgsNotEmpty(filteredArgs);
+
+        if (opArgs.getOptions().contains(DeleteByTagCommand.COMMAND_OPTION)) {
+            List<String> tags = parseWhitespaceSeparatedStrings(filteredArgs);
+            HashSet<String> tagSet = new HashSet<>(tags);
+            return new DeleteByTagCommand(tagSet);
+        } else {
+            try {
+                List<Index> indexes = ParserUtil.parseMultipleIndexes(filteredArgs);
+                return new DeleteByIndexCommand(indexes);
+            } catch (IllegalValueException ive) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+            }
+        }
+    }
+```
+###### /java/seedu/address/logic/parser/EditCommandParser.java
+``` java
+    /**
+     * Parses {@code Collection<String> socialInfos} into a {@code Set<SocialInfo>} if {@code tags} is non-empty.
+     * If {@code socialInfos} contain only one element which is an empty string, it will be parsed into a
+     * {@code Set<SocialInfo>} containing zero elements.
+     */
+    private Optional<Set<SocialInfo>> parseSocialInfosForEdit(Collection<String> socialInfos)
+            throws IllegalValueException {
+        assert socialInfos != null;
+
+        if (socialInfos.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(ParserUtil.parseSocialInfos(getCollectionToParse(socialInfos)));
+    }
+
+    /**
+     * Checks if the input collection represents an empty collection. Returns an empty collection if it is.
+     */
+    private Collection<String> getCollectionToParse(Collection<String> collection) {
+        return collection.size() == 1 && collection.contains("")
+                ? Collections.emptySet()
+                : collection;
+    }
+```
+###### /java/seedu/address/logic/parser/ExportCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new ExportCommand object
+ */
+public class ExportCommandParser implements Parser {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the ExportCommand
+     * and returns an ExportCommand object for execution.
+     */
+    public ExportCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
         }
 
+        return new ExportCommand(trimmedArgs);
+    }
+}
+```
+###### /java/seedu/address/logic/parser/FindCommandParser.java
+``` java
+    /**
+     * Utility function to check that the input arguments is not empty.
+     * Throws a parse exception if it is empty.
+     */
+    private void checkArgsNotEmpty(String args) throws ParseException {
+        if (args == null || args.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+    }
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the FindCommand
+     * and returns an FindCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public FindCommand parse(String args) throws ParseException {
+        // check that the raw args are not empty before processing
+        checkArgsNotEmpty(args);
+        OptionBearingArgument opArgs = new OptionBearingArgument(args);
+        String filteredArgs = opArgs.getFilteredArgs();
+        // check that the filtered args are not empty
+        checkArgsNotEmpty(filteredArgs);
+
+        if (opArgs.getOptions().contains(FindByTagsCommand.COMMAND_OPTION)) {
+            List<String> tagKeywords = parseWhitespaceSeparatedStrings(filteredArgs);
+            TagsContainKeywordsPredicate predicate = new TagsContainKeywordsPredicate(tagKeywords);
+            return new FindByTagsCommand(predicate);
+        } else {
+            checkArgsNotEmpty(opArgs.getFilteredArgs());
+            List<String> nameKeywords = parseWhitespaceSeparatedStrings(filteredArgs);
+            NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(nameKeywords);
+            return new FindByNameCommand(predicate);
+        }
+    }
+```
+###### /java/seedu/address/logic/parser/ImportCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new ImportCommand object
+ */
+public class ImportCommandParser implements Parser {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the ImportCommand
+     * and returns an ImportCommand object for execution.
+     */
+    public ImportCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
+        }
+
+        return new ImportCommand(trimmedArgs);
+    }
+}
+```
+###### /java/seedu/address/logic/parser/OptionBearingArgument.java
+``` java
+/**
+ * The OptionBearingArgument class encapsulates an argument that contains options, and handles the parsing and filtering
+ * of these options from the argument.
+ */
+public class OptionBearingArgument {
+
+    private String rawArgs;
+    private Set<String> optionsList;
+    private String filteredArgs;
+
+    /**
+     * Constructs an OptionBearingArgument for the input argument string.
+     */
+    public OptionBearingArgument(String args) {
+        requireNonNull(args);
+        String trimmedArgs = args.trim();
+        rawArgs = trimmedArgs;
+        parse(rawArgs);
+    }
+
+    /**
+     * Parses the string to get the list of options, and a filtered argument string with the options removed.
+     */
+    private void parse(String args) {
+        String[] splitArgs = args.split("\\s+");
+        optionsList = Arrays.stream(splitArgs)
+                .filter(arg -> arg.startsWith(PREFIX_OPTION.getPrefix()))
+                .map(optionArg -> optionArg.substring(PREFIX_OPTION.getPrefix().length())) // drop the leading prefix
+                .collect(Collectors.toCollection(HashSet::new));
+
+        filteredArgs = Arrays.stream(splitArgs)
+                .filter(arg -> !arg.startsWith(PREFIX_OPTION.getPrefix()))
+                .collect(Collectors.joining(" "));
+    }
+
+    public String getRawArgs() {
+        return rawArgs;
+    }
+
+    public Set<String> getOptions() {
+        return optionsList;
+    }
+
+    public String getFilteredArgs() {
+        return filteredArgs;
+    }
+
+}
+```
+###### /java/seedu/address/logic/parser/ParserUtil.java
+``` java
+    /**
+     * Splits {@code args} by whitespace and returns it
+     */
+    public static List<String> parseWhitespaceSeparatedStrings(String args) {
+        requireNonNull(args);
+        String[] splitArgs = args.split("\\s+");
+        return Arrays.asList(splitArgs);
+    }
+```
+###### /java/seedu/address/logic/parser/ParserUtil.java
+``` java
+    /**
+     * Parses {@code Collection<String> rawSocialInfos} into {@code Set<SocialInfo}.
+     * @param rawSocialInfos
+     * @return
+     */
+    public static Set<SocialInfo> parseSocialInfos(Collection<String> rawSocialInfos) throws IllegalValueException {
+        requireNonNull(rawSocialInfos);
+        final Set<SocialInfo> socialInfoSet = new HashSet<>();
+        for (String rawSocialInfo : rawSocialInfos) {
+            socialInfoSet.add(parseSocialInfo(rawSocialInfo));
+        }
         return socialInfoSet;
     }
 ```
-###### /java/seedu/address/model/person/PersonNameComparator.java
+###### /java/seedu/address/logic/parser/SocialInfoMapping.java
 ``` java
 /**
- * Default comparator for persons. Sorts first by name in alphabetical order, then by favorite
- * then by phone in numeric order, then by address in alphabetical order, then by email in alphabetical order
+ * Handles mappings of social related identifiers when parsing SocialInfo
  */
-public class PersonNameComparator implements Comparator<ReadOnlyPerson> {
-    @Override
-    public int compare(ReadOnlyPerson thisPerson, ReadOnlyPerson otherPerson) {
-        if (!thisPerson.getName().equals(otherPerson.getName())) {
-            return compareName(thisPerson, otherPerson);
-        } else if (!thisPerson.getFavorite().equals(otherPerson.getFavorite())) {
-            return compareFavorite(thisPerson, otherPerson);
-        } else if (!thisPerson.getPhone().equals(otherPerson.getPhone())) {
-            return comparePhone(thisPerson, otherPerson);
-        } else if (!thisPerson.getAddress().equals(otherPerson.getAddress())) {
-            return compareAddress(thisPerson, otherPerson);
+public class SocialInfoMapping {
+
+    public static final String FACEBOOK_IDENTIFIER = "facebook";
+    public static final String INSTAGRAM_IDENTIFIER = "instagram";
+    private static final String FACEBOOK_IDENTIFIER_ALIAS = "fb";
+    private static final String INSTAGRAM_IDENTIFIER_ALIAS = "ig";
+
+    private static final int SOCIAL_TYPE_INDEX = 0;
+    private static final int SOCIAL_USERNAME_INDEX = 1;
+
+    private static final String INVALID_SYNTAX_EXCEPTION_MESSAGE = "Invalid syntax for social info";
+    private static final String UNRECOGNIZED_SOCIAL_TYPE_MESSAGE = "Unrecognized social type.\n"
+        + "Currently supported platforms: "
+        + FACEBOOK_IDENTIFIER + "(aliases: " + FACEBOOK_IDENTIFIER_ALIAS + "), "
+        + INSTAGRAM_IDENTIFIER + "(aliases: " + INSTAGRAM_IDENTIFIER_ALIAS + ")\n";
+
+
+    /**
+     * Returns the SocialInfo object represented by the input String.
+     * @throws IllegalValueException if the input does not represent a valid SocialInfo recognized
+     * by the defined mappings
+     */
+    public static SocialInfo parseSocialInfo(String rawSocialInfo) throws IllegalValueException {
+        String[] splitRawSocialInfo = rawSocialInfo.split(" ", 2);
+        if (splitRawSocialInfo.length != 2) {
+            throw new IllegalValueException(INVALID_SYNTAX_EXCEPTION_MESSAGE);
+        }
+
+        if (isFacebookInfo(splitRawSocialInfo)) {
+            return buildFacebookInfo(splitRawSocialInfo);
+        } else if (isInstagramInfo(splitRawSocialInfo)) {
+            return buildInstagramInfo(splitRawSocialInfo);
         } else {
-            return compareEmail(thisPerson, otherPerson);
+            throw new IllegalValueException(UNRECOGNIZED_SOCIAL_TYPE_MESSAGE);
+        }
+
+    }
+
+    private static boolean isFacebookInfo(String[] splitRawSocialInfo) {
+        String trimmedSocialType = splitRawSocialInfo[SOCIAL_TYPE_INDEX].trim();
+        return trimmedSocialType.equals(FACEBOOK_IDENTIFIER) || trimmedSocialType.equals(FACEBOOK_IDENTIFIER_ALIAS);
+    }
+
+    private static SocialInfo buildFacebookInfo(String[] splitRawSocialInfo) {
+        String trimmedSocialUsername = splitRawSocialInfo[SOCIAL_USERNAME_INDEX].trim();
+        String socialUrl = "https://facebook.com/" + trimmedSocialUsername;
+        return new SocialInfo(FACEBOOK_IDENTIFIER, trimmedSocialUsername, socialUrl);
+    }
+
+    private static boolean isInstagramInfo(String[] splitRawSocialInfo) {
+        String trimmedSocialType = splitRawSocialInfo[SOCIAL_TYPE_INDEX].trim();
+        return trimmedSocialType.equals(INSTAGRAM_IDENTIFIER) || trimmedSocialType.equals(INSTAGRAM_IDENTIFIER_ALIAS);
+    }
+
+    private static SocialInfo buildInstagramInfo(String[] splitRawSocialInfo) {
+        String trimmedSocialUsername = splitRawSocialInfo[SOCIAL_USERNAME_INDEX].trim();
+        String socialUrl = "https://instagram.com/" + trimmedSocialUsername;
+        return new SocialInfo(INSTAGRAM_IDENTIFIER, trimmedSocialUsername, socialUrl);
+    }
+}
+```
+###### /java/seedu/address/logic/parser/SortCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new SortCommand object.
+ */
+public class SortCommandParser implements Parser<SortCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the SortCommand
+     * and returns an SortCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public SortCommand parse(String args) throws ParseException {
+        OptionBearingArgument opArgs = new OptionBearingArgument(args);
+        Set<String> options = opArgs.getOptions();
+
+        if (!opArgs.getFilteredArgs().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        }
+
+        if (options.contains(SortByNameCommand.COMMAND_OPTION)) {
+            return new SortByNameCommand();
+        } else {
+            return new SortByDefaultCommand();
         }
     }
 }
+```
+###### /java/seedu/address/model/Model.java
+``` java
+    /** Sorts the persons in the address book based on the input {@code comparator} */
+    void sortPersons(Comparator<ReadOnlyPerson> comparator);
 
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    /**
+     * Initializes a ModelManager with the given addressBook and userPrefs.
+     */
+    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+        super();
+        requireAllNonNull(addressBook, userPrefs);
+
+        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+
+        this.addressBook = new AddressBook(addressBook);
+        // To avoid having to re-sort upon every change in filter, we first sort the list before applying the filter
+        // This was we only need to re-sort when there is a change in the backing person list
+        sortedPersons = new SortedList<>(this.addressBook.getPersonList(), new PersonDefaultComparator());
+        filteredPersons = new FilteredList<>(sortedPersons);
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Override
+    public synchronized void addPersons(Collection<ReadOnlyPerson> persons) {
+        for (ReadOnlyPerson person : persons) {
+            try {
+                addressBook.addPerson(person);
+            } catch (DuplicatePersonException e) {
+                logger.info("Person already in address book: " + person.toString());
+                continue;
+            }
+        }
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Override
+    public void sortPersons(Comparator<ReadOnlyPerson> comparator) {
+        sortedPersons.setComparator(comparator);
+    }
+```
+###### /java/seedu/address/model/person/Person.java
+``` java
+    @Override
+    public ObjectProperty<UniqueSocialInfoList> socialInfoProperty() {
+        return socialInfos;
+    }
+
+    @Override
+    public Set<SocialInfo> getSocialInfos() {
+        return Collections.unmodifiableSet(socialInfos.get().toSet());
+    }
+
+    public void setSocialInfos(Set<SocialInfo> replacement) {
+        socialInfos.set(new UniqueSocialInfoList(replacement));
+    }
 ```
 ###### /java/seedu/address/model/person/PersonComparatorUtil.java
 ``` java
@@ -810,21 +779,29 @@ public class PersonDefaultComparator implements Comparator<ReadOnlyPerson> {
     }
 }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### /java/seedu/address/model/person/PersonNameComparator.java
 ``` java
+/**
+ * Default comparator for persons. Sorts first by name in alphabetical order, then by favorite
+ * then by phone in numeric order, then by address in alphabetical order, then by email in alphabetical order
+ */
+public class PersonNameComparator implements Comparator<ReadOnlyPerson> {
     @Override
-    public ObjectProperty<UniqueSocialInfoList> socialInfoProperty() {
-        return socialInfos;
+    public int compare(ReadOnlyPerson thisPerson, ReadOnlyPerson otherPerson) {
+        if (!thisPerson.getName().equals(otherPerson.getName())) {
+            return compareName(thisPerson, otherPerson);
+        } else if (!thisPerson.getFavorite().equals(otherPerson.getFavorite())) {
+            return compareFavorite(thisPerson, otherPerson);
+        } else if (!thisPerson.getPhone().equals(otherPerson.getPhone())) {
+            return comparePhone(thisPerson, otherPerson);
+        } else if (!thisPerson.getAddress().equals(otherPerson.getAddress())) {
+            return compareAddress(thisPerson, otherPerson);
+        } else {
+            return compareEmail(thisPerson, otherPerson);
+        }
     }
+}
 
-    @Override
-    public Set<SocialInfo> getSocialInfos() {
-        return Collections.unmodifiableSet(socialInfos.get().toSet());
-    }
-
-    public void setSocialInfos(Set<SocialInfo> replacement) {
-        socialInfos.set(new UniqueSocialInfoList(replacement));
-    }
 ```
 ###### /java/seedu/address/model/person/TagsContainKeywordsPredicate.java
 ``` java
@@ -856,6 +833,74 @@ public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson> {
                 && this.keywords.equals(((TagsContainKeywordsPredicate) other).keywords)); // state check
     }
 
+}
+```
+###### /java/seedu/address/model/social/SocialInfo.java
+``` java
+/**
+ * Represents information about a social media account in the address book.
+ */
+public class SocialInfo {
+
+    private final String username;
+    private final String socialType;
+    private final String socialUrl;
+
+    public SocialInfo(String socialType, String username, String socialUrl) {
+        requireAllNonNull(username, socialType, socialUrl);
+        String trimmedUsername = username.trim();
+        String trimmedSocialType = socialType.trim();
+        String trimmedSocialUrl = socialUrl.trim();
+        this.username = trimmedUsername;
+        this.socialType = trimmedSocialType;
+        this.socialUrl = trimmedSocialUrl;
+    }
+
+    /**
+     * Returns the username for the represented account
+     */
+    public String getUsername() {
+        return this.username;
+    }
+
+    /**
+     * Returns the type (usually platform) of this social media information
+     */
+    public String getSocialType() {
+        return this.socialType;
+    }
+
+    /**
+     * Returns the link to the social media feed for the represented account
+     */
+    public String getSocialUrl() {
+        return this.socialUrl;
+    }
+
+    /**
+     * Format state as text for viewing.
+     */
+    public String toString() {
+        return "["
+            + "Type: " + getSocialType() + ", "
+            + "Username: " + getUsername() + ", "
+            + "Link: " + getSocialUrl() + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof SocialInfo
+                && this.getUsername().equals(((SocialInfo) other).getUsername())
+                && this.getSocialType().equals(((SocialInfo) other).getSocialType())
+                && this.getSocialUrl().equals(((SocialInfo) other).getSocialUrl()));
+
+    }
 }
 ```
 ###### /java/seedu/address/model/social/UniqueSocialInfoList.java
@@ -1002,118 +1047,73 @@ public class UniqueSocialInfoList implements Iterable<SocialInfo> {
     }
 }
 ```
-###### /java/seedu/address/model/social/SocialInfo.java
+###### /java/seedu/address/model/util/SampleDataUtil.java
+``` java
+    /**
+     * Returns a set containing the list of SocialInfo given
+     */
+    public static Set<SocialInfo> getSocialInfoSet(SocialInfo... socialInfos) {
+        HashSet<SocialInfo> socialInfoSet = new HashSet<>();
+        for (SocialInfo socialInfo : socialInfos) {
+            socialInfoSet.add(socialInfo);
+        }
+
+        return socialInfoSet;
+    }
+```
+###### /java/seedu/address/storage/XmlAdaptedSocialInfo.java
 ``` java
 /**
- * Represents information about a social media account in the address book.
+ * JAXB-friendly adapted version of the SocialInfo.
  */
-public class SocialInfo {
+public class XmlAdaptedSocialInfo {
 
-    private final String username;
-    private final String socialType;
-    private final String socialUrl;
+    @XmlElement(required = true)
+    private String username;
+    @XmlElement(required = true)
+    private String socialType;
+    @XmlElement(required = true)
+    private String socialUrl;
 
-    public SocialInfo(String socialType, String username, String socialUrl) {
-        requireAllNonNull(username, socialType, socialUrl);
-        String trimmedUsername = username.trim();
-        String trimmedSocialType = socialType.trim();
-        String trimmedSocialUrl = socialUrl.trim();
-        this.username = trimmedUsername;
-        this.socialType = trimmedSocialType;
-        this.socialUrl = trimmedSocialUrl;
+    /**
+     * Constructs an XmlAdaptedSocialInfo.
+     * This is the no-arg constructor that is required by JAXB.
+     */
+    public XmlAdaptedSocialInfo() {}
+
+    /**
+     * Converts a given SocialInfo into this class for JAXB use.
+     *
+     * @param source future changes to this will not affect the created
+     */
+    public XmlAdaptedSocialInfo(SocialInfo source) {
+        socialType = source.getSocialType();
+        username = source.getUsername();
+        socialUrl = source.getSocialUrl();
     }
 
     /**
-     * Returns the username for the represented account
+     * Converts this jaxb-friendly adapted social info object into the model's SocialInfo object.
+     *
+     * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
-    public String getUsername() {
-        return this.username;
+    public SocialInfo toModelType() throws IllegalValueException {
+        return new SocialInfo(socialType, username, socialUrl);
     }
 
-    /**
-     * Returns the type (usually platform) of this social media information
-     */
-    public String getSocialType() {
-        return this.socialType;
-    }
-
-    /**
-     * Returns the link to the social media feed for the represented account
-     */
-    public String getSocialUrl() {
-        return this.socialUrl;
-    }
-
-    /**
-     * Format state as text for viewing.
-     */
-    public String toString() {
-        return "["
-            + "Type: " + getSocialType() + ", "
-            + "Username: " + getUsername() + ", "
-            + "Link: " + getSocialUrl() + "]";
-    }
-
-    @Override
-    public int hashCode() {
-        return toString().hashCode();
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this
-                || (other instanceof SocialInfo
-                && this.getUsername().equals(((SocialInfo) other).getUsername())
-                && this.getSocialType().equals(((SocialInfo) other).getSocialType())
-                && this.getSocialUrl().equals(((SocialInfo) other).getSocialUrl()));
-
-    }
 }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Creates a social info label for each {@code Person}
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
-        super();
-        requireAllNonNull(addressBook, userPrefs);
-
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
-
-        this.addressBook = new AddressBook(addressBook);
-        // To avoid having to re-sort upon every change in filter, we first sort the list before applying the filter
-        // This was we only need to re-sort when there is a change in the backing person list
-        sortedPersons = new SortedList<>(this.addressBook.getPersonList(), new PersonDefaultComparator());
-        filteredPersons = new FilteredList<>(sortedPersons);
+    private void initSocialInfos(ReadOnlyPerson person) {
+        person.getSocialInfos().forEach(socialInfo -> {
+            String labelText = socialInfo.getSocialType() + ": " + socialInfo.getUsername();
+            Label socialLabel = new Label(labelText);
+            socialLabel.getStyleClass().add("cell_small_label");
+            socialInfos.getChildren().add(socialLabel);
+        });
     }
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    @Override
-    public synchronized void addPersons(Collection<ReadOnlyPerson> persons) {
-        for (ReadOnlyPerson person : persons) {
-            try {
-                addressBook.addPerson(person);
-            } catch (DuplicatePersonException e) {
-                logger.info("Person already in address book: " + person.toString());
-                continue;
-            }
-        }
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
-    }
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    @Override
-    public void sortPersons(Comparator<ReadOnlyPerson> comparator) {
-        sortedPersons.setComparator(comparator);
-    }
-```
-###### /java/seedu/address/model/Model.java
-``` java
-    /** Sorts the persons in the address book based on the input {@code comparator} */
-    void sortPersons(Comparator<ReadOnlyPerson> comparator);
-
 ```
