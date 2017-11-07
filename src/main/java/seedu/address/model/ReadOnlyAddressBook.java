@@ -3,7 +3,6 @@ package seedu.address.model;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.schedule.Schedule;
-import seedu.address.model.schedule.UniqueScheduleList;
 import seedu.address.model.tag.Tag;
 
 /**

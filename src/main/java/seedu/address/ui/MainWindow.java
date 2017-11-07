@@ -152,6 +152,7 @@ public class MainWindow extends UiPart<Region> {
 
         agendaPanel = new AgendaPanel(model.getAddressBook().getScheduleList());
         agendaPanelPlaceholder.getChildren().add(agendaPanel.getRoot());
+        agendaPanelPlaceholder.setPrefWidth(285);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());

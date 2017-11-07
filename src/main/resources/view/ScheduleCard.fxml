@@ -35,7 +35,7 @@
                <Font name="System Bold" size="13.0" />
             </font></Label>
       <Label fx:id="date" styleClass="cell_small_label" text="\\$date" />
-         <Label fx:id="personsInvolvedHeader" stylesheets="@ScheduleCardHeaders.css" text="Person(s) Involved:">
+         <Label fx:id="personsInvolvedHeader" stylesheets="@ScheduleCardHeaders.css" text="Contact(s) Involved:">
             <font>
                <Font name="System Bold" size="13.0" />
             </font></Label>

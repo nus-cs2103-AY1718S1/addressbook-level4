@@ -3,7 +3,6 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
-import javafx.scene.layout.AnchorPane;
 import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.ObservableList;
@@ -12,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.FxViewUtil;
@@ -32,19 +32,18 @@ public class ReminderWindow extends UiPart<Region> {
     @FXML
     private ListView<ScheduleCard> reminderSchedulesListView;
     @FXML
-    private AnchorPane reminderWindowBottom;
+    private StackPane reminderWindowBottom;
 
     public ReminderWindow(ObservableList<Schedule> reminderSchedulesList) {
         super(FXML);
         Scene scene = new Scene(getRoot());
         //Null passed as the parent stage to make it non-modal.
         dialogStage = createDialogStage(TITLE, null, scene);
-        dialogStage.setMaximized(true); //TODO: set a more appropriate initial size
+        //dialogStage.setMaximized(true); //TODO: set a more appropriate initial size
         FxViewUtil.setStageIcon(dialogStage, ICON);
 
         //set connections
         reminderSchedulesListView.prefWidthProperty().bind(reminderWindowBottom.prefWidthProperty());
-        //reminderSchedulesListView.getStyleClass().add("pretty-list-view");
         setConnections(reminderSchedulesList);
     }
 
@@ -100,6 +99,8 @@ public class ReminderWindow extends UiPart<Region> {
      */
     public void show() {
         logger.fine("Showing help page about the application.");
+        dialogStage.setWidth(620);
+        dialogStage.setHeight(620);
         dialogStage.showAndWait();
     }
 }

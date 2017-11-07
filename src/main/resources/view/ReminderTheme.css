@@ -1,0 +1,13 @@
+/*@@author 17navasaw*/
+.anchor-pane {
+    -fx-background-color: derive(#e5c97e, 20%);
+    background-color: #e5c97e;
+}
+
+.list-cell:filled:even {
+    -fx-background-color: #a04a00;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #ef9a51;
+}
