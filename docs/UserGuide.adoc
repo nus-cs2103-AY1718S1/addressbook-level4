@@ -79,6 +79,7 @@ For the details of each command, you may refer to the link:#features[Features] s
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+[[add]]
 === `add`, `a` or `+`: Adding a Person _(Since v1.3)_
 
 Adds a person to Rolodex +
@@ -138,6 +139,7 @@ Deletes the 1st person in the results of the `find` command.
 Delete commands are _undoable_ with the `undo` command.
 ====
 
+[[edit]]
 === `edit`, `e`, `change` or `modify`: Editing a Person _(Since v1.3)_
 
 Edits an existing person in Rolodex. +
@@ -369,7 +371,8 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Redo commands are _undoable_ with the `undo` command.
 ====
 
-=== `remark` or `note` or `rmk`: Adding a Remark _(Coming in V2.0)_
+// tag::remark[]
+=== `remark`, `rmk`, `note` or `comment` : Adding a Remark _(Since v1.4)_
 
 Adds a remark to the specified person in Rolodex. +
 Format: `remark INDEX [r/REMARK]` or `remark INDEX [r/REMARK]`
@@ -387,6 +390,13 @@ Examples:
 Sets the remark of the 1st person to `Likes fishing`.
 * `note 1 r/` +
 Removes the remark for the 1st person.
+
+[TIP]
+====
+* Remarks can also be added using the `add` command, and modified with the `edit` command.
+* Remark commands are _undoable_ with the `undo` command.
+====
+// end::remark[]
 
 === Saving the Data _(Since v1.0)_
 
@@ -417,7 +427,8 @@ Selects the 1st person in the results of the `find` command.
 
 === Tagging a Person
 
-Tagging a person can be done with the `add` or `edit` commands.
+If you wish to add tags to a person, you can use the link:#add[`add`] command.
+To edit a tag, you can use the link:#edit[`edit`] command.
 
 === `undo` or `u`: Undoing a Previous Command _(Since v1.3)_
 
