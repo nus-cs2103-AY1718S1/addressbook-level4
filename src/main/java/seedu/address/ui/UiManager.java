@@ -37,7 +37,7 @@ public class UiManager extends ComponentManager implements Ui {
     private Model model;
     private Config config;
     private UserPrefs prefs;
-    private MainWindow mainWindow;
+    private WelcomeScreen welcomeScreen;
 
     public UiManager(Logic logic, Model model, Config config, UserPrefs prefs) {
         super();
@@ -56,10 +56,7 @@ public class UiManager extends ComponentManager implements Ui {
         primaryStage.getIcons().add(getImage(ICON_APPLICATION));
 
         try {
-            mainWindow = new MainWindow(primaryStage, config, prefs, logic, model);
-            mainWindow.show(); //This should be called before creating other UI parts
-            mainWindow.fillInnerParts();
-
+            loadWelcomeScreen(primaryStage);
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
@@ -68,9 +65,16 @@ public class UiManager extends ComponentManager implements Ui {
 
     @Override
     public void stop() {
+        MainWindow mainWindow = welcomeScreen.getMainWindow();
         prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
         mainWindow.hide();
         mainWindow.releaseResources();
+    }
+
+    private void loadWelcomeScreen(Stage primaryStage) {
+        welcomeScreen = new WelcomeScreen(primaryStage, config, prefs, logic, model);
+        welcomeScreen.show(); //This should be called before creating other UI parts
+        welcomeScreen.fillInnerParts();
     }
 
     private void showFileOperationAlertAndWait(String description, String details, Throwable cause) {
@@ -83,7 +87,7 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
     void showAlertDialogAndWait(Alert.AlertType type, String title, String headerText, String contentText) {
-        showAlertDialogAndWait(mainWindow.getPrimaryStage(), type, title, headerText, contentText);
+        showAlertDialogAndWait(welcomeScreen.getMainWindow().getPrimaryStage(), type, title, headerText, contentText);
     }
 
     /**
