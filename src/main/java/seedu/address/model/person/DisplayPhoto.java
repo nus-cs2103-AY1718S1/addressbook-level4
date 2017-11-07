@@ -24,6 +24,8 @@ public class DisplayPhoto {
     public static final String SAMPLE_PHOTO_ALEX = "/images/sample_dp_one.png";
 
     private static final String DEFAULT_SAVE_DIR = "data/";
+    private static final String ALLOWED_TYPE_JPG = ".jpg";
+    private static final String ALLOWED_TYPE_PNG = ".png";
     private static final int MAX_SIZE = 1000000; // Sets allowable maximum display photo size to 1MB
 
     public final String value;
@@ -63,7 +65,8 @@ public class DisplayPhoto {
      */
     public static boolean isValidFile(String test) {
         File file = new File(test);
-        return file.exists() && file.length() <= MAX_SIZE;
+        return file.exists() && file.length() <= MAX_SIZE
+                && (test.endsWith(ALLOWED_TYPE_JPG) || test.endsWith(ALLOWED_TYPE_PNG));
     }
 
     /**
