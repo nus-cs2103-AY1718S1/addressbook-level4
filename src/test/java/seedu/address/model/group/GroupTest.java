@@ -1,10 +1,5 @@
 package seedu.address.model.group;
 
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleSetProperty;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.UniquePersonList;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -13,11 +8,15 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.UniquePersonList;
+
 public class GroupTest {
 
     String groupName = "Bamboo";
     String differentGroupName = "AnotherGroup";
-    Group group = new Group("Bamboo");
+    Group group = new Group(groupName);
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
