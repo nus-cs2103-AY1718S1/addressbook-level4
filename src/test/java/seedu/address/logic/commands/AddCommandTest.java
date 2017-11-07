@@ -214,6 +214,12 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        @Override
+        public boolean hasEvenClashes(Event event) {
+            fail("This method should not be called.");
+            return false;
+        }
+
     }
 
     /**
