@@ -7,6 +7,7 @@
         <address isPrivate="false">4th street</address>
         <bloodType isPrivate="false">O+</bloodType>
         <remark isPrivate="false"></remark>
+        <relation isPrivate="false">Cornelia Meier</relation>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
@@ -15,6 +16,7 @@
         <address isPrivate="false">81th street</address>
         <bloodType isPrivate="false">AB</bloodType>
         <remark isPrivate="false"></remark>
+        <relation isPrivate="false"></relation>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
@@ -23,6 +25,7 @@
         <address isPrivate="false">wall street</address>
         <bloodType isPrivate="false">B-</bloodType>
         <remark isPrivate="false"></remark>
+        <relation isPrivate="false"></relation>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
@@ -31,6 +34,7 @@
         <address isPrivate="false">10th street</address>
         <bloodType isPrivate="false">A</bloodType>
         <remark isPrivate="false">Likes Coffee</remark>
+        <relation isPrivate="false">Hans Muster</relation>
     </persons>
     <persons>
         <name>Werner Meyer</name>
@@ -39,6 +43,7 @@
         <address isPrivate="false">michegan ave</address>
         <bloodType isPrivate="false">B+</bloodType>
         <remark isPrivate="false">Is a good programmer</remark>
+        <relation isPrivate="false"></relation>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
@@ -47,6 +52,7 @@
         <address isPrivate="false">little tokyo</address>
         <bloodType isPrivate="false">O-</bloodType>
         <remark isPrivate="false">Appointment at 3pm</remark>
+        <relation isPrivate="false">Stefan Meier</relation>
     </persons>
     <persons>
         <name>Anna Best</name>
@@ -55,6 +61,7 @@
         <address isPrivate="false">4th street</address>
         <bloodType isPrivate="false">AB+</bloodType>
         <remark isPrivate="false"></remark>
+        <relation isPrivate="false"></relation>
     </persons>
     <persons>
         <name>Stefan Meier</name>
@@ -63,6 +70,7 @@
         <address isPrivate="false">little india</address>
         <bloodType isPrivate="false">A+</bloodType>
         <remark isPrivate="false">Appointment at 5pm</remark>
+        <relation isPrivate="false">Lydia Kunz</relation>
     </persons>
     <persons>
         <name>Martin Mueller</name>
@@ -71,5 +79,6 @@
         <address isPrivate="false">chicago ave</address>
         <bloodType isPrivate="false">B</bloodType>
         <remark isPrivate="false">Dinner appointment tomorrow</remark>
+        <relation isPrivate="false"></relation>
     </persons>
 </addressbook>

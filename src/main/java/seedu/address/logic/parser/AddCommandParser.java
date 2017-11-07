@@ -27,6 +27,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Relationship;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
@@ -68,6 +69,9 @@ public class AddCommandParser implements Parser<AddCommand> {
                     ? new Remark("") : ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
             //@@author
 
+            // add command does not allow adding relationship straight away
+            Relationship relation = new Relationship("");
+
             List<Appointment> appointmentList = new ArrayList<>();
             Appointment appointment;
             if (arePrefixesPresent(argMultimap, PREFIX_DATE)) {
@@ -75,7 +79,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 appointmentList.add(appointment);
             }
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            ReadOnlyPerson person = new Person(name, phone, email, address, bloodType, tagList, remark,
+            ReadOnlyPerson person = new Person(name, phone, email, address, bloodType, tagList, remark, relation,
                     appointmentList);
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

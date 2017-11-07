@@ -27,6 +27,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Relationship;
 import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -118,10 +119,12 @@ public class EditCommand extends UndoableCommand {
         Bloodtype updatedBloodType = editPersonDescriptor.getBloodType().orElse(personToEdit.getBloodType());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
+        // edit command does not allow editing relationship
+        Relationship updatedRelationship = personToEdit.getRelationship();
         List<Appointment> appointmentList = personToEdit.getAppointments();
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedBloodType, updatedTags, updatedRemark, appointmentList);
+                updatedBloodType, updatedTags, updatedRemark, updatedRelationship, appointmentList);
 
     }
 

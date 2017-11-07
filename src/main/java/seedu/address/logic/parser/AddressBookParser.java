@@ -26,6 +26,7 @@ import seedu.address.logic.commands.ListDescendingNameCommand;
 import seedu.address.logic.commands.ListFailureCommand;
 import seedu.address.logic.commands.ListReverseCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RelationshipCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.ToggleTagColorCommand;
@@ -122,6 +123,10 @@ public class AddressBookParser {
 
         case RemarkCommand.COMMAND_WORD:
             return new RemarkCommandParser().parse(arguments);
+
+        case RelationshipCommand.COMMAND_WORD:
+        case RelationshipCommand.COMMAND_ALIAS:
+            return new RelationshipCommandParser().parse(arguments);
 
         case AddAppointmentCommand.COMMAND_WORD:
         case AddAppointmentCommand.COMMAND_ALIAS:

@@ -26,6 +26,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Bloodtype> bloodType;
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<Remark> remark;
+    private ObjectProperty<Relationship> relation;
     private ObjectProperty<AppointmentList> appointments;
 
     /**
@@ -33,7 +34,8 @@ public class Person implements ReadOnlyPerson {
      */
 
     public Person(Name name, Phone phone, Email email, Address address,
-                  Bloodtype bloodType, Set<Tag> tags, Remark remark, List<Appointment> appointments) {
+                  Bloodtype bloodType, Set<Tag> tags, Remark remark,
+                  Relationship relation, List<Appointment> appointments) {
 
         requireAllNonNull(name, phone, email, address, bloodType, tags, remark, appointments);
 
@@ -45,6 +47,7 @@ public class Person implements ReadOnlyPerson {
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.remark = new SimpleObjectProperty<>(remark);
+        this.relation = new SimpleObjectProperty<>(relation);
         this.appointments = new SimpleObjectProperty<>(new AppointmentList(appointments));
     }
 
@@ -53,7 +56,8 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getBloodType(), source.getTags(), source.getRemark(), source.getAppointments());
+                source.getBloodType(), source.getTags(), source.getRemark(),
+                source.getRelationship(), source.getAppointments());
     }
 
     public void setName(Name name) {
@@ -150,6 +154,20 @@ public class Person implements ReadOnlyPerson {
 
     public boolean hasTag(Tag tag) {
         return tags.get().contains(tag);
+    }
+
+    public void setRelationship(Relationship relation) {
+        this.relation.set(requireNonNull(relation));
+    }
+
+    @Override
+    public ObjectProperty<Relationship> relationshipProperty() {
+        return relation;
+    }
+
+    @Override
+    public Relationship getRelationship() {
+        return relation.get();
     }
 
     public void setRemark(Remark remark) {
