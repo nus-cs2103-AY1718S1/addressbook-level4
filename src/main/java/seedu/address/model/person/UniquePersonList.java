@@ -128,7 +128,8 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         switch (option) {
-        case PREFIX_SORT_BY_NAME: Collections.sort(internalList, (a, b) ->
+        case PREFIX_SORT_BY_NAME:
+            Collections.sort(internalList, (a, b) ->
                 a.getName().toString().compareToIgnoreCase(b.getName().toString()));
         break;
         case PREFIX_SORT_BY_PHONE: Collections.sort(internalList, (a, b) ->
