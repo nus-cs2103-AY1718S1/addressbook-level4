@@ -124,7 +124,7 @@ public class AddressBookParser {
 
         case ToggleTimetableCommand.COMMAND_WORD:
             return new ToggleTimetableCommand();
-            
+
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
