@@ -53,9 +53,10 @@ public class ResetPictureCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(targetIndex.getZeroBased());
-        Person editedPerson = resetProfPicPerson(personToEdit);
+        Person editedPerson;
 
         try {
+            editedPerson = resetProfPicPerson(personToEdit);
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_ALREADY_DEFAULT);
@@ -69,7 +70,10 @@ public class ResetPictureCommand extends UndoableCommand {
     /**
      * Creates and returns a {@code Person} with the the ProfPic attribute set to the default picture's path.
      */
-    private static Person resetProfPicPerson(ReadOnlyPerson personToEdit) {
+    private static Person resetProfPicPerson(ReadOnlyPerson personToEdit) throws DuplicatePersonException {
+        if ("maleIcon.png".equals(personToEdit.getProfPic().getPath())) {
+            throw new DuplicatePersonException();
+        }
         Name updatedName = personToEdit.getName();
         Phone updatedPhone = personToEdit.getPhone();
         Email updatedEmail = personToEdit.getEmail();
@@ -80,5 +84,12 @@ public class ResetPictureCommand extends UndoableCommand {
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFavourite,
                 updatedProfPic, updatedTags);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ResetPictureCommand // instanceof handles nulls
+                && this.targetIndex.equals(((ResetPictureCommand) other).targetIndex)); // state check
     }
 }
