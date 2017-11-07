@@ -150,10 +150,46 @@ public class ParserUtil {
      * @return a {@code String} without the first integer.
      */
     public static String parseRemoveFirstInt(String value) {
-        String firstInt = Integer.toString(parseFirstInt(value));
+        String firstInt;
+        try {
+            firstInt = Integer.toString(parseFirstInt(value));
+        } catch (NumberFormatException e) {
+            firstInt = "";
+        }
         return value.substring(0, value.indexOf(firstInt)).trim()
-                + " "
-                + value.substring(value.indexOf(firstInt) + firstInt.length()).trim();
+                .concat(" ")
+                .concat(value.substring(value.indexOf(firstInt) + firstInt.length()).trim()).trim();
+    }
+
+    /**
+     * Attempts to parse a {@code String} to a file path.
+     * Looks for a regex given a value and parses the first instance of the file path.
+     *
+     * @return {@code true} if successfully parsed,
+     * {@code false} otherwise.
+     */
+    public static boolean tryParseFilePath(String value) {
+        try {
+            parseFirstFilePath(value);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns the file path found in a {@code String}.
+     * @param value to be parsed.
+     * @return {@code String} value of the file path appended with the file extension.
+     * @throws IllegalArgumentException if no file path was found.
+     */
+    public static String parseFirstFilePath(String value) throws IllegalArgumentException {
+        Pattern filepath = Pattern.compile(FILEPATH_REGEX_NON_STRICT);
+        Matcher m = filepath.matcher(replaceBackslashes(value).trim());
+        if (m.find() && isValidRolodexStorageFilepath(m.group())) {
+            return m.group().replaceAll(ROLODEX_FILE_EXTENSION, "").trim() + ROLODEX_FILE_EXTENSION;
+        }
+        throw new IllegalArgumentException();
     }
 
     /**
@@ -193,10 +229,15 @@ public class ParserUtil {
      * @return a {@code String} without the first phone.
      */
     public static String parseRemoveFirstPhone(String value) {
-        String firstPhone = parseFirstPhone(value);
+        String firstPhone;
+        try {
+            firstPhone = parseFirstPhone(value);
+        } catch (IllegalArgumentException e) {
+            firstPhone = "";
+        }
         return value.substring(0, value.indexOf(firstPhone)).trim()
-                + " "
-                + value.substring(value.indexOf(firstPhone) + firstPhone.length()).trim();
+                .concat(" ")
+                .concat(value.substring(value.indexOf(firstPhone) + firstPhone.length()).trim()).trim();
     }
 
     /**
@@ -236,41 +277,15 @@ public class ParserUtil {
      * @return a {@code String} without the first email.
      */
     public static String parseRemoveFirstEmail(String value) {
-        String firstEmail = parseFirstEmail(value);
-        return value.substring(0, value.indexOf(firstEmail)).trim()
-                + " "
-                + value.substring(value.indexOf(firstEmail) + firstEmail.length()).trim();
-    }
-
-    /**
-     * Attempts to parse a {@code String} to a file path.
-     * Looks for a regex given a value and parses the first instance of the file path.
-     *
-     * @return {@code true} if successfully parsed,
-     * {@code false} otherwise.
-     */
-    public static boolean tryParseFilePath(String value) {
+        String firstEmail;
         try {
-            parseFirstFilePath(value);
-            return true;
+            firstEmail = parseFirstEmail(value);
         } catch (IllegalArgumentException e) {
-            return false;
+            firstEmail = "";
         }
-    }
-
-    /**
-     * Returns the file path found in a {@code String}.
-     * @param value to be parsed.
-     * @return {@code String} value of the file path appended with the file extension.
-     * @throws IllegalArgumentException if no file path was found.
-     */
-    public static String parseFirstFilePath(String value) throws IllegalArgumentException {
-        Pattern filepath = Pattern.compile(FILEPATH_REGEX_NON_STRICT);
-        Matcher m = filepath.matcher(replaceBackslashes(value).trim());
-        if (m.find() && isValidRolodexStorageFilepath(m.group())) {
-            return m.group().replaceAll(ROLODEX_FILE_EXTENSION, "").trim() + ROLODEX_FILE_EXTENSION;
-        }
-        throw new IllegalArgumentException();
+        return value.substring(0, value.indexOf(firstEmail)).trim()
+                .concat(" ")
+                .concat(value.substring(value.indexOf(firstEmail) + firstEmail.length()).trim()).trim();
     }
 
     /**
