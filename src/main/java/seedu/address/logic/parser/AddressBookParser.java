@@ -117,7 +117,8 @@ public class AddressBookParser {
 
         case SetRelCommand.COMMAND_WORD:
             return new SetRelCommandParser().parse(arguments);
-
+        case UpdatePhotoCommand.COMMAND_WORD:
+            return new UpdatePhotoCommandParser().parse(arguments);
         case ToggleTimetableCommand.COMMAND_WORD:
             return new ToggleTimetableCommand();
 

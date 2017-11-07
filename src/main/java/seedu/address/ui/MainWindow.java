@@ -29,6 +29,7 @@ import seedu.address.commons.events.ui.HideCalendarEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowCalendarEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowPhotoSelectionEvent;
 import seedu.address.commons.events.ui.ToggleTimetableEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
