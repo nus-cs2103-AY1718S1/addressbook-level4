@@ -20,6 +20,8 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelUnselectEvent;
+import seedu.address.commons.events.ui.PersonSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 
 import seedu.address.commons.events.ui.ShowThemeRequestEvent;
@@ -289,4 +291,14 @@ public class MainWindow extends UiPart<Region> {
         browserPanel.setDefaultPage(event.theme);
         logic.setCurrentTheme(getCurrentTheme());
     }
+
+    @Subscribe
+    private void UnselectionofPersonCardEvent(PersonPanelUnselectEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        detailsPanel = new DetailsPanel();
+        detailsPanelPlaceholder.getChildren().clear();
+        detailsPanelPlaceholder.getChildren().add(detailsPanel.getRoot());
+
+    }
+
 }

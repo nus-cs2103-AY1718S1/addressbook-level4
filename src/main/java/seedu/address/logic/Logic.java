@@ -26,4 +26,6 @@ public interface Logic {
     ListElementPointer getHistorySnapshot();
 
     void setCurrentTheme(String theme);
+
+    void updateSelectedPerson(ReadOnlyPerson person);
 }

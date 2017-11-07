@@ -59,4 +59,10 @@ public class LogicManager extends ComponentManager implements Logic {
     public void setCurrentTheme(String theme) {
         model.setCurrentTheme(theme);
     }
+
+    @Override
+    public void updateSelectedPerson(ReadOnlyPerson person) {
+        model.updateSelectedPerson(person);
+    }
+
 }
