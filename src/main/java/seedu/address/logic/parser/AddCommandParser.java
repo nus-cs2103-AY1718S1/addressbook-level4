@@ -54,7 +54,10 @@ public class AddCommandParser implements Parser<AddCommand> {
             if (ParserUtil.parseFavorite(argMultimap, PREFIX_FAV, null).isPresent()) {
                 favorite = new Favorite(true);
             }
-            DisplayPhoto displayPhoto = ParserUtil.parseDisplayPhoto(argMultimap.getValue(PREFIX_DISPLAY_PHOTO)).get();
+            DisplayPhoto displayPhoto = new DisplayPhoto(null);
+            if (argMultimap.isPrefixPresent(PREFIX_DISPLAY_PHOTO)) {
+                displayPhoto = ParserUtil.parseDisplayPhoto(argMultimap.getValue(PREFIX_DISPLAY_PHOTO)).get();
+            }
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             Set<SocialInfo> socialInfoList = ParserUtil.parseSocialInfos(argMultimap.getAllValues(PREFIX_SOCIAL));
 

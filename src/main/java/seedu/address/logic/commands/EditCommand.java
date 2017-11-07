@@ -218,9 +218,7 @@ public class EditCommand extends UndoableCommand {
         }
 
         public void setDisplayPhoto(DisplayPhoto displayPhoto) {
-            if (displayPhoto != null) {
-                this.displayPhoto = displayPhoto;
-            }
+            this.displayPhoto = displayPhoto;
         }
 
         public Optional<DisplayPhoto> getDisplayPhoto() {

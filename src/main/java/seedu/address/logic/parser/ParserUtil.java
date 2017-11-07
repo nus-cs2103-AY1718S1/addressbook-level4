@@ -159,7 +159,7 @@ public class ParserUtil {
      */
     public static Optional<DisplayPhoto> parseDisplayPhoto(Optional<String> displayPhoto) throws IllegalValueException {
         return displayPhoto.isPresent()
-                ? Optional.of(new DisplayPhoto(displayPhoto.get())) : Optional.of(new DisplayPhoto(null));
+                ? Optional.of(new DisplayPhoto(displayPhoto.get())) : Optional.empty();
     }
     //@@author
 
