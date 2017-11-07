@@ -282,13 +282,12 @@ Removes the birthday for the first person.
 // end::birthday[]
 
 // tag::upbirthday[]
-
 === Upcoming birthdays : `upcomingbirthday` (Since v1.4)
 
 Updates the list to show the upcoming birthdays. +
 Format: `upcomingbirthday`
 
-// end ::upbirthday[]
+// end::upbirthday[]
 
 === Sorting all entries : `sort` (Since v1.2)
 

@@ -17,6 +17,7 @@ import seedu.address.model.person.exceptions.EmptyBookException;
 public class SortCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "sort";
+    public static final String COMMAND_ALIAS = "s";
     public static final String MESSAGE_SORT_SUCCESS = "Peersonals sorted by %1$s.";
     public static final String MESSAGE_EMPTY_BOOK = "Peersonals is currently empty. Unable to sort.";
     public static final String SORT_MULTIPLE_INPUT = "Only one parameter can be entered.";
