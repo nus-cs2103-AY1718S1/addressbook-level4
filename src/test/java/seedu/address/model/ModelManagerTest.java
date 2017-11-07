@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
@@ -14,7 +15,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.model.module.predicates.NameContainsKeywordsPredicate;
 import seedu.address.testutil.AddressBookBuilder;
-
+//@@author caoliangnus
 public class ModelManagerTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

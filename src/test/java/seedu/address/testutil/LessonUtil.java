@@ -1,6 +1,6 @@
 package seedu.address.testutil;
 
-//@@author caoliangnus
+
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLASS_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LECTURER;
@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.module.ReadOnlyLesson;
 
+//@@author caoliangnus
 /**
  * A utility class for Lesson.
  */

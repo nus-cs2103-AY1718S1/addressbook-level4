@@ -1,11 +1,11 @@
-//@@author caoliangnus
+
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.address.logic.commands.ColorKeywordCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-
+//@@author caoliangnus
 /**
  * Parses input arguments and creates a new ColorKeywordCommand object
  */

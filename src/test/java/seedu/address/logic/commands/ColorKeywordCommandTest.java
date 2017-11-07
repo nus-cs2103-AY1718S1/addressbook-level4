@@ -13,8 +13,6 @@ import org.junit.Test;
 import seedu.address.commons.events.ui.ColorKeywordEvent;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
-
-
 //@@author caoliangnus
 public class ColorKeywordCommandTest {
 

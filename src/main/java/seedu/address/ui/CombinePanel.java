@@ -1,4 +1,4 @@
-//@@author caoliangnus
+
 package seedu.address.ui;
 
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_LARGE;
@@ -40,7 +40,7 @@ import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.Remark;
 import seedu.address.model.module.predicates.SelectedStickyNotePredicate;
-
+//@@author caoliangnus
 /**
  * The UI component that is responsible for combining the web browser panel and the timetable panel.
  */

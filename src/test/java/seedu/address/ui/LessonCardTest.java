@@ -15,6 +15,7 @@ import seedu.address.model.module.Lesson;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.testutil.LessonBuilder;
 
+//@@author caoliangnus
 public class LessonCardTest extends GuiUnitTest {
 
     @Test

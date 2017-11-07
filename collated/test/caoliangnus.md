@@ -24,6 +24,228 @@ public class ColorKeywordCommandTest {
 
 }
 ```
+###### /java/seedu/address/logic/commands/CommandTestUtil.java
+``` java
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CLASS_TYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FONT_SIZE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LECTURER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MODULE_CODE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_SLOT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.module.Code;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.predicates.FixedCodePredicate;
+import seedu.address.model.module.predicates.ShowSpecifiedLessonPredicate;
+import seedu.address.testutil.EditLessonDescriptorBuilder;
+
+/**
+ * Contains helper methods for testing commands.
+ */
+public class CommandTestUtil {
+
+    public static final String VALID_CODE_MA1101R = "MA1101R";
+    public static final String VALID_CODE_CS2101 = "CS2101";
+    public static final String VALID_CODE_MA1102R = "MA1102R";
+    public static final String VALID_CLASSTYPE_MA1101R = "Lec";
+    public static final String VALID_CLASSTYPE_CS2101 = "Tut";
+    public static final String VALID_VENUE_MA1101R = "LT30";
+    public static final String VALID_VENUE_MA1102R = "LT29";
+    public static final String VALID_VENUE_CS2101 = "COM02-04";
+    public static final String VALID_GROUP_MA1101R = "3";
+    public static final String VALID_GROUP_CS2101 = "2";
+    public static final String VALID_TIMESLOT_MA1101R = "TUE[1300-1500]";
+    public static final String VALID_TIMESLOT_CS2101 = "TUE[1600-1800]";
+    public static final String VALID_LECTURER_MA1101R = "Ma Siu Lun";
+    public static final String VALID_LECTURER_CS2101 = "Diana";
+    public static final String VALID_FONT_SIZE_XSMALL = "xsmall";
+    public static final String VALID_FONT_SIZE_SMALL = "small";
+    public static final String VALID_THEME_LIGHT = "light";
+    public static final String VALID_THEME_DARK = "dark";
+
+
+    public static final String CODE_DESC_MA1101R = " " + PREFIX_MODULE_CODE + VALID_CODE_MA1101R;
+    public static final String CODE_DESC_CS2101 = " " + PREFIX_MODULE_CODE + VALID_CODE_CS2101;
+    public static final String CLASSTYPE_DESC_MA1101R = " " + PREFIX_CLASS_TYPE + VALID_CLASSTYPE_MA1101R;
+    public static final String CLASSTYPE_DESC_CS2101 = " " + PREFIX_CLASS_TYPE + VALID_CLASSTYPE_CS2101;
+    public static final String VENUE_DESC_MA1101R = " " + PREFIX_VENUE + VALID_VENUE_MA1101R;
+    public static final String VENUE_DESC_CS2101 = " " + PREFIX_VENUE + VALID_VENUE_CS2101;
+    public static final String GROUP_DESC_MA1101R = " " + PREFIX_GROUP + VALID_GROUP_MA1101R;
+    public static final String GROUP_DESC_CS2101 = " " + PREFIX_GROUP + VALID_GROUP_CS2101;
+    public static final String TIMESLOT_DESC_MA1101R = " " + PREFIX_TIME_SLOT + VALID_TIMESLOT_MA1101R;
+    public static final String TIMESLOT_DESC_CS2101 = " " + PREFIX_TIME_SLOT + VALID_TIMESLOT_CS2101;
+    public static final String LECTURER_DESC_MA1101R = " " + PREFIX_LECTURER + VALID_LECTURER_MA1101R;
+    public static final String LECTURER_DESC_CS2101 = " " + PREFIX_LECTURER + VALID_LECTURER_CS2101;
+    public static final String FONT_SIZE_DESC_XSMALL = " " + PREFIX_FONT_SIZE + VALID_FONT_SIZE_XSMALL;
+    public static final String FONT_SIZE_DESC_SMALL = " " + PREFIX_FONT_SIZE + VALID_FONT_SIZE_SMALL;
+
+
+    public static final String INVALID_CODE_DESC = " " + PREFIX_MODULE_CODE + "MA*"; //code format is not correct
+    public static final String INVALID_CLASSTYPE_DESC = " " + PREFIX_CLASS_TYPE + "1a"; // 'a' not allowed in class type
+    public static final String INVALID_VENUE_DESC = " " + PREFIX_VENUE; // empty string not allowed for venue
+    public static final String INVALID_GROUP_DESC = " " + PREFIX_GROUP + "SL1"; // 'SL' not allowed for addresses
+    public static final String INVALID_TIMESLOT_DESC = " " + PREFIX_TIME_SLOT + "FRIDAY[1200-1300]"; // Only 3 letters
+    public static final String INVALID_LECTURER_DESC = " " + PREFIX_LECTURER + ""; // '*' not allowed in tags
+    public static final String INVALID_FONT_SIZE_DESC = " " + PREFIX_FONT_SIZE
+            + "small!"; // '!' not allowed in font size
+    public static final String INVALID_THEME_DESC = "blue";
+
+    public static final EditCommand.EditLessonDescriptor DESC_MA1101R;
+    public static final EditCommand.EditLessonDescriptor DESC_CS2101;
+
+    public static final FixedCodePredicate MA1101R_CODE_PREDICATE;
+
+    static {
+        DESC_MA1101R = new EditLessonDescriptorBuilder().withCode(VALID_CODE_MA1101R)
+                .withClassType(VALID_CLASSTYPE_MA1101R).withLocation(VALID_VENUE_MA1101R).withGroup(VALID_GROUP_MA1101R)
+                .withTimeSlot(VALID_TIMESLOT_MA1101R).withLecturers(VALID_LECTURER_MA1101R).build();
+        DESC_CS2101 = new EditLessonDescriptorBuilder().withCode(VALID_CODE_CS2101)
+                .withClassType(VALID_CLASSTYPE_CS2101).withLocation(VALID_VENUE_CS2101).withGroup(VALID_GROUP_CS2101)
+                .withTimeSlot(VALID_TIMESLOT_CS2101).withLecturers(VALID_LECTURER_CS2101).build();
+        try {
+            MA1101R_CODE_PREDICATE = new FixedCodePredicate(new Code(VALID_CODE_MA1101R));
+        } catch (IllegalValueException e) {
+            throw new AssertionError("The code cannot be invalid");
+        }
+    }
+
+    /**
+     * Executes the given {@code command}, confirms that <br>
+     * - the result message matches {@code expectedMessage} <br>
+     * - the {@code actualModel} matches {@code expectedModel}
+     */
+    public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
+            Model expectedModel) {
+        try {
+            CommandResult result = command.execute();
+            assertEquals(expectedMessage, result.feedbackToUser);
+            assertEquals(expectedModel, actualModel);
+        } catch (CommandException ce) {
+            throw new AssertionError("Execution of command should not fail.", ce);
+        }
+    }
+
+    /**
+     * Executes the given {@code command}, confirms that <br>
+     * - a {@code CommandException} is thrown <br>
+     * - the CommandException message matches {@code expectedMessage} <br>
+     * - the address book and the filtered person list in the {@code actualModel} remain unchanged
+     */
+    public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
+        // we are unable to defensively copy the model for comparison later, so we can
+        // only do so by copying its components.
+        AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
+        List<ReadOnlyLesson> expectedFilteredList = new ArrayList<>(actualModel.getFilteredLessonList());
+
+        try {
+            command.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException e) {
+            assertEquals(expectedMessage, e.getMessage());
+            assertEquals(expectedAddressBook, actualModel.getAddressBook());
+            assertEquals(expectedFilteredList, actualModel.getFilteredLessonList());
+        }
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the first lesson in the {@code model}'s address book.
+     */
+    public static void showFirstLessonOnly(Model model) {
+        ReadOnlyLesson lesson = model.getAddressBook().getLessonList().get(0);
+        model.updateFilteredLessonList(new ShowSpecifiedLessonPredicate(lesson));
+
+        assert model.getFilteredLessonList().size() == 1;
+    }
+
+    /**
+     * Deletes the first lesson in {@code model}'s filtered list from {@code model}'s address book.
+     */
+    public static void deleteFirstLesson(Model model) {
+        ReadOnlyLesson firstLesson = model.getFilteredLessonList().get(0);
+        try {
+            model.deleteLesson(firstLesson);
+        } catch (LessonNotFoundException pnfe) {
+            throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+        }
+    }
+}
+```
+###### /java/seedu/address/logic/commands/EditPersonDescriptorTest.java
+``` java
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import static seedu.address.logic.commands.CommandTestUtil.DESC_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CODE_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUP_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_LECTURER_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_CS2101;
+import static seedu.address.logic.commands.EditCommand.EditLessonDescriptor;
+
+import org.junit.Test;
+
+import seedu.address.testutil.EditLessonDescriptorBuilder;
+
+public class EditPersonDescriptorTest {
+
+    @Test
+    public void equals() {
+        // same values -> returns true
+        EditCommand.EditLessonDescriptor descriptorWithSameValues = new EditLessonDescriptor(DESC_MA1101R);
+        assertTrue(DESC_MA1101R.equals(descriptorWithSameValues));
+
+        // same object -> returns true
+        assertTrue(DESC_MA1101R.equals(DESC_MA1101R));
+
+        // null -> returns false
+        assertFalse(DESC_MA1101R.equals(null));
+
+        // different types -> returns false
+        assertFalse(DESC_MA1101R.equals(5));
+
+        // different values -> returns false
+        assertFalse(DESC_MA1101R.equals(DESC_CS2101));
+
+        // different module code -> returns false
+        EditLessonDescriptor editedAmy =
+                new EditLessonDescriptorBuilder(DESC_MA1101R).withCode(VALID_CODE_CS2101).build();
+        assertFalse(DESC_MA1101R.equals(editedAmy));
+
+        // different class type -> returns false
+        editedAmy = new EditLessonDescriptorBuilder(DESC_MA1101R).withCode(VALID_CODE_CS2101).build();
+        assertFalse(DESC_MA1101R.equals(editedAmy));
+
+        // different time slot -> returns false
+        editedAmy = new EditLessonDescriptorBuilder(DESC_MA1101R).withTimeSlot(VALID_TIMESLOT_CS2101).build();
+        assertFalse(DESC_MA1101R.equals(editedAmy));
+
+        // different group -> returns false
+        editedAmy = new EditLessonDescriptorBuilder(DESC_MA1101R).withGroup(VALID_GROUP_CS2101).build();
+        assertFalse(DESC_MA1101R.equals(editedAmy));
+
+        // different lecturer -> returns false
+        editedAmy = new EditLessonDescriptorBuilder(DESC_MA1101R).withLecturers(VALID_LECTURER_CS2101).build();
+        assertFalse(DESC_MA1101R.equals(editedAmy));
+
+        // different location -> returns false
+        editedAmy = new EditLessonDescriptorBuilder(DESC_MA1101R).withLocation(VALID_VENUE_CS2101).build();
+        assertFalse(DESC_MA1101R.equals(editedAmy));
+    }
+}
+```
 ###### /java/seedu/address/logic/parser/ColorKeywordCommandParserTest.java
 ``` java
 public class ColorKeywordCommandParserTest {
@@ -42,30 +264,228 @@ public class ColorKeywordCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/model/AddressBookTest.java
+###### /java/seedu/address/logic/parser/ParserUtilTest.java
 ``` java
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalLessons.MA1101R_L1;
-import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
+import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
+
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.lecturer.Lecturer;
-import seedu.address.model.module.Lesson;
-import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.Remark;
+import seedu.address.model.module.ClassType;
+import seedu.address.model.module.Code;
+import seedu.address.model.module.Group;
+import seedu.address.model.module.Location;
+import seedu.address.model.module.TimeSlot;
 
+public class ParserUtilTest {
+    private static final String INVALID_CODE = "ABC4444AA";
+    private static final String INVALID_CLASS_TYPE = "LECTURE";
+    private static final String INVALID_LOCATION = "";
+    private static final String INVALID_GROUP = "A";
+    private static final String INVALID_TIME_SLOT = "FRIDAY[2PM-4PM]";
+    private static final String INVALID_LECTURER = "";
+
+    private static final String VALID_CODE = "CS2103T";
+    private static final String VALID_CLASS_TYPE = "LEC";
+    private static final String VALID_LOCATION = "LT30";
+    private static final String VALID_GROUP = "4";
+    private static final String VALID_TIME_SLOT = "WED[1100-1200]";
+    private static final String VALID_LECTURER_1 = "Prof Cao Liang";
+    private static final String VALID_LECTURER_2 = "Prof Justin Poh";
+
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void parseIndex_invalidInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseIndex("10 a");
+    }
+
+    @Test
+    public void parseIndex_outOfRangeInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(MESSAGE_INVALID_INDEX);
+        ParserUtil.parseIndex(Long.toString(Integer.MAX_VALUE + 1));
+    }
+
+    @Test
+    public void parseIndex_validInput_success() throws Exception {
+        // No whitespaces
+        assertEquals(INDEX_FIRST_LESSON, ParserUtil.parseIndex("1"));
+
+        // Leading and trailing whitespaces
+        assertEquals(INDEX_FIRST_LESSON, ParserUtil.parseIndex("  1  "));
+    }
+
+    @Test
+    public void parseCode_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseCode(null);
+    }
+
+    @Test
+    public void parseCode_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseCode(Optional.of(INVALID_CODE));
+    }
+
+    @Test
+    public void parseCode_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseCode(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseCode_validValue_returnsCode() throws Exception {
+        Code expectedCode = new Code(VALID_CODE);
+        Optional<Code> actualCode = ParserUtil.parseCode(Optional.of(VALID_CODE));
+
+        assertEquals(expectedCode, actualCode.get());
+    }
+
+    @Test
+    public void parseClassType_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseClassType(null);
+    }
+
+    @Test
+    public void parseClassType_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseClassType(Optional.of(INVALID_CLASS_TYPE));
+    }
+
+    @Test
+    public void parseClassType_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseClassType(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseClassType_validValue_returnsClassType() throws Exception {
+        ClassType expectedClassType = new ClassType(VALID_CLASS_TYPE);
+        Optional<ClassType> actualClassType = ParserUtil.parseClassType(Optional.of(VALID_CLASS_TYPE));
+
+        assertEquals(expectedClassType, actualClassType.get());
+    }
+
+    @Test
+    public void parseLocation_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseLocation(null);
+    }
+
+    @Test
+    public void parseLocation_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseLocation(Optional.of(INVALID_LOCATION));
+    }
+
+    @Test
+    public void parseLocation_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseLocation(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseLocation_validValue_returnsLocation() throws Exception {
+        Location expectedLocation = new Location(VALID_LOCATION);
+        Optional<Location> actualLocation = ParserUtil.parseLocation(Optional.of(VALID_LOCATION));
+
+        assertEquals(expectedLocation, actualLocation.get());
+    }
+
+    @Test
+    public void parseGroup_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseGroup(null);
+    }
+
+    @Test
+    public void parseGroup_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseGroup(Optional.of(INVALID_GROUP));
+    }
+
+    @Test
+    public void parseGroup_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseGroup(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseGroup_validValue_returnsGroup() throws Exception {
+        Group expectedGroup = new Group(VALID_GROUP);
+        Optional<Group> actualGroup = ParserUtil.parseGroup(Optional.of(VALID_GROUP));
+
+        assertEquals(expectedGroup, actualGroup.get());
+    }
+
+    @Test
+    public void parseTimeSlot_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseTimeSlot(null);
+    }
+
+    @Test
+    public void parseTimeSlot_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTimeSlot(Optional.of(INVALID_TIME_SLOT));
+    }
+
+    @Test
+    public void parseTimeSlot_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseTimeSlot(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseTimeSlot_validValue_returnsTimeSlot() throws Exception {
+        TimeSlot expectedTimeSlot = new TimeSlot(VALID_TIME_SLOT);
+        Optional<TimeSlot> actualTimeSlot = ParserUtil.parseTimeSlot(Optional.of(VALID_TIME_SLOT));
+
+        assertEquals(expectedTimeSlot, actualTimeSlot.get());
+    }
+
+    @Test
+    public void parseLecturers_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseLecturer(null);
+    }
+
+    @Test
+    public void parseLecturers_collectionWithInvalidLecturers_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseLecturer(Arrays.asList(VALID_LECTURER_1, INVALID_LECTURER));
+    }
+
+    @Test
+    public void parseLecturers_emptyCollection_returnsEmptySet() throws Exception {
+        assertTrue(ParserUtil.parseLecturer(Collections.emptyList()).isEmpty());
+    }
+
+    @Test
+    public void parseLecturers_collectionWithValidLecturers_returnsLecturerSet() throws Exception {
+        Set<Lecturer> actualLecturerSet = ParserUtil.parseLecturer(Arrays.asList(VALID_LECTURER_1, VALID_LECTURER_2));
+        Set<Lecturer> expectedLecturerSet = new HashSet<Lecturer>(
+                Arrays.asList(new Lecturer(VALID_LECTURER_1), new Lecturer(VALID_LECTURER_2)));
+
+        assertEquals(expectedLecturerSet, actualLecturerSet);
+    }
+}
+```
+###### /java/seedu/address/model/AddressBookTest.java
+``` java
 public class AddressBookTest {
 
     @Rule
@@ -259,15 +679,89 @@ public class TimeSlotTest {
     }
 }
 ```
+###### /java/seedu/address/model/ModelManagerTest.java
+``` java
+public class ModelManagerTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
+        ModelManager modelManager = new ModelManager();
+        thrown.expect(UnsupportedOperationException.class);
+        modelManager.getFilteredLessonList().remove(0);
+    }
+
+    @Test
+    public void equals() {
+        AddressBook addressBook = new AddressBookBuilder().withLesson(MA1101R_L1).withLesson(MA1101R_L2).build();
+        AddressBook differentAddressBook = new AddressBook();
+        UserPrefs userPrefs = new UserPrefs();
+
+        // same values -> returns true
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        ModelManager modelManagerCopy = new ModelManager(addressBook, userPrefs);
+        assertTrue(modelManager.equals(modelManagerCopy));
+
+        // different userPrefs -> returns true
+        UserPrefs differentUserPrefs = new UserPrefs();
+        differentUserPrefs.setAddressBookName("differentName");
+        assertTrue(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+
+        // same object -> returns true
+        assertTrue(modelManager.equals(modelManager));
+
+        // null -> returns false
+        assertFalse(modelManager.equals(null));
+
+        // different types -> returns false
+        assertFalse(modelManager.equals(5));
+
+        // different addressBook -> returns false
+        assertFalse(modelManager.equals(new ModelManager(differentAddressBook, userPrefs)));
+
+        // different filteredList -> returns false
+        String keywords = MA1101R_L1.getCode().fullCodeName;
+        modelManager.updateFilteredLessonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
+
+        // resets modelManager to initial state for upcoming tests
+        modelManager.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+
+
+    }
+}
+```
+###### /java/seedu/address/model/UniqueLecturerListTest.java
+``` java
+public class UniqueLecturerListTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
+        UniqueLecturerList uniqueLecturerList = new UniqueLecturerList();
+        thrown.expect(UnsupportedOperationException.class);
+        uniqueLecturerList.asObservableList().remove(0);
+    }
+}
+```
+###### /java/seedu/address/model/UniqueLessonListTest.java
+``` java
+public class UniqueLessonListTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
+        UniqueLessonList uniqueLessonList = new UniqueLessonList();
+        thrown.expect(UnsupportedOperationException.class);
+        uniqueLessonList.asObservableList().remove(0);
+    }
+}
+```
 ###### /java/seedu/address/testutil/AddressBookBuilder.java
 ``` java
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.AddressBook;
-import seedu.address.model.lecturer.Lecturer;
-import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.exceptions.DuplicateLessonException;
-
-
 /**
  * A utility class to help with building Addressbook objects.
  * Example usage: <br>
@@ -316,15 +810,6 @@ public class AddressBookBuilder {
 ```
 ###### /java/seedu/address/testutil/EditLessonDescriptorBuilder.java
 ``` java
-import java.util.Arrays;
-import java.util.Optional;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.EditCommand.EditLessonDescriptor;
-import seedu.address.logic.parser.ParserUtil;
-import seedu.address.model.module.ReadOnlyLesson;
-
-
 /**
  * A utility class to help with building EditPersonDescriptor objects.
  */
@@ -433,19 +918,6 @@ public class EditLessonDescriptorBuilder {
 ```
 ###### /java/seedu/address/testutil/LessonBuilder.java
 ``` java
-import java.util.Set;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.lecturer.Lecturer;
-import seedu.address.model.module.ClassType;
-import seedu.address.model.module.Code;
-import seedu.address.model.module.Group;
-import seedu.address.model.module.Lesson;
-import seedu.address.model.module.Location;
-import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.TimeSlot;
-import seedu.address.model.util.SampleDataUtil;
-
 /**
  * A utility class to help with building Lesson objects.
  */
@@ -578,16 +1050,6 @@ public class LessonBuilder {
 ```
 ###### /java/seedu/address/testutil/LessonUtil.java
 ``` java
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CLASS_TYPE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_LECTURER;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MODULE_CODE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_SLOT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
-
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.model.module.ReadOnlyLesson;
-
 /**
  * A utility class for Lesson.
  */
@@ -620,9 +1082,6 @@ public class LessonUtil {
 ```
 ###### /java/seedu/address/testutil/TypicalLessonComponents.java
 ``` java
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.module.Code;
-
 /**
  * A utility class containing a list of {@code LessonComponent} objects to be used in tests.
  */
@@ -652,29 +1111,6 @@ public class TypicalLessonComponents {
 ```
 ###### /java/seedu/address/testutil/TypicalLessons.java
 ``` java
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CLASSTYPE_CS2101;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CLASSTYPE_MA1101R;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CODE_CS2101;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CODE_MA1101R;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUP_CS2101;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUP_MA1101R;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_LECTURER_CS2101;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_LECTURER_MA1101R;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_CS2101;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_MA1101R;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_CS2101;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_MA1101R;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-
-import seedu.address.model.AddressBook;
-import seedu.address.model.module.Code;
-import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.exceptions.DuplicateLessonException;
-
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
  */
@@ -785,17 +1221,81 @@ public class TypicalLessons {
         assertNotEquals(commandColor, keywordColorMap.get(commandKeyword));
     }
 ```
+###### /java/seedu/address/ui/LessonCardTest.java
+``` java
+public class LessonCardTest extends GuiUnitTest {
+
+    @Test
+    public void display() {
+        // no tags
+        // Lesson lessonWithNoLecturers = new LessonBuilder().withLecturers(new String[0]).build();
+        // LessonListCard lessonListCard = new LessonListCard(lessonWithNoLecturers, 1);
+        // uiPartRule.setUiPart(lessonListCard);
+        // assertCardDisplay(lessonListCard, lessonWithNoLecturers, 1);
+
+        // with tags
+        Lesson lessonWithLecturers = new LessonBuilder().build();
+        LessonListCard lessonListCard = new LessonListCard(lessonWithLecturers, 2);
+        uiPartRule.setUiPart(lessonListCard);
+        assertCardDisplay(lessonListCard, lessonWithLecturers, 2);
+
+        // changes made to Lesson reflects on card
+        guiRobot.interact(() -> {
+            lessonWithLecturers.setCodeType(MA1101R_L1.getCode());
+            lessonWithLecturers.setClassType(MA1101R_L1.getClassType());
+            lessonWithLecturers.setLocation(MA1101R_L1.getLocation());
+            lessonWithLecturers.setGroupType(MA1101R_L1.getGroup());
+            lessonWithLecturers.setTimeSlot(MA1101R_L1.getTimeSlot());
+            lessonWithLecturers.setLecturers(MA1101R_L1.getLecturers());
+        });
+        assertCardDisplay(lessonListCard, lessonWithLecturers, 2);
+    }
+
+    @Test
+    public void equals() {
+        Lesson lesson = new LessonBuilder().build();
+        LessonListCard lessonListCard = new LessonListCard(lesson, 0);
+
+        // same lesson, same index -> returns true
+        LessonListCard copy = new LessonListCard(lesson, 0);
+        assertTrue(lessonListCard.equals(copy));
+
+        // same object -> returns true
+        assertTrue(lessonListCard.equals(lessonListCard));
+
+        // null -> returns false
+        assertFalse(lessonListCard.equals(null));
+
+        // different types -> returns false
+        assertFalse(lessonListCard.equals(0));
+
+        // different lesson, same index -> returns false
+        Lesson differentLesson = new LessonBuilder().withCode("CS2101").build();
+        assertFalse(lessonListCard.equals(new LessonListCard(differentLesson, 0)));
+
+        // same lesson, different index -> returns false
+        assertFalse(lessonListCard.equals(new LessonListCard(lesson, 1)));
+    }
+
+    /**
+     * Asserts that {@code lessonListCard} displays the details of {@code expectedLesson} correctly and matches
+     * {@code expectedId}.
+     */
+    private void assertCardDisplay(LessonListCard lessonListCard, ReadOnlyLesson expectedLesson, int expectedId) {
+        guiRobot.pauseForHuman();
+
+        LessonCardHandle lessonCardHandle = new LessonCardHandle(lessonListCard.getRoot());
+
+        // verify id is displayed correctly
+        assertEquals(Integer.toString(expectedId) + ". ", lessonCardHandle.getId());
+
+        // verify lesson details are displayed correctly
+        assertCardDisplaysLesson(expectedLesson, lessonCardHandle);
+    }
+}
+```
 ###### /java/systemtests/ColorEnableSystemTest.java
 ``` java
-
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-
-import org.junit.Test;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.logic.commands.ColorKeywordCommand;
-import seedu.address.model.Model;
-
 public class ColorEnableSystemTest extends AddressBookSystemTest {
     @Test
     public void colorEnable() {

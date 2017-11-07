@@ -1,13 +1,12 @@
 package seedu.address.testutil;
 
-//@@author caoliangnus
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.lecturer.Lecturer;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 
-
+//@@author caoliangnus
 /**
  * A utility class to help with building Addressbook objects.
  * Example usage: <br>

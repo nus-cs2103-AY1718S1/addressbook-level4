@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.module.UniqueLessonList;
-
+//@@author caoliangnus
 public class UniqueLessonListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

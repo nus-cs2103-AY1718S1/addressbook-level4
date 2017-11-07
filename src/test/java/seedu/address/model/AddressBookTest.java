@@ -1,6 +1,6 @@
 package seedu.address.model;
 
-//@@author caoliangnus
+
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalLessons.MA1101R_L1;
 import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
@@ -23,6 +23,7 @@ import seedu.address.model.module.Lesson;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.Remark;
 
+//@@author caoliangnus
 public class AddressBookTest {
 
     @Rule

@@ -20,11 +20,6 @@ public class ColorKeywordEvent extends BaseEvent {
 ```
 ###### /java/seedu/address/logic/commands/ColorKeywordCommand.java
 ``` java
-package seedu.address.logic.commands;
-
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.ColorKeywordEvent;
-
 /**
  * Color the command keywords in the application
  */
@@ -70,13 +65,6 @@ public class ColorKeywordCommand extends Command {
 ```
 ###### /java/seedu/address/logic/parser/ColorKeywordCommandParser.java
 ``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import seedu.address.logic.commands.ColorKeywordCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-
 /**
  * Parses input arguments and creates a new ColorKeywordCommand object
  */
@@ -896,21 +884,6 @@ public interface ReadOnlyAddressBook {
 ```
 ###### /java/seedu/address/model/util/SampleDataUtil.java
 ``` java
-import java.util.HashSet;
-import java.util.Set;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.AddressBook;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.lecturer.Lecturer;
-import seedu.address.model.module.ClassType;
-import seedu.address.model.module.Code;
-import seedu.address.model.module.Group;
-import seedu.address.model.module.Lesson;
-import seedu.address.model.module.Location;
-import seedu.address.model.module.TimeSlot;
-import seedu.address.model.module.exceptions.DuplicateLessonException;
-
 /**
  * Contains utility methods for populating {@code AddressBook} with sample data.
  */
@@ -1075,48 +1048,6 @@ public class XmlAdaptedLesson {
 ```
 ###### /java/seedu/address/ui/CombinePanel.java
 ``` java
-package seedu.address.ui;
-
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_LARGE;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
-
-import java.net.URL;
-import java.time.DayOfWeek;
-import java.util.Objects;
-import java.util.logging.Logger;
-
-import com.google.common.eventbus.Subscribe;
-
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
-import javafx.event.Event;
-import javafx.fxml.FXML;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
-import javafx.scene.web.WebView;
-import seedu.address.MainApp;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.ChangeFontSizeEvent;
-import seedu.address.commons.events.ui.LessonPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.RemarkChangedEvent;
-import seedu.address.commons.events.ui.ViewedLessonEvent;
-import seedu.address.logic.Logic;
-import seedu.address.model.FontSizeUnit;
-import seedu.address.model.ListingUnit;
-import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.Remark;
-import seedu.address.model.module.predicates.SelectedStickyNotePredicate;
-
 /**
  * The UI component that is responsible for combining the web browser panel and the timetable panel.
  */
@@ -1424,7 +1355,7 @@ public class CombinePanel extends UiPart<Region> {
      * This method create a list of prefix used in the command
      */
     private void configPrefixList() {
-        prefixList = new ArrayList<>();
+        prefixList = new ArrayList<String>();
         prefixList.add(CliSyntax.PREFIX_MODULE_CODE.getPrefix());
         prefixList.add(CliSyntax.PREFIX_CLASS_TYPE.getPrefix());
         prefixList.add(CliSyntax.PREFIX_VENUE.getPrefix());
@@ -1840,4 +1771,142 @@ public class CombinePanel extends UiPart<Region> {
       </HBox>
    </children>
 </StackPane>
+```
+###### /resources/view/CommandBox.fxml
+``` fxml
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Text?>
+
+<StackPane fx:id="stackPane" maxHeight="37.0" minHeight="-Infinity" prefHeight="37.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <Label fx:id="keywordLabel" maxHeight="-Infinity" maxWidth="-Infinity" text="Label" />
+   <Text fx:id="commandTextDefault" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" StackPane.alignment="CENTER_LEFT">
+      <StackPane.margin>
+         <Insets left="13.0" />
+      </StackPane.margin>
+   </Text>
+   <Text fx:id="commandTextXsmall" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" />
+   <Text fx:id="commandTextSmall" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" />
+   <Text fx:id="commandTextLarge" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" />
+   <Text fx:id="commandTextXLarge" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" />
+  <TextField fx:id="commandTextField" onAction="#handleCommandInputChanged" onKeyPressed="#handleKeyPress" onKeyReleased="#handleKeyReleased" promptText="Enter command here..." styleClass="text-field" StackPane.alignment="CENTER_LEFT" />
+   <Label fx:id="checkBox" StackPane.alignment="CENTER_RIGHT">
+      <padding>
+         <Insets right="2.0" />
+      </padding></Label>
+</StackPane>
+```
+###### /resources/view/DarkTheme.css
+``` css
+#commandTextField {
+    -fx-background-color: transparent #383838 transparent #383838;
+    -fx-background-insets: 0;
+    -fx-border-color: #383838 #383838 #ffffff #383838;
+    -fx-border-insets: 0;
+    -fx-border-width: 1;
+    -fx-font-family: monospace;
+    -fx-font-size: 13pt;
+    -fx-text-fill: white;
+}
+
+#commandTextFieldKeyword {
+    -fx-background-color: transparent #383838 transparent #383838;
+    -fx-background-insets: 0;
+    -fx-border-color: #383838 #383838 #383838 #383838;
+    -fx-border-insets: 0;
+    -fx-border-width: 1;
+    -fx-font-family: monospace;
+    -fx-font-size: 13pt;
+    -fx-text-fill: white;
+}
+
+#commandTextDefault {
+    -fx-font-family: monospace;
+    -fx-font-size: 25;
+    -fx-text-fill: white;
+}
+
+#commandTextXsmall{
+    -fx-font-family: monospace;
+    -fx-font-size: 12;
+    -fx-text-fill: white;
+}
+
+#commandTextSmall{
+    -fx-font-family: monospace;
+    -fx-font-size: 17;
+    -fx-text-fill: white;
+}
+
+#commandTextLarge{
+    -fx-font-family: monospace;
+    -fx-font-size: 32;
+    -fx-text-fill: white;
+}
+
+#commandTextXLarge{
+    -fx-font-family: monospace;
+    -fx-font-size: 40;
+    -fx-text-fill: white;
+}
+
+
+#filterField, #personListPanel, #personWebpage {
+    -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
+}
+
+#resultDisplay .content {
+    -fx-background-color: derive(#282939, 20%);
+    -fx-background-radius: 0;
+}
+
+#tags {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#tags .label {
+    -fx-text-fill: white;
+    -fx-background-color: #3e7b91;
+    -fx-padding: 1 3 1 3;
+    -fx-border-radius: 2;
+    -fx-background-radius: 2;
+    -fx-font-size: 11;
+}
+
+#lessonNode {
+    -fx-font-family: monospace;
+    -fx-font-size: x-large;
+    -fx-font-weight: bolder;
+    -fx-control-inner-background: #6B4A40;
+    -fx-text-fill: derive(#d4cbb3, 50%);
+    -fx-text-alignment: center;
+}
+
+#stickyNote {
+    -fx-background-color: transparent;
+    -fx-padding:5px 5px 5px;
+    -fx-font:20px monospace;
+    -fx-line-height:1.5;
+}
+
+#stickyNote .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+#stickyNote .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+
+#stickyNote .scroll-pane .content {
+    -fx-background-color: transparent;
+}
+
+#header {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+}
 ```

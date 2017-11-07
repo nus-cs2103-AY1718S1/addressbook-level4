@@ -1,6 +1,6 @@
 package seedu.address.model.util;
 
-//@@author caoliangnus
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,6 +16,7 @@ import seedu.address.model.module.Location;
 import seedu.address.model.module.TimeSlot;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 
+//@@author caoliangnus
 /**
  * Contains utility methods for populating {@code AddressBook} with sample data.
  */
