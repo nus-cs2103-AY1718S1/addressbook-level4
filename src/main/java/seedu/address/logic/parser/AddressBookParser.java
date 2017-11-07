@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddFavouriteCommand;
 import seedu.address.logic.commands.AddPersonToGroupCommand;
+import seedu.address.logic.commands.AddScheduleCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CreateGroupCommand;
@@ -24,7 +25,9 @@ import seedu.address.logic.commands.ModListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveFavouriteCommand;
 import seedu.address.logic.commands.RemovePersonFromGroupCommand;
+import seedu.address.logic.commands.ResetPictureCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SetPictureCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -130,9 +133,21 @@ public class AddressBookParser {
         case RemoveFavouriteCommand.COMMAND_ALT:
             return new RemoveFavouriteCommandParser().parse(arguments);
 
+        case AddScheduleCommand.COMMAND_WORD:
+        case AddScheduleCommand.COMMAND_ALT:
+            return new AddScheduleCommandParser().parse(arguments);
+
         case ModListCommand.COMMAND_WORD:
         case ModListCommand.COMMAND_ALT:
             return new ModListCommand();
+
+        case ResetPictureCommand.COMMAND_WORD:
+        case ResetPictureCommand.COMMAND_ALT:
+            return new ResetPictureCommandParser().parse(arguments);
+
+        case SetPictureCommand.COMMAND_WORD:
+        case SetPictureCommand.COMMAND_ALT:
+            return new SetPictureCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

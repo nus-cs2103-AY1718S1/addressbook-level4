@@ -9,16 +9,16 @@ import seedu.address.commons.util.PartialSearchUtil;
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
  */
-public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+public class PhoneContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
 
-    public NameContainsKeywordsPredicate(List<String> keywords) {
+    public PhoneContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        List baseList = Arrays.asList(person.getName().fullNameInit.split(" "));
+        List baseList = Arrays.asList(person.getPhone().value.split(" "));
         PartialSearchUtil mySearch = new PartialSearchUtil(keywords, baseList);
         return mySearch.compare();
     }
@@ -26,8 +26,8 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof NameContainsKeywordsPredicate // instanceof handles nulls
-                && this.keywords.equals(((NameContainsKeywordsPredicate) other).keywords)); // state check
+                || (other instanceof PhoneContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((PhoneContainsKeywordsPredicate) other).keywords)); // state check
     }
 
 }

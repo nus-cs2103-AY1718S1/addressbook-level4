@@ -27,7 +27,8 @@ public class SortCommandParser implements Parser<SortCommand> {
      */
 
     public SortCommand parse(String args) throws ParseException {
-        requireNonNull(args);
+        String args2 = args; // for codacy issue fix to prevent original arg overwrite
+        requireNonNull(args2);
 
         if (!args.matches("^|( [npea]/(r)?)$")) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));

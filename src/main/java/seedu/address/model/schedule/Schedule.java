@@ -4,10 +4,8 @@ import static java.util.Objects.requireNonNull;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.ObservableList;
+import javafx.beans.property.SimpleStringProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.schedule.exceptions.DuplicateScheduleException;
-import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 
 /**
  * Represents a Schedule in an address book.
@@ -16,17 +14,22 @@ import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 public class Schedule implements ReadOnlySchedule {
 
     private ObjectProperty<ScheduleName> scheduleName;
-    /**
-     *  A Schedule will have an empty schedules list by default
-     */
-    private final UniqueScheduleList schedules = new UniqueScheduleList();
+    private ObjectProperty<ScheduleDate> startDateTime;
+    private ObjectProperty<ScheduleDate> endDateTime;
+    private SimpleStringProperty scheduleDuration;
+    private SimpleStringProperty scheduleDetails = new SimpleStringProperty();
 
     /**
      * Every field must be present and not null.
      */
-    public Schedule(ScheduleName name) {
+    public Schedule(ScheduleName name, ScheduleDate startDateTime, ScheduleDate endDateTime,
+                    String scheduleDuration, String scheduleDetails) {
         requireNonNull(name);
         this.scheduleName = new SimpleObjectProperty<>(name);
+        this.startDateTime = new SimpleObjectProperty<>(startDateTime);
+        this.endDateTime = new SimpleObjectProperty<>(endDateTime);
+        this.scheduleDuration = new SimpleStringProperty(scheduleDuration);
+        this.scheduleDetails = new SimpleStringProperty(scheduleDetails);
     }
 
     /**
@@ -40,7 +43,8 @@ public class Schedule implements ReadOnlySchedule {
      * Creates a copy of the given ReadOnlySchedule.
      */
     public Schedule(ReadOnlySchedule source) {
-        this(source.getName());
+        this(source.getName(), source.getStartDateTime(), source.getEndDateTime(),
+                source.getSheduleDuration(), source.getScheduleDetails());
     }
 
     @Override
@@ -62,13 +66,6 @@ public class Schedule implements ReadOnlySchedule {
         return getAsText();
     }
 
-    public void addMember(ReadOnlySchedule schedule) throws DuplicateScheduleException {
-        this.schedules.add(schedule);
-    }
-
-    public void deleteMember(ReadOnlySchedule schedule) throws ScheduleNotFoundException {
-        this.schedules.remove(schedule);
-    }
 
     @Override
     public ObjectProperty<ScheduleName> nameProperty() {
@@ -80,13 +77,48 @@ public class Schedule implements ReadOnlySchedule {
         return scheduleName.get();
     }
 
+    @Override
+    public ObjectProperty<ScheduleDate> startDateTimeProperty() {
+        return startDateTime;
+    }
+
+    @Override
+    public ScheduleDate getStartDateTime() {
+        return startDateTime.get();
+    }
+
+    @Override
+    public ObjectProperty<ScheduleDate> endDateTimeProperty() {
+        return endDateTime;
+    }
+
+    @Override
+    public ScheduleDate getEndDateTime() {
+        return endDateTime.get();
+    }
+
     public void setScheduleName(ScheduleName name) {
         this.scheduleName.set(requireNonNull(name));
     }
 
     @Override
-    public ObservableList<ReadOnlySchedule> getSchedules() {
-        return schedules.asObservableList();
+    public String getSheduleDuration() {
+        return scheduleDuration.get();
+    }
+
+    @Override
+    public SimpleStringProperty scheduleDurationProperty() {
+        return scheduleDuration;
+    }
+
+    @Override
+    public String getScheduleDetails() {
+        return scheduleDetails.get();
+    }
+
+    @Override
+    public SimpleStringProperty scheduleDetailsProperty() {
+        return scheduleDetails;
     }
 
 }

@@ -13,6 +13,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.NoPersonsException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.schedule.ReadOnlySchedule;
+import seedu.address.model.schedule.UniqueScheduleList;
 import seedu.address.model.schedule.exceptions.DuplicateScheduleException;
 import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 
@@ -58,6 +59,9 @@ public interface Model {
 
     /** Deletes the given schedule */
     void deleteSchedule(ReadOnlySchedule schedule) throws ScheduleNotFoundException;
+
+    /** Replaces all of ScheduleList elements with specified ScheduleList */
+    void setFilteredScheduleList(UniqueScheduleList toSet) throws DuplicateScheduleException;
 
     /** Adds given person to given group */
     void addPersonToGroup(Index targetGroup, ReadOnlyPerson toAdd) throws

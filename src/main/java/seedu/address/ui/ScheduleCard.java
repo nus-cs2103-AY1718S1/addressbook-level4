@@ -28,6 +28,10 @@ public class ScheduleCard extends UiPart<Region> {
     private Label scheduleName;
     @FXML
     private Label scheduleId;
+    @FXML
+    private Label scheduleDuration;
+    @FXML
+    private Label scheduleDetails;
 
     public ScheduleCard(ReadOnlySchedule schedule, int displayedIndex) {
         super(FXML);
@@ -42,6 +46,8 @@ public class ScheduleCard extends UiPart<Region> {
      */
     private void bindListeners(ReadOnlySchedule schedule) {
         scheduleName.textProperty().bind(Bindings.convert(schedule.nameProperty()));
+        scheduleDuration.textProperty().bind(Bindings.convert(schedule.scheduleDurationProperty()));
+        scheduleDetails.textProperty().bind(Bindings.convert(schedule.scheduleDetailsProperty()));
     }
 
     @Override

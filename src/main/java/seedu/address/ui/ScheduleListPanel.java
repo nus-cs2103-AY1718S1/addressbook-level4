@@ -4,7 +4,7 @@ import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
 
-//import com.google.common.eventbus.Subscribe;
+import com.google.common.eventbus.Subscribe;
 
 //import javafx.application.Platform;
 
@@ -15,6 +15,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 //import seedu.address.commons.events.ui.JumpToScheduleListRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.SchedulePanelSelectionChangedEvent;
 import seedu.address.model.schedule.ReadOnlySchedule;
 
@@ -40,7 +41,7 @@ public class ScheduleListPanel extends UiPart<Region> {
         ObservableList<ScheduleCard> mappedList = EasyBind.map(
                 scheduleList, (schedule) -> new ScheduleCard(schedule, scheduleList.indexOf(schedule) + 1));
         scheduleListView.setItems(mappedList);
-        scheduleListView.setCellFactory(listView -> new scheduleListViewCell());
+        scheduleListView.setCellFactory(listView -> new ScheduleListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
 
@@ -54,6 +55,15 @@ public class ScheduleListPanel extends UiPart<Region> {
                 });
     }
 
+    /** Implement it at browser panel side */
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        ObservableList<ReadOnlySchedule> scheduleList = event.getNewSelection()
+                .person.scheduleProperty().get().asObservableList();
+        ObservableList<ScheduleCard> mappedList = EasyBind.map(
+                scheduleList, (schedule) -> new ScheduleCard(schedule, scheduleList.indexOf(schedule) + 1));
+        scheduleListView.setItems(mappedList);
+    }
 
 
     /**
@@ -77,7 +87,7 @@ public class ScheduleListPanel extends UiPart<Region> {
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code ScheduleCard}.
      */
-    class scheduleListViewCell extends ListCell<ScheduleCard> {
+    class ScheduleListViewCell extends ListCell<ScheduleCard> {
 
         @Override
         protected void updateItem(ScheduleCard schedule, boolean empty) {

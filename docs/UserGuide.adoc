@@ -26,7 +26,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::bambooUi.png[width="790"]
+image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -34,7 +34,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* **`delete`**`3 4 5` : deletes the 3rd, 4th and 5th contacts shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to the link:#features[Features] section below for details of each command.
@@ -70,9 +70,12 @@ Examples:
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
-Format: `list` +
+Shows a list of all persons in the address book. Has the option of showing only favourite contacts +
+Format: `list [/f]` +
 Alias: `l`
+
+* `list` will show all contacts
+* `list /f` will show only contacts that have been marked as favourites
 
 === Editing a person : `edit`
 
@@ -95,16 +98,18 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating persons by name, address or phone number: `find` (Since V1.4)
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]` +
+Finds persons whose names or name initials or address or phone number contain any of the given keywords. +
+Format: `find [n/] [p/] [a/] KEYWORD [MORE_KEYWORDS]` +
 Alias: `f`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
+* The search can be done with initials. e.g. `AY` will match `Alex Yeoh`
+* The search can be done with partial string. e.g. `Ber` will match `Bernice Yu`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* Name, phone number and addresses are searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
@@ -115,15 +120,24 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find AY` +
+Returns `Alex Yeoh` whose name initial is `AY`
+* `find Ber` +
+Returns `Bernice Yu` whose name contains the partial string `Ber`
+* `find p/83537423` +
+Returns any person with phone number `83537423`
+* `find a/earth` +
+Returns any person with address `earth`
 
-=== Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX` +
+=== Deleting person(s) : `delete`
+
+Deletes the specified person(s) from the address book. +
+Format: `delete INDEX [INDEX...]` +
 Alias: `d`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the person(s) at the specified `INDEX(s)`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -131,8 +145,8 @@ Alias: `d`
 Examples:
 
 * `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
+`delete 2 3 4` +
+Deletes the 2nd, 3rd and 4th persons in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
@@ -144,7 +158,7 @@ Format: `select INDEX` +
 Alias: `sel`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the contact card of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -158,6 +172,7 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::faveSystem[]
 === Marking a person as 'Favourite': `fadd` (Since V1.2)
 
 Marks the person identified by the index number used in the last person listing as a 'Favourite'. +
@@ -193,6 +208,7 @@ Examples:
 * `fremove 1`
 Unmarks the 1st contact as a 'Favourite' in the address book.
 * `fr 1`
+// end::faveSystem[]
 
 === Creating a group: `gcreate` (Since V1.2)
 
@@ -207,7 +223,7 @@ Examples:
 
 === Adding a person to a group: `gadd` (Since V1.3)
 
-Adds a group to the address book. +
+Adds a person to a group. +
 Format: `gadd g/GROUP INDEX p/PERSON INDEX` +
 Alias: `ga`
 
@@ -221,6 +237,23 @@ Examples:
 
 * `gadd g/1 p/2`
 * `ga g/3 p/2`
+
+=== Removing a person to a group: `gremove` (Since V1.3)
+
+Removes a person from a group. +
+Format: `gremove g/GROUP INDEX p/PERSON INDEX` +
+Alias: `gr`
+
+****
+* Removes person from the group at the specified `GROUP INDEX` and `PERSON INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `gremove g/1 p/2`
+* `gr g/3 p/2`
 
 === Deleting a group: `gdelete` (Since V1.2)
 
@@ -239,6 +272,57 @@ Examples:
 * `gdelete 2` +
 Deletes the 2nd group in the address book.
 * `gd 2`
+
+=== Adding a schedule to a person : `cadd` (Since V1.4)
+
+Adds a person's Google Calendar events to schedules. +
+Format: `cadd p/PERSON INDEX i/GOOGLE CALENDAR ID` +
+Alias: `ca`
+
+****
+* Adds schedule list to person at specified `INDEX`
+* Calendar ID must be from publicly shared Calendar.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `cadd p/2 i/b8dkov028k71krma20qbbc8f3s`
+
+// tag::profPicSystem[]
+=== Setting the photo of a person: `ppset` (Since V1.4)
+
+Sets the photo of a person. +
+Format: `ppset INDEX fp/FILEPATH` +
+Alias: pps
+
+****
+* Adds photo to person at specified `INDEX`
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `ppset 1 fp/C:\Users\nas.png`
+
+=== Resetting the photo of a person: `ppreset` (Since V1.4)
+
+Resets photo of a person to default picture. +
+Format: `ppreset INDEX` +
+Alias: ppr
+
+****
+* Resets photo of person at specified `INDEX`
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `ppreset 1`
+// end::profPicSystem[]
 
 === Sorting persons : `sort` (Since V1.1)
 
@@ -349,8 +433,8 @@ There is no need to save manually.
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
+* *Delete* : `delete INDEX [INDEX...]` +
+e.g. `delete 3 4`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
@@ -365,7 +449,7 @@ e.g. `gcreate n/Bamboo`
 e.g. `gadd g/1 p/2`
 * *Delete Group* : `gdelete INDEX` +
 e.g. `gdelete 2`
-* *List* : `list`
+* *List* : `list [f/]`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`

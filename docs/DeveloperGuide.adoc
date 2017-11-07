@@ -14,6 +14,22 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `CS2103AUG2017-W09-B4`      Since: `Aug 2017`      Licence: `MIT`
 
+== Introduction
+
+=== About Bamboo
+
+Bamboo is a command-line interface (CLI) based address book application.
+It is a one-stop solution to help you manage your contacts in an efficient and
+convenient manner. Using Bamboo, you can organize contacts into groups,
+find common schedules and get connected to your contacts’ social media platforms.
+
+=== Purpose
+
+This document serves as the developers' guide for developing Bamboo.
+It assumes that you have an intermediate understanding of Java.
+It describes how to start developing Bamboo with the Intellij IDE,
+as well as the structure of various components in the Bamboo application.
+
 == Setting up
 
 === Prerequisites
@@ -417,18 +433,82 @@ Certain properties of the application can be controlled (e.g App name, logging l
 The commands related to the Favourite system rely on the `Favourite` attribute class which is a `model` component.
 
 ==== Add & Remove contact from Favourites (since V1.2)
-**addFave:** This command's class, `addFaveCommand`, accepts the parsed index of the contact from the current list of contacts displayed on the GUI. The contact's `Person` class is then retrieved and modified to have it's `Favourite` attribute marked as true and the in-memory model of the addressbook is updated with the modified `Person`.
+**Adding a Favourite:** This feature's functions are mainly contained in the command class `AddFavouriteCommand` with it's
+supporting parser class `AddFavouriteCommandParser`:
 
-**removeFave:** This command's class, `removeFaveCommand`, accepts the parsed index of the contact from the current list of contacts displayed on the GUI. The contact's `Person` class is then retrieved and modified to have it's `Favourite` attribute marked as false and the in-memory model of the addressbook is updated with the modified `Person`.
+* `AddFaveCommandParser`: This class is called by `AddressBookParser` and handles the parsing of the index argument and
+passes the parsed index on to an initialised **AddFavouriteCommand** object.
 
-==== Listing of Favourite contacts (coming in V1.3)
+* `AddFavouriteCommand`: You may modify the command word (fadd), usage instructions and all other functions necessary for
+the command to mark a `Person` as a Favourite in this class. +
+The current implementation takes in the parsed index, retrieves the `Person` object of the parsed index, set's the
+`Favourite` attribute to true and updates the in-memory model list of **Persons** with the updated **Person**.
 
-**listFave:** This command will list all contacts who have their Favourite attribute marked as "true".
+**Removing a Favourite:** This feature's functions are mainly contained in the command class `RemoveFavouriteCommand` with
+ it's supporting parser class `RemoveFavouriteCommandParser`:
 
-==== Modifications to existing commands in regards to Favourite system (Coming in V1.4)
+* `RemoveFaveCommandParser`: This class is called by `AddressBookParser` and handles the parsing of the index argument and
+passes the parsed index on to an initialised **RemoveFavouriteCommand** object.
 
-**List Command:** Favourite contacts will be loaded before all other contacts.
+* `RemoveFavouriteCommand`: You may modify the command word (fremove), usage instructions and all other functions necessary for
+the command to unmark a `Person` as a Favourite in this class. +
+The current implementation of this function works exactly like it does in `AddFavouriteCommand` except that the `Person`
+retreived from the parsed index has their `Favourite` attribute updated to false.
+
+==== Listing of only Favourite contacts (Since V1.3)
+
+**List command option:** The **list** command can now list only contacts marked as favourites with "list /f" +
+This feature works by updating the model's person filteredList with the predicate **isFavourite()** in `ListCommand`.
+
+==== Other modifications to existing components to handle favourites (Since V1.4)
+
+`UniquePersonList`: The **setPerson()** function that is called whenever a **Person** object has been modified to to
+also change a **Person's** order in the model list if their **Favourite** attribute's value has been changed.
+
+* If the **Favourite**'s value has been changed to true, the modified **Person** is removed from the internal model list and
+reinserted at the top of the list among the other favourites in lexicographical order.
+
+* If the **Favourite**'s value has been changed to false, the modified **Person** moved from it's position among the favourites
+and inserted into the position after the last favourite person in the internal model list
 // end::faveSystem[]
+
+// tag::profPicSystem[]
+=== Profile Picture Feature
+A user's profile picture is retrieved by and displayed in the UI class `BrowserPanel` with **setContactImage(Person)**
+a contact's  path stored in a contact's `ProfPic` person attribute and can be modified with the use of 2 commands
+explain below.
+
+==== Setting profile picture (Since V1.4)
+**Setting a new profile picture**: This feature's functions are mainly contained in the command class `SetPictureCommand`
+with it's supporting parser class `SetPictureCommandParser`:
+
+* `SetPictureCommandParser`: This class is called by `AddressBookParser` and handles the parsing of the index argument
+and provided filepath and passes the parsed index and filepath on to an initialised **SetPictureCommand** object.
+
+* `SetPictureCommand`: You may modify the command word (ppset) and it's syntax, usage instructions and all other functions necessary for
+the set picture command in this class. +
+The current implementation takes in the parsed index and filepath and stores them. Then,
+
+** The given filepath is checked to see if there exists a .png image file with **Files.probeContentType(filepath)**
+
+** The verified .png is then copied to the local folder **images** of the application and stored under the contact name of the
+ provided index as **images\contactName.png**
+
+** The **Person** provided by the index has it's `ProfPic` attribute's path var modified to **contactName.png** and
+the modified **Person** saved to the in-memory model list of **Persons**
+
+==== Resetting profile picture (Since V1.4)
+**Resetting a contact's profile picture** This feature's functions are mainly contained in the command class `ResetPictureCommand`
+with it's supporting parser class `ResetPictureCommandParser`:
+
+* `ResetPictureCommandParser`: This class is called by `AddressBookParser` and handles the parsing of the index argument
+and passes the parsed index on to an initialised **ResetPictureCommand** object.
+
+* `ResetPictureCommand`: You may modify the command word (ppreset), usage instructions and all other functions necessary for
+the reset picture command in this class. +
+The current implementation takes in the parsed index, retrieves the **Person** at that index and modifies their `ProfPic`
+attribute's path var to the default "maleIcon.png before saving the modified **Person** to the in-memory model list of **Persons**
+// end::profPicSystem[]
 
 // tag::UISystem[]
 === User Interface (UI)

@@ -29,6 +29,8 @@
         <Label fx:id="scheduleName" styleClass="cell_big_label" text="\$first" />
       </HBox>
       <FlowPane fx:id="scheduleTags" />
+      <Label fx:id="scheduleDuration" styleClass="cell_small_label" text="\$duration" />
+      <Label fx:id="scheduleDetails" styleClass="cell_small_label" text="\$details" />
     </VBox>
       <rowConstraints>
          <RowConstraints />

@@ -135,7 +135,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireNonNull(editedReadOnlyPerson);
-
         Person editedPerson = new Person(editedReadOnlyPerson);
         syncMasterTagListWith(editedPerson);
         syncMasterGroupListWith(editedPerson);
@@ -188,7 +187,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Ensures that every group in this person:
      *  - exists in the master list {@link #groups}
-     *  - points to a Tag object in the master list
+     *  - points to a Group object in the master list
      */
     private void syncMasterGroupListWith(Person person) {
         final UniqueGroupList personGroups = new UniqueGroupList(person.getGroups());
