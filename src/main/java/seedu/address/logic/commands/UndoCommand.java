@@ -1,9 +1,9 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.PersonPanelUnselectEvent;
-
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
