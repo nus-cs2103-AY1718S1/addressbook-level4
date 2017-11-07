@@ -43,6 +43,7 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private ExtendedPersonDisplay extendedPersonDisplay;
     private Config config;
     private UserPrefs prefs;
 
@@ -58,6 +59,10 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane personListPanelPlaceholder;
 
+    //author @JacobLipech
+    @FXML
+    private StackPane extendedPersonDisplayPlaceholder;
+    //author
     @FXML
     private StackPane resultDisplayPlaceholder;
 
@@ -132,6 +137,9 @@ public class MainWindow extends UiPart<Region> {
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        extendedPersonDisplay = new ExtendedPersonDisplay();
+        extendedPersonDisplayPlaceholder.getChildren().add(extendedPersonDisplay.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -220,6 +228,12 @@ public class MainWindow extends UiPart<Region> {
         return this.personListPanel;
     }
 
+    //@@author jacoblipech
+    public ExtendedPersonDisplay getExtendedPersonDisplay() {
+        return this.extendedPersonDisplay;
+    }
+
+    //@@author
     void releaseResources() {
         browserPanel.freeResources();
     }
