@@ -946,6 +946,13 @@ private void clearHighlights(WebEngine engine) {
 ----
 // end::helpWindowHighlight[]
 
+// tag::suggestion[]
+== Suggestions Mechanism
+// The suggestion mechanism is implemented at Rolodex's parser level under the logic component.
+// TODO: v1.5
+This feature is a work in progress for v1.5.
+// end::suggestion[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
