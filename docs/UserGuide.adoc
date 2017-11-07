@@ -78,6 +78,7 @@ To perform actions in KayPoh!, you will need to type a command into the command 
 .Command box
 image::command-box.png[width="790"]
 
+// tag::command-syntax[]
 === Breaking down the command syntax
 Commands have the following format: `[red]#COMMAND_WORD# [blue]#-OPTION# [green]#PARAMETERS#` +
 
@@ -94,6 +95,8 @@ Commands have the following format: `[red]#COMMAND_WORD# [blue]#-OPTION# [green]
 Example:
 
 * `[red]#find# [blue]#-tag# [green]#friends#` can be understood as "[red]#find contacts# [blue]#with the tag# [green]#friends#"
+
+// end::command-syntax[]
 
 === Representing a person as a parameter
 
@@ -393,6 +396,7 @@ a user can be found in the person list.
 image:stalk-command-social-info.png[width="300"]
 |===
 
+// tag::find-by-tag[]
 [[find-by-tag]]
 ==== Finding persons: `find`
 To find contacts by some criteria, use the `find` command.
@@ -430,7 +434,10 @@ Displays persons with names `Betsy`, `Tim`, or `John` in the person list.
 Displays persons with tags `friends` or `colleagues` in the person list.
 * `[red]#find# [blue]#-fav#` +
 Displays `favorite` contacts in the person list.
+// end::find-by-tag[]
 
+
+// tag::sort[]
 ==== Sorting the displayed list [Since v1.4]: `sort`
 
 To sort the person list, use the `sort` command.
@@ -468,11 +475,12 @@ Lists all person in the address book, sorted first based on their `favorite` sta
 * `[red]#find# [green]#john#` +
 `[red]#sort# [blue]#-recent#` +
 Lists all persons whose `names` contain the keyword `john`, sorted based on when they were last added, updated, or stalked.
-
+// end::sort[]
 
 [[social-media-integrations]]
 === Social Media Integrations [Since v1.2]
 
+// tag::representing-social-media-accounts[]
 ==== Representing Social Media Accounts
 
 Social media accounts are represented in the format `SOCIAL_TYPE USERNAME`.
@@ -488,6 +496,7 @@ Example:
 Represents the Facebook account with the username `johnd10`.
 * `ig damyth` +
 represents the Instagram account with the username `damyth`.
+// end::representing-social-media-accounts[]
 
 [[facebook-features]]
 ==== Facebook Integrations
