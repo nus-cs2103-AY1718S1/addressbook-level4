@@ -5,9 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import static seedu.address.logic.commands.CommandTestUtil.DESC_DEMO;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_HOTPOT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_HOTPOT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_HOTPOT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HOTPOT;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.assertTaskCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstTaskOnly;
