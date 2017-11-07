@@ -123,6 +123,34 @@ Examples:
 Add commands are _undoable_ with the `undo` command.
 ====
 
+//tag::autocomplete[]
+[[autocomplete]]
+=== Auto-completion _(Since v1.2)_
+
+For commands that require additional field(s), auto-completion can be triggered by pressing kbd:[Tab] after keying in the command word.
+
+Example:
+
+* Type `add` in the command box +
+* Press kbd:[Tab]
+* You will see the full format displayed in the command box as shown below.
+
+image::AutoCompletionAfterTab.png[width="500"]
+
+* Note that the placeholder for the name field has been auto-selected. Now you can directly type in the name.
+* After you are done typing the name, press kbd:[Tab] again to go to the next field.
+
+image::AutoCompletionNextField.png[width="500"]
+
+* After you are done with the entire command, press kbd:[Enter] to execute the command.
+
+[NOTE]
+====
+Commands with auto-completion enabled: `add`, `delete`, `edit`, `find`, `select` and `remark`. +
+These are commands that required additonal field(s).
+====
+//end::autocomplete[]
+
 === `clear` or `c`: Clearing All Persons _(Since v1.3)_
 
 Clears all entries from Rolodex. +
@@ -511,33 +539,28 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `u` (reverses the `delete 1` command) +
 
-[[autocomplete]]
-//tag::autocomplete[]
-=== Auto-completion
+// tag::suggestion[]
+=== `y` or `yes` or `ok` or `yea` or `yeah`: Confirming a suggested command _(Since v1.5rc)_
 
-For commands that require additional field(s), auto-completion can be triggered by pressing kbd:[Tab] after keying in the command word.
+Confirms a command suggested by Rolodex. +
+Format: `y` or `yes` or `ok` or `yea` or `yeah` +
 
-Example:
-
-* Type `add` in the command box +
-* Press kbd:[Tab]
-* You will see the full format displayed in the command box as shown below.
-
-image::AutoCompletionAfterTab.png[width="500"]
-
-* Note that the placeholder for the name field has been auto-selected. Now you can directly type in the name.
-* After you are done typing the name, press kbd:[Tab] again to go to the next field.
-
-image::AutoCompletionNextField.png[width="500"]
-
-* After you are done with the entire command, press kbd:[Enter] to execute the command.
-
-[NOTE]
+[TIP]
 ====
-Commands with auto-completion enabled: `add`, `delete`, `edit`, `find`, `select` and `remark`. +
-These are commands that required additonal field(s).
+A command will be suggested by Rolodex if you make a typo in your command.
 ====
-//end::autocomplete[]
+Examples:
+
+* `s3`, a typo for the command `s 3` will be suggested.
+`y` or `yes` or `ok` or `yea` or `yeah` executes `s 3` as normal and _Charlotte Oliviero_ will be selected:
+
+image::SuggestionSelect.png[width="500"]
+
+* `rmke3 Likes to swim` will be suggested as the formatted command, `rmk 3 r/Likes to swim`.
+`y` or `yes` or `ok` or `yea` or `yeah` executes `rmk 3 r/Likes to swim` as normal and `Likes to swim` will be added to _Charlotte Oliviero_:
+
+image::SuggestionRemark.png[width="500"]
+// end::suggestion[]
 
 
 == Upcoming Features
