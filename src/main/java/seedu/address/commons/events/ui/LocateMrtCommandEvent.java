@@ -6,7 +6,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * An event requesting to view the address of the person specified on Google Map.
  */
-//@@author YewOnn
 public class LocateMrtCommandEvent extends BaseEvent {
 
     private ReadOnlyPerson person;
