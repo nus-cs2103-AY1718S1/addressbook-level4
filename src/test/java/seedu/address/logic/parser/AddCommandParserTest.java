@@ -180,8 +180,8 @@ public class AddCommandParserTest {
                 + DEBT_DESC_AMY + INTEREST_DESC_AMY + DEADLINE_DESC_AMY, new AddCommand(expectedPerson));
         Person expectedPerson2 = new PersonBuilder().withName(VALID_NAME_AMY).withHandphone(VALID_HANDPHONE_AMY)
                 .withHomePhone(VALID_HOME_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withPostalCode(VALID_POSTAL_CODE_AMY).withDebt(VALID_DEBT_AMY).withInterest(VALID_INTEREST_AMY)
-                .withDeadline(VALID_DEADLINE_AMY).withTags(VALID_TAG_FRIEND)
+                .withPostalCode(VALID_POSTAL_CODE_AMY).withDebt(VALID_DEBT_AMY).withTotalDebt(VALID_DEBT_AMY)
+                .withInterest(VALID_INTEREST_AMY).withDeadline(VALID_DEADLINE_AMY).withTags(VALID_TAG_FRIEND)
                 .withOfficePhone(OfficePhone.NO_OFFICE_PHONE_SET).build();
         // no office phone
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + HANDPHONE_DESC_AMY
