@@ -51,7 +51,7 @@ public class PersonDetailsPanelHandle extends NodeHandle<Node> {
  */
 public class BirthdayAddCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), new AddressBook(), new UserPrefs());
 
     @Test
     public void execute_allFieldsSpecifiedCorrectlyUnfilteredList_success() throws Exception {
@@ -63,7 +63,8 @@ public class BirthdayAddCommandTest {
         BirthdayAddCommand birthdayAddCommand = prepareCommand(INDEX_FIRST_PERSON, birthday);
         String expectedMessage = String.format(BirthdayAddCommand.MESSAGE_ADD_BIRTHDAY_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new AddressBook(),
+                new UserPrefs());
         expectedModel.updatePerson(originalPerson, editedPerson);
 
         assertCommandSuccess(birthdayAddCommand, model, expectedMessage, expectedModel);
@@ -79,7 +80,8 @@ public class BirthdayAddCommandTest {
         BirthdayAddCommand birthdayAddCommand = prepareCommand(INDEX_FIRST_PERSON, birthday);
         String expectedMessage = String.format(BirthdayAddCommand.MESSAGE_ADD_BIRTHDAY_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new AddressBook(),
+                new UserPrefs());
         expectedModel.updatePerson(originalPerson, editedPerson);
 
         assertCommandSuccess(birthdayAddCommand, model, expectedMessage, expectedModel);
@@ -150,7 +152,7 @@ public class BirthdayAddCommandTest {
  */
 public class BirthdayRemoveCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), new AddressBook(), new UserPrefs());
 
 
     /**
@@ -166,7 +168,8 @@ public class BirthdayRemoveCommandTest {
         BirthdayRemoveCommand birthdayRemoveCommand = prepareCommand(INDEX_FIRST_PERSON);
         String expectedMessage = String.format(BirthdayRemoveCommand.MESSAGE_REMOVE_BIRTHDAY_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new AddressBook(),
+                new UserPrefs());
         expectedModel.updatePerson(originalPerson, editedPerson);
 
         assertCommandSuccess(birthdayRemoveCommand, model, expectedMessage, expectedModel);
@@ -185,7 +188,8 @@ public class BirthdayRemoveCommandTest {
         BirthdayRemoveCommand birthdayRemoveCommand = prepareCommand(INDEX_FIRST_PERSON);
         String expectedMessage = String.format(BirthdayRemoveCommand.MESSAGE_REMOVE_BIRTHDAY_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new AddressBook(),
+                new UserPrefs());
         expectedModel.updatePerson(originalPerson, editedPerson);
 
         assertCommandSuccess(birthdayRemoveCommand, model, expectedMessage, expectedModel);
@@ -342,7 +346,7 @@ public class MapRouteCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), new AddressBook(), new UserPrefs());
     }
 
     @Test
@@ -460,7 +464,7 @@ public class MapShowCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), new AddressBook(), new UserPrefs());
     }
 
     @Test

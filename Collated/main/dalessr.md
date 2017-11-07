@@ -558,6 +558,9 @@ public class MapShowCommand extends Command {
 
     public AddressBookParser() {
         commandNames.add(AddCommand.COMMAND_WORD);
+        commandNames.add(BinclearCommand.COMMAND_WORD);
+        commandNames.add(BindeleteCommand.COMMAND_WORD);
+        commandNames.add(BinrestoreCommand.COMMAND_WORD);
         commandNames.add(SortCommand.COMMAND_WORD);
         commandNames.add(EditCommand.COMMAND_WORD);
         commandNames.add(TagAddCommand.COMMAND_WORD);
