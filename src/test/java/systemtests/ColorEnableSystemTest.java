@@ -1,24 +1,48 @@
 package systemtests;
 
 //@@author caoliangnus
+
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.ColorKeywordCommand;
 import seedu.address.model.Model;
 
 public class ColorEnableSystemTest extends AddressBookSystemTest {
     @Test
     public void colorEnable() {
+        String command;
+        String expectedResultMessage;
 
         /* Case: enable highlighting feature with leading spaces and trailing space
          */
         assertCommandSuccess("   " + ColorKeywordCommand.COMMAND_WORD + " enable   ");
 
+        /* Case: enable highlighting feature when already enabled
+         */
+        assertCommandSuccess("   " + ColorKeywordCommand.COMMAND_WORD + " enable   ");
+
+        /* Case: attempt to enable highlighting command keyword that are undefined */
+        command = ColorKeywordCommand.COMMAND_WORD + " " + "Enabled";
+        expectedResultMessage = String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                ColorKeywordCommand.MESSAGE_USAGE);
+        assertCommandFailure(command, expectedResultMessage);
+
         /* Case: disable highlighting feature with leading spaces and trailing space
          */
         assertCommandSuccess("   " + ColorKeywordCommand.COMMAND_WORD + " disable   ");
+
+        /* Case: disable highlighting feature when already disabled
+         */
+        assertCommandSuccess("   " + ColorKeywordCommand.COMMAND_WORD + " disable   ");
+
+        /* Case: attempt to disable highlighting command keyword that are undefined */
+        command = ColorKeywordCommand.COMMAND_WORD + " " + "Disabled";
+        expectedResultMessage = String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                ColorKeywordCommand.MESSAGE_USAGE);
+        assertCommandFailure(command, expectedResultMessage);
 
 
         /* Case: mixed case command word -> rejected */

@@ -28,6 +28,7 @@ public class CommandBoxTest extends GuiUnitTest {
     private ArrayList<String> errorStyleOfCommandBox;
     private HashMap<String, String> keywordColorMap;
 
+
     private CommandBoxHandle commandBoxHandle;
 
     @Before

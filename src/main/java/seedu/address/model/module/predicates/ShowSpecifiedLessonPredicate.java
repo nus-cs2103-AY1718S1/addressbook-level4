@@ -11,10 +11,14 @@ import seedu.address.model.module.ReadOnlyLesson;
 public class ShowSpecifiedLessonPredicate implements Predicate<ReadOnlyLesson> {
     private final ReadOnlyLesson lesson;
 
-    public ShowSpecifiedLessonPredicate(ReadOnlyLesson lesson) { this.lesson = lesson; }
+    public ShowSpecifiedLessonPredicate(ReadOnlyLesson lesson) {
+        this.lesson = lesson;
+    }
 
     @Override
-    public boolean test(ReadOnlyLesson lesson) { return this.lesson.isSameStateAs(lesson); }
+    public boolean test(ReadOnlyLesson lesson) {
+        return this.lesson.isSameStateAs(lesson);
+    }
 
     @Override
     public boolean equals(Object other) {
