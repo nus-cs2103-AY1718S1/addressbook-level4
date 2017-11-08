@@ -62,6 +62,7 @@ public class UiManager extends ComponentManager implements Ui {
             mainWindow = new MainWindow(primaryStage, config, prefs, logic, model);
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
+
             // show reminder pop-up if there exists upcoming activities the next day
             ReadOnlyAddressBook addressBook = model.getAddressBook();
             ObservableList<Schedule> schedulesToRemindList = addressBook.getScheduleToRemindList();

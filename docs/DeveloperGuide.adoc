@@ -261,7 +261,7 @@ The `Model`,
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
-image::NewModelComponentClassDiagram.PNG[width="800"]
+image::ModelComponentClassDiagram.PNG[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
@@ -868,7 +868,88 @@ _Figure 4.7.4: UI display for user's agenda_
 // tag::reminder[]
 === Pop-up reminder window [Since v1.4]
 
-==== Design Considerations for viewing of user's agenda
+The `AddressBook` consists of 2 schedule lists: one contains all the scheduled activities by the user, while the other contains the scheduled activities that the user need to be reminded of. +
+If there exists any activities that the user need to be reminded of, a `ReminderWindow` will open after the `MainWindow`, as shown in _Figure 4.8.1_ below.
+
+[source,java]
+----
+public class UiManager extends ComponentManager implements Ui {
+     @Override
+     public void start(Stage primaryStage) {
+
+        //... Initialise MainWindow ...
+
+        // show reminder pop-up if there exists upcoming activities the next day
+        ReadOnlyAddressBook addressBook = model.getAddressBook();
+        ObservableList<Schedule> schedulesToRemindList = addressBook.getScheduleToRemindList();
+
+        if (!schedulesToRemindList.isEmpty()) {
+            ReminderWindow reminderWindow = new ReminderWindow(schedulesToRemindList);
+            reminderWindow.show();
+        }
+     }
+}
+----
+_Figure 4.8.1: Code section in UiManager.java_
+
+The `Reminder Window` contains a list view and each `Schedule` connection to `ScheduleCard` is set similar to that in the `AgendaPanel`. [Refer to _Figure 4.7.2_]
+
+The schedule list to be reminded in the `AddressBook` is formed during every synchronisation of the master schedule list with a `Person`, as seen in _Figure 4.8.2_ below.
+
+[source,java]
+----
+private void syncMasterScheduleListWith(Person person) {
+
+     // ... merge person schedules and sort master schedule list ...
+
+     setSchedulesToRemind();
+
+     // ... check person schedule references ...
+}
+----
+_Figure 4.8.2: Code section in AddressBook.java_
+
+Scheduled activities whose due date is 1 day after the date the user starts the application will be added to the `schedulesToRemind` list in `AddressBook`. This criteria is enforced in a static method in `Schedule.java`, as shown in _Figure 4.8.3_ below.
+
+[source,java]
+----
+public static boolean doesScheduleNeedReminder(Schedule schedule) {
+     // Date user opens application
+     LocalDate currentDate = LocalDate.now();
+
+     String scheduleDateString = schedule.getScheduleDate().value;
+
+     LocalDate scheduleDateToAlter = currentDate;
+     // build schedule date based on String
+     LocalDate scheduleDate = scheduleDateToAlter.withDayOfMonth(DateUtil.getDay(scheduleDateString))
+             .withMonth(DateUtil.getMonth(scheduleDateString))
+             .withYear(DateUtil.getYear(scheduleDateString));
+
+     // Check if scheduled activity is one day after current date
+     LocalDate dayBeforeSchedule = scheduleDate.minusDays(1);
+     final boolean isYearEqual = (dayBeforeSchedule.getYear() == currentDate.getYear());
+     final boolean isMonthEqual = (dayBeforeSchedule.getMonthValue() == currentDate.getMonthValue());
+     final boolean isDayEqual = (dayBeforeSchedule.getDayOfMonth() == currentDate.getDayOfMonth());
+
+     if (isYearEqual && isMonthEqual && isDayEqual) {
+         return true;
+     } else {
+         return false;
+     }
+}
+----
+_Figure 4.8.3: Code section in Schedule.java_
+
+
+==== Design Considerations for pop-up reminder window
+
+**Aspect:** Content of reminder window +
+**Alternative 1 (current choice)**: Show list view of schedule cards like the user agenda feature +
+**Pros:** User is able to view the details of each scheduled activity. +
+**Cons:** More troublesome to implement from developer's point of view. +
+**Alternative 2:** Show a reminder message that there are existing activities due soon +
+**Pros:** User will be alerted if reminder message is striking enough. Also easy to implement for the developer. +
+**Cons:** The details of the activities due in 1 days time are not filtered out, user have to check the agenda section for more details. +
 // end::reminder[]
 
 === Logging

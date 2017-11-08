@@ -43,7 +43,7 @@ include::../DeveloperGuide.adoc[tag=locate]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=locate]
+include::../UserGuide.adoc[tag=agenda]
 
 #End of Extract#
 

@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -12,7 +13,13 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.person.Person;
 import seedu.address.model.schedule.Schedule;
+import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.ScheduleBuilder;
 
 //@@author CT15
@@ -31,6 +38,32 @@ public class ScheduleCommandTest {
 
         new ScheduleCommand(null, null, null);
         new ScheduleCommand(indices, null, null);
+    }
+
+    @Test
+    public void execute_addValidScheduleSuccessful() throws Exception {
+        Schedule validSchedule = new ScheduleBuilder().build();
+        Set<Index> indices = new HashSet<>();
+        indices.add(INDEX_FIRST_PERSON);
+
+        ModelManager modelStub = new ModelManager();
+        Person validPerson = new PersonBuilder().build();
+        modelStub.addPerson(validPerson);
+
+        CommandResult commandResult = getScheduleCommandForPerson(indices, validSchedule, modelStub).execute();
+
+        assertEquals(String.format(ScheduleCommand.MESSAGE_SCHEDULE_SUCCESS, indices.size()),
+                commandResult.feedbackToUser);
+    }
+
+    /**
+     * Generates a new AddCommand with the details of the given person.
+     */
+    private ScheduleCommand getScheduleCommandForPerson(Set<Index> indices, Schedule validSchedule, Model model) {
+        ScheduleCommand command =
+                new ScheduleCommand(indices, validSchedule.getScheduleDate(), validSchedule.getActivity());
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
     }
 
     //@@author CT15
