@@ -380,6 +380,7 @@ public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
 ----
 // end::sort[]
 
+// tag::remark[]
 === Remark Command
 
 The `remark` command allows the user to edit the remark field of a contact. The field is initially empty when a new
@@ -400,7 +401,9 @@ column are undoable.
 `Edit Remark Command`)
 ** **Pros:** The user can manage multiple remarks without overriding any one of them.
 ** **Cons:** The user might be confused with so many commands to manage a contact's remarks.
+// end::remark[]
 
+// tag::statistics[]
 === Statistics Command
 
 The `statistics` command allows the user to view information about the system. The `statistics` command does not take
@@ -479,6 +482,7 @@ by the browser engine. It is tricker to test and more likely to break.
 ** **Pros:** User will be able to tell quickly the portion of Persons added in the year as compared to the past years.
 ** **Cons:** A breakdown by year might not allow the user to answer a more important question easily: how has the number
 of people added changed in a more manageable timeframe (such as a month)?
+// end::statistics[]
 
 // tag::findregex[]
 === Searching by Regex

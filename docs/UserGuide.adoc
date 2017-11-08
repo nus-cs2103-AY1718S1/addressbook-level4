@@ -335,6 +335,7 @@ Alias example:
 * `t add 1 friends`
 // end::addremovetags[]
 
+// tag::remark[]
 ==== Changing a person's remark : `remark` (Since v1.2)
 
 Changes the remark of an existing person in the address book. +
@@ -361,6 +362,7 @@ Changes the remark of the 2nd person returned by the `find` command to "Going ov
 Alias example:
 
 * `re 1 r/Owe money`
+// end::remark[]
 
 // tag::socialmedia[]
 ==== Accessing a person's social media : `socialmedia` (Since v1.4)
@@ -522,7 +524,8 @@ Alias example:
 * `r 1`
 // end::undoredo[]
 
-==== Viewing statistics : `statistics`
+// tag::statistics[]
+==== Viewing statistics : `statistics` (Since v1.3)
 
 Displays four charts based on information calculated in PIMP. The information displayed includes +
 1. Number of contacts added in the past 2 years, broken down by month in a bar chart. +
@@ -532,6 +535,7 @@ Displays four charts based on information calculated in PIMP. The information di
 
 Format: `statistics` +
 Alias: `st`
+// end::statistics[]
 
 ==== Exporting all entries : `export` (Not implemented yet. Coming in v2.0)
 
