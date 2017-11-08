@@ -692,6 +692,7 @@ The user has to ensure that an internet connection is established to succeed in 
 **Cons:** More difficult to implement. May require the use of Facebook API which may cause unexpected regressions that developers may not know how to solve.
 
 // tag::addremovetag[]
+
 === Add/Remove Tag mechanism
 
 The add/remove tag mechanism is facilitated by the `FilteredList`, which resides in the `ModelManager`. It inherits
@@ -776,7 +777,64 @@ then changing the first letter since the shortcut command for `AddTagCommand` an
 respectively. +
 **Cons:** Less intuitive for the user and is not consistent with the design that commands that modify data should be
 undoable.
+
 // end::addremovetag[]
+
+// tag::find[]
+
+=== Find command closest matching name suggestion mechanism
+
+The closest matching name suggestion mechanism is facilitated by the `getClosestMatchingName` function which resides
+inside `ModelManager`. The algorithm used to find the closest matching name is supported by the `JaroWinklerDistance`
+function that is imported from the Apaches Commons-Text library.
+
+This feature provides a decently accurate suggestion of the person the user might have been referring to in UniCity.
+Furthermore, it shows the results of the suggestion to guide the user further. Suppose that the user has just executed
+`FindCommand`, the given name(s) are searched. If a the name is found, the result is shown else the results for the
+name that is the most similar is shown instead. This flow can be summarised by activity diagram below.
+
+image::FindCommandActivityDiagram.png[width="800"]
+
+[NOTE]
+If the given name does not match with any of the names in UniCity, all contacts are shown instead.
+
+The function that facilitates the suggestion feature, `getClosestMatchingName()`, is implemented as shown.
+
+[source,java]
+----
+        /* JaroWinklerDistance method uses double values ranging from 0 to 1. Set initial value to match very similar
+         * names only. Setting the value to any value less than or equal to 0 will match the first name in filteredPersons
+         */
+        private final double initialToleranceValue = 0.5;
+
+        @Override
+            public String getClosestMatchingName(NameContainsKeywordsPredicate predicate) {
+
+                requireNonNull(predicate);
+                ArrayList<String> allNames = getListOfAllFirstAndLastNames(predicate);
+                List<String> keywords = predicate.getKeywords();
+                return keywords.size() == 1 ? getClosestMatchingNameForOneKeyword(keywords, allNames, initialToleranceValue)
+                        : getClosestMatchingNameForMultipleKeywords(keywords, allNames, initialToleranceValue);
+            }
+
+----
+
+
+==== Design Considerations
+
+**Aspect:** Level of `initialTolerance` value. +
+**Alternative 1 (current choice):** Set the level to a predefined value. +
+**Pros:**  Only the most relevant results are found and shown. +
+**Cons:** Depending on the given level, the checks might too stringent, causing no names to be matched at times. +
+**Alternative 2:** Do not set a value for the tolerance level. +
+**Pros:** There will definitely be a result. +
+**Cons:** No results should be returned for a input that is cannot be matched. For example, if the user were to enter
+a phone number as an input, a result will still be returned when no names in UniCity have numbers in them. This
+results in varying accuracy when trying to find a match. This uncertainty is unfavourable when accuracy is of higher
+priority.
+
+
+// end::find[]
 
 == Documentation
 
