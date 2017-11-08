@@ -511,6 +511,7 @@ image::FindTagSequenceDiagram.png[width="800"]
 
 // end::findtag[]
 
+// tag::filter[]
 === Filter feature implementation
 
 The `FilterCommand` and `FilterAllCommand` serve very similar functions to the `FindCommand` and `FindTagCommand`.
@@ -540,6 +541,28 @@ will output only contacts that match all keywords.
 **Alternative 2 (`FilterAllCommand`):** Utilising AND logic  +
 **Pros:** Allows finding of specific contacts with more than 1 tag. +
 **Cons:** Limits flexibility for power users that wish to view various contacts across more than 1 tag.
+
+// end::filter[]
+
+// tag::facebook[]
+=== Social Media link (Facebook)
+
+The `BrowserPanel` java file has been enhanced to display a Facebook user search of the selected contact's name rather +
+than a Google search.
+
+* The search includes the full name of the contact.
+
+==== Design Considerations
+**Aspect:** How the Facebook webpage is loaded  +
+**Alternative 1 (current choice):** Utilising a Facebook user search +
+**Pros:** Little chance of loading a wrong page, as the user is able to select the proper profile +
+          page from a list of closest matches.
+**Cons:** Will have to go throught the extra steps of locating and selecting a profile page +
+**Alternative 2 :** Loading a Facebook profile page that matches the selected contact's name  +
+**Pros:** Direct access to the selected contact's profile page for easy use. +
+**Cons:** Extremely likely to load the wrong profile page, due to overlapping names of millions of Facebook accounts.
+
+// end::facebook[]
 
 === Logging
 
