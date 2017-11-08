@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
-import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seedu.address.commons.core.EventsCenter;
@@ -21,6 +20,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author JasmineSee
+
 /**
  * Uploads image file to specified person.
  */
@@ -41,7 +41,6 @@ public class UploadPhotoCommand extends Command {
     private final String filePath;
     private final FileChooser fileChooser = new FileChooser();
     private Stage stage;
-    private ImageView imageView = new ImageView();
 
     public UploadPhotoCommand(Index targetIndex, String filePath) {
         this.targetIndex = targetIndex;
@@ -69,6 +68,9 @@ public class UploadPhotoCommand extends Command {
         } else {
             throw new CommandException(String.format(MESSAGE_UPLOAD_IMAGE_FALURE));
         }
+
+        LoggingCommand loggingCommand = new LoggingCommand();
+        loggingCommand.keepLog("", "Uploaded photo to " + targetIndex.getOneBased());
         return new CommandResult(String.format(MESSAGE_UPLOAD_IMAGE_SUCCESS, personToUploadImage));
     }
 

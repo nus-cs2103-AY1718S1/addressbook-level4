@@ -1,5 +1,5 @@
 # danielweide
-###### /java/seedu/address/commons/events/ui/QrEvent.java
+###### \java\seedu\address\commons\events\ui\QrEvent.java
 ``` java
 /**
  * Represents a selection change in the Qr Event
@@ -19,7 +19,7 @@ public class QrEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ClearLogCommand.java
+###### \java\seedu\address\logic\commands\ClearLogCommand.java
 ``` java
 public class ClearLogCommand extends Command {
     public static final String COMMAND_WORD = "clearlog";
@@ -37,7 +37,7 @@ public class ClearLogCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/commands/LoggingCommand.java
+###### \java\seedu\address\logic\commands\LoggingCommand.java
 ``` java
 public class LoggingCommand {
     /**
@@ -66,7 +66,7 @@ public class LoggingCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/QrCallCommand.java
+###### \java\seedu\address\logic\commands\QrCallCommand.java
 ``` java
 public class QrCallCommand extends Command {
 
@@ -108,7 +108,7 @@ public class QrCallCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/commands/QrGenCallCommand.java
+###### \java\seedu\address\logic\commands\QrGenCallCommand.java
 ``` java
 public class QrGenCallCommand {
     /**
@@ -141,7 +141,7 @@ public class QrGenCallCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/QrGenSaveContactCommand.java
+###### \java\seedu\address\logic\commands\QrGenSaveContactCommand.java
 ``` java
 public class QrGenSaveContactCommand {
     /**
@@ -184,7 +184,7 @@ public class QrGenSaveContactCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/QrGenSmsCommand.java
+###### \java\seedu\address\logic\commands\QrGenSmsCommand.java
 ``` java
 public class QrGenSmsCommand {
     /**
@@ -218,7 +218,7 @@ public class QrGenSmsCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/QrSaveContactCommand.java
+###### \java\seedu\address\logic\commands\QrSaveContactCommand.java
 ``` java
 public class QrSaveContactCommand extends Command {
 
@@ -260,7 +260,7 @@ public class QrSaveContactCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/commands/QrSmsCommand.java
+###### \java\seedu\address\logic\commands\QrSmsCommand.java
 ``` java
 public class QrSmsCommand extends Command {
 
@@ -302,7 +302,7 @@ public class QrSmsCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/parser/QrCallCommandParser.java
+###### \java\seedu\address\logic\parser\QrCallCommandParser.java
 ``` java
 public class QrCallCommandParser implements Parser<QrCallCommand> {
     /**
@@ -321,7 +321,7 @@ public class QrCallCommandParser implements Parser<QrCallCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/QrSaveContactCommandParser.java
+###### \java\seedu\address\logic\parser\QrSaveContactCommandParser.java
 ``` java
 public class QrSaveContactCommandParser implements Parser<QrSaveContactCommand> {
     /**
@@ -340,7 +340,7 @@ public class QrSaveContactCommandParser implements Parser<QrSaveContactCommand> 
     }
 }
 ```
-###### /java/seedu/address/logic/parser/QrSmsCommandParser.java
+###### \java\seedu\address\logic\parser\QrSmsCommandParser.java
 ``` java
 public class QrSmsCommandParser implements Parser<QrSmsCommand> {
     /**
