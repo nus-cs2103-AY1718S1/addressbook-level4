@@ -455,29 +455,47 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.getReadOnlyPerson(index);
     }
 
+    public ReadOnlyPerson removeProfilePic(ReadOnlyPerson person) {
+        int index;
+        index = persons.getIndexOf(person);
+
+        Person newUpdatedPerson = new Person(person);
+        newUpdatedPerson.setHasDisplayPicture(false);
+        try {
+            updatePerson(person, newUpdatedPerson);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("The target person cannot be a duplicate");
+        } catch (PersonNotFoundException e) {
+            throw new AssertionError("This is not possible as prior checks have been done");
+        }
+
+        return persons.getReadOnlyPerson(index);
+    }
+
     //// util methods
+
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, "
                 + tags.asObservableList().size() +  " tags";
         // TODO: refine later
     }
-
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
         return persons.asObservableList();
     }
+
     //@@author jaivigneshvenugopal
 
     @Override
     public ObservableList<ReadOnlyPerson> getBlacklistedPersonList() {
         return persons.asObservableBlacklist();
     }
-
     @Override
     public ObservableList<ReadOnlyPerson> getWhitelistedPersonList() {
         return persons.asObservableWhitelist();
     }
+
     //@@author
 
     @Override

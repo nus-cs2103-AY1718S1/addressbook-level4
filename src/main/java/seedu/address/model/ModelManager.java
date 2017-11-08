@@ -427,10 +427,18 @@ public class ModelManager extends ComponentManager implements Model {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            indicateAddressBookChanged();
             return true;
         }
         return false;
     }
+
+    @Override
+    public void removeProfilePicture(ReadOnlyPerson person) {
+        addressBook.removeProfilePic(person);
+        indicateAddressBookChanged();
+    }
+
 
     //=========== Filtered Person List Accessors =============================================================
 

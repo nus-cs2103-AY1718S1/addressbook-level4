@@ -196,4 +196,6 @@ public interface Model {
     void updateDebtFromInterest(ReadOnlyPerson person, int differenceInMonths);
 
     boolean addProfilePicture(ReadOnlyPerson person);
+
+    void removeProfilePicture(ReadOnlyPerson person);
 }

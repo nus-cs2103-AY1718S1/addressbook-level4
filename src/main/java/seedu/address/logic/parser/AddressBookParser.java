@@ -16,6 +16,7 @@ import seedu.address.logic.commands.BorrowCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeletePictureCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FilterCommand;
@@ -76,6 +77,10 @@ public class AddressBookParser {
         case AddPictureCommand.COMMAND_WORD:
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
             return new AddPictureCommandParser().parse(arguments);
+
+        case DeletePictureCommand.COMMAND_WORD:
+            logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
+            return new DeletePictureCommandParser().parse(arguments);
 
         case BlacklistCommand.COMMAND_WORD_ALIAS:
         case BlacklistCommand.COMMAND_WORD:
