@@ -104,23 +104,6 @@ public class UserProfileWindow extends UiPart<Region> {
         webLinkTextField.textProperty().bind(Bindings.convert(userPerson.webLinkProperty()));
     }
 
-    @Override
-    public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof DetailedPersonCard)) {
-            return false;
-        }
-
-        // state check
-        UserProfileWindow otherUserProfileWindow = (UserProfileWindow) other;
-        return userPerson.equals(otherUserProfileWindow.userPerson);
-    }
-
     /**
      *
      */
@@ -151,7 +134,6 @@ public class UserProfileWindow extends UiPart<Region> {
     @Subscribe
     private void handleUserPersonChangedEvent(UserPersonChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        //bindListeners(userPerson);
     }
 
     /**

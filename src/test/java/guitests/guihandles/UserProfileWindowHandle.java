@@ -1,6 +1,7 @@
 package guitests.guihandles;
 
 import guitests.GuiRobot;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
@@ -17,12 +18,17 @@ public class UserProfileWindowHandle extends StageHandle {
     private static final String ADDRESS_FIELD_ID = "#addressTextField";
     private static final String EMAIL_FIELD_ID = "#emailTextField";
     private static final String WEBLINK_FIELD_ID = "#webLinkTextField";
+    private static final String okButton_ID = "#okButton";
+    private static final String cancelButton_ID = "#cancelButton";
+
 
     private final TextField nameTextField;
     private final TextField phoneTextField;
     private final TextField addressTextField;
     private final TextField emailTextField;
     private final TextField webLinkTextField;
+    private final Button okButton;
+    private final Button cancelButton;
 
     public UserProfileWindowHandle(Stage userProfileWindowStage) {
         super(userProfileWindowStage);
@@ -32,6 +38,8 @@ public class UserProfileWindowHandle extends StageHandle {
         this.addressTextField = getChildNode(ADDRESS_FIELD_ID);
         this.emailTextField = getChildNode(EMAIL_FIELD_ID);
         this.webLinkTextField = getChildNode(WEBLINK_FIELD_ID);
+        this.okButton = getChildNode(okButton_ID);
+        this.cancelButton = getChildNode(cancelButton_ID);
     }
 
     /**
@@ -67,5 +75,13 @@ public class UserProfileWindowHandle extends StageHandle {
 
     public String getWebLink() {
         return webLinkTextField.getText();
+    }
+
+    public Button getOkButton() {
+        return okButton;
+    }
+
+    public Button getCancelButton() {
+        return cancelButton;
     }
 }

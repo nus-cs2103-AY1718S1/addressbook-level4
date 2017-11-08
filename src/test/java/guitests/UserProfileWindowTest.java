@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import guitests.guihandles.UserProfileWindowHandle;
+import javafx.application.Platform;
+import javafx.scene.control.Button;
 
 //@@author bladerail
 public class UserProfileWindowTest extends AddressBookGuiTest {
@@ -64,9 +66,30 @@ public class UserProfileWindowTest extends AddressBookGuiTest {
         assertUserProfileWindowOpenThenCloseAccelerator();
     }
 
+    @Test
+    public void closeUserProfileWindowByClickingOk() {
+        getMainMenu().openUserProfileWindowUsingMenu();
+        assertUserProfileWindowOpenThenCloseOk();
+        assertUserProfileWindowNotOpen();
+
+        getMainMenu().openUserProfileWindowUsingAccelerator();
+        assertUserProfileWindowOpenThenCloseOk();
+        assertUserProfileWindowNotOpen();
+    }
+
+    @Test
+    public void closeUserProfileWindowByClickingCancel() {
+        getMainMenu().openUserProfileWindowUsingMenu();
+        assertUserProfileWindowOpenThenCloseCancel();
+        assertUserProfileWindowNotOpen();
+
+        getMainMenu().openUserProfileWindowUsingAccelerator();
+        assertUserProfileWindowOpenThenCloseCancel();
+        assertUserProfileWindowNotOpen();
+    }
 
     /**
-     * Asserts that the help window is open
+     * Asserts that the help window is open, then closes it using the default close method
      */
     private void assertUserProfileWindowOpenThenCloseDefault() {
         assertTrue(ERROR_MESSAGE, UserProfileWindowHandle.isWindowPresent());
@@ -87,6 +110,35 @@ public class UserProfileWindowTest extends AddressBookGuiTest {
         new UserProfileWindowHandle(
                 guiRobot.getStage(UserProfileWindowHandle.USERPROFILE_WINDOW_TITLE)
         ).closeUserProfileWindowUsingAccelerator();
+        mainWindowHandle.focus();
+    }
+
+    /**
+     * Asserts that the help window is open, then closes it using the ok button
+     */
+    private void assertUserProfileWindowOpenThenCloseOk() {
+        assertTrue(ERROR_MESSAGE, UserProfileWindowHandle.isWindowPresent());
+        guiRobot.pauseForHuman();
+
+        Button okButton = new UserProfileWindowHandle(
+                guiRobot.getStage(UserProfileWindowHandle.USERPROFILE_WINDOW_TITLE)
+        ).getOkButton();
+        Platform.runLater(() -> okButton.fire());
+        mainWindowHandle.focus();
+    }
+
+
+    /**
+     * Asserts that the help window is open, then closes it using the ok button
+     */
+    private void assertUserProfileWindowOpenThenCloseCancel() {
+        assertTrue(ERROR_MESSAGE, UserProfileWindowHandle.isWindowPresent());
+        guiRobot.pauseForHuman();
+
+        Button cancelButton = new UserProfileWindowHandle(
+                guiRobot.getStage(UserProfileWindowHandle.USERPROFILE_WINDOW_TITLE)
+        ).getCancelButton();
+        Platform.runLater(() -> cancelButton.fire());
         mainWindowHandle.focus();
     }
 
