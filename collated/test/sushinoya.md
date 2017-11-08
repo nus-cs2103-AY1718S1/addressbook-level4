@@ -1,4 +1,152 @@
 # sushinoya
+###### /java/seedu/room/logic/commands/AddCommandTest.java
+``` java
+        @Override
+        public void sortBy(String sortCriteria) throws AlreadySortedException {
+            fail("This method should not be called.");
+        }
+
+```
+###### /java/seedu/room/logic/commands/AddCommandTest.java
+``` java
+        public void swapRooms(ReadOnlyPerson person1, ReadOnlyPerson person2) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyEventBook getEventBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addEvent(ReadOnlyEvent person) throws DuplicateEventException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws DuplicateEventException,
+                                                                                            EventNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyEvent> getFilteredEventList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortEventsBy(String sortCriteria) throws AlreadySortedException {
+            fail("This method should not be called.");
+        }
+    }
+
+```
+###### /java/seedu/room/logic/commands/SwaproomCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for {@code SwaproomCommand}.
+ */
+public class SwaproomCommandTest {
+
+    private Model model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
+
+    @Test
+    public void execute_validIndexUnfilteredList_success() throws Exception {
+        ReadOnlyPerson person1 = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        ReadOnlyPerson person2 = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        SwaproomCommand swapCommand = prepareCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON);
+
+        String expectedMessage = String.format(SwaproomCommand.MESSAGE_SWAP_PERSONS_SUCCESS, person1.getName(),
+                person2.getName());
+
+        ModelManager expectedModel = new ModelManager(model.getResidentBook(), new UserPrefs());
+        expectedModel.swapRooms(person1, person2);
+
+        assertCommandSuccess(swapCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
+        Index outOfBoundIndex1 = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        Index outOfBoundIndex2 = Index.fromOneBased(model.getFilteredPersonList().size() + 2);
+        SwaproomCommand swapCommand = prepareCommand(outOfBoundIndex1, outOfBoundIndex2);
+
+        assertCommandFailure(swapCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_invalidIndexFilteredList_throwsCommandException() {
+        showFirstPersonOnly(model);
+
+        Index outOfBoundIndex1 = INDEX_SECOND_PERSON;
+        Index outOfBoundIndex2 = INDEX_THIRD_PERSON;
+
+        // ensures that outOfBoundIndex is still in bounds of resident book list
+        assertTrue(outOfBoundIndex1.getZeroBased() < model.getResidentBook().getPersonList().size());
+        assertTrue(outOfBoundIndex2.getZeroBased() < model.getResidentBook().getPersonList().size());
+
+        SwaproomCommand swapCommand = prepareCommand(outOfBoundIndex1, outOfBoundIndex2);
+
+        assertCommandFailure(swapCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() {
+        SwaproomCommand swapFirstCommand = new SwaproomCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON);
+        SwaproomCommand swapSecondCommand = new SwaproomCommand(INDEX_SECOND_PERSON, INDEX_FIRST_PERSON);
+        SwaproomCommand swapThirdCommand = new SwaproomCommand(INDEX_SECOND_PERSON, INDEX_THIRD_PERSON);
+
+        // same object -> returns true
+        assertTrue(swapFirstCommand.equals(swapFirstCommand));
+
+        // same values -> returns true
+        SwaproomCommand swapFirstCommandCopy = new SwaproomCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON);
+        assertTrue(swapFirstCommand.equals(swapFirstCommandCopy));
+
+        // same values with swapped arguments -> returns true
+        assertTrue(swapFirstCommand.equals(swapSecondCommand));
+
+        // different types -> returns false
+        assertFalse(swapFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(swapFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(swapFirstCommand.equals(swapThirdCommand));
+    }
+
+    /**
+     * Returns a {@code SwaproomCommand} with the parameter {@code index}.
+     */
+    private SwaproomCommand prepareCommand(Index index1, Index index2) {
+        SwaproomCommand swapCommand = new SwaproomCommand(index1, index2);
+        swapCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return swapCommand;
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show no one.
+     */
+    private void showNoPerson(Model model) {
+        model.updateFilteredPersonList(p -> false);
+
+        assert model.getFilteredPersonList().isEmpty();
+    }
+}
+```
 ###### /java/seedu/room/logic/parser/AddCommandParserTest.java
 ``` java
     @Test
@@ -106,153 +254,25 @@ public class SwaproomCommandParserTest {
     }
 }
 ```
-###### /java/seedu/room/logic/commands/SwaproomCommandTest.java
+###### /java/seedu/room/model/person/RoomTest.java
 ``` java
-/**
- * Contains integration tests (interaction with the Model) and unit tests for {@code SwaproomCommand}.
- */
-public class SwaproomCommandTest {
-
-    private Model model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
+public class RoomTest {
 
     @Test
-    public void execute_validIndexUnfilteredList_success() throws Exception {
-        ReadOnlyPerson person1 = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        ReadOnlyPerson person2 = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
-        SwaproomCommand swapCommand = prepareCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON);
+    public void isValidRoom() {
+        // invalid rooms
+        assertFalse(Room.isValidRoom("")); // empty string
+        assertFalse(Room.isValidRoom(" ")); // spaces only
+        assertFalse(Room.isValidRoom("-")); // one character
+        assertFalse(Room.isValidRoom("123-1234")); // long room
 
-        String expectedMessage = String.format(SwaproomCommand.MESSAGE_SWAP_PERSONS_SUCCESS, person1.getName(),
-                person2.getName());
+        // valid rooms
+        assertTrue(Room.isValidRoom("09-100"));
 
-        ModelManager expectedModel = new ModelManager(model.getResidentBook(), new UserPrefs());
-        expectedModel.swapRooms(person1, person2);
-
-        assertCommandSuccess(swapCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
-        Index outOfBoundIndex1 = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        Index outOfBoundIndex2 = Index.fromOneBased(model.getFilteredPersonList().size() + 2);
-        SwaproomCommand swapCommand = prepareCommand(outOfBoundIndex1, outOfBoundIndex2);
-
-        assertCommandFailure(swapCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    @Test
-    public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showFirstPersonOnly(model);
-
-        Index outOfBoundIndex1 = INDEX_SECOND_PERSON;
-        Index outOfBoundIndex2 = INDEX_THIRD_PERSON;
-
-        // ensures that outOfBoundIndex is still in bounds of resident book list
-        assertTrue(outOfBoundIndex1.getZeroBased() < model.getResidentBook().getPersonList().size());
-        assertTrue(outOfBoundIndex2.getZeroBased() < model.getResidentBook().getPersonList().size());
-
-        SwaproomCommand swapCommand = prepareCommand(outOfBoundIndex1, outOfBoundIndex2);
-
-        assertCommandFailure(swapCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    @Test
-    public void equals() {
-        SwaproomCommand swapFirstCommand = new SwaproomCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON);
-        SwaproomCommand swapSecondCommand = new SwaproomCommand(INDEX_SECOND_PERSON, INDEX_FIRST_PERSON);
-        SwaproomCommand swapThirdCommand = new SwaproomCommand(INDEX_SECOND_PERSON, INDEX_THIRD_PERSON);
-
-        // same object -> returns true
-        assertTrue(swapFirstCommand.equals(swapFirstCommand));
-
-        // same values -> returns true
-        SwaproomCommand swapFirstCommandCopy = new SwaproomCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON);
-        assertTrue(swapFirstCommand.equals(swapFirstCommandCopy));
-
-        // same values with swapped arguments -> returns true
-        assertTrue(swapFirstCommand.equals(swapSecondCommand));
-
-        // different types -> returns false
-        assertFalse(swapFirstCommand.equals(1));
-
-        // null -> returns false
-        assertFalse(swapFirstCommand.equals(null));
-
-        // different person -> returns false
-        assertFalse(swapFirstCommand.equals(swapThirdCommand));
-    }
-
-    /**
-     * Returns a {@code SwaproomCommand} with the parameter {@code index}.
-     */
-    private SwaproomCommand prepareCommand(Index index1, Index index2) {
-        SwaproomCommand swapCommand = new SwaproomCommand(index1, index2);
-        swapCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return swapCommand;
-    }
-
-    /**
-     * Updates {@code model}'s filtered list to show no one.
-     */
-    private void showNoPerson(Model model) {
-        model.updateFilteredPersonList(p -> false);
-
-        assert model.getFilteredPersonList().isEmpty();
+        // default empty room
+        assertTrue(Room.isValidRoom("Not Set"));
     }
 }
-```
-###### /java/seedu/room/logic/commands/AddCommandTest.java
-``` java
-        @Override
-        public void sortBy(String sortCriteria) throws AlreadySortedException {
-            fail("This method should not be called.");
-        }
-
-```
-###### /java/seedu/room/logic/commands/AddCommandTest.java
-``` java
-        public void swapRooms(ReadOnlyPerson person1, ReadOnlyPerson person2) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyEventBook getEventBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void addEvent(ReadOnlyEvent person) throws DuplicateEventException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws DuplicateEventException,
-                                                                                            EventNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<ReadOnlyEvent> getFilteredEventList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void sortEventsBy(String sortCriteria) throws AlreadySortedException {
-            fail("This method should not be called.");
-        }
-    }
-
 ```
 ###### /java/seedu/room/storage/StorageManagerTest.java
 ``` java
@@ -272,25 +292,5 @@ public class SwaproomCommandTest {
     }
 
 
-}
-```
-###### /java/seedu/room/model/person/RoomTest.java
-``` java
-public class RoomTest {
-
-    @Test
-    public void isValidRoom() {
-        // invalid rooms
-        assertFalse(Room.isValidRoom("")); // empty string
-        assertFalse(Room.isValidRoom(" ")); // spaces only
-        assertFalse(Room.isValidRoom("-")); // one character
-        assertFalse(Room.isValidRoom("123-1234")); // long room
-
-        // valid rooms
-        assertTrue(Room.isValidRoom("09-100"));
-
-        // default empty room
-        assertTrue(Room.isValidRoom("Not Set"));
-    }
 }
 ```

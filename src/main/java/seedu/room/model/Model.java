@@ -11,6 +11,7 @@ import seedu.room.logic.commands.exceptions.TagNotFoundException;
 import seedu.room.model.event.ReadOnlyEvent;
 import seedu.room.model.event.exceptions.DuplicateEventException;
 import seedu.room.model.event.exceptions.EventNotFoundException;
+import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
@@ -79,6 +80,11 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    /**
+     * Updates Picture of Person with FilteredPersonList
+     */
+    void updateFilteredPersonListPicture(Predicate<ReadOnlyPerson> predicate, Person p);
 
     /**
      * Remove tag inside the Resident Book

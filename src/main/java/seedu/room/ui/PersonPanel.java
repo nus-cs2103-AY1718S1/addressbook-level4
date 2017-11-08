@@ -1,9 +1,11 @@
-//@@author shitian007
 package seedu.room.ui;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -22,8 +24,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import seedu.room.commons.core.LogsCenter;
 import seedu.room.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.room.logic.Logic;
+import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
 
+//@@author shitian007
 /**
  * The person information panel of the app.
  */
@@ -35,6 +40,7 @@ public class PersonPanel extends UiPart<Region> {
     private static Random random = new Random();
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private final Logic logic;
 
     private ReadOnlyPerson person;
 
@@ -55,8 +61,9 @@ public class PersonPanel extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    public PersonPanel() {
+    public PersonPanel(Logic logic) {
         super(FXML);
+        this.logic = logic;
         loadDefaultScreen();
         registerAsAnEventHandler(this);
     }
@@ -81,16 +88,30 @@ public class PersonPanel extends UiPart<Region> {
 
     /**
      * loads the selected person's information to be displayed.
-     * @param person
      */
     private void loadPersonInformation(ReadOnlyPerson person) {
-        this.person = person;
+        this.person = updatePersonFromLogic(person);
         name.textProperty().setValue(person.getName().toString());
         phone.textProperty().setValue(person.getPhone().toString());
         address.textProperty().setValue(person.getRoom().toString());
         email.textProperty().setValue(person.getEmail().toString());
         initTags();
         initImage();
+    }
+
+    /**
+     * @param person whose image is to be updated within the filtered persons list
+     * @return the updated person
+     */
+    private ReadOnlyPerson updatePersonFromLogic(ReadOnlyPerson person) {
+        List<ReadOnlyPerson> personList = logic.getFilteredPersonList();
+        for (ReadOnlyPerson p : personList) {
+            if (p.getName().toString().equals(person.getName().toString())
+                    && p.getPhone().toString().equals(person.getPhone().toString())) {
+                return p;
+            }
+        }
+        return null;
     }
 
     /**
@@ -112,18 +133,39 @@ public class PersonPanel extends UiPart<Region> {
     private void initImage() {
         try {
             File picFile = new File(person.getPicture().getPictureUrl());
-            FileInputStream fileStream = new FileInputStream(picFile);
-            Image personPicture = new Image(fileStream);
+            if (picFile.exists()) {
+                FileInputStream fileStream = new FileInputStream(picFile);
+                Image personPicture = new Image(fileStream);
+                picture.setImage(personPicture);
+            } else {
+                initJarImage();
+            }
             picture.setFitHeight(person.getPicture().PIC_HEIGHT);
             picture.setFitWidth(person.getPicture().PIC_WIDTH);
-            picture.setImage(personPicture);
             informationPane.getChildren().add(picture);
             picture.setOnMouseClicked((MouseEvent e) -> {
-                System.out.println("Image clicked");
                 handleAddImage();
             });
         } catch (Exception e) {
             System.out.println("Image not found");
+        }
+    }
+
+    /**
+     * Handle loading of image from both within and outside of jar file
+     */
+    public void initJarImage() throws FileNotFoundException {
+        try {
+            InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
+            Image personPicture = new Image(in);
+            picture.setImage(personPicture);
+            person.getPicture().setJarResourcePath();
+        } catch (Exception e) {
+            File picFile = new File(person.getPicture().getJarPictureUrl());
+            FileInputStream fileStream = new FileInputStream(picFile);
+            Image personPicture = new Image(fileStream);
+            picture.setImage(personPicture);
+            person.getPicture().setJarResourcePath();
         }
     }
 
@@ -137,15 +179,23 @@ public class PersonPanel extends UiPart<Region> {
         if (selectedPic != null) {
             try {
                 person.getPicture().setPictureUrl(person.getName().toString() + person.getPhone().toString() + ".jpg");
-                ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
-                FileInputStream fileStream = new FileInputStream(person.getPicture().getPictureUrl());
-                Image newPicture = new Image(fileStream);
-                picture.setImage(newPicture);
+                logic.updatePersonListPicture((Person) person);
+                if (person.getPicture().checkJarResourcePath()) {
+                    ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getJarPictureUrl()));
+                    FileInputStream fileStream = new FileInputStream(person.getPicture().getJarPictureUrl());
+                    Image newPicture = new Image(fileStream);
+                    picture.setImage(newPicture);
+                } else {
+                    ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
+                    FileInputStream fileStream = new FileInputStream(person.getPicture().getPictureUrl());
+                    Image newPicture = new Image(fileStream);
+                    picture.setImage(newPicture);
+                }
             } catch (Exception e) {
-                System.out.println(e + "Invalid File");
+                System.out.println(e + "Cannot set Image of person");
             }
         } else {
-            System.out.println("Invalid File");
+            System.out.println("Please select an Image File");
         }
     }
 
@@ -156,10 +206,19 @@ public class PersonPanel extends UiPart<Region> {
     private void handleDeleteImage() {
         try {
             person.getPicture().resetPictureUrl();
-            File picFile = new File(person.getPicture().getPictureUrl());
-            FileInputStream fileStream = new FileInputStream(picFile);
-            Image personPicture = new Image(fileStream);
-            picture.setImage(personPicture);
+            if (person.getPicture().checkJarResourcePath()) {
+                System.out.println(person.getPicture().getJarPictureUrl());
+                InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
+                person.getPicture().setJarResourcePath();
+                Image personPicture = new Image(in);
+                picture.setImage(personPicture);
+            } else {
+                person.getPicture().resetPictureUrl();
+                File picFile = new File(person.getPicture().getPictureUrl());
+                FileInputStream fileStream = new FileInputStream(picFile);
+                Image personPicture = new Image(fileStream);
+                picture.setImage(personPicture);
+            }
         } catch (Exception e) {
             System.out.println("Placeholder Image not found");
         }
