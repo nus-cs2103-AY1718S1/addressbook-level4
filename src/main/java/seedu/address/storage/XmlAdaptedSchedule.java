@@ -45,7 +45,7 @@ public class XmlAdaptedSchedule {
     public Schedule toModelType() throws IllegalValueException {
         final String name = this.name;
         final Schedule schedule;
-        Calendar calendar = null;
+        Calendar calendar;
         calendar = Calendar.getInstance();
         if (calendar != null) {
             try {
