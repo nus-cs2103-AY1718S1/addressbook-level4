@@ -72,14 +72,17 @@ public class PersonListPanel extends UiPart<Region> {
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollTo(CANCEL_SELECTION_INDEX);
         scrollTo(event.targetIndex);
     }
 
+    //@@author Hailinx
     @Subscribe
     private void handleClearListSelectionEvent(ClearListSelectionEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(CANCEL_SELECTION_INDEX);
     }
+    //@@author
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.

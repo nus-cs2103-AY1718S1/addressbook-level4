@@ -344,6 +344,7 @@ public class UndoCommandParser implements Parser<UndoCommand> {
             persons.add(person);
         }
     }
+
 ```
 ###### \java\seedu\address\model\Model.java
 ``` java
@@ -356,6 +357,7 @@ public class UndoCommandParser implements Parser<UndoCommand> {
      */
     void favouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
+
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -378,4 +380,5 @@ public class UndoCommandParser implements Parser<UndoCommand> {
     public void setFavourite(boolean favourite) {
         this.favourite = favourite;
     }
+
 ```

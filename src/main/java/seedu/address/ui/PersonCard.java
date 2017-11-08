@@ -3,8 +3,8 @@ package seedu.address.ui;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -18,6 +18,7 @@ public class PersonCard extends UiPart<Region> {
     private static final String tagColor = "#dc143c";
     //@@author
 
+
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -28,8 +29,6 @@ public class PersonCard extends UiPart<Region> {
 
     public final ReadOnlyPerson person;
 
-    @FXML
-    private HBox cardPane;
     @FXML
     private Label name;
     @FXML
@@ -42,6 +41,14 @@ public class PersonCard extends UiPart<Region> {
     private Label email;
     @FXML
     private FlowPane tags;
+    //@@author qihao27
+    @FXML
+    private ImageView favouriteIcon;
+    @FXML
+    private ImageView todo;
+    @FXML
+    private Label totalTodo;
+    //@@author
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
@@ -58,6 +65,8 @@ public class PersonCard extends UiPart<Region> {
     private void bindListeners(ReadOnlyPerson person) {
 
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
+
+
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
@@ -65,6 +74,10 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().clear();
             initTags(person);
         });
+        //@@author qihao27
+        addFavouriteStar(person);
+        addTodoCount(person);
+        //@@author
     }
 
     /**
@@ -73,12 +86,40 @@ public class PersonCard extends UiPart<Region> {
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            //@@author qihao27
             tagLabel.setStyle("-fx-background-color: " + tagColor);
-            //@@author
             tags.getChildren().add(tagLabel);
         });
     }
+
+    //@@author qihao27
+    /**
+     * Initialise the favourited contacts with star
+     */
+    private void addFavouriteStar(ReadOnlyPerson person) {
+        if (person.getFavourite()) {
+            favouriteIcon.setId("favouriteStar");
+        }
+    }
+
+    /**
+     * Initialise contacts with todolist(s) count
+     */
+    private void addTodoCount(ReadOnlyPerson person) {
+        if (person.getTodoItems().size() > 0) {
+            totalTodo.setText(Integer.toString(person.getTodoItems().size()));
+            todo.setId("todoBackground");
+        } else {
+            totalTodo.setText("");
+        }
+    }
+
+    //@@author aaronyhsoh-unused
+    /*private void highlightName(ReadOnlyPerson person) {
+        if (person.getFavourite()) {
+            name.setStyle("-fx-text-fill: red");
+        }
+    }*/
+    //@@author
 
     @Override
     public boolean equals(Object other) {

@@ -109,6 +109,15 @@ public class XmlAddressBookStorageTest {
         addressBook.getTagList().remove(0);
     }
 
+    //@@author qihao27
+    @Test
+    public void getTodoList_modifyList_throwsUnsupportedOperationException() {
+        XmlSerializableAddressBook addressBook = new XmlSerializableAddressBook();
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getTodoList().remove(0);
+    }
+    //@@author
+
     /**
      * Saves {@code addressBook} at the specified {@code filePath}.
      */
@@ -126,6 +135,7 @@ public class XmlAddressBookStorageTest {
         saveAddressBook(new AddressBook(), null);
     }
 
+    //@@author Hailinx
     @Test
     public void test_isEncrypted() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
@@ -174,5 +184,5 @@ public class XmlAddressBookStorageTest {
         xmlAddressBookStorage.encryptAddressBook("password");
         xmlAddressBookStorage.decryptAddressBook("wrong password");
     }
-
+    //@@author
 }

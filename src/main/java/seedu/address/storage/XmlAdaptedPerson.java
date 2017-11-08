@@ -35,8 +35,10 @@ public class XmlAdaptedPerson {
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    //@@author Hailinx
     @XmlElement
     private List<XmlAdapterTodoItem> xmlTodoItems = new ArrayList<>();
+    //@@author
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -59,9 +61,11 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        //@@author Hailinx
         for (TodoItem todoItem : source.getTodoItems()) {
             xmlTodoItems.add(new XmlAdapterTodoItem(todoItem));
         }
+        //@@author
         favourite = source.getFavourite();
     }
 
@@ -75,10 +79,12 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
+        //@@author Hailinx
         final List<TodoItem> todoItems = new ArrayList<>();
         for (XmlAdapterTodoItem todoItem : xmlTodoItems) {
             todoItems.add(todoItem.toModelType());
         }
+        //@@author
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);

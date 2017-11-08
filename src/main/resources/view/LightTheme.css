@@ -1,8 +1,8 @@
+/* @@author qihao27 */
+/* modified base on DarkTheme.css */
 .background {
-    /* @@author qihao27 */
     -fx-background-color: derive(#f3e4c6, 20%);
     background-color: #f3e4c6; /* Used in the default.html file */
-    /* @@author */
 }
 
 .label {
@@ -42,11 +42,9 @@
 }
 
 .table-view {
-    /* @@author qihao27 */
     -fx-base: #fff2d6;
     -fx-control-inner-background: #f3e4c6;
     -fx-background-color: #f3e4c6;
-    /* @@author */
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
     -fx-padding: 5;
@@ -71,9 +69,7 @@
 .table-view .column-header .label {
     -fx-font-size: 20pt;
     -fx-font-family: "Segoe UI Light";
-    /* @@author qihao27 */
     -fx-text-fill: black;
-    /* @@author */
     -fx-alignment: center-left;
     -fx-opacity: 1;
 }
@@ -83,7 +79,6 @@
 }
 
 .split-pane:horizontal .split-pane-divider {
-    /* @@author qihao27 */
     -fx-background-color: derive(#f3e4c6, 20%);
     -fx-border-color: transparent transparent transparent #fff0cc;
 }
@@ -91,22 +86,16 @@
 .split-pane:vertical .split-pane-divider {
     -fx-background-color: derive(#f3e4c6, 20%);
     -fx-border-color: transparent transparent transparent #fff0cc;
-    /* @@author */
 }
 
 .split-pane {
     -fx-border-radius: 1;
     -fx-border-width: 1;
-    /* @@author qihao27 */
     -fx-background-color: derive(#f3e4c6, 20%);
-    /* @@author */
 }
 
 .list-view {
     -fx-background-insets: 0;
-    /* @@author qihao27 */
-    -fx-background-radius: 5;
-    /* @@author */
     -fx-padding: 0;
 }
 
@@ -117,40 +106,30 @@
 }
 
 .list-cell:filled:even {
-    /* @@author qihao27 */
     -fx-background-color: #ffdece;
     -fx-background-radius: 5;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
-    /* @@author */
 }
 
 .list-cell:filled:odd {
-    /* @@author qihao27 */
     -fx-background-color: #dee8e4;
     -fx-background-radius: 5;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
-    /* @@author */
 }
 
 .list-cell:filled:selected {
-    /* @@author qihao27 */
     -fx-background-color: #f4b770;
     -fx-background-radius: 5;
-    /* @@author */
 }
 
 .list-cell:filled:selected #cardPane {
-    /* @@author qihao27 */
     -fx-border-radius: 5;
     -fx-border-color: #8F4F06;
-    /* @@author */
     -fx-border-width: 1;
 }
 
 .list-cell .label {
-    /* @@author qihao27 */
     -fx-text-fill: black;
-    /* @@author */
 }
 
 .cell_big_label {
@@ -166,23 +145,17 @@
 }
 
 .anchor-pane {
-    /* @@author qihao27 */
      -fx-background-color: derive(#f3e4c6, 20%);
-     /* @@author */
 }
 
 .pane-with-border {
-    /* @@author qihao27 */
      -fx-background-color: derive(#f3e4c6, 20%);
      -fx-border-color: derive(#f3e4c6, 10%);
-     /* @@author */
      -fx-border-top-width: 1px;
 }
 
 .status-bar {
-    /* @@author qihao27 */
     -fx-background-color: derive(#f3e4c6, 20%);
-    /* @@author */
     -fx-text-fill: black;
 }
 
@@ -190,83 +163,59 @@
     -fx-background-color: transparent;
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 13pt;
-    /* @@author qihao27 */
     -fx-text-fill: black;
-    /* @@author */
 }
 
 .result-display .label {
-    /* @@author qihao27 */
     -fx-text-fill: white !important;
-    /* @@author */
 }
 
 .status-bar .label {
     -fx-font-family: "Segoe UI Light";
-    /* @@author qihao27 */
     -fx-text-fill: black;
-    /* @@author */
 }
 
 .status-bar-with-border {
-    /* @@author qihao27 */
     -fx-background-color: derive(#f3e4c6, 30%);
     -fx-border-color: derive(#f3e4c6, 25%);
-    /* @@author */
     -fx-border-width: 1px;
 }
 
 .status-bar-with-border .label {
-    /* @@author qihao27 */
     -fx-text-fill: black;
-    /* @@author */
 }
 
 .grid-pane {
-    /* @@author qihao27 */
     -fx-background-color: derive(#f3e4c6, 30%);
     -fx-border-color: derive(#f3e4c6, 30%);
-    /* @@author */
     -fx-border-width: 1px;
 }
 
 .grid-pane .anchor-pane {
-    /* @@author qihao27 */
     -fx-background-color: derive(#f3e4c6, 30%);
-    /* @@author */
 }
 
 .context-menu {
-    /* @@author qihao27 */
     -fx-background-color: derive(#f3e4c6, 50%);
-    /* @@author */
 }
 
 .context-menu .label {
-    /* @@author qihao27 */
     -fx-text-fill: black;
-    /* @@author */
 }
 
 .menu-bar {
-    /* @@author qihao27 */
     -fx-background-color: derive(#f3e4c6, 20%);
-    /* @@author */
 }
 
 .menu-bar .label {
     -fx-font-size: 14pt;
     -fx-font-family: "Segoe UI Light";
-    /* @@author qihao27 */
     -fx-text-fill: black;
-    /* @@author */
     -fx-opacity: 0.9;
 }
 
 .menu .left-container {
-    /* @@author qihao27 */
     -fx-background-color: white;
-    /* @@author */
 }
 
 /*
@@ -279,9 +228,7 @@
     -fx-border-color: #e2e2e2;
     -fx-border-width: 2;
     -fx-background-radius: 0;
-    /* @@author qihao27 */
     -fx-background-color: #f3e4c6;
-    /* @@author */
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
     -fx-text-fill: #d8d8d8;
@@ -294,15 +241,11 @@
 
 .button:pressed, .button:default:hover:pressed {
   -fx-background-color: white;
-  /* @@author qihao27 */
   -fx-text-fill: #f3e4c6;
-  /* @@author */
 }
 
 .button:focused {
-    /* @@author qihao27 */
     -fx-border-color: black, black;
-    /* @@author */
     -fx-border-width: 1, 1;
     -fx-border-style: solid, segments(1, 1);
     -fx-border-radius: 0, 0;
@@ -311,17 +254,13 @@
 
 .button:disabled, .button:default:disabled {
     -fx-opacity: 0.4;
-    /* @@author qihao27 */
     -fx-background-color: #f3e4c6;
     -fx-text-fill: black;
-    /* @@author */
 }
 
 .button:default {
     -fx-background-color: -fx-focus-color;
-    /* @@author qihao27 */
     -fx-text-fill: #000000;
-    /* @@author */
 }
 
 .button:default:hover {
@@ -329,50 +268,36 @@
 }
 
 .dialog-pane {
-    /* @@author qihao27 */
     -fx-background-color: #f3e4c6;
-    /* @@author */
 }
 
 .dialog-pane > *.button-bar > *.container {
-    /* @@author qihao27 */
     -fx-background-color: #f3e4c6;
-    /* @@author */
 }
 
 .dialog-pane > *.label.content {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    /* @@author qihao27 */
     -fx-text-fill: black;
-    /* @@author */
 }
 
 .dialog-pane:header *.header-panel {
-    /* @@author qihao27 */
     -fx-background-color: derive(#f3e4c6, 25%);
-    /* @@author */
 }
 
 .dialog-pane:header *.header-panel *.label {
     -fx-font-size: 18px;
     -fx-font-style: italic;
     -fx-fill: white;
-    /* @@author qihao27 */
     -fx-text-fill: black;
-    /* @@author */
 }
 
 .scroll-bar {
-    /* @@author qihao27 */
     -fx-background-color: derive(#824424, 75%);
-    /* @@author */
 }
 
 .scroll-bar .thumb {
-    /* @@author qihao27 */
     -fx-background-color: derive(#824424, 100%);
-    /* @@author */
     -fx-background-insets: 3;
 }
 
@@ -386,15 +311,11 @@
 }
 
 .scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
-    /* @@author qihao27 */
     -fx-padding: 1 6 1 6;
-    /* @@author */
 }
 
 .scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
-    /* @@author qihao27 */
     -fx-padding: 6 1 6 1;
-    /* @@author */
 }
 
 #cardPane {
@@ -410,20 +331,14 @@
 #commandTextField {
     -fx-background-color: transparent #383838 transparent #383838;
     -fx-background-insets: 0;
-    /* @@author qihao27 */
     -fx-background-radius: 7;
     -fx-border-color: #383838 #383838 #383838 #383838;
-    /* @@author */
     -fx-border-insets: 0;
-    /* @@author qihao27 */
     -fx-border-radius: 7;
-    /* @@author */
     -fx-border-width: 1;
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 13pt;
-    /* @@author qihao27 */
     -fx-text-fill: black;
-    /* @@author */
 }
 
 #filterField, #personListPanel, #personWebpage {
@@ -431,10 +346,8 @@
 }
 
 #resultDisplay .content {
-    /* @@author qihao27 */
     -fx-background-color: transparent, #f3e4c6, transparent, #f3e4c6;
-    /* @@author */
-    -fx-background-radius: 0;
+    -fx-background-radius: 5;
 }
 
 #tags {
@@ -449,4 +362,23 @@
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
+}
+
+#favouriteStar {
+    -fx-image: url("../images/favStar.png");
+}
+
+#todoBackground {
+    -fx-image: url("../images/todo.png");
+}
+
+.list-cell:filled .split-pane:vertical .split-pane-divider {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent transparent transparent;
+}
+
+.list-cell .split-pane {
+    -fx-border-radius: 0;
+    -fx-border-width: 0;
+    -fx-background-color: transparent;
 }

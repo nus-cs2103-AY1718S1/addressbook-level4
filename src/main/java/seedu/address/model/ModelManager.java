@@ -17,9 +17,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TodoItem;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.DuplicateTodoItemException;
-//@@author qihao27
 import seedu.address.model.person.exceptions.NoPersonFoundException;
-//@@author
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -53,11 +51,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
         indicateAddressBookChanged();
-    }
-
-    @Override
-    public void setAddressBook(ReadOnlyAddressBook newData) {
-        addressBook.resetData(newData);
     }
 
     @Override
@@ -101,7 +94,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    //@@author qihao27
+    //@@author Hailinx
     @Override
     public void addTodoItem(ReadOnlyPerson target, TodoItem todoItem)
             throws DuplicatePersonException, PersonNotFoundException, DuplicateTodoItemException {
@@ -134,7 +127,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new ShowAllTodoItemsEvent());
     }
 
-    //@@author
+    //@@author qihao27
     @Override
     public void sortPerson(String option) throws NoPersonFoundException {
         requireNonNull(option);

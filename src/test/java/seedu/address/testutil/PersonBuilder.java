@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -10,7 +11,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
-
+import seedu.address.model.person.TodoItem;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -116,6 +117,16 @@ public class PersonBuilder {
         this.person.setFavourite(true);
         return this;
     }
+
+    //@@author Hailinx
+    /**
+     * Sets the {@code TodoItem} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withTodoItem(TodoItem... todoItem) {
+        this.person.setTodoItems(Arrays.asList(todoItem));
+        return this;
+    }
+    //@@author
 
     public Person build() {
         return this.person;

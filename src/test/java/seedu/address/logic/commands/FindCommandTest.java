@@ -66,6 +66,7 @@ public class FindCommandTest {
         assertFalse(findFirstCommand.equals(findSecondCommand));
     }
 
+    //@@author Hailinx
     @Test
     public void equals_indFuzzyFind() {
         FuzzySearchPredicate firstPredicate =
@@ -124,6 +125,7 @@ public class FindCommandTest {
         // different person -> returns false
         assertFalse(findFirstCommand.equals(findSecondCommand));
     }
+    //@@author
 
     @Test
     public void execute_findByName_multiplePersonsFound() throws ParseException {
@@ -132,6 +134,7 @@ public class FindCommandTest {
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
+    //@@author Hailinx
     @Test
     public void execute_findModeFuzzy_multiplePersonsFound() throws ParseException {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
@@ -145,6 +148,7 @@ public class FindCommandTest {
         FindCommand command = prepareCommand("-d a/street");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, DANIEL, GEORGE));
     }
+    //@@author
 
     /**
      * Parses {@code userInput} into a {@code FindCommand} in default mode.

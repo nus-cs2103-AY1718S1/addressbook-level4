@@ -10,15 +10,11 @@ import java.util.regex.Pattern;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-//@@author qihao27
 import seedu.address.logic.commands.DeleteAltCommand;
-//@@author
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
-//@@author qihao27
 import seedu.address.logic.commands.ExportCommand;
-//@@author
 import seedu.address.logic.commands.FavouriteCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -27,9 +23,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LockCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
-//@@author qihao27
 import seedu.address.logic.commands.SortCommand;
-//@@author
 import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.logic.commands.TodoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -64,10 +58,12 @@ public class AddressBookParser {
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
 
+        //@@author Hailinx
         Security security = SecurityManager.getInstance();
         if (security.isSecured() && !security.isPermittedCommand(commandWord)) {
             throw new ParseException(MESSAGE_IS_ENCRYPTD);
         }
+        //@@author
 
         switch (commandWord) {
 
@@ -92,6 +88,7 @@ public class AddressBookParser {
             return new DeleteAltCommandParser().parse(arguments);
         //@@author
 
+        //@@author Hailinx
         case TodoCommand.COMMAND_WORD:
             return new TodoCommandParser().parse(arguments);
 
@@ -100,6 +97,7 @@ public class AddressBookParser {
 
         case UnlockCommand.COMMAND_WORD:
             return new UnlockCommandParser().parse(arguments);
+        //@@author
 
         case ClearCommand.COMMAND_WORD:
         case ClearCommand.COMMAND_ALIAS:
@@ -113,9 +111,11 @@ public class AddressBookParser {
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
 
+        //@@author Hailinx
         case SwitchCommand.COMMAND_WORD:
         case SwitchCommand.COMMAND_ALIAS:
             return new SwitchCommand(arguments);
+        //@@author
 
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:

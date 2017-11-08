@@ -6,9 +6,7 @@
                 throws DuplicatePersonException {
             fail("This method should not be called.");
         }
-```
-###### \java\seedu\address\logic\commands\FavouriteCommandTest.java
-``` java
+        
 /**
  * Contains integration tests (interaction with the Model) and unit tests for FavouriteCommand.
  */
@@ -107,6 +105,7 @@ public class FavouriteCommandTest {
 }
 
 ```
+
 ###### \java\seedu\address\logic\commands\RedoCommandTest.java
 ``` java
     @Test
@@ -223,6 +222,7 @@ public class FavouriteCommandTest {
     }
 }
 ```
+
 ###### \java\seedu\address\logic\parser\AddCommandParserTest.java
 ``` java
     public static final String EMPTY_PHONE = "-";
@@ -251,6 +251,7 @@ public class FavouriteCommandTest {
 ```
 ###### \java\seedu\address\logic\parser\FavouriteCommandParserTest.java
 ``` java
+
 public class FavouriteCommandParserTest {
 
     private FavouriteCommandParser parser = new FavouriteCommandParser();
@@ -293,9 +294,4 @@ public class FavouriteCommandParserTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: missing phone, email, address, -> accepted */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(EMPTY_PHONE).withEmail(EMPTY_EMAIL)
-                .withAddress(EMPTY_ADDRESS).withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd);
 ```

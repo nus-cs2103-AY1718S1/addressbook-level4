@@ -22,9 +22,6 @@ public interface Model {
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 
-    /** Replaces the data in the ModelManager with the given addressBook */
-    void setAddressBook(ReadOnlyAddressBook newData);
-
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
@@ -54,8 +51,8 @@ public interface Model {
      */
     void favouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
-    //@@author
 
+    //@@author Hailinx
     /** Adds the given todoItem to target person */
     void addTodoItem(ReadOnlyPerson target, TodoItem todoItem)
             throws DuplicatePersonException, PersonNotFoundException, DuplicateTodoItemException;
@@ -67,6 +64,7 @@ public interface Model {
     /** Resets all todoItem for target person */
     void resetTodoItem(ReadOnlyPerson target)
             throws DuplicatePersonException, PersonNotFoundException;
+    //@@author
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
@@ -77,6 +75,7 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    //@@author Hailinx
     /** Updates the UI to show all todoItems for all persons */
     void updateTodoItemList();
 

@@ -10,6 +10,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.testutil.TodoItemUtil.getTodoItemOne;
+import static seedu.address.testutil.TodoItemUtil.getTodoItemTwo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,6 +59,33 @@ public class TypicalPersons {
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
 
+    //@@author Hailinx
+    // Persons with TodoItems fields
+    public static final ReadOnlyPerson BILL = new PersonBuilder().withName("Bill")
+            .withAddress("PGPR B1").withEmail("bill@example.com")
+            .withPhone("12345678").withTags("friends")
+            .withTodoItem(getTodoItemOne())
+            .build();
+    public static final ReadOnlyPerson CAT = new PersonBuilder().withName("Cat")
+            .withAddress("PGPR B2").withEmail("cat@example.com")
+            .withPhone("23456789").withTags("friends")
+            .withTodoItem(getTodoItemTwo())
+            .build();
+    public static final ReadOnlyPerson DARWIN = new PersonBuilder().withName("Drawin")
+            .withAddress("PGPR B3").withEmail("drawin@example.com")
+            .withPhone("34567890").withTags("friends")
+            .withTodoItem(getTodoItemOne(), getTodoItemTwo())
+            .build();
+
+    //@@author qihao27
+    // Persons with favourite star
+    public static final ReadOnlyPerson JOHN = new PersonBuilder().withName("John")
+        .withAddress("PGPR B4").withEmail("john@example.com")
+        .withPhone("45678901").withTags("friends")
+        .withTodoItem(getTodoItemOne())
+        .withFavourite()
+        .build();
+
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
     private TypicalPersons() {} // prevents instantiation
@@ -77,6 +106,24 @@ public class TypicalPersons {
     }
 
     public static List<ReadOnlyPerson> getTypicalPersons() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE, BILL, CAT, DARWIN));
     }
+
+    //@@author Hailinx
+    /**
+     * Returns an {@code AddressBook} with ItemTodo filed not empty.
+     */
+    public static AddressBook getTodoItemAddressBook() {
+        AddressBook ab = new AddressBook();
+        List<ReadOnlyPerson> personList = Arrays.asList(ALICE, BILL, CAT, DARWIN);
+        for (ReadOnlyPerson person : personList) {
+            try {
+                ab.addPerson(person);
+            } catch (DuplicatePersonException e) {
+                assert false : "not possible";
+            }
+        }
+        return ab;
+    }
+    //@@author
 }

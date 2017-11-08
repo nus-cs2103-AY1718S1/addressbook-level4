@@ -61,6 +61,7 @@ public class BrowserPanel extends UiPart<Region> {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
 
+    //@@author Hailinx
     /**
      * @return the url string according to {@code searchMode}.
      */
@@ -81,6 +82,7 @@ public class BrowserPanel extends UiPart<Region> {
             return GOOGLE_SEARCH_URL_PREFIX + GOOGLE_SEARCH_URL_SUFFIX;
         }
     }
+    //@@author
 
     /**
      * Loads a default HTML file with a background that matches the general theme.
@@ -97,11 +99,13 @@ public class BrowserPanel extends UiPart<Region> {
         browser = null;
     }
 
+    //@@author Hailinx
     @Subscribe
     private void handleChangeSearchEvent(ChangeSearchEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         searchMode = event.searchMode;
     }
+    //@@author
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {

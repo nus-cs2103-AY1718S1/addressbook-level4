@@ -27,10 +27,12 @@ public class LogicManagerTest {
     private Model model = new ModelManager();
     private Logic logic = new LogicManager(model);
 
+    //@@author Hailinx
     @Before
     public void initialSecurityManager() {
         new SecurityStubUtil().initialUnSecuredSecurity();
     }
+    //@@author
 
     @Test
     public void execute_invalidCommandFormat_throwsParseException() {

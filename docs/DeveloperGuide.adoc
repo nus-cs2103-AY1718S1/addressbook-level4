@@ -232,6 +232,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::find[]
 === Find mechanism
 
 The find command is a little bit different from other commands like `AddCommand`. It can specify options in in its arguments. There are three steps for parsing commands with options, which are as follows:
@@ -272,6 +273,7 @@ public class FindOptionByName extends CommandOption<FindCommand> {
 **Cons:** This structure is not clear.
 
 ---
+// end::find[]
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -448,6 +450,8 @@ Sort command takes in command `OPTIONS` to perform sorting by five fields of a p
 **Pros:** No inheritance required, minimise error. +
 **Cons:** 'SortCommand' class specific, cannot be reused by other commands.
 
+---
+
 **Aspect:** Implementation of sort +
 **Alternative 1 (current choice):** Lambda expression +
 **Pros:** Short and concise. +
@@ -493,7 +497,9 @@ public class SecurityManager extends ComponentManager implements Security {
 
 When methods in interface `SecureStorage` are called, `SecurityManager` will not realize them by itself. Instead, it calls the methods in `Storage` which also implements `SecureStorage`, because component `Secure` should not read and save files. +
 
-The "raise" method is used to communicate with the `UI` component while "isPermittedCommand" is called in `Logic` component to check whether a certain command have enough permission to be executed. The `Security` component acts like a bridge. It fulfills its function by communicating with every component.
+The "raise" method is used to communicate with the `UI` component while "isPermittedCommand" is called in `Logic` component to check whether a certain command have enough permission to be executed. The `Security` component acts like a bridge. It fulfills its function by communicating with every component. +
+
+After executing lock and unlock command, they will send `ReloadAddressBookEvent` to `MainApp` to clear all history and undo/redo stacks and then reload the address book from storage.
 
 image::LockSequenceDiagram.png[width="800"]
 
@@ -544,7 +550,87 @@ public class FavouriteCommand extends UndoableCommand {
 **Pros:** Does not mess up the original order. +
 **Cons:** Will use more memory (significant if favourite/contact list is large).
 
----
+// tag::tdo[]
+=== Todo mechanism
+
+Todo mechanism uses `CommandOptionUtil` to parse its options. The model class for each todo item is `TodoItem`, which has three fields including start, end, task to describe an item. +
+
+According to the option, todo command sends different events to `UI`.  Todo mechanism sends `JumpToListRequestEvent` to both `PersonListPanel` and `TodoPanel` to select one person and load his/her todo list. Meanwhile todo mechanism uses `ClearListSelectionEvent` to clear the selection in `PersonListPanel` and `ShowAllTodoItemsEvent` to show all todo items of all contacts.
+When todo command need to add or delete some items, todo mechanism will call methods in `Model` to add, delete, list and access to storage
+// end::tdo[]
+
+// tag::switch[]
+=== Switch mechanism
+
+Switch mechanism just sends the `SwitchDisplayEvent` to `MainWindow`. It will change the child in `switchablePlaceholder` according to the user input.
+
+The code below shows how switching is done:
+
+[source,java]
+----
+private void switchPlaceholderDisplay(int mode) {
+        switchablePlaceholder.getChildren().clear();
+        switch (mode) {
+        case SwitchCommand.SWITCH_TO_TODOLIST:
+            switchablePlaceholder.getChildren().add(todoPanel.getRoot());
+            break;
+        case SwitchCommand.SWITCH_TO_BROWSER:
+            switchablePlaceholder.getChildren().add(browserPanel.getRoot());
+            break;
+        default:
+            // Only two modes, no default option here.
+            break;
+        }
+    }
+----
+
+// end::switch[]
+
+// tag::select[]
+=== Select mechanism
+
+Select command also has options. After parsed by `AddressBookParser` and `CommandOptionUtil`, select mechanism sends `ChangeSearchEvent` to `BrowserPanel` in order to change search url. Then, it sends `JumpToListRequestEvent` to change selection in `PersonListPanel` and `PersonListPanel` will send `PersonPanelSelectionChangedEvent` to `BrowserPanel` to indicate which person is selected.
+// end::select[]
+
+// tag::deletebyname[]
+=== Delete by name mechanism
+
+It is an undoable delete command that offers an alternative to the existing delete command.
+
+It takes in the `String` user input name and compare it with all persons' name field. As the iterator traverse through the contact list, the first person with the occurrence of the specified `String` name will be removed from the list.
+
+As the command will always call the entire list for comparison, there is no need to modify list for the command to e executed.
+// end::deletebyname[]
+
+// tag::export[]
+=== Export mechanism
+
+It first creates a `File` object with the user specified file path.
+
+The command then returns the current address book as a `ReadOnlyAddressBook` object and then serialize it using `XmlSerializableAddressBook` class constructor.
+
+Saving of data is achieved with `XmlFileStorage#saveDataToFile` method which saves the above mentioned serialized address book into the newly created file.
+
+Code fragments to show above mentioned export mechanism:
+[source,java]
+----
+ReadOnlyAddressBook localAddressBook = model.getAddressBook();
+
+File file = new File(userPrefsFilePath);
+
+try {
+    FileUtil.createIfMissing(file);
+} catch (IOException e) {
+    return new CommandResult(MESSAGE_STORAGE_ERROR);
+}
+
+try {
+    XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(localAddressBook));
+} catch (FileNotFoundException e) {
+    return new CommandResult(MESSAGE_STORAGE_ERROR);
+}
+----
+// end::export[]
 
 === Enhance Add command
 

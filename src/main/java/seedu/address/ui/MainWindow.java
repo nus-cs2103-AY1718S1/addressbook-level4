@@ -31,7 +31,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/AcquaiNote.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
@@ -130,9 +130,11 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
+        //@@author Hailinx
         todoPanel = new TodoPanel(logic.getFilteredPersonList());
 
         switchablePlaceholder.getChildren().add(browserPanel.getRoot());
+        //@@author
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -142,7 +144,7 @@ public class MainWindow extends UiPart<Region> {
 
         //@@author qihao27
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
-                logic.getFilteredPersonList().size());
+                Integer.toString(logic.getFilteredPersonList().size()));
         //@@author
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
@@ -191,6 +193,7 @@ public class MainWindow extends UiPart<Region> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
+    //@@author Hailinx
     /**
      * Switches the display between TodoList and browser in {@code switchablePlaceholder}.
      */
@@ -204,9 +207,11 @@ public class MainWindow extends UiPart<Region> {
             switchablePlaceholder.getChildren().add(browserPanel.getRoot());
             break;
         default:
+            // Only two modes, no default option here.
             break;
         }
     }
+    //@@author
 
     /**
      * Opens the help window.
@@ -243,10 +248,12 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author Hailinx
     @Subscribe
     private void handleSwitchDisplayEvent(SwitchDisplayEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchPlaceholderDisplay(event.mode);
     }
+    //@@author
 
 }

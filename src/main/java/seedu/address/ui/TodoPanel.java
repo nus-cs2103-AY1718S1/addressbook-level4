@@ -1,10 +1,9 @@
+//@@author Hailinx
 package seedu.address.ui;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-
-import org.fxmisc.easybind.EasyBind;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -50,10 +49,12 @@ public class TodoPanel extends UiPart<Region> {
     }
 
     private void setConnections(List<TodoItem> todoItemList) {
-        ObservableList<TodoItem> allTodoItems = FXCollections.observableArrayList(todoItemList);
+        List<TodoCard> cardList = new ArrayList<>();
+        for (int i = 0; i < todoItemList.size(); i++) {
+            cardList.add(new TodoCard(todoItemList.get(i), i + 1));
+        }
 
-        ObservableList<TodoCard> mappedList = EasyBind.map(
-                allTodoItems, (item) -> new TodoCard(item, allTodoItems.indexOf(item) + 1));
+        ObservableList<TodoCard> mappedList = FXCollections.observableList(cardList);
         todoCardList.setItems(mappedList);
         todoCardList.setCellFactory(listView -> new TodoPanel.TodoListViewCell());
     }

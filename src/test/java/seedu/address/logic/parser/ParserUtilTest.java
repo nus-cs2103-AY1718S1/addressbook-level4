@@ -4,20 +4,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-//@@author qihao27
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_FILE_PATH;
-//@@author
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
-//@@author qihao27
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_OPTION;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_STRING;
 import static seedu.address.testutil.TypicalFilePath.FILE_PATH_DOCS;
-//@@author
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-//@@author qihao27
 import static seedu.address.testutil.TypicalNames.NAME_FIRST_PERSON;
 import static seedu.address.testutil.TypicalOptions.OPTION_NAME;
-//@@author
 
 import java.util.Arrays;
 import java.util.Collections;

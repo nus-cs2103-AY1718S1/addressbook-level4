@@ -1,3 +1,4 @@
+//@@author Hailinx
 package seedu.address.logic.parser.optionparser;
 
 import seedu.address.logic.commands.Command;
@@ -11,7 +12,7 @@ public abstract class CommandOption<T extends Command> {
     protected String optionArgs;
 
     CommandOption(String optionArgs) {
-        this.optionArgs = optionArgs;
+        this.optionArgs = optionArgs.trim();
     }
 
     /**

@@ -94,6 +94,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+// tag::find[]
 === Locating persons : `find`
 
 ==== Default
@@ -150,10 +151,9 @@ Examples:
 Returns `john` and `John Doe`
 * `find -d p/999 e/nus` +
 Returns any person whose phone number contains number `999` and email address contains `nus`
+// end::find[]
 
-=== Deleting a person : `delete`
-
-==== Option1
+=== Deleting a person by index: `delete`
 
 Deletes the specified person from the address book using his/her corresponding index. +
 Format: `delete INDEX`
@@ -173,29 +173,22 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-==== Option2
-
-Deletes the specified person from the address book using his/her name. +
-Format: `del NAME`
-
-****
-* Deletes the person with the first occurrence of the specified `NAME`.
-* The name refers to the name shown in the contact list (case sensitive temporarily).
-* The name *must be a alphabets* john, Jane, Bob ...
-****
-
-Examples:
-
-* `del Alex` +
-Deletes the first person named Alex in the address book contact list.
-* `find Betsy` +
-`del Betsy` +
-Deletes the 1st person in the results of the `find` command.
-
+// tag::select[]
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Format: `select OPTION INDEX`
+
+Options:
+
+****
+* `-n`		search name on browser
+* `-p`		search phone on browser
+* `-e`		search email on browser
+* `-a`		show address on google map
+****
+
+Tips
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -206,11 +199,12 @@ Format: `select INDEX`
 Examples:
 
 * `list` +
-`select 2` +
+`select -n 2` +
 Selects the 2nd person in the address book.
 * `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+`select -a 1` +
+Selects the address of 1st person in the results of the `find` command.
+// end::select[]
 
 === Listing entered commands : `history`
 
@@ -303,6 +297,27 @@ There is no need to save manually.
 
 == Since v1.2
 
+// tag::deletebyname[]
+=== Deleting a person by name: `del`
+
+Deletes the specified person from the address book using his/her name. +
+Format: `del NAME`
+
+****
+* Deletes the person with the first occurrence of the specified `NAME`.
+* The name refers to the name shown in the contact list (case insensitive).
+* The name *must be more than 3 characters*: john, James, William ...
+****
+
+Examples:
+
+* `del Alex` +
+Deletes the first person named Alex in the address book contact list.
+* `find Betsy` +
+`del Betsy` +
+Deletes the 1st person in the results of the `find` command.
+// end::deletebyname[]
+
 // tag::sort[]
 === Sorting all persons : `sort`
 
@@ -322,6 +337,7 @@ Examples:
 Sorts the address book alphabetically by name.
 // end::sort[]
 
+// tag::lockunlock[]
 === Locking the address book : `lock`
 
 Locks the address book by a password. +
@@ -344,6 +360,7 @@ Format: `unlock PASSWORD`
 * Encrypted data file will be decrypted after locking.
 * Person contact list will reload.
 ****
+// end::lockunlock[]
 
 === Favouriting a person : `favourite`
 
@@ -372,6 +389,7 @@ Favourites the 1st person in the address book. +
 `favourite 1` +
 Unfavourite the 1st person in the address book.
 
+// tag::export[]
 === Exporting address book : `export`
 
 Exports a copy of the address book. +
@@ -380,32 +398,71 @@ Format: `export FILEPATH`
 ****
 * Exports the address book into specified `FILEPATH`.
 * The filepath refers to a local directory in the computer.
-* The filepath *must be suffixed with .xml* e.g. 'C:\', 'docs/', ...
+* The filepath *must be suffixed with .xml* e.g. 'D:\', 'docs/', ...
 * If specified directory is missing, it will be automatically created when exporting.
 ****
 
 Examples:
 
-* `export C:\exported\AcquaiNote.xml` +
-Exports the address book into exported folder in C drive in xml file format.
+* `export D:\exported\AcquaiNote.xml` +
+Exports the address book into exported folder in D drive in xml file format.
+// end::export[]
+
+// tag::tdo[]
+=== To-do list: `todo`
+
+Attach a To-do list to a specified person to manage schedule with that person. +
+
+==== Option1
+
+Add a new todo item to the given person with INDEX +
+Format: `todo INDEX -a f/dd-MM-yyyy HH:mm [t/dd-MM-yyyy HH:mm] d/TASK_TO_DO`
+
+Example:
+
+* `todo 1 -a f/01-11-2017 20:40 d/Meeting`
+
+==== Option2
+
+Delete a todo item with INDEX2 from the given person with INDEX1 +
+Format: `todo INDEX1 -d  INDEX2`
+
+Example:
+
+* `todo 1 -d 1`
+
+==== Option3
+
+Delete all todo items from the given person with INDEX +
+Format: `todo INDEX -c`
+
+Example:
+
+* `todo INDEX -l`
+
+==== Option4
+
+List all todo items from the given person with INDEX +
+Format: `todo INDEX -l`
+
+==== Option5
+
+List all todo items from all person +
+Format: `todo`
+// end::tdo[]
+
+// tag::switch[]
+=== Switch between Browser and Todo list: `switch`
+
+Switch between Todo list and browser. +
+Format: `switch NUMBER`  (1 for Todo list, 2 for browser)
+// end::switch[]
 
 == Coming in v2.0
 
 === Popup dialog window during editing
 
 A dialog window pops up during contact editing.
-
-=== To-do list: `sch`
-
-Attach a To-do list to a specified person to manage schedule with that person. +
-Format: `sch INDEX`
-
-Examples:
-
-* `sch 1 s/dinner at 7` +
-Adds schedule with the 1st person: `dinner at 7`.
-* `sch 2 s/` +
-Clears all existing schedules with the 2nd person.
 
 === Real time highlight
 
@@ -441,6 +498,12 @@ e.g. `sort -n`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *Lock* : `lock PASSWORD`
+* *Todo* : `todo INDEX -a f/dd-MM-yyyy HH:mm [t/dd-MM-yyyy HH:mm] d/TASK_TO_DO` or +
+`todo INDEX1 -d  INDEX2` or +
+`todo INDEX -c` or +
+`todo INDEX -l` or +
+`todo`
+* *Switch* : `switch NUMBER`
 * *Unlock* : `unlock PASSWORD`
 * *export* : `export FILEPATH` +
 e.g. `export C:\exported\MyAddressBook.xml`

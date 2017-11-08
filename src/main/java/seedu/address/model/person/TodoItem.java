@@ -1,3 +1,4 @@
+//@@author Hailinx
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
@@ -13,7 +14,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class TodoItem implements Comparable<TodoItem> {
 
     public static final String MESSAGE_TODOITEM_CONSTRAINTS =
-            "The end time should be late than start time.";
+            "The end time should be later than start time. Task cannot be empty.";
 
     public final LocalDateTime start;
     public final LocalDateTime end;
@@ -28,7 +29,7 @@ public class TodoItem implements Comparable<TodoItem> {
     public TodoItem(LocalDateTime start, LocalDateTime end, String task)
             throws IllegalValueException {
         requireNonNull(start, task);
-        if (!isValidTodoItem(start, end)) {
+        if (!isValidTodoItem(start, end, task)) {
             throw new IllegalValueException(MESSAGE_TODOITEM_CONSTRAINTS);
         }
         this.start = start;
@@ -39,11 +40,29 @@ public class TodoItem implements Comparable<TodoItem> {
     /**
      * Checks whether the inputs are valid.
      */
-    public boolean isValidTodoItem(LocalDateTime start, LocalDateTime end) {
+    private boolean isValidTodoItem(LocalDateTime start, LocalDateTime end, String task) {
+        if (task.isEmpty()) {
+            return false;
+        }
         if (end != null && end.compareTo(start) < 0) {
             return false;
         }
         return true;
+    }
+
+    /**
+     * @return formatted time string
+     */
+    public String getTimeString() {
+        String timeStr;
+        String startTimeStr = convertTimeToString(start);
+        if (end != null) {
+            String endTime = convertTimeToString(end);
+            timeStr = "From: " + startTimeStr + "   To: " + endTime;
+        } else {
+            timeStr = "From: " + startTimeStr;
+        }
+        return timeStr;
     }
 
     @Override
@@ -58,11 +77,6 @@ public class TodoItem implements Comparable<TodoItem> {
         return other == this // short circuit if same object
                 || (other instanceof TodoItem // instanceof handles nulls
                 && this.toString().equals(other.toString())); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return toString().hashCode();
     }
 
     @Override

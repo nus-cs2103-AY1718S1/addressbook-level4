@@ -4,11 +4,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BILL;
+import static seedu.address.testutil.TypicalPersons.JOHN;
+import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysFavouriteStar;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
+import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysTodoCount;
 
 import org.junit.Test;
 
+import guitests.guihandles.FavouriteStarHandle;
 import guitests.guihandles.PersonCardHandle;
+import guitests.guihandles.TodoCountHandle;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.PersonBuilder;
@@ -38,6 +44,32 @@ public class PersonCardTest extends GuiUnitTest {
             personWithTags.setTags(ALICE.getTags());
         });
         assertCardDisplay(personCard, personWithTags, 2);
+
+        //@@author qihao27
+        // is not favurited
+        assertEquals(false, personWithNoTags.getFavourite());
+
+        // is favourited
+        Person personIsFavourited = new PersonBuilder().build();
+        personIsFavourited.setFavourite(JOHN.getFavourite());
+        assertEquals(true, personIsFavourited.getFavourite());
+
+        personCard = new PersonCard(personIsFavourited, 3);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personIsFavourited, 3);
+
+        // no todolists
+        assertEquals(0, personWithNoTags.getTodoItems().size());
+
+        // with todolists
+        Person personWithTodo = new PersonBuilder().build();
+        personWithTodo.setTodoItems(BILL.getTodoItems());
+        assertEquals(1, personWithTodo.getTodoItems().size());
+
+        personCard = new PersonCard(personWithTodo, 4);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personWithTodo, 4);
+        //@@author
     }
 
     @Test
@@ -74,11 +106,23 @@ public class PersonCardTest extends GuiUnitTest {
         guiRobot.pauseForHuman();
 
         PersonCardHandle personCardHandle = new PersonCardHandle(personCard.getRoot());
+        //@@author qihao27
+        TodoCountHandle todoCountHandle = new TodoCountHandle(personCard.getRoot());
+        FavouriteStarHandle favouriteStarHandle = new FavouriteStarHandle(personCard.getRoot());
+        //@@author
 
         // verify id is displayed correctly
         assertEquals(Integer.toString(expectedId) + ". ", personCardHandle.getId());
 
         // verify person details are displayed correctly
         assertCardDisplaysPerson(expectedPerson, personCardHandle);
+
+        //@@author qihao27
+        // verify todolist count is displayed correctly
+        assertCardDisplaysTodoCount(expectedPerson, todoCountHandle);
+
+        // verify favourite star is displayed correctly
+        assertCardDisplaysFavouriteStar(expectedPerson, favouriteStarHandle);
+        //@@author
     }
 }

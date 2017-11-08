@@ -3,9 +3,9 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalFilePath.FILE_PATH_C_CREATE_NEW_FOLDER;
+import static seedu.address.testutil.TypicalFilePath.FILE_PATH_CREATE_NEW_FOLDER;
 import static seedu.address.testutil.TypicalFilePath.FILE_PATH_DOCS;
-import static seedu.address.testutil.TypicalFilePath.FILE_PATH_LOCAL_C_DRIVE;
+import static seedu.address.testutil.TypicalFilePath.FILE_PATH_LOCAL_D_DRIVE;
 
 import org.junit.Test;
 
@@ -25,9 +25,9 @@ public class ExportCommandParserTest {
     @Test
     public void parse_validArgs_returnsExportCommand() {
         assertParseSuccess(parser, "docs/AcquaiNote.xml", new ExportCommand(FILE_PATH_DOCS));
-        assertParseSuccess(parser, "C:\\AcquaiNote.xml", new ExportCommand(FILE_PATH_LOCAL_C_DRIVE));
+        assertParseSuccess(parser, "D:\\AcquaiNote.xml", new ExportCommand(FILE_PATH_LOCAL_D_DRIVE));
         assertParseSuccess(parser, "C:\\shalkalaka\\AcquaiNote.xml",
-            new ExportCommand(FILE_PATH_C_CREATE_NEW_FOLDER));
+            new ExportCommand(FILE_PATH_CREATE_NEW_FOLDER));
     }
 
     @Test
@@ -37,6 +37,8 @@ public class ExportCommandParserTest {
         assertParseFailure(parser, "docs/AcquaiNote", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 ExportCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "C/", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ExportCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "docs/ab.xmla", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 ExportCommand.MESSAGE_USAGE));
     }
 }

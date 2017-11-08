@@ -17,6 +17,7 @@ import seedu.address.testutil.FindDetailDescriptorBuilder;
 public class FindCommandParserTest {
 
     private FindCommandParser parser = new FindCommandParser();
+    //@@author Hailinx
     private String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
 
     @Test
@@ -58,6 +59,7 @@ public class FindCommandParserTest {
         // multiple whitespaces between keywords
         assertParseSuccess(parser, "  -d     n/ ali   p/   999", expectedFindCommand);
     }
+    //@@author
 
     @Test
     public void parse_validFindByName_returnsFindCommand() {
