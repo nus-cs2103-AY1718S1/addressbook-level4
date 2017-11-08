@@ -38,7 +38,7 @@ public class AddMeetingCommand extends UndoableCommand {
             + PREFIX_NAME + "NAME_OF_MEETING "
             + PREFIX_DATE + "DATE_TIME "
             + PREFIX_LOCATION + "LOCATION "
-            + PREFIX_TAG + "0-2 \n"
+            + PREFIX_TAG + "IMPORTANCE \n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_NAME + "Project Meeting "
             + PREFIX_DATE + "31-10-2017 21:30 "

@@ -3,6 +3,7 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.ui.MeetingCard;
 
+//@@author Melvin-leo
 /**
  * Represents a selection change in the Meeting List Panel
  */
