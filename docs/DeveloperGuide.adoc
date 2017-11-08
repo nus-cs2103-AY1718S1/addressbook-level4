@@ -393,6 +393,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
+// tag::genericProperty[]
 === Generic Property
 
 We are using a generic `Property` class to support **arbitrary field** feature.
@@ -453,27 +454,29 @@ easily add/edit these properties of each contact stored in the application, just
 
 image::PropertyManagerSequenceDiagram.png[width="800"]
 _Figure 4.3.3.1 : Sequence Diagram for Adding a Customize Property_
+// end::genericProperty[]
 
+//tag::autoReminders[]
 === Auto Reminders
 
-We are adding a reminder to the event whenever an event is added. Reminders will notify users 3 days in advance before
+We are adding a reminder to the event whenever an event is added. Reminders will notify users 2 days in advance before
 event itself.
 
 As we are targeting NUS students, in view of the busy schedules of students, students should be able to set reminders
 for events that they have to attend to. In the case that students forget to set reminders themselves, we automatically
-preset a reminder that will trigger from 3 days before the event such that students have ample time to be aware and be
+preset a reminder that will trigger from 2 days before the event such that students have ample time to be aware and be
 prepared for the event itself.
 
 Learning from many modern applications, the logic behind the applications are usually efficient and is able to handle
 multiple tasks at once. By automatically adding reminders alongside the addition of events, it makes it more
-convenient for the users themselves. We have set a default reminder to trigger 3 days before the actual event
+convenient for the users themselves. We have set a default reminder to trigger 2 days before the actual event
 to remind users of their upcoming events via different colour schemes.
 
 As shown in the _Figure 4.4.1_
 
 1. The red bell indicates the day of the event
-2. The orange bell indicates one day to event.
-3. The green bell indicates two days to event.
+2. The orange bell indicates one day before event.
+3. The green bell indicates two days before event.
 
 image::ReminderColorScheme.png[width="300"]
 _Figure 4.4.1 : Reminders via different colour schemes to indicate urgency_
@@ -520,6 +523,7 @@ The following sequence diagram (Figure 4.4.2.3) shows how reminders are automati
 
 image::SDaddEventLogicReminder.png[width="700"]
 _Figure 4.4.2.3 : Sequence Diagram for Adding an event (reminders are automatically added)_
+//end::autoReminders[]
 
 // tag::importExportXml[]
 === Import & Export mechanism
@@ -617,6 +621,12 @@ or link:{repoURL}/src/main/java/seedu/address/ui/event/EventListPanel.java[`Even
 (i.e. `add` command), all the cards will be loaded in the incremental order by name or date time respectively. The sorting
 mechanism uses the `sort` method which resides inside `List` interface to sort the contacts by name.
 
+// tag::emailMech[]
+=== Emailing mechanism
+
+The automatic opening of email on the user's desktop is facilitated mainly by the `Desktop` class which allows a Java application
+to launch the default mail application registered inside the user's native desktop to handle the email `URI`.
+// end::emailMech[]
 
 === Configuration
 
