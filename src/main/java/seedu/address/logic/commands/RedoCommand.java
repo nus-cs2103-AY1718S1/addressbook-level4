@@ -28,7 +28,6 @@ public class RedoCommand extends Command {
         }
 
         undoRedoStack.popRedo().redo();
-        EventsCenter.getInstance().post(new FilteredPersonListChangedEvent(model.getFilteredPersonList()));
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

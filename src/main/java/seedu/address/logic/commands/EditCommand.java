@@ -97,7 +97,6 @@ public class EditCommand extends UndoableCommand {
 
         try {
             model.updatePerson(personToEdit, editedPerson);
-            EventsCenter.getInstance().post(new FilteredPersonListChangedEvent(model.getFilteredPersonList()));
 
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);

@@ -28,7 +28,6 @@ public class UndoCommand extends Command {
         }
 
         undoRedoStack.popUndo().undo();
-        EventsCenter.getInstance().post(new FilteredPersonListChangedEvent(model.getFilteredPersonList()));
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
