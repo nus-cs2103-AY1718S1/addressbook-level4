@@ -39,6 +39,8 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage {
     /**
      * Saves a copy of addressbook
      */
+    //@@author chernghann
     Optional<ReadOnlyAddressBook> readBackupAddressBook() throws DataConversionException, IOException;
+    //@@author
 }
 

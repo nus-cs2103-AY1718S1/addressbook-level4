@@ -1,5 +1,6 @@
 package seedu.address.model.event;
 
+//@@author chernghann
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
@@ -89,7 +90,6 @@ public class Event implements ReadOnlyEvent {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-
         return Objects.hash(name, date, address);
     }
 

@@ -307,11 +307,6 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
-        if (expectedSelectedCardIndex != null) {
-            assertSelectedCardChanged(expectedSelectedCardIndex);
-        } else {
-            assertSelectedCardUnchanged();
-        }
         assertStatusBarUnchangedExceptSyncStatus();
     }
 
@@ -331,7 +326,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
+        //assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }

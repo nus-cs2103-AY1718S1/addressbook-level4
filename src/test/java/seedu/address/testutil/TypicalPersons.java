@@ -24,7 +24,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
+import seedu.address.model.person.Address;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Website;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
@@ -98,7 +100,42 @@ public class TypicalPersons {
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
 
+    // Person with no homeNumber
+    public static final ReadOnlyPerson ERNEST = new PersonBuilder().withName("Ernest")
+            .withPhone(VALID_PHONE_BOB)
+            .withEmail(VALID_EMAIL_BOB).withSchEmail(VALID_SCH_EMAIL_BOB).withWebsite(VALID_WEBSITE_BOB)
+            .withAddress(VALID_ADDRESS_BOB).withBirthday(VALID_BIRTHDAY_BOB).withFavourite("false")
+            .withTags(VALID_TAG_FRIEND).build();
+    // Person with no birthday
+    public static final ReadOnlyPerson EVELYN = new PersonBuilder().withName("Evelyn").withPhone(VALID_PHONE_BOB)
+            .withHomeNumber(VALID_HOME_NUM_BOB).withEmail(VALID_EMAIL_BOB)
+            .withSchEmail(VALID_SCH_EMAIL_BOB).withWebsite(VALID_WEBSITE_BOB)
+            .withAddress(VALID_ADDRESS_BOB).withFavourite("false")
+            .withTags(VALID_TAG_FRIEND).build();
+    // Person with no School Email
+    public static final ReadOnlyPerson EDITH = new PersonBuilder().withName("Edith").withPhone(VALID_PHONE_BOB)
+            .withHomeNumber(VALID_HOME_NUM_BOB).withEmail(VALID_EMAIL_BOB)
+            .withWebsite(VALID_WEBSITE_BOB).withAddress(VALID_ADDRESS_BOB)
+            .withBirthday(VALID_BIRTHDAY_BOB).withFavourite("false")
+            .withTags(VALID_TAG_FRIEND).build();
+    // Person with no Website
+    public static final ReadOnlyPerson ERIC = new PersonBuilder().withName("Edith").withPhone(VALID_PHONE_BOB)
+            .withHomeNumber(VALID_HOME_NUM_BOB).withEmail(VALID_EMAIL_BOB)
+            .withWebsite(Website.WEBSITE_TEMPORARY)
+            .withSchEmail(VALID_SCH_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
+            .withBirthday(VALID_BIRTHDAY_BOB).withFavourite("false")
+            .withTags(VALID_TAG_FRIEND).build();
+    // Person with no Address
+    public static final ReadOnlyPerson ETHAN = new PersonBuilder().withName("Edith").withPhone(VALID_PHONE_BOB)
+            .withHomeNumber(VALID_HOME_NUM_BOB).withEmail(VALID_EMAIL_BOB)
+            .withAddress(Address.ADDRESS_TEMPORARY)
+            .withSchEmail(VALID_SCH_EMAIL_BOB).withWebsite(VALID_WEBSITE_BOB)
+            .withBirthday(VALID_BIRTHDAY_BOB).withFavourite("false")
+            .withTags(VALID_TAG_FRIEND).build();
+
+
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
+    public static final String TAG_MATCHING_DANIEL = "colleagues"; // A tag that matches DANIEL
 
     private TypicalPersons() {} // prevents instantiation
 

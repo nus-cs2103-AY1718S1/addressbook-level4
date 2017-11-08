@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+//@@author chernghann
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_ADDRESS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_DATE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_NAME;
@@ -18,17 +19,17 @@ import seedu.address.model.event.exceptions.DuplicateEventException;
  */
 public class TypicalEvents {
 
-    public static final ReadOnlyEvent ZOUKOUT = new EventBuilder().withName("ZoukOut").withDate("2017-12-12")
+    public static final ReadOnlyEvent ZOUKOUT = new EventBuilder().withName("ZoukOut").withDate("12/12/2017")
             .withAddress("Sentosa, Siloso Beach").build();
     public static final ReadOnlyEvent HALLOWEEN = new EventBuilder().withName("Halloween Horror Night")
-            .withDate("2017-10-31").withAddress("Universal Studios Singapore").build();
-    public static final ReadOnlyEvent FINALS = new EventBuilder().withName("Finals").withDate("2017-12-04")
+            .withDate("31/10/2017").withAddress("Universal Studios Singapore").build();
+    public static final ReadOnlyEvent FINALS = new EventBuilder().withName("Finals").withDate("04/12/2017")
             .withAddress("MPSH 2A").build();
     public static final ReadOnlyEvent CONCERT = new EventBuilder().withName("Ed Sheeren Concert")
-            .withDate("2018-01-01").withAddress("National Stadium").build();
-    public static final ReadOnlyEvent STARBUCKS = new EventBuilder().withName("Starbucks").withDate("2017-10-04")
+            .withDate("01/01/2018").withAddress("National Stadium").build();
+    public static final ReadOnlyEvent STARBUCKS = new EventBuilder().withName("Starbucks").withDate("04/10/2017")
             .withAddress("MD7, NUS").build();
-    public static final ReadOnlyEvent NATIONALDAY = new EventBuilder().withName("National Day").withDate("2017-09-08")
+    public static final ReadOnlyEvent NATIONALDAY = new EventBuilder().withName("National Day").withDate("08/09/2017")
             .withAddress("Padang").build();
 
     // Manually added - Event's details found in {@code CommandTestUtil}

@@ -33,6 +33,10 @@ public class EventsCenter {
         eventBus.register(handler);
     }
 
+    public void unregisterHandler(Object handler) {
+        eventBus.unregister(handler);
+    }
+
     /**
      * Posts an event to the event bus.
      */

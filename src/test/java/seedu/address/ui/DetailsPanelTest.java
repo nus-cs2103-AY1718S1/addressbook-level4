@@ -26,6 +26,7 @@ public class DetailsPanelTest extends GuiUnitTest {
     private DetailsPanel detailsPanel;
     private DetailsPanelHandle detailsPanelHandle;
 
+    //@@author khooroko-reused
     @Before
     public void setUp() {
         selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
@@ -35,6 +36,8 @@ public class DetailsPanelTest extends GuiUnitTest {
 
         detailsPanelHandle = new DetailsPanelHandle(detailsPanel.getRoot());
     }
+
+    //@@author archthegit
 
     @Test
     public void display() throws Exception {
@@ -79,10 +82,8 @@ public class DetailsPanelTest extends GuiUnitTest {
     public void equals() {
         detailsPanel = new DetailsPanel();
 
-        // test .equals() method for two same objects
         assertTrue(detailsPanel.equals(detailsPanel));
 
-        // test .equals() method for an object of different type
         assertFalse(detailsPanel.equals(detailsPanelHandle));
 
         DetailsPanel expectedDetailsPanel = new DetailsPanel();
@@ -96,6 +97,7 @@ public class DetailsPanelTest extends GuiUnitTest {
         assertTrue(detailsPanel.equals(expectedDetailsPanel));
     }
 
+    //@@author khooroko-reused
     /**
      * Asserts that {@code infoPanel} displays the details of {@code expectedPerson} correctly.
      */

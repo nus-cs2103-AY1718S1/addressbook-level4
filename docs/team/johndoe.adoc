@@ -23,7 +23,7 @@ include::../UserGuide.adoc[tag=undoredo]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+{Justify tohe need for, and the current design (i.e. external behavior) of, the feature}
 
 ==== Implementation
 

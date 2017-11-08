@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+// @@author itsdickson
+
 import java.util.ArrayList;
 
 import seedu.address.commons.core.EventsCenter;
@@ -60,3 +62,4 @@ public class SwitchThemeCommand extends Command {
                 && this.targetIndex.equals(((SwitchThemeCommand) other).targetIndex)); // state check
     }
 }
+// @@author

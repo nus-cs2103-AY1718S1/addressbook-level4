@@ -1,5 +1,6 @@
 package seedu.address.model.event;
 
+//@@author chernghann
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -11,10 +12,10 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Date {
 
     public static final String MESSAGE_DATE_CONSTRAINTS =
-            "The day month and year must be valid in form yyyy-mm-dd";
+            "The day month and year must be valid in form dd-mm-yyyy \n"
+                    + "Single value days should be keyed in without 0 in front.";
 
-    public static final String DATE_VALIDATION_REGEX = "20\\d{2}(-|\\/)((0[1-9])|(1[0-2]))"
-            + "(-|\\/)((0[1-9])|([1-2][0-9])|(3[0-1]))";
+    public static final String DATE_VALIDATION_REGEX = "^\\d{1,2}\\/\\d{1,2}\\/\\d{4}$";
 
     public final String value;
 

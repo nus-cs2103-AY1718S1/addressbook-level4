@@ -21,6 +21,8 @@ import seedu.address.commons.events.ui.AccessWebsiteRequestEvent;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
+    public static final String DEFAULT_LIGHT_PAGE = "defaultLight.html";
+    public static final String DARK_THEME_PAGE = "DarkTheme.css";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 
@@ -41,6 +43,7 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author DarrenCzen
     /**
      * Access website through browser panel based on person's link
      * @param website
@@ -54,6 +57,7 @@ public class BrowserPanel extends UiPart<Region> {
                 + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
+    //@@author
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
@@ -66,6 +70,21 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(defaultPage.toExternalForm());
     }
 
+    // @@author itsdickson
+    /**
+     * Sets the default HTML file based on the current theme.
+     */
+    public void setDefaultPage(String currentTheme) {
+        URL defaultPage;
+        if (currentTheme.contains(DARK_THEME_PAGE)) {
+            defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+        } else {
+            defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_LIGHT_PAGE);
+        }
+        loadPage(defaultPage.toExternalForm());
+    }
+    // @@author
+
     /**
      * Frees resources allocated to the browser.
      */
@@ -73,6 +92,7 @@ public class BrowserPanel extends UiPart<Region> {
         browser = null;
     }
 
+    //@@author DarrenCzen
     @Subscribe
     private void handleAccessWebsiteEvent(AccessWebsiteRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

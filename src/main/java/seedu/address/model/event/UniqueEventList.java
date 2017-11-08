@@ -1,5 +1,6 @@
 package seedu.address.model.event;
 
+//@@author chernghann
 import static java.util.Objects.requireNonNull;
 
 import java.util.Iterator;
@@ -44,14 +45,6 @@ public class UniqueEventList implements Iterable<Event> {
             throw new DuplicateEventException();
         }
         internalList.add(new Event(toAdd));
-    }
-
-    /**
-     * Sorts every event in the list alphabetically.
-     */
-    public void sort() {
-        internalList.sort((r1, r2) -> (
-                r1.getName().toString().compareTo(r2.getName().toString())));
     }
 
     /**

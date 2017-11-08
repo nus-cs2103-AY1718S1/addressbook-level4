@@ -1,11 +1,10 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
 import org.apache.commons.validator.routines.UrlValidator;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author DarrenCzen
 /**
  * Represents a Person's website information in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidWebsite(String)}
@@ -13,8 +12,10 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 public class Website {
     public static final String MESSAGE_WEBSITE_CONSTRAINTS =
-            "Person websites should be 3 alphanumeric strings separated by '.'";
-    public static final String NO_WEBSITE = "https://websiteless.com";
+            "Website inputted should follow format https://www.anyName.com/anyContent"
+                    + " where both anyName and anyContent can be alphanumeric."
+                    + " You must have https://www. and a domain name like .com";
+    public static final String WEBSITE_TEMPORARY = "NIL";
 
     public final String value;
 
@@ -24,14 +25,17 @@ public class Website {
      * @throws IllegalValueException if given email address string is invalid.
      */
     public Website(String websiteName) throws IllegalValueException {
-        requireNonNull(websiteName);
-        String trimmedWebsite = websiteName.trim();
+        if (websiteName == null) {
+            this.value =  WEBSITE_TEMPORARY;
+        } else {
+            String trimmedWebsite = websiteName.trim();
 
-        if (!isValidWebsite(trimmedWebsite)) {
-            throw new IllegalValueException(MESSAGE_WEBSITE_CONSTRAINTS);
+            if (!isValidWebsite(trimmedWebsite)) {
+                throw new IllegalValueException(MESSAGE_WEBSITE_CONSTRAINTS);
+            }
+
+            this.value = trimmedWebsite;
         }
-
-        this.value = trimmedWebsite;
     }
 
     /**
@@ -41,7 +45,7 @@ public class Website {
         String[] schemes = {"http", "https"};
         UrlValidator urlValidator = new UrlValidator(schemes);
 
-        return urlValidator.isValid(test);
+        return urlValidator.isValid(test) || test.matches(WEBSITE_TEMPORARY);
     }
 
     @Override

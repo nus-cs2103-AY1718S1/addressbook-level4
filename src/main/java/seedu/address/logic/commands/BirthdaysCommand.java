@@ -2,10 +2,11 @@ package seedu.address.logic.commands;
 
 import seedu.address.model.person.CheckIfBirthday;
 
+//@@author archthegit
 /**
  * Lists all persons with a birthday today
  */
-public class BirthdaysCommand extends UndoableCommand {
+public class BirthdaysCommand extends Command {
     public static final String COMMAND_WORD = "birthdays";
     public static final String COMMAND_ALIAS = "bd";
 
@@ -19,7 +20,7 @@ public class BirthdaysCommand extends UndoableCommand {
     public BirthdaysCommand (){}
 
     @Override
-    public CommandResult executeUndoableCommand() {
+    public CommandResult execute() {
         model.updateFilteredPersonList(check);
         return new CommandResult(getBirthdayMessageSummary(model.getFilteredPersonList().size()));
     }

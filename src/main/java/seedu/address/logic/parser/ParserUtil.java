@@ -72,7 +72,6 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<HomeNumber> parseHomeNumber(Optional<String> homeNumber) throws IllegalValueException {
-        requireNonNull(homeNumber);
         return homeNumber.isPresent() ? Optional.of(new HomeNumber(homeNumber.get())) : Optional.empty();
     }
 
@@ -81,7 +80,6 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
-        requireNonNull(address);
         return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.empty();
     }
 
@@ -99,7 +97,6 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<SchEmail> parseSchEmail(Optional<String> schEmail) throws IllegalValueException {
-        requireNonNull(schEmail);
         return schEmail.isPresent() ? Optional.of(new SchEmail(schEmail.get())) : Optional.empty();
     }
 
@@ -108,17 +105,14 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Website> parseWebsite(Optional<String> website) throws IllegalValueException {
-        requireNonNull(website);
         return website.isPresent() ? Optional.of(new Website(website.get())) : Optional.empty();
     }
-
 
     /**
      * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
-        requireNonNull(birthday);
         return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
     }
 

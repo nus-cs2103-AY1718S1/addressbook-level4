@@ -11,10 +11,13 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.PopulateRequestEvent;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -66,9 +69,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    //@@author chernghann
     public void setEvents(List<? extends ReadOnlyEvent> events) throws DuplicateEventException {
         this.events.setEvent(events);
     }
+    //@@author
 
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
@@ -81,8 +86,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         try {
             setPersons(newData.getPersonList());
+            setEvents(newData.getEventList());
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
+        } catch (DuplicateEventException e) {
+            assert false : "AddressBooks should not have duplicate events";
         }
 
         setTags(new HashSet<>(newData.getTagList()));
@@ -129,6 +137,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+    // @@author itsdickson
     /**
      * Favourites {@code target} to this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code target} is not in this {@code AddressBook}.
@@ -144,6 +153,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         persons.unfavouritePerson(target);
     }
+    // @@author
 
     /**
      * Ensures that every tag in this person:
@@ -194,15 +204,31 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @throws DuplicateEventException if an equivalent event already exists.
      */
+    //@@author chernghann
     public void addEvent(ReadOnlyEvent p) throws DuplicateEventException {
         Event newEvent = new Event(p);
         events.add(newEvent);
+        EventsCenter.getInstance().post(new PopulateRequestEvent(events));
+    }
+    //@@author
+
+    /**
+     * Deletes an event from the address book.
+     *
+     * @throws EventNotFoundException if the {@code event} is not in this {@code AddressBook}.
+     */
+    public boolean deleteEvent(ReadOnlyEvent event) throws EventNotFoundException {
+        if (events.remove(event)) {
+            return true;
+        } else {
+            throw new EventNotFoundException();
+        }
     }
 
+    // @@author itsdickson
     /**
      * Initialises the Themes ArrayList
      */
-
     private void initialiseThemes() {
         themes.add("DarkTheme.css");
         themes.add("BrightTheme.css");
@@ -211,7 +237,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ArrayList<String> getThemesList() {
         return themes;
     }
+    // @@author
 
+    //@@author DarrenCzen
     /** Ensures that every person in the AddressBook
      *  is sorted in an alphabetical order.
      */
@@ -219,6 +247,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.sort();
     }
 
+    //@@author
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
@@ -238,10 +267,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asObservableList();
     }
 
+    //@@author chernghann
     @Override
     public ObservableList<ReadOnlyEvent> getEventList() {
         return events.asObservableList();
     }
+    //@@author chernghann
 
     @Override
     public ObservableList<Tag> getTagList() {
@@ -260,6 +291,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(persons, tags, events);
     }
 }

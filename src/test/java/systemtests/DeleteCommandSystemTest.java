@@ -166,13 +166,6 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
             Index expectedSelectedCardIndex) {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-
-        if (expectedSelectedCardIndex != null) {
-            assertSelectedCardChanged(expectedSelectedCardIndex);
-        } else {
-            assertSelectedCardUnchanged();
-        }
-
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
     }

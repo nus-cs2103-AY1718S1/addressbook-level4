@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T15-B3/main
 
-By: ` The Myth`      Since: `Jun 2016`      Licence: `MIT`
+By: `The Myth`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
@@ -29,10 +29,12 @@ in typing out command line inputs to manipulate with information of their contac
 
 Feeling lost when using The Myth's Book? Don't worry. This user guide will provide information to help you
 understand the features and commands of the software.
-This user guide will teach you on how to use The Myth's Book effectively and allow
+This user guide will guide you on how to use The Myth's Book effectively and allow
 you to manipulate the necessary information of your contacts efficiently.
 
 == Quick Start
+
+This section shows the sequence of steps that helps you to setup `The Myth's Book`.
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -42,23 +44,33 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. You will see the GUI as seen in the diagram below.
 +
 image::Ui.png[width="790"]
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
+.  You can type a command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`add n/John Doe p/98765432 h/65812321 e/johnd@example.com se/john@u.nus.edu w/https://www.facebook.com/johnDoe a/John street, block 123, #01-01 b/12/11/1972`
- : adds a contact named `John Doe` to the Address Book.
+* *`add n/John p/98765432 e/johnd@example.com`*
+ : adds a contact named `John` to The Myth's Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
-== Features
+link:#the-myths-book---user-guide[Back To Top]
+
+== Saving the data
+
+Your contacts information in The Myth's Book's is saved in the hard disk (same folder directory as to where the jar file is stored) automatically
+after any command that changes the data. +
+There is no need for you to save the data manually.
+
+== Basic Command Features
+
+This section teaches you the `basic` commands that are available in `The Myth's Book`.
 
 ====
 *Command Format*
@@ -70,106 +82,67 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 
 === Viewing help : `help`
+This command helps to display the user guide in pop-up window format inside the software.
 
-Format: `help`
+Format: `help` +
 
 === Adding a person: `add`
-`since v1.2` `new field: Birthday (Archana) , Website (Darren), Home Number (Cherng Hann) and School Email(Cherng Hann)`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER h/HOME_NUMBER e/EMAIL se/SCHOOL_EMAIL w/WEBSITE a/ADDRESS b/BIRTHDAY [t/TAG]`
+The `add` command helps you to add a person to The Myth's Book. +
+You should look at the prefixes section, tips section and note section to
+know more on the format of adding a contact.
 
-[NOTE]
-You can see the examples provided below to know more about what details should be inputted. +
-Website should follow this format `https://www.anyName.com/anyContent` where anyName can only be alphanumeric and anyContent can be the exact url details of the website. +
-It is encouraged to have `https://www.` and a domain name like `.com` or `.net` in the inputted website or it will result in website input error. +
-Birthday should be in proper format of "dd/mm/yyyy" where all elements inputted for birthday are integers.
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [w/WEBSITE] [a/ADDRESS] [h/HOME_NUMBER] [se/SCHOOL_EMAIL] [b/BIRTHDAY] [t/TAG]...`
 
+Prefixes and its meaning:
 
-[TIP]
-A person can have any number of tags (including 0)
+[width="40%",cols="20%,<15%,<5%, <30%,<30%,options="header",]
+|=======================================================================
+|Compulsory Prefix | Meaning|.|Optional Prefix | Meaning
+|`n` |name|.|`a` |address
+|`p` |phone|.|`w` |website
+|`e` |email|.|`h` |home number
+|-|-|.|`b`|birthday
+|-|-|.|`se`|school email
+|-|-|.|`t`|tag
+|=======================================================================
+
+You can follow the examples below to guide you on how to add an individual.
 
 Examples:
 
 * `add n/John Doe p/98765432 h/65812321 e/johnd@example.com se/john@u.nus.edu w/https://www.facebook.com/johnDoe a/John street, block 123, #01-01 b/12/11/1972`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com p/98123414 h/65132100 se/betsy@u.nus.edu w/https://www.facebook.com/betsyCrowe a/Newgate Prison p/1234567 b/02/03/2000 t/criminal`
 
-=== Accessing a person's website : `access`
+Example of adding an individual that excludes the Birthday, School Email, and Home Number field:
 
-Accesses a person's website in the address book +
-Format: 'access INDEX'
+* `add n/Adam Bait t/friend e/adambait@example.com p/98123414 w/https://www.facebook.com/adamBait a/18 Taiseng p/1234567`
 
-****
-* Selects the person and attains the address details of the person at the specified `INDEX`.
-* The person's website is then inputted as a URL in the browser.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-* The website listed must be a valid existing website listed.
-* The website should be `https://www.anyName.com/anyContent` where anyName can be alphanumeric and anyContent can be the exact url details of the website.
-****
+[TIP]
+A tag is used to group your contacts into categories such as `friends`,`colleagues`. +
+Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John t/friend` or as `n/John`. +
+A person can have any number of tags (including 0). +
+Website, address, home number, school email, and birthday are optional fields.
 
-Examples:
-
-* 1.`list` +
-2.`access 2` +
-Selects the 2nd person in the address book and attains the website of the 2nd person.
-The website details is then loaded into the browser.
-* 1.`find Betsy` +
-2.`access 1` +
-Selects the 1st person in the results of the `find` command and attains the website of the 1st person.
-The website details is then loaded into the browser.
-
-Result of using `access index` should look like the figure below.
-
-image::AccessCommandFinalResult.PNG[width="790"]
-
-Figure 4.3.1 Access Command Result
+[NOTE]
+Website should follow this format `https://www.anyName.com/anyContent` where both `anyName` and `anyContent` can be alphanumeric. +
+You must have `https://www.` and a domain name like `.com` or `.net` in the inputted website or it will result in inputted format error. +
+Birthday should be in proper format of "dd/mm/yyyy" where all numbers inputted for birthday are integers.
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+This command lists all the contacts stored in The Myth's Book. +
+
 Format: `list`
 
-=== Accessing a person's location : `locate`
-`since v1.3` `Darren Chin`
-
-Accesses a person's location in the address book +
-Format: 'locate INDEX'
-
-****
-* Selects the person and attains the address details of the person at the specified `INDEX`.
-* The person's address is then used in a search function Using Google Maps Search.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-* The address listed must be a valid address listed.
-****
-
-Result of using `locate index` should look like the figure below.
-
-image::LocationCommandFinalResult.PNG[width="790"]
-
-Figure 4.5.1 Location Command Result
-
-Examples:
-
-* 1.`list` +
-2.`locate 2` +
-Selects the 2nd person in the address book and attains the address of the 2nd person.
-The address details is then used in a Google Maps Search.
-* 1.`find Betsy` +
-2.`locate 1` +
-Selects the 1st person in the results of the `find` command and attains the address of the 1st person.
-The address details is then used in a Google Maps Search.
-
 === Sorting all persons : `sort`
-`since v1.2` `Darren Chin`
 
-Sorts all persons in the address book by their names alphabetically. +
+This command sorts all contacts stored in The Myth's Book by their names alphabetically. +
 Format: `sort`
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
+This command edits an existing person in The Myth's Book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [h/HOME_NUMBER] [e/EMAIL] [se/SCHOOL_EMAIL] [w/WEBSITE] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...`
 
 ****
@@ -183,22 +156,21 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [h/HOME_NUMBER] [e/EMAIL] [se/SCHOOL_EMAI
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+By typing this command, you will be able to edit the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+By typing this command, you will be able to edit the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 === Locating persons by name: `find`
-`since v1.3` `Darren Chin`
 
-
-Finds persons whose names contain any of the given keywords. +
+This command helps you to find persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
-* Partial words will also be matched. For eg: "Han" will be matched to "Hans". `since v1.0` `Archana Pradeep`
+* Partial words will also be matched. For eg: "Han" will be matched to "Hans".
 * If search word is smaller than name, it has to be the first n character of the name.
 * It cannot be the middle n or the last n characters of the name.
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
@@ -207,54 +179,86 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 Examples:
 
 * `find John` +
-Returns `john` and `John Doe`
+If there was john` and `John Doe` in the person list,
+by typing this command, you will be able to find both `john` and `John Doe`.
+
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+By typing this command, you will be able to find any person having names `Betsy`, `Tim`, or `John`
+
+=== Finding a person's tag : `findtag`
+
+This command will help you find contacts whose tags contain any of the given keywords. +
+Format: `findtag TAGS [MORE_TAGS]`
+
+****
+* The search is case insensitive. e.g `friends` will match `Friends`
+* The order of the tags does not matter. e.g. `friends owesMoney` will match `owesMoney friends`
+* Only the tag is searched.
+* Only full words will be matched. For eg: `friend` will not be matched to `friends`.
+* Persons matching at least one tag will be returned (i.e. `OR` search). e.g. `friends` will return `Hans Gruber` that has `friends` and `neighbours` tags, `Bo Yang` that has `owesMoney` tag.
+****
+
+Examples:
+
+* `findtag friends` +
+By typing this command, you will be able to find any person having tag `friends`.
+
+* `findtag owesMoney neighbours friends` +
+By typing this command, you will be able to find any person having tags `owesMoney`, `neighbours`, or `friends`.
+
+=== Selecting a person : `select`
+
+This command selects the person identified by the index number used in the most recent person listing. +
+You will be able to view all the stored information about the person selected.
+
+Format: `select INDEX`
+
+****
+* The index refers to the index number shown in the most recent person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Selects the person and loads the details of the person at the specified `INDEX` in a person card.
+****
+
+Examples:
+
+* `find Betsy` +
+`select 1` +
+1. By typing `find Betsy`, you will be able to find any person having the name `Betsy`. +
+2. Subsequently, by typing `select 1`, you are selecting the 1st person in the results of the `find Betsy` command which will
+displays the information details of the 1st person in the graphical user interface.
+
+* `list` +
+`select 3` +
+1. By typing `list`, you will be able to view the current listing of all contacts with updated details. +
+2. Subsequently, by typing `select 3`, you are selecting the 3rd person in the most recent listing of The Myth's Book. +
+You should see the displayed result of `select 3` as seen in Figure 5.8.1 below.
+
+image::SelectCommandFinalResult.PNG[width="790"]
+Figure 5.8.1 `Select 3` Displayed Result
 
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
+This command allows you to delete the specified person from The Myth's Book. +
 Format: `delete INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
+* Deletes the person at the specified `INDEX`.
 ****
 
 Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+By typing `delete 2`, you will be able to delete the 2nd person in the most recent listing in The Myth's Book.
+
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
-
-=== Selecting a person : `select`
-`since v1.2` `Changed select from google search to Person Card` `Archana`
-
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
-
-****
-* Selects the person and loads the details of the person at the specified `INDEX` in a person card.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+By typing `find Betsy`, you will be able to delete the 1st person in the results of the `find` command.
 
 === Listing entered commands : `history`
 
-Lists all the commands that you have entered in reverse chronological order. +
+This command lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 
 [NOTE]
@@ -265,12 +269,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+This command helps you to restore The Myth's Book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify The Myth's Book's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -291,7 +295,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 === Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
+This command helps you to reverse the most recent `undo` command. +
 Format: `redo`
 
 Examples:
@@ -313,105 +317,46 @@ The `redo` command fails as there are no `undo` commands executed previously.
 // end::undoredo[]
 
 === Listing all themes : `themeslist`
-`since v1.2` `Dickson Chan`
 
-Shows a list of all themes in the address book. +
+This command shows a list of all themes that is available to you in The Myth's Book. +
+
 Format: `themeslist`
 
-=== Switching themes : `switch`
-`since v1.2` `Dickson Chan`
+You should be able to see the result of using `themeslist` in the command result box.
 
-Switches the current theme to the specified theme. +
+The displayed result should look like the figure below.
+
+=== Switching themes : `switch`
+
+This command helps you to switch the current theme to your favourite theme. +
 Format: `switch INDEX`
 
 ****
-* Switches the current theme to the theme at the specified `INDEX`.
 * The index refers to the index number shown in the themes list window.
 * The index *must be a positive integer* 1, 2, 3, ...
+* Switches the current theme to the theme at the specified `INDEX`.
 ****
 
 Examples:
 
 * `themeslist` +
 `switch 2` +
-Switches to the 2nd theme in the themes list.
+1. By typing `themeslist`, you will be able to see the available themes that The Myth's Book has to offer. +
+2. By typing `switch 2`, you will be able to switch to the 2nd theme listed in the themes list.
 
-=== Adding an event : `addevent`
-`since v1.2` `Cherng Hann`
+You should be able to see the result of using `switch INDEX`
+as seen in the figure below.
 
-Adds an event to the address book +
-Format: `add n/NAME d/DATE a/ADDRESS`
-
-Examples:
-
-* `addevent n/ZoukOut d/23/12/2017 a/Sentosa, Siloso Beach` +
-Adds an event `ZoukOut` in the address book.
-* `addevent n/Orbital d/1/5/2018 a/NUS School Of Computing` +
-Adds an event `Orbital` in the address book.
-* `addevent n/Halloween Horror Night d/31/10/2017 a/Universal Studios Singapore` +
-Adds an event `Halloween Horror Night` in the address book.
-
-=== Favouriting a person : `favourite`
-`since v1.2` `Dickson Chan`
-
-Favourites the specified person from the address book. +
-Format: `favourite INDEX`
-
-****
-* Favourites the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`favourite 2` +
-Favourites the 2nd person in the address book.
-* `find Betsy` +
-`favourite 1` +
-Favourites the 1st person in the results of the `find` command.
-
-=== Unfavouriting a person : `unfavourite`
-`since v1.2` `Dickson Chan`
-
-Unfavourites the specified person from the address book. +
-Format: `unfavourite INDEX`
-
-****
-* Unfavourites the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`unfavourite 2` +
-Unfavourites the 2nd person in the address book.
-* `favouritelist` +
-`unfavourite 1` +
-Unfavourites the 1st person in the results of the `favouritelist` command.
-* `find Betsy` +
-`unfavourite 1` +
-Unfavourites the 1st person in the results of the `find` command.
-
-=== Listing all favourited persons : `favouritelist`
-`since v1.2` `Dickson Chan`
-
-Shows a list of all favourited persons in the address book. +
-Format: `favouritelist`
 
 === Checking for birthdays : `birthdays`
-`since v1.3` `Archana Pradeep`
 
-Returns a list of all contacts who have their birthdays today
+This command shows you a list of all the contacts who have their birthdays today.
 
 Format: `birthdays`
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from The Myth's Book. +
 Format: `clear`
 
 === Exiting the program : `exit`
@@ -419,32 +364,207 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
-=== Saving the data
+link:#the-myths-book---user-guide[Back To Top]
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+== Advanced Command Features
+
+=== Accessing a person's website : `access`
+
+This command helps you to access a person's website in The Myth's Book. +
+Format: `access INDEX`
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* This command selects the person and attains the website details of the person at the specified `INDEX`.
+* The person's website is then inputted as a URL in the browser.
+* The website listed must be a valid existing website listed.
+* The website should be `https://www.anyName.com/anyContent` where anyName can be alphanumeric and anyContent can be the exact url details of the website.
+****
+
+Examples:
+
+* `find Betsy` +
+`access 1` +
+1. By typing `find Betsy`, you will be able to see a generated list of persons having names `Betsy`.
+2. Subsequently, typing `access 1`, it will help you attain the website details of the 1st person in the generated list which is then loaded into the browser.
+
+* `list` +
+`select 6` +
+`access 6` +
+1. By typing `list`, it lists down all the contacts. +
+2. Subsequently, by typing `select 6`, it will select and show you information details of the 6th person in the most recent listing. +
+3. Finally, by typing `access 6`, it allows you to access the website details of the 6th person which is loaded into the browser.
+
+You should see the displayed result of `access 6` as seen in Figure 6.1.1 below.
+
+image::AccessCommandFinalResult.PNG[width="790"]
+
+Figure 6.1.1 `Access 6` Result for Access Command
+
+// tag::addevent[]
+=== Adding an event : `addevent`
+
+This command helps you to add an event to The Myth's Book +
+Format: `add n/NAME d/DATE a/ADDRESS`
+
+Examples:
+
+* `addevent n/ZoukOut d/23/12/2017 a/Sentosa, Siloso Beach` +
+
+By typing this command, you will be able to add an event `ZoukOut` in The Myth's Book.
+
+* `addevent n/Halloween Horror Night d/31/10/2017 a/Universal Studios Singapore` +
+
+By typing this command, you will be able to add an event `Halloween Horror Night` in The Myth's Book.
+
+If input is correct, you will be able to see the event being added successfully into The Myth's Book and receive the following displayed result in the Results Display Panel.
+
+image::sampleeventresult.PNG[width="700"]
+
+A `Invalid Command Format` will appear if you have keyed in invalid fields for the event.
+
+[NOTE]
+====
+Do note that for single value dates, do not include a '0' in front on the date.
+Eg. 09/12/2017 will not be accepted as a valid date.
+====
+
+// end::addevent[]
+
+=== Favouriting a person : `favourite`
+
+This command helps you to favourite the specified person in the most recent listing from The Myth's Book. +
+Format: `favourite INDEX`
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* Favourites the person at the specified `INDEX`.
+****
+
+Examples:
+
+* `list` +
+`favourite 2` +
+By typing this command, you will be able to favourite the 2nd person in the most recent person listing of The Myth's Book.
+
+* `find Betsy` +
+`favourite 1` +
+By typing this command, you will be able to favourite the 1st person in the results of the `find` command.
+
+=== Listing all favourited persons : `favouritelist`
+
+This command shows a list of all favourited persons in The Myth's Book. +
+Format: `favouritelist`
+
+=== Unfavouriting a person : `unfavourite`
+
+This command unfavourites the specified person from The Myth's Book. +
+Format: `unfavourite INDEX`
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* Unfavourites the person at the specified `INDEX`.
+****
+
+Examples:
+
+* `list` +
+`unfavourite 2` +
+By typing `unfavourite 2`, you will be able to unfavourite the 2nd person in the most recent person listing of The Myth's Book.
+
+* `favouritelist` +
+`unfavourite 1` +
+By typing `unfavourite 1`, you will be able to unfavourite the 1st person in the results of the `favouritelist` command.
+
+* `find Betsy` +
+`unfavourite 1` +
+By typing `unfavourite 1`, you will be able to unfavourite the 1st person in the results of the `find` command.
+
+=== Accessing a person's location : `locate`
+
+This command helps you to access a person's address on Google Maps Search in The Myth's Book +
+Format: 'locate INDEX'
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* Selects the person and attains the address details of the person at the specified `INDEX`.
+* The person's address is then used in a search function Using Google Maps Search.
+* The address listed must be a valid address listed.
+****
+
+Examples:
+
+* `find Betsy` +
+`locate 1` +
+1. By typing `find Betsy`, you will be able to see a generated list of persons having names `Betsy`.
+2. Subsequently, typing `locate 1`, it will help you attain the address details of the 1st person in
+the generated list which is then loaded into the browser with a Google Maps Search.
+
+* `list` +
+`select 6` +
+`locate 6` +
+1. By typing `list`, it lists down all the contacts. +
+2. Subsequently, by typing `select 6`, it will select and show you information details of the 6th person in the most recent listing. +
+3. Finally, by typing `locate 6`, it allows you to access the address details of the 6th person which is loaded into the browser. +
+4. You should see the displayed result of the person's address in a Google Maps Search as seen in Figure 6.6.1 below.
+
+image::LocationCommandFinalResult.PNG[width="790"]
+
+Figure 6.6.1 Location Command Result
 
 link:#the-myths-book---user-guide[Back To Top]
 
-== Other features
+== UI features
 
 === Details Panel
-`since v1.2` `Archana Pradeep`
 
-UI that shows all details of a person that is not shown in person card
+This `Details Panel` is a graphical user interface that shows you all the `hidden` details of a person that is not shown in the person list.
 
+// tag::calendar[]
 === Calendar
 
-`since v1.3` `Chia Cherng Hann`
+The Calendar is a graphical user interface that displays a calendar for the user. +
+You will be able to navigate through different months to view the events on different days and dates of different months.
 
-UI that displays a calendar for the user.
-You will be able to toggle through different months to view the day and date of different months.
+image::calendar.PNG[width="700"]
+Figure 7.2.1
 
-image::calendar.PNG[width="800"]
+Furthermore, you can add events after clicking on the specific date. A pop up window (Figure 7.2.2) will appear prompting you to fill up the details of the event.
+
+image::popupwindow.PNG[width="300"]
+Figure 7.2.2
+
+After adding an event, the Calendar will be populated with a colour over the chosen date of the Event. The day that has an event will be shown as seen in Figure 7.2.3 below.
+The calendar will also be populated after adding an event through the link:#62-adding-an-event--addevent[Add Event Command].
+
+image::populatecalendar.PNG[width="700"]
+Figure 7.2.3
+
+// end::calendar[]
+
+=== Bright Theme
+
+UI that is of a bright colour scheme as compared to the default `Dark Theme`. +
+You will be able to switch between `Bright Theme` and `Dark Theme` through the command `switch`.
+
+image::BrightTheme.png[width="800"]
 
 link:#the-myths-book---user-guide[Back To Top]
 
 == FAQ
+
+*Q*: What is a jar file? +
+*A*: In short, a jar file is one distributed executable java program and a package file format typically
+combined with many Java class files and associated metadata and resources
+(text, images, etc.).
+
+*Q*: Where is my data saved in the Computer? +
+*A*: The data is saved into a folder name `"data"` along with other files that are saved in the same folder directory as
+to where the jar file is actually stored.
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
@@ -453,10 +573,13 @@ link:#the-myths-book---user-guide[Back To Top]
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER h/HOME_NUMBER e/EMAIL se/SCHOOL_EMAIL w/WEBSITE a/ADDRESS b/BIRTHDAY [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 h/65812131 e/jamesho@example.com se/jamesho@u.nus.edu w/https://www.facebook.com/jamesHo a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Access* : `access INDEX` +
-e.g. `access 2`
+=======
+
+Basic Commands
+
+* *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL [w/WEBSITE] [a/ADDRESS] [h/HOME_NUMBER] [se/SCHOOL_EMAIL] [b/BIRTHDAY] [t/TAG]...` +
+e.g. `add n/James p/22224444 e/james@example.com w/https://www.facebook.com/james a/123, Clementi Rd, 1234665 h/65812131 se/james@u.nus.edu b/12/11/1972 t/friend`
+* *Birthday* : `birthdays`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
@@ -464,38 +587,81 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
-* *Locate* : `locate INDEX` +
-e.g. `locate 2`
-* *Favourite* : `favourite INDEX` +
-e.g. `favourite 3`
-* *Unfavourite* : `unfavourite INDEX` +
-e.g. `unfavourite 3`
-* *FavouriteList* : `favouritelist`
-* *ThemesList* : `themeslist`
-* *SwitchTheme* : `switchtheme INDEX` +
-e.g. `switchtheme 2`
+* *FindTag* : `findtag TAG [MORE_TAGS]` +
+e.g. `findtag friends neighbours`
 * *Help* : `help`
+* *History* : `history`
+* *List* : `list`
+* *Redo* : `redo`
 * *Select* : `select INDEX` +
 e.g. `select 2`
-* *History* : `history`
+* *Sort* : `sort`
+* *SwitchTheme* : `switchtheme INDEX` +
+e.g. `switchtheme 2`
+* *ThemesList* : `themeslist`
 * *Undo* : `undo`
-* *Redo* : `redo`
-* *AddEvent* `addevent n/NAME d/DATE a/ADDRESS` +
-e.g. `addevent n/IHG Floorball d/16/01/2018 a/NUS Sports Recreation Centre`
 
+Advanced Commands
+
+* *Access* : `access INDEX` +
+e.g. `access 2`
+* *AddEvent* : `addevent n/NAME d/DATE a/ADDRESS` +
+e.g. `addevent n/IHG Floorball d/16/01/2018 a/NUS Sports Recreation Centre`
+* *Favourite* : `favourite INDEX` +
+e.g. `favourite 3`
+* *FavouriteList* : `favouritelist`
+* *Locate* : `locate INDEX` +
+e.g. `locate 2`
+* *Unfavourite* : `unfavourite INDEX` +
+e.g. `unfavourite 3`
+=======
 
 link:#the-myths-book---user-guide[Back To Top]
 
+== Since v1.5
+
+v1.4
+
+* Improved Graphical User Interface to look more user-friendly and organized for users. `Dickson Chan`
+* Improved user friendliness by allowing optional fields for Address, Birthday, Home Number, School Email, Website when a contact is added or edited. `Darren Chin`
+* Implementation of Calendar Interface into The Myth's Book. `Cherng Hann`
+
+v1.3
+
+* Implementation of `access` Command which allows users to access a contact's website. `Darren Chin`
+* Implementation of `findtag` command which allows users to find contacts based on their tags. `Dickson Chan
+* Implementation of `locate` Command which allows users to access a contact's address on Google Maps Search. `Darren Chin`
+* Implementation of `birthdays` command which acts as a birthday reminder and displays a list of all the contacts whose birthday is today. `Archana Pradeep`
+* Implementation of adding events to The Myth's Book with `addevent` command. `Cherng Hann`
+
+v1.2
+
+* Adding of school email field for a contact. `Cherng Hann`
+* Adding of website field for a contact. `Darren Chin`
+* Implementation of Person Card Details Panel which displays all the information of a selected contact. `Archana Pradeep`
+* Implementation of favourites list which allows users to `favourite` and `unfavourite` contacts and view `favouritelist`. `Dickson Chan`
+
+v1.1
+
+* Adding of birthday field for a contact. `Archana Pradeep`
+* Adding of home number field for a contact. `Cherng Hann`
+* Sort command to sort all contacts in The Myth's Book based on their names alphabetically. `Darren Chin`
+* Implementation of `switchtheme` and `themeslist` command that allows a user to switch the look of the Graphical User Interface of The Myth's Book. `Dickson Chan`
+
+v1.0
+
+* Modified find function that allows users to find parts of a contact's name. `Archana Pradeep`
+* Implemented `Alias Shortcuts` for each basic command. `Darren Chin`
+* Implementation of having different colours tags for each contact listed in Contact List. `Dickson Chan`
+
 == Coming in v2.0
 
-. Fuzzy find using apache lucene. The user misspells the name, but the myth's book can
-   suggest similar words.
+. Display pictures for each contact so that you can remember your friends faster.
 
-. To-do list for our university going users to keep track their tasks.
+. Fuzzy find using Apache Lucene. If you ever misspell a word, `The Myth's Book` can suggest similar words.
 
-. Calendar command, that shows all events and appointments on a calendar.
+. Compose and send emails to your classmates and professors using Outlook API.
 
-. Enable pictures for each contact so that users can remember the person faster.
+. To-do list for you to keep track of your own tasks.
 
 link:#the-myths-book---user-guide[Back To Top]

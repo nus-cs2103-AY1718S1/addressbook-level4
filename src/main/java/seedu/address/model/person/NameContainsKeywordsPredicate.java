@@ -15,6 +15,7 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
         this.keywords = keywords;
     }
 
+    //@@author archthegit
     @Override
     public boolean test(ReadOnlyPerson person) {
         return ((keywords.stream().anyMatch(keyword -> StringUtil.containsWordIgnoreCase

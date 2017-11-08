@@ -13,7 +13,9 @@ import seedu.address.logic.commands.BirthdaysCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteEventCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EventsCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FavouriteCommand;
 import seedu.address.logic.commands.FavouriteListCommand;
@@ -60,6 +62,7 @@ public class AddressBookParser {
         switch (commandWord) {
         case AddCommand.COMMAND_WORD: case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
+
         case AccessCommand.COMMAND_WORD:
             return new AccessCommandParser().parse(arguments);
 
@@ -113,6 +116,12 @@ public class AddressBookParser {
 
         case AddEventCommand.COMMAND_WORD: case AddEventCommand.COMMAND_ALIAS:
             return new AddEventCommandParser().parse(arguments);
+
+        case DeleteEventCommand.COMMAND_WORD:
+            return new DeleteEventCommandParser().parse(arguments);
+
+        case EventsCommand.COMMAND_WORD:
+            return new EventsCommand();
 
         case FavouriteCommand.COMMAND_WORD: case FavouriteCommand.COMMAND_ALIAS:
             return new FavouriteCommandParser().parse(arguments);
