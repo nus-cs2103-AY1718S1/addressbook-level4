@@ -86,7 +86,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            //Since Company, Position, Status, Priority, Photo and Relationship are optional
+            //Since Company, Position, Status, Priority and Photo and Relationship are optional
             // parameters, set them if they are present
             if (arePrefixesPresent(argMultimap, PREFIX_COMPANY)) {
                 company = ParserUtil.parseCompany(argMultimap.getValue(PREFIX_COMPANY)).get();
@@ -113,6 +113,10 @@ public class AddCommandParser implements Parser<AddCommand> {
                         (PREFIX_PHOTO)).get();
 
             }
+            if (arePrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP)) {
+                relationList = ParserUtil.parseRel(argMultimap.getAllValues(PREFIX_ADD_RELATIONSHIP));
+            }
+
             if (arePrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP)) {
                 relationList = ParserUtil.parseRel(argMultimap.getAllValues(PREFIX_ADD_RELATIONSHIP));
             }

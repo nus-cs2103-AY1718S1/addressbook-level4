@@ -57,7 +57,7 @@ public class ArgumentMultimap {
      * Returns true if there is only one prefix present
      * and false if there are more.
      */
-    public boolean containsTwoPrefixes(Prefix prefix) {
+    public boolean containsOnePrefix(Prefix prefix) {
         List<String> values = getAllValues(prefix);
         if (values.size() > 1) {
             return false;
