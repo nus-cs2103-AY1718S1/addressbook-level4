@@ -69,8 +69,8 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
  */
 public class AddMultipleByTsvCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "addMulTsv";
-    public static final String COMMAND_ALIAS = "addMT";
+    public static final String COMMAND_WORD = "addMul";
+    public static final String COMMAND_ALIAS = "addM";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds multiple people to the address book "
             + "given a tsv (tab separated value) txt file containing their contact information. "
             + "Parameters: TSV_PATH\n"
@@ -452,6 +452,48 @@ public class AddMultipleByTsvCommandParser implements Parser<AddMultipleByTsvCom
         case ChangeProfilePictureCommand.COMMAND_WORD:
         case ChangeProfilePictureCommand.COMMAND_ALIAS:
             return new ChangeProfilePictureCommandParser().parse(arguments);
+```
+###### \java\seedu\address\logic\parser\ChangeProfilePictureCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.ChangeProfilePictureCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parser for ChangeProfilePictureCommand
+ */
+public class ChangeProfilePictureCommandParser implements Parser<ChangeProfilePictureCommand> {
+
+    /**
+     * Parse arguments given by AddressBookParser to change profile picture
+     * @param args
+     * @return
+     * @throws ParseException
+     */
+    public ChangeProfilePictureCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        String[] parameters = trimmedArgs.split("\\s+");
+
+        if (trimmedArgs.isEmpty() || parameters.length != 2) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeProfilePictureCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            Index index = ParserUtil.parseIndex(parameters[0]);
+            String picturePath = parameters[1];
+            return new ChangeProfilePictureCommand(index, picturePath);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeProfilePictureCommand.MESSAGE_USAGE));
+        }
+    }
+}
 ```
 ###### \java\seedu\address\logic\parser\FindTagCommandParser.java
 ``` java
